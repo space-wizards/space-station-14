@@ -95,9 +95,9 @@ namespace Content.Server.Singularity.Components
             {
                 if (_connection1?.Item1 == direction || _connection2?.Item1 == direction) continue;
 
-                var dirVec = direction.ToVec();
+                var dirVec = Owner.Transform.WorldRotation.RotateVec(direction.ToVec());
                 var ray = new CollisionRay(Owner.Transform.WorldPosition, dirVec, (int) CollisionGroup.MobMask);
-                var rawRayCastResults = EntitySystem.Get<SharedBroadphaseSystem>().IntersectRay(Owner.Transform.MapID, ray, 4.5f, Owner, false);
+                var rawRayCastResults = EntitySystem.Get<SharedPhysicsSystem>().IntersectRay(Owner.Transform.MapID, ray, 4.5f, Owner, false);
 
                 var rayCastResults = rawRayCastResults as RayCastResults[] ?? rawRayCastResults.ToArray();
                 if(!rayCastResults.Any()) continue;

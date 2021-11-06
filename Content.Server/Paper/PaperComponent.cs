@@ -14,7 +14,9 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Paper
 {
     [RegisterComponent]
+#pragma warning disable 618
     public class PaperComponent : SharedPaperComponent, IExamine, IInteractUsing, IUse
+#pragma warning restore 618
     {
         private PaperAction _mode;
         [DataField("content")]
@@ -72,9 +74,9 @@ namespace Content.Server.Paper
 
             Content += msg.Text + '\n';
 
-            if (Owner.TryGetComponent(out SpriteComponent? sprite))
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
-                sprite.LayerSetState(0, "paper_words");
+                appearance.SetData(PaperVisuals.Status, PaperStatus.Written);
             }
 
             Owner.Description = "";

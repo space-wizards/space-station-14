@@ -2,6 +2,7 @@ using Content.Shared.Examine;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.ResourceManagement;
+using Robust.Shared.Containers;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -64,11 +65,8 @@ namespace Content.Client.Suspicion
                     continue;
                 }
 
-                // all entities have a TransformComponent
-                var transform = physics.Owner.Transform;
-
                 // if not on the same map, continue
-                if (transform.MapID != _eyeManager.CurrentMap || !transform.IsMapTransform)
+                if (physics.Owner.Transform.MapID != _eyeManager.CurrentMap || physics.Owner.IsInContainer())
                 {
                     continue;
                 }

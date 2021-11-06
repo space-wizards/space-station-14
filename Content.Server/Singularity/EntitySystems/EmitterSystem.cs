@@ -1,12 +1,12 @@
-﻿using System;
+using System;
 using System.Threading;
-using Content.Server.Access.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Projectiles.Components;
 using Content.Server.Singularity.Components;
+using Content.Server.Storage.Components;
 using Content.Shared.Audio;
 using Content.Shared.Interaction;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Singularity.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
@@ -33,45 +33,12 @@ namespace Content.Server.Singularity.EntitySystems
 
             SubscribeLocalEvent<EmitterComponent, PowerConsumerReceivedChanged>(ReceivedChanged);
             SubscribeLocalEvent<EmitterComponent, InteractHandEvent>(OnInteractHand);
-            SubscribeLocalEvent<EmitterComponent, InteractUsingEvent>(OnInteractUsing);
-        }
-
-        private void OnInteractUsing(EntityUid uid, EmitterComponent component, InteractUsingEvent args)
-        {
-            if(args.Handled) return;
-
-            if (component.AccessReader == null || !args.Used.TryGetComponent(out IAccess? access))
-            {
-                return;
-            }
-
-            if (component.AccessReader.IsAllowed(access))
-            {
-                component.IsLocked ^= true;
-
-                if (component.IsLocked)
-                {
-                    component.Owner.PopupMessage(args.User, Loc.GetString("comp-emitter-lock", ("target", component.Owner)));
-                }
-                else
-                {
-                    component.Owner.PopupMessage(args.User, Loc.GetString("comp-emitter-unlock", ("target", component.Owner)));
-                }
-
-                UpdateAppearance(component);
-            }
-            else
-            {
-                component.Owner.PopupMessage(args.User, Loc.GetString("comp-emitter-access-denied"));
-            }
-
-            args.Handled = true;
         }
 
         private void OnInteractHand(EntityUid uid, EmitterComponent component, InteractHandEvent args)
         {
             args.Handled = true;
-            if (component.IsLocked)
+            if (EntityManager.TryGetComponent(uid, out LockComponent? lockComp) && lockComp.Locked)
             {
                 component.Owner.PopupMessage(args.User, Loc.GetString("comp-emitter-access-locked", ("target", component.Owner)));
                 return;
@@ -250,7 +217,6 @@ namespace Content.Server.Singularity.EntitySystems
             }
 
             component.Appearance.SetData(EmitterVisuals.VisualState, state);
-            component.Appearance.SetData(EmitterVisuals.Locked, component.IsLocked);
         }
     }
 }

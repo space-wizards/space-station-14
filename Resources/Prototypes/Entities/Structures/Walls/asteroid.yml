@@ -10,7 +10,8 @@
     sprite: Structures/Walls/asteroid_rock.rsi
     state: 0
   - type: Damageable
-    resistances: metallicResistances
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:

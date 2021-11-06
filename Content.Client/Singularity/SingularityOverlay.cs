@@ -13,9 +13,9 @@ namespace Content.Client.Singularity
 {
     public class SingularityOverlay : Overlay
     {
-        [Dependency] private readonly IComponentManager _componentManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IEyeManager _eyeManager = default!;
 
         private const float MaxDist = 15.0f;
 
@@ -40,7 +40,7 @@ namespace Content.Client.Singularity
         {
             SingularityQuery(args.Viewport.Eye);
 
-            var viewportWB = args.WorldBounds;
+            var viewportWB = _eyeManager.GetWorldViewport();
             // Has to be correctly handled because of the way intensity/falloff transform works so just do it.
             _shader?.SetParameter("renderScale", args.Viewport.RenderScale);
             foreach (SingularityShaderInstance instance in _singularities.Values)
@@ -73,7 +73,7 @@ namespace Content.Client.Singularity
 
             var currentEyeLoc = currentEye.Position;
 
-            var distortions = _componentManager.EntityQuery<SingularityDistortionComponent>();
+            var distortions = _entityManager.EntityQuery<SingularityDistortionComponent>();
             foreach (var distortion in distortions) //Add all singulos that are not added yet but qualify
             {
                 var singuloEntity = distortion.Owner;

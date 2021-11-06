@@ -100,7 +100,7 @@ namespace Content.Client.IconSmoothing
         {
             foreach (var entity in candidates)
             {
-                if (ComponentManager.HasComponent<IconSmoothComponent>(entity))
+                if (EntityManager.HasComponent<IconSmoothComponent>(entity))
                 {
                     _dirtyEntities.Enqueue(entity);
                 }
@@ -113,7 +113,7 @@ namespace Content.Client.IconSmoothing
             // As it stands now, it's totally possible for something to get queued twice.
             // Generation on the component is set after an update so we can cull updates that happened this generation.
             if (!EntityManager.EntityExists(euid)
-                || !ComponentManager.TryGetComponent(euid, out IconSmoothComponent? smoothing)
+                || !EntityManager.TryGetComponent(euid, out IconSmoothComponent? smoothing)
                 || smoothing.UpdateGeneration == _generation)
             {
                 return;

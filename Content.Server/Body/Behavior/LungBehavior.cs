@@ -4,7 +4,7 @@ using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Circulatory;
 using Content.Server.Body.Respiratory;
-using Content.Server.Notification;
+using Content.Server.Popups;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
 using Content.Shared.MobState;

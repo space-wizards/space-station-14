@@ -8,6 +8,8 @@
   - Command
   - Security
   icon: "HeadOfSecurity"
+  requireAdminNotify: true
+  supervisors: "the captain"
   access:
   - Command
   - Brig

@@ -5,7 +5,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: BeeMob_Content
+      - id: MobBee
         amount: 8
 
 
@@ -16,7 +16,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: ButterflyMob_Content
+      - id: MobButterfly
         amount: 5
 
 
@@ -27,7 +27,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: CatMob_Content
+      - id: MobCat
         amount: 1
 
 
@@ -38,7 +38,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: ChickenMob_Content
+      - id: MobChicken
         amount: 4
 
 
@@ -49,7 +49,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: CorgiMob_Content
+      - id: MobCorgi
         amount: 1
 
 - type: entity
@@ -59,7 +59,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: CowMob_Content
+      - id: MobCow
         amount: 1
 
 
@@ -70,7 +70,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: GoatMob_Content
+      - id: MobGoat
         amount: 1
 
 
@@ -81,7 +81,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: GooseMob_Content
+      - id: MobGoose
         amount: 2
 
 
@@ -92,7 +92,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: GorillaMob_Content
+      - id: MobGorilla
         amount: 1
 
 
@@ -114,7 +114,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: ParrotMob_Content
+      - id: MobParrot
         amount: 3
 
 
@@ -125,7 +125,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: PenguinMob_Content
+      - id: MobPenguin
         amount: 2
 
 
@@ -136,5 +136,5 @@
   components:
   - type: StorageFill
     contents:
-      - id: SnakeMob_Content
+      - id: MobSnake
         amount: 3

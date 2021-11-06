@@ -1,8 +1,7 @@
 using System;
 using System.Text.RegularExpressions;
-using Content.Client.Changelog;
 using Content.Client.EscapeMenu.UI;
-using Content.Client.Parallax;
+using Content.Client.MainMenu.UI;
 using Robust.Client;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -14,7 +13,6 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Utility;
-using static Robust.Client.UserInterface.Controls.BoxContainer;
 using UsernameHelpers = Robust.Shared.AuthLib.UsernameHelpers;
 
 namespace Content.Client.MainMenu
@@ -101,7 +99,7 @@ namespace Content.Client.MainMenu
 
         private void TryConnect(string address)
         {
-            var inputName = _mainMenuControl.UserNameBox.Text.Trim();
+            var inputName = _mainMenuControl.UsernameBox.Text.Trim();
             if (!UsernameHelpers.IsNameValid(inputName, out var reason))
             {
                 var invalidReason = Loc.GetString(reason.ToText());
@@ -112,7 +110,7 @@ namespace Content.Client.MainMenu
             }
 
             var configName = _configurationManager.GetCVar(CVars.PlayerName);
-            if (_mainMenuControl.UserNameBox.Text != configName)
+            if (_mainMenuControl.UsernameBox.Text != configName)
             {
                 _configurationManager.SetCVar(CVars.PlayerName, inputName);
                 _configurationManager.SaveToFile();
@@ -195,137 +193,6 @@ namespace Content.Client.MainMenu
 #if FULL_RELEASE
             _mainMenuControl.JoinPublicServerButton.Disabled = state;
 #endif
-        }
-
-        private sealed class MainMenuControl : Control
-        {
-            private readonly IResourceCache _resourceCache;
-            private readonly IConfigurationManager _configurationManager;
-
-            public LineEdit UserNameBox { get; }
-            public Button JoinPublicServerButton { get; }
-            public LineEdit AddressBox { get; }
-            public Button DirectConnectButton { get; }
-            public Button OptionsButton { get; }
-            public Button QuitButton { get; }
-            public Label VersionLabel { get; }
-
-            public MainMenuControl(IResourceCache resCache, IConfigurationManager configMan)
-            {
-                _resourceCache = resCache;
-                _configurationManager = configMan;
-
-                LayoutContainer.SetAnchorPreset(this, LayoutContainer.LayoutPreset.Wide);
-
-                AddChild(new ParallaxControl());
-
-                var layout = new LayoutContainer();
-                AddChild(layout);
-
-                var vBox = new BoxContainer
-                {
-                    Orientation = LayoutOrientation.Vertical,
-                    StyleIdentifier = "mainMenuVBox"
-                };
-
-                layout.AddChild(vBox);
-                LayoutContainer.SetAnchorPreset(vBox, LayoutContainer.LayoutPreset.TopRight);
-                LayoutContainer.SetMarginRight(vBox, -25);
-                LayoutContainer.SetMarginTop(vBox, 30);
-                LayoutContainer.SetGrowHorizontal(vBox, LayoutContainer.GrowDirection.Begin);
-
-                var logoTexture = _resourceCache.GetResource<TextureResource>("/Textures/Logo/logo.png");
-                var logo = new TextureRect
-                {
-                    Texture = logoTexture,
-                    Stretch = TextureRect.StretchMode.KeepCentered,
-                };
-                vBox.AddChild(logo);
-
-                var userNameHBox = new BoxContainer
-                {
-                    Orientation = LayoutOrientation.Horizontal,
-                    SeparationOverride = 4
-                };
-                vBox.AddChild(userNameHBox);
-                userNameHBox.AddChild(new Label {Text = Loc.GetString("main-menu-username-label") });
-
-                var currentUserName = _configurationManager.GetCVar(CVars.PlayerName);
-                UserNameBox = new LineEdit
-                {
-                    Text = currentUserName, PlaceHolder = Loc.GetString("main-menu-username-text"),
-                    HorizontalExpand = true
-                };
-
-                userNameHBox.AddChild(UserNameBox);
-
-                JoinPublicServerButton = new Button
-                {
-                    Text = Loc.GetString("main-menu-join-public-server-button"),
-                    StyleIdentifier = "mainMenu",
-                    TextAlign = Label.AlignMode.Center,
-#if !FULL_RELEASE
-                    Disabled = true,
-                    ToolTip =  Loc.GetString("main-menu-join-public-server-button-tooltip")
-#endif
-                };
-
-                vBox.AddChild(JoinPublicServerButton);
-
-                // Separator.
-                vBox.AddChild(new Control {MinSize = (0, 2)});
-
-                AddressBox = new LineEdit
-                {
-                    Text = "localhost",
-                    PlaceHolder = "server address:port",
-                    HorizontalExpand = true
-                };
-
-                vBox.AddChild(AddressBox);
-
-                DirectConnectButton = new Button
-                {
-                    Text = Loc.GetString("main-menu-direct-connect-button"),
-                    TextAlign = Label.AlignMode.Center,
-                    StyleIdentifier = "mainMenu",
-                };
-
-                vBox.AddChild(DirectConnectButton);
-
-                // Separator.
-                vBox.AddChild(new Control {MinSize = (0, 2)});
-
-                OptionsButton = new Button
-                {
-                    Text = Loc.GetString("main-menu-options-button"),
-                    TextAlign = Label.AlignMode.Center,
-                    StyleIdentifier = "mainMenu",
-                };
-
-                vBox.AddChild(OptionsButton);
-
-                QuitButton = new Button
-                {
-                    Text = Loc.GetString("main-menu-quit-button"),
-                    TextAlign = Label.AlignMode.Center,
-                    StyleIdentifier = "mainMenu",
-                };
-
-                vBox.AddChild(QuitButton);
-
-                vBox.AddChild(new ChangelogButton());
-
-                VersionLabel = new Label
-                {
-                    Text = "v0.1"
-                };
-
-                LayoutContainer.SetAnchorPreset(VersionLabel, LayoutContainer.LayoutPreset.BottomRight);
-                LayoutContainer.SetGrowHorizontal(VersionLabel, LayoutContainer.GrowDirection.Begin);
-                LayoutContainer.SetGrowVertical(VersionLabel, LayoutContainer.GrowDirection.Begin);
-                layout.AddChild(VersionLabel);
-            }
         }
     }
 }

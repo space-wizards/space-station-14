@@ -11,8 +11,6 @@ namespace Content.Server.MachineLinking.System
 {
     public class TwoWayLeverSystem : EntitySystem
     {
-        [Dependency] private readonly IComponentManager _componentManager = default!;
-
         public override void Initialize()
         {
             base.Initialize();
@@ -42,7 +40,7 @@ namespace Content.Server.MachineLinking.System
                 component.NextSignalLeft = !component.NextSignalLeft;
             }
 
-            if (_componentManager.TryGetComponent<AppearanceComponent>(uid, out var appearanceComponent))
+            if (EntityManager.TryGetComponent<AppearanceComponent>(uid, out var appearanceComponent))
             {
                 appearanceComponent.SetData(TwoWayLeverVisuals.State, component.State);
             }

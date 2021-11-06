@@ -3,6 +3,7 @@ using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Localization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Stacks
 {
@@ -19,18 +20,11 @@ namespace Content.Shared.Stacks
             SubscribeLocalEvent<SharedStackComponent, ExaminedEvent>(OnStackExamined);
         }
 
-        private void OnStackStarted(EntityUid uid, SharedStackComponent component, ComponentStartup args)
+        public void SetCount(EntityUid uid, int amount, SharedStackComponent? component = null)
         {
-            if (!ComponentManager.TryGetComponent(uid, out SharedAppearanceComponent? appearance))
+            if (!Resolve(uid, ref component))
                 return;
 
-            appearance.SetData(StackVisuals.Actual, component.Count);
-            appearance.SetData(StackVisuals.MaxCount, component.MaxCount);
-            appearance.SetData(StackVisuals.Hide, false);
-        }
-
-        public void SetCount(EntityUid uid, SharedStackComponent component, int amount)
-        {
             // Do nothing if amount is already the same.
             if (amount == component.Count)
                 return;
@@ -57,7 +51,7 @@ namespace Content.Shared.Stacks
                 EntityManager.QueueDeleteEntity(uid);
 
             // Change appearance data.
-            if (ComponentManager.TryGetComponent(uid, out SharedAppearanceComponent? appearance))
+            if (EntityManager.TryGetComponent(uid, out SharedAppearanceComponent? appearance))
                 appearance.SetData(StackVisuals.Actual, component.Count);
 
             RaiseLocalEvent(uid, new StackCountChangedEvent(old, component.Count), false);
@@ -66,8 +60,11 @@ namespace Content.Shared.Stacks
         /// <summary>
         ///     Try to use an amount of items on this stack. Returns whether this succeeded.
         /// </summary>
-        public bool Use(EntityUid uid, SharedStackComponent stack, int amount)
+        public bool Use(EntityUid uid, int amount, SharedStackComponent? stack = null)
         {
+            if (!Resolve(uid, ref stack))
+                return false;
+
             // Check if we have enough things in the stack for this...
             if (stack.Count < amount)
             {
@@ -76,8 +73,22 @@ namespace Content.Shared.Stacks
             }
 
             // We do have enough things in the stack, so remove them and change.
-            SetCount(uid, stack, stack.Count - amount);
+            if (!stack.Unlimited)
+            {
+                SetCount(uid, stack.Count - amount, stack);
+            }
+
             return true;
+        }
+
+        private void OnStackStarted(EntityUid uid, SharedStackComponent component, ComponentStartup args)
+        {
+            if (!EntityManager.TryGetComponent(uid, out SharedAppearanceComponent? appearance))
+                return;
+
+            appearance.SetData(StackVisuals.Actual, component.Count);
+            appearance.SetData(StackVisuals.MaxCount, component.MaxCount);
+            appearance.SetData(StackVisuals.Hide, false);
         }
 
         private void OnStackGetState(EntityUid uid, SharedStackComponent component, ref ComponentGetState args)
@@ -90,9 +101,9 @@ namespace Content.Shared.Stacks
             if (args.Current is not StackComponentState cast)
                 return;
 
-            // This will change the count and call events.
-            SetCount(uid, component, cast.Count);
             component.MaxCount = cast.MaxCount;
+            // This will change the count and call events.
+            SetCount(uid, cast.Count, component);
         }
 
         private void OnStackExamined(EntityUid uid, SharedStackComponent component, ExaminedEvent args)
@@ -100,8 +111,7 @@ namespace Content.Shared.Stacks
             if (!args.IsInDetailsRange)
                 return;
 
-            args.Message.AddText("\n");
-            args.Message.AddMarkup(
+            args.PushMarkup(
                 Loc.GetString("comp-stack-examine-detail-count",
                     ("count", component.Count),
                     ("markupCountColor", "lightgray")

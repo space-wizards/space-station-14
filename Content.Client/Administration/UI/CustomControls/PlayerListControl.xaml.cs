@@ -10,7 +10,7 @@ using Robust.Shared.Players;
 namespace Content.Client.Administration.UI.CustomControls
 {
     [GenerateTypedNameReferences]
-    public partial class PlayerListControl : VBoxContainer
+    public partial class PlayerListControl : BoxContainer
     {
         private List<ICommonSession>? _data;
 

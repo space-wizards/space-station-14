@@ -1,55 +1,34 @@
 ﻿using System.Collections.Generic;
 using Robust.Server.Player;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 
 namespace Content.Server.Tabletop
 {
     /// <summary>
-    /// A struct for storing data about a running tabletop game.
+    ///     A class for storing data about a running tabletop game.
     /// </summary>
-    public struct TabletopSession
+    public class TabletopSession
     {
         /// <summary>
-        /// The map ID associated with this tabletop game session.
+        ///     The center position of this session.
         /// </summary>
-        public MapId MapId;
+        public readonly MapCoordinates Position;
 
         /// <summary>
-        /// The set of players currently playing this tabletop game.
+        ///     The set of players currently playing this tabletop game.
         /// </summary>
-        private readonly HashSet<IPlayerSession> _currentPlayers;
-
-        /// <param name="mapId">The map ID associated with this tabletop game.</param>
-        public TabletopSession(MapId mapId)
-        {
-            MapId = mapId;
-            _currentPlayers = new();
-        }
+        public readonly Dictionary<IPlayerSession, TabletopSessionPlayerData> Players = new();
 
         /// <summary>
-        /// Returns true if the given player is currently playing this tabletop game.
+        ///     All entities bound to this session. If you create an entity for this session, you have to add it here.
         /// </summary>
-        public bool IsPlaying(IPlayerSession playerSession)
-        {
-            return _currentPlayers.Contains(playerSession);
-        }
+        public readonly HashSet<EntityUid> Entities = new();
 
-        /// <summary>
-        /// Store that this player has started playing this tabletop game. If the player was already playing, nothing
-        /// happens.
-        /// </summary>
-        public void StartPlaying(IPlayerSession playerSession)
+        public TabletopSession(MapId tabletopMap, Vector2 position)
         {
-            _currentPlayers.Add(playerSession);
-        }
-
-        /// <summary>
-        /// Store that this player has stopped playing this tabletop game. If the player was not playing, nothing
-        /// happens.
-        /// </summary>
-        public void StopPlaying(IPlayerSession playerSession)
-        {
-            _currentPlayers.Remove(playerSession);
+            Position = new MapCoordinates(position, tabletopMap);
         }
     }
 }

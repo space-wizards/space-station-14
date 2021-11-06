@@ -62,7 +62,7 @@ namespace Content.Server.Singularity.Components
                 }
 
                 containmentFieldComponent.Parent = this;
-                newEnt.Transform.WorldRotation = dirVec.ToWorldAngle();
+                newEnt.Transform.WorldRotation = generator1.Owner.Transform.WorldRotation + dirVec.ToWorldAngle();
 
                 _fields.Add(newEnt);
                 currentOffset += dirVec;

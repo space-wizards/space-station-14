@@ -8,15 +8,13 @@ namespace Content.Shared.Emoting
         {
             base.Initialize();
 
-            SubscribeLocalEvent<EmoteAttemptEvent>(OnEmoteAttempt);
+            SubscribeLocalEvent<SharedEmotingComponent, EmoteAttemptEvent>(OnEmoteAttempt);
         }
 
-        private void OnEmoteAttempt(EmoteAttemptEvent ev)
+        private void OnEmoteAttempt(EntityUid entity, SharedEmotingComponent component, EmoteAttemptEvent ev)
         {
-            if (!ev.Entity.HasComponent<SharedEmotingComponent>())
-            {
+            if (!component.Enabled)
                 ev.Cancel();
-            }
         }
     }
 }

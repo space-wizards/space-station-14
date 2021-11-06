@@ -38,7 +38,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             }
 
             if (!scrubber.Enabled
-            || !ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
+            || !EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
             || !nodeContainer.TryGetNode(scrubber.OutletName, out PipeNode? outlet))
             {
                 appearance?.SetData(ScrubberVisuals.State, ScrubberState.Off);
@@ -60,7 +60,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnVentScrubberLeaveAtmosphere(EntityUid uid, GasVentScrubberComponent component, AtmosDeviceDisabledEvent args)
         {
-            if (ComponentManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+            if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
             {
                 appearance.SetData(ScrubberVisuals.State, ScrubberState.Off);
             }
@@ -79,13 +79,13 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (scrubber.PumpDirection == ScrubberPumpDirection.Scrubbing)
             {
                 appearance?.SetData(ScrubberVisuals.State, scrubber.WideNet ? ScrubberState.WideScrub : ScrubberState.Scrub);
-                var transferMoles = MathF.Min(1f, (scrubber.VolumeRate / tile.Volume) * tile.TotalMoles);
+                var transferMoles = MathF.Min(1f, scrubber.VolumeRate / tile.Volume) * tile.TotalMoles;
 
                 // Take a gas sample.
                 var removed = tile.Remove(transferMoles);
 
                 // Nothing left to remove from the tile.
-                if (MathHelper.CloseTo(removed.TotalMoles, 0f))
+                if (MathHelper.CloseToPercent(removed.TotalMoles, 0f))
                     return;
 
                 atmosphereSystem.ScrubInto(removed, outlet.Air, scrubber.FilterGases);

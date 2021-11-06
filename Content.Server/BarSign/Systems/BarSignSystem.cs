@@ -69,7 +69,7 @@ namespace Content.Server.BarSign.Systems
 
             if (component.Owner.TryGetComponent(out SpriteComponent? sprite))
             {
-                if (!component.Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered)
+                if (!component.Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || !receiver.Powered)
                 {
                     sprite.LayerSetState(0, "empty");
                     sprite.LayerSetShader(0, "shaded");

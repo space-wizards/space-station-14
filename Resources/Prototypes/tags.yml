@@ -113,6 +113,9 @@
   id: GlassBeaker
 
 - type: Tag
+  id: Handcuffs
+
+- type: Tag
   id: Hoe
 
 - type: Tag
@@ -147,6 +150,9 @@
 
 - type: Tag
   id: Pill
+
+- type: Tag
+  id: Pipe
 
 - type: Tag
   id: Pizza
@@ -206,4 +212,16 @@
   id: Write
 
 - type: Tag
+  id: RCDDeconstructWhitelist
+
+- type: Tag
+  id: Wooden # just like our atmos
+
+- type: Tag
   id: EmitterBolt
+  
+- type: Tag
+  id: HideContextMenu
+
+- type: Tag
+  id: NukeDisk

@@ -1,11 +1,13 @@
 using System.Threading.Tasks;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.DoAfter;
+using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -34,14 +36,14 @@ namespace Content.Server.Fluids.Components
         {
             get
             {
-                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution);
+                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution);
                 return solution;
             }
         }
 
-        public ReagentUnit MaxVolume
+        public FixedPoint2 MaxVolume
         {
-            get => MopSolution?.MaxVolume ?? ReagentUnit.Zero;
+            get => MopSolution?.MaxVolume ?? FixedPoint2.Zero;
             set
             {
                 var solution = MopSolution;
@@ -52,14 +54,14 @@ namespace Content.Server.Fluids.Components
             }
         }
 
-        public ReagentUnit CurrentVolume => MopSolution?.CurrentVolume ?? ReagentUnit.Zero;
+        public FixedPoint2 CurrentVolume => MopSolution?.CurrentVolume ?? FixedPoint2.Zero;
 
         // Currently there's a separate amount for pickup and dropoff so
         // Picking up a puddle requires multiple clicks
         // Dumping in a bucket requires 1 click
         // Long-term you'd probably use a cooldown and start the pickup once we have some form of global cooldown
         [DataField("pickup_amount")]
-        public ReagentUnit PickupAmount { get; } = ReagentUnit.New(5);
+        public FixedPoint2 PickupAmount { get; } = FixedPoint2.New(5);
 
         [DataField("pickup_sound")]
         private SoundSpecifier _pickupSound = new SoundPathSpecifier("/Audio/Effects/Fluids/slosh.ogg");
@@ -80,7 +82,7 @@ namespace Content.Server.Fluids.Components
              * will spill some of the mop's solution onto the puddle which will evaporate eventually.
              */
 
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var contents ) ||
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var contents ) ||
                 Mopping ||
                 !eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
             {
@@ -135,17 +137,17 @@ namespace Content.Server.Fluids.Components
                 return false;
 
             // Annihilate the puddle
-            var transferAmount = ReagentUnit.Min(ReagentUnit.New(5), puddleComponent.CurrentVolume, CurrentVolume);
+            var transferAmount = FixedPoint2.Min(FixedPoint2.New(5), puddleComponent.CurrentVolume, CurrentVolume);
             var puddleCleaned = puddleComponent.CurrentVolume - transferAmount <= 0;
 
+            var puddleSystem = EntitySystem.Get<PuddleSystem>();
+            var solutionSystem = EntitySystem.Get<SolutionContainerSystem>();
             if (transferAmount == 0)
             {
-                if (
-                    puddleComponent
-                        .EmptyHolder) //The puddle doesn't actually *have* reagents, for example vomit because there's no "vomit" reagent.
+                if (puddleSystem.EmptyHolder(puddleComponent.Owner.Uid, puddleComponent)) //The puddle doesn't actually *have* reagents, for example vomit because there's no "vomit" reagent.
                 {
                     puddleComponent.Owner.Delete();
-                    transferAmount = ReagentUnit.Min(ReagentUnit.New(5), CurrentVolume);
+                    transferAmount = FixedPoint2.Min(FixedPoint2.New(5), CurrentVolume);
                     puddleCleaned = true;
                 }
                 else
@@ -155,13 +157,13 @@ namespace Content.Server.Fluids.Components
             }
             else
             {
-                puddleComponent.SplitSolution(transferAmount);
+                if (solutionSystem.TryGetSolution(eventArgs.Target.Uid, puddleComponent.SolutionName, out var puddleSolution))
+                    solutionSystem.SplitSolution(eventArgs.Target.Uid, puddleSolution, transferAmount);
             }
 
-            if (
-                puddleCleaned) //After cleaning the puddle, make a new puddle with solution from the mop as a "wet floor". Then evaporate it slowly.
+            if (puddleCleaned) //After cleaning the puddle, make a new puddle with solution from the mop as a "wet floor". Then evaporate it slowly.
             {
-                EntitySystem.Get<SolutionContainerSystem>().SplitSolution(Owner.Uid, contents, transferAmount)
+                solutionSystem.SplitSolution(Owner.Uid, contents, transferAmount)
                     .SpillAt(eventArgs.ClickLocation, "PuddleSmear");
             }
             else

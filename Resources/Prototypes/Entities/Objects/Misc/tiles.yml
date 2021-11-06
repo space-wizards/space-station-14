@@ -9,7 +9,9 @@
   - type: Item
     sprite: Objects/Tiles/tile.rsi
   - type: DamageOtherOnHit
-    amount: 10
+    damage:
+      types:
+        Blunt: 10
   - type: Stack
     count: 1
 

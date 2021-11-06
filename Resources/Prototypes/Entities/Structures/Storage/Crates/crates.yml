@@ -530,7 +530,8 @@
       state_open: livestockcrate_open
       state_closed: livestockcrate_door
   - type: Damageable
-    resistances: metallicResistances
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:

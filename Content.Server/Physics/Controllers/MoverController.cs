@@ -33,12 +33,8 @@ namespace Content.Server.Physics.Controllers
 {
     public class MoverController : SharedMoverController
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IRobustRandom _robustRandom = default!;
-
-        private AudioSystem _audioSystem = default!;
 
         private const float StepSoundMoveDistanceRunning = 2;
         private const float StepSoundMoveDistanceWalking = 1.5f;
@@ -50,7 +46,6 @@ namespace Content.Server.Physics.Controllers
         public override void Initialize()
         {
             base.Initialize();
-            _audioSystem = EntitySystem.Get<AudioSystem>();
 
             var configManager = IoCManager.Resolve<IConfigurationManager>();
             configManager.OnValueChanged(CCVars.ShuttleDockSpeedCap, value => _shuttleDockSpeedCap = value, true);
@@ -61,20 +56,20 @@ namespace Content.Server.Physics.Controllers
             base.UpdateBeforeSolve(prediction, frameTime);
             _excludedMobs.Clear();
 
-            foreach (var (mobMover, mover, physics) in ComponentManager.EntityQuery<IMobMoverComponent, IMoverComponent, PhysicsComponent>())
+            foreach (var (mobMover, mover, physics) in EntityManager.EntityQuery<IMobMoverComponent, IMoverComponent, PhysicsComponent>())
             {
                 _excludedMobs.Add(mover.Owner.Uid);
                 HandleMobMovement(mover, physics, mobMover);
             }
 
-            foreach (var (pilot, mover) in ComponentManager.EntityQuery<PilotComponent, SharedPlayerInputMoverComponent>())
+            foreach (var (pilot, mover) in EntityManager.EntityQuery<PilotComponent, SharedPlayerInputMoverComponent>())
             {
                 if (pilot.Console == null) continue;
                 _excludedMobs.Add(mover.Owner.Uid);
                 HandleShuttleMovement(mover);
             }
 
-            foreach (var (mover, physics) in ComponentManager.EntityQuery<IMoverComponent, PhysicsComponent>(true))
+            foreach (var (mover, physics) in EntityManager.EntityQuery<IMoverComponent, PhysicsComponent>(true))
             {
                 if (_excludedMobs.Contains(mover.Owner.Uid)) continue;
 
@@ -104,8 +99,7 @@ namespace Content.Server.Physics.Controllers
             // inputs will do different things.
             // TODO: Do that
             float speedCap;
-            // This is comically fast for debugging
-            var angularSpeed = 20000f;
+            var angularSpeed = 0.75f;
 
             // ShuttleSystem has already worked out the ratio so we'll just multiply it back by the mass.
             var movement = (mover.VelocityDir.walking + mover.VelocityDir.sprinting);
@@ -113,6 +107,11 @@ namespace Content.Server.Physics.Controllers
             switch (shuttleComponent.Mode)
             {
                 case ShuttleMode.Docking:
+                    if (physicsComponent.LinearVelocity.LengthSquared == 0f)
+                    {
+                        movement *= 5f;
+                    }
+
                     if (movement.Length != 0f)
                         physicsComponent.ApplyLinearImpulse(physicsComponent.Owner.Transform.WorldRotation.RotateVec(movement) * shuttleComponent.SpeedMultipler * physicsComponent.Mass);
 
@@ -121,13 +120,19 @@ namespace Content.Server.Physics.Controllers
                 case ShuttleMode.Cruise:
                     if (movement.Length != 0.0f)
                     {
+                        if (physicsComponent.LinearVelocity.LengthSquared == 0f)
+                        {
+                            movement.Y *= 5f;
+                        }
+
                         // Currently this is slow BUT we'd have a separate multiplier for docking and cruising or whatever.
                         physicsComponent.ApplyLinearImpulse((physicsComponent.Owner.Transform.WorldRotation + new Angle(MathF.PI / 2)).ToVec() *
                                                             shuttleComponent.SpeedMultipler *
                                                             physicsComponent.Mass *
                                                             movement.Y *
-                                                            10);
-                        physicsComponent.ApplyAngularImpulse(-movement.X * angularSpeed);
+                                                            2.5f);
+
+                        physicsComponent.ApplyAngularImpulse(-movement.X * angularSpeed * physicsComponent.Mass);
                     }
 
                     // TODO WHEN THIS ACTUALLY WORKS
@@ -141,12 +146,6 @@ namespace Content.Server.Physics.Controllers
             // ideaguys the shit out of it later.
 
             var velocity = physicsComponent.LinearVelocity;
-
-            if (velocity.Length < 0.1f && movement.Length == 0f)
-            {
-                physicsComponent.LinearVelocity = Vector2.Zero;
-                return;
-            }
 
             if (velocity.Length > speedCap)
             {
@@ -214,7 +213,7 @@ namespace Content.Server.Physics.Controllers
             string? soundToPlay = null;
             foreach (var maybeFootstep in grid.GetAnchoredEntities(tile.GridIndices))
             {
-                if (EntityManager.ComponentManager.TryGetComponent(maybeFootstep, out FootstepModifierComponent? footstep))
+                if (EntityManager.TryGetComponent(maybeFootstep, out FootstepModifierComponent? footstep))
                 {
                     soundToPlay = footstep.SoundCollection.GetSound();
                     break;

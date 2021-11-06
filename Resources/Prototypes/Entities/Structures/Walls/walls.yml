@@ -3,7 +3,10 @@
   id: WallBrick
   name: brick wall
   components:
-  - type: RCDDeconstructWhitelist
+  - type: Tag
+    tags:
+      - Wall
+      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/brick.rsi
   - type: Icon
@@ -30,7 +33,10 @@
   id: WallClock
   name: clock wall
   components:
-  - type: RCDDeconstructWhitelist
+  - type: Tag
+    tags:
+      - Wall
+      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/clock.rsi
   - type: Icon
@@ -57,7 +63,10 @@
   id: WallClown
   name: clown wall
   components:
-  - type: RCDDeconstructWhitelist
+  - type: Tag
+    tags:
+      - Wall
+      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/clown.rsi
   - type: Icon
@@ -85,7 +94,10 @@
   id: WallCult
   name: cult wall
   components:
-  - type: RCDDeconstructWhitelist
+  - type: Tag
+    tags:
+      - Wall
+      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/cult.rsi
   - type: Icon
@@ -115,8 +127,9 @@
   components:
   - type: Tag
     tags:
+      - Wall
       - Debug
-  - type: RCDDeconstructWhitelist
+      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/debug.rsi
   - type: Icon
@@ -143,7 +156,10 @@
   id: WallDiamond
   name: diamond wall
   components:
-  - type: RCDDeconstructWhitelist
+  - type: Tag
+    tags:
+      - Wall
+      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/diamond.rsi
   - type: Icon
@@ -170,7 +186,10 @@
   id: WallGold
   name: gold wall
   components:
-  - type: RCDDeconstructWhitelist
+  - type: Tag
+    tags:
+      - Wall
+      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/gold.rsi
   - type: Icon
@@ -197,7 +216,10 @@
   id: WallIce
   name: ice wall
   components:
-  - type: RCDDeconstructWhitelist
+  - type: Tag
+    tags:
+      - Wall
+      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/ice.rsi
   - type: Icon
@@ -224,7 +246,10 @@
   id: WallMetal
   name: metal wall
   components:
-  - type: RCDDeconstructWhitelist
+  - type: Tag
+    tags:
+      - Wall
+      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/metal.rsi
   - type: Icon
@@ -251,7 +276,10 @@
   id: WallPlasma
   name: plasma wall
   components:
-  - type: RCDDeconstructWhitelist
+  - type: Tag
+    tags:
+      - Wall
+      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/plasma.rsi
   - type: Icon
@@ -278,7 +306,10 @@
   id: WallPlastic
   name: plastic wall
   components:
-  - type: RCDDeconstructWhitelist
+  - type: Tag
+    tags:
+      - Wall
+      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/plastic.rsi
   - type: Icon
@@ -306,7 +337,6 @@
   name: reinforced wall
   components:
   - type: Sprite
-    color: "#889192"
     sprite: Structures/Walls/solid.rsi
   - type: Icon
     sprite: Structures/Walls/solid.rsi
@@ -338,7 +368,10 @@
   id: WallRiveted
   name: riveted wall
   components:
-  - type: RCDDeconstructWhitelist
+  - type: Tag
+    tags:
+      - Wall
+      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/riveted.rsi
   - type: Icon
@@ -365,7 +398,10 @@
   id: WallSandstone
   name: sandstone wall
   components:
-  - type: RCDDeconstructWhitelist
+  - type: Tag
+    tags:
+      - Wall
+      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/sandstone.rsi
   - type: Icon
@@ -392,7 +428,10 @@
   id: WallSilver
   name: silver wall
   components:
-  - type: RCDDeconstructWhitelist
+  - type: Tag
+    tags:
+      - Wall
+      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/silver.rsi
   - type: Icon
@@ -419,9 +458,11 @@
   id: WallSolid
   name: solid wall
   components:
-  - type: RCDDeconstructWhitelist
+  - type: Tag
+    tags:
+      - Wall
+      - RCDDeconstructWhitelist
   - type: Sprite
-    color: "#889192"
     sprite: Structures/Walls/solid.rsi
   - type: Construction
     graph: girder
@@ -478,7 +519,10 @@
   id: WallWood
   name: wood wall
   components:
-  - type: RCDDeconstructWhitelist
+  - type: Tag
+    tags:
+      - Wall
+      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/wood.rsi
   - type: Icon

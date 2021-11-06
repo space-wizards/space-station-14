@@ -23,8 +23,10 @@
   - type: Tag
     tags:
     - ExplosivePassable
+    - Wooden
   - type: Damageable
-    resistances: metallicResistances
+    damageModifierSet: Wood
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -41,6 +43,9 @@
   - type: AtmosExposed
   - type: Flammable
     fireSpread: true
+    damage:
+      types:
+        Heat : 1 #per second, scales with number of fire 'stacks'
   - type: Reactive
     reactions:
       - !type:ExtinguishReaction
@@ -60,4 +65,4 @@
       sprite: Effects/fire.rsi
       normalState: 1
       Sprite:
-        drawdepth: Overlays
+        drawdepth: Effects

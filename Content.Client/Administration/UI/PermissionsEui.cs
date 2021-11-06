@@ -320,15 +320,15 @@ namespace Content.Client.Administration.UI
                 var adminVBox = new BoxContainer
                 {
                     Orientation = LayoutOrientation.Vertical,
-                    Children = {AdminsList, AddAdminButton},
+                    Children = {new ScrollContainer(){VerticalExpand = true, Children = { AdminsList }}, AddAdminButton},
                 };
                 TabContainer.SetTabTitle(adminVBox, Loc.GetString("permissions-eui-menu-admins-tab-title"));
 
-                AdminRanksList = new GridContainer {Columns = 3};
+                AdminRanksList = new GridContainer {Columns = 3, VerticalExpand = true};
                 var rankVBox = new BoxContainer
                 {
                     Orientation = LayoutOrientation.Vertical,
-                    Children = { AdminRanksList, AddAdminRankButton}
+                    Children = { new ScrollContainer(){VerticalExpand = true, Children = {AdminRanksList}}, AddAdminRankButton}
                 };
                 TabContainer.SetTabTitle(rankVBox, Loc.GetString("permissions-eui-menu-admin-ranks-tab-title"));
 
@@ -532,6 +532,7 @@ namespace Content.Client.Administration.UI
 
             public EditAdminRankWindow(PermissionsEui ui, KeyValuePair<int, PermissionsEuiState.AdminRankData>? data)
             {
+                Title = Loc.GetString("permissions-eui-edit-admin-rank-window-title");
                 MinSize = SetSize = (600, 400);
                 SourceId = data?.Key;
 

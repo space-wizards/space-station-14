@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using Content.Shared.Damage.Components;
+using Content.Shared.Damage;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Destructible.Thresholds.Triggers
@@ -15,7 +15,7 @@ namespace Content.Server.Destructible.Thresholds.Triggers
         [DataField("triggers")]
         public List<IThresholdTrigger> Triggers { get; set; } = new();
 
-        public bool Reached(IDamageableComponent damageable, DestructibleSystem system)
+        public bool Reached(DamageableComponent damageable, DestructibleSystem system)
         {
             foreach (var trigger in Triggers)
             {

@@ -68,7 +68,7 @@ namespace Content.Server.AI.EntitySystems
                 yield break;
             }
 
-            foreach (var component in ComponentManager.EntityQuery<AiFactionTagComponent>(true))
+            foreach (var component in EntityManager.EntityQuery<AiFactionTagComponent>(true))
             {
                 if ((component.Factions & hostile) == 0)
                     continue;

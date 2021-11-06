@@ -21,7 +21,6 @@ namespace Content.Server.Cloning
         public readonly Dictionary<Mind.Mind, int> MindToId = new();
         public readonly Dictionary<int, ClonerDNAEntry> IdToDNA = new();
         private int _nextAllocatedMindId = 0;
-        private float _quickAndDirtyUserUpdatePreventerTimer = 0.0f;
         public readonly Dictionary<Mind.Mind, EntityUid> ClonesWaitingForMind = new();
 
         public override void Initialize()
@@ -73,7 +72,7 @@ namespace Content.Server.Cloning
 
         public override void Update(float frameTime)
         {
-            foreach (var (cloning, power) in ComponentManager.EntityQuery<CloningPodComponent, ApcPowerReceiverComponent>(true))
+            foreach (var (cloning, power) in EntityManager.EntityQuery<CloningPodComponent, ApcPowerReceiverComponent>())
             {
                 if (cloning.UiKnownPowerState != power.Powered)
                 {
@@ -128,7 +127,7 @@ namespace Content.Server.Cloning
 
         public void OnChangeMadeToDnaScans()
         {
-            foreach (var cloning in ComponentManager.EntityQuery<CloningPodComponent>(true))
+            foreach (var cloning in EntityManager.EntityQuery<CloningPodComponent>())
                 UpdateUserInterface(cloning);
         }
 

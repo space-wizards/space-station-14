@@ -1,9 +1,10 @@
-﻿using System.Threading.Tasks;
-using Content.Server.GameObjects.Components;
+﻿using System.Collections.Generic;
 using Content.Server.WireHacking;
 using Content.Shared.Construction;
+using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Construction.Conditions
@@ -18,12 +19,9 @@ namespace Content.Server.Construction.Conditions
     {
         [DataField("value")] public bool Value { get; private set; } = true;
 
-        public async Task<bool> Condition(IEntity entity)
+        public bool Condition(EntityUid uid, IEntityManager entityManager)
         {
-            if (entity.Deleted)
-                return false;
-
-            if (!entity.TryGetComponent<WiresComponent>(out var wires))
+            if (!entityManager.TryGetComponent(uid, out WiresComponent? wires))
                 return true;
 
             foreach (var wire in wires.WiresList)
@@ -37,6 +35,23 @@ namespace Content.Server.Construction.Conditions
             }
 
             return true;
+        }
+
+        public bool DoExamine(ExaminedEvent args)
+        {
+            args.PushMarkup(Loc.GetString(Value
+                ? "construction-examine-condition-all-wires-cut"
+                : "construction-examine-condition-all-wires-intact"));
+            return true;
+        }
+
+        public IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()
+        {
+            yield return new ConstructionGuideEntry()
+            {
+                Localization = Value ? "construction-guide-condition-all-wires-cut"
+                    : "construction-guide-condition-all-wires-intact"
+            };
         }
     }
 }

@@ -4,6 +4,8 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: Transform
+    anchored: true
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
@@ -22,6 +24,7 @@
         - MobImpassable
         - SmallImpassable
   - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
   - type: UserInterface
     interfaces:
     - key: enum.ReagentDispenserUiKey.Key
@@ -29,7 +32,8 @@
   - type: Anchorable
   - type: Pullable
   - type: Damageable
-    resistances: metallicResistances
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:

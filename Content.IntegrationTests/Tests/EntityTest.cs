@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.Power.Components;
-using Content.Server.PowerCell.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Coordinates;
 using NUnit.Framework;
@@ -27,7 +25,7 @@ namespace Content.IntegrationTests.Tests
                 CVarOverrides = {{CCVars.AIMaxUpdates.Name, int.MaxValue.ToString()}}
             };
 
-            var server = StartServerDummyTicker(options);
+            var server = StartServer(options);
             await server.WaitIdleAsync();
 
             var mapManager = server.ResolveDependency<IMapManager>();
@@ -118,7 +116,7 @@ namespace Content.IntegrationTests.Tests
 - type: entity
   id: AllComponentsOneToOneDeleteTestEntity";
 
-            var server = StartServerDummyTicker(new ServerContentIntegrationOption
+            var server = StartServer(new ServerContentIntegrationOption
             {
                 ExtraPrototypes = testEntity,
                 FailureLogLevel = LogLevel.Error
@@ -189,7 +187,7 @@ namespace Content.IntegrationTests.Tests
 
                         Assert.DoesNotThrow(() =>
                             {
-                                entityManager.ComponentManager.AddComponent(entity, component);
+                                entityManager.AddComponent(entity, component);
                             }, "Component '{0}' threw an exception.",
                             component.Name);
 
@@ -221,10 +219,11 @@ namespace Content.IntegrationTests.Tests
 - type: entity
   id: AllComponentsOneEntityDeleteTestEntity";
 
-            var server = StartServerDummyTicker(new ServerContentIntegrationOption
+            var server = StartServer(new ServerContentIntegrationOption
             {
                 ExtraPrototypes = testEntity,
-                FailureLogLevel = LogLevel.Error
+                FailureLogLevel = LogLevel.Error,
+                Pool = false
             });
             await server.WaitIdleAsync();
 
@@ -267,10 +266,6 @@ namespace Content.IntegrationTests.Tests
             // Split components into groups, ensuring that their references don't conflict
             foreach (var type in componentFactory.AllRegisteredTypes)
             {
-                if (type == typeof(PowerCellComponent) || type == typeof(BatteryComponent))
-                {
-
-                }
                 var registration = componentFactory.GetRegistration(type);
 
                 for (var i = 0; i < distinctComponents.Count; i++)
@@ -334,7 +329,7 @@ namespace Content.IntegrationTests.Tests
                             // and all others variations (out parameter)
                             Assert.DoesNotThrow(() =>
                                 {
-                                    entityManager.ComponentManager.AddComponent(entity, component);
+                                    entityManager.AddComponent(entity, component);
                                 }, "Component '{0}' threw an exception.",
                                 component.Name);
                         }

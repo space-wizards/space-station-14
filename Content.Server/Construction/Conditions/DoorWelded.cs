@@ -1,12 +1,11 @@
-using System.Threading.Tasks;
+using System.Collections.Generic;
 using Content.Server.Doors.Components;
 using Content.Shared.Construction;
+using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
-using static Content.Shared.Doors.SharedDoorComponent;
 
 namespace Content.Server.Construction.Conditions
 {
@@ -17,27 +16,40 @@ namespace Content.Server.Construction.Conditions
         [DataField("welded")]
         public bool Welded { get; private set; } = true;
 
-        public async Task<bool> Condition(IEntity entity)
+        public bool Condition(EntityUid uid, IEntityManager entityManager)
         {
-            if (!entity.TryGetComponent(out ServerDoorComponent? doorComponent)) return false;
+            if (!entityManager.TryGetComponent(uid, out ServerDoorComponent? doorComponent))
+                return false;
 
             return doorComponent.IsWeldedShut == Welded;
         }
 
-        public bool DoExamine(IEntity entity, FormattedMessage message, bool inDetailsRange)
+        public bool DoExamine(ExaminedEvent args)
         {
+            var entity = args.Examined;
+
             if (!entity.TryGetComponent(out ServerDoorComponent? door)) return false;
 
             if (door.IsWeldedShut != Welded)
             {
                 if (Welded == true)
-                    message.AddMarkup(Loc.GetString("construction-condition-door-weld", ("entityName", entity.Name)) + "\n");
+                    args.PushMarkup(Loc.GetString("construction-examine-condition-door-weld", ("entityName", entity.Name)) + "\n");
                 else
-                    message.AddMarkup(Loc.GetString("construction-condition-door-unweld", ("entityName", entity.Name)) + "\n");
+                    args.PushMarkup(Loc.GetString("construction-examine-condition-door-unweld", ("entityName", entity.Name)) + "\n");
                 return true;
             }
 
             return false;
+        }
+
+        public IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()
+        {
+            yield return new ConstructionGuideEntry()
+            {
+                Localization = Welded
+                    ? "construction-guide-condition-door-weld"
+                    : "construction-guide-condition-door-unweld",
+            };
         }
     }
 }

@@ -34,7 +34,7 @@ namespace Content.Server.GameTicking.Rules
         {
             _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-death-match-added-announcement"));
 
-            _entityManager.EventBus.SubscribeEvent<DamageChangedEventArgs>(EventSource.Local, this, OnHealthChanged);
+            _entityManager.EventBus.SubscribeEvent<DamageChangedEvent>(EventSource.Local, this, OnHealthChanged);
             _playerManager.PlayerStatusChanged += PlayerManagerOnPlayerStatusChanged;
         }
 
@@ -42,11 +42,11 @@ namespace Content.Server.GameTicking.Rules
         {
             base.Removed();
 
-            _entityManager.EventBus.UnsubscribeEvent<DamageChangedEventArgs>(EventSource.Local, this);
+            _entityManager.EventBus.UnsubscribeEvent<DamageChangedEvent>(EventSource.Local, this);
             _playerManager.PlayerStatusChanged -= PlayerManagerOnPlayerStatusChanged;
         }
 
-        private void OnHealthChanged(DamageChangedEventArgs message)
+        private void OnHealthChanged(DamageChangedEvent _)
         {
             _runDelayedCheck();
         }

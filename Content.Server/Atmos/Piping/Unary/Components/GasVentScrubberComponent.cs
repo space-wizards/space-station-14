@@ -24,7 +24,10 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         [ViewVariables]
         public readonly HashSet<Gas> FilterGases = new()
         {
-            Gas.CarbonDioxide
+            Gas.CarbonDioxide,
+            Gas.Plasma,
+            Gas.Tritium,
+            Gas.WaterVapor
         };
 
         [ViewVariables(VVAccess.ReadWrite)]

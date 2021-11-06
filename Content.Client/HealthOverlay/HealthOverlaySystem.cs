@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Client.HealthOverlay.UI;
-using Content.Shared.Damage.Components;
+using Content.Shared.Damage;
 using Content.Shared.GameTicking;
 using Content.Shared.MobState;
 using JetBrains.Annotations;
@@ -79,7 +79,7 @@ namespace Content.Client.HealthOverlay
 
             var viewBox = _eyeManager.GetWorldViewport().Enlarged(2.0f);
 
-            foreach (var (mobState, _) in ComponentManager.EntityQuery<IMobStateComponent, IDamageableComponent>())
+            foreach (var (mobState, _) in EntityManager.EntityQuery<IMobStateComponent, DamageableComponent>())
             {
                 var entity = mobState.Owner;
 
@@ -88,7 +88,8 @@ namespace Content.Client.HealthOverlay
                 {
                     if (_guis.TryGetValue(entity.Uid, out var oldGui))
                     {
-                        oldGui.Dispose();
+                        _guis.Remove(entity.Uid);
+                        oldGui.Dispose();                       
                     }
 
                     continue;

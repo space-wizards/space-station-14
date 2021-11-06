@@ -1,180 +1,80 @@
-﻿using System.Collections.Generic;
-using System.Reflection;
-using Content.Shared.GameTicking;
 using Content.Shared.Verbs;
 using Robust.Server.Player;
-using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
-using static Content.Shared.Verbs.VerbSystemMessages;
 
 namespace Content.Server.Verbs
 {
-    public class VerbSystem : SharedVerbSystem
+    public sealed class VerbSystem : SharedVerbSystem
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-
-        private readonly HashSet<IPlayerSession> _seesThroughContainers = new();
 
         public override void Initialize()
         {
             base.Initialize();
 
-            IoCManager.InjectDependencies(this);
-
-            SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
-            SubscribeNetworkEvent<RequestVerbsMessage>(RequestVerbs);
-            SubscribeNetworkEvent<UseVerbMessage>(UseVerb);
-
-            _playerManager.PlayerStatusChanged += PlayerStatusChanged;
+            SubscribeNetworkEvent<RequestServerVerbsEvent>(HandleVerbRequest);
+            SubscribeNetworkEvent<ExecuteVerbEvent>(HandleTryExecuteVerb);
         }
 
-        private void PlayerStatusChanged(object? sender, SessionStatusEventArgs args)
+        /// <summary>
+        ///     Called when asked over the network to run a given verb.
+        /// </summary>
+        public void HandleTryExecuteVerb(ExecuteVerbEvent args, EntitySessionEventArgs eventArgs)
         {
-            if (args.NewStatus == SessionStatus.Disconnected)
-            {
-                _seesThroughContainers.Remove(args.Session);
-            }
-        }
-
-        public void Reset(RoundRestartCleanupEvent ev)
-        {
-            _seesThroughContainers.Clear();
-        }
-
-        public void AddContainerVisibility(IPlayerSession session)
-        {
-            if (!_seesThroughContainers.Add(session))
-            {
-                return;
-            }
-
-            var message = new PlayerContainerVisibilityMessage(true);
-            RaiseNetworkEvent(message, session.ConnectedClient);
-        }
-
-        public void RemoveContainerVisibility(IPlayerSession session)
-        {
-            if (!_seesThroughContainers.Remove(session))
-            {
-                return;
-            }
-
-            var message = new PlayerContainerVisibilityMessage(false);
-            RaiseNetworkEvent(message, session.ConnectedClient);
-        }
-
-        public bool HasContainerVisibility(IPlayerSession session)
-        {
-            return _seesThroughContainers.Contains(session);
-        }
-
-        private void UseVerb(UseVerbMessage use, EntitySessionEventArgs eventArgs)
-        {
-            if (!EntityManager.TryGetEntity(use.EntityUid, out var entity))
-            {
-                return;
-            }
-
             var session = eventArgs.SenderSession;
             var userEntity = session.AttachedEntity;
 
             if (userEntity == null)
             {
-                Logger.Warning($"{nameof(UseVerb)} called by player {session} with no attached entity.");
+                Logger.Warning($"{nameof(HandleTryExecuteVerb)} called by player {session} with no attached entity.");
                 return;
             }
 
-            foreach (var (component, verb) in VerbUtility.GetVerbs(entity))
+            if (!EntityManager.TryGetEntity(args.Target, out var targetEntity))
             {
-                if ($"{component.GetType()}:{verb.GetType()}" != use.VerbKey)
-                {
-                    continue;
-                }
-
-                if (!VerbUtility.VerbAccessChecks(userEntity, entity, verb))
-                {
-                    break;
-                }
-
-                verb.Activate(userEntity, component);
-                break;
+                return;
             }
 
-            foreach (var globalVerb in VerbUtility.GetGlobalVerbs(Assembly.GetExecutingAssembly()))
-            {
-                if (globalVerb.GetType().ToString() != use.VerbKey)
-                {
-                    continue;
-                }
+            // Get the list of verbs. This effectively also checks that the requested verb is in fact a valid verb that
+            // the user can perform.
+            var verbs = GetLocalVerbs(targetEntity, userEntity, args.Type)[args.Type];
 
-                if (!VerbUtility.VerbAccessChecks(userEntity, entity, globalVerb))
-                {
-                    break;
-                }
+            // Note that GetLocalVerbs might waste time checking & preparing unrelated verbs even though we know
+            // precisely which one we want to run. However, MOST entities will only have 1 or 2 verbs of a given type.
+            // The one exception here is the "other" verb type, which has 3-4 verbs + all the debug verbs.
 
-                globalVerb.Activate(userEntity, entity);
-                break;
-            }
+            // Find the requested verb.
+            if (verbs.TryGetValue(args.RequestedVerb, out var verb))
+                ExecuteVerb(verb);
+            else
+                // 404 Verb not found. Note that this could happen due to something as simple as opening the verb menu, walking away, then trying
+                // to run the pickup-item verb. So maybe this shouldn't even be logged?
+                Logger.Info($"{nameof(HandleTryExecuteVerb)} called by player {session} with an invalid verb: {args.RequestedVerb.Category?.Text} {args.RequestedVerb.Text}");
         }
 
-        private void RequestVerbs(RequestVerbsMessage req, EntitySessionEventArgs eventArgs)
+        private void HandleVerbRequest(RequestServerVerbsEvent args, EntitySessionEventArgs eventArgs)
         {
             var player = (IPlayerSession) eventArgs.SenderSession;
 
-            if (!EntityManager.TryGetEntity(req.EntityUid, out var entity))
+            if (!EntityManager.TryGetEntity(args.EntityUid, out var target))
             {
-                Logger.Warning($"{nameof(RequestVerbs)} called on a nonexistant entity with id {req.EntityUid} by player {player}.");
+                Logger.Warning($"{nameof(HandleVerbRequest)} called on a non-existent entity with id {args.EntityUid} by player {player}.");
                 return;
             }
 
-            var userEntity = player.AttachedEntity;
-
-            if (userEntity == null)
+            if (player.AttachedEntity == null)
             {
-                Logger.Warning($"{nameof(UseVerb)} called by player {player} with no attached entity.");
+                Logger.Warning($"{nameof(HandleVerbRequest)} called by player {player} with no attached entity.");
                 return;
             }
 
-            if (!TryGetContextEntities(userEntity, entity.Transform.MapPosition, out var entities, true) || !entities.Contains(entity))
-            {
-                return;
-            }
+            // We do not verify that the user has access to the requested entity. The individual verbs should check
+            // this, and some verbs (e.g. view variables) won't even care about whether an entity is accessible through
+            // the entity menu or not.
 
-            var data = new List<VerbsResponseMessage.NetVerbData>();
-            //Get verbs, component dependent.
-            foreach (var (component, verb) in VerbUtility.GetVerbs(entity))
-            {
-                if (!VerbUtility.VerbAccessChecks(userEntity, entity, verb))
-                {
-                    continue;
-                }
-
-                var verbData = verb.GetData(userEntity, component);
-                if (verbData.IsInvisible)
-                    continue;
-
-                // TODO: These keys being giant strings is inefficient as hell.
-                data.Add(new VerbsResponseMessage.NetVerbData(verbData, $"{component.GetType()}:{verb.GetType()}"));
-            }
-
-            //Get global verbs. Visible for all entities regardless of their components.
-            foreach (var globalVerb in VerbUtility.GetGlobalVerbs(Assembly.GetExecutingAssembly()))
-            {
-                if (!VerbUtility.VerbAccessChecks(userEntity, entity, globalVerb))
-                {
-                    continue;
-                }
-
-                var verbData = globalVerb.GetData(userEntity, entity);
-                if (verbData.IsInvisible)
-                    continue;
-
-                data.Add(new VerbsResponseMessage.NetVerbData(verbData, globalVerb.GetType().ToString()));
-            }
-
-            var response = new VerbsResponseMessage(data.ToArray(), req.EntityUid);
+            var response = new VerbsResponseEvent(args.EntityUid, GetLocalVerbs(target, player.AttachedEntity, args.Type));
             RaiseNetworkEvent(response, player.ConnectedClient);
         }
     }

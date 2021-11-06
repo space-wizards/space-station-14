@@ -13,8 +13,9 @@
       deleteOnCollide: false
       soundHit:
         path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
-      damages:
-        Radiation: 10
+      damage:
+        types:
+          Radiation: 10
     - type: Physics
       fixtures:
       - shape:

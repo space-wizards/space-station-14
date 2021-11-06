@@ -14,9 +14,9 @@
   - type: Sprite
     sprite: Objects/Misc/handcuffs.rsi
     state: handcuff
-  - type: Clothing
-    sprite: Objects/Misc/handcuffs.rsi
-    Slots: [belt]
+  - type: Tag
+    tags:
+    - Handcuffs
 
 - type: entity
   name: makeshift handcuffs
@@ -49,13 +49,7 @@
   - type: Construction
     graph: makeshifthandcuffs
     node: cuffscable
-
   - type: Sprite
     sprite: Objects/Misc/cablecuffs.rsi
     state: cuff
     color: red
-
-  - type: Clothing
-    sprite: Objects/Misc/cablecuffs.rsi
-    color: red
-    Slots: [belt]

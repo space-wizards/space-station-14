@@ -71,6 +71,9 @@
   components:
   - type: Door
     occludes: false
+    crushDamage:
+      types:
+        Blunt: 15
   - type: Occluder
     enabled: false
   - type: Sprite

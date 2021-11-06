@@ -14,7 +14,6 @@ namespace Content.Client.Atmos.Overlays
 
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
-        [Dependency] private readonly IClyde _clyde = default!;
 
         public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
 
@@ -30,24 +29,26 @@ namespace Content.Client.Atmos.Overlays
             var drawHandle = args.WorldHandle;
 
             var mapId = _eyeManager.CurrentMap;
-            var eye = _eyeManager.CurrentEye;
-
-            var worldBounds = Box2.CenteredAround(eye.Position.Position,
-                _clyde.ScreenSize / (float) EyeManager.PixelsPerMeter * eye.Zoom);
+            var worldBounds = _eyeManager.GetWorldViewbounds();
 
             foreach (var mapGrid in _mapManager.FindGridsIntersecting(mapId, worldBounds))
             {
                 if (!_gasTileOverlaySystem.HasData(mapGrid.Index))
                     continue;
 
+                drawHandle.SetTransform(mapGrid.WorldMatrix);
+
                 foreach (var tile in mapGrid.GetTilesIntersecting(worldBounds))
                 {
-                    foreach (var (texture, color) in _gasTileOverlaySystem.GetOverlays(mapGrid.Index, tile.GridIndices))
+                    var enumerator = _gasTileOverlaySystem.GetOverlays(mapGrid.Index, tile.GridIndices);
+                    while (enumerator.MoveNext(out var tuple))
                     {
-                        drawHandle.DrawTexture(texture, mapGrid.LocalToWorld(new Vector2(tile.X, tile.Y)), color);
+                        drawHandle.DrawTexture(tuple.Texture, new Vector2(tile.X, tile.Y), tuple.Color);
                     }
                 }
             }
+
+            drawHandle.SetTransform(Matrix3.Identity);
         }
     }
 }

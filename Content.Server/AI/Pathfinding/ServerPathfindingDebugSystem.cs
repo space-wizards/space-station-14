@@ -45,14 +45,14 @@ namespace Content.Server.AI.Pathfinding
                 var tileOneWorld = tileOneGrid.ToMapPos(EntityManager);
                 var tileTwoGrid = mapManager.GetGrid(to.GridIndex).GridTileToLocal(to.GridIndices);
                 var tileTwoWorld = tileTwoGrid.ToMapPos(EntityManager);
-                cameFrom.Add(tileOneWorld, tileTwoWorld);
+                cameFrom[tileOneWorld] = tileTwoWorld;
             }
 
             var gScores = new Dictionary<Vector2, float>();
             foreach (var (tile, score) in routeDebug.GScores)
             {
                 var tileGrid = mapManager.GetGrid(tile.GridIndex).GridTileToLocal(tile.GridIndices);
-                gScores.Add(tileGrid.ToMapPos(EntityManager), score);
+                gScores[tileGrid.ToMapPos(EntityManager)] = score;
             }
 
             var systemMessage = new SharedAiDebug.AStarRouteMessage(

@@ -25,7 +25,8 @@
       - VaultImpassable
       - SmallImpassable
   - type: Damageable
-    resistances: metallicResistances
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -37,7 +38,6 @@
   - type: Sprite
     sprite: Structures/Hydroponics/misc.rsi
     state: soil
-    drawdepth: FloorObjects
   - type: PlantHolder
     drawWarnings: false
   - type: SolutionContainerManager
@@ -51,6 +51,7 @@
   - type: Reactive
     reactions:
       - !type:AddToSolutionReaction
+        solution: soil
   - type: Appearance
     visuals:
       - type: PlantHolderVisualizer

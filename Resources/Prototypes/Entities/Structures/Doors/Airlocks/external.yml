@@ -6,6 +6,9 @@
   components:
   - type: Door
     bumpOpen: false
+    crushDamage:
+      types:
+        Blunt: 15
     openSound:
       path: /Audio/Machines/airlock_ext_open.ogg
     closeSound:

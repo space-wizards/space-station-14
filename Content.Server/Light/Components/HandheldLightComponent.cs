@@ -8,9 +8,8 @@ using Content.Shared.Actions.Behaviors.Item;
 using Content.Shared.Actions.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Light.Component;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Rounding;
 using Content.Shared.Sound;
 using Content.Shared.Verbs;
@@ -32,7 +31,9 @@ namespace Content.Server.Light.Components
     ///     Component that represents a powered handheld light source which can be toggled on and off.
     /// </summary>
     [RegisterComponent]
+#pragma warning disable 618
     internal sealed class HandheldLightComponent : SharedHandheldLightComponent, IUse, IExamine, IInteractUsing
+#pragma warning restore 618
     {
         [ViewVariables(VVAccess.ReadWrite)] [DataField("wattage")] public float Wattage { get; set; } = 3f;
         [ViewVariables] private PowerCellSlotComponent _cellSlot = default!;
@@ -48,7 +49,7 @@ namespace Content.Server.Light.Components
 
         [ViewVariables(VVAccess.ReadWrite)] [DataField("turnOnSound")] public SoundSpecifier TurnOnSound = new SoundPathSpecifier("/Audio/Items/flashlight_on.ogg");
         [ViewVariables(VVAccess.ReadWrite)] [DataField("turnOnFailSound")] public SoundSpecifier TurnOnFailSound = new SoundPathSpecifier("/Audio/Machines/button.ogg");
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("turnOffSound")] public SoundSpecifier TurnOffSound = new SoundPathSpecifier("/Audio/Items/flashlight_off .ogg");
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("turnOffSound")] public SoundSpecifier TurnOffSound = new SoundPathSpecifier("/Audio/Items/flashlight_off.ogg");
 
         [ComponentDependency] private readonly ItemActionsComponent? _itemActions = null;
 
@@ -108,7 +109,7 @@ namespace Content.Server.Light.Components
             return Activated ? TurnOff() : TurnOn(user);
         }
 
-        private bool TurnOff(bool makeNoise = true)
+        public bool TurnOff(bool makeNoise = true)
         {
             if (!Activated)
             {
@@ -128,7 +129,7 @@ namespace Content.Server.Light.Components
             return true;
         }
 
-        private bool TurnOn(IEntity user)
+        public bool TurnOn(IEntity user)
         {
             if (Activated)
             {
@@ -234,7 +235,7 @@ namespace Content.Server.Light.Components
 
             var currentCharge = Cell.CurrentCharge;
 
-            if (MathHelper.CloseTo(currentCharge, 0) || Wattage > currentCharge)
+            if (MathHelper.CloseToPercent(currentCharge, 0) || Wattage > currentCharge)
                 return 0;
 
             return (byte?) ContentHelpers.RoundToNearestLevels(currentCharge / Cell.MaxCharge * 255, 255, StatusLevels);
@@ -243,26 +244,6 @@ namespace Content.Server.Light.Components
         public override ComponentState GetComponentState(ICommonSession player)
         {
             return new HandheldLightComponentState(GetLevel());
-        }
-
-        [Verb]
-        public sealed class ToggleLightVerb : Verb<HandheldLightComponent>
-        {
-            protected override void GetData(IEntity user, HandheldLightComponent component, VerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Text = Loc.GetString("toggle-light-verb-get-data-text");
-            }
-
-            protected override void Activate(IEntity user, HandheldLightComponent component)
-            {
-                component.ToggleStatus(user);
-            }
         }
     }
 

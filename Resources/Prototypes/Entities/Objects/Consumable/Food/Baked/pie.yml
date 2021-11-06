@@ -1,7 +1,7 @@
 # Base
 
 - type: entity
-  parent: BaseItem
+  parent: FoodInjectableBase
   id: FoodPieBase
   abstract: true
   components:
@@ -13,7 +13,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 20
         reagents:
         - ReagentId: Nutriment
           Quantity: 15
@@ -34,7 +34,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 5
+        maxVol: 6
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
@@ -104,10 +104,6 @@
     - state: tin
     - state: plain
   - type: CreamPie
-  - type: Ammo
-    caliber: CreamPie
-    caseless: true
-    projectile: BulletCreampie
 # Tastes like pie, cream, banana.
 
 - type: entity

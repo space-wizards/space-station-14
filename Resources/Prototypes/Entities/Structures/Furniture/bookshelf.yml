@@ -19,7 +19,8 @@
       - book-4
       - book-5
   - type: Damageable
-    resistances: metallicResistances
+    damageModifierSet: Wood
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -36,3 +37,6 @@
             max: 1
       - !type:DoActsBehavior
         acts: ["Destruction"]
+  - type: Tag
+    tags:
+    - Wooden

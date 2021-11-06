@@ -1,7 +1,7 @@
 # Base
 
 - type: entity
-  parent: BaseItem
+  parent: FoodInjectableBase
   id: FoodEggBase
   description: An egg!
   abstract: true
@@ -20,15 +20,26 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 5
+        maxVol: 6
         reagents:
         - ReagentId: Egg
           Quantity: 5
   - type: DamageOnLand
-    amount: 1
+    damage:
+      types:
+        Blunt: 1
   - type: DamageOtherOnHit
-    amount: 1
+    damage:
+      types:
+        Blunt: 1
+       #Dignity: 25
+  - type: DamageOnHighSpeedImpact
+    minimumSpeed: 0.1
+    damage:
+      types:
+        Blunt: 1
   - type: Damageable
+    damageContainer: Biological
   - type: Destructible
     thresholds:
     - trigger:
@@ -59,11 +70,20 @@
   description: If the floor was a little hotter this would fry.
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Food/egg.rsi
+    sprite: Fluids/egg_splat.rsi
     state: egg-0
+    netsync: false
   - type: Puddle
-    variants: 4
-    state: egg
+  - type: SolutionContainerManager
+    solutions:
+      puddle:
+        reagents:
+        - ReagentId: Egg
+          Quantity: 2
+  - type: Evaporation
+  - type: Appearance
+    visuals:
+    - type: PuddleVisualizer
 
 - type: entity
   name: eggshells
@@ -81,7 +101,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 1
+        maxVol: 2
         reagents:
         - ReagentId: Egg
           Quantity: 1

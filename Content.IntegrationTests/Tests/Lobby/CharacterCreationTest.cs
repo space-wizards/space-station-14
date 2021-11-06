@@ -1,12 +1,8 @@
 using System.Threading.Tasks;
-using Content.Client;
 using Content.Client.Lobby;
 using Content.Client.Preferences;
-using Content.Client.State;
 using Content.Server.GameTicking;
-using Content.Server.Preferences;
 using Content.Server.Preferences.Managers;
-using Content.Shared;
 using Content.Shared.CCVar;
 using Content.Shared.Preferences;
 using NUnit.Framework;
@@ -25,7 +21,16 @@ namespace Content.IntegrationTests.Tests.Lobby
         [Test]
         public async Task CreateDeleteCreateTest()
         {
-            var (client, server) = await StartConnectedServerClientPair();
+            var serverOptions = new ServerContentIntegrationOption
+            {
+                CVarOverrides =
+                {
+                    [CCVars.GameDummyTicker.Name] = "false",
+                    [CCVars.GameLobbyEnabled.Name] = "true"
+                }
+            };
+
+            var (client, server) = await StartConnectedServerClientPair(serverOptions: serverOptions);
 
             var clientNetManager = client.ResolveDependency<IClientNetManager>();
             var clientStateManager = client.ResolveDependency<IStateManager>();
@@ -50,7 +55,7 @@ namespace Content.IntegrationTests.Tests.Lobby
             // Need to run them in sync to receive the messages.
             await RunTicksSync(client, server, 1);
 
-            await WaitUntil(client, () => clientStateManager.CurrentState is LobbyState, maxTicks: 60);
+            await WaitUntil(client, () => clientStateManager.CurrentState is LobbyState, 600);
 
             Assert.NotNull(clientNetManager.ServerChannel);
 

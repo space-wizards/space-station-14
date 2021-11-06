@@ -1,6 +1,5 @@
-﻿# Vox bad. moff best.
-- type: entity
-  parent: HumanMob_Content
+﻿- type: entity
+  parent: MobHuman
   abstract: True
   id: BaseVox
   components:
@@ -90,6 +89,12 @@
     producesGases:
       Nitrogen: 0.00045572916
       CarbonDioxide: 0.00015190972
+    damage:
+      types:
+        Asphyxiation: 1
+    damageRecovery:
+      types:
+        Asphyxiation: -1
 #  - type: Appearance
 #    visuals:
 #      - type: RotationVisualizer
@@ -108,3 +113,4 @@
     categoriesFacialHair: VoxFacialHair
   - type: Inventory
     speciesId: vox
+  - type: DoorBumpOpener

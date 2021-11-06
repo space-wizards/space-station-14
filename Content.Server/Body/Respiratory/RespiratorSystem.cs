@@ -10,7 +10,7 @@ namespace Content.Server.Body.Respiratory
         {
             base.Update(frameTime);
 
-            foreach (var respirator in ComponentManager.EntityQuery<RespiratorComponent>(false))
+            foreach (var respirator in EntityManager.EntityQuery<RespiratorComponent>(false))
             {
                 respirator.Update(frameTime);
             }

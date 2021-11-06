@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Content.Server.Administration.Commands
 {
-    [AdminCommand(AdminFlags.Admin)]
+    [AdminCommand(AdminFlags.Spawn)]
     public class DeleteEntitiesWithId : IConsoleCommand
     {
         public string Command => "deleteewi";

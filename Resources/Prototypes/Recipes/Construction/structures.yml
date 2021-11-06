@@ -1,4 +1,4 @@
-﻿- type: construction
+- type: construction
   name: girder
   id: girder
   graph: girder
@@ -53,19 +53,18 @@
     - !type:TileNotBlocked {}
 
 - type: construction
-  name: low wall
-  id: LowWall
-  graph: lowWall
+  name: grille
+  id: Grille
+  graph: grille
   startNode: start
-  targetNode: lowWall
+  targetNode: grille
   category: Structures
-  description: A low wall used for mounting windows.
+  description: A flimsy framework of iron rods.
   conditions:
-    - !type:NoWindowsInTile {}
-    - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
   icon:
-    sprite: Structures/Walls/low_wall.rsi
-    state: metal
+    sprite: Structures/Walls/grille.rsi
+    state: grille
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -77,9 +76,10 @@
   startNode: start
   targetNode: window
   category: Structures
-  description: Clear. Must be built on top of a low wall.
+  description: Clear.
+  canBuildInImpassable: true
   conditions:
-    - !type:LowWallInTile {}
+    - !type:EmptyOrWindowValidInTile {}
     - !type:NoWindowsInTile {}
   icon:
     sprite: Structures/Windows/window.rsi
@@ -95,9 +95,10 @@
   startNode: start
   targetNode: reinforcedWindow
   category: Structures
-  description: Clear but tough. Must be built on top of a low wall.
+  description: Clear but tough.
+  canBuildInImpassable: true
   conditions:
-    - !type:LowWallInTile {}
+    - !type:EmptyOrWindowValidInTile {}
     - !type:NoWindowsInTile {}
   icon:
     sprite: Structures/Windows/reinforced_window.rsi
@@ -113,12 +114,32 @@
   startNode: start
   targetNode: plasmaWindow
   category: Structures
-  description: Clear and even tougher, with an orange tint. Must be built on top of a low wall.
+  canBuildInImpassable: true
+  description: Clear and even tougher, with a purple tint.
   conditions:
-    - !type:LowWallInTile {}
+    - !type:EmptyOrWindowValidInTile {}
     - !type:NoWindowsInTile {}
   icon:
     sprite: Structures/Windows/plasma_window.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+
+- type: construction
+  name: reinforced plasma window
+  id: ReinforcedPlasmaWindow
+  graph: window
+  startNode: start
+  targetNode: reinforcedPlasmaWindow
+  category: Structures
+  canBuildInImpassable: true
+  description: Fire resistant and even tougher, with a purple tint.
+  conditions:
+    - !type:EmptyOrWindowValidInTile {}
+    - !type:NoWindowsInTile {}
+  icon:
+    sprite: Structures/Windows/reinforced_plasma_window.rsi
     state: full
   objectType: Structure
   placementMode: SnapgridCenter

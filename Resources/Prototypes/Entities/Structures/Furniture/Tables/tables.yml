@@ -9,7 +9,8 @@
   - type: Icon
     sprite: Structures/Furniture/Tables/frame.rsi
   - type: Damageable
-    resistances: metallicResistances
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -41,7 +42,8 @@
   - type: Icon
     sprite: Structures/Furniture/Tables/generic.rsi
   - type: Damageable
-    resistances: metallicResistances
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -61,66 +63,6 @@
   - type: Construction
     graph: table
     node: Table
-
-- type: entity
-  id: TableBar
-  parent: TableBase
-  name: bar table
-  description: Fancy table. Perfect for serving drinks.
-  components:
-  - type: Sprite
-    sprite: Structures/Furniture/Tables/bar.rsi
-  - type: Icon
-    sprite: Structures/Furniture/Tables/bar.rsi
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 1
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Effects/metalbreak.ogg
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          SheetSteel1:
-            min: 1
-            max: 1
-          MaterialCloth1:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-  - type: Construction
-    graph: table
-    node: TableBar
-
-- type: entity
-  id: TableMetal
-  parent: TableBase
-  name: metal table
-  description: Just a metal table.
-  components:
-  - type: Sprite
-    sprite: Structures/Furniture/Tables/metal.rsi
-  - type: Icon
-    sprite: Structures/Furniture/Tables/metal.rsi
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 15
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Effects/metalbreak.ogg
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          SheetSteel1:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
 
 - type: entity
   id: TableReinforced
@@ -216,6 +158,39 @@
     node: TableReinforcedGlass
 
 - type: entity
+  id: TablePlasmaGlass
+  parent: TableBase
+  name: plasma glass table
+  description: A square piece of plasma glass, standing on four metal legs. Pretty!
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/plasma.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Tables/plasma.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 20
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/glass_break2.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlassPlasma:
+            min: 1
+            max: 1
+          PartRodMetal1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: table
+    node: TablePlasmaGlass
+
+- type: entity
   id: TableWood
   parent: TableBase
   name: wood table
@@ -225,6 +200,8 @@
     sprite: Structures/Furniture/Tables/wood.rsi
   - type: Icon
     sprite: Structures/Furniture/Tables/wood.rsi
+  - type: Damageable
+    damageModifierSet: Wood
   - type: Destructible
     thresholds:
     - trigger:
@@ -244,6 +221,9 @@
   - type: Construction
     graph: table
     node: TableWood
+  - type: Tag
+    tags:
+    - Wooden
 
 - type: entity
   id: TableCarpet
@@ -255,6 +235,8 @@
     sprite: Structures/Furniture/Tables/carpet.rsi
   - type: Icon
     sprite: Structures/Furniture/Tables/carpet.rsi
+  - type: Damageable
+    damageModifierSet: Wood
   - type: Destructible
     thresholds:
     - trigger:
@@ -277,6 +259,9 @@
   - type: Construction
     graph: table
     node: TableCarpet
+  - type: Tag
+    tags:
+    - Wooden
 
 - type: entity
   id: TableStone

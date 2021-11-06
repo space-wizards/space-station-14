@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Access.Components;
+using Content.Server.Access.Systems;
 using Content.Server.Advertise;
-using Content.Server.Notification;
+using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Server.WireHacking;
@@ -51,6 +52,8 @@ namespace Content.Server.VendingMachines
         private SoundSpecifier _soundDeny = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(VendingMachineUiKey.Key);
+
+        public bool Broken => _broken;
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
@@ -114,9 +117,12 @@ namespace Content.Server.VendingMachines
             InitializeFromPrototype();
         }
 
+        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
         public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
+#pragma warning disable 618
             base.HandleMessage(message, component);
+#pragma warning restore 618
             switch (message)
             {
                 case PowerChangedMessage powerChanged:
@@ -129,18 +135,6 @@ namespace Content.Server.VendingMachines
         {
             var state = args.Powered ? VendingMachineVisualState.Normal : VendingMachineVisualState.Off;
             TrySetVisualState(state);
-
-            // Pause/resume advertising if advertising component exists and not broken
-            if (!Owner.TryGetComponent(out AdvertiseComponent? advertiseComponent) || _broken) return;
-
-            if (Powered)
-            {
-                advertiseComponent.Resume();
-            }
-            else
-            {
-                advertiseComponent.Pause();
-            }
         }
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
@@ -201,7 +195,8 @@ namespace Content.Server.VendingMachines
         {
             if (Owner.TryGetComponent<AccessReader>(out var accessReader))
             {
-                if (sender == null || !accessReader.IsAllowed(sender))
+                var accessSystem = EntitySystem.Get<AccessReaderSystem>();
+                if (sender == null || !accessSystem.IsAllowed(accessReader, sender.Uid))
                 {
                     Owner.PopupMessageEveryone(Loc.GetString("vending-machine-component-try-eject-access-denied"));
                     Deny();
@@ -250,11 +245,6 @@ namespace Content.Server.VendingMachines
         {
             _broken = true;
             TrySetVisualState(VendingMachineVisualState.Broken);
-
-            if (Owner.TryGetComponent(out AdvertiseComponent? advertiseComponent))
-            {
-                advertiseComponent.Pause();
-            }
         }
 
         public enum Wires

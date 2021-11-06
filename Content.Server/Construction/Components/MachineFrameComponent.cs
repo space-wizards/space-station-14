@@ -8,6 +8,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Construction.Components
@@ -124,16 +125,16 @@ namespace Content.Server.Construction.Components
             if (Owner.TryGetComponent<ConstructionComponent>(out var construction))
             {
                 // Attempt to set pathfinding to the machine node...
-                construction.SetNewTarget("machine");
+                EntitySystem.Get<ConstructionSystem>().SetPathfindingTarget(Owner.Uid, "machine", construction);
             }
         }
 
         private void ResetProgressAndRequirements(MachineBoardComponent machineBoard)
         {
-            _requirements = machineBoard.Requirements;
-            _materialRequirements = machineBoard.MaterialIdRequirements;
-            _componentRequirements = machineBoard.ComponentRequirements;
-            _tagRequirements = machineBoard.TagRequirements;
+            _requirements = new Dictionary<MachinePart, int>(machineBoard.Requirements);
+            _materialRequirements = new Dictionary<string, int>(machineBoard.MaterialIdRequirements);
+            _componentRequirements = new Dictionary<string, GenericPartInfo>(machineBoard.ComponentRequirements);
+            _tagRequirements = new Dictionary<string, GenericPartInfo>(machineBoard.TagRequirements);
 
             _progress.Clear();
             _materialProgress.Clear();
@@ -271,7 +272,7 @@ namespace Content.Server.Construction.Components
                     if (Owner.TryGetComponent(out ConstructionComponent? construction))
                     {
                         // So prying the components off works correctly.
-                        construction.ResetEdge();
+                        EntitySystem.Get<ConstructionSystem>().ResetEdge(Owner.Uid, construction);
                     }
 
                     return true;
@@ -313,7 +314,7 @@ namespace Content.Server.Construction.Components
                         return true;
                     }
 
-                    var splitStack = EntitySystem.Get<StackSystem>().Split(eventArgs.Using.Uid, stack, needed, Owner.Transform.Coordinates);
+                    var splitStack = EntitySystem.Get<StackSystem>().Split(eventArgs.Using.Uid, needed, Owner.Transform.Coordinates, stack);
 
                     if (splitStack == null)
                         return false;
@@ -356,5 +357,10 @@ namespace Content.Server.Construction.Components
 
             return false;
         }
+    }
+
+    [DataDefinition]
+    public class MachineDeconstructedEvent : EntityEventArgs
+    {
     }
 }

@@ -565,6 +565,9 @@
     range: 2.0
     arcwidth: 0
     arc: spear
+    damage:
+      types:
+        Blunt: 1
   - type: Item
     size: 24
     sprite: Objects/Fun/toys.rsi

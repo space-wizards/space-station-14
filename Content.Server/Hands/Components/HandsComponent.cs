@@ -5,17 +5,16 @@ using System.Linq;
 using Content.Server.Act;
 using Content.Server.Interaction;
 using Content.Server.Items;
-using Content.Server.Notification;
+using Content.Server.Popups;
 using Content.Server.Pulling;
 using Content.Shared.Audio;
 using Content.Shared.Body.Part;
 using Content.Shared.Hands.Components;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -29,7 +28,9 @@ namespace Content.Server.Hands.Components
     [ComponentReference(typeof(IHandsComponent))]
     [ComponentReference(typeof(ISharedHandsComponent))]
     [ComponentReference(typeof(SharedHandsComponent))]
+#pragma warning disable 618
     public class HandsComponent : SharedHandsComponent, IHandsComponent, IBodyPartAdded, IBodyPartRemoved, IDisarmedAct
+#pragma warning restore 618
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
@@ -50,49 +51,11 @@ namespace Content.Server.Hands.Components
             }
         }
 
-        protected override void DoEquippedHandInteraction(IEntity entity, HandState handState)
-        {
-            _entitySystemManager.GetEntitySystem<InteractionSystem>().EquippedHandInteraction(Owner, entity, handState);
-        }
-
-        protected override void DoDroppedInteraction(IEntity heldEntity, bool intentionalDrop)
-        {
-            _entitySystemManager.GetEntitySystem<InteractionSystem>().DroppedInteraction(Owner, heldEntity, intentionalDrop);
-        }
-
-        protected override void DoHandSelectedInteraction(IEntity entity)
-        {
-            _entitySystemManager.GetEntitySystem<InteractionSystem>().HandSelectedInteraction(Owner, entity);
-        }
-
-        protected override void DoHandDeselectedInteraction(IEntity entity)
-        {
-            _entitySystemManager.GetEntitySystem<InteractionSystem>().HandDeselectedInteraction(Owner, entity);
-        }
-
-        protected override async void DoInteraction(IEntity activeHeldEntity, IEntity heldEntity)
-        {
-            await _entitySystemManager.GetEntitySystem<InteractionSystem>()
-                .InteractUsing(Owner, activeHeldEntity, heldEntity, EntityCoordinates.Invalid);
-        }
-
-        protected override void DoActivate(IEntity heldEntity)
-        {
-            _entitySystemManager.GetEntitySystem<InteractionSystem>()
-                .TryInteractionActivate(Owner, heldEntity);
-        }
-
-        protected override void DoUse(IEntity heldEntity, bool altInteract = false)
-        {
-            _entitySystemManager.GetEntitySystem<InteractionSystem>()
-                .TryUseInteraction(Owner, heldEntity, altInteract);
-        }
-
         protected override void HandlePickupAnimation(IEntity entity)
         {
             var initialPosition = EntityCoordinates.FromMap(Owner.Transform.Parent?.Owner ?? Owner, entity.Transform.MapPosition);
 
-            var finalPosition = Owner.Transform.Coordinates.Position;
+            var finalPosition = Owner.Transform.LocalPosition;
 
             if (finalPosition.EqualsApprox(initialPosition.Position))
                 return;
@@ -129,13 +92,13 @@ namespace Content.Server.Hands.Components
             RemoveHand(args.Slot);
         }
 
-        bool IDisarmedAct.Disarmed(DisarmedActEventArgs eventArgs)
+        bool IDisarmedAct.Disarmed(DisarmedActEvent @event)
         {
             if (BreakPulls())
                 return false;
 
-            var source = eventArgs.Source;
-            var target = eventArgs.Target;
+            var source = @event.Source;
+            var target = @event.Target;
 
             if (source != null)
             {
@@ -163,10 +126,10 @@ namespace Content.Server.Hands.Components
         {
             // What is this API??
             if (!Owner.TryGetComponent(out SharedPullerComponent? puller)
-                || puller.Pulling == null || !puller.Pulling.TryGetComponent(out PullableComponent? pullable))
+                || puller.Pulling == null || !puller.Pulling.TryGetComponent(out SharedPullableComponent? pullable))
                 return false;
 
-            return pullable.TryStopPull();
+            return _entitySystemManager.GetEntitySystem<PullingSystem>().TryStopPull(pullable);
         }
 
         #endregion
@@ -192,38 +155,6 @@ namespace Content.Server.Hands.Components
 
                 yield return hand.Name;
             }
-        }
-
-        /// <summary>
-        ///     Attempts to use the active held item.
-        /// </summary>
-        public void ActivateItem()
-        {
-            UseActiveHeldEntity();
-        }
-
-        /// <summary>
-        ///     Tries to drop the contents of a hand directly under the player.
-        /// </summary>
-        public bool Drop(string handName, bool checkActionBlocker = true, bool intentionalDrop = true)
-        {
-            return TryDropHandToFloor(handName, checkActionBlocker, intentionalDrop);
-        }
-
-        /// <summary>
-        ///     Tries to drop an entity in a hand directly under the player.
-        /// </summary>
-        public bool Drop(IEntity entity, bool checkActionBlocker = true, bool intentionalDrop = true)
-        {
-            return TryDropEntityToFloor(entity, checkActionBlocker, intentionalDrop);
-        }
-
-        /// <summary>
-        ///     Tries to unequip contents of a hand directly into a container.
-        /// </summary>
-        public bool Drop(IEntity entity, BaseContainer targetContainer, bool checkActionBlocker = true)
-        {
-            return TryPutEntityIntoContainer(entity, targetContainer, checkActionBlocker);
         }
 
         /// <summary>
@@ -292,26 +223,6 @@ namespace Content.Server.Hands.Components
             }
             return false;
         }
-
-        /// <summary>
-        ///     Attempts to put an item into the active hand, or any other hand if it cannot.
-        /// </summary>
-        public bool PutInHand(ItemComponent item, bool checkActionBlocker = true)
-        {
-            return TryPutInActiveHandOrAny(item.Owner, checkActionBlocker);
-        }
-
-        /// <summary>
-        ///     Puts an item any hand, prefering the active hand, or puts it on the floor under the player.
-        /// </summary>
-        public void PutInHandOrDrop(ItemComponent item, bool checkActionBlocker = true)
-        {
-            var entity = item.Owner;
-
-            if (!TryPutInActiveHandOrAny(entity, checkActionBlocker))
-                entity.Transform.Coordinates = Owner.Transform.Coordinates;
-        }
-
         #endregion
     }
 }

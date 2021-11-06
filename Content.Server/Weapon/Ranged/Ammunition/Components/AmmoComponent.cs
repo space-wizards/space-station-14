@@ -21,7 +21,9 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
     /// Generally used for bullets but can be used for other things like bananas
     /// </summary>
     [RegisterComponent]
+#pragma warning disable 618
     public class AmmoComponent : Component, IExamine, ISerializationHooks
+#pragma warning restore 618
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -177,6 +179,5 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
         Dart, // Placeholder
         Grenade,
         Energy,
-        CreamPie, // I can't wait for this enum to be a prototype type...
     }
 }

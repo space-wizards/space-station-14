@@ -1,39 +1,26 @@
+
+# Base Alcohol
+
 - type: reagent
   id: Absinthe
   name: absinthe
-  desc: One sip of this and you just know you're gonna have a good time.
-  spritePath: absintheglass.rsi
+  desc: A anise-flavoured spirit derived from botanicals.
+  physicalDesc: strong-smelling
   color: "#33EE00"
-  physicalDesc: strong-smelling
-
-- type: reagent
-  id: Whiskey
-  name: whiskey
-  desc: An alcoholic beverage made from fermented grain mash
-  physicalDesc: strong-smelling
-  color: "#664300"
-  spritePath: whiskeyglass.rsi
+  spritePath: absintheglass.rsi
 
 - type: reagent
   id: Ale
   name: ale
-  desc: A type of beer brewed using a warm fermentation method, resulting in a sweet, full-bodied and fruity taste.
+  desc: A dark alchoholic beverage made by malted barley and yeast.
   physicalDesc: bubbly
   color: "#663100"
   spritePath: aleglass.rsi
 
 - type: reagent
-  id: Wine
-  name: wine
-  desc: An alcoholic drink made from fermented grapes
-  physicalDesc: translucent
-  color: "#7E4043"
-  spritePath: wineglass.rsi
-
-- type: reagent
   id: Beer
   name: beer
-  desc: A cold pint of pale lager.
+  desc: An alcoholic beverage made from malted grains, hops, yeast, and water.
   physicalDesc: bubbly
   color: "#cfa85f"
   spritePath: beerglass.rsi
@@ -44,50 +31,12 @@
       amount: 0.7
 
 - type: reagent
-  id: Vodka
-  name: vodka
-  desc: The glass contain wodka. Хуета.
+  id: BlueCuracao
+  name: blue curacao
+  desc: Exotically blue, fruity drink, distilled from oranges.
   physicalDesc: strong-smelling
-  color: "#d1d1d155"
-  spritePath: ginvodkaglass.rsi
-
-- type: reagent
-  id: Gin
-  name: gin
-  desc: A crystal clear glass of Griffeater gin.
-  physicalDesc: strong-smelling
-  color: "#664300"
-  spritePath: ginvodkaglass.rsi
-
-- type: reagent
-  id: Rum
-  name: rum
-  desc: Popular with the sailors. Not very popular with anyone else.
-  physicalDesc: strong-smelling
-  color: "#664300"
-  spritePath: rumglass.rsi
-
-- type: reagent
-  id: Moonshine
-  name: moonshine
-  desc: Artisanal homemade liquor. What could go wrong?
-  physicalDesc: strong-smelling
-  color: "#d1d7d155"
-
-- type: reagent
-  id: Tequila
-  name: tequila
-  desc: This stuff will get you fucked up.
-  physicalDesc: strong-smelling
-  color: "#d7d1d155"
-
-- type: reagent
-  id: Kahlua
-  name: kahlua
-  desc: A widely known, Mexican coffee-flavoured liqueur. In production since 1936!
-  physicalDesc: cloudy
-  color: "#664300"
-  spritePath: kahluaglass.rsi
+  color: "#0000CD"
+  spritePath: curacaoglass.rsi
 
 - type: reagent
   id: Cognac
@@ -98,52 +47,156 @@
   spritePath: cognacglass.rsi
 
 - type: reagent
-  id: ManlyDorf
-  name: manly dorf
-  desc: A dwarfy concoction made from ale and beer. Intended for stout dwarves only.
-  physicalDesc: bubbly
+  id: DeadRum
+  name: deadrum
+  desc: Distilled alcoholic drink made from saltwater.
+  physicalDesc: strong-smelling
   color: "#664300"
-  spritePath: manlydorfglass.rsi
+  spritePath: rumglass.rsi
 
 - type: reagent
-  id: CubaLibre
-  name: cuba libre
-  desc: A classic mix of rum and cola.
-  physicalDesc: bubbly
-  color: "#3E1B00"
-  spritePath: cubalibreglass.rsi
+  id: Gin
+  name: gin
+  desc: A distilled alcoholic drink that derives its predominant flavour from juniper berries.
+  physicalDesc: strong-smelling
+  color: "#664300"
+  spritePath: ginvodkaglass.rsi
 
 - type: reagent
-  id: IrishCarBomb
-  name: irish car bomb
-  desc: A troubling mixture of irish cream and ale.
-  physicalDesc: bubbly
-  color: "#2E6671"
-  spritePath: irishcarbomb.rsi
-
-- type: reagent
-  id: IrishCoffee
-  name: irish coffee
-  desc: Coffee served with irish cream. Regular cream just isn't the same!
+  id: Kahlua
+  name: kahlua
+  desc: A widely known, Mexican coffee-flavoured liqueur.
   physicalDesc: cloudy
   color: "#664300"
-  spritePath: irishcoffeeglass.rsi
+  spritePath: kahluaglass.rsi
 
 - type: reagent
-  id: IrishCream
-  name: irish cream
-  desc: Whiskey-imbued cream. What else could you expect from the Irish.
-  physicalDesc: creamy
-  color: "#664300"
-  spritePath: irishcreamglass.rsi
+  id: MelonLiquor
+  name: melon liquor
+  desc: A relatively sweet and fruity 46 proof liquor.
+  physicalDesc: strong-smelling
+  color: "#138808"
+  spritePath: emeraldglass.rsi
 
 - type: reagent
-  id: B52
-  name: b-52
-  desc: Coffee, irish cream, and cognac. You will get bombed.
-  physicalDesc: bubbly
+  id: NTCahors
+  name: NeoTheology Cahors Wine
+  desc: Fortified dessert wine made from cabernet sauvignon, saperavi and other grapes.
+  physicalDesc: strong-smelling
+  color: "#7E4043"
+  spritePath: wineglass.rsi
+
+- type: reagent
+  id: PoisonWine
+  name: poison wine
+  desc: Is this even wine? Toxic! Hallucinogenic! Probably consumed in boatloads by your superiors!
+  physicalDesc: strong-smelling
+  color: "#000000"
+  spritePath: pwineglass.rsi
+
+- type: reagent
+  id: Rum
+  name: rum
+  desc: Distilled alcoholic drink made from sugarcane byproducts.
+  physicalDesc: strong-smelling
   color: "#664300"
-  spritePath: b52glass.rsi
+  spritePath: rumglass.rsi
+
+- type: reagent
+  id: Sake
+  name: sake
+  desc: Alcoholic beverage made by fermenting rice that has been polished.
+  physicalDesc: strong-smelling
+  color: "#DDDDDD"
+
+- type: reagent
+  id: Tequila
+  name: tequila
+  desc: A strong and mildly flavoured, mexican produced spirit.
+  physicalDesc: strong-smelling
+  color: "#d7d1d155"
+
+- type: reagent
+  id: Vermouth
+  name: vermouth
+  desc: Aromatized, fortified white wine flavored with various botanicals.
+  physicalDesc: strong-smelling
+  color: "#91FF91"
+  spritePath: vermouthglass.rsi
+
+- type: reagent
+  id: Vodka
+  name: vodka
+  desc: Clear distilled alcoholic beverage that originates from Poland and Russia.
+  physicalDesc: strong-smelling
+  color: "#d1d1d155"
+  spritePath: ginvodkaglass.rsi
+
+- type: reagent
+  id: Whiskey
+  name: whiskey
+  desc: A type of distilled alcoholic beverage made from fermented grain mash.
+  physicalDesc: strong-smelling
+  color: "#664300"
+  spritePath: whiskeyglass.rsi
+
+- type: reagent
+  id: Wine
+  name: wine
+  desc: An premium alchoholic beverage made from distilled grape juice.
+  physicalDesc: translucent
+  color: "#7E4043"
+  spritePath: wineglass.rsi
+
+# Mixed Alcohol
+
+- type: reagent
+  id: AcidSpit
+  name: acidspit
+  desc: A drink for the daring, can be deadly if incorrectly prepared!
+  physicalDesc: strong-smelling
+  color: "#365000"
+  spritePath: acidspitglass.rsi
+
+- type: reagent
+  id: AlliesCocktail #haha, cock. that's hot
+  name: allies cocktail
+  desc: A drink made from your allies, not as sweet as when made from your enemies.
+  physicalDesc: strong-smelling
+  color: "#00664d"
+  spritePath: alliescocktail.rsi
+
+- type: reagent
+  id: Aloe
+  name: aloe
+  desc: So very, very, very good.
+  physicalDesc: strong-smelling
+  color: "#192c00"
+  spritePath: aloe.rsi
+
+- type: reagent
+  id: Amasec
+  name: amasec
+  desc: Official drink of the Gun Club!
+  physicalDesc: strong-smelling
+  color: "#124da7"
+  spritePath: amasecglass.rsi
+
+- type: reagent
+  id: Andalusia
+  name: andalusia
+  desc: A nice, strangely named drink.
+  physicalDesc: strong-smelling
+  color: "#665700"
+  spritePath: andalusia.rsi
+
+- type: reagent
+  id: Antifreeze
+  name: antifreeze
+  desc: Ultimate refreshment.
+  physicalDesc: translucent
+  color: "#ff7d63"
+  spritePath: antifreeze.rsi
 
 - type: reagent
   id: AtomicBomb
@@ -154,35 +207,228 @@
   spritePath: atomicbombglass.rsi
 
 - type: reagent
-  id: WhiskeyCola
-  name: whiskey cola
-  desc: An innocent-looking mixture of cola and whiskey. Delicious.
+  id: B52
+  name: b-52
+  desc: Coffee, irish cream, and cognac. You will get bombed.
+  physicalDesc: bubbly
+  color: "#664300"
+  spritePath: b52glass.rsi
+
+- type: reagent
+  id: BahamaMama
+  name: bahama mama
+  desc: Tropical cocktail.
+  physicalDesc: strong-smelling
+  color: "#FF7F3B"
+  spritePath: bahama_mama.rsi
+
+- type: reagent
+  id: BananaHonk
+  name: banana mama
+  desc: A drink from Clown Heaven.
+  physicalDesc: strong-smelling
+  color: "#ffff91"
+  spritePath: bananahonkglass.rsi
+
+- type: reagent
+  id: Barefoot
+  name: barefoot
+  desc: Barefoot and pregnant.
+  physicalDesc: strong-smelling
+  color: "#664300"
+  spritePath: b&p.rsi
+
+- type: reagent
+  id: BeepskySmash
+  name: beepsky smash
+  desc: Deny drinking this and prepare for THE LAW.
+  physicalDesc: strong-smelling
+  color: "#664300"
+  spritePath: beepskysmashglass.rsi
+
+- type: reagent
+  id: Bilk
+  name: bilk
+  desc: This appears to be beer mixed with milk. Disgusting.
+  physicalDesc: bilky...
+  color: "#895C4C"
+  spritePath: glass_brown.rsi
+
+- type: reagent
+  id: BlackRussian
+  name: black russian
+  desc: For the lactose-intolerant. Still as classy as a White Russian.
+  physicalDesc: strong-smelling
+  color: "#360000"
+  spritePath: blackrussianglass.rsi
+
+- type: reagent
+  id: BloodyMary
+  name: bloody mary
+  desc: A strange yet pleasurable mixture made of vodka, tomato, and lime juice.
+  physicalDesc: strong-smelling
+  color: "#660000"
+  spritePath: bloodymaryglass.rsi
+
+- type: reagent
+  id:  Booger
+  name: booger
+  desc: Ewww...
+  physicalDesc: strong-smelling
+  color: "#8CFF8C"
+  spritePath: booger.rsi
+
+- type: reagent
+  id: BraveBull
+  name: brave bull
+  desc: It's just as effective as Dutch-Courage!
+  physicalDesc: strong-smelling
+  color: "#664300"
+  spritePath: bravebullglass.rsi
+
+- type: reagent
+  id: CubaLibre
+  name: cuba libre
+  desc: Rum, mixed with cola. Viva la revolucion.
   physicalDesc: bubbly
   color: "#3E1B00"
-  spritePath: whiskeycolaglass.rsi
+  spritePath: cubalibreglass.rsi
 
 - type: reagent
-  id: SyndicateBomb
-  name: syndicate bomb
-  desc: Somebody set us up the bomb!
-  physicalDesc: opaque
-  color: "#2E6660"
-  spritePath: syndicatebomb.rsi
+  id: DemonsBlood
+  name: demons blood
+  desc: AHHHH!!!!
+  physicalDesc: strong-smelling
+  color: "#a70000"
+  spritePath: demonsblood.rsi
 
 - type: reagent
-  id: Antifreeze
-  name: antifreeze
-  desc: The ultimate refreshment.
-  physicalDesc: translucent
-  color: "#ff7d63"
-  spritePath: antifreeze.rsi
+  id: DevilsKiss
+  name: devils kiss
+  desc: Creepy time!
+  physicalDesc: strong-smelling
+  color: "#A68310"
+  spritePath: devilskiss.rsi
 
 - type: reagent
-  id: CreamyDelight
-  name: creamy delight
-  desc: A combination of cream, wine and moonshine. Why would you do this?
-  physicalDesc: foul
-  color: "#a6969a"
+  id: DoctorsDelight
+  name: the doctor's delight
+  desc: A gulp a day keeps the MediBot away. That's probably for the best.
+  physicalDesc: strong-smelling
+  color: "#FF8CFF"
+  spritePath: doctorsdelightglass.rsi
+
+- type: reagent
+  id: DriestMartini
+  name: driest martini
+  desc: Only for the experienced. You think you see sand floating in the glass.
+  physicalDesc: strong-smelling
+  color: "#2E6671"
+  spritePath: driestmartiniglass.rsi
+
+- type: reagent
+  id: ErikaSuprise
+  name: erika suprise
+  desc: The surprise is, it's green!
+  physicalDesc: strong-smelling
+  color: "#2E6671"
+  spritePath: erikasurprise.rsi
+
+- type: reagent
+  id: GargleBlaster
+  name: Pan-Galactic Gargle Blaster
+  desc: Whoah, this stuff looks volatile!
+  physicalDesc: volatile
+  color: "#9cc8b4"
+  spritePath: gargleblasterglass.rsi
+
+- type: reagent
+  id: GinFizz
+  name: gin fizz
+  desc: Refreshingly lemony, deliciously dry.
+  physicalDesc: strong-smelling
+  color: "#664300"
+  spritePath: ginfizzglass.rsi
+
+- type: reagent
+  id: GinTonic
+  name: gin and tonic
+  desc: An all time classic, mild cocktail.
+  physicalDesc: strong-smelling
+  color: "#004166"
+  spritePath: gintonicglass.rsi
+
+- type: reagent
+  id: Goldschlager
+  name: Goldschlager
+  desc: 100 proof cinnamon schnapps, made for alcoholic teen girls on spring break.
+  physicalDesc: strong-smelling
+  color: "#FFFF91"
+  spritePath: goldschlagerglass.rsi
+
+- type: reagent
+  id: Grog
+  name: grog
+  desc: Watered-down rum, pirate approved!
+  physicalDesc: strong-smelling
+  color: "#664300"
+  spritePath: grogglass.rsi
+
+- type: reagent
+  id: HippiesDelight
+  name: hippies delight
+  desc: You just don't get it maaaan.
+  physicalDesc: strong-smelling
+  color: "#6eaa0c"
+  spritePath: hippiesdelightglass.rsi
+
+- type: reagent
+  id: Hooch
+  name: hooch
+  desc: Either someone's failure at cocktail making or attempt in alchohol production. In any case, do you really want to drink that?
+  physicalDesc: strong-smelling
+  color: "#664e00"
+  spritePath: glass_brown2.rsi
+
+- type: reagent
+  id: IcedBeer
+  name: iced beer
+  desc: A beer which is so cold the air around it freezes.
+  physicalDesc: bubbly
+  color: "#664300"
+  spritePath: iced_beerglass.rsi
+
+- type: reagent
+  id: IrishCarBomb
+  name: irish car bomb
+  desc: A troubling mixture of irish cream and ale.
+  physicalDesc: bubbly
+  color: "#2E6671"
+  spritePath: irishcarbomb.rsi
+
+- type: reagent
+  id: IrishCream
+  name: irish cream
+  desc: Whiskey-imbued cream. What else could you expect from the Irish.
+  physicalDesc: creamy
+  color: "#664300"
+  spritePath: irishcreamglass.rsi
+
+- type: reagent
+  id: IrishCoffee
+  name: irish coffee
+  desc: Coffee served with irish cream. Regular cream just isn't the same!
+  physicalDesc: cloudy
+  color: "#664300"
+  spritePath: irishcoffeeglass.rsi
+
+- type: reagent
+  id: KiraSpecial
+  name: kira special
+  desc: Long live the guy who everyone had mistaken for a girl. Baka!
+  physicalDesc: strong-smelling
+  color: "#CCCC99"
+  spritePath: kiraspecial.rsi
 
 - type: reagent
   id: Lean
@@ -197,3 +443,226 @@
   desc: Lean mixed with moonshine. Turn up for months.
   physicalDesc: bubbly
   color: "#9d5fb8"
+
+- type: reagent
+  id: LongIslandIcedTea
+  name: long island iced tea
+  desc: The liquor cabinet, brought together in a delicious mix. Intended for middle-aged alcoholic women only.
+  physicalDesc: strong-smelling
+  color: "#664300"
+  spritePath: longislandicedteaglass.rsi
+
+- type: reagent
+  id: Manhattan
+  name: manhattan
+  desc: The Detective's undercover drink of choice. He never could stomach gin...
+  physicalDesc: strong-smelling
+  color: "#664300"
+  spritePath: manhattanglass.rsi
+
+- type: reagent
+  id: ManhattanProject
+  name: manhattan project
+  desc: A scientist's drink of choice, for pondering ways to blow up the ship.
+  physicalDesc: strong-smelling
+  color: "#664300"
+  spritePath: proj_manhattanglass.rsi
+
+- type: reagent
+  id: ManlyDorf
+  name: manly dorf
+  desc: Beer and Ale, brought together in a delicious mix. Intended for stout dwarves only.
+  physicalDesc: bubbly
+  color: "#664300"
+  spritePath: manlydorfglass.rsi
+
+- type: reagent
+  id: Margarita
+  name: margarita
+  desc: On the rocks with salt on the rim. Arriba~!
+  physicalDesc: strong-smelling
+  color: "#8CFF8C"
+  spritePath: margaritaglass.rsi
+
+- type: reagent
+  id: Martini
+  name: classic martini
+  desc: Vermouth with Gin. Not quite how 007 enjoyed it, but still delicious.
+  physicalDesc: strong-smelling
+  color: "#664300"
+  spritePath: martiniglass.rsi
+
+- type: reagent
+  id: Mead
+  name: mead
+  desc: A Viking's drink, though a cheap one.
+  physicalDesc: strong-smelling
+  color: "#664300"
+  spritePath: meadglass.rsi
+
+- type: reagent
+  id: Mojito
+  name: mojito
+  desc: If it's good enough for Spesscuba, it's good enough for you.
+  physicalDesc: strong-smelling
+  color: "#664300"
+  spritePath: mojito.rsi
+
+- type: reagent
+  id: Moonshine
+  name: moonshine
+  desc: Artisanal homemade liquor. What could go wrong?
+  physicalDesc: strong-smelling
+  color: "#d1d7d155"
+
+- type: reagent
+  id: Neurotoxin
+  name: neurotoxin
+  desc: A strong neurotoxin that puts the subject into a death-like state.
+  physicalDesc: strong-smelling
+  color: "#2E2E61"
+  spritePath: neurotoxinglass.rsi
+
+- type: reagent
+  id: Patron
+  name: patron
+  desc: Tequila with silver in it, a favorite of alcoholic women in the club scene.
+  physicalDesc: metallic
+  color: "#585840"
+  spritePath: patronglass.rsi
+
+- type: reagent
+  id: RedMead
+  name: red mead
+  desc: The true Viking's drink! Even though it has a strange red color.
+  physicalDesc: strong-smelling
+  color: "#C73C00"
+  spritePath: red_meadglass.rsi
+
+- type: reagent
+  id: Rewriter
+  name: rewriter
+  desc: The secret of the sanctuary of the Libarian...
+  physicalDesc: strong-smelling
+  color: "#485000"
+  spritePath: rewriter.rsi
+
+- type: reagent
+  id: Sbiten
+  name: sbiten
+  desc: A spicy Vodka! Might be a little hot for the little guys!
+  physicalDesc: strong-smelling
+  color: "#004166"
+  spritePath: sbitenglass.rsi
+
+- type: reagent
+  id: ScrewdriverCocktail
+  name: screwdriver
+  desc: Vodka, mixed with plain ol' orange juice. The result is surprisingly delicious.
+  physicalDesc: strong-smelling
+  color: "#A68310"
+  spritePath: screwdriverglass.rsi
+
+- type: reagent
+  id: Silencer
+  name: silencer
+  desc: A drink from Mime Heaven.
+  physicalDesc: strong-smelling
+  color: "#004666"
+  spritePath: silencerglass.rsi
+
+- type: reagent
+  id: Singulo
+  name: singulo
+  desc: A blue-space beverage!
+  physicalDesc: strong-smelling
+  color: "#3b0c0c"
+  spritePath: singulo.rsi
+
+- type: reagent
+  id: SnowWhite
+  name: snow white
+  desc: A cold refreshment.
+  physicalDesc: bubbly
+  color: "#FFFFFF"
+  spritePath: snowwhite.rsi
+
+- type: reagent
+  id: SuiDream
+  name: sui dream
+  desc: 'Comprised of: White soda, blue curacao, melon liquor.'
+  physicalDesc: strong-smelling
+  color: "#00A86B"
+  spritePath: sdreamglass.rsi
+
+- type: reagent
+  id: SyndicateBomb
+  name: syndicate bomb
+  desc: Somebody set us up the bomb!
+  physicalDesc: opaque
+  color: "#2E6660"
+  spritePath: syndicatebomb.rsi
+
+- type: reagent
+  id: TequilaSunrise
+  name: tequila sunrise
+  desc: Tequila and orange juice. Much like a Screwdriver, only Mexican.
+  physicalDesc: strong-smelling
+  color: "#FFE48C"
+  spritePath: tequillasunriseglass.rsi
+
+- type: reagent
+  id: ThreeMileIsland
+  name: three mile island iced tea
+  desc: "Made for a woman, strong enough for a man."
+  physicalDesc: strong-smelling
+  color: "#666340"
+  spritePath: threemileislandglass.rsi
+
+- type: reagent
+  id: ToxinsSpecial
+  name: toxins special
+  desc: This thing is ON FIRE! CALL THE DAMN SHUTTLE!
+  physicalDesc: strong-smelling
+  color: "#665c00"
+  spritePath: toxinsspecialglass.rsi
+
+- type: reagent
+  id: VodkaMartini
+  name: vodka martini
+  desc: Vodka with Gin. Not quite how 007 enjoyed it, but still delicious.
+  physicalDesc: strong-smelling
+  color: "#004666"
+  spritePath: martiniglass.rsi
+
+- type: reagent
+  id: VodkaTonic
+  name: vodka tonic
+  desc: For when a gin and tonic isn't russian enough.
+  physicalDesc: strong-smelling
+  color: "#0064C8"
+  spritePath: vodkatonicglass.rsi
+
+- type: reagent
+  id: WhiskeyCola
+  name: whiskey cola
+  desc: Whiskey, mixed with cola. Surprisingly refreshing.
+  physicalDesc: bubbly
+  color: "#3E1B00"
+  spritePath: whiskeycolaglass.rsi
+
+- type: reagent
+  id: WhiskeySoda
+  name: whiskey soda
+  desc: For the more refined griffon.
+  physicalDesc: strong-smelling
+  color: "#533600"
+  spritePath: whiskeysodaglass.rsi
+
+- type: reagent
+  id: WhiteRussian
+  name: white russian
+  desc: That's just, like, your opinion, man...
+  physicalDesc: strong-smelling
+  color: "#A68340"
+  spritePath: whiterussianglass.rsi

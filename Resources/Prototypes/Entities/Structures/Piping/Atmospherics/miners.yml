@@ -12,6 +12,8 @@
     - type: Transform
       anchored: true
     - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: Metallic
     - type: Destructible
       thresholds:
         - trigger:

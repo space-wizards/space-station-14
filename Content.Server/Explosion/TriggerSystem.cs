@@ -1,9 +1,11 @@
-﻿using System;
+using System;
+using Content.Server.Doors.Components;
 using Content.Server.Explosion.Components;
 using Content.Server.Flash;
 using Content.Server.Flash.Components;
 using Content.Shared.Acts;
 using Content.Shared.Audio;
+using Content.Shared.Doors;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -43,19 +45,13 @@ namespace Content.Server.Explosion
             SubscribeLocalEvent<SoundOnTriggerComponent, TriggerEvent>(HandleSoundTrigger);
             SubscribeLocalEvent<ExplodeOnTriggerComponent, TriggerEvent>(HandleExplodeTrigger);
             SubscribeLocalEvent<FlashOnTriggerComponent, TriggerEvent>(HandleFlashTrigger);
-
-            SubscribeLocalEvent<ExplosiveComponent, DestructionEventArgs>(HandleDestruction);
+            SubscribeLocalEvent<ToggleDoorOnTriggerComponent, TriggerEvent>(HandleDoorTrigger);
         }
 
         #region Explosions
-        private void HandleDestruction(EntityUid uid, ExplosiveComponent component, DestructionEventArgs args)
-        {
-            Explode(uid, component);
-        }
-
         private void HandleExplodeTrigger(EntityUid uid, ExplodeOnTriggerComponent component, TriggerEvent args)
         {
-            if (!ComponentManager.TryGetComponent(uid, out ExplosiveComponent? explosiveComponent)) return;
+            if (!EntityManager.TryGetComponent(uid, out ExplosiveComponent? explosiveComponent)) return;
 
             Explode(uid, explosiveComponent);
         }
@@ -94,6 +90,25 @@ namespace Content.Server.Explosion
         private void HandleDeleteTrigger(EntityUid uid, DeleteOnTriggerComponent component, TriggerEvent args)
         {
             EntityManager.QueueDeleteEntity(uid);
+        }
+
+        private void HandleDoorTrigger(EntityUid uid, ToggleDoorOnTriggerComponent component, TriggerEvent args)
+        {
+            if (EntityManager.TryGetComponent<ServerDoorComponent>(uid, out var door))
+            {
+                switch (door.State)
+                {
+                    case SharedDoorComponent.DoorState.Open:
+                        door.Close();
+                        break;
+                    case SharedDoorComponent.DoorState.Closed:
+                        door.Open();
+                        break;
+                    case SharedDoorComponent.DoorState.Closing:
+                    case SharedDoorComponent.DoorState.Opening:
+                        break;
+                }
+            }
         }
 
         private void HandleCollide(EntityUid uid, TriggerOnCollideComponent component, StartCollideEvent args)

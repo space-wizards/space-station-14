@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using Content.Server.Access.Components;
+using Content.Server.Access.Systems;
 using Content.Server.CharacterAppearance.Components;
 using Content.Server.Ghost.Components;
 using Content.Server.Hands.Components;
@@ -12,6 +13,7 @@ using Content.Server.Players;
 using Content.Server.Roles;
 using Content.Server.Spawners.Components;
 using Content.Server.Speech.Components;
+using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
 using Content.Shared.Inventory;
@@ -19,6 +21,7 @@ using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
@@ -29,8 +32,10 @@ namespace Content.Server.GameTicking
 {
     public partial class GameTicker
     {
-        private const string PlayerPrototypeName = "HumanMob_Content";
+        private const string PlayerPrototypeName = "MobHuman";
         private const string ObserverPrototypeName = "MobObserver";
+
+        [Dependency] private readonly IdCardSystem _cardSystem = default!;
 
         [ViewVariables(VVAccess.ReadWrite)]
         private EntityCoordinates _spawnPoint;
@@ -97,7 +102,11 @@ namespace Content.Server.GameTicking
             AddManifestEntry(character.Name, jobId);
             AddSpawnedPosition(jobId);
             EquipIdCard(mob, character.Name, jobPrototype);
-            jobPrototype.Special?.AfterEquip(mob);
+
+            foreach (var jobSpecial in jobPrototype.Special)
+            {
+                jobSpecial.AfterEquip(mob);
+            }
 
             Preset?.OnSpawnPlayerCompleted(player, mob, lateJoin);
         }
@@ -167,7 +176,7 @@ namespace Content.Server.GameTicking
 
             if (profile != null)
             {
-                entity.GetComponent<HumanoidAppearanceComponent>().UpdateFromProfile(profile);
+                EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(entity.Uid, profile);
                 entity.Name = profile.Name;
             }
 
@@ -189,7 +198,7 @@ namespace Content.Server.GameTicking
                 foreach (var slot in EquipmentSlotDefines.AllSlots)
                 {
                     var equipmentStr = startingGear.GetGear(slot, profile);
-                    if (equipmentStr != string.Empty)
+                    if (!string.IsNullOrEmpty(equipmentStr))
                     {
                         var equipmentEntity = EntityManager.SpawnEntity(equipmentStr, entity.Transform.Coordinates);
                         inventory.Equip(slot, equipmentEntity.GetComponent<ItemComponent>());
@@ -224,13 +233,14 @@ namespace Content.Server.GameTicking
                 return;
 
             var card = pdaComponent.ContainedID;
-            card.FullName = characterName;
-            card.JobTitle = jobPrototype.Name;
+            _cardSystem.TryChangeFullName(card.Owner.Uid, characterName, card);
+            _cardSystem.TryChangeJobTitle(card.Owner.Uid, jobPrototype.Name, card);
 
             var access = card.Owner.GetComponent<AccessComponent>();
             var accessTags = access.Tags;
             accessTags.UnionWith(jobPrototype.Access);
-            pdaComponent.SetPDAOwner(characterName);
+            EntityManager.EntitySysManager.GetEntitySystem<PDASystem>()
+                .SetOwner(pdaComponent, characterName);
         }
         #endregion
 
@@ -246,7 +256,7 @@ namespace Content.Server.GameTicking
 
             _possiblePositions.Clear();
 
-            foreach (var (point, transform) in ComponentManager.EntityQuery<SpawnPointComponent, ITransformComponent>())
+            foreach (var (point, transform) in EntityManager.EntityQuery<SpawnPointComponent, ITransformComponent>())
             {
                 if (point.SpawnType == SpawnPointType.Job && point.Job?.ID == jobId)
                     _possiblePositions.Add(transform.Coordinates);
@@ -264,7 +274,7 @@ namespace Content.Server.GameTicking
 
             _possiblePositions.Clear();
 
-            foreach (var (point, transform) in ComponentManager.EntityQuery<SpawnPointComponent, ITransformComponent>())
+            foreach (var (point, transform) in EntityManager.EntityQuery<SpawnPointComponent, ITransformComponent>())
             {
                 if (point.SpawnType == SpawnPointType.LateJoin) _possiblePositions.Add(transform.Coordinates);
             }
@@ -282,7 +292,7 @@ namespace Content.Server.GameTicking
 
             _possiblePositions.Clear();
 
-            foreach (var (point, transform) in ComponentManager.EntityQuery<SpawnPointComponent, ITransformComponent>())
+            foreach (var (point, transform) in EntityManager.EntityQuery<SpawnPointComponent, ITransformComponent>())
             {
                 if (point.SpawnType == SpawnPointType.Observer)
                     _possiblePositions.Add(transform.Coordinates);

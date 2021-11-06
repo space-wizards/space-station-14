@@ -49,6 +49,9 @@
     sprite: Objects/Specific/Medical/Surgery/drill.rsi
   - type: ItemCooldown
   - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 10
     hitSound:
       path: /Audio/Items/drill_hit.ogg
 
@@ -73,9 +76,11 @@
     sprite: Objects/Specific/Medical/Surgery/scalpel.rsi
   - type: ItemCooldown
   - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 12
     hitSound:
       path: /Audio/Weapons/bladeslice.ogg
-    damage: 12
 
 - type: entity
   name: shiv
@@ -214,9 +219,11 @@
   - type: Item
     HeldPrefix: improv
   - type: MeleeWeapon
+    damage:
+      groups:
+        Brute: 10
     hitSound:
       path: /Audio/Weapons/bladeslice.ogg
-    damage: 10
 
 - type: entity
   name: circular saw
@@ -233,9 +240,11 @@
   - type: Item
     HeldPrefix: electric
   - type: MeleeWeapon
+    damage:
+      groups:
+        Brute: 15
     hitSound:
       path: /Audio/Items/drill_hit.ogg
-    damage: 15
 
 - type: entity
   name: advanced circular saw
@@ -252,6 +261,8 @@
   - type: Item
     HeldPrefix: advanced
   - type: MeleeWeapon
+    damage:
+      groups:
+        Brute: 20
     hitSound:
       path: /Audio/Items/drill_hit.ogg
-    damage: 20

@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using Content.Server.Roles;
+using Content.Server.Suspicion.Roles;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -20,18 +22,32 @@ namespace Content.Server.Suspicion.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
-            SubscribeLocalEvent<SuspicionRoleComponent, PlayerAttachedEvent>((HandlePlayerAttached));
-            SubscribeLocalEvent<SuspicionRoleComponent, PlayerDetachedEvent>((HandlePlayerDetached));
+            SubscribeLocalEvent<SuspicionRoleComponent, PlayerAttachedEvent>(OnPlayerAttached);
+            SubscribeLocalEvent<SuspicionRoleComponent, PlayerDetachedEvent>(OnPlayerDetached);
+            SubscribeLocalEvent<SuspicionRoleComponent, RoleAddedEvent>(OnRoleAdded);
+            SubscribeLocalEvent<SuspicionRoleComponent, RoleRemovedEvent>(OnRoleRemoved);
         }
 
-        private void HandlePlayerDetached(EntityUid uid, SuspicionRoleComponent component, PlayerDetachedEvent args)
+        private void OnPlayerDetached(EntityUid uid, SuspicionRoleComponent component, PlayerDetachedEvent args)
         {
             component.SyncRoles();
         }
 
-        private void HandlePlayerAttached(EntityUid uid, SuspicionRoleComponent component, PlayerAttachedEvent args)
+        private void OnPlayerAttached(EntityUid uid, SuspicionRoleComponent component, PlayerAttachedEvent args)
         {
             component.SyncRoles();
+        }
+
+        private void OnRoleAdded(EntityUid uid, SuspicionRoleComponent component, RoleAddedEvent args)
+        {
+            if (args.Role is not SuspicionRole role) return;
+            component.Role = role;
+        }
+
+        private void OnRoleRemoved(EntityUid uid, SuspicionRoleComponent component, RoleRemovedEvent args)
+        {
+            if (args.Role is not SuspicionRole) return;
+            component.Role = null;
         }
 
         #endregion

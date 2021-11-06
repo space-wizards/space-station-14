@@ -1,10 +1,9 @@
 using System;
 using Content.Server.Destructible;
 using Content.Server.Destructible.Thresholds.Triggers;
-using Content.Server.Notification;
+using Content.Server.Popups;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Rounding;
@@ -25,7 +24,9 @@ namespace Content.Server.Window
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedWindowComponent))]
+#pragma warning disable 618
     public class WindowComponent : SharedWindowComponent, IExamine, IInteractHand
+#pragma warning restore 618
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -41,41 +42,9 @@ namespace Content.Server.Window
         [DataField("knockSound")]
         private SoundSpecifier _knockSound = new SoundPathSpecifier("/Audio/Effects/glass_knock.ogg");
 
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-
-            switch (message)
-            {
-                case DamageChangedMessage msg:
-                {
-                    var current = msg.Damageable.TotalDamage;
-                    UpdateVisuals(current);
-                    break;
-                }
-            }
-        }
-
-        private void UpdateVisuals(int currentDamage)
-        {
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance) &&
-                Owner.TryGetComponent(out DestructibleComponent? destructible))
-            {
-                foreach (var threshold in destructible.Thresholds)
-                {
-                    if (threshold.Trigger is not DamageTrigger trigger)
-                    {
-                        continue;
-                    }
-
-                    appearance.SetData(WindowVisuals.Damage, (float) currentDamage / trigger.Damage);
-                }
-            }
-        }
-
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
-            if (!Owner.TryGetComponent(out IDamageableComponent? damageable) ||
+            if (!Owner.TryGetComponent(out DamageableComponent? damageable) ||
                 !Owner.TryGetComponent(out DestructibleComponent? destructible))
             {
                 return;

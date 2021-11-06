@@ -21,7 +21,8 @@
       - VaultImpassable
       - SmallImpassable
   - type: Damageable
-    resistances: inflatableResistances
+    damageContainer: Inorganic
+    damageModifierSet: Inflatable
   - type: Destructible
     thresholds:
     - trigger:

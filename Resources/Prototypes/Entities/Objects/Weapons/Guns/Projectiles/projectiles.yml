@@ -25,10 +25,11 @@
     linearDamping: 0
     angularDamping: 0
   - type: Projectile
+    damage:
+      types:
+        Piercing: 20
     soundHit:
       path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
-    damages:
-      Piercing: 20
 
 - type: entity
   id: BulletBaseFlash
@@ -37,10 +38,11 @@
   abstract: true
   components:
   - type: Projectile
+    damage:
+      types:
+        Piercing: 10
     soundHit:
       path: /Audio/Weapons/Guns/Hits/snap.ogg
-    damages:
-      Piercing: 10
   - type: FlashOnTrigger
     range: 1
   - type: SoundOnTrigger
@@ -56,8 +58,9 @@
   abstract: true
   components:
   - type: Projectile
-    damages:
-      Piercing: 12
+    damage:
+      types:
+        Piercing: 12
 
 - type: entity
   id: BulletBasePractice
@@ -66,8 +69,9 @@
   abstract: true
   components:
   - type: Projectile
-    damages:
-      Blunt: 2
+    damage:
+      types:
+        Blunt: 2
 
 - type: entity
   id: BulletBaseRubber
@@ -76,10 +80,11 @@
   abstract: true
   components:
   - type: Projectile
+    damage:
+      types:
+        Blunt: 3
     soundHit:
       path: /Audio/Weapons/Guns/Hits/snap.ogg
-    damages:
-      Blunt: 3
   - type: StunOnCollide
     stunAmount: 2
     knockdownAmount: 2
@@ -92,7 +97,7 @@
   abstract: true
   components:
   - type: Sprite
-    directional: false
+    noRot: true
     sprite: Objects/Weapons/Guns/Projectiles/spark.rsi
     color: "#ffff33"
     layers:
@@ -113,10 +118,11 @@
     ammoVelocity: 20
     caliber: Energy
   - type: Projectile
+    damage:
+      types:
+        Heat: 5
     soundHit:
       path: "/Audio/Weapons/Guns/Hits/taser_hit.ogg"
-    damages:
-      Heat: 5
   - type: StunOnCollide
     stunAmount: 5
     knockdownAmount: 5
@@ -137,16 +143,14 @@
         !type:PhysShapeAabb
           bounds: "-0.2,-0.2,0.2,0.2"
       hard: false
-      layer:
-        - Impassable
-        - MobImpassable
       mask:
         - Opaque
   - type: Projectile
+    damage:
+      types:
+        Heat: 20
     soundHit:
       path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
-    damages:
-      Heat: 20
   - type: Tag
     tags:
     - EmitterBolt
@@ -167,6 +171,9 @@
   - type: TriggerOnCollide
   - type: Projectile
     deleteOnCollide: false
+    damage:
+      types:
+        Blunt: 1
   - type: Explosive
     devastationRange: 1
     heavyImpactRange: 2
@@ -189,6 +196,9 @@
     state: grenade
   - type: Projectile
     deleteOnCollide: false
+    damage:
+      types:
+        Blunt: 1
     soundHit:
       path: /Audio/Effects/gen_hit.ogg
   - type: StunOnCollide
@@ -210,6 +220,9 @@
   - type: TriggerOnCollide
   - type: Projectile
     deleteOnCollide: false
+    damage:
+      types:
+        Blunt: 1
   - type: Explosive
     devastationRange: 1
     heavyImpactRange: 2
@@ -228,6 +241,9 @@
     state: grenade
   - type: Projectile
     deleteOnCollide: false
+    damage:
+      types:
+        Blunt: 1
     soundHit:
       path: /Audio/Effects/flash_bang.ogg
   - type: FlashOnTrigger
@@ -254,6 +270,9 @@
   - type: TriggerOnCollide
   - type: Projectile
     deleteOnCollide: false
+    damage:
+      types:
+        Blunt: 1
   - type: Explosive
     devastationRange: 0
     heavyImpactRange: 1
@@ -272,10 +291,11 @@
     state: foamdart
   - type: Projectile
     deleteOnCollide: true
+    damage:
+      types:
+        Blunt: 2
     soundHit:
       path: /Audio/Weapons/Guns/Hits/snap.ogg
-    damages:
-      Blunt: 2
 
 - type: entity
   id: BulletCap
@@ -289,29 +309,6 @@
     state: capbullet
   - type: Projectile
     deleteOnCollide: true
-    damages:
-      Piercing: 0
-
-- type: entity
-  id: BulletCreampie
-  name: cream pie
-  parent: BulletBase
-  description: get creampied, honk!!
-  abstract: true
-  components:
-  - type: Projectile
-    deleteOnCollide: false # CreamPie component handles this.
-  - type: CreamPie
-  - type: ThrownItem
-  - type: Sprite
-    sprite: Objects/Consumable/Food/Baked/pie.rsi
-    netsync: false
-    layers:
-    - state: tin
-    - state: plain
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 8
+    damage:
+      types:
+        Piercing: 0

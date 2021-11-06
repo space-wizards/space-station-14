@@ -9,6 +9,9 @@
   - type: InteractionOutline
   - type: MovedByPressure
   - type: DamageOnHighSpeedImpact
+    damage:
+      types:
+        Blunt: 5
     soundHit:
       path: /Audio/Effects/hit_kick.ogg
   - type: CollisionWake

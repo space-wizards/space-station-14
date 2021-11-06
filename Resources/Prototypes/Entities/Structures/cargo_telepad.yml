@@ -19,7 +19,8 @@
     state: offline
     drawdepth: FloorObjects
   - type: Damageable
-    resistances: metallicResistances
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -34,4 +35,5 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
   - type: CargoTelepad

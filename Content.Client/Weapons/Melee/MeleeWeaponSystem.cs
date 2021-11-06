@@ -30,7 +30,7 @@ namespace Content.Client.Weapons.Melee
         {
             base.FrameUpdate(frameTime);
 
-            foreach (var arcAnimationComponent in EntityManager.ComponentManager.EntityQuery<MeleeWeaponArcAnimationComponent>(true))
+            foreach (var arcAnimationComponent in EntityManager.EntityQuery<MeleeWeaponArcAnimationComponent>(true))
             {
                 arcAnimationComponent.Update(frameTime);
             }

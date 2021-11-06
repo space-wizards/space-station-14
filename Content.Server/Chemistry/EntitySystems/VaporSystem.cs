@@ -1,8 +1,8 @@
 ﻿using Content.Server.Chemistry.Components;
+using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Components.SolutionManager;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Content.Shared.Physics;
 using Content.Shared.Vapor;
 using JetBrains.Annotations;
@@ -32,7 +32,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void HandleCollide(EntityUid uid, VaporComponent component, StartCollideEvent args)
         {
-            if (!ComponentManager.TryGetComponent(uid, out SolutionContainerManagerComponent? contents)) return;
+            if (!EntityManager.TryGetComponent(uid, out SolutionContainerManagerComponent? contents)) return;
 
             foreach (var (_, value) in contents.Solutions)
             {
@@ -66,18 +66,19 @@ namespace Content.Server.Chemistry.EntitySystems
                 return false;
             }
 
-            if (!_solutionContainerSystem.TryGetSolution(vapor.Owner, SharedVaporComponent.SolutionName, out _))
+            if (!_solutionContainerSystem.TryGetSolution(vapor.Owner.Uid, SharedVaporComponent.SolutionName,
+                out var vaporSolution))
             {
                 return false;
             }
 
-            return true;
+            return _solutionContainerSystem.TryAddSolution(vapor.Owner.Uid, vaporSolution, solution);
         }
 
         public override void Update(float frameTime)
         {
-            foreach (var (vaporComp, solution) in ComponentManager
-                .EntityQuery<VaporComponent, SolutionContainerManagerComponent>(true))
+            foreach (var (vaporComp, solution) in EntityManager
+                .EntityQuery<VaporComponent, SolutionContainerManagerComponent>())
             {
                 foreach (var (_, value) in solution.Solutions)
                 {
@@ -104,7 +105,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 var tile = mapGrid.GetTileRef(entity.Transform.Coordinates.ToVector2i(EntityManager, _mapManager));
                 foreach (var reagentQuantity in contents.Contents.ToArray())
                 {
-                    if (reagentQuantity.Quantity == ReagentUnit.Zero) continue;
+                    if (reagentQuantity.Quantity == FixedPoint2.Zero) continue;
                     var reagent = _protoManager.Index<ReagentPrototype>(reagentQuantity.ReagentId);
                     _solutionContainerSystem.TryRemoveReagent(vapor.Owner.Uid, contents, reagentQuantity.ReagentId,
                         reagent.ReactionTile(tile, (reagentQuantity.Quantity / vapor.TransferAmount) * 0.25f));

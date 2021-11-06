@@ -1,11 +1,13 @@
 using System.Linq;
 using Content.Client.Actions.UI;
+using Content.Client.ContextMenu.UI;
 using Content.Client.Examine;
 using Content.Client.HUD;
 using Content.Client.HUD.UI;
 using Content.Client.Resources;
 using Content.Client.Targeting;
 using Content.Client.UserInterface.Controls;
+using Content.Client.Verbs.UI;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -16,6 +18,27 @@ using static Robust.Client.UserInterface.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets
 {
+    public static class ResCacheExtension
+    {
+        public static Font notoStack(this IResourceCache resCache, string variation = "Regular", int size = 10, bool display = false)
+        {
+            var ds = display ? "Display" : "";
+            var sv = variation.StartsWith("Bold") ? "Bold" : "Regular";
+            return resCache.GetFont
+            (
+                // Ew, but ok
+                new []
+                {
+                    $"/Fonts/NotoSans{ds}/NotoSans{ds}-{variation}.ttf",
+                    $"/Fonts/NotoSans/NotoSansSymbols-{sv}.ttf",
+                    "/Fonts/NotoSans/NotoSansSymbols2-Regular.ttf"
+                },
+                size
+            );
+
+        }
+
+    }
     public sealed class StyleNano : StyleBase
     {
         public const string StyleClassBorderedWindowPanel = "BorderedWindowPanel";
@@ -38,7 +61,6 @@ namespace Content.Client.Stylesheets
         public const string StyleClassChatLineEdit = "chatLineEdit";
         public const string StyleClassChatChannelSelectorButton = "chatSelectorOptionButton";
         public const string StyleClassChatFilterOptionButton = "chatFilterOptionButton";
-        public const string StyleClassContextMenuCount = "contextMenuCount";
         public const string StyleClassStorageButton = "storageButton";
 
         public const string StyleClassSliderRed = "Red";
@@ -53,6 +75,10 @@ namespace Content.Client.Stylesheets
         public const string StyleClassPopupMessage = "PopupMessage";
 
         public static readonly Color NanoGold = Color.FromHex("#A88B5E");
+        public static readonly Color GoodGreenFore = Color.FromHex("#31843E");
+        public static readonly Color ConcerningOrangeFore = Color.FromHex("#A5762F");
+        public static readonly Color DangerousRedFore = Color.FromHex("#BB3232");
+        public static readonly Color DisabledFore = Color.FromHex("#5A5A5A");
 
         public static readonly Color ButtonColorDefault = Color.FromHex("#464966");
         public static readonly Color ButtonColorDefaultRed = Color.FromHex("#D43B3B");
@@ -66,6 +92,12 @@ namespace Content.Client.Stylesheets
         public static readonly Color ButtonColorCautionPressed = Color.FromHex("#3e6c45");
         public static readonly Color ButtonColorCautionDisabled = Color.FromHex("#602a2a");
 
+        // Context menu button colors
+        public static readonly Color ButtonColorContext = Color.FromHex("#1119");
+        public static readonly Color ButtonColorContextHover = Color.DarkSlateGray;
+        public static readonly Color ButtonColorContextPressed = Color.LightSlateGray;
+        public static readonly Color ButtonColorContextDisabled = Color.Black;
+
         //Used by the APC and SMES menus
         public const string StyleClassPowerStateNone = "PowerStateNone";
         public const string StyleClassPowerStateLow = "PowerStateLow";
@@ -77,18 +109,19 @@ namespace Content.Client.Stylesheets
 
         public StyleNano(IResourceCache resCache) : base(resCache)
         {
-            var notoSans10 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Regular.ttf", 10);
-            var notoSansItalic10 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Italic.ttf", 10);
-            var notoSans12 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Regular.ttf", 12);
-            var notoSansItalic12 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Italic.ttf", 12);
-            var notoSansBold12 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Bold.ttf", 12);
-            var notoSansDisplayBold14 = resCache.GetFont("/Fonts/NotoSansDisplay/NotoSansDisplay-Bold.ttf", 14);
-            var notoSansDisplayBold16 = resCache.GetFont("/Fonts/NotoSansDisplay/NotoSansDisplay-Bold.ttf", 16);
-            var notoSans15 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Regular.ttf", 15);
-            var notoSans16 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Regular.ttf", 16);
-            var notoSansBold16 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Bold.ttf", 16);
-            var notoSansBold18 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Bold.ttf", 18);
-            var notoSansBold20 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Bold.ttf", 20);
+            var notoSans10 = resCache.notoStack(size: 10);
+            var notoSansItalic10 = resCache.notoStack(variation: "Italic", size: 10);
+            var notoSans12 = resCache.notoStack(size: 12);
+            var notoSansItalic12 = resCache.notoStack(variation: "Italic", size: 12);
+            var notoSansBold12 = resCache.notoStack(variation: "Bold", size: 12);
+            var notoSansBoldItalic12 = resCache.notoStack(variation: "BoldItalic", size: 12);
+            var notoSansDisplayBold14 = resCache.notoStack(variation: "Bold", display: true, size: 14); 
+            var notoSansDisplayBold16 = resCache.notoStack(variation: "Bold", display: true, size: 16);
+            var notoSans15 = resCache.notoStack(variation: "Regular", size: 15);
+            var notoSans16 = resCache.notoStack(variation: "Regular", size: 16);
+            var notoSansBold16 = resCache.notoStack(variation: "Bold", size: 16);
+            var notoSansBold18 = resCache.notoStack(variation: "Bold", size: 18);
+            var notoSansBold20 = resCache.notoStack(variation: "Bold", size: 20);
             var windowHeaderTex = resCache.GetTexture("/Textures/Interface/Nano/window_header.png");
             var windowHeader = new StyleBoxTexture
             {
@@ -111,6 +144,12 @@ namespace Content.Client.Stylesheets
                 Texture = borderedWindowBackgroundTex,
             };
             borderedWindowBackground.SetPatchMargin(StyleBox.Margin.All, 2);
+
+            var contextMenuBackground = new StyleBoxTexture
+            {
+                Texture = borderedWindowBackgroundTex,
+            };
+            contextMenuBackground.SetPatchMargin(StyleBox.Margin.All, ContextMenuElement.ElementMargin);
 
             var invSlotBgTex = resCache.GetTexture("/Textures/Interface/Inventory/inv_slot_background.png");
             var invSlotBg = new StyleBoxTexture
@@ -146,6 +185,8 @@ namespace Content.Client.Stylesheets
             buttonStorage.SetPadding(StyleBox.Margin.All, 0);
             buttonStorage.SetContentMarginOverride(StyleBox.Margin.Vertical, 0);
             buttonStorage.SetContentMarginOverride(StyleBox.Margin.Horizontal, 4);
+
+            var buttonContext = new StyleBoxTexture { Texture = Texture.White };
 
             var buttonRectTex = resCache.GetTexture("/Textures/Interface/Nano/light_panel_background_bordered.png");
             var buttonRect = new StyleBoxTexture(BaseButton)
@@ -375,9 +416,18 @@ namespace Content.Client.Stylesheets
             sliderForeBox.SetPatchMargin(StyleBox.Margin.All, 12);
             sliderGrabBox.SetPatchMargin(StyleBox.Margin.All, 12);
 
-            var sliderFillGreen = new StyleBoxTexture(sliderFillBox) {Modulate = Color.Green};
+            var sliderFillGreen = new StyleBoxTexture(sliderFillBox) {Modulate = Color.LimeGreen};
             var sliderFillRed = new StyleBoxTexture(sliderFillBox) {Modulate = Color.Red};
             var sliderFillBlue = new StyleBoxTexture(sliderFillBox) {Modulate = Color.Blue};
+
+            var boxFont13 = resCache.GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 13);
+
+            var insetBack = new StyleBoxTexture
+            {
+                Texture = buttonTex,
+                Modulate = Color.FromHex("#202023"),
+            };
+            insetBack.SetPatchMargin(StyleBox.Margin.All, 10);
 
             Stylesheet = new Stylesheet(BaseRules.Concat(new[]
             {
@@ -503,6 +553,43 @@ namespace Content.Client.Stylesheets
                     {
                         new StyleProperty("font-color", Color.FromHex("#E5E5E581")),
                     }),
+
+                // Context Menu window
+                Element<PanelContainer>().Class(ContextMenuPopup.StyleClassContextMenuPopup)
+                    .Prop(PanelContainer.StylePropertyPanel, contextMenuBackground),
+
+                // Context menu buttons
+                Element<ContextMenuElement>().Class(ContextMenuElement.StyleClassContextMenuButton)
+                    .Prop(ContainerButton.StylePropertyStyleBox, buttonContext),
+
+                Element<ContextMenuElement>().Class(ContextMenuElement.StyleClassContextMenuButton)
+                    .Pseudo(ContainerButton.StylePseudoClassNormal)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorContext),
+
+                Element<ContextMenuElement>().Class(ContextMenuElement.StyleClassContextMenuButton)
+                    .Pseudo(ContainerButton.StylePseudoClassHover)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorContextHover),
+
+                Element<ContextMenuElement>().Class(ContextMenuElement.StyleClassContextMenuButton)
+                    .Pseudo(ContainerButton.StylePseudoClassPressed)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorContextPressed),
+
+                Element<ContextMenuElement>().Class(ContextMenuElement.StyleClassContextMenuButton)
+                    .Pseudo(ContainerButton.StylePseudoClassDisabled)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorContextDisabled),
+
+                // Context Menu Labels
+                Element<RichTextLabel>().Class(VerbMenuElement.StyleClassVerbInteractionText)
+                    .Prop(Label.StylePropertyFont, notoSansBoldItalic12),
+
+                Element<RichTextLabel>().Class(VerbMenuElement.StyleClassVerbActivationText)
+                    .Prop(Label.StylePropertyFont, notoSansBold12),
+
+                Element<RichTextLabel>().Class(VerbMenuElement.StyleClassVerbAlternativeText)
+                    .Prop(Label.StylePropertyFont, notoSansItalic12),
+
+                Element<RichTextLabel>().Class(VerbMenuElement.StyleClassVerbOtherText)
+                    .Prop(Label.StylePropertyFont, notoSans12),
 
                 // Thin buttons (No padding nor vertical margin)
                 Element<EntityContainerButton>().Class(StyleClassStorageButton)
@@ -647,7 +734,7 @@ namespace Content.Client.Stylesheets
                     new StyleProperty(TextureRect.StylePropertyTexture, checkBoxTextureChecked),
                 }),
 
-                new StyleRule(new SelectorElement(typeof(HBoxContainer), new [] { CheckBox.StyleClassCheckBox }, null, null), new[]
+                new StyleRule(new SelectorElement(typeof(BoxContainer), new [] { CheckBox.StyleClassCheckBox }, null, null), new[]
                 {
                     new StyleProperty(BoxContainer.StylePropertySeparation, 10),
                 }),
@@ -708,8 +795,8 @@ namespace Content.Client.Stylesheets
                     new StyleProperty("font", notoSans15)
                 }),
 
-                // small number for the context menu
-                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassContextMenuCount}, null, null), new[]
+                // small number for the entity counter in the entity menu
+                new StyleRule(new SelectorElement(typeof(Label), new[] {EntityMenuElement.StyleClassEntityMenuCountText}, null, null), new[]
                 {
                     new StyleProperty("font", notoSans10),
                     new StyleProperty(Label.StylePropertyAlignMode, Label.AlignMode.Right),
@@ -1070,6 +1157,40 @@ namespace Content.Client.Stylesheets
                 Element<PanelContainer>().Class(ClassAngleRect)
                     .Prop(PanelContainer.StylePropertyPanel, BaseAngleRect)
                     .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#25252A")),
+
+                Element<PanelContainer>().Class(ClassLowDivider)
+                    .Prop(PanelContainer.StylePropertyPanel, new StyleBoxFlat
+                    {
+                        BackgroundColor = Color.FromHex("#444"),
+                        ContentMarginLeftOverride = 2,
+                        ContentMarginBottomOverride = 2
+                    }),
+
+                Element<Label>().Class("FancyWindowTitle")
+                    .Prop("font", boxFont13)
+                    .Prop("font-color", NanoGold),
+
+                Element<PanelContainer>().Class("WindowHeadingBackground")
+                    .Prop("panel", new StyleBoxTexture(BaseButtonOpenLeft) { Padding = default })
+                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#1F1F23")),
+
+                Element<PanelContainer>().Class("Inset")
+                    .Prop("panel", insetBack),
+
+                Element<Label>().Class("StatusFieldTitle")
+                    .Prop("font-color", NanoGold),
+
+                Element<Label>().Class("Good")
+                    .Prop("font-color", GoodGreenFore),
+
+                Element<Label>().Class("Caution")
+                    .Prop("font-color", ConcerningOrangeFore),
+
+                Element<Label>().Class("Danger")
+                    .Prop("font-color", DangerousRedFore),
+
+                Element<Label>().Class("Disabled")
+                    .Prop("font-color", DisabledFore),
 
             }).ToList());
         }

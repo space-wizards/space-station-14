@@ -1,11 +1,10 @@
 using Content.Server.Hands.Components;
 using Content.Server.Items;
-using Content.Server.Notification;
+using Content.Server.Popups;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions.Behaviors;
-using Content.Shared.Actions.Components;
 using Content.Shared.Cooldown;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;

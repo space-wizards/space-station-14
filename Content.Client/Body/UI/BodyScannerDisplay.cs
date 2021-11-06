@@ -2,7 +2,7 @@ using System.Linq;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Mechanism;
 using Content.Shared.Body.Part;
-using Content.Shared.Damage.Components;
+using Content.Shared.Damage;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
@@ -147,7 +147,7 @@ namespace Content.Client.Body.UI
             BodyPartLabel.Text = $"{Loc.GetString(slotName)}: {Loc.GetString(part.Owner.Name)}";
 
             // TODO BODY Part damage
-            if (part.Owner.TryGetComponent(out IDamageableComponent? damageable))
+            if (part.Owner.TryGetComponent(out DamageableComponent? damageable))
             {
                 BodyPartHealth.Text = Loc.GetString("body-scanner-display-body-part-damage-text",("damage", damageable.TotalDamage));
             }

@@ -5,17 +5,16 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
+using Content.Server.Interaction;
 using Content.Server.Items;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Item;
-using Content.Shared.Notification.Managers;
 using Content.Shared.Placeable;
+using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Storage;
-using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -24,7 +23,6 @@ using Robust.Shared.Containers;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
@@ -54,8 +52,13 @@ namespace Content.Server.Storage.Components
         [DataField("quickInsert")]
         private bool _quickInsert = false; // Can insert storables by "attacking" them with the storage entity
 
+        [DataField("clickInsert")]
+        private bool _clickInsert = true; // Can insert stuff by clicking the storage entity with it
+
         [DataField("areaInsert")]
         private bool _areaInsert = false;  // "Attacking" with the storage entity causes it to insert all nearby storables after a delay
+        [DataField("areaInsertRadius")]
+        private int _areaInsertRadius = 1;
 
         [DataField("whitelist")]
         private EntityWhitelist? _whitelist = null;
@@ -133,6 +136,11 @@ namespace Content.Server.Storage.Components
             }
 
             if (_whitelist != null && !_whitelist.IsValid(entity))
+            {
+                return false;
+            }
+
+            if (entity.Transform.Anchored)
             {
                 return false;
             }
@@ -267,7 +275,9 @@ namespace Content.Server.Storage.Components
             Logger.DebugS(LoggerName, $"Storage (UID {Owner.Uid}) \"used\" by player session (UID {userSession.AttachedEntityUid}).");
 
             SubscribeSession(userSession);
+#pragma warning disable 618
             SendNetworkMessage(new OpenStorageUIMessage(), userSession.ConnectedClient);
+#pragma warning restore 618
             UpdateClientInventory(userSession);
         }
 
@@ -312,7 +322,9 @@ namespace Content.Server.Storage.Components
 
             var stored = StoredEntities.Select(e => e.Uid).ToArray();
 
+#pragma warning disable 618
             SendNetworkMessage(new StorageHeldItemsMessage(stored, _storageUsed, _storageCapacityMax), session.ConnectedClient);
+#pragma warning restore 618
         }
 
         /// <summary>
@@ -345,7 +357,9 @@ namespace Content.Server.Storage.Components
                 Logger.DebugS(LoggerName, $"Storage (UID {Owner.Uid}) unsubscribed player session (UID {session.AttachedEntityUid}).");
 
                 SubscribedSessions.Remove(session);
+#pragma warning disable 618
                 SendNetworkMessage(new CloseStorageUIMessage(), session.ConnectedClient);
+#pragma warning restore 618
 
                 UpdateDoorState();
             }
@@ -374,10 +388,11 @@ namespace Content.Server.Storage.Components
             base.Initialize();
 
             // ReSharper disable once StringLiteralTypo
-            _storage = ContainerHelpers.EnsureContainer<Container>(Owner, "storagebase");
+            _storage = Owner.EnsureContainer<Container>("storagebase");
             _storage.OccludesLight = _occludesLight;
         }
 
+        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
         {
             base.HandleNetworkMessage(message, channel, session);
@@ -404,20 +419,17 @@ namespace Content.Server.Storage.Components
                     var playerTransform = player.Transform;
 
                     if (!playerTransform.Coordinates.InRange(Owner.EntityManager, ownerTransform.Coordinates, 2) ||
-                        !ownerTransform.IsMapTransform && !playerTransform.ContainsEntity(ownerTransform))
+                        Owner.IsInContainer() && !playerTransform.ContainsEntity(ownerTransform))
                     {
                         break;
                     }
 
-                    var entity = Owner.EntityManager.GetEntity(remove.EntityUid);
-
-                    if (entity == null || _storage?.Contains(entity) == false)
+                    if (!Owner.EntityManager.TryGetEntity(remove.EntityUid, out var entity) || _storage?.Contains(entity) == false)
                     {
                         break;
                     }
 
-                    var item = entity.GetComponent<ItemComponent>();
-                    if (item == null || !player.TryGetComponent(out HandsComponent? hands))
+                    if (!entity.TryGetComponent(out ItemComponent? item) || !player.TryGetComponent(out HandsComponent? hands))
                     {
                         break;
                     }
@@ -471,6 +483,8 @@ namespace Content.Server.Storage.Components
         /// <returns>true if inserted, false otherwise</returns>
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
+            if (!_clickInsert)
+                return false;
             Logger.DebugS(LoggerName, $"Storage (UID {Owner.Uid}) attacked by user (UID {eventArgs.User.Uid}) with entity (UID {eventArgs.Using.Uid}).");
 
             if (Owner.HasComponent<PlaceableSurfaceComponent>())
@@ -495,7 +509,9 @@ namespace Content.Server.Storage.Components
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
+#pragma warning disable 618
             ((IUse) this).UseEntity(new UseEntityEventArgs(eventArgs.User));
+#pragma warning restore 618
         }
 
         /// <summary>
@@ -513,11 +529,12 @@ namespace Content.Server.Storage.Components
             if (_areaInsert && (eventArgs.Target == null || !eventArgs.Target.HasComponent<SharedItemComponent>()))
             {
                 var validStorables = new List<IEntity>();
-                foreach (var entity in IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(eventArgs.ClickLocation, 1))
+                foreach (var entity in IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(eventArgs.ClickLocation, _areaInsertRadius, LookupFlags.None))
                 {
-                    if (!entity.Transform.IsMapTransform
+                    if (entity.IsInContainer()
                         || entity == eventArgs.User
-                        || !entity.HasComponent<SharedItemComponent>())
+                        || !entity.HasComponent<SharedItemComponent>()
+                        || !EntitySystem.Get<InteractionSystem>().InRangeUnobstructed(eventArgs.User, entity))
                         continue;
                     validStorables.Add(entity);
                 }
@@ -542,15 +559,15 @@ namespace Content.Server.Storage.Components
                 foreach (var entity in validStorables)
                 {
                     // Check again, situation may have changed for some entities, but we'll still pick up any that are valid
-                    if (!entity.Transform.IsMapTransform
+                    if (entity.IsInContainer()
                         || entity == eventArgs.User
                         || !entity.HasComponent<SharedItemComponent>())
                         continue;
-                    var coords = entity.Transform.Coordinates;
+                    var position = EntityCoordinates.FromMap(Owner.Transform.Parent?.Owner ?? Owner, entity.Transform.MapPosition);
                     if (PlayerInsertEntityInWorld(eventArgs.User, entity))
                     {
                         successfullyInserted.Add(entity.Uid);
-                        successfullyInsertedPositions.Add(coords);
+                        successfullyInsertedPositions.Add(position);
                     }
                 }
 
@@ -558,7 +575,9 @@ namespace Content.Server.Storage.Components
                 if (successfullyInserted.Count > 0)
                 {
                     PlaySoundCollection();
+#pragma warning disable 618
                     SendNetworkMessage(
+#pragma warning restore 618
                         new AnimateInsertingEntitiesMessage(
                             successfullyInserted,
                             successfullyInsertedPositions
@@ -571,14 +590,16 @@ namespace Content.Server.Storage.Components
             else if (_quickInsert)
             {
                 if (eventArgs.Target == null
-                    || !eventArgs.Target.Transform.IsMapTransform
+                    || eventArgs.Target.IsInContainer()
                     || eventArgs.Target == eventArgs.User
                     || !eventArgs.Target.HasComponent<SharedItemComponent>())
                     return false;
-                var position = eventArgs.Target.Transform.Coordinates;
+                var position = EntityCoordinates.FromMap(Owner.Transform.Parent?.Owner ?? Owner, eventArgs.Target.Transform.MapPosition);
                 if (PlayerInsertEntityInWorld(eventArgs.User, eventArgs.Target))
                 {
+#pragma warning disable 618
                     SendNetworkMessage(new AnimateInsertingEntitiesMessage(
+#pragma warning restore 618
                         new List<EntityUid>() { eventArgs.Target.Uid },
                         new List<EntityCoordinates>() { position }
                     ));
@@ -631,47 +652,6 @@ namespace Content.Server.Storage.Components
         private void PlaySoundCollection()
         {
             SoundSystem.Play(Filter.Pvs(Owner), StorageSoundCollection.GetSound(), Owner, AudioParams.Default);
-        }
-
-        [Verb]
-        private sealed class ToggleOpenVerb : Verb<ServerStorageComponent>
-        {
-            public override bool AlternativeInteraction => true;
-
-            protected override void GetData(IEntity user, ServerStorageComponent component, VerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                // Get the session for the user
-                var session = user.GetComponentOrNull<ActorComponent>()?.PlayerSession;
-                if (session == null)
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                // Does this player currently have the storage UI open?
-                if (component.SubscribedSessions.Contains(session))
-                {
-                    data.Text = Loc.GetString("toggle-open-verb-close");
-                    data.IconTexture = "/Textures/Interface/VerbIcons/close.svg.192dpi.png";
-                } else
-                {
-                    data.Text = Loc.GetString("toggle-open-verb-open");
-                    data.IconTexture = "/Textures/Interface/VerbIcons/open.svg.192dpi.png";
-                }
-            }
-
-            /// <inheritdoc />
-            protected override void Activate(IEntity user, ServerStorageComponent component)
-            {
-                // "Open" actually closes the UI if it is already open.
-                component.OpenStorageUI(user);
-            }
         }
     }
 }

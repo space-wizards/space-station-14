@@ -61,7 +61,7 @@ namespace Content.Server.Singularity.EntitySystems
             {
                 _accumulator -= _updateInterval;
 
-                foreach (var singularity in ComponentManager.EntityQuery<ServerSingularityComponent>())
+                foreach (var singularity in EntityManager.EntityQuery<ServerSingularityComponent>())
                 {
                     singularity.Energy -= singularity.EnergyDrain;
                 }
@@ -71,7 +71,7 @@ namespace Content.Server.Singularity.EntitySystems
             {
                 _gravityAccumulator -= GravityCooldown;
 
-                foreach (var singularity in ComponentManager.EntityQuery<ServerSingularityComponent>())
+                foreach (var singularity in EntityManager.EntityQuery<ServerSingularityComponent>())
                 {
                     Update(singularity, GravityCooldown);
                 }

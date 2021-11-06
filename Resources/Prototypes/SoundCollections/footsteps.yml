@@ -55,11 +55,10 @@
 - type: soundCollection
   id: footstep_tile
   files:
-  - /Audio/Effects/Footsteps/tile1.ogg
-  - /Audio/Effects/Footsteps/tile2.ogg
-  - /Audio/Effects/Footsteps/tile3.ogg
-  - /Audio/Effects/Footsteps/tile4.ogg
-  - /Audio/Effects/Footsteps/tile5.ogg
+  - /Audio/Effects/Footsteps/tile1.wav
+  - /Audio/Effects/Footsteps/tile2.wav
+  - /Audio/Effects/Footsteps/tile3.wav
+  - /Audio/Effects/Footsteps/tile4.wav
 
 - type: soundCollection
   id: footstep_clown

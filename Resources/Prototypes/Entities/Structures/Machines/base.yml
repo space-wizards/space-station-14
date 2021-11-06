@@ -18,7 +18,8 @@
       mask:
       - MobMask
   - type: Damageable
-    resistances: metallicResistances
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -37,3 +38,4 @@
   id: BaseMachinePowered
   components:
   - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver

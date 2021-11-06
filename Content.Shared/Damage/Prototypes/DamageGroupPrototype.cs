@@ -1,0 +1,26 @@
+using System;
+using System.Collections.Generic;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
+
+namespace Content.Shared.Damage.Prototypes
+{
+    /// <summary>
+    ///     A Group of <see cref="DamageTypePrototype"/>s.
+    /// </summary>
+    /// <remarks>
+    ///     These groups can be used to specify supported damage types of a <see cref="DamageContainerPrototype"/>, or
+    ///     to change/get/set damage in a <see cref="DamageableComponent"/>.
+    /// </remarks>
+    [Prototype("damageGroup")]
+    [Serializable, NetSerializable]
+    public class DamageGroupPrototype : IPrototype
+    {
+        [DataField("id", required: true)] public string ID { get; } = default!;
+
+        [DataField("damageTypes", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<DamageTypePrototype>))]
+        public List<string> DamageTypes { get; } = default!;
+    }
+}

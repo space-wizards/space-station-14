@@ -6,14 +6,12 @@ using Content.Client.Chat.Managers;
 using Content.Client.EscapeMenu;
 using Content.Client.Eui;
 using Content.Client.Flash;
-using Content.Client.GameTicking.Managers;
 using Content.Client.HUD;
 using Content.Client.Input;
 using Content.Client.IoC;
 using Content.Client.Launcher;
 using Content.Client.MainMenu;
 using Content.Client.MobState.Overlays;
-using Content.Client.Notifications.Managers;
 using Content.Client.Parallax;
 using Content.Client.Parallax.Managers;
 using Content.Client.Preferences;
@@ -32,7 +30,6 @@ using Content.Shared.Cargo.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Dispenser;
 using Content.Shared.Gravity;
-using Content.Shared.Kitchen.Components;
 using Content.Shared.Lathe;
 using Content.Shared.Markers;
 using Content.Shared.Research.Components;
@@ -166,7 +163,6 @@ namespace Content.Client.Entry
             ContentContexts.SetupContexts(inputMan.Contexts);
 
             IoCManager.Resolve<IGameHud>().Initialize();
-            IoCManager.Resolve<IClientNotifyManager>().Initialize();
 
             var overlayMgr = IoCManager.Resolve<IOverlayManager>();
             overlayMgr.AddOverlay(new ParallaxOverlay());
@@ -228,7 +224,7 @@ namespace Content.Client.Entry
             switch (level)
             {
                 case ModUpdateLevel.FramePreEngine:
-                    IoCManager.Resolve<IClientNotifyManager>().FrameUpdate(frameEventArgs);
+                    // TODO: Turn IChatManager into an EntitySystem and remove the line below.
                     IoCManager.Resolve<IChatManager>().FrameUpdate(frameEventArgs);
                     break;
             }

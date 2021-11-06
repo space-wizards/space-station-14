@@ -1,7 +1,5 @@
 using System;
-using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;
-using Content.Shared.EffectBlocker;
 using Content.Shared.Interaction;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
@@ -12,7 +10,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Buckle.Components
 {
     [NetworkedComponent()]
-    public abstract class SharedBuckleComponent : Component, IActionBlocker, IEffectBlocker, IDraggable
+    public abstract class SharedBuckleComponent : Component, IDraggable
     {
         public sealed override string Name => "Buckle";
 
@@ -35,13 +33,6 @@ namespace Content.Shared.Buckle.Components
         public bool DontCollide { get; set; }
 
         public abstract bool TryBuckle(IEntity? user, IEntity to);
-
-        bool IActionBlocker.CanChangeDirection()
-        {
-            return !Buckled;
-        }
-
-        bool IEffectBlocker.CanFall() => !Buckled;
 
         bool IDraggable.CanDrop(CanDropEvent args)
         {
@@ -78,7 +69,9 @@ namespace Content.Shared.Buckle.Components
     }
 
     [Serializable, NetSerializable]
+#pragma warning disable 618
     public abstract class BuckleChangeMessage : ComponentMessage
+#pragma warning restore 618
     {
         /// <summary>
         ///     Constructs a new instance of <see cref="BuckleChangeMessage"/>

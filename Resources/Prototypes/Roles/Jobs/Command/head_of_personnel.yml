@@ -7,6 +7,8 @@
   - Command
   - Civilian
   icon: "HeadOfPersonnel"
+  requireAdminNotify: true
+  supervisors: "the captain"
   access:
   - Command
   - HeadOfPersonnel

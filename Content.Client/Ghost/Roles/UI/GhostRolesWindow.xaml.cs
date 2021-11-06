@@ -8,18 +8,18 @@ namespace Content.Client.Ghost.Roles.UI
     [GenerateTypedNameReferences]
     public partial class GhostRolesWindow : SS14Window
     {
-        public event Action<uint>? RoleRequested;
+        public event Action<GhostRoleInfo>? RoleRequested;
 
         public void ClearEntries()
         {
-            EntryContainer.DisposeAllChildren();
             NoRolesMessage.Visible = true;
+            EntryContainer.DisposeAllChildren();
         }
 
         public void AddEntry(GhostRoleInfo info)
         {
             NoRolesMessage.Visible = false;
-            EntryContainer.AddChild(new GhostRolesEntry(info, _ => RoleRequested?.Invoke(info.Identifier)));
+            EntryContainer.AddChild(new GhostRolesEntry(info, _ => RoleRequested?.Invoke(info)));
         }
     }
 }

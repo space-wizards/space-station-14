@@ -15,11 +15,6 @@ namespace Content.Client.Light.Visualizers
         {
             base.OnChangeData(component);
 
-            if (component.Deleted)
-            {
-                return;
-            }
-
             if (component.TryGetData(ExpendableLightVisuals.Behavior, out string lightBehaviourID))
             {
                 if (component.Owner.TryGetComponent<LightBehaviourComponent>(out var lightBehaviour))
@@ -39,14 +34,7 @@ namespace Content.Client.Light.Visualizers
 
             void TryStopStream(IPlayingAudioStream? stream)
             {
-                try
-                {
-                    stream?.Stop();
-                }
-                catch (Exception _)
-                {
-                    // TODO: HOLY SHIT EXPOSE SOME DISPOSED PROPERTY ON PLAYING STREAM OR SOMETHING.
-                }
+                stream?.Stop();
             }
 
             if (component.TryGetData(ExpendableLightVisuals.State, out ExpendableLightState state)

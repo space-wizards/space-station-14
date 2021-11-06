@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Body.Circulatory;
 using Content.Server.Chemistry.Components;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Cooldown;
 using Content.Server.Weapon.Melee.Components;
-using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Damage.Components;
+using Content.Shared.Damage;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Physics;
 using Content.Shared.Weapons.Melee;
 using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -25,6 +26,7 @@ namespace Content.Server.Weapon.Melee
     public sealed class MeleeWeaponSystem : EntitySystem
     {
         [Dependency] private IGameTiming _gameTiming = default!;
+        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private SolutionContainerSystem _solutionsSystem = default!;
 
         public override void Initialize()
@@ -88,11 +90,10 @@ namespace Content.Server.Weapon.Melee
                     var targets = new[] { target };
                     SendAnimation(comp.ClickArc, angle, args.User, owner, targets, comp.ClickAttackEffect, false);
 
-                    if (target.TryGetComponent(out IDamageableComponent? damageableComponent))
-                    {
-                        damageableComponent.TryChangeDamage(comp.DamageType, comp.Damage);
-                    }
+                    RaiseLocalEvent(target.Uid, new AttackedEvent(args.Used, args.User, args.ClickLocation));
 
+                    _damageableSystem.TryChangeDamage(target.Uid,
+                        DamageSpecifier.ApplyModifierSets(comp.Damage, hitEvent.ModifiersList));
                     SoundSystem.Play(Filter.Pvs(owner), comp.HitSound.GetSound(), target);
                 }
             }
@@ -130,10 +131,10 @@ namespace Content.Server.Weapon.Melee
             var hitEntities = new List<IEntity>();
             foreach (var entity in entities)
             {
-                if (!entity.Transform.IsMapTransform || entity == args.User)
+                if (entity.IsInContainer() || entity == args.User)
                     continue;
 
-                if (ComponentManager.HasComponent<IDamageableComponent>(entity.Uid))
+                if (EntityManager.HasComponent<DamageableComponent>(entity.Uid))
                 {
                     hitEntities.Add(entity);
                 }
@@ -157,10 +158,10 @@ namespace Content.Server.Weapon.Melee
 
                 foreach (var entity in hitEntities)
                 {
-                    if (entity.TryGetComponent<IDamageableComponent>(out var damageComponent))
-                    {
-                        damageComponent.TryChangeDamage(comp.DamageType, comp.Damage);
-                    }
+                    RaiseLocalEvent(entity.Uid, new AttackedEvent(args.Used, args.User, args.ClickLocation));
+
+                    _damageableSystem.TryChangeDamage(entity.Uid,
+                            DamageSpecifier.ApplyModifierSets(comp.Damage, hitEvent.ModifiersList));
                 }
             }
 
@@ -219,7 +220,7 @@ namespace Content.Server.Weapon.Melee
             for (var i = 0; i < increments; i++)
             {
                 var castAngle = new Angle(baseAngle + increment * i);
-                var res = Get<SharedBroadphaseSystem>().IntersectRay(mapId,
+                var res = Get<SharedPhysicsSystem>().IntersectRay(mapId,
                     new CollisionRay(position, castAngle.ToWorldVec(),
                         (int) (CollisionGroup.Impassable | CollisionGroup.MobImpassable)), range, ignore).ToList();
 
@@ -281,6 +282,17 @@ namespace Content.Server.Weapon.Melee
     /// </summary>
     public class MeleeHitEvent : HandledEntityEventArgs
     {
+        /// <summary>
+        ///     Modifier sets to apply to the hit event when it's all said and done.
+        ///     This should be modified by adding a new entry to the list.
+        /// </summary>
+        public List<DamageModifierSet> ModifiersList = new();
+
+        /// <summary>
+        ///     A flat amount of damage to add. Same reason as above with Multiplier.
+        /// </summary>
+        public int FlatDamage = 0;
+
         /// <summary>
         ///     A list containing every hit entity. Can be zero.
         /// </summary>

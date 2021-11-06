@@ -7,7 +7,7 @@
   category: Furniture
   description: You sit in this. Either by will or force.
   icon:
-    sprite: Structures/Furniture/furniture.rsi
+    sprite: Structures/Furniture/chairs.rsi
     state: chair
   objectType: Structure
   placementMode: SnapgridCenter
@@ -24,8 +24,8 @@
   category: Furniture
   description: You sit in this. Either by will or force.
   icon:
-    sprite: Structures/Furniture/furniture.rsi
-    state: stool_base
+    sprite: Structures/Furniture/chairs.rsi
+    state: stool
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -41,8 +41,8 @@
   category: Furniture
   description: You sit in this. Either by will or force.
   icon:
-    sprite: Structures/Furniture/furniture.rsi
-    state: bar_stool
+    sprite: Structures/Furniture/chairs.rsi
+    state: bar
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -58,8 +58,8 @@
   category: Furniture
   description: You sit in this. Either by will or force.
   icon:
-    sprite: Structures/Furniture/furniture.rsi
-    state: officechair_white
+    sprite: Structures/Furniture/chairs.rsi
+    state: office-white
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -75,8 +75,8 @@
   category: Furniture
   description: You sit in this. Either by will or force.
   icon:
-    sprite: Structures/Furniture/furniture.rsi
-    state: officechair_dark
+    sprite: Structures/Furniture/chairs.rsi
+    state: office-dark
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -92,8 +92,8 @@
   category: Furniture
   description: It looks comfy.
   icon:
-    sprite: Structures/Furniture/furniture.rsi
-    state: comfychair_preview
+    sprite: Structures/Furniture/chairs.rsi
+    state: comfy
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -109,8 +109,8 @@
   category: Furniture
   description: You sit in this. Either by will or force.
   icon:
-    sprite: Structures/Furniture/furniture.rsi
-    state: wooden_chair
+    sprite: Structures/Furniture/chairs.rsi
+    state: wooden
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false

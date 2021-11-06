@@ -7,7 +7,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.Announcements
 {
-    [AdminCommand(AdminFlags.Fun)]
+    [AdminCommand(AdminFlags.Admin)]
     public class AnnounceCommand : IConsoleCommand
     {
         public string Command => "announce";

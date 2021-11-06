@@ -6,8 +6,7 @@ using Content.Server.Items;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Notification;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
@@ -19,7 +18,9 @@ using Robust.Shared.Utility;
 namespace Content.Server.Weapon.Ranged.Ammunition.Components
 {
     [RegisterComponent]
+#pragma warning disable 618
     public class RangedMagazineComponent : Component, IMapInit, IInteractUsing, IUse, IExamine
+#pragma warning restore 618
     {
         public override string Name => "RangedMagazine";
 

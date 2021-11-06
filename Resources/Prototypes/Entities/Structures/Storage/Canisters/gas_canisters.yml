@@ -42,7 +42,8 @@
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
     - type: Damageable
-      resistances: metallicResistances
+      damageContainer: Inorganic
+      damageModifierSet: Metallic
     - type: Physics
       bodyType: Dynamic
       fixtures:
@@ -266,6 +267,7 @@
               max: 1
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
+        - !type:DumpCanisterBehavior
 
 - type: entity
   parent: GasCanister
@@ -362,7 +364,8 @@
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
     - type: Damageable
-      resistances: metallicResistances
+      damageContainer: Inorganic
+      damageModifierSet: Metallic
     - type: InteractionOutline
     - type: Sprite
       sprite: Structures/Storage/canister.rsi

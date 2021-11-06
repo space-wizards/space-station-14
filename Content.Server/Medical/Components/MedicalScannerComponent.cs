@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Content.Server.Cloning;
 using Content.Server.Mind.Components;
 using Content.Server.Power.Components;
@@ -8,25 +7,19 @@ using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.MedicalScanner;
 using Content.Shared.MobState;
-using Content.Shared.Movement;
-using Content.Shared.Notification;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Preferences;
-using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
-using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Medical.Components
@@ -37,11 +30,9 @@ namespace Content.Server.Medical.Components
     public class MedicalScannerComponent : SharedMedicalScannerComponent, IActivate, IDestroyAct
     {
         [Dependency] private readonly IServerPreferencesManager _prefsManager = null!;
-        [Dependency] private readonly IPlayerManager _playerManager = null!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-        private static readonly TimeSpan InternalOpenAttemptDelay = TimeSpan.FromSeconds(0.5);
-        private TimeSpan _lastInternalOpenAttempt;
+        public static readonly TimeSpan InternalOpenAttemptDelay = TimeSpan.FromSeconds(0.5);
+        public TimeSpan LastInternalOpenAttempt;
 
         private ContainerSlot _bodyContainer = default!;
         private readonly Vector2 _ejectOffset = new(0f, 0f);
@@ -71,36 +62,10 @@ namespace Content.Server.Medical.Components
             UpdateUserInterface();
         }
 
-        /// <inheritdoc />
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-
-            switch (message)
-            {
-                case RelayMovementEntityMessage msg:
-                {
-                    if (EntitySystem.Get<ActionBlockerSystem>().CanInteract(msg.Entity))
-                    {
-                        if (_gameTiming.CurTime <
-                            _lastInternalOpenAttempt + InternalOpenAttemptDelay)
-                        {
-                            break;
-                        }
-
-                        _lastInternalOpenAttempt = _gameTiming.CurTime;
-                        EjectBody();
-                    }
-                    break;
-                }
-            }
-        }
-
         private static readonly MedicalScannerBoundUserInterfaceState EmptyUIState =
             new(
                 null,
-                new Dictionary<string, int>(),
-                new Dictionary<string, int>(),
+                null,
                 false);
 
         private MedicalScannerBoundUserInterfaceState GetUserInterfaceState()
@@ -116,18 +81,14 @@ namespace Content.Server.Medical.Components
                 return EmptyUIState;
             }
 
-            if (!body.TryGetComponent(out IDamageableComponent? damageable))
+            if (!body.TryGetComponent(out DamageableComponent? damageable))
             {
                 return EmptyUIState;
             }
 
-            // Get dictionaries of damage, by fully supported damage groups and types
-            var groups = new Dictionary<string, int>(damageable.GetDamagePerFullySupportedGroupIDs);
-            var types = new Dictionary<string, int>(damageable.GetDamagePerTypeIDs);
-
             if (_bodyContainer.ContainedEntity?.Uid == null)
             {
-                return new MedicalScannerBoundUserInterfaceState(body.Uid, groups, types, true);
+                return new MedicalScannerBoundUserInterfaceState(body.Uid, damageable, true);
             }
 
             var cloningSystem = EntitySystem.Get<CloningSystem>();
@@ -135,7 +96,7 @@ namespace Content.Server.Medical.Components
                          mindComponent.Mind != null &&
                          cloningSystem.HasDnaScan(mindComponent.Mind);
 
-            return new MedicalScannerBoundUserInterfaceState(body.Uid, groups, types, scanned);
+            return new MedicalScannerBoundUserInterfaceState(body.Uid, damageable, scanned);
         }
 
         private void UpdateUserInterface()
@@ -203,51 +164,6 @@ namespace Content.Server.Medical.Components
                 return;
 
             UserInterface?.Open(actor.PlayerSession);
-        }
-
-        [Verb]
-        public sealed class EnterVerb : Verb<MedicalScannerComponent>
-        {
-            protected override void GetData(IEntity user, MedicalScannerComponent component, VerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Text = Loc.GetString("enter-verb-get-data-text");
-                data.Visibility = component.IsOccupied ? VerbVisibility.Invisible : VerbVisibility.Visible;
-            }
-
-            protected override void Activate(IEntity user, MedicalScannerComponent component)
-            {
-                component.InsertBody(user);
-            }
-        }
-
-        [Verb]
-        public sealed class EjectVerb : Verb<MedicalScannerComponent>
-        {
-            public override bool AlternativeInteraction => true;
-
-            protected override void GetData(IEntity user, MedicalScannerComponent component, VerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Text = Loc.GetString("medical-scanner-eject-verb-get-data-text");
-                data.Visibility = component.IsOccupied ? VerbVisibility.Visible : VerbVisibility.Invisible;
-                data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
-            }
-
-            protected override void Activate(IEntity user, MedicalScannerComponent component)
-            {
-                component.EjectBody();
-            }
         }
 
         public void InsertBody(IEntity user)

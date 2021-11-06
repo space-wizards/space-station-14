@@ -1,7 +1,7 @@
 using System;
 using Content.Server.Power.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Radiation;
 using Content.Shared.Singularity.Components;
 using Robust.Server.GameObjects;

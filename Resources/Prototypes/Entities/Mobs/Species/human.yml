@@ -1,8 +1,8 @@
-# Anything human specific (e.g. UI, input) goes under HumanMob_Content
+# Anything human specific (e.g. UI, input) goes under MobHuman
 - type: entity
   save: false
   name: Urist McHands
-  id: BaseHumanMob_Content
+  id: MobHumanBase
   description: A miserable pile of secrets.
   abstract: true
   components:
@@ -34,12 +34,23 @@
   - type: MovementSpeedModifier
   - type: MovedByPressure
   - type: Barotrauma
-    damageType: Blunt
+    damage:
+      types:
+        Blunt: 1 #per second, scales with pressure and other constants.
   - type: DamageOnHighSpeedImpact
+    damage:
+      types:
+        Blunt: 5
     soundHit:
       path: /Audio/Effects/hit_kick.ogg
   - type: Hunger
+    damage:
+      types:
+        Blunt: 2
   - type: Thirst
+    damage:
+      types:
+        Blunt: 2
   # Organs
   - type: SolutionContainerManager
     solutions:
@@ -51,8 +62,13 @@
     solution: bloodstream
   - type: Bloodstream
     max_volume: 100
-  # StatusEffects
-  - type: Stunnable
+  - type: StatusEffects
+    allowed:
+    - Stun
+    - KnockedDown
+    - SlowedDown
+    - Stutter
+    - Electrocution
   # Other
   - type: Inventory
   - type: Clickable
@@ -162,20 +178,27 @@
   - type: Flammable
     fireSpread: true
     canResistFire: true
+    damage:
+      types:
+        Heat : 1 #per second, scales with number of fire 'stacks'
   - type: Temperature
-    heatDamageType: Heat
     heatDamageThreshold: 360
-    coldDamageType: Cold
     coldDamageThreshold: 260
     currentTemperature: 310.15
     specificHeat: 42
     tempDamageCoefficient: 0.1
+    coldDamage:
+      types:
+        Cold : 1 #per second, scales with temperature & other constants
+    heatDamage:
+      types:
+        Heat : 1 #per second, scales with temperature & other constants
   - type: HumanoidAppearance
   - type: Body
     template: HumanoidTemplate
     preset: HumanPreset
   - type: Damageable
-    damageContainer: biologicalDamageContainer
+    damageContainer: Biological
   - type: Respirator
     metabolismHeat: 5000
     radiatedHeat: 400
@@ -189,6 +212,12 @@
     producesGases:
       Oxygen: 0.00045572916
       CarbonDioxide: 0.00015190972
+    damage:
+      types:
+        Asphyxiation: 1
+    damageRecovery:
+      types:
+        Asphyxiation: -1
   - type: Internals
   - type: MobState
     thresholds:
@@ -216,6 +245,21 @@
     - type: CreamPiedVisualizer
       state: creampie_human
     - type: HandsVisualizer
+    - type: DamageVisualizer
+      thresholds: [20, 40, 100]
+      targetLayers:
+      - "enum.HumanoidVisualLayers.Chest"
+      - "enum.HumanoidVisualLayers.Head"
+      - "enum.HumanoidVisualLayers.LArm"
+      - "enum.HumanoidVisualLayers.LLeg"
+      - "enum.HumanoidVisualLayers.RArm"
+      - "enum.HumanoidVisualLayers.RLeg"
+      damageOverlayGroups:
+        Brute:
+          sprite: Mobs/Effects/brute_damage.rsi
+          color: "#FF0000"
+        Burn:
+          sprite: Mobs/Effects/burn_damage.rsi
   - type: CombatMode
   - type: Climbing
   - type: Cuffable
@@ -226,6 +270,9 @@
     range: 0.8
     arcwidth: 30
     arc: fist
+    damage:
+      types:
+        Blunt: 5
   - type: Pullable
   - type: DoAfter
   - type: CreamPied
@@ -246,11 +293,12 @@
     attributes:
       proper: true
   - type: StandingState
+  - type: DoorBumpOpener
 
 - type: entity
   save: false
   name: Urist McHands
-  id: HumanMob_Dummy
+  id: MobHumanDummy
   abstract: true
   description: A dummy human meant to be used in character setup.
   components:
@@ -355,7 +403,7 @@
       template: HumanoidTemplate
       preset: HumanPreset
     - type: Damageable
-      damageContainer: biologicalDamageContainer
+      damageContainer: Biological
     - type: MobState
       thresholds:
         0: !type:NormalMobState {}

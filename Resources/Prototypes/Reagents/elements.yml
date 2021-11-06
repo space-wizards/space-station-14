@@ -62,6 +62,15 @@
       amount: -2
 
 - type: reagent
+  id: Gold
+  name: gold
+  desc: Gold is a dense, soft, shiny metal and the most malleable and ductile metal known.
+  physicalDesc: metallic
+  color: "#F7C430"
+  boilingPoint: 2700.0
+  meltingPoint: 1064.76
+
+- type: reagent
   id: Hydrogen
   name: hydrogen
   desc: A light, flammable gas.
@@ -143,7 +152,7 @@
 - type: reagent
   id: Radium
   name: radium
-  desc: A radioactive metal, silvery-white in it's pure form. It glows due to it's radioactivity and is highly toxic.
+  desc: A radioactive metal, silvery-white in its pure form. It glows due to its radioactivity and is highly toxic.
   physicalDesc: glowing
   color: "#00ff04"
   meltingPoint: 700.0
@@ -170,6 +179,15 @@
   meltingPoint: 1414.0
 
 - type: reagent
+  id: Silver
+  name: silver
+  desc: A soft, white, lustrous transition metal, it has the highest electrical conductivity of any element and the highest thermal conductivity of any metal.
+  physicalDesc: metallic
+  color: "#d0d0d0"
+  boilingPoint: 2212.0
+  meltingPoint: 960.5
+
+- type: reagent
   id: Sulfur
   name: sulfur
   desc: A yellow, crystalline solid.
@@ -181,7 +199,7 @@
 - type: reagent
   id: Sodium
   name: sodium
-  desc: A silvery-white alkali metal. Highly reactive in it's pure form.
+  desc: A silvery-white alkali metal. Highly reactive in its pure form. #thanks visne <3
   physicalDesc: metallic
   color: "#c6c8cc"
   meltingPoint: 97.8

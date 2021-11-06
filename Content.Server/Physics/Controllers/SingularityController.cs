@@ -19,7 +19,7 @@ namespace Content.Server.Physics.Controllers
         {
             base.UpdateBeforeSolve(prediction, frameTime);
 
-            foreach (var (singularity, physics) in ComponentManager.EntityQuery<ServerSingularityComponent, PhysicsComponent>())
+            foreach (var (singularity, physics) in EntityManager.EntityQuery<ServerSingularityComponent, PhysicsComponent>())
             {
                 if (singularity.Owner.HasComponent<ActorComponent>() ||
                     singularity.BeingDeletedByAnotherSingularity) continue;

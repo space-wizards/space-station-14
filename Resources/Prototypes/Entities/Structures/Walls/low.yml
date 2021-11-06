@@ -4,7 +4,9 @@
   name: low wall
   description: Goes up to about your waist.
   components:
-  - type: RCDDeconstructWhitelist
+  - type: Tag
+    tags:
+      - RCDDeconstructWhitelist
   - type: CanBuildWindowOnTop
   - type: Sprite
     netsync: false
@@ -15,7 +17,8 @@
     sprite: Structures/Walls/low_wall.rsi
     state: metal
   - type: Damageable
-    resistances: metallicResistances
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -39,8 +42,10 @@
   name: low wall overlay
   abstract: true
   components:
+  - type: Tag
+    tags:
+    - HideContextMenu
   - type: Sprite
     color: "#889192"
     drawdepth: WallMountedItems
     sprite: Structures/Walls/low_wall.rsi
-  - type: HideContextMenu

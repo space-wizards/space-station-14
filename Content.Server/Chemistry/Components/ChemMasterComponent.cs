@@ -1,20 +1,20 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Content.Server.Chemistry.Components.SolutionManager;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Components.SolutionManager;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Sound;
-using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -38,10 +38,10 @@ namespace Content.Server.Chemistry.Components
     public class ChemMasterComponent : SharedChemMasterComponent, IActivate, IInteractUsing
     {
         [ViewVariables]
-        private ContainerSlot _beakerContainer = default!;
+        public ContainerSlot BeakerContainer = default!;
 
         [ViewVariables]
-        private bool HasBeaker => _beakerContainer.ContainedEntity != null;
+        public bool HasBeaker => BeakerContainer.ContainedEntity != null;
 
         [ViewVariables]
         private bool _bufferModeTransfer = true;
@@ -50,7 +50,7 @@ namespace Content.Server.Chemistry.Components
         private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         [ViewVariables]
-        private Solution BufferSolution => _bufferSolution ??= EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, SolutionName);
+        private Solution BufferSolution => _bufferSolution ??= EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner.Uid, SolutionName);
 
         private Solution? _bufferSolution;
 
@@ -74,17 +74,21 @@ namespace Content.Server.Chemistry.Components
                 UserInterface.OnReceiveMessage += OnUiReceiveMessage;
             }
 
-            _beakerContainer =
+            // Name relied upon by construction graph machine.yml to ensure beaker doesn't get deleted
+            BeakerContainer =
                 ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-reagentContainerContainer");
 
-            _bufferSolution = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, SolutionName);
+            _bufferSolution = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner.Uid, SolutionName);
 
             UpdateUserInterface();
         }
 
+        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
         public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
+#pragma warning disable 618
             base.HandleMessage(message, component);
+#pragma warning restore 618
             switch (message)
             {
                 case PowerChangedMessage:
@@ -177,16 +181,14 @@ namespace Content.Server.Chemistry.Components
         /// <returns>Returns a <see cref="SharedChemMasterComponent.ChemMasterBoundUserInterfaceState"/></returns>
         private ChemMasterBoundUserInterfaceState GetUserInterfaceState()
         {
-            var beaker = _beakerContainer.ContainedEntity;
-            EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(beaker, SolutionName, out var beakerSolution);
-            // TODO this is just a guess
-            if (beaker == null || beakerSolution == null)
+            var beaker = BeakerContainer.ContainedEntity;
+            if (beaker is null || !beaker.TryGetComponent(out FitsInDispenserComponent? fits) ||
+                !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(beaker.Uid, fits.Solution, out var beakerSolution))
             {
-                return new ChemMasterBoundUserInterfaceState(Powered, false, ReagentUnit.New(0), ReagentUnit.New(0),
+                return new ChemMasterBoundUserInterfaceState(Powered, false, FixedPoint2.New(0), FixedPoint2.New(0),
                     "", Owner.Name, new List<Solution.ReagentQuantity>(), BufferSolution.Contents, _bufferModeTransfer,
                     BufferSolution.TotalVolume);
             }
-
 
             return new ChemMasterBoundUserInterfaceState(Powered, true, beakerSolution.CurrentVolume,
                 beakerSolution.MaxVolume,
@@ -204,17 +206,17 @@ namespace Content.Server.Chemistry.Components
         /// If this component contains an entity with a <see cref="Solution"/>, eject it.
         /// Tries to eject into user's hands first, then ejects onto chem master if both hands are full.
         /// </summary>
-        private void TryEject(IEntity user)
+        public void TryEject(IEntity user)
         {
             if (!HasBeaker)
                 return;
 
-            var beaker = _beakerContainer.ContainedEntity;
+            var beaker = BeakerContainer.ContainedEntity;
 
             if (beaker is null)
                 return;
 
-            _beakerContainer.Remove(beaker);
+            BeakerContainer.Remove(beaker);
             UpdateUserInterface();
 
             if (!user.TryGetComponent<HandsComponent>(out var hands) ||
@@ -224,15 +226,13 @@ namespace Content.Server.Chemistry.Components
                 hands.PutInHand(item);
         }
 
-        private void TransferReagent(string id, ReagentUnit amount, bool isBuffer)
+        private void TransferReagent(string id, FixedPoint2 amount, bool isBuffer)
         {
             if (!HasBeaker && _bufferModeTransfer) return;
-            var beaker = _beakerContainer.ContainedEntity;
+            var beaker = BeakerContainer.ContainedEntity;
 
-            if (beaker is null)
-                return;
-
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(beaker, SolutionName, out var beakerSolution))
+            if (beaker is null || !beaker.TryGetComponent(out FitsInDispenserComponent? fits) ||
+                !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(beaker.Uid, fits.Solution, out var beakerSolution))
                 return;
 
             if (isBuffer)
@@ -241,16 +241,16 @@ namespace Content.Server.Chemistry.Components
                 {
                     if (reagent.ReagentId == id)
                     {
-                        ReagentUnit actualAmount;
+                        FixedPoint2 actualAmount;
                         if (
-                            amount == ReagentUnit
-                                .New(-1)) //amount is ReagentUnit.New(-1) when the client sends a message requesting to remove all solution from the container
+                            amount == FixedPoint2
+                                .New(-1)) //amount is FixedPoint2.New(-1) when the client sends a message requesting to remove all solution from the container
                         {
-                            actualAmount = ReagentUnit.Min(reagent.Quantity, beakerSolution.AvailableVolume);
+                            actualAmount = FixedPoint2.Min(reagent.Quantity, beakerSolution.AvailableVolume);
                         }
                         else
                         {
-                            actualAmount = ReagentUnit.Min(reagent.Quantity, amount, beakerSolution.AvailableVolume);
+                            actualAmount = FixedPoint2.Min(reagent.Quantity, amount, beakerSolution.AvailableVolume);
                         }
 
 
@@ -272,14 +272,14 @@ namespace Content.Server.Chemistry.Components
                 {
                     if (reagent.ReagentId == id)
                     {
-                        ReagentUnit actualAmount;
-                        if (amount == ReagentUnit.New(-1))
+                        FixedPoint2 actualAmount;
+                        if (amount == FixedPoint2.New(-1))
                         {
                             actualAmount = reagent.Quantity;
                         }
                         else
                         {
-                            actualAmount = ReagentUnit.Min(reagent.Quantity, amount);
+                            actualAmount = FixedPoint2.Min(reagent.Quantity, amount);
                         }
 
                         EntitySystem.Get<SolutionContainerSystem>().TryRemoveReagent(beaker.Uid, beakerSolution, id, actualAmount);
@@ -299,17 +299,17 @@ namespace Content.Server.Chemistry.Components
 
             if (action == UiAction.CreateBottles)
             {
-                var individualVolume = BufferSolution.TotalVolume / ReagentUnit.New(bottleAmount);
-                if (individualVolume < ReagentUnit.New(1))
+                var individualVolume = BufferSolution.TotalVolume / FixedPoint2.New(bottleAmount);
+                if (individualVolume < FixedPoint2.New(1))
                     return;
 
-                var actualVolume = ReagentUnit.Min(individualVolume, ReagentUnit.New(30));
+                var actualVolume = FixedPoint2.Min(individualVolume, FixedPoint2.New(30));
                 for (int i = 0; i < bottleAmount; i++)
                 {
                     var bottle = Owner.EntityManager.SpawnEntity("ChemistryEmptyBottle01", Owner.Transform.Coordinates);
 
                     var bufferSolution = BufferSolution.SplitSolution(actualVolume);
-                    var bottleSolution = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(bottle, "bottle");
+                    var bottleSolution = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(bottle.Uid, "drink");
 
                     EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(bottle.Uid, bottleSolution, bufferSolution);
 
@@ -332,18 +332,18 @@ namespace Content.Server.Chemistry.Components
             }
             else //Pills
             {
-                var individualVolume = BufferSolution.TotalVolume / ReagentUnit.New(pillAmount);
-                if (individualVolume < ReagentUnit.New(1))
+                var individualVolume = BufferSolution.TotalVolume / FixedPoint2.New(pillAmount);
+                if (individualVolume < FixedPoint2.New(1))
                     return;
 
-                var actualVolume = ReagentUnit.Min(individualVolume, ReagentUnit.New(50));
+                var actualVolume = FixedPoint2.Min(individualVolume, FixedPoint2.New(50));
                 for (int i = 0; i < pillAmount; i++)
                 {
                     var pill = Owner.EntityManager.SpawnEntity("pill", Owner.Transform.Coordinates);
 
                     var bufferSolution = BufferSolution.SplitSolution(actualVolume);
 
-                    var pillSolution = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(pill, "pill");
+                    var pillSolution = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(pill.Uid, "food");
                     EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(pill.Uid, pillSolution, bufferSolution);
 
                     //Try to give them the bottle
@@ -428,7 +428,7 @@ namespace Content.Server.Chemistry.Components
                 }
                 else
                 {
-                    _beakerContainer.Insert(activeHandEntity);
+                    BeakerContainer.Insert(activeHandEntity);
                     UpdateUserInterface();
                 }
             }
@@ -436,6 +436,11 @@ namespace Content.Server.Chemistry.Components
             {
                 Owner.PopupMessage(args.User,
                     Loc.GetString("chem-master-component-cannot-put-entity-message", ("entity", activeHandEntity)));
+                // TBD: This is very definitely hax so that Construction & Wires get a chance to handle things.
+                // When this is ECS'd, drop this in favour of proper prioritization.
+                // Since this is a catch-all handler, that means do this last!
+                // Also note ReagentDispenserComponent did something similar before I got here.
+                return false;
             }
 
             return true;
@@ -444,30 +449,6 @@ namespace Content.Server.Chemistry.Components
         private void ClickSound()
         {
             SoundSystem.Play(Filter.Pvs(Owner), _clickSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
-        }
-
-        [Verb]
-        public sealed class EjectBeakerVerb : Verb<ChemMasterComponent>
-        {
-            public override bool AlternativeInteraction => true;
-
-            protected override void GetData(IEntity user, ChemMasterComponent component, VerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Text = Loc.GetString("eject-beaker-verb-get-data-text");
-                data.Visibility = component.HasBeaker ? VerbVisibility.Visible : VerbVisibility.Invisible;
-                data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
-            }
-
-            protected override void Activate(IEntity user, ChemMasterComponent component)
-            {
-                component.TryEject(user);
-            }
         }
     }
 }

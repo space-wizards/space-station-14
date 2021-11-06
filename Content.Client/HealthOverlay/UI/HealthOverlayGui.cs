@@ -1,6 +1,7 @@
 using Content.Client.IoC;
 using Content.Client.Resources;
-using Content.Shared.Damage.Components;
+using Content.Shared.Damage;
+using Content.Shared.FixedPoint;
 using Content.Shared.MobState;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -12,7 +13,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.HealthOverlay.UI
 {
-    public class HealthOverlayGui : VBoxContainer
+    public class HealthOverlayGui : BoxContainer
     {
         [Dependency] private readonly IEyeManager _eyeManager = default!;
 
@@ -21,6 +22,7 @@ namespace Content.Client.HealthOverlay.UI
             IoCManager.InjectDependencies(this);
             IoCManager.Resolve<IUserInterfaceManager>().StateRoot.AddChild(this);
             SeparationOverride = 0;
+            Orientation = LayoutOrientation.Vertical;
 
             CritBar = new HealthOverlayBar
             {
@@ -33,7 +35,7 @@ namespace Content.Client.HealthOverlay.UI
             {
                 Visible = false,
                 VerticalAlignment = VAlignment.Center,
-                Color = Color.Green
+                Color = Color.LimeGreen
             };
 
             AddChild(Panel = new PanelContainer
@@ -76,14 +78,14 @@ namespace Content.Client.HealthOverlay.UI
             }
 
             if (!Entity.TryGetComponent(out IMobStateComponent? mobState) ||
-                !Entity.TryGetComponent(out IDamageableComponent? damageable))
+                !Entity.TryGetComponent(out DamageableComponent? damageable))
             {
                 CritBar.Visible = false;
                 HealthBar.Visible = false;
                 return;
             }
 
-            int threshold;
+            FixedPoint2 threshold;
 
             if (mobState.IsAlive())
             {
@@ -96,7 +98,7 @@ namespace Content.Client.HealthOverlay.UI
 
                 CritBar.Ratio = 1;
                 CritBar.Visible = true;
-                HealthBar.Ratio = 1 - (float) damageable.TotalDamage / threshold;
+                HealthBar.Ratio = 1 - (damageable.TotalDamage / threshold).Float();
                 HealthBar.Visible = true;
             }
             else if (mobState.IsCritical())
@@ -112,9 +114,9 @@ namespace Content.Client.HealthOverlay.UI
                 }
 
                 CritBar.Visible = true;
-                CritBar.Ratio = 1 - (float)
-                    (damageable.TotalDamage - critThreshold) /
-                    (deadThreshold - critThreshold);
+                CritBar.Ratio = 1 -
+                    ((damageable.TotalDamage - critThreshold) /
+                    (deadThreshold - critThreshold)).Float();
             }
             else if (mobState.IsDead())
             {

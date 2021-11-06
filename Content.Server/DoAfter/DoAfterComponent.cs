@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Players;
@@ -32,41 +31,12 @@ namespace Content.Server.DoAfter
                     doAfter.EventArgs.BreakOnUserMove,
                     doAfter.EventArgs.BreakOnTargetMove,
                     doAfter.EventArgs.MovementThreshold,
-                    doAfter.EventArgs.Target?.Uid ?? EntityUid.Invalid);
+                    doAfter.EventArgs.Target ?? EntityUid.Invalid);
 
                 toAdd.Add(clientDoAfter);
             }
 
             return new DoAfterComponentState(toAdd);
-        }
-
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-
-            switch (message)
-            {
-                case DamageChangedMessage msg:
-                    if (DoAfters.Count == 0)
-                    {
-                        return;
-                    }
-
-                    if (!msg.TookDamage)
-                    {
-                        return;
-                    }
-
-                    foreach (var doAfter in _doAfters.Keys)
-                    {
-                        if (doAfter.EventArgs.BreakOnDamage)
-                        {
-                            doAfter.TookDamage = true;
-                        }
-                    }
-
-                    break;
-            }
         }
 
         public void Add(DoAfter doAfter)
@@ -82,7 +52,9 @@ namespace Content.Server.DoAfter
                 return;
 
             _doAfters.Remove(doAfter);
+#pragma warning disable 618
             SendNetworkMessage(new CancelledDoAfterMessage(index));
+#pragma warning restore 618
         }
 
         /// <summary>

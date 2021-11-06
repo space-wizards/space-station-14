@@ -1,16 +1,12 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.Stack;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Stacks;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Prototypes;
-using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Medical.Components
@@ -20,12 +16,9 @@ namespace Content.Server.Medical.Components
     {
         public override string Name => "Healing";
 
-        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
-        // This also requires changing the dictionary type, and removing a _prototypeManager.Index() call.
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [DataField("heal", required: true )]
+        [DataField("damage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
-        public Dictionary<string, int> Heal = new();
+        public DamageSpecifier Damage = default!;
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
@@ -34,7 +27,7 @@ namespace Content.Server.Medical.Components
                 return false;
             }
 
-            if (!eventArgs.Target.TryGetComponent(out IDamageableComponent? damageable))
+            if (!eventArgs.Target.HasComponent<DamageableComponent>())
             {
                 return true;
             }
@@ -50,15 +43,12 @@ namespace Content.Server.Medical.Components
                 return true;
             }
 
-            if (Owner.TryGetComponent<SharedStackComponent>(out var stack) && !EntitySystem.Get<StackSystem>().Use(Owner.Uid, stack, 1))
+            if (Owner.TryGetComponent<SharedStackComponent>(out var stack) && !EntitySystem.Get<StackSystem>().Use(Owner.Uid, 1, stack))
             {
                 return true;
             }
 
-            foreach (var (damageTypeID, amount) in Heal)
-            {
-                damageable.TryChangeDamage(_prototypeManager.Index<DamageTypePrototype>(damageTypeID), -amount, true);
-            }
+            EntitySystem.Get<DamageableSystem>().TryChangeDamage(eventArgs.Target.Uid, Damage, true);
 
             return true;
         }

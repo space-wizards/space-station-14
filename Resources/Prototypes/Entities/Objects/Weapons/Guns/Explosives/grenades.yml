@@ -24,6 +24,7 @@
     flashRange: 7
   - type: ExplodeOnTrigger
   - type: Damageable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -64,6 +65,7 @@
       path: "/Audio/Effects/flash_bang.ogg"
   - type: DeleteOnTrigger
   - type: Damageable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -100,6 +102,7 @@
     flashRange: 10
   - type: ExplodeOnTrigger
   - type: Damageable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -135,6 +138,7 @@
     flashRange: 50
   - type: ExplodeOnTrigger
   - type: Damageable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:

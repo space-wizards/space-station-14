@@ -40,3 +40,4 @@
       mask:
       - Impassable
   - type: Spillable
+    solution: bucket

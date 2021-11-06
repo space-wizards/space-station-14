@@ -3,6 +3,8 @@
   parent: BaseStructureDynamic
   abstract: true
   components:
+  - type: Transform
+    noRot: true
   - type: InteractionOutline
   - type: Physics
     bodyType: Dynamic
@@ -19,12 +21,14 @@
         - SmallImpassable
         - VaultImpassable
   - type: Sprite
+    noRot: true
     sprite: Structures/Furniture/potted_plants.rsi
   - type: PottedPlantHide
   - type: SecretStash
     secretPartName: the plant
   - type: Pullable
   - type: Damageable
+    damageContainer: Inorganic # The pot. Not the plant. Or is it plastic?
   - type: Destructible
     thresholds:
     - trigger:

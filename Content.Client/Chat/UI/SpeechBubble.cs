@@ -1,5 +1,6 @@
 using System;
 using Content.Client.Chat.Managers;
+using Content.Client.Viewport;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -101,7 +102,7 @@ namespace Content.Client.Chat.UI
             }
 
             // Lerp to our new vertical offset if it's been modified.
-            if (MathHelper.CloseTo(_verticalOffsetAchieved - VerticalOffset, 0, 0.1))
+            if (MathHelper.CloseToPercent(_verticalOffsetAchieved - VerticalOffset, 0, 0.1))
             {
                 _verticalOffsetAchieved = VerticalOffset;
             }
@@ -114,13 +115,16 @@ namespace Content.Client.Chat.UI
                 return;
 
             var worldPos = _senderEntity.Transform.WorldPosition;
-            worldPos += (0, EntityVerticalOffset);
+            var scale = _eyeManager.MainViewport.GetRenderScale();
+            var offset = new Vector2(0, EntityVerticalOffset * EyeManager.PixelsPerMeter * scale);
+            var lowerCenter = (_eyeManager.WorldToScreen(worldPos) - offset) / UIScale;
 
-            var lowerCenter = _eyeManager.WorldToScreen(worldPos) / UIScale;
             var screenPos = lowerCenter - (Width / 2, ContentHeight + _verticalOffsetAchieved);
+            // Round to nearest 0.5
+            screenPos = (screenPos * 2).Rounded() / 2;
             LayoutContainer.SetPosition(this, screenPos);
 
-            var height = MathHelper.Clamp(lowerCenter.Y - screenPos.Y, 0, ContentHeight);
+            var height = MathF.Ceiling(MathHelper.Clamp(lowerCenter.Y - screenPos.Y, 0, ContentHeight));
             SetHeight = height;
         }
 

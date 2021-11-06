@@ -6,8 +6,8 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Morgue;
-using Content.Shared.Notification.Managers;
 using Content.Shared.Physics;
+using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Standing;
 using Robust.Server.GameObjects;
@@ -16,6 +16,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -28,7 +29,9 @@ namespace Content.Server.Morgue.Components
     [ComponentReference(typeof(EntityStorageComponent))]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
+#pragma warning disable 618
     public class MorgueEntityStorageComponent : EntityStorageComponent, IExamine
+#pragma warning restore 618
     {
         public override string Name => "MorgueEntityStorage";
 
@@ -68,7 +71,7 @@ namespace Content.Server.Morgue.Components
 
         protected override bool AddToContents(IEntity entity)
         {
-            if (entity.HasComponent<SharedBodyComponent>() && !EntitySystem.Get<StandingStateSystem>().IsDown(entity))
+            if (entity.HasComponent<SharedBodyComponent>() && !EntitySystem.Get<StandingStateSystem>().IsDown(entity.Uid))
                 return false;
             return base.AddToContents(entity);
         }
@@ -106,8 +109,7 @@ namespace Content.Server.Morgue.Components
                 TrayContainer?.Remove(_tray);
             }
 
-            _tray.Transform.WorldPosition = Owner.Transform.WorldPosition + Owner.Transform.LocalRotation.GetCardinalDir().ToVec();
-            _tray.Transform.AttachParent(Owner);
+            _tray.Transform.Coordinates = new EntityCoordinates(Owner.Uid, 0, -1);
 
             base.OpenStorage();
         }
@@ -151,7 +153,7 @@ namespace Content.Server.Morgue.Components
             }
 
             var entityLookup = IoCManager.Resolve<IEntityLookup>();
-            foreach (var entity in entityLookup.GetEntitiesIntersecting(_tray))
+            foreach (var entity in entityLookup.GetEntitiesIntersecting(_tray, flags: LookupFlags.None))
             {
                 yield return entity;
             }
@@ -165,7 +167,7 @@ namespace Content.Server.Morgue.Components
             if (DoSoulBeep && Appearance != null && Appearance.TryGetData(MorgueVisuals.HasSoul, out bool hasSoul) && hasSoul)
             {
                 SoundSystem.Play(Filter.Pvs(Owner), _occupantHasSoulAlarmSound.GetSound(), Owner);
-            }                
+            }
         }
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)

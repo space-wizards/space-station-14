@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Content.Server.Power.Components;
 using Content.Server.Solar.Components;
 using Content.Shared.Physics;
 using JetBrains.Annotations;
@@ -7,7 +8,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -71,9 +71,16 @@ namespace Content.Server.Solar.EntitySystems
 
         public override void Initialize()
         {
+            SubscribeLocalEvent<SolarPanelComponent, MapInitEvent>(OnMapInit);
+
             // Initialize the sun to something random
             TowardsSun = MathHelper.TwoPi * _robustRandom.NextDouble();
             SunAngularVelocity = Angle.FromDegrees(0.1 + ((_robustRandom.NextDouble() - 0.5) * 0.05));
+        }
+
+        private void OnMapInit(EntityUid uid, SolarPanelComponent component, MapInitEvent args)
+        {
+            UpdateSupply(uid, component);
         }
 
         public override void Update(float frameTime)
@@ -86,7 +93,7 @@ namespace Content.Server.Solar.EntitySystems
 
             TotalPanelPower = 0;
 
-            foreach (var panel in ComponentManager.EntityQuery<SolarPanelComponent>(true))
+            foreach (var panel in EntityManager.EntityQuery<SolarPanelComponent>())
             {
                 // There's supposed to be rotational logic here, but that implies putting it somewhere.
                 panel.Owner.Transform.WorldRotation = TargetPanelRotation;
@@ -137,13 +144,26 @@ namespace Content.Server.Solar.EntitySystems
                 // Determine if the solar panel is occluded, and zero out coverage if so.
                 // FIXME: The "Opaque" collision group doesn't seem to work right now.
                 var ray = new CollisionRay(entity.Transform.WorldPosition, TowardsSun.ToWorldVec(), (int) CollisionGroup.Opaque);
-                var rayCastResults = EntitySystem.Get<SharedBroadphaseSystem>().IntersectRay(entity.Transform.MapID, ray, SunOcclusionCheckDistance, entity);
+                var rayCastResults = Get<SharedPhysicsSystem>().IntersectRay(entity.Transform.MapID, ray, SunOcclusionCheckDistance, entity);
                 if (rayCastResults.Any())
                     coverage = 0;
             }
 
             // Total coverage calculated; apply it to the panel.
             panel.Coverage = coverage;
+        }
+
+        private void UpdateSupply(
+            EntityUid uid,
+            SolarPanelComponent? solar = null,
+            PowerSupplierComponent? supplier = null)
+        {
+            if (!Resolve(uid, ref solar, ref supplier))
+            {
+                return;
+            }
+
+            supplier.MaxSupply = (int) (solar.MaxSupply * solar.Coverage);
         }
     }
 }

@@ -26,16 +26,22 @@ namespace Content.Server.Shuttles
 
         private void HandleGridFixtureChange(GridFixtureChangeEvent args)
         {
-            var fixture = args.NewFixture;
+            // Look this is jank but it's a placeholder until we design it.
+            if (args.NewFixtures.Count == 0) return;
 
-            if (fixture == null) return;
+            var body = args.NewFixtures[0].Body;
 
-            fixture.Mass = fixture.Area * TileMassMultiplier;
-
-            if (fixture.Body.Owner.TryGetComponent(out ShuttleComponent? shuttleComponent))
+            foreach (var fixture in args.NewFixtures)
             {
-                RecalculateSpeedMultiplier(shuttleComponent, fixture.Body);
+                fixture.Mass = fixture.Area * TileMassMultiplier;
+                fixture.Restitution = 0.1f;
             }
+
+            if (body.Owner.TryGetComponent(out ShuttleComponent? shuttleComponent))
+            {
+                RecalculateSpeedMultiplier(shuttleComponent, body);
+            }
+
         }
 
         private void HandleGridInit(GridInitializeEvent ev)
@@ -118,8 +124,9 @@ namespace Content.Server.Shuttles
             component.BodyType = BodyType.Dynamic;
             component.BodyStatus = BodyStatus.InAir;
             //component.FixedRotation = false; TODO WHEN ROTATING SHUTTLES FIXED.
-            component.FixedRotation = true;
-            component.LinearDamping = 0.05f;
+            component.FixedRotation = false;
+            component.LinearDamping = 0.2f;
+            component.AngularDamping = 0.1f;
         }
 
         private void Disable(PhysicsComponent component)

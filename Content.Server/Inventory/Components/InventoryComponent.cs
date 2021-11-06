@@ -7,19 +7,17 @@ using Content.Server.Clothing.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Interaction;
 using Content.Server.Items;
-using Content.Server.Pressure;
 using Content.Server.Storage.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
-using Content.Shared.EffectBlocker;
 using Content.Shared.Inventory;
-using Content.Shared.Inventory.Events;
 using Content.Shared.Movement.Components;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Audio;
 using Robust.Shared.Console;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -27,6 +25,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.Inventory.EquipmentSlotDefines;
@@ -36,7 +35,7 @@ namespace Content.Server.Inventory.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedInventoryComponent))]
-    public class InventoryComponent : SharedInventoryComponent, IExAct, IPressureProtection, IEffectBlocker
+    public class InventoryComponent : SharedInventoryComponent, IExAct
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
@@ -58,52 +57,6 @@ namespace Content.Server.Inventory.Components
                 {
                     AddSlot(slotName);
                 }
-            }
-        }
-
-        // Optimization: Cache this
-        [ViewVariables]
-        public float HighPressureMultiplier
-        {
-            get
-            {
-                var multiplier = 1f;
-
-                foreach (var (slot, containerSlot) in _slotContainers)
-                {
-                    foreach (var entity in containerSlot.ContainedEntities)
-                    {
-                        foreach (var protection in entity.GetAllComponents<IPressureProtection>())
-                        {
-                            multiplier *= protection.HighPressureMultiplier;
-                        }
-                    }
-                }
-
-                return multiplier;
-            }
-        }
-
-        // Optimization: Cache this
-        [ViewVariables]
-        public float LowPressureMultiplier
-        {
-            get
-            {
-                var multiplier = 1f;
-
-                foreach (var (slot, containerSlot) in _slotContainers)
-                {
-                    foreach (var entity in containerSlot.ContainedEntities)
-                    {
-                        foreach (var protection in entity.GetAllComponents<IPressureProtection>())
-                        {
-                            multiplier *= protection.LowPressureMultiplier;
-                        }
-                    }
-                }
-
-                return multiplier;
             }
         }
 
@@ -145,11 +98,6 @@ namespace Content.Server.Inventory.Components
 
                 return mod;
             }
-        }
-
-        bool IEffectBlocker.CanSlip()
-        {
-            return !TryGetSlotItem(EquipmentSlotDefines.Slots.SHOES, out ItemComponent? shoes) || EffectBlockerSystem.CanSlip(shoes.Owner);
         }
 
         protected override void OnRemove()
@@ -260,6 +208,13 @@ namespace Content.Server.Inventory.Components
             {
                 reason = Loc.GetString("inventory-component-on-equip-cannot");
                 return false;
+            }
+
+            // TODO: Make clothing component not inherit ItemComponent, for fuck's sake.
+            // TODO: Make clothing component not required for playing a sound on equip... Move it to its own component.
+            if (mobCheck && item is ClothingComponent { EquipSound: {} equipSound })
+            {
+                SoundSystem.Play(Filter.Pvs(Owner), equipSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
             }
 
             _entitySystemManager.GetEntitySystem<InteractionSystem>().EquippedInteraction(Owner, item.Owner, slot);
@@ -520,10 +475,14 @@ namespace Content.Server.Inventory.Components
                     var hands = Owner.GetComponent<HandsComponent>();
                     var activeHand = hands.ActiveHand;
                     var activeItem = hands.GetActiveHand;
-                    if (activeHand != null && activeItem != null && activeItem.Owner.TryGetComponent(out ClothingComponent? clothing))
+                    if (activeHand != null && activeItem != null && activeItem.Owner.TryGetComponent(out ItemComponent? item))
                     {
                         hands.TryDropNoInteraction();
-                        clothing.TryEquip(this, msg.Inventoryslot, Owner);
+                        if (!Equip(msg.Inventoryslot, item, true, out var reason))
+                        {
+                            hands.PutInHand(item);
+                            Owner.PopupMessageCursor(reason);
+                        }
                     }
 
                     break;
@@ -569,6 +528,7 @@ namespace Content.Server.Inventory.Components
         }
 
         /// <inheritdoc />
+        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel,
             ICommonSession? session = null)
         {
@@ -648,48 +608,6 @@ namespace Content.Server.Inventory.Components
             }
 
             return false;
-        }
-
-        [Verb]
-        private sealed class SetOutfitVerb : Verb<InventoryComponent>
-        {
-            public override bool RequireInteractionRange => false;
-            public override bool BlockedByContainers => false;
-
-            protected override void GetData(IEntity user, InventoryComponent component, VerbData data)
-            {
-                data.Visibility = VerbVisibility.Invisible;
-                if (!CanCommand(user))
-                    return;
-
-                data.Visibility = VerbVisibility.Visible;
-                data.Text = Loc.GetString("set-outfit-verb-get-data-text");
-                data.CategoryData = VerbCategories.Debug;
-                data.IconTexture = "/Textures/Interface/VerbIcons/outfit.svg.192dpi.png";
-            }
-
-            protected override void Activate(IEntity user, InventoryComponent component)
-            {
-                if (!CanCommand(user))
-                    return;
-
-                var target = component.Owner;
-
-                var entityId = target.Uid.ToString();
-
-                var command = new SetOutfitCommand();
-                var host = IoCManager.Resolve<IServerConsoleHost>();
-                var args = new string[] {entityId};
-                var session = user.PlayerSession();
-                command.Execute(new ConsoleShell(host, session), $"{command.Command} {entityId}", args);
-            }
-
-            private static bool CanCommand(IEntity user)
-            {
-                var groupController = IoCManager.Resolve<IConGroupController>();
-                return user.TryGetComponent<ActorComponent>(out var player) &&
-                       groupController.CanCommand(player.PlayerSession, "setoutfit");
-            }
         }
     }
 }

@@ -95,9 +95,7 @@
       - box12
   # Someday...
   # - type: DamageOnLand
-  #   amount: 5
   # - type: DamageOtherOnHit
-  #   amount: 5
   # - type: Damageable
   # - type: Destructible
   #   thresholds:
@@ -146,7 +144,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
-    drawdepth: FloorObjects
+    drawdepth: SmallObjects
     layers:
     - state: box
     - state: box-open

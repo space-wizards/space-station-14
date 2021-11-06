@@ -4,7 +4,7 @@
 - type: entity
   name: bat
   parent: SimpleMobBase
-  id: BatMob_Content
+  id: MobBat
   description: Some cultures find them terrifying, others crunchy on the teeth.
   components:
   - type: MovementSpeedModifier
@@ -38,7 +38,7 @@
 - type: entity
   name: bee
   parent: SimpleMobBase
-  id: BeeMob_Content
+  id: MobBee
   description: Nice to have, but you can't build a civilization on a foundation of honey alone.
   components:
   - type: MovementSpeedModifier
@@ -73,7 +73,7 @@
 - type: entity
   name: chicken
   parent: SimpleMobBase
-  id: ChickenMob_Content
+  id: MobChicken
   description: Comes before an egg, and IS a dinosaur!
   components:
   - type: Sprite
@@ -104,7 +104,7 @@
 - type: entity
   name: butterfly
   parent: SimpleMobBase
-  id: ButterflyMob_Content
+  id: MobButterfly
   description: Despite popular misconceptions, it's not actually made of butter.
   components:
   - type: MovementSpeedModifier
@@ -148,7 +148,7 @@
 - type: entity
   name: cow
   parent: SimpleMobBase
-  id: CowMob_Content
+  id: MobCow
   description: Moo.
   components:
   - type: Sprite
@@ -179,7 +179,7 @@
 - type: entity
   name: crab
   parent: SimpleMobBase
-  id: CrabMob_Content
+  id: MobCrab
   description: A folk legend goes around that his claw snaps spacemen out of existance over distasteful remarks. Be polite and tolerant for your own safety.
   components:
   - type: Sprite
@@ -211,7 +211,7 @@
 - type: entity
   name: goat
   parent: SimpleMobBase
-  id: GoatMob_Content
+  id: MobGoat
   description: His spine consists of long sharp segments, no wonder he is so grumpy.
   components:
   - type: Sprite
@@ -243,7 +243,7 @@
 - type: entity
   name: goose
   parent: SimpleMobBase
-  id: GooseMob_Content
+  id: MobGoose
   description: Its stomach and mind are an enigma beyond human comprehension.
   components:
   - type: Sprite
@@ -274,7 +274,7 @@
 - type: entity
   name: gorilla
   parent: SimpleMobBase
-  id: GorillaMob_Content
+  id: MobGorilla
   description: Smashes, roars, looks cool. Don't stand near one.
   components:
   - type: Sprite
@@ -304,7 +304,7 @@
 
 - type: entity
   name: monkey
-  id: MonkeyMob_Content
+  id: MobMonkey
   parent: SimpleMobBase
   description: New church of neo-darwinists actually believe that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing.
   components:
@@ -339,7 +339,7 @@
 - type: entity
   name: mouse
   parent: SimpleMobBase
-  id: MouseMob_Content
+  id: MobMouse
   description: Squeak!
   components:
   - type: GhostTakeoverAvailable
@@ -385,7 +385,7 @@
 # a mob is dead or something idk
   - type: Food
   - type: Extractable
-    extractableSolution: food
+    grindableSolutionName: food
   - type: SolutionContainerManager
     solutions:
       food:
@@ -395,8 +395,8 @@
   - type: MouseAccent
 
 - type: entity
-  parent: MouseMob_Content
-  id: MouseMob1_Content
+  parent: MobMouse
+  id: MobMouse1
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -415,8 +415,8 @@
       dead: splat-1
 
 - type: entity
-  parent: MouseMob_Content
-  id: MouseMob2_Content
+  parent: MobMouse
+  id: MobMouse2
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -438,7 +438,7 @@
 - type: entity
   name: parrot
   parent: SimpleMobBase
-  id: ParrotMob_Content
+  id: MobParrot
   description: Infiltrates your domain, spies on you, and somehow still a cool pet.
   components:
   - type: MovementSpeedModifier
@@ -472,7 +472,7 @@
 - type: entity
   name: penguin
   parent: SimpleMobBase
-  id: PenguinMob_Content
+  id: MobPenguin
   description: Their lives are constant pain due to their inner-body knees.
   components:
   - type: Sprite
@@ -503,7 +503,7 @@
 - type: entity
   name: snake
   parent: SimpleMobBase
-  id: SnakeMob_Content
+  id: MobSnake
   description: Hissss! Bites aren't poisonous.
   components:
   - type: Sprite
@@ -537,7 +537,7 @@
 - type: entity
   name: tarantula
   parent: SimpleMobBase
-  id: GiantSpiderMob_Content
+  id: MobGiantSpider
   description: Widely recognized to be the literal worst thing in existence.
   components:
   - type: Sprite

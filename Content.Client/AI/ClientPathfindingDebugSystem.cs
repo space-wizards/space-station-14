@@ -270,7 +270,7 @@ namespace Content.Client.AI
                 }
                 else
                 {
-                    _cachedRegionColors[gridId][region] = Color.Green.WithAlpha(0.3f);
+                    _cachedRegionColors[gridId][region] = Color.LimeGreen.WithAlpha(0.3f);
                 }
 
                 Timer.Spawn(3000, () =>

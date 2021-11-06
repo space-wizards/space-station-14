@@ -1,0 +1,27 @@
+﻿<SS14Window xmlns="https://spacestation14.io"
+            Name="APCMenu"
+            Title="{Loc 'apc-menu-title'}"
+            Resizable="False">
+    <BoxContainer Orientation="Vertical"
+                  SeparationOverride="4">
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc 'apc-menu-breaker-label'}"/>
+            <Button Name="BreakerButton" Text="{Loc 'apc-menu-breaker-button'}"></Button>
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc 'apc-menu-external-label'}"/>
+            <Label Name="ExternalPowerStateLabel" Text="{Loc 'apc-menu-power-state-good'}"/>
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc 'apc-menu-charge-label'}"/>
+            <ProgressBar Name="ChargeBar"
+                         HorizontalExpand="True"
+                         MinValue="0"
+                         MaxValue="1"
+                         Page="0"
+                         Value="0.5">
+            </ProgressBar>
+            <Label Name="ChargePercentage"/>
+        </BoxContainer>
+    </BoxContainer>
+</SS14Window>

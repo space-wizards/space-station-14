@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: Smoke
   name: smoke
   abstract: true
@@ -102,7 +102,9 @@
     snap:
       - Wall
   components:
-  - type: RCDDeconstructWhitelist
+  - type: Tag
+    tags:
+      - RCDDeconstructWhitelist
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
@@ -125,7 +127,8 @@
     anchored: true
   - type: Airtight
   - type: Damageable
-    resistances: metallicResistances
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:

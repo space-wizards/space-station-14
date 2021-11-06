@@ -4,7 +4,10 @@
   name: closet
   description: A standard-issue Nanotrasen storage unit.
   components:
+  - type: Transform
+    noRot: true
   - type: Sprite
+    noRot: true
     netsync: false
     sprite: Structures/Storage/closet.rsi
     layers:
@@ -16,6 +19,9 @@
       map: ["enum.StorageVisualLayers.Welded"]
   - type: MovedByPressure
   - type: DamageOnHighSpeedImpact
+    damage:
+      types:
+        Blunt: 5
     soundHit:
       path: /Audio/Effects/bang.ogg
   - type: InteractionOutline
@@ -37,7 +43,8 @@
   - type: PlaceableSurface
     placeCentered: true
   - type: Damageable
-    resistances: metallicResistances
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:

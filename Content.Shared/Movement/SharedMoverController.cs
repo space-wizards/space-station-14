@@ -26,7 +26,7 @@ namespace Content.Shared.Movement
         [Dependency] private readonly IMapManager _mapManager = default!;
 
         private ActionBlockerSystem _blocker = default!;
-        private SharedBroadphaseSystem _broadPhaseSystem = default!;
+        private SharedPhysicsSystem _broadPhaseSystem = default!;
 
         private bool _relativeMovement;
 
@@ -38,7 +38,7 @@ namespace Content.Shared.Movement
         public override void Initialize()
         {
             base.Initialize();
-            _broadPhaseSystem = EntitySystem.Get<SharedBroadphaseSystem>();
+            _broadPhaseSystem = EntitySystem.Get<SharedPhysicsSystem>();
             _blocker = EntitySystem.Get<ActionBlockerSystem>();
             var configManager = IoCManager.Resolve<IConfigurationManager>();
             configManager.OnValueChanged(CCVars.RelativeMovement, SetRelativeMovement, true);
@@ -67,16 +67,21 @@ namespace Content.Shared.Movement
         {
             var (walkDir, sprintDir) = mover.VelocityDir;
 
+            var transform = mover.Owner.Transform;
+
             // Regular movement.
             // Target velocity.
-            var total = (walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed);
+            var total = walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed;
 
-            var worldTotal = _relativeMovement ? new Angle(mover.Owner.Transform.Parent!.WorldRotation.Theta).RotateVec(total) : total;
+            var worldTotal = _relativeMovement ? transform.Parent!.WorldRotation.RotateVec(total) : total;
+
+            if (transform.GridID == GridId.Invalid)
+                worldTotal = mover.LastGridAngle.RotateVec(worldTotal);
+            else
+                mover.LastGridAngle = transform.Parent!.WorldRotation;
 
             if (worldTotal != Vector2.Zero)
-            {
-                mover.Owner.Transform.WorldRotation = worldTotal.GetDir().ToAngle();
-            }
+                transform.WorldRotation = worldTotal.GetDir().ToAngle();
 
             physicsComponent.LinearVelocity = worldTotal;
         }
@@ -111,6 +116,8 @@ namespace Content.Shared.Movement
 
                 if (!touching)
                 {
+                    if (transform.GridID != GridId.Invalid)
+                        mover.LastGridAngle = transform.Parent!.WorldRotation;
                     transform.WorldRotation = physicsComponent.LinearVelocity.GetDir().ToAngle();
                     return;
                 }
@@ -119,18 +126,19 @@ namespace Content.Shared.Movement
             // Regular movement.
             // Target velocity.
             // This is relative to the map / grid we're on.
-            var total = (walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed);
+            var total = walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed;
 
-            var worldTotal = _relativeMovement ?
-                new Angle(transform.Parent!.WorldRotation.Theta).RotateVec(total) :
-                total;
+            var worldTotal = _relativeMovement ? transform.Parent!.WorldRotation.RotateVec(total) : total;
 
-            DebugTools.Assert(MathHelper.CloseTo(total.Length, worldTotal.Length));
+            DebugTools.Assert(MathHelper.CloseToPercent(total.Length, worldTotal.Length));
 
             if (weightless)
-            {
                 worldTotal *= mobMover.WeightlessStrength;
-            }
+
+            if (transform.GridID == GridId.Invalid)
+                worldTotal = mover.LastGridAngle.RotateVec(worldTotal);
+            else
+                mover.LastGridAngle = transform.Parent!.WorldRotation;
 
             if (worldTotal != Vector2.Zero)
             {
@@ -161,12 +169,7 @@ namespace Content.Shared.Movement
         /// <summary>
         ///     Used for weightlessness to determine if we are near a wall.
         /// </summary>
-        /// <param name="broadPhaseSystem"></param>
-        /// <param name="transform"></param>
-        /// <param name="mover"></param>
-        /// <param name="collider"></param>
-        /// <returns></returns>
-        public static bool IsAroundCollider(SharedBroadphaseSystem broadPhaseSystem, ITransformComponent transform, IMobMoverComponent mover, IPhysBody collider)
+        public static bool IsAroundCollider(SharedPhysicsSystem broadPhaseSystem, ITransformComponent transform, IMobMoverComponent mover, IPhysBody collider)
         {
             var enlargedAABB = collider.GetWorldAABB().Enlarged(mover.GrabRange);
 

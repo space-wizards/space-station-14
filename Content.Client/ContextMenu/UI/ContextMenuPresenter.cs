@@ -1,352 +1,179 @@
 using System;
-using System.Linq;
+using System.Collections.Generic;
 using System.Threading;
-using Content.Client.Examine;
-using Content.Client.Interactable;
-using Content.Client.Items.Managers;
-using Content.Client.Verbs;
-using Content.Client.Viewport;
-using Content.Shared;
-using Content.Shared.CCVar;
-using Content.Shared.Input;
-using Content.Shared.Verbs;
-using Robust.Client.GameObjects;
-using Robust.Client.Graphics;
-using Robust.Client.Input;
-using Robust.Client.Player;
-using Robust.Client.State;
 using Robust.Client.UserInterface;
-using Robust.Shared.Configuration;
-using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Input;
-using Robust.Shared.Input.Binding;
-using Robust.Shared.IoC;
-using Robust.Shared.Map;
-using Robust.Shared.Timing;
-using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
+using Robust.Shared.Maths;
 using Timer = Robust.Shared.Timing.Timer;
 namespace Content.Client.ContextMenu.UI
 {
+    /// <summary>
+    ///     This class handles all the logic associated with showing a context menu.
+    /// </summary>
+    /// <remarks>
+    ///     This largely involves setting up timers to open and close sub-menus when hovering over other menu elements.
+    /// </remarks>
     public class ContextMenuPresenter : IDisposable
     {
-        [Dependency] private readonly IEntitySystemManager _systemManager = default!;
-        [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IStateManager _stateManager = default!;
-        [Dependency] private readonly IInputManager _inputManager = default!;
-        [Dependency] private readonly IConfigurationManager _cfg = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IEyeManager _eyeManager = default!;
+        public static readonly TimeSpan HoverDelay = TimeSpan.FromSeconds(0.2);
 
-        private readonly IContextMenuView _contextMenuView;
-        private readonly VerbSystem _verbSystem;
+        public ContextMenuPopup RootMenu;
+        public Stack<ContextMenuPopup> Menus { get; } = new();
 
-        private bool _playerCanSeeThroughContainers;
+        /// <summary>
+        ///     Used to cancel the timer that opens menus.
+        /// </summary>
+        public CancellationTokenSource? CancelOpen;
 
-        private MapCoordinates _mapCoordinates;
-        private CancellationTokenSource? _cancellationTokenSource;
+        /// <summary>
+        ///     Used to cancel the timer that closes menus.
+        /// </summary>
+        public CancellationTokenSource? CancelClose;
 
-        public ContextMenuPresenter(VerbSystem verbSystem)
+        public ContextMenuPresenter()
         {
-            IoCManager.InjectDependencies(this);
-
-            _verbSystem = verbSystem;
-            _verbSystem.ToggleContextMenu += SystemOnToggleContextMenu;
-            _verbSystem.ToggleContainerVisibility += SystemOnToggleContainerVisibility;
-
-            _contextMenuView = new ContextMenuView();
-            _contextMenuView.OnKeyBindDownSingle += OnKeyBindDownSingle;
-            _contextMenuView.OnMouseEnteredSingle += OnMouseEnteredSingle;
-            _contextMenuView.OnMouseExitedSingle += OnMouseExitedSingle;
-            _contextMenuView.OnMouseHoveringSingle += OnMouseHoveringSingle;
-
-            _contextMenuView.OnKeyBindDownStack += OnKeyBindDownStack;
-            _contextMenuView.OnMouseEnteredStack += OnMouseEnteredStack;
-
-            _contextMenuView.OnExitedTree += OnExitedTree;
-            _contextMenuView.OnCloseRootMenu += OnCloseRootMenu;
-            _contextMenuView.OnCloseChildMenu += OnCloseChildMenu;
-
-            _cfg.OnValueChanged(CCVars.ContextMenuGroupingType, _contextMenuView.OnGroupingContextMenuChanged, true);
+            RootMenu = new(this, null);
+            RootMenu.OnPopupHide += RootMenu.MenuBody.DisposeAllChildren;
+            Menus.Push(RootMenu);
         }
 
-        #region View Events
-        private void OnCloseChildMenu(object? sender, int depth)
+        /// <summary>
+        ///     Dispose of all UI elements.
+        /// </summary>
+        public virtual void Dispose()
         {
-            _contextMenuView.CloseContextPopups(depth);
+            RootMenu.OnPopupHide -= RootMenu.MenuBody.DisposeAllChildren;
+            RootMenu.Dispose();
         }
 
-        private void OnCloseRootMenu(object? sender, EventArgs e)
+        /// <summary>
+        ///     Close and clear the root menu. This will also dispose any sub-menus.
+        /// </summary>
+        public virtual void Close()
         {
-            _contextMenuView.CloseContextPopups();
+            RootMenu.Close();
+            CancelOpen?.Cancel();
+            CancelClose?.Cancel();
         }
 
-        private void OnExitedTree(object? sender, ContextMenuElement e)
+        /// <summary>
+        ///     Starts closing menus until the top-most menu is the given one.
+        /// </summary>
+        /// <remarks>
+        ///     Note that this does not actually check if the given menu IS a sub menu of this presenter. In that case
+        ///     this will close all menus.
+        /// </remarks>
+        public void CloseSubMenus(ContextMenuPopup? menu)
         {
-           _contextMenuView.UpdateParents(e);
-        }
-
-        private void OnMouseEnteredStack(object? sender, StackContextElement e)
-        {
-            var realGlobalPosition = e.GlobalPosition;
-
-            _cancellationTokenSource?.Cancel();
-            _cancellationTokenSource = new();
-
-            Timer.Spawn(e.HoverDelay, () =>
-            {
-                _verbSystem.CloseGroupMenu();
-
-                if (_contextMenuView.Menus.Count == 0)
-                {
-                    return;
-                }
-
-                OnCloseChildMenu(sender, e.ParentMenu?.Depth ?? 0);
-
-                var filteredEntities = e.ContextEntities.Where(entity => !entity.Deleted);
-                if (filteredEntities.Any())
-                {
-                    _contextMenuView.AddChildMenu(filteredEntities, realGlobalPosition, e);
-                }
-            }, _cancellationTokenSource.Token);
-        }
-
-        private void OnKeyBindDownStack(object? sender, (GUIBoundKeyEventArgs, StackContextElement) e)
-        {
-            var (args, stack) = e;
-            var firstEntity = stack.ContextEntities.FirstOrDefault(ent => !ent.Deleted);
-
-            if (firstEntity == null) return;
-
-            if (args.Function == EngineKeyFunctions.Use || args.Function == ContentKeyFunctions.AltActivateItemInWorld || args.Function == ContentKeyFunctions.TryPullObject || args.Function == ContentKeyFunctions.MovePulledObject)
-            {
-                var inputSys = _systemManager.GetEntitySystem<InputSystem>();
-
-                var func = args.Function;
-                var funcId = _inputManager.NetworkBindMap.KeyFunctionID(func);
-
-                var message = new FullInputCmdMessage(_gameTiming.CurTick, _gameTiming.TickFraction, funcId,
-                    BoundKeyState.Down, firstEntity.Transform.Coordinates, args.PointerLocation, firstEntity.Uid);
-
-                var session = _playerManager.LocalPlayer?.Session;
-                if (session != null)
-                {
-                    inputSys.HandleInputCommand(session, func, message);
-                }
-                CloseAllMenus();
-                args.Handle();
+            if (menu == null || !menu.Visible)
                 return;
-            }
 
-            if (_itemSlotManager.OnButtonPressed(args, firstEntity))
+            while (Menus.TryPeek(out var subMenu) && subMenu != menu)
             {
-                CloseAllMenus();
-            }
-        }
-
-        private void OnMouseHoveringSingle(object? sender, SingleContextElement e)
-        {
-            if (!e.DrawOutline) return;
-
-            var localPlayer = _playerManager.LocalPlayer;
-            if (localPlayer?.ControlledEntity != null)
-            {
-                var inRange =
-                    localPlayer.InRangeUnobstructed(e.ContextEntity, ignoreInsideBlocker: true);
-
-                // BUG: This assumes that the main viewport is the viewport that the context menu is active on.
-                // This is not necessarily true but we currently have no way to find the viewport (reliably)
-                // from the input event.
-                //
-                // This might be particularly important in the future with a more advanced mapping mode.
-                var renderScale = _eyeManager.MainViewport.GetRenderScale();
-                e.OutlineComponent?.UpdateInRange(inRange, renderScale);
+                Menus.Pop().Close();
             }
         }
 
-        private void OnMouseEnteredSingle(object? sender, SingleContextElement e)
+        /// <summary>
+        ///     Start a timer to open this element's sub-menu.
+        /// </summary>
+        public virtual void OnMouseEntered(ContextMenuElement element)
         {
-            _cancellationTokenSource?.Cancel();
+            var topMenu = Menus.Peek();
 
-            var entity = e.ContextEntity;
-            _verbSystem.CloseGroupMenu();
+            if (element.ParentMenu == topMenu || element.SubMenu == topMenu)
+                CancelClose?.Cancel();
 
-            OnCloseChildMenu(sender, e.ParentMenu?.Depth ?? 0);
-
-            if (entity.Deleted) return;
-
-            var localPlayer = _playerManager.LocalPlayer;
-            if (localPlayer?.ControlledEntity == null) return;
-
-            var renderScale = _eyeManager.MainViewport.GetRenderScale();
-            e.OutlineComponent?.OnMouseEnter(localPlayer.InRangeUnobstructed(entity, ignoreInsideBlocker: true), renderScale);
-            if (e.SpriteComp != null)
-            {
-                e.SpriteComp.DrawDepth = (int) DrawDepth.HighlightedItems;
-            }
-            e.DrawOutline = true;
-        }
-
-        private void OnMouseExitedSingle(object? sender, SingleContextElement e)
-        {
-            if (!e.ContextEntity.Deleted)
-            {
-                if (e.SpriteComp != null)
-                {
-                    e.SpriteComp.DrawDepth = e.OriginalDrawDepth;
-                }
-                e.OutlineComponent?.OnMouseLeave();
-            }
-            e.DrawOutline = false;
-        }
-
-        private void OnKeyBindDownSingle(object? sender, (GUIBoundKeyEventArgs, SingleContextElement) valueTuple)
-        {
-            var (args, single) = valueTuple;
-            var entity = single.ContextEntity;
-             if (args.Function == ContentKeyFunctions.OpenContextMenu)
-             {
-                 _verbSystem.OnContextButtonPressed(entity);
-                 args.Handle();
-                 return;
-             }
-
-             if (args.Function == ContentKeyFunctions.ExamineEntity)
-             {
-                 _systemManager.GetEntitySystem<ExamineSystem>().DoExamine(entity);
-                 args.Handle();
-                 return;
-             }
-
-             if (args.Function == EngineKeyFunctions.Use || args.Function == ContentKeyFunctions.AltActivateItemInWorld || args.Function == ContentKeyFunctions.Point ||
-                 args.Function == ContentKeyFunctions.TryPullObject || args.Function == ContentKeyFunctions.MovePulledObject)
-             {
-                 var inputSys = _systemManager.GetEntitySystem<InputSystem>();
-
-                 var func = args.Function;
-                 var funcId = _inputManager.NetworkBindMap.KeyFunctionID(func);
-
-                 var message = new FullInputCmdMessage(_gameTiming.CurTick, _gameTiming.TickFraction, funcId,
-                     BoundKeyState.Down, entity.Transform.Coordinates, args.PointerLocation, entity.Uid);
-
-                 var session = _playerManager.LocalPlayer?.Session;
-                 if (session != null)
-                 {
-                     inputSys.HandleInputCommand(session, func, message);
-                 }
-
-                 CloseAllMenus();
-                 args.Handle();
-                 return;
-             }
-
-             if (_itemSlotManager.OnButtonPressed(args, single.ContextEntity))
-             {
-                 CloseAllMenus();
-             }
-        }
-        #endregion
-
-        #region Model Updates
-        private void SystemOnToggleContainerVisibility(object? sender, bool args)
-        {
-            _playerCanSeeThroughContainers = args;
-        }
-
-        private void SystemOnToggleContextMenu(object? sender, PointerInputCmdHandler.PointerInputCmdArgs args)
-        {
-            if (_stateManager.CurrentState is not GameScreenBase)
-            {
+            if (element.SubMenu == topMenu)
                 return;
-            }
 
-            var playerEntity = _playerManager.LocalPlayer?.ControlledEntity;
-            if (playerEntity == null)
-            {
+            // open the sub-menu after a short delay.
+            CancelOpen?.Cancel();
+            CancelOpen = new();
+            Timer.Spawn(HoverDelay, () => OpenSubMenu(element), CancelOpen.Token);
+        }
+
+        /// <summary>
+        ///     Start a timer to close this element's sub-menu.
+        /// </summary>
+        /// <remarks>
+        ///     Note that this timer will be aborted when entering the actual sub-menu itself.
+        /// </remarks>
+        public virtual void OnMouseExited(ContextMenuElement element)
+        {
+            CancelOpen?.Cancel();
+
+            if (element.SubMenu == null)
                 return;
-            }
 
-            _mapCoordinates = args.Coordinates.ToMap(_entityManager);
-            if (!_verbSystem.TryGetContextEntities(playerEntity, _mapCoordinates, out var entities))
-            {
+            CancelClose?.Cancel();
+            CancelClose = new();
+            Timer.Spawn(HoverDelay, () => CloseSubMenus(element.ParentMenu), CancelClose.Token);
+        }
+
+        public virtual void OnKeyBindDown(ContextMenuElement element, GUIBoundKeyEventArgs args) { }
+
+        /// <summary>
+        ///     Opens a new sub menu, and close the old one.
+        /// </summary>
+        /// <remarks>
+        ///     If the given element has no sub-menu, just close the current one.
+        /// </remarks>
+        public virtual void OpenSubMenu(ContextMenuElement element)
+        {
+            // If This is already the top most menu, do nothing.
+            if (element.SubMenu == Menus.Peek())
                 return;
-            }
 
-            entities = entities.Where(CanSeeOnContextMenu).ToList();
-            if (entities.Count > 0)
-            {
-                _contextMenuView.AddRootMenu(entities);
-            }
+            // Was the parent menu closed or disposed before an open timer completed?
+            if (element.Disposed || element.ParentMenu == null || !element.ParentMenu.Visible)
+                return;
+
+            // Close any currently open sub-menus up to this element's parent menu.
+            CloseSubMenus(element.ParentMenu);
+
+            if (element.SubMenu == null)
+                return;
+
+            // open pop-up adjacent to the parent element. We want the sub-menu elements to align with this element
+            // which depends on the panel container style margins.
+            var altPos = element.GlobalPosition;
+            var pos = altPos + (element.Width + 2*ContextMenuElement.ElementMargin, - 2*ContextMenuElement.ElementMargin);
+            element.SubMenu.Open(UIBox2.FromDimensions(pos, (1, 1)), altPos);
+            element.SubMenu.Close();
+            element.SubMenu.Open(UIBox2.FromDimensions(pos, (1, 1)), altPos);
+
+            // draw on top of other menus
+            element.SubMenu.SetPositionLast();
+
+            Menus.Push(element.SubMenu);
         }
 
-        public void HandleMoveEvent(ref MoveEvent ev)
+        /// <summary>
+        ///     Add an element to a menu and subscribe to GUI events.
+        /// </summary>
+        public void AddElement(ContextMenuPopup menu, ContextMenuElement element)
         {
-            if (_contextMenuView.Elements.Count == 0) return;
-            var entity = ev.Sender;
-            if (_contextMenuView.Elements.ContainsKey(entity))
-            {
-                if (!entity.Transform.MapPosition.InRange(_mapCoordinates, 1.0f))
-                {
-                    _contextMenuView.RemoveEntity(entity);
-                }
-            }
+            element.OnMouseEntered += _ => OnMouseEntered(element);
+            element.OnMouseExited += _ => OnMouseExited(element);
+            element.OnKeyBindDown += args => OnKeyBindDown(element, args);
+            element.ParentMenu = menu;
+            menu.MenuBody.AddChild(element);
+            menu.InvalidateMeasure();
         }
 
-        public void Update()
+        /// <summary>
+        ///     Removes event subscriptions when an element is removed from a menu, 
+        /// </summary>
+        public void OnRemoveElement(ContextMenuPopup menu, Control control)
         {
-            if (_contextMenuView.Elements.Count == 0) return;
+            if (control is not ContextMenuElement element)
+                return;
 
-            foreach (var entity in _contextMenuView.Elements.Keys.ToList())
-            {
-                if (entity.Deleted || !_playerCanSeeThroughContainers && entity.IsInContainer())
-                {
-                    _contextMenuView.RemoveEntity(entity);
-                }
-            }
-        }
-        #endregion
+            element.OnMouseEntered -= _ => OnMouseEntered(element);
+            element.OnMouseExited -= _ => OnMouseExited(element);
+            element.OnKeyBindDown -= args => OnKeyBindDown(element, args);
 
-        private bool CanSeeOnContextMenu(IEntity entity)
-        {
-            if (!entity.TryGetComponent(out ISpriteComponent? spriteComponent) || !spriteComponent.Visible)
-            {
-                return false;
-            }
-
-            if (entity.GetAllComponents<IShowContextMenu>().Any(s => !s.ShowContextMenu(entity)))
-            {
-                return false;
-            }
-
-            return _playerCanSeeThroughContainers || !entity.TryGetContainer(out var container) || container.ShowContents;
-        }
-
-        private void CloseAllMenus()
-        {
-            _contextMenuView.CloseContextPopups();
-            _verbSystem.CloseGroupMenu();
-            _verbSystem.CloseVerbMenu();
-        }
-
-        public void Dispose()
-        {
-            _verbSystem.ToggleContextMenu -= SystemOnToggleContextMenu;
-            _verbSystem.ToggleContainerVisibility -= SystemOnToggleContainerVisibility;
-
-            _contextMenuView.OnKeyBindDownSingle -= OnKeyBindDownSingle;
-            _contextMenuView.OnMouseEnteredSingle -= OnMouseEnteredSingle;
-            _contextMenuView.OnMouseExitedSingle -= OnMouseExitedSingle;
-            _contextMenuView.OnMouseHoveringSingle -= OnMouseHoveringSingle;
-
-            _contextMenuView.OnKeyBindDownStack -= OnKeyBindDownStack;
-            _contextMenuView.OnMouseEnteredStack -= OnMouseEnteredStack;
-
-            _contextMenuView.OnExitedTree -= OnExitedTree;
-            _contextMenuView.OnCloseRootMenu -= OnCloseRootMenu;
-            _contextMenuView.OnCloseChildMenu -= OnCloseChildMenu;
+            menu.InvalidateMeasure();
         }
     }
 }

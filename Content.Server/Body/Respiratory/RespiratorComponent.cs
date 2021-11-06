@@ -7,16 +7,14 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Behavior;
 using Content.Server.Body.Circulatory;
 using Content.Server.Temperature.Components;
+using Content.Server.Temperature.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
-using Robust.Shared.Prototypes;
-using Robust.Shared.IoC;
 using Content.Shared.MobState;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -92,21 +90,13 @@ namespace Content.Server.Body.Respiratory
 
         [ViewVariables] public bool Suffocating { get; private set; }
 
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("suffocationDamage")] private int _damage = 1;
-
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("suffocationDamageRecovery")] private int _damageRecovery = 1;
-
-        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
-        // Also remove Initialize override, if no longer needed.
-        [DataField("damageType")]
-        private readonly string _damageTypeID = "Asphyxiation"!;
+        [DataField("damage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
-        public DamageTypePrototype DamageType = default!;
-        protected override void Initialize()
-        {
-            base.Initialize();
-            DamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
-        }
+        public DamageSpecifier Damage = default!;
+
+        [DataField("damageRecovery", required: true)]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageSpecifier DamageRecovery = default!;
 
         private Dictionary<Gas, float> NeedsAndDeficit(float frameTime)
         {
@@ -249,20 +239,21 @@ namespace Content.Server.Body.Respiratory
         /// <param name="frameTime"></param>
         private void ProcessThermalRegulation(float frameTime)
         {
+            var temperatureSystem = EntitySystem.Get<TemperatureSystem>();
             if (!Owner.TryGetComponent(out TemperatureComponent? temperatureComponent)) return;
-            temperatureComponent.ReceiveHeat(MetabolismHeat);
-            temperatureComponent.RemoveHeat(RadiatedHeat);
+            temperatureSystem.ReceiveHeat(Owner.Uid, MetabolismHeat, temperatureComponent);
+            temperatureSystem.RemoveHeat(Owner.Uid, RadiatedHeat, temperatureComponent);
 
             // implicit heat regulation
             var tempDiff = Math.Abs(temperatureComponent.CurrentTemperature - NormalBodyTemperature);
             var targetHeat = tempDiff * temperatureComponent.HeatCapacity;
             if (temperatureComponent.CurrentTemperature > NormalBodyTemperature)
             {
-                temperatureComponent.RemoveHeat(Math.Min(targetHeat, ImplicitHeatRegulation));
+                temperatureSystem.RemoveHeat(Owner.Uid, Math.Min(targetHeat, ImplicitHeatRegulation), temperatureComponent);
             }
             else
             {
-                temperatureComponent.ReceiveHeat(Math.Min(targetHeat, ImplicitHeatRegulation));
+                temperatureSystem.ReceiveHeat(Owner.Uid, Math.Min(targetHeat, ImplicitHeatRegulation), temperatureComponent);
             }
 
             // recalc difference and target heat
@@ -298,7 +289,7 @@ namespace Content.Server.Body.Respiratory
                 // creadth: sweating does not help in airless environment
                 if (EntitySystem.Get<AtmosphereSystem>().GetTileMixture(Owner.Transform.Coordinates) is not {})
                 {
-                    temperatureComponent.RemoveHeat(Math.Min(targetHeat, SweatHeatRegulation));
+                    temperatureSystem.RemoveHeat(Owner.Uid, Math.Min(targetHeat, SweatHeatRegulation), temperatureComponent);
                 }
             }
             else
@@ -310,7 +301,7 @@ namespace Content.Server.Body.Respiratory
                     _isShivering = true;
                 }
 
-                temperatureComponent.ReceiveHeat(Math.Min(targetHeat, ShiveringHeatRegulation));
+                temperatureSystem.ReceiveHeat(Owner.Uid, Math.Min(targetHeat, ShiveringHeatRegulation), temperatureComponent);
             }
         }
 
@@ -358,27 +349,19 @@ namespace Content.Server.Body.Respiratory
                 alertsComponent.ShowAlert(AlertType.LowOxygen);
             }
 
-            if (!Owner.TryGetComponent(out IDamageableComponent? damageable))
-            {
-                return;
-            }
-
-            damageable.TryChangeDamage(DamageType, _damage, false);
+            EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner.Uid, Damage, true);
         }
 
         private void StopSuffocation()
         {
             Suffocating = false;
 
-            if (Owner.TryGetComponent(out IDamageableComponent? damageable))
-            {
-                damageable.TryChangeDamage(DamageType, -_damageRecovery, false);
-            }
-
             if (Owner.TryGetComponent(out ServerAlertsComponent? alertsComponent))
             {
                 alertsComponent.ClearAlert(AlertType.LowOxygen);
             }
+
+            EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner.Uid, DamageRecovery, true);
         }
 
         public GasMixture Clean(BloodstreamComponent bloodstream)
