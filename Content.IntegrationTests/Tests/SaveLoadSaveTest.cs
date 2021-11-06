@@ -19,7 +19,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task SaveLoadSave()
         {
-            var server = StartServer();
+            var server = StartServer(new ServerContentIntegrationOption {Pool = false});
             await server.WaitIdleAsync();
             var mapLoader = server.ResolveDependency<IMapLoader>();
             var mapManager = server.ResolveDependency<IMapManager>();
@@ -86,7 +86,7 @@ namespace Content.IntegrationTests.Tests
 
             IMapGrid grid = default;
 
-            // Load stationstation.yml as uninitialized map, and save it to ensure it's up to date.
+            // Load saltern.yml as uninitialized map, and save it to ensure it's up to date.
             server.Post(() =>
             {
                 var mapId = mapManager.CreateMap();

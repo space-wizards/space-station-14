@@ -1,10 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: 'Reinforced glass, plasma glass, and reinforced plasma glass can now
-      be constructed.', type: Add}
-  id: 48
-  time: '2021-03-07T23:22:25.0000000+00:00'
 - author: ike709
   changes:
   - {message: Player join/leave messages are now only shown to admins., type: Tweak}
@@ -2820,3 +2814,9 @@ Entries:
   - {message: Volume pumps now have a UI, type: Add}
   id: 547
   time: '2021-11-05T00:41:57.0000000+00:00'
+- author: moonheart08
+  changes:
+  - {message: Canisters now dump their contents like they should when busted open.,
+    type: Fix}
+  id: 548
+  time: '2021-11-06T00:19:12.0000000+00:00'
