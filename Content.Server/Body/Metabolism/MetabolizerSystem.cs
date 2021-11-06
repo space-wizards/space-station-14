@@ -103,7 +103,7 @@ namespace Content.Server.Body.Metabolism
             if (solutionEntityUid == null || solution == null)
                 return;
             // we found our guy
-            foreach (var reagent in solution.Contents)
+            foreach (var reagent in solution.Contents.ToArray())
             {
                 if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.ReagentId, out var proto))
                     continue;
@@ -142,13 +142,13 @@ namespace Content.Server.Body.Metabolism
                                 continue;
                         }
 
-                        effect.Metabolize(ent, quant);
+                        effect.Metabolize(ent, meta.Owner, quant);
                     }
                 }
 
                 // remove a certain amount of reagent
                 if (mostToRemove > FixedPoint2.Zero)
-                    _solutionContainerSystem.TryRemoveReagent(solutionEntityUid.Value, null, reagent.ReagentId, mostToRemove);
+                    _solutionContainerSystem.TryRemoveReagent(solutionEntityUid.Value, solution, reagent.ReagentId, mostToRemove);
             }
         }
     }

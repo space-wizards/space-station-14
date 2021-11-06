@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -20,6 +21,6 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField("conditions")]
         public ReagentEffectCondition[]? Conditions;
 
-        public abstract void Metabolize(IEntity solutionEntity, Components.Solution.ReagentQuantity amount);
+        public abstract void Metabolize(IEntity solutionEntity, IEntity organEntity, Solution.ReagentQuantity amount);
     }
 }

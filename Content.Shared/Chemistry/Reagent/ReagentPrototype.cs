@@ -103,7 +103,7 @@ namespace Content.Shared.Chemistry.Reagent
 
             foreach (var plantMetabolizable in _plantMetabolism)
             {
-                plantMetabolizable.Metabolize(plantHolder, amount);
+                plantMetabolizable.Metabolize(plantHolder, plantHolder, amount);
             }
         }
     }

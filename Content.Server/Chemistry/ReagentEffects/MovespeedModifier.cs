@@ -36,7 +36,7 @@ namespace Content.Server.Chemistry.ReagentEffects
         /// <summary>
         /// Remove reagent at set rate, changes the movespeed modifiers and adds a MovespeedModifierMetabolismComponent if not already there.
         /// </summary>
-        public override void Metabolize(IEntity solutionEntity, Solution.ReagentQuantity amount)
+        public override void Metabolize(IEntity solutionEntity, IEntity organEntity, Solution.ReagentQuantity amount)
         {
             if (!solutionEntity.TryGetComponent(out MovementSpeedModifierComponent? movement)) return;
 

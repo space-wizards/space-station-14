@@ -7,7 +7,7 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
     [UsedImplicitly]
     public class PlantAdjustNutrition : PlantAdjustAttribute
     {
-        public override void Metabolize(IEntity plantHolder, Solution.ReagentQuantity amount)
+        public override void Metabolize(IEntity plantHolder, IEntity organEntity, Solution.ReagentQuantity amount)
         {
             if (!CanMetabolize(plantHolder, out var plantHolderComp, false))
                 return;
