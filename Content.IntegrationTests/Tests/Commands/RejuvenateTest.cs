@@ -34,7 +34,7 @@ namespace Content.IntegrationTests.Tests.Commands
         public async Task RejuvenateDeadTest()
         {
             var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
-            var server = StartServerDummyTicker(options);
+            var server = StartServer(options);
 
             await server.WaitAssertion(() =>
             {

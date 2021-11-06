@@ -4,13 +4,11 @@ using Content.Server.Disposal.Tube.Components;
 using Content.Server.Disposal.Unit.Components;
 using Content.Server.Disposal.Unit.EntitySystems;
 using Content.Server.Power.Components;
-using Content.Shared.Coordinates;
 using Content.Shared.Disposal;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Reflection;
-using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests.Tests.Disposal
 {
@@ -122,7 +120,7 @@ namespace Content.IntegrationTests.Tests.Disposal
         public async Task Test()
         {
             var options = new ServerIntegrationOptions { ExtraPrototypes = Prototypes };
-            var server = StartServerDummyTicker(options);
+            var server = StartServer(options);
             await server.WaitIdleAsync();
 
             IEntity human = default!;
@@ -130,47 +128,18 @@ namespace Content.IntegrationTests.Tests.Disposal
             IEntity disposalUnit = default!;
             IEntity disposalTrunk = default!;
             DisposalUnitComponent unit = default!;
-            EntityCoordinates coordinates = default!;
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
-            var pauseManager = server.ResolveDependency<IPauseManager>();
-            var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
-
-            // Build up test environment
-            server.Post(() =>
-            {
-                // Create a one tile grid to anchor our disposal unit to.
-                var mapId = mapManager.CreateMap();
-
-                pauseManager.AddUninitializedMap(mapId);
-
-                var gridId = new GridId(1);
-
-                if (!mapManager.TryGetGrid(gridId, out var grid))
-                {
-                    grid = mapManager.CreateGrid(mapId, gridId);
-                }
-
-                var tileDefinition = tileDefinitionManager["underplating"];
-                var tile = new Tile(tileDefinition.TileId);
-                coordinates = grid.ToCoordinates();
-
-                grid.SetTile(coordinates, tile);
-
-                pauseManager.DoMapInitialize(mapId);
-            });
 
             await server.WaitAssertion(() =>
             {
                 // Spawn the entities
+                var coordinates = GetMainEntityCoordinates(mapManager);
                 human = entityManager.SpawnEntity("HumanDummy", coordinates);
                 wrench = entityManager.SpawnEntity("WrenchDummy", coordinates);
                 disposalUnit = entityManager.SpawnEntity("DisposalUnitDummy", coordinates);
                 disposalTrunk = entityManager.SpawnEntity("DisposalTrunkDummy", disposalUnit.Transform.MapPosition);
-
-                // Check that we have a grid, so that we can anchor our unit
-                Assert.That(mapManager.TryFindGridAt(disposalUnit.Transform.MapPosition, out var _));
 
                 // Test for components existing
                 Assert.True(disposalUnit.TryGetComponent(out unit!));
