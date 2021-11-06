@@ -72,8 +72,8 @@ jobs:
           uploaded: ${{ steps.new_map_images.outputs.imgur_urls }}
           maps: ${{ steps.create_images.outputs.map_names }}
           url: https://spacestation14.io/map-diff-viewer/
-          baseCommit: map-renderer
-          repoName: DrSmugleaf/space-station-14
+          baseCommit: ${{ github.event.pull_request.base.sha }}
+          repoName: ${{ github.event.pull_request.base.repo.full_name }}
           mapImageDirectory: Resources/MapImages
 
       - name: Potentially find comment
