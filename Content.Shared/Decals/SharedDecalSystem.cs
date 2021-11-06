@@ -41,7 +41,7 @@ namespace Content.Shared.Decals
 
         private void OnGridInitialize(GridInitializeEvent msg)
         {
-            ChunkCollections[msg.GridId] = new ChunkCollection<Dictionary<uint, Decal>>(new Vector2i(ChunkSize, ChunkSize));
+            ChunkCollections[msg.GridId] = new ChunkCollection<Dictionary<uint, Decal>>(new Vector2i(ChunkSize, ChunkSize), () => new Dictionary<uint, Decal>());
         }
 
         protected void DirtyChunk((GridId, Vector2i) values) => DirtyChunk(values.Item1, values.Item2);
@@ -146,15 +146,17 @@ namespace Content.Shared.Decals
         }
     }
 
-    public class ChunkCollection<T> where T : new()
+    public class ChunkCollection<T>
     {
         private readonly Dictionary<Vector2i, T> _chunks = new();
         public IReadOnlyDictionary<Vector2i, T> Chunks => _chunks;
         private readonly Vector2i _chunkSize;
+        private readonly Func<T> _createDelegate;
 
-        public ChunkCollection(Vector2i chunkSize)
+        public ChunkCollection(Vector2i chunkSize, Func<T> createDelegate)
         {
             _chunkSize = chunkSize;
+            _createDelegate = createDelegate;
         }
 
         public Vector2i GetIndices(Vector2 a)
@@ -167,7 +169,7 @@ namespace Content.Shared.Decals
             if (_chunks.TryGetValue(indices, out var chunk))
                 return chunk;
 
-            return _chunks[indices] = new T();
+            return _chunks[indices] = _createDelegate();
         }
 
         public IEnumerable<T> GetChunksForArea(Box2 area)
