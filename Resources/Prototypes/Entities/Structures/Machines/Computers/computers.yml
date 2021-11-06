@@ -284,6 +284,9 @@
 #      - AtmosphericsWaterVapor
 #      - AtmosphericsPlasma
 #      - AtmosphericsTritium
+  - type: ActivatableUI
+    key: enum.CargoConsoleUiKey.Key
+  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.CargoConsoleUiKey.Key
