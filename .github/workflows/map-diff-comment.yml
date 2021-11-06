@@ -90,8 +90,8 @@ jobs:
         with:
           issue-number: ${{ github.event.number }}
           body: |
-            | 1 maps were modified.
-            | [saltern](https://spacestation14.io/map-diff-viewer/?new=https%3A%2F%2Fi.imgur.com%2FqgGXYDN.jpg)
+            1 maps were modified.
+            [saltern](https://spacestation14.io/map-diff-viewer/?new=https%3A%2F%2Fi.imgur.com%2FqgGXYDN.jpg)
 
       - name: Update comment if it exists
         if: steps.fc.outputs.comment-id != ''
@@ -100,8 +100,8 @@ jobs:
           comment-id: ${{ steps.fc.outputs.comment-id }}
           edit-mode: replace
           body: |
-            | 1 maps were modified.
-            | [saltern](https://spacestation14.io/map-diff-viewer/?new=https%3A%2F%2Fi.imgur.com%2FqgGXYDN.jpg)
+            1 maps were modified.
+            [saltern](https://spacestation14.io/map-diff-viewer/?new=https%3A%2F%2Fi.imgur.com%2FqgGXYDN.jpg)
 
       - name: Update comment to read that it has been edited
         if: steps.fc.outputs.comment-id != ''
