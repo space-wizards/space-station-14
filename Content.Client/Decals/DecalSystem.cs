@@ -12,6 +12,12 @@ namespace Content.Client.Decals
 
             SubscribeNetworkEvent<DecalChunkUpdateEvent>(OnChunkUpdate);
             SubscribeNetworkEvent<DecalRemovalUpdateEvent>(OnRemovalUpdate);
+            SubscribeNetworkEvent<DecalIndexCheckEvent>(OnIndexCheck);
+        }
+
+        private void OnIndexCheck(DecalIndexCheckEvent ev)
+        {
+            throw new NotImplementedException();
         }
 
         private void OnRemovalUpdate(DecalRemovalUpdateEvent msg)
