@@ -6,6 +6,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Network;
@@ -55,10 +56,26 @@ namespace Content.Server.UserInterface
                 if (aui.UserInterface.SubscribedSessions.Count != 0) return;
             }
 
-            aui.SetCurrentSingleUser(actor.PlayerSession);
+            SetCurrentSingleUser(aui.OwnerUid, actor.PlayerSession, aui);
             aui.UserInterface?.Toggle(actor.PlayerSession);
 
             return;
+        }
+
+        public void SetCurrentSingleUser(EntityUid uid, IPlayerSession? v, ActivatableUIComponent? aui = null)
+        {
+            if (!Resolve(uid, ref aui))
+                return;
+            if (!aui.SingleUser)
+                return;
+            if (aui.CurrentSingleUser != null)
+                aui.CurrentSingleUser.PlayerStatusChanged -= aui.OnPlayerStatusChanged;
+
+            aui.CurrentSingleUser = v;
+
+            if (v != null)
+                v.PlayerStatusChanged += aui.OnPlayerStatusChanged;
+            RaiseLocalEvent(uid, new ActivatableUIPlayerChangedEvent(), false);
         }
 
         public override void Update(float frameTime)

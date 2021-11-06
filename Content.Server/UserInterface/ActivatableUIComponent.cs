@@ -52,31 +52,10 @@ namespace Content.Server.UserInterface
 
         /// <summary>
         ///     The client channel currently using the object, or null if there's none/not single user.
+        ///     NOTE: DO NOT DIRECTLY SET, USE ActivatableUISystem.SetCurrentSingleUser
         /// </summary>
         [ViewVariables]
         public IPlayerSession? CurrentSingleUser;
-
-        public void SetCurrentSingleUser(IPlayerSession? v)
-        {
-            if (!SingleUser)
-                return;
-            if (CurrentSingleUser != null)
-                CurrentSingleUser.PlayerStatusChanged -= OnPlayerStatusChanged;
-
-            CurrentSingleUser = v;
-
-            if (v != null)
-                v.PlayerStatusChanged += OnPlayerStatusChanged;
-            Owner.EntityManager.EventBus.RaiseLocalEvent(OwnerUid, new ActivatableUIPlayerChangedEvent(), false);
-        }
-
-        private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
-        {
-            // this probably ought to be BUI's responsibility.
-            // a disconnect should count as closing the UI, rest follows automatically
-            if (Deleted || e.Session != CurrentSingleUser || e.NewStatus != SessionStatus.Disconnected) return;
-            SetCurrentSingleUser(null);
-        }
 
         void ISerializationHooks.AfterDeserialization()
         {
@@ -84,6 +63,20 @@ namespace Content.Server.UserInterface
             reflectionManager.TryParseEnumReference(_keyRaw, out var key);
             DebugTools.AssertNotNull(key);
             Key = key!;
+        }
+
+        public void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
+        {
+            // Has to be here for delegate to bind correctly.
+            // This *CANNOT* be elevated to system level because otherwise:
+            // pick one:
+            // + as method: delegate doesn't get the context it needs
+            //              (and will break if multiple show up)
+            // + as lambda: it can't be properly removed
+            // This probably ought to be BUI's responsibility anyway
+            // A disconnect should count as closing the UI, rest follows automatically
+            if (Deleted || e.Session != CurrentSingleUser || e.NewStatus != SessionStatus.Disconnected) return;
+            _activatableUISystem.SetCurrentSingleUser(OwnerUid, null, this);
         }
 
         protected override void Initialize()
@@ -115,7 +108,7 @@ namespace Content.Server.UserInterface
         private void UserInterfaceOnClosed(IPlayerSession player)
         {
             if (player != CurrentSingleUser) return;
-            SetCurrentSingleUser(null);
+            _activatableUISystem.SetCurrentSingleUser(OwnerUid, null, this);
         }
     }
 }
