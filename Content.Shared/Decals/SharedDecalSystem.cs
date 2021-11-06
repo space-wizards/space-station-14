@@ -15,7 +15,7 @@ namespace Content.Shared.Decals
     {
         [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] protected readonly IMapManager MapManager = default!;
 
         protected readonly Dictionary<GridId, ChunkCollection<Dictionary<uint, Decal>>> ChunkCollections = new();
         protected readonly Dictionary<uint, (GridId gridId, Vector2i chunkIndices)> ChunkIndex = new();
@@ -87,7 +87,7 @@ namespace Content.Shared.Decals
             foreach (var viewerUid in viewers)
             {
                 var (bounds, mapId) = CalcViewBounds(viewerUid);
-                foreach (var grid in _mapManager.FindGridsIntersecting(mapId, bounds, approx: true))
+                foreach (var grid in MapManager.FindGridsIntersecting(mapId, bounds, approx: true))
                 {
                     if (!chunks.ContainsKey(grid.Index))
                         chunks[grid.Index] = new();
@@ -149,6 +149,7 @@ namespace Content.Shared.Decals
     public class ChunkCollection<T> where T : new()
     {
         private readonly Dictionary<Vector2i, T> _chunks = new();
+        public IReadOnlyDictionary<Vector2i, T> Chunks => _chunks;
         private readonly Vector2i _chunkSize;
 
         public ChunkCollection(Vector2i chunkSize)
