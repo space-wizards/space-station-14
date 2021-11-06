@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
@@ -18,6 +19,8 @@ namespace Content.Shared.Decals
 
         protected readonly Dictionary<GridId, ChunkCollection<Dictionary<uint, Decal>>> _chunkCollections = new();
         protected readonly Dictionary<uint, (GridId gridId, Vector2i chunkIndices)> _chunkIndex = new();
+
+        private const int ChunkSize = 32;
 
         private float _viewSize;
 
@@ -38,7 +41,7 @@ namespace Content.Shared.Decals
 
         private void OnGridInitialize(GridInitializeEvent msg)
         {
-            _chunkCollections[msg.GridId] = new ChunkCollection<Dictionary<uint, Decal>>(new Vector2i(32, 32));
+            _chunkCollections[msg.GridId] = new ChunkCollection<Dictionary<uint, Decal>>(new Vector2i(ChunkSize, ChunkSize));
         }
 
         protected void DirtyChunk((GridId, Vector2i) values) => DirtyChunk(values.Item1, values.Item2);
@@ -89,23 +92,59 @@ namespace Content.Shared.Decals
                     if (!chunks.ContainsKey(grid.Index))
                         chunks[grid.Index] = new();
 
-                    foreach (var indices in GetGridChunksinBounds(grid.GridEntityId, bounds))
+                    var enumerator = new ChunkIndicesEnumerator(grid.InvWorldMatrix.TransformBox(bounds), ChunkSize);
+                    while (enumerator.MoveNext(out var indices))
                     {
-                        chunks[grid.Index].Add(indices);
+                        chunks[grid.Index].Add(indices.Value);
                     }
                 }
             }
             return chunks;
         }
-
-        private Vector2i[] GetGridChunksinBounds(EntityUid gridEntityUid, Box2 worldBounds)
-        {
-            var gridTransform = EntityManager.GetComponent<ITransformComponent>(gridEntityUid);
-            //todo
-            return new Vector2i[0];
-        }
     }
 
+    internal struct ChunkIndicesEnumerator
+    {
+        private Vector2i _chunkLB;
+        private Vector2i _chunkRT;
+
+        private int _xIndex;
+        private int _yIndex;
+
+        internal ChunkIndicesEnumerator(Box2 localAABB, int chunkSize)
+        {
+            _chunkLB = new Vector2i((int)Math.Floor(localAABB.Left / chunkSize), (int)Math.Floor(localAABB.Bottom / chunkSize));
+            _chunkRT = new Vector2i((int)Math.Floor(localAABB.Right / chunkSize), (int)Math.Floor(localAABB.Top / chunkSize));
+
+            _xIndex = _chunkLB.X;
+            _yIndex = _chunkLB.Y;
+        }
+
+        public bool MoveNext([NotNullWhen(true)] out Vector2i? indices)
+        {
+            if (_yIndex > _chunkRT.Y)
+            {
+                _yIndex = _chunkLB.Y;
+                _xIndex += 1;
+            }
+
+            for (var x = _xIndex; x <= _chunkRT.X; x++)
+            {
+                for (var y = _yIndex; y <= _chunkRT.Y; y++)
+                {
+                    indices = new Vector2i(x, y);
+                    _xIndex = x;
+                    _yIndex = y + 1;
+                    return true;
+                }
+
+                _yIndex = _chunkLB.Y;
+            }
+
+            indices = null;
+            return false;
+        }
+    }
 
     public class ChunkCollection<T> where T : new()
     {
