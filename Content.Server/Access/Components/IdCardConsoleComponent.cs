@@ -21,8 +21,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Access.Components
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IActivate))]
-    public class IdCardConsoleComponent : SharedIdCardConsoleComponent, IActivate, IInteractUsing, IBreakAct
+    public class IdCardConsoleComponent : SharedIdCardConsoleComponent, IInteractUsing, IBreakAct
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -205,17 +204,6 @@ namespace Content.Server.Access.Components
                     TargetIdContainer.ContainedEntity?.Name ?? string.Empty);
             }
             UserInterface?.SetState(newState);
-        }
-
-        void IActivate.Activate(ActivateEventArgs eventArgs)
-        {
-            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
-            {
-                return;
-            }
-            if (!Powered) return;
-
-            UserInterface?.Open(actor.PlayerSession);
         }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)

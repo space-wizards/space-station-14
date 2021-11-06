@@ -126,6 +126,9 @@
   - type: AccessReader
     access: [["HeadOfPersonnel"]]
   - type: IdCardConsole
+  - type: ActivatableUI
+    key: enum.IdCardConsoleUiKey.Key
+  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.IdCardConsoleUiKey.Key
