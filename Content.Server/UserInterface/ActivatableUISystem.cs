@@ -2,6 +2,11 @@ using System.Linq;
 using Content.Shared;
 using Content.Shared.CCVar;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Hands;
+using Content.Shared.Popups;
+using Content.Shared.Standing;
+using Content.Shared.Stunnable;
+using Content.Shared.Throwing;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using JetBrains.Annotations;
@@ -25,6 +30,9 @@ namespace Content.Server.UserInterface
 
             SubscribeLocalEvent<ActivatableUIComponent, ActivateInWorldEvent>(OnActivate);
             SubscribeLocalEvent<ActivatableUIComponent, UseInHandEvent>(OnUseInHand);
+            SubscribeLocalEvent<ActivatableUIComponent, DroppedEvent>(OnDropped);
+            SubscribeLocalEvent<ActivatableUIComponent, ThrownEvent>(OnThrown);
+            SubscribeLocalEvent<ActivatableUIComponent, HandDeselectedEvent>(OnHandDeselected);
         }
 
         private void OnActivate(EntityUid uid, ActivatableUIComponent component, ActivateInWorldEvent args)
@@ -36,11 +44,25 @@ namespace Content.Server.UserInterface
             args.Handled = true;
         }
 
-
         private void OnUseInHand(EntityUid uid, ActivatableUIComponent component, UseInHandEvent args)
         {
             InteractInstrument(args.User, component);
             args.Handled = true;
+        }
+
+        private void OnDropped(EntityUid uid, ActivatableUIComponent component, DroppedEvent args)
+        {
+            component.UserInterface.CloseAll();
+        }
+
+        private void OnThrown(EntityUid uid, ActivatableUIComponent component, ThrownEvent args)
+        {
+            component.UserInterface.CloseAll();
+        }
+
+        private void OnHandDeselected(EntityUid uid, ActivatableUIComponent component, HandDeselectedEvent args)
+        {
+            component.UserInterface.CloseAll();
         }
 
         private void InteractInstrument(IEntity user, ActivatableUIComponent aui)
@@ -57,7 +79,7 @@ namespace Content.Server.UserInterface
             }
 
             SetCurrentSingleUser(aui.OwnerUid, actor.PlayerSession, aui);
-            aui.UserInterface?.Toggle(actor.PlayerSession);
+            aui.UserInterface.Toggle(actor.PlayerSession);
 
             return;
         }

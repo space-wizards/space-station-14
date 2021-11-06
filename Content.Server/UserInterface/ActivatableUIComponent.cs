@@ -1,12 +1,6 @@
 using System;
-using Content.Shared.ActionBlocker;
-using Content.Shared.Hands;
 using Content.Shared.Instruments;
 using Content.Shared.Interaction;
-using Content.Shared.Popups;
-using Content.Shared.Standing;
-using Content.Shared.Stunnable;
-using Content.Shared.Throwing;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Reflection;
@@ -23,11 +17,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.UserInterface
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IActivate))]
     public class ActivatableUIComponent : Component,
-            IDropped,
-            IHandDeselected,
-            IThrown,
             ISerializationHooks
     {
         public override string Name => "ActivatableUI";
@@ -88,21 +78,6 @@ namespace Content.Server.UserInterface
             UserInterface.OnClosed += UserInterfaceOnClosed;
 
             _activatableUISystem = EntitySystem.Get<ActivatableUISystem>();
-        }
-
-        void IDropped.Dropped(DroppedEventArgs eventArgs)
-        {
-            UserInterface.CloseAll();
-        }
-
-        void IThrown.Thrown(ThrownEventArgs eventArgs)
-        {
-            UserInterface.CloseAll();
-        }
-
-        void IHandDeselected.HandDeselected(HandDeselectedEventArgs eventArgs)
-        {
-            UserInterface.CloseAll();
         }
 
         private void UserInterfaceOnClosed(IPlayerSession player)
