@@ -112,8 +112,8 @@ namespace Content.Server.Access.Systems
         }
 
         /// <summary>
-        ///     Attempt to get the id card component from an entity. This will also check if this entity has is a PDA,
-        ///     and if so, it will check the ID card slot.
+        ///     Attempt to get an id card component from an entity, either by getting it directly from the entity, or by
+        ///     getting the contained id from a <see cref="PDAComponent"/>.
         /// </summary>
         private bool TryGetIdCard(EntityUid uid, [NotNullWhen(true)] out IdCardComponent? idCard)
         {
