@@ -40,50 +40,49 @@ namespace Content.Server.UserInterface
 
         private void OnActivate(EntityUid uid, ActivatableUIComponent component, ActivateInWorldEvent args)
         {
-            if (component.InHandsOnly)
-                return;
-
-            InteractInstrument(args.User, component);
-            args.Handled = true;
+            if (args.Handled) return;
+            if (component.InHandsOnly) return;
+            args.Handled = InteractInstrument(args.User, component);
         }
 
         private void OnUseInHand(EntityUid uid, ActivatableUIComponent component, UseInHandEvent args)
         {
-            InteractInstrument(args.User, component);
-            args.Handled = true;
+            if (args.Handled) return;
+            args.Handled = InteractInstrument(args.User, component);
         }
 
-        private void InteractInstrument(IEntity user, ActivatableUIComponent aui)
+        private bool InteractInstrument(IEntity user, ActivatableUIComponent aui)
         {
-            if (!user.TryGetComponent(out ActorComponent? actor)) return;
+            if (!user.TryGetComponent(out ActorComponent? actor)) return false;
+
+            if (aui.AdminOnly && !_adminManager.IsAdmin(actor.PlayerSession)) return false;
 
             if (!_actionBlockerSystem.CanInteract(user))
             {
                 user.PopupMessageCursor(Loc.GetString("base-computer-ui-component-cannot-interact"));
-                return;
+                return true;
             }
 
-            if (aui.AdminOnly && !_adminManager.IsAdmin(actor.PlayerSession)) return;
-
             var ui = aui.UserInterface;
-            if (ui == null) return;
+            if (ui == null) return false;
 
             if (aui.SingleUser && (aui.CurrentSingleUser != null) && (actor.PlayerSession != aui.CurrentSingleUser))
             {
                 // If we get here, supposedly, the object is in use.
                 // Check with BUI that it's ACTUALLY in use just in case.
                 // Since this could brick the object if it goes wrong.
-                if (ui.SubscribedSessions.Count != 0) return;
+                if (ui.SubscribedSessions.Count != 0) return false;
             }
 
             // If we've gotten this far, fire a cancellable event that indicates someone is about to activate this.
             // This is so that stuff can require further conditions (like power).
             var oae = new ActivatableUIOpenAttemptEvent(user);
             RaiseLocalEvent(aui.OwnerUid, oae, false);
-            if (oae.Cancelled) return;
+            if (oae.Cancelled) return false;
 
             SetCurrentSingleUser(aui.OwnerUid, actor.PlayerSession, aui);
             ui.Toggle(actor.PlayerSession);
+            return true;
         }
 
         public void SetCurrentSingleUser(EntityUid uid, IPlayerSession? v, ActivatableUIComponent? aui = null)
