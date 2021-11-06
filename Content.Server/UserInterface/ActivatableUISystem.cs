@@ -9,6 +9,7 @@ using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
+using Content.Server.Administration.Managers;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -23,6 +24,7 @@ namespace Content.Server.UserInterface
     internal sealed class ActivatableUISystem : EntitySystem
     {
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+        [Dependency] private readonly IAdminManager _adminManager = default!;
 
         public override void Initialize()
         {
@@ -68,7 +70,10 @@ namespace Content.Server.UserInterface
         private void InteractInstrument(IEntity user, ActivatableUIComponent aui)
         {
             if (!user.TryGetComponent(out ActorComponent? actor)) return;
+
             if (!_actionBlockerSystem.CanInteract(user)) return;
+
+            if (aui.AdminOnly && !_adminManager.IsAdmin(actor.PlayerSession)) return;
 
             if (aui.SingleUser && (aui.CurrentSingleUser != null) && (actor.PlayerSession != aui.CurrentSingleUser))
             {

@@ -29,13 +29,17 @@ namespace Content.Server.UserInterface
 
         [ViewVariables] public BoundUserInterface UserInterface => Owner.GetUIOrNull(Key)!;
 
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         [DataField("inHandsOnly")]
         public bool InHandsOnly { get; set; } = false;
 
         [ViewVariables]
         [DataField("singleUser")]
         public bool SingleUser { get; set; } = false;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("adminOnly")]
+        public bool AdminOnly { get; set; } = false;
 
         [DataField("key", readOnly: true, required: true)]
         private string _keyRaw = default!;
