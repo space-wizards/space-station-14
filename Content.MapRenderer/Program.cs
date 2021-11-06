@@ -8,6 +8,7 @@ using Content.MapRenderer.GitHub;
 using Content.MapRenderer.Imgur.Client;
 using Content.MapRenderer.Painters;
 using Robust.Shared.Utility;
+using SixLabors.ImageSharp;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.MapRenderer
@@ -20,7 +21,6 @@ namespace Content.MapRenderer
         private const string PrNumberEnvKey = "PR_NUMBER";
 
         private static readonly MapPainter MapPainter = new();
-        private static readonly ImgurClient ImgurClient = new();
 
         internal static void Main()
         {
@@ -74,30 +74,27 @@ namespace Content.MapRenderer
 
             Console.WriteLine($"Creating images for {maps.Count} maps");
 
-            var links = new List<string>();
-
             foreach (var map in maps)
             {
                 Console.WriteLine($"Painting map {map}");
 
                 await foreach (var grid in MapPainter.Paint(map))
                 {
-                    Console.WriteLine($"Uploading grid of size {grid.Width}x{grid.Height}");
-                    var image = await ImgurClient.Upload(grid);
-                    links.Add(image.Link);
+                    var savePath = DirectoryExtensions.MapImages().FullName;
 
+                    Console.WriteLine($"Writing grid of size {grid.Width}x{grid.Height} to {savePath}");
+
+                    await grid.SaveAsPngAsync(savePath);
                     grid.Dispose();
                 }
             }
 
-            Console.WriteLine($"Got {links.Count} links");
-
-            var repo = EnvironmentExtensions.GetVariableOrThrow(GitHubRepositoryEnvKey);
-            var prNumber = int.Parse(EnvironmentExtensions.GetVariableOrThrow(PrNumberEnvKey));
-            var writer = new GitHubClient(repo);
-            var message = writer.Write(links);
-
-            writer.Send(prNumber, message);
+            // var repo = EnvironmentExtensions.GetVariableOrThrow(GitHubRepositoryEnvKey);
+            // var prNumber = int.Parse(EnvironmentExtensions.GetVariableOrThrow(PrNumberEnvKey));
+            // var writer = new GitHubClient(repo);
+            // var message = writer.Write(links);
+            //
+            // writer.Send(prNumber, message);
         }
     }
 }
