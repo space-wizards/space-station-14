@@ -18,12 +18,14 @@ namespace Content.Server.Guardian
     {
         public override string Name => "GuardianCreator";
 
-        //The injected guardian prototype entity
+        /// <summary>
+        /// Counts as spent upon exhausting uses
+        /// </summary>
+        public bool Used = false;
+
+        /// <summary>
+        /// The uid of the guardian entity
+        /// </summary>
         [ViewVariables] [DataField("GuardianID")] public string GuardianType { get; set; } = default!;
-
-        //How far can the guardian leave the player
-        [ViewVariables] [DataField("DistanceAllowed")] public float GuardianTetherDistance { get; set; } = default!;
-
-
     }
 }

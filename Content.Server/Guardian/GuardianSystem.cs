@@ -4,6 +4,7 @@ using Content.Server.Popups;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
 using Content.Shared.Damage;
+using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
@@ -24,10 +25,72 @@ namespace Content.Server.Guardian
         {
             base.Initialize();
             SubscribeLocalEvent<GuardianCreatorComponent, UseInHandEvent>(OnGuardianCreated);
+            SubscribeLocalEvent<GuardianCreatorComponent, ExaminedEvent>(OnActivatorExamined);
             SubscribeLocalEvent<GuardianComponent, MoveEvent>(OnGuardianMove);
             SubscribeLocalEvent<GuardianHostComponent, MoveEvent>(OnGuardianHostMove);
             SubscribeLocalEvent<GuardianComponent, DamageChangedEvent>(OnGuardianDamaged);
             SubscribeLocalEvent<GuardianHostComponent, MobStateChangedMessage>(OnHostDeath);
+        }
+
+        /// <summary>
+        /// Triggers while trying to examine an activator to see if it's used
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="component"></param>
+        /// <param name="args"></param>
+        private void OnActivatorExamined(EntityUid uid, GuardianCreatorComponent component, ExaminedEvent args)
+        {
+           if (component.Used == true)
+           {
+               string usedstring = Loc.GetString("guardian-activator-empty-invalid-creaton");
+               args.Message.AddMarkup("\n" + $"[color=#ba1919]{usedstring}[/color]");
+           }
+        }
+
+        /// <summary>
+        /// Adds the guardian host component to the user and spawns the guardian inside said component
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="component"></param>
+        /// <param name="args"></param>
+        private void OnGuardianCreated(EntityUid uid, GuardianCreatorComponent component, UseInHandEvent args)
+        {
+            //Only works if the guardian isn't already present. NOTE: this is up to preference, we can probably later allow
+            //a person to host multiple guardians, however the idea is that in a normal setting you won't get the opportunity to
+            if (!args.User.TryGetComponent<GuardianHostComponent>(out var guardianComponent))
+            {
+                if (args.User.TryGetComponent<SharedActionsComponent>(out SharedActionsComponent? action))
+                {
+                    if (component.Used == false)
+                    {
+                        var hostcomp = args.User.AddComponent<GuardianHostComponent>();
+                        var guardian = EntityManager.SpawnEntity(component.GuardianType, hostcomp.Owner.Transform.Coordinates);
+                        hostcomp.GuardianContainer.Insert(guardian);
+                        hostcomp._hostedguardian = guardian.Uid;
+                        //Ensures the guardian component on the supposed guardian entity and fills out it's synced parametres
+                        var guardiancomp = guardian.EnsureComponent<GuardianComponent>();
+                        guardiancomp.Guardian = guardian.Uid;
+                        guardiancomp.Host = args.User.Uid;
+                        //Grant the user the recall action and notify them
+                        action.Grant(ActionType.ManifestGuardian);
+                        args.User.PopupMessage(Loc.GetString("guardian-created"));
+                        //Exhaust the activator
+                        component.Used = true;
+                    }
+                    else
+                    {
+                        args.User.PopupMessage(Loc.GetString("guardian-activator-empty-invalid-creaton"));
+                    }
+                }
+                else
+                {
+                    args.User.PopupMessage(Loc.GetString("guardian-no-actions-invalid-creation"));
+                }
+            }
+            else
+            {
+                args.User.PopupMessage(Loc.GetString("guardian-already-present-invalid-creation"));
+            }
         }
 
         /// <summary>
@@ -66,8 +129,6 @@ namespace Content.Server.Guardian
             }
                   
         }
-
-
 
         /// <summary>
         /// Called every time the host moves, to make sure the distance between the host and the guardian isn't too far
@@ -110,42 +171,7 @@ namespace Content.Server.Guardian
             }
         }
 
-        /// <summary>
-        /// Adds the guardian host component to the user and spawns the guardian inside said component
-        /// </summary>
-        /// <param name="uid"></param>
-        /// <param name="component"></param>
-        /// <param name="args"></param>
-        private void OnGuardianCreated(EntityUid uid, GuardianCreatorComponent component, UseInHandEvent args)
-        {
-            //Only works if the guardian isn't already present. NOTE: this is up to preference, we can probably later allow
-            //a person to host multiple guardians, however the idea is that in a normal setting you won't get the opportunity to
-            if (!args.User.TryGetComponent<GuardianHostComponent>(out var guardianComponent))
-            {
-                if (args.User.TryGetComponent<SharedActionsComponent>(out SharedActionsComponent? action))
-                {
-                    var hostcomp = args.User.AddComponent<GuardianHostComponent>();
-                    var guardian = EntityManager.SpawnEntity(component.GuardianType, hostcomp.Owner.Transform.Coordinates);
-                    hostcomp.GuardianContainer.Insert(guardian);
-                    hostcomp._hostedguardian = guardian.Uid;
-                    //Ensures the guardian component on the supposed guardian entity and fills out it's synced parametres
-                    var guardiancomp = guardian.EnsureComponent<GuardianComponent>();
-                    guardiancomp.Guardian = guardian.Uid;
-                    guardiancomp.Host = args.User.Uid;
-                    //Grant the user the recall action and notify them
-                    action.Grant(ActionType.ManifestGuardian);
-                    args.User.PopupMessage(Loc.GetString("guardian-created"));     
-                }
-                else
-                {
-                    args.User.PopupMessage(Loc.GetString("guardian-no-actions-invalid-creation"));
-                }
-                }
-                else
-                {
-                    args.User.PopupMessage(Loc.GetString("guardian-already-present-invalid-creation"));
-                }
-            }
+        
 
         public void OnGuardianManifestAction(EntityUid guardian, EntityUid host)
         {

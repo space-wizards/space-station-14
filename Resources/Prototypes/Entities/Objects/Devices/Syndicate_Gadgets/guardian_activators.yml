@@ -1,12 +1,12 @@
 - type: entity
-  name: holoparasite projector
-  id: HoloparaIjector
+  name: holoparasite injector
+  id: HoloparaInjector
   parent: BaseItem
-  description: A immesly complex artwork of handheld machinery, allowing the user to host a holoparasite guardian. Should come with an insturction booklet.
+  description: A immesly complex artwork of handheld machinery, allowing the user to host a holoparasite guardian. Should come with an insturction manual.
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Food/plates.rsi
-    state: plate-small-trash
+    sprite: Objects/Specific/Medical/hypospray.rsi
+    state: bulky_hypo
     netsync: false
   - type: GuardianCreator
     GuardianID: MobHoloparasite

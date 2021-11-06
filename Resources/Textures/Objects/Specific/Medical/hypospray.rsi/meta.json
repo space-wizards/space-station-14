@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from vgstation at commit https://github.com/vgstation-coders/vgstation13/commit/1cdfb0230cc96d0ba751fa002d04f8aa2f25ad7d",
+  "copyright": "Taken from vgstation and tgstation at commits https://github.com/vgstation-coders/vgstation13/commit/1cdfb0230cc96d0ba751fa002d04f8aa2f25ad7d and https://github.com/tgstation/tgstation/commit/eee229d870169475e61e8c6a37bee181bbf5e8d8",
   "size": {
     "x": 32,
     "y": 32
@@ -15,6 +15,9 @@
     },
     {
       "name": "combat_hypo"
+    },
+	{
+      "name": "bulky_hypo"
     },
     {
       "name": "hypo"

@@ -51,7 +51,7 @@
   components:
   - type: StorageFill
     contents:
-    - id: HoloparaIjector
+    - id: HoloparaInjector
       amount: 1
     - id: GuardianInfo
       amount: 1
