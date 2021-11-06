@@ -1,0 +1,21 @@
+﻿uniform sampler2D SCREEN_TEXTURE;
+uniform highp float boozePower;
+
+void fragment() {
+    highp vec2 uv = FRAGCOORD.xy;
+
+    uv.x += sin(uv.y * 10.0 + TIME) / 10.0;
+    COLOR = zTextureSpec(SCREEN_TEXTURE, uv * SCREEN_PIXEL_SIZE);
+}
+
+void fart() {
+    highp vec2 uv;
+    uv.x+=cos(uv.y * 2.0 + TIME) * boozePower / 20;
+    uv.y+=sin(uv.x * 2.0 + TIME) * boozePower / 20;
+    float offset = sin(TIME *0.5) * boozePower / 10;
+    vec4 a = zTextureSpec(SCREEN_TEXTURE,uv);
+    vec4 b = zTextureSpec(SCREEN_TEXTURE,uv-vec2(sin(offset)));
+    vec4 c = zTextureSpec(SCREEN_TEXTURE,uv+vec2(sin(offset)));
+    vec4 d = zTextureSpec(SCREEN_TEXTURE,uv-vec2(0.0,sin(offset)));
+    vec4 e = zTextureSpec(SCREEN_TEXTURE,uv+vec2(0.0,sin(offset)));
+}

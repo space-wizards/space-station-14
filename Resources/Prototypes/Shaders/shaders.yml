@@ -36,6 +36,14 @@
     life: 0
 
 - type: shader
+  id: Drunk
+  kind: source
+  path: "/Textures/Shaders/drunk.swsl"
+  params:
+    boozePower: 0.0
+    time: 0.0
+
+- type: shader
   id: Texture
   kind: source
   path: "/Textures/Shaders/texture.swsl"

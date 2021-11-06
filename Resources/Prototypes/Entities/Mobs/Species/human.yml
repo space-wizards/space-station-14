@@ -71,6 +71,8 @@
     - SlowedDown
     - Stutter
     - Electrocution
+    - Drunk
+    - SlurredSpeech
   - type: DiseaseCarrier
   # Other
   - type: Inventory
