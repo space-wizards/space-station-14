@@ -28,12 +28,12 @@ namespace Content.MapRenderer
         };
 #pragma warning restore CA1825
 
-        internal static void Main()
+        internal static async Task Main()
         {
-            new Program().Run().Wait();
+            await Run();
         }
 
-        private async Task Run()
+        private static async Task Run()
         {
             var created = Environment.GetEnvironmentVariable(MapsAddedEnvKey);
             var modified = Environment.GetEnvironmentVariable(MapsModifiedEnvKey);
