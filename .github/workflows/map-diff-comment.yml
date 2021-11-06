@@ -10,71 +10,71 @@ jobs:
     name: Map Diff Comment
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-
-      - id: file_changes
-        name: Check changed files
-        uses: trilom/file-changes-action@v1.2.4
-        with:
-          fileOutput: 'yml'
-          persist-credentials: false
-          fetch-depth: 0
-
-      - name: Set environment variables
-        run: |
-            echo "FILES_ADDED=${{ steps.file_changes.outputs.files_added }}" >> $GITHUB_ENV
-            echo "FILES_MODIFIED=${{ steps.file_changes.outputs.files_modified }}" >> $GITHUB_ENV
-            echo "PR_NUMBER=${{ github.event.issue.number }}" >> $GITHUB_ENV
-
-      - name: Setup submodule
-        run: |
-          git submodule update --init --recursive
-          touch BuildChecker/DISABLE_SUBMODULE_AUTOUPDATE
-
-      - name: Pull engine updates
-        uses: space-wizards/submodule-dependency@v0.1.5
-
-      - name: Update Engine Submodules
-        run: |
-          cd RobustToolbox/
-          git submodule update --init --recursive
-
-      - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 5.0.100
-
-      - uses: actions/cache@v2
-        with:
-          path: ~/.nuget/packages
-          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-nuget-
-
-      - name: Install dependencies
-        if: steps.cache-primes.outputs.cache-hit != 'true'
-        run: dotnet restore
-
-      - name: Create map images
-        id: create_images
-        run: dotnet run --project Content.MapRenderer/Content.MapRenderer.csproj --no-restore --configuration Release
-
-      - name: Upload map images
-        uses: devicons/public-upload-to-imgur@main
-        id: new_map_images
-        with:
-          path: ./Resources/MapImages/
-          client_id: ${{ secrets.IMGUR_CLIENT_ID }}
-
-      - name: Map Diff Bot
-        uses: DrSmugleaf/MapDiffBot@v1.2
-        with:
-          uploaded: ${{ steps.new_map_images.outputs.imgur_urls }}
-          maps: ${{ steps.create_images.outputs.map_names }}
-          url: https://spacestation14.io/map-diff-viewer/
-          baseCommit: map-renderer
-          repoName: DrSmugleaf/space-station-14
-          mapImageDirectory: Resources/MapImages
+#      - uses: actions/checkout@v2
+#
+#      - id: file_changes
+#        name: Check changed files
+#        uses: trilom/file-changes-action@v1.2.4
+#        with:
+#          fileOutput: 'yml'
+#          persist-credentials: false
+#          fetch-depth: 0
+#
+#      - name: Set environment variables
+#        run: |
+#            echo "FILES_ADDED=${{ steps.file_changes.outputs.files_added }}" >> $GITHUB_ENV
+#            echo "FILES_MODIFIED=${{ steps.file_changes.outputs.files_modified }}" >> $GITHUB_ENV
+#            echo "PR_NUMBER=${{ github.event.issue.number }}" >> $GITHUB_ENV
+#
+#      - name: Setup submodule
+#        run: |
+#          git submodule update --init --recursive
+#          touch BuildChecker/DISABLE_SUBMODULE_AUTOUPDATE
+#
+#      - name: Pull engine updates
+#        uses: space-wizards/submodule-dependency@v0.1.5
+#
+#      - name: Update Engine Submodules
+#        run: |
+#          cd RobustToolbox/
+#          git submodule update --init --recursive
+#
+#      - name: Setup .NET Core
+#        uses: actions/setup-dotnet@v1
+#        with:
+#          dotnet-version: 5.0.100
+#
+#      - uses: actions/cache@v2
+#        with:
+#          path: ~/.nuget/packages
+#          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+#          restore-keys: |
+#            ${{ runner.os }}-nuget-
+#
+#      - name: Install dependencies
+#        if: steps.cache-primes.outputs.cache-hit != 'true'
+#        run: dotnet restore
+#
+#      - name: Create map images
+#        id: create_images
+#        run: dotnet run --project Content.MapRenderer/Content.MapRenderer.csproj --no-restore --configuration Release
+#
+#      - name: Upload map images
+#        uses: devicons/public-upload-to-imgur@main
+#        id: new_map_images
+#        with:
+#          path: ./Resources/MapImages/
+#          client_id: ${{ secrets.IMGUR_CLIENT_ID }}
+#
+#      - name: Map Diff Bot
+#        uses: DrSmugleaf/MapDiffBot@v1.2
+#        with:
+#          uploaded: ${{ steps.new_map_images.outputs.imgur_urls }}
+#          maps: ${{ steps.create_images.outputs.map_names }}
+#          url: https://spacestation14.io/map-diff-viewer/
+#          baseCommit: map-renderer
+#          repoName: DrSmugleaf/space-station-14
+#          mapImageDirectory: Resources/MapImages
 
       - name: Potentially find comment
         uses: peter-evans/find-comment@v1
@@ -90,7 +90,8 @@ jobs:
         with:
           issue-number: ${{ github.event.number }}
           body: |
-            ${{ steps.create_images.outputs.map_names }}
+            | 1 maps were modified.
+            | [saltern](https://spacestation14.io/map-diff-viewer/?new=https%3A%2F%2Fi.imgur.com%2FqgGXYDN.jpg)
 
       - name: Update comment if it exists
         if: steps.fc.outputs.comment-id != ''
@@ -99,7 +100,8 @@ jobs:
           comment-id: ${{ steps.fc.outputs.comment-id }}
           edit-mode: replace
           body: |
-            ${{ steps.create_images.outputs.map_names }}
+            | 1 maps were modified.
+            | [saltern](https://spacestation14.io/map-diff-viewer/?new=https%3A%2F%2Fi.imgur.com%2FqgGXYDN.jpg)
 
       - name: Update comment to read that it has been edited
         if: steps.fc.outputs.comment-id != ''
