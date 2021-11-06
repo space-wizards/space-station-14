@@ -21,7 +21,7 @@ namespace Content.MapRenderer.Painters
     {
         public async IAsyncEnumerable<Image> Paint(string map)
         {
-            map = map.Substring(10); // Resources/
+            map = map[10..]; // Resources/
 
             var stopwatch = new Stopwatch();
             stopwatch.Start();

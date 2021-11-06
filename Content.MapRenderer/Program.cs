@@ -16,8 +16,6 @@ namespace Content.MapRenderer
     {
         private const string MapsAddedEnvKey = "FILES_ADDED";
         private const string MapsModifiedEnvKey = "FILES_MODIFIED";
-        private const string GitHubRepositoryEnvKey = "GITHUB_REPOSITORY";
-        private const string PrNumberEnvKey = "PR_NUMBER";
 
         private static readonly MapPainter MapPainter = new();
 
@@ -101,13 +99,6 @@ namespace Content.MapRenderer
             var mapNamesString = $"[{string.Join(',', mapNames.Select(s => $"\"{s}\""))}]";
             Console.WriteLine($@"::set-output name=map_names::{mapNamesString}");
             Console.WriteLine($"Created {maps.Count} map images.");
-
-            // var repo = EnvironmentExtensions.GetVariableOrThrow(GitHubRepositoryEnvKey);
-            // var prNumber = int.Parse(EnvironmentExtensions.GetVariableOrThrow(PrNumberEnvKey));
-            // var writer = new GitHubClient(repo);
-            // var message = writer.Write(links);
-            //
-            // writer.Send(prNumber, message);
         }
     }
 }
