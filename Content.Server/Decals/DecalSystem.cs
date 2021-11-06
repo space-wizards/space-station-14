@@ -32,7 +32,7 @@ namespace Content.Server.Decals
 
         public uint AddDecal(string id, EntityCoordinates coordinates, Color? color = null)
         {
-            if (!_prototypeManager.HasIndex<DecalPrototype>(id))
+            if (!PrototypeManager.HasIndex<DecalPrototype>(id))
                 throw new ArgumentOutOfRangeException($"Tried to create decal with invalid prototypeid: {id}");
 
             var gridId = coordinates.GetGridId(EntityManager);
@@ -52,7 +52,7 @@ namespace Content.Server.Decals
 
         public bool SetDecalPosition(uint uid, EntityCoordinates coordinates)
         {
-            if (!_chunkIndex.TryGetValue(uid, out var values))
+            if (!ChunkIndex.TryGetValue(uid, out var values))
             {
                 return false;
             }
@@ -60,30 +60,30 @@ namespace Content.Server.Decals
             DirtyChunk(values);
 
             var gridId = coordinates.GetGridId(EntityManager);
-            var decal = _chunkCollections[values.gridId].GetChunk(values.chunkIndices)[uid];
+            var decal = ChunkCollections[values.gridId].GetChunk(values.chunkIndices)[uid];
             if (gridId == values.gridId)
             {
-                _chunkCollections[values.gridId].GetChunk(values.chunkIndices)[uid] = new Decal(coordinates.Position, decal.Id, decal.Color);
+                ChunkCollections[values.gridId].GetChunk(values.chunkIndices)[uid] = new Decal(coordinates.Position, decal.Id, decal.Color);
                 return true;
             }
 
-            _chunkCollections[values.gridId].GetChunk(values.chunkIndices).Remove(uid);
-            var chunkIndices = _chunkCollections[gridId].GetIndices(coordinates.Position);
-            _chunkCollections[gridId].GetChunk(chunkIndices).Add(uid, new Decal(coordinates.Position, decal.Id, decal.Color));
-            _chunkIndex[uid] = (gridId, chunkIndices);
+            ChunkCollections[values.gridId].GetChunk(values.chunkIndices).Remove(uid);
+            var chunkIndices = ChunkCollections[gridId].GetIndices(coordinates.Position);
+            ChunkCollections[gridId].GetChunk(chunkIndices).Add(uid, new Decal(coordinates.Position, decal.Id, decal.Color));
+            ChunkIndex[uid] = (gridId, chunkIndices);
             DirtyChunk(gridId, chunkIndices);
             return true;
         }
 
         public bool SetDecalColor(uint uid, Color? color)
         {
-            if (!_chunkIndex.TryGetValue(uid, out var values))
+            if (!ChunkIndex.TryGetValue(uid, out var values))
             {
                 return false;
             }
 
-            var decal = _chunkCollections[values.gridId].GetChunk(values.chunkIndices)[uid];
-            _chunkCollections[values.gridId].GetChunk(values.chunkIndices)[uid] =
+            var decal = ChunkCollections[values.gridId].GetChunk(values.chunkIndices)[uid];
+            ChunkCollections[values.gridId].GetChunk(values.chunkIndices)[uid] =
                 new Decal(decal.Coordinates, decal.Id, color);
             DirtyChunk(values);
             return true;
@@ -91,16 +91,16 @@ namespace Content.Server.Decals
 
         public bool SetDecalId(uint uid, string id)
         {
-            if (!_chunkIndex.TryGetValue(uid, out var values))
+            if (!ChunkIndex.TryGetValue(uid, out var values))
             {
                 return false;
             }
 
-            if (!_prototypeManager.HasIndex<DecalPrototype>(id))
+            if (!PrototypeManager.HasIndex<DecalPrototype>(id))
                 throw new ArgumentOutOfRangeException($"Tried to set decal id to invalid prototypeid: {id}");
 
-            var decal = _chunkCollections[values.gridId].GetChunk(values.chunkIndices)[uid];
-            _chunkCollections[values.gridId].GetChunk(values.chunkIndices)[uid] =
+            var decal = ChunkCollections[values.gridId].GetChunk(values.chunkIndices)[uid];
+            ChunkCollections[values.gridId].GetChunk(values.chunkIndices)[uid] =
                 new Decal(decal.Coordinates, id, decal.Color);
             DirtyChunk(values);
             return true;
@@ -122,7 +122,7 @@ namespace Content.Server.Decals
                 {
                     foreach (var chunkIndices in gridChunks)
                     {
-                        foreach (var (uid, _) in _chunkCollections[gridId].GetChunk(chunkIndices))
+                        foreach (var (uid, _) in ChunkCollections[gridId].GetChunk(chunkIndices))
                         {
                             seenIndices.Add(uid);
                         }
@@ -169,7 +169,7 @@ namespace Content.Server.Decals
             {
                 foreach (var chunkIndices in chunks)
                 {
-                    foreach (var (uid, decal) in _chunkCollections[gridId].GetChunk(chunkIndices))
+                    foreach (var (uid, decal) in ChunkCollections[gridId].GetChunk(chunkIndices))
                     {
                         updatedDecals[uid] = (decal, gridId);
                     }

@@ -13,12 +13,12 @@ namespace Content.Shared.Decals
 {
     public class SharedDecalSystem : EntitySystem
     {
-        [Dependency] protected readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
 
-        protected readonly Dictionary<GridId, ChunkCollection<Dictionary<uint, Decal>>> _chunkCollections = new();
-        protected readonly Dictionary<uint, (GridId gridId, Vector2i chunkIndices)> _chunkIndex = new();
+        protected readonly Dictionary<GridId, ChunkCollection<Dictionary<uint, Decal>>> ChunkCollections = new();
+        protected readonly Dictionary<uint, (GridId gridId, Vector2i chunkIndices)> ChunkIndex = new();
 
         private const int ChunkSize = 32;
 
@@ -36,12 +36,12 @@ namespace Content.Shared.Decals
 
         private void OnGridRemoval(GridRemovalEvent msg)
         {
-            _chunkCollections.Remove(msg.GridId);
+            ChunkCollections.Remove(msg.GridId);
         }
 
         private void OnGridInitialize(GridInitializeEvent msg)
         {
-            _chunkCollections[msg.GridId] = new ChunkCollection<Dictionary<uint, Decal>>(new Vector2i(ChunkSize, ChunkSize));
+            ChunkCollections[msg.GridId] = new ChunkCollection<Dictionary<uint, Decal>>(new Vector2i(ChunkSize, ChunkSize));
         }
 
         protected void DirtyChunk((GridId, Vector2i) values) => DirtyChunk(values.Item1, values.Item2);
@@ -49,25 +49,25 @@ namespace Content.Shared.Decals
 
         protected void RegisterDecal(uint uid, Decal decal, GridId gridId)
         {
-            var chunkIndices = _chunkCollections[gridId].GetIndices(decal.Coordinates);
-            _chunkCollections[gridId].GetChunk(chunkIndices).Add(uid, decal);
-            _chunkIndex.Add(uid, (gridId, chunkIndices));
+            var chunkIndices = ChunkCollections[gridId].GetIndices(decal.Coordinates);
+            ChunkCollections[gridId].GetChunk(chunkIndices).Add(uid, decal);
+            ChunkIndex.Add(uid, (gridId, chunkIndices));
             DirtyChunk(gridId, chunkIndices);
         }
 
         protected bool RemoveDecalInternal(uint uid)
         {
-            if (!_chunkIndex.TryGetValue(uid, out var values))
+            if (!ChunkIndex.TryGetValue(uid, out var values))
             {
                 return false;
             }
 
-            if (!_chunkCollections[values.gridId].GetChunk(values.chunkIndices).Remove(uid))
+            if (!ChunkCollections[values.gridId].GetChunk(values.chunkIndices).Remove(uid))
             {
                 return false;
             }
 
-            _chunkIndex.Remove(uid);
+            ChunkIndex.Remove(uid);
             return true;
         }
 
