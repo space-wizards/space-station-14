@@ -30,16 +30,21 @@ namespace Content.Server.Decals
             _dirtyChunks[id].Add(chunkIndices);
         }
 
+        public uint AddDecal(string id, GridId gridId, Vector2 coordinates, Color? color = null)
+        {
+            var decal = new Decal(coordinates, id, color);
+            var uid = _latestIndex++;
+            RegisterDecal(uid, decal, gridId);
+            return uid;
+        }
+
         public uint AddDecal(string id, EntityCoordinates coordinates, Color? color = null)
         {
             if (!PrototypeManager.HasIndex<DecalPrototype>(id))
                 throw new ArgumentOutOfRangeException($"Tried to create decal with invalid prototypeid: {id}");
 
             var gridId = coordinates.GetGridId(EntityManager);
-            var decal = new Decal(coordinates.Position, id, color);
-            var uid = _latestIndex++;
-            RegisterDecal(uid, decal, gridId);
-            return uid;
+            return AddDecal(id, gridId, coordinates.Position, color);
         }
 
         public bool RemoveDecal(uint uid)
