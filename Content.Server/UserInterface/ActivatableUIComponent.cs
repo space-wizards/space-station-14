@@ -1,0 +1,122 @@
+using System;
+using Content.Shared.ActionBlocker;
+using Content.Shared.Hands;
+using Content.Shared.Instruments;
+using Content.Shared.Interaction;
+using Content.Shared.Popups;
+using Content.Shared.Standing;
+using Content.Shared.Stunnable;
+using Content.Shared.Throwing;
+using Robust.Server.GameObjects;
+using Robust.Server.Player;
+using Robust.Shared.Reflection;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Enums;
+using Robust.Shared.Player;
+using Robust.Shared.Network;
+using Robust.Shared.IoC;
+using Robust.Shared.Utility;
+using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
+
+namespace Content.Server.UserInterface
+{
+    [RegisterComponent]
+    [ComponentReference(typeof(IActivate))]
+    public class ActivatableUIComponent : Component,
+            IDropped,
+            IHandDeselected,
+            IThrown,
+            ISerializationHooks
+    {
+        public override string Name => "ActivatableUI";
+
+        private ActivatableUISystem _activatableUISystem = default!;
+
+        [ViewVariables]
+        public Enum Key { get; set; } = default!;
+
+        [ViewVariables] public BoundUserInterface UserInterface => Owner.GetUIOrNull(Key)!;
+
+        [ViewVariables]
+        [DataField("inHandsOnly")]
+        public bool InHandsOnly { get; set; } = false;
+
+        [ViewVariables]
+        [DataField("singleUser")]
+        public bool SingleUser { get; set; } = false;
+
+        [DataField("key", readOnly: true, required: true)]
+        private string _keyRaw = default!;
+
+        /// <summary>
+        ///     The client channel currently using the object, or null if there's none/not single user.
+        /// </summary>
+        [ViewVariables]
+        public IPlayerSession? CurrentSingleUser;
+
+        public void SetCurrentSingleUser(IPlayerSession? v)
+        {
+            if (!SingleUser)
+                return;
+            if (CurrentSingleUser != null)
+                CurrentSingleUser.PlayerStatusChanged -= OnPlayerStatusChanged;
+
+            CurrentSingleUser = v;
+
+            if (v != null)
+                v.PlayerStatusChanged += OnPlayerStatusChanged;
+            Owner.EntityManager.EventBus.RaiseLocalEvent(OwnerUid, new ActivatableUIPlayerChangedEvent(), false);
+        }
+
+        private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
+        {
+            // this probably ought to be BUI's responsibility.
+            // a disconnect should count as closing the UI, rest follows automatically
+            if (Deleted || e.Session != CurrentSingleUser || e.NewStatus != SessionStatus.Disconnected) return;
+            SetCurrentSingleUser(null);
+        }
+
+        void ISerializationHooks.AfterDeserialization()
+        {
+            var reflectionManager = IoCManager.Resolve<IReflectionManager>();
+            reflectionManager.TryParseEnumReference(_keyRaw, out var key);
+            DebugTools.AssertNotNull(key);
+            Key = key!;
+        }
+
+        protected override void Initialize()
+        {
+            base.Initialize();
+
+            // Note the implicit exception thrown if the key is messed up
+            // This is on purpose for fail-fast
+            UserInterface.OnClosed += UserInterfaceOnClosed;
+
+            _activatableUISystem = EntitySystem.Get<ActivatableUISystem>();
+        }
+
+        void IDropped.Dropped(DroppedEventArgs eventArgs)
+        {
+            UserInterface.CloseAll();
+        }
+
+        void IThrown.Thrown(ThrownEventArgs eventArgs)
+        {
+            UserInterface.CloseAll();
+        }
+
+        void IHandDeselected.HandDeselected(HandDeselectedEventArgs eventArgs)
+        {
+            UserInterface.CloseAll();
+        }
+
+        private void UserInterfaceOnClosed(IPlayerSession player)
+        {
+            if (player != CurrentSingleUser) return;
+            SetCurrentSingleUser(null);
+        }
+    }
+}
+
