@@ -36,20 +36,18 @@ namespace Content.Client.Chat
         /// </summary>
         public TimeSpan TimeSinceType { get; private set; }
 
-
-        private bool _localTypingNow = false;
-
         public override void Initialize()
         {
             base.Initialize();
             SubscribeNetworkEvent<ClientTypingMessage>(HandleRemoteTyping);
+            SubscribeNetworkEvent<ClientStoppedTypingMessage>(HandleRemoteStoppedTyping);
             SubscribeLocalEvent<PlayerAttachSysMessage>(HandlePlayerAttached);
         }
 
         public void HandleClientTyping()
         {
             if (!Enabled) return;
-            _localTypingNow = true;
+            TimeSinceType = _timing.RealTime;
 
         }
 
@@ -58,12 +56,18 @@ namespace Content.Client.Chat
             TimeSinceType = TimeSpan.Zero;
         }
 
-
         private void HandleRemoteTyping(ClientTypingMessage ev)
         {
             var entity = EntityManager.GetEntity(ev.EnityId.GetValueOrDefault());
             var comp = entity.EnsureComponent<TypingIndicatorComponent>();
             comp.Enabled = true;
+        }
+
+        private void HandleRemoteStoppedTyping(ClientStoppedTypingMessage ev)
+        {
+            var entity = EntityManager.GetEntity(ev.EnityId.GetValueOrDefault());
+            var comp = entity.EnsureComponent<TypingIndicatorComponent>();
+            comp.Enabled = false;
         }
 
         private void HandlePlayerAttached(PlayerAttachSysMessage message)
@@ -75,20 +79,14 @@ namespace Content.Client.Chat
         {
             base.Update(frameTime);
             var pollRate = TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.ChatTypingIndicatorPollRate));
-            if(_localTypingNow && _timing.RealTime.Subtract(TimeSinceType) >= pollRate)
-            {
-                var player = _playerManager.LocalPlayer;
-                if (player == null) return;
-                RaiseNetworkEvent(new ClientTypingMessage(player.UserId, player.ControlledEntity?.Uid));
-                TimeSinceType = _timing.RealTime;
-            }
-            else
-            {
-                var player = _playerManager.LocalPlayer;
-                if (player == null) return;
-                RaiseNetworkEvent(new ClientStoppedTypingMessage(player.UserId, player.ControlledEntity?.Uid));
-            }
 
+            if(_timing.RealTime.Subtract(pollRate) <= TimeSinceType)
+            {
+                var player = _playerManager.LocalPlayer;
+                if (player == null) return;
+
+                RaiseNetworkEvent(new ClientTypingMessage(player.UserId, player.ControlledEntity?.Uid));
+            }
         }
 
         public override void FrameUpdate(float frameTime)
@@ -105,8 +103,7 @@ namespace Content.Client.Chat
 
             foreach (var (mobState, typingIndicatorComp) in EntityManager.EntityQuery<IMobStateComponent, TypingIndicatorComponent>())
             {
-                if (!typingIndicatorComp.Enabled) return;
-
+              
                 var entity = mobState.Owner;
                 
                 if (_attachedEntity.Transform.MapID != entity.Transform.MapID ||
@@ -123,6 +120,11 @@ namespace Content.Client.Chat
 
                 if (_guis.ContainsKey(entity.Uid))
                 {
+                    if(_guis.TryGetValue(entity.Uid, out var typGui))
+                    {
+                        typGui.Visible = typingIndicatorComp.Enabled;
+                    }
+
                     continue;
                 }
 
@@ -134,7 +136,7 @@ namespace Content.Client.Chat
         [UsedImplicitly]
         public sealed class EnabledTypingIndicatorSystem : IConsoleCommand
         {
-            public string Command => "enabledtypingindicator";
+            public string Command => "enabletypingindicator";
             public string Description => "Enables the typing indicator";
             public string Help => ""; //helpless
 

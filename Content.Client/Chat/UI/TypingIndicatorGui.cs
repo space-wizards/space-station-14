@@ -17,6 +17,8 @@ namespace Content.Client.Chat.UI
         public TypingIndicatorOverlay TalkOverlay { get; }
         public IEntity Entity { get; }
 
+        public bool Enabled { get; set; }
+
         public TypingIndicatorGui(IEntity entity)
         {
             IoCManager.InjectDependencies(this);
@@ -43,7 +45,7 @@ namespace Content.Client.Chat.UI
                 return;
             }
 
-            Visible = true;
+            Visible = Enabled;
 
             var screenCoordinates = _eyeManager.CoordinatesToScreen(Entity.Transform.Coordinates);
             var playerPosition = UserInterfaceManager.ScreenToUIPosition(screenCoordinates);
@@ -60,7 +62,7 @@ namespace Content.Client.Chat.UI
         {
             IoCManager.InjectDependencies(this);
             Shader = IoCManager.Resolve<IPrototypeManager>().Index<ShaderPrototype>("unshaded").Instance();
-            var specifier = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Interface/Misc/talk.rsi"), "h0");
+            var specifier = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Interface/Misc/talk.rsi"), "talk0");
             TypingIndicatorTexture = specifier.Frame0();
         }
 
@@ -69,6 +71,7 @@ namespace Content.Client.Chat.UI
             base.Draw(handle);
             handle.UseShader(Shader);
             handle.DrawTexture(TypingIndicatorTexture, Vector2.Zero);
+            
         }
     }
 }
