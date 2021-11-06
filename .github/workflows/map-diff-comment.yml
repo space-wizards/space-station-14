@@ -67,7 +67,7 @@ jobs:
           client_id: ${{ secrets.IMGUR_CLIENT_ID }}
 
       - name: Map Diff Bot
-        uses: DrSmugleaf/MapDiffBot@v1.5
+        uses: DrSmugleaf/MapDiffBot@v1.6
         id: mapdiff
         with:
           uploaded: ${{ steps.new_map_images.outputs.imgur_urls }}
