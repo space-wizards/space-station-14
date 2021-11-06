@@ -84,8 +84,11 @@ namespace Content.MapRenderer
 
                 await foreach (var grid in MapPainter.Paint(map))
                 {
+                    var directory = DirectoryExtensions.MapImages().FullName;
+                    Directory.CreateDirectory(directory);
+
                     var fileName = Path.GetFileNameWithoutExtension(map);
-                    var savePath = $"{DirectoryExtensions.MapImages().FullName}{Path.DirectorySeparatorChar}{fileName}.png";
+                    var savePath = $"{directory}{Path.DirectorySeparatorChar}{fileName}.png";
 
                     Console.WriteLine($"Writing grid of size {grid.Width}x{grid.Height} to {savePath}");
 
