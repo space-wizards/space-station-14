@@ -24,7 +24,8 @@
   - type: UnpoweredFlashlight
   - type: PointLight
     enabled: false
-    radius: 1.4
+    radius: 2.5
+    softness: 5
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
   - type: UserInterface
