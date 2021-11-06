@@ -5,6 +5,7 @@ using System.Linq;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
+using Content.Shared.MobState.EntitySystems;
 using Content.Shared.MobState.State;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
@@ -311,6 +312,18 @@ namespace Content.Shared.MobState.Components
 
             state.EnterState(Owner);
             state.UpdateState(Owner, threshold);
+
+            if (old != null)
+            {
+               var stateChangeEvent = new MobStateChangedEvent(this, old, state);
+               Owner.EntityManager.EventBus.RaiseLocalEvent(OwnerUid, stateChangeEvent);
+            }
+            else
+            {
+                var stateChangeEvent = new MobStateChangedEvent(this, null, state);
+                Owner.EntityManager.EventBus.RaiseLocalEvent(OwnerUid, stateChangeEvent);1
+            }
+            
 
             var message = new MobStateChangedMessage(this, old, state);
 #pragma warning disable 618

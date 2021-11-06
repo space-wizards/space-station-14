@@ -18,7 +18,7 @@
     HeldPrefix: box
 
 # The box size values may change depending on what is stored in them
-# But if you want to balance a high-risk item by having it's box be nigh un-conceallable then you might want to consider a bigger box  
+# But if you want to balance a high-risk item by having its box be nigh un-conceallable then you might want to consider a bigger box  
     
 - type: entity
   parent: BoxBase
