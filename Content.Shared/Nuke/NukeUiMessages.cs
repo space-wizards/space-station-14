@@ -34,4 +34,9 @@ namespace Content.Shared.Nuke
     public sealed class NukeKeypadEnterMessage : BoundUserInterfaceMessage
     {
     }
+
+    [Serializable, NetSerializable]
+    public sealed class NukeArmedMessage : BoundUserInterfaceMessage
+    {
+    }
 }

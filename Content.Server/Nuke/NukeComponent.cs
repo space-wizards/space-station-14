@@ -9,11 +9,8 @@ namespace Content.Server.Nuke
     {
         public override string Name => "Nuke";
 
-        [DataField("minTime")]
-        public int MinimumTime = 90;
-
-        [DataField("maxTime")]
-        public int MaximumTime = 3600;
+        [DataField("timer")]
+        public int Timer = 120;
 
         public int RemainingTime;
         public bool IsArmed = false;

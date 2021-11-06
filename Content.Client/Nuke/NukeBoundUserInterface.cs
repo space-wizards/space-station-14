@@ -43,6 +43,10 @@ namespace Content.Client.Nuke
             {
                 SendMessage(new NukeAnchorMessage());
             };
+            _menu.ArmButton.OnPressed += _ =>
+            {
+                SendMessage(new NukeArmedMessage());
+            };
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)

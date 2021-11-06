@@ -14,7 +14,6 @@ namespace Content.Shared.Nuke
     {
         AWAIT_DISK,
         AWAIT_CODE,
-        AWAIT_TIMER,
         AWAIT_ARM,
         TIMING
     }

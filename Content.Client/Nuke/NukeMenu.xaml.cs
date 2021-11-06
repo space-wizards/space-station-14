@@ -78,6 +78,16 @@ namespace Content.Client.Nuke
                     secondMsg = Loc.GetString("nuke-user-interface-second-status-current-code",
                         ("code", VisualizeCode(state.EnteredCodeLength, state.MaxCodeLength)));
                     break;
+                case NukeStatus.AWAIT_ARM:
+                    firstMsg = Loc.GetString("nuke-user-interface-first-status-device-ready");
+                    secondMsg = Loc.GetString("nuke-user-interface-second-status-time",
+                        ("time", state.RemainingTime));
+                    break;
+                case NukeStatus.TIMING:
+                    firstMsg = Loc.GetString("nuke-user-interface-first-status-device-armed");
+                    secondMsg = Loc.GetString("nuke-user-interface-second-status-time",
+                        ("time", state.RemainingTime));
+                    break;
                 default:
                     // shouldn't normally be here
                     firstMsg = Loc.GetString("nuke-user-interface-status-error");

@@ -39,9 +39,16 @@ namespace Content.Server.Nuke
             // ui events
             SubscribeLocalEvent<NukeComponent, NukeEjectMessage>(OnEject);
             SubscribeLocalEvent<NukeComponent, NukeAnchorMessage>(OnAnchor);
+            SubscribeLocalEvent<NukeComponent, NukeArmedMessage>(OnArmed);
             SubscribeLocalEvent<NukeComponent, NukeKeypadMessage>(OnKeypad);
             SubscribeLocalEvent<NukeComponent, NukeKeypadClearMessage>(OnClear);
             SubscribeLocalEvent<NukeComponent, NukeKeypadEnterMessage>(OnEnter);
+        }
+
+        private void OnArmed(EntityUid uid, NukeComponent component, NukeArmedMessage args)
+        {
+            component.Status = NukeStatus.TIMING;
+            UpdateUserInterface(uid, component);
         }
 
         private void OnEnter(EntityUid uid, NukeComponent component, NukeKeypadEnterMessage args)
