@@ -89,14 +89,14 @@
       zeroVisible: false
 
 - type: entity
-  name: STAR Laser Pistol
+  name: Svalinn Laser Pistol
   parent: BaseItem
-  id: LaserPistolStar
+  id: LaserPistolSvalinn
   description: A cheap and widely used laser pistol.
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Weapons/Guns/Battery/star.rsi
+    sprite: Objects/Weapons/Guns/Battery/svalinn.rsi
     layers:
       - state: base
         map: ["enum.RangedBarrelVisualLayers.Base"]
@@ -105,7 +105,7 @@
         shader: unshaded
   - type: Item
     size: 24
-    sprite: Objects/Weapons/Guns/Battery/star.rsi
+    sprite: Objects/Weapons/Guns/Battery/svalinn.rsi
   - type: RangedWeapon
   - type: BatteryBarrel
     currentSelector: Single
