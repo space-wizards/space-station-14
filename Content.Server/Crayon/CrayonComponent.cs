@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Decals;
@@ -126,7 +127,8 @@ namespace Content.Server.Crayon
                 return true;
             }
 
-            EntitySystem.Get<DecalSystem>().AddDecal(SelectedState, eventArgs.ClickLocation.Offset(new Vector2(-0.5f,-0.5f)), Color.FromName(_color));
+            if(!EntitySystem.Get<DecalSystem>().TryAddDecal(SelectedState, eventArgs.ClickLocation.Offset(new Vector2(-0.5f,-0.5f)), out _, Color.FromName(_color)))
+                return false;
 
             if (_useSound != null)
                 SoundSystem.Play(Filter.Pvs(Owner), _useSound.GetSound(), Owner, AudioHelpers.WithVariation(0.125f));

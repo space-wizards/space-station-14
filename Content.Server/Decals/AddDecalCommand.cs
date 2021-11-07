@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Decals;
+using Content.Shared.Maps;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -26,21 +27,34 @@ namespace Content.Server.Decals
                 return;
             }
 
+            if (!IoCManager.Resolve<IPrototypeManager>().HasIndex<DecalPrototype>(args[0]))
+            {
+                shell.WriteError($"Cannot find decalprototype '{args[0]}'.");
+            }
+
             if (!float.TryParse(args[1], out var x))
             {
-                shell.WriteError("Failed parsing x-coordinate.");
+                shell.WriteError($"Failed parsing x-coordinate '{args[1]}'.");
                 return;
             }
 
             if (!float.TryParse(args[2], out var y))
             {
-                shell.WriteError("Failed parsing y-coordinate");
+                shell.WriteError($"Failed parsing y-coordinate'{args[2]}'.");
                 return;
             }
 
-            if (!int.TryParse(args[3], out var gridIdRaw))
+            var mapManager = IoCManager.Resolve<IMapManager>();
+            if (!int.TryParse(args[3], out var gridIdRaw) || !mapManager.TryGetGrid(new GridId(gridIdRaw), out var grid))
             {
-                shell.WriteError("Failed parsing gridId");
+                shell.WriteError($"Failed parsing gridId '{args[3]}'.");
+                return;
+            }
+
+            var coordinates = new EntityCoordinates(grid.GridEntityId, new Vector2(x, y));
+            if (grid.GetTileRef(coordinates).IsSpace())
+            {
+                shell.WriteError($"Cannot create decal on space tile at {coordinates}.");
                 return;
             }
 
@@ -54,7 +68,7 @@ namespace Content.Server.Decals
                     var rawValue = args[i].Split('=');
                     if (rawValue.Length != 2)
                     {
-                        shell.WriteError($"Failed parsing parameter: {args[i]}");
+                        shell.WriteError($"Failed parsing parameter: '{args[i]}'");
                         return;
                     }
 
@@ -63,7 +77,7 @@ namespace Content.Server.Decals
                         case "angle":
                             if (!double.TryParse(rawValue[1], out var degrees))
                             {
-                                shell.WriteError("Failed parsing angle.");
+                                shell.WriteError($"Failed parsing angle '{rawValue[1]}'.");
                                 return;
                             }
                             rotation = Angle.FromDegrees(degrees);
@@ -71,33 +85,33 @@ namespace Content.Server.Decals
                         case "zIndex":
                             if (!int.TryParse(rawValue[1], out zIndex))
                             {
-                                shell.WriteError("Failed parsing zIndex.");
+                                shell.WriteError($"Failed parsing zIndex '{rawValue[1]}'.");
                                 return;
                             }
                             break;
                         case "color":
                             if (!Color.TryFromName(rawValue[1], out var colorRaw))
                             {
-                                shell.WriteError("Failed parsing color.");
+                                shell.WriteError($"Failed parsing color '{rawValue[1]}'.");
                                 return;
                             }
 
                             color = colorRaw;
                             break;
                         default:
-                            shell.WriteError($"Unknown named parameter key: {rawValue[0]}");
+                            shell.WriteError($"Unknown parameter key '{rawValue[0]}'.");
                             return;
                     }
                 }
             }
 
-            try
+            if(EntitySystem.Get<DecalSystem>().TryAddDecal(args[0], coordinates, out var uid, color, rotation, zIndex))
             {
-                EntitySystem.Get<DecalSystem>().AddDecal(args[0], new GridId(gridIdRaw), new Vector2(x, y), color, rotation, zIndex);
+                shell.WriteLine($"Successfully created decal {uid}.");
             }
-            catch (Exception e)
+            else
             {
-                shell.WriteError($"Adding decal failed with the following message: {e.Message}");
+                shell.WriteError($"Failed adding decal.");
             }
         }
     }

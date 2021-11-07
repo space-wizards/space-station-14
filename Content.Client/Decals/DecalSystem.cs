@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using Content.Shared.Decals;
 using Robust.Client.Graphics;
 using Robust.Shared.GameObjects;
@@ -26,7 +24,6 @@ namespace Content.Client.Decals
 
             SubscribeNetworkEvent<DecalChunkUpdateEvent>(OnChunkUpdate);
             SubscribeNetworkEvent<DecalRemovalUpdateEvent>(OnRemovalUpdate);
-            SubscribeNetworkEvent<DecalIndexCheckEvent>(OnIndexCheck);
             SubscribeLocalEvent<GridInitializeEvent>(OnGridInitialize);
             SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoval);
         }
@@ -47,17 +44,6 @@ namespace Content.Client.Decals
             _overlayManager.RemoveOverlay(_overlay);
         }
 
-        private void OnIndexCheck(DecalIndexCheckEvent ev)
-        {
-            var existingUids = ChunkIndex.Keys.ToHashSet();
-            var missing = new HashSet<uint>(ev.SeenIndices);
-            missing.ExceptWith(existingUids);
-            if (missing.Count > 0)
-            {
-                throw new Exception($"Missing decals: {string.Join(',', missing)}");
-            }
-        }
-
         private void OnRemovalUpdate(DecalRemovalUpdateEvent msg)
         {
             foreach (var uid in msg.RemovedDecals)
@@ -66,12 +52,39 @@ namespace Content.Client.Decals
             }
         }
 
+        protected override bool RemoveDecalHook(uint uid)
+        {
+            RemoveDecalFromRenderIndex(uid);
+
+            return base.RemoveDecalHook(uid);
+        }
+
+        private void RemoveDecalFromRenderIndex(uint uid)
+        {
+            var values = DecalZIndexIndex[uid];
+
+            DecalRenderIndex[values.gridId][values.zIndex].Remove(uid);
+            if (DecalRenderIndex[values.gridId][values.zIndex].Count == 0)
+                DecalRenderIndex[values.gridId].Remove(values.zIndex);
+
+            DecalZIndexIndex.Remove(uid);
+        }
+
         private void OnChunkUpdate(DecalChunkUpdateEvent ev)
         {
             foreach (var (gridId, gridChunks) in ev.Data)
             {
                 foreach (var (indices, newChunkData) in gridChunks)
                 {
+                    if (ChunkCollections[gridId].TryGetChunk(indices, out var chunk))
+                    {
+                        var removedUids = new HashSet<uint>(chunk.Keys);
+                        removedUids.ExceptWith(newChunkData.Keys);
+                        foreach (var removedUid in removedUids)
+                        {
+                            RemoveDecalFromRenderIndex(removedUid);
+                        }
+                    }
                     foreach (var (uid, decal) in newChunkData)
                     {
                         if (!DecalRenderIndex[gridId].TryGetValue(decal.ZIndex, out var decals))

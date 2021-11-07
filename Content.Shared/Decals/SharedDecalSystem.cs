@@ -11,7 +11,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Decals
 {
-    public class SharedDecalSystem : EntitySystem
+    public abstract class SharedDecalSystem : EntitySystem
     {
         [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
@@ -31,7 +31,18 @@ namespace Content.Shared.Decals
             SubscribeLocalEvent<GridInitializeEvent>(OnGridInitialize);
             SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoval);
             _viewSize = _configurationManager.GetCVar(CVars.NetMaxUpdateRange)*2f;
-            _configurationManager.OnValueChanged(CVars.NetMaxUpdateRange, f => _viewSize = f*2f);
+            _configurationManager.OnValueChanged(CVars.NetMaxUpdateRange, OnPvsRangeChanged);
+        }
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+            _configurationManager.UnsubValueChanged(CVars.NetMaxUpdateRange, OnPvsRangeChanged);
+        }
+
+        private void OnPvsRangeChanged(float obj)
+        {
+            _viewSize = obj * 2f;
         }
 
         private void OnGridRemoval(GridRemovalEvent msg)
@@ -50,26 +61,34 @@ namespace Content.Shared.Decals
         protected void RegisterDecal(uint uid, Decal decal, GridId gridId)
         {
             var chunkIndices = ChunkCollections[gridId].GetIndices(decal.Coordinates);
-            ChunkCollections[gridId].GetChunk(chunkIndices).Add(uid, decal);
+            ChunkCollections[gridId].EnsureChunk(chunkIndices).Add(uid, decal);
             ChunkIndex.Add(uid, (gridId, chunkIndices));
             DirtyChunk(gridId, chunkIndices);
         }
 
         protected bool RemoveDecalInternal(uint uid)
         {
+            if (!RemoveDecalHook(uid)) return false;
+
             if (!ChunkIndex.TryGetValue(uid, out var values))
             {
                 return false;
             }
 
-            if (!ChunkCollections[values.gridId].GetChunk(values.chunkIndices).Remove(uid))
+            if (!ChunkCollections[values.gridId].TryGetChunk(values.chunkIndices, out var chunk) || !chunk.Remove(uid))
             {
                 return false;
             }
 
+            if (ChunkCollections[values.gridId].GetChunk(values.chunkIndices).Count == 0)
+                ChunkCollections[values.gridId].RemoveChunk(values.chunkIndices);
+
             ChunkIndex.Remove(uid);
+            DirtyChunk(values);
             return true;
         }
+
+        protected virtual bool RemoveDecalHook(uint uid) => true;
 
         private (Box2 view, MapId mapId) CalcViewBounds(in EntityUid euid)
         {
@@ -169,18 +188,32 @@ namespace Content.Shared.Decals
             _chunks[indices] = chunk;
         }
 
-        public bool TryGetChunk(Vector2i indices, out T? chunk)
+        public bool TryGetChunk(Vector2i indices, [NotNullWhen(true)] out T? chunk)
         {
-            return _chunks.TryGetValue(indices, out chunk);
+            if(_chunks.TryGetValue(indices, out var rawChunk) && rawChunk != null)
+            {
+                chunk = rawChunk;
+                return true;
+            }
+
+            chunk = default;
+            return false;
         }
 
         public T GetChunk(Vector2i indices)
+        {
+            return _chunks[indices];
+        }
+
+        public T EnsureChunk(Vector2i indices)
         {
             if (_chunks.TryGetValue(indices, out var chunk))
                 return chunk;
 
             return _chunks[indices] = _createDelegate();
         }
+
+        public bool RemoveChunk(Vector2i indices) => _chunks.Remove(indices);
 
         public IEnumerable<T> GetChunksForArea(Box2 area)
         {
@@ -199,7 +232,8 @@ namespace Content.Shared.Decals
 
             foreach (var indices in coordinates)
             {
-                yield return GetChunk(indices);
+                if (TryGetChunk(indices, out var chunk))
+                    yield return chunk;
             }
         }
     }
