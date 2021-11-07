@@ -15,6 +15,7 @@ namespace Content.Client.Decals
 
         private DecalOverlay _overlay = default!;
         public Dictionary<GridId, SortedDictionary<int, SortedDictionary<uint, Decal>>> DecalRenderIndex = new();
+        private Dictionary<uint, (GridId gridId, int zIndex)> DecalZIndexIndex = new();
 
         public override void Initialize()
         {
@@ -71,15 +72,24 @@ namespace Content.Client.Decals
             {
                 foreach (var (indices, newChunkData) in gridChunks)
                 {
-                    ChunkCollections[gridId].InsertChunk(indices, newChunkData);
                     foreach (var (uid, decal) in newChunkData)
                     {
-                        ChunkIndex.TryAdd(uid, (gridId, indices));
                         if (!DecalRenderIndex[gridId].TryGetValue(decal.ZIndex, out var decals))
+                        {
                             DecalRenderIndex[gridId][decal.ZIndex] = new ();
+                        }
 
-                        DecalRenderIndex[gridId][decal.ZIndex].Add(uid, decal);
+                        if (DecalZIndexIndex.TryGetValue(uid, out var values))
+                        {
+                            DecalRenderIndex[values.gridId][values.zIndex].Remove(uid);
+                        }
+
+                        DecalRenderIndex[gridId][decal.ZIndex][uid] = decal;
+                        DecalZIndexIndex[uid] = (gridId, decal.ZIndex);
+
+                        ChunkIndex[uid] = (gridId, indices);
                     }
+                    ChunkCollections[gridId].InsertChunk(indices, newChunkData);
                 }
             }
         }

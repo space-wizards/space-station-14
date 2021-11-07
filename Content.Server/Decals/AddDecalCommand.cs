@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Decals;
@@ -16,12 +17,12 @@ namespace Content.Server.Decals
     {
         public string Command => "adddecal";
         public string Description => "Creates a decal on the map";
-        public string Help => $"{Command} <id> <x position> <y position> <gridId> [<color>]";
+        public string Help => $"{Command} <id> <x position> <y position> <gridId> [angle=<angle> zIndex=<zIndex> color=<color>]";
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            if (args.Length < 4)
+            if (args.Length < 4 || args.Length > 7)
             {
-                shell.WriteError($"Received too little arguments. Expected at least 4, got {args.Length}.\nUsage: {Help}");
+                shell.WriteError($"Received invalid amount of arguments arguments. Expected 4 to 7, got {args.Length}.\nUsage: {Help}");
                 return;
             }
 
@@ -44,22 +45,55 @@ namespace Content.Server.Decals
             }
 
             Color? color = null;
+            var zIndex = 0;
+            Angle? rotation = null;
             if (args.Length > 4)
             {
-                if (Color.TryFromName(args[4], out var colorRaw))
+                for (int i = 4; i < args.Length; i++)
                 {
-                    color = colorRaw;
-                }
-                else
-                {
-                    shell.WriteError("Failed parsing color.");
-                    return;
+                    var rawValue = args[i].Split('=');
+                    if (rawValue.Length != 2)
+                    {
+                        shell.WriteError($"Failed parsing parameter: {args[i]}");
+                        return;
+                    }
+
+                    switch (rawValue[0])
+                    {
+                        case "angle":
+                            if (!double.TryParse(rawValue[1], out var degrees))
+                            {
+                                shell.WriteError("Failed parsing angle.");
+                                return;
+                            }
+                            rotation = Angle.FromDegrees(degrees);
+                            break;
+                        case "zIndex":
+                            if (!int.TryParse(rawValue[1], out zIndex))
+                            {
+                                shell.WriteError("Failed parsing zIndex.");
+                                return;
+                            }
+                            break;
+                        case "color":
+                            if (!Color.TryFromName(rawValue[1], out var colorRaw))
+                            {
+                                shell.WriteError("Failed parsing color.");
+                                return;
+                            }
+
+                            color = colorRaw;
+                            break;
+                        default:
+                            shell.WriteError($"Unknown named parameter key: {rawValue[0]}");
+                            return;
+                    }
                 }
             }
 
             try
             {
-                EntitySystem.Get<DecalSystem>().AddDecal(args[0], new GridId(gridIdRaw), new Vector2(x, y), color);
+                EntitySystem.Get<DecalSystem>().AddDecal(args[0], new GridId(gridIdRaw), new Vector2(x, y), color, rotation, zIndex);
             }
             catch (Exception e)
             {
