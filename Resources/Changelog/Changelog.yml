@@ -1,16 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Nerfed throwing while weightless, type: Tweak}
-  - {message: Fixed weightless movement to use push strength again, type: Fix}
-  - {message: Throwing pushback implemented again, type: Fix}
-  id: 51
-  time: '2021-03-08T01:10:56.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Pushing strength, type: Fix}
-  id: 52
-  time: '2021-03-08T01:48:15.0000000+00:00'
 - author: DrSmugleaf
   changes:
   - {message: The client being able to set character age and other values outside
@@ -2821,3 +2809,13 @@ Entries:
       in yet.', type: Add}
   id: 550
   time: '2021-11-07T00:12:42.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Valves make sound when used, type: Tweak}
+  id: 551
+  time: '2021-11-07T00:32:33.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Fixed bucket, type: Fix}
+  id: 552
+  time: '2021-11-07T00:33:03.0000000+00:00'
