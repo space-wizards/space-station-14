@@ -98,11 +98,6 @@ namespace Content.Client.CharacterInfo.Components
                     }
                 });
 
-                AddChild(new Placeholder()
-                {
-                    PlaceholderText = Loc.GetString("character-info-health-and-status-effects-text")
-                });
-
                 AddChild(new Label
                 {
                     Text = Loc.GetString("character-info-objectives-label"),
