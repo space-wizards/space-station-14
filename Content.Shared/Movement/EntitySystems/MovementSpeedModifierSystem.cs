@@ -60,6 +60,8 @@ namespace Content.Shared.Movement.EntitySystems
 
             move.WalkSpeedModifier = ev.WalkSpeedModifier;
             move.SprintSpeedModifier = ev.SprintSpeedModifier;
+
+            move.Dirty();
         }
 
         [Serializable, NetSerializable]
@@ -71,7 +73,7 @@ namespace Content.Shared.Movement.EntitySystems
     }
 
     /// <summary>
-    ///     Raised on an entity to determine it's new movement speed. Any system that wishes to change movement speed
+    ///     Raised on an entity to determine its new movement speed. Any system that wishes to change movement speed
     ///     should hook into this event and set it then. If you want this event to be raised,
     ///     call <see cref="MovementSpeedModifierSystem.RefreshMovementSpeedModifiers"/>.
     /// </summary>
