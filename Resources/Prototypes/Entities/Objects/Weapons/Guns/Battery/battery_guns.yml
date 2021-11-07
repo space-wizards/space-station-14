@@ -305,7 +305,7 @@
     angleDecay: 15
     powerCellPrototype: PowerCellSmallStandard
     powerCellRemovable: false
-    fireCost: 40
+    fireCost: 80
     ammoPrototype: BulletTaser
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser.ogg
