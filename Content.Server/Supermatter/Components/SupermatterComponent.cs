@@ -80,7 +80,7 @@ namespace Content.Server.Supermatter
         //The alert we send when we've reached emergency_point
         private const string emergency_alert = "CRYSTAL DELAMINATION IMMINENT.";
         //The point at which we delam
-        private const int explosion_point = 900;
+        public readonly int ExplosionPoint = 900;
         //When we pass this amount of damage we start shooting bolts
         private const int damage_penalty_point = 550;
 
@@ -162,8 +162,8 @@ namespace Content.Server.Supermatter
         public static float  CRITICAL_POWER_PENALTY_THRESHOLD = 9000f;
         //Higher == Crystal safe operational temperature is higher.
         public static float  HeatPenaltyThreshold = 40f;
-        public static float  DamageHardcap = 0.002f;
-        public static float  DamageIncreaseMultiplier = 0.25f;
+        public readonly float  DamageHardcap = 0.002f;
+        public readonly float  DamageIncreaseMultiplier = 0.25f;
 
         //Higher == less heat released during reaction, not to be confused with the above values
         public static float  ThermalReleaseModifier = 5f;
