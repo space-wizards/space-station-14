@@ -4,6 +4,7 @@ using Content.Server.Administration.Managers;
 using Content.Server.Players;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Events;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
@@ -21,12 +22,42 @@ namespace Content.Server.Administration
             base.Initialize();
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
+            SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
+            SubscribeLocalEvent<PlayerDetachedEvent>(OnPlayerDetached);
+        }
+
+        private void OnPlayerDetached(PlayerDetachedEvent ev)
+        {
+            foreach (var admin in _adminManager.ActiveAdmins)
+            {
+                RaiseNetworkEvent(GetChangedEvent(ev.Player), admin.ConnectedClient);
+            }
+        }
+
+        private void OnPlayerAttached(PlayerAttachedEvent ev)
+        {
+            foreach (var admin in _adminManager.ActiveAdmins)
+            {
+                RaiseNetworkEvent(GetChangedEvent(ev.Player), admin.ConnectedClient);
+            }
         }
 
         public override void Shutdown()
         {
             base.Shutdown();
             _playerManager.PlayerStatusChanged -= OnPlayerStatusChanged;
+        }
+
+        private PlayerInfoChangedEvent GetChangedEvent(IPlayerSession session)
+        {
+            return new()
+            {
+                PlayerInfo = new PlayerInfo(
+                    session.Name, session.AttachedEntity?.Name ?? string.Empty,
+                    session.ContentData()?.Mind?.AllRoles.Any(r => r.Antagonist) ?? false,
+                    session.AttachedEntity?.Uid ?? EntityUid.Invalid,
+                    session.UserId),
+            };
         }
 
         private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
@@ -36,14 +67,7 @@ namespace Content.Server.Administration
             {
                 case SessionStatus.InGame:
                 case SessionStatus.Connected:
-                    args = new PlayerInfoChangedEvent
-                    {
-                        PlayerInfo = new PlayerInfo(
-                            e.Session.Name, e.Session.AttachedEntity?.Name ?? string.Empty,
-                            e.Session.ContentData()?.Mind?.AllRoles.Any(r => r.Antagonist) ?? false,
-                            e.Session.AttachedEntity?.Uid ?? EntityUid.Invalid,
-                            e.Session.UserId),
-                    };
+                    args = GetChangedEvent(e.Session);
                     break;
                 case SessionStatus.Disconnected:
                     args = new PlayerInfoRemovalMessage {NetUserId = e.Session.UserId};
