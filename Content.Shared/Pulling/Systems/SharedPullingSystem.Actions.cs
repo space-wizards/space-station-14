@@ -172,7 +172,7 @@ namespace Content.Shared.Pulling
             return true;
         }
 
-        public bool TryMoveTo(SharedPullableComponent pullable, MapCoordinates to)
+        public bool TryMoveTo(SharedPullableComponent pullable, EntityCoordinates to)
         {
             if (pullable.Puller == null)
             {
