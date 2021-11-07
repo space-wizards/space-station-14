@@ -11,7 +11,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Guardian
 {
     /// <summary>
-    /// Allows user to create a guardian link with a specific entity at a certian max distance
+    /// Allows user to create a guardian link with a specific entity at a certain max distance
     /// </summary>
     [RegisterComponent]
     public class GuardianCreatorComponent : Component
