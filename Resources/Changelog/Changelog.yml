@@ -1,10 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: The client being able to set character age and other values outside
-      their limits., type: Fix}
-  id: 53
-  time: '2021-03-08T02:07:53.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Stuns and slips are now properly predicted, type: Fix}
@@ -2819,3 +2813,12 @@ Entries:
   - {message: Fixed bucket, type: Fix}
   id: 552
   time: '2021-11-07T00:33:03.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Pulling to a specific location now pushes the player doing the pulling,
+    type: Tweak}
+  - {message: Pulled object rotation snaps cleanly to (grid-relative) angles so pianos
+      don't get stuck as often, type: Tweak}
+  - {message: Moved more pulling code server-side to prevent desyncs, type: Fix}
+  id: 553
+  time: '2021-11-07T02:16:49.0000000+00:00'
