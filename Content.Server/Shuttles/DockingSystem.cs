@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using Content.Server.Power.Components;
 using Content.Shared.Physics;
+using Microsoft.CodeAnalysis;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -9,6 +11,8 @@ using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Physics.Dynamics.Joints;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -24,6 +28,9 @@ namespace Content.Server.Shuttles
 
         [ViewVariables]
         public DockingComponent? DockedWith;
+
+        [ViewVariables]
+        public WeldJoint? DockJoint;
     }
 
     public class DockingSystem : EntitySystem
@@ -40,104 +47,29 @@ namespace Content.Server.Shuttles
         {
             base.Initialize();
             SubscribeLocalEvent<DockingComponent, ComponentStartup>(OnStartup);
+            SubscribeLocalEvent<DockingComponent, ComponentShutdown>(OnShutdown);
             SubscribeLocalEvent<DockingComponent, PowerChangedEvent>(OnPowerChange);
             SubscribeLocalEvent<DockingComponent, AnchorStateChangedEvent>(OnAnchorChange);
-
-            // Forgive me
-            SubscribeLocalEvent<ShuttleComponent, MoveEvent>(OnShuttleMove);
-            SubscribeLocalEvent<ShuttleComponent, RotateEvent>(OnShuttleRotate);
         }
 
-        private void OnShuttleRotate(EntityUid uid, ShuttleComponent component, ref RotateEvent args)
+        public override void Update(float frameTime)
         {
-            CheckDocking(uid, component);
+            base.Update(frameTime);
+            // TODO: Have a timer for docking
         }
 
-        private void OnShuttleMove(EntityUid uid, ShuttleComponent component, ref MoveEvent args)
+        private void OnShutdown(EntityUid uid, DockingComponent component, ComponentShutdown args)
         {
-            CheckDocking(uid, component);
-        }
+            if (component.DockJoint == null ||
+                EntityManager.GetComponent<MetaDataComponent>(uid).EntityLifeStage > EntityLifeStage.MapInitialized) return;
 
-        private void CheckDocking(EntityUid uid, ShuttleComponent component)
-        {
-            // Having bodies hanging off the edge of a grid colliding with another grid turns out to be
-            // hard as balls hence you get this for now. Don't @ me
-
-            // TODO: So ideally we would have a local UI for the docking port so the client can just check this every tick
-            // and then send to the server "hey please dock" which checks it once.
-            // Given there's only gonna be like... 10 docking ports for a while this isn't the worst code.
-            var shuttleXform = EntityManager.GetComponent<ITransformComponent>(uid);
-            var dockingPorts = new List<(DockingComponent, PhysicsComponent, ITransformComponent)>();
-
-            foreach (var (docking, body, xform) in EntityManager.EntityQuery<DockingComponent, PhysicsComponent, ITransformComponent>())
-            {
-                if (xform.MapID != shuttleXform.MapID || !docking.Enabled || docking.DockedWith != null || body.GetFixture(DockingFixture) == null) continue;
-
-                dockingPorts.Add((docking, body, xform));
-            }
-
-            // Check for any docking collisions
-            foreach (var (docking, body, xform) in dockingPorts)
-            {
-                if (xform.GridID != shuttleXform.GridID || docking.DockedWith != null) continue;
-
-                var transform = body.GetTransform();
-                var dockingFixture = body.GetFixture(DockingFixture)!;
-                var stop = false;
-
-                // Check for any docking collisions
-                foreach (var (otherDocking, otherBody, otherXform) in dockingPorts)
-                {
-                    if (otherXform.GridID == xform.GridID ||
-                        otherDocking.DockedWith != null) continue;
-
-                    if (stop) break;
-
-                    var otherTransform = otherBody.GetTransform();
-                    var otherDockingFixture = otherBody.GetFixture(DockingFixture);
-
-                    for (var i = 0; i < dockingFixture.Shape.ChildCount; i++)
-                    {
-                        if (stop) break;
-
-                        var aabb = dockingFixture.Shape.ComputeAABB(transform, i);
-
-                        for (var j = 0; j < dockingFixture.Shape.ChildCount; j++)
-                        {
-                            var otherAABB = otherDockingFixture!.Shape.ComputeAABB(otherTransform, j);
-
-                            if (!aabb.Intersects(otherAABB)) continue;
-
-                            stop = true;
-                            Dock(docking, otherDocking);
-                            break;
-                        }
-                    }
-                }
-            }
+            _jointSystem.RemoveJoint(component.DockJoint);
         }
 
         private void OnStartup(EntityUid uid, DockingComponent component, ComponentStartup args)
         {
             // Use startup so transform already initialized
             EnableDocking(uid, component);
-        }
-
-        private void OnEndCollide(EntityUid uid, DockingComponent component, EndCollideEvent args)
-        {
-            /*
-            if (component.DockedWith != null) return;
-
-            if (!EntityManager.TryGetComponent(uid, out DockingComponent? otherDocking))
-            {
-                return;
-            }
-
-            component.CollidingCount -= 1;
-            // TODO: Decrease if ending with another docking comp
-
-            throw new System.NotImplementedException();
-            */
         }
 
         private void OnAnchorChange(EntityUid uid, DockingComponent component, ref AnchorStateChangedEvent args)
@@ -235,7 +167,79 @@ namespace Content.Server.Shuttles
 
             dockA.DockedWith = dockB;
             dockB.DockedWith = dockA;
-            // TODO: Try to dock with all other ports
+            dockA.DockJoint = weld;
+            dockB.DockJoint = weld;
+
+            SoundSystem.Play(Filter.Pvs(dockA.Owner), "/Audio/Effects/docking.ogg");
+        }
+
+        public bool TryDock(ShuttleComponent shuttleA, ShuttleComponent shuttleB)
+        {
+            var shuttleAXform = EntityManager.GetComponent<ITransformComponent>(shuttleA.OwnerUid);
+            var shuttleBXform = EntityManager.GetComponent<ITransformComponent>(shuttleB.OwnerUid);
+            var dockingPorts = new List<(DockingComponent, PhysicsComponent, ITransformComponent)>();
+
+            // Get the relevant ports for shuttle A and shuttle B
+            foreach (var (docking, body, xform) in EntityManager.EntityQuery<DockingComponent, PhysicsComponent, ITransformComponent>())
+            {
+                if (xform.GridID != shuttleAXform.GridID ||
+                    xform.GridID != shuttleBXform.GridID ||
+                    !docking.Enabled ||
+                    docking.DockedWith != null ||
+                    body.GetFixture(DockingFixture) == null) continue;
+
+                dockingPorts.Add((docking, body, xform));
+            }
+
+            var intersectingPorts = new List<(DockingComponent, DockingComponent)>();
+
+            // Check for any docking collisions
+            foreach (var (docking, body, xform) in dockingPorts)
+            {
+                if (xform.GridID != shuttleAXform.GridID) continue;
+
+                var transform = body.GetTransform();
+                var dockingFixture = body.GetFixture(DockingFixture)!;
+
+                foreach (var (otherDocking, otherBody, otherXform) in dockingPorts)
+                {
+                    if (otherXform.GridID == xform.GridID ||
+                        otherDocking.DockedWith != null) continue;
+
+                    var otherTransform = otherBody.GetTransform();
+                    var otherDockingFixture = otherBody.GetFixture(DockingFixture);
+
+                    for (var i = 0; i < dockingFixture.Shape.ChildCount; i++)
+                    {
+                        var aabb = dockingFixture.Shape.ComputeAABB(transform, i);
+
+                        for (var j = 0; j < dockingFixture.Shape.ChildCount; j++)
+                        {
+                            var otherAABB = otherDockingFixture!.Shape.ComputeAABB(otherTransform, j);
+
+                            if (!aabb.Intersects(otherAABB)) continue;
+
+                            intersectingPorts.Add((docking, otherDocking));
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (intersectingPorts.Count == 0) return false;
+
+            foreach (var (dockA, dockB) in intersectingPorts)
+            {
+                Dock(dockA, dockB);
+            }
+
+            EntityManager.EventBus.RaiseEvent(EventSource.Local, new DockEvent
+            {
+                ShuttleA = shuttleA,
+                ShuttleB = shuttleB
+            });
+
+            return true;
         }
 
         private void Undock(DockingComponent dock)
@@ -243,26 +247,55 @@ namespace Content.Server.Shuttles
             DebugTools.Assert(dock.DockedWith != null);
 
             dock.DockedWith = null;
-
-            //Get<SharedJointSystem>().RemoveJoint();
-            // TODO: Break weld
+            _jointSystem.RemoveJoint(dock.DockJoint!);
+            SoundSystem.Play(Filter.Pvs(dock.Owner), "/Audio/Effects/docking.ogg");
         }
 
-        private void Undock(ShuttleComponent shuttleA, ShuttleComponent shuttleB)
+        public bool TryUndock(ShuttleComponent shuttleA, ShuttleComponent shuttleB)
         {
             var shuttleAXform = EntityManager.GetComponent<ITransformComponent>(shuttleA.OwnerUid);
             var shuttleBXform = EntityManager.GetComponent<ITransformComponent>(shuttleB.OwnerUid);
+
+            var undocked = false;
 
             foreach (var (docking, body, xform) in EntityManager
                 .EntityQuery<DockingComponent, PhysicsComponent, ITransformComponent>())
             {
                 // We'll always just check ShuttleA's docks and assume all of ShuttleB's will be cleaned up as a result.
-                if (shuttleAXform.MapID != xform.MapID ||
-                    docking.DockedWith == null ||
-                    xform.GridID != shuttleAXform.GridID) continue;
+                if (shuttleAXform.GridID != xform.GridID ||
+                    docking.DockedWith == null) continue;
 
                 Undock(docking);
+                undocked = true;
             }
+
+            if (!undocked) return false;
+
+            EntityManager.EventBus.RaiseEvent(EventSource.Local, new UndockEvent
+            {
+                ShuttleA = shuttleA,
+                ShuttleB = shuttleB
+            });
+
+            return true;
+        }
+
+        /// <summary>
+        /// Raised whenever 2 grids dock.
+        /// </summary>
+        public sealed class DockEvent : EntityEventArgs
+        {
+            public ShuttleComponent ShuttleA = default!;
+            public ShuttleComponent ShuttleB = default!;
+        }
+
+        /// <summary>
+        /// Raised whenever 2 grids undock.
+        /// </summary>
+        public sealed class UndockEvent : EntityEventArgs
+        {
+            public ShuttleComponent ShuttleA = default!;
+            public ShuttleComponent ShuttleB = default!;
         }
     }
 }
