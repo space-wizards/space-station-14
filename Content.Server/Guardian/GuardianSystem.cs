@@ -3,19 +3,24 @@ using Content.Server.Lathe.Components;
 using Content.Server.Popups;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
+using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
+using Content.Shared.MobState.EntitySystems;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 using System;
+using System.Timers;
 
 namespace Content.Server.Guardian
 {
@@ -29,7 +34,44 @@ namespace Content.Server.Guardian
             SubscribeLocalEvent<GuardianComponent, MoveEvent>(OnGuardianMove);
             SubscribeLocalEvent<GuardianHostComponent, MoveEvent>(OnGuardianHostMove);
             SubscribeLocalEvent<GuardianComponent, DamageChangedEvent>(OnGuardianDamaged);
-            SubscribeLocalEvent<GuardianHostComponent, MobStateChangedMessage>(OnHostDeath);
+            SubscribeLocalEvent<GuardianHostComponent, MobStateChangedEvent>(OnHostStateChange);
+        }
+
+        /// <summary>
+        /// Triggers when the host recives damage which puts in either critical or killed state
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="component"></param>
+        /// <param name="args"></param>
+        private void OnHostStateChange(EntityUid uid, GuardianHostComponent component, MobStateChangedEvent args)
+        {
+            if (EntityManager.GetEntity(component._hostedguardian) != null)
+            {
+                if (args.State.IsCritical())
+                {
+                    var guard = EntityManager.GetEntity(component._hostedguardian);
+                    guard.PopupMessage(Loc.GetString("guardian-host-critical-warn"));
+                    SoundSystem.Play(Filter.Local(), "/Audio/Effects/guardian_warn.ogg", uid);
+                }
+                else if (args.State.IsDead())
+                {
+                    var guard = EntityManager.GetEntity(component._hostedguardian);
+                    SoundSystem.Play(Filter.Pvs(guard), "/Audio/Voice/Human/malescream_guardian.ogg", uid, AudioHelpers.WithVariation(0.25f));
+                    EntityManager.QueueDeleteEntity(guard);
+                    EntityManager.QueueDeleteEntity(uid);
+                }
+            } 
+        }
+
+        private void OnGuardianDamaged(EntityUid uid, GuardianComponent component, DamageChangedEvent args)
+        {
+            var guardiandamage = EntityManager.GetEntity(uid).EnsureComponent<DamageableComponent>();
+            var hostdamage = EntityManager.GetEntity(component.Host).EnsureComponent<DamageableComponent>();
+            if (args.DamageDelta != null)
+            {
+                EntitySystem.Get<DamageableSystem>().SetDamage(hostdamage, (hostdamage.Damage + args.DamageDelta * component.DamagePercent));
+                hostdamage.Owner.PopupMessage(Loc.GetString("guardian-entity-taking-damage"));
+            }
         }
 
         /// <summary>
@@ -94,43 +136,6 @@ namespace Content.Server.Guardian
         }
 
         /// <summary>
-        /// Triggers upon mobstate, to detect disintigration command upon host's death
-        /// </summary>
-        /// <param name="uid"></param>
-        /// <param name="component"></param>
-        /// <param name="args"></param>
-        private void OnHostDeath(EntityUid uid, GuardianHostComponent component, MobStateChangedMessage args)
-        {
-            //We only care if the host is dead, not in crit or incapacitated, as he still can support a holopara
-            //Dragging him away
-            if (component.Owner.GetComponent<MobStateComponent>().IsDead())
-            {
-                //Delete both entities to prevent revival, guardian first to avoid errors
-                //TODO: add disintigration. Proper. Current method leaves no items behind.
-                EntityManager.QueueDeleteEntity(component._hostedguardian);
-                EntityManager.QueueDeleteEntity(uid);
-            }
-        }
-
-        /// <summary>
-        /// Triggers upon guardian taking damage, reflecting it to the host
-        /// </summary>
-        /// <param name="uid"></param>
-        /// <param name="component"></param>
-        /// <param name="args"></param>
-        private void OnGuardianDamaged(EntityUid uid, GuardianComponent component, DamageChangedEvent args)
-        {
-            var guardiandamage = EntityManager.GetEntity(uid).EnsureComponent<DamageableComponent>();
-            var hostdamage = EntityManager.GetEntity(component.Host).EnsureComponent<DamageableComponent>();
-            if (args.DamageDelta != null)
-            {
-                EntitySystem.Get<DamageableSystem>().SetDamage(hostdamage, (hostdamage.Damage+args.DamageDelta*component.DamagePercent));
-                hostdamage.Owner.PopupMessage(Loc.GetString("guardian-entity-taking-damage"));
-            }
-                  
-        }
-
-        /// <summary>
         /// Called every time the host moves, to make sure the distance between the host and the guardian isn't too far
         /// </summary>
         /// <param name="uid"></param>
@@ -171,8 +176,6 @@ namespace Content.Server.Guardian
             }
         }
 
-        
-
         public void OnGuardianManifestAction(EntityUid guardian, EntityUid host)
         {
             var guardianloose = EntityManager.GetEntity(guardian).GetComponent<GuardianComponent>().Guardianloose;
@@ -187,7 +190,7 @@ namespace Content.Server.Guardian
                 //Recalls guardian if it's outside
                 //Message first otherwise it's a dead giveaway
                 EntityManager.GetEntity(guardian).PopupMessageEveryone(Loc.GetString("guardian-entity-recall"));
-                EntityManager.GetEntity(host).GetComponent<GuardianHostComponent>().GuardianContainer.Insert(EntityManager.GetEntity(guardian));         
+                EntityManager.GetEntity(host).GetComponent<GuardianHostComponent>().GuardianContainer.Insert(EntityManager.GetEntity(guardian));
             }
             //Update the guardian loose value
             EntityManager.GetEntity(guardian).GetComponent<GuardianComponent>().Guardianloose = !guardianloose;

@@ -4,8 +4,9 @@
   id: MobHoloparasite
   description: A mezmirising whirl of hard-light patterns weaves a marvelous, yet oddly familiar visage. It stands tall, tuning into it's owner's life to sustain itself.
   components:
-  - type: Mind
-    showExamineInfo: true
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: Holoparasite
   - type: Input
     context: "human"
   - type: PlayerMobMover

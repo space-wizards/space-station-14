@@ -11,3 +11,9 @@ guardian-activator-empty-invalid-creaton = This one is spent. What a shame.
 
 guardian-entity-recall = the guardian vanishes into thin air!
 guardian-entity-taking-damage = Your guardian is taking damage!
+
+## Health warnings
+guardian-host-critical-warn = YOUR HOST IS WOUNDED!
+guardian-host-death-warn = YOUR FORM SUCCUMBS TO NONEXISTANCE!
+host-guardian-death-warn = YOUR BODY IS PIERECED BY SUBATOMIC PAIN AS IT DISINTEGRATES!
+
