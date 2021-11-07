@@ -1,8 +1,10 @@
+using System.Collections.Generic;
 using Content.Server.Power.Components;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
@@ -26,7 +28,9 @@ namespace Content.Server.Shuttles
 
     public class DockingSystem : EntitySystem
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly SharedBroadphaseSystem _broadphaseSystem = default!;
+        [Dependency] private readonly SharedJointSystem _jointSystem = default!;
 
         private const string DockingFixture = "docking";
         private const string DockingJoint = "docking";
@@ -39,29 +43,84 @@ namespace Content.Server.Shuttles
             SubscribeLocalEvent<DockingComponent, PowerChangedEvent>(OnPowerChange);
             SubscribeLocalEvent<DockingComponent, AnchorStateChangedEvent>(OnAnchorChange);
 
-            SubscribeLocalEvent<DockingComponent, StartCollideEvent>(OnCollide);
-            SubscribeLocalEvent<DockingComponent, EndCollideEvent>(OnEndCollide);
+            // Forgive me
+            SubscribeLocalEvent<ShuttleComponent, MoveEvent>(OnShuttleMove);
+            SubscribeLocalEvent<ShuttleComponent, RotateEvent>(OnShuttleRotate);
+        }
+
+        private void OnShuttleRotate(EntityUid uid, ShuttleComponent component, ref RotateEvent args)
+        {
+            CheckDocking(uid, component);
+        }
+
+        private void OnShuttleMove(EntityUid uid, ShuttleComponent component, ref MoveEvent args)
+        {
+            CheckDocking(uid, component);
+        }
+
+        private void CheckDocking(EntityUid uid, ShuttleComponent component)
+        {
+            // Having bodies hanging off the edge of a grid colliding with another grid turns out to be
+            // hard as balls hence you get this for now. Don't @ me
+
+            // TODO: So ideally we would have a local UI for the docking port so the client can just check this every tick
+            // and then send to the server "hey please dock" which checks it once.
+            // Given there's only gonna be like... 10 docking ports for a while this isn't the worst code.
+            var shuttleXform = EntityManager.GetComponent<ITransformComponent>(uid);
+            var dockingPorts = new List<(DockingComponent, PhysicsComponent, ITransformComponent)>();
+
+            foreach (var (docking, body, xform) in EntityManager.EntityQuery<DockingComponent, PhysicsComponent, ITransformComponent>())
+            {
+                if (xform.MapID != shuttleXform.MapID || !docking.Enabled || docking.DockedWith != null || body.GetFixture(DockingFixture) == null) continue;
+
+                dockingPorts.Add((docking, body, xform));
+            }
+
+            // Check for any docking collisions
+            foreach (var (docking, body, xform) in dockingPorts)
+            {
+                if (xform.GridID != shuttleXform.GridID || docking.DockedWith != null) continue;
+
+                var transform = body.GetTransform();
+                var dockingFixture = body.GetFixture(DockingFixture)!;
+                var stop = false;
+
+                // Check for any docking collisions
+                foreach (var (otherDocking, otherBody, otherXform) in dockingPorts)
+                {
+                    if (otherXform.GridID == xform.GridID ||
+                        otherDocking.DockedWith != null) continue;
+
+                    if (stop) break;
+
+                    var otherTransform = otherBody.GetTransform();
+                    var otherDockingFixture = otherBody.GetFixture(DockingFixture);
+
+                    for (var i = 0; i < dockingFixture.Shape.ChildCount; i++)
+                    {
+                        if (stop) break;
+
+                        var aabb = dockingFixture.Shape.ComputeAABB(transform, i);
+
+                        for (var j = 0; j < dockingFixture.Shape.ChildCount; j++)
+                        {
+                            var otherAABB = otherDockingFixture!.Shape.ComputeAABB(otherTransform, j);
+
+                            if (!aabb.Intersects(otherAABB)) continue;
+
+                            stop = true;
+                            Dock(docking, otherDocking);
+                            break;
+                        }
+                    }
+                }
+            }
         }
 
         private void OnStartup(EntityUid uid, DockingComponent component, ComponentStartup args)
         {
             // Use startup so transform already initialized
             EnableDocking(uid, component);
-        }
-
-        // TODO: Probably better to have a funny UI for this but I hate UI so this is what you get.
-        private void OnCollide(EntityUid uid, DockingComponent component, StartCollideEvent args)
-        {
-            if (component.DockedWith != null || args.OtherFixture.ID != DockingFixture) return;
-
-            if (!EntityManager.TryGetComponent(uid, out DockingComponent? docking) ||
-                !EntityManager.TryGetComponent(args.OtherFixture.Body.OwnerUid, out DockingComponent? otherDocking))
-            {
-                return;
-            }
-
-            // TODO: Should have a docking UI and make it optional
-            Dock(docking, otherDocking);
         }
 
         private void OnEndCollide(EntityUid uid, DockingComponent component, EndCollideEvent args)
@@ -159,8 +218,24 @@ namespace Content.Server.Shuttles
 
         private void Dock(DockingComponent dockA, DockingComponent dockB)
         {
+            var gridA = _mapManager.GetGrid(dockA.Owner.Transform.GridID).GridEntityId;
+            var gridB = _mapManager.GetGrid(dockB.Owner.Transform.GridID).GridEntityId;
+
+            var dockAXform = EntityManager.GetComponent<ITransformComponent>(dockA.OwnerUid);
+            var dockBXform = EntityManager.GetComponent<ITransformComponent>(dockB.OwnerUid);
+
             Logger.DebugS("docking", $"Docking between {dockA.Owner} and {dockB.Owner}");
-            var weld = Get<SharedJointSystem>().CreateWeldJoint(dockA.OwnerUid, dockB.OwnerUid, DockingJoint);
+
+            var weld = _jointSystem.CreateWeldJoint(gridA, gridB, DockingJoint);
+
+            weld.LocalAnchorA = dockBXform.LocalPosition + dockBXform.LocalRotation.ToWorldVec() / 2f;
+            weld.LocalAnchorB = dockAXform.LocalPosition + dockAXform.LocalRotation.ToWorldVec() / 2f;
+            weld.ReferenceAngle = 0f;
+            weld.CollideConnected = false;
+
+            dockA.DockedWith = dockB;
+            dockB.DockedWith = dockA;
+            // TODO: Try to dock with all other ports
         }
 
         private void Undock(DockingComponent dock)
@@ -169,12 +244,25 @@ namespace Content.Server.Shuttles
 
             dock.DockedWith = null;
 
-            //if (Get<SharedJointSystem>().Get)
-
             //Get<SharedJointSystem>().RemoveJoint();
             // TODO: Break weld
         }
 
-        // So how docking works is that if 2 adjacent fixtures are colliding with 2 other docking fixtures the grids will "dock"
+        private void Undock(ShuttleComponent shuttleA, ShuttleComponent shuttleB)
+        {
+            var shuttleAXform = EntityManager.GetComponent<ITransformComponent>(shuttleA.OwnerUid);
+            var shuttleBXform = EntityManager.GetComponent<ITransformComponent>(shuttleB.OwnerUid);
+
+            foreach (var (docking, body, xform) in EntityManager
+                .EntityQuery<DockingComponent, PhysicsComponent, ITransformComponent>())
+            {
+                // We'll always just check ShuttleA's docks and assume all of ShuttleB's will be cleaned up as a result.
+                if (shuttleAXform.MapID != xform.MapID ||
+                    docking.DockedWith == null ||
+                    xform.GridID != shuttleAXform.GridID) continue;
+
+                Undock(docking);
+            }
+        }
     }
 }
