@@ -124,7 +124,7 @@ namespace Content.Server.UserInterface
 
         public void CloseAll(EntityUid uid, ActivatableUIComponent? aui = null)
         {
-            if (!Resolve(uid, ref aui)) return;
+            if (!Resolve(uid, ref aui, false)) return;
             aui.UserInterface?.CloseAll();
         }
     }
