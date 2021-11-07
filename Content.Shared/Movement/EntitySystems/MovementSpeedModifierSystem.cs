@@ -52,7 +52,7 @@ namespace Content.Shared.Movement.EntitySystems
 
         private void RecalculateMovementSpeedModifiers(EntityUid uid, MovementSpeedModifierComponent? move = null)
         {
-            if (!Resolve(uid, ref move))
+            if (!Resolve(uid, ref move, false))
                 return;
 
             var ev = new RefreshMovementSpeedModifiersEvent();
