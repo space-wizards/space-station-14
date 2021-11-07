@@ -79,7 +79,7 @@ namespace Content.Client.CharacterInfo.Components
                     Orientation = LayoutOrientation.Horizontal,
                     Children =
                     {
-                        (SpriteView = new SpriteView { Scale = (2, 2)}),
+                        (SpriteView = new SpriteView { OverrideDirection = Direction.South, Scale = (2,2)}),
                         new BoxContainer
                         {
                             Orientation = LayoutOrientation.Vertical,
