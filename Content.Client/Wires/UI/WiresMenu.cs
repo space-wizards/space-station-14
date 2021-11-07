@@ -370,7 +370,7 @@ namespace Content.Client.Wires.UI
                     return;
                 }
 
-                if (args.RelativePixelPosition.Y > 20 && args.RelativePixelPosition.Y < 60)
+                if (args.RelativePosition.Y > 20 && args.RelativePosition.Y < 60)
                 {
                     WireClicked?.Invoke();
                 }
