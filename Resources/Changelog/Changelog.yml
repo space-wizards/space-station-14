@@ -1,9 +1,4 @@
 Entries:
-- author: ike709
-  changes:
-  - {message: Added a radio message to announce latejoins., type: Add}
-  id: 50
-  time: '2021-03-08T00:15:51.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Nerfed throwing while weightless, type: Tweak}
@@ -2820,3 +2815,9 @@ Entries:
   - {message: PDA flashlights are brighter now, type: Tweak}
   id: 549
   time: '2021-11-06T22:35:01.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Directional windows have been added (non-fulltile), though not mapped
+      in yet.', type: Add}
+  id: 550
+  time: '2021-11-07T00:12:42.0000000+00:00'
