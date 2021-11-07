@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Shared.Movement.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
@@ -9,7 +10,17 @@ namespace Content.Shared.Movement.EntitySystems
 {
     public sealed class MovementSpeedModifierSystem : EntitySystem
     {
-        public HashSet<EntityUid> NeedsRefresh = new();
+        private readonly HashSet<EntityUid> _needsRefresh = new();
+
+        public override void Update(float frameTime)
+        {
+            foreach (var uid in _needsRefresh)
+            {
+                RecalculateMovementSpeedModifiers(uid);
+            }
+
+            _needsRefresh.Clear();
+        }
 
         public override void Initialize()
         {
@@ -36,7 +47,7 @@ namespace Content.Shared.Movement.EntitySystems
 
         public void RefreshMovementSpeedModifiers(EntityUid uid)
         {
-            NeedsRefresh.Add(uid);
+            _needsRefresh.Add(uid);
         }
 
         private void RecalculateMovementSpeedModifiers(EntityUid uid, MovementSpeedModifierComponent? move = null)

@@ -1,6 +1,7 @@
 using System;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.EntitySystems;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -16,8 +17,11 @@ namespace Content.Shared.Clothing
 
         protected void OnChanged()
         {
-            // inventorysystem will automatically hook into the event raised by this and update accordingly
-            EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(Owner.Uid);
+            // inventory system will automatically hook into the event raised by this and update accordingly
+            if (Owner.TryGetContainer(out var container))
+            {
+                EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(container.Owner.Uid);
+            }
         }
 
         public float WalkSpeedModifier => On ? 0.85f : 1;
