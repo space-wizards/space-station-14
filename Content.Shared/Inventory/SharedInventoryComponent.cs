@@ -14,7 +14,7 @@ using static Content.Shared.Inventory.EquipmentSlotDefines;
 namespace Content.Shared.Inventory
 {
     [NetworkedComponent()]
-    public abstract class SharedInventoryComponent : Component, IMoveSpeedModifier
+    public abstract class SharedInventoryComponent : Component
     {
         [Dependency] protected readonly IReflectionManager ReflectionManager = default!;
         [Dependency] protected readonly IDynamicTypeFactory DynamicTypeFactory = default!;
@@ -98,8 +98,5 @@ namespace Content.Shared.Inventory
                 Slot = slot;
             }
         }
-
-        public abstract float WalkSpeedModifier { get; }
-        public abstract float SprintSpeedModifier { get; }
     }
 }

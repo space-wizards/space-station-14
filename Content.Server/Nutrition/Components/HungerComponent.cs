@@ -5,6 +5,7 @@ using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.MobState;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.EntitySystems;
 using Content.Shared.Nutrition.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -86,7 +87,7 @@ namespace Content.Server.Nutrition.Components
                 if (_lastHungerThreshold == HungerThreshold.Starving && _currentHungerThreshold != HungerThreshold.Dead &&
                     Owner.TryGetComponent(out MovementSpeedModifierComponent? movementSlowdownComponent))
                 {
-                    movementSlowdownComponent.RefreshMovementSpeedModifiers();
+                    EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(OwnerUid);
                 }
 
                 // Update UI
@@ -122,10 +123,7 @@ namespace Content.Server.Nutrition.Components
                     case HungerThreshold.Starving:
                         // TODO: If something else bumps this could cause mega-speed.
                         // If some form of speed update system if multiple things are touching it use that.
-                        if (Owner.TryGetComponent(out MovementSpeedModifierComponent? movementSlowdownComponent1))
-                        {
-                            movementSlowdownComponent1.RefreshMovementSpeedModifiers();
-                        }
+                        EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(OwnerUid);
                         _lastHungerThreshold = _currentHungerThreshold;
                         _actualDecayRate = _baseDecayRate * 0.6f;
                         return;

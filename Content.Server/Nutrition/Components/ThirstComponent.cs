@@ -5,6 +5,7 @@ using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.MobState;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.EntitySystems;
 using Content.Shared.Nutrition.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -85,7 +86,7 @@ namespace Content.Server.Nutrition.Components
                 if (_lastThirstThreshold == ThirstThreshold.Parched && _currentThirstThreshold != ThirstThreshold.Dead &&
                     Owner.TryGetComponent(out MovementSpeedModifierComponent? movementSlowdownComponent))
                 {
-                    movementSlowdownComponent.RefreshMovementSpeedModifiers();
+                    EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(OwnerUid);
                 }
 
                 // Update UI
@@ -119,10 +120,7 @@ namespace Content.Server.Nutrition.Components
                         return;
 
                     case ThirstThreshold.Parched:
-                        if (Owner.TryGetComponent(out MovementSpeedModifierComponent? movementSlowdownComponent1))
-                        {
-                            movementSlowdownComponent1.RefreshMovementSpeedModifiers();
-                        }
+                        EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(OwnerUid);
                         _lastThirstThreshold = _currentThirstThreshold;
                         _actualDecayRate = _baseDecayRate * 0.6f;
                         return;
