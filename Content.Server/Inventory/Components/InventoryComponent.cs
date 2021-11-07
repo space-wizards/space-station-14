@@ -276,7 +276,13 @@ namespace Content.Server.Inventory.Components
                 reason = Loc.GetString("inventory-component-can-equip-cannot");
             }
 
-            var canEquip = pass && _slotContainers.ContainsKey(slot) && _slotContainers[slot].CanInsert(item.Owner);
+            var canInsert = false;
+            if (_slotContainers.TryGetValue(slot, out var containerSlot))
+            {
+                canInsert = containerSlot.CanInsert(item.Owner);
+            }
+
+            var canEquip = pass && canInsert;
 
             if (!canEquip)
             {
@@ -606,7 +612,11 @@ namespace Content.Server.Inventory.Components
                 slot = _lastHoveredSlot;
             }
 
-            var hands = Owner.GetComponent<HandsComponent>();
+            if (!Owner.TryGetComponent(out HandsComponent? hands))
+            {
+                return;
+            }
+
             var activeHand = hands.GetActiveHand;
             _lastHoveredSlot = slot;
             if (activeHand != null && GetSlotItem(slot) == null)
