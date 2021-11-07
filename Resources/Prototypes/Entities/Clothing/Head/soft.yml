@@ -258,6 +258,6 @@
   description: A truly.. bizarre acessory, flipped.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Soft/bizzaresoft_flipped.rsi
+    sprite: Clothing/Head/Soft/bizarresoft_flipped.rsi
   - type: Clothing
-    sprite: Clothing/Head/Soft/bizzaresoft_flipped.rsi
+    sprite: Clothing/Head/Soft/bizarresoft_flipped.rsi
