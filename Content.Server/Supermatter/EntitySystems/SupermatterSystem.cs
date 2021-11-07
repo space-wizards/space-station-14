@@ -71,9 +71,6 @@ namespace Content.Server.SupermatterSystem{
 
         private float _updateAccumulator;
         private const float _updateTimer = 0.5f;
-
-        //private const float RadiationCooldown = 0.5f;
-        //private float _accumulator;
         public override void Initialize()
         {
             base.Initialize();
@@ -93,8 +90,9 @@ namespace Content.Server.SupermatterSystem{
         /// </summary>
         public void HandleRads(SupermatterComponent component, float frameTime)
         {
+            var Coords = component.Owner.Transform.Coordinates;
             _updateAccumulator += frameTime;
-            if (_atmosphereSystem.GetTileMixture(component.Owner.Transform.Coordinates) is { } mixture && _updateAccumulator > _updateTimer)
+            if ((int)component.Owner.Transform.GridID != 0 && _atmosphereSystem.GetTileMixture(Coords) is { } mixture && _updateAccumulator > _updateTimer)
             {
                 _updateAccumulator -= _updateTimer;
                 var pressure = mixture.Pressure;
