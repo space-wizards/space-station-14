@@ -1,8 +1,11 @@
+using System.Collections.Generic;
 using Content.Server.Construction.Components;
 using Content.Server.Popups;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Body.Components;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Damage;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Nuke;
@@ -21,12 +24,14 @@ namespace Content.Server.Nuke
         [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
         [Dependency] private readonly SharedItemSlotsSystem _itemSlots = default!;
         [Dependency] private readonly PopupSystem _popups = default!;
+        [Dependency] private readonly IEntityLookup _lookup = default!;
 
-        public const string DiskSlotName = "DiskSlot";
+        private readonly HashSet<EntityUid> _tickingBombs = new();
 
         public override void Initialize()
         {
             base.Initialize();
+            SubscribeLocalEvent<NukeComponent, ComponentRemove>(OnRemove);
             SubscribeLocalEvent<NukeComponent, ActivateInWorldEvent>(OnActivate);
             SubscribeLocalEvent<NukeComponent, ItemSlotChangedEvent>(OnItemSlotChanged);
 
@@ -45,13 +50,42 @@ namespace Content.Server.Nuke
             SubscribeLocalEvent<NukeComponent, NukeKeypadEnterMessage>(OnEnter);
         }
 
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+            foreach (var uid in _tickingBombs)
+            {
+                if (!EntityManager.TryGetComponent(uid, out NukeComponent nuke))
+                    continue;
+
+                nuke.RemainingTime -= frameTime;
+                if (nuke.RemainingTime <= 0)
+                {
+                    nuke.RemainingTime = 0;
+                    ActivateBomb(uid, nuke);
+                }
+                else
+                {
+                    UpdateUserInterface(uid, nuke);
+                }
+            }
+        }
+
+        private void OnRemove(EntityUid uid, NukeComponent component, ComponentRemove args)
+        {
+            _tickingBombs.Remove(uid);
+        }
+
         private void OnArmed(EntityUid uid, NukeComponent component, NukeArmedMessage args)
         {
-            if (component.Status != NukeStatus.AWAIT_ARM)
-                return;
-
-            component.Status = NukeStatus.TIMING;
-            UpdateUserInterface(uid, component);
+            if (component.Status == NukeStatus.AWAIT_ARM)
+            {
+                ArmBomb(uid, component);
+            }
+            else
+            {
+                DisarmBomb(uid, component);
+            }
         }
 
         private void OnEnter(EntityUid uid, NukeComponent component, NukeKeypadEnterMessage args)
@@ -86,7 +120,7 @@ namespace Content.Server.Nuke
 
         private void OnItemSlotChanged(EntityUid uid, NukeComponent component, ItemSlotChangedEvent args)
         {
-            if (args.SlotName != DiskSlotName)
+            if (args.SlotName != component.DiskSlotName)
                 return;
 
             component.DiskInserted = args.ContainedItem != null;
@@ -146,7 +180,7 @@ namespace Content.Server.Nuke
 
         private void OnEject(EntityUid uid, NukeComponent component, NukeEjectMessage args)
         {
-            _itemSlots.TryEjectContent(uid, DiskSlotName, args.Session.AttachedEntity);
+            _itemSlots.TryEjectContent(uid, component.DiskSlotName, args.Session.AttachedEntity);
         }
 
         private async void OnAnchor(EntityUid uid, NukeComponent component, NukeAnchorMessage args)
@@ -193,7 +227,6 @@ namespace Content.Server.Nuke
                     }
                     break;
                 }
-
             }
 
         }
@@ -229,7 +262,7 @@ namespace Content.Server.Nuke
             var state = new NukeUiState()
             {
                 Status = component.Status,
-                RemainingTime = component.RemainingTime,
+                RemainingTime = (int) component.RemainingTime,
                 DiskInserted = component.DiskInserted,
                 IsAnchored = anchored,
                 AllowArm = allowArm,
@@ -238,6 +271,50 @@ namespace Content.Server.Nuke
             };
 
             ui.SetState(state);
+        }
+
+        public void ArmBomb(EntityUid uid, NukeComponent? component = null)
+        {
+            if (!Resolve(uid, ref component))
+                return;
+
+            component.Status = NukeStatus.TIMING;
+            _tickingBombs.Add(uid);
+            UpdateUserInterface(uid, component);
+        }
+
+        public void DisarmBomb(EntityUid uid, NukeComponent? component = null)
+        {
+            if (!Resolve(uid, ref component))
+                return;
+
+            component.Status = NukeStatus.AWAIT_ARM;
+            _tickingBombs.Remove(uid);
+            UpdateUserInterface(uid, component);
+        }
+
+        public void ActivateBomb(EntityUid uid, NukeComponent? component = null,
+            ITransformComponent? transform = null)
+        {
+            if (!Resolve(uid, ref component, ref transform))
+                return;
+
+            // gib anyone in a blast radius
+            // its lame, but will work for now
+            var pos = transform.Coordinates;
+            var ents = _lookup.GetEntitiesInRange(pos, component.BlastRadius);
+            foreach (var ent in ents)
+            {
+                var entUid = ent.Uid;
+                if (!EntityManager.EntityExists(entUid))
+                    continue;;
+
+                if (EntityManager.TryGetComponent(entUid, out SharedBodyComponent? body))
+                    body.Gib();
+            }
+
+            EntityManager.DeleteEntity(uid);
+
         }
     }
 }

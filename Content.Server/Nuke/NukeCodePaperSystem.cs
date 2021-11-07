@@ -19,7 +19,7 @@ namespace Content.Server.Nuke
         {
             PaperComponent? paper = null;
             if (!Resolve(uid, ref paper))
-                return;;
+                return;
 
             paper.Content += _codes.Code;
         }

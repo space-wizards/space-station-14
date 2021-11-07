@@ -46,7 +46,7 @@ namespace Content.Server.Nuke
             Code = ret;
         }
 
-        /*/// <summary>
+        /// <summary>
         ///     Send a nuclear code to all communication consoles
         /// </summary>
         public void SendNukeCodes()
@@ -58,13 +58,8 @@ namespace Content.Server.Nuke
                     continue;
 
                 var consolePos = transform.MapPosition;
-                var paperEnt = EntityManager.SpawnEntity("Paper", consolePos);
-
-                if (!EntityManager.TryGetComponent(paperEnt.Uid, out PaperComponent? paper))
-                    continue;
-
-                paper.Content
+                EntityManager.SpawnEntity("NukeCodePaper", consolePos);
             }
-        }*/
+        }
     }
 }

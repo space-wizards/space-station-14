@@ -10,10 +10,15 @@ namespace Content.Server.Nuke
         public override string Name => "Nuke";
 
         [DataField("timer")]
-        public int Timer = 180;
+        public int Timer = 5;
 
-        public int RemainingTime;
-        public bool IsArmed = false;
+        [DataField("slot")]
+        public string DiskSlotName = "DiskSlot";
+
+        [DataField("blastRadius")]
+        public int BlastRadius = 200;
+
+        public float RemainingTime;
         public bool DiskInserted = false;
         public NukeStatus Status = NukeStatus.AWAIT_DISK;
         public string EnteredCode = "";
