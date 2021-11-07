@@ -17,10 +17,10 @@ namespace Content.Shared.Decals
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] protected readonly IMapManager MapManager = default!;
 
-        protected readonly Dictionary<GridId, ChunkCollection<Dictionary<uint, Decal>>> ChunkCollections = new();
-        protected readonly Dictionary<uint, (GridId gridId, Vector2i chunkIndices)> ChunkIndex = new();
+        protected readonly Dictionary<GridId, Dictionary<uint, Vector2i>> ChunkIndex = new();
 
-        private const int ChunkSize = 32;
+        public const int ChunkSize = 32;
+        public static Vector2i GetChunkIndices(Vector2 coordinates) => new ((int) Math.Floor(coordinates.X / ChunkSize), (int) Math.Floor(coordinates.Y / ChunkSize));
 
         private float _viewSize;
 
@@ -29,7 +29,6 @@ namespace Content.Shared.Decals
             base.Initialize();
 
             SubscribeLocalEvent<GridInitializeEvent>(OnGridInitialize);
-            SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoval);
             _viewSize = _configurationManager.GetCVar(CVars.NetMaxUpdateRange)*2f;
             _configurationManager.OnValueChanged(CVars.NetMaxUpdateRange, OnPvsRangeChanged);
         }
@@ -45,50 +44,49 @@ namespace Content.Shared.Decals
             _viewSize = obj * 2f;
         }
 
-        private void OnGridRemoval(GridRemovalEvent msg)
-        {
-            ChunkCollections.Remove(msg.GridId);
-        }
-
         private void OnGridInitialize(GridInitializeEvent msg)
         {
-            ChunkCollections[msg.GridId] = new ChunkCollection<Dictionary<uint, Decal>>(new Vector2i(ChunkSize, ChunkSize), () => new Dictionary<uint, Decal>());
+            var comp = EntityManager.EnsureComponent<DecalGridComponent>(MapManager.GetGrid(msg.GridId).GridEntityId);
+            ChunkIndex[msg.GridId] = new();
+            foreach (var (indices, decals) in comp.ChunkCollection.ChunkCollection)
+            {
+                foreach (var uid in decals.Keys)
+                {
+                    ChunkIndex[msg.GridId][uid] = indices;
+                }
+            }
         }
 
-        protected void DirtyChunk((GridId, Vector2i) values) => DirtyChunk(values.Item1, values.Item2);
+        protected DecalGridComponent.DecalGridChunkCollection DecalGridChunkCollection(GridId gridId) => EntityManager
+            .GetComponent<DecalGridComponent>(MapManager.GetGrid(gridId).GridEntityId).ChunkCollection;
+        protected Dictionary<Vector2i, Dictionary<uint, Decal>> ChunkCollection(GridId gridId) => DecalGridChunkCollection(gridId).ChunkCollection;
+
         protected virtual void DirtyChunk(GridId id, Vector2i chunkIndices) {}
 
-        protected void RegisterDecal(uint uid, Decal decal, GridId gridId)
+        protected bool RemoveDecalInternal(GridId gridId, uint uid)
         {
-            var chunkIndices = ChunkCollections[gridId].GetIndices(decal.Coordinates);
-            ChunkCollections[gridId].EnsureChunk(chunkIndices).Add(uid, decal);
-            ChunkIndex.Add(uid, (gridId, chunkIndices));
-            DirtyChunk(gridId, chunkIndices);
-        }
+            if (!RemoveDecalHook(gridId, uid)) return false;
 
-        protected bool RemoveDecalInternal(uint uid)
-        {
-            if (!RemoveDecalHook(uid)) return false;
-
-            if (!ChunkIndex.TryGetValue(uid, out var values))
+            if (!ChunkIndex.TryGetValue(gridId, out var values) || !values.TryGetValue(uid, out var indices))
             {
                 return false;
             }
 
-            if (!ChunkCollections[values.gridId].TryGetChunk(values.chunkIndices, out var chunk) || !chunk.Remove(uid))
+            var chunkCollection = ChunkCollection(gridId);
+            if (!chunkCollection.TryGetValue(indices, out var chunk) || !chunk.Remove(uid))
             {
                 return false;
             }
 
-            if (ChunkCollections[values.gridId].GetChunk(values.chunkIndices).Count == 0)
-                ChunkCollections[values.gridId].RemoveChunk(values.chunkIndices);
+            if (chunkCollection[indices].Count == 0)
+                chunkCollection.Remove(indices);
 
-            ChunkIndex.Remove(uid);
-            DirtyChunk(values);
+            ChunkIndex[gridId]?.Remove(uid);
+            DirtyChunk(gridId, indices);
             return true;
         }
 
-        protected virtual bool RemoveDecalHook(uint uid) => true;
+        protected virtual bool RemoveDecalHook(GridId gridId, uint uid) => true;
 
         private (Box2 view, MapId mapId) CalcViewBounds(in EntityUid euid)
         {
@@ -108,9 +106,8 @@ namespace Content.Shared.Decals
                 var (bounds, mapId) = CalcViewBounds(viewerUid);
                 foreach (var grid in MapManager.FindGridsIntersecting(mapId, bounds, approx: true))
                 {
-                    if (!chunks.ContainsKey(grid.Index))
+                    if(!chunks.ContainsKey(grid.Index))
                         chunks[grid.Index] = new();
-
                     var enumerator = new ChunkIndicesEnumerator(grid.InvWorldMatrix.TransformBox(bounds), ChunkSize);
                     while (enumerator.MoveNext(out var indices))
                     {
@@ -164,78 +161,4 @@ namespace Content.Shared.Decals
             return false;
         }
     }
-
-    public class ChunkCollection<T>
-    {
-        private readonly Dictionary<Vector2i, T> _chunks = new();
-        public IReadOnlyDictionary<Vector2i, T> Chunks => _chunks;
-        private readonly Vector2i _chunkSize;
-        private readonly Func<T> _createDelegate;
-
-        public ChunkCollection(Vector2i chunkSize, Func<T> createDelegate)
-        {
-            _chunkSize = chunkSize;
-            _createDelegate = createDelegate;
-        }
-
-        public Vector2i GetIndices(Vector2 a)
-        {
-            return new ((int) Math.Floor(a.X / _chunkSize.X), (int) Math.Floor(a.Y / _chunkSize.Y));
-        }
-
-        public void InsertChunk(Vector2i indices, T chunk)
-        {
-            _chunks[indices] = chunk;
-        }
-
-        public bool TryGetChunk(Vector2i indices, [NotNullWhen(true)] out T? chunk)
-        {
-            if(_chunks.TryGetValue(indices, out var rawChunk) && rawChunk != null)
-            {
-                chunk = rawChunk;
-                return true;
-            }
-
-            chunk = default;
-            return false;
-        }
-
-        public T GetChunk(Vector2i indices)
-        {
-            return _chunks[indices];
-        }
-
-        public T EnsureChunk(Vector2i indices)
-        {
-            if (_chunks.TryGetValue(indices, out var chunk))
-                return chunk;
-
-            return _chunks[indices] = _createDelegate();
-        }
-
-        public bool RemoveChunk(Vector2i indices) => _chunks.Remove(indices);
-
-        public IEnumerable<T> GetChunksForArea(Box2 area)
-        {
-            var coordinates = new HashSet<Vector2i>();
-
-            var bottomRight = GetIndices(area.BottomRight);
-            var topLeft = GetIndices(area.TopLeft);
-
-            for (var x = 0; x < bottomRight.X - topLeft.X; x++)
-            {
-                for (var y = 0; y < topLeft.Y - bottomRight.Y; y++)
-                {
-                    coordinates.Add(new Vector2i(x, y));
-                }
-            }
-
-            foreach (var indices in coordinates)
-            {
-                if (TryGetChunk(indices, out var chunk))
-                    yield return chunk;
-            }
-        }
-    }
-
 }

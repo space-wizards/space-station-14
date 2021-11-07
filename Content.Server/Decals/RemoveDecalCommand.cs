@@ -2,6 +2,8 @@ using Content.Server.Administration;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Map;
 
 namespace Content.Server.Decals
 {
@@ -10,12 +12,12 @@ namespace Content.Server.Decals
     {
         public string Command => "rmdecal";
         public string Description => "removes a decal";
-        public string Help => $"{Command} <uid>";
+        public string Help => $"{Command} <uid> <gridId>";
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            if (args.Length != 1)
+            if (args.Length != 2)
             {
-                shell.WriteError($"Unexpected number of arguments.\nExpected one: {Help}");
+                shell.WriteError($"Unexpected number of arguments.\nExpected two: {Help}");
                 return;
             }
 
@@ -25,8 +27,14 @@ namespace Content.Server.Decals
                 return;
             }
 
+            if (!int.TryParse(args[1], out var rawGridId) ||
+                !IoCManager.Resolve<IMapManager>().GridExists(new GridId(rawGridId)))
+            {
+                shell.WriteError("Failed parsing gridId.");
+            }
+
             var decalSystem = EntitySystem.Get<DecalSystem>();
-            if (decalSystem.RemoveDecal(uid))
+            if (decalSystem.RemoveDecal(new GridId(rawGridId), uid))
             {
                 shell.WriteLine($"Successfully removed decal {uid}.");
                 return;

@@ -42,7 +42,7 @@ namespace Content.Server.Chemistry.TileReactions
             foreach (var uid in decalSystem.GetDecalsOnTile(tile.GridIndex, tile.GridIndices,
                 x => prototypeManager.TryIndex<DecalPrototype>(x.Id, out var decal) && decal.Tags.Contains("crayon")))
             {
-                decalSystem.RemoveDecal(uid);
+                decalSystem.RemoveDecal(tile.GridIndex, uid);
             }
 
             return amount;
