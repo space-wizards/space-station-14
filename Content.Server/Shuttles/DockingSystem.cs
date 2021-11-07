@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using Content.Server.Power.Components;
 using Content.Shared.Physics;
-using Microsoft.CodeAnalysis;
+using Content.Shared.Shuttles;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Dynamics;
@@ -19,21 +19,19 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Shuttles
 {
     [RegisterComponent]
-    public sealed class DockingComponent : Component
+    public sealed class DockingComponent : SharedDockingComponent
     {
-        public override string Name => "Docking";
-
-        [ViewVariables]
-        public bool Enabled = false;
-
         [ViewVariables]
         public DockingComponent? DockedWith;
 
         [ViewVariables]
         public WeldJoint? DockJoint;
+
+        [ViewVariables]
+        public override bool Docked => DockedWith != null;
     }
 
-    public class DockingSystem : EntitySystem
+    public sealed class DockingSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly SharedBroadphaseSystem _broadphaseSystem = default!;
