@@ -1,5 +1,4 @@
-using System.Collections.Generic;
-using Content.Shared.Administration.Events;
+using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Administration
 {
@@ -12,20 +11,15 @@ namespace Content.Client.Administration
             _adminNameOverlay = new AdminNameOverlay(this, _entityManager, _eyeManager, _resourceCache, _entityLookup);
         }
 
-        public void AdminOverlayOn()
+        public void AdminOverlayOn(BaseButton.ButtonEventArgs? _ = null)
         {
             if (!_overlayManager.HasOverlay<AdminNameOverlay>())
                 _overlayManager.AddOverlay(_adminNameOverlay);
         }
 
-        public void AdminOverlayOff()
+        public void AdminOverlayOff(BaseButton.ButtonEventArgs? _ = null)
         {
             _overlayManager.RemoveOverlay<AdminNameOverlay>();
-        }
-
-        private void UpdateOverlay(List<PlayerListChangedEvent.PlayerInfo> playerInfos)
-        {
-            _adminNameOverlay.UpdatePlayerInfo(playerInfos);
         }
     }
 }

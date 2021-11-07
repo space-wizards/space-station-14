@@ -1,6 +1,8 @@
+using System;
 using System.Linq;
 using Content.Server.Administration.Managers;
 using Content.Server.Players;
+using Content.Shared.Administration;
 using Content.Shared.Administration.Events;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
@@ -29,9 +31,41 @@ namespace Content.Server.Administration
 
         private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
         {
-            if (e.NewStatus != SessionStatus.Connected && e.NewStatus != SessionStatus.Disconnected) return;
+            EntityEventArgs? args = null;
+            switch (e.NewStatus)
+            {
+                case SessionStatus.InGame:
+                case SessionStatus.Connected:
+                    args = new PlayerInfoChangedEvent
+                    {
+                        PlayerInfo = new PlayerInfo(
+                            e.Session.Name, e.Session.AttachedEntity?.Name ?? string.Empty,
+                            e.Session.ContentData()?.Mind?.AllRoles.Any(r => r.Antagonist) ?? false,
+                            e.Session.AttachedEntity?.Uid ?? EntityUid.Invalid,
+                            e.Session.UserId),
+                    };
+                    break;
+                case SessionStatus.Disconnected:
+                    args = new PlayerInfoRemovalMessage {NetUserId = e.Session.UserId};
+                    break;
+            }
 
-            var ev = new PlayerListChangedEvent();
+            if(args == null) return;
+
+            foreach (var admin in _adminManager.ActiveAdmins)
+            {
+                RaiseNetworkEvent(args, admin.ConnectedClient);
+            }
+
+            if (e.NewStatus != SessionStatus.Disconnected && _adminManager.IsAdmin(e.Session))
+            {
+                SendFullPlayerList(e.Session);
+            }
+        }
+
+        private void SendFullPlayerList(IPlayerSession playerSession)
+        {
+            var ev = new FullPlayerListEvent();
             ev.PlayersInfo.Clear();
             foreach (var session in _playerManager.GetAllPlayers())
             {
@@ -40,13 +74,10 @@ namespace Content.Server.Administration
                 var antag = session.ContentData()?.Mind?.AllRoles.Any(r => r.Antagonist) ?? false;
                 var uid = session.AttachedEntity?.Uid ?? EntityUid.Invalid;
 
-                ev.PlayersInfo.Add(new PlayerListChangedEvent.PlayerInfo(name, username, antag, uid, session));
+                ev.PlayersInfo.Add(new PlayerInfo(name, username, antag, uid, session.UserId));
             }
 
-            foreach (var admin in _adminManager.ActiveAdmins)
-            {
-                RaiseNetworkEvent(ev, admin.ConnectedClient);
-            }
+            RaiseNetworkEvent(ev, playerSession.ConnectedClient);
         }
     }
 }

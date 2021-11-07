@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Shared.Administration;
 using Content.Shared.Administration.Events;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Network;
 using Robust.Shared.Players;
 
 namespace Content.Client.Administration
@@ -14,16 +16,16 @@ namespace Content.Client.Administration
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
-        public event Action<List<PlayerListChangedEvent.PlayerInfo>>? PlayerListChanged;
+        public event Action<List<PlayerInfo>>? PlayerListChanged;
 
-        private List<PlayerListChangedEvent.PlayerInfo>? _playerList;
-        public IReadOnlyList<PlayerListChangedEvent.PlayerInfo> PlayerList
+        private Dictionary<NetUserId, PlayerInfo>? _playerList;
+        public IReadOnlyList<PlayerInfo> PlayerList
         {
             get
             {
-                if (_playerList != null) return _playerList;
+                if (_playerList != null) return _playerList.Values.ToList();
 
-                return new List<PlayerListChangedEvent.PlayerInfo>();
+                return new List<PlayerInfo>();
             }
         }
 
@@ -33,13 +35,32 @@ namespace Content.Client.Administration
 
             InitializeOverlay();
             InitializeMenu();
-            SubscribeNetworkEvent<PlayerListChangedEvent>(OnPlayerListChanged);
+            SubscribeNetworkEvent<FullPlayerListEvent>(OnPlayerListChanged);
+            SubscribeNetworkEvent<PlayerInfoChangedEvent>(OnPlayerInfoChanged);
+            SubscribeNetworkEvent<PlayerInfoRemovalMessage>(OnPlayerInfoRemoval);
         }
 
-        private void OnPlayerListChanged(PlayerListChangedEvent msg, EntitySessionEventArgs args)
+        private void OnPlayerInfoRemoval(PlayerInfoRemovalMessage ev)
         {
-            _playerList = msg.PlayersInfo;
-            UpdateOverlay(msg.PlayersInfo);
+            if (_playerList == null) _playerList = new();
+
+            _playerList.Remove(ev.NetUserId);
+            PlayerListChanged?.Invoke(_playerList.Values.ToList());
+        }
+
+        private void OnPlayerInfoChanged(PlayerInfoChangedEvent ev)
+        {
+            if(ev.PlayerInfo == null) return;
+
+            if (_playerList == null) _playerList = new();
+
+            _playerList[ev.PlayerInfo.SessionId] = ev.PlayerInfo;
+            PlayerListChanged?.Invoke(_playerList.Values.ToList());
+        }
+
+        private void OnPlayerListChanged(FullPlayerListEvent msg)
+        {
+            _playerList = msg.PlayersInfo.ToDictionary(x => x.SessionId, x => x);
             PlayerListChanged?.Invoke(msg.PlayersInfo);
         }
     }

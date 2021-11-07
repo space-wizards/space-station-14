@@ -14,7 +14,6 @@ namespace Content.Client.Administration
         private readonly IEntityManager _entityManager;
         private readonly IEyeManager _eyeManager;
         private readonly IEntityLookup _entityLookup;
-        private IReadOnlyList<PlayerListChangedEvent.PlayerInfo>? _playerInfos;
         private readonly Font _font;
 
         public AdminNameOverlay(AdminSystem system, IEntityManager entityManager, IEyeManager eyeManager, IResourceCache resourceCache, IEntityLookup entityLookup)
@@ -29,21 +28,11 @@ namespace Content.Client.Administration
 
         public override OverlaySpace Space => OverlaySpace.ScreenSpace;
 
-        public void UpdatePlayerInfo(List<PlayerListChangedEvent.PlayerInfo> playerInfos)
-        {
-            _playerInfos = playerInfos;
-        }
-
         protected override void Draw(in OverlayDrawArgs args)
         {
-            if (_playerInfos == null)
-            {
-                return;
-            }
-
             var viewport = _eyeManager.GetWorldViewport();
 
-            foreach (var playerInfo in _playerInfos)
+            foreach (var playerInfo in _system.PlayerList)
             {
                 // Otherwise the entity can not exist yet
                 if (!_entityManager.TryGetEntity(playerInfo.EntityUid, out var entity))
