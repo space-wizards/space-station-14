@@ -139,6 +139,9 @@ namespace Content.Server.Interaction
                 return;
             }
 
+            if (!_actionBlockerSystem.CanInteract(userEntity))
+                return;
+
             if (!EntityManager.TryGetEntity(msg.Dropped, out var dropped))
                 return;
             if (!EntityManager.TryGetEntity(msg.Target, out var target))
