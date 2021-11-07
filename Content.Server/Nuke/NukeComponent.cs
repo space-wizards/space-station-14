@@ -10,7 +10,7 @@ namespace Content.Server.Nuke
         public override string Name => "Nuke";
 
         [DataField("timer")]
-        public int Timer = 120;
+        public int Timer = 180;
 
         public int RemainingTime;
         public bool IsArmed = false;

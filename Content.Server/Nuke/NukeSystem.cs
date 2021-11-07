@@ -17,12 +17,12 @@ namespace Content.Server.Nuke
 {
     public class NukeSystem : EntitySystem
     {
+        [Dependency] private readonly NukeCodeSystem _codes = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
         [Dependency] private readonly SharedItemSlotsSystem _itemSlots = default!;
         [Dependency] private readonly PopupSystem _popups = default!;
 
         public const string DiskSlotName = "DiskSlot";
-        public const int PinCodeLength = 6;
 
         public override void Initialize()
         {
@@ -47,21 +47,28 @@ namespace Content.Server.Nuke
 
         private void OnArmed(EntityUid uid, NukeComponent component, NukeArmedMessage args)
         {
+            if (component.Status != NukeStatus.AWAIT_ARM)
+                return;
+
             component.Status = NukeStatus.TIMING;
             UpdateUserInterface(uid, component);
         }
 
         private void OnEnter(EntityUid uid, NukeComponent component, NukeKeypadEnterMessage args)
         {
-            component.EnteredCode = "";
-            component.Status = NukeStatus.AWAIT_ARM;
+            if (component.Status != NukeStatus.AWAIT_CODE)
+                return;
 
+            UpdateStatus(uid, component);
             UpdateUserInterface(uid, component);
         }
 
         private void OnKeypad(EntityUid uid, NukeComponent component, NukeKeypadMessage args)
         {
-            if (component.EnteredCode.Length >= PinCodeLength)
+            if (component.Status != NukeStatus.AWAIT_CODE)
+                return;
+
+            if (component.EnteredCode.Length >= _codes.Code.Length)
                 return;
 
             component.EnteredCode += args.Value.ToString();
@@ -70,6 +77,9 @@ namespace Content.Server.Nuke
 
         private void OnClear(EntityUid uid, NukeComponent component, NukeKeypadClearMessage args)
         {
+            if (component.Status != NukeStatus.AWAIT_CODE)
+                return;
+
             component.EnteredCode = "";
             UpdateUserInterface(uid, component);
         }
@@ -163,9 +173,27 @@ namespace Content.Server.Nuke
                         component.Status = NukeStatus.AWAIT_CODE;
                     break;
                 case NukeStatus.AWAIT_CODE:
+                {
                     if (!component.DiskInserted)
+                    {
                         component.Status = NukeStatus.AWAIT_DISK;
+                        component.EnteredCode = "";
+                        break;
+                    }
+
+                    var isValid = _codes.IsCodeValid(component.EnteredCode);
+                    if (isValid)
+                    {
+                        component.Status = NukeStatus.AWAIT_ARM;
+                        component.RemainingTime = component.Timer;
+                    }
+                    else
+                    {
+                        component.EnteredCode = "";
+                    }
                     break;
+                }
+
             }
 
         }
@@ -206,7 +234,7 @@ namespace Content.Server.Nuke
                 IsAnchored = anchored,
                 AllowArm = allowArm,
                 EnteredCodeLength = component.EnteredCode.Length,
-                MaxCodeLength = PinCodeLength
+                MaxCodeLength = _codes.Code.Length
             };
 
             ui.SetState(state);

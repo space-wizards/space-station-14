@@ -20,7 +20,7 @@ namespace Content.Server.Paper
     {
         private PaperAction _mode;
         [DataField("content")]
-        public string Content { get; private set; } = "";
+        public string Content { get; set; } = "";
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(PaperUiKey.Key);
 
