@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Content.Shared.Botany;
 using Content.Shared.Chemistry.Reaction;
+using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -77,9 +78,9 @@ namespace Content.Shared.Chemistry.Reagent
             return SubstanceColor;
         }
 
-        public ReagentUnit ReactionTile(TileRef tile, ReagentUnit reactVolume)
+        public FixedPoint2 ReactionTile(TileRef tile, FixedPoint2 reactVolume)
         {
-            var removed = ReagentUnit.Zero;
+            var removed = FixedPoint2.Zero;
 
             if (tile.Tile.IsEmpty)
                 return removed;

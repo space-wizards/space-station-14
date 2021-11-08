@@ -28,6 +28,7 @@
     DoRangeCheck: false
   - type: IgnorePause
   - type: Ghost
+  - type: GhostRadio
   - type: Sprite
     netsync: false
     noRot: true

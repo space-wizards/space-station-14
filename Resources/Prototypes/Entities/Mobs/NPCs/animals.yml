@@ -385,7 +385,7 @@
 # a mob is dead or something idk
   - type: Food
   - type: Extractable
-    extractableSolution: food
+    grindableSolutionName: food
   - type: SolutionContainerManager
     solutions:
       food:

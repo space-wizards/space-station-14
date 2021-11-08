@@ -16,6 +16,10 @@ namespace Content.Client.Ghost
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IGameHud _gameHud = default!;
 
+        // Changes to this value are manually propagated.
+        // No good way to get an event into the UI.
+        public int AvailableGhostRoleCount { get; private set; } = 0;
+
         private bool _ghostVisibility;
 
         private bool GhostVisibility
@@ -51,6 +55,7 @@ namespace Content.Client.Ghost
             SubscribeLocalEvent<GhostComponent, PlayerDetachedEvent>(OnGhostPlayerDetach);
 
             SubscribeNetworkEvent<GhostWarpsResponseEvent>(OnGhostWarpsResponse);
+            SubscribeNetworkEvent<GhostUpdateGhostRoleCountEvent>(OnUpdateGhostRoleCount);
         }
 
         private void OnGhostInit(EntityUid uid, GhostComponent component, ComponentInit args)
@@ -78,7 +83,7 @@ namespace Content.Client.Ghost
             // I hate UI I hate UI I Hate UI
             if (component.Gui == null)
             {
-                component.Gui = new GhostGui(component, EntityManager.EntityNetManager!);
+                component.Gui = new GhostGui(component, this, EntityManager.EntityNetManager!);
                 component.Gui.Update();
             }
 
@@ -112,6 +117,13 @@ namespace Content.Client.Ghost
                 window.Players = msg.Players;
                 window.Populate();
             }
+        }
+
+        private void OnUpdateGhostRoleCount(GhostUpdateGhostRoleCountEvent msg)
+        {
+            AvailableGhostRoleCount = msg.AvailableGhostRoles;
+            foreach (var ghost in EntityManager.EntityQuery<GhostComponent>(true))
+                ghost.Gui?.Update();
         }
     }
 }

@@ -16,5 +16,6 @@ namespace Content.Shared.Construction.Steps
         public IReadOnlyList<IGraphAction> Completed => _completed;
 
         public abstract void DoExamine(ExaminedEvent examinedEvent);
+        public abstract ConstructionGuideEntry GenerateGuideEntry();
     }
 }

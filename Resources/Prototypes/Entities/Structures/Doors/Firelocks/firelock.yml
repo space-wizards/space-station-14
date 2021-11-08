@@ -18,7 +18,6 @@
           acts: ["Destruction"]
     - type: Sprite
       netsync: false
-      drawdepth: Mobs # They're on the same layer as mobs, perspective.
       sprite: Structures/Doors/Airlocks/Standard/firelock.rsi
       layers:
         - state: closed
@@ -48,6 +47,7 @@
           - VaultImpassable
           - SmallImpassable
     - type: Door
+      openDrawDepth: WallTops
       closeTimeOne: 0.1
       closeTimeTwo: 0.6
       openTimeOne: 0.1

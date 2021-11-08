@@ -7,6 +7,7 @@ using Content.Server.Nutrition.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Examine;
+using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Nutrition.Components;
@@ -59,7 +60,7 @@ namespace Content.Server.Nutrition.EntitySystems
             var color = IsEmpty(uid, component) ? "gray" : "yellow";
             var openedText =
                 Loc.GetString(IsEmpty(uid, component) ? "drink-component-on-examine-is-empty" : "drink-component-on-examine-is-opened");
-            args.Message.AddMarkup(Loc.GetString("drink-component-on-examine-details-text", ("colorName", color), ("text", openedText)));
+            args.Message.AddMarkup($"\n{Loc.GetString("drink-component-on-examine-details-text", ("colorName", color), ("text", openedText))}");
         }
 
         private void SetOpen(EntityUid uid, bool opened = false, DrinkComponent? component = null)
@@ -217,7 +218,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (user != target && !user.InRangeUnobstructed(target, popup: true))
                 return false;
 
-            var transferAmount = ReagentUnit.Min(component.TransferAmount, interactions.DrainAvailable);
+            var transferAmount = FixedPoint2.Min(component.TransferAmount, interactions.DrainAvailable);
             var drain = _solutionContainerSystem.Drain(owner.Uid, interactions, transferAmount);
             var firstStomach = stomachs.FirstOrDefault(stomach => stomach.CanTransferSolution(drain));
 

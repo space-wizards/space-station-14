@@ -47,6 +47,10 @@
         - type: GasFilterVisualizer
           disabledState: gasFilter
           enabledState: gasFilterOn
+    - type: UserInterface
+      interfaces:
+        - key: enum.GasFilterUiKey.Key
+          type: GasFilterBoundUserInterface
     - type: GasFilter
 
 - type: entity

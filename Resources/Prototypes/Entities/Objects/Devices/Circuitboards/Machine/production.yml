@@ -59,6 +59,37 @@
         Cable: 1
 
 - type: entity
+  id: ChemMasterMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: Chem Master (Machine Board)
+  components:
+    - type: MachineBoard
+      prototype: chem_master
+      requirements:
+        Manipulator: 1
+      materialRequirements:
+        Glass: 1
+      tagRequirements:
+        GlassBeaker:
+          Amount: 2
+          DefaultPrototype: Beaker
+          ExamineName: Glass Beaker
+
+- type: entity
+  id: ChemDispenserMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: Chem Dispenser (Machine Board)
+  components:
+    - type: MachineBoard
+      prototype: chem_dispenser
+      requirements:
+        Capacitor: 1
+        Manipulator: 1
+        MatterBin: 2
+      materialRequirements:
+        Glass: 1
+
+- type: entity
   id: HydroponicsTrayMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: Hydroponics Tray (Machine Board)

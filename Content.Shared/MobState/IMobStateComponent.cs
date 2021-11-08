@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using Content.Shared.FixedPoint;
 using Content.Shared.MobState.State;
 using Robust.Shared.GameObjects;
 
@@ -16,34 +17,34 @@ namespace Content.Shared.MobState
 
         bool IsIncapacitated();
 
-        (IMobState state, int threshold)? GetEarliestIncapacitatedState(int minimumDamage);
+        (IMobState state, FixedPoint2 threshold)? GetEarliestIncapacitatedState(FixedPoint2 minimumDamage);
 
-        (IMobState state, int threshold)? GetEarliestCriticalState(int minimumDamage);
+        (IMobState state, FixedPoint2 threshold)? GetEarliestCriticalState(FixedPoint2 minimumDamage);
 
-        (IMobState state, int threshold)? GetEarliestDeadState(int minimumDamage);
+        (IMobState state, FixedPoint2 threshold)? GetEarliestDeadState(FixedPoint2 minimumDamage);
 
-        (IMobState state, int threshold)? GetPreviousCriticalState(int maximumDamage);
+        (IMobState state, FixedPoint2 threshold)? GetPreviousCriticalState(FixedPoint2 maximumDamage);
 
         bool TryGetEarliestIncapacitatedState(
-            int minimumDamage,
+            FixedPoint2 minimumDamage,
             [NotNullWhen(true)] out IMobState? state,
-            out int threshold);
+            out FixedPoint2 threshold);
 
         bool TryGetEarliestCriticalState(
-            int minimumDamage,
+            FixedPoint2 minimumDamage,
             [NotNullWhen(true)] out IMobState? state,
-            out int threshold);
+            out FixedPoint2 threshold);
 
         bool TryGetEarliestDeadState(
-            int minimumDamage,
+            FixedPoint2 minimumDamage,
             [NotNullWhen(true)] out IMobState? state,
-            out int threshold);
+            out FixedPoint2 threshold);
 
         bool TryGetPreviousCriticalState(
-            int maximumDamage,
+            FixedPoint2 maximumDamage,
             [NotNullWhen(true)] out IMobState? state,
-            out int threshold);
+            out FixedPoint2 threshold);
 
-        void UpdateState(int damage);
+        void UpdateState(FixedPoint2 damage);
     }
 }

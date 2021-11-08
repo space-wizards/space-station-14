@@ -2,6 +2,7 @@
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.Chemistry.EntitySystems
@@ -26,7 +27,7 @@ namespace Content.Server.Chemistry.EntitySystems
             TryAddSolution(targetUid, targetSolution, addedSolution);
         }
 
-        public Solution Draw(EntityUid targetUid, Solution solution, ReagentUnit amount,
+        public Solution Draw(EntityUid targetUid, Solution solution, FixedPoint2 amount,
             DrawableSolutionComponent? drawableSolution = null)
         {
             if (!Resolve(targetUid, ref drawableSolution, false))
@@ -35,7 +36,7 @@ namespace Content.Server.Chemistry.EntitySystems
             return SplitSolution(targetUid, solution, amount);
         }
 
-        public Solution Drain(EntityUid targetUid, Solution targetSolution, ReagentUnit amount,
+        public Solution Drain(EntityUid targetUid, Solution targetSolution, FixedPoint2 amount,
             DrainableSolutionComponent? drainableSolution = null)
         {
             if (!Resolve(targetUid, ref drainableSolution, false))
@@ -106,10 +107,10 @@ namespace Content.Server.Chemistry.EntitySystems
             return true;
         }
 
-        public ReagentUnit DrainAvailable(EntityUid uid)
+        public FixedPoint2 DrainAvailable(EntityUid uid)
         {
             return !TryGetDrainableSolution(uid, out var solution)
-                ? ReagentUnit.Zero
+                ? FixedPoint2.Zero
                 : solution.CurrentVolume;
         }
 
