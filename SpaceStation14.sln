@@ -106,6 +106,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluralRules.Generator", "Ro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pow3r", "Pow3r\Pow3r.csproj", "{1C048C9F-00A9-4796-BE4D-BB36B7769720}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.MapRenderer", "Content.MapRenderer\Content.MapRenderer.csproj", "{199BBEA1-7627-434B-B6F6-0F52A7C0E1E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -251,6 +253,10 @@ Global
 		{1C048C9F-00A9-4796-BE4D-BB36B7769720}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C048C9F-00A9-4796-BE4D-BB36B7769720}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C048C9F-00A9-4796-BE4D-BB36B7769720}.Release|Any CPU.Build.0 = Release|Any CPU
+		{199BBEA1-7627-434B-B6F6-0F52A7C0E1E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{199BBEA1-7627-434B-B6F6-0F52A7C0E1E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{199BBEA1-7627-434B-B6F6-0F52A7C0E1E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{199BBEA1-7627-434B-B6F6-0F52A7C0E1E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
