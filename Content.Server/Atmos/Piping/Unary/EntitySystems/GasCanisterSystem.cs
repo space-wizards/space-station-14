@@ -51,7 +51,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         /// <summary>
         /// Completely dumps the content of the canister into the world.
         /// </summary>
-        public void PurgeContents(EntityUid uid, GasCanisterComponent? canister = null, ITransformComponent? transform = null)
+        public void PurgeContents(EntityUid uid, GasCanisterComponent? canister = null, TransformComponent? transform = null)
         {
             if (!Resolve(uid, ref canister, ref transform)) return;
 

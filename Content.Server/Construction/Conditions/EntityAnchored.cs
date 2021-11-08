@@ -19,7 +19,7 @@ namespace Content.Server.Construction.Conditions
 
         public bool Condition(EntityUid uid, IEntityManager entityManager)
         {
-            var transform = entityManager.GetComponent<ITransformComponent>(uid);
+            var transform = entityManager.GetComponent<TransformComponent>(uid);
             return transform.Anchored && Anchored || !transform.Anchored && !Anchored;
         }
 

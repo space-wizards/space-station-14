@@ -52,7 +52,7 @@ namespace Content.Server.Tabletop
             // TODO: some permission system, disallow movement if you're not permitted to move the item
 
             // Move the entity and dirty it (we use the map ID from the entity so noone can try to be funny and move the item to another map)
-            var transform = EntityManager.GetComponent<ITransformComponent>(movedEntity.Uid);
+            var transform = EntityManager.GetComponent<TransformComponent>(movedEntity.Uid);
             var entityCoordinates = new EntityCoordinates(_mapManager.GetMapEntityId(transform.MapID), msg.Coordinates.Position);
             transform.Coordinates = entityCoordinates;
         }
