@@ -55,7 +55,6 @@ namespace Content.Server.Body.Metabolism
             IReadOnlyList<Solution.ReagentQuantity> reagentList = new List<Solution.ReagentQuantity>();
             Solution? solution = null;
             SharedBodyComponent? body = null;
-            var solutionsSys = Get<SolutionContainerSystem>();
 
             // if this field is passed we should try and take from the bloodstream over anything else
             if (owner.TryGetComponent<SharedMechanismComponent>(out var mech))
@@ -64,7 +63,7 @@ namespace Content.Server.Body.Metabolism
                 if (body != null)
                 {
                     if (body.Owner.HasComponent<BloodstreamComponent>()
-                        && solutionsSys.TryGetSolution(body.Owner.Uid, comp.SolutionName, out solution)
+                        && _solutionContainerSystem.TryGetSolution(body.OwnerUid, comp.SolutionName, out solution)
                         && solution.CurrentVolume >= FixedPoint2.Zero)
                     {
                         reagentList = solution.Contents;
@@ -79,6 +78,7 @@ namespace Content.Server.Body.Metabolism
             }
 
             List<Solution.ReagentQuantity> removeReagents = new(5);
+            var ent = body?.Owner ?? owner;
 
             // Run metabolism for each reagent, remove metabolized reagents
             foreach (var reagent in reagentList)
@@ -90,7 +90,6 @@ namespace Content.Server.Body.Metabolism
                 // Run metabolism code for each reagent
                 foreach (var effect in metabolism.Effects)
                 {
-                    var ent = body != null ? body.Owner : owner;
                     var conditionsMet = true;
                     if (effect.Conditions != null)
                     {
@@ -117,7 +116,7 @@ namespace Content.Server.Body.Metabolism
                 removeReagents.Add(new Solution.ReagentQuantity(reagent.ReagentId, metabolism.MetabolismRate));
             }
 
-            solutionsSys.TryRemoveAllReagents(solution, removeReagents);
+            _solutionContainerSystem.TryRemoveAllReagents(ent.Uid, solution, removeReagents);
         }
     }
 }
