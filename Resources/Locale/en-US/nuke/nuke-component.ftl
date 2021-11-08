@@ -1,4 +1,7 @@
 nuke-component-cant-anchor = The bolts seems to be blocked without disk!
+nuke-component-announcement-sender = Nuclear Fission Explosive
+nuke-component-announcement-armed = Attention! The station's self-destruct mechanism has been engaged. {$time} seconds until detonation.
+nuke-component-announcement-unarmed = The station's self-destruct was deactivated! Have a nice day! 
 
 # Nuke UI
 nuke-user-interface-title = Nuclear Fission Explosive

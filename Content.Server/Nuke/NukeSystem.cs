@@ -7,7 +7,7 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Nuke;
-using Content.Shared.Verbs;
+using Content.Server.Chat.Managers;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
@@ -15,6 +15,8 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using System.Collections.Generic;
+using Robust.Shared.Timing;
+using System;
 
 namespace Content.Server.Nuke
 {
@@ -25,12 +27,14 @@ namespace Content.Server.Nuke
         [Dependency] private readonly SharedItemSlotsSystem _itemSlots = default!;
         [Dependency] private readonly PopupSystem _popups = default!;
         [Dependency] private readonly IEntityLookup _lookup = default!;
+        [Dependency] private readonly IChatManager _chat = default!;
 
         private readonly HashSet<EntityUid> _tickingBombs = new();
 
         public override void Initialize()
         {
             base.Initialize();
+            SubscribeLocalEvent<NukeComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<NukeComponent, ComponentRemove>(OnRemove);
             SubscribeLocalEvent<NukeComponent, ActivateInWorldEvent>(OnActivate);
             SubscribeLocalEvent<NukeComponent, ItemSlotChangedEvent>(OnItemSlotChanged);
@@ -48,6 +52,11 @@ namespace Content.Server.Nuke
             SubscribeLocalEvent<NukeComponent, NukeKeypadMessage>(OnKeypadButtonPressed);
             SubscribeLocalEvent<NukeComponent, NukeKeypadClearMessage>(OnClearButtonPressed);
             SubscribeLocalEvent<NukeComponent, NukeKeypadEnterMessage>(OnEnterButtonPressed);
+        }
+
+        private void OnInit(EntityUid uid, NukeComponent component, ComponentInit args)
+        {
+            component.RemainingTime = component.Timer;
         }
 
         public override void Update(float frameTime)
@@ -202,7 +211,7 @@ namespace Content.Server.Nuke
             {
                 ArmBomb(uid, component);
             }
-            else if (component.Status == NukeStatus.ARMED)
+            else
             {
                 DisarmBomb(uid, component);
             }
@@ -221,26 +230,26 @@ namespace Content.Server.Nuke
                         component.Status = NukeStatus.AWAIT_CODE;
                     break;
                 case NukeStatus.AWAIT_CODE:
-                {
-                    if (!component.DiskInserted)
                     {
-                        component.Status = NukeStatus.AWAIT_DISK;
-                        component.EnteredCode = "";
+                        if (!component.DiskInserted)
+                        {
+                            component.Status = NukeStatus.AWAIT_DISK;
+                            component.EnteredCode = "";
+                            break;
+                        }
+
+                        var isValid = _codes.IsCodeValid(component.EnteredCode);
+                        if (isValid)
+                        {
+                            component.Status = NukeStatus.AWAIT_ARM;
+                            component.RemainingTime = component.Timer;
+                        }
+                        else
+                        {
+                            component.EnteredCode = "";
+                        }
                         break;
                     }
-
-                    var isValid = _codes.IsCodeValid(component.EnteredCode);
-                    if (isValid)
-                    {
-                        component.Status = NukeStatus.AWAIT_ARM;
-                        component.RemainingTime = component.Timer;
-                    }
-                    else
-                    {
-                        component.EnteredCode = "";
-                    }
-                    break;
-                }
                 case NukeStatus.AWAIT_ARM:
                     // do nothing, wait for arm button to be pressed
                     break;
@@ -303,6 +312,12 @@ namespace Content.Server.Nuke
             if (component.Status == NukeStatus.ARMED)
                 return;
 
+            // warn a crew
+            var announcement = Loc.GetString("nuke-component-announcement-armed",
+                ("time", (int) component.RemainingTime));
+            var sender = Loc.GetString("nuke-component-announcement-sender");
+            _chat.DispatchStationAnnouncement(announcement, sender);
+
             component.Status = NukeStatus.ARMED;
             _tickingBombs.Add(uid);
             UpdateUserInterface(uid, component);
@@ -319,9 +334,25 @@ namespace Content.Server.Nuke
             if (component.Status != NukeStatus.ARMED)
                 return;
 
+            // warn a crew
+            var announcement = Loc.GetString("nuke-component-announcement-unarmed");
+            var sender = Loc.GetString("nuke-component-announcement-sender");
+            _chat.DispatchStationAnnouncement(announcement, sender);
+
             component.Status = NukeStatus.AWAIT_ARM;
             _tickingBombs.Remove(uid);
             UpdateUserInterface(uid, component);
+        }
+
+        public void ToggleBomb(EntityUid uid, NukeComponent? component = null)
+        {
+            if (!Resolve(uid, ref component))
+                return;
+
+            if (component.Status == NukeStatus.ARMED)
+                DisarmBomb(uid, component);
+            else
+                ArmBomb(uid, component);
         }
 
         /// <summary>
