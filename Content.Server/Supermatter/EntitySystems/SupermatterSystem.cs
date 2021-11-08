@@ -1,6 +1,7 @@
 using System;
 using System.Data;
 using System.Linq;
+using Robust.Shared.Audio;
 using Content.Shared.Radiation;
 using Content.Server.Radiation;
 using JetBrains.Annotations;
@@ -51,6 +52,8 @@ using Content.Shared.Alert;
 using Content.Server.Atmos.EntitySystems;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Content.Server.Construction.Components;
+using Robust.Shared.Player;
 
 namespace Content.Server.SupermatterSystem{
     [UsedImplicitly]
@@ -69,8 +72,9 @@ namespace Content.Server.SupermatterSystem{
         [Dependency] private IEntityManager _entityManager = default!;
         private RadioSystem _radioSystem = default!;
 
-        private float _updateAccumulator;
-        private const float _updateTimer = 0.5f;
+        private float _atmosUpdateAccumulator;
+        //update atmos every half second
+        private const float _atmosUpdateTimer = 0.5f;
         public override void Initialize()
         {
             base.Initialize();
@@ -91,15 +95,16 @@ namespace Content.Server.SupermatterSystem{
         public void HandleRads(SupermatterComponent component, float frameTime)
         {
             var Coords = component.Owner.Transform.Coordinates;
-            _updateAccumulator += frameTime;
-            if (_atmosphereSystem.GetTileMixture(Coords) is { } mixture && _updateAccumulator > _updateTimer)
+            _atmosUpdateAccumulator += frameTime;
+            if(_atmosphereSystem.GetTileMixture(Coords) is { } mixture && _atmosUpdateAccumulator > _atmosUpdateTimer)
             {
-                _updateAccumulator -= _updateTimer;
+                _atmosUpdateAccumulator -= _atmosUpdateTimer;
+                component.Mix = mixture;
                 var pressure = mixture.Pressure;
                 var moles = mixture.TotalMoles;
                 var temp = mixture.Temperature;
 
-                if (moles > 0f)
+                if(moles > 0f)
                 {
                     var Oxy = mixture.Moles[0];
                     var Nit = mixture.Moles[1];
@@ -108,7 +113,7 @@ namespace Content.Server.SupermatterSystem{
                     var Tri = mixture.Moles[4];
                     var H2o = mixture.Moles[5];
 
-                    for (int gasId = 0; gasId < component.GasComp.Length; gasId++)
+                    for(int gasId = 0; gasId < component.GasComp.Length; gasId++)
                     {
                         component.GasComp[gasId] = Math.Clamp(mixture.Moles[gasId] / moles, 0, 1);
                     };
@@ -119,7 +124,7 @@ namespace Content.Server.SupermatterSystem{
                     component.GasmixPowerRatio = 0f;
                     component.DynamicHeatModifier = 0f;
                     component.PowerTransmissionBonus = 0f;
-                    for (int gasId = 0; gasId < component.GasComp.Length; gasId++)
+                    for(int gasId = 0; gasId < component.GasComp.Length; gasId++)
                     {
                         //No less then zero, and no greater then one, we use this to do explosions and heat to power transfer
                         //Be very careful with modifing this var by large amounts, and for the love of god do not push it past 1
@@ -137,7 +142,8 @@ namespace Content.Server.SupermatterSystem{
 
                     //Value between 1 and 10. Effects the damage heat does to the crystal
                     component.DynamicHeatResistance = 0f;
-                    //TODO: port this once more gasses are in
+
+                    //TODO: port this once more gasses (cough n20) are in
                     /*
                     for(var/gas_id in gas_resist)
                         dynamic_heat_resistance += gas_comp[gas_id] * gas_resist[gas_id])
@@ -162,7 +168,7 @@ namespace Content.Server.SupermatterSystem{
                     //Given infinite time, powerloss_dynamic_scaling = co2comp
                     //Some value between 0 and 1
 
-                    if (moles > SupermatterComponent.PowerlossInhibitionMoleThreshold && component.GasComp[2] > SupermatterComponent.PowerlossInhibitionGasThreshold)
+                    if(moles > SupermatterComponent.PowerlossInhibitionMoleThreshold && component.GasComp[2] > SupermatterComponent.PowerlossInhibitionGasThreshold)
                         component.PowerlossDynamicScaling = Math.Clamp(component.PowerlossDynamicScaling + Math.Clamp(component.GasComp[2] - component.PowerlossDynamicScaling, -0.02f, 0.02f), 0f, 1f);
                     else
                         component.PowerlossDynamicScaling = Math.Clamp(component.PowerlossDynamicScaling - 0.05f, 0f, 1f);
@@ -215,6 +221,170 @@ namespace Content.Server.SupermatterSystem{
             }
         }
 
+        private float _damageUpdateAccumulator;
+        //update environment damage every second
+        private const float _damageUpdateTimer = 1f;
+        private const float _yellTimer = 60f;
+        public void HandleDamage(SupermatterComponent component, float frameTime)
+        {
+            _damageUpdateAccumulator += frameTime;
+            var chat = IoCManager.Resolve<IChatManager>();
+            var entity = component.Owner;
+            float damage = 0;
+            component.DamageArchived = component.Owner.GetComponent<DamageableComponent>().TotalDamage.Float();
+            var integrity = GetIntegrity(component);
+            var Coords = component.Owner.Transform.Coordinates;
+
+            if(component.DamageArchived >= component.ExplosionPoint)
+            {
+                Delamination(component, frameTime);
+                return;
+            }
+
+            if(component.DamageArchived <= component.ExplosionPoint)
+            {
+                component.YellAccumulator += frameTime;
+                if(component.YellAccumulator >= _yellTimer)
+                {
+                    if(component.DamageArchived >= component.EmergencyPoint && component.DamageArchived <= component.ExplosionPoint)
+                    {
+                        chat.DispatchStationAnnouncement($"WARNING! Crystal hyperstructure integrity reaching critical levels! Integrity:{100 - integrity}%", "Supermatter");
+                        component.YellAccumulator = 0;
+                    }
+                    if(component.DamageArchived >= component.WarningPoint && component.DamageArchived <= component.EmergencyPoint)
+                    {
+                        chat.EntitySay(component.Owner, $"Danger! Crystal hyperstructure integrity faltering! Integrity:{100 - integrity}%");
+                        component.YellAccumulator = 0;
+                    }
+
+                }
+            }
+
+            if(_damageUpdateAccumulator > _damageUpdateTimer)
+            {
+                _damageUpdateAccumulator -= _damageUpdateTimer;
+                //if in space
+                if((int)component.Owner.Transform.GridID == 0)
+                {
+                    damage = Math.Max((component.Power / 1000) * component.DamageIncreaseMultiplier, 0.1f);
+                }
+
+                //*
+                //if in an atmosphere
+                if(_atmosphereSystem.GetTileMixture(Coords) is { } mixture)
+                {
+                    //((((some value between 0.5 and 1 * temp - ((273.15 + 40) * some values between 1 and 10)) * some number between 0.25 and knock your socks off / 150) * 0.25
+                    //Heat and mols account for each other, a lot of hot mols are more damaging then a few
+                    //Mols start to have a positive effect on damage after 350
+                    var MoleClamp = Math.Clamp(mixture.TotalMoles / 200f, 0.5f, 1f);
+                    var HeatDamage = ((275.15f + SupermatterComponent.HeatPenaltyThreshold)*component.DynamicHeatResistance);
+                    damage = Math.Max(damage + (Math.Max(MoleClamp * mixture.Temperature - HeatDamage, 0) * component.MoleHeatPenalty / 150) * component.DamageIncreaseMultiplier, 0f);
+                    //Power only starts affecting damage when it is above 5000
+                    damage = Math.Max(damage + (Math.Max(component.Power - SupermatterComponent.PowerPenaltyThreshold, 0f)/500f) * component.DamageIncreaseMultiplier, 0f);
+                    //Molar count only starts affecting damage when it is above 1800
+                    damage = Math.Max(damage + (Math.Max(mixture.TotalMoles - SupermatterComponent.MolePenaltyThreshold, 0f)/80f) * component.DamageIncreaseMultiplier, 0f);
+
+                    //There might be a way to integrate healing and hurting via heat
+			        //healing damage
+                    if(mixture.TotalMoles < SupermatterComponent.MolePenaltyThreshold)
+                    {
+                        //Only has a net positive effect when the temp is below 313.15, heals up to 2 damage. Psycologists increase this temp min by up to 45
+                        var heatcap = ((273.15f + SupermatterComponent.HeatPenaltyThreshold) + (45 * component.PsyCoeff));
+                        damage = Math.Max(-(2 * (1 - (mixture.Temperature / heatcap))),-2);
+                    }
+                    //if there are space tiles next to SM
+                    foreach(var adjacent in _atmosphereSystem.GetAdjacentTileMixtures(Coords))
+                    {
+                        if(adjacent.TotalMoles == 0)
+                        {
+                            if(integrity < 10)
+                                damage = Math.Clamp((component.Power * 0.0005f) * component.DamageIncreaseMultiplier, 0f, SupermatterComponent.MaxSpaceExposureDamage);
+                            else if(integrity < 25)
+                                damage = Math.Clamp((component.Power * 0.0009f) * component.DamageIncreaseMultiplier, 0f, SupermatterComponent.MaxSpaceExposureDamage);
+                            else if(integrity < 45)
+                                damage = Math.Clamp((component.Power * 0.005f) * component.DamageIncreaseMultiplier, 0f, SupermatterComponent.MaxSpaceExposureDamage);
+                            else if(integrity < 75)
+                                damage = Math.Clamp((component.Power * 0.002f) * component.DamageIncreaseMultiplier, 0f, SupermatterComponent.MaxSpaceExposureDamage);
+                            break;
+                        }
+                    }
+                }
+                //only take 1.8 per cycle //gets rouneded to 2 after the first cycle??? why??? the float to fixed cast shouldnt be rounding???
+                damage = Math.Min(component.DamageArchived + (component.DamageHardcap * component.ExplosionPoint), damage);
+                //damage to add to total
+                var damageDelta = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Blunt"), (Shared.FixedPoint.FixedPoint2)damage);
+                _damageable.TryChangeDamage(component.OwnerUid, damageDelta, true);
+            }
+        }
+
+        public float GetIntegrity(SupermatterComponent component)
+        {
+            var damage = component.Owner.GetComponent<DamageableComponent>().TotalDamage;
+            var integrity = 100 * ((double) damage / component.ExplosionPoint);
+            integrity = Math.Round(integrity);
+            integrity = integrity < 0 ? 0 : integrity;
+            return(float) integrity;
+        }
+
+        private float _delamTimerAccumulator;
+        private const int _delamTimerTimer = 30;
+        private float _speakAccumulator = 5f;
+        private bool AlarmPlaying = false;
+        public void Delamination(SupermatterComponent component, float frameTime)
+        {
+            //TODO: make singulo spawn at SupermatterComponent.MolePenaltyThreshold
+            //TODO: make tesla spawn at SupermatterComponent.PowerPenaltyThreshold
+            var Coords = component.Owner.Transform.Coordinates;
+            var chat = IoCManager.Resolve<IChatManager>();
+            var uid = component.OwnerUid;
+
+            if(!component.FinalCountdown)
+            {
+                chat.DispatchStationAnnouncement("The Supermatter has Reached Critical Integrity Falure. Emergency Causality Destabilization Field has been Activated.", "Supermatter");
+            }
+            component.FinalCountdown = true;
+
+            _delamTimerAccumulator += frameTime;
+            _speakAccumulator += frameTime;
+            var RoundSeconds = _delamTimerTimer - (int)Math.Floor(_delamTimerAccumulator);
+
+            if(component.DamageArchived < component.ExplosionPoint)
+            {
+                chat.DispatchStationAnnouncement($"{SupermatterComponent.SafeAlert} Failsafe has been Disengaged.");
+                component.FinalCountdown = false;
+                return;
+            }
+            else if(RoundSeconds >= 5 && _speakAccumulator >= 5)
+            {
+                _speakAccumulator -= 5;
+                chat.DispatchStationAnnouncement($"{RoundSeconds} Seconds Remain Before Delamination.", "Supermatter");
+            }
+            else if(RoundSeconds <  5 && _speakAccumulator >= 1)
+            {
+                _speakAccumulator -= 1;
+                chat.DispatchStationAnnouncement($"{RoundSeconds} Seconds Remain Before Delamination.", "Supermatter");
+            }
+            if(_delamTimerAccumulator >= _delamTimerTimer)
+            {
+                if(_atmosphereSystem.GetTileMixture(Coords) is { } mixture)
+                {
+                    if(mixture.TotalMoles >= SupermatterComponent.MolePenaltyThreshold)
+                    {
+                        _entityManager.SpawnEntity("Singularity", Coords);
+                        return;
+                    }
+                }
+                component.Owner.SpawnExplosion(50, 50, 50, 75);
+                component.Owner.QueueDelete();
+            }
+
+            if(component.FinalCountdown && !AlarmPlaying && RoundSeconds <= 13)
+            {
+                AlarmPlaying = true;
+                SoundSystem.Play(Filter.Pvs(uid, 2), component.DelamAlarm.GetSound(), uid);
+            }
+        }
+
         public bool CanDestroy(IEntity entity)
         {
             return entity.HasComponent<SharedBodyComponent>() || entity.HasComponent<SharedItemComponent>() ||
@@ -226,123 +396,18 @@ namespace Content.Server.SupermatterSystem{
             return entity.MetaData.EntityName == "ash" || entity.IsInContainer() ||
             entity.HasComponent<GhostComponent>() || entity.HasComponent<SubFloorHideComponent>();
         }
-
-        public void HandleDamage(SupermatterComponent component, float frameTime)
-        {
-            var chat = IoCManager.Resolve<IChatManager>();
-            var entity = component.Owner;
-            float damage = 0;
-            component.DamageArchived = component.Owner.GetComponent<DamageableComponent>().TotalDamage.Float();
-            var integrity = GetIntegrity(component);
-            var Coords = component.Owner.Transform.Coordinates;
-
-            //if in space
-            if((int)component.Owner.Transform.GridID == 0)
-            {
-                damage += Math.Max((component.Power / 1000) * component.DamageIncreaseMultiplier, 0.1f);
-            }
-
-            //*
-            //if in an atmosphere
-            if(_atmosphereSystem.GetTileMixture(Coords) is { } mixture)
-            {
-                //((((some value between 0.5 and 1 * temp - ((273.15 + 40) * some values between 1 and 10)) * some number between 0.25 and knock your socks off / 150) * 0.25
-                //Heat and mols account for each other, a lot of hot mols are more damaging then a few
-                //Mols start to have a positive effect on damage after 350
-                var MoleClamp = Math.Clamp(mixture.TotalMoles / 200f, 0.5f, 1f);
-                var HeatDamage = ((275.15f + SupermatterComponent.HeatPenaltyThreshold)*component.DynamicHeatResistance);
-                damage += Math.Max(damage + (Math.Max(MoleClamp * mixture.Temperature - HeatDamage, 0) * component.MoleHeatPenalty / 150) * component.DamageIncreaseMultiplier, 0);
-                //Power only starts affecting damage when it is above 5000
-                damage += Math.Max(damage + (Math.Max(component.Power - SupermatterComponent.PowerPenaltyThreshold, 0f)/500f) * component.DamageIncreaseMultiplier, 0f);
-                //Molar count only starts affecting damage when it is above 1800
-                damage += Math.Max(damage + (Math.Max(mixture.TotalMoles - SupermatterComponent.MolePenaltyThreshold, 0)/80f) * component.DamageIncreaseMultiplier, 0);
-                    //if there are space tiles next to SM
-                    foreach(var adjacent in _atmosphereSystem.GetAdjacentTileMixtures(Coords))
-                    {
-                        if (adjacent.TotalMoles == 0)
-                        {
-                            if(integrity < 10)
-                                damage += Math.Clamp((component.Power * 0.0005f) * component.DamageIncreaseMultiplier, 0, SupermatterComponent.MaxSpaceExposureDamage);
-                            else if(integrity < 25)
-                                damage += Math.Clamp((component.Power * 0.0009f) * component.DamageIncreaseMultiplier, 0, SupermatterComponent.MaxSpaceExposureDamage);
-                            else if(integrity < 45)
-                                damage += Math.Clamp((component.Power * 0.005f) * component.DamageIncreaseMultiplier, 0, SupermatterComponent.MaxSpaceExposureDamage);
-                            else if(integrity < 75)
-                                damage += Math.Clamp((component.Power * 0.002f) * component.DamageIncreaseMultiplier, 0, SupermatterComponent.MaxSpaceExposureDamage);
-
-                            break;
-                        }
-                    }
-
-                //only take 1.8 per cycle
-                damage = Math.Min(component.DamageArchived + (component.DamageHardcap * component.ExplosionPoint), component.DamageArchived + damage);
-            }
-            var damageDelta = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Blunt"), (Shared.FixedPoint.FixedPoint2)damage);
-            _damageable.TryChangeDamage(component.OwnerUid, damageDelta, true);
-
-            //entity.GetComponent<DamageableComponent>().TotalDamage = damage;
-
-            //_mapManager.GetGrid(component.Owner.Transform.GridID).TryGetTileRef(component.Owner.Transform.MapPosition.Position, out var TileRef)
-            /*
-            var splodeTime = 180f;
-            var hurtTime = 120f;
-            if (damage >= 900)
-            {
-                Delamination(component, entity, frameTime);
-                entity.SpawnExplosion(50, 50, 50, 75); //TODO: Tune This once splosions work:tm:
-                entity.QueueDelete();
-                return;
-            }
-
-            component.splodeTimer += frameTime;
-            while (damage >= 700 & component.splodeTimer > splodeTime)
-            {
-                component.splodeTimer -= splodeTime;
-                component.emergency_point = true;
-                chat.DispatchStationAnnouncement("CRYSTAL DELAMINATION IMMINENT.", "Supermatter");
-                //TODO: yell over comms about blowing the fuck up
-            }
-
-            component.hurtTimer += frameTime;
-            while (damage >= 50 & damage <= 700 & component.hurtTimer > hurtTime)
-            {
-                component.hurtTimer -= hurtTime;
-                component.warning_point = true;
-                chat.DispatchStationAnnouncement("Danger! Crystal hyperstructure integrity faltering!", "Supermatter");
-                //TODO: yell over comms about being bullied
-            }
-            */
-
-
-
-        }
-
-        public float GetIntegrity(SupermatterComponent component)
-        {
-            var damage = component.Owner.GetComponent<DamageableComponent>().TotalDamage;
-            var integrity = (double) damage / component.ExplosionPoint;
-            integrity = Math.Round(integrity);
-            integrity = integrity < 0 ? 0 : integrity;
-            return (float) integrity;
-        }
-
-        public void Delamination(SupermatterComponent component, IEntity entity, float frameTime)
-        {
-
-        }
-
         public void HandleDestroy(SupermatterComponent component, IEntity entity)
         {
-            if (!CanDestroy(entity) || CantDestroy(entity)) return;
+            if(!CanDestroy(entity) || CantDestroy(entity)) return;
 
             EntityManager.SpawnEntity("Ash", entity.Transform.MapPosition);
             entity.QueueDelete();
 
-            if (entity.TryGetComponent<SupermatterFoodComponent>(out var SupermatterFood))
+            if(entity.TryGetComponent<SupermatterFoodComponent>(out var SupermatterFood))
             {
                 component.Power += SupermatterFood.Energy;
             }
-            else if (entity.TryGetComponent<ProjectileComponent>(out var Projectile))
+            else if(entity.TryGetComponent<ProjectileComponent>(out var Projectile))
             {
                 component.Power += (float) Projectile.Damage.Total;
             }
@@ -358,7 +423,7 @@ namespace Content.Server.SupermatterSystem{
         public void HandleBehavour(SupermatterComponent component, Vector2 worldPos, float frameTime){
             HandleRads(component, frameTime);
             HandleDamage(component, frameTime);
-            foreach (var entity in _lookup.GetEntitiesInRange(component.Owner.Transform.MapID, worldPos, 0.5f))
+            foreach(var entity in _lookup.GetEntitiesInRange(component.Owner.Transform.MapID, worldPos, 0.5f))
             {
                 HandleDestroy(component, entity);
             }

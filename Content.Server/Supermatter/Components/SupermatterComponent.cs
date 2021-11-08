@@ -43,6 +43,10 @@ namespace Content.Server.Supermatter
     public class SupermatterComponent : Component
     {
         public override string Name => "Supermatter";
+
+        //TODO: clean all this up... or something
+        //i've yet to see another component need so many variables and im not even using most of them
+        //anything still using WHATEVER_THE_FUCK_THIS_IS is not used at the moment and should be considered for deletion
         private float _Power = 0;
         private Atmos.GasMixture? _mix;
         private float _PowerRatio = 0;
@@ -55,8 +59,8 @@ namespace Content.Server.Supermatter
         //Heat damage scales around this. Too hot setups with this amount of moles do regular damage, anything above and below is scaled
         private float  _moleHeatPenalty = 0f;
 
-        private float _splodeTimer = 120f;
-        private float _hurtTimer = 180f;
+        private float _yellaccumulator = 60f;
+        private const float _yellTimer = 60f;
 
         //TODO: PsyCoeff should change from 0-1 based on psycologist distance
         public float PsyCoeff = 0;
@@ -64,27 +68,27 @@ namespace Content.Server.Supermatter
         //Are we exploding?
         private bool final_countdown = false;
 
-        //The amount of damage we have currently
-        private int _damage = 0;
-
         //The damage we had before this cycle. Used to limit the damage we can take each cycle, and for safe_alert
         private int damage_archived = 0;
         //Our "Shit is no longer fucked" message. We send it when damage is less then damage_archived
-        private const string safe_alert = "Crystalline hyperstructure returning to safe operating parameters.";
+        public const string SafeAlert = "Crystalline hyperstructure returning to safe operating parameters.";
         //The point at which we should start sending messeges about the damage to the engi channels.
-        public bool warning_point = false; //50 damage
+        public float WarningPoint = 50;
         ///The alert we send when we've reached warning_point
         private const string warning_alert = "Danger! Crystal hyperstructure integrity faltering!";
         //The point at which we start sending messages to the common channel
-        public bool emergency_point = false; //700 damage
+        public float EmergencyPoint = 700;
         //The alert we send when we've reached emergency_point
         private const string emergency_alert = "CRYSTAL DELAMINATION IMMINENT.";
         //The point at which we delam
         public readonly int ExplosionPoint = 900;
+        //delam alarm sound
+        public SoundSpecifier DelamAlarm = new SoundPathSpecifier("/Audio/Machines/alarm.ogg");
         //When we pass this amount of damage we start shooting bolts
         private const int damage_penalty_point = 550;
+        public bool _finalCountdown = false;
 
-        // Higher == Bigger heat and waste penalty from having the crystal surrounded by this gas. Negative numbers reduce penalty.
+        //Higher == Bigger heat and waste penalty from having the crystal surrounded by this gas. Negative numbers reduce penalty.
         //public static float PLASMA_HEAT_PENALTY = 15f;
         //public static float OXYGEN_HEAT_PENALTY = 1f;
         //Better then co2, worse then n2
@@ -214,28 +218,6 @@ namespace Content.Server.Supermatter
             }
         }
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        public int Damage
-        {
-            get => _damage;
-            set
-            {
-                _damage = value;
-                Dirty();
-            }
-        }
-
-        [ViewVariables(VVAccess.ReadOnly)]
-        public Atmos.GasMixture? Mix
-        {
-            get => _mix;
-            set
-            {
-                _mix = value;
-                Dirty();
-            }
-        }
-
         [ViewVariables(VVAccess.ReadOnly)]
         public float GasmixPowerRatio
         {
@@ -243,6 +225,17 @@ namespace Content.Server.Supermatter
             set
             {
                 _PowerRatio = value;
+                Dirty();
+            }
+        }
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public Atmos.GasMixture? Mix
+        {
+            get => _mix;
+            set
+            {
+                _mix = value;
                 Dirty();
             }
         }
@@ -297,24 +290,13 @@ namespace Content.Server.Supermatter
             }
         }
 
-        [ViewVariables(VVAccess.ReadOnly)]
-        public float splodeTimer
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool FinalCountdown
         {
-            get => _splodeTimer;
+            get => _finalCountdown;
             set
             {
-                _splodeTimer = value;
-                Dirty();
-            }
-        }
-
-        [ViewVariables(VVAccess.ReadOnly)]
-        public float hurtTimer
-        {
-            get => _hurtTimer;
-            set
-            {
-                _hurtTimer = value;
+                _finalCountdown = value;
                 Dirty();
             }
         }
@@ -335,6 +317,18 @@ namespace Content.Server.Supermatter
             set
             {
                 _moleHeatPenalty = value;
+                Dirty();
+            }
+        }
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float YellAccumulator
+        {
+            get => _yellaccumulator;
+
+            set
+            {
+                _yellaccumulator = value;
                 Dirty();
             }
         }

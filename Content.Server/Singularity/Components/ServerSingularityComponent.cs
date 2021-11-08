@@ -35,15 +35,16 @@ namespace Content.Server.Singularity.Components
                     return;
                 }
 
-                var level = _energy switch
+                int level = _energy switch
                 {
-                    >= 1500 => 6,
+                    >= 1500 when Scrung => 6,
                     >= 1000 => 5,
                     >= 600 => 4,
                     >= 300 => 3,
                     >= 200 => 2,
                     < 200 => 1
                 };
+
                 _singularitySystem.ChangeSingularityLevel(this, level);
             }
         }
@@ -63,6 +64,7 @@ namespace Content.Server.Singularity.Components
             };
 
         public float MoveAccumulator;
+        public bool Scrung = false;
 
         // This is an interesting little workaround.
         // See, two singularities queuing deletion of each other at the same time will annihilate.
