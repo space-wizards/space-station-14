@@ -76,7 +76,7 @@ The ban reason is: ""{ban.Reason}""
 
             if (_plyMgr.PlayerCount >= _cfg.GetCVar(CCVars.SoftMaxPlayers) && await _dbManager.GetAdminDataForAsync(e.UserId) is null)
             {
-                e.Deny("The server is too full! Only admins can join.");
+                e.Deny("The server is too full!");
                 return;
             }
 
