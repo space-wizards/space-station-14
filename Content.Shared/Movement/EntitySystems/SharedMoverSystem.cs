@@ -1,6 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
 using Content.Shared.Movement.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -54,7 +53,7 @@ namespace Content.Shared.Movement.EntitySystems
 
                 // For stuff like "Moving out of locker" or the likes
                 if (owner.IsInContainer() &&
-                    (!owner.TryGetComponent(out IMobStateComponent? mobState) ||
+                    (!owner.TryGetComponent(out MobStateComponent? mobState) ||
                      mobState.IsAlive()))
                 {
                     var relayMoveEvent = new RelayMovementEntityEvent(owner);

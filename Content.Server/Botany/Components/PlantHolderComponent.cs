@@ -562,7 +562,7 @@ namespace Content.Server.Botany.Components
             else
             {
                 var one = FixedPoint2.New(1);
-                foreach (var reagent in solutionSystem.RemoveEachReagent(solution, one))
+                foreach (var reagent in solutionSystem.RemoveEachReagent(Owner.Uid, solution, one))
                 {
                     var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagent);
                     reagentProto.ReactionPlant(Owner);

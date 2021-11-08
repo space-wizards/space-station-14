@@ -29,7 +29,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnPortableAnchorAttempt(EntityUid uid, GasPortableComponent component, AnchorAttemptEvent args)
         {
-            if (!EntityManager.TryGetComponent(uid, out ITransformComponent? transform))
+            if (!EntityManager.TryGetComponent(uid, out TransformComponent? transform))
                 return;
 
             // If we can't find any ports, cancel the anchoring.

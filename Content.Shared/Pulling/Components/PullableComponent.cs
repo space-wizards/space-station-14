@@ -36,7 +36,7 @@ namespace Content.Shared.Pulling.Components
 
         public bool BeingPulled => Puller != null;
 
-        public MapCoordinates? MovingTo { get; set; }
+        public EntityCoordinates? MovingTo { get; set; }
 
         public override ComponentState GetComponentState(ICommonSession player)
         {

@@ -391,7 +391,9 @@ namespace Content.Client.Light.Components
             base.Startup();
 
             CopyLightSettings();
-            Owner.EnsureComponentWarn<AnimationPlayerComponent>();
+
+            // TODO: Do NOT ensure component here. And use eventbus events instead...
+            Owner.EnsureComponent<AnimationPlayerComponent>();
 
             if (Owner.TryGetComponent(out AnimationPlayerComponent? animation))
             {

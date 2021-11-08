@@ -117,7 +117,7 @@ namespace Content.IntegrationTests.Tests.Body
         public async Task EventsTest()
         {
             var options = new ServerContentIntegrationOption {ExtraPrototypes = Prototypes};
-            var server = StartServerDummyTicker(options);
+            var server = StartServer(options);
 
             await server.WaitAssertion(() =>
             {

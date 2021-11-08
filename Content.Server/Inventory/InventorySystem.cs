@@ -5,6 +5,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Slippery;
 using Content.Shared.Damage;
 using Content.Shared.Electrocution;
+using Content.Shared.Movement.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 
@@ -23,6 +24,7 @@ namespace Content.Server.Inventory
             SubscribeLocalEvent<InventoryComponent, DamageModifyEvent>(OnDamageModify);
             SubscribeLocalEvent<InventoryComponent, ElectrocutionAttemptEvent>(OnElectrocutionAttempt);
             SubscribeLocalEvent<InventoryComponent, SlipAttemptEvent>(OnSlipAttemptEvent);
+            SubscribeLocalEvent<InventoryComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
         }
 
         private void OnSlipAttemptEvent(EntityUid uid, InventoryComponent component, SlipAttemptEvent args)
@@ -31,6 +33,11 @@ namespace Content.Server.Inventory
             {
                 RaiseLocalEvent(shoes.Owner.Uid, args, false);
             }
+        }
+
+        private void OnRefreshMovespeed(EntityUid uid, InventoryComponent component, RefreshMovementSpeedModifiersEvent args)
+        {
+            RelayInventoryEvent(component, args);
         }
 
         private static void HandleInvRemovedFromContainer(EntityUid uid, InventoryComponent component, EntRemovedFromContainerMessage args)
@@ -45,31 +52,25 @@ namespace Content.Server.Inventory
 
         private void OnHighPressureEvent(EntityUid uid, InventoryComponent component, HighPressureEvent args)
         {
-            RelayPressureEvent(component, args);
+            RelayInventoryEvent(component, args);
         }
 
         private void OnLowPressureEvent(EntityUid uid, InventoryComponent component, LowPressureEvent args)
         {
-            RelayPressureEvent(component, args);
+            RelayInventoryEvent(component, args);
         }
 
         private void OnElectrocutionAttempt(EntityUid uid, InventoryComponent component, ElectrocutionAttemptEvent args)
         {
-            foreach (var equipped in component.GetAllHeldItems())
-            {
-                RaiseLocalEvent(equipped.Uid, args, false);
-            }
+            RelayInventoryEvent(component, args);
         }
 
         private void OnDamageModify(EntityUid uid, InventoryComponent component, DamageModifyEvent args)
         {
-            foreach (var equipped in component.GetAllHeldItems())
-            {
-                RaiseLocalEvent(equipped.Uid, args, false);
-            }
+            RelayInventoryEvent(component, args);
         }
 
-        private void RelayPressureEvent<T>(InventoryComponent component, T args) where T : PressureEvent
+        private void RelayInventoryEvent<T>(InventoryComponent component, T args) where T : EntityEventArgs
         {
             foreach (var equipped in component.GetAllHeldItems())
             {

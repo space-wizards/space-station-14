@@ -46,7 +46,7 @@ namespace Content.IntegrationTests.Tests.Doors
         public async Task OpenCloseDestroyTest()
         {
             var options = new ServerIntegrationOptions {ExtraPrototypes = Prototypes};
-            var server = StartServerDummyTicker(options);
+            var server = StartServer(options);
 
             await server.WaitIdleAsync();
 

@@ -31,7 +31,7 @@ namespace Content.IntegrationTests.Tests
         public async Task Test()
         {
             var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
-            var server = StartServerDummyTicker(options);
+            var server = StartServer(options);
 
             IEntity generator = null;
 
@@ -43,9 +43,9 @@ namespace Content.IntegrationTests.Tests
             {
                 var mapMan = IoCManager.Resolve<IMapManager>();
 
-                mapMan.CreateMap(new MapId(1));
-                grid1 = mapMan.CreateGrid(new MapId(1));
-                grid2 = mapMan.CreateGrid(new MapId(1));
+                var mapId = GetMainMapId(mapMan);
+                grid1 = mapMan.CreateGrid(mapId);
+                grid2 = mapMan.CreateGrid(mapId);
 
                 var entityMan = IoCManager.Resolve<IEntityManager>();
 
