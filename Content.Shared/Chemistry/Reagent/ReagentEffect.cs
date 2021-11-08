@@ -9,7 +9,7 @@ namespace Content.Shared.Chemistry.Reagent
 {
     /// <summary>
     ///     Reagent effects describe behavior that occurs when a reagent is ingested and metabolized by some
-    ///     organ. They only trigger when their conditions (<see cref="ReagentEffectCondition"/>
+    ///     organ. They only trigger when all of <see cref="Conditions"/> are satisfied.
     /// </summary>
     [ImplicitDataDefinitionForInheritors]
     [MeansImplicitUse]

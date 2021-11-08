@@ -10,6 +10,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Server.Body.Metabolism
 {
@@ -48,7 +49,7 @@ namespace Content.Server.Body.Metabolism
         /// <summary>
         ///     List of metabolizer types that this organ is. ex. Human, Slime, Felinid, w/e.
         /// </summary>
-        [DataField("metabolizerTypes", customTypeSerializer:typeof(PrototypeIdListSerializer<MetabolizerTypePrototype>))]
+        [DataField("metabolizerTypes", customTypeSerializer:typeof(PrototypeIdHashSetSerializer<MetabolizerTypePrototype>))]
         public HashSet<string>? MetabolizerTypes = null;
 
         /// <summary>
