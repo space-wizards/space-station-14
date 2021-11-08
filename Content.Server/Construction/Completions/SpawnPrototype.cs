@@ -21,7 +21,7 @@ namespace Content.Server.Construction.Completions
             if (string.IsNullOrEmpty(Prototype))
                 return;
 
-            var coordinates = entityManager.GetComponent<ITransformComponent>(uid).Coordinates;
+            var coordinates = entityManager.GetComponent<TransformComponent>(uid).Coordinates;
 
             if (EntityPrototypeHelpers.HasComponent<StackComponent>(Prototype))
             {
