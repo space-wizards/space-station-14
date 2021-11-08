@@ -8,7 +8,6 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
-using Content.Shared.Verbs;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -166,7 +165,7 @@ namespace Content.Server.Disposal.Tube.Components
                 return;
             }
 
-            if (!args.User.TryGetComponent(out IHandsComponent? hands))
+            if (!args.User.TryGetComponent(out HandsComponent? hands))
             {
                 Owner.PopupMessage(args.User, Loc.GetString("disposal-router-window-tag-input-activate-no-hands"));
                 return;

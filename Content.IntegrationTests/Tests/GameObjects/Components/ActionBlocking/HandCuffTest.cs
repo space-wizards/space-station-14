@@ -10,7 +10,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using HandsComponent = Content.Client.Hands.HandsComponent;
 
 namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
 {
@@ -48,7 +47,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
             IEntity cuffs;
             IEntity secondCuffs;
             CuffableComponent cuffed;
-            IHandsComponent hands;
+            HandsComponent hands;
 
             server.Assert(() =>
             {

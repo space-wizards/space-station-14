@@ -19,8 +19,8 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Hands.Components
 {
-    [NetworkedComponent()]
-    public abstract class SharedHandsComponent : Component, ISharedHandsComponent
+    [NetworkedComponent]
+    public abstract class SharedHandsComponent : Component
     {
         public sealed override string Name => "Hands";
 

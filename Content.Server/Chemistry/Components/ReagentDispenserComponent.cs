@@ -11,7 +11,6 @@ using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Dispenser;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -321,7 +320,7 @@ namespace Content.Server.Chemistry.Components
                 return;
             }
 
-            if (!args.User.TryGetComponent(out IHandsComponent? hands))
+            if (!args.User.TryGetComponent(out HandsComponent? hands))
             {
                 Owner.PopupMessage(args.User, Loc.GetString("reagent-dispenser-component-activate-no-hands"));
                 return;
@@ -343,7 +342,7 @@ namespace Content.Server.Chemistry.Components
         /// <returns></returns>
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs args)
         {
-            if (!args.User.TryGetComponent(out IHandsComponent? hands))
+            if (!args.User.TryGetComponent(out HandsComponent? hands))
             {
                 Owner.PopupMessage(args.User, Loc.GetString("reagent-dispenser-component-interact-using-no-hands"));
                 return true;

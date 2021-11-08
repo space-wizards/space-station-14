@@ -170,11 +170,11 @@ namespace Content.Server.Hands.Systems
         {
             base.DropAllItemsInHands(entity, doMobChecks);
 
-            if (!entity.TryGetComponent(out IHandsComponent? hands)) return;
+            if (!entity.TryGetComponent(out HandsComponent? hands)) return;
 
             foreach (var heldItem in hands.GetAllHeldItems())
             {
-                hands.Drop(heldItem.Owner, doMobChecks, intentional:false);
+                hands.Drop(heldItem.Owner, doMobChecks, false);
             }
         }
 
