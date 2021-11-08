@@ -7,9 +7,20 @@
     - type: Transform
       anchored: true
     - type: Sprite
-      sprite: Objects/Fun/toys.rsi
+      sprite: Objects/Devices/nuke.rsi
       netsync: false
-      state: nuketoy
+      state: nuclearbomb_base
+    - type: Physics
+      bodyType: Dynamic
+      fixtures:
+      - shape:
+          !type:PhysShapeCircle
+            radius: 0.45
+        mass: 150
+        layer:
+        - SmallImpassable
+        mask:
+        - VaultImpassable
     - type: Nuke
     - type: InteractionOutline
     - type: ItemSlots
