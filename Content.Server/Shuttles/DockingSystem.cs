@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Content.Server.Power.Components;
 using Content.Shared.Physics;
@@ -8,7 +9,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Dynamics;
@@ -69,6 +69,7 @@ namespace Content.Server.Shuttles
 
             // TODO: Have it open the UI and have the UI do this.
             if (component.Enabled &&
+                !component.Docked &&
                 EntityManager.TryGetComponent(uid, out PhysicsComponent? body) &&
                 EntityManager.TryGetComponent(uid, out ITransformComponent? xform))
             {
@@ -85,7 +86,7 @@ namespace Content.Server.Shuttles
                     }
                 };
             }
-            else
+            else if (component.Docked)
             {
                 verb = new Verb
                 {
@@ -142,9 +143,21 @@ namespace Content.Server.Shuttles
         private void OnShutdown(EntityUid uid, DockingComponent component, ComponentShutdown args)
         {
             if (component.DockJoint == null ||
+                component.DockedWith == null ||
                 EntityManager.GetComponent<MetaDataComponent>(uid).EntityLifeStage > EntityLifeStage.MapInitialized) return;
 
-            _jointSystem.RemoveJoint(component.DockJoint);
+            Cleanup(component);
+        }
+
+        private void Cleanup(DockingComponent component)
+        {
+            _jointSystem.RemoveJoint(component.DockJoint!);
+
+            component.DockedWith!.DockedWith = null;
+            component.DockedWith.DockJoint = null;
+
+            component.DockJoint = null;
+            component.DockedWith = null;
         }
 
         private void OnStartup(EntityUid uid, DockingComponent component, ComponentStartup args)
@@ -244,7 +257,7 @@ namespace Content.Server.Shuttles
             weld.LocalAnchorA = dockBXform.LocalPosition + dockBXform.LocalRotation.ToWorldVec() / 2f;
             weld.LocalAnchorB = dockAXform.LocalPosition + dockAXform.LocalRotation.ToWorldVec() / 2f;
             // TODO: Get the cardinal you numpty
-            weld.ReferenceAngle = (float) -dockBXform.LocalRotation.Theta;
+            weld.ReferenceAngle = (float) dockAXform.LocalRotation.Theta - MathF.PI / 2;
             weld.CollideConnected = false;
 
             dockA.DockedWith = dockB;
@@ -326,10 +339,14 @@ namespace Content.Server.Shuttles
 
         private void Undock(DockingComponent dock)
         {
-            DebugTools.Assert(dock.DockedWith != null);
+            if (dock.DockedWith == null)
+            {
+                DebugTools.Assert(false);
+                Logger.ErrorS("docking", $"Tried to undock {dock.OwnerUid} but not docked with anything?");
+                return;
+            }
 
-            dock.DockedWith = null;
-            _jointSystem.RemoveJoint(dock.DockJoint!);
+            Cleanup(dock);
             SoundSystem.Play(Filter.Pvs(dock.Owner), DockingSound);
         }
 
