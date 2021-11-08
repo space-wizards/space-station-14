@@ -30,10 +30,6 @@ namespace Content.Client.Chat.UI
     public partial class ChatBox : Control
     {
         [Dependency] protected readonly IChatManager ChatMgr = default!;
-        [Dependency] private readonly IGameTiming _timing = default!;
-        [Dependency] private readonly IConfigurationManager _cfg = default!;
-        [Dependency] private readonly IEntitySystemManager _entitySystemMan = default!;
-
         private TypingIndicatorSystem _typingIndicatorSystem = default!;
 
         // order in which the available channel filters show up when available
@@ -489,7 +485,7 @@ namespace Content.Client.Chat.UI
         {
             _typingIndicatorSystem.HandleClientTyping();
             // Update channel select button to correct channel if we have a prefix.
-            UpdateChannelSelectButton();           
+            UpdateChannelSelectButton();
         }
 
         private static ChatSelectChannel GetChannelFromPrefix(char prefix)
@@ -549,8 +545,7 @@ namespace Content.Client.Chat.UI
 
                 //Reset the timer when we send a message so the typing indicator can immediately be ready again.
                 //could handle this in a handler of a netmsg from server instead?
-                if (_cfg.GetCVar(CCVars.ChatTypingIndicatorSystemEnabled))
-                    _typingIndicatorSystem.ResetTypingTime();
+                _typingIndicatorSystem.ResetTypingTime();
 
                 ChatMgr.OnChatBoxTextSubmitted(this, text, prefixChannel == 0 ? SelectedChannel : prefixChannel);
             }
