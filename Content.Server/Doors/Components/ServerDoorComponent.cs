@@ -501,7 +501,7 @@ namespace Content.Server.Doors.Components
             if (CloseSound != null)
             {
                 SoundSystem.Play(Filter.Pvs(Owner), CloseSound.GetSound(), Owner,
-                    AudioParams.Default.WithVolume(-10));
+                    AudioParams.Default.WithVolume(-5));
             }
 
             Owner.SpawnTimer(CloseTimeOne, async () =>
