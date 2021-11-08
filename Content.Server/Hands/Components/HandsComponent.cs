@@ -134,6 +134,9 @@ namespace Content.Server.Hands.Components
 
         #region Old public methods
 
+        /// <summary>
+        ///     The hands in this component.
+        /// </summary>
         public IEnumerable<string> HandNames => Hands.Select(h => h.Name);
 
         public int Count => Hands.Count;
@@ -156,8 +159,10 @@ namespace Content.Server.Hands.Components
         }
 
         /// <summary>
-        ///     Tries to get the ItemComponent on the entity held by a hand.
+        ///     Gets the item held by a hand.
         /// </summary>
+        /// <param name="handName">The name of the hand to get.</param>
+        /// <returns>The item in the held, null if no item is held</returns>
         public ItemComponent? GetItem(string handName)
         {
             if (!TryGetHeldEntity(handName, out var heldEntity))
@@ -168,8 +173,11 @@ namespace Content.Server.Hands.Components
         }
 
         /// <summary>
-        ///     Tries to get the ItemComponent on the entity held by a hand.
+        ///     Attempts to get an item in a hand.
         /// </summary>
+        /// <param name="handName">The name of the hand to get.</param>
+        /// <param name="item">The item in the held, null if no item is held</param>
+        /// <returns>Whether it was holding an item</returns>
         public bool TryGetItem(string handName, [NotNullWhen(true)] out ItemComponent? item)
         {
             item = null;
@@ -181,7 +189,7 @@ namespace Content.Server.Hands.Components
         }
 
         /// <summary>
-        ///     Tries to get the ItemComponent off the entity in the active hand.
+        ///     Gets item held by the current active hand
         /// </summary>
         public ItemComponent? GetActiveHand
         {
@@ -195,6 +203,9 @@ namespace Content.Server.Hands.Components
             }
         }
 
+        /// <summary>
+        ///     Enumerates over every held item.
+        /// </summary>
         public IEnumerable<ItemComponent> GetAllHeldItems()
         {
             foreach (var entity in GetAllHeldEntities())
@@ -205,8 +216,11 @@ namespace Content.Server.Hands.Components
         }
 
         /// <summary>
-        ///     Checks if any hand can pick up an item.
+        ///     Checks to see if an item can be put in any hand.
         /// </summary>
+        /// <param name="item">The item to check for.</param>
+        /// <param name="mobCheck">Whether to perform an ActionBlocker check to the entity.</param>
+        /// <returns>True if the item can be inserted, false otherwise.</returns>
         public bool CanPutInHand(ItemComponent item, bool mobCheck = true)
         {
             var entity = item.Owner;
