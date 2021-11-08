@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using Content.Server.Doors.Components;
 using Content.Server.Power.Components;
+using Content.Shared.Doors;
 using Content.Shared.Physics;
 using Content.Shared.Shuttles;
 using Content.Shared.Verbs;
@@ -30,11 +32,6 @@ namespace Content.Server.Shuttles
 
         [ViewVariables]
         public override bool Docked => DockedWith != null;
-
-        public bool Docking => Accumulator > 0f;
-
-        [ViewVariables]
-        public float Accumulator;
     }
 
     public sealed class DockingSystem : EntitySystem
@@ -47,8 +44,6 @@ namespace Content.Server.Shuttles
         private const string DockingJoint = "docking";
         private const float DockingRadius = 0.3f;
 
-        private const string DockingSound = "/Audio/Effects/docking.ogg";
-
         public override void Initialize()
         {
             base.Initialize();
@@ -58,6 +53,27 @@ namespace Content.Server.Shuttles
             SubscribeLocalEvent<DockingComponent, AnchorStateChangedEvent>(OnAnchorChange);
 
             SubscribeLocalEvent<DockingComponent, GetInteractionVerbsEvent>(OnVerb);
+            SubscribeLocalEvent<DockingComponent, BeforeDoorAutoCloseEvent>(OnAutoClose);
+            SubscribeLocalEvent<DockingComponent, DoorOpenAttemptEvent>(OnDoorOpenAttempt);
+            SubscribeLocalEvent<DockingComponent, DoorCloseAttemptEvent>(OnDoorCloseAttempt);
+        }
+
+        // Won't allow users to override door controls
+        private void OnDoorOpenAttempt(EntityUid uid, DockingComponent component, DoorOpenAttemptEvent args)
+        {
+            args.Cancel();
+        }
+
+        private void OnDoorCloseAttempt(EntityUid uid, DockingComponent component, DoorCloseAttemptEvent args)
+        {
+            args.Cancel();
+        }
+
+        private void OnAutoClose(EntityUid uid, DockingComponent component, BeforeDoorAutoCloseEvent args)
+        {
+            // We'll just pin the door open when docked.
+            if (component.Docked)
+                args.Cancel();
         }
 
         private void OnVerb(EntityUid uid, DockingComponent component, GetInteractionVerbsEvent args)
@@ -73,7 +89,7 @@ namespace Content.Server.Shuttles
                 EntityManager.TryGetComponent(uid, out PhysicsComponent? body) &&
                 EntityManager.TryGetComponent(uid, out ITransformComponent? xform))
             {
-                var shuttles = GetDockable(component, body, xform);
+                var shuttles = GetDockable(body, xform);
 
                 verb = new Verb
                 {
@@ -102,7 +118,7 @@ namespace Content.Server.Shuttles
             args.Verbs.Add(verb);
         }
 
-        private (ShuttleComponent, ShuttleComponent)? GetDockable(DockingComponent docking, PhysicsComponent body, ITransformComponent dockingXform)
+        private (ShuttleComponent, ShuttleComponent)? GetDockable(PhysicsComponent body, ITransformComponent dockingXform)
         {
             if (!_mapManager.TryGetGrid(dockingXform.GridID, out var grid) ||
                 !EntityManager.TryGetComponent(grid.GridEntityId, out ShuttleComponent? shuttleA)) return null;
@@ -264,8 +280,6 @@ namespace Content.Server.Shuttles
             dockB.DockedWith = dockA;
             dockA.DockJoint = weld;
             dockB.DockJoint = weld;
-
-            SoundSystem.Play(Filter.Pvs(dockA.Owner), DockingSound);
         }
 
         public bool TryDock(ShuttleComponent shuttleA, ShuttleComponent shuttleB)
@@ -323,8 +337,20 @@ namespace Content.Server.Shuttles
 
             if (intersectingPorts.Count == 0) return false;
 
+            // Docking confirmed
+
             foreach (var (dockA, dockB) in intersectingPorts)
             {
+                if (EntityManager.TryGetComponent(dockA.OwnerUid, out ServerDoorComponent? doorA))
+                {
+                    doorA.Open();
+                }
+
+                if (EntityManager.TryGetComponent(dockB.OwnerUid, out ServerDoorComponent? doorB))
+                {
+                    doorB.Open();
+                }
+
                 Dock(dockA, dockB);
             }
 
@@ -346,8 +372,17 @@ namespace Content.Server.Shuttles
                 return;
             }
 
+            if (EntityManager.TryGetComponent(dock.OwnerUid, out ServerDoorComponent? doorA))
+            {
+                doorA.Close();
+            }
+
+            if (EntityManager.TryGetComponent(dock.DockedWith.OwnerUid, out ServerDoorComponent? doorB))
+            {
+                doorB.Close();
+            }
+
             Cleanup(dock);
-            SoundSystem.Play(Filter.Pvs(dock.Owner), DockingSound);
         }
 
         public bool TryUndock(ShuttleComponent shuttleA, ShuttleComponent shuttleB)

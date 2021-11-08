@@ -36,21 +36,24 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
-  #- type: Door
-  #  board: DoorElectronics
-  #  crushDamage:
-  #    types:
-  #      Blunt: 15
-  #  openSound:
-  #    path: /Audio/Machines/airlock_open.ogg
-  #  closeSound:
-  #    path: /Audio/Machines/airlock_close.ogg
+  - type: Door
+    closeTimeTwo: 0.4
+    openTimeTwo: 0.4
+    board: DoorElectronics
+    crushDamage:
+      types:
+        Blunt: 15
+    openSound:
+      path: /Audio/Effects/docking.ogg
+    closeSound:
+      path: /Audio/Effects/docking.ogg
   #  denySound:
   #    path: /Audio/Machines/airlock_deny.ogg
-  #- type: Airlock
-  #- type: Appearance
-  #  visuals:
-  #  - type: AirlockVisualizer
+  - type: Airlock
+  - type: Appearance
+    visuals:
+    - type: AirlockVisualizer
+      simpleVisuals: true
   #  - type: WiresVisualizer
   - type: ApcPowerReceiver
     needsPower: false
