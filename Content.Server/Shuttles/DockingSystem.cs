@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using Content.Server.Power.Components;
 using Content.Shared.Physics;
 using Content.Shared.Shuttles;
+using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
@@ -29,6 +29,11 @@ namespace Content.Server.Shuttles
 
         [ViewVariables]
         public override bool Docked => DockedWith != null;
+
+        public bool Docking => Accumulator > 0f;
+
+        [ViewVariables]
+        public float Accumulator;
     }
 
     public sealed class DockingSystem : EntitySystem
@@ -48,12 +53,61 @@ namespace Content.Server.Shuttles
             SubscribeLocalEvent<DockingComponent, ComponentShutdown>(OnShutdown);
             SubscribeLocalEvent<DockingComponent, PowerChangedEvent>(OnPowerChange);
             SubscribeLocalEvent<DockingComponent, AnchorStateChangedEvent>(OnAnchorChange);
+
+            SubscribeLocalEvent<DockingComponent, GetInteractionVerbsEvent>(OnVerb);
         }
 
-        public override void Update(float frameTime)
+        private void OnVerb(EntityUid uid, DockingComponent component, GetInteractionVerbsEvent args)
         {
-            base.Update(frameTime);
-            // TODO: Have a timer for docking
+            if (!args.CanInteract ||
+                !args.CanAccess) return;
+
+            Verb verb = new();
+
+            // TODO: Have it open the UI and have the UI do this.
+            if (component.Enabled)
+            {
+                var dockable = GetDockable(component);
+
+                verb = new Verb
+                {
+                    Disabled = dockable == null,
+                    Text = "Dock", // TODO Loc I know
+                    Act = () =>
+                    {
+                        Dock(component, dockable!);
+                    }
+                };
+            }
+            else
+            {
+                verb = new Verb
+                {
+                    Disabled = !component.Docked,
+                    Text = "Undock",
+                    Act = () =>
+                    {
+                        Undock(component);
+                    }
+                };
+            }
+
+            args.Verbs.Add(verb);
+        }
+
+        private DockingComponent? GetDockable(DockingComponent docking)
+        {
+            var dockingXForm = EntityManager.GetComponent<ITransformComponent>(docking.OwnerUid);
+
+            foreach (var (comp, xform) in EntityManager.EntityQuery<DockingComponent, ITransformComponent>())
+            {
+                if (xform.MapID != dockingXForm.MapID ||
+                    xform.GridID == dockingXForm.GridID) continue;
+
+                // TODO: Get intersecting docks and return the first one
+            }
+
+            return null;
         }
 
         private void OnShutdown(EntityUid uid, DockingComponent component, ComponentShutdown args)
