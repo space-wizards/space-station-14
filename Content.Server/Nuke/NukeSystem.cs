@@ -252,7 +252,7 @@ namespace Content.Server.Nuke
                 return;
 
             var anchored = false;
-            if (EntityManager.TryGetComponent(uid, out ITransformComponent transform))
+            if (EntityManager.TryGetComponent(uid, out TransformComponent transform))
                 anchored = transform.Anchored;
 
             var allowArm = component.DiskInserted &&
@@ -294,7 +294,7 @@ namespace Content.Server.Nuke
         }
 
         public void ActivateBomb(EntityUid uid, NukeComponent? component = null,
-            ITransformComponent? transform = null)
+            TransformComponent? transform = null)
         {
             if (!Resolve(uid, ref component, ref transform))
                 return;

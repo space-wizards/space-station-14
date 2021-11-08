@@ -54,7 +54,7 @@ namespace Content.Server.Nuke
             var consoles = EntityManager.EntityQuery<CommunicationsConsoleComponent>();
             foreach (var console in consoles)
             {
-                if (!EntityManager.TryGetComponent(console.OwnerUid, out ITransformComponent? transform))
+                if (!EntityManager.TryGetComponent(console.OwnerUid, out TransformComponent? transform))
                     continue;
 
                 var consolePos = transform.MapPosition;
