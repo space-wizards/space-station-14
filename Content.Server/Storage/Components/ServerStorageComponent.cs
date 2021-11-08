@@ -219,7 +219,7 @@ namespace Content.Server.Storage.Components
         {
             EnsureInitialCalculated();
 
-            if (!player.TryGetComponent(out IHandsComponent? hands) ||
+            if (!player.TryGetComponent(out HandsComponent? hands) ||
                 hands.GetActiveHand == null)
             {
                 return false;

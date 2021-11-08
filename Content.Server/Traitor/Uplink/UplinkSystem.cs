@@ -1,11 +1,12 @@
+using System.Linq;
 using Content.Server.Hands.Components;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
-using Content.Server.Mind.Components;
 using Content.Server.PDA;
 using Content.Server.Traitor.Uplink.Account;
 using Content.Server.Traitor.Uplink.Components;
 using Content.Server.UserInterface;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Traitor.Uplink;
@@ -16,9 +17,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Player;
-using System;
-using System.Linq;
-using Content.Shared.ActionBlocker;
 
 namespace Content.Server.Traitor.Uplink
 {
@@ -218,7 +216,7 @@ namespace Content.Server.Traitor.Uplink
             }
 
             // Also check hands
-            if (user.TryGetComponent(out IHandsComponent? hands))
+            if (user.TryGetComponent(out HandsComponent? hands))
             {
                 var heldItems = hands.GetAllHeldItems();
                 foreach (var item in heldItems)

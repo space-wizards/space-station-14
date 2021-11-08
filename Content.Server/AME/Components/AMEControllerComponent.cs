@@ -124,7 +124,7 @@ namespace Content.Server.AME.Components
                 return;
             }
 
-            if (!args.User.TryGetComponent(out IHandsComponent? hands))
+            if (!args.User.TryGetComponent(out HandsComponent? hands))
             {
                 Owner.PopupMessage(args.User, Loc.GetString("ame-controller-component-interact-no-hands-text"));
                 return;
@@ -335,7 +335,7 @@ namespace Content.Server.AME.Components
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs args)
         {
-            if (!args.User.TryGetComponent(out IHandsComponent? hands))
+            if (!args.User.TryGetComponent(out HandsComponent? hands))
             {
                 Owner.PopupMessage(args.User, Loc.GetString("ame-controller-component-interact-using-no-hands-text"));
                 return true;

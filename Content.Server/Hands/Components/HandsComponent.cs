@@ -25,11 +25,9 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Server.Hands.Components
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IHandsComponent))]
-    [ComponentReference(typeof(ISharedHandsComponent))]
     [ComponentReference(typeof(SharedHandsComponent))]
 #pragma warning disable 618
-    public class HandsComponent : SharedHandsComponent, IHandsComponent, IBodyPartAdded, IBodyPartRemoved, IDisarmedAct
+    public class HandsComponent : SharedHandsComponent, IBodyPartAdded, IBodyPartRemoved, IDisarmedAct
 #pragma warning restore 618
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;

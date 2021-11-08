@@ -392,7 +392,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             }
             // This popup message doesn't appear on clicks, even when code was seperate. Unsure why.
 
-            if (!eventArgs.User.HasComponent<IHandsComponent>())
+            if (!eventArgs.User.HasComponent<HandsComponent>())
             {
                 eventArgs.Target.PopupMessage(eventArgs.User, Loc.GetString("ui-disposal-unit-is-valid-interaction-no-hands"));
                 return false;
