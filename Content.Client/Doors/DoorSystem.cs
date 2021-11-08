@@ -58,6 +58,7 @@ namespace Content.Client.Doors
                 if (comp.Deleted)
                 {
                     _activeDoors.RemoveAt(i);
+                    continue;
                 }
                 comp.OnUpdate();
             }

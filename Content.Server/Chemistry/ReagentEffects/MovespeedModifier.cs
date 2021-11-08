@@ -2,6 +2,7 @@ using System;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -38,8 +39,6 @@ namespace Content.Server.Chemistry.ReagentEffects
         /// </summary>
         public override void Metabolize(IEntity solutionEntity, Solution.ReagentQuantity amount)
         {
-            if (!solutionEntity.TryGetComponent(out MovementSpeedModifierComponent? movement)) return;
-
             solutionEntity.EnsureComponent(out MovespeedModifierMetabolismComponent status);
 
             // Only refresh movement if we need to.
@@ -52,7 +51,7 @@ namespace Content.Server.Chemistry.ReagentEffects
             IncreaseTimer(status, StatusLifetime * amount.Quantity.Float());
 
             if (modified)
-                movement.RefreshMovementSpeedModifiers();
+                EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(solutionEntity.Uid);
 
         }
         public void IncreaseTimer(MovespeedModifierMetabolismComponent status, float time)

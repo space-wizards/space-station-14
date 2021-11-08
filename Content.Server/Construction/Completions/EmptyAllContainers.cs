@@ -16,7 +16,7 @@ namespace Content.Server.Construction.Completions
             if (!entityManager.TryGetComponent(uid, out ContainerManagerComponent? containerManager))
                 return;
 
-            var transform = entityManager.GetComponent<ITransformComponent>(uid);
+            var transform = entityManager.GetComponent<TransformComponent>(uid);
             foreach (var container in containerManager.GetAllContainers())
             {
                 container.EmptyContainer(true, transform.Coordinates);

@@ -1,44 +1,4 @@
 Entries:
-- author: ike709
-  changes:
-  - {message: Player join/leave messages are now only shown to admins., type: Tweak}
-  id: 49
-  time: '2021-03-08T00:15:31.0000000+00:00'
-- author: ike709
-  changes:
-  - {message: Added a radio message to announce latejoins., type: Add}
-  id: 50
-  time: '2021-03-08T00:15:51.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Nerfed throwing while weightless, type: Tweak}
-  - {message: Fixed weightless movement to use push strength again, type: Fix}
-  - {message: Throwing pushback implemented again, type: Fix}
-  id: 51
-  time: '2021-03-08T01:10:56.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Pushing strength, type: Fix}
-  id: 52
-  time: '2021-03-08T01:48:15.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: The client being able to set character age and other values outside
-      their limits., type: Fix}
-  id: 53
-  time: '2021-03-08T02:07:53.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Stuns and slips are now properly predicted, type: Fix}
-  - {message: Slipping on a puddle with galoshes on no longer causes you to stay stunned
-      forever client-side., type: Fix}
-  id: 54
-  time: '2021-03-08T04:00:51.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Protolathes can now be built again., type: Fix}
-  id: 55
-  time: '2021-03-08T04:09:30.0000000+00:00'
 - author: tmtmtl30
   changes:
   - {message: Crit overlay is now unaffected by lights., type: Fix}
@@ -2820,3 +2780,44 @@ Entries:
     type: Fix}
   id: 548
   time: '2021-11-06T00:19:12.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: PDA flashlights are brighter now, type: Tweak}
+  id: 549
+  time: '2021-11-06T22:35:01.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Directional windows have been added (non-fulltile), though not mapped
+      in yet.', type: Add}
+  id: 550
+  time: '2021-11-07T00:12:42.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Valves make sound when used, type: Tweak}
+  id: 551
+  time: '2021-11-07T00:32:33.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Fixed bucket, type: Fix}
+  id: 552
+  time: '2021-11-07T00:33:03.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Pulling to a specific location now pushes the player doing the pulling,
+    type: Tweak}
+  - {message: Pulled object rotation snaps cleanly to (grid-relative) angles so pianos
+      don't get stuck as often, type: Tweak}
+  - {message: Moved more pulling code server-side to prevent desyncs, type: Fix}
+  id: 553
+  time: '2021-11-07T02:16:49.0000000+00:00'
+- author: thevinter
+  changes:
+  - {message: power cells now properly bounce off walls, type: Fix}
+  id: 554
+  time: '2021-11-07T09:11:40.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fix a bug that causes the examine-popup to close immediately after opening.,
+    type: Fix}
+  id: 555
+  time: '2021-11-07T10:33:52.0000000+00:00'

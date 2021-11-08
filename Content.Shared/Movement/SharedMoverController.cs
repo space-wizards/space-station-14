@@ -169,7 +169,7 @@ namespace Content.Shared.Movement
         /// <summary>
         ///     Used for weightlessness to determine if we are near a wall.
         /// </summary>
-        public static bool IsAroundCollider(SharedPhysicsSystem broadPhaseSystem, ITransformComponent transform, IMobMoverComponent mover, IPhysBody collider)
+        public static bool IsAroundCollider(SharedPhysicsSystem broadPhaseSystem, TransformComponent transform, IMobMoverComponent mover, IPhysBody collider)
         {
             var enlargedAABB = collider.GetWorldAABB().Enlarged(mover.GrabRange);
 

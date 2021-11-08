@@ -28,8 +28,8 @@ namespace Content.IntegrationTests.Tests.Disposal
                 SubscribeLocalEvent<DoInsertDisposalUnitEvent>(ev =>
                 {
                     var (_, toInsert, unit) = ev;
-                    var insertTransform = EntityManager.GetComponent<ITransformComponent>(toInsert);
-                    var unitTransform = EntityManager.GetComponent<ITransformComponent>(unit);
+                    var insertTransform = EntityManager.GetComponent<TransformComponent>(toInsert);
+                    var unitTransform = EntityManager.GetComponent<TransformComponent>(unit);
                     // Not in a tube yet
                     Assert.That(insertTransform.Parent, Is.EqualTo(unitTransform));
                 }, after: new[] {typeof(SharedDisposalUnitSystem)});

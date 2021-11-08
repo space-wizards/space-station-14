@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Content.Client.State;
 using Content.Client.Viewport;
+using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
@@ -37,6 +38,7 @@ namespace Content.Client.DragDrop
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
         [Dependency] private readonly InputSystem _inputSystem = default!;
+        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
 
         // how often to recheck possible targets (prevents calling expensive
         // check logic each update)
@@ -413,6 +415,11 @@ namespace Content.Client.DragDrop
         /// <returns>null if the target doesn't support IDragDropOn</returns>
         private bool? ValidDragDrop(DragDropEvent eventArgs)
         {
+            if (!_actionBlockerSystem.CanInteract(eventArgs.User))
+            {
+                return false;
+            }
+
             bool? valid = null;
 
             foreach (var comp in eventArgs.Target.GetAllComponents<IDragDropOn>())
