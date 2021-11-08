@@ -2,6 +2,7 @@ using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -59,7 +60,7 @@ namespace Content.Server.Administration.Commands
                 shell.WriteLine($"Failed to parse quantity");
                 return;
             }
-            var quantity = ReagentUnit.New(MathF.Abs(quantityFloat));
+            var quantity = FixedPoint2.New(MathF.Abs(quantityFloat));
 
             if (quantityFloat > 0)
                 EntitySystem.Get<SolutionContainerSystem>().TryAddReagent(uid, solution, args[2], quantity, out var _);
