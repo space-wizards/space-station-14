@@ -8,6 +8,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Dynamics;
@@ -46,6 +47,8 @@ namespace Content.Server.Shuttles
         private const string DockingJoint = "docking";
         private const float DockingRadius = 0.3f;
 
+        private const string DockingSound = "/Audio/Effects/docking.ogg";
+
         public override void Initialize()
         {
             base.Initialize();
@@ -65,17 +68,20 @@ namespace Content.Server.Shuttles
             Verb verb = new();
 
             // TODO: Have it open the UI and have the UI do this.
-            if (component.Enabled)
+            if (component.Enabled &&
+                EntityManager.TryGetComponent(uid, out PhysicsComponent? body) &&
+                EntityManager.TryGetComponent(uid, out ITransformComponent? xform))
             {
-                var dockable = GetDockable(component);
+                var shuttles = GetDockable(component, body, xform);
 
                 verb = new Verb
                 {
-                    Disabled = dockable == null,
+                    Disabled = shuttles == null,
                     Text = "Dock", // TODO Loc I know
                     Act = () =>
                     {
-                        Dock(component, dockable!);
+                        if (shuttles == null) return;
+                        TryDock(shuttles.Value.Item1, shuttles.Value.Item2);
                     }
                 };
             }
@@ -95,16 +101,39 @@ namespace Content.Server.Shuttles
             args.Verbs.Add(verb);
         }
 
-        private DockingComponent? GetDockable(DockingComponent docking)
+        private (ShuttleComponent, ShuttleComponent)? GetDockable(DockingComponent docking, PhysicsComponent body, ITransformComponent dockingXform)
         {
-            var dockingXForm = EntityManager.GetComponent<ITransformComponent>(docking.OwnerUid);
+            if (!_mapManager.TryGetGrid(dockingXform.GridID, out var grid) ||
+                !EntityManager.TryGetComponent(grid.GridEntityId, out ShuttleComponent? shuttleA)) return null;
 
-            foreach (var (comp, xform) in EntityManager.EntityQuery<DockingComponent, ITransformComponent>())
+            var transform = body.GetTransform();
+            var dockingFixture = body.GetFixture(DockingFixture)!;
+
+            foreach (var (otherDocking, otherBody, otherXform) in EntityManager.EntityQuery<DockingComponent, PhysicsComponent, ITransformComponent>())
             {
-                if (xform.MapID != dockingXForm.MapID ||
-                    xform.GridID == dockingXForm.GridID) continue;
+                if (!otherDocking.Enabled ||
+                    otherDocking.Docked ||
+                    dockingXform.MapID != otherXform.MapID ||
+                    dockingXform.GridID == otherXform.GridID ||
+                    !_mapManager.TryGetGrid(otherXform.GridID, out var otherGrid) ||
+                    !EntityManager.TryGetComponent(otherGrid.GridEntityId, out ShuttleComponent? shuttleB)) continue;
 
-                // TODO: Get intersecting docks and return the first one
+                var otherTransform = otherBody.GetTransform();
+                var otherDockingFixture = otherBody.GetFixture(DockingFixture);
+
+                for (var i = 0; i < dockingFixture.Shape.ChildCount; i++)
+                {
+                    var aabb = dockingFixture.Shape.ComputeAABB(transform, i);
+
+                    for (var j = 0; j < dockingFixture.Shape.ChildCount; j++)
+                    {
+                        var otherAABB = otherDockingFixture!.Shape.ComputeAABB(otherTransform, j);
+
+                        if (!aabb.Intersects(otherAABB)) continue;
+
+                        return (shuttleA, shuttleB);
+                    }
+                }
             }
 
             return null;
@@ -214,7 +243,8 @@ namespace Content.Server.Shuttles
 
             weld.LocalAnchorA = dockBXform.LocalPosition + dockBXform.LocalRotation.ToWorldVec() / 2f;
             weld.LocalAnchorB = dockAXform.LocalPosition + dockAXform.LocalRotation.ToWorldVec() / 2f;
-            weld.ReferenceAngle = 0f;
+            // TODO: Get the cardinal you numpty
+            weld.ReferenceAngle = (float) -dockBXform.LocalRotation.Theta;
             weld.CollideConnected = false;
 
             dockA.DockedWith = dockB;
@@ -222,7 +252,7 @@ namespace Content.Server.Shuttles
             dockA.DockJoint = weld;
             dockB.DockJoint = weld;
 
-            SoundSystem.Play(Filter.Pvs(dockA.Owner), "/Audio/Effects/docking.ogg");
+            SoundSystem.Play(Filter.Pvs(dockA.Owner), DockingSound);
         }
 
         public bool TryDock(ShuttleComponent shuttleA, ShuttleComponent shuttleB)
@@ -234,7 +264,7 @@ namespace Content.Server.Shuttles
             // Get the relevant ports for shuttle A and shuttle B
             foreach (var (docking, body, xform) in EntityManager.EntityQuery<DockingComponent, PhysicsComponent, ITransformComponent>())
             {
-                if (xform.GridID != shuttleAXform.GridID ||
+                if (xform.GridID != shuttleAXform.GridID &&
                     xform.GridID != shuttleBXform.GridID ||
                     !docking.Enabled ||
                     docking.DockedWith != null ||
@@ -300,7 +330,7 @@ namespace Content.Server.Shuttles
 
             dock.DockedWith = null;
             _jointSystem.RemoveJoint(dock.DockJoint!);
-            SoundSystem.Play(Filter.Pvs(dock.Owner), "/Audio/Effects/docking.ogg");
+            SoundSystem.Play(Filter.Pvs(dock.Owner), DockingSound);
         }
 
         public bool TryUndock(ShuttleComponent shuttleA, ShuttleComponent shuttleB)
