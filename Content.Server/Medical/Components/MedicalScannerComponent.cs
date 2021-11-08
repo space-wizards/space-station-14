@@ -4,13 +4,12 @@ using Content.Server.Mind.Components;
 using Content.Server.Power.Components;
 using Content.Server.Preferences.Managers;
 using Content.Server.UserInterface;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
 using Content.Shared.Damage;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.MedicalScanner;
-using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
 using Content.Shared.Popups;
 using Content.Shared.Preferences;
 using Robust.Server.GameObjects;
@@ -110,7 +109,7 @@ namespace Content.Server.Medical.Components
             UserInterface?.SetState(newState);
         }
 
-        private MedicalScannerStatus GetStatusFromDamageState(IMobStateComponent state)
+        private MedicalScannerStatus GetStatusFromDamageState(MobStateComponent state)
         {
             if (state.IsAlive())
             {
@@ -135,7 +134,7 @@ namespace Content.Server.Medical.Components
             if (Powered)
             {
                 var body = _bodyContainer.ContainedEntity;
-                var state = body?.GetComponentOrNull<IMobStateComponent>();
+                var state = body?.GetComponentOrNull<MobStateComponent>();
 
                 return state == null
                     ? MedicalScannerStatus.Open

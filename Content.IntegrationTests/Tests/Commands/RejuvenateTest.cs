@@ -1,9 +1,9 @@
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Content.Server.Administration.Commands;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
-using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -49,7 +49,7 @@ namespace Content.IntegrationTests.Tests.Commands
 
                 // Sanity check
                 Assert.True(human.TryGetComponent(out DamageableComponent damageable));
-                Assert.True(human.TryGetComponent(out IMobStateComponent mobState));
+                Assert.True(human.TryGetComponent(out MobStateComponent mobState));
                 mobState.UpdateState(0);
                 Assert.That(mobState.IsAlive, Is.True);
                 Assert.That(mobState.IsCritical, Is.False);

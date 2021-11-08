@@ -2,7 +2,7 @@
 using Content.Shared.Body.Components;
 using Content.Shared.Disposal.Components;
 using Content.Shared.Item;
-using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -63,7 +63,7 @@ namespace Content.Shared.Disposal
             if (!entity.TryGetComponent(out IPhysBody? physics) ||
                 !physics.CanCollide && storable == null)
             {
-                if (!(entity.TryGetComponent(out IMobStateComponent? damageState) && damageState.IsDead()))
+                if (!(entity.TryGetComponent(out MobStateComponent? damageState) && damageState.IsDead()))
                 {
                     return false;
                 }

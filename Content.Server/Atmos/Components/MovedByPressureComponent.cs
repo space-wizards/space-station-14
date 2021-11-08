@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Atmos;
-using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -61,7 +61,7 @@ namespace Content.Server.Atmos.Components
                                                  && (maxForce >= (MoveResist * MoveForcePushRatio)))
                 || (physics.BodyType == BodyType.Static && (maxForce >= (MoveResist * MoveForceForcePushRatio))))
             {
-                if (physics.Owner.HasComponent<IMobStateComponent>())
+                if (physics.Owner.HasComponent<MobStateComponent>())
                 {
                     physics.BodyStatus = BodyStatus.InAir;
 
@@ -75,7 +75,7 @@ namespace Content.Server.Atmos.Components
                         if (Deleted || !Owner.TryGetComponent(out PhysicsComponent? physicsComponent)) return;
 
                         // Uhh if you get race conditions good luck buddy.
-                        if (physicsComponent.Owner.HasComponent<IMobStateComponent>())
+                        if (physicsComponent.Owner.HasComponent<MobStateComponent>())
                         {
                             physicsComponent.BodyStatus = BodyStatus.OnGround;
                         }
