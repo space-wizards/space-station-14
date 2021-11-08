@@ -11,6 +11,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Dynamics;
@@ -42,7 +43,7 @@ namespace Content.Server.Shuttles
 
         private const string DockingFixture = "docking";
         private const string DockingJoint = "docking";
-        private const float DockingRadius = 0.3f;
+        private const float DockingRadius = 0.1f;
 
         public override void Initialize()
         {
@@ -130,6 +131,8 @@ namespace Content.Server.Shuttles
             var transform = body.GetTransform();
             var dockingFixture = body.GetFixture(DockingFixture)!;
 
+            // Get any docking ports in range
+            // TODO: Probably use lookup for this.
             foreach (var (otherDocking, otherBody, otherXform) in EntityManager.EntityQuery<DockingComponent, PhysicsComponent, ITransformComponent>())
             {
                 if (!otherDocking.Enabled ||
@@ -290,35 +293,38 @@ namespace Content.Server.Shuttles
         {
             var shuttleAXform = EntityManager.GetComponent<ITransformComponent>(shuttleA.OwnerUid);
             var shuttleBXform = EntityManager.GetComponent<ITransformComponent>(shuttleB.OwnerUid);
-            var dockingPorts = new List<(DockingComponent, PhysicsComponent, ITransformComponent)>();
+            var dockingPortsA = new List<(DockingComponent, PhysicsComponent, ITransformComponent)>();
+            var dockingPortsB = new List<(DockingComponent, PhysicsComponent, ITransformComponent)>();
 
             // Get the relevant ports for shuttle A and shuttle B
             foreach (var (docking, body, xform) in EntityManager.EntityQuery<DockingComponent, PhysicsComponent, ITransformComponent>())
             {
-                if (xform.GridID != shuttleAXform.GridID &&
-                    xform.GridID != shuttleBXform.GridID ||
-                    !docking.Enabled ||
+                if (!docking.Enabled ||
                     docking.DockedWith != null ||
                     body.GetFixture(DockingFixture) == null) continue;
 
-                dockingPorts.Add((docking, body, xform));
+                if (xform.GridID != shuttleAXform.GridID)
+                {
+                    dockingPortsA.Add((docking, body, xform));
+                }
+
+                if (xform.GridID != shuttleBXform.GridID)
+                {
+                    dockingPortsB.Add((docking, body, xform));
+                }
             }
 
-            var intersectingPorts = new List<(DockingComponent, DockingComponent)>();
+            var canDock = false;
 
             // Check for any docking collisions
-            foreach (var (docking, body, xform) in dockingPorts)
+            // TODO: Would be good to combine this with the above one for the verb (to be UI) but UHHHHHH.
+            foreach (var (_, body, xform) in dockingPortsA)
             {
-                if (xform.GridID != shuttleAXform.GridID) continue;
-
                 var transform = body.GetTransform();
                 var dockingFixture = body.GetFixture(DockingFixture)!;
 
-                foreach (var (otherDocking, otherBody, otherXform) in dockingPorts)
+                foreach (var (otherDocking, otherBody, otherXform) in dockingPortsB)
                 {
-                    if (otherXform.GridID == xform.GridID ||
-                        otherDocking.DockedWith != null) continue;
-
                     var otherTransform = otherBody.GetTransform();
                     var otherDockingFixture = otherBody.GetFixture(DockingFixture);
 
@@ -332,30 +338,52 @@ namespace Content.Server.Shuttles
 
                             if (!aabb.Intersects(otherAABB)) continue;
 
-                            intersectingPorts.Add((docking, otherDocking));
+                            canDock = true;
                             break;
                         }
+
+                        if (canDock) break;
                     }
+
+                    if (canDock) break;
                 }
+
+                if (canDock) break;
             }
 
-            if (intersectingPorts.Count == 0) return false;
+            if (!canDock) return false;
 
             // Docking confirmed
 
-            foreach (var (dockA, dockB) in intersectingPorts)
+            // TODO: iterate all of DockA ports and check where its localposition aligns with a ShuttleB port
+
+            foreach (var (dockA, _, xformA) in dockingPortsA)
             {
-                if (EntityManager.TryGetComponent(dockA.OwnerUid, out ServerDoorComponent? doorA))
-                {
-                    doorA.Open();
-                }
+                var dockPosA = xformA.LocalPosition + xformA.LocalRotation.ToWorldVec();
 
-                if (EntityManager.TryGetComponent(dockB.OwnerUid, out ServerDoorComponent? doorB))
+                foreach (var (dockB, _, xformB) in dockingPortsB)
                 {
-                    doorB.Open();
-                }
+                    var localPosB = xformB.LocalPosition;
+                    // TODO: Get the B equivalent pos for A and determine if it equals B
 
-                Dock(dockA, dockB);
+                    var connectPosition = localPosA + xformA.LocalRotation;
+
+                    continue;
+
+                    if (EntityManager.TryGetComponent(dockA.OwnerUid, out ServerDoorComponent? doorA))
+                    {
+                        doorA.Open();
+                    }
+
+                    if (EntityManager.TryGetComponent(dockB.OwnerUid, out ServerDoorComponent? doorB))
+                    {
+                        doorB.Open();
+                    }
+
+                    Dock(dockA, dockB);
+
+                    break;
+                }
             }
 
             EntityManager.EventBus.RaiseEvent(EventSource.Local, new DockEvent
