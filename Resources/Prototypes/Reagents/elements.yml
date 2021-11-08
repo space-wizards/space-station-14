@@ -25,13 +25,13 @@
   meltingPoint: -101.5
   boilingPoint: -34.04
   plantMetabolism:
-    - !type:AdjustWater
+    - !type:PlantAdjustWater
       amount: -0.5
-    - !type:AdjustToxins
+    - !type:PlantAdjustToxins
       amount: 15
-    - !type:AdjustWeeds
+    - !type:PlantAdjustWeeds
       amount: -3
-    - !type:AdjustHealth
+    - !type:PlantAdjustHealth
       amount: -1
 
 - type: reagent
@@ -52,13 +52,13 @@
   boilingPoint: -188.11
   meltingPoint: -219.67
   plantMetabolism:
-    - !type:AdjustWater
+    - !type:PlantAdjustWater
       amount: -0.5
-    - !type:AdjustToxins
+    - !type:PlantAdjustToxins
       amount: 25
-    - !type:AdjustWeeds
+    - !type:PlantAdjustWeeds
       amount: -4
-    - !type:AdjustHealth
+    - !type:PlantAdjustHealth
       amount: -2
 
 - type: reagent
@@ -142,11 +142,11 @@
   meltingPoint: 44.2
   boilingPoint: 280.5
   plantMetabolism:
-    - !type:AdjustNutrition
+    - !type:PlantAdjustNutrition
       amount: 0.1
-    - !type:AdjustWater
+    - !type:PlantAdjustWater
       amount: -0.5
-    - !type:AdjustWeeds
+    - !type:PlantAdjustWeeds
       amount: -2
 
 - type: reagent
@@ -157,15 +157,14 @@
   color: "#00ff04"
   meltingPoint: 700.0
   boilingPoint: 1737.0
-  customPlantMetabolism: 2
   plantMetabolism:
-    - !type:AdjustMutationLevel
+    - !type:PlantAdjustMutationLevel
       amount: 0.6
-    - !type:AdjustToxins
+    - !type:PlantAdjustToxins
       amount: 4
-    - !type:AdjustHealth
+    - !type:PlantAdjustHealth
       amount: -1.5
-    - !type:AdjustMutationMod
+    - !type:PlantAdjustMutationMod
       prob: 0.2
       amount: 0.1
 

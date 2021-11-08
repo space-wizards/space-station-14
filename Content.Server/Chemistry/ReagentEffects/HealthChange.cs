@@ -19,9 +19,9 @@ namespace Content.Server.Chemistry.ReagentEffects
         [DataField("damage", required: true)]
         public DamageSpecifier Damage = default!;
 
-        public override void Metabolize(IEntity solutionEntity, Solution.ReagentQuantity amount)
+        public override void Metabolize(EntityUid solutionEntity, EntityUid organEntity, Solution.ReagentQuantity reagent, IEntityManager entityManager)
         {
-            EntitySystem.Get<DamageableSystem>().TryChangeDamage(solutionEntity.Uid, Damage, true);
+            EntitySystem.Get<DamageableSystem>().TryChangeDamage(solutionEntity, Damage, true);
         }
     }
 }

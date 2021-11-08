@@ -7,9 +7,9 @@
   boilingPoint: -33.0
   meltingPoint: -77.7
   plantMetabolism:
-    - !type:AdjustNutrition
+    - !type:PlantAdjustNutrition
       amount: 1
-    - !type:AdjustHealth
+    - !type:PlantAdjustHealth
       amount: 0.5
 
 - type: reagent
@@ -20,19 +20,18 @@
   color: "#a1000b"
   boilingPoint: 55.5
   meltingPoint: -50.0
-  customPlantMetabolism: 0.1
   plantMetabolism:
-    - !type:AdjustNutrition
+    - !type:PlantAdjustNutrition
       amount: 0.1
-    - !type:AdjustPests
+    - !type:PlantAdjustPests
       prob: 0.1
       amount: -1
-    - !type:AdjustHealth
+    - !type:PlantAdjustHealth
       amount: 0.1
-    - !type:AffectGrowth
+    - !type:PlantAffectGrowth
       prob: 0.2
       amount: 1
-    - !type:Diethylamine {}
+    - !type:PlantDiethylamine {}
 
 - type: reagent
   id: Ethanol
@@ -64,11 +63,11 @@
   boilingPoint: 340282300000000000000000000000000000000 #Fun fact: Glucose can't boil. So let's just set it to the maximum float value.
   meltingPoint: 146.0
   plantMetabolism:
-    - !type:AdjustNutrition
+    - !type:PlantAdjustNutrition
       amount: 0.1
-    - !type:AdjustWeeds
+    - !type:PlantAdjustWeeds
       amount: 2
-    - !type:AdjustPests
+    - !type:PlantAdjustPests
       amount: 2
 
 - type: reagent
@@ -80,7 +79,7 @@
   meltingPoint: 0.0
   boilingPoint: 100.0
   plantMetabolism:
-    - !type:AdjustWater
+    - !type:PlantAdjustWater
       amount: 1
 
 - type: reagent
@@ -89,10 +88,14 @@
   desc: All the vitamins, minerals, and carbohydrates the body needs in pure form.
   physicalDesc: opaque
   color: "#664330"
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateHunger
   plantMetabolism:
-    - !type:AdjustNutrition
+    - !type:PlantAdjustNutrition
       amount: 1
-    - !type:AdjustHealth
+    - !type:PlantAdjustHealth
       amount: 0.5
 
 - type: reagent
@@ -116,11 +119,11 @@
   boilingPoint: 78.2 # This isn't a real chemical...
   meltingPoint: -19.4
   plantMetabolism:
-    - !type:AdjustToxins
+    - !type:PlantAdjustToxins
       amount: 20
-    - !type:AdjustWeeds
+    - !type:PlantAdjustWeeds
       amount: -4
-    - !type:AdjustHealth
+    - !type:PlantAdjustHealth
       amount: -8
 
 - type: reagent
@@ -141,17 +144,17 @@
   boilingPoint: 1465.0
   meltingPoint: 800.7
   plantMetabolism:
-    - !type:AdjustWater
+    - !type:PlantAdjustWater
       amount: -3
-    - !type:AdjustNutrition
+    - !type:PlantAdjustNutrition
       amount: -0.3
-    - !type:AdjustToxins
+    - !type:PlantAdjustToxins
       amount: 8
-    - !type:AdjustWeeds
+    - !type:PlantAdjustWeeds
       amount: -2
-    - !type:AdjustPests
+    - !type:PlantAdjustPests
       amount: -1
-    - !type:AdjustHealth
+    - !type:PlantAdjustHealth
       amount: -2
 
 - type: reagent
@@ -173,9 +176,9 @@
   color: "#cf3600"
   physicalDesc: opaque
   plantMetabolism:
-    - !type:AdjustToxins
+    - !type:PlantAdjustToxins
       amount: 10
-    - !type:AdjustHealth
+    - !type:PlantAdjustHealth
       amount: -5
 
 - type: reagent
@@ -187,11 +190,11 @@
   boilingPoint: 337.0
   meltingPoint: 10.31
   plantMetabolism:
-    - !type:AdjustToxins
+    - !type:PlantAdjustToxins
       amount: 10
-    - !type:AdjustWeeds
+    - !type:PlantAdjustWeeds
       amount: -2
-    - !type:AdjustHealth
+    - !type:PlantAdjustHealth
       amount: -5
 
 - type: reagent
@@ -202,9 +205,8 @@
   color: "#00ff5f"
   boilingPoint: 340282300000000000000000000000000000000 # Ethidium bromide, which doesn't boil.
   meltingPoint: 261.0
-  customPlantMetabolism: 2
   plantMetabolism:
-    - !type:AdjustMutationLevel
+    - !type:PlantAdjustMutationLevel
       amount: 1
 
 - type: reagent
@@ -215,11 +217,16 @@
   color: "#c0e0ff20"
   boilingPoint: 100.0
   meltingPoint: 0.0
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 4
   tileReactions:
     - !type:ExtinguishTileReaction {}
     - !type:SpillIfPuddlePresentTileReaction {}
   plantMetabolism:
-    - !type:AdjustWater
+    - !type:PlantAdjustWater
       amount: 1
 
 - type: reagent
@@ -230,6 +237,25 @@
   color: "#FAFAFA"
   boilingPoint: 212.0 #Meth vape when?
   meltingPoint: 170.0
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 2.5
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 10
+        damage:
+          types:
+            Poison: 4 # this is added to the base damage of the meth.
+    Narcotic:
+      effects:
+      - !type:MovespeedModifier
+        walkSpeedModifier: 1.3
+        sprintSpeedModifier: 1.3
 
 - type: reagent
   id: Iodine
@@ -248,6 +274,12 @@
   color: "#D2FFFA"
   boilingPoint: 255.0
   meltingPoint: 36.0
+  metabolisms:
+    Narcotic:
+      effects:
+      - !type:MovespeedModifier
+        walkSpeedModifier: 1.2
+        sprintSpeedModifier: 1.2
 
 - type: reagent
   id: Oil

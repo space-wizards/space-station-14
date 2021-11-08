@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -7,9 +9,10 @@ namespace Content.Shared.Chemistry.Reagent
 {
     /// <summary>
     ///     Reagent effects describe behavior that occurs when a reagent is ingested and metabolized by some
-    ///     organ. They only trigger when their conditions (<see cref="ReagentEffectCondition"/>
+    ///     organ. They only trigger when all of <see cref="Conditions"/> are satisfied.
     /// </summary>
     [ImplicitDataDefinitionForInheritors]
+    [MeansImplicitUse]
     public abstract class ReagentEffect
     {
         /// <summary>
@@ -18,6 +21,6 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField("conditions")]
         public ReagentEffectCondition[]? Conditions;
 
-        public abstract void Metabolize(IEntity solutionEntity, Components.Solution.ReagentQuantity amount);
+        public abstract void Metabolize(EntityUid solutionEntity, EntityUid organEntity, Solution.ReagentQuantity reagent, IEntityManager entityManager);
     }
 }

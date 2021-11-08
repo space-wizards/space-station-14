@@ -1,29 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
+using Content.Shared.Body.Metabolism;
 using Content.Shared.Botany;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Chemistry.Reagent
 {
     [Prototype("reagent")]
     [DataDefinition]
-    public class ReagentPrototype : IPrototype
+    public class ReagentPrototype : IPrototype, IInheritingPrototype
     {
+        [DataField("metabolisms", serverOnly: true, customTypeSerializer: typeof(PrototypeIdDictionarySerializer<ReagentEffectsEntry, MetabolismGroupPrototype>))]
+        public Dictionary<string, ReagentEffectsEntry>? Metabolisms = null;
+
         [DataField("tileReactions", serverOnly: true)]
         private readonly List<ITileReaction> _tileReactions = new(0);
 
         [DataField("plantMetabolism", serverOnly: true)]
-        private readonly List<IPlantMetabolizable> _plantMetabolism = new(0);
-
-        [DataField("customPlantMetabolism")]
-        private readonly float _customPlantMetabolism = 1f;
+        private readonly List<ReagentEffect> _plantMetabolism = new(0);
 
         [ViewVariables]
         [DataField("id", required: true)]
@@ -31,6 +37,13 @@ namespace Content.Shared.Chemistry.Reagent
 
         [DataField("name")]
         public string Name { get; } = string.Empty;
+
+        [DataField("parent", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentPrototype>))]
+        public string? Parent { get; private set; }
+
+        [NeverPushInheritance]
+        [DataField("abstract")]
+        public bool Abstract { get; private set; }
 
         [DataField("desc")]
         public string Description { get; } = string.Empty;
@@ -40,12 +53,6 @@ namespace Content.Shared.Chemistry.Reagent
 
         [DataField("color")]
         public Color SubstanceColor { get; } = Color.White;
-
-        [DataField("toxin")]
-        public bool Toxin { get; }
-
-        [DataField("boozePower")]
-        public int BoozePower { get; }
 
         [DataField("boilingPoint")]
         public float? BoilingPoint { get; }
@@ -58,7 +65,7 @@ namespace Content.Shared.Chemistry.Reagent
 
         //List of metabolism effects this reagent has, should really only be used server-side.
         public IReadOnlyList<ITileReaction> TileReactions => _tileReactions;
-        public IReadOnlyList<IPlantMetabolizable> PlantMetabolism => _plantMetabolism;
+        public IReadOnlyList<ReagentEffect> PlantMetabolism => _plantMetabolism;
 
         /// <summary>
         /// If the substance color is too dark we user a lighter version to make the text color readable when the user examines a solution.
@@ -99,15 +106,32 @@ namespace Content.Shared.Chemistry.Reagent
             return removed;
         }
 
-        public void ReactionPlant(IEntity? plantHolder)
+        public void ReactionPlant(EntityUid? plantHolder, Solution.ReagentQuantity amount)
         {
-            if (plantHolder == null || plantHolder.Deleted)
+            if (plantHolder == null)
                 return;
 
+            var entMan = IoCManager.Resolve<IEntityManager>();
             foreach (var plantMetabolizable in _plantMetabolism)
             {
-                plantMetabolizable.Metabolize(plantHolder, _customPlantMetabolism);
+                plantMetabolizable.Metabolize(plantHolder.Value, plantHolder.Value, amount, entMan);
             }
         }
+    }
+
+    [DataDefinition]
+    public class ReagentEffectsEntry
+    {
+        /// <summary>
+        ///     Amount of reagent to metabolize, per metabolism cycle.
+        /// </summary>
+        [DataField("metabolismRate")]
+        public FixedPoint2 MetabolismRate = FixedPoint2.New(1.0f);
+
+        /// <summary>
+        ///     A list of effects to apply when these reagents are metabolized.
+        /// </summary>
+        [DataField("effects", required: true)]
+        public ReagentEffect[] Effects = default!;
     }
 }

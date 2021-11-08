@@ -1,12 +1,14 @@
 ﻿using Content.Shared.Chemistry.Components;
+using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Chemistry.Reagent
 {
     [ImplicitDataDefinitionForInheritors]
+    [MeansImplicitUse]
     public abstract class ReagentEffectCondition
     {
-        public abstract bool Condition(IEntity solutionEntity, Solution.ReagentQuantity reagent);
+        public abstract bool Condition(EntityUid solutionEntity, EntityUid organEntity, Solution.ReagentQuantity reagent, IEntityManager entityManager);
     }
 }
