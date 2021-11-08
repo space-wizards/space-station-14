@@ -24,9 +24,6 @@ namespace Content.Shared.Hands.Components
     {
         public sealed override string Name => "Hands";
 
-        /// <summary>
-        ///     Invoked when the hand contents changes or when a hand is added/removed.
-        /// </summary>
         public event Action? OnItemChanged; //TODO: Try to replace C# event
 
         /// <summary>
@@ -122,35 +119,24 @@ namespace Content.Shared.Hands.Components
             appearance.SetData(HandsVisuals.VisualState, new HandsVisualState(hands));
         }
 
-        /// <summary>
-        ///     Adds a new hand to this hands component.
-        /// </summary>
-        /// <param name="handName">The name of the hand to add.</param>
-        /// <param name="handLocation">The symmetry of the hand to add.</param>
         public void AddHand(string handName, HandLocation handLocation)
         {
             if (HasHand(handName))
                 return;
 
-            var container = Owner.CreateContainer<ContainerSlot>(handName);
+            var container = ContainerHelpers.CreateContainer<ContainerSlot>(Owner, handName);
             container.OccludesLight = false;
 
             Hands.Add(new Hand(handName, handLocation, container));
 
-            ActiveHand ??= handName;
+            if (ActiveHand == null)
+                ActiveHand = handName;
 
             HandCountChanged();
 
             HandsModified();
         }
 
-        /// <summary>
-        ///     Removes a hand from this hands component.
-        /// </summary>
-        /// <remarks>
-        ///     If the hand contains an item, the item is dropped.
-        /// </remarks>
-        /// <param name="handName">The name of the hand to remove.</param>
         public void RemoveHand(string handName)
         {
             if (!TryGetHand(handName, out var hand))
@@ -161,7 +147,7 @@ namespace Content.Shared.Hands.Components
 
         private void RemoveHand(Hand hand)
         {
-            DropHeldEntityToFloor(hand, false);
+            DropHeldEntityToFloor(hand, intentionalDrop: false);
             hand.Container?.Shutdown();
             Hands.Remove(hand);
 
@@ -181,11 +167,6 @@ namespace Content.Shared.Hands.Components
             return GetHandOrNull(ActiveHand);
         }
 
-        /// <summary>
-        ///     Checks whether a hand with the specified name exists.
-        /// </summary>
-        /// <param name="handName">The hand name to check.</param>
-        /// <returns>True if the hand exists, false otherwise.</returns>
         public bool HasHand(string handName)
         {
             return TryGetHand(handName, out _);
@@ -307,13 +288,8 @@ namespace Content.Shared.Hands.Components
         #region Dropping
 
         /// <summary>
-        ///     Checks whether the item in the specified hand can be dropped.
+        ///     Checks all the conditions relevant to a player being able to drop an item.
         /// </summary>
-        /// <param name="handName">The hand to check for.</param>
-        /// <param name="checkActionBlocker">Whether to perform an ActionBlocker check to the entity.</param>
-        /// <returns>
-        ///     True if the item can be dropped, false if the hand is empty or the item in the hand cannot be dropped.
-        /// </returns>
         public bool CanDrop(string handName, bool checkActionBlocker = true)
         {
             if (!TryGetHand(handName, out var hand))
@@ -340,13 +316,8 @@ namespace Content.Shared.Hands.Components
         }
 
         /// <summary>
-        ///     Tries to drop the item in a slot.
+        ///     Tries to drop the contents of a hand to the target location.
         /// </summary>
-        /// <param name="handName">The slot to drop the item from.</param>
-        /// <param name="targetDropLocation">The coordinates to drop at</param>
-        /// <param name="checkActionBlocker">Whether to check the <see cref="ActionBlockerSystem.CanDrop(EntityUid)"/> for the mob or not.</param>
-        /// <param name="intentional">Whether or not the drop was intentional by the hand's owner.</param>
-        /// <returns>True if an item was dropped, false otherwise.</returns>
         public bool TryDropHand(string handName, EntityCoordinates targetDropLocation, bool checkActionBlocker = true, bool intentional = true)
         {
             if (!TryGetHand(handName, out var hand))
@@ -356,20 +327,8 @@ namespace Content.Shared.Hands.Components
         }
 
         /// <summary>
-        ///     Tries to drop the specified entity in our hands to a certain position.
+        ///     Tries to drop a held entity to the target location.
         /// </summary>
-        /// <remarks>
-        ///     There are no checks whether or not the user is within interaction range of the drop location
-        ///     or whether the drop location is occupied.
-        /// </remarks>
-        /// <param name="entity">The entity to drop, must be held in one of the hands.</param>
-        /// <param name="coords">The coordinates to drop the entity at.</param>
-        /// <param name="doMobChecks">Whether to check the <see cref="ActionBlockerSystem.CanDrop(EntityUid)"/> for the mob or not.</param>
-        /// <param name="intentional">Whether or not the drop was intentional by the hand's owner.</param>
-        /// <returns>
-        ///     True if the drop succeeded,
-        ///     false if it failed (due to failing to eject from our hand slot, etc...)
-        /// </returns>
         public bool TryDropEntity(IEntity entity, EntityCoordinates coords, bool doMobChecks = true, bool intentional = true)
         {
             if (!TryGetHandHoldingEntity(entity, out var hand))
@@ -379,12 +338,8 @@ namespace Content.Shared.Hands.Components
         }
 
         /// <summary>
-        ///     Drop the item contained in a slot into another container.
+        ///     Attempts to move the contents of a hand into a container that is not another hand, without dropping it on the floor inbetween.
         /// </summary>
-        /// <param name="handName">The slot of which to drop the entity.</param>
-        /// <param name="targetContainer">The container to drop into.</param>
-        /// <param name="checkActionBlocker">Whether to check the <see cref="ActionBlockerSystem.CanDrop(IEntity)"/> for the mob or not.</param>
-        /// <returns>True on success, false if something was blocked (insertion or removal).</returns>
         public bool TryPutHandIntoContainer(string handName, BaseContainer targetContainer, bool checkActionBlocker = true)
         {
             if (!TryGetHand(handName, out var hand))
@@ -398,12 +353,8 @@ namespace Content.Shared.Hands.Components
         }
 
         /// <summary>
-        ///     Tries to drops an item in one of the hands into a container.
+        ///     Attempts to move a held item from a hand into a container that is not another hand, without dropping it on the floor inbetween.
         /// </summary>
-        /// <param name="entity">The item to drop.</param>
-        /// <param name="targetContainer">The container to drop into.</param>
-        /// <param name="checkActionBlocker">Whether to check the <see cref="ActionBlockerSystem.CanDrop(EntityUid)"/> for the mob or not.</param>
-        /// <returns>True on success, false if something was blocked (insertion or removal).</returns>
         public bool Drop(IEntity entity, BaseContainer targetContainer, bool checkActionBlocker = true)
         {
             if (!TryGetHandHoldingEntity(entity, out var hand))
@@ -417,12 +368,8 @@ namespace Content.Shared.Hands.Components
         }
 
         /// <summary>
-        ///     Drops the item contained in the slot to the same position as our entity.
+        ///     Tries to drop the contents of a hand directly under the player.
         /// </summary>
-        /// <param name="handName">The slot of which to drop to drop the item.</param>
-        /// <param name="checkActionBlocker">Whether to check the <see cref="ActionBlockerSystem.CanDrop(EntityUid)"/> for the mob or not.</param>
-        /// <param name="intentionalDrop">Whether or not the drop was intentional by the hand's owner.</param>
-        /// <returns>True on success, false if something blocked the drop.</returns>
         public bool Drop(string handName, bool checkActionBlocker = true, bool intentionalDrop = true)
         {
             if (!TryGetHand(handName, out var hand))
@@ -432,12 +379,8 @@ namespace Content.Shared.Hands.Components
         }
 
         /// <summary>
-        ///     Drops an item held by one of our hand slots to the same position as our owning entity.
+        ///     Tries to drop a held entity directly under the player.
         /// </summary>
-        /// <param name="entity">The item to drop.</param>
-        /// <param name="checkActionBlocker">Whether to check the <see cref="ActionBlockerSystem.CanDrop(EntityUid)"/> for the mob or not.</param>
-        /// <param name="intentionalDrop">Whether or not the drop was intentional by the hand's owner.</param>
-        /// <returns>True on success, false if something blocked the drop.</returns>
         public bool Drop(IEntity entity, bool checkActionBlocker = true, bool intentionalDrop = true)
         {
             if (!TryGetHandHoldingEntity(entity, out var hand))
@@ -448,9 +391,8 @@ namespace Content.Shared.Hands.Components
 
         /// <summary>
         ///     Tries to remove the item in the active hand, without dropping it.
-        ///     For transferring the held item to another location, like an inventory slot,
-        ///     which shouldn't trigger the drop interaction
-        /// </summary>
+        ///     For transfering the held item to anothe rlocation, like an inventory slot,
+        ///     which souldn't trigger the drop interaction
         public bool TryDropNoInteraction()
         {
             if (!TryGetActiveHand(out var hand))
@@ -830,11 +772,8 @@ namespace Content.Shared.Hands.Components
         }
 
         /// <summary>
-        ///     Puts an item into any empty hand, preferring the active hand.
+        ///     Tries to pick up an entity into the active hand. If it cannot, tries to pick up the entity into each other hand.
         /// </summary>
-        /// <param name="item">The item to put in a hand.</param>
-        /// <param name="checkActionBlocker">Whether to perform an ActionBlocker check to the entity.</param>
-        /// <returns>True if the item was inserted, false otherwise.</returns>
         public bool PutInHand(SharedItemComponent item, bool checkActionBlocker = true)
         {
             return TryPutInActiveHandOrAny(item.Owner, checkActionBlocker);
