@@ -1,4 +1,5 @@
 using Content.Server.Clothing.Components;
+using Content.Shared.Movement.EntitySystems;
 using Content.Shared.Slippery;
 using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
@@ -14,6 +15,12 @@ namespace Content.Server.Clothing
 
             SubscribeLocalEvent<MagbootsComponent, GetActivationVerbsEvent>(AddToggleVerb);
             SubscribeLocalEvent<MagbootsComponent, SlipAttemptEvent>(OnSlipAttempt);
+            SubscribeLocalEvent<MagbootsComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
+        }
+
+        private void OnRefreshMovespeed(EntityUid uid, MagbootsComponent component, RefreshMovementSpeedModifiersEvent args)
+        {
+            args.ModifySpeed(component.WalkSpeedModifier, component.SprintSpeedModifier);
         }
 
         private void AddToggleVerb(EntityUid uid, MagbootsComponent component, GetActivationVerbsEvent args)
