@@ -51,6 +51,7 @@ namespace Content.Server.Nuke
         /// </summary>
         public void SendNukeCodes()
         {
+            // todo: this should probably be handled by fax system
             var consoles = EntityManager.EntityQuery<CommunicationsConsoleComponent>();
             foreach (var console in consoles)
             {

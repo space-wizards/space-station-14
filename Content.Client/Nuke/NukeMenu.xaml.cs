@@ -83,7 +83,7 @@ namespace Content.Client.Nuke
                     secondMsg = Loc.GetString("nuke-user-interface-second-status-time",
                         ("time", state.RemainingTime));
                     break;
-                case NukeStatus.TIMING:
+                case NukeStatus.ARMED:
                     firstMsg = Loc.GetString("nuke-user-interface-first-status-device-armed");
                     secondMsg = Loc.GetString("nuke-user-interface-second-status-time",
                         ("time", state.RemainingTime));

@@ -1,20 +1,20 @@
-using System.Collections.Generic;
 using Content.Server.Construction.Components;
 using Content.Server.Popups;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Body.Components;
 using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Damage;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Nuke;
+using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
+using System.Collections.Generic;
 
 namespace Content.Server.Nuke
 {
@@ -42,12 +42,12 @@ namespace Content.Server.Nuke
             SubscribeLocalEvent<NukeComponent, UnanchoredEvent>(OnWasUnanchored);
 
             // ui events
-            SubscribeLocalEvent<NukeComponent, NukeEjectMessage>(OnEject);
-            SubscribeLocalEvent<NukeComponent, NukeAnchorMessage>(OnAnchor);
-            SubscribeLocalEvent<NukeComponent, NukeArmedMessage>(OnArmed);
-            SubscribeLocalEvent<NukeComponent, NukeKeypadMessage>(OnKeypad);
-            SubscribeLocalEvent<NukeComponent, NukeKeypadClearMessage>(OnClear);
-            SubscribeLocalEvent<NukeComponent, NukeKeypadEnterMessage>(OnEnter);
+            SubscribeLocalEvent<NukeComponent, NukeEjectMessage>(OnEjectButtonPressed);
+            SubscribeLocalEvent<NukeComponent, NukeAnchorMessage>(OnAnchorButtonPressed);
+            SubscribeLocalEvent<NukeComponent, NukeArmedMessage>(OnArmButtonPressed);
+            SubscribeLocalEvent<NukeComponent, NukeKeypadMessage>(OnKeypadButtonPressed);
+            SubscribeLocalEvent<NukeComponent, NukeKeypadClearMessage>(OnClearButtonPressed);
+            SubscribeLocalEvent<NukeComponent, NukeKeypadEnterMessage>(OnEnterButtonPressed);
         }
 
         public override void Update(float frameTime)
@@ -76,48 +76,6 @@ namespace Content.Server.Nuke
             _tickingBombs.Remove(uid);
         }
 
-        private void OnArmed(EntityUid uid, NukeComponent component, NukeArmedMessage args)
-        {
-            if (component.Status == NukeStatus.AWAIT_ARM)
-            {
-                ArmBomb(uid, component);
-            }
-            else
-            {
-                DisarmBomb(uid, component);
-            }
-        }
-
-        private void OnEnter(EntityUid uid, NukeComponent component, NukeKeypadEnterMessage args)
-        {
-            if (component.Status != NukeStatus.AWAIT_CODE)
-                return;
-
-            UpdateStatus(uid, component);
-            UpdateUserInterface(uid, component);
-        }
-
-        private void OnKeypad(EntityUid uid, NukeComponent component, NukeKeypadMessage args)
-        {
-            if (component.Status != NukeStatus.AWAIT_CODE)
-                return;
-
-            if (component.EnteredCode.Length >= _codes.Code.Length)
-                return;
-
-            component.EnteredCode += args.Value.ToString();
-            UpdateUserInterface(uid, component);
-        }
-
-        private void OnClear(EntityUid uid, NukeComponent component, NukeKeypadClearMessage args)
-        {
-            if (component.Status != NukeStatus.AWAIT_CODE)
-                return;
-
-            component.EnteredCode = "";
-            UpdateUserInterface(uid, component);
-        }
-
         private void OnItemSlotChanged(EntityUid uid, NukeComponent component, ItemSlotChangedEvent args)
         {
             if (args.SlotName != component.DiskSlotName)
@@ -142,10 +100,11 @@ namespace Content.Server.Nuke
             if (!EntityManager.TryGetComponent(args.User.Uid, out ActorComponent? actor))
                 return;
 
-            ToggleUI(uid, actor.PlayerSession, component);
+            ShowUI(uid, actor.PlayerSession, component);
             args.Handled = true;
         }
 
+        #region Anchor
         private void OnAnchorAttempt(EntityUid uid, NukeComponent component, AnchorAttemptEvent args)
         {
             CheckAnchorAttempt(uid, component, args);
@@ -177,14 +136,22 @@ namespace Content.Server.Nuke
         {
             UpdateUserInterface(uid, component);
         }
+        #endregion
 
-        private void OnEject(EntityUid uid, NukeComponent component, NukeEjectMessage args)
+        #region UI Events
+        private void OnEjectButtonPressed(EntityUid uid, NukeComponent component, NukeEjectMessage args)
         {
+            if (!component.DiskInserted)
+                return;
+
             _itemSlots.TryEjectContent(uid, component.DiskSlotName, args.Session.AttachedEntity);
         }
 
-        private async void OnAnchor(EntityUid uid, NukeComponent component, NukeAnchorMessage args)
+        private async void OnAnchorButtonPressed(EntityUid uid, NukeComponent component, NukeAnchorMessage args)
         {
+            if (!component.DiskInserted)
+                return;
+
             if (!EntityManager.TryGetComponent(uid, out AnchorableComponent anchorable))
                 return;
 
@@ -192,8 +159,55 @@ namespace Content.Server.Nuke
             if (user == null)
                 return;
 
-            await anchorable.TryToggleAnchor(user, null);
+            // this is async only to supress warning
+            await anchorable.TryToggleAnchor(user);
         }
+
+        private void OnEnterButtonPressed(EntityUid uid, NukeComponent component, NukeKeypadEnterMessage args)
+        {
+            if (component.Status != NukeStatus.AWAIT_CODE)
+                return;
+
+            UpdateStatus(uid, component);
+            UpdateUserInterface(uid, component);
+        }
+
+        private void OnKeypadButtonPressed(EntityUid uid, NukeComponent component, NukeKeypadMessage args)
+        {
+            if (component.Status != NukeStatus.AWAIT_CODE)
+                return;
+
+            if (component.EnteredCode.Length >= _codes.Code.Length)
+                return;
+
+            component.EnteredCode += args.Value.ToString();
+            UpdateUserInterface(uid, component);
+        }
+
+        private void OnClearButtonPressed(EntityUid uid, NukeComponent component, NukeKeypadClearMessage args)
+        {
+            if (component.Status != NukeStatus.AWAIT_CODE)
+                return;
+
+            component.EnteredCode = "";
+            UpdateUserInterface(uid, component);
+        }
+
+        private void OnArmButtonPressed(EntityUid uid, NukeComponent component, NukeArmedMessage args)
+        {
+            if (!component.DiskInserted)
+                return;
+
+            if (component.Status == NukeStatus.AWAIT_ARM)
+            {
+                ArmBomb(uid, component);
+            }
+            else if (component.Status == NukeStatus.ARMED)
+            {
+                DisarmBomb(uid, component);
+            }
+        }
+        #endregion
 
         private void UpdateStatus(EntityUid uid, NukeComponent? component = null)
         {
@@ -227,17 +241,22 @@ namespace Content.Server.Nuke
                     }
                     break;
                 }
+                case NukeStatus.AWAIT_ARM:
+                    // do nothing, wait for arm button to be pressed
+                    break;
+                case NukeStatus.ARMED:
+                    // do nothing, wait for arm button to be unpressed
+                    break;
             }
-
         }
 
-        private void ToggleUI(EntityUid uid, IPlayerSession session, NukeComponent? component = null)
+        private void ShowUI(EntityUid uid, IPlayerSession session, NukeComponent? component = null)
         {
             if (!Resolve(uid, ref component))
                 return;
 
             var ui = component.Owner.GetUIOrNull(NukeUiKey.Key);
-            ui?.Toggle(session);
+            ui?.Open(session);
 
             UpdateUserInterface(uid, component);
         }
@@ -257,7 +276,7 @@ namespace Content.Server.Nuke
 
             var allowArm = component.DiskInserted &&
                            (component.Status == NukeStatus.AWAIT_ARM ||
-                            component.Status == NukeStatus.TIMING);
+                            component.Status == NukeStatus.ARMED);
 
             var state = new NukeUiState()
             {
@@ -273,19 +292,31 @@ namespace Content.Server.Nuke
             ui.SetState(state);
         }
 
+        /// <summary>
+        ///     Force a nuclear bomb to start a countdown timer
+        /// </summary>
         public void ArmBomb(EntityUid uid, NukeComponent? component = null)
         {
             if (!Resolve(uid, ref component))
                 return;
 
-            component.Status = NukeStatus.TIMING;
+            if (component.Status == NukeStatus.ARMED)
+                return;
+
+            component.Status = NukeStatus.ARMED;
             _tickingBombs.Add(uid);
             UpdateUserInterface(uid, component);
         }
 
+        /// <summary>
+        ///     Stop nuclear bomb timer
+        /// </summary>
         public void DisarmBomb(EntityUid uid, NukeComponent? component = null)
         {
             if (!Resolve(uid, ref component))
+                return;
+
+            if (component.Status != NukeStatus.ARMED)
                 return;
 
             component.Status = NukeStatus.AWAIT_ARM;
@@ -293,6 +324,9 @@ namespace Content.Server.Nuke
             UpdateUserInterface(uid, component);
         }
 
+        /// <summary>
+        ///     Force bomb to explode
+        /// </summary>
         public void ActivateBomb(EntityUid uid, NukeComponent? component = null,
             TransformComponent? transform = null)
         {

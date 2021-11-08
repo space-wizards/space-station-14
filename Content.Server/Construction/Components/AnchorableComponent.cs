@@ -75,7 +75,7 @@ namespace Content.Server.Construction.Components
         /// <param name="user">The entity doing the anchoring</param>
         /// <param name="utilizing">The tool being used</param>
         /// <returns>true if anchored, false otherwise</returns>
-        public async Task<bool> TryAnchor(IEntity user, IEntity? utilizing)
+        public async Task<bool> TryAnchor(IEntity user, IEntity? utilizing = null)
         {
             if (!(await Valid(user, utilizing, true)))
             {
@@ -113,7 +113,7 @@ namespace Content.Server.Construction.Components
         /// <param name="utilizing">The tool being used, if any</param>
         /// <param name="force">Whether or not to ignore valid tool checks</param>
         /// <returns>true if unanchored, false otherwise</returns>
-        public async Task<bool> TryUnAnchor(IEntity user, IEntity? utilizing)
+        public async Task<bool> TryUnAnchor(IEntity user, IEntity? utilizing = null)
         {
             if (!(await Valid(user, utilizing, false)))
             {
@@ -135,7 +135,7 @@ namespace Content.Server.Construction.Components
         /// <param name="user">The entity doing the unanchoring</param>
         /// <param name="utilizing">The tool being used</param>
         /// <returns>true if toggled, false otherwise</returns>
-        public async Task<bool> TryToggleAnchor(IEntity user, IEntity? utilizing)
+        public async Task<bool> TryToggleAnchor(IEntity user, IEntity? utilizing = null)
         {
             return Owner.Transform.Anchored ?
                 await TryUnAnchor(user, utilizing) :
