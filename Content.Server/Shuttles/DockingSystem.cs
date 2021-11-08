@@ -114,6 +114,10 @@ namespace Content.Server.Shuttles
                     }
                 };
             }
+            else
+            {
+                return;
+            }
 
             args.Verbs.Add(verb);
         }
