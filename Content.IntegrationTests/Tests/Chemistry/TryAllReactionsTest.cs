@@ -19,13 +19,14 @@ namespace Content.IntegrationTests.Tests.Chemistry
         [Test]
         public async Task TryAllTest()
         {
-            var server = StartServerDummyTicker();
+            var server = StartServer();
 
             await server.WaitIdleAsync();
 
-            var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var prototypeManager = server.ResolveDependency<IPrototypeManager>();
+            var mapManager = server.ResolveDependency<IMapManager>();
+            var coordinates = GetMainEntityCoordinates(mapManager);
 
             foreach (var reactionPrototype in prototypeManager.EnumeratePrototypes<ReactionPrototype>())
             {
@@ -37,9 +38,7 @@ namespace Content.IntegrationTests.Tests.Chemistry
 
                 server.Assert(() =>
                 {
-                    mapManager.CreateNewMapEntity(MapId.Nullspace);
-
-                    beaker = entityManager.SpawnEntity("BluespaceBeaker", MapCoordinates.Nullspace);
+                    beaker = entityManager.SpawnEntity("BluespaceBeaker", coordinates);
                     Assert.That(EntitySystem.Get<SolutionContainerSystem>()
                         .TryGetSolution(beaker.Uid, "beaker", out component));
                     foreach (var (id, reactant) in reactionPrototype.Reactants)

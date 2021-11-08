@@ -3,8 +3,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.Clothing;
 using Content.Shared.CharacterAppearance;
+using Content.Shared.Chemistry;
 using Content.Shared.Inventory;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.EntitySystems;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -81,46 +83,6 @@ namespace Content.Client.Inventory
             return item != null && _slots.Values.Any(e => e == item);
         }
 
-        public override float WalkSpeedModifier
-        {
-            get
-            {
-                var mod = 1f;
-                foreach (var slot in _slots.Values)
-                {
-                    if (slot != null)
-                    {
-                        foreach (var modifier in slot.GetAllComponents<IMoveSpeedModifier>())
-                        {
-                            mod *= modifier.WalkSpeedModifier;
-                        }
-                    }
-                }
-
-                return mod;
-            }
-        }
-
-        public override float SprintSpeedModifier
-        {
-            get
-            {
-                var mod = 1f;
-                foreach (var slot in _slots.Values)
-                {
-                    if (slot != null)
-                    {
-                        foreach (var modifier in slot.GetAllComponents<IMoveSpeedModifier>())
-                        {
-                            mod *= modifier.SprintSpeedModifier;
-                        }
-                    }
-                }
-
-                return mod;
-            }
-        }
-
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
@@ -161,10 +123,7 @@ namespace Content.Client.Inventory
                 }
             }
 
-            if (Owner.TryGetComponent(out MovementSpeedModifierComponent? mod))
-            {
-                mod.RefreshMovementSpeedModifiers();
-            }
+            EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(OwnerUid);
         }
 
         private void _setSlot(Slots slot, IEntity entity)

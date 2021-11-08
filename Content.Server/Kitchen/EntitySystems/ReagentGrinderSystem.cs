@@ -54,7 +54,7 @@ namespace Content.Server.Kitchen.EntitySystems
         {
             if (args.Handled) return;
 
-            if (!args.User.HasComponent<IHandsComponent>())
+            if (!args.User.HasComponent<HandsComponent>())
             {
                 component.Owner.PopupMessage(args.User,
                     Loc.GetString("reagent-grinder-component-interact-using-no-hands"));
@@ -229,7 +229,7 @@ namespace Content.Server.Kitchen.EntitySystems
                         if (canJuice || !entity.TryGetComponent(out ExtractableComponent? component)) continue;
 
                         canJuice = component.JuiceSolution != null;
-                        canGrind = component.GrindableSolution != null 
+                        canGrind = component.GrindableSolution != null
                                    && _solutionsSystem.TryGetSolution(entity.Uid, component.GrindableSolution, out _);
                     }
                 }

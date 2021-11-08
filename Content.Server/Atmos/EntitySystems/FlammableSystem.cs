@@ -187,7 +187,7 @@ namespace Content.Server.Atmos.EntitySystems
             _timer -= UpdateTime;
 
             // TODO: This needs cleanup to take off the crust from TemperatureComponent and shit.
-            foreach (var (flammable, physics, transform) in EntityManager.EntityQuery<FlammableComponent, IPhysBody, ITransformComponent>())
+            foreach (var (flammable, physics, transform) in EntityManager.EntityQuery<FlammableComponent, IPhysBody, TransformComponent>())
             {
                 var uid = flammable.Owner.Uid;
 

@@ -3,13 +3,16 @@ using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Atmos.Piping;
+using Content.Shared.Audio;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Player;
 
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 {
@@ -45,8 +48,11 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
         private void OnActivate(EntityUid uid, GasValveComponent component, ActivateInWorldEvent args)
         {
-            if(args.User.InRangeUnobstructed(args.Target) && Get<ActionBlockerSystem>().CanInteract(args.User))
+            if (args.User.InRangeUnobstructed(args.Target) && Get<ActionBlockerSystem>().CanInteract(args.User))
+            {
                 Toggle(uid, component);
+                SoundSystem.Play(Filter.Pvs(component.Owner), component._valveSound.GetSound(), component.Owner, AudioHelpers.WithVariation(0.25f));
+            }
         }
 
         public void Set(EntityUid uid, GasValveComponent component, bool value)

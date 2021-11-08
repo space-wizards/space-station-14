@@ -43,6 +43,10 @@
       disabledState: pumpPressure
       enabledState: pumpPressureOn
   - type: GasPressurePump
+  - type: UserInterface
+    interfaces:
+      - key: enum.GasPressurePumpUiKey.Key
+        type: GasPressurePumpBoundUserInterface
 
 - type: entity
   parent: GasBinaryBase
@@ -67,6 +71,10 @@
         - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
     - type: GasVolumePump
+    - type: UserInterface
+      interfaces:
+        - key: enum.GasVolumePumpUiKey.Key
+          type: GasVolumePumpBoundUserInterface
 
 - type: entity
   parent: GasBinaryBase

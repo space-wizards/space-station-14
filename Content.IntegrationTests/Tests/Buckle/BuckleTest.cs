@@ -8,8 +8,6 @@ using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Coordinates;
-using Content.Shared.Interaction.Events;
-using Content.Shared.Movement;
 using Content.Shared.Standing;
 using NUnit.Framework;
 using Robust.Server.Player;
@@ -73,8 +71,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
                 var standingState = EntitySystem.Get<StandingStateSystem>();
 
-                var gridId = new GridId(1);
-                var grid = mapManager.GetGrid(gridId);
+                var grid = GetMainGrid(mapManager);
                 var coordinates = grid.GridEntityId.ToCoordinates();
 
                 human = entityManager.SpawnEntity(BuckleDummyId, coordinates);
@@ -235,8 +232,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 var mapManager = IoCManager.Resolve<IMapManager>();
                 var entityManager = IoCManager.Resolve<IEntityManager>();
 
-                var gridId = new GridId(1);
-                var grid = mapManager.GetGrid(gridId);
+                var grid = GetMainGrid(mapManager);
                 var coordinates = grid.GridEntityId.ToCoordinates();
 
                 human = entityManager.SpawnEntity(BuckleDummyId, coordinates);
@@ -321,8 +317,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 var mapManager = IoCManager.Resolve<IMapManager>();
                 var entityManager = IoCManager.Resolve<IEntityManager>();
 
-                var gridId = new GridId(1);
-                var grid = mapManager.GetGrid(gridId);
+                var grid = GetMainGrid(mapManager);
                 var coordinates = grid.GridEntityId.ToCoordinates();
 
                 human = entityManager.SpawnEntity(BuckleDummyId, coordinates);

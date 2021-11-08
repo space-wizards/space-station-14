@@ -9,7 +9,6 @@ using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using static Content.IntegrationTests.Tests.Destructible.DestructibleTestPrototypes;
@@ -24,7 +23,7 @@ namespace Content.IntegrationTests.Tests.Destructible
         [Test]
         public async Task Test()
         {
-            var server = StartServerDummyTicker(new ServerContentIntegrationOption
+            var server = StartServer(new ServerContentIntegrationOption
             {
                 ExtraPrototypes = Prototypes
             });
@@ -44,14 +43,16 @@ namespace Content.IntegrationTests.Tests.Destructible
 
             await server.WaitPost(() =>
             {
-                var mapId = new MapId(1);
-                var coordinates = new MapCoordinates(0, 0, mapId);
-                sMapManager.CreateMap(mapId);
+                var gridId = GetMainGrid(sMapManager).GridEntityId;
+                var coordinates = new EntityCoordinates(gridId, 0, 0);
 
                 sDestructibleEntity = sEntityManager.SpawnEntity(DestructibleEntityId, coordinates);
                 sDamageableComponent = sDestructibleEntity.GetComponent<DamageableComponent>();
                 sDestructibleComponent = sDestructibleEntity.GetComponent<DestructibleComponent>();
+
                 sTestThresholdListenerSystem = sEntitySystemManager.GetEntitySystem<TestDestructibleListenerSystem>();
+                sTestThresholdListenerSystem.ThresholdsReached.Clear();
+
                 sDamageableSystem = sEntitySystemManager.GetEntitySystem<DamageableSystem>();
             });
 
