@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Content.Server.Explosion;
 using Content.Server.Pointing.Components;
-using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
 using Content.Shared.Pointing.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -44,7 +44,7 @@ namespace Content.Server.Pointing.EntitySystems
 
             var players = _playerManager
                 .GetPlayersInRange(transform.Coordinates, 15)
-                .Where(player => player.AttachedEntity != null && player.AttachedEntity.TryGetComponent(out IMobStateComponent? mobStateComponent) && !mobStateComponent.IsDead())
+                .Where(player => player.AttachedEntity != null && player.AttachedEntity.TryGetComponent(out MobStateComponent? mobStateComponent) && !mobStateComponent.IsDead())
                 .ToArray();
 
             if (players.Length == 0)

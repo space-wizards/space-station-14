@@ -22,9 +22,8 @@ namespace Content.Shared.MobState.Components
     ///     (such as blur effect for unconsciousness) and managing the health HUD.
     /// </summary>
     [RegisterComponent]
-    [ComponentReference(typeof(IMobStateComponent))]
-    [NetworkedComponent()]
-    public class MobStateComponent : Component, IMobStateComponent
+    [NetworkedComponent]
+    public class MobStateComponent : Component
     {
         public override string Name => "MobState";
 

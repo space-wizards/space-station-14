@@ -2,7 +2,7 @@ using Content.Server.Alert;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
-using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
 using Content.Shared.MobState.State;
 using Robust.Shared.GameObjects;
 
@@ -24,7 +24,7 @@ namespace Content.Server.MobState.States
                 return;
             }
 
-            if (!entity.TryGetComponent(out IMobStateComponent? stateComponent))
+            if (!entity.TryGetComponent(out MobStateComponent? stateComponent))
             {
                 return;
             }

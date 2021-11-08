@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Content.Server.Alert;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
-using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.EntitySystems;
 using Content.Shared.Nutrition.Components;
@@ -182,7 +182,7 @@ namespace Content.Server.Nutrition.Components
                 return;
             // --> Current Hunger is below dead threshold
 
-            if (!Owner.TryGetComponent(out IMobStateComponent? mobState))
+            if (!Owner.TryGetComponent(out MobStateComponent? mobState))
                 return;
 
             if (!mobState.IsDead())
