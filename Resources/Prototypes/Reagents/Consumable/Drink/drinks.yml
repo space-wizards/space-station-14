@@ -1,14 +1,10 @@
 - type: reagent
   id: Coffee
   name: coffee
+  parent: BaseDrink
   desc: A drink made from brewed coffee beans. Contains a moderate amount of caffeine.
   physicalDesc: aromatic
   color: "#664300"
-  metabolisms:
-    Drink:
-      effects:
-      - !type:SatiateThirst
-        factor: 2
 
 - type: reagent
   id: Cream
@@ -25,75 +21,56 @@
 - type: reagent
   id: CafeLatte
   name: cafe latte
+  parent: BaseDrink
   desc: A nice, strong and tasty beverage while you are reading.
   physicalDesc: creamy
   color: "#664300"
   spritePath: cafe_latte.rsi
-  metabolisms:
-    Drink:
-      effects:
-      - !type:SatiateThirst
-        factor: 2
 
 - type: reagent
   id: GreenTea
   name: green tea
+  parent: BaseDrink
   desc: Tasty green tea.
   physicalDesc: aromatic
   color: "#C33F00"
   spritePath: glass_green.rsi #Placeholder
-  metabolisms:
-    Drink:
-      effects:
-      - !type:SatiateThirst
 
 - type: reagent
   id: Grenadine
   name: grenadine
+  parent: BaseDrink
   desc: Not cherry flavored!
   physicalDesc: dark-red
   color: "#EA1D26"
   spritePath: grenadineglass.rsi
-  metabolisms:
-    Drink:
-      effects:
-      - !type:SatiateThirst
 
 - type: reagent
   id: IcedCoffee
   name: iced coffee
+  parent: BaseDrink
   desc: Coffee and ice, refreshing and cool.
   physicalDesc: aromatic
   color: "#102838"
   spritePath: icedcoffeeglass.rsi
-  metabolisms:
-    Drink:
-      effects:
-      - !type:SatiateThirst
 
 - type: reagent
   id: IcedGreenTea
   name: iced green tea
+  parent: BaseDrink
   desc: cold green tea.
   physicalDesc: aromatic
   color: "#CE4200"
   spritePath: glass_green.rsi #Placeholder
-  metabolisms:
-    Drink:
-      effects:
-      - !type:SatiateThirst
 
 - type: reagent
   id: IcedTea
   name: iced tea
+  parent: BaseDrink
   desc: No relation to a certain rap artist/actor.
   physicalDesc: aromatic
   color: "#104038"
   spritePath: icedteaglass.rsi
-  metabolisms:
-    Drink:
-      effects:
-      - !type:SatiateThirst
 
 - type: reagent
   id: Lemonade
@@ -191,49 +168,37 @@
       - !type:HealthChange
         damage:
           types:
-            Poison: 2
+            Poison: 1
 
 - type: reagent
   id: SodaWater
   name: soda water
+  parent: BaseDrink
   desc: A container of club soda. Why not make a scotch and soda?
   physicalDesc: fizzy
   color: "#619494"
-  metabolisms:
-    Drink:
-      effects:
-      - !type:SatiateThirst
 
 - type: reagent
   id: SoyLatte
   name: soy latte
+  parent: BaseDrink
   desc: A coffee drink made with espresso and steamed soy milk.
   physicalDesc: strong-smelling
   color: "#664300"
   spritePath: soy_latte.rsi
-  metabolisms:
-    Drink:
-      effects:
-      - !type:SatiateThirst
 
 - type: reagent
   id: Tea
   name: tea
+  parent: BaseDrink
   desc: A drink made by boiling leaves of the tea tree, Camellia sinensis.
   physicalDesc: aromatic
   color: "#8a5a3a"
-  metabolisms:
-    Drink:
-      effects:
-      - !type:SatiateThirst
 
 - type: reagent
   id: TonicWater
   name: tonic water
+  parent: BaseDrink
   desc: It tastes strange but at least the quinine keeps the Space Malaria at bay.
   physicalDesc: fizzy
   color: "#0064C8"
-  metabolisms:
-    Drink:
-      effects:
-      - !type:SatiateThirst

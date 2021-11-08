@@ -11,6 +11,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.ViewVariables;
@@ -19,7 +20,7 @@ namespace Content.Shared.Chemistry.Reagent
 {
     [Prototype("reagent")]
     [DataDefinition]
-    public class ReagentPrototype : IPrototype
+    public class ReagentPrototype : IPrototype, IInheritingPrototype
     {
         [DataField("metabolisms", serverOnly: true, customTypeSerializer: typeof(PrototypeIdDictionarySerializer<ReagentEffectsEntry, MetabolismGroupPrototype>))]
         public Dictionary<string, ReagentEffectsEntry>? Metabolisms = null;
@@ -36,6 +37,13 @@ namespace Content.Shared.Chemistry.Reagent
 
         [DataField("name")]
         public string Name { get; } = string.Empty;
+
+        [DataField("parent", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentPrototype>))]
+        public string? Parent { get; private set; }
+
+        [NeverPushInheritance]
+        [DataField("abstract")]
+        public bool Abstract { get; private set; }
 
         [DataField("desc")]
         public string Description { get; } = string.Empty;
