@@ -1,10 +1,10 @@
 ﻿using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.Body.Metabolism
+namespace Content.Shared.Body.Metabolism
 {
-    [Prototype("metabolismGroup")]
-    public class MetabolismGroupPrototype : IPrototype
+    [Prototype("metabolizerType")]
+    public class MetabolizerTypePrototype : IPrototype
     {
         [DataField("id", required: true)]
         public string ID { get; } = default!;

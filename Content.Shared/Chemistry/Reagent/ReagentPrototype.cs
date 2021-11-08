@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using Content.Shared.Body.Metabolism;
 using Content.Shared.Botany;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
@@ -19,7 +21,7 @@ namespace Content.Shared.Chemistry.Reagent
     [DataDefinition]
     public class ReagentPrototype : IPrototype
     {
-        [DataField("metabolisms", serverOnly: true)] //customTypeSerializer: PrototypeIdDictionarySerializer<List<ReagentEffectsEntry>, PrototypeIdListSerializer<MetabolismGroupPrototype>>)]
+        [DataField("metabolisms", serverOnly: true, customTypeSerializer: typeof(PrototypeIdDictionarySerializer<ReagentEffectsEntry, MetabolismGroupPrototype>))]
         public Dictionary<string, ReagentEffectsEntry>? Metabolisms = null;
 
         [DataField("tileReactions", serverOnly: true)]
@@ -96,14 +98,15 @@ namespace Content.Shared.Chemistry.Reagent
             return removed;
         }
 
-        public void ReactionPlant(IEntity? plantHolder, Solution.ReagentQuantity amount)
+        public void ReactionPlant(EntityUid? plantHolder, Solution.ReagentQuantity amount)
         {
-            if (plantHolder == null || plantHolder.Deleted)
+            if (plantHolder == null)
                 return;
 
+            var entMan = IoCManager.Resolve<IEntityManager>();
             foreach (var plantMetabolizable in _plantMetabolism)
             {
-                plantMetabolizable.Metabolize(plantHolder, plantHolder, amount);
+                plantMetabolizable.Metabolize(plantHolder.Value, plantHolder.Value, amount, entMan);
             }
         }
     }

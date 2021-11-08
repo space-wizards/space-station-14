@@ -7,9 +7,9 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
     [UsedImplicitly]
     public class PlantAffectGrowth : PlantAdjustAttribute
     {
-        public override void Metabolize(IEntity plantHolder, IEntity organEntity, Solution.ReagentQuantity amount)
+        public override void Metabolize(EntityUid plantHolder, EntityUid organEntity, Solution.ReagentQuantity reagent, IEntityManager entityManager)
         {
-            if (!CanMetabolize(plantHolder, out var plantHolderComp))
+            if (!CanMetabolize(plantHolder, out var plantHolderComp, entityManager))
                 return;
 
             plantHolderComp.AffectGrowth((int) Amount);

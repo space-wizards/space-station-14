@@ -21,6 +21,6 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField("conditions")]
         public ReagentEffectCondition[]? Conditions;
 
-        public abstract void Metabolize(IEntity solutionEntity, IEntity organEntity, Solution.ReagentQuantity amount);
+        public abstract void Metabolize(EntityUid solutionEntity, EntityUid organEntity, Solution.ReagentQuantity reagent, IEntityManager entityManager);
     }
 }

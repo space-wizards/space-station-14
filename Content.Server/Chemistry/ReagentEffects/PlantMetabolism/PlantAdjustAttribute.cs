@@ -23,13 +23,16 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
         /// </summary>
         /// <param name="plantHolder">The entity holding the plant</param>
         /// <param name="plantHolderComponent">The plant holder component</param>
+        /// <param name="entityManager">The entity manager</param>
         /// <param name="mustHaveAlivePlant">Whether to check if it has an alive plant or not</param>
         /// <returns></returns>
-        public bool CanMetabolize(IEntity plantHolder, [NotNullWhen(true)] out PlantHolderComponent? plantHolderComponent, bool mustHaveAlivePlant = true)
+        public bool CanMetabolize(EntityUid plantHolder, [NotNullWhen(true)] out PlantHolderComponent? plantHolderComponent,
+            IEntityManager entityManager,
+            bool mustHaveAlivePlant = true)
         {
             plantHolderComponent = null;
 
-            if (plantHolder.Deleted || !plantHolder.TryGetComponent(out plantHolderComponent)
+            if (!entityManager.TryGetComponent(plantHolder, out plantHolderComponent)
                                     || mustHaveAlivePlant && (plantHolderComponent.Seed == null || plantHolderComponent.Dead))
                 return false;
 

@@ -18,9 +18,9 @@ namespace Content.Server.Chemistry.ReagentEffects
         [DataField("factor")] public float NutritionFactor { get; set; } = 3.0f;
 
         //Remove reagent at set rate, satiate hunger if a HungerComponent can be found
-        public override void Metabolize(IEntity solutionEntity, IEntity organEntity, Solution.ReagentQuantity amount)
+        public override void Metabolize(EntityUid solutionEntity, EntityUid organEntity, Solution.ReagentQuantity reagent, IEntityManager entityManager)
         {
-            if (solutionEntity.TryGetComponent(out HungerComponent? hunger))
+            if (entityManager.TryGetComponent(solutionEntity, out HungerComponent? hunger))
                 hunger.UpdateFood(NutritionFactor);
         }
     }

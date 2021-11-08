@@ -15,9 +15,9 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
     [DataDefinition]
     public class PlantDiethylamine : ReagentEffect
     {
-        public override void Metabolize(IEntity plantHolder, IEntity organEntity, Solution.ReagentQuantity amount)
+        public override void Metabolize(EntityUid plantHolder, EntityUid organEntity, Solution.ReagentQuantity reagent, IEntityManager entityManager)
         {
-            if (plantHolder.Deleted || !plantHolder.TryGetComponent(out PlantHolderComponent? plantHolderComp)
+            if (!entityManager.TryGetComponent(plantHolder, out PlantHolderComponent? plantHolderComp)
                                     || plantHolderComp.Seed == null || plantHolderComp.Dead ||
                                     plantHolderComp.Seed.Immutable)
                 return;

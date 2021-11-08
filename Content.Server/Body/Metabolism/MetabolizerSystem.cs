@@ -128,13 +128,12 @@ namespace Content.Server.Body.Metabolism
                     foreach (var effect in entry.Effects)
                     {
                         bool failed = false;
-                        var ent = EntityManager.GetEntity(solutionEntityUid.Value);
                         var quant = new Solution.ReagentQuantity(reagent.ReagentId, reagent.Quantity);
                         if (effect.Conditions != null)
                         {
                             foreach (var cond in effect.Conditions)
                             {
-                                if (!cond.Condition(ent, meta.Owner, quant))
+                                if (!cond.Condition(solutionEntityUid.Value, meta.OwnerUid, quant, EntityManager))
                                     failed = true;
                             }
 
@@ -142,7 +141,7 @@ namespace Content.Server.Body.Metabolism
                                 continue;
                         }
 
-                        effect.Metabolize(ent, meta.Owner, quant);
+                        effect.Metabolize(solutionEntityUid.Value, meta.OwnerUid, quant, EntityManager);
                     }
                 }
 

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Content.Shared.Body.Metabolism;
 using Content.Shared.Body.Networks;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
@@ -48,7 +49,7 @@ namespace Content.Server.Body.Metabolism
         ///     List of metabolizer types that this organ is. ex. Human, Slime, Felinid, w/e.
         /// </summary>
         [DataField("metabolizerTypes", customTypeSerializer:typeof(PrototypeIdListSerializer<MetabolizerTypePrototype>))]
-        public List<string>? MetabolizerTypes = null;
+        public HashSet<string>? MetabolizerTypes = null;
 
         /// <summary>
         ///     A list of metabolism groups that this metabolizer will act on, in order of precedence.
