@@ -305,6 +305,7 @@ namespace Content.Client.Entry
             "GhostRadio",
             "Armor",
             "Supermatter",
+            "SupermatterFood",
             "PneumaticCannon"
         };
     }

@@ -294,6 +294,8 @@
       proper: true
   - type: StandingState
   - type: DoorBumpOpener
+  - type: SupermatterFood
+    energy: 10
 
 - type: entity
   save: false
