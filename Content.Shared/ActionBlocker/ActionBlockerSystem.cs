@@ -43,18 +43,12 @@ namespace Content.Shared.ActionBlocker
             return CanInteract(EntityManager.GetEntity(uid));
         }
 
-        public bool CanUse(IEntity entity)
-        {
-            var ev = new UseAttemptEvent(entity);
-
-            RaiseLocalEvent(entity.Uid, ev);
-
-            return !ev.Cancelled;
-        }
-
         public bool CanUse(EntityUid uid)
         {
-            return CanUse(EntityManager.GetEntity(uid));
+            var ev = new UseAttemptEvent(uid);
+            RaiseLocalEvent(uid, ev);
+
+            return !ev.Cancelled;
         }
 
         public bool CanThrow(IEntity entity)

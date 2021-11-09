@@ -82,7 +82,7 @@ namespace Content.Server.HandLabeler
         {
             if (session.AttachedEntity is not { } entity
                 || !Get<ActionBlockerSystem>().CanInteract(entity)
-                || !Get<ActionBlockerSystem>().CanUse(entity))
+                || !Get<ActionBlockerSystem>().CanUse(entity.Uid))
                 return false;
 
             return true;

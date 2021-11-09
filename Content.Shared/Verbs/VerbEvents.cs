@@ -166,7 +166,7 @@ namespace Content.Shared.Verbs
         ///     The entity currently being held by the active hand.
         /// </summary>
         /// <remarks>
-        ///     This is only ever not null when <see cref="ActionBlockerSystem.CanUse(IEntity)"/> is true and the user
+        ///     This is only ever not null when <see cref="ActionBlockerSystem.CanUse(EntityUid)"/> is true and the user
         ///     has hands.
         /// </remarks>
         public IEntity? Using;
@@ -185,7 +185,7 @@ namespace Content.Shared.Verbs
             CanInteract = force || actionBlockerSystem.CanInteract(user);
 
             if (!user.TryGetComponent(out Hands) ||
-                !actionBlockerSystem.CanUse(user))
+                !actionBlockerSystem.CanUse(user.Uid))
                 return;
 
             Hands.TryGetActiveHeldEntity(out Using);

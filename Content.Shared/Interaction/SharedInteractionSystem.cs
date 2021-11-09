@@ -444,7 +444,7 @@ namespace Content.Shared.Interaction
                 delayComponent.BeginDelay();
             }
 
-            if (!_actionBlockerSystem.CanInteract(user) || !_actionBlockerSystem.CanUse(user))
+            if (!_actionBlockerSystem.CanInteract(user) || !_actionBlockerSystem.CanUse(user.Uid))
                 return;
 
             // all activates should only fire when in range / unobstructed
@@ -474,7 +474,7 @@ namespace Content.Shared.Interaction
         /// <param name="used"></param>
         public void TryUseInteraction(IEntity user, IEntity used, bool altInteract = false)
         {
-            if (user != null && used != null && _actionBlockerSystem.CanUse(user))
+            if (user != null && used != null && _actionBlockerSystem.CanUse(user.Uid))
             {
                 if (altInteract)
                     AltInteract(user, used);
