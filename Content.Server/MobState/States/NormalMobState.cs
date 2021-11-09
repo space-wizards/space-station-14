@@ -10,21 +10,21 @@ namespace Content.Server.MobState.States
 {
     public class NormalMobState : SharedNormalMobState
     {
-        public override void UpdateState(IEntity entity, FixedPoint2 threshold)
+        public override void UpdateState(EntityUid entity, FixedPoint2 threshold, IEntityManager entityManager)
         {
-            base.UpdateState(entity, threshold);
+            base.UpdateState(entity, threshold, entityManager);
 
-            if (!entity.TryGetComponent(out DamageableComponent? damageable))
+            if (!entityManager.TryGetComponent(entity, out DamageableComponent? damageable))
             {
                 return;
             }
 
-            if (!entity.TryGetComponent(out ServerAlertsComponent? alerts))
+            if (!entityManager.TryGetComponent(entity, out ServerAlertsComponent? alerts))
             {
                 return;
             }
 
-            if (!entity.TryGetComponent(out MobStateComponent? stateComponent))
+            if (!entityManager.TryGetComponent(entity, out MobStateComponent? stateComponent))
             {
                 return;
             }

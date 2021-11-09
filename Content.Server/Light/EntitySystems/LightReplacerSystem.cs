@@ -44,7 +44,7 @@ namespace Content.Server.Light.EntitySystems
                 return;
 
             // standard interaction checks
-            if (!_blocker.CanUse(eventArgs.User)) return;
+            if (!_blocker.CanUse(eventArgs.User.Uid)) return;
             if (!eventArgs.CanReach) return;
 
             // behaviour will depends on target type
@@ -67,7 +67,7 @@ namespace Content.Server.Light.EntitySystems
                 return;
 
             // standard interaction checks
-            if (!_blocker.CanInteract(eventArgs.User)) return;
+            if (!_blocker.CanInteract(eventArgs.User.Uid)) return;
 
             if (eventArgs.Used != null)
             {

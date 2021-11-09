@@ -18,11 +18,11 @@ namespace Content.Server.Chemistry.ReagentEntityReactions
         // ReSharper disable once CollectionNeverUpdated.Local
         private readonly HashSet<string> _reagents = new ();
 
-        protected override void React(IEntity entity, ReagentPrototype reagent, FixedPoint2 volume, Solution? source)
+        protected override void React(EntityUid uid, ReagentPrototype reagent, FixedPoint2 volume, Solution? source, IEntityManager entityManager)
         {
-            if (!entity.TryGetComponent(out CreamPiedComponent? creamPied) || !_reagents.Contains(reagent.ID)) return;
+            if (!entityManager.TryGetComponent(uid, out CreamPiedComponent? creamPied) || !_reagents.Contains(reagent.ID)) return;
 
-            EntitySystem.Get<CreamPieSystem>().SetCreamPied(entity.Uid, creamPied, false);
+            EntitySystem.Get<CreamPieSystem>().SetCreamPied(uid, creamPied, false);
         }
     }
 }

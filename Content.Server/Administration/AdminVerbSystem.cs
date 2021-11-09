@@ -106,7 +106,7 @@ namespace Content.Server.Administration
                 verb.Text = Loc.GetString("make-sentient-verb-get-data-text");
                 verb.Category = VerbCategory.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/sentient.svg.192dpi.png";
-                verb.Act = () => MakeSentientCommand.MakeSentient(args.Target);
+                verb.Act = () => MakeSentientCommand.MakeSentient(args.Target.Uid, EntityManager);
                 args.Verbs.Add(verb);
             }
 

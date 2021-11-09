@@ -94,7 +94,7 @@ namespace Content.Server.Disposal.Tube.Components
             var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
             var groupController = IoCManager.Resolve<IConGroupController>();
             //Check if player can interact in their current state
-            if (!groupController.CanAdminMenu(session) && (!actionBlocker.CanInteract(session.AttachedEntity) || !actionBlocker.CanUse(session.AttachedEntity)))
+            if (!groupController.CanAdminMenu(session) && (!actionBlocker.CanInteract(session.AttachedEntityUid!.Value) || !actionBlocker.CanUse(session.AttachedEntityUid!.Value)))
                 return false;
 
             return true;

@@ -59,10 +59,10 @@ namespace Content.Shared.Pulling
             // Messaging
             var message = new PullStoppedMessage(pullerPhysics, pullablePhysics);
 
-            RaiseLocalEvent(puller.Owner.Uid, message, broadcast: false);
+            RaiseLocalEvent(puller.OwnerUid, message, broadcast: false);
 
             if (pullable.Owner.LifeStage <= EntityLifeStage.MapInitialized)
-                RaiseLocalEvent(pullable.Owner.Uid, message);
+                RaiseLocalEvent(pullable.OwnerUid, message);
 
             // Networking
             puller.Dirty();
@@ -106,7 +106,7 @@ namespace Content.Shared.Pulling
                 var union = pullerPhysics.GetWorldAABB().Union(pullablePhysics.GetWorldAABB());
                 var length = Math.Max(union.Size.X, union.Size.Y) * 0.75f;
 
-                pullable.PullJoint = _jointSystem.CreateDistanceJoint(pullablePhysics.Owner.Uid, pullerPhysics.Owner.Uid, id:$"pull-joint-{pullablePhysics.Owner.Uid}");
+                pullable.PullJoint = _jointSystem.CreateDistanceJoint(pullablePhysics.OwnerUid, pullerPhysics.Owner.Uid, id:$"pull-joint-{pullablePhysics.Owner.Uid}");
                 pullable.PullJoint.CollideConnected = false;
                 // This maximum has to be there because if the object is constrained too closely, the clamping goes backwards and asserts.
                 pullable.PullJoint.MaxLength = Math.Max(1.0f, length);
@@ -117,8 +117,8 @@ namespace Content.Shared.Pulling
                 // Messaging
                 var message = new PullStartedMessage(pullerPhysics, pullablePhysics);
 
-                RaiseLocalEvent(puller.Owner.Uid, message, broadcast: false);
-                RaiseLocalEvent(pullable.Owner.Uid, message);
+                RaiseLocalEvent(puller.OwnerUid, message, broadcast: false);
+                RaiseLocalEvent(pullable.OwnerUid, message);
 
                 // Networking
                 puller.Dirty();

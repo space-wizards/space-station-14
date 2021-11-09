@@ -24,7 +24,7 @@ namespace Content.Server.Storage.EntitySystems
                 {
                     foreach (var entity in containedLayers)
                     {
-                        if (mapLayerData.Whitelist.IsValid(entity))
+                        if (mapLayerData.Whitelist.IsValid(entity.Uid))
                         {
                             list.Add(mapLayerData.Layer);
                             break;

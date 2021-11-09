@@ -28,7 +28,7 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField("ingestion")]
         public bool Ingestion { get; } = false;
 
-        public void React(ReactionMethod method, IEntity entity, ReagentPrototype reagent, FixedPoint2 volume, Components.Solution? source)
+        public void React(ReactionMethod method, EntityUid uid, ReagentPrototype reagent, FixedPoint2 volume, Components.Solution? source, IEntityManager entityManager)
         {
             switch (method)
             {
@@ -48,9 +48,9 @@ namespace Content.Shared.Chemistry.Reagent
                     throw new ArgumentOutOfRangeException(nameof(method), method, null);
             }
 
-            React(entity, reagent, volume, source);
+            React(uid, reagent, volume, source, entityManager);
         }
 
-        protected abstract void React(IEntity entity, ReagentPrototype reagent, FixedPoint2 volume, Components.Solution? source);
+        protected abstract void React(EntityUid uid, ReagentPrototype reagent, FixedPoint2 volume, Components.Solution? source, IEntityManager entityManager);
     }
 }

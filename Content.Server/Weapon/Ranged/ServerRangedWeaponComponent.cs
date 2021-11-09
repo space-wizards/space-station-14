@@ -89,7 +89,7 @@ namespace Content.Server.Weapon.Ranged
 
         private bool UserCanFire(IEntity user)
         {
-            return (UserCanFireHandler == null || UserCanFireHandler(user)) && EntitySystem.Get<ActionBlockerSystem>().CanInteract(user);
+            return (UserCanFireHandler == null || UserCanFireHandler(user)) && EntitySystem.Get<ActionBlockerSystem>().CanInteract(user.Uid);
         }
 
         /// <inheritdoc />

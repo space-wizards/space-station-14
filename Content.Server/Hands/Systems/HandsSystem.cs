@@ -245,7 +245,7 @@ namespace Content.Server.Hands.Systems
                 if (splitStack == null)
                     return false;
 
-                throwEnt = splitStack;
+                throwEnt = EntityManager.GetEntity(splitStack.Value);
             }
             else if (!hands.Drop(throwEnt))
                 return false;

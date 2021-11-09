@@ -218,7 +218,7 @@ namespace Content.Server.Atmos.Components
         {
             var user = GetInternalsComponent()?.Owner;
 
-            if (user == null || !EntitySystem.Get<ActionBlockerSystem>().CanUse(user))
+            if (user == null || !EntitySystem.Get<ActionBlockerSystem>().CanUse(user.Uid))
                 return;
 
             if (IsConnected)

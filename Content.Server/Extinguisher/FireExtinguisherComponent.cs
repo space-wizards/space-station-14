@@ -99,7 +99,7 @@ namespace Content.Server.Extinguisher
 
         private void SetSafety(IEntity user, bool state)
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || !_hasSafety)
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user.Uid) || !_hasSafety)
                 return;
 
             _safety = state;

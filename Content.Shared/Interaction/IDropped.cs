@@ -37,22 +37,22 @@ namespace Content.Shared.Interaction
         /// <summary>
         ///     Entity that dropped the item.
         /// </summary>
-        public IEntity User { get; }
+        public EntityUid UserUid { get; }
 
         /// <summary>
         ///     Item that was dropped.
         /// </summary>
-        public IEntity Dropped { get; }
+        public EntityUid DroppedUid { get; }
 
         /// <summary>
         ///     If the item was dropped intentionally.
         /// </summary>
         public bool Intentional { get; }
 
-        public DroppedEvent(IEntity user, IEntity dropped, bool intentional)
+        public DroppedEvent(EntityUid user, EntityUid dropped, bool intentional)
         {
-            User = user;
-            Dropped = dropped;
+            UserUid = user;
+            DroppedUid = dropped;
             Intentional = intentional;
         }
     }

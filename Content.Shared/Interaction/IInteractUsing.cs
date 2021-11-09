@@ -56,14 +56,29 @@ namespace Content.Shared.Interaction
         public IEntity User { get; }
 
         /// <summary>
+        ///     Entity that triggered the interaction.
+        /// </summary>
+        public EntityUid UserUid => User.Uid;
+
+        /// <summary>
         ///     Entity that the user used to interact.
         /// </summary>
         public IEntity Used { get; }
 
         /// <summary>
+        ///     Entity that the user used to interact.
+        /// </summary>
+        public EntityUid UsedUid => Used.Uid;
+
+        /// <summary>
         ///     Entity that was interacted on.
         /// </summary>
         public IEntity Target { get; }
+
+        /// <summary>
+        ///     Entity that was interacted on.
+        /// </summary>
+        public EntityUid TargetUid => Target.Uid;
 
         /// <summary>
         ///     The original location that was clicked by the user.

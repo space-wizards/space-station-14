@@ -273,6 +273,15 @@ namespace Content.Server.Explosion
             }
         }
 
+        // TODO: remove this shit
+        public static void SpawnExplosion(this EntityUid uid, int devastationRange = 0, int heavyImpactRange = 0,
+            int lightImpactRange = 0, int flashRange = 0, IEntityManager? entityManager = null)
+        {
+            entityManager ??= IoCManager.Resolve<IEntityManager>();
+
+            SpawnExplosion(entityManager.GetEntity(uid), devastationRange, heavyImpactRange, lightImpactRange, flashRange);
+        }
+
         public static void SpawnExplosion(this IEntity entity, int devastationRange = 0, int heavyImpactRange = 0,
             int lightImpactRange = 0, int flashRange = 0)
         {

@@ -28,11 +28,11 @@ namespace Content.Server.Chemistry.ReactionEffects
         /// </summary>
         [DataField("maxScale")] private float _maxScale = 1;
 
-        public void React(Solution solution, IEntity solutionEntity, double intensity)
+        public void React(Solution solution, EntityUid solutionEntity, double intensity, IEntityManager entityManager)
         {
             var floatIntensity = (float) intensity;
-      
-            if (!solutionEntity.HasComponent<SolutionContainerManagerComponent>())
+
+            if (!entityManager.HasComponent<SolutionContainerManagerComponent>(solutionEntity))
                 return;
 
             //Handle scaling

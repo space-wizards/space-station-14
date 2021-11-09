@@ -67,11 +67,13 @@ namespace Content.Shared.Whitelist
         /// <summary>
         ///     Returns whether a given entity fits the whitelist.
         /// </summary>
-        public bool IsValid(IEntity entity)
+        public bool IsValid(EntityUid uid, IEntityManager? entityManager = null)
         {
-            if (Tags != null)
+            entityManager ??= IoCManager.Resolve<IEntityManager>();
+
+            if (Tags != null && entityManager.TryGetComponent(uid, out TagComponent? tags))
             {
-                if (entity.HasAnyTag(Tags))
+                if (tags.HasAnyTag(Tags))
                         return true;
             }
 
@@ -79,7 +81,7 @@ namespace Content.Shared.Whitelist
             {
                 foreach (var reg in _registrations)
                 {
-                    if (entity.HasComponent(reg.Type))
+                    if (entityManager.HasComponent(uid, reg.Type))
                         return true;
                 }
             }

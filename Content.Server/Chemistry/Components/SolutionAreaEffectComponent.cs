@@ -143,7 +143,7 @@ namespace Content.Server.Chemistry.Components
                 // Touch every entity on the tile
                 foreach (var entity in tile.GetEntitiesInTileFast().ToArray())
                 {
-                    chemistry.ReactionEntity(entity, ReactionMethod.Touch, reagent,
+                    chemistry.ReactionEntity(entity.Uid, ReactionMethod.Touch, reagent,
                         reagentQuantity.Quantity * solutionFraction, solution);
                 }
             }
