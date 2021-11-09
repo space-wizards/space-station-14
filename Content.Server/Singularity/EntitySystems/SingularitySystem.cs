@@ -1,5 +1,6 @@
 using Content.Server.Ghost.Components;
 using Content.Server.Singularity.Components;
+using Content.Server.Supermatter.Components;
 using Content.Shared.Singularity;
 using Content.Shared.Singularity.Components;
 using JetBrains.Annotations;
@@ -143,7 +144,7 @@ namespace Content.Server.Singularity.EntitySystems
 
             foreach (var entity in _lookup.GetEntitiesInRange(component.Owner.Transform.MapID, worldPos, destroyRange))
             {
-                if (entity.HasComponent<Supermatter.SupermatterComponent>())
+                if (entity.HasComponent<SupermatterComponent>())
                     component.Scrung = true;
                 HandleDestroy(component, entity);
             }
