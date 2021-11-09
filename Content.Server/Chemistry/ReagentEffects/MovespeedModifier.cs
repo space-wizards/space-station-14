@@ -2,6 +2,7 @@ using System;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -36,11 +37,9 @@ namespace Content.Server.Chemistry.ReagentEffects
         /// <summary>
         /// Remove reagent at set rate, changes the movespeed modifiers and adds a MovespeedModifierMetabolismComponent if not already there.
         /// </summary>
-        public override void Metabolize(IEntity solutionEntity, Solution.ReagentQuantity amount)
+        public override void Metabolize(EntityUid solutionEntity, EntityUid organEntity, Solution.ReagentQuantity reagent, IEntityManager entityManager)
         {
-            if (!solutionEntity.TryGetComponent(out MovementSpeedModifierComponent? movement)) return;
-
-            solutionEntity.EnsureComponent(out MovespeedModifierMetabolismComponent status);
+            var status = entityManager.EnsureComponent<MovespeedModifierMetabolismComponent>(solutionEntity);
 
             // Only refresh movement if we need to.
             var modified = !status.WalkSpeedModifier.Equals(WalkSpeedModifier) ||
@@ -49,10 +48,10 @@ namespace Content.Server.Chemistry.ReagentEffects
             status.WalkSpeedModifier = WalkSpeedModifier;
             status.SprintSpeedModifier = SprintSpeedModifier;
 
-            IncreaseTimer(status, StatusLifetime * amount.Quantity.Float());
+            IncreaseTimer(status, StatusLifetime * reagent.Quantity.Float());
 
             if (modified)
-                movement.RefreshMovementSpeedModifiers();
+                EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(solutionEntity);
 
         }
         public void IncreaseTimer(MovespeedModifierMetabolismComponent status, float time)

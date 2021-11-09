@@ -53,7 +53,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 !args.CanInteract ||
                 component.HasBeaker ||
                 !args.Using.HasComponent<FitsInDispenserComponent>() ||
-                !_actionBlockerSystem.CanDrop(args.User))
+                !_actionBlockerSystem.CanDrop(args.User.Uid))
                 return;
 
             Verb verb = new();

@@ -2,6 +2,7 @@
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Content.Shared.Physics;
 using Content.Shared.Vapor;
 using JetBrains.Annotations;
@@ -35,7 +36,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
             foreach (var (_, value) in contents.Solutions)
             {
-                value.DoEntityReaction(args.OtherFixture.Body.Owner, ReactionMethod.Touch);
+                value.DoEntityReaction(args.OtherFixture.Body.Owner.Uid, ReactionMethod.Touch);
             }
 
             // Check for collision with a impassable object (e.g. wall) and stop
@@ -104,7 +105,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 var tile = mapGrid.GetTileRef(entity.Transform.Coordinates.ToVector2i(EntityManager, _mapManager));
                 foreach (var reagentQuantity in contents.Contents.ToArray())
                 {
-                    if (reagentQuantity.Quantity == ReagentUnit.Zero) continue;
+                    if (reagentQuantity.Quantity == FixedPoint2.Zero) continue;
                     var reagent = _protoManager.Index<ReagentPrototype>(reagentQuantity.ReagentId);
                     _solutionContainerSystem.TryRemoveReagent(vapor.Owner.Uid, contents, reagentQuantity.ReagentId,
                         reagent.ReactionTile(tile, (reagentQuantity.Quantity / vapor.TransferAmount) * 0.25f));

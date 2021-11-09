@@ -13,12 +13,12 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         [DataField("node")]
         public string Node { get; private set; } = string.Empty;
 
-        public void Execute(IEntity owner, DestructibleSystem system)
+        public void Execute(EntityUid owner, DestructibleSystem system, IEntityManager entityManager)
         {
-            if (string.IsNullOrEmpty(Node) || !owner.TryGetComponent(out ConstructionComponent? construction))
+            if (string.IsNullOrEmpty(Node) || !entityManager.TryGetComponent(owner, out ConstructionComponent? construction))
                 return;
 
-            EntitySystem.Get<ConstructionSystem>().ChangeNode(owner.Uid, null, Node, true, construction);
+            EntitySystem.Get<ConstructionSystem>().ChangeNode(owner, null, Node, true, construction);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task Test()
         {
-            var (client, _) = await StartConnectedServerClientPair();
+            var (client, _) = await StartConnectedServerClientPair(new ClientContentIntegrationOption(){ Pool = false }, new ServerContentIntegrationOption() { Pool = false });
 
             var prototypeManager = client.ResolveDependency<IPrototypeManager>();
             var resourceCache = client.ResolveDependency<IResourceCache>();

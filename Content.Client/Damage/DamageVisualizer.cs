@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.FixedPoint;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -58,7 +59,7 @@ namespace Content.Client.Damage
         ///     isn't required for it.
         /// </remarks>
         [DataField("thresholds", required: true)]
-        private List<int> _thresholds = new();
+        private List<FixedPoint2> _thresholds = new();
 
         /// <summary>
         ///     Layers to target, by layerMapKey.
@@ -295,7 +296,7 @@ namespace Content.Client.Damage
                 || !entity.TryGetComponent<AppearanceComponent>(out var appearanceComponent))
                 return;
 
-            _thresholds.Add(0);
+            _thresholds.Add(FixedPoint2.Zero);
             _thresholds.Sort();
 
             if (_thresholds[0] != 0)
@@ -324,7 +325,7 @@ namespace Content.Client.Damage
                             return;
                         }
 
-                        damageData.LastThresholdPerGroup.Add(damageType, 0);
+                        damageData.LastThresholdPerGroup.Add(damageType, FixedPoint2.Zero);
                     }
                 }
                 // Are we tracking a single damage group without overlay instead?
@@ -338,7 +339,7 @@ namespace Content.Client.Damage
                         return;
                     }
 
-                    damageData.LastThresholdPerGroup.Add(_damageGroup, 0);
+                    damageData.LastThresholdPerGroup.Add(_damageGroup, FixedPoint2.Zero);
                 }
             }
             // Ditto above, but instead we go through every group.
@@ -356,7 +357,7 @@ namespace Content.Client.Damage
                             damageData.Valid = false;
                             return;
                         }
-                        damageData.LastThresholdPerGroup.Add(damageType, 0);
+                        damageData.LastThresholdPerGroup.Add(damageType, FixedPoint2.Zero);
                     }
                 else if (_damageGroup != null)
                 {
@@ -367,7 +368,7 @@ namespace Content.Client.Damage
                         return;
                     }
 
-                    damageData.LastThresholdPerGroup.Add(_damageGroup, 0);
+                    damageData.LastThresholdPerGroup.Add(_damageGroup, FixedPoint2.Zero);
                 }
             }
 
@@ -604,7 +605,7 @@ namespace Content.Client.Damage
                 {
                     foreach (var (damageGroup, sprite) in _damageOverlayGroups)
                     {
-                        int threshold = damageData.LastThresholdPerGroup[damageGroup];
+                        FixedPoint2 threshold = damageData.LastThresholdPerGroup[damageGroup];
                         ReorderOverlaySprite(spriteComponent,
                             damageData,
                             sprite,
@@ -625,12 +626,12 @@ namespace Content.Client.Damage
             }
         }
 
-        private void ReorderOverlaySprite(SpriteComponent spriteComponent, DamageVisualizerDataComponent damageData, DamageVisualizerSprite sprite, string key, string statePrefix, int threshold)
+        private void ReorderOverlaySprite(SpriteComponent spriteComponent, DamageVisualizerDataComponent damageData, DamageVisualizerSprite sprite, string key, string statePrefix, FixedPoint2 threshold)
         {
             spriteComponent.LayerMapTryGet(key, out int spriteLayer);
             bool visibility = spriteComponent[spriteLayer].Visible;
             spriteComponent.RemoveLayer(spriteLayer);
-            if (threshold == 0) // these should automatically be invisible
+            if (threshold == FixedPoint2.Zero) // these should automatically be invisible
                 threshold = _thresholds[1];
             spriteLayer = spriteComponent.AddLayer(
                 new SpriteSpecifier.Rsi(
@@ -650,7 +651,7 @@ namespace Content.Client.Damage
         /// </summary>
         private void UpdateDamageVisuals(DamageableComponent damageComponent, SpriteComponent spriteComponent, DamageVisualizerDataComponent damageData)
         {
-            if (!CheckThresholdBoundary(damageComponent.TotalDamage, damageData.LastDamageThreshold, out int threshold))
+            if (!CheckThresholdBoundary(damageComponent.TotalDamage, damageData.LastDamageThreshold, out FixedPoint2 threshold))
                 return;
 
             damageData.LastDamageThreshold = threshold;
@@ -679,11 +680,11 @@ namespace Content.Client.Damage
                     continue;
 
                 if (!_prototypeManager.TryIndex<DamageGroupPrototype>(damageGroup, out var damageGroupPrototype)
-                    || !damageComponent.Damage.TryGetDamageInGroup(damageGroupPrototype, out int damageTotal))
+                    || !damageComponent.Damage.TryGetDamageInGroup(damageGroupPrototype, out FixedPoint2 damageTotal))
                     continue;
 
-                if (!damageData.LastThresholdPerGroup.TryGetValue(damageGroup, out int lastThreshold)
-                    || !CheckThresholdBoundary(damageTotal, lastThreshold, out int threshold))
+                if (!damageData.LastThresholdPerGroup.TryGetValue(damageGroup, out FixedPoint2 lastThreshold)
+                    || !CheckThresholdBoundary(damageTotal, lastThreshold, out FixedPoint2 threshold))
                     continue;
 
                 damageData.LastThresholdPerGroup[damageGroup] = threshold;
@@ -704,10 +705,10 @@ namespace Content.Client.Damage
         /// <summary>
         ///     Checks if a threshold boundary was passed.
         /// </summary>
-        private bool CheckThresholdBoundary(int damageTotal, int lastThreshold, out int threshold)
+        private bool CheckThresholdBoundary(FixedPoint2 damageTotal, FixedPoint2 lastThreshold, out FixedPoint2 threshold)
         {
-            threshold = 0;
-            damageTotal = (int) Math.Floor(damageTotal / _divisor);
+            threshold = FixedPoint2.Zero;
+            damageTotal = damageTotal / _divisor;
             int thresholdIndex = _thresholds.BinarySearch(damageTotal);
 
             if (thresholdIndex < 0)
@@ -753,7 +754,7 @@ namespace Content.Client.Damage
         ///     it assumes you're updating a layer that is tracking all
         ///     damage.
         /// </summary>
-        private void UpdateTargetLayer(SpriteComponent spriteComponent, DamageVisualizerDataComponent damageData, object layerMapKey, int threshold)
+        private void UpdateTargetLayer(SpriteComponent spriteComponent, DamageVisualizerDataComponent damageData, object layerMapKey, FixedPoint2 threshold)
         {
             if (_overlay && _damageOverlayGroups != null)
             {
@@ -783,7 +784,7 @@ namespace Content.Client.Damage
         /// <summary>
         ///     Updates a target layer by damage group.
         /// </summary>
-        private void UpdateTargetLayer(SpriteComponent spriteComponent, DamageVisualizerDataComponent damageData, object layerMapKey, string damageGroup, int threshold)
+        private void UpdateTargetLayer(SpriteComponent spriteComponent, DamageVisualizerDataComponent damageData, object layerMapKey, string damageGroup, FixedPoint2 threshold)
         {
             if (_overlay && _damageOverlayGroups != null)
             {
@@ -813,7 +814,7 @@ namespace Content.Client.Damage
         /// <summary>
         ///     Updates an overlay that is tracking all damage.
         /// </summary>
-        private void UpdateOverlay(SpriteComponent spriteComponent, int threshold)
+        private void UpdateOverlay(SpriteComponent spriteComponent, FixedPoint2 threshold)
         {
             spriteComponent.LayerMapTryGet($"DamageOverlay", out int spriteLayer);
 
@@ -826,7 +827,7 @@ namespace Content.Client.Damage
         /// <summary>
         ///     Updates an overlay based on damage group.
         /// </summary>
-        private void UpdateOverlay(SpriteComponent spriteComponent, string damageGroup, int threshold)
+        private void UpdateOverlay(SpriteComponent spriteComponent, string damageGroup, FixedPoint2 threshold)
         {
             if (_damageOverlayGroups != null)
             {
@@ -848,7 +849,7 @@ namespace Content.Client.Damage
         ///     function calls it), and what threshold
         ///     was passed into it.
         /// </summary>
-        private void UpdateDamageLayerState(SpriteComponent spriteComponent, int spriteLayer, string statePrefix, int threshold)
+        private void UpdateDamageLayerState(SpriteComponent spriteComponent, int spriteLayer, string statePrefix, FixedPoint2 threshold)
         {
             if (threshold == 0)
             {

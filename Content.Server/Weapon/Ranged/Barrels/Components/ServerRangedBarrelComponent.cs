@@ -359,7 +359,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 });
 
 
-                projectile.Transform.LocalRotation = projectileAngle + MathHelper.PiOver2;
+                projectile.Transform.WorldRotation = projectileAngle + MathHelper.PiOver2;
             }
 #pragma warning disable 618
             ammo.SendMessage(this, new BarrelFiredMessage(firedProjectiles));

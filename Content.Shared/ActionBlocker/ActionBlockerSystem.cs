@@ -21,17 +21,12 @@ namespace Content.Shared.ActionBlocker
         // TODO: Make the EntityUid the main overload for all these methods.
         // TODO: Move each of these to their relevant EntitySystems?
 
-        public bool CanMove(IEntity entity)
-        {
-            var ev = new MovementAttemptEvent(entity);
-
-            RaiseLocalEvent(entity.Uid, ev);
-            return !ev.Cancelled;
-        }
-
         public bool CanMove(EntityUid uid)
         {
-            return CanMove(EntityManager.GetEntity(uid));
+            var ev = new MovementAttemptEvent(uid);
+            RaiseLocalEvent(uid, ev);
+
+            return !ev.Cancelled;
         }
 
         public bool CanInteract(IEntity entity)
@@ -48,60 +43,36 @@ namespace Content.Shared.ActionBlocker
             return CanInteract(EntityManager.GetEntity(uid));
         }
 
-        public bool CanUse(IEntity entity)
-        {
-            var ev = new UseAttemptEvent(entity);
-
-            RaiseLocalEvent(entity.Uid, ev);
-
-            return !ev.Cancelled;
-        }
-
         public bool CanUse(EntityUid uid)
         {
-            return CanUse(EntityManager.GetEntity(uid));
-        }
-
-        public bool CanThrow(IEntity entity)
-        {
-            var ev = new ThrowAttemptEvent(entity);
-
-            RaiseLocalEvent(entity.Uid, ev);
+            var ev = new UseAttemptEvent(uid);
+            RaiseLocalEvent(uid, ev);
 
             return !ev.Cancelled;
         }
 
         public bool CanThrow(EntityUid uid)
         {
-            return CanThrow(EntityManager.GetEntity(uid));
-        }
-
-        public bool CanSpeak(IEntity entity)
-        {
-            var ev = new SpeakAttemptEvent(entity);
-
-            RaiseLocalEvent(entity.Uid, ev);
+            var ev = new ThrowAttemptEvent(uid);
+            RaiseLocalEvent(uid, ev);
 
             return !ev.Cancelled;
         }
 
         public bool CanSpeak(EntityUid uid)
         {
-            return CanSpeak(EntityManager.GetEntity(uid));
-        }
-
-        public bool CanDrop(IEntity entity)
-        {
-            var ev = new DropAttemptEvent(entity);
-
-            RaiseLocalEvent(entity.Uid, ev);
+            var ev = new SpeakAttemptEvent(uid);
+            RaiseLocalEvent(uid, ev);
 
             return !ev.Cancelled;
         }
-
+        
         public bool CanDrop(EntityUid uid)
         {
-            return CanDrop(EntityManager.GetEntity(uid));
+            var ev = new DropAttemptEvent(uid);
+            RaiseLocalEvent(uid, ev);
+
+            return !ev.Cancelled;
         }
 
         public bool CanPickup(IEntity entity)

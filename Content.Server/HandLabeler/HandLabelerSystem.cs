@@ -34,7 +34,7 @@ namespace Content.Server.HandLabeler
 
         private void AfterInteractOn(EntityUid uid, HandLabelerComponent handLabeler, AfterInteractEvent args)
         {
-            if (args.Target == null || !handLabeler.Whitelist.IsValid(args.Target))
+            if (args.Target == null || !handLabeler.Whitelist.IsValid(args.Target.Uid))
                 return;
 
             AddLabelTo(uid, handLabeler, args.Target, out string? result);
@@ -82,7 +82,7 @@ namespace Content.Server.HandLabeler
         {
             if (session.AttachedEntity is not { } entity
                 || !Get<ActionBlockerSystem>().CanInteract(entity)
-                || !Get<ActionBlockerSystem>().CanUse(entity))
+                || !Get<ActionBlockerSystem>().CanUse(entity.Uid))
                 return false;
 
             return true;

@@ -88,7 +88,7 @@ namespace Content.Server.Weapon.Ranged.Barrels
                 !args.CanInteract ||
                 component.PowerCell != null ||
                 !args.Using.HasComponent<BatteryComponent>() ||
-                !_actionBlockerSystem.CanDrop(args.User))
+                !_actionBlockerSystem.CanDrop(args.User.Uid))
                 return;
 
             Verb verb = new();
@@ -135,7 +135,7 @@ namespace Content.Server.Weapon.Ranged.Barrels
             // Are we holding a mag that we can insert?
             if (args.Using == null ||
                 !component.CanInsertMagazine(args.User, args.Using) ||
-                !_actionBlockerSystem.CanDrop(args.User))
+                !_actionBlockerSystem.CanDrop(args.User.Uid))
                 return;
 
             // Insert mag verb

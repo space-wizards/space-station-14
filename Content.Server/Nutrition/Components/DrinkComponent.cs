@@ -5,6 +5,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 using Content.Server.Nutrition.EntitySystems;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Analyzers;
 
 namespace Content.Server.Nutrition.Components
@@ -28,7 +29,7 @@ namespace Content.Server.Nutrition.Components
         internal bool DefaultToOpened;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public ReagentUnit TransferAmount { get; [UsedImplicitly] private set; } = ReagentUnit.New(5);
+        public FixedPoint2 TransferAmount { get; [UsedImplicitly] private set; } = FixedPoint2.New(5);
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Opened;

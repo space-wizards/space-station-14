@@ -49,7 +49,7 @@ namespace Content.Server.Power.EntitySystems
 
                 var mask = WireVisDirFlags.None;
 
-                var transform = EntityManager.GetComponent<ITransformComponent>(uid);
+                var transform = EntityManager.GetComponent<TransformComponent>(uid);
 
                 // Only valid grids allowed.
                 if(!transform.GridID.IsValid())

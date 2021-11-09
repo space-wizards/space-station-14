@@ -5,7 +5,7 @@
   color: "#664330"
   physicalDesc: thick
   plantMetabolism:
-    - !type:AdjustNutrition
+    - !type:PlantAdjustNutrition
       amount: 1
 
 - type: reagent
@@ -15,11 +15,11 @@
   color: "#5b406c"
   physicalDesc: heterogeneous
   plantMetabolism:
-    - !type:AdjustNutrition
+    - !type:PlantAdjustNutrition
       amount: 1
-    - !type:AdjustHealth
+    - !type:PlantAdjustHealth
       amount: -0.5
-    - !type:AdjustMutationMod
+    - !type:PlantAdjustMutationMod
       prob: 0.3
       amount: 0.2
 
@@ -30,9 +30,9 @@
   color: "#9e9886"
   physicalDesc: bubbling
   plantMetabolism:
-    - !type:AdjustToxins
+    - !type:PlantAdjustToxins
       amount: 4
-    - !type:AdjustPests
+    - !type:PlantAdjustPests
       amount: -6
 
 - type: reagent
@@ -42,13 +42,13 @@
   color: "#49002E"
   physicalDesc: bubbling
   plantMetabolism:
-    - !type:AdjustToxins
+    - !type:PlantAdjustToxins
       amount: 6
-    - !type:AdjustWeeds
+    - !type:PlantAdjustWeeds
       amount: -8
-    - !type:AdjustHealth
+    - !type:PlantAdjustHealth
       amount: -20
-    - !type:AdjustMutationMod
+    - !type:PlantAdjustMutationMod
       amount: 0.1
 
 - type: reagent
@@ -57,14 +57,13 @@
   desc: Plant-enhancing hormones, good for increasing potency.
   color: "#3e901c"
   physicalDesc: robust
-  customPlantMetabolism: 0.1
   plantMetabolism:
-    - !type:AdjustNutrition
+    - !type:PlantAdjustNutrition
       amount: 0.05
-    - !type:AdjustWeeds
+    - !type:PlantAdjustWeeds
       prob: 0.025
       amount: 1
-    - !type:AdjustPests
+    - !type:PlantAdjustPests
       prob: 0.025
       amount: 1
     - !type:RobustHarvest {}
@@ -76,9 +75,9 @@
   color: "#968395"
   physicalDesc: bubbling
   plantMetabolism:
-    - !type:AdjustToxins
+    - !type:PlantAdjustToxins
       amount: 4
-    - !type:AdjustWeeds
+    - !type:PlantAdjustWeeds
       amount: -6
 
 - type: reagent
@@ -88,9 +87,9 @@
   color: "#808080"
   physicalDesc: crystalline
   plantMetabolism:
-    - !type:AdjustNutrition
+    - !type:PlantAdjustNutrition
       amount: -5
-    - !type:AdjustHealth
+    - !type:PlantAdjustHealth
       amount: -1
 
 - type: reagent
@@ -100,5 +99,5 @@
   color: "#C0C0C0"
   physicalDesc: strong smelling
   plantMetabolism:
-    - !type:AdjustHealth
+    - !type:PlantAdjustHealth
       amount: -5

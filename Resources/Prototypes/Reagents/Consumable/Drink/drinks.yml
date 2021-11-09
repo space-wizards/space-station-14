@@ -1,6 +1,7 @@
 - type: reagent
   id: Coffee
   name: coffee
+  parent: BaseDrink
   desc: A drink made from brewed coffee beans. Contains a moderate amount of caffeine.
   physicalDesc: aromatic
   color: "#664300"
@@ -11,10 +12,16 @@
   desc: The fatty, still liquid part of milk. Why don't you mix this with sum scotch, eh?
   physicalDesc: creamy
   color: "#DFD7AF"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 1
 
 - type: reagent
   id: CafeLatte
   name: cafe latte
+  parent: BaseDrink
   desc: A nice, strong and tasty beverage while you are reading.
   physicalDesc: creamy
   color: "#664300"
@@ -23,6 +30,7 @@
 - type: reagent
   id: GreenTea
   name: green tea
+  parent: BaseDrink
   desc: Tasty green tea.
   physicalDesc: aromatic
   color: "#C33F00"
@@ -31,6 +39,7 @@
 - type: reagent
   id: Grenadine
   name: grenadine
+  parent: BaseDrink
   desc: Not cherry flavored!
   physicalDesc: dark-red
   color: "#EA1D26"
@@ -39,6 +48,7 @@
 - type: reagent
   id: IcedCoffee
   name: iced coffee
+  parent: BaseDrink
   desc: Coffee and ice, refreshing and cool.
   physicalDesc: aromatic
   color: "#102838"
@@ -47,6 +57,7 @@
 - type: reagent
   id: IcedGreenTea
   name: iced green tea
+  parent: BaseDrink
   desc: cold green tea.
   physicalDesc: aromatic
   color: "#CE4200"
@@ -55,6 +66,7 @@
 - type: reagent
   id: IcedTea
   name: iced tea
+  parent: BaseDrink
   desc: No relation to a certain rap artist/actor.
   physicalDesc: aromatic
   color: "#104038"
@@ -67,6 +79,11 @@
   physicalDesc: tart
   color: "#FFFF00"
   spritePath: lemonadeglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: Milk
@@ -75,10 +92,15 @@
   physicalDesc: opaque
   color: "#DFDFDF"
   plantMetabolism:
-    - !type:AdjustNutrition
+    - !type:PlantAdjustNutrition
       amount: 0.1
-    - !type:AdjustWater
+    - !type:PlantAdjustWater
       amount: 0.9
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 4
 
 - type: reagent
   id: MilkOat
@@ -86,6 +108,11 @@
   desc: Surprisingly tasty.
   physicalDesc: refreshing
   color: "#302000"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 4
 
 - type: reagent
   id: MilkSoy
@@ -93,6 +120,11 @@
   desc: Surprisingly tasty.
   physicalDesc: refreshing
   color: "#302000"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 5 # soyboys stay winning
 
 - type: reagent
   id: MilkSpoiled
@@ -100,6 +132,11 @@
   desc: This milk has gone rancid.
   physicalDesc: putrid
   color: "#faffba"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: -2
 
 - type: reagent
   id: Nothing
@@ -107,6 +144,12 @@
   desc: Absolutely nothing.
   physicalDesc: nothing
   spritePath: nothing.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+        # TODO heal mimes
 
 - type: reagent
   id: NukaCola
@@ -115,10 +158,22 @@
   physicalDesc: fizzy
   color: "#100800"
   spritePath: nuka_colaglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 6
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1
 
 - type: reagent
   id: SodaWater
   name: soda water
+  parent: BaseDrink
   desc: A container of club soda. Why not make a scotch and soda?
   physicalDesc: fizzy
   color: "#619494"
@@ -126,6 +181,7 @@
 - type: reagent
   id: SoyLatte
   name: soy latte
+  parent: BaseDrink
   desc: A coffee drink made with espresso and steamed soy milk.
   physicalDesc: strong-smelling
   color: "#664300"
@@ -134,6 +190,7 @@
 - type: reagent
   id: Tea
   name: tea
+  parent: BaseDrink
   desc: A drink made by boiling leaves of the tea tree, Camellia sinensis.
   physicalDesc: aromatic
   color: "#8a5a3a"
@@ -141,6 +198,7 @@
 - type: reagent
   id: TonicWater
   name: tonic water
+  parent: BaseDrink
   desc: It tastes strange but at least the quinine keeps the Space Malaria at bay.
   physicalDesc: fizzy
   color: "#0064C8"

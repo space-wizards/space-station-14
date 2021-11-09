@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using NUnit.Framework;
 
 namespace Content.Tests.Shared.Chemistry
@@ -11,7 +12,7 @@ namespace Content.Tests.Shared.Chemistry
         public void AddReagentAndGetSolution()
         {
             var solution = new Solution();
-            solution.AddReagent("water", ReagentUnit.New(1000));
+            solution.AddReagent("water", FixedPoint2.New(1000));
             var quantity = solution.GetReagentQuantity("water");
 
             Assert.That(quantity.Int(), Is.EqualTo(1000));
@@ -20,7 +21,7 @@ namespace Content.Tests.Shared.Chemistry
         [Test]
         public void ConstructorAddReagent()
         {
-            var solution = new Solution("water", ReagentUnit.New(1000));
+            var solution = new Solution("water", FixedPoint2.New(1000));
             var quantity = solution.GetReagentQuantity("water");
 
             Assert.That(quantity.Int(), Is.EqualTo(1000));
@@ -38,7 +39,7 @@ namespace Content.Tests.Shared.Chemistry
         [Test]
         public void AddLessThanZeroReagentReturnsZero()
         {
-            var solution = new Solution("water", ReagentUnit.New(-1000));
+            var solution = new Solution("water", FixedPoint2.New(-1000));
             var quantity = solution.GetReagentQuantity("water");
 
             Assert.That(quantity.Int(), Is.EqualTo(0));
@@ -48,8 +49,8 @@ namespace Content.Tests.Shared.Chemistry
         public void AddingReagentsSumsProperly()
         {
             var solution = new Solution();
-            solution.AddReagent("water", ReagentUnit.New(1000));
-            solution.AddReagent("water", ReagentUnit.New(2000));
+            solution.AddReagent("water", FixedPoint2.New(1000));
+            solution.AddReagent("water", FixedPoint2.New(2000));
             var quantity = solution.GetReagentQuantity("water");
 
             Assert.That(quantity.Int(), Is.EqualTo(3000));
@@ -59,8 +60,8 @@ namespace Content.Tests.Shared.Chemistry
         public void ReagentQuantitiesStayUnique()
         {
             var solution = new Solution();
-            solution.AddReagent("water", ReagentUnit.New(1000));
-            solution.AddReagent("fire", ReagentUnit.New(2000));
+            solution.AddReagent("water", FixedPoint2.New(1000));
+            solution.AddReagent("fire", FixedPoint2.New(2000));
 
             Assert.That(solution.GetReagentQuantity("water").Int(), Is.EqualTo(1000));
             Assert.That(solution.GetReagentQuantity("fire").Int(), Is.EqualTo(2000));
@@ -70,8 +71,8 @@ namespace Content.Tests.Shared.Chemistry
         public void TotalVolumeIsCorrect()
         {
             var solution = new Solution();
-            solution.AddReagent("water", ReagentUnit.New(1000));
-            solution.AddReagent("fire", ReagentUnit.New(2000));
+            solution.AddReagent("water", FixedPoint2.New(1000));
+            solution.AddReagent("fire", FixedPoint2.New(2000));
 
             Assert.That(solution.TotalVolume.Int(), Is.EqualTo(3000));
         }
@@ -80,8 +81,8 @@ namespace Content.Tests.Shared.Chemistry
         public void CloningSolutionIsCorrect()
         {
             var solution = new Solution();
-            solution.AddReagent("water", ReagentUnit.New(1000));
-            solution.AddReagent("fire", ReagentUnit.New(2000));
+            solution.AddReagent("water", FixedPoint2.New(1000));
+            solution.AddReagent("fire", FixedPoint2.New(2000));
 
             var newSolution = solution.Clone();
 
@@ -94,10 +95,10 @@ namespace Content.Tests.Shared.Chemistry
         public void RemoveSolutionRecalculatesProperly()
         {
             var solution = new Solution();
-            solution.AddReagent("water", ReagentUnit.New(1000));
-            solution.AddReagent("fire", ReagentUnit.New(2000));
+            solution.AddReagent("water", FixedPoint2.New(1000));
+            solution.AddReagent("fire", FixedPoint2.New(2000));
 
-            solution.RemoveReagent("water", ReagentUnit.New(500));
+            solution.RemoveReagent("water", FixedPoint2.New(500));
 
             Assert.That(solution.GetReagentQuantity("water").Int(), Is.EqualTo(500));
             Assert.That(solution.GetReagentQuantity("fire").Int(), Is.EqualTo(2000));
@@ -107,9 +108,9 @@ namespace Content.Tests.Shared.Chemistry
         [Test]
         public void RemoveLessThanOneQuantityDoesNothing()
         {
-            var solution = new Solution("water", ReagentUnit.New(100));
+            var solution = new Solution("water", FixedPoint2.New(100));
 
-            solution.RemoveReagent("water", ReagentUnit.New(-100));
+            solution.RemoveReagent("water", FixedPoint2.New(-100));
 
             Assert.That(solution.GetReagentQuantity("water").Int(), Is.EqualTo(100));
             Assert.That(solution.TotalVolume.Int(), Is.EqualTo(100));
@@ -118,9 +119,9 @@ namespace Content.Tests.Shared.Chemistry
         [Test]
         public void RemoveMoreThanTotalRemovesAllReagent()
         {
-            var solution = new Solution("water", ReagentUnit.New(100));
+            var solution = new Solution("water", FixedPoint2.New(100));
 
-            solution.RemoveReagent("water", ReagentUnit.New(1000));
+            solution.RemoveReagent("water", FixedPoint2.New(1000));
 
             Assert.That(solution.GetReagentQuantity("water").Int(), Is.EqualTo(0));
             Assert.That(solution.TotalVolume.Int(), Is.EqualTo(0));
@@ -129,9 +130,9 @@ namespace Content.Tests.Shared.Chemistry
         [Test]
         public void RemoveNonExistReagentDoesNothing()
         {
-            var solution = new Solution("water", ReagentUnit.New(100));
+            var solution = new Solution("water", FixedPoint2.New(100));
 
-            solution.RemoveReagent("fire", ReagentUnit.New(1000));
+            solution.RemoveReagent("fire", FixedPoint2.New(1000));
 
             Assert.That(solution.GetReagentQuantity("water").Int(), Is.EqualTo(100));
             Assert.That(solution.TotalVolume.Int(), Is.EqualTo(100));
@@ -140,9 +141,9 @@ namespace Content.Tests.Shared.Chemistry
         [Test]
         public void RemoveSolution()
         {
-            var solution = new Solution("water", ReagentUnit.New(700));
+            var solution = new Solution("water", FixedPoint2.New(700));
 
-            solution.RemoveSolution(ReagentUnit.New(500));
+            solution.RemoveSolution(FixedPoint2.New(500));
 
             //Check that edited solution is correct
             Assert.That(solution.GetReagentQuantity("water").Int(), Is.EqualTo(200));
@@ -152,9 +153,9 @@ namespace Content.Tests.Shared.Chemistry
         [Test]
         public void RemoveSolutionMoreThanTotalRemovesAll()
         {
-            var solution = new Solution("water", ReagentUnit.New(800));
+            var solution = new Solution("water", FixedPoint2.New(800));
 
-            solution.RemoveSolution(ReagentUnit.New(1000));
+            solution.RemoveSolution(FixedPoint2.New(1000));
 
             //Check that edited solution is correct
             Assert.That(solution.GetReagentQuantity("water").Int(), Is.EqualTo(0));
@@ -165,10 +166,10 @@ namespace Content.Tests.Shared.Chemistry
         public void RemoveSolutionRatioPreserved()
         {
             var solution = new Solution();
-            solution.AddReagent("water", ReagentUnit.New(1000));
-            solution.AddReagent("fire", ReagentUnit.New(2000));
+            solution.AddReagent("water", FixedPoint2.New(1000));
+            solution.AddReagent("fire", FixedPoint2.New(2000));
 
-            solution.RemoveSolution(ReagentUnit.New(1500));
+            solution.RemoveSolution(FixedPoint2.New(1500));
 
             Assert.That(solution.GetReagentQuantity("water").Int(), Is.EqualTo(500));
             Assert.That(solution.GetReagentQuantity("fire").Int(), Is.EqualTo(1000));
@@ -178,9 +179,9 @@ namespace Content.Tests.Shared.Chemistry
         [Test]
         public void RemoveSolutionLessThanOneDoesNothing()
         {
-            var solution = new Solution("water", ReagentUnit.New(800));
+            var solution = new Solution("water", FixedPoint2.New(800));
 
-            solution.RemoveSolution(ReagentUnit.New(-200));
+            solution.RemoveSolution(FixedPoint2.New(-200));
 
             Assert.That(solution.GetReagentQuantity("water").Int(), Is.EqualTo(800));
             Assert.That(solution.TotalVolume.Int(), Is.EqualTo(800));
@@ -190,10 +191,10 @@ namespace Content.Tests.Shared.Chemistry
         public void SplitSolution()
         {
             var solution = new Solution();
-            solution.AddReagent("water", ReagentUnit.New(1000));
-            solution.AddReagent("fire", ReagentUnit.New(2000));
+            solution.AddReagent("water", FixedPoint2.New(1000));
+            solution.AddReagent("fire", FixedPoint2.New(2000));
 
-            var splitSolution = solution.SplitSolution(ReagentUnit.New(750));
+            var splitSolution = solution.SplitSolution(FixedPoint2.New(750));
 
             Assert.That(solution.GetReagentQuantity("water").Int(), Is.EqualTo(750));
             Assert.That(solution.GetReagentQuantity("fire").Int(), Is.EqualTo(1500));
@@ -208,10 +209,10 @@ namespace Content.Tests.Shared.Chemistry
         public void SplitSolutionFractional()
         {
             var solution = new Solution();
-            solution.AddReagent("water", ReagentUnit.New(1));
-            solution.AddReagent("fire", ReagentUnit.New(2));
+            solution.AddReagent("water", FixedPoint2.New(1));
+            solution.AddReagent("fire", FixedPoint2.New(2));
 
-            var splitSolution = solution.SplitSolution(ReagentUnit.New(1));
+            var splitSolution = solution.SplitSolution(FixedPoint2.New(1));
 
             Assert.That(solution.GetReagentQuantity("water").Float(), Is.EqualTo(0.67f));
             Assert.That(solution.GetReagentQuantity("fire").Float(), Is.EqualTo(1.33f));
@@ -226,10 +227,10 @@ namespace Content.Tests.Shared.Chemistry
         public void SplitSolutionFractionalOpposite()
         {
             var solution = new Solution();
-            solution.AddReagent("water", ReagentUnit.New(1));
-            solution.AddReagent("fire", ReagentUnit.New(2));
+            solution.AddReagent("water", FixedPoint2.New(1));
+            solution.AddReagent("fire", FixedPoint2.New(2));
 
-            var splitSolution = solution.SplitSolution(ReagentUnit.New(2));
+            var splitSolution = solution.SplitSolution(FixedPoint2.New(2));
 
             Assert.That(solution.GetReagentQuantity("water").Float(), Is.EqualTo(0.33f));
             Assert.That(solution.GetReagentQuantity("fire").Float(), Is.EqualTo(0.67f));
@@ -246,9 +247,9 @@ namespace Content.Tests.Shared.Chemistry
         public void SplitSolutionTinyFractionalBigSmall(float initial, float reduce, float remainder)
         {
             var solution = new Solution();
-            solution.AddReagent("water", ReagentUnit.New(initial));
+            solution.AddReagent("water", FixedPoint2.New(initial));
 
-            var splitSolution = solution.SplitSolution(ReagentUnit.New(reduce));
+            var splitSolution = solution.SplitSolution(FixedPoint2.New(reduce));
 
             Assert.That(solution.GetReagentQuantity("water").Float(), Is.EqualTo(remainder));
             Assert.That(solution.TotalVolume.Float(), Is.EqualTo(remainder));
@@ -265,11 +266,11 @@ namespace Content.Tests.Shared.Chemistry
         public void SplitRounding(int amount)
         {
             var solutionOne = new Solution();
-            solutionOne.AddReagent("foo", ReagentUnit.New(amount));
-            solutionOne.AddReagent("bar", ReagentUnit.New(amount));
-            solutionOne.AddReagent("baz", ReagentUnit.New(amount));
+            solutionOne.AddReagent("foo", FixedPoint2.New(amount));
+            solutionOne.AddReagent("bar", FixedPoint2.New(amount));
+            solutionOne.AddReagent("baz", FixedPoint2.New(amount));
 
-            var splitAmount = ReagentUnit.New(5);
+            var splitAmount = FixedPoint2.New(5);
             var split = solutionOne.SplitSolution(splitAmount);
 
             Assert.That(split.TotalVolume, Is.EqualTo(splitAmount));
@@ -278,9 +279,9 @@ namespace Content.Tests.Shared.Chemistry
         [Test]
         public void SplitSolutionMoreThanTotalRemovesAll()
         {
-            var solution = new Solution("water", ReagentUnit.New(800));
+            var solution = new Solution("water", FixedPoint2.New(800));
 
-            var splitSolution = solution.SplitSolution(ReagentUnit.New(1000));
+            var splitSolution = solution.SplitSolution(FixedPoint2.New(1000));
 
             Assert.That(solution.GetReagentQuantity("water").Int(), Is.EqualTo(0));
             Assert.That(solution.TotalVolume.Int(), Is.EqualTo(0));
@@ -292,9 +293,9 @@ namespace Content.Tests.Shared.Chemistry
         [Test]
         public void SplitSolutionLessThanOneDoesNothing()
         {
-            var solution = new Solution("water", ReagentUnit.New(800));
+            var solution = new Solution("water", FixedPoint2.New(800));
 
-            var splitSolution = solution.SplitSolution(ReagentUnit.New(-200));
+            var splitSolution = solution.SplitSolution(FixedPoint2.New(-200));
 
             Assert.That(solution.GetReagentQuantity("water").Int(), Is.EqualTo(800));
             Assert.That(solution.TotalVolume.Int(), Is.EqualTo(800));
@@ -307,33 +308,33 @@ namespace Content.Tests.Shared.Chemistry
         public void SplitSolutionZero()
         {
             var solution = new Solution();
-            solution.AddReagent("Impedrezene", ReagentUnit.New(0.01 + 0.19));
-            solution.AddReagent("Thermite", ReagentUnit.New(0.01 + 0.39));
-            solution.AddReagent("Li", ReagentUnit.New(0.01 + 0.17));
-            solution.AddReagent("F", ReagentUnit.New(0.01 + 0.17));
-            solution.AddReagent("Na", ReagentUnit.New(0 + 0.13));
-            solution.AddReagent("Hg", ReagentUnit.New(0.15 + 4.15));
-            solution.AddReagent("Cu", ReagentUnit.New(0 + 0.13));
-            solution.AddReagent("U", ReagentUnit.New(0.76 + 20.77));
-            solution.AddReagent("Fe", ReagentUnit.New(0.01 + 0.36));
-            solution.AddReagent("SpaceDrugs", ReagentUnit.New(0.02 + 0.41));
-            solution.AddReagent("Al", ReagentUnit.New(0));
-            solution.AddReagent("Glucose", ReagentUnit.New(0));
-            solution.AddReagent("O", ReagentUnit.New(0));
+            solution.AddReagent("Impedrezene", FixedPoint2.New(0.01 + 0.19));
+            solution.AddReagent("Thermite", FixedPoint2.New(0.01 + 0.39));
+            solution.AddReagent("Li", FixedPoint2.New(0.01 + 0.17));
+            solution.AddReagent("F", FixedPoint2.New(0.01 + 0.17));
+            solution.AddReagent("Na", FixedPoint2.New(0 + 0.13));
+            solution.AddReagent("Hg", FixedPoint2.New(0.15 + 4.15));
+            solution.AddReagent("Cu", FixedPoint2.New(0 + 0.13));
+            solution.AddReagent("U", FixedPoint2.New(0.76 + 20.77));
+            solution.AddReagent("Fe", FixedPoint2.New(0.01 + 0.36));
+            solution.AddReagent("SpaceDrugs", FixedPoint2.New(0.02 + 0.41));
+            solution.AddReagent("Al", FixedPoint2.New(0));
+            solution.AddReagent("Glucose", FixedPoint2.New(0));
+            solution.AddReagent("O", FixedPoint2.New(0));
 
-            solution.SplitSolution(ReagentUnit.New(0.98));
+            solution.SplitSolution(FixedPoint2.New(0.98));
         }
 
         [Test]
         public void AddSolution()
         {
             var solutionOne = new Solution();
-            solutionOne.AddReagent("water", ReagentUnit.New(1000));
-            solutionOne.AddReagent("fire", ReagentUnit.New(2000));
+            solutionOne.AddReagent("water", FixedPoint2.New(1000));
+            solutionOne.AddReagent("fire", FixedPoint2.New(2000));
 
             var solutionTwo = new Solution();
-            solutionTwo.AddReagent("water", ReagentUnit.New(500));
-            solutionTwo.AddReagent("earth", ReagentUnit.New(1000));
+            solutionTwo.AddReagent("water", FixedPoint2.New(500));
+            solutionTwo.AddReagent("earth", FixedPoint2.New(1000));
 
             solutionOne.AddSolution(solutionTwo);
 

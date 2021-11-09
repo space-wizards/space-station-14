@@ -1,117 +1,4 @@
 Entries:
-- author: Swept
-  changes:
-  - {message: Tiles do damage when thrown at someone else, type: Add}
-  - {message: You can craft tiles, type: Add}
-  - {message: Tile max stack size changed from 8 to 30, type: Tweak}
-  - {message: 'Removed unobtainable, player placeable tiles like snow/rock', type: Remove}
-  id: 36
-  time: '2021-03-06T05:41:53.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Hands and inventory (pockets) no longer block the light from flashlights,
-    type: Fix}
-  id: 37
-  time: '2021-03-06T10:32:24.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fixes emitters shooting sideway bolts and in the wrong direction., type: Fix}
-  id: 38
-  time: '2021-03-06T12:28:13.757819+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fixes wood table and poker table constructions having the wrong material.,
-    type: Fix}
-  id: 39
-  time: '2021-03-06T12:28:13.759792+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fixes torch crafting recipe having incorrect materials., type: Fix}
-  id: 40
-  time: '2021-03-06T12:28:13.760916+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fixes bug where deconstructing computers wouldn't return the circuit
-      board., type: Fix}
-  id: 41
-  time: '2021-03-06T13:48:07.041235+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Glass shards can be turned into glass sheets with a welder again, type: Fix}
-  id: 42
-  time: '2021-03-07T09:05:57.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: The Red-and-White Shrine Maiden outfit complete with gohei is now available
-      in the theater vendor!, type: Add}
-  id: 43
-  time: '2021-03-07T12:41:42.0000000+00:00'
-- author: SweptWasTaken
-  changes:
-  - {message: Added ammovend, type: Add}
-  id: 44
-  time: '2021-03-07T19:17:58.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: 'Mags/Batteries stop spawning at 0, 0.', type: Fix}
-  id: 45
-  time: '2021-03-07T19:43:07.0000000+00:00'
-- author: Rember
-  changes:
-  - {message: Character eye customization, type: Add}
-  id: 46
-  time: '2021-03-07T19:48:24.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Reworked the construction UI so that the recipe is easier to see, type: Tweak}
-  id: 47
-  time: '2021-03-07T22:09:41.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: 'Reinforced glass, plasma glass, and reinforced plasma glass can now
-      be constructed.', type: Add}
-  id: 48
-  time: '2021-03-07T23:22:25.0000000+00:00'
-- author: ike709
-  changes:
-  - {message: Player join/leave messages are now only shown to admins., type: Tweak}
-  id: 49
-  time: '2021-03-08T00:15:31.0000000+00:00'
-- author: ike709
-  changes:
-  - {message: Added a radio message to announce latejoins., type: Add}
-  id: 50
-  time: '2021-03-08T00:15:51.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Nerfed throwing while weightless, type: Tweak}
-  - {message: Fixed weightless movement to use push strength again, type: Fix}
-  - {message: Throwing pushback implemented again, type: Fix}
-  id: 51
-  time: '2021-03-08T01:10:56.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Pushing strength, type: Fix}
-  id: 52
-  time: '2021-03-08T01:48:15.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: The client being able to set character age and other values outside
-      their limits., type: Fix}
-  id: 53
-  time: '2021-03-08T02:07:53.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Stuns and slips are now properly predicted, type: Fix}
-  - {message: Slipping on a puddle with galoshes on no longer causes you to stay stunned
-      forever client-side., type: Fix}
-  id: 54
-  time: '2021-03-08T04:00:51.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Protolathes can now be built again., type: Fix}
-  id: 55
-  time: '2021-03-08T04:09:30.0000000+00:00'
 - author: tmtmtl30
   changes:
   - {message: Crit overlay is now unaffected by lights., type: Fix}
@@ -2811,3 +2698,126 @@ Entries:
       drawn above windoors.', type: Tweak}
   id: 535
   time: '2021-11-03T13:43:10.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Improvised pneumatic cannons! You can mess around with them with a
+      screwdriver and wrench, and shoot items from them as long as they have a gas
+      tank. They''re in the crafting menu.', type: Add}
+  id: 536
+  time: '2021-11-03T21:33:36.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Added a brand new pinpointer for the nuclear disk in a captain locker,
+    type: Add}
+  id: 537
+  time: '2021-11-03T21:35:34.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Pinpointers stop being active on component shutdown, type: Fix}
+  id: 538
+  time: '2021-11-03T23:42:22.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Bicaridine now properly heals blunt damage., type: Fix}
+  id: 539
+  time: '2021-11-03T23:48:03.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'There is now an indicator showing how many ghost roles are available,
+      if any.', type: Add}
+  id: 540
+  time: '2021-11-03T23:48:13.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: 'Receiving a message from server administrators now makes the game window
+      light up in your task bar, to grab your attention if you are alt-tabbed or similar.',
+    type: Tweak}
+  id: 541
+  time: '2021-11-04T03:22:09.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: ChemMaster buffer displays properly with no beaker, type: Fix}
+  - {message: Chemical dispenser 100 button works again, type: Fix}
+  id: 542
+  time: '2021-11-04T03:22:48.0000000+00:00'
+- author: Daemon
+  changes:
+  - {message: Fixed some drink cans not having correct drink/size, type: Fix}
+  - {message: Fixed being unable to juice potato in grinder, type: Fix}
+  - {message: Changed BrownStar to Starkist, type: Tweak}
+  - {message: Added energy drink reagent and can object to vending machine, type: Add}
+  id: 543
+  time: '2021-11-04T04:31:22.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'Added some pAIs at roundstart (in dorms and in RD office). Also, some
+      toy spawners.', type: Add}
+  - {message: The reinforced glass under solars is now just plating so it doesn't
+      have to be crowbared up., type: Tweak}
+  id: 544
+  time: '2021-11-04T14:11:07.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Draw depth issues for the bar dispensers & wall mounted lights., type: Fix}
+  id: 545
+  time: '2021-11-04T19:44:15.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: pAIs can no longer wipe each other or do other odd things. You can still
+      wipe yourself with the ghost command., type: Fix}
+  - {message: pAIs name themselves after their owner automatically, type: Add}
+  id: 546
+  time: '2021-11-04T22:29:17.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: Pressure pumps now have a UI, type: Add}
+  - {message: Volume pumps now have a UI, type: Add}
+  id: 547
+  time: '2021-11-05T00:41:57.0000000+00:00'
+- author: moonheart08
+  changes:
+  - {message: Canisters now dump their contents like they should when busted open.,
+    type: Fix}
+  id: 548
+  time: '2021-11-06T00:19:12.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: PDA flashlights are brighter now, type: Tweak}
+  id: 549
+  time: '2021-11-06T22:35:01.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Directional windows have been added (non-fulltile), though not mapped
+      in yet.', type: Add}
+  id: 550
+  time: '2021-11-07T00:12:42.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Valves make sound when used, type: Tweak}
+  id: 551
+  time: '2021-11-07T00:32:33.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Fixed bucket, type: Fix}
+  id: 552
+  time: '2021-11-07T00:33:03.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Pulling to a specific location now pushes the player doing the pulling,
+    type: Tweak}
+  - {message: Pulled object rotation snaps cleanly to (grid-relative) angles so pianos
+      don't get stuck as often, type: Tweak}
+  - {message: Moved more pulling code server-side to prevent desyncs, type: Fix}
+  id: 553
+  time: '2021-11-07T02:16:49.0000000+00:00'
+- author: thevinter
+  changes:
+  - {message: power cells now properly bounce off walls, type: Fix}
+  id: 554
+  time: '2021-11-07T09:11:40.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fix a bug that causes the examine-popup to close immediately after opening.,
+    type: Fix}
+  id: 555
+  time: '2021-11-07T10:33:52.0000000+00:00'

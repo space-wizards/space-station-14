@@ -168,7 +168,7 @@ namespace Content.IntegrationTests.Tests.Power
         public async Task Setup()
         {
             var options = new ServerIntegrationOptions {ExtraPrototypes = Prototypes};
-            _server = StartServerDummyTicker(options);
+            _server = StartServer(options);
 
             await _server.WaitIdleAsync();
             _mapManager = _server.ResolveDependency<IMapManager>();

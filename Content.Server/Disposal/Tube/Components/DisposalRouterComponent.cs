@@ -8,7 +8,6 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
-using Content.Shared.Verbs;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -113,7 +112,7 @@ namespace Content.Server.Disposal.Tube.Components
             var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
             var groupController = IoCManager.Resolve<IConGroupController>();
             //Check if player can interact in their current state
-            if (!groupController.CanAdminMenu(session) && (!actionBlocker.CanInteract(session.AttachedEntity) || !actionBlocker.CanUse(session.AttachedEntity)))
+            if (!groupController.CanAdminMenu(session) && (!actionBlocker.CanInteract(session.AttachedEntity) || !actionBlocker.CanUse(session.AttachedEntityUid!.Value)))
                 return false;
 
             return true;
@@ -166,7 +165,7 @@ namespace Content.Server.Disposal.Tube.Components
                 return;
             }
 
-            if (!args.User.TryGetComponent(out IHandsComponent? hands))
+            if (!args.User.TryGetComponent(out HandsComponent? hands))
             {
                 Owner.PopupMessage(args.User, Loc.GetString("disposal-router-window-tag-input-activate-no-hands"));
                 return;

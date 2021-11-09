@@ -4,6 +4,7 @@ using Content.Server.Interaction.Components;
 using Content.Server.Weapon.Melee;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Content.Shared.MobState.Components;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
@@ -27,7 +28,7 @@ namespace Content.Server.Chemistry.Components
 
         [DataField("TransferAmount")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public ReagentUnit TransferAmount { get; set; } = ReagentUnit.New(5);
+        public FixedPoint2 TransferAmount { get; set; } = FixedPoint2.New(5);
 
         [DataField("InjectSound")]
         private SoundSpecifier _injectSound = new SoundPathSpecifier("/Audio/Items/hypospray.ogg");
@@ -85,7 +86,7 @@ namespace Content.Server.Chemistry.Components
             SoundSystem.Play(Filter.Pvs(user), _injectSound.GetSound(), user);
 
             // Get transfer amount. May be smaller than _transferAmount if not enough room
-            var realTransferAmount = ReagentUnit.Min(TransferAmount, targetSolution.AvailableVolume);
+            var realTransferAmount = FixedPoint2.Min(TransferAmount, targetSolution.AvailableVolume);
 
             if (realTransferAmount <= 0)
             {
@@ -105,7 +106,7 @@ namespace Content.Server.Chemistry.Components
                 return true;
             }
 
-            removedSolution.DoEntityReaction(target, ReactionMethod.Injection);
+            removedSolution.DoEntityReaction(target.Uid, ReactionMethod.Injection);
 
             EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(target.Uid, targetSolution, removedSolution);
 
@@ -126,7 +127,7 @@ namespace Content.Server.Chemistry.Components
             var solutionSys = Owner.EntityManager.EntitySysManager.GetEntitySystem<SolutionContainerSystem>();
             return solutionSys.TryGetSolution(Owner.Uid, SolutionName, out var solution)
                 ? new HyposprayComponentState(solution.CurrentVolume, solution.MaxVolume)
-                : new HyposprayComponentState(ReagentUnit.Zero, ReagentUnit.Zero);
+                : new HyposprayComponentState(FixedPoint2.Zero, FixedPoint2.Zero);
         }
     }
 }

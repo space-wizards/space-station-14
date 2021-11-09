@@ -18,10 +18,17 @@
   desc: A broad-spectrum anti-toxin, which treats toxin damage in the blood stream. Overdosing will cause vomiting, dizzyness and pain.
   physicalDesc: translucent
   color: "#3a1d8a"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: -1
   plantMetabolism:
-    - !type:AdjustToxins
+    - !type:PlantAdjustToxins
       amount: -10
-    - !type:AdjustHealth
+    - !type:PlantAdjustHealth
       amount: 1
 
 - type: reagent
@@ -30,6 +37,14 @@
   desc: A slightly unstable medication used for the most extreme any serious case of radiation poisoning. Lowers radiation level at over twice the rate Hyronalin does and will heal toxin damage at the same time. Deals very minor brute damage to the patient over time, but the patient's body will typically out-regenerate it easily.
   physicalDesc: cloudy
   color: "#bd5902"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Toxin: -1
+            Brute: 0.5
 
 - type: reagent
   id: Bicaridine
@@ -37,6 +52,13 @@
   desc: An analgesic which is highly effective at treating brute damage. It is useful for stabilizing people who have been severely beaten, as well as treating less life-threatening injuries. In the case of bleeding (internal or external), bicaridine will slow down the bleeding heavily. If the dosage exceeds the overdose limit, it'll stop it outright.
   physicalDesc: opaque
   color: "#ffaa00"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Brute: -2
 
 - type: reagent
   id: Cryoxadone
@@ -45,9 +67,9 @@
   physicalDesc: fizzy
   color: "#0091ff"
   plantMetabolism:
-    - !type:AdjustToxins
+    - !type:PlantAdjustToxins
       amount: -3
-    - !type:AdjustHealth
+    - !type:PlantAdjustHealth
       amount: 3
 
 - type: reagent
@@ -57,9 +79,9 @@
   physicalDesc: bubbly
   color: "#0666ff"
   plantMetabolism:
-    - !type:AdjustToxins
+    - !type:PlantAdjustToxins
       amount: -5
-    - !type:AdjustHealth
+    - !type:PlantAdjustHealth
       amount: 5
 
 - type: reagent
@@ -75,6 +97,13 @@
   desc: An advanced chemical that is more effective at treating burn damage than Kelotane.
   physicalDesc: translucent
   color: "#215263"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Burn: -3
 
 - type: reagent
   id: Dexalin
@@ -82,6 +111,13 @@
   desc: Used for treating oxygen deprivation. In most cases where it is likely to be needed, the strength of Dexalin Plus will probably be more useful (Results in 1 unit instead of 2).
   physicalDesc: opaque
   color: "#0041a8"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Asphyxiation: -1
 
 - type: reagent
   id: DexalinPlus
@@ -89,6 +125,13 @@
   desc: Used in treatment of extreme cases of oxygen deprivation. Even a single unit immediately counters all oxygen loss, which is hugely useful in many circumstances. Any dose beyond this will continue to counter oxygen loss until it is metabolized, essentially removing the need to breathe.
   physicalDesc: cloudy
   color: "#4da0bd"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Asphyxiation: -3
 
 - type: reagent
   id: Ethylredoxrazine
@@ -138,6 +181,13 @@
   desc: Treats burn damage and prevents infection.
   physicalDesc: strong-smelling
   color: "#bf3d19"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Burn: -1
 
 - type: reagent
   id: Leporazine
@@ -194,6 +244,13 @@
   desc: Toxic, but treats hallucinations, drowsiness & halves the duration of paralysis, stuns and knockdowns. It is metabolized very slowly. One unit is enough to treat hallucinations; two units is deadly.
   physicalDesc: pungent
   color: "#d49a2f"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 0.5
 
 - type: reagent
   id: Tramadol
@@ -250,8 +307,15 @@
   desc: A hallucinogenic compound that is illegal under space law. A synthetic drug derived from Mindbreaker toxin, it blocks some neurological signals to the respiratory system which causes choking.
   physicalDesc: strong-smelling
   color: "#5f959c"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Asphyxiation: 4
   plantMetabolism:
-    - !type:AdjustToxins
+    - !type:PlantAdjustToxins
       amount: 10
 
 - type: reagent
@@ -267,6 +331,13 @@
   desc: Temporarily stops respiration and causes tissue damage. Large doses are fatal, and will cause people to pass out very quickly. Dexalin and Dexalin Plus will both remove it, however.
   physicalDesc: pungent
   color: "#6b0007"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Airloss: 7
 
 - type: reagent
   id: Lipozine
@@ -282,7 +353,7 @@
   physicalDesc: opaque
   color: "#77b58e"
   plantMetabolism:
-    - !type:AdjustToxins
+    - !type:PlantAdjustToxins
       amount: 10
 
 - type: reagent
@@ -319,3 +390,13 @@
   desc: A soothing milky liquid with an iridescent gleam. A well known conspiracy theory says that it's origins remain a mystery because knowing the secrets of its production would render most commercial pharmaceuticals obsolete.
   physicalDesc: soothing
   color: "#fcf7f9"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Burn: -2
+            Toxin: -2
+            Airloss: -2
+            Brute: -2

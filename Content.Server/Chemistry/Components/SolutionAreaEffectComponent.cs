@@ -6,6 +6,7 @@ using Content.Server.Coordinates.Helpers;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -133,7 +134,7 @@ namespace Content.Server.Chemistry.Components
 
             foreach (var reagentQuantity in solution.Contents)
             {
-                if (reagentQuantity.Quantity == ReagentUnit.Zero) continue;
+                if (reagentQuantity.Quantity == FixedPoint2.Zero) continue;
                 var reagent = PrototypeManager.Index<ReagentPrototype>(reagentQuantity.ReagentId);
 
                 // React with the tile the effect is on
@@ -142,7 +143,7 @@ namespace Content.Server.Chemistry.Components
                 // Touch every entity on the tile
                 foreach (var entity in tile.GetEntitiesInTileFast().ToArray())
                 {
-                    chemistry.ReactionEntity(entity, ReactionMethod.Touch, reagent,
+                    chemistry.ReactionEntity(entity.Uid, ReactionMethod.Touch, reagent,
                         reagentQuantity.Quantity * solutionFraction, solution);
                 }
             }
@@ -164,7 +165,7 @@ namespace Content.Server.Chemistry.Components
                 return;
 
             var addSolution =
-                solution.SplitSolution(ReagentUnit.Min(solution.TotalVolume, solutionArea.AvailableVolume));
+                solution.SplitSolution(FixedPoint2.Min(solution.TotalVolume, solutionArea.AvailableVolume));
 
             EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(Owner.Uid, solutionArea, addSolution);
 

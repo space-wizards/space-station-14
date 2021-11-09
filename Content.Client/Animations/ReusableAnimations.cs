@@ -36,8 +36,8 @@ namespace Content.Client.Animations
                 {
                     new AnimationTrackComponentProperty
                     {
-                        ComponentType = typeof(ITransformComponent),
-                        Property = nameof(ITransformComponent.LocalPosition),
+                        ComponentType = typeof(TransformComponent),
+                        Property = nameof(TransformComponent.LocalPosition),
                         InterpolationMode = AnimationInterpolationMode.Linear,
                         KeyFrames =
                         {

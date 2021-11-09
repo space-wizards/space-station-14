@@ -4,7 +4,7 @@ using Content.Server.Ghost.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Ghost;
-using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
 using Content.Shared.Preferences;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
@@ -58,7 +58,7 @@ namespace Content.Server.GameTicking.Presets
             //   (If the mob survives, that's a bug. Ghosting is kept regardless.)
             var canReturn = canReturnGlobal && mind.CharacterDeadPhysically;
 
-            if (playerEntity != null && canReturnGlobal && playerEntity.TryGetComponent(out IMobStateComponent? mobState))
+            if (playerEntity != null && canReturnGlobal && playerEntity.TryGetComponent(out MobStateComponent? mobState))
             {
                 if (mobState.IsCritical())
                 {

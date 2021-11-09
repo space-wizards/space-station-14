@@ -73,7 +73,7 @@ namespace Content.Server.Stunnable
 
         private void OnUseInHand(EntityUid uid, StunbatonComponent comp, UseInHandEvent args)
         {
-            if (!Get<ActionBlockerSystem>().CanUse(args.User))
+            if (!Get<ActionBlockerSystem>().CanUse(args.User.Uid))
                 return;
 
             if (comp.Activated)
