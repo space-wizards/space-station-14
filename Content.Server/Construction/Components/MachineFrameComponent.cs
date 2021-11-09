@@ -319,7 +319,7 @@ namespace Content.Server.Construction.Components
                     if (splitStack == null)
                         return false;
 
-                    if(!_partContainer.Insert(splitStack))
+                    if(!_partContainer.Insert(Owner.EntityManager.GetEntity(splitStack.Value)))
                         return false;
 
                     _materialProgress[type] += needed;

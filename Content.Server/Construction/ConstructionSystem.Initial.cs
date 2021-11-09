@@ -171,10 +171,10 @@ namespace Content.Server.Construction
 
                             if (string.IsNullOrEmpty(materialStep.Store))
                             {
-                                if (!container.Insert(splitStack))
+                                if (!container.Insert(EntityManager.GetEntity(splitStack.Value)))
                                     continue;
                             }
-                            else if (!GetContainer(materialStep.Store).Insert(splitStack))
+                            else if (!GetContainer(materialStep.Store).Insert(EntityManager.GetEntity(splitStack.Value)))
                                     continue;
 
                             handled = true;
@@ -186,7 +186,7 @@ namespace Content.Server.Construction
                     case ArbitraryInsertConstructionGraphStep arbitraryStep:
                         foreach (var entity in EnumerateNearby(user))
                         {
-                            if (!arbitraryStep.EntityValid(entity))
+                            if (!arbitraryStep.EntityValid(entity.Uid, EntityManager))
                                 continue;
 
                             if (string.IsNullOrEmpty(arbitraryStep.Store))
@@ -430,7 +430,7 @@ namespace Content.Server.Construction
                 switch (step)
                 {
                     case EntityInsertConstructionGraphStep entityInsert:
-                        if (entityInsert.EntityValid(holding))
+                        if (entityInsert.EntityValid(holding.Uid, EntityManager))
                             valid = true;
                         break;
                     case ToolConstructionGraphStep _:
