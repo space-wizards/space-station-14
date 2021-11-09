@@ -219,9 +219,12 @@
 
 - type: Tag
   id: EmitterBolt
-  
+
 - type: Tag
   id: HideContextMenu
 
 - type: Tag
   id: NukeDisk
+
+- type: Tag
+  id: SMimmune
