@@ -15,7 +15,7 @@ namespace Content.Server.Explosion.Components
                 return;
 
             var sourceLocation = eventArgs.Source;
-            var targetLocation = eventArgs.Target.Transform.Coordinates;
+            var targetLocation = Owner.EntityManager.GetComponent<TransformComponent>(eventArgs.Target).Coordinates;
 
             if (sourceLocation.Equals(targetLocation)) return;
 
@@ -27,7 +27,7 @@ namespace Content.Server.Explosion.Components
                 ExplosionSeverity.Light => 20,
                 _ => 0,
             };
-            
+
             Owner.TryThrow(direction, throwForce);
         }
     }

@@ -20,21 +20,25 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         /// </summary>
         /// <param name="owner">Entity on which behavior is executed</param>
         /// <param name="system">system calling the behavior</param>
-        public void Execute(IEntity owner, DestructibleSystem system)
+        public void Execute(EntityUid owner, DestructibleSystem system)
         {
+            if (!system.EntityManager.TryGetComponent(owner, out TransformComponent? transform))
+            {
+                return;
+            }
+
             var solutionContainerSystem = EntitySystem.Get<SolutionContainerSystem>();
 
-
-            if (owner.TryGetComponent(out SpillableComponent? spillableComponent) &&
-                solutionContainerSystem.TryGetSolution(owner.Uid, spillableComponent.SolutionName,
+            if (system.EntityManager.TryGetComponent(owner, out SpillableComponent? spillableComponent) &&
+                solutionContainerSystem.TryGetSolution(owner, spillableComponent.SolutionName,
                     out var compSolution))
             {
-                compSolution.SpillAt(owner.Transform.Coordinates, "PuddleSmear", false);
+                compSolution.SpillAt(transform.Coordinates, "PuddleSmear", false);
             }
             else if (Solution != null &&
-                     solutionContainerSystem.TryGetSolution(owner.Uid, Solution, out var behaviorSolution))
+                     solutionContainerSystem.TryGetSolution(owner, Solution, out var behaviorSolution))
             {
-                behaviorSolution.SpillAt(owner.Transform.Coordinates, "PuddleSmear", false);
+                behaviorSolution.SpillAt(transform.Coordinates, "PuddleSmear", false);
             }
         }
     }

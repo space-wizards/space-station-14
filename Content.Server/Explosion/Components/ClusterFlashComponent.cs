@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using Content.Server.Explosion.EntitySystems;
 using Content.Server.Flash.Components;
 using Content.Server.Throwing;
 using Content.Shared.Explosion;

@@ -1,7 +1,6 @@
 using System;
-using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
-using Content.Server.Explosion;
+using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Robust.Shared.GameObjects;
@@ -31,7 +30,7 @@ namespace Content.Server.Chemistry.ReactionEffects
         public void React(Solution solution, IEntity solutionEntity, double intensity)
         {
             var floatIntensity = (float) intensity;
-      
+
             if (!solutionEntity.HasComponent<SolutionContainerManagerComponent>())
                 return;
 
@@ -50,7 +49,7 @@ namespace Content.Server.Chemistry.ReactionEffects
             var finalHeavyImpactRange = (int)MathF.Round(_heavyImpactRange * floatIntensity);
             var finalLightImpactRange = (int)MathF.Round(_lightImpactRange * floatIntensity);
             var finalFlashRange = (int)MathF.Round(_flashRange * floatIntensity);
-            solutionEntity.SpawnExplosion(finalDevastationRange,
+            EntitySystem.Get<ExplosionSystem>().SpawnExplosion(solutionEntity.Uid, finalDevastationRange,
                 finalHeavyImpactRange, finalLightImpactRange, finalFlashRange);
         }
     }

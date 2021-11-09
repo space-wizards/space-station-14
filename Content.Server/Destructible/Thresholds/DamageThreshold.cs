@@ -94,7 +94,7 @@ namespace Content.Server.Destructible.Thresholds
                 if (owner.Deleted)
                     return;
 
-                behavior.Execute(owner, system);
+                behavior.Execute(owner.Uid, system);
             }
         }
     }

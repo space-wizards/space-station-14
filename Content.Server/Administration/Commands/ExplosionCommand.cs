@@ -1,9 +1,9 @@
-using Content.Server.Explosion;
+using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-
 
 namespace Content.Server.Administration.Commands
 {
@@ -35,7 +35,7 @@ namespace Content.Server.Administration.Commands
             var mapTransform = player.AttachedEntity.Transform.GetMapTransform();
             var coords = new EntityCoordinates(mapTransform.Owner.Uid, x, y);
 
-            ExplosionHelper.SpawnExplosion(coords, dev, hvy, lgh, fla);
+            EntitySystem.Get<ExplosionSystem>().SpawnExplosion(coords, dev, hvy, lgh, fla);
         }
     }
 }

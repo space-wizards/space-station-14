@@ -1,4 +1,4 @@
-﻿using Content.Server.Explosion;
+﻿using Content.Server.Explosion.EntitySystems;
 using Content.Server.MachineLinking.Components;
 using Content.Server.MachineLinking.Events;
 using Robust.Shared.GameObjects;

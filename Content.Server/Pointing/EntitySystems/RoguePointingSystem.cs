@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Content.Server.Explosion;
+using Content.Server.Explosion.EntitySystems;
 using Content.Server.Pointing.Components;
 using Content.Shared.MobState;
 using Content.Shared.Pointing.Components;
@@ -21,6 +21,8 @@ namespace Content.Server.Pointing.EntitySystems
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+
+        [Dependency] private readonly ExplosionSystem _explosions = default!;
 
         public override void Initialize()
         {
@@ -106,7 +108,7 @@ namespace Content.Server.Pointing.EntitySystems
                     return;
                 }
 
-                component.Owner.SpawnExplosion(0, 2, 1, 1);
+                _explosions.SpawnExplosion(uid, 0, 2, 1, 1);
                 SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), component.ExplosionSound.GetSound(), uid);
 
                 EntityManager.QueueDeleteEntity(uid);

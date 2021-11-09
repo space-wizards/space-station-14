@@ -1,4 +1,6 @@
+using Content.Server.Construction;
 using Content.Server.Destructible.Thresholds;
+using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Acts;
 using Content.Shared.Damage;
 using JetBrains.Annotations;
@@ -13,8 +15,12 @@ namespace Content.Server.Destructible
     public class DestructibleSystem : EntitySystem
     {
         [Dependency] public readonly IRobustRandom Random = default!;
-        [Dependency] public readonly AudioSystem AudioSystem = default!;
+        public new IEntityManager EntityManager => base.EntityManager;
+
         [Dependency] public readonly ActSystem ActSystem = default!;
+        [Dependency] public readonly AudioSystem AudioSystem = default!;
+        [Dependency] public readonly ConstructionSystem ConstructionSystem = default!;
+        [Dependency] public readonly ExplosionSystem ExplosionSystem = default!;
 
         public override void Initialize()
         {
