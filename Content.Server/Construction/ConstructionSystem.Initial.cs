@@ -297,7 +297,7 @@ namespace Content.Server.Construction
 
             var user = args.SenderSession.AttachedEntity;
 
-            if (user == null || !Get<ActionBlockerSystem>().CanInteract(user)) return;
+            if (user == null || !Get<ActionBlockerSystem>().CanInteract(user.Uid)) return;
 
             if (!user.TryGetComponent(out HandsComponent? hands)) return;
 
@@ -398,7 +398,7 @@ namespace Content.Server.Construction
             }
 
             if (user == null
-                || !Get<ActionBlockerSystem>().CanInteract(user)
+                || !Get<ActionBlockerSystem>().CanInteract(user.Uid)
                 || !user.TryGetComponent(out HandsComponent? hands) || hands.GetActiveHand == null
                 || !user.InRangeUnobstructed(ev.Location, ignoreInsideBlocker:constructionPrototype.CanBuildInImpassable))
             {

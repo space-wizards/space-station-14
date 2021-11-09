@@ -182,7 +182,7 @@ namespace Content.Shared.Verbs
             // A large number of verbs need to check action blockers. Instead of repeatedly having each system individually
             // call ActionBlocker checks, just cache it for the verb request.
             var actionBlockerSystem = EntitySystem.Get<ActionBlockerSystem>();
-            CanInteract = force || actionBlockerSystem.CanInteract(user);
+            CanInteract = force || actionBlockerSystem.CanInteract(user.Uid);
 
             if (!user.TryGetComponent(out Hands) ||
                 !actionBlockerSystem.CanUse(user.Uid))

@@ -18,9 +18,6 @@ namespace Content.Shared.ActionBlocker
     [UsedImplicitly]
     public class ActionBlockerSystem : EntitySystem
     {
-        // TODO: Make the EntityUid the main overload for all these methods.
-        // TODO: Move each of these to their relevant EntitySystems?
-
         public bool CanMove(EntityUid uid)
         {
             var ev = new MovementAttemptEvent(uid);
@@ -29,18 +26,12 @@ namespace Content.Shared.ActionBlocker
             return !ev.Cancelled;
         }
 
-        public bool CanInteract(IEntity entity)
-        {
-            var ev = new InteractionAttemptEvent(entity);
-
-            RaiseLocalEvent(entity.Uid, ev);
-
-            return !ev.Cancelled;
-        }
-
         public bool CanInteract(EntityUid uid)
         {
-            return CanInteract(EntityManager.GetEntity(uid));
+            var ev = new InteractionAttemptEvent(uid);
+            RaiseLocalEvent(uid, ev);
+
+            return !ev.Cancelled;
         }
 
         public bool CanUse(EntityUid uid)

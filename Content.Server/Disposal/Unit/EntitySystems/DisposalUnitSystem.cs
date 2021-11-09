@@ -379,7 +379,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
         private bool IsValidInteraction(ITargetedInteractEventArgs eventArgs)
         {
-            if (!Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
+            if (!Get<ActionBlockerSystem>().CanInteract(eventArgs.User.Uid))
             {
                 eventArgs.Target.PopupMessage(eventArgs.User, Loc.GetString("ui-disposal-unit-is-valid-interaction-cannot=interact"));
                 return false;

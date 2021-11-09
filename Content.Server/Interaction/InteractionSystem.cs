@@ -133,7 +133,7 @@ namespace Content.Server.Interaction
                 return;
             }
 
-            if (!_actionBlockerSystem.CanInteract(userEntity))
+            if (!_actionBlockerSystem.CanInteract(userEntity.Uid))
                 return;
 
             if (!EntityManager.TryGetEntity(msg.Dropped, out var dropped))
@@ -293,7 +293,7 @@ namespace Content.Server.Interaction
             if (!ValidateInteractAndFace(user, coordinates))
                 return;
 
-            if (!_actionBlockerSystem.CanInteract(user))
+            if (!_actionBlockerSystem.CanInteract(user.Uid))
                 return;
 
             // Get entity clicked upon from UID if valid UID, if not assume no entity clicked upon and null
@@ -367,7 +367,7 @@ namespace Content.Server.Interaction
         /// </summary>
         public void InteractHand(IEntity user, IEntity target)
         {
-            if (!_actionBlockerSystem.CanInteract(user))
+            if (!_actionBlockerSystem.CanInteract(user.Uid))
                 return;
 
             // all interactions should only happen when in range / unobstructed, so no range check is needed

@@ -373,7 +373,7 @@ namespace Content.Shared.Interaction
         /// </summary>
         public async Task InteractUsing(IEntity user, IEntity used, IEntity target, EntityCoordinates clickLocation)
         {
-            if (!_actionBlockerSystem.CanInteract(user))
+            if (!_actionBlockerSystem.CanInteract(user.Uid))
                 return;
 
             if (InteractDoBefore(user, used, target, clickLocation, true))
@@ -444,7 +444,7 @@ namespace Content.Shared.Interaction
                 delayComponent.BeginDelay();
             }
 
-            if (!_actionBlockerSystem.CanInteract(user) || !_actionBlockerSystem.CanUse(user.Uid))
+            if (!_actionBlockerSystem.CanInteract(user.Uid) || !_actionBlockerSystem.CanUse(user.Uid))
                 return;
 
             // all activates should only fire when in range / unobstructed

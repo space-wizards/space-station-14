@@ -160,7 +160,7 @@ namespace Content.Server.Strip
 
             bool Check()
             {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user.Uid))
                     return false;
 
                 if (item == null)
@@ -225,7 +225,7 @@ namespace Content.Server.Strip
 
             bool Check()
             {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user.Uid))
                     return false;
 
                 if (item == null)
@@ -290,7 +290,7 @@ namespace Content.Server.Strip
 
             bool Check()
             {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user.Uid))
                     return false;
 
                 if (!inventory.HasSlot(slot))
@@ -346,7 +346,7 @@ namespace Content.Server.Strip
 
             bool Check()
             {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user.Uid))
                     return false;
 
                 if (!hands.HasHand(hand))
