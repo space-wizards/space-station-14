@@ -3,7 +3,6 @@ using Content.Server.Doors.Components;
 using Content.Server.Explosion.Components;
 using Content.Server.Flash;
 using Content.Server.Flash.Components;
-using Content.Shared.Acts;
 using Content.Shared.Audio;
 using Content.Shared.Doors;
 using JetBrains.Annotations;
@@ -14,7 +13,7 @@ using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
-namespace Content.Server.Explosion
+namespace Content.Server.Explosion.EntitySystems
 {
     /// <summary>
     /// Raised whenever something is Triggered on the entity.
@@ -34,6 +33,7 @@ namespace Content.Server.Explosion
     [UsedImplicitly]
     public sealed class TriggerSystem : EntitySystem
     {
+        [Dependency] private readonly ExplosionSystem _explosions = default!;
         [Dependency] private readonly FlashSystem _flashSystem = default!;
 
         public override void Initialize()
@@ -65,7 +65,7 @@ namespace Content.Server.Explosion
             }
 
             component.Exploding = true;
-            component.Owner.SpawnExplosion(component.DevastationRange, component.HeavyImpactRange, component.LightImpactRange, component.FlashRange);
+            _explosions.SpawnExplosion(uid, component.DevastationRange, component.HeavyImpactRange, component.LightImpactRange, component.FlashRange);
             EntityManager.QueueDeleteEntity(uid);
         }
         #endregion

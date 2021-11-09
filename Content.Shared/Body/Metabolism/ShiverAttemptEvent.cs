@@ -4,11 +4,11 @@ namespace Content.Shared.Body.Metabolism
 {
     public class ShiverAttemptEvent : CancellableEntityEventArgs
     {
-        public ShiverAttemptEvent(IEntity entity)
+        public ShiverAttemptEvent(EntityUid uid)
         {
-            Entity = entity;
+            Uid = uid;
         }
 
-        public IEntity Entity { get; }
+        public EntityUid Uid { get; }
     }
 }

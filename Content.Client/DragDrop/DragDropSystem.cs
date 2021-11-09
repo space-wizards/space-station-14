@@ -415,7 +415,7 @@ namespace Content.Client.DragDrop
         /// <returns>null if the target doesn't support IDragDropOn</returns>
         private bool? ValidDragDrop(DragDropEvent eventArgs)
         {
-            if (!_actionBlockerSystem.CanInteract(eventArgs.User))
+            if (!_actionBlockerSystem.CanInteract(eventArgs.User.Uid))
             {
                 return false;
             }

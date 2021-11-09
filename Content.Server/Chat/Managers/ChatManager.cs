@@ -110,7 +110,7 @@ namespace Content.Server.Chat.Managers
 
         public void EntitySay(IEntity source, string message)
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanSpeak(source))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanSpeak(source.Uid))
             {
                 return;
             }
@@ -129,7 +129,7 @@ namespace Content.Server.Chat.Managers
             foreach (var handler in _chatTransformHandlers)
             {
                 //TODO: rather return a bool and use a out var?
-                message = handler(source, message);
+                message = handler(source.Uid, message);
             }
 
             message = message.Trim();
@@ -195,7 +195,7 @@ namespace Content.Server.Chat.Managers
 
         public void EntityMe(IEntity source, string action)
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanEmote(source))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanEmote(source.Uid))
             {
                 return;
             }

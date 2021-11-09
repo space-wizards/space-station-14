@@ -60,7 +60,7 @@ namespace Content.Server.Pinpointer
             var l = new SortedList<float, EntityUid>();
             foreach (var e in ents)
             {
-                if (whitelist.IsValid(e))
+                if (whitelist.IsValid(e.Uid))
                 {
                     var dist = (e.Transform.WorldPosition - transform.WorldPosition).LengthSquared;
                     l.TryAdd(dist, e.Uid);
