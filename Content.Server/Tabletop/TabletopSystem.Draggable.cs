@@ -25,7 +25,7 @@ namespace Content.Server.Tabletop
         /// </summary>
         private void OnTabletopMove(TabletopMoveEvent msg, EntitySessionEventArgs args)
         {
-            if (args.SenderSession as IPlayerSession is not { AttachedEntity: { } playerEntity } playerSession)
+            if (args.SenderSession as IPlayerSession is not { AttachedEntityUid: { } playerEntity } playerSession)
                 return;
 
             if (!EntityManager.TryGetComponent(msg.TableUid, out TabletopGameComponent? tabletop) || tabletop.Session is not {} session)
@@ -36,10 +36,10 @@ namespace Content.Server.Tabletop
                 return;
 
             // Return if can not see table or stunned/no hands
-            if (!EntityManager.TryGetEntity(msg.TableUid, out var table))
+            if (!EntityManager.EntityExists(msg.TableUid))
                 return;
 
-            if (!CanSeeTable(playerEntity, table) || StunnedOrNoHands(playerEntity))
+            if (!CanSeeTable(playerEntity, msg.TableUid) || StunnedOrNoHands(playerEntity))
                 return;
 
             // Check if moved entity exists and has tabletop draggable component
