@@ -2,20 +2,19 @@
 using Content.Shared.DragDrop;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.Body.Components
-{
-    [RegisterComponent]
-    [ComponentReference(typeof(SharedBodyComponent))]
-    public class BodyComponent : SharedBodyComponent, IDraggable
-    {
-        bool IDraggable.CanStartDrag(StartDragDropEvent args)
-        {
-            return true;
-        }
+namespace Content.Client.Body.Components;
 
-        bool IDraggable.CanDrop(CanDropEvent args)
-        {
-            return true;
-        }
+[RegisterComponent]
+[ComponentReference(typeof(SharedBodyComponent))]
+public class BodyComponent : SharedBodyComponent, IDraggable
+{
+    bool IDraggable.CanStartDrag(StartDragDropEvent args)
+    {
+        return true;
+    }
+
+    bool IDraggable.CanDrop(CanDropEvent args)
+    {
+        return true;
     }
 }

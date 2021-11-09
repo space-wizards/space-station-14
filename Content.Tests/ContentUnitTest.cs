@@ -9,45 +9,44 @@ using Content.Shared.IoC;
 using Robust.UnitTesting;
 using EntryPoint = Content.Server.Entry.EntryPoint;
 
-namespace Content.Tests
+namespace Content.Tests;
+
+public class ContentUnitTest : RobustUnitTest
 {
-    public class ContentUnitTest : RobustUnitTest
+    protected override void OverrideIoC()
     {
-        protected override void OverrideIoC()
+        base.OverrideIoC();
+
+        SharedContentIoC.Register();
+
+        if (Project == UnitTestProject.Server)
         {
-            base.OverrideIoC();
+            ServerContentIoC.Register();
+        }
+        else if (Project == UnitTestProject.Client)
+        {
+            ClientContentIoC.Register();
+        }
+    }
 
-            SharedContentIoC.Register();
+    protected override Assembly[] GetContentAssemblies()
+    {
+        var l = new List<Assembly>
+        {
+            typeof(Content.Shared.Entry.EntryPoint).Assembly
+        };
 
-            if (Project == UnitTestProject.Server)
-            {
-                ServerContentIoC.Register();
-            }
-            else if (Project == UnitTestProject.Client)
-            {
-                ClientContentIoC.Register();
-            }
+        if (Project == UnitTestProject.Server)
+        {
+            l.Add(typeof(EntryPoint).Assembly);
+        }
+        else if (Project == UnitTestProject.Client)
+        {
+            l.Add(typeof(Content.Client.Entry.EntryPoint).Assembly);
         }
 
-        protected override Assembly[] GetContentAssemblies()
-        {
-            var l = new List<Assembly>
-            {
-                typeof(Content.Shared.Entry.EntryPoint).Assembly
-            };
+        l.Add(typeof(ContentUnitTest).Assembly);
 
-            if (Project == UnitTestProject.Server)
-            {
-                l.Add(typeof(EntryPoint).Assembly);
-            }
-            else if (Project == UnitTestProject.Client)
-            {
-                l.Add(typeof(Content.Client.Entry.EntryPoint).Assembly);
-            }
-
-            l.Add(typeof(ContentUnitTest).Assembly);
-
-            return l.ToArray();
-        }
+        return l.ToArray();
     }
 }

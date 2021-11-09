@@ -4,27 +4,26 @@ using Content.Shared.CharacterAppearance.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.CharacterAppearance.Systems
+namespace Content.Server.CharacterAppearance.Systems;
+
+public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
 {
-    public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
+    public override void Initialize()
     {
-        public override void Initialize()
-        {
-            base.Initialize();
+        base.Initialize();
 
-            SubscribeLocalEvent<HumanoidAppearanceComponent, ChangedHumanoidAppearanceEvent>(UpdateSkinColor);
-        }
+        SubscribeLocalEvent<HumanoidAppearanceComponent, ChangedHumanoidAppearanceEvent>(UpdateSkinColor);
+    }
 
-        private void UpdateSkinColor(EntityUid uid, HumanoidAppearanceComponent component, ChangedHumanoidAppearanceEvent _)
+    private void UpdateSkinColor(EntityUid uid, HumanoidAppearanceComponent component, ChangedHumanoidAppearanceEvent _)
+    {
+        if (EntityManager.TryGetComponent<SharedBodyComponent>(uid, out SharedBodyComponent?  body))
         {
-            if (EntityManager.TryGetComponent<SharedBodyComponent>(uid, out SharedBodyComponent?  body))
+            foreach (var (part, _) in body.Parts)
             {
-                foreach (var (part, _) in body.Parts)
+                if (part.Owner.TryGetComponent(out SpriteComponent? sprite))
                 {
-                    if (part.Owner.TryGetComponent(out SpriteComponent? sprite))
-                    {
-                        sprite!.Color = component.Appearance.SkinColor;
-                    }
+                    sprite!.Color = component.Appearance.SkinColor;
                 }
             }
         }

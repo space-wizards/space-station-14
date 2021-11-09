@@ -9,89 +9,88 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
-namespace Content.Server.Atmos.Commands
+namespace Content.Server.Atmos.Commands;
+
+[AdminCommand(AdminFlags.Debug)]
+public class FixGridAtmos : IConsoleCommand
 {
-    [AdminCommand(AdminFlags.Debug)]
-    public class FixGridAtmos : IConsoleCommand
+    public string Command => "fixgridatmos";
+    public string Description => "Makes every tile on a grid have a roundstart gas mix.";
+    public string Help => $"{Command} <grid Ids>";
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        public string Command => "fixgridatmos";
-        public string Description => "Makes every tile on a grid have a roundstart gas mix.";
-        public string Help => $"{Command} <grid Ids>";
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        if (args.Length == 0)
         {
-            if (args.Length == 0)
+            shell.WriteError("Not enough arguments.");
+            return;
+        }
+
+        var mapManager = IoCManager.Resolve<IMapManager>();
+        var entityManager = IoCManager.Resolve<IEntityManager>();
+        var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
+
+        var mixtures = new GasMixture[5];
+        for (var i = 0; i < mixtures.Length; i++)
+            mixtures[i] = new GasMixture(Atmospherics.CellVolume) { Temperature = Atmospherics.T20C };
+
+        // 0: Air
+        mixtures[0].AdjustMoles(Gas.Oxygen, Atmospherics.OxygenMolesStandard);
+        mixtures[0].AdjustMoles(Gas.Nitrogen, Atmospherics.NitrogenMolesStandard);
+
+        // 1: Vaccum
+
+        // 2: Oxygen (GM)
+        mixtures[2].AdjustMoles(Gas.Oxygen, Atmospherics.MolesCellGasMiner);
+
+        // 3: Nitrogen (GM)
+        mixtures[3].AdjustMoles(Gas.Nitrogen, Atmospherics.MolesCellGasMiner);
+
+        // 4: Plasma (GM)
+        mixtures[4].AdjustMoles(Gas.Plasma, Atmospherics.MolesCellGasMiner);
+
+        foreach (var gid in args)
+        {
+            // I like offering detailed error messages, that's why I don't use one of the extension methods.
+            if (!int.TryParse(gid, out var i) || i <= 0)
             {
-                shell.WriteError("Not enough arguments.");
-                return;
+                shell.WriteError($"Invalid grid ID \"{gid}\".");
+                continue;
             }
 
-            var mapManager = IoCManager.Resolve<IMapManager>();
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
+            var gridId = new GridId(i);
 
-            var mixtures = new GasMixture[5];
-            for (var i = 0; i < mixtures.Length; i++)
-                mixtures[i] = new GasMixture(Atmospherics.CellVolume) { Temperature = Atmospherics.T20C };
-
-            // 0: Air
-            mixtures[0].AdjustMoles(Gas.Oxygen, Atmospherics.OxygenMolesStandard);
-            mixtures[0].AdjustMoles(Gas.Nitrogen, Atmospherics.NitrogenMolesStandard);
-
-            // 1: Vaccum
-
-            // 2: Oxygen (GM)
-            mixtures[2].AdjustMoles(Gas.Oxygen, Atmospherics.MolesCellGasMiner);
-
-            // 3: Nitrogen (GM)
-            mixtures[3].AdjustMoles(Gas.Nitrogen, Atmospherics.MolesCellGasMiner);
-
-            // 4: Plasma (GM)
-            mixtures[4].AdjustMoles(Gas.Plasma, Atmospherics.MolesCellGasMiner);
-
-            foreach (var gid in args)
+            if (!mapManager.TryGetGrid(gridId, out var mapGrid))
             {
-                // I like offering detailed error messages, that's why I don't use one of the extension methods.
-                if (!int.TryParse(gid, out var i) || i <= 0)
-                {
-                    shell.WriteError($"Invalid grid ID \"{gid}\".");
+                shell.WriteError($"Grid \"{i}\" doesn't exist.");
+                continue;
+            }
+
+            if (!entityManager.TryGetComponent(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
+            {
+                shell.WriteError($"Grid \"{i}\" has no atmosphere component, try addatmos.");
+                continue;
+            }
+
+            foreach (var (indices, tileMain) in gridAtmosphere.Tiles)
+            {
+                var tile = tileMain.Air;
+                if (tile == null)
                     continue;
-                }
 
-                var gridId = new GridId(i);
-
-                if (!mapManager.TryGetGrid(gridId, out var mapGrid))
+                tile.Clear();
+                var mixtureId = 0;
+                foreach (var entUid in mapGrid.GetAnchoredEntities(indices))
                 {
-                    shell.WriteError($"Grid \"{i}\" doesn't exist.");
-                    continue;
-                }
-
-                if (!entityManager.TryGetComponent(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
-                {
-                    shell.WriteError($"Grid \"{i}\" has no atmosphere component, try addatmos.");
-                    continue;
-                }
-
-                foreach (var (indices, tileMain) in gridAtmosphere.Tiles)
-                {
-                    var tile = tileMain.Air;
-                    if (tile == null)
+                    if (!entityManager.TryGetComponent(entUid, out AtmosFixMarkerComponent? afm))
                         continue;
-
-                    tile.Clear();
-                    var mixtureId = 0;
-                    foreach (var entUid in mapGrid.GetAnchoredEntities(indices))
-                    {
-                        if (!entityManager.TryGetComponent(entUid, out AtmosFixMarkerComponent? afm))
-                            continue;
-                        mixtureId = afm.Mode;
-                        break;
-                    }
-                    var mixture = mixtures[mixtureId];
-                    atmosphereSystem.Merge(tile, mixture);
-                    tile.Temperature = mixture.Temperature;
-
-                    atmosphereSystem.InvalidateTile(gridAtmosphere, indices);
+                    mixtureId = afm.Mode;
+                    break;
                 }
+                var mixture = mixtures[mixtureId];
+                atmosphereSystem.Merge(tile, mixture);
+                tile.Temperature = mixture.Temperature;
+
+                atmosphereSystem.InvalidateTile(gridAtmosphere, indices);
             }
         }
     }

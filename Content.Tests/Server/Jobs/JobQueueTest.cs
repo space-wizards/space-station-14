@@ -7,210 +7,209 @@ using NUnit.Framework;
 using Robust.Shared.Timing;
 using Robust.UnitTesting;
 
-namespace Content.Tests.Server.Jobs
+namespace Content.Tests.Server.Jobs;
+
+[TestFixture]
+[TestOf(typeof(Job<>))]
+[TestOf(typeof(JobQueue))]
+public class JobQueueTest : RobustUnitTest
 {
-    [TestFixture]
-    [TestOf(typeof(Job<>))]
-    [TestOf(typeof(JobQueue))]
-    public class JobQueueTest : RobustUnitTest
+    /// <summary>
+    ///     Test a job that immediately exits with a value.
+    /// </summary>
+    [Test]
+    public void TestImmediateJob()
     {
-        /// <summary>
-        ///     Test a job that immediately exits with a value.
-        /// </summary>
-        [Test]
-        public void TestImmediateJob()
+        // Pass debug stopwatch so time doesn't advance.
+        var sw = new DebugStopwatch();
+        var queue = new JobQueue(sw);
+
+        var job = new ImmediateJob();
+
+        queue.EnqueueJob(job);
+
+        queue.Process();
+
+        Assert.That(job.Status, Is.EqualTo(JobStatus.Finished));
+        Assert.That(job.Result, Is.EqualTo("honk!"));
+    }
+
+    [Test]
+    public void TestLongJob()
+    {
+        var swA = new DebugStopwatch();
+        var swB = new DebugStopwatch();
+        var queue = new LongJobQueue(swB);
+
+        var job = new LongJob(swA, swB);
+
+        queue.EnqueueJob(job);
+
+        queue.Process();
+        Assert.That(job.Status, Is.EqualTo(JobStatus.Paused));
+        Assert.That((float)job.DebugTime, new ApproxEqualityConstraint(1f));
+        queue.Process();
+        Assert.That(job.Status, Is.EqualTo(JobStatus.Paused));
+        Assert.That((float)job.DebugTime, new ApproxEqualityConstraint(2f));
+        queue.Process();
+        Assert.That(job.Status, Is.EqualTo(JobStatus.Finished));
+
+        Assert.That(job.Result, Is.EqualTo("foo!"));
+        Assert.That((float)job.DebugTime, new ApproxEqualityConstraint(2.4f));
+    }
+
+    [Test]
+    public void TestLongJobCancel()
+    {
+        var swA = new DebugStopwatch();
+        var swB = new DebugStopwatch();
+        var queue = new LongJobQueue(swB);
+
+        var cts = new CancellationTokenSource();
+        var job = new LongJob(swA, swB, cts.Token);
+
+        queue.EnqueueJob(job);
+
+        queue.Process();
+        Assert.That(job.Status, Is.EqualTo(JobStatus.Paused));
+        queue.Process();
+        Assert.That(job.Status, Is.EqualTo(JobStatus.Paused));
+        cts.Cancel();
+        queue.Process();
+        Assert.That(job.Status, Is.EqualTo(JobStatus.Finished));
+        Assert.That((float)job.DebugTime, new ApproxEqualityConstraint(2.0f));
+
+        Assert.That(job.Result, Is.Null);
+    }
+
+    [Test]
+    public void TestWaitingJob()
+    {
+        var sw = new DebugStopwatch();
+        var queue = new LongJobQueue(sw);
+
+        var tcs = new TaskCompletionSource<object>();
+
+        var job = new WaitingJob(tcs.Task);
+
+        queue.EnqueueJob(job);
+
+        queue.Process();
+        Assert.That(job.Status, Is.EqualTo(JobStatus.Waiting));
+        queue.Process();
+        Assert.That(job.Status, Is.EqualTo(JobStatus.Waiting));
+        tcs.SetResult(1);
+        queue.Process();
+        Assert.That(job.Status, Is.EqualTo(JobStatus.Finished));
+
+        Assert.That(job.Result, Is.EqualTo("oof!"));
+    }
+
+    [Test]
+    public void TestWaitingJobCancel()
+    {
+        var sw = new DebugStopwatch();
+        var queue = new LongJobQueue(sw);
+
+        var tcs = new TaskCompletionSource<object>();
+
+        var job = new WaitingJob(tcs.Task);
+
+        queue.EnqueueJob(job);
+
+        queue.Process();
+        Assert.That(job.Status, Is.EqualTo(JobStatus.Waiting));
+        queue.Process();
+        Assert.That(job.Status, Is.EqualTo(JobStatus.Waiting));
+        tcs.SetCanceled();
+        queue.Process();
+        Assert.That(job.Status, Is.EqualTo(JobStatus.Finished));
+
+        Assert.That(job.Result, Is.Null);
+    }
+
+    private class DebugStopwatch : IStopwatch
+    {
+        public TimeSpan Elapsed { get; set; }
+
+        public void Restart()
         {
-            // Pass debug stopwatch so time doesn't advance.
-            var sw = new DebugStopwatch();
-            var queue = new JobQueue(sw);
-
-            var job = new ImmediateJob();
-
-            queue.EnqueueJob(job);
-
-            queue.Process();
-
-            Assert.That(job.Status, Is.EqualTo(JobStatus.Finished));
-            Assert.That(job.Result, Is.EqualTo("honk!"));
+            Elapsed = TimeSpan.Zero;
         }
 
-        [Test]
-        public void TestLongJob()
+        public void Start()
         {
-            var swA = new DebugStopwatch();
-            var swB = new DebugStopwatch();
-            var queue = new LongJobQueue(swB);
+            Elapsed = TimeSpan.Zero;
+        }
+    }
 
-            var job = new LongJob(swA, swB);
-
-            queue.EnqueueJob(job);
-
-            queue.Process();
-            Assert.That(job.Status, Is.EqualTo(JobStatus.Paused));
-            Assert.That((float)job.DebugTime, new ApproxEqualityConstraint(1f));
-            queue.Process();
-            Assert.That(job.Status, Is.EqualTo(JobStatus.Paused));
-            Assert.That((float)job.DebugTime, new ApproxEqualityConstraint(2f));
-            queue.Process();
-            Assert.That(job.Status, Is.EqualTo(JobStatus.Finished));
-
-            Assert.That(job.Result, Is.EqualTo("foo!"));
-            Assert.That((float)job.DebugTime, new ApproxEqualityConstraint(2.4f));
+    private class ImmediateJob : Job<string>
+    {
+        public ImmediateJob() : base(0)
+        {
         }
 
-        [Test]
-        public void TestLongJobCancel()
+        protected override Task<string> Process()
         {
-            var swA = new DebugStopwatch();
-            var swB = new DebugStopwatch();
-            var queue = new LongJobQueue(swB);
+            return Task.FromResult("honk!");
+        }
+    }
 
-            var cts = new CancellationTokenSource();
-            var job = new LongJob(swA, swB, cts.Token);
+    private class LongJob : Job<string>
+    {
+        private readonly DebugStopwatch _stopwatch;
+        private readonly DebugStopwatch _stopwatchB;
 
-            queue.EnqueueJob(job);
-
-            queue.Process();
-            Assert.That(job.Status, Is.EqualTo(JobStatus.Paused));
-            queue.Process();
-            Assert.That(job.Status, Is.EqualTo(JobStatus.Paused));
-            cts.Cancel();
-            queue.Process();
-            Assert.That(job.Status, Is.EqualTo(JobStatus.Finished));
-            Assert.That((float)job.DebugTime, new ApproxEqualityConstraint(2.0f));
-
-            Assert.That(job.Result, Is.Null);
+        public LongJob(DebugStopwatch stopwatchA, DebugStopwatch stopwatchB, CancellationToken cancel = default) :
+            base(0.95, stopwatchA, cancel)
+        {
+            _stopwatch = stopwatchA;
+            _stopwatchB = stopwatchB;
         }
 
-        [Test]
-        public void TestWaitingJob()
+        protected override async Task<string> Process()
         {
-            var sw = new DebugStopwatch();
-            var queue = new LongJobQueue(sw);
+            for (var i = 0; i < 12; i++)
+            {
+                // Increment time by 0.2 seconds.
+                IncrementTime();
+                await SuspendIfOutOfTime();
+            }
 
-            var tcs = new TaskCompletionSource<object>();
-
-            var job = new WaitingJob(tcs.Task);
-
-            queue.EnqueueJob(job);
-
-            queue.Process();
-            Assert.That(job.Status, Is.EqualTo(JobStatus.Waiting));
-            queue.Process();
-            Assert.That(job.Status, Is.EqualTo(JobStatus.Waiting));
-            tcs.SetResult(1);
-            queue.Process();
-            Assert.That(job.Status, Is.EqualTo(JobStatus.Finished));
-
-            Assert.That(job.Result, Is.EqualTo("oof!"));
+            return "foo!";
         }
 
-        [Test]
-        public void TestWaitingJobCancel()
+        private void IncrementTime()
         {
-            var sw = new DebugStopwatch();
-            var queue = new LongJobQueue(sw);
+            var diff = TimeSpan.FromSeconds(0.2);
+            _stopwatch.Elapsed += diff;
+            _stopwatchB.Elapsed += diff;
+        }
+    }
 
-            var tcs = new TaskCompletionSource<object>();
-
-            var job = new WaitingJob(tcs.Task);
-
-            queue.EnqueueJob(job);
-
-            queue.Process();
-            Assert.That(job.Status, Is.EqualTo(JobStatus.Waiting));
-            queue.Process();
-            Assert.That(job.Status, Is.EqualTo(JobStatus.Waiting));
-            tcs.SetCanceled();
-            queue.Process();
-            Assert.That(job.Status, Is.EqualTo(JobStatus.Finished));
-
-            Assert.That(job.Result, Is.Null);
+    private class LongJobQueue : JobQueue
+    {
+        public LongJobQueue(IStopwatch swB) : base(swB)
+        {
         }
 
-        private class DebugStopwatch : IStopwatch
+        public override double MaxTime => 0.9;
+    }
+
+    private class WaitingJob : Job<string>
+    {
+        private readonly Task _t;
+
+        public WaitingJob(Task t) : base(0)
         {
-            public TimeSpan Elapsed { get; set; }
-
-            public void Restart()
-            {
-                Elapsed = TimeSpan.Zero;
-            }
-
-            public void Start()
-            {
-                Elapsed = TimeSpan.Zero;
-            }
+            _t = t;
         }
 
-        private class ImmediateJob : Job<string>
+        protected override async Task<string> Process()
         {
-            public ImmediateJob() : base(0)
-            {
-            }
+            await WaitAsyncTask(_t);
 
-            protected override Task<string> Process()
-            {
-                return Task.FromResult("honk!");
-            }
-        }
-
-        private class LongJob : Job<string>
-        {
-            private readonly DebugStopwatch _stopwatch;
-            private readonly DebugStopwatch _stopwatchB;
-
-            public LongJob(DebugStopwatch stopwatchA, DebugStopwatch stopwatchB, CancellationToken cancel = default) :
-                base(0.95, stopwatchA, cancel)
-            {
-                _stopwatch = stopwatchA;
-                _stopwatchB = stopwatchB;
-            }
-
-            protected override async Task<string> Process()
-            {
-                for (var i = 0; i < 12; i++)
-                {
-                    // Increment time by 0.2 seconds.
-                    IncrementTime();
-                    await SuspendIfOutOfTime();
-                }
-
-                return "foo!";
-            }
-
-            private void IncrementTime()
-            {
-                var diff = TimeSpan.FromSeconds(0.2);
-                _stopwatch.Elapsed += diff;
-                _stopwatchB.Elapsed += diff;
-            }
-        }
-
-        private class LongJobQueue : JobQueue
-        {
-            public LongJobQueue(IStopwatch swB) : base(swB)
-            {
-            }
-
-            public override double MaxTime => 0.9;
-        }
-
-        private class WaitingJob : Job<string>
-        {
-            private readonly Task _t;
-
-            public WaitingJob(Task t) : base(0)
-            {
-                _t = t;
-            }
-
-            protected override async Task<string> Process()
-            {
-                await WaitAsyncTask(_t);
-
-                return "oof!";
-            }
+            return "oof!";
         }
     }
 }

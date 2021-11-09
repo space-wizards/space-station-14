@@ -5,24 +5,23 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Maths;
 
-namespace Content.Client.Traitor.Uplink
+namespace Content.Client.Traitor.Uplink;
+
+[GenerateTypedNameReferences]
+public partial class UplinkListingControl : Control
 {
-    [GenerateTypedNameReferences]
-    public partial class UplinkListingControl : Control
+
+    public UplinkListingControl(string itemName, string itemDescription,
+        int itemPrice, bool canBuy, Texture? texture = null)
     {
+        RobustXamlLoader.Load(this);
 
-        public UplinkListingControl(string itemName, string itemDescription,
-            int itemPrice, bool canBuy, Texture? texture = null)
-        {
-            RobustXamlLoader.Load(this);
+        UplinkItemName.Text = itemName;
+        UplinkItemDescription.SetMessage(itemDescription);
 
-            UplinkItemName.Text = itemName;
-            UplinkItemDescription.SetMessage(itemDescription);
+        UplinkItemBuyButton.Text = $"{itemPrice} TC";
+        UplinkItemBuyButton.Disabled = !canBuy;
 
-            UplinkItemBuyButton.Text = $"{itemPrice} TC";
-            UplinkItemBuyButton.Disabled = !canBuy;
-
-            UplinkItemTexture.Texture = texture;
-        }
+        UplinkItemTexture.Texture = texture;
     }
 }

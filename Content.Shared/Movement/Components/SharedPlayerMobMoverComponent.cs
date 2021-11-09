@@ -8,115 +8,114 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.Movement.Components
+namespace Content.Shared.Movement.Components;
+
+/// <summary>
+///     The basic player mover with footsteps and grabbing
+/// </summary>
+[RegisterComponent]
+[ComponentReference(typeof(IMobMoverComponent))]
+[NetworkedComponent()]
+public class SharedPlayerMobMoverComponent : Component, IMobMoverComponent
 {
+    public override string Name => "PlayerMobMover";
+
+    private float _stepSoundDistance;
+    [DataField("grabRange")]
+    private float _grabRange = IMobMoverComponent.GrabRangeDefault;
+    [DataField("pushStrength")]
+    private float _pushStrength = IMobMoverComponent.PushStrengthDefault;
+
+    [DataField("weightlessStrength")]
+    private float _weightlessStrength = IMobMoverComponent.WeightlessStrengthDefault;
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    public EntityCoordinates LastPosition { get; set; }
+
     /// <summary>
-    ///     The basic player mover with footsteps and grabbing
+    ///     Used to keep track of how far we have moved before playing a step sound
     /// </summary>
-    [RegisterComponent]
-    [ComponentReference(typeof(IMobMoverComponent))]
-    [NetworkedComponent()]
-    public class SharedPlayerMobMoverComponent : Component, IMobMoverComponent
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float StepSoundDistance
     {
-        public override string Name => "PlayerMobMover";
-
-        private float _stepSoundDistance;
-        [DataField("grabRange")]
-        private float _grabRange = IMobMoverComponent.GrabRangeDefault;
-        [DataField("pushStrength")]
-        private float _pushStrength = IMobMoverComponent.PushStrengthDefault;
-
-        [DataField("weightlessStrength")]
-        private float _weightlessStrength = IMobMoverComponent.WeightlessStrengthDefault;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        public EntityCoordinates LastPosition { get; set; }
-
-        /// <summary>
-        ///     Used to keep track of how far we have moved before playing a step sound
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float StepSoundDistance
+        get => _stepSoundDistance;
+        set
         {
-            get => _stepSoundDistance;
-            set
-            {
-                if (MathHelper.CloseToPercent(_stepSoundDistance, value)) return;
-                _stepSoundDistance = value;
-            }
+            if (MathHelper.CloseToPercent(_stepSoundDistance, value)) return;
+            _stepSoundDistance = value;
         }
+    }
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float GrabRange
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float GrabRange
+    {
+        get => _grabRange;
+        set
         {
-            get => _grabRange;
-            set
-            {
-                if (MathHelper.CloseToPercent(_grabRange, value)) return;
-                _grabRange = value;
-                Dirty();
-            }
+            if (MathHelper.CloseToPercent(_grabRange, value)) return;
+            _grabRange = value;
+            Dirty();
         }
+    }
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float PushStrength
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float PushStrength
+    {
+        get => _pushStrength;
+        set
         {
-            get => _pushStrength;
-            set
-            {
-                if (MathHelper.CloseToPercent(_pushStrength, value)) return;
-                _pushStrength = value;
-                Dirty();
-            }
+            if (MathHelper.CloseToPercent(_pushStrength, value)) return;
+            _pushStrength = value;
+            Dirty();
         }
+    }
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float WeightlessStrength
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float WeightlessStrength
+    {
+        get => _weightlessStrength;
+        set
         {
-            get => _weightlessStrength;
-            set
-            {
-                if (MathHelper.CloseToPercent(_weightlessStrength, value)) return;
-                _weightlessStrength = value;
-                Dirty();
-            }
+            if (MathHelper.CloseToPercent(_weightlessStrength, value)) return;
+            _weightlessStrength = value;
+            Dirty();
         }
+    }
 
-        protected override void Initialize()
+    protected override void Initialize()
+    {
+        base.Initialize();
+        if (!Owner.HasComponent<IMoverComponent>())
         {
-            base.Initialize();
-            if (!Owner.HasComponent<IMoverComponent>())
-            {
-                Owner.EnsureComponentWarn<SharedPlayerInputMoverComponent>();
-            }
+            Owner.EnsureComponentWarn<SharedPlayerInputMoverComponent>();
         }
+    }
 
-        public override ComponentState GetComponentState(ICommonSession session)
+    public override ComponentState GetComponentState(ICommonSession session)
+    {
+        return new PlayerMobMoverComponentState(_grabRange, _pushStrength, _weightlessStrength);
+    }
+
+    public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
+    {
+        base.HandleComponentState(curState, nextState);
+        if (curState is not PlayerMobMoverComponentState playerMoverState) return;
+        GrabRange = playerMoverState.GrabRange;
+        PushStrength = playerMoverState.PushStrength;
+    }
+
+    [Serializable, NetSerializable]
+    private sealed class PlayerMobMoverComponentState : ComponentState
+    {
+        public float GrabRange;
+        public float PushStrength;
+        public float WeightlessStrength;
+
+        public PlayerMobMoverComponentState(float grabRange, float pushStrength, float weightlessStrength)
         {
-            return new PlayerMobMoverComponentState(_grabRange, _pushStrength, _weightlessStrength);
-        }
-
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
-        {
-            base.HandleComponentState(curState, nextState);
-            if (curState is not PlayerMobMoverComponentState playerMoverState) return;
-            GrabRange = playerMoverState.GrabRange;
-            PushStrength = playerMoverState.PushStrength;
-        }
-
-        [Serializable, NetSerializable]
-        private sealed class PlayerMobMoverComponentState : ComponentState
-        {
-            public float GrabRange;
-            public float PushStrength;
-            public float WeightlessStrength;
-
-            public PlayerMobMoverComponentState(float grabRange, float pushStrength, float weightlessStrength)
-            {
-                GrabRange = grabRange;
-                PushStrength = pushStrength;
-                WeightlessStrength = weightlessStrength;
-            }
+            GrabRange = grabRange;
+            PushStrength = pushStrength;
+            WeightlessStrength = weightlessStrength;
         }
     }
 }

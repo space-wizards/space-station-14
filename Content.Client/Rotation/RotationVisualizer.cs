@@ -6,62 +6,61 @@ using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
 using Robust.Shared.Maths;
 
-namespace Content.Client.Rotation
-{
-    [UsedImplicitly]
-    public class RotationVisualizer : AppearanceVisualizer
-    {
-        public override void OnChangeData(AppearanceComponent component)
-        {
-            base.OnChangeData(component);
+namespace Content.Client.Rotation;
 
-            if (component.TryGetData<RotationState>(RotationVisuals.RotationState, out var state))
+[UsedImplicitly]
+public class RotationVisualizer : AppearanceVisualizer
+{
+    public override void OnChangeData(AppearanceComponent component)
+    {
+        base.OnChangeData(component);
+
+        if (component.TryGetData<RotationState>(RotationVisuals.RotationState, out var state))
+        {
+            switch (state)
             {
-                switch (state)
-                {
-                    case RotationState.Vertical:
-                        SetRotation(component, 0);
-                        break;
-                    case RotationState.Horizontal:
-                        SetRotation(component, Angle.FromDegrees(90));
-                        break;
-                }
+                case RotationState.Vertical:
+                    SetRotation(component, 0);
+                    break;
+                case RotationState.Horizontal:
+                    SetRotation(component, Angle.FromDegrees(90));
+                    break;
             }
         }
+    }
 
-        private void SetRotation(AppearanceComponent component, Angle rotation)
+    private void SetRotation(AppearanceComponent component, Angle rotation)
+    {
+        var sprite = component.Owner.GetComponent<ISpriteComponent>();
+
+        if (!sprite.Owner.TryGetComponent(out AnimationPlayerComponent? animation))
         {
-            var sprite = component.Owner.GetComponent<ISpriteComponent>();
+            sprite.Rotation = rotation;
+            return;
+        }
 
-            if (!sprite.Owner.TryGetComponent(out AnimationPlayerComponent? animation))
-            {
-                sprite.Rotation = rotation;
-                return;
-            }
+        if (animation.HasRunningAnimation("rotate"))
+        {
+            animation.Stop("rotate");
+        }
 
-            if (animation.HasRunningAnimation("rotate"))
+        animation.Play(new Animation
+        {
+            Length = TimeSpan.FromSeconds(0.125),
+            AnimationTracks =
             {
-                animation.Stop("rotate");
-            }
-
-            animation.Play(new Animation
-            {
-                Length = TimeSpan.FromSeconds(0.125),
-                AnimationTracks =
+                new AnimationTrackComponentProperty
                 {
-                    new AnimationTrackComponentProperty
+                    ComponentType = typeof(ISpriteComponent),
+                    Property = nameof(ISpriteComponent.Rotation),
+                    InterpolationMode = AnimationInterpolationMode.Linear,
+                    KeyFrames =
                     {
-                        ComponentType = typeof(ISpriteComponent),
-                        Property = nameof(ISpriteComponent.Rotation),
-                        InterpolationMode = AnimationInterpolationMode.Linear,
-                        KeyFrames =
-                        {
-                            new AnimationTrackProperty.KeyFrame(sprite.Rotation, 0),
-                            new AnimationTrackProperty.KeyFrame(rotation, 0.125f)
-                        }
+                        new AnimationTrackProperty.KeyFrame(sprite.Rotation, 0),
+                        new AnimationTrackProperty.KeyFrame(rotation, 0.125f)
                     }
                 }
-            }, "rotate");
-        }
+            }
+        }, "rotate");
     }
 }

@@ -1,28 +1,27 @@
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.Markers
+namespace Content.Client.Markers;
+
+[RegisterComponent]
+public sealed class MarkerComponent : Component
 {
-    [RegisterComponent]
-    public sealed class MarkerComponent : Component
+    public override string Name => "Marker";
+
+    protected override void Startup()
     {
-        public override string Name => "Marker";
+        base.Startup();
 
-        protected override void Startup()
+        UpdateVisibility();
+    }
+
+    public void UpdateVisibility()
+    {
+        var system = EntitySystem.Get<MarkerSystem>();
+
+        if (Owner.TryGetComponent(out ISpriteComponent? sprite))
         {
-            base.Startup();
-
-            UpdateVisibility();
-        }
-
-        public void UpdateVisibility()
-        {
-            var system = EntitySystem.Get<MarkerSystem>();
-
-            if (Owner.TryGetComponent(out ISpriteComponent? sprite))
-            {
-                sprite.Visible = system.MarkersVisible;
-            }
+            sprite.Visible = system.MarkersVisible;
         }
     }
 }

@@ -7,44 +7,43 @@ using Robust.Client.Player;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 
-namespace Content.Client.CombatMode
+namespace Content.Client.CombatMode;
+
+[UsedImplicitly]
+public sealed class CombatModeSystem : SharedCombatModeSystem
 {
-    [UsedImplicitly]
-    public sealed class CombatModeSystem : SharedCombatModeSystem
+    [Dependency] private readonly IGameHud _gameHud = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly IGameHud _gameHud = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        base.Initialize();
 
-        public override void Initialize()
+        _gameHud.OnTargetingZoneChanged = OnTargetingZoneChanged;
+
+        SubscribeLocalEvent<CombatModeComponent, PlayerAttachedEvent>((_, component, _) => component.PlayerAttached());
+        SubscribeLocalEvent<CombatModeComponent, PlayerDetachedEvent>((_, component, _) => component.PlayerDetached());
+    }
+
+    public override void Shutdown()
+    {
+        CommandBinds.Unregister<CombatModeSystem>();
+        base.Shutdown();
+    }
+
+    public bool IsInCombatMode()
+    {
+        var entity = _playerManager.LocalPlayer?.ControlledEntity;
+        if (entity == null || !entity.TryGetComponent(out CombatModeComponent? combatMode))
         {
-            base.Initialize();
-
-            _gameHud.OnTargetingZoneChanged = OnTargetingZoneChanged;
-
-            SubscribeLocalEvent<CombatModeComponent, PlayerAttachedEvent>((_, component, _) => component.PlayerAttached());
-            SubscribeLocalEvent<CombatModeComponent, PlayerDetachedEvent>((_, component, _) => component.PlayerDetached());
+            return false;
         }
 
-        public override void Shutdown()
-        {
-            CommandBinds.Unregister<CombatModeSystem>();
-            base.Shutdown();
-        }
+        return combatMode.IsInCombatMode;
+    }
 
-        public bool IsInCombatMode()
-        {
-            var entity = _playerManager.LocalPlayer?.ControlledEntity;
-            if (entity == null || !entity.TryGetComponent(out CombatModeComponent? combatMode))
-            {
-                return false;
-            }
-
-            return combatMode.IsInCombatMode;
-        }
-
-        private void OnTargetingZoneChanged(TargetingZone obj)
-        {
-            EntityManager.RaisePredictiveEvent(new CombatModeSystemMessages.SetTargetZoneMessage(obj));
-        }
+    private void OnTargetingZoneChanged(TargetingZone obj)
+    {
+        EntityManager.RaisePredictiveEvent(new CombatModeSystemMessages.SetTargetZoneMessage(obj));
     }
 }

@@ -10,56 +10,55 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Localization;
 
-namespace Content.Client.Atmos.UI
+namespace Content.Client.Atmos.UI;
+
+/// <summary>
+/// Client-side UI used to control a gas pressure pump.
+/// </summary>
+[GenerateTypedNameReferences]
+public partial class GasPressurePumpWindow : SS14Window
 {
-    /// <summary>
-    /// Client-side UI used to control a gas pressure pump.
-    /// </summary>
-    [GenerateTypedNameReferences]
-    public partial class GasPressurePumpWindow : SS14Window
+    public bool PumpStatus = true;
+
+    public event Action? ToggleStatusButtonPressed;
+    public event Action<string>? PumpOutputPressureChanged;
+
+    public GasPressurePumpWindow()
     {
-        public bool PumpStatus = true;
+        RobustXamlLoader.Load(this);
 
-        public event Action? ToggleStatusButtonPressed;
-        public event Action<string>? PumpOutputPressureChanged;
+        ToggleStatusButton.OnPressed += _ => SetPumpStatus(!PumpStatus);
+        ToggleStatusButton.OnPressed += _ => ToggleStatusButtonPressed?.Invoke();
 
-        public GasPressurePumpWindow()
+        PumpPressureOutputInput.OnTextChanged += _ => SetOutputPressureButton.Disabled = false;
+        SetOutputPressureButton.OnPressed += _ =>
         {
-            RobustXamlLoader.Load(this);
+            PumpOutputPressureChanged?.Invoke(PumpPressureOutputInput.Text ??= "");
+            SetOutputPressureButton.Disabled = true;
+        };
 
-            ToggleStatusButton.OnPressed += _ => SetPumpStatus(!PumpStatus);
-            ToggleStatusButton.OnPressed += _ => ToggleStatusButtonPressed?.Invoke();
+        SetMaxPressureButton.OnPressed += _ =>
+        {
+            PumpPressureOutputInput.Text = Atmospherics.MaxOutputPressure.ToString(CultureInfo.InvariantCulture);
+            SetOutputPressureButton.Disabled = false;
+        };
+    }
 
-            PumpPressureOutputInput.OnTextChanged += _ => SetOutputPressureButton.Disabled = false;
-            SetOutputPressureButton.OnPressed += _ =>
-            {
-                PumpOutputPressureChanged?.Invoke(PumpPressureOutputInput.Text ??= "");
-                SetOutputPressureButton.Disabled = true;
-            };
+    public void SetOutputPressure(float pressure)
+    {
+        PumpPressureOutputInput.Text = pressure.ToString(CultureInfo.InvariantCulture);
+    }
 
-            SetMaxPressureButton.OnPressed += _ =>
-            {
-                PumpPressureOutputInput.Text = Atmospherics.MaxOutputPressure.ToString(CultureInfo.InvariantCulture);
-                SetOutputPressureButton.Disabled = false;
-            };
+    public void SetPumpStatus(bool enabled)
+    {
+        PumpStatus = enabled;
+        if (enabled)
+        {
+            ToggleStatusButton.Text = Loc.GetString("comp-gas-pump-ui-status-enabled");
         }
-
-        public void SetOutputPressure(float pressure)
+        else
         {
-            PumpPressureOutputInput.Text = pressure.ToString(CultureInfo.InvariantCulture);
-        }
-
-        public void SetPumpStatus(bool enabled)
-        {
-            PumpStatus = enabled;
-            if (enabled)
-            {
-                ToggleStatusButton.Text = Loc.GetString("comp-gas-pump-ui-status-enabled");
-            }
-            else
-            {
-                ToggleStatusButton.Text = Loc.GetString("comp-gas-pump-ui-status-disabled");
-            }
+            ToggleStatusButton.Text = Loc.GetString("comp-gas-pump-ui-status-disabled");
         }
     }
 }

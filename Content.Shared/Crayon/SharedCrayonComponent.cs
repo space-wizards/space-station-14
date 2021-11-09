@@ -8,80 +8,79 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.Crayon
+namespace Content.Shared.Crayon;
+
+[NetworkedComponent()]
+public class SharedCrayonComponent : Component
 {
-    [NetworkedComponent()]
-    public class SharedCrayonComponent : Component
-    {
-        public override string Name => "Crayon";
+    public override string Name => "Crayon";
 
-        public string SelectedState { get; set; } = string.Empty;
+    public string SelectedState { get; set; } = string.Empty;
 
-        [DataField("color")]
-        protected string _color = "white";
-
-        [Serializable, NetSerializable]
-        public enum CrayonUiKey
-        {
-            Key,
-        }
-    }
+    [DataField("color")]
+    protected string _color = "white";
 
     [Serializable, NetSerializable]
-    public class CrayonSelectMessage : BoundUserInterfaceMessage
+    public enum CrayonUiKey
     {
-        public readonly string State;
-        public CrayonSelectMessage(string selected)
-        {
-            State = selected;
-        }
+        Key,
     }
+}
 
-    [Serializable, NetSerializable]
-    public enum CrayonVisuals
+[Serializable, NetSerializable]
+public class CrayonSelectMessage : BoundUserInterfaceMessage
+{
+    public readonly string State;
+    public CrayonSelectMessage(string selected)
     {
-        State,
-        Color
+        State = selected;
     }
+}
 
-    [Serializable, NetSerializable]
-    public class CrayonComponentState : ComponentState
+[Serializable, NetSerializable]
+public enum CrayonVisuals
+{
+    State,
+    Color
+}
+
+[Serializable, NetSerializable]
+public class CrayonComponentState : ComponentState
+{
+    public readonly string Color;
+    public readonly string State;
+    public readonly int Charges;
+    public readonly int Capacity;
+
+    public CrayonComponentState(string color, string state, int charges, int capacity)
     {
-        public readonly string Color;
-        public readonly string State;
-        public readonly int Charges;
-        public readonly int Capacity;
-
-        public CrayonComponentState(string color, string state, int charges, int capacity)
-        {
-            Color = color;
-            State = state;
-            Charges = charges;
-            Capacity = capacity;
-        }
+        Color = color;
+        State = state;
+        Charges = charges;
+        Capacity = capacity;
     }
-    [Serializable, NetSerializable]
-    public class CrayonBoundUserInterfaceState : BoundUserInterfaceState
+}
+[Serializable, NetSerializable]
+public class CrayonBoundUserInterfaceState : BoundUserInterfaceState
+{
+    public string Selected;
+    public Color Color;
+
+    public CrayonBoundUserInterfaceState(string selected, Color color)
     {
-        public string Selected;
-        public Color Color;
-
-        public CrayonBoundUserInterfaceState(string selected, Color color)
-        {
-            Selected = selected;
-            Color = color;
-        }
+        Selected = selected;
+        Color = color;
     }
+}
 
-    [Serializable, NetSerializable, Prototype("crayonDecal")]
-    public class CrayonDecalPrototype : IPrototype
-    {
-        [ViewVariables]
-        [DataField("id", required: true)]
-        public string ID { get; } = default!;
+[Serializable, NetSerializable, Prototype("crayonDecal")]
+public class CrayonDecalPrototype : IPrototype
+{
+    [ViewVariables]
+    [DataField("id", required: true)]
+    public string ID { get; } = default!;
 
-        [DataField("spritePath")] public string SpritePath { get; } = string.Empty;
+    [DataField("spritePath")] public string SpritePath { get; } = string.Empty;
 
-        [DataField("decals")] public List<string> Decals { get; } = new();
-    }
+    [DataField("decals")] public List<string> Decals { get; } = new();
 }

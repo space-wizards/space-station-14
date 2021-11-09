@@ -3,14 +3,13 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 
-namespace Content.Client.Chemistry.UI
+namespace Content.Client.Chemistry.UI;
+
+[GenerateTypedNameReferences]
+public partial class TransferAmountWindow : SS14Window
 {
-    [GenerateTypedNameReferences]
-    public partial class TransferAmountWindow : SS14Window
+    public TransferAmountWindow()
     {
-        public TransferAmountWindow()
-        {
-            RobustXamlLoader.Load(this);
-        }
+        RobustXamlLoader.Load(this);
     }
 }

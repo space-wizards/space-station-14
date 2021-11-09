@@ -4,23 +4,22 @@ using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.Power.Commands
+namespace Content.Server.Power.Commands;
+
+[AdminCommand(AdminFlags.Debug)]
+public sealed class PowerStatCommand : IConsoleCommand
 {
-    [AdminCommand(AdminFlags.Debug)]
-    public sealed class PowerStatCommand : IConsoleCommand
+    public string Command => "powerstat";
+    public string Description => "Shows statistics for pow3r";
+    public string Help => "Usage: powerstat";
+
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        public string Command => "powerstat";
-        public string Description => "Shows statistics for pow3r";
-        public string Help => "Usage: powerstat";
+        var stats = EntitySystem.Get<PowerNetSystem>().GetStatistics();
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
-        {
-            var stats = EntitySystem.Get<PowerNetSystem>().GetStatistics();
-
-            shell.WriteLine($"networks: {stats.CountNetworks}");
-            shell.WriteLine($"loads: {stats.CountLoads}");
-            shell.WriteLine($"supplies: {stats.CountSupplies}");
-            shell.WriteLine($"batteries: {stats.CountBatteries}");
-        }
+        shell.WriteLine($"networks: {stats.CountNetworks}");
+        shell.WriteLine($"loads: {stats.CountLoads}");
+        shell.WriteLine($"supplies: {stats.CountSupplies}");
+        shell.WriteLine($"batteries: {stats.CountBatteries}");
     }
 }

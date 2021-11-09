@@ -1,10 +1,9 @@
-namespace Content.Server.Kitchen.Components
-{
-    public enum MicrowaveSuccessState
-    {
-        RecipePass,
-        RecipeFail,
-        UnwantedForeignObject
+namespace Content.Server.Kitchen.Components;
 
-    }
+public enum MicrowaveSuccessState
+{
+    RecipePass,
+    RecipeFail,
+    UnwantedForeignObject
+
 }

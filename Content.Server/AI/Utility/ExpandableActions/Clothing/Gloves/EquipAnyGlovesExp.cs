@@ -11,37 +11,36 @@ using Content.Server.Clothing.Components;
 using Content.Shared.Inventory;
 using Robust.Shared.IoC;
 
-namespace Content.Server.AI.Utility.ExpandableActions.Clothing.Gloves
+namespace Content.Server.AI.Utility.ExpandableActions.Clothing.Gloves;
+
+/// <summary>
+/// Equip any head item currently in our inventory
+/// </summary>
+public sealed class EquipAnyGlovesExp : ExpandableUtilityAction
 {
-    /// <summary>
-    /// Equip any head item currently in our inventory
-    /// </summary>
-    public sealed class EquipAnyGlovesExp : ExpandableUtilityAction
+    public override float Bonus => UtilityAction.NormalBonus;
+
+    protected override IEnumerable<Func<float>> GetCommonConsiderations(Blackboard context)
     {
-        public override float Bonus => UtilityAction.NormalBonus;
+        var considerationsManager = IoCManager.Resolve<ConsiderationsManager>();
 
-        protected override IEnumerable<Func<float>> GetCommonConsiderations(Blackboard context)
+        return new []
         {
-            var considerationsManager = IoCManager.Resolve<ConsiderationsManager>();
+            considerationsManager.Get<ClothingInSlotCon>().Slot(EquipmentSlotDefines.Slots.GLOVES, context)
+                                 .InverseBoolCurve(context),
+        };
+    }
 
-            return new []
-            {
-                considerationsManager.Get<ClothingInSlotCon>().Slot(EquipmentSlotDefines.Slots.GLOVES, context)
-                    .InverseBoolCurve(context),
-            };
-        }
+    public override IEnumerable<UtilityAction> GetActions(Blackboard context)
+    {
+        var owner = context.GetState<SelfState>().GetValue();
 
-        public override IEnumerable<UtilityAction> GetActions(Blackboard context)
+        foreach (var entity in context.GetState<EnumerableInventoryState>().GetValue())
         {
-            var owner = context.GetState<SelfState>().GetValue();
-
-            foreach (var entity in context.GetState<EnumerableInventoryState>().GetValue())
+            if (entity.TryGetComponent(out ClothingComponent? clothing) &&
+                (clothing.SlotFlags & EquipmentSlotDefines.SlotFlags.GLOVES) != 0)
             {
-                if (entity.TryGetComponent(out ClothingComponent? clothing) &&
-                    (clothing.SlotFlags & EquipmentSlotDefines.SlotFlags.GLOVES) != 0)
-                {
-                    yield return new EquipGloves {Owner = owner, Target = entity, Bonus = Bonus};
-                }
+                yield return new EquipGloves {Owner = owner, Target = entity, Bonus = Bonus};
             }
         }
     }

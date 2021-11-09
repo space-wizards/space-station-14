@@ -1,13 +1,12 @@
 ﻿using Robust.Shared.GameObjects;
 
-namespace Content.Server.Atmos.Components
-{
-    [RegisterComponent]
-    [ComponentReference(typeof(IAtmosphereComponent))]
-    public class SpaceAtmosphereComponent : Component, IAtmosphereComponent
-    {
-        public override string Name => "SpaceAtmosphere";
+namespace Content.Server.Atmos.Components;
 
-        public bool Simulated => false;
-    }
+[RegisterComponent]
+[ComponentReference(typeof(IAtmosphereComponent))]
+public class SpaceAtmosphereComponent : Component, IAtmosphereComponent
+{
+    public override string Name => "SpaceAtmosphere";
+
+    public bool Simulated => false;
 }

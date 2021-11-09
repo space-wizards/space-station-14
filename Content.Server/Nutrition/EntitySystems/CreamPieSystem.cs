@@ -14,27 +14,26 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 
-namespace Content.Server.Nutrition.EntitySystems
+namespace Content.Server.Nutrition.EntitySystems;
+
+[UsedImplicitly]
+public class CreamPieSystem : SharedCreamPieSystem
 {
-    [UsedImplicitly]
-    public class CreamPieSystem : SharedCreamPieSystem
+    [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
+
+    protected override void SplattedCreamPie(EntityUid uid, CreamPieComponent creamPie)
     {
-        [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
+        SoundSystem.Play(Filter.Pvs(creamPie.Owner), creamPie.Sound.GetSound(), creamPie.Owner, AudioHelpers.WithVariation(0.125f));
 
-        protected override void SplattedCreamPie(EntityUid uid, CreamPieComponent creamPie)
+        if (creamPie.Owner.TryGetComponent<FoodComponent>(out var foodComp) && _solutionsSystem.TryGetSolution(creamPie.Owner.Uid, foodComp.SolutionName, out var solution))
         {
-            SoundSystem.Play(Filter.Pvs(creamPie.Owner), creamPie.Sound.GetSound(), creamPie.Owner, AudioHelpers.WithVariation(0.125f));
-
-            if (creamPie.Owner.TryGetComponent<FoodComponent>(out var foodComp) && _solutionsSystem.TryGetSolution(creamPie.Owner.Uid, foodComp.SolutionName, out var solution))
-            {
-                solution.SpillAt(creamPie.Owner, "PuddleSmear", false);
-            }
+            solution.SpillAt(creamPie.Owner, "PuddleSmear", false);
         }
+    }
 
-        protected override void CreamedEntity(EntityUid uid, CreamPiedComponent creamPied, ThrowHitByEvent args)
-        {
-            creamPied.Owner.PopupMessage(Loc.GetString("cream-pied-component-on-hit-by-message",("thrower", args.Thrown)));
-            creamPied.Owner.PopupMessageOtherClients(Loc.GetString("cream-pied-component-on-hit-by-message-others", ("owner", creamPied.Owner),("thrower", args.Thrown)));
-        }
+    protected override void CreamedEntity(EntityUid uid, CreamPiedComponent creamPied, ThrowHitByEvent args)
+    {
+        creamPied.Owner.PopupMessage(Loc.GetString("cream-pied-component-on-hit-by-message",("thrower", args.Thrown)));
+        creamPied.Owner.PopupMessageOtherClients(Loc.GetString("cream-pied-component-on-hit-by-message-others", ("owner", creamPied.Owner),("thrower", args.Thrown)));
     }
 }

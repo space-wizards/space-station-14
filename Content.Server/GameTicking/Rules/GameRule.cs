@@ -1,19 +1,18 @@
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameTicking.Rules
+namespace Content.Server.GameTicking.Rules;
+
+[PublicAPI]
+public abstract class GameRule : IEntityEventSubscriber
 {
-    [PublicAPI]
-    public abstract class GameRule : IEntityEventSubscriber
+    public virtual void Added()
     {
-        public virtual void Added()
-        {
 
-        }
+    }
 
-        public virtual void Removed()
-        {
+    public virtual void Removed()
+    {
 
-        }
     }
 }

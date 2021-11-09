@@ -5,17 +5,16 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.MachineLinking.Components
+namespace Content.Server.MachineLinking.Components;
+
+[RegisterComponent]
+public class SignalTransmitterComponent : Component
 {
-    [RegisterComponent]
-    public class SignalTransmitterComponent : Component
-    {
-        public override string Name => "SignalTransmitter";
+    public override string Name => "SignalTransmitter";
 
-        [DataField("outputs")]
-        private List<SignalPort> _outputs = new();
+    [DataField("outputs")]
+    private List<SignalPort> _outputs = new();
 
-        [ViewVariables]
-        public IReadOnlyList<SignalPort> Outputs => _outputs;
-    }
+    [ViewVariables]
+    public IReadOnlyList<SignalPort> Outputs => _outputs;
 }

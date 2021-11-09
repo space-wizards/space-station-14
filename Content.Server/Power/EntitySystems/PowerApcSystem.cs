@@ -2,24 +2,23 @@ using Content.Server.Power.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.Power.EntitySystems
+namespace Content.Server.Power.EntitySystems;
+
+[UsedImplicitly]
+internal sealed class PowerApcSystem : EntitySystem
 {
-    [UsedImplicitly]
-    internal sealed class PowerApcSystem : EntitySystem
+    public override void Initialize()
     {
-        public override void Initialize()
-        {
-            base.Initialize();
+        base.Initialize();
 
-            UpdatesAfter.Add(typeof(PowerNetSystem));
-        }
+        UpdatesAfter.Add(typeof(PowerNetSystem));
+    }
 
-        public override void Update(float frameTime)
+    public override void Update(float frameTime)
+    {
+        foreach (var apc in EntityManager.EntityQuery<ApcComponent>())
         {
-            foreach (var apc in EntityManager.EntityQuery<ApcComponent>())
-            {
-                apc.Update();
-            }
+            apc.Update();
         }
     }
 }

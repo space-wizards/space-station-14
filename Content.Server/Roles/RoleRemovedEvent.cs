@@ -1,7 +1,6 @@
-﻿namespace Content.Server.Roles
+﻿namespace Content.Server.Roles;
+
+public sealed class RoleRemovedEvent : RoleEvent
 {
-    public sealed class RoleRemovedEvent : RoleEvent
-    {
-        public RoleRemovedEvent(Role role) : base(role) { }
-    }
+    public RoleRemovedEvent(Role role) : base(role) { }
 }

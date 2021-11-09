@@ -5,38 +5,37 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Chemistry.Components
+namespace Content.Shared.Chemistry.Components;
+
+/// <summary>
+/// Shared class for injectors & syringes
+/// </summary>
+[NetworkedComponent()]
+public class SharedInjectorComponent : Component
 {
+    public override string Name => "Injector";
+
     /// <summary>
-    /// Shared class for injectors & syringes
+    /// Component data used for net updates. Used by client for item status ui
     /// </summary>
-    [NetworkedComponent()]
-    public class SharedInjectorComponent : Component
+    [Serializable, NetSerializable]
+    protected sealed class InjectorComponentState : ComponentState
     {
-        public override string Name => "Injector";
+        public FixedPoint2 CurrentVolume { get; }
+        public FixedPoint2 TotalVolume { get; }
+        public InjectorToggleMode CurrentMode { get; }
 
-        /// <summary>
-        /// Component data used for net updates. Used by client for item status ui
-        /// </summary>
-        [Serializable, NetSerializable]
-        protected sealed class InjectorComponentState : ComponentState
+        public InjectorComponentState(FixedPoint2 currentVolume, FixedPoint2 totalVolume, InjectorToggleMode currentMode)
         {
-            public FixedPoint2 CurrentVolume { get; }
-            public FixedPoint2 TotalVolume { get; }
-            public InjectorToggleMode CurrentMode { get; }
-
-            public InjectorComponentState(FixedPoint2 currentVolume, FixedPoint2 totalVolume, InjectorToggleMode currentMode)
-            {
-                CurrentVolume = currentVolume;
-                TotalVolume = totalVolume;
-                CurrentMode = currentMode;
-            }
+            CurrentVolume = currentVolume;
+            TotalVolume = totalVolume;
+            CurrentMode = currentMode;
         }
+    }
 
-        public enum InjectorToggleMode
-        {
-            Inject,
-            Draw
-        }
+    public enum InjectorToggleMode
+    {
+        Inject,
+        Draw
     }
 }

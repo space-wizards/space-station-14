@@ -9,70 +9,69 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 
-namespace Content.Server.Suspicion.EntitySystems
+namespace Content.Server.Suspicion.EntitySystems;
+
+[UsedImplicitly]
+public sealed class SuspicionEndTimerSystem : EntitySystem
 {
-    [UsedImplicitly]
-    public sealed class SuspicionEndTimerSystem : EntitySystem
+    [Dependency] private readonly IPlayerManager _playerManager = null!;
+
+    private TimeSpan? _endTime;
+
+    public TimeSpan? EndTime
     {
-        [Dependency] private readonly IPlayerManager _playerManager = null!;
-
-        private TimeSpan? _endTime;
-
-        public TimeSpan? EndTime
+        get => _endTime;
+        set
         {
-            get => _endTime;
-            set
-            {
-                _endTime = value;
-                SendUpdateToAll();
-            }
+            _endTime = value;
+            SendUpdateToAll();
         }
+    }
 
-        public override void Initialize()
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
+
+        _playerManager.PlayerStatusChanged += PlayerManagerOnPlayerStatusChanged;
+    }
+
+    public override void Shutdown()
+    {
+        base.Shutdown();
+
+        _playerManager.PlayerStatusChanged -= PlayerManagerOnPlayerStatusChanged;
+    }
+
+    private void PlayerManagerOnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
+    {
+        if (e.NewStatus == SessionStatus.InGame)
         {
-            base.Initialize();
-
-            SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
-
-            _playerManager.PlayerStatusChanged += PlayerManagerOnPlayerStatusChanged;
+            SendUpdateTimerMessage(e.Session);
         }
+    }
 
-        public override void Shutdown()
+    private void SendUpdateToAll()
+    {
+        foreach (var player in _playerManager.GetAllPlayers().Where(p => p.Status == SessionStatus.InGame))
         {
-            base.Shutdown();
-
-            _playerManager.PlayerStatusChanged -= PlayerManagerOnPlayerStatusChanged;
+            SendUpdateTimerMessage(player);
         }
+    }
 
-        private void PlayerManagerOnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
+    private void SendUpdateTimerMessage(IPlayerSession player)
+    {
+        var msg = new SuspicionMessages.SetSuspicionEndTimerMessage
         {
-            if (e.NewStatus == SessionStatus.InGame)
-            {
-                SendUpdateTimerMessage(e.Session);
-            }
-        }
+            EndTime = EndTime
+        };
 
-        private void SendUpdateToAll()
-        {
-            foreach (var player in _playerManager.GetAllPlayers().Where(p => p.Status == SessionStatus.InGame))
-            {
-                SendUpdateTimerMessage(player);
-            }
-        }
+        EntityManager.EntityNetManager?.SendSystemNetworkMessage(msg, player.ConnectedClient);
+    }
 
-        private void SendUpdateTimerMessage(IPlayerSession player)
-        {
-            var msg = new SuspicionMessages.SetSuspicionEndTimerMessage
-            {
-                EndTime = EndTime
-            };
-
-            EntityManager.EntityNetManager?.SendSystemNetworkMessage(msg, player.ConnectedClient);
-        }
-
-        private void Reset(RoundRestartCleanupEvent ev)
-        {
-            EndTime = null;
-        }
+    private void Reset(RoundRestartCleanupEvent ev)
+    {
+        EndTime = null;
     }
 }

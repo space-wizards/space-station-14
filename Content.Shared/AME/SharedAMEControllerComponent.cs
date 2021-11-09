@@ -2,64 +2,63 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.AME
+namespace Content.Shared.AME;
+
+public class SharedAMEControllerComponent : Component
 {
-    public class SharedAMEControllerComponent : Component
+    public override string Name => "AMEController";
+
+    [Serializable, NetSerializable]
+    public class AMEControllerBoundUserInterfaceState : BoundUserInterfaceState
     {
-        public override string Name => "AMEController";
+        public readonly bool HasPower;
+        public readonly bool IsMaster;
+        public readonly bool Injecting;
+        public readonly bool HasFuelJar;
+        public readonly int FuelAmount;
+        public readonly int InjectionAmount;
+        public readonly int CoreCount;
 
-        [Serializable, NetSerializable]
-        public class AMEControllerBoundUserInterfaceState : BoundUserInterfaceState
+        public AMEControllerBoundUserInterfaceState(bool hasPower, bool isMaster, bool injecting, bool hasFuelJar, int fuelAmount, int injectionAmount, int coreCount)
         {
-            public readonly bool HasPower;
-            public readonly bool IsMaster;
-            public readonly bool Injecting;
-            public readonly bool HasFuelJar;
-            public readonly int FuelAmount;
-            public readonly int InjectionAmount;
-            public readonly int CoreCount;
-
-            public AMEControllerBoundUserInterfaceState(bool hasPower, bool isMaster, bool injecting, bool hasFuelJar, int fuelAmount, int injectionAmount, int coreCount)
-            {
-                HasPower = hasPower;
-                IsMaster = isMaster;
-                Injecting = injecting;
-                HasFuelJar = hasFuelJar;
-                FuelAmount = fuelAmount;
-                InjectionAmount = injectionAmount;
-                CoreCount = coreCount;
-            }
+            HasPower = hasPower;
+            IsMaster = isMaster;
+            Injecting = injecting;
+            HasFuelJar = hasFuelJar;
+            FuelAmount = fuelAmount;
+            InjectionAmount = injectionAmount;
+            CoreCount = coreCount;
         }
+    }
 
-        [Serializable, NetSerializable]
-        public class UiButtonPressedMessage : BoundUserInterfaceMessage
+    [Serializable, NetSerializable]
+    public class UiButtonPressedMessage : BoundUserInterfaceMessage
+    {
+        public readonly UiButton Button;
+
+        public UiButtonPressedMessage(UiButton button)
         {
-            public readonly UiButton Button;
-
-            public UiButtonPressedMessage(UiButton button)
-            {
-                Button = button;
-            }
+            Button = button;
         }
+    }
 
-        [Serializable, NetSerializable]
-        public enum AMEControllerUiKey
-        {
-            Key
-        }
+    [Serializable, NetSerializable]
+    public enum AMEControllerUiKey
+    {
+        Key
+    }
 
-        public enum UiButton
-        {
-            Eject,
-            ToggleInjection,
-            IncreaseFuel,
-            DecreaseFuel,
-        }
+    public enum UiButton
+    {
+        Eject,
+        ToggleInjection,
+        IncreaseFuel,
+        DecreaseFuel,
+    }
 
-        [Serializable, NetSerializable]
-        public enum AMEControllerVisuals
-        {
-            DisplayState,
-        }
+    [Serializable, NetSerializable]
+    public enum AMEControllerVisuals
+    {
+        DisplayState,
     }
 }

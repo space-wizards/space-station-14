@@ -1,8 +1,7 @@
 ﻿using Content.Shared.Singularity;
 
-namespace Content.Client.Singularity
+namespace Content.Client.Singularity;
+
+public class SingularitySystem : SharedSingularitySystem
 {
-    public class SingularitySystem : SharedSingularitySystem
-    {
-    }
 }

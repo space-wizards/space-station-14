@@ -5,52 +5,51 @@ using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Client.Body.UI
+namespace Content.Client.Body.UI;
+
+[UsedImplicitly]
+public class BodyScannerBoundUserInterface : BoundUserInterface
 {
-    [UsedImplicitly]
-    public class BodyScannerBoundUserInterface : BoundUserInterface
+    [ViewVariables]
+    private BodyScannerDisplay? _display;
+
+    [ViewVariables]
+    private IEntity? _entity;
+
+    public BodyScannerBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey) { }
+
+    protected override void Open()
     {
-        [ViewVariables]
-        private BodyScannerDisplay? _display;
+        base.Open();
+        _display = new BodyScannerDisplay(this);
+        _display.OnClose += Close;
+        _display.OpenCentered();
+    }
 
-        [ViewVariables]
-        private IEntity? _entity;
+    protected override void UpdateState(BoundUserInterfaceState state)
+    {
+        base.UpdateState(state);
 
-        public BodyScannerBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey) { }
-
-        protected override void Open()
+        if (state is not BodyScannerUIState scannerState)
         {
-            base.Open();
-            _display = new BodyScannerDisplay(this);
-            _display.OnClose += Close;
-            _display.OpenCentered();
+            return;
         }
 
-        protected override void UpdateState(BoundUserInterfaceState state)
+        if (!Owner.Owner.EntityManager.TryGetEntity(scannerState.Uid, out _entity))
         {
-            base.UpdateState(state);
-
-            if (state is not BodyScannerUIState scannerState)
-            {
-                return;
-            }
-
-            if (!Owner.Owner.EntityManager.TryGetEntity(scannerState.Uid, out _entity))
-            {
-                throw new ArgumentException($"Received an invalid entity with id {scannerState.Uid} for body scanner with id {Owner.Owner.Uid} at {Owner.Owner.Transform.MapPosition}");
-            }
-
-            _display?.UpdateDisplay(_entity);
+            throw new ArgumentException($"Received an invalid entity with id {scannerState.Uid} for body scanner with id {Owner.Owner.Uid} at {Owner.Owner.Transform.MapPosition}");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
+        _display?.UpdateDisplay(_entity);
+    }
 
-            if (disposing)
-            {
-                _display?.Dispose();
-            }
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+
+        if (disposing)
+        {
+            _display?.Dispose();
         }
     }
 }

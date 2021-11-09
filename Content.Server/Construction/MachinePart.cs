@@ -1,20 +1,19 @@
-﻿namespace Content.Server.Construction
-{
-    public enum MachinePart : byte
-    {
-        Capacitor,
-        ScanningModule,
-        Manipulator,
-        Laser,
-        MatterBin,
+﻿namespace Content.Server.Construction;
 
-        // Subspace parts.
-        Ansible,
-        Filter,
-        Amplifier,
-        Treatment,
-        Analyzer,
-        Crystal,
-        Transmitter,
-    }
+public enum MachinePart : byte
+{
+    Capacitor,
+    ScanningModule,
+    Manipulator,
+    Laser,
+    MatterBin,
+
+    // Subspace parts.
+    Ansible,
+    Filter,
+    Amplifier,
+    Treatment,
+    Analyzer,
+    Crystal,
+    Transmitter,
 }

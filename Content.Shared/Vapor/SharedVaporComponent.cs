@@ -2,19 +2,18 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Vapor
-{
-    public class SharedVaporComponent : Component
-    {
-        public override string Name => "Vapor";
-        public const string SolutionName = "vapor";
-    }
+namespace Content.Shared.Vapor;
 
-    [Serializable, NetSerializable]
-    public enum VaporVisuals
-    {
-        Rotation,
-        Color,
-        State,
-    }
+public class SharedVaporComponent : Component
+{
+    public override string Name => "Vapor";
+    public const string SolutionName = "vapor";
+}
+
+[Serializable, NetSerializable]
+public enum VaporVisuals
+{
+    Rotation,
+    Color,
+    State,
 }

@@ -1,22 +1,21 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
-namespace Content.Shared.Movement.Components
+namespace Content.Shared.Movement.Components;
+
+public interface IMobMoverComponent : IComponent
 {
-    public interface IMobMoverComponent : IComponent
-    {
-        const float GrabRangeDefault = 0.6f;
-        const float PushStrengthDefault = 600.0f;
-        const float WeightlessStrengthDefault = 0.4f;
+    const float GrabRangeDefault = 0.6f;
+    const float PushStrengthDefault = 600.0f;
+    const float WeightlessStrengthDefault = 0.4f;
 
-        EntityCoordinates LastPosition { get; set; }
+    EntityCoordinates LastPosition { get; set; }
 
-        public float StepSoundDistance { get; set; }
+    public float StepSoundDistance { get; set; }
 
-        float GrabRange { get; set; }
+    float GrabRange { get; set; }
 
-        float PushStrength { get; set; }
+    float PushStrength { get; set; }
 
-        float WeightlessStrength { get; set; }
-    }
+    float WeightlessStrength { get; set; }
 }

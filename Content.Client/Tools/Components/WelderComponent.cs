@@ -11,58 +11,57 @@ using Robust.Shared.Localization;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Client.Tools.Components
+namespace Content.Client.Tools.Components;
+
+[RegisterComponent, Friend(typeof(ToolSystem), typeof(StatusControl))]
+public class WelderComponent : SharedWelderComponent, IItemStatus
 {
-    [RegisterComponent, Friend(typeof(ToolSystem), typeof(StatusControl))]
-    public class WelderComponent : SharedWelderComponent, IItemStatus
+    public override string Name => "Welder";
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool UiUpdateNeeded { get; set; }
+
+    [ViewVariables]
+    public float FuelCapacity { get; set; }
+
+    [ViewVariables]
+    public float Fuel { get; set; }
+
+    public Control MakeControl() => new StatusControl(this);
+
+    private sealed class StatusControl : Control
     {
-        public override string Name => "Welder";
+        private readonly WelderComponent _parent;
+        private readonly RichTextLabel _label;
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool UiUpdateNeeded { get; set; }
-
-        [ViewVariables]
-        public float FuelCapacity { get; set; }
-
-        [ViewVariables]
-        public float Fuel { get; set; }
-
-        public Control MakeControl() => new StatusControl(this);
-
-        private sealed class StatusControl : Control
+        public StatusControl(WelderComponent parent)
         {
-            private readonly WelderComponent _parent;
-            private readonly RichTextLabel _label;
+            _parent = parent;
+            _label = new RichTextLabel {StyleClasses = {StyleNano.StyleClassItemStatus}};
+            AddChild(_label);
 
-            public StatusControl(WelderComponent parent)
+            parent.UiUpdateNeeded = true;
+        }
+
+        /// <inheritdoc />
+        protected override void FrameUpdate(FrameEventArgs args)
+        {
+            base.FrameUpdate(args);
+
+            if (!_parent.UiUpdateNeeded)
             {
-                _parent = parent;
-                _label = new RichTextLabel {StyleClasses = {StyleNano.StyleClassItemStatus}};
-                AddChild(_label);
-
-                parent.UiUpdateNeeded = true;
+                return;
             }
 
-            /// <inheritdoc />
-            protected override void FrameUpdate(FrameEventArgs args)
-            {
-                base.FrameUpdate(args);
+            _parent.UiUpdateNeeded = false;
 
-                if (!_parent.UiUpdateNeeded)
-                {
-                    return;
-                }
+            var fuelCap = _parent.FuelCapacity;
+            var fuel = _parent.Fuel;
 
-                _parent.UiUpdateNeeded = false;
-
-                var fuelCap = _parent.FuelCapacity;
-                var fuel = _parent.Fuel;
-
-                _label.SetMarkup(Loc.GetString("welder-component-on-examine-detailed-message",
-                                               ("colorName", fuel < fuelCap / 4f ? "darkorange" : "orange"),
-                                               ("fuelLeft", Math.Round(fuel)),
-                                               ("fuelCapacity", fuelCap)));
-            }
+            _label.SetMarkup(Loc.GetString("welder-component-on-examine-detailed-message",
+                                           ("colorName", fuel < fuelCap / 4f ? "darkorange" : "orange"),
+                                           ("fuelLeft", Math.Round(fuel)),
+                                           ("fuelCapacity", fuelCap)));
         }
     }
 }

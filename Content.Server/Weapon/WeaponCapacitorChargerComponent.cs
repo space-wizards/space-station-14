@@ -4,43 +4,42 @@ using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.Interaction;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.Weapon
+namespace Content.Server.Weapon;
+
+/// <summary>
+/// Recharges the battery in a <see cref="ServerBatteryBarrelComponent"/>.
+/// </summary>
+[RegisterComponent]
+[ComponentReference(typeof(IActivate))]
+[ComponentReference(typeof(BaseCharger))]
+public sealed class WeaponCapacitorChargerComponent : BaseCharger
 {
-    /// <summary>
-    /// Recharges the battery in a <see cref="ServerBatteryBarrelComponent"/>.
-    /// </summary>
-    [RegisterComponent]
-    [ComponentReference(typeof(IActivate))]
-    [ComponentReference(typeof(BaseCharger))]
-    public sealed class WeaponCapacitorChargerComponent : BaseCharger
+    public override string Name => "WeaponCapacitorCharger";
+
+    public override bool IsEntityCompatible(IEntity entity)
     {
-        public override string Name => "WeaponCapacitorCharger";
+        return entity.TryGetComponent(out ServerBatteryBarrelComponent? battery) && battery.PowerCell != null ||
+               entity.TryGetComponent(out PowerCellSlotComponent? slot) && slot.HasCell;
+    }
 
-        public override bool IsEntityCompatible(IEntity entity)
+    protected override BatteryComponent? GetBatteryFrom(IEntity entity)
+    {
+        if (entity.TryGetComponent(out PowerCellSlotComponent? slot))
         {
-            return entity.TryGetComponent(out ServerBatteryBarrelComponent? battery) && battery.PowerCell != null ||
-                   entity.TryGetComponent(out PowerCellSlotComponent? slot) && slot.HasCell;
+            if (slot.Cell != null)
+            {
+                return slot.Cell;
+            }
         }
 
-        protected override BatteryComponent? GetBatteryFrom(IEntity entity)
+        if (entity.TryGetComponent(out ServerBatteryBarrelComponent? battery))
         {
-            if (entity.TryGetComponent(out PowerCellSlotComponent? slot))
+            if (battery.PowerCell != null)
             {
-                if (slot.Cell != null)
-                {
-                    return slot.Cell;
-                }
+                return battery.PowerCell;
             }
-
-            if (entity.TryGetComponent(out ServerBatteryBarrelComponent? battery))
-            {
-                if (battery.PowerCell != null)
-                {
-                    return battery.PowerCell;
-                }
-            }
-
-            return null;
         }
+
+        return null;
     }
 }

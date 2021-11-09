@@ -1,11 +1,10 @@
 using System;
 
-namespace Content.Client.Sandbox
+namespace Content.Client.Sandbox;
+
+public interface ISandboxManager
 {
-    public interface ISandboxManager
-    {
-        void Initialize();
-        bool SandboxAllowed { get; }
-        event Action<bool> AllowedChanged;
-    }
+    void Initialize();
+    bool SandboxAllowed { get; }
+    event Action<bool> AllowedChanged;
 }

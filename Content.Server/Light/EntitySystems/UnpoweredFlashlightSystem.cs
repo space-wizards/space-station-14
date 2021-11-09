@@ -9,46 +9,45 @@ using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using System;
 
-namespace Content.Server.Light.EntitySystems
+namespace Content.Server.Light.EntitySystems;
+
+public class UnpoweredFlashlightSystem : EntitySystem
 {
-    public class UnpoweredFlashlightSystem : EntitySystem
+    public override void Initialize()
     {
-        public override void Initialize()
-        {
-            base.Initialize();
+        base.Initialize();
 
-            SubscribeLocalEvent<UnpoweredFlashlightComponent, GetActivationVerbsEvent>(AddToggleLightVerbs);
-        }
-
-        private void AddToggleLightVerbs(EntityUid uid, UnpoweredFlashlightComponent component, GetActivationVerbsEvent args)
-        {
-            if (!args.CanAccess || !args.CanInteract)
-                return;
-
-            Verb verb = new();
-            verb.Text = Loc.GetString("toggle-flashlight-verb-get-data-text");
-            verb.IconTexture = "/Textures/Interface/VerbIcons/light.svg.192dpi.png";
-            verb.Act = () => ToggleLight(component);
-            verb.Priority = -1; // For things like PDA's, Open-UI and other verbs that should be higher priority.
-
-            args.Verbs.Add(verb);
-        }
-
-        public void ToggleLight(UnpoweredFlashlightComponent flashlight)
-        {
-            if (!flashlight.Owner.TryGetComponent(out PointLightComponent? light))
-                return;
-
-            flashlight.LightOn = !flashlight.LightOn;
-            light.Enabled = flashlight.LightOn;
-
-            if (flashlight.Owner.TryGetComponent(out AppearanceComponent? appearance))
-                appearance.SetData(UnpoweredFlashlightVisuals.LightOn, flashlight.LightOn);
-
-            SoundSystem.Play(Filter.Pvs(light.Owner), flashlight.ToggleSound.GetSound(), flashlight.Owner);
-
-            RaiseLocalEvent(flashlight.Owner.Uid, new LightToggleEvent(flashlight.LightOn));
-        }
-
+        SubscribeLocalEvent<UnpoweredFlashlightComponent, GetActivationVerbsEvent>(AddToggleLightVerbs);
     }
+
+    private void AddToggleLightVerbs(EntityUid uid, UnpoweredFlashlightComponent component, GetActivationVerbsEvent args)
+    {
+        if (!args.CanAccess || !args.CanInteract)
+            return;
+
+        Verb verb = new();
+        verb.Text = Loc.GetString("toggle-flashlight-verb-get-data-text");
+        verb.IconTexture = "/Textures/Interface/VerbIcons/light.svg.192dpi.png";
+        verb.Act = () => ToggleLight(component);
+        verb.Priority = -1; // For things like PDA's, Open-UI and other verbs that should be higher priority.
+
+        args.Verbs.Add(verb);
+    }
+
+    public void ToggleLight(UnpoweredFlashlightComponent flashlight)
+    {
+        if (!flashlight.Owner.TryGetComponent(out PointLightComponent? light))
+            return;
+
+        flashlight.LightOn = !flashlight.LightOn;
+        light.Enabled = flashlight.LightOn;
+
+        if (flashlight.Owner.TryGetComponent(out AppearanceComponent? appearance))
+            appearance.SetData(UnpoweredFlashlightVisuals.LightOn, flashlight.LightOn);
+
+        SoundSystem.Play(Filter.Pvs(light.Owner), flashlight.ToggleSound.GetSound(), flashlight.Owner);
+
+        RaiseLocalEvent(flashlight.Owner.Uid, new LightToggleEvent(flashlight.LightOn));
+    }
+
 }

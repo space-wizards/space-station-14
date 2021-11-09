@@ -20,32 +20,31 @@ using Content.Shared.Alert;
 using Content.Shared.Module;
 using Robust.Shared.IoC;
 
-namespace Content.Client.IoC
+namespace Content.Client.IoC;
+
+internal static class ClientContentIoC
 {
-    internal static class ClientContentIoC
+    public static void Register()
     {
-        public static void Register()
-        {
-            IoCManager.Register<IGameHud, GameHud>();
-            IoCManager.Register<IParallaxManager, ParallaxManager>();
-            IoCManager.Register<IChatManager, ChatManager>();
-            IoCManager.Register<IEscapeMenuOwner, EscapeMenuOwner>();
-            IoCManager.Register<ISandboxManager, SandboxManager>();
-            IoCManager.Register<IModuleManager, ClientModuleManager>();
-            IoCManager.Register<IClientPreferencesManager, ClientPreferencesManager>();
-            IoCManager.Register<IItemSlotManager, ItemSlotManager>();
-            IoCManager.Register<IStylesheetManager, StylesheetManager>();
-            IoCManager.Register<IScreenshotHook, ScreenshotHook>();
-            IoCManager.Register<IClickMapManager, ClickMapManager>();
-            IoCManager.Register<IStationEventManager, StationEventManager>();
-            IoCManager.Register<IAdminMenuManager, AdminMenuManager>();
-            IoCManager.Register<AlertManager, AlertManager>();
-            IoCManager.Register<ActionManager, ActionManager>();
-            IoCManager.Register<IClientAdminManager, ClientAdminManager>();
-            IoCManager.Register<EuiManager, EuiManager>();
-            IoCManager.Register<IVoteManager, VoteManager>();
-            IoCManager.Register<ChangelogManager, ChangelogManager>();
-            IoCManager.Register<ViewportManager, ViewportManager>();
-        }
+        IoCManager.Register<IGameHud, GameHud>();
+        IoCManager.Register<IParallaxManager, ParallaxManager>();
+        IoCManager.Register<IChatManager, ChatManager>();
+        IoCManager.Register<IEscapeMenuOwner, EscapeMenuOwner>();
+        IoCManager.Register<ISandboxManager, SandboxManager>();
+        IoCManager.Register<IModuleManager, ClientModuleManager>();
+        IoCManager.Register<IClientPreferencesManager, ClientPreferencesManager>();
+        IoCManager.Register<IItemSlotManager, ItemSlotManager>();
+        IoCManager.Register<IStylesheetManager, StylesheetManager>();
+        IoCManager.Register<IScreenshotHook, ScreenshotHook>();
+        IoCManager.Register<IClickMapManager, ClickMapManager>();
+        IoCManager.Register<IStationEventManager, StationEventManager>();
+        IoCManager.Register<IAdminMenuManager, AdminMenuManager>();
+        IoCManager.Register<AlertManager, AlertManager>();
+        IoCManager.Register<ActionManager, ActionManager>();
+        IoCManager.Register<IClientAdminManager, ClientAdminManager>();
+        IoCManager.Register<EuiManager, EuiManager>();
+        IoCManager.Register<IVoteManager, VoteManager>();
+        IoCManager.Register<ChangelogManager, ChangelogManager>();
+        IoCManager.Register<ViewportManager, ViewportManager>();
     }
 }

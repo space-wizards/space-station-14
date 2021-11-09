@@ -13,214 +13,213 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.ViewVariables;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
-namespace Content.Client.Alerts
+namespace Content.Client.Alerts;
+
+/// <inheritdoc/>
+[RegisterComponent]
+[ComponentReference(typeof(SharedAlertsComponent))]
+public sealed class ClientAlertsComponent : SharedAlertsComponent
 {
-    /// <inheritdoc/>
-    [RegisterComponent]
-    [ComponentReference(typeof(SharedAlertsComponent))]
-    public sealed class ClientAlertsComponent : SharedAlertsComponent
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
+
+    private AlertsUI? _ui;
+    private AlertOrderPrototype? _alertOrder;
+
+    [ViewVariables]
+    private readonly Dictionary<AlertKey, AlertControl> _alertControls
+        = new();
+
+    /// <summary>
+    /// Allows calculating if we need to act due to this component being controlled by the current mob
+    /// </summary>
+    [ViewVariables]
+    private bool CurrentlyControlled => _playerManager.LocalPlayer != null && _playerManager.LocalPlayer.ControlledEntity == Owner;
+
+    protected override void Shutdown()
     {
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        base.Shutdown();
+        PlayerDetached();
+    }
 
-        private AlertsUI? _ui;
-        private AlertOrderPrototype? _alertOrder;
+    public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
+    {
+        base.HandleComponentState(curState, nextState);
 
-        [ViewVariables]
-        private readonly Dictionary<AlertKey, AlertControl> _alertControls
-            = new();
-
-        /// <summary>
-        /// Allows calculating if we need to act due to this component being controlled by the current mob
-        /// </summary>
-        [ViewVariables]
-        private bool CurrentlyControlled => _playerManager.LocalPlayer != null && _playerManager.LocalPlayer.ControlledEntity == Owner;
-
-        protected override void Shutdown()
+        if (curState is not AlertsComponentState)
         {
-            base.Shutdown();
-            PlayerDetached();
+            return;
         }
 
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
+        UpdateAlertsControls();
+    }
+
+    public void PlayerAttached()
+    {
+        if (!CurrentlyControlled || _ui != null)
         {
-            base.HandleComponentState(curState, nextState);
-
-            if (curState is not AlertsComponentState)
-            {
-                return;
-            }
-
-            UpdateAlertsControls();
+            return;
         }
 
-        public void PlayerAttached()
+        _alertOrder = IoCManager.Resolve<IPrototypeManager>().EnumeratePrototypes<AlertOrderPrototype>().FirstOrDefault();
+        if (_alertOrder == null)
         {
-            if (!CurrentlyControlled || _ui != null)
-            {
-                return;
-            }
-
-            _alertOrder = IoCManager.Resolve<IPrototypeManager>().EnumeratePrototypes<AlertOrderPrototype>().FirstOrDefault();
-            if (_alertOrder == null)
-            {
-                Logger.ErrorS("alert", "no alertOrder prototype found, alerts will be in random order");
-            }
-
-            _ui = new AlertsUI();
-            IoCManager.Resolve<IUserInterfaceManager>().StateRoot.AddChild(_ui);
-
-            UpdateAlertsControls();
+            Logger.ErrorS("alert", "no alertOrder prototype found, alerts will be in random order");
         }
 
-        public void PlayerDetached()
-        {
-            foreach (var alertControl in _alertControls.Values)
-            {
-                alertControl.OnPressed -= AlertControlOnPressed;
-            }
+        _ui = new AlertsUI();
+        IoCManager.Resolve<IUserInterfaceManager>().StateRoot.AddChild(_ui);
 
-            if (_ui != null)
-            {
-                IoCManager.Resolve<IUserInterfaceManager>().StateRoot.RemoveChild(_ui);
-                _ui = null;
-            }
-            _alertControls.Clear();
+        UpdateAlertsControls();
+    }
+
+    public void PlayerDetached()
+    {
+        foreach (var alertControl in _alertControls.Values)
+        {
+            alertControl.OnPressed -= AlertControlOnPressed;
         }
 
-        /// <summary>
-        /// Updates the displayed alerts based on current state of Alerts, performing
-        /// a diff to ensure we only change what's changed (this avoids active tooltips disappearing any
-        /// time state changes)
-        /// </summary>
-        private void UpdateAlertsControls()
+        if (_ui != null)
         {
-            if (!CurrentlyControlled || _ui == null)
+            IoCManager.Resolve<IUserInterfaceManager>().StateRoot.RemoveChild(_ui);
+            _ui = null;
+        }
+        _alertControls.Clear();
+    }
+
+    /// <summary>
+    /// Updates the displayed alerts based on current state of Alerts, performing
+    /// a diff to ensure we only change what's changed (this avoids active tooltips disappearing any
+    /// time state changes)
+    /// </summary>
+    private void UpdateAlertsControls()
+    {
+        if (!CurrentlyControlled || _ui == null)
+        {
+            return;
+        }
+
+        // remove any controls with keys no longer present
+        var toRemove = new List<AlertKey>();
+        foreach (var existingKey in _alertControls.Keys)
+        {
+            if (!IsShowingAlert(existingKey))
             {
-                return;
+                toRemove.Add(existingKey);
+            }
+        }
+        foreach (var alertKeyToRemove in toRemove)
+        {
+            _alertControls.Remove(alertKeyToRemove, out var control);
+            if (control == null) return;
+            _ui.AlertContainer.Children.Remove(control);
+        }
+
+        // now we know that alertControls contains alerts that should still exist but
+        // may need to updated,
+        // also there may be some new alerts we need to show.
+        // further, we need to ensure they are ordered w.r.t their configured order
+        foreach (var (alertKey, alertState) in EnumerateAlertStates())
+        {
+            if (!alertKey.AlertType.HasValue)
+            {
+                Logger.WarningS("alert", "found alertkey without alerttype," +
+                                         " alert keys should never be stored without an alerttype set: {0}", alertKey);
+                continue;
+            }
+            var alertType = alertKey.AlertType.Value;
+            if (!AlertManager.TryGet(alertType, out var newAlert))
+            {
+                Logger.ErrorS("alert", "Unrecognized alertType {0}", alertType);
+                continue;
             }
 
-            // remove any controls with keys no longer present
-            var toRemove = new List<AlertKey>();
-            foreach (var existingKey in _alertControls.Keys)
+            if (_alertControls.TryGetValue(newAlert.AlertKey, out var existingAlertControl) &&
+                existingAlertControl.Alert.AlertType == newAlert.AlertType)
             {
-                if (!IsShowingAlert(existingKey))
-                {
-                    toRemove.Add(existingKey);
-                }
+                // key is the same, simply update the existing control severity / cooldown
+                existingAlertControl.SetSeverity(alertState.Severity);
+                existingAlertControl.Cooldown = alertState.Cooldown;
             }
-            foreach (var alertKeyToRemove in toRemove)
+            else
             {
-                _alertControls.Remove(alertKeyToRemove, out var control);
-                if (control == null) return;
-                _ui.AlertContainer.Children.Remove(control);
-            }
-
-            // now we know that alertControls contains alerts that should still exist but
-            // may need to updated,
-            // also there may be some new alerts we need to show.
-            // further, we need to ensure they are ordered w.r.t their configured order
-            foreach (var (alertKey, alertState) in EnumerateAlertStates())
-            {
-                if (!alertKey.AlertType.HasValue)
+                if (existingAlertControl != null)
                 {
-                    Logger.WarningS("alert", "found alertkey without alerttype," +
-                                             " alert keys should never be stored without an alerttype set: {0}", alertKey);
-                    continue;
-                }
-                var alertType = alertKey.AlertType.Value;
-                if (!AlertManager.TryGet(alertType, out var newAlert))
-                {
-                    Logger.ErrorS("alert", "Unrecognized alertType {0}", alertType);
-                    continue;
+                    _ui.AlertContainer.Children.Remove(existingAlertControl);
                 }
 
-                if (_alertControls.TryGetValue(newAlert.AlertKey, out var existingAlertControl) &&
-                    existingAlertControl.Alert.AlertType == newAlert.AlertType)
+                // this is a new alert + alert key or just a different alert with the same
+                // key, create the control and add it in the appropriate order
+                var newAlertControl = CreateAlertControl(newAlert, alertState);
+                if (_alertOrder != null)
                 {
-                    // key is the same, simply update the existing control severity / cooldown
-                    existingAlertControl.SetSeverity(alertState.Severity);
-                    existingAlertControl.Cooldown = alertState.Cooldown;
-                }
-                else
-                {
-                    if (existingAlertControl != null)
+                    var added = false;
+                    foreach (var alertControl in _ui.AlertContainer.Children)
                     {
-                        _ui.AlertContainer.Children.Remove(existingAlertControl);
-                    }
-
-                    // this is a new alert + alert key or just a different alert with the same
-                    // key, create the control and add it in the appropriate order
-                    var newAlertControl = CreateAlertControl(newAlert, alertState);
-                    if (_alertOrder != null)
-                    {
-                        var added = false;
-                        foreach (var alertControl in _ui.AlertContainer.Children)
+                        if (_alertOrder.Compare(newAlert, ((AlertControl) alertControl).Alert) < 0)
                         {
-                            if (_alertOrder.Compare(newAlert, ((AlertControl) alertControl).Alert) < 0)
-                            {
-                                var idx = alertControl.GetPositionInParent();
-                                _ui.AlertContainer.Children.Add(newAlertControl);
-                                newAlertControl.SetPositionInParent(idx);
-                                added = true;
-                                break;
-                            }
-                        }
-
-                        if (!added)
-                        {
+                            var idx = alertControl.GetPositionInParent();
                             _ui.AlertContainer.Children.Add(newAlertControl);
+                            newAlertControl.SetPositionInParent(idx);
+                            added = true;
+                            break;
                         }
                     }
-                    else
+
+                    if (!added)
                     {
                         _ui.AlertContainer.Children.Add(newAlertControl);
                     }
-
-                    _alertControls[newAlert.AlertKey] = newAlertControl;
                 }
+                else
+                {
+                    _ui.AlertContainer.Children.Add(newAlertControl);
+                }
+
+                _alertControls[newAlert.AlertKey] = newAlertControl;
             }
         }
+    }
 
-        private AlertControl CreateAlertControl(AlertPrototype alert, AlertState alertState)
+    private AlertControl CreateAlertControl(AlertPrototype alert, AlertState alertState)
+    {
+        var alertControl = new AlertControl(alert, alertState.Severity)
         {
-            var alertControl = new AlertControl(alert, alertState.Severity)
-            {
-                Cooldown = alertState.Cooldown
-            };
-            alertControl.OnPressed += AlertControlOnPressed;
-            return alertControl;
+            Cooldown = alertState.Cooldown
+        };
+        alertControl.OnPressed += AlertControlOnPressed;
+        return alertControl;
+    }
+
+    private void AlertControlOnPressed(ButtonEventArgs args)
+    {
+        if (args.Button is not AlertControl control)
+        {
+            return;
         }
 
-        private void AlertControlOnPressed(ButtonEventArgs args)
-        {
-            if (args.Button is not AlertControl control)
-            {
-                return;
-            }
+        AlertPressed(args, control);
+    }
 
-            AlertPressed(args, control);
+    private void AlertPressed(ButtonEventArgs args, AlertControl alert)
+    {
+        if (args.Event.Function != EngineKeyFunctions.UIClick)
+        {
+            return;
         }
-
-        private void AlertPressed(ButtonEventArgs args, AlertControl alert)
-        {
-            if (args.Event.Function != EngineKeyFunctions.UIClick)
-            {
-                return;
-            }
 
 #pragma warning disable 618
-            SendNetworkMessage(new ClickAlertMessage(alert.Alert.AlertType));
+        SendNetworkMessage(new ClickAlertMessage(alert.Alert.AlertType));
 #pragma warning restore 618
-        }
+    }
 
-        protected override void AfterShowAlert()
-        {
-            UpdateAlertsControls();
-        }
+    protected override void AfterShowAlert()
+    {
+        UpdateAlertsControls();
+    }
 
-        protected override void AfterClearAlert()
-        {
-            UpdateAlertsControls();
-        }
+    protected override void AfterClearAlert()
+    {
+        UpdateAlertsControls();
     }
 }

@@ -1,8 +1,7 @@
-namespace Content.Server.CPUJob.JobQueues
+namespace Content.Server.CPUJob.JobQueues;
+
+public interface IJob
 {
-    public interface IJob
-    {
-        JobStatus Status { get; }
-        void Run();
-    }
+    JobStatus Status { get; }
+    void Run();
 }

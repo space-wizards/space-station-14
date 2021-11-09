@@ -4,22 +4,21 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Cargo.Components
+namespace Content.Shared.Cargo.Components;
+
+[NetworkedComponent()]
+public class SharedCargoOrderDatabaseComponent : Component
 {
-    [NetworkedComponent()]
-    public class SharedCargoOrderDatabaseComponent : Component
-    {
-        public sealed override string Name => "CargoOrderDatabase";
-    }
+    public sealed override string Name => "CargoOrderDatabase";
+}
 
-    [NetSerializable, Serializable]
-    public class CargoOrderDatabaseState : ComponentState
-    {
-        public readonly List<CargoOrderData>? Orders;
+[NetSerializable, Serializable]
+public class CargoOrderDatabaseState : ComponentState
+{
+    public readonly List<CargoOrderData>? Orders;
 
-        public CargoOrderDatabaseState(List<CargoOrderData>? orders)
-        {
-            Orders = orders;
-        }
+    public CargoOrderDatabaseState(List<CargoOrderData>? orders)
+    {
+        Orders = orders;
     }
 }

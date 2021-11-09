@@ -4,30 +4,29 @@ using Robust.Client.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Client.Ghost
+namespace Content.Client.Ghost;
+
+[RegisterComponent]
+[ComponentReference(typeof(SharedGhostComponent))]
+public sealed class GhostComponent : SharedGhostComponent
 {
-    [RegisterComponent]
-    [ComponentReference(typeof(SharedGhostComponent))]
-    public sealed class GhostComponent : SharedGhostComponent
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
+
+    public GhostGui? Gui { get; set; }
+    public bool IsAttached { get; set; }
+
+    public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
     {
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        base.HandleComponentState(curState, nextState);
 
-        public GhostGui? Gui { get; set; }
-        public bool IsAttached { get; set; }
-
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
+        if (curState is not GhostComponentState)
         {
-            base.HandleComponentState(curState, nextState);
+            return;
+        }
 
-            if (curState is not GhostComponentState)
-            {
-                return;
-            }
-
-            if (Owner == _playerManager.LocalPlayer?.ControlledEntity)
-            {
-                Gui?.Update();
-            }
+        if (Owner == _playerManager.LocalPlayer?.ControlledEntity)
+        {
+            Gui?.Update();
         }
     }
 }

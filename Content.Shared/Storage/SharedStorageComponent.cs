@@ -10,173 +10,172 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Storage
+namespace Content.Shared.Storage;
+
+[NetworkedComponent()]
+public abstract class SharedStorageComponent : Component, IDraggable
 {
-    [NetworkedComponent()]
-    public abstract class SharedStorageComponent : Component, IDraggable
+    public override string Name => "Storage";
+
+    public abstract IReadOnlyList<IEntity>? StoredEntities { get; }
+
+    /// <summary>
+    ///     Removes from the storage container and updates the stored value
+    /// </summary>
+    /// <param name="entity">The entity to remove</param>
+    /// <returns>True if no longer in storage, false otherwise</returns>
+    public abstract bool Remove(IEntity entity);
+
+    bool IDraggable.CanDrop(CanDropEvent args)
     {
-        public override string Name => "Storage";
+        return args.Target.TryGetComponent(out PlaceableSurfaceComponent? placeable) &&
+               placeable.IsPlaceable;
+    }
 
-        public abstract IReadOnlyList<IEntity>? StoredEntities { get; }
-
-        /// <summary>
-        ///     Removes from the storage container and updates the stored value
-        /// </summary>
-        /// <param name="entity">The entity to remove</param>
-        /// <returns>True if no longer in storage, false otherwise</returns>
-        public abstract bool Remove(IEntity entity);
-
-        bool IDraggable.CanDrop(CanDropEvent args)
+    bool IDraggable.Drop(DragDropEvent eventArgs)
+    {
+        if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User.Uid))
         {
-            return args.Target.TryGetComponent(out PlaceableSurfaceComponent? placeable) &&
-                   placeable.IsPlaceable;
+            return false;
         }
 
-        bool IDraggable.Drop(DragDropEvent eventArgs)
+        var storedEntities = StoredEntities?.ToArray();
+
+        if (storedEntities == null)
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User.Uid))
+            return false;
+        }
+
+        // empty everything out
+        foreach (var storedEntity in storedEntities)
+        {
+            if (Remove(storedEntity))
             {
-                return false;
+                storedEntity.Transform.WorldPosition = eventArgs.DropLocation.Position;
             }
-
-            var storedEntities = StoredEntities?.ToArray();
-
-            if (storedEntities == null)
-            {
-                return false;
-            }
-
-            // empty everything out
-            foreach (var storedEntity in storedEntities)
-            {
-                if (Remove(storedEntity))
-                {
-                    storedEntity.Transform.WorldPosition = eventArgs.DropLocation.Position;
-                }
-            }
-
-            return true;
         }
-    }
 
-    [Serializable, NetSerializable]
-    public class StorageComponentState : ComponentState
+        return true;
+    }
+}
+
+[Serializable, NetSerializable]
+public class StorageComponentState : ComponentState
+{
+    public readonly EntityUid[] StoredEntities;
+
+    public StorageComponentState(EntityUid[] storedEntities)
     {
-        public readonly EntityUid[] StoredEntities;
-
-        public StorageComponentState(EntityUid[] storedEntities)
-        {
-            StoredEntities = storedEntities;
-        }
+        StoredEntities = storedEntities;
     }
+}
 
-    /// <summary>
-    /// Updates the client component about what entities this storage is holding
-    /// </summary>
-    [Serializable, NetSerializable]
+/// <summary>
+/// Updates the client component about what entities this storage is holding
+/// </summary>
+[Serializable, NetSerializable]
 #pragma warning disable 618
-    public class StorageHeldItemsMessage : ComponentMessage
+public class StorageHeldItemsMessage : ComponentMessage
 #pragma warning restore 618
+{
+    public readonly int StorageSizeMax;
+    public readonly int StorageSizeUsed;
+    public readonly EntityUid[] StoredEntities;
+
+    public StorageHeldItemsMessage(EntityUid[] storedEntities, int storageUsed, int storageMaxSize)
     {
-        public readonly int StorageSizeMax;
-        public readonly int StorageSizeUsed;
-        public readonly EntityUid[] StoredEntities;
-
-        public StorageHeldItemsMessage(EntityUid[] storedEntities, int storageUsed, int storageMaxSize)
-        {
-            Directed = true;
-            StorageSizeMax = storageMaxSize;
-            StorageSizeUsed = storageUsed;
-            StoredEntities = storedEntities;
-        }
+        Directed = true;
+        StorageSizeMax = storageMaxSize;
+        StorageSizeUsed = storageUsed;
+        StoredEntities = storedEntities;
     }
+}
 
-    /// <summary>
-    /// Component message for adding an entity to the storage entity.
-    /// </summary>
-    [Serializable, NetSerializable]
+/// <summary>
+/// Component message for adding an entity to the storage entity.
+/// </summary>
+[Serializable, NetSerializable]
 #pragma warning disable 618
-    public class InsertEntityMessage : ComponentMessage
+public class InsertEntityMessage : ComponentMessage
 #pragma warning restore 618
+{
+    public InsertEntityMessage()
     {
-        public InsertEntityMessage()
-        {
-            Directed = true;
-        }
+        Directed = true;
     }
+}
 
-    /// <summary>
-    /// Component message for displaying an animation of entities flying into a storage entity
-    /// </summary>
-    [Serializable, NetSerializable]
+/// <summary>
+/// Component message for displaying an animation of entities flying into a storage entity
+/// </summary>
+[Serializable, NetSerializable]
 #pragma warning disable 618
-    public class AnimateInsertingEntitiesMessage : ComponentMessage
+public class AnimateInsertingEntitiesMessage : ComponentMessage
 #pragma warning restore 618
+{
+    public readonly List<EntityUid> StoredEntities;
+    public readonly List<EntityCoordinates> EntityPositions;
+    public AnimateInsertingEntitiesMessage(List<EntityUid> storedEntities, List<EntityCoordinates> entityPositions)
     {
-        public readonly List<EntityUid> StoredEntities;
-        public readonly List<EntityCoordinates> EntityPositions;
-        public AnimateInsertingEntitiesMessage(List<EntityUid> storedEntities, List<EntityCoordinates> entityPositions)
-        {
-            Directed = true;
-            StoredEntities = storedEntities;
-            EntityPositions = entityPositions;
-        }
+        Directed = true;
+        StoredEntities = storedEntities;
+        EntityPositions = entityPositions;
     }
+}
 
-    /// <summary>
-    /// Component message for removing a contained entity from the storage entity
-    /// </summary>
-    [Serializable, NetSerializable]
+/// <summary>
+/// Component message for removing a contained entity from the storage entity
+/// </summary>
+[Serializable, NetSerializable]
 #pragma warning disable 618
-    public class RemoveEntityMessage : ComponentMessage
+public class RemoveEntityMessage : ComponentMessage
 #pragma warning restore 618
+{
+    public EntityUid EntityUid;
+
+    public RemoveEntityMessage(EntityUid entityuid)
     {
-        public EntityUid EntityUid;
-
-        public RemoveEntityMessage(EntityUid entityuid)
-        {
-            Directed = true;
-            EntityUid = entityuid;
-        }
+        Directed = true;
+        EntityUid = entityuid;
     }
+}
 
-    /// <summary>
-    /// Component message for opening the storage UI
-    /// </summary>
-    [Serializable, NetSerializable]
+/// <summary>
+/// Component message for opening the storage UI
+/// </summary>
+[Serializable, NetSerializable]
 #pragma warning disable 618
-    public class OpenStorageUIMessage : ComponentMessage
+public class OpenStorageUIMessage : ComponentMessage
 #pragma warning restore 618
+{
+    public OpenStorageUIMessage()
     {
-        public OpenStorageUIMessage()
-        {
-            Directed = true;
-        }
+        Directed = true;
     }
+}
 
-    /// <summary>
-    /// Component message for closing the storage UI.
-    /// E.g when the player moves too far away from the container.
-    /// </summary>
-    [Serializable, NetSerializable]
+/// <summary>
+/// Component message for closing the storage UI.
+/// E.g when the player moves too far away from the container.
+/// </summary>
+[Serializable, NetSerializable]
 #pragma warning disable 618
-    public class CloseStorageUIMessage : ComponentMessage
+public class CloseStorageUIMessage : ComponentMessage
 #pragma warning restore 618
+{
+    public CloseStorageUIMessage()
     {
-        public CloseStorageUIMessage()
-        {
-            Directed = true;
-        }
+        Directed = true;
     }
+}
 
-    [NetSerializable]
-    [Serializable]
-    public enum StorageVisuals
-    {
-        Open,
-        CanWeld,
-        Welded,
-        CanLock,
-        Locked
-    }
+[NetSerializable]
+[Serializable]
+public enum StorageVisuals
+{
+    Open,
+    CanWeld,
+    Welded,
+    CanLock,
+    Locked
 }

@@ -3,14 +3,13 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Network;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Client.Tabletop.Components
+namespace Content.Client.Tabletop.Components;
+
+[RegisterComponent]
+[ComponentReference(typeof(SharedTabletopDraggableComponent))]
+public class TabletopDraggableComponent : SharedTabletopDraggableComponent
 {
-    [RegisterComponent]
-    [ComponentReference(typeof(SharedTabletopDraggableComponent))]
-    public class TabletopDraggableComponent : SharedTabletopDraggableComponent
-    {
-        // The player dragging the piece
-        [ViewVariables]
-        public NetUserId? DraggingPlayer;
-    }
+    // The player dragging the piece
+    [ViewVariables]
+    public NetUserId? DraggingPlayer;
 }

@@ -10,36 +10,35 @@ using Content.Server.AI.WorldState.States;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Server.AI.Utility.Actions.Clothing.Head
+namespace Content.Server.AI.Utility.Actions.Clothing.Head;
+
+public sealed class PickUpHead : UtilityAction
 {
-    public sealed class PickUpHead : UtilityAction
+    public IEntity Target { get; set; } = default!;
+
+    public override void SetupOperators(Blackboard context)
     {
-        public IEntity Target { get; set; } = default!;
+        ActionOperators = new GoPickupEntitySequence(Owner, Target).Sequence;
+    }
 
-        public override void SetupOperators(Blackboard context)
+    protected override void UpdateBlackboard(Blackboard context)
+    {
+        base.UpdateBlackboard(context);
+        context.GetState<TargetEntityState>().SetValue(Target);
+    }
+
+    protected override IReadOnlyCollection<Func<float>> GetConsiderations(Blackboard context)
+    {
+        var considerationsManager = IoCManager.Resolve<ConsiderationsManager>();
+
+        return new[]
         {
-            ActionOperators = new GoPickupEntitySequence(Owner, Target).Sequence;
-        }
-
-        protected override void UpdateBlackboard(Blackboard context)
-        {
-            base.UpdateBlackboard(context);
-            context.GetState<TargetEntityState>().SetValue(Target);
-        }
-
-        protected override IReadOnlyCollection<Func<float>> GetConsiderations(Blackboard context)
-        {
-            var considerationsManager = IoCManager.Resolve<ConsiderationsManager>();
-
-            return new[]
-            {
-                considerationsManager.Get<CanPutTargetInInventoryCon>()
-                    .BoolCurve(context),
-                considerationsManager.Get<TargetDistanceCon>()
-                    .PresetCurve(context, PresetCurve.Distance),
-				considerationsManager.Get<TargetAccessibleCon>()
-                    .BoolCurve(context),
-            };
-        }
+            considerationsManager.Get<CanPutTargetInInventoryCon>()
+                                 .BoolCurve(context),
+            considerationsManager.Get<TargetDistanceCon>()
+                                 .PresetCurve(context, PresetCurve.Distance),
+            considerationsManager.Get<TargetAccessibleCon>()
+                                 .BoolCurve(context),
+        };
     }
 }

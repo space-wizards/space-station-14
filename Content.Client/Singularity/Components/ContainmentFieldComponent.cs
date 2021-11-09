@@ -3,28 +3,27 @@ using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 
-namespace Content.Client.Singularity.Components
+namespace Content.Client.Singularity.Components;
+
+[RegisterComponent]
+[ComponentReference(typeof(SharedContainmentFieldComponent))]
+public class ContainmentFieldComponent : SharedContainmentFieldComponent
 {
-    [RegisterComponent]
-    [ComponentReference(typeof(SharedContainmentFieldComponent))]
-    public class ContainmentFieldComponent : SharedContainmentFieldComponent
+    // Jesus what is this code.
+    // Singulo cleanup WHEEENNN
+    private SpriteComponent? _spriteComponent;
+
+    protected override void Initialize()
     {
-        // Jesus what is this code.
-        // Singulo cleanup WHEEENNN
-        private SpriteComponent? _spriteComponent;
+        base.Initialize();
 
-        protected override void Initialize()
+        if (!Owner.TryGetComponent(out _spriteComponent))
         {
-            base.Initialize();
-
-            if (!Owner.TryGetComponent(out _spriteComponent))
-            {
-                Logger.Error($"{nameof(ContainmentFieldComponent)} created without {nameof(SpriteComponent)}");
-            }
-            else
-            {
-                _spriteComponent.NoRotation = true;
-            }
+            Logger.Error($"{nameof(ContainmentFieldComponent)} created without {nameof(SpriteComponent)}");
+        }
+        else
+        {
+            _spriteComponent.NoRotation = true;
         }
     }
 }

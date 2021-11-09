@@ -5,23 +5,22 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Kitchen.Components
+namespace Content.Server.Kitchen.Components;
+
+/// <summary>
+/// Tag component that denotes an entity as Extractable
+/// </summary>
+[RegisterComponent]
+[Friend(typeof(ReagentGrinderSystem))]
+public class ExtractableComponent : Component
 {
-    /// <summary>
-    /// Tag component that denotes an entity as Extractable
-    /// </summary>
-    [RegisterComponent]
-    [Friend(typeof(ReagentGrinderSystem))]
-    public class ExtractableComponent : Component
-    {
-        public override string Name => "Extractable";
+    public override string Name => "Extractable";
 
-        [ViewVariables]
-        [DataField("juiceSolution")] 
-        public Solution? JuiceSolution;
+    [ViewVariables]
+    [DataField("juiceSolution")] 
+    public Solution? JuiceSolution;
 
-        [ViewVariables] 
-        [DataField("grindableSolutionName")]
-        public string? GrindableSolution;
-    }
+    [ViewVariables] 
+    [DataField("grindableSolutionName")]
+    public string? GrindableSolution;
 }

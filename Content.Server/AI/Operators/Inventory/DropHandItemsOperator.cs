@@ -1,30 +1,29 @@
 using Content.Server.Hands.Components;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.AI.Operators.Inventory
+namespace Content.Server.AI.Operators.Inventory;
+
+public class DropHandItemsOperator : AiOperator
 {
-    public class DropHandItemsOperator : AiOperator
+    private readonly IEntity _owner;
+
+    public DropHandItemsOperator(IEntity owner)
     {
-        private readonly IEntity _owner;
+        _owner = owner;
+    }
 
-        public DropHandItemsOperator(IEntity owner)
+    public override Outcome Execute(float frameTime)
+    {
+        if (!_owner.TryGetComponent(out HandsComponent? handsComponent))
         {
-            _owner = owner;
+            return Outcome.Failed;
         }
 
-        public override Outcome Execute(float frameTime)
+        foreach (var item in handsComponent.GetAllHeldItems())
         {
-            if (!_owner.TryGetComponent(out HandsComponent? handsComponent))
-            {
-                return Outcome.Failed;
-            }
-
-            foreach (var item in handsComponent.GetAllHeldItems())
-            {
-                handsComponent.Drop(item.Owner);
-            }
-
-            return Outcome.Success;
+            handsComponent.Drop(item.Owner);
         }
+
+        return Outcome.Success;
     }
 }

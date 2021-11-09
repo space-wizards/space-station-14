@@ -1,13 +1,12 @@
 ﻿using Content.Shared.CharacterAppearance;
 using Robust.Shared.IoC;
 
-namespace Content.Shared.IoC
+namespace Content.Shared.IoC;
+
+public static class SharedContentIoC
 {
-    public static class SharedContentIoC
+    public static void Register()
     {
-        public static void Register()
-        {
-            IoCManager.Register<SpriteAccessoryManager, SpriteAccessoryManager>();
-        }
+        IoCManager.Register<SpriteAccessoryManager, SpriteAccessoryManager>();
     }
 }

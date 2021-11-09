@@ -19,140 +19,139 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.Disposal.Components.SharedDisposalTaggerComponent;
 
-namespace Content.Server.Disposal.Tube.Components
+namespace Content.Server.Disposal.Tube.Components;
+
+[RegisterComponent]
+[ComponentReference(typeof(IActivate))]
+[ComponentReference(typeof(IDisposalTubeComponent))]
+public class DisposalTaggerComponent : DisposalTransitComponent, IActivate
 {
-    [RegisterComponent]
-    [ComponentReference(typeof(IActivate))]
-    [ComponentReference(typeof(IDisposalTubeComponent))]
-    public class DisposalTaggerComponent : DisposalTransitComponent, IActivate
+    public override string Name => "DisposalTagger";
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    private string _tag = "";
+
+    [ViewVariables]
+    public bool Anchored =>
+        !Owner.TryGetComponent(out PhysicsComponent? physics) ||
+        physics.BodyType == BodyType.Static;
+
+    [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(DisposalTaggerUiKey.Key);
+
+    [DataField("clickSound")] private SoundSpecifier _clickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
+
+    public override Direction NextDirection(DisposalHolderComponent holder)
     {
-        public override string Name => "DisposalTagger";
+        holder.Tags.Add(_tag);
+        return base.NextDirection(holder);
+    }
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        private string _tag = "";
+    protected override void Initialize()
+    {
+        base.Initialize();
 
-        [ViewVariables]
-        public bool Anchored =>
-            !Owner.TryGetComponent(out PhysicsComponent? physics) ||
-            physics.BodyType == BodyType.Static;
-
-        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(DisposalTaggerUiKey.Key);
-
-        [DataField("clickSound")] private SoundSpecifier _clickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
-
-        public override Direction NextDirection(DisposalHolderComponent holder)
+        if (UserInterface != null)
         {
-            holder.Tags.Add(_tag);
-            return base.NextDirection(holder);
+            UserInterface.OnReceiveMessage += OnUiReceiveMessage;
         }
 
-        protected override void Initialize()
+        UpdateUserInterface();
+    }
+
+    /// <summary>
+    /// Handles ui messages from the client. For things such as button presses
+    /// which interact with the world and require server action.
+    /// </summary>
+    /// <param name="obj">A user interface message from the client.</param>
+    private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
+    {
+        var msg = (UiActionMessage) obj.Message;
+
+        if (!PlayerCanUseDisposalTagger(obj.Session))
+            return;
+
+        //Check for correct message and ignore maleformed strings
+        if (msg.Action == UiAction.Ok && TagRegex.IsMatch(msg.Tag))
         {
-            base.Initialize();
+            _tag = msg.Tag;
+            ClickSound();
+        }
+    }
 
-            if (UserInterface != null)
-            {
-                UserInterface.OnReceiveMessage += OnUiReceiveMessage;
-            }
+    /// <summary>
+    /// Checks whether the player entity is able to use the configuration interface of the pipe tagger.
+    /// </summary>
+    /// <param name="IPlayerSession">The player entity.</param>
+    /// <returns>Returns true if the entity can use the configuration interface, and false if it cannot.</returns>
+    private bool PlayerCanUseDisposalTagger(IPlayerSession session)
+    {
+        //Need player entity to check if they are still able to use the configuration interface
+        if (session.AttachedEntity == null)
+            return false;
+        if (!Anchored)
+            return false;
 
-            UpdateUserInterface();
+        var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
+        var groupController = IoCManager.Resolve<IConGroupController>();
+        //Check if player can interact in their current state
+        if (!groupController.CanAdminMenu(session) && (!actionBlocker.CanInteract(session.AttachedEntityUid!.Value) || !actionBlocker.CanUse(session.AttachedEntityUid!.Value)))
+            return false;
+
+        return true;
+    }
+
+    /// <summary>
+    /// Gets component data to be used to update the user interface client-side.
+    /// </summary>
+    /// <returns>Returns a <see cref="DisposalTaggerUserInterfaceState"/></returns>
+    private DisposalTaggerUserInterfaceState GetUserInterfaceState()
+    {
+        return new(_tag);
+    }
+
+    private void UpdateUserInterface()
+    {
+        var state = GetUserInterfaceState();
+        UserInterface?.SetState(state);
+    }
+
+    private void ClickSound()
+    {
+        SoundSystem.Play(Filter.Pvs(Owner), _clickSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
+    }
+
+    /// <summary>
+    /// Called when you click the owner entity with an empty hand. Opens the UI client-side if possible.
+    /// </summary>
+    /// <param name="args">Data relevant to the event such as the actor which triggered it.</param>
+    void IActivate.Activate(ActivateEventArgs args)
+    {
+        if (!args.User.TryGetComponent(out ActorComponent? actor))
+        {
+            return;
         }
 
-        /// <summary>
-        /// Handles ui messages from the client. For things such as button presses
-        /// which interact with the world and require server action.
-        /// </summary>
-        /// <param name="obj">A user interface message from the client.</param>
-        private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
+        if (!args.User.TryGetComponent(out HandsComponent? hands))
         {
-            var msg = (UiActionMessage) obj.Message;
-
-            if (!PlayerCanUseDisposalTagger(obj.Session))
-                return;
-
-            //Check for correct message and ignore maleformed strings
-            if (msg.Action == UiAction.Ok && TagRegex.IsMatch(msg.Tag))
-            {
-                    _tag = msg.Tag;
-                    ClickSound();
-            }
+            Owner.PopupMessage(args.User, Loc.GetString("disposal-tagger-window-activate-no-hands"));
+            return;
         }
 
-        /// <summary>
-        /// Checks whether the player entity is able to use the configuration interface of the pipe tagger.
-        /// </summary>
-        /// <param name="IPlayerSession">The player entity.</param>
-        /// <returns>Returns true if the entity can use the configuration interface, and false if it cannot.</returns>
-        private bool PlayerCanUseDisposalTagger(IPlayerSession session)
+        var activeHandEntity = hands.GetActiveHand?.Owner;
+        if (activeHandEntity == null)
         {
-            //Need player entity to check if they are still able to use the configuration interface
-            if (session.AttachedEntity == null)
-                return false;
-            if (!Anchored)
-                return false;
-
-            var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
-            var groupController = IoCManager.Resolve<IConGroupController>();
-            //Check if player can interact in their current state
-            if (!groupController.CanAdminMenu(session) && (!actionBlocker.CanInteract(session.AttachedEntityUid!.Value) || !actionBlocker.CanUse(session.AttachedEntityUid!.Value)))
-                return false;
-
-            return true;
+            OpenUserInterface(actor);
         }
+    }
 
-        /// <summary>
-        /// Gets component data to be used to update the user interface client-side.
-        /// </summary>
-        /// <returns>Returns a <see cref="DisposalTaggerUserInterfaceState"/></returns>
-        private DisposalTaggerUserInterfaceState GetUserInterfaceState()
-        {
-            return new(_tag);
-        }
-
-        private void UpdateUserInterface()
-        {
-            var state = GetUserInterfaceState();
-            UserInterface?.SetState(state);
-        }
-
-        private void ClickSound()
-        {
-            SoundSystem.Play(Filter.Pvs(Owner), _clickSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
-        }
-
-        /// <summary>
-        /// Called when you click the owner entity with an empty hand. Opens the UI client-side if possible.
-        /// </summary>
-        /// <param name="args">Data relevant to the event such as the actor which triggered it.</param>
-        void IActivate.Activate(ActivateEventArgs args)
-        {
-            if (!args.User.TryGetComponent(out ActorComponent? actor))
-            {
-                return;
-            }
-
-            if (!args.User.TryGetComponent(out HandsComponent? hands))
-            {
-                Owner.PopupMessage(args.User, Loc.GetString("disposal-tagger-window-activate-no-hands"));
-                return;
-            }
-
-            var activeHandEntity = hands.GetActiveHand?.Owner;
-            if (activeHandEntity == null)
-            {
-                OpenUserInterface(actor);
-            }
-        }
-
-        protected override void OnRemove()
-        {
-            base.OnRemove();
-            UserInterface?.CloseAll();
-        }
-        public void OpenUserInterface(ActorComponent actor)
-        {
-            UpdateUserInterface();
-            UserInterface?.Open(actor.PlayerSession);
-        }
+    protected override void OnRemove()
+    {
+        base.OnRemove();
+        UserInterface?.CloseAll();
+    }
+    public void OpenUserInterface(ActorComponent actor)
+    {
+        UpdateUserInterface();
+        UserInterface?.Open(actor.PlayerSession);
     }
 }

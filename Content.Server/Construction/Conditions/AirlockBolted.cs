@@ -9,47 +9,46 @@ using System.Threading.Tasks;
 using Content.Server.Doors.Components;
 using Content.Shared.Examine;
 
-namespace Content.Server.Construction.Conditions
+namespace Content.Server.Construction.Conditions;
+
+[UsedImplicitly]
+[DataDefinition]
+public class AirlockBolted : IGraphCondition
 {
-    [UsedImplicitly]
-    [DataDefinition]
-    public class AirlockBolted : IGraphCondition
+    [DataField("value")]
+    public bool Value { get; private set; } = true;
+
+    public bool Condition(EntityUid uid, IEntityManager entityManager)
     {
-        [DataField("value")]
-        public bool Value { get; private set; } = true;
+        if (!entityManager.TryGetComponent(uid, out AirlockComponent? airlock))
+            return true;
 
-        public bool Condition(EntityUid uid, IEntityManager entityManager)
+        return airlock.BoltsDown == Value;
+    }
+
+    public bool DoExamine(ExaminedEvent args)
+    {
+        var entity = args.Examined;
+
+        if (!entity.TryGetComponent(out AirlockComponent? airlock)) return false;
+
+        if (airlock.BoltsDown != Value)
         {
-            if (!entityManager.TryGetComponent(uid, out AirlockComponent? airlock))
-                return true;
-
-            return airlock.BoltsDown == Value;
+            if (Value == true)
+                args.PushMarkup(Loc.GetString("construction-examine-condition-airlock-bolt", ("entityName", entity.Name)) + "\n");
+            else
+                args.PushMarkup(Loc.GetString("construction-examine-condition-airlock-unbolt", ("entityName", entity.Name)) + "\n");
+            return true;
         }
 
-        public bool DoExamine(ExaminedEvent args)
+        return false;
+    }
+
+    public IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()
+    {
+        yield return new ConstructionGuideEntry()
         {
-            var entity = args.Examined;
-
-            if (!entity.TryGetComponent(out AirlockComponent? airlock)) return false;
-
-            if (airlock.BoltsDown != Value)
-            {
-                if (Value == true)
-                    args.PushMarkup(Loc.GetString("construction-examine-condition-airlock-bolt", ("entityName", entity.Name)) + "\n");
-                else
-                    args.PushMarkup(Loc.GetString("construction-examine-condition-airlock-unbolt", ("entityName", entity.Name)) + "\n");
-                return true;
-            }
-
-            return false;
-        }
-
-        public IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()
-        {
-            yield return new ConstructionGuideEntry()
-            {
-                Localization = Value ? "construction-step-condition-airlock-bolt" : "construction-step-condition-airlock-unbolt"
-            };
-        }
+            Localization = Value ? "construction-step-condition-airlock-bolt" : "construction-step-condition-airlock-unbolt"
+        };
     }
 }

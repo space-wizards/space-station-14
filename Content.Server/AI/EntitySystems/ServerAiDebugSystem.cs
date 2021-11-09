@@ -3,28 +3,26 @@ using Content.Shared.AI;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.AI.EntitySystems
-{
+namespace Content.Server.AI.EntitySystems;
 #if DEBUG
-    [UsedImplicitly]
-    public class ServerAiDebugSystem : EntitySystem
+[UsedImplicitly]
+public class ServerAiDebugSystem : EntitySystem
+{
+    public override void Initialize()
     {
-        public override void Initialize()
-        {
-            base.Initialize();
-            AiActionRequestJob.FoundAction += NotifyActionJob;
-        }
-
-        public override void Shutdown()
-        {
-            base.Shutdown();
-            AiActionRequestJob.FoundAction -= NotifyActionJob;
-        }
-
-        private void NotifyActionJob(SharedAiDebug.UtilityAiDebugMessage message)
-        {
-            RaiseNetworkEvent(message);
-        }
+        base.Initialize();
+        AiActionRequestJob.FoundAction += NotifyActionJob;
     }
-#endif
+
+    public override void Shutdown()
+    {
+        base.Shutdown();
+        AiActionRequestJob.FoundAction -= NotifyActionJob;
+    }
+
+    private void NotifyActionJob(SharedAiDebug.UtilityAiDebugMessage message)
+    {
+        RaiseNetworkEvent(message);
+    }
 }
+#endif

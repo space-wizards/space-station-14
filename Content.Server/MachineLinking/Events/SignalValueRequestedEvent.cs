@@ -1,19 +1,18 @@
 using System;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.MachineLinking.Events
+namespace Content.Server.MachineLinking.Events;
+
+public class SignalValueRequestedEvent : HandledEntityEventArgs
 {
-    public class SignalValueRequestedEvent : HandledEntityEventArgs
+    public readonly string Port;
+    public readonly Type Type;
+
+    public object? Signal;
+
+    public SignalValueRequestedEvent(string port, Type type)
     {
-        public readonly string Port;
-        public readonly Type Type;
-
-        public object? Signal;
-
-        public SignalValueRequestedEvent(string port, Type type)
-        {
-            Port = port;
-            Type = type;
-        }
+        Port = port;
+        Type = type;
     }
 }

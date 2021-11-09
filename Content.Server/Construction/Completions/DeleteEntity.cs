@@ -4,15 +4,14 @@ using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.Construction.Completions
+namespace Content.Server.Construction.Completions;
+
+[UsedImplicitly]
+[DataDefinition]
+public class DeleteEntity : IGraphAction
 {
-    [UsedImplicitly]
-    [DataDefinition]
-    public class DeleteEntity : IGraphAction
+    public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
     {
-        public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
-        {
-            entityManager.DeleteEntity(uid);
-        }
+        entityManager.DeleteEntity(uid);
     }
 }

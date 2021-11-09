@@ -17,119 +17,118 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Configurable
+namespace Content.Server.Configurable;
+
+[RegisterComponent]
+[ComponentReference(typeof(SharedConfigurationComponent))]
+public class ConfigurationComponent : SharedConfigurationComponent, IInteractUsing, ISerializationHooks
 {
-    [RegisterComponent]
-    [ComponentReference(typeof(SharedConfigurationComponent))]
-    public class ConfigurationComponent : SharedConfigurationComponent, IInteractUsing, ISerializationHooks
+    [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ConfigurationUiKey.Key);
+
+    [DataField("keys")] private List<string> _keys = new();
+
+    [ViewVariables]
+    private readonly Dictionary<string, string> _config = new();
+
+    [DataField("validation")]
+    private readonly Regex _validation = new ("^[a-zA-Z0-9 ]*$", RegexOptions.Compiled);
+
+    [DataField("qualityNeeded", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
+    private string _qualityNeeded = "Pulsing";
+
+    void ISerializationHooks.BeforeSerialization()
     {
-        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ConfigurationUiKey.Key);
+        _keys = _config.Keys.ToList();
+    }
 
-        [DataField("keys")] private List<string> _keys = new();
-
-        [ViewVariables]
-        private readonly Dictionary<string, string> _config = new();
-
-        [DataField("validation")]
-        private readonly Regex _validation = new ("^[a-zA-Z0-9 ]*$", RegexOptions.Compiled);
-
-        [DataField("qualityNeeded", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
-        private string _qualityNeeded = "Pulsing";
-
-        void ISerializationHooks.BeforeSerialization()
+    void ISerializationHooks.AfterDeserialization()
+    {
+        foreach (var key in _keys)
         {
-            _keys = _config.Keys.ToList();
+            _config.Add(key, string.Empty);
         }
+    }
 
-        void ISerializationHooks.AfterDeserialization()
+    protected override void OnAdd()
+    {
+        base.OnAdd();
+        if (UserInterface != null)
         {
-            foreach (var key in _keys)
+            UserInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
+        }
+    }
+
+    protected override void OnRemove()
+    {
+        base.OnRemove();
+        if (UserInterface != null)
+        {
+            UserInterface.OnReceiveMessage -= UserInterfaceOnReceiveMessage;
+        }
+    }
+
+    public string? GetConfig(string name)
+    {
+        return _config.GetValueOrDefault(name);
+    }
+
+    protected override void Startup()
+    {
+        base.Startup();
+        UpdateUserInterface();
+    }
+
+    async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+    {
+        if (UserInterface == null || !eventArgs.User.TryGetComponent(out ActorComponent? actor))
+            return false;
+
+        if (!eventArgs.Using.TryGetComponent<ToolComponent>(out var tool) || !tool.Qualities.Contains(_qualityNeeded))
+            return false;
+
+        OpenUserInterface(actor);
+        return true;
+    }
+
+    private void UserInterfaceOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
+    {
+        var message = serverMsg.Message;
+        var config = new Dictionary<string, string>(_config);
+
+        if (message is ConfigurationUpdatedMessage msg)
+        {
+            foreach (var key in config.Keys)
             {
-                _config.Add(key, string.Empty);
+                var value = msg.Config.GetValueOrDefault(key);
+
+                if (value == null || _validation != null && !_validation.IsMatch(value) && value != string.Empty)
+                    continue;
+
+                _config[key] = value;
             }
-        }
-
-        protected override void OnAdd()
-        {
-            base.OnAdd();
-            if (UserInterface != null)
-            {
-                UserInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
-            }
-        }
-
-        protected override void OnRemove()
-        {
-            base.OnRemove();
-            if (UserInterface != null)
-            {
-                UserInterface.OnReceiveMessage -= UserInterfaceOnReceiveMessage;
-            }
-        }
-
-        public string? GetConfig(string name)
-        {
-            return _config.GetValueOrDefault(name);
-        }
-
-        protected override void Startup()
-        {
-            base.Startup();
-            UpdateUserInterface();
-        }
-
-        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
-        {
-            if (UserInterface == null || !eventArgs.User.TryGetComponent(out ActorComponent? actor))
-                return false;
-
-            if (!eventArgs.Using.TryGetComponent<ToolComponent>(out var tool) || !tool.Qualities.Contains(_qualityNeeded))
-                return false;
-
-            OpenUserInterface(actor);
-            return true;
-        }
-
-        private void UserInterfaceOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
-        {
-            var message = serverMsg.Message;
-            var config = new Dictionary<string, string>(_config);
-
-            if (message is ConfigurationUpdatedMessage msg)
-            {
-                foreach (var key in config.Keys)
-                {
-                    var value = msg.Config.GetValueOrDefault(key);
-
-                    if (value == null || _validation != null && !_validation.IsMatch(value) && value != string.Empty)
-                        continue;
-
-                    _config[key] = value;
-                }
 
 #pragma warning disable 618
-                SendMessage(new ConfigUpdatedComponentMessage(config));
+            SendMessage(new ConfigUpdatedComponentMessage(config));
 #pragma warning restore 618
-            }
         }
+    }
 
-        private void UpdateUserInterface()
+    private void UpdateUserInterface()
+    {
+        UserInterface?.SetState(new ConfigurationBoundUserInterfaceState(_config));
+    }
+
+    public void OpenUserInterface(ActorComponent actor)
+    {
+        UpdateUserInterface();
+        UserInterface?.Open(actor.PlayerSession);
+        UserInterface?.SendMessage(new ValidationUpdateMessage(_validation.ToString()), actor.PlayerSession);
+    }
+
+    private static void FillConfiguration<T>(List<string> list, Dictionary<string, T> configuration, T value){
+        for (var index = 0; index < list.Count; index++)
         {
-            UserInterface?.SetState(new ConfigurationBoundUserInterfaceState(_config));
-        }
-
-        public void OpenUserInterface(ActorComponent actor)
-        {
-            UpdateUserInterface();
-            UserInterface?.Open(actor.PlayerSession);
-            UserInterface?.SendMessage(new ValidationUpdateMessage(_validation.ToString()), actor.PlayerSession);
-        }
-
-        private static void FillConfiguration<T>(List<string> list, Dictionary<string, T> configuration, T value){
-            for (var index = 0; index < list.Count; index++)
-            {
-                configuration.Add(list[index], value);
-            }
+            configuration.Add(list[index], value);
         }
     }
 }

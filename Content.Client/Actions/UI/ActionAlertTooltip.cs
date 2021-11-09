@@ -6,96 +6,95 @@ using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
-namespace Content.Client.Actions.UI
+namespace Content.Client.Actions.UI;
+
+/// <summary>
+/// Tooltip for actions or alerts because they are very similar.
+/// </summary>
+public class ActionAlertTooltip : PanelContainer
 {
+    private const float TooltipTextMaxWidth = 350;
+
+    private readonly RichTextLabel _cooldownLabel;
+    private readonly IGameTiming _gameTiming;
+
     /// <summary>
-    /// Tooltip for actions or alerts because they are very similar.
+    /// Current cooldown displayed in this tooltip. Set to null to show no cooldown.
     /// </summary>
-    public class ActionAlertTooltip : PanelContainer
+    public (TimeSpan Start, TimeSpan End)? Cooldown { get; set; }
+
+    public ActionAlertTooltip(FormattedMessage name, FormattedMessage? desc, string? requires = null)
     {
-        private const float TooltipTextMaxWidth = 350;
+        _gameTiming = IoCManager.Resolve<IGameTiming>();
 
-        private readonly RichTextLabel _cooldownLabel;
-        private readonly IGameTiming _gameTiming;
+        SetOnlyStyleClass(StyleNano.StyleClassTooltipPanel);
 
-        /// <summary>
-        /// Current cooldown displayed in this tooltip. Set to null to show no cooldown.
-        /// </summary>
-        public (TimeSpan Start, TimeSpan End)? Cooldown { get; set; }
-
-        public ActionAlertTooltip(FormattedMessage name, FormattedMessage? desc, string? requires = null)
+        BoxContainer vbox;
+        AddChild(vbox = new BoxContainer
         {
-            _gameTiming = IoCManager.Resolve<IGameTiming>();
+            Orientation = LayoutOrientation.Vertical,
+            RectClipContent = true
+        });
+        var nameLabel = new RichTextLabel
+        {
+            MaxWidth = TooltipTextMaxWidth,
+            StyleClasses = {StyleNano.StyleClassTooltipActionTitle}
+        };
+        nameLabel.SetMessage(name);
+        vbox.AddChild(nameLabel);
 
-            SetOnlyStyleClass(StyleNano.StyleClassTooltipPanel);
-
-            BoxContainer vbox;
-            AddChild(vbox = new BoxContainer
-            {
-                Orientation = LayoutOrientation.Vertical,
-                RectClipContent = true
-            });
-            var nameLabel = new RichTextLabel
+        if (desc != null && !string.IsNullOrWhiteSpace(desc.ToString()))
+        {
+            var description = new RichTextLabel
             {
                 MaxWidth = TooltipTextMaxWidth,
-                StyleClasses = {StyleNano.StyleClassTooltipActionTitle}
+                StyleClasses = {StyleNano.StyleClassTooltipActionDescription}
             };
-            nameLabel.SetMessage(name);
-            vbox.AddChild(nameLabel);
-
-            if (desc != null && !string.IsNullOrWhiteSpace(desc.ToString()))
-            {
-                var description = new RichTextLabel
-                {
-                    MaxWidth = TooltipTextMaxWidth,
-                    StyleClasses = {StyleNano.StyleClassTooltipActionDescription}
-                };
-                description.SetMessage(desc);
-                vbox.AddChild(description);
-            }
-
-            vbox.AddChild(_cooldownLabel = new RichTextLabel
-            {
-                MaxWidth = TooltipTextMaxWidth,
-                StyleClasses = {StyleNano.StyleClassTooltipActionCooldown},
-                Visible = false
-            });
-
-            if (!string.IsNullOrWhiteSpace(requires))
-            {
-                var requiresLabel = new RichTextLabel
-                {
-                    MaxWidth = TooltipTextMaxWidth,
-                    StyleClasses = {StyleNano.StyleClassTooltipActionRequirements}
-                };
-                requiresLabel.SetMessage(FormattedMessage.FromMarkup("[color=#635c5c]" +
-                                                                     requires +
-                                                                     "[/color]"));
-                vbox.AddChild(requiresLabel);
-            }
+            description.SetMessage(desc);
+            vbox.AddChild(description);
         }
 
-        protected override void FrameUpdate(FrameEventArgs args)
+        vbox.AddChild(_cooldownLabel = new RichTextLabel
         {
-            base.FrameUpdate(args);
-            if (!Cooldown.HasValue)
-            {
-                _cooldownLabel.Visible = false;
-                return;
-            }
+            MaxWidth = TooltipTextMaxWidth,
+            StyleClasses = {StyleNano.StyleClassTooltipActionCooldown},
+            Visible = false
+        });
 
-            var timeLeft = Cooldown.Value.End - _gameTiming.CurTime;
-            if (timeLeft > TimeSpan.Zero)
+        if (!string.IsNullOrWhiteSpace(requires))
+        {
+            var requiresLabel = new RichTextLabel
             {
-                var duration = Cooldown.Value.End - Cooldown.Value.Start;
-                _cooldownLabel.SetMessage(FormattedMessage.FromMarkup(
-                    $"[color=#a10505]{duration.Seconds} sec cooldown ({timeLeft.Seconds + 1} sec remaining)[/color]"));
-                _cooldownLabel.Visible = true;
-            }
-            else
-            {
-                _cooldownLabel.Visible = false;
-            }
+                MaxWidth = TooltipTextMaxWidth,
+                StyleClasses = {StyleNano.StyleClassTooltipActionRequirements}
+            };
+            requiresLabel.SetMessage(FormattedMessage.FromMarkup("[color=#635c5c]" +
+                                                                 requires +
+                                                                 "[/color]"));
+            vbox.AddChild(requiresLabel);
+        }
+    }
+
+    protected override void FrameUpdate(FrameEventArgs args)
+    {
+        base.FrameUpdate(args);
+        if (!Cooldown.HasValue)
+        {
+            _cooldownLabel.Visible = false;
+            return;
+        }
+
+        var timeLeft = Cooldown.Value.End - _gameTiming.CurTime;
+        if (timeLeft > TimeSpan.Zero)
+        {
+            var duration = Cooldown.Value.End - Cooldown.Value.Start;
+            _cooldownLabel.SetMessage(FormattedMessage.FromMarkup(
+                                          $"[color=#a10505]{duration.Seconds} sec cooldown ({timeLeft.Seconds + 1} sec remaining)[/color]"));
+            _cooldownLabel.Visible = true;
+        }
+        else
+        {
+            _cooldownLabel.Visible = false;
         }
     }
 }

@@ -4,16 +4,15 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.Audio
-{
-    [Prototype("soundCollection")]
-    public sealed class SoundCollectionPrototype : IPrototype
-    {
-        [ViewVariables]
-        [DataField("id", required: true)]
-        public string ID { get; } = default!;
+namespace Content.Shared.Audio;
 
-        [DataField("files")]
-        public List<ResourcePath> PickFiles { get; } = new();
-    }
+[Prototype("soundCollection")]
+public sealed class SoundCollectionPrototype : IPrototype
+{
+    [ViewVariables]
+    [DataField("id", required: true)]
+    public string ID { get; } = default!;
+
+    [DataField("files")]
+    public List<ResourcePath> PickFiles { get; } = new();
 }

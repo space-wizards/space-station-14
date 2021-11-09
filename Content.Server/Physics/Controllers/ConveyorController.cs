@@ -9,52 +9,51 @@ using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Controllers;
 
-namespace Content.Server.Physics.Controllers
+namespace Content.Server.Physics.Controllers;
+
+internal sealed class ConveyorController : VirtualController
 {
-    internal sealed class ConveyorController : VirtualController
+    public override List<Type> UpdatesAfter => new() {typeof(MoverController)};
+
+    public override void UpdateBeforeSolve(bool prediction, float frameTime)
     {
-        public override List<Type> UpdatesAfter => new() {typeof(MoverController)};
-
-        public override void UpdateBeforeSolve(bool prediction, float frameTime)
+        base.UpdateBeforeSolve(prediction, frameTime);
+        var system = EntitySystem.Get<ConveyorSystem>();
+        foreach (var comp in EntityManager.EntityQuery<ConveyorComponent>())
         {
-            base.UpdateBeforeSolve(prediction, frameTime);
-            var system = EntitySystem.Get<ConveyorSystem>();
-            foreach (var comp in EntityManager.EntityQuery<ConveyorComponent>())
-            {
-                Convey(system, comp, frameTime);
-            }
+            Convey(system, comp, frameTime);
+        }
+    }
+
+    private void Convey(ConveyorSystem system, ConveyorComponent comp, float frameTime)
+    {
+        // Use an event for conveyors to know what needs to run
+        if (!system.CanRun(comp))
+        {
+            return;
         }
 
-        private void Convey(ConveyorSystem system, ConveyorComponent comp, float frameTime)
+        var direction = system.GetAngle(comp).ToVec();
+        var ownerPos = comp.Owner.Transform.WorldPosition;
+
+        foreach (var (entity, physics) in EntitySystem.Get<ConveyorSystem>().GetEntitiesToMove(comp))
         {
-            // Use an event for conveyors to know what needs to run
-            if (!system.CanRun(comp))
-            {
-                return;
-            }
-
-            var direction = system.GetAngle(comp).ToVec();
-            var ownerPos = comp.Owner.Transform.WorldPosition;
-
-            foreach (var (entity, physics) in EntitySystem.Get<ConveyorSystem>().GetEntitiesToMove(comp))
-            {
-                var itemRelativeToConveyor = entity.Transform.WorldPosition - ownerPos;
-                physics.LinearVelocity += Convey(direction, comp.Speed, frameTime, itemRelativeToConveyor);
-            }
+            var itemRelativeToConveyor = entity.Transform.WorldPosition - ownerPos;
+            physics.LinearVelocity += Convey(direction, comp.Speed, frameTime, itemRelativeToConveyor);
         }
+    }
 
-        private Vector2 Convey(Vector2 direction, float speed, float frameTime, Vector2 itemRelativeToConveyor)
-        {
-            if(speed == 0 || direction.Length == 0) return Vector2.Zero;
-            direction = direction.Normalized;
+    private Vector2 Convey(Vector2 direction, float speed, float frameTime, Vector2 itemRelativeToConveyor)
+    {
+        if(speed == 0 || direction.Length == 0) return Vector2.Zero;
+        direction = direction.Normalized;
 
-            var dirNormal = new Vector2(direction.Y, direction.X);
-            var dot = Vector2.Dot(itemRelativeToConveyor, dirNormal);
+        var dirNormal = new Vector2(direction.Y, direction.X);
+        var dot = Vector2.Dot(itemRelativeToConveyor, dirNormal);
 
-            var velocity = direction * speed * 5;
-            velocity += dirNormal * speed * -dot;
+        var velocity = direction * speed * 5;
+        velocity += dirNormal * speed * -dot;
 
-            return velocity * frameTime;
-        }
+        return velocity * frameTime;
     }
 }

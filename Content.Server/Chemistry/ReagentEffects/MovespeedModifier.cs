@@ -8,60 +8,59 @@ using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 
-namespace Content.Server.Chemistry.ReagentEffects
+namespace Content.Server.Chemistry.ReagentEffects;
+
+/// <summary>
+/// Default metabolism for stimulants and tranqs. Attempts to find a MovementSpeedModifier on the target,
+/// adding one if not there and to change the movespeed
+/// </summary>
+public class MovespeedModifier : ReagentEffect
 {
     /// <summary>
-    /// Default metabolism for stimulants and tranqs. Attempts to find a MovementSpeedModifier on the target,
-    /// adding one if not there and to change the movespeed
+    /// How much the entities' walk speed is multiplied by.
     /// </summary>
-    public class MovespeedModifier : ReagentEffect
+    [DataField("walkSpeedModifier")]
+    public float WalkSpeedModifier { get; set; } = 1;
+
+    /// <summary>
+    /// How much the entities' run speed is multiplied by.
+    /// </summary>
+    [DataField("sprintSpeedModifier")]
+    public float SprintSpeedModifier { get; set; } = 1;
+
+    /// <summary>
+    /// How long the modifier applies (in seconds) when metabolized.
+    /// </summary>
+    [DataField("statusLifetime")]
+    public float StatusLifetime = 2f;
+
+    /// <summary>
+    /// Remove reagent at set rate, changes the movespeed modifiers and adds a MovespeedModifierMetabolismComponent if not already there.
+    /// </summary>
+    public override void Metabolize(EntityUid solutionEntity, EntityUid organEntity, Solution.ReagentQuantity reagent, IEntityManager entityManager)
     {
-        /// <summary>
-        /// How much the entities' walk speed is multiplied by.
-        /// </summary>
-        [DataField("walkSpeedModifier")]
-        public float WalkSpeedModifier { get; set; } = 1;
+        var status = entityManager.EnsureComponent<MovespeedModifierMetabolismComponent>(solutionEntity);
 
-        /// <summary>
-        /// How much the entities' run speed is multiplied by.
-        /// </summary>
-        [DataField("sprintSpeedModifier")]
-        public float SprintSpeedModifier { get; set; } = 1;
+        // Only refresh movement if we need to.
+        var modified = !status.WalkSpeedModifier.Equals(WalkSpeedModifier) ||
+                       !status.SprintSpeedModifier.Equals(SprintSpeedModifier);
 
-        /// <summary>
-        /// How long the modifier applies (in seconds) when metabolized.
-        /// </summary>
-        [DataField("statusLifetime")]
-        public float StatusLifetime = 2f;
+        status.WalkSpeedModifier = WalkSpeedModifier;
+        status.SprintSpeedModifier = SprintSpeedModifier;
 
-        /// <summary>
-        /// Remove reagent at set rate, changes the movespeed modifiers and adds a MovespeedModifierMetabolismComponent if not already there.
-        /// </summary>
-        public override void Metabolize(EntityUid solutionEntity, EntityUid organEntity, Solution.ReagentQuantity reagent, IEntityManager entityManager)
-        {
-            var status = entityManager.EnsureComponent<MovespeedModifierMetabolismComponent>(solutionEntity);
+        IncreaseTimer(status, StatusLifetime * reagent.Quantity.Float());
 
-            // Only refresh movement if we need to.
-            var modified = !status.WalkSpeedModifier.Equals(WalkSpeedModifier) ||
-                           !status.SprintSpeedModifier.Equals(SprintSpeedModifier);
+        if (modified)
+            EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(solutionEntity);
 
-            status.WalkSpeedModifier = WalkSpeedModifier;
-            status.SprintSpeedModifier = SprintSpeedModifier;
+    }
+    public void IncreaseTimer(MovespeedModifierMetabolismComponent status, float time)
+    {
+        var gameTiming = IoCManager.Resolve<IGameTiming>();
 
-            IncreaseTimer(status, StatusLifetime * reagent.Quantity.Float());
+        var offsetTime = Math.Max(status.ModifierTimer.TotalSeconds, gameTiming.CurTime.TotalSeconds);
 
-            if (modified)
-                EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(solutionEntity);
-
-        }
-        public void IncreaseTimer(MovespeedModifierMetabolismComponent status, float time)
-        {
-            var gameTiming = IoCManager.Resolve<IGameTiming>();
-
-            var offsetTime = Math.Max(status.ModifierTimer.TotalSeconds, gameTiming.CurTime.TotalSeconds);
-
-            status.ModifierTimer = TimeSpan.FromSeconds(offsetTime + time);
-            status.Dirty();
-        }
+        status.ModifierTimer = TimeSpan.FromSeconds(offsetTime + time);
+        status.Dirty();
     }
 }

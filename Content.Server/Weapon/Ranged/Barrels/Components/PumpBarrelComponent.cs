@@ -19,227 +19,226 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Weapon.Ranged.Barrels.Components
+namespace Content.Server.Weapon.Ranged.Barrels.Components;
+
+/// <summary>
+/// Bolt-action rifles
+/// </summary>
+[RegisterComponent]
+[NetworkedComponent()]
+public sealed class PumpBarrelComponent : ServerRangedBarrelComponent, IMapInit, ISerializationHooks
 {
-    /// <summary>
-    /// Bolt-action rifles
-    /// </summary>
-    [RegisterComponent]
-    [NetworkedComponent()]
-    public sealed class PumpBarrelComponent : ServerRangedBarrelComponent, IMapInit, ISerializationHooks
+    public override string Name => "PumpBarrel";
+
+    public override int ShotsLeft
     {
-        public override string Name => "PumpBarrel";
-
-        public override int ShotsLeft
+        get
         {
-            get
-            {
-                var chamberCount = _chamberContainer.ContainedEntity != null ? 1 : 0;
-                return chamberCount + _spawnedAmmo.Count + _unspawnedCount;
-            }
+            var chamberCount = _chamberContainer.ContainedEntity != null ? 1 : 0;
+            return chamberCount + _spawnedAmmo.Count + _unspawnedCount;
         }
+    }
 
-        private const int DefaultCapacity = 6;
-        [DataField("capacity")]
-        public override int Capacity { get; } = DefaultCapacity;
+    private const int DefaultCapacity = 6;
+    [DataField("capacity")]
+    public override int Capacity { get; } = DefaultCapacity;
 
-        // Even a point having a chamber? I guess it makes some of the below code cleaner
-        private ContainerSlot _chamberContainer = default!;
-        private Stack<IEntity> _spawnedAmmo = new(DefaultCapacity - 1);
-        private Container _ammoContainer = default!;
+    // Even a point having a chamber? I guess it makes some of the below code cleaner
+    private ContainerSlot _chamberContainer = default!;
+    private Stack<IEntity> _spawnedAmmo = new(DefaultCapacity - 1);
+    private Container _ammoContainer = default!;
 
-        [ViewVariables]
-        [DataField("caliber")]
-        private BallisticCaliber _caliber = BallisticCaliber.Unspecified;
+    [ViewVariables]
+    [DataField("caliber")]
+    private BallisticCaliber _caliber = BallisticCaliber.Unspecified;
 
-        [ViewVariables]
-        [DataField("fillPrototype")]
-        private string? _fillPrototype;
-        [ViewVariables]
-        private int _unspawnedCount;
+    [ViewVariables]
+    [DataField("fillPrototype")]
+    private string? _fillPrototype;
+    [ViewVariables]
+    private int _unspawnedCount;
 
-        [DataField("manualCycle")]
-        private bool _manualCycle = true;
+    [DataField("manualCycle")]
+    private bool _manualCycle = true;
 
-        private AppearanceComponent? _appearanceComponent;
+    private AppearanceComponent? _appearanceComponent;
 
-        // Sounds
-        [DataField("soundCycle")]
-        private SoundSpecifier _soundCycle = new SoundPathSpecifier("/Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg");
+    // Sounds
+    [DataField("soundCycle")]
+    private SoundSpecifier _soundCycle = new SoundPathSpecifier("/Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg");
 
-        [DataField("soundInsert")]
-        private SoundSpecifier _soundInsert = new SoundPathSpecifier("/Audio/Weapons/Guns/MagIn/bullet_insert.ogg");
+    [DataField("soundInsert")]
+    private SoundSpecifier _soundInsert = new SoundPathSpecifier("/Audio/Weapons/Guns/MagIn/bullet_insert.ogg");
 
-        void IMapInit.MapInit()
+    void IMapInit.MapInit()
+    {
+        if (_fillPrototype != null)
         {
-            if (_fillPrototype != null)
-            {
-                _unspawnedCount += Capacity - 1;
-            }
-            UpdateAppearance();
+            _unspawnedCount += Capacity - 1;
         }
+        UpdateAppearance();
+    }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+    public override ComponentState GetComponentState(ICommonSession player)
+    {
+        (int, int)? count = (ShotsLeft, Capacity);
+        var chamberedExists = _chamberContainer.ContainedEntity != null;
+        // (Is one chambered?, is the bullet spend)
+        var chamber = (chamberedExists, false);
+
+        if (chamberedExists && _chamberContainer.ContainedEntity!.TryGetComponent<AmmoComponent>(out var ammo))
         {
-            (int, int)? count = (ShotsLeft, Capacity);
-            var chamberedExists = _chamberContainer.ContainedEntity != null;
-            // (Is one chambered?, is the bullet spend)
-            var chamber = (chamberedExists, false);
-
-            if (chamberedExists && _chamberContainer.ContainedEntity!.TryGetComponent<AmmoComponent>(out var ammo))
-            {
-                chamber.Item2 = ammo.Spent;
-            }
-            return new PumpBarrelComponentState(
-                chamber,
-                FireRateSelector,
-                count,
-                SoundGunshot.GetSound());
+            chamber.Item2 = ammo.Spent;
         }
+        return new PumpBarrelComponentState(
+            chamber,
+            FireRateSelector,
+            count,
+            SoundGunshot.GetSound());
+    }
 
-        void ISerializationHooks.AfterDeserialization()
+    void ISerializationHooks.AfterDeserialization()
+    {
+        _spawnedAmmo = new Stack<IEntity>(Capacity - 1);
+    }
+
+    protected override void Initialize()
+    {
+        base.Initialize();
+
+        _ammoContainer =
+            ContainerHelpers.EnsureContainer<Container>(Owner, $"{Name}-ammo-container", out var existing);
+
+        if (existing)
         {
-            _spawnedAmmo = new Stack<IEntity>(Capacity - 1);
-        }
-
-        protected override void Initialize()
-        {
-            base.Initialize();
-
-            _ammoContainer =
-                ContainerHelpers.EnsureContainer<Container>(Owner, $"{Name}-ammo-container", out var existing);
-
-            if (existing)
+            foreach (var entity in _ammoContainer.ContainedEntities)
             {
-                foreach (var entity in _ammoContainer.ContainedEntities)
-                {
-                    _spawnedAmmo.Push(entity);
-                    _unspawnedCount--;
-                }
-            }
-
-            _chamberContainer =
-                ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-chamber-container", out existing);
-            if (existing)
-            {
+                _spawnedAmmo.Push(entity);
                 _unspawnedCount--;
             }
+        }
 
-            if (Owner.TryGetComponent(out AppearanceComponent? appearanceComponent))
-            {
-                _appearanceComponent = appearanceComponent;
-            }
+        _chamberContainer =
+            ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-chamber-container", out existing);
+        if (existing)
+        {
+            _unspawnedCount--;
+        }
 
-            _appearanceComponent?.SetData(MagazineBarrelVisuals.MagLoaded, true);
+        if (Owner.TryGetComponent(out AppearanceComponent? appearanceComponent))
+        {
+            _appearanceComponent = appearanceComponent;
+        }
+
+        _appearanceComponent?.SetData(MagazineBarrelVisuals.MagLoaded, true);
+        Dirty();
+        UpdateAppearance();
+    }
+
+    private void UpdateAppearance()
+    {
+        _appearanceComponent?.SetData(AmmoVisuals.AmmoCount, ShotsLeft);
+        _appearanceComponent?.SetData(AmmoVisuals.AmmoMax, Capacity);
+    }
+
+    public override IEntity? PeekAmmo()
+    {
+        return _chamberContainer.ContainedEntity;
+    }
+
+    public override IEntity? TakeProjectile(EntityCoordinates spawnAt)
+    {
+        var chamberEntity = _chamberContainer.ContainedEntity;
+        if (!_manualCycle)
+        {
+            Cycle();
+        }
+        else
+        {
             Dirty();
-            UpdateAppearance();
         }
 
-        private void UpdateAppearance()
+        return chamberEntity?.GetComponentOrNull<AmmoComponent>()?.TakeBullet(spawnAt);
+    }
+
+    private void Cycle(bool manual = false)
+    {
+        var chamberedEntity = _chamberContainer.ContainedEntity;
+        if (chamberedEntity != null)
         {
-            _appearanceComponent?.SetData(AmmoVisuals.AmmoCount, ShotsLeft);
-            _appearanceComponent?.SetData(AmmoVisuals.AmmoMax, Capacity);
+            _chamberContainer.Remove(chamberedEntity);
+            var ammoComponent = chamberedEntity.GetComponent<AmmoComponent>();
+            if (!ammoComponent.Caseless)
+            {
+                EjectCasing(chamberedEntity);
+            }
         }
 
-        public override IEntity? PeekAmmo()
+        if (_spawnedAmmo.TryPop(out var next))
         {
-            return _chamberContainer.ContainedEntity;
+            _ammoContainer.Remove(next);
+            _chamberContainer.Insert(next);
         }
 
-        public override IEntity? TakeProjectile(EntityCoordinates spawnAt)
+        if (_unspawnedCount > 0)
         {
-            var chamberEntity = _chamberContainer.ContainedEntity;
-            if (!_manualCycle)
-            {
-                Cycle();
-            }
-            else
-            {
-                Dirty();
-            }
-
-            return chamberEntity?.GetComponentOrNull<AmmoComponent>()?.TakeBullet(spawnAt);
+            _unspawnedCount--;
+            var ammoEntity = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.Coordinates);
+            _chamberContainer.Insert(ammoEntity);
         }
 
-        private void Cycle(bool manual = false)
+        if (manual)
         {
-            var chamberedEntity = _chamberContainer.ContainedEntity;
-            if (chamberedEntity != null)
-            {
-                _chamberContainer.Remove(chamberedEntity);
-                var ammoComponent = chamberedEntity.GetComponent<AmmoComponent>();
-                if (!ammoComponent.Caseless)
-                {
-                    EjectCasing(chamberedEntity);
-                }
-            }
-
-            if (_spawnedAmmo.TryPop(out var next))
-            {
-                _ammoContainer.Remove(next);
-                _chamberContainer.Insert(next);
-            }
-
-            if (_unspawnedCount > 0)
-            {
-                _unspawnedCount--;
-                var ammoEntity = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.Coordinates);
-                _chamberContainer.Insert(ammoEntity);
-            }
-
-            if (manual)
-            {
-                SoundSystem.Play(Filter.Pvs(Owner), _soundCycle.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
-            }
-
-            Dirty();
-            UpdateAppearance();
+            SoundSystem.Play(Filter.Pvs(Owner), _soundCycle.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
         }
 
-        public bool TryInsertBullet(InteractUsingEventArgs eventArgs)
+        Dirty();
+        UpdateAppearance();
+    }
+
+    public bool TryInsertBullet(InteractUsingEventArgs eventArgs)
+    {
+        if (!eventArgs.Using.TryGetComponent(out AmmoComponent? ammoComponent))
         {
-            if (!eventArgs.Using.TryGetComponent(out AmmoComponent? ammoComponent))
-            {
-                return false;
-            }
-
-            if (ammoComponent.Caliber != _caliber)
-            {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("pump-barrel-component-try-insert-bullet-wrong-caliber"));
-                return false;
-            }
-
-            if (_ammoContainer.ContainedEntities.Count < Capacity - 1)
-            {
-                _ammoContainer.Insert(eventArgs.Using);
-                _spawnedAmmo.Push(eventArgs.Using);
-                Dirty();
-                UpdateAppearance();
-                SoundSystem.Play(Filter.Pvs(Owner), _soundInsert.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
-                return true;
-            }
-
-            Owner.PopupMessage(eventArgs.User, Loc.GetString("pump-barrel-component-try-insert-bullet-no-room"));
-
             return false;
         }
 
-        public override bool UseEntity(UseEntityEventArgs eventArgs)
+        if (ammoComponent.Caliber != _caliber)
         {
-            Cycle(true);
+            Owner.PopupMessage(eventArgs.User, Loc.GetString("pump-barrel-component-try-insert-bullet-wrong-caliber"));
+            return false;
+        }
+
+        if (_ammoContainer.ContainedEntities.Count < Capacity - 1)
+        {
+            _ammoContainer.Insert(eventArgs.Using);
+            _spawnedAmmo.Push(eventArgs.Using);
+            Dirty();
+            UpdateAppearance();
+            SoundSystem.Play(Filter.Pvs(Owner), _soundInsert.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
             return true;
         }
 
-        public override async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
-        {
-            return TryInsertBullet(eventArgs);
-        }
+        Owner.PopupMessage(eventArgs.User, Loc.GetString("pump-barrel-component-try-insert-bullet-no-room"));
 
-        public override void Examine(FormattedMessage message, bool inDetailsRange)
-        {
-            base.Examine(message, inDetailsRange);
+        return false;
+    }
 
-            message.AddMarkup("\n" + Loc.GetString("pump-barrel-component-on-examine", ("caliber", _caliber)));
-        }
+    public override bool UseEntity(UseEntityEventArgs eventArgs)
+    {
+        Cycle(true);
+        return true;
+    }
+
+    public override async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+    {
+        return TryInsertBullet(eventArgs);
+    }
+
+    public override void Examine(FormattedMessage message, bool inDetailsRange)
+    {
+        base.Examine(message, inDetailsRange);
+
+        message.AddMarkup("\n" + Loc.GetString("pump-barrel-component-on-examine", ("caliber", _caliber)));
     }
 }

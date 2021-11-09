@@ -6,15 +6,14 @@ using System.Threading.Tasks;
 using Content.Server.Destructible;
 using Content.Shared.Acts;
 
-namespace Content.Server.Construction.Completions
+namespace Content.Server.Construction.Completions;
+
+[UsedImplicitly]
+[DataDefinition]
+public class DestroyEntity : IGraphAction
 {
-    [UsedImplicitly]
-    [DataDefinition]
-    public class DestroyEntity : IGraphAction
+    public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
     {
-        public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
-        {
-            entityManager.EntitySysManager.GetEntitySystem<ActSystem>().HandleDestruction(uid);
-        }
+        entityManager.EntitySysManager.GetEntitySystem<ActSystem>().HandleDestruction(uid);
     }
 }

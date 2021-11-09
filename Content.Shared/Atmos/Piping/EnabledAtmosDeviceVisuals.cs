@@ -1,41 +1,40 @@
 using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Atmos.Piping
+namespace Content.Shared.Atmos.Piping;
+
+[Serializable, NetSerializable]
+public enum OutletInjectorVisuals : byte
 {
-    [Serializable, NetSerializable]
-    public enum OutletInjectorVisuals : byte
-    {
-        Enabled,
-    }
+    Enabled,
+}
 
-    [Serializable, NetSerializable]
-    public enum PassiveVentVisuals : byte
-    {
-        Enabled,
-    }
+[Serializable, NetSerializable]
+public enum PassiveVentVisuals : byte
+{
+    Enabled,
+}
 
-    [Serializable, NetSerializable]
-    public enum VentScrubberVisuals : byte
-    {
-        Enabled,
-    }
+[Serializable, NetSerializable]
+public enum VentScrubberVisuals : byte
+{
+    Enabled,
+}
 
-    [Serializable, NetSerializable]
-    public enum ThermoMachineVisuals : byte
-    {
-        Enabled,
-    }
+[Serializable, NetSerializable]
+public enum ThermoMachineVisuals : byte
+{
+    Enabled,
+}
 
-    [Serializable, NetSerializable]
-    public enum PressurePumpVisuals : byte
-    {
-        Enabled,
-    }
+[Serializable, NetSerializable]
+public enum PressurePumpVisuals : byte
+{
+    Enabled,
+}
 
-    [Serializable, NetSerializable]
-    public enum FilterVisuals : byte
-    {
-        Enabled,
-    }
+[Serializable, NetSerializable]
+public enum FilterVisuals : byte
+{
+    Enabled,
 }

@@ -1,29 +1,28 @@
 ﻿using Content.Shared.Actions.Components;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.Actions
+namespace Content.Shared.Actions;
+
+/// <summary>
+/// Evicts action states with expired cooldowns.
+/// </summary>
+public class SharedActionSystem : EntitySystem
 {
-    /// <summary>
-    /// Evicts action states with expired cooldowns.
-    /// </summary>
-    public class SharedActionSystem : EntitySystem
+    private const float CooldownCheckIntervalSeconds = 10;
+    private float _timeSinceCooldownCheck;
+
+
+    public override void Update(float frameTime)
     {
-        private const float CooldownCheckIntervalSeconds = 10;
-        private float _timeSinceCooldownCheck;
+        base.Update(frameTime);
 
+        _timeSinceCooldownCheck += frameTime;
+        if (_timeSinceCooldownCheck < CooldownCheckIntervalSeconds) return;
 
-        public override void Update(float frameTime)
+        foreach (var comp in EntityManager.EntityQuery<SharedActionsComponent>(false))
         {
-            base.Update(frameTime);
-
-            _timeSinceCooldownCheck += frameTime;
-            if (_timeSinceCooldownCheck < CooldownCheckIntervalSeconds) return;
-
-            foreach (var comp in EntityManager.EntityQuery<SharedActionsComponent>(false))
-            {
-                comp.ExpireCooldowns();
-            }
-            _timeSinceCooldownCheck -= CooldownCheckIntervalSeconds;
+            comp.ExpireCooldowns();
         }
+        _timeSinceCooldownCheck -= CooldownCheckIntervalSeconds;
     }
 }

@@ -7,300 +7,299 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Atmos.EntitySystems
+namespace Content.Server.Atmos.EntitySystems;
+
+public partial class AtmosphereSystem
 {
-    public partial class AtmosphereSystem
+    [Dependency] private readonly IPrototypeManager _protoMan = default!;
+
+    private GasReactionPrototype[] _gasReactions = Array.Empty<GasReactionPrototype>();
+    private float[] _gasSpecificHeats = new float[Atmospherics.TotalNumberOfGases];
+
+    /// <summary>
+    ///     List of gas reactions ordered by priority.
+    /// </summary>
+    public IEnumerable<GasReactionPrototype> GasReactions => _gasReactions!;
+    public float[] GasSpecificHeats => _gasSpecificHeats;
+
+    private void InitializeGases()
     {
-        [Dependency] private readonly IPrototypeManager _protoMan = default!;
+        _gasReactions = _protoMan.EnumeratePrototypes<GasReactionPrototype>().ToArray();
+        Array.Sort(_gasReactions, (a, b) => b.Priority.CompareTo(a.Priority));
 
-        private GasReactionPrototype[] _gasReactions = Array.Empty<GasReactionPrototype>();
-        private float[] _gasSpecificHeats = new float[Atmospherics.TotalNumberOfGases];
+        Array.Resize(ref _gasSpecificHeats, MathHelper.NextMultipleOf(Atmospherics.TotalNumberOfGases, 4));
 
-        /// <summary>
-        ///     List of gas reactions ordered by priority.
-        /// </summary>
-        public IEnumerable<GasReactionPrototype> GasReactions => _gasReactions!;
-        public float[] GasSpecificHeats => _gasSpecificHeats;
-
-        private void InitializeGases()
+        for (var i = 0; i < GasPrototypes.Length; i++)
         {
-            _gasReactions = _protoMan.EnumeratePrototypes<GasReactionPrototype>().ToArray();
-            Array.Sort(_gasReactions, (a, b) => b.Priority.CompareTo(a.Priority));
+            _gasSpecificHeats[i] = GasPrototypes[i].SpecificHeat;
+        }
+    }
 
-            Array.Resize(ref _gasSpecificHeats, MathHelper.NextMultipleOf(Atmospherics.TotalNumberOfGases, 4));
+    public float GetHeatCapacity(GasMixture mixture)
+    {
+        Span<float> tmp = stackalloc float[mixture.Moles.Length];
+        NumericsHelpers.Multiply(mixture.Moles, GasSpecificHeats, tmp);
+        return MathF.Max(NumericsHelpers.HorizontalAdd(tmp), Atmospherics.MinimumHeatCapacity);
+    }
 
-            for (var i = 0; i < GasPrototypes.Length; i++)
+    public float GetThermalEnergy(GasMixture mixture)
+    {
+        return mixture.Temperature * GetHeatCapacity(mixture);
+    }
+
+    public float GetThermalEnergy(GasMixture mixture, float cachedHeatCapacity)
+    {
+        return mixture.Temperature * cachedHeatCapacity;
+    }
+
+    public void Merge(GasMixture receiver, GasMixture giver)
+    {
+        if (receiver.Immutable) return;
+
+        if (MathF.Abs(receiver.Temperature - giver.Temperature) > Atmospherics.MinimumTemperatureDeltaToConsider)
+        {
+            var receiverHeatCapacity = GetHeatCapacity(receiver);
+            var giverHeatCapacity = GetHeatCapacity(giver);
+            var combinedHeatCapacity = receiverHeatCapacity + giverHeatCapacity;
+            if (combinedHeatCapacity > 0f)
             {
-                _gasSpecificHeats[i] = GasPrototypes[i].SpecificHeat;
+                receiver.Temperature = (GetThermalEnergy(giver, giverHeatCapacity) + GetThermalEnergy(receiver, receiverHeatCapacity)) / combinedHeatCapacity;
             }
         }
 
-        public float GetHeatCapacity(GasMixture mixture)
+        NumericsHelpers.Add(receiver.Moles, giver.Moles);
+    }
+
+    public float Share(GasMixture receiver, GasMixture sharer, int atmosAdjacentTurfs)
+    {
+        var temperatureDelta = receiver.Temperature - sharer.Temperature;
+        var absTemperatureDelta = Math.Abs(temperatureDelta);
+        var oldHeatCapacity = 0f;
+        var oldSharerHeatCapacity = 0f;
+
+        if (absTemperatureDelta > Atmospherics.MinimumTemperatureDeltaToConsider)
         {
-            Span<float> tmp = stackalloc float[mixture.Moles.Length];
-            NumericsHelpers.Multiply(mixture.Moles, GasSpecificHeats, tmp);
-            return MathF.Max(NumericsHelpers.HorizontalAdd(tmp), Atmospherics.MinimumHeatCapacity);
+            oldHeatCapacity = GetHeatCapacity(receiver);
+            oldSharerHeatCapacity = GetHeatCapacity(sharer);
         }
 
-        public float GetThermalEnergy(GasMixture mixture)
+        var heatCapacityToSharer = 0f;
+        var heatCapacitySharerToThis = 0f;
+        var movedMoles = 0f;
+        var absMovedMoles = 0f;
+
+        for(var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
         {
-            return mixture.Temperature * GetHeatCapacity(mixture);
-        }
-
-        public float GetThermalEnergy(GasMixture mixture, float cachedHeatCapacity)
-        {
-            return mixture.Temperature * cachedHeatCapacity;
-        }
-
-        public void Merge(GasMixture receiver, GasMixture giver)
-        {
-            if (receiver.Immutable) return;
-
-            if (MathF.Abs(receiver.Temperature - giver.Temperature) > Atmospherics.MinimumTemperatureDeltaToConsider)
-            {
-                var receiverHeatCapacity = GetHeatCapacity(receiver);
-                var giverHeatCapacity = GetHeatCapacity(giver);
-                var combinedHeatCapacity = receiverHeatCapacity + giverHeatCapacity;
-                if (combinedHeatCapacity > 0f)
-                {
-                    receiver.Temperature = (GetThermalEnergy(giver, giverHeatCapacity) + GetThermalEnergy(receiver, receiverHeatCapacity)) / combinedHeatCapacity;
-                }
-            }
-
-            NumericsHelpers.Add(receiver.Moles, giver.Moles);
-        }
-
-        public float Share(GasMixture receiver, GasMixture sharer, int atmosAdjacentTurfs)
-        {
-            var temperatureDelta = receiver.Temperature - sharer.Temperature;
-            var absTemperatureDelta = Math.Abs(temperatureDelta);
-            var oldHeatCapacity = 0f;
-            var oldSharerHeatCapacity = 0f;
-
+            var thisValue = receiver.Moles[i];
+            var sharerValue = sharer.Moles[i];
+            var delta = (thisValue - sharerValue) / (atmosAdjacentTurfs + 1);
+            if (!(MathF.Abs(delta) >= Atmospherics.GasMinMoles)) continue;
             if (absTemperatureDelta > Atmospherics.MinimumTemperatureDeltaToConsider)
             {
-                oldHeatCapacity = GetHeatCapacity(receiver);
-                oldSharerHeatCapacity = GetHeatCapacity(sharer);
-            }
-
-            var heatCapacityToSharer = 0f;
-            var heatCapacitySharerToThis = 0f;
-            var movedMoles = 0f;
-            var absMovedMoles = 0f;
-
-            for(var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
-            {
-                var thisValue = receiver.Moles[i];
-                var sharerValue = sharer.Moles[i];
-                var delta = (thisValue - sharerValue) / (atmosAdjacentTurfs + 1);
-                if (!(MathF.Abs(delta) >= Atmospherics.GasMinMoles)) continue;
-                if (absTemperatureDelta > Atmospherics.MinimumTemperatureDeltaToConsider)
+                var gasHeatCapacity = delta * GasSpecificHeats[i];
+                if (delta > 0)
                 {
-                    var gasHeatCapacity = delta * GasSpecificHeats[i];
-                    if (delta > 0)
-                    {
-                        heatCapacityToSharer += gasHeatCapacity;
-                    }
-                    else
-                    {
-                        heatCapacitySharerToThis -= gasHeatCapacity;
-                    }
+                    heatCapacityToSharer += gasHeatCapacity;
                 }
-
-                if (!receiver.Immutable) receiver.Moles[i] -= delta;
-                if (!sharer.Immutable) sharer.Moles[i] += delta;
-                movedMoles += delta;
-                absMovedMoles += MathF.Abs(delta);
-            }
-
-            receiver.LastShare = absMovedMoles;
-
-            if (absTemperatureDelta > Atmospherics.MinimumTemperatureDeltaToConsider)
-            {
-                var newHeatCapacity = oldHeatCapacity + heatCapacitySharerToThis - heatCapacityToSharer;
-                var newSharerHeatCapacity = oldSharerHeatCapacity + heatCapacityToSharer - heatCapacitySharerToThis;
-
-                // Transfer of thermal energy (via changed heat capacity) between self and sharer.
-                if (!receiver.Immutable && newHeatCapacity > Atmospherics.MinimumHeatCapacity)
+                else
                 {
-                    receiver.Temperature = ((oldHeatCapacity * receiver.Temperature) - (heatCapacityToSharer * receiver.Temperature) + (heatCapacitySharerToThis * sharer.Temperature)) / newHeatCapacity;
-                }
-
-                if (!sharer.Immutable && newSharerHeatCapacity > Atmospherics.MinimumHeatCapacity)
-                {
-                    sharer.Temperature = ((oldSharerHeatCapacity * sharer.Temperature) - (heatCapacitySharerToThis * sharer.Temperature) + (heatCapacityToSharer*receiver.Temperature)) / newSharerHeatCapacity;
-                }
-
-                // Thermal energy of the system (self and sharer) is unchanged.
-
-                if (MathF.Abs(oldSharerHeatCapacity) > Atmospherics.MinimumHeatCapacity)
-                {
-                    if (MathF.Abs(newSharerHeatCapacity / oldSharerHeatCapacity - 1) < 0.1)
-                    {
-                        TemperatureShare(receiver, sharer, Atmospherics.OpenHeatTransferCoefficient);
-                    }
+                    heatCapacitySharerToThis -= gasHeatCapacity;
                 }
             }
 
-            if (!(temperatureDelta > Atmospherics.MinimumTemperatureToMove) &&
-                !(MathF.Abs(movedMoles) > Atmospherics.MinimumMolesDeltaToMove)) return 0f;
-            var moles = receiver.TotalMoles;
-            var theirMoles = sharer.TotalMoles;
-
-            return (receiver.Temperature * (moles + movedMoles)) - (sharer.Temperature * (theirMoles - movedMoles)) * Atmospherics.R / receiver.Volume;
-
+            if (!receiver.Immutable) receiver.Moles[i] -= delta;
+            if (!sharer.Immutable) sharer.Moles[i] += delta;
+            movedMoles += delta;
+            absMovedMoles += MathF.Abs(delta);
         }
 
-        public float TemperatureShare(GasMixture receiver, GasMixture sharer, float conductionCoefficient)
+        receiver.LastShare = absMovedMoles;
+
+        if (absTemperatureDelta > Atmospherics.MinimumTemperatureDeltaToConsider)
         {
-            var temperatureDelta = receiver.Temperature - sharer.Temperature;
-            if (MathF.Abs(temperatureDelta) > Atmospherics.MinimumTemperatureDeltaToConsider)
+            var newHeatCapacity = oldHeatCapacity + heatCapacitySharerToThis - heatCapacityToSharer;
+            var newSharerHeatCapacity = oldSharerHeatCapacity + heatCapacityToSharer - heatCapacitySharerToThis;
+
+            // Transfer of thermal energy (via changed heat capacity) between self and sharer.
+            if (!receiver.Immutable && newHeatCapacity > Atmospherics.MinimumHeatCapacity)
             {
-                var heatCapacity = GetHeatCapacity(receiver);
-                var sharerHeatCapacity = GetHeatCapacity(sharer);
-
-                if (sharerHeatCapacity > Atmospherics.MinimumHeatCapacity && heatCapacity > Atmospherics.MinimumHeatCapacity)
-                {
-                    var heat = conductionCoefficient * temperatureDelta * (heatCapacity * sharerHeatCapacity / (heatCapacity + sharerHeatCapacity));
-
-                    if (!receiver.Immutable)
-                        receiver.Temperature = MathF.Abs(MathF.Max(receiver.Temperature - heat / heatCapacity, Atmospherics.TCMB));
-
-                    if (!sharer.Immutable)
-                        sharer.Temperature = MathF.Abs(MathF.Max(sharer.Temperature + heat / sharerHeatCapacity, Atmospherics.TCMB));
-                }
+                receiver.Temperature = ((oldHeatCapacity * receiver.Temperature) - (heatCapacityToSharer * receiver.Temperature) + (heatCapacitySharerToThis * sharer.Temperature)) / newHeatCapacity;
             }
 
-            return sharer.Temperature;
-        }
-
-        public float TemperatureShare(GasMixture receiver, float conductionCoefficient, float sharerTemperature, float sharerHeatCapacity)
-        {
-            var temperatureDelta = receiver.Temperature - sharerTemperature;
-            if (MathF.Abs(temperatureDelta) > Atmospherics.MinimumTemperatureDeltaToConsider)
+            if (!sharer.Immutable && newSharerHeatCapacity > Atmospherics.MinimumHeatCapacity)
             {
-                var heatCapacity = GetHeatCapacity(receiver);
-
-                if (sharerHeatCapacity > Atmospherics.MinimumHeatCapacity && heatCapacity > Atmospherics.MinimumHeatCapacity)
-                {
-                    var heat = conductionCoefficient * temperatureDelta * (heatCapacity * sharerHeatCapacity / (heatCapacity + sharerHeatCapacity));
-
-                    if (!receiver.Immutable)
-                        receiver.Temperature = MathF.Abs(MathF.Max(receiver.Temperature - heat / heatCapacity, Atmospherics.TCMB));
-
-                    sharerTemperature = MathF.Abs(MathF.Max(sharerTemperature + heat / sharerHeatCapacity, Atmospherics.TCMB));
-                }
+                sharer.Temperature = ((oldSharerHeatCapacity * sharer.Temperature) - (heatCapacitySharerToThis * sharer.Temperature) + (heatCapacityToSharer*receiver.Temperature)) / newSharerHeatCapacity;
             }
 
-            return sharerTemperature;
+            // Thermal energy of the system (self and sharer) is unchanged.
+
+            if (MathF.Abs(oldSharerHeatCapacity) > Atmospherics.MinimumHeatCapacity)
+            {
+                if (MathF.Abs(newSharerHeatCapacity / oldSharerHeatCapacity - 1) < 0.1)
+                {
+                    TemperatureShare(receiver, sharer, Atmospherics.OpenHeatTransferCoefficient);
+                }
+            }
         }
 
-        /// <summary>
-        ///     Releases gas from this mixture to the output mixture.
-        ///     If the output mixture is null, then this is being released into space.
-        ///     It can't transfer air to a mixture with higher pressure.
-        /// </summary>
-        public bool ReleaseGasTo(GasMixture mixture, GasMixture? output, float targetPressure)
+        if (!(temperatureDelta > Atmospherics.MinimumTemperatureToMove) &&
+            !(MathF.Abs(movedMoles) > Atmospherics.MinimumMolesDeltaToMove)) return 0f;
+        var moles = receiver.TotalMoles;
+        var theirMoles = sharer.TotalMoles;
+
+        return (receiver.Temperature * (moles + movedMoles)) - (sharer.Temperature * (theirMoles - movedMoles)) * Atmospherics.R / receiver.Volume;
+
+    }
+
+    public float TemperatureShare(GasMixture receiver, GasMixture sharer, float conductionCoefficient)
+    {
+        var temperatureDelta = receiver.Temperature - sharer.Temperature;
+        if (MathF.Abs(temperatureDelta) > Atmospherics.MinimumTemperatureDeltaToConsider)
         {
-            var outputStartingPressure = output?.Pressure ?? 0;
-            var inputStartingPressure = mixture.Pressure;
+            var heatCapacity = GetHeatCapacity(receiver);
+            var sharerHeatCapacity = GetHeatCapacity(sharer);
 
-            if (outputStartingPressure >= MathF.Min(targetPressure, inputStartingPressure - 10))
-                // No need to pump gas if the target is already reached or input pressure is too low.
-                // Need at least 10 kPa difference to overcome friction in the mechanism.
-                return false;
+            if (sharerHeatCapacity > Atmospherics.MinimumHeatCapacity && heatCapacity > Atmospherics.MinimumHeatCapacity)
+            {
+                var heat = conductionCoefficient * temperatureDelta * (heatCapacity * sharerHeatCapacity / (heatCapacity + sharerHeatCapacity));
 
-            if (!(mixture.TotalMoles > 0) || !(mixture.Temperature > 0)) return false;
+                if (!receiver.Immutable)
+                    receiver.Temperature = MathF.Abs(MathF.Max(receiver.Temperature - heat / heatCapacity, Atmospherics.TCMB));
 
-            // We calculate the necessary moles to transfer with the ideal gas law.
-            var pressureDelta = MathF.Min(targetPressure - outputStartingPressure, (inputStartingPressure - outputStartingPressure) / 2f);
-            var transferMoles = pressureDelta * (output?.Volume ?? Atmospherics.CellVolume) / (mixture.Temperature * Atmospherics.R);
-
-            // And now we transfer the gas.
-            var removed = mixture.Remove(transferMoles);
-
-            if(output != null)
-                Merge(output, removed);
-
-            return true;
+                if (!sharer.Immutable)
+                    sharer.Temperature = MathF.Abs(MathF.Max(sharer.Temperature + heat / sharerHeatCapacity, Atmospherics.TCMB));
+            }
         }
 
-        /// <summary>
-        ///     Pump gas from this mixture to the output mixture.
-        ///     Amount depends on target pressure.
-        /// </summary>
-        /// <param name="mixture">The mixture to pump the gas from</param>
-        /// <param name="output">The mixture to pump the gas to</param>
-        /// <param name="targetPressure">The target pressure to reach</param>
-        /// <returns>Whether we could pump air to the output or not</returns>
-        public bool PumpGasTo(GasMixture mixture, GasMixture output, float targetPressure)
+        return sharer.Temperature;
+    }
+
+    public float TemperatureShare(GasMixture receiver, float conductionCoefficient, float sharerTemperature, float sharerHeatCapacity)
+    {
+        var temperatureDelta = receiver.Temperature - sharerTemperature;
+        if (MathF.Abs(temperatureDelta) > Atmospherics.MinimumTemperatureDeltaToConsider)
         {
-            var outputStartingPressure = output.Pressure;
-            var pressureDelta = targetPressure - outputStartingPressure;
+            var heatCapacity = GetHeatCapacity(receiver);
 
-            if (pressureDelta < 0.01)
-                // No need to pump gas, we've reached the target.
-                return false;
+            if (sharerHeatCapacity > Atmospherics.MinimumHeatCapacity && heatCapacity > Atmospherics.MinimumHeatCapacity)
+            {
+                var heat = conductionCoefficient * temperatureDelta * (heatCapacity * sharerHeatCapacity / (heatCapacity + sharerHeatCapacity));
 
-            if (!(mixture.TotalMoles > 0) || !(mixture.Temperature > 0)) return false;
+                if (!receiver.Immutable)
+                    receiver.Temperature = MathF.Abs(MathF.Max(receiver.Temperature - heat / heatCapacity, Atmospherics.TCMB));
 
-            // We calculate the necessary moles to transfer with the ideal gas law.
-            var transferMoles = pressureDelta * output.Volume / (mixture.Temperature * Atmospherics.R);
+                sharerTemperature = MathF.Abs(MathF.Max(sharerTemperature + heat / sharerHeatCapacity, Atmospherics.TCMB));
+            }
+        }
 
-            // And now we transfer the gas.
-            var removed = mixture.Remove(transferMoles);
+        return sharerTemperature;
+    }
+
+    /// <summary>
+    ///     Releases gas from this mixture to the output mixture.
+    ///     If the output mixture is null, then this is being released into space.
+    ///     It can't transfer air to a mixture with higher pressure.
+    /// </summary>
+    public bool ReleaseGasTo(GasMixture mixture, GasMixture? output, float targetPressure)
+    {
+        var outputStartingPressure = output?.Pressure ?? 0;
+        var inputStartingPressure = mixture.Pressure;
+
+        if (outputStartingPressure >= MathF.Min(targetPressure, inputStartingPressure - 10))
+            // No need to pump gas if the target is already reached or input pressure is too low.
+            // Need at least 10 kPa difference to overcome friction in the mechanism.
+            return false;
+
+        if (!(mixture.TotalMoles > 0) || !(mixture.Temperature > 0)) return false;
+
+        // We calculate the necessary moles to transfer with the ideal gas law.
+        var pressureDelta = MathF.Min(targetPressure - outputStartingPressure, (inputStartingPressure - outputStartingPressure) / 2f);
+        var transferMoles = pressureDelta * (output?.Volume ?? Atmospherics.CellVolume) / (mixture.Temperature * Atmospherics.R);
+
+        // And now we transfer the gas.
+        var removed = mixture.Remove(transferMoles);
+
+        if(output != null)
             Merge(output, removed);
-            return true;
+
+        return true;
+    }
+
+    /// <summary>
+    ///     Pump gas from this mixture to the output mixture.
+    ///     Amount depends on target pressure.
+    /// </summary>
+    /// <param name="mixture">The mixture to pump the gas from</param>
+    /// <param name="output">The mixture to pump the gas to</param>
+    /// <param name="targetPressure">The target pressure to reach</param>
+    /// <returns>Whether we could pump air to the output or not</returns>
+    public bool PumpGasTo(GasMixture mixture, GasMixture output, float targetPressure)
+    {
+        var outputStartingPressure = output.Pressure;
+        var pressureDelta = targetPressure - outputStartingPressure;
+
+        if (pressureDelta < 0.01)
+            // No need to pump gas, we've reached the target.
+            return false;
+
+        if (!(mixture.TotalMoles > 0) || !(mixture.Temperature > 0)) return false;
+
+        // We calculate the necessary moles to transfer with the ideal gas law.
+        var transferMoles = pressureDelta * output.Volume / (mixture.Temperature * Atmospherics.R);
+
+        // And now we transfer the gas.
+        var removed = mixture.Remove(transferMoles);
+        Merge(output, removed);
+        return true;
+    }
+
+    public void ScrubInto(GasMixture mixture, GasMixture destination, IReadOnlyCollection<Gas> filterGases)
+    {
+        var buffer = new GasMixture(mixture.Volume){Temperature = mixture.Temperature};
+
+        foreach (var gas in filterGases)
+        {
+            buffer.AdjustMoles(gas, mixture.GetMoles(gas));
+            mixture.SetMoles(gas, 0f);
         }
 
-        public void ScrubInto(GasMixture mixture, GasMixture destination, IReadOnlyCollection<Gas> filterGases)
-        {
-            var buffer = new GasMixture(mixture.Volume){Temperature = mixture.Temperature};
+        Merge(destination, buffer);
+    }
 
-            foreach (var gas in filterGases)
+    public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder)
+    {
+        var reaction = ReactionResult.NoReaction;
+        var temperature = mixture.Temperature;
+        var energy = GetThermalEnergy(mixture);
+
+        foreach (var prototype in GasReactions)
+        {
+            if (energy < prototype.MinimumEnergyRequirement ||
+                temperature < prototype.MinimumTemperatureRequirement ||
+                temperature > prototype.MaximumTemperatureRequirement)
+                continue;
+
+            var doReaction = true;
+            for (var i = 0; i < prototype.MinimumRequirements.Length; i++)
             {
-                buffer.AdjustMoles(gas, mixture.GetMoles(gas));
-                mixture.SetMoles(gas, 0f);
+                if(i > Atmospherics.TotalNumberOfGases)
+                    throw new IndexOutOfRangeException("Reaction Gas Minimum Requirements Array Prototype exceeds total number of gases!");
+
+                var req = prototype.MinimumRequirements[i];
+
+                if (!(mixture.GetMoles(i) < req)) continue;
+                doReaction = false;
+                break;
             }
 
-            Merge(destination, buffer);
+            if (!doReaction)
+                continue;
+
+            reaction = prototype.React(mixture, holder, this);
+            if(reaction.HasFlag(ReactionResult.StopReactions))
+                break;
         }
 
-        public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder)
-        {
-            var reaction = ReactionResult.NoReaction;
-            var temperature = mixture.Temperature;
-            var energy = GetThermalEnergy(mixture);
-
-            foreach (var prototype in GasReactions)
-            {
-                if (energy < prototype.MinimumEnergyRequirement ||
-                    temperature < prototype.MinimumTemperatureRequirement ||
-                    temperature > prototype.MaximumTemperatureRequirement)
-                    continue;
-
-                var doReaction = true;
-                for (var i = 0; i < prototype.MinimumRequirements.Length; i++)
-                {
-                    if(i > Atmospherics.TotalNumberOfGases)
-                        throw new IndexOutOfRangeException("Reaction Gas Minimum Requirements Array Prototype exceeds total number of gases!");
-
-                    var req = prototype.MinimumRequirements[i];
-
-                    if (!(mixture.GetMoles(i) < req)) continue;
-                    doReaction = false;
-                    break;
-                }
-
-                if (!doReaction)
-                    continue;
-
-                reaction = prototype.React(mixture, holder, this);
-                if(reaction.HasFlag(ReactionResult.StopReactions))
-                    break;
-            }
-
-            return reaction;
-        }
+        return reaction;
     }
 }

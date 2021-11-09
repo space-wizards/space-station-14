@@ -1,10 +1,9 @@
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.Slippery
+namespace Content.Shared.Slippery;
+
+[RegisterComponent]
+public class NoSlipComponent : Component
 {
-    [RegisterComponent]
-    public class NoSlipComponent : Component
-    {
-        public override string Name => "NoSlip";
-    }
+    public override string Name => "NoSlip";
 }

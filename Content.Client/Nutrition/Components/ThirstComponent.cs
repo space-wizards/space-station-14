@@ -3,26 +3,25 @@ using Content.Shared.Movement.EntitySystems;
 using Content.Shared.Nutrition.Components;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.Nutrition.Components
+namespace Content.Client.Nutrition.Components;
+
+[RegisterComponent]
+public class ThirstComponent : SharedThirstComponent
 {
-    [RegisterComponent]
-    public class ThirstComponent : SharedThirstComponent
+    private ThirstThreshold _currentThirstThreshold;
+    public override ThirstThreshold CurrentThirstThreshold => _currentThirstThreshold;
+
+    public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
     {
-        private ThirstThreshold _currentThirstThreshold;
-        public override ThirstThreshold CurrentThirstThreshold => _currentThirstThreshold;
+        base.HandleComponentState(curState, nextState);
 
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
+        if (curState is not ThirstComponentState thirst)
         {
-            base.HandleComponentState(curState, nextState);
-
-            if (curState is not ThirstComponentState thirst)
-            {
-                return;
-            }
-
-            _currentThirstThreshold = thirst.CurrentThreshold;
-
-            EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(OwnerUid);
+            return;
         }
+
+        _currentThirstThreshold = thirst.CurrentThreshold;
+
+        EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(OwnerUid);
     }
 }

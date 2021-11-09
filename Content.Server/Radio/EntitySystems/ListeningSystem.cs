@@ -2,20 +2,19 @@
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.Radio.EntitySystems
+namespace Content.Server.Radio.EntitySystems;
+
+[UsedImplicitly]
+public class ListeningSystem : EntitySystem
 {
-    [UsedImplicitly]
-    public class ListeningSystem : EntitySystem
+    public void PingListeners(IEntity source, string message)
     {
-        public void PingListeners(IEntity source, string message)
+        foreach (var listener in EntityManager.EntityQuery<IListen>(true))
         {
-            foreach (var listener in EntityManager.EntityQuery<IListen>(true))
+            // TODO: Map Position distance
+            if (listener.CanListen(message, source))
             {
-                // TODO: Map Position distance
-                if (listener.CanListen(message, source))
-                {
-                    listener.Listen(message, source);
-                }
+                listener.Listen(message, source);
             }
         }
     }

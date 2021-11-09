@@ -2,44 +2,43 @@
 using Content.Shared.Actions.Components;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.Actions.Behaviors
+namespace Content.Shared.Actions.Behaviors;
+
+/// <summary>
+/// Currently just a marker interface delineating the different possible
+/// types of action behaviors.
+/// </summary>
+public interface IActionBehavior
+{
+}
+
+/// <summary>
+/// Base class for all action event args
+/// </summary>
+public abstract class ActionEventArgs : EventArgs
 {
     /// <summary>
-    /// Currently just a marker interface delineating the different possible
-    /// types of action behaviors.
+    /// Entity performing the action.
     /// </summary>
-    public interface IActionBehavior
-    {
-    }
-
+    public readonly IEntity Performer;
     /// <summary>
-    /// Base class for all action event args
+    /// Action being performed
     /// </summary>
-    public abstract class ActionEventArgs : EventArgs
-    {
-        /// <summary>
-        /// Entity performing the action.
-        /// </summary>
-        public readonly IEntity Performer;
-        /// <summary>
-        /// Action being performed
-        /// </summary>
-        public readonly ActionType ActionType;
-        /// <summary>
-        /// Actions component of the performer.
-        /// </summary>
-        public readonly SharedActionsComponent? PerformerActions;
+    public readonly ActionType ActionType;
+    /// <summary>
+    /// Actions component of the performer.
+    /// </summary>
+    public readonly SharedActionsComponent? PerformerActions;
 
-        public ActionEventArgs(IEntity performer, ActionType actionType)
+    public ActionEventArgs(IEntity performer, ActionType actionType)
+    {
+        Performer = performer;
+        ActionType = actionType;
+        if (!Performer.TryGetComponent(out PerformerActions))
         {
-            Performer = performer;
-            ActionType = actionType;
-            if (!Performer.TryGetComponent(out PerformerActions))
-            {
-                throw new InvalidOperationException($"performer {performer.Name} tried to perform action {actionType} " +
-                                                    $" but the performer had no actions component," +
-                                                    " which should never occur");
-            }
+            throw new InvalidOperationException($"performer {performer.Name} tried to perform action {actionType} " +
+                                                $" but the performer had no actions component," +
+                                                " which should never occur");
         }
     }
 }

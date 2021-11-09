@@ -9,73 +9,72 @@ using Content.Shared.Movement.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.Inventory
+namespace Content.Server.Inventory;
+
+class InventorySystem : EntitySystem
 {
-    class InventorySystem : EntitySystem
+    public override void Initialize()
     {
-        public override void Initialize()
-        {
-            base.Initialize();
+        base.Initialize();
 
-            SubscribeLocalEvent<HumanInventoryControllerComponent, EntRemovedFromContainerMessage>(HandleRemovedFromContainer);
-            SubscribeLocalEvent<InventoryComponent, EntRemovedFromContainerMessage>(HandleInvRemovedFromContainer);
-            SubscribeLocalEvent<InventoryComponent, HighPressureEvent>(OnHighPressureEvent);
-            SubscribeLocalEvent<InventoryComponent, LowPressureEvent>(OnLowPressureEvent);
-            SubscribeLocalEvent<InventoryComponent, DamageModifyEvent>(OnDamageModify);
-            SubscribeLocalEvent<InventoryComponent, ElectrocutionAttemptEvent>(OnElectrocutionAttempt);
-            SubscribeLocalEvent<InventoryComponent, SlipAttemptEvent>(OnSlipAttemptEvent);
-            SubscribeLocalEvent<InventoryComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
+        SubscribeLocalEvent<HumanInventoryControllerComponent, EntRemovedFromContainerMessage>(HandleRemovedFromContainer);
+        SubscribeLocalEvent<InventoryComponent, EntRemovedFromContainerMessage>(HandleInvRemovedFromContainer);
+        SubscribeLocalEvent<InventoryComponent, HighPressureEvent>(OnHighPressureEvent);
+        SubscribeLocalEvent<InventoryComponent, LowPressureEvent>(OnLowPressureEvent);
+        SubscribeLocalEvent<InventoryComponent, DamageModifyEvent>(OnDamageModify);
+        SubscribeLocalEvent<InventoryComponent, ElectrocutionAttemptEvent>(OnElectrocutionAttempt);
+        SubscribeLocalEvent<InventoryComponent, SlipAttemptEvent>(OnSlipAttemptEvent);
+        SubscribeLocalEvent<InventoryComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
+    }
+
+    private void OnSlipAttemptEvent(EntityUid uid, InventoryComponent component, SlipAttemptEvent args)
+    {
+        if (component.TryGetSlotItem(EquipmentSlotDefines.Slots.SHOES, out ItemComponent? shoes))
+        {
+            RaiseLocalEvent(shoes.Owner.Uid, args, false);
         }
+    }
 
-        private void OnSlipAttemptEvent(EntityUid uid, InventoryComponent component, SlipAttemptEvent args)
-        {
-            if (component.TryGetSlotItem(EquipmentSlotDefines.Slots.SHOES, out ItemComponent? shoes))
-            {
-                RaiseLocalEvent(shoes.Owner.Uid, args, false);
-            }
-        }
+    private void OnRefreshMovespeed(EntityUid uid, InventoryComponent component, RefreshMovementSpeedModifiersEvent args)
+    {
+        RelayInventoryEvent(component, args);
+    }
 
-        private void OnRefreshMovespeed(EntityUid uid, InventoryComponent component, RefreshMovementSpeedModifiersEvent args)
-        {
-            RelayInventoryEvent(component, args);
-        }
+    private static void HandleInvRemovedFromContainer(EntityUid uid, InventoryComponent component, EntRemovedFromContainerMessage args)
+    {
+        component.ForceUnequip(args.Container, args.Entity);
+    }
 
-        private static void HandleInvRemovedFromContainer(EntityUid uid, InventoryComponent component, EntRemovedFromContainerMessage args)
-        {
-            component.ForceUnequip(args.Container, args.Entity);
-        }
+    private static void HandleRemovedFromContainer(EntityUid uid, HumanInventoryControllerComponent component, EntRemovedFromContainerMessage args)
+    {
+        component.CheckUniformExists();
+    }
 
-        private static void HandleRemovedFromContainer(EntityUid uid, HumanInventoryControllerComponent component, EntRemovedFromContainerMessage args)
-        {
-            component.CheckUniformExists();
-        }
+    private void OnHighPressureEvent(EntityUid uid, InventoryComponent component, HighPressureEvent args)
+    {
+        RelayInventoryEvent(component, args);
+    }
 
-        private void OnHighPressureEvent(EntityUid uid, InventoryComponent component, HighPressureEvent args)
-        {
-            RelayInventoryEvent(component, args);
-        }
+    private void OnLowPressureEvent(EntityUid uid, InventoryComponent component, LowPressureEvent args)
+    {
+        RelayInventoryEvent(component, args);
+    }
 
-        private void OnLowPressureEvent(EntityUid uid, InventoryComponent component, LowPressureEvent args)
-        {
-            RelayInventoryEvent(component, args);
-        }
+    private void OnElectrocutionAttempt(EntityUid uid, InventoryComponent component, ElectrocutionAttemptEvent args)
+    {
+        RelayInventoryEvent(component, args);
+    }
 
-        private void OnElectrocutionAttempt(EntityUid uid, InventoryComponent component, ElectrocutionAttemptEvent args)
-        {
-            RelayInventoryEvent(component, args);
-        }
+    private void OnDamageModify(EntityUid uid, InventoryComponent component, DamageModifyEvent args)
+    {
+        RelayInventoryEvent(component, args);
+    }
 
-        private void OnDamageModify(EntityUid uid, InventoryComponent component, DamageModifyEvent args)
+    private void RelayInventoryEvent<T>(InventoryComponent component, T args) where T : EntityEventArgs
+    {
+        foreach (var equipped in component.GetAllHeldItems())
         {
-            RelayInventoryEvent(component, args);
-        }
-
-        private void RelayInventoryEvent<T>(InventoryComponent component, T args) where T : EntityEventArgs
-        {
-            foreach (var equipped in component.GetAllHeldItems())
-            {
-                RaiseLocalEvent(equipped.Uid, args, false);
-            }
+            RaiseLocalEvent(equipped.Uid, args, false);
         }
     }
 }

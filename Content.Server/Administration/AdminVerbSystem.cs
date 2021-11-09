@@ -29,216 +29,215 @@ using Robust.Shared.Localization;
 using Robust.Shared.Timing;
 using Timer = Robust.Shared.Timing.Timer;
 
-namespace Content.Server.Administration
+namespace Content.Server.Administration;
+
+/// <summary>
+///     System to provide various global admin/debug verbs
+/// </summary>
+public class AdminVerbSystem : EntitySystem
 {
-    /// <summary>
-    ///     System to provide various global admin/debug verbs
-    /// </summary>
-    public class AdminVerbSystem : EntitySystem
+    [Dependency] private readonly IConGroupController _groupController = default!;
+    [Dependency] private readonly IAdminManager _adminManager = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly EuiManager _euiManager = default!;
+    [Dependency] private readonly ExplosionSystem _explosions = default!;
+    [Dependency] private readonly GhostRoleSystem _ghostRoleSystem = default!;
+
+    private readonly Dictionary<IPlayerSession, EditSolutionsEui> _openSolutionUis = new();
+
+    public override void Initialize()
     {
-        [Dependency] private readonly IConGroupController _groupController = default!;
-        [Dependency] private readonly IAdminManager _adminManager = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly EuiManager _euiManager = default!;
-        [Dependency] private readonly ExplosionSystem _explosions = default!;
-        [Dependency] private readonly GhostRoleSystem _ghostRoleSystem = default!;
+        SubscribeLocalEvent<GetOtherVerbsEvent>(AddDebugVerbs);
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
+        SubscribeLocalEvent<SolutionContainerManagerComponent, SolutionChangedEvent>(OnSolutionChanged);
+    }
 
-        private readonly Dictionary<IPlayerSession, EditSolutionsEui> _openSolutionUis = new();
+    private void AddDebugVerbs(GetOtherVerbsEvent args)
+    {
+        if (!args.User.TryGetComponent<ActorComponent>(out var actor))
+            return;
 
-        public override void Initialize()
+        var player = actor.PlayerSession;
+
+        // Delete verb
+        if (_groupController.CanCommand(player, "deleteentity"))
         {
-            SubscribeLocalEvent<GetOtherVerbsEvent>(AddDebugVerbs);
-            SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
-            SubscribeLocalEvent<SolutionContainerManagerComponent, SolutionChangedEvent>(OnSolutionChanged);
+            Verb verb = new();
+            verb.Text = Loc.GetString("delete-verb-get-data-text");
+            verb.Category = VerbCategory.Debug;
+            verb.IconTexture = "/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png";
+            verb.Act = () => args.Target.Delete();
+            args.Verbs.Add(verb);
         }
 
-        private void AddDebugVerbs(GetOtherVerbsEvent args)
+        // Rejuvenate verb
+        if (_groupController.CanCommand(player, "rejuvenate"))
         {
-            if (!args.User.TryGetComponent<ActorComponent>(out var actor))
-                return;
+            Verb verb = new();
+            verb.Text = Loc.GetString("rejuvenate-verb-get-data-text");
+            verb.Category = VerbCategory.Debug;
+            verb.IconTexture = "/Textures/Interface/VerbIcons/rejuvenate.svg.192dpi.png";
+            verb.Act = () => RejuvenateCommand.PerformRejuvenate(args.Target);
+            args.Verbs.Add(verb);
+        }
 
-            var player = actor.PlayerSession;
-
-            // Delete verb
-            if (_groupController.CanCommand(player, "deleteentity"))
+        // Control mob verb
+        if (_groupController.CanCommand(player, "controlmob") &&
+            args.User != args.Target &&
+            args.User.HasComponent<MindComponent>() &&
+            args.Target.TryGetComponent<MindComponent>(out var targetMind))
+        {
+            Verb verb = new();
+            verb.Text = Loc.GetString("control-mob-verb-get-data-text");
+            verb.Category = VerbCategory.Debug;
+            // TODO VERB ICON control mob icon
+            verb.Act = () =>
             {
-                Verb verb = new();
-                verb.Text = Loc.GetString("delete-verb-get-data-text");
-                verb.Category = VerbCategory.Debug;
-                verb.IconTexture = "/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png";
-                verb.Act = () => args.Target.Delete();
-                args.Verbs.Add(verb);
-            }
+                player.ContentData()?.Mind?.TransferTo(args.Target, ghostCheckOverride: true);
+            };
+            args.Verbs.Add(verb);
+        }
 
-            // Rejuvenate verb
-            if (_groupController.CanCommand(player, "rejuvenate"))
-            {
-                Verb verb = new();
-                verb.Text = Loc.GetString("rejuvenate-verb-get-data-text");
-                verb.Category = VerbCategory.Debug;
-                verb.IconTexture = "/Textures/Interface/VerbIcons/rejuvenate.svg.192dpi.png";
-                verb.Act = () => RejuvenateCommand.PerformRejuvenate(args.Target);
-                args.Verbs.Add(verb);
-            }
+        // Make Sentient verb
+        if (_groupController.CanCommand(player, "makesentient") &&
+            args.User != args.Target &&
+            !args.Target.HasComponent<MindComponent>())
+        {
+            Verb verb = new();
+            verb.Text = Loc.GetString("make-sentient-verb-get-data-text");
+            verb.Category = VerbCategory.Debug;
+            verb.IconTexture = "/Textures/Interface/VerbIcons/sentient.svg.192dpi.png";
+            verb.Act = () => MakeSentientCommand.MakeSentient(args.Target.Uid, EntityManager);
+            args.Verbs.Add(verb);
+        }
 
-            // Control mob verb
-            if (_groupController.CanCommand(player, "controlmob") &&
-                args.User != args.Target &&
-                args.User.HasComponent<MindComponent>() &&
-                args.Target.TryGetComponent<MindComponent>(out var targetMind))
+        if (_adminManager.HasAdminFlag(player, AdminFlags.Fun))
+        {
+            Verb verb = new();
+            verb.Text = Loc.GetString("explode-verb-get-data-text");
+            verb.Category = VerbCategory.Debug;
+            verb.Act = () =>
             {
-                Verb verb = new();
-                verb.Text = Loc.GetString("control-mob-verb-get-data-text");
-                verb.Category = VerbCategory.Debug;
-                // TODO VERB ICON control mob icon
-                verb.Act = () =>
+                var coords = args.Target.Transform.Coordinates;
+                Timer.Spawn(_gameTiming.TickPeriod, () => _explosions.SpawnExplosion(coords, 0, 1, 2, 1), CancellationToken.None);
+                if (args.Target.TryGetComponent(out SharedBodyComponent? body))
                 {
-                    player.ContentData()?.Mind?.TransferTo(args.Target, ghostCheckOverride: true);
-                };
-                args.Verbs.Add(verb);
-            }
+                    body.Gib();
+                }
+            };
+            args.Verbs.Add(verb);
+        }
 
-            // Make Sentient verb
-            if (_groupController.CanCommand(player, "makesentient") &&
-                args.User != args.Target &&
-                !args.Target.HasComponent<MindComponent>())
-            {
-                Verb verb = new();
-                verb.Text = Loc.GetString("make-sentient-verb-get-data-text");
-                verb.Category = VerbCategory.Debug;
-                verb.IconTexture = "/Textures/Interface/VerbIcons/sentient.svg.192dpi.png";
-                verb.Act = () => MakeSentientCommand.MakeSentient(args.Target.Uid, EntityManager);
-                args.Verbs.Add(verb);
-            }
+        // Set clothing verb
+        if (_groupController.CanCommand(player, "setoutfit") &&
+            args.Target.HasComponent<InventoryComponent>())
+        {
+            Verb verb = new();
+            verb.Text = Loc.GetString("set-outfit-verb-get-data-text");
+            verb.Category = VerbCategory.Debug;
+            verb.IconTexture = "/Textures/Interface/VerbIcons/outfit.svg.192dpi.png";
+            verb.Act = () => _euiManager.OpenEui(new SetOutfitEui(args.Target), player);
+            args.Verbs.Add(verb);
+        }
 
-            if (_adminManager.HasAdminFlag(player, AdminFlags.Fun))
+        // In range unoccluded verb
+        if (_groupController.CanCommand(player, "inrangeunoccluded"))
+        {
+            Verb verb = new();
+            verb.Text = Loc.GetString("in-range-unoccluded-verb-get-data-text");
+            verb.Category = VerbCategory.Debug;
+            verb.IconTexture = "/Textures/Interface/VerbIcons/information.svg.192dpi.png";
+            verb.Act = () =>
             {
-                Verb verb = new();
-                verb.Text = Loc.GetString("explode-verb-get-data-text");
-                verb.Category = VerbCategory.Debug;
-                verb.Act = () =>
-                {
-                    var coords = args.Target.Transform.Coordinates;
-                    Timer.Spawn(_gameTiming.TickPeriod, () => _explosions.SpawnExplosion(coords, 0, 1, 2, 1), CancellationToken.None);
-                    if (args.Target.TryGetComponent(out SharedBodyComponent? body))
-                    {
-                        body.Gib();
-                    }
-                };
-                args.Verbs.Add(verb);
-            }
-
-            // Set clothing verb
-            if (_groupController.CanCommand(player, "setoutfit") &&
-                args.Target.HasComponent<InventoryComponent>())
-            {
-                Verb verb = new();
-                verb.Text = Loc.GetString("set-outfit-verb-get-data-text");
-                verb.Category = VerbCategory.Debug;
-                verb.IconTexture = "/Textures/Interface/VerbIcons/outfit.svg.192dpi.png";
-                verb.Act = () => _euiManager.OpenEui(new SetOutfitEui(args.Target), player);
-                args.Verbs.Add(verb);
-            }
-
-            // In range unoccluded verb
-            if (_groupController.CanCommand(player, "inrangeunoccluded"))
-            {
-                Verb verb = new();
-                verb.Text = Loc.GetString("in-range-unoccluded-verb-get-data-text");
-                verb.Category = VerbCategory.Debug;
-                verb.IconTexture = "/Textures/Interface/VerbIcons/information.svg.192dpi.png";
-                verb.Act = () =>
-                {
-                    var message = args.User.InRangeUnOccluded(args.Target)
+                var message = args.User.InRangeUnOccluded(args.Target)
                     ? Loc.GetString("in-range-unoccluded-verb-on-activate-not-occluded")
                     : Loc.GetString("in-range-unoccluded-verb-on-activate-occluded");
-                    args.Target.PopupMessage(args.User, message);
-                };
-                args.Verbs.Add(verb);
-            }
-
-            // Get Disposal tube direction verb
-            if (_groupController.CanCommand(player, "tubeconnections") &&
-                args.Target.TryGetComponent<IDisposalTubeComponent>(out var tube))
-            {
-                Verb verb = new();
-                verb.Text = Loc.GetString("tube-direction-verb-get-data-text");
-                verb.Category = VerbCategory.Debug;
-                verb.IconTexture = "/Textures/Interface/VerbIcons/information.svg.192dpi.png";
-                verb.Act = () => tube.PopupDirections(args.User);
-                args.Verbs.Add(verb);
-            }
-
-            // Make ghost role verb
-            if (_groupController.CanCommand(player, "makeghostrole") &&
-                !(args.Target.GetComponentOrNull<MindComponent>()?.HasMind ?? false))
-            {
-                Verb verb = new();
-                verb.Text = Loc.GetString("make-ghost-role-verb-get-data-text");
-                verb.Category = VerbCategory.Debug;
-                // TODO VERB ICON add ghost icon
-                // Where is the national park service icon for haunted forests?
-                verb.Act = () => _ghostRoleSystem.OpenMakeGhostRoleEui(player, args.Target.Uid);
-                args.Verbs.Add(verb);
-            }
-
-            // Configuration verb. Is this even used for anything!?
-            if (_groupController.CanAdminMenu(player) &&
-                args.Target.TryGetComponent<ConfigurationComponent>(out var config))
-            {
-                Verb verb = new();
-                verb.Text = Loc.GetString("configure-verb-get-data-text");
-                verb.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png";
-                verb.Category = VerbCategory.Debug;
-                verb.Act = () => config.OpenUserInterface(actor);
-                args.Verbs.Add(verb);
-            }
-
-            // Add verb to open Solution Editor
-            if (_groupController.CanCommand(player, "addreagent") &&
-                args.Target.HasComponent<SolutionContainerManagerComponent>())
-            {
-                Verb verb = new();
-                verb.Text = Loc.GetString("edit-solutions-verb-get-data-text");
-                verb.Category = VerbCategory.Debug;
-                verb.IconTexture = "/Textures/Interface/VerbIcons/spill.svg.192dpi.png";
-                verb.Act = () => OpenEditSolutionsEui(player, args.Target.Uid);
-                args.Verbs.Add(verb);
-            }
+                args.Target.PopupMessage(args.User, message);
+            };
+            args.Verbs.Add(verb);
         }
 
-        #region SolutionsEui
-        private void OnSolutionChanged(EntityUid uid, SolutionContainerManagerComponent component, SolutionChangedEvent args)
+        // Get Disposal tube direction verb
+        if (_groupController.CanCommand(player, "tubeconnections") &&
+            args.Target.TryGetComponent<IDisposalTubeComponent>(out var tube))
         {
-            foreach (var eui in _openSolutionUis.Values)
-            {
-                if (eui.Target == uid)
-                    eui.StateDirty();
-            }
+            Verb verb = new();
+            verb.Text = Loc.GetString("tube-direction-verb-get-data-text");
+            verb.Category = VerbCategory.Debug;
+            verb.IconTexture = "/Textures/Interface/VerbIcons/information.svg.192dpi.png";
+            verb.Act = () => tube.PopupDirections(args.User);
+            args.Verbs.Add(verb);
         }
 
-        public void OpenEditSolutionsEui(IPlayerSession session, EntityUid uid)
+        // Make ghost role verb
+        if (_groupController.CanCommand(player, "makeghostrole") &&
+            !(args.Target.GetComponentOrNull<MindComponent>()?.HasMind ?? false))
         {
-            if (session.AttachedEntity == null)
-                return;
-
-            if (_openSolutionUis.ContainsKey(session))
-                _openSolutionUis[session].Close();
-
-            var eui = _openSolutionUis[session] = new EditSolutionsEui(uid);
-            _euiManager.OpenEui(eui, session);
-            eui.StateDirty();
+            Verb verb = new();
+            verb.Text = Loc.GetString("make-ghost-role-verb-get-data-text");
+            verb.Category = VerbCategory.Debug;
+            // TODO VERB ICON add ghost icon
+            // Where is the national park service icon for haunted forests?
+            verb.Act = () => _ghostRoleSystem.OpenMakeGhostRoleEui(player, args.Target.Uid);
+            args.Verbs.Add(verb);
         }
 
-        public void OnEditSolutionsEuiClosed(IPlayerSession session)
+        // Configuration verb. Is this even used for anything!?
+        if (_groupController.CanAdminMenu(player) &&
+            args.Target.TryGetComponent<ConfigurationComponent>(out var config))
         {
-            _openSolutionUis.Remove(session, out var eui);
+            Verb verb = new();
+            verb.Text = Loc.GetString("configure-verb-get-data-text");
+            verb.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png";
+            verb.Category = VerbCategory.Debug;
+            verb.Act = () => config.OpenUserInterface(actor);
+            args.Verbs.Add(verb);
         }
 
-        private void Reset(RoundRestartCleanupEvent ev)
+        // Add verb to open Solution Editor
+        if (_groupController.CanCommand(player, "addreagent") &&
+            args.Target.HasComponent<SolutionContainerManagerComponent>())
         {
-            _openSolutionUis.Clear();
+            Verb verb = new();
+            verb.Text = Loc.GetString("edit-solutions-verb-get-data-text");
+            verb.Category = VerbCategory.Debug;
+            verb.IconTexture = "/Textures/Interface/VerbIcons/spill.svg.192dpi.png";
+            verb.Act = () => OpenEditSolutionsEui(player, args.Target.Uid);
+            args.Verbs.Add(verb);
         }
-        #endregion
     }
+
+    #region SolutionsEui
+    private void OnSolutionChanged(EntityUid uid, SolutionContainerManagerComponent component, SolutionChangedEvent args)
+    {
+        foreach (var eui in _openSolutionUis.Values)
+        {
+            if (eui.Target == uid)
+                eui.StateDirty();
+        }
+    }
+
+    public void OpenEditSolutionsEui(IPlayerSession session, EntityUid uid)
+    {
+        if (session.AttachedEntity == null)
+            return;
+
+        if (_openSolutionUis.ContainsKey(session))
+            _openSolutionUis[session].Close();
+
+        var eui = _openSolutionUis[session] = new EditSolutionsEui(uid);
+        _euiManager.OpenEui(eui, session);
+        eui.StateDirty();
+    }
+
+    public void OnEditSolutionsEuiClosed(IPlayerSession session)
+    {
+        _openSolutionUis.Remove(session, out var eui);
+    }
+
+    private void Reset(RoundRestartCleanupEvent ev)
+    {
+        _openSolutionUis.Clear();
+    }
+    #endregion
 }

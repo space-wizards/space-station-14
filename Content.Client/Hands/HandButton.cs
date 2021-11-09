@@ -3,45 +3,44 @@ using Content.Shared.Hands.Components;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 
-namespace Content.Client.Hands
+namespace Content.Client.Hands;
+
+public class HandButton : ItemSlotButton
 {
-    public class HandButton : ItemSlotButton
+    private bool _activeHand;
+    private bool _highlighted;
+
+    public HandButton(Texture texture, Texture storageTexture, string textureName, Texture blockedTexture, HandLocation location) : base(texture, storageTexture, textureName)
     {
-        private bool _activeHand;
-        private bool _highlighted;
+        Location = location;
 
-        public HandButton(Texture texture, Texture storageTexture, string textureName, Texture blockedTexture, HandLocation location) : base(texture, storageTexture, textureName)
+        AddChild(Blocked = new TextureRect
         {
-            Location = location;
+            Texture = blockedTexture,
+            TextureScale = (2, 2),
+            MouseFilter = MouseFilterMode.Stop,
+            Visible = false
+        });
+    }
 
-            AddChild(Blocked = new TextureRect
-            {
-                Texture = blockedTexture,
-                TextureScale = (2, 2),
-                MouseFilter = MouseFilterMode.Stop,
-                Visible = false
-            });
-        }
+    public HandLocation Location { get; }
+    public TextureRect Blocked { get; }
 
-        public HandLocation Location { get; }
-        public TextureRect Blocked { get; }
+    public void SetActiveHand(bool active)
+    {
+        _activeHand = active;
+        UpdateHighlight();
+    }
 
-        public void SetActiveHand(bool active)
-        {
-            _activeHand = active;
-            UpdateHighlight();
-        }
+    public override void Highlight(bool highlight)
+    {
+        _highlighted = highlight;
+        UpdateHighlight();
+    }
 
-        public override void Highlight(bool highlight)
-        {
-            _highlighted = highlight;
-            UpdateHighlight();
-        }
-
-        private void UpdateHighlight()
-        {
-            // always stay highlighted if active
-            base.Highlight(_activeHand || _highlighted);
-        }
+    private void UpdateHighlight()
+    {
+        // always stay highlighted if active
+        base.Highlight(_activeHand || _highlighted);
     }
 }

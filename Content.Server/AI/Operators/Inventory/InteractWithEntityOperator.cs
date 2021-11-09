@@ -4,45 +4,44 @@ using Content.Shared.Interaction.Helpers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Server.AI.Operators.Inventory
+namespace Content.Server.AI.Operators.Inventory;
+
+/// <summary>
+/// A Generic interacter; if you need to check stuff then make your own
+/// </summary>
+public class InteractWithEntityOperator : AiOperator
 {
-    /// <summary>
-    /// A Generic interacter; if you need to check stuff then make your own
-    /// </summary>
-    public class InteractWithEntityOperator : AiOperator
+    private readonly IEntity _owner;
+    private readonly IEntity _useTarget;
+
+    public InteractWithEntityOperator(IEntity owner, IEntity useTarget)
     {
-        private readonly IEntity _owner;
-        private readonly IEntity _useTarget;
+        _owner = owner;
+        _useTarget = useTarget;
 
-        public InteractWithEntityOperator(IEntity owner, IEntity useTarget)
+    }
+
+    public override Outcome Execute(float frameTime)
+    {
+        if (_useTarget.Transform.GridID != _owner.Transform.GridID)
         {
-            _owner = owner;
-            _useTarget = useTarget;
-
+            return Outcome.Failed;
         }
 
-        public override Outcome Execute(float frameTime)
+        if (!_owner.InRangeUnobstructed(_useTarget, popup: true))
         {
-            if (_useTarget.Transform.GridID != _owner.Transform.GridID)
-            {
-                return Outcome.Failed;
-            }
-
-            if (!_owner.InRangeUnobstructed(_useTarget, popup: true))
-            {
-                return Outcome.Failed;
-            }
-
-            if (_owner.TryGetComponent(out CombatModeComponent? combatModeComponent))
-            {
-                combatModeComponent.IsInCombatMode = false;
-            }
-
-            // Click on da thing
-            var interactionSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InteractionSystem>();
-            interactionSystem.AiUseInteraction(_owner, _useTarget.Transform.Coordinates, _useTarget.Uid);
-
-            return Outcome.Success;
+            return Outcome.Failed;
         }
+
+        if (_owner.TryGetComponent(out CombatModeComponent? combatModeComponent))
+        {
+            combatModeComponent.IsInCombatMode = false;
+        }
+
+        // Click on da thing
+        var interactionSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InteractionSystem>();
+        interactionSystem.AiUseInteraction(_owner, _useTarget.Transform.Coordinates, _useTarget.Uid);
+
+        return Outcome.Success;
     }
 }

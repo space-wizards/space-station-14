@@ -26,280 +26,278 @@ using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.Wires.SharedWiresComponent;
 
-namespace Content.Server.VendingMachines
+namespace Content.Server.VendingMachines;
+
+[RegisterComponent]
+[ComponentReference(typeof(IActivate))]
+public class VendingMachineComponent : SharedVendingMachineComponent, IActivate, IBreakAct, IWires
 {
-    [RegisterComponent]
-    [ComponentReference(typeof(IActivate))]
-    public class VendingMachineComponent : SharedVendingMachineComponent, IActivate, IBreakAct, IWires
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
+    private bool _ejecting;
+    private TimeSpan _animationDuration = TimeSpan.Zero;
+    [DataField("pack")]
+    private string _packPrototypeId = string.Empty;
+    private string _spriteName = "";
+
+    private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
+    private bool _broken;
+
+    [DataField("soundVend")]
+    // Grabbed from: https://github.com/discordia-space/CEV-Eris/blob/f702afa271136d093ddeb415423240a2ceb212f0/sound/machines/vending_drop.ogg
+    private SoundSpecifier _soundVend = new SoundPathSpecifier("/Audio/Machines/machine_vend.ogg");
+    [DataField("soundDeny")]
+    // Yoinked from: https://github.com/discordia-space/CEV-Eris/blob/35bbad6764b14e15c03a816e3e89aa1751660ba9/sound/machines/Custom_deny.ogg
+    private SoundSpecifier _soundDeny = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
+
+    [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(VendingMachineUiKey.Key);
+
+    public bool Broken => _broken;
+
+    void IActivate.Activate(ActivateEventArgs eventArgs)
     {
-        [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
-        private bool _ejecting;
-        private TimeSpan _animationDuration = TimeSpan.Zero;
-        [DataField("pack")]
-        private string _packPrototypeId = string.Empty;
-        private string _spriteName = "";
-
-        private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
-        private bool _broken;
-
-        [DataField("soundVend")]
-        // Grabbed from: https://github.com/discordia-space/CEV-Eris/blob/f702afa271136d093ddeb415423240a2ceb212f0/sound/machines/vending_drop.ogg
-        private SoundSpecifier _soundVend = new SoundPathSpecifier("/Audio/Machines/machine_vend.ogg");
-        [DataField("soundDeny")]
-        // Yoinked from: https://github.com/discordia-space/CEV-Eris/blob/35bbad6764b14e15c03a816e3e89aa1751660ba9/sound/machines/Custom_deny.ogg
-        private SoundSpecifier _soundDeny = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
-
-        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(VendingMachineUiKey.Key);
-
-        public bool Broken => _broken;
-
-        void IActivate.Activate(ActivateEventArgs eventArgs)
+        if(!eventArgs.User.TryGetComponent(out ActorComponent? actor))
         {
-            if(!eventArgs.User.TryGetComponent(out ActorComponent? actor))
-            {
-                return;
-            }
-            if (!Powered)
-                return;
+            return;
+        }
+        if (!Powered)
+            return;
 
-            var wires = Owner.GetComponent<WiresComponent>();
-            if (wires.IsPanelOpen)
-            {
-                wires.OpenInterface(actor.PlayerSession);
-            } else
-            {
-                UserInterface?.Toggle(actor.PlayerSession);
-            }
+        var wires = Owner.GetComponent<WiresComponent>();
+        if (wires.IsPanelOpen)
+        {
+            wires.OpenInterface(actor.PlayerSession);
+        } else
+        {
+            UserInterface?.Toggle(actor.PlayerSession);
+        }
+    }
+
+    private void InitializeFromPrototype()
+    {
+        if (string.IsNullOrEmpty(_packPrototypeId)) { return; }
+        if (!_prototypeManager.TryIndex(_packPrototypeId, out VendingMachineInventoryPrototype? packPrototype))
+        {
+            return;
         }
 
-        private void InitializeFromPrototype()
+        Owner.Name = packPrototype.Name;
+        _animationDuration = TimeSpan.FromSeconds(packPrototype.AnimationDuration);
+        _spriteName = packPrototype.SpriteName;
+        if (!string.IsNullOrEmpty(_spriteName))
         {
-            if (string.IsNullOrEmpty(_packPrototypeId)) { return; }
-            if (!_prototypeManager.TryIndex(_packPrototypeId, out VendingMachineInventoryPrototype? packPrototype))
-            {
-                return;
-            }
-
-            Owner.Name = packPrototype.Name;
-            _animationDuration = TimeSpan.FromSeconds(packPrototype.AnimationDuration);
-            _spriteName = packPrototype.SpriteName;
-            if (!string.IsNullOrEmpty(_spriteName))
-            {
-                var spriteComponent = Owner.GetComponent<SpriteComponent>();
-                const string vendingMachineRSIPath = "Structures/Machines/VendingMachines/{0}.rsi";
-                spriteComponent.BaseRSIPath = string.Format(vendingMachineRSIPath, _spriteName);
-            }
-
-            var inventory = new List<VendingMachineInventoryEntry>();
-            foreach(var (id, amount) in packPrototype.StartingInventory)
-            {
-                inventory.Add(new VendingMachineInventoryEntry(id, amount));
-            }
-            Inventory = inventory;
+            var spriteComponent = Owner.GetComponent<SpriteComponent>();
+            const string vendingMachineRSIPath = "Structures/Machines/VendingMachines/{0}.rsi";
+            spriteComponent.BaseRSIPath = string.Format(vendingMachineRSIPath, _spriteName);
         }
 
-        protected override void Initialize()
+        var inventory = new List<VendingMachineInventoryEntry>();
+        foreach(var (id, amount) in packPrototype.StartingInventory)
         {
-            base.Initialize();
+            inventory.Add(new VendingMachineInventoryEntry(id, amount));
+        }
+        Inventory = inventory;
+    }
 
-            if (UserInterface != null)
-            {
-                UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
-            }
+    protected override void Initialize()
+    {
+        base.Initialize();
 
-            if (Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver))
-            {
-                TrySetVisualState(receiver.Powered ? VendingMachineVisualState.Normal : VendingMachineVisualState.Off);
-            }
-
-            InitializeFromPrototype();
+        if (UserInterface != null)
+        {
+            UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
         }
 
-        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        if (Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver))
         {
+            TrySetVisualState(receiver.Powered ? VendingMachineVisualState.Normal : VendingMachineVisualState.Off);
+        }
+
+        InitializeFromPrototype();
+    }
+
+    [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
+    public override void HandleMessage(ComponentMessage message, IComponent? component)
+    {
 #pragma warning disable 618
-            base.HandleMessage(message, component);
+        base.HandleMessage(message, component);
 #pragma warning restore 618
-            switch (message)
-            {
-                case PowerChangedMessage powerChanged:
-                    UpdatePower(powerChanged);
-                    break;
-            }
+        switch (message)
+        {
+            case PowerChangedMessage powerChanged:
+                UpdatePower(powerChanged);
+                break;
+        }
+    }
+
+    private void UpdatePower(PowerChangedMessage args)
+    {
+        var state = args.Powered ? VendingMachineVisualState.Normal : VendingMachineVisualState.Off;
+        TrySetVisualState(state);
+    }
+
+    private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
+    {
+        if (!Powered)
+            return;
+
+        var message = serverMsg.Message;
+        switch (message)
+        {
+            case VendingMachineEjectMessage msg:
+                TryEject(msg.ID, serverMsg.Session.AttachedEntity);
+                break;
+            case InventorySyncRequestMessage _:
+                UserInterface?.SendMessage(new VendingMachineInventoryMessage(Inventory));
+                break;
+        }
+    }
+
+    private void TryEject(string id)
+    {
+        if (_ejecting || _broken)
+        {
+            return;
         }
 
-        private void UpdatePower(PowerChangedMessage args)
+        var entry = Inventory.Find(x => x.ID == id);
+        if (entry == null)
         {
-            var state = args.Powered ? VendingMachineVisualState.Normal : VendingMachineVisualState.Off;
-            TrySetVisualState(state);
+            Owner.PopupMessageEveryone(Loc.GetString("vending-machine-component-try-eject-invalid-item"));
+            Deny();
+            return;
         }
 
-        private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
+        if (entry.Amount <= 0)
         {
-            if (!Powered)
-                return;
-
-            var message = serverMsg.Message;
-            switch (message)
-            {
-                case VendingMachineEjectMessage msg:
-                    TryEject(msg.ID, serverMsg.Session.AttachedEntity);
-                    break;
-                case InventorySyncRequestMessage _:
-                    UserInterface?.SendMessage(new VendingMachineInventoryMessage(Inventory));
-                    break;
-            }
+            Owner.PopupMessageEveryone(Loc.GetString("vending-machine-component-try-eject-out-of-stock"));
+            Deny();
+            return;
         }
 
-        private void TryEject(string id)
-        {
-            if (_ejecting || _broken)
-            {
-                return;
-            }
+        _ejecting = true;
+        entry.Amount--;
+        UserInterface?.SendMessage(new VendingMachineInventoryMessage(Inventory));
+        TrySetVisualState(VendingMachineVisualState.Eject);
 
-            var entry = Inventory.Find(x => x.ID == id);
-            if (entry == null)
+        Owner.SpawnTimer(_animationDuration, () =>
+        {
+            _ejecting = false;
+            TrySetVisualState(VendingMachineVisualState.Normal);
+            Owner.EntityManager.SpawnEntity(id, Owner.Transform.Coordinates);
+        });
+
+        SoundSystem.Play(Filter.Pvs(Owner), _soundVend.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
+    }
+
+    private void TryEject(string id, IEntity? sender)
+    {
+        if (Owner.TryGetComponent<AccessReader>(out var accessReader))
+        {
+            var accessSystem = EntitySystem.Get<AccessReaderSystem>();
+            if (sender == null || !accessSystem.IsAllowed(accessReader, sender.Uid))
             {
-                Owner.PopupMessageEveryone(Loc.GetString("vending-machine-component-try-eject-invalid-item"));
+                Owner.PopupMessageEveryone(Loc.GetString("vending-machine-component-try-eject-access-denied"));
                 Deny();
                 return;
             }
-
-            if (entry.Amount <= 0)
-            {
-                Owner.PopupMessageEveryone(Loc.GetString("vending-machine-component-try-eject-out-of-stock"));
-                Deny();
-                return;
-            }
-
-            _ejecting = true;
-            entry.Amount--;
-            UserInterface?.SendMessage(new VendingMachineInventoryMessage(Inventory));
-            TrySetVisualState(VendingMachineVisualState.Eject);
-
-            Owner.SpawnTimer(_animationDuration, () =>
-            {
-                _ejecting = false;
-                TrySetVisualState(VendingMachineVisualState.Normal);
-                Owner.EntityManager.SpawnEntity(id, Owner.Transform.Coordinates);
-            });
-
-            SoundSystem.Play(Filter.Pvs(Owner), _soundVend.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
         }
+        TryEject(id);
+    }
 
-        private void TryEject(string id, IEntity? sender)
+    private void Deny()
+    {
+        SoundSystem.Play(Filter.Pvs(Owner), _soundDeny.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
+
+        // Play the Deny animation
+        TrySetVisualState(VendingMachineVisualState.Deny);
+        //TODO: This duration should be a distinct value specific to the deny animation
+        Owner.SpawnTimer(_animationDuration, () =>
         {
-            if (Owner.TryGetComponent<AccessReader>(out var accessReader))
-            {
-                var accessSystem = EntitySystem.Get<AccessReaderSystem>();
-                if (sender == null || !accessSystem.IsAllowed(accessReader, sender.Uid))
-                {
-                    Owner.PopupMessageEveryone(Loc.GetString("vending-machine-component-try-eject-access-denied"));
-                    Deny();
-                    return;
-                }
-            }
-            TryEject(id);
-        }
+            TrySetVisualState(VendingMachineVisualState.Normal);
+        });
+    }
 
-        private void Deny()
+    private void TrySetVisualState(VendingMachineVisualState state)
+    {
+        var finalState = state;
+        if (_broken)
         {
-            SoundSystem.Play(Filter.Pvs(Owner), _soundDeny.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
-
-            // Play the Deny animation
-            TrySetVisualState(VendingMachineVisualState.Deny);
-            //TODO: This duration should be a distinct value specific to the deny animation
-            Owner.SpawnTimer(_animationDuration, () =>
-            {
-                TrySetVisualState(VendingMachineVisualState.Normal);
-            });
+            finalState = VendingMachineVisualState.Broken;
         }
-
-        private void TrySetVisualState(VendingMachineVisualState state)
+        else if (_ejecting)
         {
-            var finalState = state;
-            if (_broken)
-            {
-                finalState = VendingMachineVisualState.Broken;
-            }
-            else if (_ejecting)
-            {
-                finalState = VendingMachineVisualState.Eject;
-            }
-            else if (!Powered)
-            {
-                finalState = VendingMachineVisualState.Off;
-            }
-
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
-            {
-                appearance.SetData(VendingMachineVisuals.VisualState, finalState);
-            }
+            finalState = VendingMachineVisualState.Eject;
         }
-
-        public void OnBreak(BreakageEventArgs eventArgs)
+        else if (!Powered)
         {
-            _broken = true;
-            TrySetVisualState(VendingMachineVisualState.Broken);
+            finalState = VendingMachineVisualState.Off;
         }
 
-        public enum Wires
+        if (Owner.TryGetComponent(out AppearanceComponent? appearance))
         {
-            /// <summary>
-            /// Shoots a random item when pulsed.
-            /// </summary>
-            Shoot
+            appearance.SetData(VendingMachineVisuals.VisualState, finalState);
         }
+    }
 
-        void IWires.RegisterWires(WiresComponent.WiresBuilder builder)
-        {
-            builder.CreateWire(Wires.Shoot);
-        }
+    public void OnBreak(BreakageEventArgs eventArgs)
+    {
+        _broken = true;
+        TrySetVisualState(VendingMachineVisualState.Broken);
+    }
 
-        void IWires.WiresUpdate(WiresUpdateEventArgs args)
-        {
-            var identifier = (Wires) args.Identifier;
-            if (identifier == Wires.Shoot && args.Action == WiresAction.Pulse)
-            {
-                EjectRandom();
-            }
-        }
-
+    public enum Wires
+    {
         /// <summary>
-        /// Ejects a random item if present.
+        /// Shoots a random item when pulsed.
         /// </summary>
-        private void EjectRandom()
+        Shoot
+    }
+
+    void IWires.RegisterWires(WiresComponent.WiresBuilder builder)
+    {
+        builder.CreateWire(Wires.Shoot);
+    }
+
+    void IWires.WiresUpdate(WiresUpdateEventArgs args)
+    {
+        var identifier = (Wires) args.Identifier;
+        if (identifier == Wires.Shoot && args.Action == WiresAction.Pulse)
         {
-            var availableItems = Inventory.Where(x => x.Amount > 0).ToList();
-            if (availableItems.Count <= 0)
-            {
-                return;
-            }
-            TryEject(_random.Pick(availableItems).ID);
+            EjectRandom();
         }
     }
 
-    public class WiresUpdateEventArgs : EventArgs
+    /// <summary>
+    /// Ejects a random item if present.
+    /// </summary>
+    private void EjectRandom()
     {
-        public readonly object Identifier;
-        public readonly WiresAction Action;
-
-        public WiresUpdateEventArgs(object identifier, WiresAction action)
+        var availableItems = Inventory.Where(x => x.Amount > 0).ToList();
+        if (availableItems.Count <= 0)
         {
-            Identifier = identifier;
-            Action = action;
+            return;
         }
-    }
-
-    public interface IWires
-    {
-        void RegisterWires(WiresComponent.WiresBuilder builder);
-        void WiresUpdate(WiresUpdateEventArgs args);
-
+        TryEject(_random.Pick(availableItems).ID);
     }
 }
 
+public class WiresUpdateEventArgs : EventArgs
+{
+    public readonly object Identifier;
+    public readonly WiresAction Action;
+
+    public WiresUpdateEventArgs(object identifier, WiresAction action)
+    {
+        Identifier = identifier;
+        Action = action;
+    }
+}
+
+public interface IWires
+{
+    void RegisterWires(WiresComponent.WiresBuilder builder);
+    void WiresUpdate(WiresUpdateEventArgs args);
+
+}

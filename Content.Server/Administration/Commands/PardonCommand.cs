@@ -7,58 +7,57 @@ using Robust.Shared.Console;
 using Robust.Shared.IoC;
 
 
-namespace Content.Server.Administration.Commands
+namespace Content.Server.Administration.Commands;
+
+[AdminCommand(AdminFlags.Ban)]
+public class PardonCommand : IConsoleCommand
 {
-    [AdminCommand(AdminFlags.Ban)]
-    public class PardonCommand : IConsoleCommand
+    public string Command => "pardon";
+    public string Description => "Pardons somebody's ban";
+    public string Help => $"Usage: {Command} <ban id>";
+
+    public async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        public string Command => "pardon";
-        public string Description => "Pardons somebody's ban";
-        public string Help => $"Usage: {Command} <ban id>";
+        var player = shell.Player as IPlayerSession;
+        var dbMan = IoCManager.Resolve<IServerDbManager>();
 
-        public async void Execute(IConsoleShell shell, string argStr, string[] args)
+        if (args.Length != 1)
         {
-            var player = shell.Player as IPlayerSession;
-            var dbMan = IoCManager.Resolve<IServerDbManager>();
-
-            if (args.Length != 1)
-            {
-                shell.WriteLine(Help);
-                return;
-            }
-
-            if (!int.TryParse(args[0], out var banId))
-            {
-                shell.WriteLine($"Unable to parse {args[1]} as a ban id integer.\n{Help}");
-                return;
-            }
-
-            var ban = await dbMan.GetServerBanAsync(banId);
-
-            if (ban == null)
-            {
-                shell.WriteLine($"No ban found with id {banId}");
-                return;
-            }
-
-            if (ban.Unban != null)
-            {
-                var response = new StringBuilder("This ban has already been pardoned");
-
-                if (ban.Unban.UnbanningAdmin != null)
-                {
-                    response.Append($" by {ban.Unban.UnbanningAdmin.Value}");
-                }
-
-                response.Append($" in {ban.Unban.UnbanTime}.");
-
-                shell.WriteLine(response.ToString());
-                return;
-            }
-
-            await dbMan.AddServerUnbanAsync(new ServerUnbanDef(banId, player?.UserId, DateTimeOffset.Now));
-
-            shell.WriteLine($"Pardoned ban with id {banId}");
+            shell.WriteLine(Help);
+            return;
         }
+
+        if (!int.TryParse(args[0], out var banId))
+        {
+            shell.WriteLine($"Unable to parse {args[1]} as a ban id integer.\n{Help}");
+            return;
+        }
+
+        var ban = await dbMan.GetServerBanAsync(banId);
+
+        if (ban == null)
+        {
+            shell.WriteLine($"No ban found with id {banId}");
+            return;
+        }
+
+        if (ban.Unban != null)
+        {
+            var response = new StringBuilder("This ban has already been pardoned");
+
+            if (ban.Unban.UnbanningAdmin != null)
+            {
+                response.Append($" by {ban.Unban.UnbanningAdmin.Value}");
+            }
+
+            response.Append($" in {ban.Unban.UnbanTime}.");
+
+            shell.WriteLine(response.ToString());
+            return;
+        }
+
+        await dbMan.AddServerUnbanAsync(new ServerUnbanDef(banId, player?.UserId, DateTimeOffset.Now));
+
+        shell.WriteLine($"Pardoned ban with id {banId}");
     }
 }

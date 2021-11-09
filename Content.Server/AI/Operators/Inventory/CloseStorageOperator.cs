@@ -5,72 +5,71 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.AI.Operators.Inventory
+namespace Content.Server.AI.Operators.Inventory;
+
+/// <summary>
+/// Close the last EntityStorage we opened
+/// This will also update the State for it (which a regular InteractWith won't do)
+/// </summary>
+public sealed class CloseLastStorageOperator : AiOperator
 {
-    /// <summary>
-    /// Close the last EntityStorage we opened
-    /// This will also update the State for it (which a regular InteractWith won't do)
-    /// </summary>
-    public sealed class CloseLastStorageOperator : AiOperator
+    private readonly IEntity _owner;
+    private IEntity? _target;
+
+    public CloseLastStorageOperator(IEntity owner)
     {
-        private readonly IEntity _owner;
-        private IEntity? _target;
+        _owner = owner;
+    }
 
-        public CloseLastStorageOperator(IEntity owner)
+    public override bool Startup()
+    {
+        if (!base.Startup())
         {
-            _owner = owner;
-        }
-
-        public override bool Startup()
-        {
-            if (!base.Startup())
-            {
-                return true;
-            }
-
-            var blackboard = UtilityAiHelpers.GetBlackboard(_owner);
-
-            if (blackboard == null)
-            {
-                return false;
-            }
-
-            _target = blackboard.GetState<LastOpenedStorageState>().GetValue();
-
-            return _target != null;
-        }
-
-        public override bool Shutdown(Outcome outcome)
-        {
-            if (!base.Shutdown(outcome))
-                return false;
-
-            var blackboard = UtilityAiHelpers.GetBlackboard(_owner);
-
-            blackboard?.GetState<LastOpenedStorageState>().SetValue(null);
             return true;
         }
 
-        public override Outcome Execute(float frameTime)
+        var blackboard = UtilityAiHelpers.GetBlackboard(_owner);
+
+        if (blackboard == null)
         {
-            if (_target == null || !_owner.InRangeUnobstructed(_target, popup: true))
-            {
-                return Outcome.Failed;
-            }
-
-            if (!_target.TryGetComponent(out EntityStorageComponent? storageComponent) ||
-                storageComponent.IsWeldedShut)
-            {
-                return Outcome.Failed;
-            }
-
-            if (storageComponent.Open)
-            {
-                var activateArgs = new ActivateEventArgs(_owner, _target);
-                storageComponent.Activate(activateArgs);
-            }
-
-            return Outcome.Success;
+            return false;
         }
+
+        _target = blackboard.GetState<LastOpenedStorageState>().GetValue();
+
+        return _target != null;
+    }
+
+    public override bool Shutdown(Outcome outcome)
+    {
+        if (!base.Shutdown(outcome))
+            return false;
+
+        var blackboard = UtilityAiHelpers.GetBlackboard(_owner);
+
+        blackboard?.GetState<LastOpenedStorageState>().SetValue(null);
+        return true;
+    }
+
+    public override Outcome Execute(float frameTime)
+    {
+        if (_target == null || !_owner.InRangeUnobstructed(_target, popup: true))
+        {
+            return Outcome.Failed;
+        }
+
+        if (!_target.TryGetComponent(out EntityStorageComponent? storageComponent) ||
+            storageComponent.IsWeldedShut)
+        {
+            return Outcome.Failed;
+        }
+
+        if (storageComponent.Open)
+        {
+            var activateArgs = new ActivateEventArgs(_owner, _target);
+            storageComponent.Activate(activateArgs);
+        }
+
+        return Outcome.Success;
     }
 }

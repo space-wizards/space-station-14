@@ -4,24 +4,23 @@ using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.Chemistry.ReagentEffects
+namespace Content.Server.Chemistry.ReagentEffects;
+
+/// <summary>
+/// Attempts to find a HungerComponent on the target,
+/// and to update it's hunger values.
+/// </summary>
+public class SatiateHunger : ReagentEffect
 {
     /// <summary>
-    /// Attempts to find a HungerComponent on the target,
-    /// and to update it's hunger values.
+    ///     How much hunger is satiated when 1u of the reagent is metabolized
     /// </summary>
-    public class SatiateHunger : ReagentEffect
-    {
-        /// <summary>
-        ///     How much hunger is satiated when 1u of the reagent is metabolized
-        /// </summary>
-        [DataField("factor")] public float NutritionFactor { get; set; } = 3.0f;
+    [DataField("factor")] public float NutritionFactor { get; set; } = 3.0f;
 
-        //Remove reagent at set rate, satiate hunger if a HungerComponent can be found
-        public override void Metabolize(EntityUid solutionEntity, EntityUid organEntity, Solution.ReagentQuantity reagent, IEntityManager entityManager)
-        {
-            if (entityManager.TryGetComponent(solutionEntity, out HungerComponent? hunger))
-                hunger.UpdateFood(NutritionFactor);
-        }
+    //Remove reagent at set rate, satiate hunger if a HungerComponent can be found
+    public override void Metabolize(EntityUid solutionEntity, EntityUid organEntity, Solution.ReagentQuantity reagent, IEntityManager entityManager)
+    {
+        if (entityManager.TryGetComponent(solutionEntity, out HungerComponent? hunger))
+            hunger.UpdateFood(NutritionFactor);
     }
 }

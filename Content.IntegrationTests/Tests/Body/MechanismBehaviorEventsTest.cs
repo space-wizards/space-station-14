@@ -11,98 +11,98 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 
-namespace Content.IntegrationTests.Tests.Body
+namespace Content.IntegrationTests.Tests.Body;
+
+[TestFixture]
+[TestOf(typeof(SharedBodyComponent))]
+[TestOf(typeof(SharedBodyPartComponent))]
+[TestOf(typeof(SharedMechanismComponent))]
+[TestOf(typeof(MechanismBehavior))]
+public class MechanismBehaviorEventsTest : ContentIntegrationTest
 {
-    [TestFixture]
-    [TestOf(typeof(SharedBodyComponent))]
-    [TestOf(typeof(SharedBodyPartComponent))]
-    [TestOf(typeof(SharedMechanismComponent))]
-    [TestOf(typeof(MechanismBehavior))]
-    public class MechanismBehaviorEventsTest : ContentIntegrationTest
+    private class TestMechanismBehavior : MechanismBehavior
     {
-        private class TestMechanismBehavior : MechanismBehavior
+        public bool WasAddedToBody;
+        public bool WasAddedToPart;
+        public bool WasAddedToPartInBody;
+        public bool WasRemovedFromBody;
+        public bool WasRemovedFromPart;
+        public bool WasRemovedFromPartInBody;
+
+        public bool NoAdded()
         {
-            public bool WasAddedToBody;
-            public bool WasAddedToPart;
-            public bool WasAddedToPartInBody;
-            public bool WasRemovedFromBody;
-            public bool WasRemovedFromPart;
-            public bool WasRemovedFromPartInBody;
-
-            public bool NoAdded()
-            {
-                return !WasAddedToBody && !WasAddedToPart && !WasAddedToPartInBody;
-            }
-
-            public bool NoRemoved()
-            {
-                return !WasRemovedFromBody && !WasRemovedFromPart && !WasRemovedFromPartInBody;
-            }
-
-            public void ResetAdded()
-            {
-                WasAddedToBody = false;
-                WasAddedToPart = false;
-                WasAddedToPartInBody = false;
-            }
-
-            public void ResetRemoved()
-            {
-                WasRemovedFromBody = false;
-                WasRemovedFromPart = false;
-                WasRemovedFromPartInBody = false;
-            }
-
-            public void ResetAll()
-            {
-                ResetAdded();
-                ResetRemoved();
-            }
-
-            protected override void OnAddedToBody(SharedBodyComponent body)
-            {
-                base.OnAddedToBody(body);
-
-                WasAddedToBody = true;
-            }
-
-            protected override void OnAddedToPart(SharedBodyPartComponent part)
-            {
-                base.OnAddedToPart(part);
-
-                WasAddedToPart = true;
-            }
-
-            protected override void OnAddedToPartInBody(SharedBodyComponent body, SharedBodyPartComponent part)
-            {
-                base.OnAddedToPartInBody(body, part);
-
-                WasAddedToPartInBody = true;
-            }
-
-            protected override void OnRemovedFromBody(SharedBodyComponent old)
-            {
-                base.OnRemovedFromBody(old);
-
-                WasRemovedFromBody = true;
-            }
-
-            protected override void OnRemovedFromPart(SharedBodyPartComponent old)
-            {
-                base.OnRemovedFromPart(old);
-
-                WasRemovedFromPart = true;
-            }
-
-            protected override void OnRemovedFromPartInBody(SharedBodyComponent oldBody, SharedBodyPartComponent oldPart)
-            {
-                base.OnRemovedFromPartInBody(oldBody, oldPart);
-
-                WasRemovedFromPartInBody = true;
-            }
+            return !WasAddedToBody && !WasAddedToPart && !WasAddedToPartInBody;
         }
 
-        private const string Prototypes = @"
+        public bool NoRemoved()
+        {
+            return !WasRemovedFromBody && !WasRemovedFromPart && !WasRemovedFromPartInBody;
+        }
+
+        public void ResetAdded()
+        {
+            WasAddedToBody = false;
+            WasAddedToPart = false;
+            WasAddedToPartInBody = false;
+        }
+
+        public void ResetRemoved()
+        {
+            WasRemovedFromBody = false;
+            WasRemovedFromPart = false;
+            WasRemovedFromPartInBody = false;
+        }
+
+        public void ResetAll()
+        {
+            ResetAdded();
+            ResetRemoved();
+        }
+
+        protected override void OnAddedToBody(SharedBodyComponent body)
+        {
+            base.OnAddedToBody(body);
+
+            WasAddedToBody = true;
+        }
+
+        protected override void OnAddedToPart(SharedBodyPartComponent part)
+        {
+            base.OnAddedToPart(part);
+
+            WasAddedToPart = true;
+        }
+
+        protected override void OnAddedToPartInBody(SharedBodyComponent body, SharedBodyPartComponent part)
+        {
+            base.OnAddedToPartInBody(body, part);
+
+            WasAddedToPartInBody = true;
+        }
+
+        protected override void OnRemovedFromBody(SharedBodyComponent old)
+        {
+            base.OnRemovedFromBody(old);
+
+            WasRemovedFromBody = true;
+        }
+
+        protected override void OnRemovedFromPart(SharedBodyPartComponent old)
+        {
+            base.OnRemovedFromPart(old);
+
+            WasRemovedFromPart = true;
+        }
+
+        protected override void OnRemovedFromPartInBody(SharedBodyComponent oldBody, SharedBodyPartComponent oldPart)
+        {
+            base.OnRemovedFromPartInBody(oldBody, oldPart);
+
+            WasRemovedFromPartInBody = true;
+        }
+    }
+
+    private const string Prototypes = @"
 - type: entity
   name: HumanBodyDummy
   id: HumanBodyDummy
@@ -113,96 +113,95 @@ namespace Content.IntegrationTests.Tests.Body
     centerSlot: torso
 ";
 
-        [Test]
-        public async Task EventsTest()
+    [Test]
+    public async Task EventsTest()
+    {
+        var options = new ServerContentIntegrationOption {ExtraPrototypes = Prototypes};
+        var server = StartServer(options);
+
+        await server.WaitAssertion(() =>
         {
-            var options = new ServerContentIntegrationOption {ExtraPrototypes = Prototypes};
-            var server = StartServer(options);
+            var mapManager = IoCManager.Resolve<IMapManager>();
 
-            await server.WaitAssertion(() =>
-            {
-                var mapManager = IoCManager.Resolve<IMapManager>();
+            var mapId = mapManager.CreateMap();
 
-                var mapId = mapManager.CreateMap();
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var human = entityManager.SpawnEntity("HumanBodyDummy", new MapCoordinates(Vector2.Zero, mapId));
 
-                var entityManager = IoCManager.Resolve<IEntityManager>();
-                var human = entityManager.SpawnEntity("HumanBodyDummy", new MapCoordinates(Vector2.Zero, mapId));
+            Assert.That(human.TryGetComponent(out SharedBodyComponent? body));
+            Assert.NotNull(body);
 
-                Assert.That(human.TryGetComponent(out SharedBodyComponent? body));
-                Assert.NotNull(body);
+            var centerPart = body!.CenterPart;
+            Assert.NotNull(centerPart);
 
-                var centerPart = body!.CenterPart;
-                Assert.NotNull(centerPart);
+            Assert.That(body.TryGetSlot(centerPart!, out var centerSlot));
+            Assert.NotNull(centerSlot);
 
-                Assert.That(body.TryGetSlot(centerPart!, out var centerSlot));
-                Assert.NotNull(centerSlot);
+            var mechanism = centerPart!.Mechanisms.First();
+            Assert.NotNull(mechanism);
 
-                var mechanism = centerPart!.Mechanisms.First();
-                Assert.NotNull(mechanism);
+            mechanism.EnsureBehavior<TestMechanismBehavior>(out var behavior);
+            Assert.False(behavior.WasAddedToBody);
+            Assert.False(behavior.WasAddedToPart);
+            Assert.That(behavior.WasAddedToPartInBody);
+            Assert.That(behavior.NoRemoved);
 
-                mechanism.EnsureBehavior<TestMechanismBehavior>(out var behavior);
-                Assert.False(behavior.WasAddedToBody);
-                Assert.False(behavior.WasAddedToPart);
-                Assert.That(behavior.WasAddedToPartInBody);
-                Assert.That(behavior.NoRemoved);
+            behavior.ResetAll();
 
-                behavior.ResetAll();
+            Assert.That(behavior.NoAdded);
+            Assert.That(behavior.NoRemoved);
 
-                Assert.That(behavior.NoAdded);
-                Assert.That(behavior.NoRemoved);
+            centerPart.RemoveMechanism(mechanism);
 
-                centerPart.RemoveMechanism(mechanism);
+            Assert.That(behavior.NoAdded);
+            Assert.False(behavior.WasRemovedFromBody);
+            Assert.False(behavior.WasRemovedFromPart);
+            Assert.That(behavior.WasRemovedFromPartInBody);
 
-                Assert.That(behavior.NoAdded);
-                Assert.False(behavior.WasRemovedFromBody);
-                Assert.False(behavior.WasRemovedFromPart);
-                Assert.That(behavior.WasRemovedFromPartInBody);
+            behavior.ResetAll();
 
-                behavior.ResetAll();
+            centerPart.TryAddMechanism(mechanism, true);
 
-                centerPart.TryAddMechanism(mechanism, true);
+            Assert.False(behavior.WasAddedToBody);
+            Assert.False(behavior.WasAddedToPart);
+            Assert.That(behavior.WasAddedToPartInBody);
+            Assert.That(behavior.NoRemoved());
 
-                Assert.False(behavior.WasAddedToBody);
-                Assert.False(behavior.WasAddedToPart);
-                Assert.That(behavior.WasAddedToPartInBody);
-                Assert.That(behavior.NoRemoved());
+            behavior.ResetAll();
 
-                behavior.ResetAll();
+            body.RemovePart(centerPart);
 
-                body.RemovePart(centerPart);
+            Assert.That(behavior.NoAdded);
+            Assert.That(behavior.WasRemovedFromBody);
+            Assert.False(behavior.WasRemovedFromPart);
+            Assert.False(behavior.WasRemovedFromPartInBody);
 
-                Assert.That(behavior.NoAdded);
-                Assert.That(behavior.WasRemovedFromBody);
-                Assert.False(behavior.WasRemovedFromPart);
-                Assert.False(behavior.WasRemovedFromPartInBody);
+            behavior.ResetAll();
 
-                behavior.ResetAll();
+            centerPart.RemoveMechanism(mechanism);
 
-                centerPart.RemoveMechanism(mechanism);
+            Assert.That(behavior.NoAdded);
+            Assert.False(behavior.WasRemovedFromBody);
+            Assert.That(behavior.WasRemovedFromPart);
+            Assert.False(behavior.WasRemovedFromPartInBody);
 
-                Assert.That(behavior.NoAdded);
-                Assert.False(behavior.WasRemovedFromBody);
-                Assert.That(behavior.WasRemovedFromPart);
-                Assert.False(behavior.WasRemovedFromPartInBody);
+            behavior.ResetAll();
 
-                behavior.ResetAll();
+            centerPart.TryAddMechanism(mechanism, true);
 
-                centerPart.TryAddMechanism(mechanism, true);
+            Assert.False(behavior.WasAddedToBody);
+            Assert.That(behavior.WasAddedToPart);
+            Assert.False(behavior.WasAddedToPartInBody);
+            Assert.That(behavior.NoRemoved);
 
-                Assert.False(behavior.WasAddedToBody);
-                Assert.That(behavior.WasAddedToPart);
-                Assert.False(behavior.WasAddedToPartInBody);
-                Assert.That(behavior.NoRemoved);
+            behavior.ResetAll();
 
-                behavior.ResetAll();
+            body.SetPart(centerSlot!.Id, centerPart);
 
-                body.SetPart(centerSlot!.Id, centerPart);
-
-                Assert.That(behavior.WasAddedToBody);
-                Assert.False(behavior.WasAddedToPart);
-                Assert.False(behavior.WasAddedToPartInBody);
-                Assert.That(behavior.NoRemoved);
-            });
-        }
+            Assert.That(behavior.WasAddedToBody);
+            Assert.False(behavior.WasAddedToPart);
+            Assert.False(behavior.WasAddedToPartInBody);
+            Assert.That(behavior.NoRemoved);
+        });
     }
 }

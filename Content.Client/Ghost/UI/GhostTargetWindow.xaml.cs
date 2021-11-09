@@ -7,79 +7,78 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 
-namespace Content.Client.Ghost.UI
+namespace Content.Client.Ghost.UI;
+
+[GenerateTypedNameReferences]
+public partial class GhostTargetWindow : SS14Window
 {
-    [GenerateTypedNameReferences]
-    public partial class GhostTargetWindow : SS14Window
+    private readonly IEntityNetworkManager _netManager;
+
+    public List<string> Locations { get; set; } = new();
+
+    public Dictionary<EntityUid, string> Players { get; set; } = new();
+
+    public GhostTargetWindow(IEntityNetworkManager netManager)
     {
-        private readonly IEntityNetworkManager _netManager;
+        RobustXamlLoader.Load(this);
 
-        public List<string> Locations { get; set; } = new();
+        _netManager = netManager;
+    }
 
-        public Dictionary<EntityUid, string> Players { get; set; } = new();
+    public void Populate()
+    {
+        ButtonContainer.DisposeAllChildren();
+        AddButtonPlayers();
+        AddButtonLocations();
+    }
 
-        public GhostTargetWindow(IEntityNetworkManager netManager)
+    private void AddButtonPlayers()
+    {
+        foreach (var (key, value) in Players)
         {
-            RobustXamlLoader.Load(this);
-
-            _netManager = netManager;
-        }
-
-        public void Populate()
-        {
-            ButtonContainer.DisposeAllChildren();
-            AddButtonPlayers();
-            AddButtonLocations();
-        }
-
-        private void AddButtonPlayers()
-        {
-            foreach (var (key, value) in Players)
+            var currentButtonRef = new Button
             {
-                var currentButtonRef = new Button
-                {
-                    Text = value,
-                    TextAlign = Label.AlignMode.Right,
-                    HorizontalAlignment = HAlignment.Center,
-                    VerticalAlignment = VAlignment.Center,
-                    SizeFlagsStretchRatio = 1,
-                    MinSize = (230, 20),
-                    ClipText = true,
-                };
+                Text = value,
+                TextAlign = Label.AlignMode.Right,
+                HorizontalAlignment = HAlignment.Center,
+                VerticalAlignment = VAlignment.Center,
+                SizeFlagsStretchRatio = 1,
+                MinSize = (230, 20),
+                ClipText = true,
+            };
 
-                currentButtonRef.OnPressed += (_) =>
-                {
-                    var msg = new GhostWarpToTargetRequestEvent(key);
-                    _netManager.SendSystemNetworkMessage(msg);
-                };
-
-                ButtonContainer.AddChild(currentButtonRef);
-            }
-        }
-
-        private void AddButtonLocations()
-        {
-            foreach (var name in Locations)
+            currentButtonRef.OnPressed += (_) =>
             {
-                var currentButtonRef = new Button
-                {
-                    Text = Loc.GetString("ghost-target-window-current-button", ("name", name)),
-                    TextAlign = Label.AlignMode.Right,
-                    HorizontalAlignment = HAlignment.Center,
-                    VerticalAlignment = VAlignment.Center,
-                    SizeFlagsStretchRatio = 1,
-                    MinSize = (230, 20),
-                    ClipText = true,
-                };
+                var msg = new GhostWarpToTargetRequestEvent(key);
+                _netManager.SendSystemNetworkMessage(msg);
+            };
 
-                currentButtonRef.OnPressed += _ =>
-                {
-                    var msg = new GhostWarpToLocationRequestEvent(name);
-                    _netManager.SendSystemNetworkMessage(msg);
-                };
+            ButtonContainer.AddChild(currentButtonRef);
+        }
+    }
 
-                ButtonContainer.AddChild(currentButtonRef);
-            }
+    private void AddButtonLocations()
+    {
+        foreach (var name in Locations)
+        {
+            var currentButtonRef = new Button
+            {
+                Text = Loc.GetString("ghost-target-window-current-button", ("name", name)),
+                TextAlign = Label.AlignMode.Right,
+                HorizontalAlignment = HAlignment.Center,
+                VerticalAlignment = VAlignment.Center,
+                SizeFlagsStretchRatio = 1,
+                MinSize = (230, 20),
+                ClipText = true,
+            };
+
+            currentButtonRef.OnPressed += _ =>
+            {
+                var msg = new GhostWarpToLocationRequestEvent(name);
+                _netManager.SendSystemNetworkMessage(msg);
+            };
+
+            ButtonContainer.AddChild(currentButtonRef);
         }
     }
 }

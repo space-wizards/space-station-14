@@ -2,24 +2,23 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.AME
+namespace Content.Shared.AME;
+
+public class SharedAMEShieldComponent : Component
 {
-    public class SharedAMEShieldComponent : Component
+    public override string Name => "AMEShield";
+
+    [Serializable, NetSerializable]
+    public enum AMEShieldVisuals
     {
-        public override string Name => "AMEShield";
+        Core,
+        CoreState
+    }
 
-        [Serializable, NetSerializable]
-        public enum AMEShieldVisuals
-        {
-            Core,
-            CoreState
-        }
-
-        public enum AMECoreState
-        {
-            Off,
-            Weak,
-            Strong
-        }
+    public enum AMECoreState
+    {
+        Off,
+        Weak,
+        Strong
     }
 }

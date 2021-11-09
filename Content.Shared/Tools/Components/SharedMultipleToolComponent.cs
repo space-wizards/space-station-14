@@ -3,22 +3,21 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Tools.Components
+namespace Content.Shared.Tools.Components;
+
+[NetworkedComponent]
+public class SharedMultipleToolComponent : Component
 {
-    [NetworkedComponent]
-    public class SharedMultipleToolComponent : Component
-    {
-        public override string Name => "MultipleTool";
-    }
+    public override string Name => "MultipleTool";
+}
 
-    [NetSerializable, Serializable]
-    public class MultipleToolComponentState : ComponentState
-    {
-        public string QualityName { get; }
+[NetSerializable, Serializable]
+public class MultipleToolComponentState : ComponentState
+{
+    public string QualityName { get; }
 
-        public MultipleToolComponentState(string qualityName)
-        {
-            QualityName = qualityName;
-        }
+    public MultipleToolComponentState(string qualityName)
+    {
+        QualityName = qualityName;
     }
 }

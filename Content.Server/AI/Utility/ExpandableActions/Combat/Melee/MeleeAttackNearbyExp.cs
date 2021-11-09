@@ -11,36 +11,35 @@ using Content.Server.AI.WorldState.States;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Server.AI.Utility.ExpandableActions.Combat.Melee
+namespace Content.Server.AI.Utility.ExpandableActions.Combat.Melee;
+
+public sealed class MeleeAttackNearbyExp : ExpandableUtilityAction
 {
-    public sealed class MeleeAttackNearbyExp : ExpandableUtilityAction
+    public override float Bonus => UtilityAction.CombatBonus;
+
+    protected override IEnumerable<Func<float>> GetCommonConsiderations(Blackboard context)
     {
-        public override float Bonus => UtilityAction.CombatBonus;
+        var considerationsManager = IoCManager.Resolve<ConsiderationsManager>();
 
-        protected override IEnumerable<Func<float>> GetCommonConsiderations(Blackboard context)
+        return new[]
         {
-            var considerationsManager = IoCManager.Resolve<ConsiderationsManager>();
+            considerationsManager.Get<MeleeWeaponEquippedCon>()
+                                 .BoolCurve(context),
+        };
+    }
 
-            return new[]
-            {
-                considerationsManager.Get<MeleeWeaponEquippedCon>()
-                    .BoolCurve(context),
-            };
+    public override IEnumerable<UtilityAction> GetActions(Blackboard context)
+    {
+        var owner = context.GetState<SelfState>().GetValue();
+        if (!owner.TryGetComponent(out AiControllerComponent? controller))
+        {
+            throw new InvalidOperationException();
         }
 
-        public override IEnumerable<UtilityAction> GetActions(Blackboard context)
+        foreach (var target in EntitySystem.Get<AiFactionTagSystem>()
+                                           .GetNearbyHostiles(owner, controller.VisionRadius))
         {
-            var owner = context.GetState<SelfState>().GetValue();
-            if (!owner.TryGetComponent(out AiControllerComponent? controller))
-            {
-                throw new InvalidOperationException();
-            }
-
-            foreach (var target in EntitySystem.Get<AiFactionTagSystem>()
-                .GetNearbyHostiles(owner, controller.VisionRadius))
-            {
-                yield return new MeleeWeaponAttackEntity {Owner = owner, Target = target, Bonus = Bonus};
-            }
+            yield return new MeleeWeaponAttackEntity {Owner = owner, Target = target, Bonus = Bonus};
         }
     }
 }

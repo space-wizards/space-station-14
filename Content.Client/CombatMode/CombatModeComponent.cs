@@ -6,51 +6,50 @@ using Robust.Client.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Client.CombatMode
+namespace Content.Client.CombatMode;
+
+[RegisterComponent]
+[ComponentReference(typeof(SharedCombatModeComponent))]
+public sealed class CombatModeComponent : SharedCombatModeComponent
 {
-    [RegisterComponent]
-    [ComponentReference(typeof(SharedCombatModeComponent))]
-    public sealed class CombatModeComponent : SharedCombatModeComponent
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly IGameHud _gameHud = default!;
+
+    public override bool IsInCombatMode
     {
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IGameHud _gameHud = default!;
-
-        public override bool IsInCombatMode
+        get => base.IsInCombatMode;
+        set
         {
-            get => base.IsInCombatMode;
-            set
-            {
-                base.IsInCombatMode = value;
-                UpdateHud();
-            }
-        }
-
-        public override TargetingZone ActiveZone
-        {
-            get => base.ActiveZone;
-            set
-            {
-                base.ActiveZone = value;
-                UpdateHud();
-            }
-        }
-
-        public void PlayerDetached() { _gameHud.CombatPanelVisible = false; }
-
-        public void PlayerAttached()
-        {
-            _gameHud.CombatPanelVisible = true;
+            base.IsInCombatMode = value;
             UpdateHud();
         }
+    }
 
-        private void UpdateHud()
+    public override TargetingZone ActiveZone
+    {
+        get => base.ActiveZone;
+        set
         {
-            if (Owner != _playerManager.LocalPlayer?.ControlledEntity)
-            {
-                return;
-            }
-
-            _gameHud.TargetingZone = ActiveZone;
+            base.ActiveZone = value;
+            UpdateHud();
         }
+    }
+
+    public void PlayerDetached() { _gameHud.CombatPanelVisible = false; }
+
+    public void PlayerAttached()
+    {
+        _gameHud.CombatPanelVisible = true;
+        UpdateHud();
+    }
+
+    private void UpdateHud()
+    {
+        if (Owner != _playerManager.LocalPlayer?.ControlledEntity)
+        {
+            return;
+        }
+
+        _gameHud.TargetingZone = ActiveZone;
     }
 }

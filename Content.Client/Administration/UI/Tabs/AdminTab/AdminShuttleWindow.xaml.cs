@@ -8,24 +8,23 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
-namespace Content.Client.Administration.UI.Tabs.AdminTab
+namespace Content.Client.Administration.UI.Tabs.AdminTab;
+
+[GenerateTypedNameReferences]
+public partial class AdminShuttleWindow : SS14Window
 {
-    [GenerateTypedNameReferences]
-    public partial class AdminShuttleWindow : SS14Window
+    public AdminShuttleWindow()
     {
-        public AdminShuttleWindow()
-        {
-            RobustXamlLoader.Load(this);
-            IoCManager.InjectDependencies(this);
+        RobustXamlLoader.Load(this);
+        IoCManager.InjectDependencies(this);
 
-            _callShuttleTime.OnTextChanged += CallShuttleTimeOnOnTextChanged;
-        }
+        _callShuttleTime.OnTextChanged += CallShuttleTimeOnOnTextChanged;
+    }
 
-        private void CallShuttleTimeOnOnTextChanged(LineEdit.LineEditEventArgs obj)
-        {
-            var loc = IoCManager.Resolve<ILocalizationManager>();
-            _callShuttleButton.Disabled = !TimeSpan.TryParseExact(obj.Text, Localization.TimeSpanMinutesFormats, loc.DefaultCulture, out _);
-            _callShuttleButton.Command = $"callshuttle {obj.Text}";
-        }
+    private void CallShuttleTimeOnOnTextChanged(LineEdit.LineEditEventArgs obj)
+    {
+        var loc = IoCManager.Resolve<ILocalizationManager>();
+        _callShuttleButton.Disabled = !TimeSpan.TryParseExact(obj.Text, Localization.TimeSpanMinutesFormats, loc.DefaultCulture, out _);
+        _callShuttleButton.Command = $"callshuttle {obj.Text}";
     }
 }

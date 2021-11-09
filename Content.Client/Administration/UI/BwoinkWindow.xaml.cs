@@ -19,45 +19,44 @@ using Robust.Shared.Network;
 using Robust.Shared.GameObjects;
 using YamlDotNet.RepresentationModel;
 
-namespace Content.Client.Administration.UI
+namespace Content.Client.Administration.UI;
+
+/// <summary>
+/// This window connects to a BwoinkSystem channel. BwoinkSystem manages the rest.
+/// </summary>
+[GenerateTypedNameReferences]
+public partial class BwoinkWindow : SS14Window
 {
-    /// <summary>
-    /// This window connects to a BwoinkSystem channel. BwoinkSystem manages the rest.
-    /// </summary>
-    [GenerateTypedNameReferences]
-    public partial class BwoinkWindow : SS14Window
+    [Dependency] private readonly IEntitySystemManager _systemManager = default!;
+
+    private readonly NetUserId _channelId;
+
+    public BwoinkWindow(NetUserId channelId, string title)
     {
-        [Dependency] private readonly IEntitySystemManager _systemManager = default!;
+        RobustXamlLoader.Load(this);
+        IoCManager.InjectDependencies(this);
 
-        private readonly NetUserId _channelId;
+        Title = title;
+        _channelId = channelId;
 
-        public BwoinkWindow(NetUserId channelId, string title)
+        SenderLineEdit.OnTextEntered += Input_OnTextEntered;
+    }
+
+    private void Input_OnTextEntered(LineEdit.LineEditEventArgs args)
+    {
+        if (!string.IsNullOrWhiteSpace(args.Text))
         {
-            RobustXamlLoader.Load(this);
-            IoCManager.InjectDependencies(this);
-
-            Title = title;
-            _channelId = channelId;
-
-            SenderLineEdit.OnTextEntered += Input_OnTextEntered;
+            var bwoink = _systemManager.GetEntitySystem<BwoinkSystem>();
+            bwoink.Send(_channelId, args.Text);
         }
 
-        private void Input_OnTextEntered(LineEdit.LineEditEventArgs args)
-        {
-            if (!string.IsNullOrWhiteSpace(args.Text))
-            {
-                var bwoink = _systemManager.GetEntitySystem<BwoinkSystem>();
-                bwoink.Send(_channelId, args.Text);
-            }
+        SenderLineEdit.Clear();
+    }
 
-            SenderLineEdit.Clear();
-        }
-
-        public void ReceiveLine(string text)
-        {
-            var formatted = new FormattedMessage(1);
-            formatted.AddText(text);
-            TextOutput.AddMessage(formatted);
-        }
+    public void ReceiveLine(string text)
+    {
+        var formatted = new FormattedMessage(1);
+        formatted.AddText(text);
+        TextOutput.AddMessage(formatted);
     }
 }

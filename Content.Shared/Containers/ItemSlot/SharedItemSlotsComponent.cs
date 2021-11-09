@@ -10,45 +10,44 @@ using Robust.Shared.ViewVariables;
 using System;
 using System.Collections.Generic;
 
-namespace Content.Shared.Containers.ItemSlots
+namespace Content.Shared.Containers.ItemSlots;
+
+/// <summary>
+///     Used for entities that can hold items in different slots
+///     Allows basic insert/eject interaction
+/// </summary>
+[RegisterComponent]
+public class SharedItemSlotsComponent : Component
 {
+    public override string Name => "ItemSlots";
+
+    [ViewVariables] [DataField("slots")] public Dictionary<string, ItemSlot> Slots = new();
+}
+
+[Serializable]
+[DataDefinition]
+public class ItemSlot
+{
+    [ViewVariables] [DataField("whitelist")] public EntityWhitelist? Whitelist;
+    [ViewVariables] [DataField("insertSound")] public SoundSpecifier? InsertSound;
+    [ViewVariables] [DataField("ejectSound")] public SoundSpecifier? EjectSound;
+
     /// <summary>
-    ///     Used for entities that can hold items in different slots
-    ///     Allows basic insert/eject interaction
+    ///     The name of this item slot. This will be shown to the user in the verb menu.
     /// </summary>
-    [RegisterComponent]
-    public class SharedItemSlotsComponent : Component
+    [ViewVariables] public string Name
     {
-        public override string Name => "ItemSlots";
-
-        [ViewVariables] [DataField("slots")] public Dictionary<string, ItemSlot> Slots = new();
+        get => _name != string.Empty
+            ? Loc.GetString(_name)
+            : ContainerSlot.ContainedEntity?.Name ?? string.Empty;
+        set => _name = value;
     }
+    [DataField("name")] private string _name = string.Empty;
 
-    [Serializable]
-    [DataDefinition]
-    public class ItemSlot
-    {
-        [ViewVariables] [DataField("whitelist")] public EntityWhitelist? Whitelist;
-        [ViewVariables] [DataField("insertSound")] public SoundSpecifier? InsertSound;
-        [ViewVariables] [DataField("ejectSound")] public SoundSpecifier? EjectSound;
+    [DataField("item", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [ViewVariables] public string? StartingItem;
 
-        /// <summary>
-        ///     The name of this item slot. This will be shown to the user in the verb menu.
-        /// </summary>
-        [ViewVariables] public string Name
-        {
-            get => _name != string.Empty
-                ? Loc.GetString(_name)
-                : ContainerSlot.ContainedEntity?.Name ?? string.Empty;
-            set => _name = value;
-        }
-        [DataField("name")] private string _name = string.Empty;
+    [ViewVariables] public ContainerSlot ContainerSlot = default!;
 
-        [DataField("item", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        [ViewVariables] public string? StartingItem;
-
-        [ViewVariables] public ContainerSlot ContainerSlot = default!;
-
-        public bool HasEntity => ContainerSlot.ContainedEntity != null;
-    }
+    public bool HasEntity => ContainerSlot.ContainedEntity != null;
 }

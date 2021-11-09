@@ -3,19 +3,18 @@ using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
-namespace Content.Client.Pointing.Components
-{
-    [RegisterComponent]
-    public class RoguePointingArrowComponent : SharedRoguePointingArrowComponent
-    {
-        protected override void Startup()
-        {
-            base.Startup();
+namespace Content.Client.Pointing.Components;
 
-            if (Owner.TryGetComponent(out SpriteComponent? sprite))
-            {
-                sprite.DrawDepth = (int) DrawDepth.Overlays;
-            }
+[RegisterComponent]
+public class RoguePointingArrowComponent : SharedRoguePointingArrowComponent
+{
+    protected override void Startup()
+    {
+        base.Startup();
+
+        if (Owner.TryGetComponent(out SpriteComponent? sprite))
+        {
+            sprite.DrawDepth = (int) DrawDepth.Overlays;
         }
     }
 }

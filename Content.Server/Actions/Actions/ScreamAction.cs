@@ -16,55 +16,54 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Server.Actions.Actions
+namespace Content.Server.Actions.Actions;
+
+[UsedImplicitly]
+[DataDefinition]
+public class ScreamAction : IInstantAction, ISerializationHooks
 {
-    [UsedImplicitly]
-    [DataDefinition]
-    public class ScreamAction : IInstantAction, ISerializationHooks
+    private const float Variation = 0.125f;
+    private const float Volume = 4f;
+
+    [Dependency] private readonly IRobustRandom _random = default!;
+
+    [DataField("male", required: true)] private SoundSpecifier _male = default!;
+    [DataField("female", required: true)] private SoundSpecifier _female = default!;
+    [DataField("wilhelm", required: true)] private SoundSpecifier _wilhelm = default!;
+
+    /// seconds
+    [DataField("cooldown")] private float _cooldown = 10;
+
+    void ISerializationHooks.AfterDeserialization()
     {
-        private const float Variation = 0.125f;
-        private const float Volume = 4f;
+        IoCManager.InjectDependencies(this);
+    }
 
-        [Dependency] private readonly IRobustRandom _random = default!;
+    public void DoInstantAction(InstantActionEventArgs args)
+    {
+        if (!EntitySystem.Get<ActionBlockerSystem>().CanSpeak(args.Performer.Uid)) return;
+        if (!args.Performer.TryGetComponent<HumanoidAppearanceComponent>(out var humanoid)) return;
+        if (!args.Performer.TryGetComponent<SharedActionsComponent>(out var actions)) return;
 
-        [DataField("male", required: true)] private SoundSpecifier _male = default!;
-        [DataField("female", required: true)] private SoundSpecifier _female = default!;
-        [DataField("wilhelm", required: true)] private SoundSpecifier _wilhelm = default!;
-
-        /// seconds
-        [DataField("cooldown")] private float _cooldown = 10;
-
-        void ISerializationHooks.AfterDeserialization()
+        if (_random.Prob(.01f))
         {
-            IoCManager.InjectDependencies(this);
+            SoundSystem.Play(Filter.Pvs(args.Performer), _wilhelm.GetSound(), args.Performer, AudioParams.Default.WithVolume(Volume));
+        }
+        else
+        {
+            switch (humanoid.Sex)
+            {
+                case Sex.Male:
+                    SoundSystem.Play(Filter.Pvs(args.Performer), _male.GetSound(), args.Performer, AudioHelpers.WithVariation(Variation).WithVolume(Volume));
+                    break;
+                case Sex.Female:
+                    SoundSystem.Play(Filter.Pvs(args.Performer), _female.GetSound(), args.Performer, AudioHelpers.WithVariation(Variation).WithVolume(Volume));
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
-        public void DoInstantAction(InstantActionEventArgs args)
-        {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanSpeak(args.Performer.Uid)) return;
-            if (!args.Performer.TryGetComponent<HumanoidAppearanceComponent>(out var humanoid)) return;
-            if (!args.Performer.TryGetComponent<SharedActionsComponent>(out var actions)) return;
-
-            if (_random.Prob(.01f))
-            {
-                SoundSystem.Play(Filter.Pvs(args.Performer), _wilhelm.GetSound(), args.Performer, AudioParams.Default.WithVolume(Volume));
-            }
-            else
-            {
-                switch (humanoid.Sex)
-                {
-                    case Sex.Male:
-                        SoundSystem.Play(Filter.Pvs(args.Performer), _male.GetSound(), args.Performer, AudioHelpers.WithVariation(Variation).WithVolume(Volume));
-                        break;
-                    case Sex.Female:
-                        SoundSystem.Play(Filter.Pvs(args.Performer), _female.GetSound(), args.Performer, AudioHelpers.WithVariation(Variation).WithVolume(Volume));
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-            }
-
-            actions.Cooldown(args.ActionType, Cooldowns.SecondsFromNow(_cooldown));
-        }
+        actions.Cooldown(args.ActionType, Cooldowns.SecondsFromNow(_cooldown));
     }
 }

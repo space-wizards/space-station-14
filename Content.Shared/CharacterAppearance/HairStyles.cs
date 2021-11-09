@@ -2,34 +2,33 @@ using System;
 using System.Collections.Generic;
 using Robust.Shared.Maths;
 
-namespace Content.Shared.CharacterAppearance
+namespace Content.Shared.CharacterAppearance;
+
+public static class HairStyles
 {
-    public static class HairStyles
+    public const string DefaultHairStyle = "HairBald";
+    public const string DefaultFacialHairStyle = "FacialHairShaved";
+
+    public static readonly IReadOnlyList<Color> RealisticHairColors = new List<Color>
     {
-        public const string DefaultHairStyle = "HairBald";
-        public const string DefaultFacialHairStyle = "FacialHairShaved";
+        Color.Yellow,
+        Color.Black,
+        Color.SandyBrown,
+        Color.Brown,
+        Color.Wheat,
+        Color.Gray
+    };
 
-        public static readonly IReadOnlyList<Color> RealisticHairColors = new List<Color>
+    // These comparers put the default hair style (shaved/bald) at the very top.
+    // For in the hair style pickers.
+
+    public static readonly IComparer<SpriteAccessoryPrototype> SpriteAccessoryComparer =
+        Comparer<SpriteAccessoryPrototype>.Create((a, b) =>
         {
-            Color.Yellow,
-            Color.Black,
-            Color.SandyBrown,
-            Color.Brown,
-            Color.Wheat,
-            Color.Gray
-        };
+            var cmp = -a.Priority.CompareTo(b.Priority);
+            if (cmp != 0)
+                return cmp;
 
-        // These comparers put the default hair style (shaved/bald) at the very top.
-        // For in the hair style pickers.
-
-        public static readonly IComparer<SpriteAccessoryPrototype> SpriteAccessoryComparer =
-            Comparer<SpriteAccessoryPrototype>.Create((a, b) =>
-            {
-                var cmp = -a.Priority.CompareTo(b.Priority);
-                if (cmp != 0)
-                    return cmp;
-
-                return string.Compare(a.Name, b.Name, StringComparison.CurrentCulture);
-            });
-    }
+            return string.Compare(a.Name, b.Name, StringComparison.CurrentCulture);
+        });
 }

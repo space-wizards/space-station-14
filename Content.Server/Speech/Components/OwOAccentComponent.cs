@@ -1,10 +1,9 @@
 ﻿using Robust.Shared.GameObjects;
 
-namespace Content.Server.Speech.Components
+namespace Content.Server.Speech.Components;
+
+[RegisterComponent]
+public class OwOAccentComponent : Component
 {
-    [RegisterComponent]
-    public class OwOAccentComponent : Component
-    {
-        public override string Name => "OwOAccent";
-    }
+    public override string Name => "OwOAccent";
 }

@@ -1,18 +1,16 @@
 using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.PDA
+namespace Content.Shared.PDA;
+
+[Serializable, NetSerializable]
+public enum PDAVisuals
 {
-    [Serializable, NetSerializable]
-    public enum PDAVisuals
-    {
-        IDCardInserted
-    }
+    IDCardInserted
+}
 
-    [Serializable, NetSerializable]
-    public enum PDAUiKey
-    {
-        Key
-    }
-
+[Serializable, NetSerializable]
+public enum PDAUiKey
+{
+    Key
 }

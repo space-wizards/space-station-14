@@ -8,92 +8,91 @@ using DrawDepthTag = Robust.Shared.GameObjects.DrawDepth;
 using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 
-namespace Content.Client.Doors
+namespace Content.Client.Doors;
+
+/// <summary>
+/// Bare-bones client-side door component; used to stop door-based mispredicts.
+/// </summary>
+[UsedImplicitly]
+[RegisterComponent]
+[ComponentReference(typeof(SharedDoorComponent))]
+public class ClientDoorComponent : SharedDoorComponent
 {
-    /// <summary>
-    /// Bare-bones client-side door component; used to stop door-based mispredicts.
-    /// </summary>
-    [UsedImplicitly]
-    [RegisterComponent]
-    [ComponentReference(typeof(SharedDoorComponent))]
-    public class ClientDoorComponent : SharedDoorComponent
+    [DataField("openDrawDepth", customTypeSerializer: typeof(ConstantSerializer<DrawDepthTag>))]
+    public int OpenDrawDepth = (int) DrawDepth.Doors;
+
+    [DataField("closedDrawDepth", customTypeSerializer: typeof(ConstantSerializer<DrawDepthTag>))]
+    public int ClosedDrawDepth = (int) DrawDepth.Doors;
+
+    private bool _stateChangeHasProgressed = false;
+    private TimeSpan _timeOffset;
+
+    public override DoorState State
     {
-        [DataField("openDrawDepth", customTypeSerializer: typeof(ConstantSerializer<DrawDepthTag>))]
-        public int OpenDrawDepth = (int) DrawDepth.Doors;
-
-        [DataField("closedDrawDepth", customTypeSerializer: typeof(ConstantSerializer<DrawDepthTag>))]
-        public int ClosedDrawDepth = (int) DrawDepth.Doors;
-
-        private bool _stateChangeHasProgressed = false;
-        private TimeSpan _timeOffset;
-
-        public override DoorState State
+        protected set
         {
-            protected set
+            if (State == value)
             {
-                if (State == value)
-                {
-                    return;
-                }
-
-                base.State = value;
-
-                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new DoorStateChangedEvent(State), false);
+                return;
             }
+
+            base.State = value;
+
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new DoorStateChangedEvent(State), false);
+        }
+    }
+
+    public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
+    {
+        base.HandleComponentState(curState, nextState);
+
+        if (curState is not DoorComponentState doorCompState)
+        {
+            return;
         }
 
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
+        CurrentlyCrushing = doorCompState.CurrentlyCrushing;
+        StateChangeStartTime = doorCompState.StartTime;
+        State = doorCompState.DoorState;
+
+        if (StateChangeStartTime == null)
         {
-            base.HandleComponentState(curState, nextState);
-
-            if (curState is not DoorComponentState doorCompState)
-            {
-                return;
-            }
-
-            CurrentlyCrushing = doorCompState.CurrentlyCrushing;
-            StateChangeStartTime = doorCompState.StartTime;
-            State = doorCompState.DoorState;
-
-            if (StateChangeStartTime == null)
-            {
-                return;
-            }
-
-            _timeOffset = State switch
-            {
-                DoorState.Opening => OpenTimeOne,
-                DoorState.Closing => CloseTimeOne,
-                _ => throw new ArgumentOutOfRangeException(),
-            };
-
-            if (doorCompState.CurTime >= StateChangeStartTime + _timeOffset)
-            {
-                _stateChangeHasProgressed = true;
-                return;
-            }
-
-            _stateChangeHasProgressed = false;
+            return;
         }
 
-        public void OnUpdate()
+        _timeOffset = State switch
         {
-            if (!_stateChangeHasProgressed)
+            DoorState.Opening => OpenTimeOne,
+            DoorState.Closing => CloseTimeOne,
+            _ => throw new ArgumentOutOfRangeException(),
+        };
+
+        if (doorCompState.CurTime >= StateChangeStartTime + _timeOffset)
+        {
+            _stateChangeHasProgressed = true;
+            return;
+        }
+
+        _stateChangeHasProgressed = false;
+    }
+
+    public void OnUpdate()
+    {
+        if (!_stateChangeHasProgressed)
+        {
+            if (GameTiming.CurTime < StateChangeStartTime + _timeOffset) return;
+
+            if (State == DoorState.Opening)
             {
-                if (GameTiming.CurTime < StateChangeStartTime + _timeOffset) return;
-
-                if (State == DoorState.Opening)
-                {
-                    OnPartialOpen();
-                }
-                else
-                {
-                    OnPartialClose();
-                }
-
-                _stateChangeHasProgressed = true;
-                Dirty();
+                OnPartialOpen();
             }
+            else
+            {
+                OnPartialClose();
+            }
+
+            _stateChangeHasProgressed = true;
+            Dirty();
         }
     }
 }

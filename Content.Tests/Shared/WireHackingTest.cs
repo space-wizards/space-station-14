@@ -5,39 +5,37 @@ using NUnit.Framework;
 using Robust.UnitTesting;
 using static Content.Shared.Wires.SharedWiresComponent;
 
-namespace Content.Tests.Shared
+namespace Content.Tests.Shared;
+// Making sure nobody forgets to set values for these wire colors/letters.
+// Also a thinly veiled excuse to bloat the test count.
+
+[TestFixture]
+public class WireHackingTest : RobustUnitTest
 {
-    // Making sure nobody forgets to set values for these wire colors/letters.
-    // Also a thinly veiled excuse to bloat the test count.
+    public static IEnumerable<WireColor> ColorValues = (WireColor[]) Enum.GetValues(typeof(WireColor));
+    public static IEnumerable<WireLetter> LetterValues = (WireLetter[]) Enum.GetValues(typeof(WireLetter));
 
-    [TestFixture]
-    public class WireHackingTest : RobustUnitTest
+    [Test]
+    public void TestColorNameExists([ValueSource(nameof(ColorValues))] WireColor color)
     {
-        public static IEnumerable<WireColor> ColorValues = (WireColor[]) Enum.GetValues(typeof(WireColor));
-        public static IEnumerable<WireLetter> LetterValues = (WireLetter[]) Enum.GetValues(typeof(WireLetter));
+        Assert.DoesNotThrow(() => color.Name());
+    }
 
-        [Test]
-        public void TestColorNameExists([ValueSource(nameof(ColorValues))] WireColor color)
-        {
-            Assert.DoesNotThrow(() => color.Name());
-        }
+    [Test]
+    public void TestColorValueExists([ValueSource(nameof(ColorValues))] WireColor color)
+    {
+        Assert.DoesNotThrow(() => color.ColorValue());
+    }
 
-        [Test]
-        public void TestColorValueExists([ValueSource(nameof(ColorValues))] WireColor color)
-        {
-            Assert.DoesNotThrow(() => color.ColorValue());
-        }
+    [Test]
+    public void TestLetterNameExists([ValueSource(nameof(LetterValues))] WireLetter letter)
+    {
+        Assert.DoesNotThrow(() => letter.Name());
+    }
 
-        [Test]
-        public void TestLetterNameExists([ValueSource(nameof(LetterValues))] WireLetter letter)
-        {
-            Assert.DoesNotThrow(() => letter.Name());
-        }
-
-        [Test]
-        public void TestLetterLetterExists([ValueSource(nameof(LetterValues))] WireLetter letter)
-        {
-            Assert.DoesNotThrow(() => letter.Letter());
-        }
+    [Test]
+    public void TestLetterLetterExists([ValueSource(nameof(LetterValues))] WireLetter letter)
+    {
+        Assert.DoesNotThrow(() => letter.Letter());
     }
 }

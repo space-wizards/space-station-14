@@ -1,8 +1,7 @@
 ﻿using Robust.Shared.GameObjects;
 
-namespace Content.Shared.Pulling
+namespace Content.Shared.Pulling;
+
+public class PullableMoveMessage : EntityEventArgs
 {
-    public class PullableMoveMessage : EntityEventArgs
-    {
-    }
 }

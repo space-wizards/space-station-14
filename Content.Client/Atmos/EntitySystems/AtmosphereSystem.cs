@@ -1,10 +1,9 @@
 ﻿using Content.Shared.Atmos.EntitySystems;
 using JetBrains.Annotations;
 
-namespace Content.Client.Atmos.EntitySystems
+namespace Content.Client.Atmos.EntitySystems;
+
+[UsedImplicitly]
+public class AtmosphereSystem : SharedAtmosphereSystem
 {
-    [UsedImplicitly]
-    public class AtmosphereSystem : SharedAtmosphereSystem
-    {
-    }
 }

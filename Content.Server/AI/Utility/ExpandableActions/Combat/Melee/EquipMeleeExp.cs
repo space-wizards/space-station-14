@@ -10,36 +10,35 @@ using Content.Server.AI.WorldState.States.Inventory;
 using Content.Server.Weapon.Melee.Components;
 using Robust.Shared.IoC;
 
-namespace Content.Server.AI.Utility.ExpandableActions.Combat.Melee
+namespace Content.Server.AI.Utility.ExpandableActions.Combat.Melee;
+
+public sealed class EquipMeleeExp : ExpandableUtilityAction
 {
-    public sealed class EquipMeleeExp : ExpandableUtilityAction
+    public override float Bonus => UtilityAction.CombatPrepBonus;
+
+    protected override IEnumerable<Func<float>> GetCommonConsiderations(Blackboard context)
     {
-        public override float Bonus => UtilityAction.CombatPrepBonus;
+        var considerationsManager = IoCManager.Resolve<ConsiderationsManager>();
 
-        protected override IEnumerable<Func<float>> GetCommonConsiderations(Blackboard context)
+        return new[]
         {
-            var considerationsManager = IoCManager.Resolve<ConsiderationsManager>();
+            considerationsManager.Get<MeleeWeaponEquippedCon>()
+                                 .InverseBoolCurve(context),
+        };
+    }
 
-            return new[]
-            {
-                considerationsManager.Get<MeleeWeaponEquippedCon>()
-                    .InverseBoolCurve(context),
-            };
-        }
+    public override IEnumerable<UtilityAction> GetActions(Blackboard context)
+    {
+        var owner = context.GetState<SelfState>().GetValue();
 
-        public override IEnumerable<UtilityAction> GetActions(Blackboard context)
+        foreach (var entity in context.GetState<EnumerableInventoryState>().GetValue())
         {
-            var owner = context.GetState<SelfState>().GetValue();
-
-            foreach (var entity in context.GetState<EnumerableInventoryState>().GetValue())
+            if (!entity.HasComponent<MeleeWeaponComponent>())
             {
-                if (!entity.HasComponent<MeleeWeaponComponent>())
-                {
-                    continue;
-                }
-
-                yield return new EquipMelee {Owner = owner, Target = entity, Bonus = Bonus};
+                continue;
             }
+
+            yield return new EquipMelee {Owner = owner, Target = entity, Bonus = Bonus};
         }
     }
 }

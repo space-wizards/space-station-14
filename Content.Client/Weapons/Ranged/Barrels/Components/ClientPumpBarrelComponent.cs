@@ -13,201 +13,200 @@ using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
-namespace Content.Client.Weapons.Ranged.Barrels.Components
+namespace Content.Client.Weapons.Ranged.Barrels.Components;
+
+[RegisterComponent]
+[NetworkedComponent()]
+public class ClientPumpBarrelComponent : Component, IItemStatus
 {
-    [RegisterComponent]
-    [NetworkedComponent()]
-    public class ClientPumpBarrelComponent : Component, IItemStatus
+    public override string Name => "PumpBarrel";
+
+    private StatusControl? _statusControl;
+
+    /// <summary>
+    ///     chambered is true when a bullet is chambered
+    ///     spent is true when the chambered bullet is spent
+    /// </summary>
+    [ViewVariables]
+    public (bool chambered, bool spent) Chamber { get; private set; }
+
+    /// <summary>
+    ///     Count of bullets in the magazine.
+    /// </summary>
+    /// <remarks>
+    ///     Null if no magazine is inserted.
+    /// </remarks>
+    [ViewVariables]
+    public (int count, int max)? MagazineCount { get; private set; }
+
+    public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
     {
-        public override string Name => "PumpBarrel";
+        base.HandleComponentState(curState, nextState);
 
-        private StatusControl? _statusControl;
+        if (curState is not PumpBarrelComponentState cast)
+            return;
 
-        /// <summary>
-        ///     chambered is true when a bullet is chambered
-        ///     spent is true when the chambered bullet is spent
-        /// </summary>
-        [ViewVariables]
-        public (bool chambered, bool spent) Chamber { get; private set; }
+        Chamber = cast.Chamber;
+        MagazineCount = cast.Magazine;
+        _statusControl?.Update();
+    }
 
-        /// <summary>
-        ///     Count of bullets in the magazine.
-        /// </summary>
-        /// <remarks>
-        ///     Null if no magazine is inserted.
-        /// </remarks>
-        [ViewVariables]
-        public (int count, int max)? MagazineCount { get; private set; }
+    public Control MakeControl()
+    {
+        _statusControl = new StatusControl(this);
+        _statusControl.Update();
+        return _statusControl;
+    }
 
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
+    public void DestroyControl(Control control)
+    {
+        if (_statusControl == control)
         {
-            base.HandleComponentState(curState, nextState);
-
-            if (curState is not PumpBarrelComponentState cast)
-                return;
-
-            Chamber = cast.Chamber;
-            MagazineCount = cast.Magazine;
-            _statusControl?.Update();
+            _statusControl = null;
         }
+    }
 
-        public Control MakeControl()
-        {
-            _statusControl = new StatusControl(this);
-            _statusControl.Update();
-            return _statusControl;
-        }
+    private sealed class StatusControl : Control
+    {
+        private readonly ClientPumpBarrelComponent _parent;
+        private readonly BoxContainer _bulletsListTop;
+        private readonly BoxContainer _bulletsListBottom;
+        private readonly TextureRect _chamberedBullet;
+        private readonly Label _noMagazineLabel;
 
-        public void DestroyControl(Control control)
+        public StatusControl(ClientPumpBarrelComponent parent)
         {
-            if (_statusControl == control)
+            MinHeight = 15;
+            _parent = parent;
+            HorizontalExpand = true;
+            VerticalAlignment = VAlignment.Center;
+            AddChild(new BoxContainer
             {
-                _statusControl = null;
-            }
-        }
-
-        private sealed class StatusControl : Control
-        {
-            private readonly ClientPumpBarrelComponent _parent;
-            private readonly BoxContainer _bulletsListTop;
-            private readonly BoxContainer _bulletsListBottom;
-            private readonly TextureRect _chamberedBullet;
-            private readonly Label _noMagazineLabel;
-
-            public StatusControl(ClientPumpBarrelComponent parent)
-            {
-                MinHeight = 15;
-                _parent = parent;
-                HorizontalExpand = true;
-                VerticalAlignment = VAlignment.Center;
-                AddChild(new BoxContainer
+                Orientation = LayoutOrientation.Vertical,
+                HorizontalExpand = true,
+                VerticalAlignment = VAlignment.Center,
+                SeparationOverride = 0,
+                Children =
                 {
-                    Orientation = LayoutOrientation.Vertical,
-                    HorizontalExpand = true,
-                    VerticalAlignment = VAlignment.Center,
-                    SeparationOverride = 0,
-                    Children =
+                    (_bulletsListTop = new BoxContainer
                     {
-                        (_bulletsListTop = new BoxContainer
+                        Orientation = LayoutOrientation.Horizontal,
+                        SeparationOverride = 0
+                    }),
+                    new BoxContainer
+                    {
+                        Orientation = LayoutOrientation.Horizontal,
+                        HorizontalExpand = true,
+                        Children =
                         {
-                            Orientation = LayoutOrientation.Horizontal,
-                            SeparationOverride = 0
-                        }),
-                        new BoxContainer
-                        {
-                            Orientation = LayoutOrientation.Horizontal,
-                            HorizontalExpand = true,
-                            Children =
+                            new Control
                             {
-                                new Control
+                                HorizontalExpand = true,
+                                Children =
                                 {
-                                    HorizontalExpand = true,
-                                    Children =
+                                    (_bulletsListBottom = new BoxContainer
                                     {
-                                        (_bulletsListBottom = new BoxContainer
-                                        {
-                                            Orientation = LayoutOrientation.Horizontal,
-                                            VerticalAlignment = VAlignment.Center,
-                                            SeparationOverride = 0
-                                        }),
-                                        (_noMagazineLabel = new Label
-                                        {
-                                            Text = "No Magazine!",
-                                            StyleClasses = {StyleNano.StyleClassItemStatus}
-                                        })
-                                    }
-                                },
-                                (_chamberedBullet = new TextureRect
-                                {
-                                    Texture = StaticIoC.ResC.GetTexture("/Textures/Interface/ItemStatus/Bullets/chambered.png"),
-                                    VerticalAlignment = VAlignment.Center,
-                                    HorizontalAlignment = HAlignment.Right,
-                                })
-                            }
+                                        Orientation = LayoutOrientation.Horizontal,
+                                        VerticalAlignment = VAlignment.Center,
+                                        SeparationOverride = 0
+                                    }),
+                                    (_noMagazineLabel = new Label
+                                    {
+                                        Text = "No Magazine!",
+                                        StyleClasses = {StyleNano.StyleClassItemStatus}
+                                    })
+                                }
+                            },
+                            (_chamberedBullet = new TextureRect
+                            {
+                                Texture = StaticIoC.ResC.GetTexture("/Textures/Interface/ItemStatus/Bullets/chambered.png"),
+                                VerticalAlignment = VAlignment.Center,
+                                HorizontalAlignment = HAlignment.Right,
+                            })
                         }
                     }
-                });
-            }
+                }
+            });
+        }
 
-            public void Update()
-            {
-                _chamberedBullet.ModulateSelfOverride =
-                    _parent.Chamber.chambered ?
+        public void Update()
+        {
+            _chamberedBullet.ModulateSelfOverride =
+                _parent.Chamber.chambered ?
                     _parent.Chamber.spent ? Color.Red : Color.FromHex("#d7df60")
                     : Color.Black;
 
-                _bulletsListTop.RemoveAllChildren();
-                _bulletsListBottom.RemoveAllChildren();
+            _bulletsListTop.RemoveAllChildren();
+            _bulletsListBottom.RemoveAllChildren();
 
-                if (_parent.MagazineCount == null)
-                {
-                    _noMagazineLabel.Visible = true;
-                    return;
-                }
-
-                var (count, capacity) = _parent.MagazineCount.Value;
-
-                _noMagazineLabel.Visible = false;
-
-                string texturePath;
-                if (capacity <= 20)
-                {
-                    texturePath = "/Textures/Interface/ItemStatus/Bullets/normal.png";
-                }
-                else if (capacity <= 30)
-                {
-                    texturePath = "/Textures/Interface/ItemStatus/Bullets/small.png";
-                }
-                else
-                {
-                    texturePath = "/Textures/Interface/ItemStatus/Bullets/tiny.png";
-                }
-
-                var texture = StaticIoC.ResC.GetTexture(texturePath);
-
-                const int tinyMaxRow = 60;
-
-                if (capacity > tinyMaxRow)
-                {
-                    FillBulletRow(_bulletsListBottom, Math.Min(tinyMaxRow, count), tinyMaxRow, texture);
-                    FillBulletRow(_bulletsListTop, Math.Max(0, count - tinyMaxRow), capacity - tinyMaxRow, texture);
-                }
-                else
-                {
-                    FillBulletRow(_bulletsListBottom, count, capacity, texture);
-                }
+            if (_parent.MagazineCount == null)
+            {
+                _noMagazineLabel.Visible = true;
+                return;
             }
 
-            private static void FillBulletRow(Control container, int count, int capacity, Texture texture)
+            var (count, capacity) = _parent.MagazineCount.Value;
+
+            _noMagazineLabel.Visible = false;
+
+            string texturePath;
+            if (capacity <= 20)
             {
-                var colorA = Color.FromHex("#b68f0e");
-                var colorB = Color.FromHex("#d7df60");
-                var colorGoneA = Color.FromHex("#000000");
-                var colorGoneB = Color.FromHex("#222222");
+                texturePath = "/Textures/Interface/ItemStatus/Bullets/normal.png";
+            }
+            else if (capacity <= 30)
+            {
+                texturePath = "/Textures/Interface/ItemStatus/Bullets/small.png";
+            }
+            else
+            {
+                texturePath = "/Textures/Interface/ItemStatus/Bullets/tiny.png";
+            }
 
-                var altColor = false;
+            var texture = StaticIoC.ResC.GetTexture(texturePath);
 
-                for (var i = count; i < capacity; i++)
+            const int tinyMaxRow = 60;
+
+            if (capacity > tinyMaxRow)
+            {
+                FillBulletRow(_bulletsListBottom, Math.Min(tinyMaxRow, count), tinyMaxRow, texture);
+                FillBulletRow(_bulletsListTop, Math.Max(0, count - tinyMaxRow), capacity - tinyMaxRow, texture);
+            }
+            else
+            {
+                FillBulletRow(_bulletsListBottom, count, capacity, texture);
+            }
+        }
+
+        private static void FillBulletRow(Control container, int count, int capacity, Texture texture)
+        {
+            var colorA = Color.FromHex("#b68f0e");
+            var colorB = Color.FromHex("#d7df60");
+            var colorGoneA = Color.FromHex("#000000");
+            var colorGoneB = Color.FromHex("#222222");
+
+            var altColor = false;
+
+            for (var i = count; i < capacity; i++)
+            {
+                container.AddChild(new TextureRect
                 {
-                    container.AddChild(new TextureRect
-                    {
-                        Texture = texture,
-                        ModulateSelfOverride = altColor ? colorGoneA : colorGoneB
-                    });
+                    Texture = texture,
+                    ModulateSelfOverride = altColor ? colorGoneA : colorGoneB
+                });
 
-                    altColor ^= true;
-                }
+                altColor ^= true;
+            }
 
-                for (var i = 0; i < count; i++)
+            for (var i = 0; i < count; i++)
+            {
+                container.AddChild(new TextureRect
                 {
-                    container.AddChild(new TextureRect
-                    {
-                        Texture = texture,
-                        ModulateSelfOverride = altColor ? colorA : colorB
-                    });
+                    Texture = texture,
+                    ModulateSelfOverride = altColor ? colorA : colorB
+                });
 
-                    altColor ^= true;
-                }
+                altColor ^= true;
             }
         }
     }

@@ -1,8 +1,7 @@
 using Robust.Shared.Serialization;
 
-namespace Content.Server.Weapon.Ranged.Ammunition.Components
+namespace Content.Server.Weapon.Ranged.Ammunition.Components;
+
+public partial class AmmoComponentData : ISerializationHooks
 {
-    public partial class AmmoComponentData : ISerializationHooks
-    {
-    }
 }

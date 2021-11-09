@@ -2,24 +2,23 @@ using System;
 using Content.Client.Parallax.Managers;
 using Robust.Client.Graphics;
 
-namespace Content.IntegrationTests
+namespace Content.IntegrationTests;
+
+public sealed class DummyParallaxManager : IParallaxManager
 {
-    public sealed class DummyParallaxManager : IParallaxManager
+    public event Action<Texture> OnTextureLoaded
     {
-        public event Action<Texture> OnTextureLoaded
-        {
-            add
-            {
-            }
-            remove
-            {
-            }
-        }
-
-        public Texture ParallaxTexture => null;
-
-        public void LoadParallax()
+        add
         {
         }
+        remove
+        {
+        }
+    }
+
+    public Texture ParallaxTexture => null;
+
+    public void LoadParallax()
+    {
     }
 }

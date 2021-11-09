@@ -6,91 +6,90 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.Suspicion.EntitySystems
+namespace Content.Server.Suspicion.EntitySystems;
+
+[UsedImplicitly]
+public class SuspicionRoleSystem : EntitySystem
 {
-    [UsedImplicitly]
-    public class SuspicionRoleSystem : EntitySystem
+    private readonly HashSet<SuspicionRoleComponent> _traitors = new();
+
+    public IReadOnlyCollection<SuspicionRoleComponent> Traitors => _traitors;
+
+    #region Overrides of EntitySystem
+
+    public override void Initialize()
     {
-        private readonly HashSet<SuspicionRoleComponent> _traitors = new();
+        base.Initialize();
 
-        public IReadOnlyCollection<SuspicionRoleComponent> Traitors => _traitors;
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
+        SubscribeLocalEvent<SuspicionRoleComponent, PlayerAttachedEvent>(OnPlayerAttached);
+        SubscribeLocalEvent<SuspicionRoleComponent, PlayerDetachedEvent>(OnPlayerDetached);
+        SubscribeLocalEvent<SuspicionRoleComponent, RoleAddedEvent>(OnRoleAdded);
+        SubscribeLocalEvent<SuspicionRoleComponent, RoleRemovedEvent>(OnRoleRemoved);
+    }
 
-        #region Overrides of EntitySystem
+    private void OnPlayerDetached(EntityUid uid, SuspicionRoleComponent component, PlayerDetachedEvent args)
+    {
+        component.SyncRoles();
+    }
 
-        public override void Initialize()
+    private void OnPlayerAttached(EntityUid uid, SuspicionRoleComponent component, PlayerAttachedEvent args)
+    {
+        component.SyncRoles();
+    }
+
+    private void OnRoleAdded(EntityUid uid, SuspicionRoleComponent component, RoleAddedEvent args)
+    {
+        if (args.Role is not SuspicionRole role) return;
+        component.Role = role;
+    }
+
+    private void OnRoleRemoved(EntityUid uid, SuspicionRoleComponent component, RoleRemovedEvent args)
+    {
+        if (args.Role is not SuspicionRole) return;
+        component.Role = null;
+    }
+
+    #endregion
+
+    public void AddTraitor(SuspicionRoleComponent role)
+    {
+        if (!_traitors.Add(role))
         {
-            base.Initialize();
-
-            SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
-            SubscribeLocalEvent<SuspicionRoleComponent, PlayerAttachedEvent>(OnPlayerAttached);
-            SubscribeLocalEvent<SuspicionRoleComponent, PlayerDetachedEvent>(OnPlayerDetached);
-            SubscribeLocalEvent<SuspicionRoleComponent, RoleAddedEvent>(OnRoleAdded);
-            SubscribeLocalEvent<SuspicionRoleComponent, RoleRemovedEvent>(OnRoleRemoved);
+            return;
         }
 
-        private void OnPlayerDetached(EntityUid uid, SuspicionRoleComponent component, PlayerDetachedEvent args)
+        foreach (var traitor in _traitors)
         {
-            component.SyncRoles();
+            traitor.AddAlly(role);
         }
 
-        private void OnPlayerAttached(EntityUid uid, SuspicionRoleComponent component, PlayerAttachedEvent args)
+        role.SetAllies(_traitors);
+    }
+
+    public void RemoveTraitor(SuspicionRoleComponent role)
+    {
+        if (!_traitors.Remove(role))
         {
-            component.SyncRoles();
+            return;
         }
 
-        private void OnRoleAdded(EntityUid uid, SuspicionRoleComponent component, RoleAddedEvent args)
+        foreach (var traitor in _traitors)
         {
-            if (args.Role is not SuspicionRole role) return;
-            component.Role = role;
+            traitor.RemoveAlly(role);
         }
 
-        private void OnRoleRemoved(EntityUid uid, SuspicionRoleComponent component, RoleRemovedEvent args)
-        {
-            if (args.Role is not SuspicionRole) return;
-            component.Role = null;
-        }
+        role.ClearAllies();
+    }
 
-        #endregion
+    public override void Shutdown()
+    {
+        _traitors.Clear();
+        base.Shutdown();
+    }
 
-        public void AddTraitor(SuspicionRoleComponent role)
-        {
-            if (!_traitors.Add(role))
-            {
-                return;
-            }
-
-            foreach (var traitor in _traitors)
-            {
-                traitor.AddAlly(role);
-            }
-
-            role.SetAllies(_traitors);
-        }
-
-        public void RemoveTraitor(SuspicionRoleComponent role)
-        {
-            if (!_traitors.Remove(role))
-            {
-                return;
-            }
-
-            foreach (var traitor in _traitors)
-            {
-                traitor.RemoveAlly(role);
-            }
-
-            role.ClearAllies();
-        }
-
-        public override void Shutdown()
-        {
-            _traitors.Clear();
-            base.Shutdown();
-        }
-
-        public void Reset(RoundRestartCleanupEvent ev)
-        {
-            _traitors.Clear();
-        }
+    public void Reset(RoundRestartCleanupEvent ev)
+    {
+        _traitors.Clear();
     }
 }

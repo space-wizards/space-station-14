@@ -15,155 +15,154 @@ using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
 
-namespace Content.Client.CharacterInfo.Components
+namespace Content.Client.CharacterInfo.Components;
+
+[RegisterComponent]
+public sealed class CharacterInfoComponent : SharedCharacterInfoComponent, ICharacterUI
 {
-    [RegisterComponent]
-    public sealed class CharacterInfoComponent : SharedCharacterInfoComponent, ICharacterUI
+    [Dependency] private readonly IResourceCache _resourceCache = default!;
+
+    private CharacterInfoControl _control = default!;
+
+    public Control Scene { get; private set; } = default!;
+    public UIPriority Priority => UIPriority.Info;
+
+    protected override void OnAdd()
     {
-        [Dependency] private readonly IResourceCache _resourceCache = default!;
+        base.OnAdd();
 
-        private CharacterInfoControl _control = default!;
+        Scene = _control = new CharacterInfoControl(_resourceCache);
+    }
 
-        public Control Scene { get; private set; } = default!;
-        public UIPriority Priority => UIPriority.Info;
-
-        protected override void OnAdd()
-        {
-            base.OnAdd();
-
-            Scene = _control = new CharacterInfoControl(_resourceCache);
-        }
-
-        public void Opened()
-        {
+    public void Opened()
+    {
 #pragma warning disable 618
-            SendNetworkMessage(new RequestCharacterInfoMessage());
+        SendNetworkMessage(new RequestCharacterInfoMessage());
 #pragma warning restore 618
-        }
+    }
 
-        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null)
+    [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
+    public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null)
+    {
+        base.HandleNetworkMessage(message, netChannel, session);
+
+        switch (message)
         {
-            base.HandleNetworkMessage(message, netChannel, session);
+            case CharacterInfoMessage characterInfoMessage:
+                _control.UpdateUI(characterInfoMessage);
+                if (Owner.TryGetComponent(out ISpriteComponent? spriteComponent))
+                {
+                    _control.SpriteView.Sprite = spriteComponent;
+                }
 
-            switch (message)
-            {
-                case CharacterInfoMessage characterInfoMessage:
-                    _control.UpdateUI(characterInfoMessage);
-                    if (Owner.TryGetComponent(out ISpriteComponent? spriteComponent))
-                    {
-                        _control.SpriteView.Sprite = spriteComponent;
-                    }
-
-                    _control.NameLabel.Text = Owner.Name;
-                    break;
-            }
+                _control.NameLabel.Text = Owner.Name;
+                break;
         }
+    }
 
-        private sealed class CharacterInfoControl : BoxContainer
+    private sealed class CharacterInfoControl : BoxContainer
+    {
+        public SpriteView SpriteView { get; }
+        public Label NameLabel { get; }
+        public Label SubText { get; }
+
+        public BoxContainer ObjectivesContainer { get; }
+
+        public CharacterInfoControl(IResourceCache resourceCache)
         {
-            public SpriteView SpriteView { get; }
-            public Label NameLabel { get; }
-            public Label SubText { get; }
+            IoCManager.InjectDependencies(this);
 
-            public BoxContainer ObjectivesContainer { get; }
+            Orientation = LayoutOrientation.Vertical;
 
-            public CharacterInfoControl(IResourceCache resourceCache)
+            AddChild(new BoxContainer
             {
-                IoCManager.InjectDependencies(this);
-
-                Orientation = LayoutOrientation.Vertical;
-
-                AddChild(new BoxContainer
+                Orientation = LayoutOrientation.Horizontal,
+                Children =
                 {
-                    Orientation = LayoutOrientation.Horizontal,
-                    Children =
-                    {
-                        (SpriteView = new SpriteView { OverrideDirection = Direction.South, Scale = (2,2)}),
-                        new BoxContainer
-                        {
-                            Orientation = LayoutOrientation.Vertical,
-                            VerticalAlignment = VAlignment.Top,
-                            Children =
-                            {
-                                (NameLabel = new Label()),
-                                (SubText = new Label
-                                {
-                                    VerticalAlignment = VAlignment.Top,
-                                    StyleClasses = {StyleNano.StyleClassLabelSubText},
-
-                                })
-                            }
-                        }
-                    }
-                });
-
-                AddChild(new Label
-                {
-                    Text = Loc.GetString("character-info-objectives-label"),
-                    HorizontalAlignment = HAlignment.Center
-                });
-                ObjectivesContainer = new BoxContainer
-                {
-                    Orientation = LayoutOrientation.Vertical
-                };
-                AddChild(ObjectivesContainer);
-
-                AddChild(new Placeholder()
-                {
-                    PlaceholderText = Loc.GetString("character-info-roles-antagonist-text")
-                });
-            }
-
-            public void UpdateUI(CharacterInfoMessage characterInfoMessage)
-            {
-                SubText.Text = characterInfoMessage.JobTitle;
-
-                ObjectivesContainer.RemoveAllChildren();
-                foreach (var (groupId, objectiveConditions) in characterInfoMessage.Objectives)
-                {
-                    var vbox = new BoxContainer
+                    (SpriteView = new SpriteView { OverrideDirection = Direction.South, Scale = (2,2)}),
+                    new BoxContainer
                     {
                         Orientation = LayoutOrientation.Vertical,
-                        Modulate = Color.Gray
-                    };
-
-                    vbox.AddChild(new Label
-                    {
-                        Text = groupId,
-                        Modulate = Color.LightSkyBlue
-                    });
-
-                    foreach (var objectiveCondition in objectiveConditions)
-                    {
-                        var hbox = new BoxContainer
+                        VerticalAlignment = VAlignment.Top,
+                        Children =
                         {
-                            Orientation = LayoutOrientation.Horizontal
-                        };
-                        hbox.AddChild(new ProgressTextureRect
-                        {
-                            Texture = objectiveCondition.SpriteSpecifier.Frame0(),
-                            Progress = objectiveCondition.Progress,
-                            VerticalAlignment = VAlignment.Center
-                        });
-                        hbox.AddChild(new Control
-                        {
-                            MinSize = (10,0)
-                        });
-                        hbox.AddChild(new BoxContainer
+                            (NameLabel = new Label()),
+                            (SubText = new Label
                             {
-                                Orientation = LayoutOrientation.Vertical,
-                                Children =
-                                {
-                                    new Label{Text = objectiveCondition.Title},
-                                    new Label{Text = objectiveCondition.Description}
-                                }
-                            }
-                        );
-                        vbox.AddChild(hbox);
+                                VerticalAlignment = VAlignment.Top,
+                                StyleClasses = {StyleNano.StyleClassLabelSubText},
+
+                            })
+                        }
                     }
-                    ObjectivesContainer.AddChild(vbox);
                 }
+            });
+
+            AddChild(new Label
+            {
+                Text = Loc.GetString("character-info-objectives-label"),
+                HorizontalAlignment = HAlignment.Center
+            });
+            ObjectivesContainer = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical
+            };
+            AddChild(ObjectivesContainer);
+
+            AddChild(new Placeholder()
+            {
+                PlaceholderText = Loc.GetString("character-info-roles-antagonist-text")
+            });
+        }
+
+        public void UpdateUI(CharacterInfoMessage characterInfoMessage)
+        {
+            SubText.Text = characterInfoMessage.JobTitle;
+
+            ObjectivesContainer.RemoveAllChildren();
+            foreach (var (groupId, objectiveConditions) in characterInfoMessage.Objectives)
+            {
+                var vbox = new BoxContainer
+                {
+                    Orientation = LayoutOrientation.Vertical,
+                    Modulate = Color.Gray
+                };
+
+                vbox.AddChild(new Label
+                {
+                    Text = groupId,
+                    Modulate = Color.LightSkyBlue
+                });
+
+                foreach (var objectiveCondition in objectiveConditions)
+                {
+                    var hbox = new BoxContainer
+                    {
+                        Orientation = LayoutOrientation.Horizontal
+                    };
+                    hbox.AddChild(new ProgressTextureRect
+                    {
+                        Texture = objectiveCondition.SpriteSpecifier.Frame0(),
+                        Progress = objectiveCondition.Progress,
+                        VerticalAlignment = VAlignment.Center
+                    });
+                    hbox.AddChild(new Control
+                    {
+                        MinSize = (10,0)
+                    });
+                    hbox.AddChild(new BoxContainer
+                        {
+                            Orientation = LayoutOrientation.Vertical,
+                            Children =
+                            {
+                                new Label{Text = objectiveCondition.Title},
+                                new Label{Text = objectiveCondition.Description}
+                            }
+                        }
+                    );
+                    vbox.AddChild(hbox);
+                }
+                ObjectivesContainer.AddChild(vbox);
             }
         }
     }

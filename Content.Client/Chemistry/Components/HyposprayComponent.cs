@@ -11,60 +11,59 @@ using Robust.Shared.Localization;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Client.Chemistry.Components
+namespace Content.Client.Chemistry.Components;
+
+[RegisterComponent]
+public sealed class HyposprayComponent : SharedHyposprayComponent, IItemStatus
 {
-    [RegisterComponent]
-    public sealed class HyposprayComponent : SharedHyposprayComponent, IItemStatus
+    [ViewVariables] private FixedPoint2 CurrentVolume { get; set; }
+    [ViewVariables] private FixedPoint2 TotalVolume { get; set; }
+    [ViewVariables(VVAccess.ReadWrite)] private bool _uiUpdateNeeded;
+
+    public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
     {
-        [ViewVariables] private FixedPoint2 CurrentVolume { get; set; }
-        [ViewVariables] private FixedPoint2 TotalVolume { get; set; }
-        [ViewVariables(VVAccess.ReadWrite)] private bool _uiUpdateNeeded;
+        if (curState is not HyposprayComponentState cState)
+            return;
 
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
+        CurrentVolume = cState.CurVolume;
+        TotalVolume = cState.MaxVolume;
+        _uiUpdateNeeded = true;
+    }
+
+    Control IItemStatus.MakeControl()
+    {
+        return new StatusControl(this);
+    }
+
+    private sealed class StatusControl : Control
+    {
+        private readonly HyposprayComponent _parent;
+        private readonly RichTextLabel _label;
+
+        public StatusControl(HyposprayComponent parent)
         {
-            if (curState is not HyposprayComponentState cState)
+            _parent = parent;
+            _label = new RichTextLabel {StyleClasses = {StyleNano.StyleClassItemStatus}};
+            AddChild(_label);
+
+            parent._uiUpdateNeeded = true;
+        }
+
+        /// <inheritdoc />
+        protected override void FrameUpdate(FrameEventArgs args)
+        {
+            base.FrameUpdate(args);
+            if (!_parent._uiUpdateNeeded)
+            {
                 return;
-
-            CurrentVolume = cState.CurVolume;
-            TotalVolume = cState.MaxVolume;
-            _uiUpdateNeeded = true;
-        }
-
-        Control IItemStatus.MakeControl()
-        {
-            return new StatusControl(this);
-        }
-
-        private sealed class StatusControl : Control
-        {
-            private readonly HyposprayComponent _parent;
-            private readonly RichTextLabel _label;
-
-            public StatusControl(HyposprayComponent parent)
-            {
-                _parent = parent;
-                _label = new RichTextLabel {StyleClasses = {StyleNano.StyleClassItemStatus}};
-                AddChild(_label);
-
-                parent._uiUpdateNeeded = true;
             }
 
-            /// <inheritdoc />
-            protected override void FrameUpdate(FrameEventArgs args)
-            {
-                base.FrameUpdate(args);
-                if (!_parent._uiUpdateNeeded)
-                {
-                    return;
-                }
+            _parent._uiUpdateNeeded = false;
 
-                _parent._uiUpdateNeeded = false;
-
-                _label.SetMarkup(Loc.GetString(
-                    "hypospray-volume-text",
-                    ("currentVolume", _parent.CurrentVolume),
-                    ("totalVolume", _parent.TotalVolume)));
-            }
+            _label.SetMarkup(Loc.GetString(
+                                 "hypospray-volume-text",
+                                 ("currentVolume", _parent.CurrentVolume),
+                                 ("totalVolume", _parent.TotalVolume)));
         }
     }
 }

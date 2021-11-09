@@ -2,14 +2,13 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Suspicion
+namespace Content.Shared.Suspicion;
+
+public static class SuspicionMessages
 {
-    public static class SuspicionMessages
+    [Serializable, NetSerializable]
+    public sealed class SetSuspicionEndTimerMessage : EntityEventArgs
     {
-        [Serializable, NetSerializable]
-        public sealed class SetSuspicionEndTimerMessage : EntityEventArgs
-        {
-            public TimeSpan? EndTime;
-        }
+        public TimeSpan? EndTime;
     }
 }

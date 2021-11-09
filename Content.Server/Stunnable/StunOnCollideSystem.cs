@@ -12,40 +12,39 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Physics.Dynamics;
 
-namespace Content.Server.Stunnable
+namespace Content.Server.Stunnable;
+
+[UsedImplicitly]
+internal sealed class StunOnCollideSystem : EntitySystem
 {
-    [UsedImplicitly]
-    internal sealed class StunOnCollideSystem : EntitySystem
+    [Dependency] private readonly StunSystem _stunSystem = default!;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly StunSystem _stunSystem = default!;
+        base.Initialize();
+        SubscribeLocalEvent<StunOnCollideComponent, StartCollideEvent>(HandleCollide);
+    }
 
-        public override void Initialize()
+    private void HandleCollide(EntityUid uid, StunOnCollideComponent component, StartCollideEvent args)
+    {
+        var otherUid = args.OtherFixture.Body.Owner.Uid;
+
+        if (EntityManager.TryGetComponent<StatusEffectsComponent>(otherUid, out var status))
         {
-            base.Initialize();
-            SubscribeLocalEvent<StunOnCollideComponent, StartCollideEvent>(HandleCollide);
-        }
+            ServerAlertsComponent? alerts = null;
+            StandingStateComponent? standingState = null;
+            AppearanceComponent? appearance = null;
 
-        private void HandleCollide(EntityUid uid, StunOnCollideComponent component, StartCollideEvent args)
-        {
-            var otherUid = args.OtherFixture.Body.Owner.Uid;
+            // Let the actual methods log errors for these.
+            Resolve(otherUid, ref alerts, ref standingState, ref appearance, false);
 
-            if (EntityManager.TryGetComponent<StatusEffectsComponent>(otherUid, out var status))
-            {
-                ServerAlertsComponent? alerts = null;
-                StandingStateComponent? standingState = null;
-                AppearanceComponent? appearance = null;
+            _stunSystem.TryStun(otherUid, TimeSpan.FromSeconds(component.StunAmount), status, alerts);
 
-                // Let the actual methods log errors for these.
-                Resolve(otherUid, ref alerts, ref standingState, ref appearance, false);
+            _stunSystem.TryKnockdown(otherUid, TimeSpan.FromSeconds(component.KnockdownAmount),
+                                     status, alerts);
 
-                _stunSystem.TryStun(otherUid, TimeSpan.FromSeconds(component.StunAmount), status, alerts);
-
-                _stunSystem.TryKnockdown(otherUid, TimeSpan.FromSeconds(component.KnockdownAmount),
-                    status, alerts);
-
-                _stunSystem.TrySlowdown(otherUid, TimeSpan.FromSeconds(component.SlowdownAmount),
-                    component.WalkSpeedMultiplier, component.RunSpeedMultiplier, status, alerts);
-            }
+            _stunSystem.TrySlowdown(otherUid, TimeSpan.FromSeconds(component.SlowdownAmount),
+                                    component.WalkSpeedMultiplier, component.RunSpeedMultiplier, status, alerts);
         }
     }
 }

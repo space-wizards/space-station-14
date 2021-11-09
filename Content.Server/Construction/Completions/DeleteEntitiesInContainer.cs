@@ -5,25 +5,24 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.Construction.Completions
+namespace Content.Server.Construction.Completions;
+
+[DataDefinition]
+public class DeleteEntitiesInContainer : IGraphAction
 {
-    [DataDefinition]
-    public class DeleteEntitiesInContainer : IGraphAction
+    [DataField("container")] public string Container { get; } = string.Empty;
+
+    public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
     {
-        [DataField("container")] public string Container { get; } = string.Empty;
+        if (string.IsNullOrEmpty(Container)) return;
+        // TODO CONSTRUCTION: Use the new ContainerSystem methods here.
+        if (!entityManager.TryGetComponent(uid, out ContainerManagerComponent? containerMan)) return;
+        if (!containerMan.TryGetContainer(Container, out var container)) return;
 
-        public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
+        foreach (var contained in container.ContainedEntities.ToArray())
         {
-            if (string.IsNullOrEmpty(Container)) return;
-            // TODO CONSTRUCTION: Use the new ContainerSystem methods here.
-            if (!entityManager.TryGetComponent(uid, out ContainerManagerComponent? containerMan)) return;
-            if (!containerMan.TryGetContainer(Container, out var container)) return;
-
-            foreach (var contained in container.ContainedEntities.ToArray())
-            {
-                if(container.Remove(contained))
-                    contained.QueueDelete();
-            }
+            if(container.Remove(contained))
+                contained.QueueDelete();
         }
     }
 }

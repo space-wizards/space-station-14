@@ -5,60 +5,59 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
-namespace Content.Client.Strip
+namespace Content.Client.Strip;
+
+public class StrippingMenu : SS14Window
 {
-    public class StrippingMenu : SS14Window
+    private readonly BoxContainer _vboxContainer;
+
+    public StrippingMenu(string title)
     {
-        private readonly BoxContainer _vboxContainer;
+        MinSize = SetSize = (400, 600);
+        Title = title;
 
-        public StrippingMenu(string title)
+        _vboxContainer = new BoxContainer
         {
-            MinSize = SetSize = (400, 600);
-            Title = title;
+            Orientation = LayoutOrientation.Vertical,
+            VerticalExpand = true,
+            SeparationOverride = 5,
+        };
 
-            _vboxContainer = new BoxContainer
-            {
-                Orientation = LayoutOrientation.Vertical,
-                VerticalExpand = true,
-                SeparationOverride = 5,
-            };
+        Contents.AddChild(_vboxContainer);
+    }
 
-            Contents.AddChild(_vboxContainer);
-        }
+    public void ClearButtons()
+    {
+        _vboxContainer.DisposeAllChildren();
+    }
 
-        public void ClearButtons()
+    public void AddButton(string title, string name, Action<BaseButton.ButtonEventArgs> onPressed)
+    {
+        var button = new Button()
         {
-            _vboxContainer.DisposeAllChildren();
-        }
+            Text = name,
+            StyleClasses = { StyleBase.ButtonOpenRight }
+        };
 
-        public void AddButton(string title, string name, Action<BaseButton.ButtonEventArgs> onPressed)
+        button.OnPressed += onPressed;
+
+        _vboxContainer.AddChild(new BoxContainer
         {
-            var button = new Button()
+            Orientation = LayoutOrientation.Horizontal,
+            HorizontalExpand = true,
+            SeparationOverride = 5,
+            Children =
             {
-                Text = name,
-                StyleClasses = { StyleBase.ButtonOpenRight }
-            };
-
-            button.OnPressed += onPressed;
-
-            _vboxContainer.AddChild(new BoxContainer
-            {
-                Orientation = LayoutOrientation.Horizontal,
-                HorizontalExpand = true,
-                SeparationOverride = 5,
-                Children =
+                new Label()
                 {
-                    new Label()
-                    {
-                        Text = $"{title}:"
-                    },
-                    new Control()
-                    {
-                        HorizontalExpand = true
-                    },
-                    button,
-                }
-            });
-        }
+                    Text = $"{title}:"
+                },
+                new Control()
+                {
+                    HorizontalExpand = true
+                },
+                button,
+            }
+        });
     }
 }

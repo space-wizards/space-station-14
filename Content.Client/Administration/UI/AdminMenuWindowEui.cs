@@ -2,39 +2,38 @@ using Content.Client.Eui;
 using Content.Shared.Administration;
 using Robust.Client.UserInterface.Controls;
 
-namespace Content.Client.Administration.UI
+namespace Content.Client.Administration.UI;
+
+public class AdminAnnounceEui : BaseEui
 {
-    public class AdminAnnounceEui : BaseEui
+    private readonly AdminAnnounceWindow _window;
+
+    public AdminAnnounceEui()
     {
-        private readonly AdminAnnounceWindow _window;
+        _window = new AdminAnnounceWindow();
+        _window.OnClose += () => SendMessage(new AdminAnnounceEuiMsg.Close());
+        _window.AnnounceButton.OnPressed += AnnounceButtonOnOnPressed;
+    }
 
-        public AdminAnnounceEui()
+    private void AnnounceButtonOnOnPressed(BaseButton.ButtonEventArgs obj)
+    {
+        SendMessage(new AdminAnnounceEuiMsg.DoAnnounce
         {
-            _window = new AdminAnnounceWindow();
-            _window.OnClose += () => SendMessage(new AdminAnnounceEuiMsg.Close());
-            _window.AnnounceButton.OnPressed += AnnounceButtonOnOnPressed;
-        }
+            Announcement = _window.Announcement.Text,
+            Announcer =  _window.Announcer.Text,
+            AnnounceType =  (AdminAnnounceType) (_window.AnnounceMethod.SelectedMetadata ?? AdminAnnounceType.Station),
+            CloseAfter = true,
+        });
 
-        private void AnnounceButtonOnOnPressed(BaseButton.ButtonEventArgs obj)
-        {
-            SendMessage(new AdminAnnounceEuiMsg.DoAnnounce
-            {
-                Announcement = _window.Announcement.Text,
-                Announcer =  _window.Announcer.Text,
-                AnnounceType =  (AdminAnnounceType) (_window.AnnounceMethod.SelectedMetadata ?? AdminAnnounceType.Station),
-                CloseAfter = true,
-            });
+    }
 
-        }
+    public override void Opened()
+    {
+        _window.OpenCentered();
+    }
 
-        public override void Opened()
-        {
-            _window.OpenCentered();
-        }
-
-        public override void Closed()
-        {
-            _window.Close();
-        }
+    public override void Closed()
+    {
+        _window.Close();
     }
 }

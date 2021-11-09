@@ -6,50 +6,49 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.Emoting
+namespace Content.Shared.Emoting;
+
+[RegisterComponent, NetworkedComponent]
+public class SharedEmotingComponent : Component
 {
-    [RegisterComponent, NetworkedComponent]
-    public class SharedEmotingComponent : Component
+    [DataField("enabled")] private bool _enabled = true;
+    public override string Name => "Emoting";
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool Enabled
     {
-        [DataField("enabled")] private bool _enabled = true;
-        public override string Name => "Emoting";
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool Enabled
+        get => _enabled;
+        set
         {
-            get => _enabled;
-            set
-            {
-                if (_enabled == value)
-                    return;
-
-                _enabled = value;
-                Dirty();
-            }
-        }
-
-        public override ComponentState GetComponentState(ICommonSession player)
-        {
-            return new EmotingComponentState(Enabled);
-        }
-
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
-        {
-            if (curState is not EmotingComponentState emoting)
+            if (_enabled == value)
                 return;
 
-            _enabled = emoting.Enabled;
+            _enabled = value;
+            Dirty();
         }
+    }
 
-        [Serializable, NetSerializable]
-        private sealed class EmotingComponentState : ComponentState
+    public override ComponentState GetComponentState(ICommonSession player)
+    {
+        return new EmotingComponentState(Enabled);
+    }
+
+    public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
+    {
+        if (curState is not EmotingComponentState emoting)
+            return;
+
+        _enabled = emoting.Enabled;
+    }
+
+    [Serializable, NetSerializable]
+    private sealed class EmotingComponentState : ComponentState
+    {
+        public bool Enabled { get; }
+
+        public EmotingComponentState(bool enabled)
         {
-            public bool Enabled { get; }
-
-            public EmotingComponentState(bool enabled)
-            {
-                Enabled = enabled;
-            }
+            Enabled = enabled;
         }
     }
 }

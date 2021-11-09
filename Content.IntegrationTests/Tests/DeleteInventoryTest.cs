@@ -7,44 +7,43 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using static Content.Shared.Inventory.EquipmentSlotDefines;
 
-namespace Content.IntegrationTests.Tests
+namespace Content.IntegrationTests.Tests;
+
+[TestFixture]
+public class DeleteInventoryTest : ContentIntegrationTest
 {
-    [TestFixture]
-    public class DeleteInventoryTest : ContentIntegrationTest
+    // Test that when deleting an entity with an InventoryComponent,
+    // any equipped items also get deleted.
+    [Test]
+    public async Task Test()
     {
-        // Test that when deleting an entity with an InventoryComponent,
-        // any equipped items also get deleted.
-        [Test]
-        public async Task Test()
+        var server = StartServer();
+
+        server.Assert(() =>
         {
-            var server = StartServer();
+            // Spawn everything.
+            var mapMan = IoCManager.Resolve<IMapManager>();
 
-            server.Assert(() =>
-            {
-                // Spawn everything.
-                var mapMan = IoCManager.Resolve<IMapManager>();
+            mapMan.CreateNewMapEntity(MapId.Nullspace);
 
-                mapMan.CreateNewMapEntity(MapId.Nullspace);
+            var entMgr = IoCManager.Resolve<IEntityManager>();
+            var container = entMgr.SpawnEntity(null, MapCoordinates.Nullspace);
+            var inv = container.AddComponent<InventoryComponent>();
 
-                var entMgr = IoCManager.Resolve<IEntityManager>();
-                var container = entMgr.SpawnEntity(null, MapCoordinates.Nullspace);
-                var inv = container.AddComponent<InventoryComponent>();
+            var child = entMgr.SpawnEntity(null, MapCoordinates.Nullspace);
+            var item = child.AddComponent<ClothingComponent>();
+            item.SlotFlags = SlotFlags.HEAD;
 
-                var child = entMgr.SpawnEntity(null, MapCoordinates.Nullspace);
-                var item = child.AddComponent<ClothingComponent>();
-                item.SlotFlags = SlotFlags.HEAD;
+            // Equip item.
+            Assert.That(inv.Equip(Slots.HEAD, item, false), Is.True);
 
-                // Equip item.
-                Assert.That(inv.Equip(Slots.HEAD, item, false), Is.True);
+            // Delete parent.
+            container.Delete();
 
-                // Delete parent.
-                container.Delete();
+            // Assert that child item was also deleted.
+            Assert.That(item.Deleted, Is.True);
+        });
 
-                // Assert that child item was also deleted.
-                Assert.That(item.Deleted, Is.True);
-            });
-
-            await server.WaitIdleAsync();
-        }
+        await server.WaitIdleAsync();
     }
 }

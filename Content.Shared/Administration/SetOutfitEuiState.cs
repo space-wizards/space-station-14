@@ -3,11 +3,10 @@ using Robust.Shared.Serialization;
 using System;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.Administration
+namespace Content.Shared.Administration;
+
+[Serializable, NetSerializable]
+public class SetOutfitEuiState : EuiStateBase
 {
-    [Serializable, NetSerializable]
-    public class SetOutfitEuiState : EuiStateBase
-    {
-        public EntityUid TargetEntityId;
-    }
+    public EntityUid TargetEntityId;
 }

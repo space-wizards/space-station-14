@@ -5,32 +5,31 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Server.Containers
+namespace Content.Server.Containers;
+
+/// <summary>
+/// Implements functionality of EmptyOnMachineDeconstructComponent.
+/// </summary>
+[UsedImplicitly]
+public class EmptyOnMachineDeconstructSystem : EntitySystem
 {
-    /// <summary>
-    /// Implements functionality of EmptyOnMachineDeconstructComponent.
-    /// </summary>
-    [UsedImplicitly]
-    public class EmptyOnMachineDeconstructSystem : EntitySystem
+    public override void Initialize()
     {
-        public override void Initialize()
-        {
-            base.Initialize();
+        base.Initialize();
 
-            SubscribeLocalEvent<EmptyOnMachineDeconstructComponent, MachineDeconstructedEvent>(OnDeconstruct);
-        }
+        SubscribeLocalEvent<EmptyOnMachineDeconstructComponent, MachineDeconstructedEvent>(OnDeconstruct);
+    }
 
-        private void OnDeconstruct(EntityUid uid, EmptyOnMachineDeconstructComponent component, MachineDeconstructedEvent ev)
+    private void OnDeconstruct(EntityUid uid, EmptyOnMachineDeconstructComponent component, MachineDeconstructedEvent ev)
+    {
+        if (!EntityManager.TryGetComponent<IContainerManager>(uid, out var mComp))
+            return;
+        var baseCoords = component.Owner.Transform.Coordinates;
+        foreach (var v in component.Containers)
         {
-            if (!EntityManager.TryGetComponent<IContainerManager>(uid, out var mComp))
-                return;
-            var baseCoords = component.Owner.Transform.Coordinates;
-            foreach (var v in component.Containers)
+            if (mComp.TryGetContainer(v, out var container))
             {
-                if (mComp.TryGetContainer(v, out var container))
-                {
-                    container.EmptyContainer(true, baseCoords);
-                }
+                container.EmptyContainer(true, baseCoords);
             }
         }
     }

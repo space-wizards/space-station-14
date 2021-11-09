@@ -11,133 +11,132 @@ using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Timer = Robust.Shared.Timing.Timer;
 
-namespace Content.Server.RoundEnd
+namespace Content.Server.RoundEnd;
+
+public class RoundEndSystem : EntitySystem
 {
-    public class RoundEndSystem : EntitySystem
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly IChatManager _chatManager = default!;
+
+    public const float RestartRoundTime = 20f;
+
+    private CancellationTokenSource _roundEndCancellationTokenSource = new();
+    private CancellationTokenSource _callCooldownEndedTokenSource = new();
+    public bool IsRoundEndCountdownStarted { get; private set; }
+    public TimeSpan RoundEndCountdownTime { get; set; } = TimeSpan.FromMinutes(4);
+    public TimeSpan? ExpectedCountdownEnd = null;
+
+    public TimeSpan LastCallTime { get; private set; }
+
+    public TimeSpan CallCooldown { get; } = TimeSpan.FromSeconds(30);
+
+    // TODO: Make these regular eventbus events...
+    public delegate void RoundEndCountdownStarted();
+    public event RoundEndCountdownStarted? OnRoundEndCountdownStarted;
+
+    public delegate void RoundEndCountdownCancelled();
+    public event RoundEndCountdownCancelled? OnRoundEndCountdownCancelled;
+
+    public delegate void RoundEndCountdownFinished();
+    public event RoundEndCountdownFinished? OnRoundEndCountdownFinished;
+
+    public delegate void CallCooldownEnded();
+    public event CallCooldownEnded? OnCallCooldownEnded;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IChatManager _chatManager = default!;
+        base.Initialize();
 
-        public const float RestartRoundTime = 20f;
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
+    }
 
-        private CancellationTokenSource _roundEndCancellationTokenSource = new();
-        private CancellationTokenSource _callCooldownEndedTokenSource = new();
-        public bool IsRoundEndCountdownStarted { get; private set; }
-        public TimeSpan RoundEndCountdownTime { get; set; } = TimeSpan.FromMinutes(4);
-        public TimeSpan? ExpectedCountdownEnd = null;
+    void Reset(RoundRestartCleanupEvent ev)
+    {
+        IsRoundEndCountdownStarted = false;
+        _roundEndCancellationTokenSource.Cancel();
+        _roundEndCancellationTokenSource = new CancellationTokenSource();
+        _callCooldownEndedTokenSource.Cancel();
+        _callCooldownEndedTokenSource = new CancellationTokenSource();
+        ExpectedCountdownEnd = null;
+        LastCallTime = default;
+    }
 
-        public TimeSpan LastCallTime { get; private set; }
+    public bool CanCall()
+    {
+        return _gameTiming.CurTime >= LastCallTime + CallCooldown;
+    }
 
-        public TimeSpan CallCooldown { get; } = TimeSpan.FromSeconds(30);
+    private void ActivateCooldown()
+    {
+        _callCooldownEndedTokenSource.Cancel();
+        _callCooldownEndedTokenSource = new CancellationTokenSource();
+        LastCallTime = _gameTiming.CurTime;
+        Timer.Spawn(CallCooldown, () => OnCallCooldownEnded?.Invoke(), _callCooldownEndedTokenSource.Token);
+    }
 
-        // TODO: Make these regular eventbus events...
-        public delegate void RoundEndCountdownStarted();
-        public event RoundEndCountdownStarted? OnRoundEndCountdownStarted;
+    public void RequestRoundEnd(bool checkCooldown = true)
+    {
+        RequestRoundEnd(RoundEndCountdownTime, checkCooldown);
+    }
 
-        public delegate void RoundEndCountdownCancelled();
-        public event RoundEndCountdownCancelled? OnRoundEndCountdownCancelled;
+    public void RequestRoundEnd(TimeSpan countdownTime, bool checkCooldown = true)
+    {
+        if (IsRoundEndCountdownStarted)
+            return;
 
-        public delegate void RoundEndCountdownFinished();
-        public event RoundEndCountdownFinished? OnRoundEndCountdownFinished;
-
-        public delegate void CallCooldownEnded();
-        public event CallCooldownEnded? OnCallCooldownEnded;
-
-        public override void Initialize()
+        if (checkCooldown && !CanCall())
         {
-            base.Initialize();
-
-            SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
+            return;
         }
 
-        void Reset(RoundRestartCleanupEvent ev)
+        IsRoundEndCountdownStarted = true;
+
+        _chatManager.DispatchStationAnnouncement(Loc.GetString("round-end-system-shuttle-called-announcement",("minutes", countdownTime.Minutes)), Loc.GetString("Station"));
+
+        SoundSystem.Play(Filter.Broadcast(), "/Audio/Announcements/shuttlecalled.ogg");
+
+        ExpectedCountdownEnd = _gameTiming.CurTime + countdownTime;
+        Timer.Spawn(countdownTime, EndRound, _roundEndCancellationTokenSource.Token);
+
+        ActivateCooldown();
+
+        OnRoundEndCountdownStarted?.Invoke();
+    }
+
+    public void CancelRoundEndCountdown( bool checkCooldown = true)
+    {
+        if (!IsRoundEndCountdownStarted)
+            return;
+
+        if (checkCooldown && !CanCall())
         {
-            IsRoundEndCountdownStarted = false;
-            _roundEndCancellationTokenSource.Cancel();
-            _roundEndCancellationTokenSource = new CancellationTokenSource();
-            _callCooldownEndedTokenSource.Cancel();
-            _callCooldownEndedTokenSource = new CancellationTokenSource();
-            ExpectedCountdownEnd = null;
-            LastCallTime = default;
+            return;
         }
 
-        public bool CanCall()
-        {
-            return _gameTiming.CurTime >= LastCallTime + CallCooldown;
-        }
+        IsRoundEndCountdownStarted = false;
 
-        private void ActivateCooldown()
-        {
-            _callCooldownEndedTokenSource.Cancel();
-            _callCooldownEndedTokenSource = new CancellationTokenSource();
-            LastCallTime = _gameTiming.CurTime;
-            Timer.Spawn(CallCooldown, () => OnCallCooldownEnded?.Invoke(), _callCooldownEndedTokenSource.Token);
-        }
+        _chatManager.DispatchStationAnnouncement(Loc.GetString("round-end-system-shuttle-recalled-announcement"), Loc.GetString("Station"));
 
-        public void RequestRoundEnd(bool checkCooldown = true)
-        {
-            RequestRoundEnd(RoundEndCountdownTime, checkCooldown);
-        }
+        SoundSystem.Play(Filter.Broadcast(), "/Audio/Announcements/shuttlerecalled.ogg");
 
-        public void RequestRoundEnd(TimeSpan countdownTime, bool checkCooldown = true)
-        {
-            if (IsRoundEndCountdownStarted)
-                return;
+        _roundEndCancellationTokenSource.Cancel();
+        _roundEndCancellationTokenSource = new CancellationTokenSource();
 
-            if (checkCooldown && !CanCall())
-            {
-                return;
-            }
+        ExpectedCountdownEnd = null;
 
-            IsRoundEndCountdownStarted = true;
+        ActivateCooldown();
 
-            _chatManager.DispatchStationAnnouncement(Loc.GetString("round-end-system-shuttle-called-announcement",("minutes", countdownTime.Minutes)), Loc.GetString("Station"));
+        OnRoundEndCountdownCancelled?.Invoke();
+    }
 
-            SoundSystem.Play(Filter.Broadcast(), "/Audio/Announcements/shuttlecalled.ogg");
+    public void EndRound()
+    {
+        OnRoundEndCountdownFinished?.Invoke();
+        var gameTicker = Get<GameTicker>();
+        gameTicker.EndRound();
 
-            ExpectedCountdownEnd = _gameTiming.CurTime + countdownTime;
-            Timer.Spawn(countdownTime, EndRound, _roundEndCancellationTokenSource.Token);
+        _chatManager.DispatchServerAnnouncement(Loc.GetString("round-end-system-round-restart-eta-announcement", ("seconds", RestartRoundTime)));
 
-            ActivateCooldown();
-
-            OnRoundEndCountdownStarted?.Invoke();
-        }
-
-        public void CancelRoundEndCountdown( bool checkCooldown = true)
-        {
-            if (!IsRoundEndCountdownStarted)
-                return;
-
-            if (checkCooldown && !CanCall())
-            {
-                return;
-            }
-
-            IsRoundEndCountdownStarted = false;
-
-            _chatManager.DispatchStationAnnouncement(Loc.GetString("round-end-system-shuttle-recalled-announcement"), Loc.GetString("Station"));
-
-            SoundSystem.Play(Filter.Broadcast(), "/Audio/Announcements/shuttlerecalled.ogg");
-
-            _roundEndCancellationTokenSource.Cancel();
-            _roundEndCancellationTokenSource = new CancellationTokenSource();
-
-            ExpectedCountdownEnd = null;
-
-            ActivateCooldown();
-
-            OnRoundEndCountdownCancelled?.Invoke();
-        }
-
-        public void EndRound()
-        {
-            OnRoundEndCountdownFinished?.Invoke();
-            var gameTicker = Get<GameTicker>();
-            gameTicker.EndRound();
-
-            _chatManager.DispatchServerAnnouncement(Loc.GetString("round-end-system-round-restart-eta-announcement", ("seconds", RestartRoundTime)));
-
-            Timer.Spawn(TimeSpan.FromSeconds(RestartRoundTime), () => gameTicker.RestartRound(), CancellationToken.None);
-        }
+        Timer.Spawn(TimeSpan.FromSeconds(RestartRoundTime), () => gameTicker.RestartRound(), CancellationToken.None);
     }
 }

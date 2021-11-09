@@ -9,28 +9,27 @@ using Robust.Shared.IoC;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
-{
-    [UsedImplicitly]
-    [DataDefinition]
-    public class PlantClonexadone : ReagentEffect
-    {
-        public override void Metabolize(EntityUid plantHolder, EntityUid organEntity, Solution.ReagentQuantity reagent, IEntityManager entityManager)
-        {
-            if (!entityManager.TryGetComponent(plantHolder, out PlantHolderComponent? plantHolderComp)
-            || plantHolderComp.Seed == null || plantHolderComp.Dead)
-                return;
+namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism;
 
-            var deviation = 0;
-            var seed = plantHolderComp.Seed;
-            var random = IoCManager.Resolve<IRobustRandom>();
-            if (plantHolderComp.Age > seed.Maturation)
-                deviation = (int) Math.Max(seed.Maturation - 1, plantHolderComp.Age - random.Next(7, 10));
-            else
-                deviation = (int) (seed.Maturation / seed.GrowthStages);
-            plantHolderComp.Age -= deviation;
-            plantHolderComp.SkipAging++;
-            plantHolderComp.ForceUpdate = true;
-        }
+[UsedImplicitly]
+[DataDefinition]
+public class PlantClonexadone : ReagentEffect
+{
+    public override void Metabolize(EntityUid plantHolder, EntityUid organEntity, Solution.ReagentQuantity reagent, IEntityManager entityManager)
+    {
+        if (!entityManager.TryGetComponent(plantHolder, out PlantHolderComponent? plantHolderComp)
+            || plantHolderComp.Seed == null || plantHolderComp.Dead)
+            return;
+
+        var deviation = 0;
+        var seed = plantHolderComp.Seed;
+        var random = IoCManager.Resolve<IRobustRandom>();
+        if (plantHolderComp.Age > seed.Maturation)
+            deviation = (int) Math.Max(seed.Maturation - 1, plantHolderComp.Age - random.Next(7, 10));
+        else
+            deviation = (int) (seed.Maturation / seed.GrowthStages);
+        plantHolderComp.Age -= deviation;
+        plantHolderComp.SkipAging++;
+        plantHolderComp.ForceUpdate = true;
     }
 }

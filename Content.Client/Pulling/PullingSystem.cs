@@ -3,19 +3,18 @@ using Content.Shared.Pulling.Components;
 using JetBrains.Annotations;
 using Robust.Client.Physics;
 
-namespace Content.Client.Pulling
+namespace Content.Client.Pulling;
+
+[UsedImplicitly]
+public class PullingSystem : SharedPullingSystem
 {
-    [UsedImplicitly]
-    public class PullingSystem : SharedPullingSystem
+    public override void Initialize()
     {
-        public override void Initialize()
-        {
-            base.Initialize();
+        base.Initialize();
 
-            UpdatesAfter.Add(typeof(PhysicsSystem));
+        UpdatesAfter.Add(typeof(PhysicsSystem));
 
-            SubscribeLocalEvent<SharedPullableComponent, PullableMoveMessage>(OnPullableMove);
-            SubscribeLocalEvent<SharedPullableComponent, PullableStopMovingMessage>(OnPullableStopMove);
-        }
+        SubscribeLocalEvent<SharedPullableComponent, PullableMoveMessage>(OnPullableMove);
+        SubscribeLocalEvent<SharedPullableComponent, PullableStopMovingMessage>(OnPullableStopMove);
     }
 }

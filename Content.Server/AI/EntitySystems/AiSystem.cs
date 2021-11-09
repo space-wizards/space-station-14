@@ -11,122 +11,121 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 
-namespace Content.Server.AI.EntitySystems
+namespace Content.Server.AI.EntitySystems;
+
+/// <summary>
+///     Handles NPCs running every tick.
+/// </summary>
+[UsedImplicitly]
+internal class AiSystem : EntitySystem
 {
+    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+
     /// <summary>
-    ///     Handles NPCs running every tick.
+    ///     To avoid iterating over dead AI continuously they can wake and sleep themselves when necessary.
     /// </summary>
-    [UsedImplicitly]
-    internal class AiSystem : EntitySystem
+    private readonly HashSet<AiControllerComponent> _awakeAi = new();
+
+    // To avoid modifying awakeAi while iterating over it.
+    private readonly List<SleepAiMessage> _queuedSleepMessages = new();
+
+    private readonly List<MobStateChangedMessage> _queuedMobStateMessages = new();
+
+    public bool IsAwake(AiControllerComponent npc) => _awakeAi.Contains(npc);
+
+    /// <inheritdoc />
+    public override void Initialize()
     {
-        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+        base.Initialize();
+        SubscribeLocalEvent<SleepAiMessage>(HandleAiSleep);
+        SubscribeLocalEvent<MobStateChangedMessage>(MobStateChanged);
+    }
 
-        /// <summary>
-        ///     To avoid iterating over dead AI continuously they can wake and sleep themselves when necessary.
-        /// </summary>
-        private readonly HashSet<AiControllerComponent> _awakeAi = new();
+    /// <inheritdoc />
+    public override void Update(float frameTime)
+    {
+        var cvarMaxUpdates = _configurationManager.GetCVar(CCVars.AIMaxUpdates);
+        if (cvarMaxUpdates <= 0)
+            return;
 
-        // To avoid modifying awakeAi while iterating over it.
-        private readonly List<SleepAiMessage> _queuedSleepMessages = new();
-
-        private readonly List<MobStateChangedMessage> _queuedMobStateMessages = new();
-
-        public bool IsAwake(AiControllerComponent npc) => _awakeAi.Contains(npc);
-
-        /// <inheritdoc />
-        public override void Initialize()
+        foreach (var message in _queuedMobStateMessages)
         {
-            base.Initialize();
-            SubscribeLocalEvent<SleepAiMessage>(HandleAiSleep);
-            SubscribeLocalEvent<MobStateChangedMessage>(MobStateChanged);
+            // TODO: Need to generecise this but that will be part of a larger cleanup later anyway.
+            if (message.Entity.Deleted ||
+                !message.Entity.TryGetComponent(out UtilityAi? controller))
+            {
+                continue;
+            }
+
+            controller.MobStateChanged(message);
         }
 
-        /// <inheritdoc />
-        public override void Update(float frameTime)
+        _queuedMobStateMessages.Clear();
+
+        foreach (var message in _queuedSleepMessages)
         {
-            var cvarMaxUpdates = _configurationManager.GetCVar(CCVars.AIMaxUpdates);
-            if (cvarMaxUpdates <= 0)
-                return;
-
-            foreach (var message in _queuedMobStateMessages)
+            switch (message.Sleep)
             {
-                // TODO: Need to generecise this but that will be part of a larger cleanup later anyway.
-                if (message.Entity.Deleted ||
-                    !message.Entity.TryGetComponent(out UtilityAi? controller))
-                {
-                    continue;
-                }
-
-                controller.MobStateChanged(message);
-            }
-
-            _queuedMobStateMessages.Clear();
-
-            foreach (var message in _queuedSleepMessages)
-            {
-                switch (message.Sleep)
-                {
-                    case true:
-                        if (_awakeAi.Count == cvarMaxUpdates && _awakeAi.Contains(message.Component))
-                        {
-                            Logger.Warning($"Under AI limit again: {_awakeAi.Count - 1} / {cvarMaxUpdates}");
-                        }
-                        _awakeAi.Remove(message.Component);
-                        break;
-                    case false:
-                        _awakeAi.Add(message.Component);
-
-                        if (_awakeAi.Count > cvarMaxUpdates)
-                        {
-                            Logger.Warning($"AI limit exceeded: {_awakeAi.Count} / {cvarMaxUpdates}");
-                        }
-                        break;
-                }
-            }
-
-            _queuedSleepMessages.Clear();
-            var toRemove = new List<AiControllerComponent>();
-            var maxUpdates = Math.Min(_awakeAi.Count, cvarMaxUpdates);
-            var count = 0;
-
-            foreach (var npc in _awakeAi)
-            {
-                if (npc.Paused) continue;
-
-                if (npc.Deleted)
-                {
-                    toRemove.Add(npc);
-                    continue;
-                }
-
-                if (count >= maxUpdates)
-                {
+                case true:
+                    if (_awakeAi.Count == cvarMaxUpdates && _awakeAi.Contains(message.Component))
+                    {
+                        Logger.Warning($"Under AI limit again: {_awakeAi.Count - 1} / {cvarMaxUpdates}");
+                    }
+                    _awakeAi.Remove(message.Component);
                     break;
-                }
+                case false:
+                    _awakeAi.Add(message.Component);
 
-                npc.Update(frameTime);
-                count++;
-            }
-
-            foreach (var processor in toRemove)
-            {
-                _awakeAi.Remove(processor);
+                    if (_awakeAi.Count > cvarMaxUpdates)
+                    {
+                        Logger.Warning($"AI limit exceeded: {_awakeAi.Count} / {cvarMaxUpdates}");
+                    }
+                    break;
             }
         }
 
-        private void HandleAiSleep(SleepAiMessage message)
+        _queuedSleepMessages.Clear();
+        var toRemove = new List<AiControllerComponent>();
+        var maxUpdates = Math.Min(_awakeAi.Count, cvarMaxUpdates);
+        var count = 0;
+
+        foreach (var npc in _awakeAi)
         {
-            _queuedSleepMessages.Add(message);
-        }
+            if (npc.Paused) continue;
 
-        private void MobStateChanged(MobStateChangedMessage message)
-        {
-            if (!message.Entity.HasComponent<AiControllerComponent>())
+            if (npc.Deleted)
             {
-                return;
+                toRemove.Add(npc);
+                continue;
             }
 
-            _queuedMobStateMessages.Add(message);
+            if (count >= maxUpdates)
+            {
+                break;
+            }
+
+            npc.Update(frameTime);
+            count++;
         }
+
+        foreach (var processor in toRemove)
+        {
+            _awakeAi.Remove(processor);
+        }
+    }
+
+    private void HandleAiSleep(SleepAiMessage message)
+    {
+        _queuedSleepMessages.Add(message);
+    }
+
+    private void MobStateChanged(MobStateChangedMessage message)
+    {
+        if (!message.Entity.HasComponent<AiControllerComponent>())
+        {
+            return;
+        }
+
+        _queuedMobStateMessages.Add(message);
     }
 }

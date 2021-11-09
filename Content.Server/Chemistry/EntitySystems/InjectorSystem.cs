@@ -2,21 +2,20 @@
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.Chemistry.EntitySystems
+namespace Content.Server.Chemistry.EntitySystems;
+
+[UsedImplicitly]
+public class InjectorSystem : EntitySystem
 {
-    [UsedImplicitly]
-    public class InjectorSystem : EntitySystem
+    public override void Initialize()
     {
-        public override void Initialize()
-        {
-            base.Initialize();
+        base.Initialize();
 
-            SubscribeLocalEvent<InjectorComponent, SolutionChangedEvent>(OnSolutionChange);
-        }
+        SubscribeLocalEvent<InjectorComponent, SolutionChangedEvent>(OnSolutionChange);
+    }
 
-        private void OnSolutionChange(EntityUid uid, InjectorComponent component, SolutionChangedEvent args)
-        {
-            component.Dirty();
-        }
+    private void OnSolutionChange(EntityUid uid, InjectorComponent component, SolutionChangedEvent args)
+    {
+        component.Dirty();
     }
 }

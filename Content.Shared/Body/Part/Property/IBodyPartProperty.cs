@@ -1,12 +1,11 @@
 ﻿using Robust.Shared.GameObjects;
 
-namespace Content.Shared.Body.Part.Property
+namespace Content.Shared.Body.Part.Property;
+
+/// <summary>
+///     Defines a property for a <see cref="SharedBodyPartComponent"/>.
+/// </summary>
+public interface IBodyPartProperty : IComponent
 {
-    /// <summary>
-    ///     Defines a property for a <see cref="SharedBodyPartComponent"/>.
-    /// </summary>
-    public interface IBodyPartProperty : IComponent
-    {
-        bool Active { get; set; }
-    }
+    bool Active { get; set; }
 }

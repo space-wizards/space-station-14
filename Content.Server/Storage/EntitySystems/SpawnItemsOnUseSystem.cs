@@ -8,61 +8,60 @@ using Robust.Shared.IoC;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
-namespace Content.Server.Storage.EntitySystems
+namespace Content.Server.Storage.EntitySystems;
+
+public class SpawnItemsOnUseSystem : EntitySystem
 {
-    public class SpawnItemsOnUseSystem : EntitySystem
+    [Dependency] private readonly IRobustRandom _random = default!;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly IRobustRandom _random = default!;
+        base.Initialize();
 
-        public override void Initialize()
+        SubscribeLocalEvent<SpawnItemsOnUseComponent, UseInHandEvent>(OnUseInHand);
+    }
+
+    private void OnUseInHand(EntityUid uid, SpawnItemsOnUseComponent component, UseInHandEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        var owner = EntityManager.GetEntity(uid);
+        var alreadySpawnedGroups = new List<string>();
+        IEntity? entityToPlaceInHands = null;
+        foreach (var storageItem in component.Items)
         {
-            base.Initialize();
+            if (!string.IsNullOrEmpty(storageItem.GroupId) &&
+                alreadySpawnedGroups.Contains(storageItem.GroupId)) continue;
 
-            SubscribeLocalEvent<SpawnItemsOnUseComponent, UseInHandEvent>(OnUseInHand);
+            if (storageItem.SpawnProbability != 1f &&
+                !_random.Prob(storageItem.SpawnProbability))
+            {
+                continue;
+            }
+
+            for (var i = 0; i < storageItem.Amount; i++)
+            {
+                entityToPlaceInHands = EntityManager.SpawnEntity(storageItem.PrototypeId, args.User.Transform.Coordinates);
+            }
+
+            if (!string.IsNullOrEmpty(storageItem.GroupId)) alreadySpawnedGroups.Add(storageItem.GroupId);
         }
 
-        private void OnUseInHand(EntityUid uid, SpawnItemsOnUseComponent component, UseInHandEvent args)
+        if (component.Sound != null)
+            SoundSystem.Play(Filter.Pvs(owner), component.Sound.GetSound());
+
+        component.Uses--;
+        if (component.Uses == 0)
         {
-            if (args.Handled)
-                return;
+            args.Handled = true;
+            owner.Delete();
+        }
 
-            var owner = EntityManager.GetEntity(uid);
-            var alreadySpawnedGroups = new List<string>();
-            IEntity? entityToPlaceInHands = null;
-            foreach (var storageItem in component.Items)
-            {
-                if (!string.IsNullOrEmpty(storageItem.GroupId) &&
-                    alreadySpawnedGroups.Contains(storageItem.GroupId)) continue;
-
-                if (storageItem.SpawnProbability != 1f &&
-                    !_random.Prob(storageItem.SpawnProbability))
-                {
-                    continue;
-                }
-
-                for (var i = 0; i < storageItem.Amount; i++)
-                {
-                    entityToPlaceInHands = EntityManager.SpawnEntity(storageItem.PrototypeId, args.User.Transform.Coordinates);
-                }
-
-                if (!string.IsNullOrEmpty(storageItem.GroupId)) alreadySpawnedGroups.Add(storageItem.GroupId);
-            }
-
-            if (component.Sound != null)
-                SoundSystem.Play(Filter.Pvs(owner), component.Sound.GetSound());
-
-            component.Uses--;
-            if (component.Uses == 0)
-            {
-                args.Handled = true;
-                owner.Delete();
-            }
-
-            if (entityToPlaceInHands != null
-                && args.User.TryGetComponent<SharedHandsComponent>(out var hands))
-            {
-                hands.TryPutInAnyHand(entityToPlaceInHands);
-            }
+        if (entityToPlaceInHands != null
+            && args.User.TryGetComponent<SharedHandsComponent>(out var hands))
+        {
+            hands.TryPutInAnyHand(entityToPlaceInHands);
         }
     }
 }

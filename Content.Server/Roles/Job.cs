@@ -3,41 +3,40 @@ using Content.Shared.Roles;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
-namespace Content.Server.Roles
+namespace Content.Server.Roles;
+
+public class Job : Role
 {
-    public class Job : Role
+    public JobPrototype Prototype { get; }
+
+    public override string Name { get; }
+    public override bool Antagonist => false;
+
+    public string? StartingGear => Prototype.StartingGear;
+
+    public Job(Mind.Mind mind, JobPrototype jobPrototype) : base(mind)
     {
-        public JobPrototype Prototype { get; }
+        Prototype = jobPrototype;
+        Name = jobPrototype.Name;
+    }
 
-        public override string Name { get; }
-        public override bool Antagonist => false;
+    public override void Greet()
+    {
+        base.Greet();
 
-        public string? StartingGear => Prototype.StartingGear;
-
-        public Job(Mind.Mind mind, JobPrototype jobPrototype) : base(mind)
+        if (Mind.TryGetSession(out var session))
         {
-            Prototype = jobPrototype;
-            Name = jobPrototype.Name;
-        }
+            var chat = IoCManager.Resolve<IChatManager>();
+            chat.DispatchServerMessage(session, Loc.GetString("job-greet-introduce-job-name", ("jobName", Name)));
 
-        public override void Greet()
-        {
-            base.Greet();
+            if(Prototype.RequireAdminNotify)
+                chat.DispatchServerMessage(session, Loc.GetString("job-greet-important-disconnect-admin-notify"));
 
-            if (Mind.TryGetSession(out var session))
-            {
-                var chat = IoCManager.Resolve<IChatManager>();
-                chat.DispatchServerMessage(session, Loc.GetString("job-greet-introduce-job-name", ("jobName", Name)));
+            chat.DispatchServerMessage(session, Loc.GetString("job-greet-supervisors-warning", ("jobName", Name), ("supervisors", Prototype.Supervisors)));
 
-                if(Prototype.RequireAdminNotify)
-                    chat.DispatchServerMessage(session, Loc.GetString("job-greet-important-disconnect-admin-notify"));
-
-                chat.DispatchServerMessage(session, Loc.GetString("job-greet-supervisors-warning", ("jobName", Name), ("supervisors", Prototype.Supervisors)));
-
-                if(Prototype.JoinNotifyCrew && Mind.CharacterName != null)
-                    chat.DispatchStationAnnouncement(Loc.GetString("job-greet-join-notify-crew", ("jobName", Name), ("characterName", Mind.CharacterName)),
-                        Loc.GetString("job-greet-join-notify-crew-announcer"));
-            }
+            if(Prototype.JoinNotifyCrew && Mind.CharacterName != null)
+                chat.DispatchStationAnnouncement(Loc.GetString("job-greet-join-notify-crew", ("jobName", Name), ("characterName", Mind.CharacterName)),
+                                                 Loc.GetString("job-greet-join-notify-crew-announcer"));
         }
     }
 }

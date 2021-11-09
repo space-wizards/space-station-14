@@ -6,58 +6,57 @@ using Robust.Client.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 
-namespace Content.Client.Light.Visualizers
+namespace Content.Client.Light.Visualizers;
+
+[UsedImplicitly]
+public class ExpendableLightVisualizer : AppearanceVisualizer
 {
-    [UsedImplicitly]
-    public class ExpendableLightVisualizer : AppearanceVisualizer
+    public override void OnChangeData(AppearanceComponent component)
     {
-        public override void OnChangeData(AppearanceComponent component)
+        base.OnChangeData(component);
+
+        if (component.TryGetData(ExpendableLightVisuals.Behavior, out string lightBehaviourID))
         {
-            base.OnChangeData(component);
-
-            if (component.TryGetData(ExpendableLightVisuals.Behavior, out string lightBehaviourID))
+            if (component.Owner.TryGetComponent<LightBehaviourComponent>(out var lightBehaviour))
             {
-                if (component.Owner.TryGetComponent<LightBehaviourComponent>(out var lightBehaviour))
-                {
-                    lightBehaviour.StopLightBehaviour();
+                lightBehaviour.StopLightBehaviour();
 
-                    if (lightBehaviourID != string.Empty)
-                    {
-                        lightBehaviour.StartLightBehaviour(lightBehaviourID);
-                    }
-                    else if (component.Owner.TryGetComponent<PointLightComponent>(out var light))
-                    {
-                        light.Enabled = false;
-                    }
+                if (lightBehaviourID != string.Empty)
+                {
+                    lightBehaviour.StartLightBehaviour(lightBehaviourID);
+                }
+                else if (component.Owner.TryGetComponent<PointLightComponent>(out var light))
+                {
+                    light.Enabled = false;
                 }
             }
+        }
 
-            void TryStopStream(IPlayingAudioStream? stream)
-            {
-                stream?.Stop();
-            }
+        void TryStopStream(IPlayingAudioStream? stream)
+        {
+            stream?.Stop();
+        }
 
-            if (component.TryGetData(ExpendableLightVisuals.State, out ExpendableLightState state)
+        if (component.TryGetData(ExpendableLightVisuals.State, out ExpendableLightState state)
             && component.Owner.TryGetComponent<ExpendableLightComponent>(out var expendableLight))
+        {
+            switch (state)
             {
-                switch (state)
+                case ExpendableLightState.Lit:
                 {
-                    case ExpendableLightState.Lit:
+                    TryStopStream(expendableLight.PlayingStream);
+                    if (expendableLight.LoopedSound != null)
                     {
-                        TryStopStream(expendableLight.PlayingStream);
-                        if (expendableLight.LoopedSound != null)
-                        {
-                            expendableLight.PlayingStream = SoundSystem.Play(Filter.Local(),
-                                expendableLight.LoopedSound, expendableLight.Owner,
-                                SharedExpendableLightComponent.LoopedSoundParams.WithLoop(true));
-                        }
-                        break;
+                        expendableLight.PlayingStream = SoundSystem.Play(Filter.Local(),
+                                                                         expendableLight.LoopedSound, expendableLight.Owner,
+                                                                         SharedExpendableLightComponent.LoopedSoundParams.WithLoop(true));
                     }
-                    case ExpendableLightState.Dead:
-                    {
-                        TryStopStream(expendableLight.PlayingStream);
-                        break;
-                    }
+                    break;
+                }
+                case ExpendableLightState.Dead:
+                {
+                    TryStopStream(expendableLight.PlayingStream);
+                    break;
                 }
             }
         }

@@ -1,10 +1,9 @@
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.Electrocution
+namespace Content.Shared.Electrocution;
+
+[RegisterComponent]
+public sealed class ElectrocutedComponent : Component
 {
-    [RegisterComponent]
-    public sealed class ElectrocutedComponent : Component
-    {
-        public override string Name => "Electrocuted";
-    }
+    public override string Name => "Electrocuted";
 }

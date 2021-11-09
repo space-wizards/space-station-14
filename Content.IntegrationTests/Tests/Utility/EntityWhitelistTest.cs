@@ -6,16 +6,16 @@ using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
-namespace Content.IntegrationTests.Tests.Utility
-{
-    [TestFixture]
-    [TestOf(typeof(EntityWhitelist))]
-    public class EntityWhitelistTest : ContentIntegrationTest
-    {
-        private const string InvalidComponent = "Sprite";
-        private const string ValidComponent = "Physics";
+namespace Content.IntegrationTests.Tests.Utility;
 
-        private static readonly string Prototypes = $@"
+[TestFixture]
+[TestOf(typeof(EntityWhitelist))]
+public class EntityWhitelistTest : ContentIntegrationTest
+{
+    private const string InvalidComponent = "Sprite";
+    private const string ValidComponent = "Physics";
+
+    private static readonly string Prototypes = $@"
 - type: Tag
   id: ValidTag
 - type: Tag
@@ -57,59 +57,58 @@ namespace Content.IntegrationTests.Tests.Utility
     tags:
     - ValidTag";
 
-        [Test]
-        public async Task Test()
+    [Test]
+    public async Task Test()
+    {
+        var serverOptions = new ServerContentIntegrationOption {ExtraPrototypes = Prototypes};
+        var server = StartServer(serverOptions);
+
+        await server.WaitIdleAsync();
+        var mapManager = server.ResolveDependency<IMapManager>();
+        var entityManager = server.ResolveDependency<IEntityManager>();
+
+        await server.WaitAssertion(() =>
         {
-            var serverOptions = new ServerContentIntegrationOption {ExtraPrototypes = Prototypes};
-            var server = StartServer(serverOptions);
+            var mapId = GetMainMapId(mapManager);
+            var mapCoordinates = new MapCoordinates(0, 0, mapId);
 
-            await server.WaitIdleAsync();
-            var mapManager = server.ResolveDependency<IMapManager>();
-            var entityManager = server.ResolveDependency<IEntityManager>();
+            var validComponent = entityManager.SpawnEntity("ValidComponentDummy", mapCoordinates).Uid;
+            var validTag = entityManager.SpawnEntity("ValidTagDummy", mapCoordinates).Uid;
 
-            await server.WaitAssertion(() =>
+            var invalidComponent = entityManager.SpawnEntity("InvalidComponentDummy", mapCoordinates).Uid;
+            var invalidTag = entityManager.SpawnEntity("InvalidTagDummy", mapCoordinates).Uid;
+
+            // Test instantiated on its own
+            var whitelistInst = new EntityWhitelist
             {
-                var mapId = GetMainMapId(mapManager);
-                var mapCoordinates = new MapCoordinates(0, 0, mapId);
+                Components = new[] {$"{ValidComponent}"},
+                Tags = new[] {"ValidTag"}
+            };
+            whitelistInst.UpdateRegistrations();
+            Assert.That(whitelistInst, Is.Not.Null);
 
-                var validComponent = entityManager.SpawnEntity("ValidComponentDummy", mapCoordinates).Uid;
-                var validTag = entityManager.SpawnEntity("ValidTagDummy", mapCoordinates).Uid;
+            Assert.That(whitelistInst.Components, Is.Not.Null);
+            Assert.That(whitelistInst.Tags, Is.Not.Null);
 
-                var invalidComponent = entityManager.SpawnEntity("InvalidComponentDummy", mapCoordinates).Uid;
-                var invalidTag = entityManager.SpawnEntity("InvalidTagDummy", mapCoordinates).Uid;
+            Assert.That(whitelistInst.IsValid(validComponent), Is.True);
+            Assert.That(whitelistInst.IsValid(validTag), Is.True);
 
-                // Test instantiated on its own
-                var whitelistInst = new EntityWhitelist
-                {
-                    Components = new[] {$"{ValidComponent}"},
-                    Tags = new[] {"ValidTag"}
-                };
-                whitelistInst.UpdateRegistrations();
-                Assert.That(whitelistInst, Is.Not.Null);
+            Assert.That(whitelistInst.IsValid(invalidComponent), Is.False);
+            Assert.That(whitelistInst.IsValid(invalidTag), Is.False);
 
-                Assert.That(whitelistInst.Components, Is.Not.Null);
-                Assert.That(whitelistInst.Tags, Is.Not.Null);
+            // Test from serialized
+            var dummy = entityManager.SpawnEntity("WhitelistDummy", mapCoordinates);
+            var whitelistSer = dummy.GetComponent<SharedItemSlotsComponent>().Slots.Values.First().Whitelist;
+            Assert.That(whitelistSer, Is.Not.Null);
 
-                Assert.That(whitelistInst.IsValid(validComponent), Is.True);
-                Assert.That(whitelistInst.IsValid(validTag), Is.True);
+            Assert.That(whitelistSer.Components, Is.Not.Null);
+            Assert.That(whitelistSer.Tags, Is.Not.Null);
 
-                Assert.That(whitelistInst.IsValid(invalidComponent), Is.False);
-                Assert.That(whitelistInst.IsValid(invalidTag), Is.False);
+            Assert.That(whitelistSer.IsValid(validComponent), Is.True);
+            Assert.That(whitelistSer.IsValid(validTag), Is.True);
 
-                // Test from serialized
-                var dummy = entityManager.SpawnEntity("WhitelistDummy", mapCoordinates);
-                var whitelistSer = dummy.GetComponent<SharedItemSlotsComponent>().Slots.Values.First().Whitelist;
-                Assert.That(whitelistSer, Is.Not.Null);
-
-                Assert.That(whitelistSer.Components, Is.Not.Null);
-                Assert.That(whitelistSer.Tags, Is.Not.Null);
-
-                Assert.That(whitelistSer.IsValid(validComponent), Is.True);
-                Assert.That(whitelistSer.IsValid(validTag), Is.True);
-
-                Assert.That(whitelistSer.IsValid(invalidComponent), Is.False);
-                Assert.That(whitelistSer.IsValid(invalidTag), Is.False);
-            });
-        }
+            Assert.That(whitelistSer.IsValid(invalidComponent), Is.False);
+            Assert.That(whitelistSer.IsValid(invalidTag), Is.False);
+        });
     }
 }

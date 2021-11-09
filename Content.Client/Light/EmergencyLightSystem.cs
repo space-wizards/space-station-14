@@ -9,78 +9,77 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Maths;
 
-namespace Content.Client.Light
+namespace Content.Client.Light;
+
+public sealed class EmergencyLightSystem : SharedEmergencyLightSystem
 {
-    public sealed class EmergencyLightSystem : SharedEmergencyLightSystem
-    {
-        private static Animation Animation =>
-            new()
+    private static Animation Animation =>
+        new()
+        {
+            Length = TimeSpan.FromSeconds(4),
+            AnimationTracks =
             {
-                Length = TimeSpan.FromSeconds(4),
-                AnimationTracks =
+                new AnimationTrackComponentProperty
                 {
-                    new AnimationTrackComponentProperty
+                    ComponentType = typeof(PointLightComponent),
+                    InterpolationMode = AnimationInterpolationMode.Linear,
+                    Property = nameof(PointLightComponent.Rotation),
+                    KeyFrames =
                     {
-                        ComponentType = typeof(PointLightComponent),
-                        InterpolationMode = AnimationInterpolationMode.Linear,
-                        Property = nameof(PointLightComponent.Rotation),
-                        KeyFrames =
-                        {
-                            new AnimationTrackProperty.KeyFrame(Angle.Zero, 0),
-                            new AnimationTrackProperty.KeyFrame(Angle.FromDegrees(1080), 4)
-                        }
+                        new AnimationTrackProperty.KeyFrame(Angle.Zero, 0),
+                        new AnimationTrackProperty.KeyFrame(Angle.FromDegrees(1080), 4)
                     }
                 }
-            };
+            }
+        };
 
-        private const string AnimKey = "emergency";
+    private const string AnimKey = "emergency";
 
-        public override void Initialize()
-        {
-            base.Initialize();
-            SubscribeLocalEvent<EmergencyLightComponent, ComponentStartup>(HandleStartup);
-            SubscribeLocalEvent<EmergencyLightComponent, AnimationCompletedEvent>(HandleAnimationComplete);
-            SubscribeLocalEvent<EmergencyLightComponent, ComponentHandleState>(HandleCompState);
-        }
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<EmergencyLightComponent, ComponentStartup>(HandleStartup);
+        SubscribeLocalEvent<EmergencyLightComponent, AnimationCompletedEvent>(HandleAnimationComplete);
+        SubscribeLocalEvent<EmergencyLightComponent, ComponentHandleState>(HandleCompState);
+    }
 
-        private void HandleCompState(EntityUid uid, EmergencyLightComponent component, ref ComponentHandleState args)
-        {
-            if (args.Current is not EmergencyLightComponentState state) return;
+    private void HandleCompState(EntityUid uid, EmergencyLightComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is not EmergencyLightComponentState state) return;
 
-            if (component.Enabled == state.Enabled) return;
+        if (component.Enabled == state.Enabled) return;
 
-            var playerComponent = component.Owner.EnsureComponent<AnimationPlayerComponent>();
+        var playerComponent = component.Owner.EnsureComponent<AnimationPlayerComponent>();
 
-            component.Enabled = state.Enabled;
+        component.Enabled = state.Enabled;
 
-            if (component.Enabled && !playerComponent.HasRunningAnimation(AnimKey))
-                playerComponent.Play(Animation, AnimKey);
-
-            if (!component.Enabled)
-                playerComponent.Stop(AnimKey);
-        }
-
-        private void HandleAnimationComplete(EntityUid uid, EmergencyLightComponent component, AnimationCompletedEvent args)
-        {
-            if (!component.Enabled ||
-                !EntityManager.TryGetComponent<AnimationPlayerComponent>(uid, out var playerComponent)) return;
-
+        if (component.Enabled && !playerComponent.HasRunningAnimation(AnimKey))
             playerComponent.Play(Animation, AnimKey);
-        }
 
-        private void HandleStartup(EntityUid uid, EmergencyLightComponent component, ComponentStartup args)
-        {
-            PlayAnimation(component);
-        }
+        if (!component.Enabled)
+            playerComponent.Stop(AnimKey);
+    }
 
-        private void PlayAnimation(EmergencyLightComponent component)
-        {
-            if (!component.Enabled) return;
+    private void HandleAnimationComplete(EntityUid uid, EmergencyLightComponent component, AnimationCompletedEvent args)
+    {
+        if (!component.Enabled ||
+            !EntityManager.TryGetComponent<AnimationPlayerComponent>(uid, out var playerComponent)) return;
 
-            var playerComponent = component.Owner.EnsureComponent<AnimationPlayerComponent>();
+        playerComponent.Play(Animation, AnimKey);
+    }
 
-            if (!playerComponent.HasRunningAnimation(AnimKey))
-                playerComponent.Play(Animation, AnimKey);
-        }
+    private void HandleStartup(EntityUid uid, EmergencyLightComponent component, ComponentStartup args)
+    {
+        PlayAnimation(component);
+    }
+
+    private void PlayAnimation(EmergencyLightComponent component)
+    {
+        if (!component.Enabled) return;
+
+        var playerComponent = component.Owner.EnsureComponent<AnimationPlayerComponent>();
+
+        if (!playerComponent.HasRunningAnimation(AnimKey))
+            playerComponent.Play(Animation, AnimKey);
     }
 }

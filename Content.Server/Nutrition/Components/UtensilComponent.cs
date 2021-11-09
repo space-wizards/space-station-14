@@ -11,101 +11,100 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Nutrition.Components
+namespace Content.Server.Nutrition.Components;
+
+[RegisterComponent]
+public class UtensilComponent : Component, IAfterInteract
 {
-    [RegisterComponent]
-    public class UtensilComponent : Component, IAfterInteract
+    public override string Name => "Utensil";
+
+    [DataField("types")]
+    private UtensilType _types = UtensilType.None;
+
+    [ViewVariables]
+    public UtensilType Types
     {
-        public override string Name => "Utensil";
-
-        [DataField("types")]
-        private UtensilType _types = UtensilType.None;
-
-        [ViewVariables]
-        public UtensilType Types
+        get => _types;
+        set
         {
-            get => _types;
-            set
-            {
-                if (_types.Equals(value))
-                    return;
+            if (_types.Equals(value))
+                return;
 
-                _types = value;
-            }
-        }
-
-        /// <summary>
-        /// The chance that the utensil has to break with each use.
-        /// A value of 0 means that it is unbreakable.
-        /// </summary>
-        [ViewVariables]
-        [DataField("breakChance")]
-        private float _breakChance;
-
-        /// <summary>
-        /// The sound to be played if the utensil breaks.
-        /// </summary>
-        [ViewVariables]
-        [DataField("breakSound")]
-        private SoundSpecifier _breakSound = new SoundPathSpecifier("/Audio/Items/snap.ogg");
-
-        public void AddType(UtensilType type)
-        {
-            Types |= type;
-        }
-
-        public bool HasAnyType(UtensilType type)
-        {
-            return (_types & type) != UtensilType.None;
-        }
-
-        public bool HasType(UtensilType type)
-        {
-            return (_types & type) != 0;
-        }
-
-        public void RemoveType(UtensilType type)
-        {
-            Types &= ~type;
-        }
-
-        internal void TryBreak(IEntity user)
-        {
-            if (IoCManager.Resolve<IRobustRandom>().Prob(_breakChance))
-            {
-                SoundSystem.Play(Filter.Pvs(user), _breakSound.GetSound(), user, AudioParams.Default.WithVolume(-2f));
-                Owner.Delete();
-            }
-        }
-
-        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
-        {
-            return TryUseUtensil(eventArgs.User, eventArgs.Target);
-        }
-
-        private bool TryUseUtensil(IEntity user, IEntity? target)
-        {
-            if (target == null || !target.TryGetComponent(out FoodComponent? food))
-            {
-                return false;
-            }
-
-            if (!user.InRangeUnobstructed(target, popup: true))
-            {
-                return false;
-            }
-
-            food.TryUseFood(user, null, this);
-            return true;
+            _types = value;
         }
     }
 
-    [Flags]
-    public enum UtensilType : byte
+    /// <summary>
+    /// The chance that the utensil has to break with each use.
+    /// A value of 0 means that it is unbreakable.
+    /// </summary>
+    [ViewVariables]
+    [DataField("breakChance")]
+    private float _breakChance;
+
+    /// <summary>
+    /// The sound to be played if the utensil breaks.
+    /// </summary>
+    [ViewVariables]
+    [DataField("breakSound")]
+    private SoundSpecifier _breakSound = new SoundPathSpecifier("/Audio/Items/snap.ogg");
+
+    public void AddType(UtensilType type)
     {
-        None = 0,
-        Fork = 1,
-        Spoon = 1 << 1,
-        Knife = 1 << 2
+        Types |= type;
     }
+
+    public bool HasAnyType(UtensilType type)
+    {
+        return (_types & type) != UtensilType.None;
+    }
+
+    public bool HasType(UtensilType type)
+    {
+        return (_types & type) != 0;
+    }
+
+    public void RemoveType(UtensilType type)
+    {
+        Types &= ~type;
+    }
+
+    internal void TryBreak(IEntity user)
+    {
+        if (IoCManager.Resolve<IRobustRandom>().Prob(_breakChance))
+        {
+            SoundSystem.Play(Filter.Pvs(user), _breakSound.GetSound(), user, AudioParams.Default.WithVolume(-2f));
+            Owner.Delete();
+        }
+    }
+
+    async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+    {
+        return TryUseUtensil(eventArgs.User, eventArgs.Target);
+    }
+
+    private bool TryUseUtensil(IEntity user, IEntity? target)
+    {
+        if (target == null || !target.TryGetComponent(out FoodComponent? food))
+        {
+            return false;
+        }
+
+        if (!user.InRangeUnobstructed(target, popup: true))
+        {
+            return false;
+        }
+
+        food.TryUseFood(user, null, this);
+        return true;
+    }
+}
+
+[Flags]
+public enum UtensilType : byte
+{
+    None = 0,
+    Fork = 1,
+    Spoon = 1 << 1,
+    Knife = 1 << 2
 }

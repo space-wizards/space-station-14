@@ -2,25 +2,24 @@
 using Content.Shared.DragDrop;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.Disposal.Components
+namespace Content.Client.Disposal.Components;
+
+[RegisterComponent]
+[ComponentReference(typeof(SharedDisposalUnitComponent))]
+public class DisposalUnitComponent : SharedDisposalUnitComponent
 {
-    [RegisterComponent]
-    [ComponentReference(typeof(SharedDisposalUnitComponent))]
-    public class DisposalUnitComponent : SharedDisposalUnitComponent
+    public DisposalUnitBoundUserInterfaceState? UiState;
+
+    public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
     {
-        public DisposalUnitBoundUserInterfaceState? UiState;
+        base.HandleComponentState(curState, nextState);
+        if (curState is not DisposalUnitComponentState state) return;
 
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
-        {
-            base.HandleComponentState(curState, nextState);
-            if (curState is not DisposalUnitComponentState state) return;
+        RecentlyEjected = state.RecentlyEjected;
+    }
 
-            RecentlyEjected = state.RecentlyEjected;
-        }
-
-        public override bool DragDropOn(DragDropEvent eventArgs)
-        {
-            return false;
-        }
+    public override bool DragDropOn(DragDropEvent eventArgs)
+    {
+        return false;
     }
 }

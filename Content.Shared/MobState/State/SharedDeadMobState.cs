@@ -2,46 +2,45 @@
 using Content.Shared.Standing;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.MobState.State
+namespace Content.Shared.MobState.State;
+
+public abstract class SharedDeadMobState : BaseMobState
 {
-    public abstract class SharedDeadMobState : BaseMobState
+    protected override DamageState DamageState => DamageState.Dead;
+
+    public override void EnterState(EntityUid uid, IEntityManager entityManager)
     {
-        protected override DamageState DamageState => DamageState.Dead;
+        base.EnterState(uid, entityManager);
+        var wake = entityManager.EnsureComponent<CollisionWakeComponent>(uid);
+        wake.Enabled = true;
+        var standingState = EntitySystem.Get<StandingStateSystem>();
+        standingState.Down(uid);
 
-        public override void EnterState(EntityUid uid, IEntityManager entityManager)
+        if (standingState.IsDown(uid) && entityManager.TryGetComponent(uid, out PhysicsComponent? physics))
         {
-            base.EnterState(uid, entityManager);
-            var wake = entityManager.EnsureComponent<CollisionWakeComponent>(uid);
-            wake.Enabled = true;
-            var standingState = EntitySystem.Get<StandingStateSystem>();
-            standingState.Down(uid);
-
-            if (standingState.IsDown(uid) && entityManager.TryGetComponent(uid, out PhysicsComponent? physics))
-            {
-                physics.CanCollide = false;
-            }
-
-            if (entityManager.TryGetComponent(uid, out SharedAppearanceComponent? appearance))
-            {
-                appearance.SetData(DamageStateVisuals.State, DamageState.Dead);
-            }
+            physics.CanCollide = false;
         }
 
-        public override void ExitState(EntityUid uid, IEntityManager entityManager)
+        if (entityManager.TryGetComponent(uid, out SharedAppearanceComponent? appearance))
         {
-            base.ExitState(uid, entityManager);
-            if (entityManager.HasComponent<CollisionWakeComponent>(uid))
-            {
-                entityManager.RemoveComponent<CollisionWakeComponent>(uid);
-            }
+            appearance.SetData(DamageStateVisuals.State, DamageState.Dead);
+        }
+    }
 
-            var standingState = EntitySystem.Get<StandingStateSystem>();
-            standingState.Stand(uid);
+    public override void ExitState(EntityUid uid, IEntityManager entityManager)
+    {
+        base.ExitState(uid, entityManager);
+        if (entityManager.HasComponent<CollisionWakeComponent>(uid))
+        {
+            entityManager.RemoveComponent<CollisionWakeComponent>(uid);
+        }
 
-            if (!standingState.IsDown(uid) && entityManager.TryGetComponent(uid, out PhysicsComponent? physics))
-            {
-                physics.CanCollide = true;
-            }
+        var standingState = EntitySystem.Get<StandingStateSystem>();
+        standingState.Stand(uid);
+
+        if (!standingState.IsDown(uid) && entityManager.TryGetComponent(uid, out PhysicsComponent? physics))
+        {
+            physics.CanCollide = true;
         }
     }
 }

@@ -4,46 +4,45 @@ using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Client.Atmos.Visualizers
+namespace Content.Client.Atmos.Visualizers;
+
+[UsedImplicitly]
+public class GasPortableVisualizer : AppearanceVisualizer
 {
-    [UsedImplicitly]
-    public class GasPortableVisualizer : AppearanceVisualizer
+    [DataField("stateConnected")]
+    private string? _stateConnected;
+
+    public override void InitializeEntity(IEntity entity)
     {
-        [DataField("stateConnected")]
-        private string? _stateConnected;
+        base.InitializeEntity(entity);
 
-        public override void InitializeEntity(IEntity entity)
+        var sprite = entity.GetComponent<ISpriteComponent>();
+
+        if (_stateConnected != null)
         {
-            base.InitializeEntity(entity);
+            sprite.LayerMapSet(Layers.ConnectedToPort, sprite.AddLayerState(_stateConnected));
+            sprite.LayerSetVisible(Layers.ConnectedToPort, false);
+        }
+    }
 
-            var sprite = entity.GetComponent<ISpriteComponent>();
+    public override void OnChangeData(AppearanceComponent component)
+    {
+        base.OnChangeData(component);
 
-            if (_stateConnected != null)
-            {
-                sprite.LayerMapSet(Layers.ConnectedToPort, sprite.AddLayerState(_stateConnected));
-                sprite.LayerSetVisible(Layers.ConnectedToPort, false);
-            }
+        if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite))
+        {
+            return;
         }
 
-        public override void OnChangeData(AppearanceComponent component)
+        // Update the visuals : Is the canister connected to a port or not
+        if (component.TryGetData(GasPortableVisuals.ConnectedState, out bool isConnected))
         {
-            base.OnChangeData(component);
-
-            if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite))
-            {
-                return;
-            }
-
-            // Update the visuals : Is the canister connected to a port or not
-            if (component.TryGetData(GasPortableVisuals.ConnectedState, out bool isConnected))
-            {
-                sprite.LayerSetVisible(Layers.ConnectedToPort, isConnected);
-            }
+            sprite.LayerSetVisible(Layers.ConnectedToPort, isConnected);
         }
+    }
 
-        private enum Layers : byte
-        {
-            ConnectedToPort,
-        }
+    private enum Layers : byte
+    {
+        ConnectedToPort,
     }
 }

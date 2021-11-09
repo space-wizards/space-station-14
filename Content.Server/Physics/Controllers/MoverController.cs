@@ -29,217 +29,216 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
-namespace Content.Server.Physics.Controllers
+namespace Content.Server.Physics.Controllers;
+
+public class MoverController : SharedMoverController
 {
-    public class MoverController : SharedMoverController
+    [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
+
+    private const float StepSoundMoveDistanceRunning = 2;
+    private const float StepSoundMoveDistanceWalking = 1.5f;
+
+    private float _shuttleDockSpeedCap;
+
+    private HashSet<EntityUid> _excludedMobs = new();
+
+    public override void Initialize()
     {
-        [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
+        base.Initialize();
 
-        private const float StepSoundMoveDistanceRunning = 2;
-        private const float StepSoundMoveDistanceWalking = 1.5f;
+        var configManager = IoCManager.Resolve<IConfigurationManager>();
+        configManager.OnValueChanged(CCVars.ShuttleDockSpeedCap, value => _shuttleDockSpeedCap = value, true);
+    }
 
-        private float _shuttleDockSpeedCap;
+    public override void UpdateBeforeSolve(bool prediction, float frameTime)
+    {
+        base.UpdateBeforeSolve(prediction, frameTime);
+        _excludedMobs.Clear();
 
-        private HashSet<EntityUid> _excludedMobs = new();
-
-        public override void Initialize()
+        foreach (var (mobMover, mover, physics) in EntityManager.EntityQuery<IMobMoverComponent, IMoverComponent, PhysicsComponent>())
         {
-            base.Initialize();
-
-            var configManager = IoCManager.Resolve<IConfigurationManager>();
-            configManager.OnValueChanged(CCVars.ShuttleDockSpeedCap, value => _shuttleDockSpeedCap = value, true);
+            _excludedMobs.Add(mover.Owner.Uid);
+            HandleMobMovement(mover, physics, mobMover);
         }
 
-        public override void UpdateBeforeSolve(bool prediction, float frameTime)
+        foreach (var (pilot, mover) in EntityManager.EntityQuery<PilotComponent, SharedPlayerInputMoverComponent>())
         {
-            base.UpdateBeforeSolve(prediction, frameTime);
-            _excludedMobs.Clear();
-
-            foreach (var (mobMover, mover, physics) in EntityManager.EntityQuery<IMobMoverComponent, IMoverComponent, PhysicsComponent>())
-            {
-                _excludedMobs.Add(mover.Owner.Uid);
-                HandleMobMovement(mover, physics, mobMover);
-            }
-
-            foreach (var (pilot, mover) in EntityManager.EntityQuery<PilotComponent, SharedPlayerInputMoverComponent>())
-            {
-                if (pilot.Console == null) continue;
-                _excludedMobs.Add(mover.Owner.Uid);
-                HandleShuttleMovement(mover);
-            }
-
-            foreach (var (mover, physics) in EntityManager.EntityQuery<IMoverComponent, PhysicsComponent>(true))
-            {
-                if (_excludedMobs.Contains(mover.Owner.Uid)) continue;
-
-                HandleKinematicMovement(mover, physics);
-            }
+            if (pilot.Console == null) continue;
+            _excludedMobs.Add(mover.Owner.Uid);
+            HandleShuttleMovement(mover);
         }
 
-        /*
-         * Some thoughts:
-         * Unreal actually doesn't predict vehicle movement at all, it's purely server-side which I thought was interesting
-         * The reason for this is that vehicles change direction very slowly compared to players so you don't really have the requirement for quick movement anyway
-         * As such could probably just look at applying a force / impulse to the shuttle server-side only so it controls like the titanic.
-         */
-        private void HandleShuttleMovement(SharedPlayerInputMoverComponent mover)
+        foreach (var (mover, physics) in EntityManager.EntityQuery<IMoverComponent, PhysicsComponent>(true))
         {
-            var gridId = mover.Owner.Transform.GridID;
+            if (_excludedMobs.Contains(mover.Owner.Uid)) continue;
 
-            if (!_mapManager.TryGetGrid(gridId, out var grid) || !EntityManager.TryGetEntity(grid.GridEntityId, out var gridEntity)) return;
+            HandleKinematicMovement(mover, physics);
+        }
+    }
 
-            if (!gridEntity.TryGetComponent(out ShuttleComponent? shuttleComponent) ||
-                !gridEntity.TryGetComponent(out PhysicsComponent? physicsComponent))
-            {
-                return;
-            }
+    /*
+     * Some thoughts:
+     * Unreal actually doesn't predict vehicle movement at all, it's purely server-side which I thought was interesting
+     * The reason for this is that vehicles change direction very slowly compared to players so you don't really have the requirement for quick movement anyway
+     * As such could probably just look at applying a force / impulse to the shuttle server-side only so it controls like the titanic.
+     */
+    private void HandleShuttleMovement(SharedPlayerInputMoverComponent mover)
+    {
+        var gridId = mover.Owner.Transform.GridID;
 
-            // Depending whether you have "cruise" mode on (tank controls, higher speed) or "docking" mode on (strafing, lower speed)
-            // inputs will do different things.
-            // TODO: Do that
-            float speedCap;
-            var angularSpeed = 0.75f;
+        if (!_mapManager.TryGetGrid(gridId, out var grid) || !EntityManager.TryGetEntity(grid.GridEntityId, out var gridEntity)) return;
 
-            // ShuttleSystem has already worked out the ratio so we'll just multiply it back by the mass.
-            var movement = (mover.VelocityDir.walking + mover.VelocityDir.sprinting);
+        if (!gridEntity.TryGetComponent(out ShuttleComponent? shuttleComponent) ||
+            !gridEntity.TryGetComponent(out PhysicsComponent? physicsComponent))
+        {
+            return;
+        }
 
-            switch (shuttleComponent.Mode)
-            {
-                case ShuttleMode.Docking:
+        // Depending whether you have "cruise" mode on (tank controls, higher speed) or "docking" mode on (strafing, lower speed)
+        // inputs will do different things.
+        // TODO: Do that
+        float speedCap;
+        var angularSpeed = 0.75f;
+
+        // ShuttleSystem has already worked out the ratio so we'll just multiply it back by the mass.
+        var movement = (mover.VelocityDir.walking + mover.VelocityDir.sprinting);
+
+        switch (shuttleComponent.Mode)
+        {
+            case ShuttleMode.Docking:
+                if (physicsComponent.LinearVelocity.LengthSquared == 0f)
+                {
+                    movement *= 5f;
+                }
+
+                if (movement.Length != 0f)
+                    physicsComponent.ApplyLinearImpulse(physicsComponent.Owner.Transform.WorldRotation.RotateVec(movement) * shuttleComponent.SpeedMultipler * physicsComponent.Mass);
+
+                speedCap = _shuttleDockSpeedCap;
+                break;
+            case ShuttleMode.Cruise:
+                if (movement.Length != 0.0f)
+                {
                     if (physicsComponent.LinearVelocity.LengthSquared == 0f)
                     {
-                        movement *= 5f;
+                        movement.Y *= 5f;
                     }
 
-                    if (movement.Length != 0f)
-                        physicsComponent.ApplyLinearImpulse(physicsComponent.Owner.Transform.WorldRotation.RotateVec(movement) * shuttleComponent.SpeedMultipler * physicsComponent.Mass);
+                    // Currently this is slow BUT we'd have a separate multiplier for docking and cruising or whatever.
+                    physicsComponent.ApplyLinearImpulse((physicsComponent.Owner.Transform.WorldRotation + new Angle(MathF.PI / 2)).ToVec() *
+                                                        shuttleComponent.SpeedMultipler *
+                                                        physicsComponent.Mass *
+                                                        movement.Y *
+                                                        2.5f);
 
-                    speedCap = _shuttleDockSpeedCap;
-                    break;
-                case ShuttleMode.Cruise:
-                    if (movement.Length != 0.0f)
-                    {
-                        if (physicsComponent.LinearVelocity.LengthSquared == 0f)
-                        {
-                            movement.Y *= 5f;
-                        }
+                    physicsComponent.ApplyAngularImpulse(-movement.X * angularSpeed * physicsComponent.Mass);
+                }
 
-                        // Currently this is slow BUT we'd have a separate multiplier for docking and cruising or whatever.
-                        physicsComponent.ApplyLinearImpulse((physicsComponent.Owner.Transform.WorldRotation + new Angle(MathF.PI / 2)).ToVec() *
-                                                            shuttleComponent.SpeedMultipler *
-                                                            physicsComponent.Mass *
-                                                            movement.Y *
-                                                            2.5f);
-
-                        physicsComponent.ApplyAngularImpulse(-movement.X * angularSpeed * physicsComponent.Mass);
-                    }
-
-                    // TODO WHEN THIS ACTUALLY WORKS
-                    speedCap = _shuttleDockSpeedCap * 10;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-
-            // Look don't my ride ass on this stuff most of the PR was just getting the thing working, we can
-            // ideaguys the shit out of it later.
-
-            var velocity = physicsComponent.LinearVelocity;
-
-            if (velocity.Length > speedCap)
-            {
-                physicsComponent.LinearVelocity = velocity.Normalized * speedCap;
-            }
+                // TODO WHEN THIS ACTUALLY WORKS
+                speedCap = _shuttleDockSpeedCap * 10;
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
         }
 
-        protected override void HandleFootsteps(IMoverComponent mover, IMobMoverComponent mobMover)
+        // Look don't my ride ass on this stuff most of the PR was just getting the thing working, we can
+        // ideaguys the shit out of it later.
+
+        var velocity = physicsComponent.LinearVelocity;
+
+        if (velocity.Length > speedCap)
         {
-            if (!mover.Owner.HasTag("FootstepSound")) return;
+            physicsComponent.LinearVelocity = velocity.Normalized * speedCap;
+        }
+    }
 
-            var transform = mover.Owner.Transform;
-            var coordinates = transform.Coordinates;
-            var gridId = coordinates.GetGridId(EntityManager);
-            var distanceNeeded = mover.Sprinting ? StepSoundMoveDistanceRunning : StepSoundMoveDistanceWalking;
+    protected override void HandleFootsteps(IMoverComponent mover, IMobMoverComponent mobMover)
+    {
+        if (!mover.Owner.HasTag("FootstepSound")) return;
 
-            // Handle footsteps.
-            if (_mapManager.GridExists(gridId))
+        var transform = mover.Owner.Transform;
+        var coordinates = transform.Coordinates;
+        var gridId = coordinates.GetGridId(EntityManager);
+        var distanceNeeded = mover.Sprinting ? StepSoundMoveDistanceRunning : StepSoundMoveDistanceWalking;
+
+        // Handle footsteps.
+        if (_mapManager.GridExists(gridId))
+        {
+            // Can happen when teleporting between grids.
+            if (!coordinates.TryDistance(EntityManager, mobMover.LastPosition, out var distance) ||
+                distance > distanceNeeded)
             {
-                // Can happen when teleporting between grids.
-                if (!coordinates.TryDistance(EntityManager, mobMover.LastPosition, out var distance) ||
-                    distance > distanceNeeded)
-                {
-                    mobMover.StepSoundDistance = distanceNeeded;
-                }
-                else
-                {
-                    mobMover.StepSoundDistance += distance;
-                }
+                mobMover.StepSoundDistance = distanceNeeded;
             }
             else
             {
-                // In space no one can hear you squeak
-                return;
-            }
-
-            DebugTools.Assert(gridId != GridId.Invalid);
-            mobMover.LastPosition = coordinates;
-
-            if (mobMover.StepSoundDistance < distanceNeeded) return;
-
-            mobMover.StepSoundDistance -= distanceNeeded;
-
-            if (mover.Owner.TryGetComponent<InventoryComponent>(out var inventory)
-                && inventory.TryGetSlotItem<ItemComponent>(EquipmentSlotDefines.Slots.SHOES, out var item)
-                && item.Owner.TryGetComponent<FootstepModifierComponent>(out var modifier))
-            {
-                modifier.PlayFootstep();
-            }
-            else
-            {
-                PlayFootstepSound(mover.Owner, gridId, coordinates, mover.Sprinting);
+                mobMover.StepSoundDistance += distance;
             }
         }
-
-        private void PlayFootstepSound(IEntity mover, GridId gridId, EntityCoordinates coordinates, bool sprinting)
+        else
         {
-            var grid = _mapManager.GetGrid(gridId);
-            var tile = grid.GetTileRef(coordinates);
-
-            if (tile.IsSpace(_tileDefinitionManager)) return;
-
-            // If the coordinates have a FootstepModifier component
-            // i.e. component that emit sound on footsteps emit that sound
-            string? soundToPlay = null;
-            foreach (var maybeFootstep in grid.GetAnchoredEntities(tile.GridIndices))
-            {
-                if (EntityManager.TryGetComponent(maybeFootstep, out FootstepModifierComponent? footstep))
-                {
-                    soundToPlay = footstep.SoundCollection.GetSound();
-                    break;
-                }
-            }
-            // if there is no FootstepModifierComponent, determine sound based on tiles
-            if (soundToPlay == null)
-            {
-                // Walking on a tile.
-                var def = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
-                soundToPlay = def.FootstepSounds.GetSound();
-                if (string.IsNullOrEmpty(soundToPlay))
-                    return;
-            }
-
-            if (string.IsNullOrWhiteSpace(soundToPlay))
-            {
-                Logger.ErrorS("sound", $"Unable to find sound in {nameof(PlayFootstepSound)}");
-                return;
-            }
-
-            SoundSystem.Play(
-                Filter.Pvs(coordinates),
-                soundToPlay,
-                mover.Transform.Coordinates,
-                sprinting ? AudioParams.Default.WithVolume(0.75f) : null);
+            // In space no one can hear you squeak
+            return;
         }
+
+        DebugTools.Assert(gridId != GridId.Invalid);
+        mobMover.LastPosition = coordinates;
+
+        if (mobMover.StepSoundDistance < distanceNeeded) return;
+
+        mobMover.StepSoundDistance -= distanceNeeded;
+
+        if (mover.Owner.TryGetComponent<InventoryComponent>(out var inventory)
+            && inventory.TryGetSlotItem<ItemComponent>(EquipmentSlotDefines.Slots.SHOES, out var item)
+            && item.Owner.TryGetComponent<FootstepModifierComponent>(out var modifier))
+        {
+            modifier.PlayFootstep();
+        }
+        else
+        {
+            PlayFootstepSound(mover.Owner, gridId, coordinates, mover.Sprinting);
+        }
+    }
+
+    private void PlayFootstepSound(IEntity mover, GridId gridId, EntityCoordinates coordinates, bool sprinting)
+    {
+        var grid = _mapManager.GetGrid(gridId);
+        var tile = grid.GetTileRef(coordinates);
+
+        if (tile.IsSpace(_tileDefinitionManager)) return;
+
+        // If the coordinates have a FootstepModifier component
+        // i.e. component that emit sound on footsteps emit that sound
+        string? soundToPlay = null;
+        foreach (var maybeFootstep in grid.GetAnchoredEntities(tile.GridIndices))
+        {
+            if (EntityManager.TryGetComponent(maybeFootstep, out FootstepModifierComponent? footstep))
+            {
+                soundToPlay = footstep.SoundCollection.GetSound();
+                break;
+            }
+        }
+        // if there is no FootstepModifierComponent, determine sound based on tiles
+        if (soundToPlay == null)
+        {
+            // Walking on a tile.
+            var def = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
+            soundToPlay = def.FootstepSounds.GetSound();
+            if (string.IsNullOrEmpty(soundToPlay))
+                return;
+        }
+
+        if (string.IsNullOrWhiteSpace(soundToPlay))
+        {
+            Logger.ErrorS("sound", $"Unable to find sound in {nameof(PlayFootstepSound)}");
+            return;
+        }
+
+        SoundSystem.Play(
+            Filter.Pvs(coordinates),
+            soundToPlay,
+            mover.Transform.Coordinates,
+            sprinting ? AudioParams.Default.WithVolume(0.75f) : null);
     }
 }

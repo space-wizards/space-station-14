@@ -6,14 +6,13 @@ using Robust.Shared.IoC;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.Ghost.Components
-{
-    [RegisterComponent]
-    [ComponentReference(typeof(IGhostOnMove))]
-    public class GhostOnMoveComponent : Component,IGhostOnMove
-    {
-        public override string Name => "GhostOnMove";
+namespace Content.Server.Ghost.Components;
 
-        [DataField("canReturn")] public bool CanReturn { get; set; } = true;
-    }
+[RegisterComponent]
+[ComponentReference(typeof(IGhostOnMove))]
+public class GhostOnMoveComponent : Component,IGhostOnMove
+{
+    public override string Name => "GhostOnMove";
+
+    [DataField("canReturn")] public bool CanReturn { get; set; } = true;
 }

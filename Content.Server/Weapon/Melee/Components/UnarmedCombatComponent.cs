@@ -1,12 +1,11 @@
 ﻿using Robust.Shared.GameObjects;
 
-namespace Content.Server.Weapon.Melee.Components
+namespace Content.Server.Weapon.Melee.Components;
+
+// TODO: Remove this, just use MeleeWeapon...
+[RegisterComponent]
+[ComponentReference(typeof(MeleeWeaponComponent))]
+public class UnarmedCombatComponent : MeleeWeaponComponent
 {
-    // TODO: Remove this, just use MeleeWeapon...
-    [RegisterComponent]
-    [ComponentReference(typeof(MeleeWeaponComponent))]
-    public class UnarmedCombatComponent : MeleeWeaponComponent
-    {
-        public override string Name => "UnarmedCombat";
-    }
+    public override string Name => "UnarmedCombat";
 }

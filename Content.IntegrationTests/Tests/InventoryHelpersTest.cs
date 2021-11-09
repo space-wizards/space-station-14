@@ -10,13 +10,13 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using static Content.Shared.Inventory.EquipmentSlotDefines;
 
-namespace Content.IntegrationTests.Tests
+namespace Content.IntegrationTests.Tests;
+
+[TestFixture]
+[TestOf(typeof(InventoryHelpers))]
+public class InventoryHelpersTest : ContentIntegrationTest
 {
-    [TestFixture]
-    [TestOf(typeof(InventoryHelpers))]
-    public class InventoryHelpersTest : ContentIntegrationTest
-    {
-        private const string Prototypes = @"
+    private const string Prototypes = @"
 - type: entity
   name: InventoryStunnableDummy
   id: InventoryStunnableDummy
@@ -44,51 +44,50 @@ namespace Content.IntegrationTests.Tests
   - type: PDA
     idCard: AssistantIDCard
 ";
-        [Test]
-        public async Task SpawnItemInSlotTest()
+    [Test]
+    public async Task SpawnItemInSlotTest()
+    {
+        var options = new ServerIntegrationOptions {ExtraPrototypes = Prototypes};
+        var server = StartServer(options);
+
+        IEntity human = null;
+        InventoryComponent inventory = null;
+
+        server.Assert(() =>
         {
-            var options = new ServerIntegrationOptions {ExtraPrototypes = Prototypes};
-            var server = StartServer(options);
+            var mapMan = IoCManager.Resolve<IMapManager>();
 
-            IEntity human = null;
-            InventoryComponent inventory = null;
+            mapMan.CreateNewMapEntity(MapId.Nullspace);
 
-            server.Assert(() =>
-            {
-                var mapMan = IoCManager.Resolve<IMapManager>();
+            var entityMan = IoCManager.Resolve<IEntityManager>();
 
-                mapMan.CreateNewMapEntity(MapId.Nullspace);
+            human = entityMan.SpawnEntity("InventoryStunnableDummy", MapCoordinates.Nullspace);
+            inventory = human.GetComponent<InventoryComponent>();
 
-                var entityMan = IoCManager.Resolve<IEntityManager>();
+            // Can't do the test if this human doesn't have the slots for it.
+            Assert.That(inventory.HasSlot(Slots.INNERCLOTHING));
+            Assert.That(inventory.HasSlot(Slots.IDCARD));
 
-                human = entityMan.SpawnEntity("InventoryStunnableDummy", MapCoordinates.Nullspace);
-                inventory = human.GetComponent<InventoryComponent>();
+            Assert.That(inventory.SpawnItemInSlot(Slots.INNERCLOTHING, "InventoryJumpsuitJanitorDummy", true));
 
-                // Can't do the test if this human doesn't have the slots for it.
-                Assert.That(inventory.HasSlot(Slots.INNERCLOTHING));
-                Assert.That(inventory.HasSlot(Slots.IDCARD));
+            // Do we actually have the uniform equipped?
+            Assert.That(inventory.TryGetSlotItem(Slots.INNERCLOTHING, out ItemComponent uniform));
+            Assert.That(uniform.Owner.Prototype != null && uniform.Owner.Prototype.ID == "InventoryJumpsuitJanitorDummy");
 
-                Assert.That(inventory.SpawnItemInSlot(Slots.INNERCLOTHING, "InventoryJumpsuitJanitorDummy", true));
+            EntitySystem.Get<StunSystem>().TryStun(human.Uid, TimeSpan.FromSeconds(1f));
 
-                // Do we actually have the uniform equipped?
-                Assert.That(inventory.TryGetSlotItem(Slots.INNERCLOTHING, out ItemComponent uniform));
-                Assert.That(uniform.Owner.Prototype != null && uniform.Owner.Prototype.ID == "InventoryJumpsuitJanitorDummy");
+            // Since the mob is stunned, they can't equip this.
+            Assert.That(inventory.SpawnItemInSlot(Slots.IDCARD, "InventoryIDCardDummy", true), Is.False);
 
-                EntitySystem.Get<StunSystem>().TryStun(human.Uid, TimeSpan.FromSeconds(1f));
+            // Make sure we don't have the ID card equipped.
+            Assert.That(inventory.TryGetSlotItem(Slots.IDCARD, out ItemComponent _), Is.False);
 
-                // Since the mob is stunned, they can't equip this.
-                Assert.That(inventory.SpawnItemInSlot(Slots.IDCARD, "InventoryIDCardDummy", true), Is.False);
+            // Let's try skipping the interaction check and see if it equips it!
+            Assert.That(inventory.SpawnItemInSlot(Slots.IDCARD, "InventoryIDCardDummy"));
+            Assert.That(inventory.TryGetSlotItem(Slots.IDCARD, out ItemComponent id));
+            Assert.That(id.Owner.Prototype != null && id.Owner.Prototype.ID == "InventoryIDCardDummy");
+        });
 
-                // Make sure we don't have the ID card equipped.
-                Assert.That(inventory.TryGetSlotItem(Slots.IDCARD, out ItemComponent _), Is.False);
-
-                // Let's try skipping the interaction check and see if it equips it!
-                Assert.That(inventory.SpawnItemInSlot(Slots.IDCARD, "InventoryIDCardDummy"));
-                Assert.That(inventory.TryGetSlotItem(Slots.IDCARD, out ItemComponent id));
-                Assert.That(id.Owner.Prototype != null && id.Owner.Prototype.ID == "InventoryIDCardDummy");
-            });
-
-            await server.WaitIdleAsync();
-        }
+        await server.WaitIdleAsync();
     }
 }

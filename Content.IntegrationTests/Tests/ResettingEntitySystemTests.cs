@@ -6,60 +6,59 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Reflection;
 
-namespace Content.IntegrationTests.Tests
+namespace Content.IntegrationTests.Tests;
+
+[TestFixture]
+[TestOf(typeof(RoundRestartCleanupEvent))]
+public class ResettingEntitySystemTests : ContentIntegrationTest
 {
-    [TestFixture]
-    [TestOf(typeof(RoundRestartCleanupEvent))]
-    public class ResettingEntitySystemTests : ContentIntegrationTest
+    [Reflect(false)]
+    private class TestRoundRestartCleanupEvent : EntitySystem
     {
-        [Reflect(false)]
-        private class TestRoundRestartCleanupEvent : EntitySystem
+        public bool HasBeenReset { get; set; }
+
+        public override void Initialize()
         {
-            public bool HasBeenReset { get; set; }
+            base.Initialize();
 
-            public override void Initialize()
-            {
-                base.Initialize();
-
-                SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
-            }
-
-            public void Reset(RoundRestartCleanupEvent ev)
-            {
-                HasBeenReset = true;
-            }
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
         }
 
-        [Test]
-        public async Task ResettingEntitySystemResetTest()
+        public void Reset(RoundRestartCleanupEvent ev)
         {
-            var server = StartServer(new ServerContentIntegrationOption
-            {
-                ContentBeforeIoC = () =>
-                {
-                    IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<TestRoundRestartCleanupEvent>();
-                }
-            });
-
-            await server.WaitIdleAsync();
-
-            var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
-            var gameTicker = entitySystemManager.GetEntitySystem<GameTicker>();
-
-            await server.WaitAssertion(() =>
-            {
-                Assert.That(gameTicker.RunLevel, Is.EqualTo(GameRunLevel.InRound));
-
-                var system = entitySystemManager.GetEntitySystem<TestRoundRestartCleanupEvent>();
-
-                system.HasBeenReset = false;
-
-                Assert.False(system.HasBeenReset);
-
-                gameTicker.RestartRound();
-
-                Assert.True(system.HasBeenReset);
-            });
+            HasBeenReset = true;
         }
+    }
+
+    [Test]
+    public async Task ResettingEntitySystemResetTest()
+    {
+        var server = StartServer(new ServerContentIntegrationOption
+        {
+            ContentBeforeIoC = () =>
+            {
+                IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<TestRoundRestartCleanupEvent>();
+            }
+        });
+
+        await server.WaitIdleAsync();
+
+        var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
+        var gameTicker = entitySystemManager.GetEntitySystem<GameTicker>();
+
+        await server.WaitAssertion(() =>
+        {
+            Assert.That(gameTicker.RunLevel, Is.EqualTo(GameRunLevel.InRound));
+
+            var system = entitySystemManager.GetEntitySystem<TestRoundRestartCleanupEvent>();
+
+            system.HasBeenReset = false;
+
+            Assert.False(system.HasBeenReset);
+
+            gameTicker.RestartRound();
+
+            Assert.True(system.HasBeenReset);
+        });
     }
 }

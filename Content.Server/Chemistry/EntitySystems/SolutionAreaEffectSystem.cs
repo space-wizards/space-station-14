@@ -3,17 +3,16 @@ using Content.Server.Chemistry.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.Chemistry.EntitySystems
+namespace Content.Server.Chemistry.EntitySystems;
+
+[UsedImplicitly]
+public class SolutionAreaEffectSystem : EntitySystem
 {
-    [UsedImplicitly]
-    public class SolutionAreaEffectSystem : EntitySystem
+    public override void Update(float frameTime)
     {
-        public override void Update(float frameTime)
+        foreach (var inception in EntityManager.EntityQuery<SolutionAreaEffectInceptionComponent>().ToArray())
         {
-            foreach (var inception in EntityManager.EntityQuery<SolutionAreaEffectInceptionComponent>().ToArray())
-            {
-                inception.InceptionUpdate(frameTime);
-            }
+            inception.InceptionUpdate(frameTime);
         }
     }
 }

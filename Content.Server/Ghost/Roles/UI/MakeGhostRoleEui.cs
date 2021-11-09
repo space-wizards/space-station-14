@@ -3,39 +3,38 @@ using Content.Shared.Eui;
 using Content.Shared.Ghost.Roles;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.Ghost.Roles.UI
+namespace Content.Server.Ghost.Roles.UI;
+
+public class MakeGhostRoleEui : BaseEui
 {
-    public class MakeGhostRoleEui : BaseEui
+    public MakeGhostRoleEui(EntityUid entityUid)
     {
-        public MakeGhostRoleEui(EntityUid entityUid)
+        EntityUid = entityUid;
+    }
+
+    public EntityUid EntityUid { get; }
+
+    public override EuiStateBase GetNewState()
+    {
+        return new MakeGhostRoleEuiState(EntityUid);
+    }
+
+    public override void HandleMessage(EuiMessageBase msg)
+    {
+        base.HandleMessage(msg);
+
+        switch (msg)
         {
-            EntityUid = entityUid;
+            case MakeGhostRoleWindowClosedMessage _:
+                Closed();
+                break;
         }
+    }
 
-        public EntityUid EntityUid { get; }
+    public override void Closed()
+    {
+        base.Closed();
 
-        public override EuiStateBase GetNewState()
-        {
-            return new MakeGhostRoleEuiState(EntityUid);
-        }
-
-        public override void HandleMessage(EuiMessageBase msg)
-        {
-            base.HandleMessage(msg);
-
-            switch (msg)
-            {
-                case MakeGhostRoleWindowClosedMessage _:
-                    Closed();
-                    break;
-            }
-        }
-
-        public override void Closed()
-        {
-            base.Closed();
-
-            EntitySystem.Get<GhostRoleSystem>().CloseMakeGhostRoleEui(Player);
-        }
+        EntitySystem.Get<GhostRoleSystem>().CloseMakeGhostRoleEui(Player);
     }
 }

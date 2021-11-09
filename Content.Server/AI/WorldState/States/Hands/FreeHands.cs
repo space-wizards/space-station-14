@@ -2,31 +2,30 @@ using System.Collections.Generic;
 using Content.Server.Hands.Components;
 using JetBrains.Annotations;
 
-namespace Content.Server.AI.WorldState.States.Hands
+namespace Content.Server.AI.WorldState.States.Hands;
+
+[UsedImplicitly]
+public sealed class FreeHands : StateData<List<string>>
 {
-    [UsedImplicitly]
-    public sealed class FreeHands : StateData<List<string>>
+    public override string Name => "FreeHands";
+
+    public override List<string> GetValue()
     {
-        public override string Name => "FreeHands";
+        var result = new List<string>();
 
-        public override List<string> GetValue()
+        if (!Owner.TryGetComponent(out HandsComponent? handsComponent))
         {
-            var result = new List<string>();
-
-            if (!Owner.TryGetComponent(out HandsComponent? handsComponent))
-            {
-                return result;
-            }
-
-            foreach (var hand in handsComponent.ActivePriorityEnumerable())
-            {
-                if (handsComponent.GetItem(hand) == null)
-                {
-                    result.Add(hand);
-                }
-            }
-
             return result;
         }
+
+        foreach (var hand in handsComponent.ActivePriorityEnumerable())
+        {
+            if (handsComponent.GetItem(hand) == null)
+            {
+                result.Add(hand);
+            }
+        }
+
+        return result;
     }
 }

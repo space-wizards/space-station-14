@@ -3,18 +3,17 @@ using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.Destructible.Thresholds.Behaviors
+namespace Content.Server.Destructible.Thresholds.Behaviors;
+
+/// <summary>
+///     This behavior will trigger entities with <see cref="ExplosiveComponent"/> to go boom.
+/// </summary>
+[UsedImplicitly]
+[DataDefinition]
+public class ExplodeBehavior : IThresholdBehavior
 {
-    /// <summary>
-    ///     This behavior will trigger entities with <see cref="ExplosiveComponent"/> to go boom.
-    /// </summary>
-    [UsedImplicitly]
-    [DataDefinition]
-    public class ExplodeBehavior : IThresholdBehavior
+    public void Execute(EntityUid owner, DestructibleSystem system)
     {
-        public void Execute(EntityUid owner, DestructibleSystem system)
-        {
-            system.ExplosionSystem.SpawnExplosion(owner);
-        }
+        system.ExplosionSystem.SpawnExplosion(owner);
     }
 }

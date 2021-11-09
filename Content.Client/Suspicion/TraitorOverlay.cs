@@ -10,78 +10,77 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 
-namespace Content.Client.Suspicion
+namespace Content.Client.Suspicion;
+
+public class TraitorOverlay : Overlay
 {
-    public class TraitorOverlay : Overlay
+    private readonly IEntityManager _entityManager;
+    private readonly IEyeManager _eyeManager;
+    private readonly IPlayerManager _playerManager;
+
+    public override OverlaySpace Space => OverlaySpace.ScreenSpace;
+    private readonly Font _font;
+
+    private readonly string _traitorText = Loc.GetString("traitor-overlay-traitor-text");
+
+    public TraitorOverlay(
+        IEntityManager entityManager,
+        IResourceCache resourceCache,
+        IEyeManager eyeManager)
     {
-        private readonly IEntityManager _entityManager;
-        private readonly IEyeManager _eyeManager;
-        private readonly IPlayerManager _playerManager;
+        _playerManager = IoCManager.Resolve<IPlayerManager>();
 
-        public override OverlaySpace Space => OverlaySpace.ScreenSpace;
-        private readonly Font _font;
+        _entityManager = entityManager;
+        _eyeManager = eyeManager;
 
-        private readonly string _traitorText = Loc.GetString("traitor-overlay-traitor-text");
+        _font = new VectorFont(resourceCache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), 10);
+    }
 
-        public TraitorOverlay(
-            IEntityManager entityManager,
-            IResourceCache resourceCache,
-            IEyeManager eyeManager)
+    protected override void Draw(in OverlayDrawArgs args)
+    {
+        var viewport = _eyeManager.GetWorldViewport();
+
+        var ent = _playerManager.LocalPlayer?.ControlledEntity;
+        if (ent == null || ent.TryGetComponent(out SuspicionRoleComponent? sus) != true)
         {
-            _playerManager = IoCManager.Resolve<IPlayerManager>();
-
-            _entityManager = entityManager;
-            _eyeManager = eyeManager;
-
-            _font = new VectorFont(resourceCache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), 10);
+            return;
         }
 
-        protected override void Draw(in OverlayDrawArgs args)
+        foreach (var (_, uid) in sus.Allies)
         {
-            var viewport = _eyeManager.GetWorldViewport();
-
-            var ent = _playerManager.LocalPlayer?.ControlledEntity;
-            if (ent == null || ent.TryGetComponent(out SuspicionRoleComponent? sus) != true)
+            // Otherwise the entity can not exist yet
+            if (!_entityManager.TryGetEntity(uid, out var ally))
             {
-                return;
+                continue;
             }
 
-            foreach (var (_, uid) in sus.Allies)
+            if (!ally.TryGetComponent(out IPhysBody? physics))
             {
-                // Otherwise the entity can not exist yet
-                if (!_entityManager.TryGetEntity(uid, out var ally))
-                {
-                    continue;
-                }
-
-                if (!ally.TryGetComponent(out IPhysBody? physics))
-                {
-                    continue;
-                }
-
-                if (!ExamineSystemShared.InRangeUnOccluded(ent.Transform.MapPosition, ally.Transform.MapPosition, 15,
-                    entity => entity == ent || entity == ally))
-                {
-                    continue;
-                }
-
-                // if not on the same map, continue
-                if (physics.Owner.Transform.MapID != _eyeManager.CurrentMap || physics.Owner.IsInContainer())
-                {
-                    continue;
-                }
-
-                var worldBox = physics.GetWorldAABB();
-
-                // if not on screen, or too small, continue
-                if (!worldBox.Intersects(in viewport) || worldBox.IsEmpty())
-                {
-                    continue;
-                }
-
-                var screenCoordinates = args.ViewportControl!.WorldToScreen(physics.GetWorldAABB().TopLeft + (0, 0.5f));
-                args.ScreenHandle.DrawString(_font, screenCoordinates, _traitorText, Color.OrangeRed);
+                continue;
             }
+
+            if (!ExamineSystemShared.InRangeUnOccluded(ent.Transform.MapPosition, ally.Transform.MapPosition, 15,
+                                                       entity => entity == ent || entity == ally))
+            {
+                continue;
+            }
+
+            // if not on the same map, continue
+            if (physics.Owner.Transform.MapID != _eyeManager.CurrentMap || physics.Owner.IsInContainer())
+            {
+                continue;
+            }
+
+            var worldBox = physics.GetWorldAABB();
+
+            // if not on screen, or too small, continue
+            if (!worldBox.Intersects(in viewport) || worldBox.IsEmpty())
+            {
+                continue;
+            }
+
+            var screenCoordinates = args.ViewportControl!.WorldToScreen(physics.GetWorldAABB().TopLeft + (0, 0.5f));
+            args.ScreenHandle.DrawString(_font, screenCoordinates, _traitorText, Color.OrangeRed);
         }
     }
 }

@@ -6,24 +6,23 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Tools.Components
+namespace Content.Server.Tools.Components;
+
+[RegisterComponent, Friend(typeof(ToolSystem))]
+public class ToolComponent : Component
 {
-    [RegisterComponent, Friend(typeof(ToolSystem))]
-    public class ToolComponent : Component
-    {
-        public override string Name => "Tool";
+    public override string Name => "Tool";
 
-        [DataField("qualities")]
-        public PrototypeFlags<ToolQualityPrototype> Qualities { get; set; } = new();
+    [DataField("qualities")]
+    public PrototypeFlags<ToolQualityPrototype> Qualities { get; set; } = new();
 
-        /// <summary>
-        ///     For tool interactions that have a delay before action this will modify the rate, time to wait is divided by this value
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("speed")]
-        public float SpeedModifier { get; set; } = 1;
+    /// <summary>
+    ///     For tool interactions that have a delay before action this will modify the rate, time to wait is divided by this value
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("speed")]
+    public float SpeedModifier { get; set; } = 1;
 
-        [DataField("useSound")]
-        public SoundSpecifier? UseSound { get; set; }
-    }
+    [DataField("useSound")]
+    public SoundSpecifier? UseSound { get; set; }
 }

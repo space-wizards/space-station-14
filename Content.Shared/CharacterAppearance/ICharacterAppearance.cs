@@ -1,8 +1,7 @@
 
-namespace Content.Shared.CharacterAppearance
+namespace Content.Shared.CharacterAppearance;
+
+public interface ICharacterAppearance
 {
-    public interface ICharacterAppearance
-    {
-        bool MemberwiseEquals(ICharacterAppearance other);
-    }
+    bool MemberwiseEquals(ICharacterAppearance other);
 }

@@ -10,197 +10,195 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
-namespace Content.Client.AI
-{
+namespace Content.Client.AI;
 #if DEBUG
-    public class ClientAiDebugSystem : EntitySystem
+public class ClientAiDebugSystem : EntitySystem
+{
+    [Dependency] private readonly IEyeManager _eyeManager = default!;
+
+    private AiDebugMode _tooltips = AiDebugMode.None;
+    private readonly Dictionary<IEntity, PanelContainer> _aiBoxes = new();
+
+    public override void Update(float frameTime)
     {
-        [Dependency] private readonly IEyeManager _eyeManager = default!;
-
-        private AiDebugMode _tooltips = AiDebugMode.None;
-        private readonly Dictionary<IEntity, PanelContainer> _aiBoxes = new();
-
-        public override void Update(float frameTime)
+        base.Update(frameTime);
+        if (_tooltips == 0)
         {
-            base.Update(frameTime);
-            if (_tooltips == 0)
+            if (_aiBoxes.Count > 0)
             {
-                if (_aiBoxes.Count > 0)
+                foreach (var (_, panel) in _aiBoxes)
                 {
-                    foreach (var (_, panel) in _aiBoxes)
-                    {
-                        panel.Dispose();
-                    }
-
-                    _aiBoxes.Clear();
-                }
-                return;
-            }
-
-            var deletedEntities = new List<IEntity>(0);
-            foreach (var (entity, panel) in _aiBoxes)
-            {
-                if (entity.Deleted)
-                {
-                    deletedEntities.Add(entity);
-                    continue;
+                    panel.Dispose();
                 }
 
-                if (!_eyeManager.GetWorldViewport().Contains(entity.Transform.WorldPosition))
-                {
-                    panel.Visible = false;
-                    continue;
-                }
-
-                var (x, y) = _eyeManager.CoordinatesToScreen(entity.Transform.Coordinates).Position;
-                var offsetPosition = new Vector2(x - panel.Width / 2, y - panel.Height - 50f);
-                panel.Visible = true;
-
-                LayoutContainer.SetPosition(panel, offsetPosition);
+                _aiBoxes.Clear();
             }
+            return;
+        }
 
-            foreach (var entity in deletedEntities)
+        var deletedEntities = new List<IEntity>(0);
+        foreach (var (entity, panel) in _aiBoxes)
+        {
+            if (entity.Deleted)
             {
-                _aiBoxes.Remove(entity);
+                deletedEntities.Add(entity);
+                continue;
             }
-        }
 
-        public override void Initialize()
-        {
-            base.Initialize();
-            SubscribeNetworkEvent<SharedAiDebug.UtilityAiDebugMessage>(HandleUtilityAiDebugMessage);
-            SubscribeNetworkEvent<SharedAiDebug.AStarRouteMessage>(HandleAStarRouteMessage);
-            SubscribeNetworkEvent<SharedAiDebug.JpsRouteMessage>(HandleJpsRouteMessage);
-        }
-
-        private void HandleUtilityAiDebugMessage(SharedAiDebug.UtilityAiDebugMessage message)
-        {
-            if ((_tooltips & AiDebugMode.Thonk) != 0)
+            if (!_eyeManager.GetWorldViewport().Contains(entity.Transform.WorldPosition))
             {
-                // I guess if it's out of range we don't know about it?
-                var entityManager = IoCManager.Resolve<IEntityManager>();
-                var entity = entityManager.GetEntity(message.EntityUid);
-                TryCreatePanel(entity);
-
-                // Probably shouldn't access by index but it's a debugging tool so eh
-                var label = (Label) _aiBoxes[entity].GetChild(0).GetChild(0);
-                label.Text = $"Current Task: {message.FoundTask}\n" +
-                             $"Task score: {message.ActionScore}\n" +
-                             $"Planning time (ms): {message.PlanningTime * 1000:0.0000}\n" +
-                             $"Considered {message.ConsideredTaskCount} tasks";
-            }
-        }
-
-        private void HandleAStarRouteMessage(SharedAiDebug.AStarRouteMessage message)
-        {
-            if ((_tooltips & AiDebugMode.Paths) != 0)
-            {
-                var entityManager = IoCManager.Resolve<IEntityManager>();
-                var entity = entityManager.GetEntity(message.EntityUid);
-                TryCreatePanel(entity);
-
-                var label = (Label) _aiBoxes[entity].GetChild(0).GetChild(1);
-                label.Text = $"Pathfinding time (ms): {message.TimeTaken * 1000:0.0000}\n" +
-                             $"Nodes traversed: {message.CameFrom.Count}\n" +
-                             $"Nodes per ms: {message.CameFrom.Count / (message.TimeTaken * 1000)}";
-            }
-        }
-
-        private void HandleJpsRouteMessage(SharedAiDebug.JpsRouteMessage message)
-        {
-            if ((_tooltips & AiDebugMode.Paths) != 0)
-            {
-                var entityManager = IoCManager.Resolve<IEntityManager>();
-                var entity = entityManager.GetEntity(message.EntityUid);
-                TryCreatePanel(entity);
-
-                var label = (Label) _aiBoxes[entity].GetChild(0).GetChild(1);
-                label.Text = $"Pathfinding time (ms): {message.TimeTaken * 1000:0.0000}\n" +
-                             $"Jump Nodes: {message.JumpNodes.Count}\n" +
-                             $"Jump Nodes per ms: {message.JumpNodes.Count / (message.TimeTaken * 1000)}";
-            }
-        }
-
-        public void Disable()
-        {
-            foreach (var tooltip in _aiBoxes.Values)
-            {
-                tooltip.Dispose();
-            }
-            _aiBoxes.Clear();
-            _tooltips = AiDebugMode.None;
-        }
-
-
-        private void EnableTooltip(AiDebugMode tooltip)
-        {
-            _tooltips |= tooltip;
-        }
-
-        private void DisableTooltip(AiDebugMode tooltip)
-        {
-            _tooltips &= ~tooltip;
-        }
-
-        public void ToggleTooltip(AiDebugMode tooltip)
-        {
-            if ((_tooltips & tooltip) != 0)
-            {
-                DisableTooltip(tooltip);
-            }
-            else
-            {
-                EnableTooltip(tooltip);
-            }
-        }
-
-        private bool TryCreatePanel(IEntity entity)
-        {
-            if (!_aiBoxes.ContainsKey(entity))
-            {
-                var userInterfaceManager = IoCManager.Resolve<IUserInterfaceManager>();
-
-                var actionLabel = new Label
-                {
-                    MouseFilter = Control.MouseFilterMode.Ignore,
-                };
-
-                var pathfindingLabel = new Label
-                {
-                    MouseFilter = Control.MouseFilterMode.Ignore,
-                };
-
-                var vBox = new BoxContainer()
-                {
-                    Orientation = LayoutOrientation.Vertical,
-                    SeparationOverride = 15,
-                    Children = {actionLabel, pathfindingLabel},
-                };
-
-                var panel = new PanelContainer
-                {
-                    StyleClasses = { StyleNano.StyleClassTooltipPanel },
-                    Children = {vBox},
-                    MouseFilter = Control.MouseFilterMode.Ignore,
-                    ModulateSelfOverride = Color.White.WithAlpha(0.75f),
-                };
-
-                userInterfaceManager.StateRoot.AddChild(panel);
-
-                _aiBoxes[entity] = panel;
-                return true;
+                panel.Visible = false;
+                continue;
             }
 
-            return false;
+            var (x, y) = _eyeManager.CoordinatesToScreen(entity.Transform.Coordinates).Position;
+            var offsetPosition = new Vector2(x - panel.Width / 2, y - panel.Height - 50f);
+            panel.Visible = true;
+
+            LayoutContainer.SetPosition(panel, offsetPosition);
+        }
+
+        foreach (var entity in deletedEntities)
+        {
+            _aiBoxes.Remove(entity);
         }
     }
 
-    [Flags]
-    public enum AiDebugMode : byte
+    public override void Initialize()
     {
-        None = 0,
-        Paths = 1 << 1,
-        Thonk = 1 << 2,
+        base.Initialize();
+        SubscribeNetworkEvent<SharedAiDebug.UtilityAiDebugMessage>(HandleUtilityAiDebugMessage);
+        SubscribeNetworkEvent<SharedAiDebug.AStarRouteMessage>(HandleAStarRouteMessage);
+        SubscribeNetworkEvent<SharedAiDebug.JpsRouteMessage>(HandleJpsRouteMessage);
     }
-#endif
+
+    private void HandleUtilityAiDebugMessage(SharedAiDebug.UtilityAiDebugMessage message)
+    {
+        if ((_tooltips & AiDebugMode.Thonk) != 0)
+        {
+            // I guess if it's out of range we don't know about it?
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var entity = entityManager.GetEntity(message.EntityUid);
+            TryCreatePanel(entity);
+
+            // Probably shouldn't access by index but it's a debugging tool so eh
+            var label = (Label) _aiBoxes[entity].GetChild(0).GetChild(0);
+            label.Text = $"Current Task: {message.FoundTask}\n" +
+                         $"Task score: {message.ActionScore}\n" +
+                         $"Planning time (ms): {message.PlanningTime * 1000:0.0000}\n" +
+                         $"Considered {message.ConsideredTaskCount} tasks";
+        }
+    }
+
+    private void HandleAStarRouteMessage(SharedAiDebug.AStarRouteMessage message)
+    {
+        if ((_tooltips & AiDebugMode.Paths) != 0)
+        {
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var entity = entityManager.GetEntity(message.EntityUid);
+            TryCreatePanel(entity);
+
+            var label = (Label) _aiBoxes[entity].GetChild(0).GetChild(1);
+            label.Text = $"Pathfinding time (ms): {message.TimeTaken * 1000:0.0000}\n" +
+                         $"Nodes traversed: {message.CameFrom.Count}\n" +
+                         $"Nodes per ms: {message.CameFrom.Count / (message.TimeTaken * 1000)}";
+        }
+    }
+
+    private void HandleJpsRouteMessage(SharedAiDebug.JpsRouteMessage message)
+    {
+        if ((_tooltips & AiDebugMode.Paths) != 0)
+        {
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var entity = entityManager.GetEntity(message.EntityUid);
+            TryCreatePanel(entity);
+
+            var label = (Label) _aiBoxes[entity].GetChild(0).GetChild(1);
+            label.Text = $"Pathfinding time (ms): {message.TimeTaken * 1000:0.0000}\n" +
+                         $"Jump Nodes: {message.JumpNodes.Count}\n" +
+                         $"Jump Nodes per ms: {message.JumpNodes.Count / (message.TimeTaken * 1000)}";
+        }
+    }
+
+    public void Disable()
+    {
+        foreach (var tooltip in _aiBoxes.Values)
+        {
+            tooltip.Dispose();
+        }
+        _aiBoxes.Clear();
+        _tooltips = AiDebugMode.None;
+    }
+
+
+    private void EnableTooltip(AiDebugMode tooltip)
+    {
+        _tooltips |= tooltip;
+    }
+
+    private void DisableTooltip(AiDebugMode tooltip)
+    {
+        _tooltips &= ~tooltip;
+    }
+
+    public void ToggleTooltip(AiDebugMode tooltip)
+    {
+        if ((_tooltips & tooltip) != 0)
+        {
+            DisableTooltip(tooltip);
+        }
+        else
+        {
+            EnableTooltip(tooltip);
+        }
+    }
+
+    private bool TryCreatePanel(IEntity entity)
+    {
+        if (!_aiBoxes.ContainsKey(entity))
+        {
+            var userInterfaceManager = IoCManager.Resolve<IUserInterfaceManager>();
+
+            var actionLabel = new Label
+            {
+                MouseFilter = Control.MouseFilterMode.Ignore,
+            };
+
+            var pathfindingLabel = new Label
+            {
+                MouseFilter = Control.MouseFilterMode.Ignore,
+            };
+
+            var vBox = new BoxContainer()
+            {
+                Orientation = LayoutOrientation.Vertical,
+                SeparationOverride = 15,
+                Children = {actionLabel, pathfindingLabel},
+            };
+
+            var panel = new PanelContainer
+            {
+                StyleClasses = { StyleNano.StyleClassTooltipPanel },
+                Children = {vBox},
+                MouseFilter = Control.MouseFilterMode.Ignore,
+                ModulateSelfOverride = Color.White.WithAlpha(0.75f),
+            };
+
+            userInterfaceManager.StateRoot.AddChild(panel);
+
+            _aiBoxes[entity] = panel;
+            return true;
+        }
+
+        return false;
+    }
 }
+
+[Flags]
+public enum AiDebugMode : byte
+{
+    None = 0,
+    Paths = 1 << 1,
+    Thonk = 1 << 2,
+}
+#endif

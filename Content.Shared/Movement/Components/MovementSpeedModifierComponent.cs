@@ -6,54 +6,53 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.Movement.Components
+namespace Content.Shared.Movement.Components;
+
+[RegisterComponent]
+[NetworkedComponent, Friend(typeof(MovementSpeedModifierSystem))]
+public sealed class MovementSpeedModifierComponent : Component
 {
-    [RegisterComponent]
-    [NetworkedComponent, Friend(typeof(MovementSpeedModifierSystem))]
-    public sealed class MovementSpeedModifierComponent : Component
+    public const float DefaultBaseWalkSpeed = 4.0f;
+    public const float DefaultBaseSprintSpeed = 7.0f;
+
+    public override string Name => "MovementSpeedModifier";
+
+    [ViewVariables]
+    public float WalkSpeedModifier = 1.0f;
+
+    [ViewVariables]
+    public float SprintSpeedModifier = 1.0f;
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float BaseWalkSpeedVV
     {
-        public const float DefaultBaseWalkSpeed = 4.0f;
-        public const float DefaultBaseSprintSpeed = 7.0f;
-
-        public override string Name => "MovementSpeedModifier";
-
-        [ViewVariables]
-        public float WalkSpeedModifier = 1.0f;
-
-        [ViewVariables]
-        public float SprintSpeedModifier = 1.0f;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float BaseWalkSpeedVV
+        get => BaseWalkSpeed;
+        set
         {
-            get => BaseWalkSpeed;
-            set
-            {
-                BaseWalkSpeed = value;
-                Dirty();
-            }
+            BaseWalkSpeed = value;
+            Dirty();
         }
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float BaseSprintSpeedVV
-        {
-            get => BaseSprintSpeed;
-            set
-            {
-                BaseSprintSpeed = value;
-                Dirty();
-            }
-        }
-
-        [DataField("baseWalkSpeed")]
-        public float BaseWalkSpeed { get; set; } = DefaultBaseWalkSpeed;
-
-        [DataField("baseSprintSpeed")]
-        public float BaseSprintSpeed { get; set; } = DefaultBaseSprintSpeed;
-
-        [ViewVariables]
-        public float CurrentWalkSpeed => WalkSpeedModifier * BaseWalkSpeed;
-        [ViewVariables]
-        public float CurrentSprintSpeed => SprintSpeedModifier * BaseSprintSpeed;
     }
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float BaseSprintSpeedVV
+    {
+        get => BaseSprintSpeed;
+        set
+        {
+            BaseSprintSpeed = value;
+            Dirty();
+        }
+    }
+
+    [DataField("baseWalkSpeed")]
+    public float BaseWalkSpeed { get; set; } = DefaultBaseWalkSpeed;
+
+    [DataField("baseSprintSpeed")]
+    public float BaseSprintSpeed { get; set; } = DefaultBaseSprintSpeed;
+
+    [ViewVariables]
+    public float CurrentWalkSpeed => WalkSpeedModifier * BaseWalkSpeed;
+    [ViewVariables]
+    public float CurrentSprintSpeed => SprintSpeedModifier * BaseSprintSpeed;
 }

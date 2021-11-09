@@ -15,240 +15,239 @@ using Robust.Shared.ViewVariables;
 using static Content.Shared.Inventory.EquipmentSlotDefines;
 using static Content.Shared.Inventory.SharedInventoryComponent.ClientInventoryMessage;
 
-namespace Content.Client.Inventory
+namespace Content.Client.Inventory;
+
+/// <summary>
+/// A character UI which shows items the user has equipped within his inventory
+/// </summary>
+[RegisterComponent]
+[ComponentReference(typeof(SharedInventoryComponent))]
+public class ClientInventoryComponent : SharedInventoryComponent
 {
-    /// <summary>
-    /// A character UI which shows items the user has equipped within his inventory
-    /// </summary>
-    [RegisterComponent]
-    [ComponentReference(typeof(SharedInventoryComponent))]
-    public class ClientInventoryComponent : SharedInventoryComponent
+    private readonly Dictionary<Slots, IEntity> _slots = new();
+
+    public IReadOnlyDictionary<Slots, IEntity> AllSlots => _slots;
+
+    [ViewVariables] public InventoryInterfaceController InterfaceController { get; private set; } = default!;
+
+    [ComponentDependency]
+    private ISpriteComponent? _sprite;
+
+    private bool _playerAttached = false;
+
+    [ViewVariables]
+    [DataField("speciesId")] public string? SpeciesId { get; set; }
+
+    protected override void OnRemove()
     {
-        private readonly Dictionary<Slots, IEntity> _slots = new();
+        base.OnRemove();
 
-        public IReadOnlyDictionary<Slots, IEntity> AllSlots => _slots;
-
-        [ViewVariables] public InventoryInterfaceController InterfaceController { get; private set; } = default!;
-
-        [ComponentDependency]
-        private ISpriteComponent? _sprite;
-
-        private bool _playerAttached = false;
-
-        [ViewVariables]
-        [DataField("speciesId")] public string? SpeciesId { get; set; }
-
-        protected override void OnRemove()
+        if (_playerAttached)
         {
-            base.OnRemove();
-
-            if (_playerAttached)
-            {
-                InterfaceController?.PlayerDetached();
-            }
-            InterfaceController?.Dispose();
+            InterfaceController?.PlayerDetached();
         }
+        InterfaceController?.Dispose();
+    }
 
-        protected override void Initialize()
+    protected override void Initialize()
+    {
+        base.Initialize();
+
+        var controllerType = ReflectionManager.LooseGetType(InventoryInstance.InterfaceControllerTypeName);
+        var args = new object[] {this};
+        InterfaceController = DynamicTypeFactory.CreateInstance<InventoryInterfaceController>(controllerType, args);
+        InterfaceController.Initialize();
+
+        if (_sprite != null)
         {
-            base.Initialize();
-
-            var controllerType = ReflectionManager.LooseGetType(InventoryInstance.InterfaceControllerTypeName);
-            var args = new object[] {this};
-            InterfaceController = DynamicTypeFactory.CreateInstance<InventoryInterfaceController>(controllerType, args);
-            InterfaceController.Initialize();
-
-            if (_sprite != null)
+            foreach (var mask in InventoryInstance.SlotMasks.OrderBy(s => InventoryInstance.SlotDrawingOrder(s)))
             {
-                foreach (var mask in InventoryInstance.SlotMasks.OrderBy(s => InventoryInstance.SlotDrawingOrder(s)))
-                {
-                    if (mask == Slots.NONE)
-                    {
-                        continue;
-                    }
-
-                    _sprite.LayerMapReserveBlank(mask);
-                }
-            }
-
-            // Component state already came in but we couldn't set anything visually because, well, we didn't initialize yet.
-            foreach (var (slot, entity) in _slots)
-            {
-                _setSlot(slot, entity);
-            }
-        }
-
-        public override bool IsEquipped(IEntity item)
-        {
-            return item != null && _slots.Values.Any(e => e == item);
-        }
-
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
-        {
-            base.HandleComponentState(curState, nextState);
-
-            if (curState is not InventoryComponentState state)
-                return;
-
-            var doneSlots = new HashSet<Slots>();
-
-            foreach (var (slot, entityUid) in state.Entities)
-            {
-                if (!Owner.EntityManager.TryGetEntity(entityUid, out var entity))
+                if (mask == Slots.NONE)
                 {
                     continue;
                 }
-                if (!_slots.ContainsKey(slot) || _slots[slot] != entity)
-                {
-                    _slots[slot] = entity;
-                    _setSlot(slot, entity);
-                }
-                doneSlots.Add(slot);
+
+                _sprite.LayerMapReserveBlank(mask);
             }
-
-            if (state.HoverEntity != null)
-            {
-                var (slot, (entityUid, fits)) = state.HoverEntity.Value;
-                var entity = Owner.EntityManager.GetEntity(entityUid);
-
-                InterfaceController?.HoverInSlot(slot, entity, fits);
-            }
-
-            foreach (var slot in _slots.Keys.ToList())
-            {
-                if (!doneSlots.Contains(slot))
-                {
-                    _clearSlot(slot);
-                    _slots.Remove(slot);
-                }
-            }
-
-            EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(OwnerUid);
         }
 
-        private void _setSlot(Slots slot, IEntity entity)
+        // Component state already came in but we couldn't set anything visually because, well, we didn't initialize yet.
+        foreach (var (slot, entity) in _slots)
         {
-            SetSlotVisuals(slot, entity);
+            _setSlot(slot, entity);
+        }
+    }
 
-            InterfaceController?.AddToSlot(slot, entity);
+    public override bool IsEquipped(IEntity item)
+    {
+        return item != null && _slots.Values.Any(e => e == item);
+    }
+
+    public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
+    {
+        base.HandleComponentState(curState, nextState);
+
+        if (curState is not InventoryComponentState state)
+            return;
+
+        var doneSlots = new HashSet<Slots>();
+
+        foreach (var (slot, entityUid) in state.Entities)
+        {
+            if (!Owner.EntityManager.TryGetEntity(entityUid, out var entity))
+            {
+                continue;
+            }
+            if (!_slots.ContainsKey(slot) || _slots[slot] != entity)
+            {
+                _slots[slot] = entity;
+                _setSlot(slot, entity);
+            }
+            doneSlots.Add(slot);
         }
 
-        internal void SetSlotVisuals(Slots slot, IEntity entity)
+        if (state.HoverEntity != null)
         {
-            if (_sprite == null)
+            var (slot, (entityUid, fits)) = state.HoverEntity.Value;
+            var entity = Owner.EntityManager.GetEntity(entityUid);
+
+            InterfaceController?.HoverInSlot(slot, entity, fits);
+        }
+
+        foreach (var slot in _slots.Keys.ToList())
+        {
+            if (!doneSlots.Contains(slot))
             {
-                return;
+                _clearSlot(slot);
+                _slots.Remove(slot);
             }
+        }
 
-            if (entity.TryGetComponent(out ClothingComponent? clothing))
+        EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(OwnerUid);
+    }
+
+    private void _setSlot(Slots slot, IEntity entity)
+    {
+        SetSlotVisuals(slot, entity);
+
+        InterfaceController?.AddToSlot(slot, entity);
+    }
+
+    internal void SetSlotVisuals(Slots slot, IEntity entity)
+    {
+        if (_sprite == null)
+        {
+            return;
+        }
+
+        if (entity.TryGetComponent(out ClothingComponent? clothing))
+        {
+            var flag = SlotMasks[slot];
+            var data = clothing.GetEquippedStateInfo(flag, SpeciesId);
+            if (data != null)
             {
-                var flag = SlotMasks[slot];
-                var data = clothing.GetEquippedStateInfo(flag, SpeciesId);
-                if (data != null)
-                {
-                    var (rsi, state) = data.Value;
-                    _sprite.LayerSetVisible(slot, true);
-                    _sprite.LayerSetState(slot, state, rsi);
-                    _sprite.LayerSetAutoAnimated(slot, true);
+                var (rsi, state) = data.Value;
+                _sprite.LayerSetVisible(slot, true);
+                _sprite.LayerSetState(slot, state, rsi);
+                _sprite.LayerSetAutoAnimated(slot, true);
 
-                    if (slot == Slots.INNERCLOTHING && _sprite.LayerMapTryGet(HumanoidVisualLayers.StencilMask, out _))
+                if (slot == Slots.INNERCLOTHING && _sprite.LayerMapTryGet(HumanoidVisualLayers.StencilMask, out _))
+                {
+                    _sprite.LayerSetState(HumanoidVisualLayers.StencilMask, clothing.FemaleMask switch
                     {
-                        _sprite.LayerSetState(HumanoidVisualLayers.StencilMask, clothing.FemaleMask switch
-                        {
-                            FemaleClothingMask.NoMask => "female_none",
-                            FemaleClothingMask.UniformTop => "female_top",
-                            _ => "female_full",
-                        });
-                    }
-
-                    return;
+                        FemaleClothingMask.NoMask => "female_none",
+                        FemaleClothingMask.UniformTop => "female_top",
+                        _ => "female_full",
+                    });
                 }
-            }
 
-            _sprite.LayerSetVisible(slot, false);
-        }
-
-        internal void ClearAllSlotVisuals()
-        {
-            if (_sprite == null)
                 return;
-
-            foreach (var slot in InventoryInstance.SlotMasks)
-            {
-                if (slot != Slots.NONE)
-                {
-                    _sprite.LayerSetVisible(slot, false);
-                }
             }
         }
 
-        private void _clearSlot(Slots slot)
-        {
-            InterfaceController?.RemoveFromSlot(slot);
-            _sprite?.LayerSetVisible(slot, false);
-        }
+        _sprite.LayerSetVisible(slot, false);
+    }
 
-        public void SendEquipMessage(Slots slot)
-        {
-            var equipMessage = new ClientInventoryMessage(slot, ClientInventoryUpdate.Equip);
-#pragma warning disable 618
-            SendNetworkMessage(equipMessage);
-#pragma warning restore 618
-        }
+    internal void ClearAllSlotVisuals()
+    {
+        if (_sprite == null)
+            return;
 
-        public void SendUseMessage(Slots slot)
+        foreach (var slot in InventoryInstance.SlotMasks)
         {
-            var equipmessage = new ClientInventoryMessage(slot, ClientInventoryUpdate.Use);
-#pragma warning disable 618
-            SendNetworkMessage(equipmessage);
-#pragma warning restore 618
-        }
-
-        public void SendHoverMessage(Slots slot)
-        {
-#pragma warning disable 618
-            SendNetworkMessage(new ClientInventoryMessage(slot, ClientInventoryUpdate.Hover));
-#pragma warning restore 618
-        }
-
-        public void SendOpenStorageUIMessage(Slots slot)
-        {
-#pragma warning disable 618
-            SendNetworkMessage(new OpenSlotStorageUIMessage(slot));
-#pragma warning restore 618
-        }
-
-        public void PlayerDetached()
-        {
-            InterfaceController.PlayerDetached();
-            _playerAttached = false;
-        }
-
-        public void PlayerAttached()
-        {
-            InterfaceController.PlayerAttached();
-            _playerAttached = true;
-        }
-
-        public bool TryGetSlot(Slots slot, [NotNullWhen(true)] out IEntity? item)
-        {
-            return _slots.TryGetValue(slot, out item);
-        }
-
-        public bool TryFindItemSlots(IEntity item, [NotNullWhen(true)] out Slots? slots)
-        {
-            slots = null;
-
-            foreach (var (slot, entity) in _slots)
+            if (slot != Slots.NONE)
             {
-                if (entity == item)
-                {
-                    slots = slot;
-                    return true;
-                }
+                _sprite.LayerSetVisible(slot, false);
             }
-
-            return false;
         }
+    }
+
+    private void _clearSlot(Slots slot)
+    {
+        InterfaceController?.RemoveFromSlot(slot);
+        _sprite?.LayerSetVisible(slot, false);
+    }
+
+    public void SendEquipMessage(Slots slot)
+    {
+        var equipMessage = new ClientInventoryMessage(slot, ClientInventoryUpdate.Equip);
+#pragma warning disable 618
+        SendNetworkMessage(equipMessage);
+#pragma warning restore 618
+    }
+
+    public void SendUseMessage(Slots slot)
+    {
+        var equipmessage = new ClientInventoryMessage(slot, ClientInventoryUpdate.Use);
+#pragma warning disable 618
+        SendNetworkMessage(equipmessage);
+#pragma warning restore 618
+    }
+
+    public void SendHoverMessage(Slots slot)
+    {
+#pragma warning disable 618
+        SendNetworkMessage(new ClientInventoryMessage(slot, ClientInventoryUpdate.Hover));
+#pragma warning restore 618
+    }
+
+    public void SendOpenStorageUIMessage(Slots slot)
+    {
+#pragma warning disable 618
+        SendNetworkMessage(new OpenSlotStorageUIMessage(slot));
+#pragma warning restore 618
+    }
+
+    public void PlayerDetached()
+    {
+        InterfaceController.PlayerDetached();
+        _playerAttached = false;
+    }
+
+    public void PlayerAttached()
+    {
+        InterfaceController.PlayerAttached();
+        _playerAttached = true;
+    }
+
+    public bool TryGetSlot(Slots slot, [NotNullWhen(true)] out IEntity? item)
+    {
+        return _slots.TryGetValue(slot, out item);
+    }
+
+    public bool TryFindItemSlots(IEntity item, [NotNullWhen(true)] out Slots? slots)
+    {
+        slots = null;
+
+        foreach (var (slot, entity) in _slots)
+        {
+            if (entity == item)
+            {
+                slots = slot;
+                return true;
+            }
+        }
+
+        return false;
     }
 }

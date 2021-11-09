@@ -2,51 +2,50 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 
-namespace Content.Client.Weapons.Melee.Components
+namespace Content.Client.Weapons.Melee.Components;
+
+[RegisterComponent]
+public sealed class MeleeLungeComponent : Component
 {
-    [RegisterComponent]
-    public sealed class MeleeLungeComponent : Component
+    public override string Name => "MeleeLunge";
+
+    private const float ResetTime = 0.3f;
+    private const float BaseOffset = 0.25f;
+
+    private Angle _angle;
+    private float _time;
+
+    public void SetData(Angle angle)
     {
-        public override string Name => "MeleeLunge";
+        _angle = angle;
+        _time = 0;
+    }
 
-        private const float ResetTime = 0.3f;
-        private const float BaseOffset = 0.25f;
+    public void Update(float frameTime)
+    {
+        _time += frameTime;
 
-        private Angle _angle;
-        private float _time;
+        var offset = Vector2.Zero;
+        var deleteSelf = false;
 
-        public void SetData(Angle angle)
+        if (_time > ResetTime)
         {
-            _angle = angle;
-            _time = 0;
+            deleteSelf = true;
+        }
+        else
+        {
+            offset = _angle.RotateVec((0, -BaseOffset));
+            offset *= (ResetTime - _time) / ResetTime;
         }
 
-        public void Update(float frameTime)
+        if (Owner.TryGetComponent(out ISpriteComponent? spriteComponent))
         {
-            _time += frameTime;
+            spriteComponent.Offset = offset;
+        }
 
-            var offset = Vector2.Zero;
-            var deleteSelf = false;
-
-            if (_time > ResetTime)
-            {
-                deleteSelf = true;
-            }
-            else
-            {
-                offset = _angle.RotateVec((0, -BaseOffset));
-                offset *= (ResetTime - _time) / ResetTime;
-            }
-
-            if (Owner.TryGetComponent(out ISpriteComponent? spriteComponent))
-            {
-                spriteComponent.Offset = offset;
-            }
-
-            if (deleteSelf)
-            {
-                Owner.RemoveComponent<MeleeLungeComponent>();
-            }
+        if (deleteSelf)
+        {
+            Owner.RemoveComponent<MeleeLungeComponent>();
         }
     }
 }

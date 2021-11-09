@@ -4,52 +4,51 @@ using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Preferences
+namespace Content.Shared.Preferences;
+
+/// <summary>
+/// The server sends this before the client joins the lobby.
+/// </summary>
+public class MsgPreferencesAndSettings : NetMessage
 {
-    /// <summary>
-    /// The server sends this before the client joins the lobby.
-    /// </summary>
-    public class MsgPreferencesAndSettings : NetMessage
+    public override MsgGroups MsgGroup => MsgGroups.Command;
+
+    public PlayerPreferences Preferences = default!;
+    public GameSettings Settings = default!;
+
+    public override void ReadFromBuffer(NetIncomingMessage buffer)
     {
-        public override MsgGroups MsgGroup => MsgGroups.Command;
-
-        public PlayerPreferences Preferences = default!;
-        public GameSettings Settings = default!;
-
-        public override void ReadFromBuffer(NetIncomingMessage buffer)
+        var serializer = IoCManager.Resolve<IRobustSerializer>();
+        var length = buffer.ReadVariableInt32();
+        using (var stream = buffer.ReadAlignedMemory(length))
         {
-            var serializer = IoCManager.Resolve<IRobustSerializer>();
-            var length = buffer.ReadVariableInt32();
-            using (var stream = buffer.ReadAlignedMemory(length))
-            {
-                serializer.DeserializeDirect(stream, out Preferences);
-            }
-
-            length = buffer.ReadVariableInt32();
-            using (var stream = buffer.ReadAlignedMemory(length))
-            {
-                serializer.DeserializeDirect(stream, out Settings);
-            }
+            serializer.DeserializeDirect(stream, out Preferences);
         }
 
-        public override void WriteToBuffer(NetOutgoingMessage buffer)
+        length = buffer.ReadVariableInt32();
+        using (var stream = buffer.ReadAlignedMemory(length))
         {
-            var serializer = IoCManager.Resolve<IRobustSerializer>();
-            using (var stream = new MemoryStream())
-            {
-                serializer.SerializeDirect(stream, Preferences);
-                buffer.WriteVariableInt32((int) stream.Length);
-                stream.TryGetBuffer(out var segment);
-                buffer.Write(segment);
-            }
+            serializer.DeserializeDirect(stream, out Settings);
+        }
+    }
 
-            using (var stream = new MemoryStream())
-            {
-                serializer.SerializeDirect(stream, Settings);
-                buffer.WriteVariableInt32((int) stream.Length);
-                stream.TryGetBuffer(out var segment);
-                buffer.Write(segment);
-            }
+    public override void WriteToBuffer(NetOutgoingMessage buffer)
+    {
+        var serializer = IoCManager.Resolve<IRobustSerializer>();
+        using (var stream = new MemoryStream())
+        {
+            serializer.SerializeDirect(stream, Preferences);
+            buffer.WriteVariableInt32((int) stream.Length);
+            stream.TryGetBuffer(out var segment);
+            buffer.Write(segment);
+        }
+
+        using (var stream = new MemoryStream())
+        {
+            serializer.SerializeDirect(stream, Settings);
+            buffer.WriteVariableInt32((int) stream.Length);
+            stream.TryGetBuffer(out var segment);
+            buffer.Write(segment);
         }
     }
 }

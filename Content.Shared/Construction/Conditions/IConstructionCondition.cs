@@ -2,11 +2,10 @@
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 
-namespace Content.Shared.Construction.Conditions
+namespace Content.Shared.Construction.Conditions;
+
+public interface IConstructionCondition
 {
-    public interface IConstructionCondition
-    {
-        ConstructionGuideEntry? GenerateGuideEntry();
-        bool Condition(IEntity user, EntityCoordinates location, Direction direction);
-    }
+    ConstructionGuideEntry? GenerateGuideEntry();
+    bool Condition(IEntity user, EntityCoordinates location, Direction direction);
 }

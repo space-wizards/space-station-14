@@ -1,10 +1,9 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Reactions;
 
-namespace Content.Server.Atmos
+namespace Content.Server.Atmos;
+
+public interface IGasReactionEffect
 {
-    public interface IGasReactionEffect
-    {
-        ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, AtmosphereSystem atmosphereSystem);
-    }
+    ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, AtmosphereSystem atmosphereSystem);
 }

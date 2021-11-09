@@ -1,19 +1,18 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.Flash.Components
+namespace Content.Server.Flash.Components;
+
+/// <summary>
+/// Upon being triggered will flash in an area around it.
+/// </summary>
+[RegisterComponent]
+internal sealed class FlashOnTriggerComponent : Component
 {
-    /// <summary>
-    /// Upon being triggered will flash in an area around it.
-    /// </summary>
-    [RegisterComponent]
-    internal sealed class FlashOnTriggerComponent : Component
-    {
-        public override string Name => "FlashOnTrigger";
+    public override string Name => "FlashOnTrigger";
 
-        [DataField("range")] internal float Range = 1.0f;
-        [DataField("duration")] internal float Duration = 8.0f;
+    [DataField("range")] internal float Range = 1.0f;
+    [DataField("duration")] internal float Duration = 8.0f;
 
-        internal bool Flashed;
-    }
+    internal bool Flashed;
 }

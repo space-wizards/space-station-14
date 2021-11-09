@@ -7,57 +7,56 @@ using Robust.Client.Utility;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
-namespace Content.Client.Construction
+namespace Content.Client.Construction;
+
+public sealed class ConstructionPlacementHijack : PlacementHijack
 {
-    public sealed class ConstructionPlacementHijack : PlacementHijack
+    private readonly ConstructionSystem _constructionSystem;
+    private readonly ConstructionPrototype? _prototype;
+
+    public override bool CanRotate { get; }
+
+    public ConstructionPlacementHijack(ConstructionSystem constructionSystem, ConstructionPrototype? prototype)
     {
-        private readonly ConstructionSystem _constructionSystem;
-        private readonly ConstructionPrototype? _prototype;
+        _constructionSystem = constructionSystem;
+        _prototype = prototype;
+        CanRotate = prototype?.CanRotate ?? true;
+    }
 
-        public override bool CanRotate { get; }
-
-        public ConstructionPlacementHijack(ConstructionSystem constructionSystem, ConstructionPrototype? prototype)
+    /// <inheritdoc />
+    public override bool HijackPlacementRequest(EntityCoordinates coordinates)
+    {
+        if (_prototype != null)
         {
-            _constructionSystem = constructionSystem;
-            _prototype = prototype;
-            CanRotate = prototype?.CanRotate ?? true;
+            var dir = Manager.Direction;
+            _constructionSystem.SpawnGhost(_prototype, coordinates, dir);
         }
+        return true;
+    }
 
-        /// <inheritdoc />
-        public override bool HijackPlacementRequest(EntityCoordinates coordinates)
+    /// <inheritdoc />
+    public override bool HijackDeletion(IEntity entity)
+    {
+        if (entity.TryGetComponent(out ConstructionGhostComponent? ghost))
         {
-            if (_prototype != null)
-            {
-                var dir = Manager.Direction;
-                _constructionSystem.SpawnGhost(_prototype, coordinates, dir);
-            }
-            return true;
+            _constructionSystem.ClearGhost(ghost.GhostId);
         }
+        return true;
+    }
 
-        /// <inheritdoc />
-        public override bool HijackDeletion(IEntity entity)
+    /// <inheritdoc />
+    public override void StartHijack(PlacementManager manager)
+    {
+        base.StartHijack(manager);
+
+        var frame = _prototype?.Icon.DirFrame0();
+        if (frame == null)
         {
-            if (entity.TryGetComponent(out ConstructionGhostComponent? ghost))
-            {
-                _constructionSystem.ClearGhost(ghost.GhostId);
-            }
-            return true;
+            manager.CurrentTextures = null;
         }
-
-        /// <inheritdoc />
-        public override void StartHijack(PlacementManager manager)
+        else
         {
-            base.StartHijack(manager);
-
-            var frame = _prototype?.Icon.DirFrame0();
-            if (frame == null)
-            {
-                manager.CurrentTextures = null;
-            }
-            else
-            {
-                manager.CurrentTextures = new List<IDirectionalTextureProvider> {frame};
-            }
+            manager.CurrentTextures = new List<IDirectionalTextureProvider> {frame};
         }
     }
 }

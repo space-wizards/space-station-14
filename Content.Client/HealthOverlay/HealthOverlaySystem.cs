@@ -9,100 +9,99 @@ using Robust.Client.Graphics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Client.HealthOverlay
+namespace Content.Client.HealthOverlay;
+
+[UsedImplicitly]
+public class HealthOverlaySystem : EntitySystem
 {
-    [UsedImplicitly]
-    public class HealthOverlaySystem : EntitySystem
+    [Dependency] private readonly IEyeManager _eyeManager = default!;
+
+    private readonly Dictionary<EntityUid, HealthOverlayGui> _guis = new();
+    private IEntity? _attachedEntity;
+    private bool _enabled;
+
+    public bool Enabled
     {
-        [Dependency] private readonly IEyeManager _eyeManager = default!;
-
-        private readonly Dictionary<EntityUid, HealthOverlayGui> _guis = new();
-        private IEntity? _attachedEntity;
-        private bool _enabled;
-
-        public bool Enabled
+        get => _enabled;
+        set
         {
-            get => _enabled;
-            set
+            if (_enabled == value)
             {
-                if (_enabled == value)
-                {
-                    return;
-                }
-
-                _enabled = value;
-
-                foreach (var gui in _guis.Values)
-                {
-                    gui.SetVisibility(value);
-                }
+                return;
             }
-        }
 
-        public override void Initialize()
-        {
-            base.Initialize();
+            _enabled = value;
 
-            SubscribeNetworkEvent<RoundRestartCleanupEvent>(Reset);
-            SubscribeLocalEvent<PlayerAttachSysMessage>(HandlePlayerAttached);
-        }
-
-        public void Reset(RoundRestartCleanupEvent ev)
-        {
             foreach (var gui in _guis.Values)
             {
-                gui.Dispose();
+                gui.SetVisibility(value);
             }
+        }
+    }
 
-            _guis.Clear();
-            _attachedEntity = null;
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeNetworkEvent<RoundRestartCleanupEvent>(Reset);
+        SubscribeLocalEvent<PlayerAttachSysMessage>(HandlePlayerAttached);
+    }
+
+    public void Reset(RoundRestartCleanupEvent ev)
+    {
+        foreach (var gui in _guis.Values)
+        {
+            gui.Dispose();
         }
 
-        private void HandlePlayerAttached(PlayerAttachSysMessage message)
+        _guis.Clear();
+        _attachedEntity = null;
+    }
+
+    private void HandlePlayerAttached(PlayerAttachSysMessage message)
+    {
+        _attachedEntity = message.AttachedEntity;
+    }
+
+    public override void FrameUpdate(float frameTime)
+    {
+        base.Update(frameTime);
+
+        if (!_enabled)
         {
-            _attachedEntity = message.AttachedEntity;
+            return;
         }
 
-        public override void FrameUpdate(float frameTime)
+        if (_attachedEntity == null || _attachedEntity.Deleted)
         {
-            base.Update(frameTime);
+            return;
+        }
 
-            if (!_enabled)
+        var viewBox = _eyeManager.GetWorldViewport().Enlarged(2.0f);
+
+        foreach (var (mobState, _) in EntityManager.EntityQuery<MobStateComponent, DamageableComponent>())
+        {
+            var entity = mobState.Owner;
+
+            if (_attachedEntity.Transform.MapID != entity.Transform.MapID ||
+                !viewBox.Contains(entity.Transform.WorldPosition))
             {
-                return;
-            }
-
-            if (_attachedEntity == null || _attachedEntity.Deleted)
-            {
-                return;
-            }
-
-            var viewBox = _eyeManager.GetWorldViewport().Enlarged(2.0f);
-
-            foreach (var (mobState, _) in EntityManager.EntityQuery<MobStateComponent, DamageableComponent>())
-            {
-                var entity = mobState.Owner;
-
-                if (_attachedEntity.Transform.MapID != entity.Transform.MapID ||
-                    !viewBox.Contains(entity.Transform.WorldPosition))
+                if (_guis.TryGetValue(entity.Uid, out var oldGui))
                 {
-                    if (_guis.TryGetValue(entity.Uid, out var oldGui))
-                    {
-                        _guis.Remove(entity.Uid);
-                        oldGui.Dispose();                       
-                    }
-
-                    continue;
+                    _guis.Remove(entity.Uid);
+                    oldGui.Dispose();                       
                 }
 
-                if (_guis.ContainsKey(entity.Uid))
-                {
-                    continue;
-                }
-
-                var gui = new HealthOverlayGui(entity);
-                _guis.Add(entity.Uid, gui);
+                continue;
             }
+
+            if (_guis.ContainsKey(entity.Uid))
+            {
+                continue;
+            }
+
+            var gui = new HealthOverlayGui(entity);
+            _guis.Add(entity.Uid, gui);
         }
     }
 }

@@ -1,8 +1,7 @@
-namespace Content.Server.Sandbox
+namespace Content.Server.Sandbox;
+
+public interface ISandboxManager
 {
-    public interface ISandboxManager
-    {
-        bool IsSandboxEnabled { get; set; }
-        void Initialize();
-    }
+    bool IsSandboxEnabled { get; set; }
+    void Initialize();
 }

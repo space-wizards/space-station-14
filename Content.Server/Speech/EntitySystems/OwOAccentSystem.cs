@@ -4,43 +4,42 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Random;
 
-namespace Content.Server.Speech.EntitySystems
+namespace Content.Server.Speech.EntitySystems;
+
+public class OwOAccentSystem : EntitySystem
 {
-    public class OwOAccentSystem : EntitySystem
+    [Dependency] private readonly IRobustRandom _random = default!;
+
+    private static readonly IReadOnlyList<string> Faces = new List<string>{
+        " (・`ω´・)", " ;;w;;", " owo", " UwU", " >w<", " ^w^"
+    }.AsReadOnly();
+
+    private static readonly IReadOnlyDictionary<string, string> SpecialWords = new Dictionary<string, string>()
     {
-        [Dependency] private readonly IRobustRandom _random = default!;
+        { "you", "wu" },
+    };
 
-        private static readonly IReadOnlyList<string> Faces = new List<string>{
-            " (・`ω´・)", " ;;w;;", " owo", " UwU", " >w<", " ^w^"
-        }.AsReadOnly();
+    private string RandomFace => _random.Pick(Faces);
 
-        private static readonly IReadOnlyDictionary<string, string> SpecialWords = new Dictionary<string, string>()
+    public override void Initialize()
+    {
+        SubscribeLocalEvent<OwOAccentComponent, AccentGetEvent>(OnAccent);
+    }
+
+    public string Accentuate(string message)
+    {
+        foreach (var (word, repl) in SpecialWords)
         {
-            { "you", "wu" },
-        };
-
-        private string RandomFace => _random.Pick(Faces);
-
-        public override void Initialize()
-        {
-            SubscribeLocalEvent<OwOAccentComponent, AccentGetEvent>(OnAccent);
+            message = message.Replace(word, repl);
         }
 
-        public string Accentuate(string message)
-        {
-            foreach (var (word, repl) in SpecialWords)
-            {
-                message = message.Replace(word, repl);
-            }
+        return message.Replace("!", RandomFace)
+                      .Replace("r", "w").Replace("R", "W")
+                      .Replace("l", "w").Replace("L", "W");
+    }
 
-            return message.Replace("!", RandomFace)
-                .Replace("r", "w").Replace("R", "W")
-                .Replace("l", "w").Replace("L", "W");
-        }
-
-        private void OnAccent(EntityUid uid, OwOAccentComponent component, AccentGetEvent args)
-        {
-            args.Message = Accentuate(args.Message);
-        }
+    private void OnAccent(EntityUid uid, OwOAccentComponent component, AccentGetEvent args)
+    {
+        args.Message = Accentuate(args.Message);
     }
 }

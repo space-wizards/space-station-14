@@ -1,16 +1,15 @@
 ﻿using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Botany
+namespace Content.Shared.Botany;
+
+[Serializable, NetSerializable]
+public enum PlantHolderVisuals
 {
-    [Serializable, NetSerializable]
-    public enum PlantHolderVisuals
-    {
-        Plant,
-        HealthLight,
-        WaterLight,
-        NutritionLight,
-        AlertLight,
-        HarvestLight,
-    }
+    Plant,
+    HealthLight,
+    WaterLight,
+    NutritionLight,
+    AlertLight,
+    HarvestLight,
 }

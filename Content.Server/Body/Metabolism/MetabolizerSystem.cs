@@ -14,141 +14,140 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Body.Metabolism
+namespace Content.Server.Body.Metabolism;
+
+// TODO mirror in the future working on mechanisms move updating here to BodySystem so it can be ordered?
+[UsedImplicitly]
+public class MetabolizerSystem : EntitySystem
 {
-    // TODO mirror in the future working on mechanisms move updating here to BodySystem so it can be ordered?
-    [UsedImplicitly]
-    public class MetabolizerSystem : EntitySystem
+    [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        base.Initialize();
 
-        public override void Initialize()
+        SubscribeLocalEvent<MetabolizerComponent, ComponentInit>(OnMetabolizerInit);
+    }
+
+    private void OnMetabolizerInit(EntityUid uid, MetabolizerComponent component, ComponentInit args)
+    {
+        if (!component.SolutionOnBody)
         {
-            base.Initialize();
-
-            SubscribeLocalEvent<MetabolizerComponent, ComponentInit>(OnMetabolizerInit);
+            _solutionContainerSystem.EnsureSolution(uid, component.SolutionName);
         }
-
-        private void OnMetabolizerInit(EntityUid uid, MetabolizerComponent component, ComponentInit args)
+        else
         {
-            if (!component.SolutionOnBody)
+            if (EntityManager.TryGetComponent<MechanismComponent>(uid, out var mech))
             {
-                _solutionContainerSystem.EnsureSolution(uid, component.SolutionName);
-            }
-            else
-            {
-                if (EntityManager.TryGetComponent<MechanismComponent>(uid, out var mech))
+                if (mech.Body != null)
                 {
-                    if (mech.Body != null)
-                    {
-                        _solutionContainerSystem.EnsureSolution(mech.Body.OwnerUid, component.SolutionName);
-                    }
+                    _solutionContainerSystem.EnsureSolution(mech.Body.OwnerUid, component.SolutionName);
                 }
             }
         }
+    }
 
-        public override void Update(float frameTime)
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        foreach (var metab in EntityManager.EntityQuery<MetabolizerComponent>(false))
         {
-            base.Update(frameTime);
+            metab.AccumulatedFrametime += frameTime;
 
-            foreach (var metab in EntityManager.EntityQuery<MetabolizerComponent>(false))
+            // Only update as frequently as it should
+            if (metab.AccumulatedFrametime >= metab.UpdateFrequency)
             {
-                metab.AccumulatedFrametime += frameTime;
+                metab.AccumulatedFrametime -= metab.UpdateFrequency;
+                TryMetabolize(metab.OwnerUid, metab);
+            }
+        }
+    }
 
-                // Only update as frequently as it should
-                if (metab.AccumulatedFrametime >= metab.UpdateFrequency)
+    private void TryMetabolize(EntityUid uid, MetabolizerComponent? meta=null, MechanismComponent? mech=null)
+    {
+        if (!Resolve(uid, ref meta))
+            return;
+
+        Resolve(uid, ref mech, false);
+
+        // First step is get the solution we actually care about
+        Solution? solution = null;
+        EntityUid? solutionEntityUid = null;
+        SolutionContainerManagerComponent? manager = null;
+
+        if (meta.SolutionOnBody)
+        {
+            if (mech != null)
+            {
+                var body = mech.Body;
+
+                if (body != null)
                 {
-                    metab.AccumulatedFrametime -= metab.UpdateFrequency;
-                    TryMetabolize(metab.OwnerUid, metab);
+                    if (!Resolve(body.OwnerUid, ref manager, false))
+                        return;
+                    _solutionContainerSystem.TryGetSolution(body.OwnerUid, meta.SolutionName, out solution, manager);
+                    solutionEntityUid = body.OwnerUid;
                 }
             }
         }
-
-        private void TryMetabolize(EntityUid uid, MetabolizerComponent? meta=null, MechanismComponent? mech=null)
+        else
         {
-            if (!Resolve(uid, ref meta))
+            if (!Resolve(uid, ref manager, false))
                 return;
+            _solutionContainerSystem.TryGetSolution(uid, meta.SolutionName, out solution, manager);
+            solutionEntityUid = uid;
+        }
 
-            Resolve(uid, ref mech, false);
+        if (solutionEntityUid == null || solution == null)
+            return;
+        // we found our guy
+        foreach (var reagent in solution.Contents.ToArray())
+        {
+            if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.ReagentId, out var proto))
+                continue;
 
-            // First step is get the solution we actually care about
-            Solution? solution = null;
-            EntityUid? solutionEntityUid = null;
-            SolutionContainerManagerComponent? manager = null;
+            if (proto.Metabolisms == null)
+                continue;
 
-            if (meta.SolutionOnBody)
+            // loop over all our groups and see which ones apply
+            FixedPoint2 mostToRemove = FixedPoint2.Zero;
+            foreach (var group in meta.MetabolismGroups)
             {
-                if (mech != null)
-                {
-                    var body = mech.Body;
-
-                    if (body != null)
-                    {
-                        if (!Resolve(body.OwnerUid, ref manager, false))
-                            return;
-                        _solutionContainerSystem.TryGetSolution(body.OwnerUid, meta.SolutionName, out solution, manager);
-                        solutionEntityUid = body.OwnerUid;
-                    }
-                }
-            }
-            else
-            {
-                if (!Resolve(uid, ref manager, false))
-                    return;
-                _solutionContainerSystem.TryGetSolution(uid, meta.SolutionName, out solution, manager);
-                solutionEntityUid = uid;
-            }
-
-            if (solutionEntityUid == null || solution == null)
-                return;
-            // we found our guy
-            foreach (var reagent in solution.Contents.ToArray())
-            {
-                if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.ReagentId, out var proto))
+                if (!proto.Metabolisms.Keys.Contains(group.Id))
                     continue;
 
-                if (proto.Metabolisms == null)
-                    continue;
+                var entry = proto.Metabolisms[group.Id];
 
-                // loop over all our groups and see which ones apply
-                FixedPoint2 mostToRemove = FixedPoint2.Zero;
-                foreach (var group in meta.MetabolismGroups)
+                // we don't remove reagent for every group, just whichever had the biggest rate
+                if (entry.MetabolismRate > mostToRemove)
+                    mostToRemove = entry.MetabolismRate;
+
+                // do all effects, if conditions apply
+                foreach (var effect in entry.Effects)
                 {
-                    if (!proto.Metabolisms.Keys.Contains(group.Id))
-                        continue;
-
-                    var entry = proto.Metabolisms[group.Id];
-
-                    // we don't remove reagent for every group, just whichever had the biggest rate
-                    if (entry.MetabolismRate > mostToRemove)
-                        mostToRemove = entry.MetabolismRate;
-
-                    // do all effects, if conditions apply
-                    foreach (var effect in entry.Effects)
+                    bool failed = false;
+                    var quant = new Solution.ReagentQuantity(reagent.ReagentId, reagent.Quantity);
+                    if (effect.Conditions != null)
                     {
-                        bool failed = false;
-                        var quant = new Solution.ReagentQuantity(reagent.ReagentId, reagent.Quantity);
-                        if (effect.Conditions != null)
+                        foreach (var cond in effect.Conditions)
                         {
-                            foreach (var cond in effect.Conditions)
-                            {
-                                if (!cond.Condition(solutionEntityUid.Value, meta.OwnerUid, quant, EntityManager))
-                                    failed = true;
-                            }
-
-                            if (failed)
-                                continue;
+                            if (!cond.Condition(solutionEntityUid.Value, meta.OwnerUid, quant, EntityManager))
+                                failed = true;
                         }
 
-                        effect.Metabolize(solutionEntityUid.Value, meta.OwnerUid, quant, EntityManager);
+                        if (failed)
+                            continue;
                     }
-                }
 
-                // remove a certain amount of reagent
-                if (mostToRemove > FixedPoint2.Zero)
-                    _solutionContainerSystem.TryRemoveReagent(solutionEntityUid.Value, solution, reagent.ReagentId, mostToRemove);
+                    effect.Metabolize(solutionEntityUid.Value, meta.OwnerUid, quant, EntityManager);
+                }
             }
+
+            // remove a certain amount of reagent
+            if (mostToRemove > FixedPoint2.Zero)
+                _solutionContainerSystem.TryRemoveReagent(solutionEntityUid.Value, solution, reagent.ReagentId, mostToRemove);
         }
     }
 }

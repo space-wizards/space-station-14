@@ -9,47 +9,45 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Timing;
 using Robust.Shared.IoC;
 
-namespace Content.Shared.Chemistry.Components
+namespace Content.Shared.Chemistry.Components;
+
+//TODO: refactor movement modifier component because this is a pretty poor solution
+[RegisterComponent]
+[NetworkedComponent]
+public sealed class MovespeedModifierMetabolismComponent : Component
 {
-    //TODO: refactor movement modifier component because this is a pretty poor solution
-    [RegisterComponent]
-    [NetworkedComponent]
-    public sealed class MovespeedModifierMetabolismComponent : Component
+    [ViewVariables]
+    public override string Name => "MovespeedModifierMetabolism";
+
+    [ViewVariables]
+    public float WalkSpeedModifier { get; set; }
+
+    [ViewVariables]
+    public float SprintSpeedModifier { get; set; }
+
+    /// <summary>
+    /// When the current modifier is expected to end.
+    /// </summary>
+    [ViewVariables]
+    public TimeSpan ModifierTimer { get; set; } = TimeSpan.Zero;
+
+    public override ComponentState GetComponentState(ICommonSession player)
     {
-        [ViewVariables]
-        public override string Name => "MovespeedModifierMetabolism";
+        return new MovespeedModifierMetabolismComponentState(WalkSpeedModifier, SprintSpeedModifier, ModifierTimer);
+    }
 
-        [ViewVariables]
-        public float WalkSpeedModifier { get; set; }
+    [Serializable, NetSerializable]
+    public class MovespeedModifierMetabolismComponentState : ComponentState
+    {
+        public float WalkSpeedModifier { get; }
+        public float SprintSpeedModifier { get; }
+        public TimeSpan ModifierTimer { get; }
 
-        [ViewVariables]
-        public float SprintSpeedModifier { get; set; }
-
-        /// <summary>
-        /// When the current modifier is expected to end.
-        /// </summary>
-        [ViewVariables]
-        public TimeSpan ModifierTimer { get; set; } = TimeSpan.Zero;
-
-        public override ComponentState GetComponentState(ICommonSession player)
+        public MovespeedModifierMetabolismComponentState(float walkSpeedModifier, float sprintSpeedModifier, TimeSpan modifierTimer)
         {
-            return new MovespeedModifierMetabolismComponentState(WalkSpeedModifier, SprintSpeedModifier, ModifierTimer);
-        }
-
-        [Serializable, NetSerializable]
-        public class MovespeedModifierMetabolismComponentState : ComponentState
-        {
-            public float WalkSpeedModifier { get; }
-            public float SprintSpeedModifier { get; }
-            public TimeSpan ModifierTimer { get; }
-
-            public MovespeedModifierMetabolismComponentState(float walkSpeedModifier, float sprintSpeedModifier, TimeSpan modifierTimer)
-            {
-                WalkSpeedModifier = walkSpeedModifier;
-                SprintSpeedModifier = sprintSpeedModifier;
-                ModifierTimer = modifierTimer;
-            }
+            WalkSpeedModifier = walkSpeedModifier;
+            SprintSpeedModifier = sprintSpeedModifier;
+            ModifierTimer = modifierTimer;
         }
     }
 }
-

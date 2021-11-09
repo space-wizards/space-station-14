@@ -3,53 +3,52 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.Gravity.UI
+namespace Content.Client.Gravity.UI;
+
+[UsedImplicitly]
+public class GravityGeneratorBoundUserInterface : BoundUserInterface
 {
-    [UsedImplicitly]
-    public class GravityGeneratorBoundUserInterface : BoundUserInterface
+    private GravityGeneratorWindow? _window;
+
+    public GravityGeneratorBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base (owner, uiKey)
     {
-        private GravityGeneratorWindow? _window;
+    }
 
-        public GravityGeneratorBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base (owner, uiKey)
+    protected override void Open()
+    {
+        base.Open();
+
+        _window = new GravityGeneratorWindow(this, Owner);
+
+        /*
+        _window.Switch.OnPressed += _ =>
         {
-        }
+            SendMessage(new SharedGravityGeneratorComponent.SwitchGeneratorMessage(!IsOn));
+        };
+        */
 
-        protected override void Open()
-        {
-            base.Open();
+        _window.OpenCentered();
+        _window.OnClose += Close;
+    }
 
-            _window = new GravityGeneratorWindow(this, Owner);
+    protected override void UpdateState(BoundUserInterfaceState state)
+    {
+        base.UpdateState(state);
 
-            /*
-            _window.Switch.OnPressed += _ =>
-            {
-                SendMessage(new SharedGravityGeneratorComponent.SwitchGeneratorMessage(!IsOn));
-            };
-            */
+        var castState = (SharedGravityGeneratorComponent.GeneratorState) state;
+        _window?.UpdateState(castState);
+    }
 
-            _window.OpenCentered();
-            _window.OnClose += Close;
-        }
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+        if (!disposing) return;
 
-        protected override void UpdateState(BoundUserInterfaceState state)
-        {
-            base.UpdateState(state);
+        _window?.Dispose();
+    }
 
-            var castState = (SharedGravityGeneratorComponent.GeneratorState) state;
-            _window?.UpdateState(castState);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-            if (!disposing) return;
-
-            _window?.Dispose();
-        }
-
-        public void SetPowerSwitch(bool on)
-        {
-            SendMessage(new SharedGravityGeneratorComponent.SwitchGeneratorMessage(on));
-        }
+    public void SetPowerSwitch(bool on)
+    {
+        SendMessage(new SharedGravityGeneratorComponent.SwitchGeneratorMessage(on));
     }
 }

@@ -11,159 +11,158 @@ using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
-namespace Content.Client.Weapons.Ranged.Barrels.Components
+namespace Content.Client.Weapons.Ranged.Barrels.Components;
+
+[RegisterComponent]
+[NetworkedComponent()]
+public class ClientRevolverBarrelComponent : Component, IItemStatus
 {
-    [RegisterComponent]
-    [NetworkedComponent()]
-    public class ClientRevolverBarrelComponent : Component, IItemStatus
+    public override string Name => "RevolverBarrel";
+
+    private StatusControl? _statusControl;
+
+    /// <summary>
+    /// A array that lists the bullet states
+    /// true means a spent bullet
+    /// false means a "shootable" bullet
+    /// null means no bullet
+    /// </summary>
+    [ViewVariables]
+    public bool?[] Bullets { get; private set; } = new bool?[0];
+
+    [ViewVariables]
+    public int CurrentSlot { get; private set; }
+
+    public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
     {
-        public override string Name => "RevolverBarrel";
+        base.HandleComponentState(curState, nextState);
 
-        private StatusControl? _statusControl;
+        if (curState is not RevolverBarrelComponentState cast)
+            return;
 
-        /// <summary>
-        /// A array that lists the bullet states
-        /// true means a spent bullet
-        /// false means a "shootable" bullet
-        /// null means no bullet
-        /// </summary>
-        [ViewVariables]
-        public bool?[] Bullets { get; private set; } = new bool?[0];
+        CurrentSlot = cast.CurrentSlot;
+        Bullets = cast.Bullets;
+        _statusControl?.Update();
+    }
 
-        [ViewVariables]
-        public int CurrentSlot { get; private set; }
+    public Control MakeControl()
+    {
+        _statusControl = new StatusControl(this);
+        _statusControl.Update();
+        return _statusControl;
+    }
 
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
+    public void DestroyControl(Control control)
+    {
+        if (_statusControl == control)
         {
-            base.HandleComponentState(curState, nextState);
+            _statusControl = null;
+        }
+    }
 
-            if (curState is not RevolverBarrelComponentState cast)
-                return;
+    private sealed class StatusControl : Control
+    {
+        private readonly ClientRevolverBarrelComponent _parent;
+        private readonly BoxContainer _bulletsList;
 
-            CurrentSlot = cast.CurrentSlot;
-            Bullets = cast.Bullets;
-            _statusControl?.Update();
+        public StatusControl(ClientRevolverBarrelComponent parent)
+        {
+            MinHeight = 15;
+            _parent = parent;
+            HorizontalExpand = true;
+            VerticalAlignment = VAlignment.Center;
+            AddChild((_bulletsList = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Horizontal,
+                HorizontalExpand = true,
+                VerticalAlignment = VAlignment.Center,
+                SeparationOverride = 0
+            }));
         }
 
-        public Control MakeControl()
+        public void Update()
         {
-            _statusControl = new StatusControl(this);
-            _statusControl.Update();
-            return _statusControl;
+            _bulletsList.RemoveAllChildren();
+
+            var capacity = _parent.Bullets.Length;
+
+            string texturePath;
+            if (capacity <= 20)
+            {
+                texturePath = "/Textures/Interface/ItemStatus/Bullets/normal.png";
+            }
+            else if (capacity <= 30)
+            {
+                texturePath = "/Textures/Interface/ItemStatus/Bullets/small.png";
+            }
+            else
+            {
+                texturePath = "/Textures/Interface/ItemStatus/Bullets/tiny.png";
+            }
+
+            var texture = StaticIoC.ResC.GetTexture(texturePath);
+            var spentTexture = StaticIoC.ResC.GetTexture("/Textures/Interface/ItemStatus/Bullets/empty.png");
+
+            FillBulletRow(_bulletsList, texture, spentTexture);
         }
 
-        public void DestroyControl(Control control)
+        private void FillBulletRow(Control container, Texture texture, Texture emptyTexture)
         {
-            if (_statusControl == control)
+            var colorA = Color.FromHex("#b68f0e");
+            var colorB = Color.FromHex("#d7df60");
+            var colorSpentA = Color.FromHex("#b50e25");
+            var colorSpentB = Color.FromHex("#d3745f");
+            var colorGoneA = Color.FromHex("#000000");
+            var colorGoneB = Color.FromHex("#222222");
+
+            var altColor = false;
+            var scale = 1.3f;
+
+            for (var i = 0; i < _parent.Bullets.Length; i++)
             {
-                _statusControl = null;
-            }
-        }
-
-        private sealed class StatusControl : Control
-        {
-            private readonly ClientRevolverBarrelComponent _parent;
-            private readonly BoxContainer _bulletsList;
-
-            public StatusControl(ClientRevolverBarrelComponent parent)
-            {
-                MinHeight = 15;
-                _parent = parent;
-                HorizontalExpand = true;
-                VerticalAlignment = VAlignment.Center;
-                AddChild((_bulletsList = new BoxContainer
+                var bulletSpent = _parent.Bullets[i];
+                // Add a outline
+                var box = new Control()
                 {
-                    Orientation = LayoutOrientation.Horizontal,
-                    HorizontalExpand = true,
-                    VerticalAlignment = VAlignment.Center,
-                    SeparationOverride = 0
-                }));
-            }
-
-            public void Update()
-            {
-                _bulletsList.RemoveAllChildren();
-
-                var capacity = _parent.Bullets.Length;
-
-                string texturePath;
-                if (capacity <= 20)
+                    MinSize = texture.Size * scale,
+                };
+                if (i == _parent.CurrentSlot)
                 {
-                    texturePath = "/Textures/Interface/ItemStatus/Bullets/normal.png";
-                }
-                else if (capacity <= 30)
-                {
-                    texturePath = "/Textures/Interface/ItemStatus/Bullets/small.png";
-                }
-                else
-                {
-                    texturePath = "/Textures/Interface/ItemStatus/Bullets/tiny.png";
-                }
-
-                var texture = StaticIoC.ResC.GetTexture(texturePath);
-                var spentTexture = StaticIoC.ResC.GetTexture("/Textures/Interface/ItemStatus/Bullets/empty.png");
-
-                FillBulletRow(_bulletsList, texture, spentTexture);
-            }
-
-            private void FillBulletRow(Control container, Texture texture, Texture emptyTexture)
-            {
-                var colorA = Color.FromHex("#b68f0e");
-                var colorB = Color.FromHex("#d7df60");
-                var colorSpentA = Color.FromHex("#b50e25");
-                var colorSpentB = Color.FromHex("#d3745f");
-                var colorGoneA = Color.FromHex("#000000");
-                var colorGoneB = Color.FromHex("#222222");
-
-                var altColor = false;
-                var scale = 1.3f;
-
-                for (var i = 0; i < _parent.Bullets.Length; i++)
-                {
-                    var bulletSpent = _parent.Bullets[i];
-                    // Add a outline
-                    var box = new Control()
+                    box.AddChild(new TextureRect
                     {
-                        MinSize = texture.Size * scale,
-                    };
-                    if (i == _parent.CurrentSlot)
-                    {
-                        box.AddChild(new TextureRect
-                        {
-                            Texture = texture,
-                            TextureScale = (scale, scale),
-                            ModulateSelfOverride = Color.LimeGreen,
-                        });
-                    }
-                    Color color;
-                    Texture bulletTexture = texture;
+                        Texture = texture,
+                        TextureScale = (scale, scale),
+                        ModulateSelfOverride = Color.LimeGreen,
+                    });
+                }
+                Color color;
+                Texture bulletTexture = texture;
 
-                    if (bulletSpent.HasValue)
+                if (bulletSpent.HasValue)
+                {
+                    if (bulletSpent.Value)
                     {
-                        if (bulletSpent.Value)
-                        {
-                            color = altColor ? colorSpentA : colorSpentB;
-                            bulletTexture = emptyTexture;
-                        }
-                        else
-                        {
-                            color = altColor ? colorA : colorB;
-                        }
+                        color = altColor ? colorSpentA : colorSpentB;
+                        bulletTexture = emptyTexture;
                     }
                     else
                     {
-                        color = altColor ? colorGoneA : colorGoneB;
+                        color = altColor ? colorA : colorB;
                     }
-
-                    box.AddChild(new TextureRect
-                    {
-                        Stretch = TextureRect.StretchMode.KeepCentered,
-                        Texture = bulletTexture,
-                        ModulateSelfOverride = color,
-                    });
-                    altColor ^= true;
-                    container.AddChild(box);
                 }
+                else
+                {
+                    color = altColor ? colorGoneA : colorGoneB;
+                }
+
+                box.AddChild(new TextureRect
+                {
+                    Stretch = TextureRect.StretchMode.KeepCentered,
+                    Texture = bulletTexture,
+                    ModulateSelfOverride = color,
+                });
+                altColor ^= true;
+                container.AddChild(box);
             }
         }
     }

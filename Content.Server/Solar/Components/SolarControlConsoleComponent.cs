@@ -6,46 +6,45 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Solar.Components
+namespace Content.Server.Solar.Components;
+
+[RegisterComponent]
+[ComponentReference(typeof(BaseComputerUserInterfaceComponent))]
+public class SolarControlConsoleComponent : BaseComputerUserInterfaceComponent
 {
-    [RegisterComponent]
-    [ComponentReference(typeof(BaseComputerUserInterfaceComponent))]
-    public class SolarControlConsoleComponent : BaseComputerUserInterfaceComponent
+    public override string Name => "SolarControlConsole";
+
+    [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+
+    private PowerSolarSystem _powerSolarSystem = default!;
+
+    public SolarControlConsoleComponent() : base(SolarControlConsoleUiKey.Key) { }
+
+    protected override void Initialize()
     {
-        public override string Name => "SolarControlConsole";
+        base.Initialize();
+        _powerSolarSystem = _entitySystemManager.GetEntitySystem<PowerSolarSystem>();
+    }
 
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+    public void UpdateUIState()
+    {
+        UserInterface?.SetState(new SolarControlConsoleBoundInterfaceState(_powerSolarSystem.TargetPanelRotation, _powerSolarSystem.TargetPanelVelocity, _powerSolarSystem.TotalPanelPower, _powerSolarSystem.TowardsSun));
+    }
 
-        private PowerSolarSystem _powerSolarSystem = default!;
-
-        public SolarControlConsoleComponent() : base(SolarControlConsoleUiKey.Key) { }
-
-        protected override void Initialize()
+    protected override void OnReceiveUserInterfaceMessage(ServerBoundUserInterfaceMessage obj)
+    {
+        switch (obj.Message)
         {
-            base.Initialize();
-            _powerSolarSystem = _entitySystemManager.GetEntitySystem<PowerSolarSystem>();
-        }
-
-        public void UpdateUIState()
-        {
-            UserInterface?.SetState(new SolarControlConsoleBoundInterfaceState(_powerSolarSystem.TargetPanelRotation, _powerSolarSystem.TargetPanelVelocity, _powerSolarSystem.TotalPanelPower, _powerSolarSystem.TowardsSun));
-        }
-
-        protected override void OnReceiveUserInterfaceMessage(ServerBoundUserInterfaceMessage obj)
-        {
-            switch (obj.Message)
-            {
-                case SolarControlConsoleAdjustMessage msg:
-                    if (double.IsFinite(msg.Rotation))
-                    {
-                        _powerSolarSystem.TargetPanelRotation = msg.Rotation.Reduced();
-                    }
-                    if (double.IsFinite(msg.AngularVelocity))
-                    {
-                        _powerSolarSystem.TargetPanelVelocity = msg.AngularVelocity.Reduced();
-                    }
-                    break;
-            }
+            case SolarControlConsoleAdjustMessage msg:
+                if (double.IsFinite(msg.Rotation))
+                {
+                    _powerSolarSystem.TargetPanelRotation = msg.Rotation.Reduced();
+                }
+                if (double.IsFinite(msg.AngularVelocity))
+                {
+                    _powerSolarSystem.TargetPanelVelocity = msg.AngularVelocity.Reduced();
+                }
+                break;
         }
     }
 }

@@ -1,10 +1,9 @@
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.MachineLinking.Components
+namespace Content.Server.MachineLinking.Components;
+
+[RegisterComponent]
+public class SignalButtonComponent : Component
 {
-    [RegisterComponent]
-    public class SignalButtonComponent : Component
-    {
-        public override string Name => "SignalButton";
-    }
+    public override string Name => "SignalButton";
 }

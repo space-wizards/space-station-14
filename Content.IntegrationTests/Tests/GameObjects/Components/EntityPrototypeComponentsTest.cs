@@ -11,112 +11,111 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
-namespace Content.IntegrationTests.Tests.GameObjects.Components
+namespace Content.IntegrationTests.Tests.GameObjects.Components;
+
+[TestFixture]
+[TestOf(typeof(IgnoredComponents))]
+[TestOf(typeof(Server.Entry.IgnoredComponents))]
+public class EntityPrototypeComponentsTest : ContentIntegrationTest
 {
-    [TestFixture]
-    [TestOf(typeof(IgnoredComponents))]
-    [TestOf(typeof(Server.Entry.IgnoredComponents))]
-    public class EntityPrototypeComponentsTest : ContentIntegrationTest
+    [Test]
+    public async Task Test()
     {
-        [Test]
-        public async Task Test()
+        var (client, server) = await StartConnectedServerDummyTickerClientPair();
+
+        await server.WaitIdleAsync();
+
+        var sResourceManager = server.ResolveDependency<IResourceManager>();
+        var prototypePath = new ResourcePath("/Prototypes/");
+        var paths = sResourceManager.ContentFindFiles(prototypePath)
+                                    .ToList()
+                                    .AsParallel()
+                                    .Where(filePath => filePath.Extension == "yml" &&
+                                                       !filePath.Filename.StartsWith("."))
+                                    .ToArray();
+
+        var cComponentFactory = client.ResolveDependency<IComponentFactory>();
+        var sComponentFactory = server.ResolveDependency<IComponentFactory>();
+
+        var unknownComponentsClient = new List<(string entityId, string component)>();
+        var unknownComponentsServer = new List<(string entityId, string component)>();
+        var entitiesValidated = 0;
+        var componentsValidated = 0;
+
+        foreach (var path in paths)
         {
-            var (client, server) = await StartConnectedServerDummyTickerClientPair();
+            var file = sResourceManager.ContentFileRead(path);
+            var reader = new StreamReader(file, Encoding.UTF8);
 
-            await server.WaitIdleAsync();
+            var yamlStream = new YamlStream();
 
-            var sResourceManager = server.ResolveDependency<IResourceManager>();
-            var prototypePath = new ResourcePath("/Prototypes/");
-            var paths = sResourceManager.ContentFindFiles(prototypePath)
-                .ToList()
-                .AsParallel()
-                .Where(filePath => filePath.Extension == "yml" &&
-                                   !filePath.Filename.StartsWith("."))
-                .ToArray();
+            Assert.DoesNotThrow(() => yamlStream.Load(reader), "Error while parsing yaml file {0}", path);
 
-            var cComponentFactory = client.ResolveDependency<IComponentFactory>();
-            var sComponentFactory = server.ResolveDependency<IComponentFactory>();
-
-            var unknownComponentsClient = new List<(string entityId, string component)>();
-            var unknownComponentsServer = new List<(string entityId, string component)>();
-            var entitiesValidated = 0;
-            var componentsValidated = 0;
-
-            foreach (var path in paths)
+            foreach (var document in yamlStream.Documents)
             {
-                var file = sResourceManager.ContentFileRead(path);
-                var reader = new StreamReader(file, Encoding.UTF8);
+                var root = (YamlSequenceNode) document.RootNode;
 
-                var yamlStream = new YamlStream();
-
-                Assert.DoesNotThrow(() => yamlStream.Load(reader), "Error while parsing yaml file {0}", path);
-
-                foreach (var document in yamlStream.Documents)
+                foreach (var node in root.Cast<YamlMappingNode>())
                 {
-                    var root = (YamlSequenceNode) document.RootNode;
+                    var prototypeType = node.GetNode("type").AsString();
 
-                    foreach (var node in root.Cast<YamlMappingNode>())
+                    if (prototypeType != "entity")
                     {
-                        var prototypeType = node.GetNode("type").AsString();
+                        continue;
+                    }
 
-                        if (prototypeType != "entity")
+                    if (!node.TryGetNode<YamlSequenceNode>("components", out var components))
+                    {
+                        continue;
+                    }
+
+                    entitiesValidated++;
+
+                    foreach (var component in components.Cast<YamlMappingNode>())
+                    {
+                        componentsValidated++;
+
+                        var componentType = component.GetNode("type").AsString();
+                        var clientAvailability = cComponentFactory.GetComponentAvailability(componentType);
+
+                        if (clientAvailability == ComponentAvailability.Unknown)
                         {
-                            continue;
+                            var entityId = node.GetNode("id").AsString();
+                            unknownComponentsClient.Add((entityId, componentType));
                         }
 
-                        if (!node.TryGetNode<YamlSequenceNode>("components", out var components))
+                        var serverAvailability = sComponentFactory.GetComponentAvailability(componentType);
+
+                        if (serverAvailability == ComponentAvailability.Unknown)
                         {
-                            continue;
-                        }
-
-                        entitiesValidated++;
-
-                        foreach (var component in components.Cast<YamlMappingNode>())
-                        {
-                            componentsValidated++;
-
-                            var componentType = component.GetNode("type").AsString();
-                            var clientAvailability = cComponentFactory.GetComponentAvailability(componentType);
-
-                            if (clientAvailability == ComponentAvailability.Unknown)
-                            {
-                                var entityId = node.GetNode("id").AsString();
-                                unknownComponentsClient.Add((entityId, componentType));
-                            }
-
-                            var serverAvailability = sComponentFactory.GetComponentAvailability(componentType);
-
-                            if (serverAvailability == ComponentAvailability.Unknown)
-                            {
-                                var entityId = node.GetNode("id").AsString();
-                                unknownComponentsServer.Add((entityId, componentType));
-                            }
+                            var entityId = node.GetNode("id").AsString();
+                            unknownComponentsServer.Add((entityId, componentType));
                         }
                     }
                 }
             }
-
-            if (unknownComponentsClient.Count + unknownComponentsServer.Count == 0)
-            {
-                Assert.Pass($"Validated {entitiesValidated} entities with {componentsValidated} components in {paths.Length} files.");
-                return;
-            }
-
-            var message = new StringBuilder();
-
-            foreach (var unknownComponent in unknownComponentsClient)
-            {
-                message.Append(
-                    $"CLIENT: Unknown component {unknownComponent.component} in prototype {unknownComponent.entityId}\n");
-            }
-
-            foreach (var unknownComponent in unknownComponentsServer)
-            {
-                message.Append(
-                    $"SERVER: Unknown component {unknownComponent.component} in prototype {unknownComponent.entityId}\n");
-            }
-
-            Assert.Fail(message.ToString());
         }
+
+        if (unknownComponentsClient.Count + unknownComponentsServer.Count == 0)
+        {
+            Assert.Pass($"Validated {entitiesValidated} entities with {componentsValidated} components in {paths.Length} files.");
+            return;
+        }
+
+        var message = new StringBuilder();
+
+        foreach (var unknownComponent in unknownComponentsClient)
+        {
+            message.Append(
+                $"CLIENT: Unknown component {unknownComponent.component} in prototype {unknownComponent.entityId}\n");
+        }
+
+        foreach (var unknownComponent in unknownComponentsServer)
+        {
+            message.Append(
+                $"SERVER: Unknown component {unknownComponent.component} in prototype {unknownComponent.entityId}\n");
+        }
+
+        Assert.Fail(message.ToString());
     }
 }

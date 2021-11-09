@@ -1,11 +1,10 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Window
+namespace Content.Shared.Window;
+
+[NetworkedComponent]
+public class SharedWindowComponent : Component
 {
-    [NetworkedComponent]
-    public class SharedWindowComponent : Component
-    {
-        public override string Name => "Window";
-    }
+    public override string Name => "Window";
 }

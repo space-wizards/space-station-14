@@ -10,112 +10,111 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
-namespace Content.Client.Lobby.UI
+namespace Content.Client.Lobby.UI;
+
+[GenerateTypedNameReferences]
+internal sealed partial class LobbyGui : Control
 {
-    [GenerateTypedNameReferences]
-    internal sealed partial class LobbyGui : Control
+    public LobbyCharacterPreviewPanel CharacterPreview { get; }
+
+    public LobbyGui(IEntityManager entityManager,
+        IClientPreferencesManager preferencesManager)
     {
-        public LobbyCharacterPreviewPanel CharacterPreview { get; }
+        RobustXamlLoader.Load(this);
 
-        public LobbyGui(IEntityManager entityManager,
-            IClientPreferencesManager preferencesManager)
+        ServerName.HorizontalExpand = true;
+        ServerName.HorizontalAlignment = HAlignment.Center;
+
+        CharacterPreview = new LobbyCharacterPreviewPanel(
+            entityManager,
+            preferencesManager)
         {
-            RobustXamlLoader.Load(this);
+            HorizontalAlignment = HAlignment.Left
+        };
 
-            ServerName.HorizontalExpand = true;
-            ServerName.HorizontalAlignment = HAlignment.Center;
+        LeftPanelContainer.AddChild(CharacterPreview);
+        CharacterPreview.SetPositionFirst();
+    }
+}
 
-            CharacterPreview = new LobbyCharacterPreviewPanel(
-                entityManager,
-                preferencesManager)
-            {
-                HorizontalAlignment = HAlignment.Left
-            };
+public class LobbyPlayerList : Control
+{
+    private readonly ScrollContainer _scroll;
+    private readonly BoxContainer _vBox;
 
-            LeftPanelContainer.AddChild(CharacterPreview);
-            CharacterPreview.SetPositionFirst();
-        }
+    public LobbyPlayerList()
+    {
+        var panel = new PanelContainer()
+        {
+            PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#202028")},
+        };
+        _vBox = new BoxContainer
+        {
+            Orientation = LayoutOrientation.Vertical
+        };
+        _scroll = new ScrollContainer();
+        _scroll.AddChild(_vBox);
+        panel.AddChild(_scroll);
+        AddChild(panel);
     }
 
-    public class LobbyPlayerList : Control
+    // Adds a row
+    public void AddItem(string name, string status)
     {
-        private readonly ScrollContainer _scroll;
-        private readonly BoxContainer _vBox;
-
-        public LobbyPlayerList()
+        var hbox = new BoxContainer
         {
-            var panel = new PanelContainer()
-            {
-                PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#202028")},
-            };
-            _vBox = new BoxContainer
-            {
-                Orientation = LayoutOrientation.Vertical
-            };
-            _scroll = new ScrollContainer();
-            _scroll.AddChild(_vBox);
-            panel.AddChild(_scroll);
-            AddChild(panel);
-        }
+            Orientation = LayoutOrientation.Horizontal,
+            HorizontalExpand = true,
+        };
 
-        // Adds a row
-        public void AddItem(string name, string status)
+        // Player Name
+        hbox.AddChild(new PanelContainer()
         {
-            var hbox = new BoxContainer
+            PanelOverride = new StyleBoxFlat
             {
-                Orientation = LayoutOrientation.Horizontal,
-                HorizontalExpand = true,
-            };
-
-            // Player Name
-            hbox.AddChild(new PanelContainer()
+                BackgroundColor = Color.FromHex("#373744"),
+                ContentMarginBottomOverride = 2,
+                ContentMarginLeftOverride = 4,
+                ContentMarginRightOverride = 4,
+                ContentMarginTopOverride = 2
+            },
+            Children =
             {
-                PanelOverride = new StyleBoxFlat
+                new Label
                 {
-                    BackgroundColor = Color.FromHex("#373744"),
-                    ContentMarginBottomOverride = 2,
-                    ContentMarginLeftOverride = 4,
-                    ContentMarginRightOverride = 4,
-                    ContentMarginTopOverride = 2
-                },
-                Children =
-                {
-                    new Label
-                    {
-                        Text = name
-                    }
-                },
-                HorizontalExpand = true
-            });
-            // Status
-            hbox.AddChild(new PanelContainer()
-            {
-                PanelOverride = new StyleBoxFlat
-                {
-                    BackgroundColor = Color.FromHex("#373744"),
-                    ContentMarginBottomOverride = 2,
-                    ContentMarginLeftOverride = 4,
-                    ContentMarginRightOverride = 4,
-                    ContentMarginTopOverride = 2
-                },
-                Children =
-                {
-                    new Label
-                    {
-                        Text = status
-                    }
-                },
-                HorizontalExpand = true,
-                SizeFlagsStretchRatio = 0.2f,
-            });
-
-            _vBox.AddChild(hbox);
-        }
-
-        // Deletes all rows
-        public void Clear()
+                    Text = name
+                }
+            },
+            HorizontalExpand = true
+        });
+        // Status
+        hbox.AddChild(new PanelContainer()
         {
-            _vBox.RemoveAllChildren();
-        }
+            PanelOverride = new StyleBoxFlat
+            {
+                BackgroundColor = Color.FromHex("#373744"),
+                ContentMarginBottomOverride = 2,
+                ContentMarginLeftOverride = 4,
+                ContentMarginRightOverride = 4,
+                ContentMarginTopOverride = 2
+            },
+            Children =
+            {
+                new Label
+                {
+                    Text = status
+                }
+            },
+            HorizontalExpand = true,
+            SizeFlagsStretchRatio = 0.2f,
+        });
+
+        _vBox.AddChild(hbox);
+    }
+
+    // Deletes all rows
+    public void Clear()
+    {
+        _vBox.RemoveAllChildren();
     }
 }

@@ -10,66 +10,65 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
-namespace Content.Server.Engineering.EntitySystems
+namespace Content.Server.Engineering.EntitySystems;
+
+[UsedImplicitly]
+public class SpawnAfterInteractSystem : EntitySystem
 {
-    [UsedImplicitly]
-    public class SpawnAfterInteractSystem : EntitySystem
+    [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly StackSystem _stackSystem = default!;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
-        [Dependency] private readonly StackSystem _stackSystem = default!;
+        base.Initialize();
 
-        public override void Initialize()
+        SubscribeLocalEvent<SpawnAfterInteractComponent, AfterInteractEvent>(HandleAfterInteract);
+    }
+
+    private async void HandleAfterInteract(EntityUid uid, SpawnAfterInteractComponent component, AfterInteractEvent args)
+    {
+        if (string.IsNullOrEmpty(component.Prototype))
+            return;
+        if (!_mapManager.TryGetGrid(args.ClickLocation.GetGridId(EntityManager), out var grid))
+            return;
+        if (!grid.TryGetTileRef(args.ClickLocation, out var tileRef))
+            return;
+
+        bool IsTileClear()
         {
-            base.Initialize();
-
-            SubscribeLocalEvent<SpawnAfterInteractComponent, AfterInteractEvent>(HandleAfterInteract);
+            return tileRef.Tile.IsEmpty == false && args.User.InRangeUnobstructed(args.ClickLocation, popup: true);
         }
 
-        private async void HandleAfterInteract(EntityUid uid, SpawnAfterInteractComponent component, AfterInteractEvent args)
+        if (!IsTileClear())
+            return;
+
+        if (component.DoAfterTime > 0)
         {
-            if (string.IsNullOrEmpty(component.Prototype))
-                return;
-            if (!_mapManager.TryGetGrid(args.ClickLocation.GetGridId(EntityManager), out var grid))
-                return;
-            if (!grid.TryGetTileRef(args.ClickLocation, out var tileRef))
-                return;
-
-            bool IsTileClear()
+            var doAfterArgs = new DoAfterEventArgs(args.User, component.DoAfterTime)
             {
-                return tileRef.Tile.IsEmpty == false && args.User.InRangeUnobstructed(args.ClickLocation, popup: true);
-            }
+                BreakOnUserMove = true,
+                BreakOnStun = true,
+                PostCheck = IsTileClear,
+            };
+            var result = await _doAfterSystem.WaitDoAfter(doAfterArgs);
 
-            if (!IsTileClear())
+            if (result != DoAfterStatus.Finished)
                 return;
-
-            if (component.DoAfterTime > 0)
-            {
-                var doAfterArgs = new DoAfterEventArgs(args.User, component.DoAfterTime)
-                {
-                    BreakOnUserMove = true,
-                    BreakOnStun = true,
-                    PostCheck = IsTileClear,
-                };
-                var result = await _doAfterSystem.WaitDoAfter(doAfterArgs);
-
-                if (result != DoAfterStatus.Finished)
-                    return;
-            }
-
-            if (component.Deleted || component.Owner.Deleted)
-                return;
-
-            if (component.Owner.TryGetComponent<SharedStackComponent>(out var stackComp)
-                && component.RemoveOnInteract && !_stackSystem.Use(uid, 1, stackComp))
-            {
-                return;
-            }
-
-            EntityManager.SpawnEntity(component.Prototype, args.ClickLocation.SnapToGrid(grid));
-
-            if (component.RemoveOnInteract && stackComp == null && !component.Owner.Deleted)
-                component.Owner.Delete();
         }
+
+        if (component.Deleted || component.Owner.Deleted)
+            return;
+
+        if (component.Owner.TryGetComponent<SharedStackComponent>(out var stackComp)
+            && component.RemoveOnInteract && !_stackSystem.Use(uid, 1, stackComp))
+        {
+            return;
+        }
+
+        EntityManager.SpawnEntity(component.Prototype, args.ClickLocation.SnapToGrid(grid));
+
+        if (component.RemoveOnInteract && stackComp == null && !component.Owner.Deleted)
+            component.Owner.Delete();
     }
 }

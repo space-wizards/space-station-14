@@ -5,15 +5,14 @@ using Content.Shared.Atmos;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 
-namespace Content.Server.Atmos.Components
-{
-    [RegisterComponent]
-    [ComponentReference(typeof(IAtmosphereComponent))]
-    [Serializable]
-    public class UnsimulatedGridAtmosphereComponent : GridAtmosphereComponent
-    {
-        public override string Name => "UnsimulatedGridAtmosphere";
+namespace Content.Server.Atmos.Components;
 
-        public override bool Simulated => false;
-    }
+[RegisterComponent]
+[ComponentReference(typeof(IAtmosphereComponent))]
+[Serializable]
+public class UnsimulatedGridAtmosphereComponent : GridAtmosphereComponent
+{
+    public override string Name => "UnsimulatedGridAtmosphere";
+
+    public override bool Simulated => false;
 }

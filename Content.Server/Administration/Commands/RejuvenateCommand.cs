@@ -14,70 +14,69 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
-namespace Content.Server.Administration.Commands
+namespace Content.Server.Administration.Commands;
+
+[AdminCommand(AdminFlags.Admin)]
+public class RejuvenateCommand : IConsoleCommand
 {
-    [AdminCommand(AdminFlags.Admin)]
-    public class RejuvenateCommand : IConsoleCommand
+    public string Command => "rejuvenate";
+
+    public string Description => Loc.GetString("rejuvenate-command-description");
+
+    public string Help => Loc.GetString("rejuvenate-command-help-text");
+
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        public string Command => "rejuvenate";
-
-        public string Description => Loc.GetString("rejuvenate-command-description");
-
-        public string Help => Loc.GetString("rejuvenate-command-help-text");
-
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        var player = shell.Player as IPlayerSession;
+        if (args.Length < 1 && player != null) //Try to heal the users mob if applicable
         {
-            var player = shell.Player as IPlayerSession;
-            if (args.Length < 1 && player != null) //Try to heal the users mob if applicable
+            shell.WriteLine(Loc.GetString("rejuvenate-command-self-heal-message"));
+            if (player.AttachedEntity == null)
             {
-                shell.WriteLine(Loc.GetString("rejuvenate-command-self-heal-message"));
-                if (player.AttachedEntity == null)
-                {
-                    shell.WriteLine(Loc.GetString("rejuvenate-command-no-entity-attached-message"));
-                    return;
-                }
-                PerformRejuvenate(player.AttachedEntity);
+                shell.WriteLine(Loc.GetString("rejuvenate-command-no-entity-attached-message"));
+                return;
             }
-
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            foreach (var arg in args)
-            {
-                if(!EntityUid.TryParse(arg, out var uid) || !entityManager.TryGetEntity(uid, out var entity))
-                {
-                    shell.WriteLine(Loc.GetString("shell-could-not-find-entity",("entity", arg)));
-                    continue;
-                }
-                PerformRejuvenate(entity);
-            }
+            PerformRejuvenate(player.AttachedEntity);
         }
 
-        public static void PerformRejuvenate(IEntity target)
+        var entityManager = IoCManager.Resolve<IEntityManager>();
+        foreach (var arg in args)
         {
-            target.GetComponentOrNull<MobStateComponent>()?.UpdateState(0);
-            target.GetComponentOrNull<HungerComponent>()?.ResetFood();
-            target.GetComponentOrNull<ThirstComponent>()?.ResetThirst();
-
-            EntitySystem.Get<StatusEffectsSystem>().TryRemoveAllStatusEffects(target.Uid);
-
-            if (target.TryGetComponent(out FlammableComponent? flammable))
+            if(!EntityUid.TryParse(arg, out var uid) || !entityManager.TryGetEntity(uid, out var entity))
             {
-                EntitySystem.Get<FlammableSystem>().Extinguish(target.Uid, flammable);
+                shell.WriteLine(Loc.GetString("shell-could-not-find-entity",("entity", arg)));
+                continue;
             }
+            PerformRejuvenate(entity);
+        }
+    }
 
-            if (target.TryGetComponent(out DamageableComponent? damageable))
-            {
-                EntitySystem.Get<DamageableSystem>().SetAllDamage(damageable, 0);
-            }
+    public static void PerformRejuvenate(IEntity target)
+    {
+        target.GetComponentOrNull<MobStateComponent>()?.UpdateState(0);
+        target.GetComponentOrNull<HungerComponent>()?.ResetFood();
+        target.GetComponentOrNull<ThirstComponent>()?.ResetThirst();
 
-            if (target.TryGetComponent(out CreamPiedComponent? creamPied))
-            {
-                EntitySystem.Get<CreamPieSystem>().SetCreamPied(target.Uid, creamPied, false);
-            }
+        EntitySystem.Get<StatusEffectsSystem>().TryRemoveAllStatusEffects(target.Uid);
 
-            if (target.HasComponent<JitteringComponent>())
-            {
-                target.RemoveComponent<JitteringComponent>();
-            }
+        if (target.TryGetComponent(out FlammableComponent? flammable))
+        {
+            EntitySystem.Get<FlammableSystem>().Extinguish(target.Uid, flammable);
+        }
+
+        if (target.TryGetComponent(out DamageableComponent? damageable))
+        {
+            EntitySystem.Get<DamageableSystem>().SetAllDamage(damageable, 0);
+        }
+
+        if (target.TryGetComponent(out CreamPiedComponent? creamPied))
+        {
+            EntitySystem.Get<CreamPieSystem>().SetCreamPied(target.Uid, creamPied, false);
+        }
+
+        if (target.HasComponent<JitteringComponent>())
+        {
+            target.RemoveComponent<JitteringComponent>();
         }
     }
 }

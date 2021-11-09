@@ -4,45 +4,44 @@ using Robust.Client.Console;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 
-namespace Content.IntegrationTests.Tests.Networking
+namespace Content.IntegrationTests.Tests.Networking;
+
+[TestFixture]
+public class ReconnectTest : ContentIntegrationTest
 {
-    [TestFixture]
-    public class ReconnectTest : ContentIntegrationTest
+    [Test]
+    public async Task Test()
     {
-        [Test]
-        public async Task Test()
-        {
-            var client = StartClient();
-            var server = StartServer();
+        var client = StartClient();
+        var server = StartServer();
 
-            await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
+        await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
 
-            // Connect.
-            client.SetConnectTarget(server);
+        // Connect.
+        client.SetConnectTarget(server);
 
-            await client.WaitPost(() => IoCManager.Resolve<IClientNetManager>().ClientConnect(null, 0, null));
+        await client.WaitPost(() => IoCManager.Resolve<IClientNetManager>().ClientConnect(null, 0, null));
 
-            // Run some ticks for the handshake to complete and such.
-            await RunTicksSync(client, server, 10);
+        // Run some ticks for the handshake to complete and such.
+        await RunTicksSync(client, server, 10);
 
-            await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
+        await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
 
-            await client.WaitPost(() => IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand("disconnect"));
+        await client.WaitPost(() => IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand("disconnect"));
 
-            // Run some ticks for the disconnect to complete and such.
-            await RunTicksSync(client, server, 5);
+        // Run some ticks for the disconnect to complete and such.
+        await RunTicksSync(client, server, 5);
 
-            await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
+        await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
 
-            // Reconnect.
-            client.SetConnectTarget(server);
+        // Reconnect.
+        client.SetConnectTarget(server);
 
-            await client.WaitPost(() => IoCManager.Resolve<IClientNetManager>().ClientConnect(null, 0, null));
+        await client.WaitPost(() => IoCManager.Resolve<IClientNetManager>().ClientConnect(null, 0, null));
 
-            // Run some ticks for the handshake to complete and such.
-            await RunTicksSync(client, server, 10);
+        // Run some ticks for the handshake to complete and such.
+        await RunTicksSync(client, server, 10);
 
-            await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
-        }
+        await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
     }
 }

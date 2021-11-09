@@ -6,32 +6,31 @@ using Content.Shared.Random.Helpers;
 using Content.Shared.Tag;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.Botany.Components
+namespace Content.Server.Botany.Components;
+
+[RegisterComponent]
+public class LogComponent : Component, IInteractUsing
 {
-    [RegisterComponent]
-    public class LogComponent : Component, IInteractUsing
+    public override string Name => "Log";
+
+    async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
     {
-        public override string Name => "Log";
+        if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User.Uid))
+            return false;
 
-        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+        if (eventArgs.Using.HasTag("BotanySharp"))
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User.Uid))
-                return false;
-
-            if (eventArgs.Using.HasTag("BotanySharp"))
+            for (var i = 0; i < 2; i++)
             {
-                for (var i = 0; i < 2; i++)
-                {
-                    var plank = Owner.EntityManager.SpawnEntity("MaterialWoodPlank1", Owner.Transform.Coordinates);
-                    plank.RandomOffset(0.25f);
-                }
-
-                Owner.QueueDelete();
-
-                return true;
+                var plank = Owner.EntityManager.SpawnEntity("MaterialWoodPlank1", Owner.Transform.Coordinates);
+                plank.RandomOffset(0.25f);
             }
 
-            return false;
+            Owner.QueueDelete();
+
+            return true;
         }
+
+        return false;
     }
 }

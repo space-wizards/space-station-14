@@ -3,58 +3,57 @@ using Content.Shared.Inventory;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.Atmos.Components
+namespace Content.Server.Atmos.Components;
+
+/// <summary>
+/// Used in internals as breath tool.
+/// </summary>
+[RegisterComponent]
+public class BreathToolComponent : Component, IEquipped, IUnequipped
 {
     /// <summary>
-    /// Used in internals as breath tool.
+    /// Tool is functional only in allowed slots
     /// </summary>
-    [RegisterComponent]
-    public class BreathToolComponent : Component, IEquipped, IUnequipped
+    [DataField("allowedSlots")]
+    private EquipmentSlotDefines.SlotFlags _allowedSlots = EquipmentSlotDefines.SlotFlags.MASK;
+
+    public override string Name => "BreathMask";
+    public bool IsFunctional { get; private set; }
+    public IEntity? ConnectedInternalsEntity { get; private set; }
+
+    protected override void Shutdown()
     {
-        /// <summary>
-        /// Tool is functional only in allowed slots
-        /// </summary>
-        [DataField("allowedSlots")]
-        private EquipmentSlotDefines.SlotFlags _allowedSlots = EquipmentSlotDefines.SlotFlags.MASK;
+        base.Shutdown();
+        DisconnectInternals();
+    }
 
-        public override string Name => "BreathMask";
-        public bool IsFunctional { get; private set; }
-        public IEntity? ConnectedInternalsEntity { get; private set; }
+    void IEquipped.Equipped(EquippedEventArgs eventArgs)
+    {
+        if ((EquipmentSlotDefines.SlotMasks[eventArgs.Slot] & _allowedSlots) != _allowedSlots) return;
+        IsFunctional = true;
 
-        protected override void Shutdown()
+        if (eventArgs.User.TryGetComponent(out InternalsComponent? internals))
         {
-            base.Shutdown();
-            DisconnectInternals();
+            ConnectedInternalsEntity = eventArgs.User;
+            internals.ConnectBreathTool(Owner);
+        }
+    }
+
+    void IUnequipped.Unequipped(UnequippedEventArgs eventArgs)
+    {
+        DisconnectInternals();
+    }
+
+    public void DisconnectInternals()
+    {
+        var old = ConnectedInternalsEntity;
+        ConnectedInternalsEntity = null;
+
+        if (old != null && old.TryGetComponent<InternalsComponent>(out var internalsComponent))
+        {
+            internalsComponent.DisconnectBreathTool();
         }
 
-        void IEquipped.Equipped(EquippedEventArgs eventArgs)
-        {
-            if ((EquipmentSlotDefines.SlotMasks[eventArgs.Slot] & _allowedSlots) != _allowedSlots) return;
-            IsFunctional = true;
-
-            if (eventArgs.User.TryGetComponent(out InternalsComponent? internals))
-            {
-                ConnectedInternalsEntity = eventArgs.User;
-                internals.ConnectBreathTool(Owner);
-            }
-        }
-
-        void IUnequipped.Unequipped(UnequippedEventArgs eventArgs)
-        {
-            DisconnectInternals();
-        }
-
-        public void DisconnectInternals()
-        {
-            var old = ConnectedInternalsEntity;
-            ConnectedInternalsEntity = null;
-
-            if (old != null && old.TryGetComponent<InternalsComponent>(out var internalsComponent))
-            {
-                internalsComponent.DisconnectBreathTool();
-            }
-
-            IsFunctional = false;
-        }
+        IsFunctional = false;
     }
 }

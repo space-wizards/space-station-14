@@ -1,10 +1,9 @@
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.Doors.Components
+namespace Content.Server.Doors.Components;
+
+[RegisterComponent]
+public class DoorBumpOpenerComponent : Component
 {
-    [RegisterComponent]
-    public class DoorBumpOpenerComponent : Component
-    {
-        public override string Name => "DoorBumpOpener";
-    }
+    public override string Name => "DoorBumpOpener";
 }

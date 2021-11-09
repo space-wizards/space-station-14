@@ -18,128 +18,127 @@ using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timing.Timer;
 
-namespace Content.Server.Communications
+namespace Content.Server.Communications;
+
+[RegisterComponent]
+[ComponentReference(typeof(IActivate))]
+public class CommunicationsConsoleComponent : SharedCommunicationsConsoleComponent, IActivate
 {
-    [RegisterComponent]
-    [ComponentReference(typeof(IActivate))]
-    public class CommunicationsConsoleComponent : SharedCommunicationsConsoleComponent, IActivate
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly IChatManager _chatManager = default!;
+    private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
+
+    private RoundEndSystem RoundEndSystem => EntitySystem.Get<RoundEndSystem>();
+
+    [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(CommunicationsConsoleUiKey.Key);
+
+    public TimeSpan LastAnnounceTime { get; private set; } = TimeSpan.Zero;
+    public TimeSpan AnnounceCooldown { get; } = TimeSpan.FromSeconds(90);
+    private CancellationTokenSource _announceCooldownEndedTokenSource = new();
+
+    protected override void Initialize()
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IChatManager _chatManager = default!;
-        private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
+        base.Initialize();
 
-        private RoundEndSystem RoundEndSystem => EntitySystem.Get<RoundEndSystem>();
-
-        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(CommunicationsConsoleUiKey.Key);
-
-        public TimeSpan LastAnnounceTime { get; private set; } = TimeSpan.Zero;
-        public TimeSpan AnnounceCooldown { get; } = TimeSpan.FromSeconds(90);
-        private CancellationTokenSource _announceCooldownEndedTokenSource = new();
-
-        protected override void Initialize()
+        if (UserInterface != null)
         {
-            base.Initialize();
-
-            if (UserInterface != null)
-            {
-                UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
-            }
-
-            RoundEndSystem.OnRoundEndCountdownStarted += UpdateBoundInterface;
-            RoundEndSystem.OnRoundEndCountdownCancelled += UpdateBoundInterface;
-            RoundEndSystem.OnRoundEndCountdownFinished += UpdateBoundInterface;
-            RoundEndSystem.OnCallCooldownEnded += UpdateBoundInterface;
+            UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
         }
 
-        protected override void Startup()
-        {
-            base.Startup();
+        RoundEndSystem.OnRoundEndCountdownStarted += UpdateBoundInterface;
+        RoundEndSystem.OnRoundEndCountdownCancelled += UpdateBoundInterface;
+        RoundEndSystem.OnRoundEndCountdownFinished += UpdateBoundInterface;
+        RoundEndSystem.OnCallCooldownEnded += UpdateBoundInterface;
+    }
 
-            UpdateBoundInterface();
+    protected override void Startup()
+    {
+        base.Startup();
+
+        UpdateBoundInterface();
+    }
+
+    private void UpdateBoundInterface()
+    {
+        if (!Deleted)
+        {
+            var system = RoundEndSystem;
+
+            UserInterface?.SetState(new CommunicationsConsoleInterfaceState(CanAnnounce(), system.CanCall(), system.ExpectedCountdownEnd));
         }
+    }
 
-        private void UpdateBoundInterface()
+    public bool CanAnnounce()
+    {
+        if (LastAnnounceTime == TimeSpan.Zero)
         {
-            if (!Deleted)
-            {
-                var system = RoundEndSystem;
-
-                UserInterface?.SetState(new CommunicationsConsoleInterfaceState(CanAnnounce(), system.CanCall(), system.ExpectedCountdownEnd));
-            }
+            return true;
         }
+        return _gameTiming.CurTime >= LastAnnounceTime + AnnounceCooldown;
+    }
 
-        public bool CanAnnounce()
+    protected override void OnRemove()
+    {
+        RoundEndSystem.OnRoundEndCountdownStarted -= UpdateBoundInterface;
+        RoundEndSystem.OnRoundEndCountdownCancelled -= UpdateBoundInterface;
+        RoundEndSystem.OnRoundEndCountdownFinished -= UpdateBoundInterface;
+        base.OnRemove();
+    }
+
+    private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage obj)
+    {
+        switch (obj.Message)
         {
-            if (LastAnnounceTime == TimeSpan.Zero)
-            {
-                return true;
-            }
-            return _gameTiming.CurTime >= LastAnnounceTime + AnnounceCooldown;
+            case CommunicationsConsoleCallEmergencyShuttleMessage _:
+                RoundEndSystem.RequestRoundEnd();
+                break;
+
+            case CommunicationsConsoleRecallEmergencyShuttleMessage _:
+                RoundEndSystem.CancelRoundEndCountdown();
+                break;
+            case CommunicationsConsoleAnnounceMessage msg:
+                if (!CanAnnounce())
+                {
+                    return;
+                }
+                _announceCooldownEndedTokenSource.Cancel();
+                _announceCooldownEndedTokenSource = new CancellationTokenSource();
+                LastAnnounceTime = _gameTiming.CurTime;
+                Timer.Spawn(AnnounceCooldown, () => UpdateBoundInterface(), _announceCooldownEndedTokenSource.Token);
+                UpdateBoundInterface();
+
+                var message = msg.Message.Length <= 256 ? msg.Message.Trim() : $"{msg.Message.Trim().Substring(0, 256)}...";
+
+                var author = "Unknown";
+                var mob = obj.Session.AttachedEntity;
+                if (mob != null && mob.TryGetHeldId(out var id))
+                {
+                    author = $"{id.FullName} ({CultureInfo.CurrentCulture.TextInfo.ToTitleCase(id.JobTitle ?? string.Empty)})".Trim();
+                }
+
+                SoundSystem.Play(Filter.Broadcast(), "/Audio/Announcements/announce.ogg", AudioParams.Default.WithVolume(-2f));
+
+                message += $"\nSent by {author}";
+                _chatManager.DispatchStationAnnouncement(message, "Communications Console");
+                break;
         }
+    }
 
-        protected override void OnRemove()
-        {
-            RoundEndSystem.OnRoundEndCountdownStarted -= UpdateBoundInterface;
-            RoundEndSystem.OnRoundEndCountdownCancelled -= UpdateBoundInterface;
-            RoundEndSystem.OnRoundEndCountdownFinished -= UpdateBoundInterface;
-            base.OnRemove();
-        }
+    public void OpenUserInterface(IPlayerSession session)
+    {
+        UserInterface?.Open(session);
+    }
 
-        private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage obj)
-        {
-            switch (obj.Message)
-            {
-                case CommunicationsConsoleCallEmergencyShuttleMessage _:
-                    RoundEndSystem.RequestRoundEnd();
-                    break;
-
-                case CommunicationsConsoleRecallEmergencyShuttleMessage _:
-                    RoundEndSystem.CancelRoundEndCountdown();
-                    break;
-                case CommunicationsConsoleAnnounceMessage msg:
-                    if (!CanAnnounce())
-                    {
-                        return;
-                    }
-                    _announceCooldownEndedTokenSource.Cancel();
-                    _announceCooldownEndedTokenSource = new CancellationTokenSource();
-                    LastAnnounceTime = _gameTiming.CurTime;
-                    Timer.Spawn(AnnounceCooldown, () => UpdateBoundInterface(), _announceCooldownEndedTokenSource.Token);
-                    UpdateBoundInterface();
-
-                    var message = msg.Message.Length <= 256 ? msg.Message.Trim() : $"{msg.Message.Trim().Substring(0, 256)}...";
-
-                    var author = "Unknown";
-                    var mob = obj.Session.AttachedEntity;
-                    if (mob != null && mob.TryGetHeldId(out var id))
-                    {
-                        author = $"{id.FullName} ({CultureInfo.CurrentCulture.TextInfo.ToTitleCase(id.JobTitle ?? string.Empty)})".Trim();
-                    }
-
-                    SoundSystem.Play(Filter.Broadcast(), "/Audio/Announcements/announce.ogg", AudioParams.Default.WithVolume(-2f));
-
-                    message += $"\nSent by {author}";
-                    _chatManager.DispatchStationAnnouncement(message, "Communications Console");
-                    break;
-            }
-        }
-
-        public void OpenUserInterface(IPlayerSession session)
-        {
-            UserInterface?.Open(session);
-        }
-
-        void IActivate.Activate(ActivateEventArgs eventArgs)
-        {
-            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
-                return;
+    void IActivate.Activate(ActivateEventArgs eventArgs)
+    {
+        if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
+            return;
 /*
             if (!Powered)
             {
                 return;
             }
 */
-            OpenUserInterface(actor.PlayerSession);
-        }
+        OpenUserInterface(actor.PlayerSession);
     }
 }

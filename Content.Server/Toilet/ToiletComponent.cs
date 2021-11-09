@@ -28,154 +28,153 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Toilet
-{
-    [RegisterComponent]
+namespace Content.Server.Toilet;
+
+[RegisterComponent]
 #pragma warning disable 618
-    public class ToiletComponent : Component, IInteractUsing,
-        IInteractHand, IMapInit, IExamine, ISuicideAct
+public class ToiletComponent : Component, IInteractUsing,
+    IInteractHand, IMapInit, IExamine, ISuicideAct
 #pragma warning restore 618
+{
+    public sealed override string Name => "Toilet";
+
+    private const float PryLidTime = 1f;
+
+    private bool _isPrying = false;
+
+    [DataField("pryingQuality", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
+    private string _pryingQuality = "Prying";
+
+    [ViewVariables] public bool LidOpen { get; private set; }
+    [ViewVariables] public bool IsSeatUp { get; private set; }
+
+    [ViewVariables] private SecretStashComponent _secretStash = default!;
+
+    [DataField("toggleSound")] SoundSpecifier _toggleSound = new SoundPathSpecifier("/Audio/Effects/toilet_seat_down.ogg");
+
+    protected override void Initialize()
     {
-        public sealed override string Name => "Toilet";
+        base.Initialize();
+        _secretStash = Owner.EnsureComponent<SecretStashComponent>();
+    }
 
-        private const float PryLidTime = 1f;
+    public void MapInit()
+    {
+        // roll is toilet seat will be up or down
+        var random = IoCManager.Resolve<IRobustRandom>();
+        IsSeatUp = random.Prob(0.5f);
+        UpdateSprite();
+    }
 
-        private bool _isPrying = false;
-
-        [DataField("pryingQuality", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
-        private string _pryingQuality = "Prying";
-
-        [ViewVariables] public bool LidOpen { get; private set; }
-        [ViewVariables] public bool IsSeatUp { get; private set; }
-
-        [ViewVariables] private SecretStashComponent _secretStash = default!;
-
-        [DataField("toggleSound")] SoundSpecifier _toggleSound = new SoundPathSpecifier("/Audio/Effects/toilet_seat_down.ogg");
-
-        protected override void Initialize()
+    async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+    {
+        // are player trying place or lift of cistern lid?
+        if (eventArgs.Using.TryGetComponent(out ToolComponent? tool)
+            && tool.Qualities.Contains(_pryingQuality))
         {
-            base.Initialize();
-            _secretStash = Owner.EnsureComponent<SecretStashComponent>();
-        }
+            // check if someone is already prying this toilet
+            if (_isPrying)
+                return false;
+            _isPrying = true;
 
-        public void MapInit()
-        {
-            // roll is toilet seat will be up or down
-            var random = IoCManager.Resolve<IRobustRandom>();
-            IsSeatUp = random.Prob(0.5f);
-            UpdateSprite();
-        }
-
-        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
-        {
-            // are player trying place or lift of cistern lid?
-            if (eventArgs.Using.TryGetComponent(out ToolComponent? tool)
-                && tool.Qualities.Contains(_pryingQuality))
+            if (!await EntitySystem.Get<ToolSystem>().UseTool(eventArgs.Using.Uid, eventArgs.User.Uid, Owner.Uid, 0f, PryLidTime, _pryingQuality))
             {
-                // check if someone is already prying this toilet
-                if (_isPrying)
-                    return false;
-                _isPrying = true;
-
-                if (!await EntitySystem.Get<ToolSystem>().UseTool(eventArgs.Using.Uid, eventArgs.User.Uid, Owner.Uid, 0f, PryLidTime, _pryingQuality))
-                {
-                    _isPrying = false;
-                    return false;
-                }
-
                 _isPrying = false;
-
-                // all cool - toggle lid
-                LidOpen = !LidOpen;
-                UpdateSprite();
-
-                return true;
-            }
-            // maybe player trying to hide something inside cistern?
-            else if (LidOpen)
-            {
-                return _secretStash.TryHideItem(eventArgs.User, eventArgs.Using);
+                return false;
             }
 
-            return false;
-        }
+            _isPrying = false;
 
-        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
-        {
-            // trying get something from stash?
-            if (LidOpen)
-            {
-                var gotItem = _secretStash.TryGetItem(eventArgs.User);
+            // all cool - toggle lid
+            LidOpen = !LidOpen;
+            UpdateSprite();
 
-                if (gotItem)
-                    return true;
-            }
-
-            // just want to up/down seat?
-            // check that nobody seats on seat right now
-            if (Owner.TryGetComponent(out StrapComponent? strap))
-            {
-                if (strap.BuckledEntities.Count != 0)
-                    return false;
-            }
-
-            ToggleToiletSeat();
             return true;
         }
-
-        public void Examine(FormattedMessage message, bool inDetailsRange)
+        // maybe player trying to hide something inside cistern?
+        else if (LidOpen)
         {
-            if (inDetailsRange && LidOpen)
-            {
-                if (_secretStash.HasItemInside())
-                {
-                    message.AddMarkup(Loc.GetString("toilet-component-on-examine-found-hidden-item"));
-                }
-            }
+            return _secretStash.TryHideItem(eventArgs.User, eventArgs.Using);
         }
 
-        public void ToggleToiletSeat()
-        {
-            IsSeatUp = !IsSeatUp;
-            SoundSystem.Play(Filter.Pvs(Owner), _toggleSound.GetSound(), Owner, AudioHelpers.WithVariation(0.05f));
-
-            UpdateSprite();
-        }
-
-        private void UpdateSprite()
-        {
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
-            {
-                appearance.SetData(ToiletVisuals.LidOpen, LidOpen);
-                appearance.SetData(ToiletVisuals.SeatUp, IsSeatUp);
-            }
-        }
-
-        SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)
-        {
-            // check that victim even have head
-            if (victim.TryGetComponent<SharedBodyComponent>(out var body) &&
-                body.HasPartOfType(BodyPartType.Head))
-            {
-                var othersMessage = Loc.GetString("toilet-component-suicide-head-message-others", ("victim",victim.Name),("owner", Owner.Name));
-                victim.PopupMessageOtherClients(othersMessage);
-
-                var selfMessage = Loc.GetString("toilet-component-suicide-head-message", ("owner", Owner.Name));
-                victim.PopupMessage(selfMessage);
-
-                return SuicideKind.Asphyxiation;
-            }
-            else
-            {
-                var othersMessage = Loc.GetString("toilet-component-suicide-message-others",("victim", victim.Name),("owner", Owner.Name));
-                victim.PopupMessageOtherClients(othersMessage);
-
-                var selfMessage = Loc.GetString("toilet-component-suicide-message", ("owner",Owner.Name));
-                victim.PopupMessage(selfMessage);
-
-                return SuicideKind.Blunt;
-            }
-        }
-
+        return false;
     }
+
+    bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
+    {
+        // trying get something from stash?
+        if (LidOpen)
+        {
+            var gotItem = _secretStash.TryGetItem(eventArgs.User);
+
+            if (gotItem)
+                return true;
+        }
+
+        // just want to up/down seat?
+        // check that nobody seats on seat right now
+        if (Owner.TryGetComponent(out StrapComponent? strap))
+        {
+            if (strap.BuckledEntities.Count != 0)
+                return false;
+        }
+
+        ToggleToiletSeat();
+        return true;
+    }
+
+    public void Examine(FormattedMessage message, bool inDetailsRange)
+    {
+        if (inDetailsRange && LidOpen)
+        {
+            if (_secretStash.HasItemInside())
+            {
+                message.AddMarkup(Loc.GetString("toilet-component-on-examine-found-hidden-item"));
+            }
+        }
+    }
+
+    public void ToggleToiletSeat()
+    {
+        IsSeatUp = !IsSeatUp;
+        SoundSystem.Play(Filter.Pvs(Owner), _toggleSound.GetSound(), Owner, AudioHelpers.WithVariation(0.05f));
+
+        UpdateSprite();
+    }
+
+    private void UpdateSprite()
+    {
+        if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+        {
+            appearance.SetData(ToiletVisuals.LidOpen, LidOpen);
+            appearance.SetData(ToiletVisuals.SeatUp, IsSeatUp);
+        }
+    }
+
+    SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)
+    {
+        // check that victim even have head
+        if (victim.TryGetComponent<SharedBodyComponent>(out var body) &&
+            body.HasPartOfType(BodyPartType.Head))
+        {
+            var othersMessage = Loc.GetString("toilet-component-suicide-head-message-others", ("victim",victim.Name),("owner", Owner.Name));
+            victim.PopupMessageOtherClients(othersMessage);
+
+            var selfMessage = Loc.GetString("toilet-component-suicide-head-message", ("owner", Owner.Name));
+            victim.PopupMessage(selfMessage);
+
+            return SuicideKind.Asphyxiation;
+        }
+        else
+        {
+            var othersMessage = Loc.GetString("toilet-component-suicide-message-others",("victim", victim.Name),("owner", Owner.Name));
+            victim.PopupMessageOtherClients(othersMessage);
+
+            var selfMessage = Loc.GetString("toilet-component-suicide-message", ("owner",Owner.Name));
+            victim.PopupMessage(selfMessage);
+
+            return SuicideKind.Blunt;
+        }
+    }
+
 }

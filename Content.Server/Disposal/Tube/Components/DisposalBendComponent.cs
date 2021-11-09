@@ -3,36 +3,35 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.Disposal.Tube.Components
+namespace Content.Server.Disposal.Tube.Components;
+
+[RegisterComponent]
+[ComponentReference(typeof(IDisposalTubeComponent))]
+public class DisposalBendComponent : DisposalTubeComponent
 {
-    [RegisterComponent]
-    [ComponentReference(typeof(IDisposalTubeComponent))]
-    public class DisposalBendComponent : DisposalTubeComponent
+    [DataField("sideDegrees")]
+    private int _sideDegrees = -90;
+
+    public override string Name => "DisposalBend";
+
+    protected override Direction[] ConnectableDirections()
     {
-        [DataField("sideDegrees")]
-        private int _sideDegrees = -90;
+        var direction = Owner.Transform.LocalRotation;
+        var side = new Angle(MathHelper.DegreesToRadians(direction.Degrees + _sideDegrees));
 
-        public override string Name => "DisposalBend";
+        return new[] {direction.GetDir(), side.GetDir()};
+    }
 
-        protected override Direction[] ConnectableDirections()
+    public override Direction NextDirection(DisposalHolderComponent holder)
+    {
+        var directions = ConnectableDirections();
+        var previousDF = holder.PreviousDirectionFrom;
+
+        if (previousDF == Direction.Invalid)
         {
-            var direction = Owner.Transform.LocalRotation;
-            var side = new Angle(MathHelper.DegreesToRadians(direction.Degrees + _sideDegrees));
-
-            return new[] {direction.GetDir(), side.GetDir()};
+            return directions[0];
         }
 
-        public override Direction NextDirection(DisposalHolderComponent holder)
-        {
-            var directions = ConnectableDirections();
-            var previousDF = holder.PreviousDirectionFrom;
-
-            if (previousDF == Direction.Invalid)
-            {
-                return directions[0];
-            }
-
-            return previousDF == directions[0] ? directions[1] : directions[0];
-        }
+        return previousDF == directions[0] ? directions[1] : directions[0];
     }
 }

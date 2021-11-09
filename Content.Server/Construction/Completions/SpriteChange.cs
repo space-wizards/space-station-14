@@ -6,25 +6,24 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
-namespace Content.Server.Construction.Completions
+namespace Content.Server.Construction.Completions;
+
+[UsedImplicitly]
+[DataDefinition]
+public class SpriteChange : IGraphAction
 {
-    [UsedImplicitly]
-    [DataDefinition]
-    public class SpriteChange : IGraphAction
+    [DataField("layer")] public int Layer { get; private set; } = 0;
+    [DataField("specifier")]  public SpriteSpecifier? SpriteSpecifier { get; private set; } = SpriteSpecifier.Invalid;
+
+    public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
     {
-        [DataField("layer")] public int Layer { get; private set; } = 0;
-        [DataField("specifier")]  public SpriteSpecifier? SpriteSpecifier { get; private set; } = SpriteSpecifier.Invalid;
+        if (SpriteSpecifier == null || SpriteSpecifier == SpriteSpecifier.Invalid) return;
 
-        public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
-        {
-            if (SpriteSpecifier == null || SpriteSpecifier == SpriteSpecifier.Invalid) return;
+        if (!entityManager.TryGetComponent(uid, out SpriteComponent? sprite)) return;
 
-            if (!entityManager.TryGetComponent(uid, out SpriteComponent? sprite)) return;
+        // That layer doesn't exist, we do nothing.
+        if (sprite.LayerCount <= Layer) return;
 
-            // That layer doesn't exist, we do nothing.
-            if (sprite.LayerCount <= Layer) return;
-
-            sprite.LayerSetSprite(Layer, SpriteSpecifier);
-        }
+        sprite.LayerSetSprite(Layer, SpriteSpecifier);
     }
 }

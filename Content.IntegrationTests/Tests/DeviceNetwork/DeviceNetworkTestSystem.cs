@@ -5,23 +5,22 @@ using Content.Server.DeviceNetwork.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Reflection;
 
-namespace Content.IntegrationTests.Tests.DeviceNetwork
+namespace Content.IntegrationTests.Tests.DeviceNetwork;
+
+[Reflect(false)]
+public class DeviceNetworkTestSystem : EntitySystem
 {
-    [Reflect(false)]
-    public class DeviceNetworkTestSystem : EntitySystem
+    public NetworkPayload LastPayload = default;
+
+    public override void Initialize()
     {
-        public NetworkPayload LastPayload = default;
+        base.Initialize();
 
-        public override void Initialize()
-        {
-            base.Initialize();
+        SubscribeLocalEvent<DeviceNetworkComponent, PacketSentEvent>(OnPacketReceived);
+    }
 
-            SubscribeLocalEvent<DeviceNetworkComponent, PacketSentEvent>(OnPacketReceived);
-        }
-
-        private void OnPacketReceived(EntityUid uid, DeviceNetworkComponent component, PacketSentEvent args)
-        {
-            LastPayload = args.Data;
-        }
+    private void OnPacketReceived(EntityUid uid, DeviceNetworkComponent component, PacketSentEvent args)
+    {
+        LastPayload = args.Data;
     }
 }

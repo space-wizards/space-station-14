@@ -3,30 +3,29 @@ using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Construction.Steps
+namespace Content.Shared.Construction.Steps;
+
+public abstract class ArbitraryInsertConstructionGraphStep : EntityInsertConstructionGraphStep
 {
-    public abstract class ArbitraryInsertConstructionGraphStep : EntityInsertConstructionGraphStep
+    [DataField("name")] public string Name { get; private set; } = string.Empty;
+
+    [DataField("icon")] public SpriteSpecifier? Icon { get; private set; } = null;
+
+    public override void DoExamine(ExaminedEvent examinedEvent)
     {
-        [DataField("name")] public string Name { get; private set; } = string.Empty;
+        if (string.IsNullOrEmpty(Name))
+            return;
 
-        [DataField("icon")] public SpriteSpecifier? Icon { get; private set; } = null;
+        examinedEvent.Message.AddMarkup(Loc.GetString("construction-insert-arbitrary-entity", ("stepName", Name)));
+    }
 
-        public override void DoExamine(ExaminedEvent examinedEvent)
+    public override ConstructionGuideEntry GenerateGuideEntry()
+    {
+        return new ConstructionGuideEntry()
         {
-            if (string.IsNullOrEmpty(Name))
-                return;
-
-            examinedEvent.Message.AddMarkup(Loc.GetString("construction-insert-arbitrary-entity", ("stepName", Name)));
-        }
-
-        public override ConstructionGuideEntry GenerateGuideEntry()
-        {
-            return new ConstructionGuideEntry()
-            {
-                Localization = "construction-presenter-arbitrary-step",
-                Arguments = new (string, object)[]{("name", Name)},
-                Icon = Icon,
-            };
-        }
+            Localization = "construction-presenter-arbitrary-step",
+            Arguments = new (string, object)[]{("name", Name)},
+            Icon = Icon,
+        };
     }
 }

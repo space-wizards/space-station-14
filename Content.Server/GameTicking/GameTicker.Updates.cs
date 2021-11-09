@@ -6,56 +6,55 @@ using Robust.Shared.Localization;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timing.Timer;
 
-namespace Content.Server.GameTicking
+namespace Content.Server.GameTicking;
+
+public partial class GameTicker
 {
-    public partial class GameTicker
+    private static readonly TimeSpan UpdateRestartDelay = TimeSpan.FromSeconds(20);
+
+    [ViewVariables]
+    private bool _updateOnRoundEnd;
+    private CancellationTokenSource? _updateShutdownCts;
+
+    private void InitializeUpdates()
     {
-        private static readonly TimeSpan UpdateRestartDelay = TimeSpan.FromSeconds(20);
+        _watchdogApi.UpdateReceived += WatchdogApiOnUpdateReceived;
+    }
 
-        [ViewVariables]
-        private bool _updateOnRoundEnd;
-        private CancellationTokenSource? _updateShutdownCts;
+    private void WatchdogApiOnUpdateReceived()
+    {
+        _chatManager.DispatchServerAnnouncement(Loc.GetString("game-ticker-restart-round-server-update"));
+        _updateOnRoundEnd = true;
+        ServerEmptyUpdateRestartCheck();
+    }
 
-        private void InitializeUpdates()
+    /// <summary>
+    ///     Checks whether there are still players on the server,
+    /// and if not starts a timer to automatically reboot the server if an update is available.
+    /// </summary>
+    private void ServerEmptyUpdateRestartCheck()
+    {
+        // Can't simple check the current connected player count since that doesn't update
+        // before PlayerStatusChanged gets fired.
+        // So in the disconnect handler we'd still see a single player otherwise.
+        var playersOnline = _playerManager.GetAllPlayers().Any(p => p.Status != SessionStatus.Disconnected);
+        if (playersOnline || !_updateOnRoundEnd)
         {
-            _watchdogApi.UpdateReceived += WatchdogApiOnUpdateReceived;
+            // Still somebody online.
+            return;
         }
 
-        private void WatchdogApiOnUpdateReceived()
+        if (_updateShutdownCts is {IsCancellationRequested: false})
         {
-            _chatManager.DispatchServerAnnouncement(Loc.GetString("game-ticker-restart-round-server-update"));
-            _updateOnRoundEnd = true;
-            ServerEmptyUpdateRestartCheck();
+            // Do nothing because I guess we already have a timer running..?
+            return;
         }
 
-        /// <summary>
-        ///     Checks whether there are still players on the server,
-        /// and if not starts a timer to automatically reboot the server if an update is available.
-        /// </summary>
-        private void ServerEmptyUpdateRestartCheck()
+        _updateShutdownCts = new CancellationTokenSource();
+
+        Timer.Spawn(UpdateRestartDelay, () =>
         {
-            // Can't simple check the current connected player count since that doesn't update
-            // before PlayerStatusChanged gets fired.
-            // So in the disconnect handler we'd still see a single player otherwise.
-            var playersOnline = _playerManager.GetAllPlayers().Any(p => p.Status != SessionStatus.Disconnected);
-            if (playersOnline || !_updateOnRoundEnd)
-            {
-                // Still somebody online.
-                return;
-            }
-
-            if (_updateShutdownCts is {IsCancellationRequested: false})
-            {
-                // Do nothing because I guess we already have a timer running..?
-                return;
-            }
-
-            _updateShutdownCts = new CancellationTokenSource();
-
-            Timer.Spawn(UpdateRestartDelay, () =>
-            {
-                _baseServer.Shutdown(Loc.GetString("game-ticker-shutdown-server-update"));
-            }, _updateShutdownCts.Token);
-        }
+            _baseServer.Shutdown(Loc.GetString("game-ticker-shutdown-server-update"));
+        }, _updateShutdownCts.Token);
     }
 }

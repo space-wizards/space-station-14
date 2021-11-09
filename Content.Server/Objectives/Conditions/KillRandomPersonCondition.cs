@@ -8,21 +8,20 @@ using Robust.Shared.IoC;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.Objectives.Conditions
+namespace Content.Server.Objectives.Conditions;
+
+[UsedImplicitly]
+[DataDefinition]
+public class KillRandomPersonCondition : KillPersonCondition
 {
-    [UsedImplicitly]
-    [DataDefinition]
-    public class KillRandomPersonCondition : KillPersonCondition
+    public override IObjectiveCondition GetAssigned(Mind.Mind mind)
     {
-        public override IObjectiveCondition GetAssigned(Mind.Mind mind)
+        var entityMgr = IoCManager.Resolve<IEntityManager>();
+        var allHumans = entityMgr.EntityQuery<MindComponent>(true).Where(mc =>
         {
-            var entityMgr = IoCManager.Resolve<IEntityManager>();
-            var allHumans = entityMgr.EntityQuery<MindComponent>(true).Where(mc =>
-            {
-                var entity = mc.Mind?.OwnedEntity;
-                return (entity?.GetComponentOrNull<MobStateComponent>()?.IsAlive() ?? false) && mc.Mind != mind;
-            }).Select(mc => mc.Mind).ToList();
-            return new KillRandomPersonCondition {Target = IoCManager.Resolve<IRobustRandom>().Pick(allHumans)};
-        }
+            var entity = mc.Mind?.OwnedEntity;
+            return (entity?.GetComponentOrNull<MobStateComponent>()?.IsAlive() ?? false) && mc.Mind != mind;
+        }).Select(mc => mc.Mind).ToList();
+        return new KillRandomPersonCondition {Target = IoCManager.Resolve<IRobustRandom>().Pick(allHumans)};
     }
 }

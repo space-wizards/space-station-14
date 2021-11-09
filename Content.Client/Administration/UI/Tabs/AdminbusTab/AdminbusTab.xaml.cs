@@ -9,38 +9,37 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client.Administration.UI.Tabs.AdminbusTab
+namespace Content.Client.Administration.UI.Tabs.AdminbusTab;
+
+[GenerateTypedNameReferences]
+public partial class AdminbusTab : Control
 {
-    [GenerateTypedNameReferences]
-    public partial class AdminbusTab : Control
+    private EntitySpawnWindow? _entitySpawnWindow;
+    private TileSpawnWindow? _tileSpawnWindow;
+
+    protected override void EnteredTree()
     {
-        private EntitySpawnWindow? _entitySpawnWindow;
-        private TileSpawnWindow? _tileSpawnWindow;
+        // For the SpawnEntitiesButton and SpawnTilesButton we need to do the press manually
+        // TODO: This will probably need some command check at some point
+        SpawnEntitiesButton.OnPressed += SpawnEntitiesButtonOnOnPressed;
+        SpawnTilesButton.OnPressed += SpawnTilesButtonOnOnPressed;
+    }
 
-        protected override void EnteredTree()
-        {
-            // For the SpawnEntitiesButton and SpawnTilesButton we need to do the press manually
-            // TODO: This will probably need some command check at some point
-            SpawnEntitiesButton.OnPressed += SpawnEntitiesButtonOnOnPressed;
-            SpawnTilesButton.OnPressed += SpawnTilesButtonOnOnPressed;
-        }
+    private void SpawnEntitiesButtonOnOnPressed(BaseButton.ButtonEventArgs obj)
+    {
+        var manager = IoCManager.Resolve<IAdminMenuManager>();
+        _entitySpawnWindow ??= new EntitySpawnWindow(IoCManager.Resolve<IPlacementManager>(),
+                                                     IoCManager.Resolve<IPrototypeManager>(),
+                                                     IoCManager.Resolve<IResourceCache>());
+        manager.OpenCommand(_entitySpawnWindow);
+    }
 
-        private void SpawnEntitiesButtonOnOnPressed(BaseButton.ButtonEventArgs obj)
-        {
-            var manager = IoCManager.Resolve<IAdminMenuManager>();
-            _entitySpawnWindow ??= new EntitySpawnWindow(IoCManager.Resolve<IPlacementManager>(),
-                IoCManager.Resolve<IPrototypeManager>(),
-                IoCManager.Resolve<IResourceCache>());
-            manager.OpenCommand(_entitySpawnWindow);
-        }
-
-        private void SpawnTilesButtonOnOnPressed(BaseButton.ButtonEventArgs obj)
-        {
-            var manager = IoCManager.Resolve<IAdminMenuManager>();
-            _tileSpawnWindow ??= new TileSpawnWindow(IoCManager.Resolve<ITileDefinitionManager>(),
-                IoCManager.Resolve<IPlacementManager>(),
-                IoCManager.Resolve<IResourceCache>());
-            manager.OpenCommand(_tileSpawnWindow);
-        }
+    private void SpawnTilesButtonOnOnPressed(BaseButton.ButtonEventArgs obj)
+    {
+        var manager = IoCManager.Resolve<IAdminMenuManager>();
+        _tileSpawnWindow ??= new TileSpawnWindow(IoCManager.Resolve<ITileDefinitionManager>(),
+                                                 IoCManager.Resolve<IPlacementManager>(),
+                                                 IoCManager.Resolve<IResourceCache>());
+        manager.OpenCommand(_tileSpawnWindow);
     }
 }

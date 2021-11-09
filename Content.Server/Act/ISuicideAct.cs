@@ -2,28 +2,27 @@
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.Act
+namespace Content.Server.Act;
+
+[RequiresExplicitImplementation]
+public interface ISuicideAct
 {
-    [RequiresExplicitImplementation]
-    public interface ISuicideAct
-    {
-        public SuicideKind Suicide(IEntity victim, IChatManager chat);
-    }
+    public SuicideKind Suicide(IEntity victim, IChatManager chat);
+}
 
-    public enum SuicideKind
-    {
-        Special, //Doesn't damage the mob, used for "weird" suicides like gibbing
+public enum SuicideKind
+{
+    Special, //Doesn't damage the mob, used for "weird" suicides like gibbing
 
-        //Damage type suicides
-        Blunt,
-        Slash,
-        Piercing,
-        Heat,
-        Shock,
-        Cold,
-        Poison,
-        Radiation,
-        Asphyxiation,
-        Bloodloss
-    }
+    //Damage type suicides
+    Blunt,
+    Slash,
+    Piercing,
+    Heat,
+    Shock,
+    Cold,
+    Poison,
+    Radiation,
+    Asphyxiation,
+    Bloodloss
 }

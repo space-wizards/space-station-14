@@ -4,27 +4,26 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client.Lathe.Components
+namespace Content.Client.Lathe.Components;
+
+[RegisterComponent]
+[ComponentReference(typeof(SharedLatheDatabaseComponent))]
+public class LatheDatabaseComponent : SharedLatheDatabaseComponent
 {
-    [RegisterComponent]
-    [ComponentReference(typeof(SharedLatheDatabaseComponent))]
-    public class LatheDatabaseComponent : SharedLatheDatabaseComponent
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
+    public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        base.HandleComponentState(curState, nextState);
 
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
+        if (curState is not LatheDatabaseState state) return;
+
+        Clear();
+
+        foreach (var ID in state.Recipes)
         {
-            base.HandleComponentState(curState, nextState);
-
-            if (curState is not LatheDatabaseState state) return;
-
-            Clear();
-
-            foreach (var ID in state.Recipes)
-            {
-                if (!_prototypeManager.TryIndex(ID, out LatheRecipePrototype? recipe)) continue;
-                AddRecipe(recipe);
-            }
+            if (!_prototypeManager.TryIndex(ID, out LatheRecipePrototype? recipe)) continue;
+            AddRecipe(recipe);
         }
     }
 }

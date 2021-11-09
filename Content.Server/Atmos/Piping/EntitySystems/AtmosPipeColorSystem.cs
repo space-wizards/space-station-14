@@ -4,42 +4,41 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 
-namespace Content.Server.Atmos.Piping.EntitySystems
+namespace Content.Server.Atmos.Piping.EntitySystems;
+
+public class AtmosPipeColorSystem : EntitySystem
 {
-    public class AtmosPipeColorSystem : EntitySystem
+    public override void Initialize()
     {
-        public override void Initialize()
-        {
-            base.Initialize();
+        base.Initialize();
 
-            SubscribeLocalEvent<AtmosPipeColorComponent, ComponentStartup>(OnStartup);
-            SubscribeLocalEvent<AtmosPipeColorComponent, ComponentShutdown>(OnShutdown);
-        }
+        SubscribeLocalEvent<AtmosPipeColorComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<AtmosPipeColorComponent, ComponentShutdown>(OnShutdown);
+    }
 
-        private void OnStartup(EntityUid uid, AtmosPipeColorComponent component, ComponentStartup args)
-        {
-            if (!EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
-                return;
+    private void OnStartup(EntityUid uid, AtmosPipeColorComponent component, ComponentStartup args)
+    {
+        if (!EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+            return;
 
-            appearance.SetData(PipeColorVisuals.Color, component.Color);
-        }
+        appearance.SetData(PipeColorVisuals.Color, component.Color);
+    }
 
-        private void OnShutdown(EntityUid uid, AtmosPipeColorComponent component, ComponentShutdown args)
-        {
-            if (!EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
-                return;
+    private void OnShutdown(EntityUid uid, AtmosPipeColorComponent component, ComponentShutdown args)
+    {
+        if (!EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+            return;
 
-            appearance.SetData(PipeColorVisuals.Color, Color.White);
-        }
+        appearance.SetData(PipeColorVisuals.Color, Color.White);
+    }
 
-        public void SetColor(EntityUid uid, AtmosPipeColorComponent component, Color color)
-        {
-            component.Color = color;
+    public void SetColor(EntityUid uid, AtmosPipeColorComponent component, Color color)
+    {
+        component.Color = color;
 
-            if (!EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
-                return;
+        if (!EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+            return;
 
-            appearance.SetData(PipeColorVisuals.Color, color);
-        }
+        appearance.SetData(PipeColorVisuals.Color, color);
     }
 }

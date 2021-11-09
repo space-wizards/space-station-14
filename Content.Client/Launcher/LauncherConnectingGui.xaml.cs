@@ -7,58 +7,57 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Network;
 
-namespace Content.Client.Launcher
+namespace Content.Client.Launcher;
+
+[GenerateTypedNameReferences]
+public sealed partial class LauncherConnectingGui : Control
 {
-    [GenerateTypedNameReferences]
-    public sealed partial class LauncherConnectingGui : Control
+    private readonly LauncherConnecting _state;
+
+    public LauncherConnectingGui(LauncherConnecting state)
     {
-        private readonly LauncherConnecting _state;
+        _state = state;
 
-        public LauncherConnectingGui(LauncherConnecting state)
-        {
-            _state = state;
+        RobustXamlLoader.Load(this);
 
-            RobustXamlLoader.Load(this);
+        LayoutContainer.SetAnchorPreset(this, LayoutContainer.LayoutPreset.Wide);
 
-            LayoutContainer.SetAnchorPreset(this, LayoutContainer.LayoutPreset.Wide);
+        Stylesheet = IoCManager.Resolve<IStylesheetManager>().SheetSpace;
 
-            Stylesheet = IoCManager.Resolve<IStylesheetManager>().SheetSpace;
+        ReconnectButton.OnPressed += _ => _state.RetryConnect();
+        RetryButton.OnPressed += _ => _state.RetryConnect();
+        ExitButton.OnPressed += _ => _state.Exit();
 
-            ReconnectButton.OnPressed += _ => _state.RetryConnect();
-            RetryButton.OnPressed += _ => _state.RetryConnect();
-            ExitButton.OnPressed += _ => _state.Exit();
+        var addr = state.Address;
+        if (addr != null)
+            ConnectingAddress.Text = addr;
 
-            var addr = state.Address;
-            if (addr != null)
-                ConnectingAddress.Text = addr;
+        state.PageChanged += OnPageChanged;
+        state.ConnectFailReasonChanged += ConnectFailReasonChanged;
+        state.ConnectionStateChanged += ConnectionStateChanged;
 
-            state.PageChanged += OnPageChanged;
-            state.ConnectFailReasonChanged += ConnectFailReasonChanged;
-            state.ConnectionStateChanged += ConnectionStateChanged;
+        ConnectionStateChanged(state.ConnectionState);
+    }
 
-            ConnectionStateChanged(state.ConnectionState);
-        }
+    private void ConnectFailReasonChanged(string? reason)
+    {
+        ConnectFailReason.Text = reason == null
+            ? null
+            : Loc.GetString("connecting-fail-reason", ("reason", reason));
+    }
 
-        private void ConnectFailReasonChanged(string? reason)
-        {
-            ConnectFailReason.Text = reason == null
-                ? null
-                : Loc.GetString("connecting-fail-reason", ("reason", reason));
-        }
+    private void OnPageChanged(LauncherConnecting.Page page)
+    {
+        ConnectingStatus.Visible = page == LauncherConnecting.Page.Connecting;
+        ConnectFail.Visible = page == LauncherConnecting.Page.ConnectFailed;
+        Disconnected.Visible = page == LauncherConnecting.Page.Disconnected;
 
-        private void OnPageChanged(LauncherConnecting.Page page)
-        {
-            ConnectingStatus.Visible = page == LauncherConnecting.Page.Connecting;
-            ConnectFail.Visible = page == LauncherConnecting.Page.ConnectFailed;
-            Disconnected.Visible = page == LauncherConnecting.Page.Disconnected;
+        if (page == LauncherConnecting.Page.Disconnected)
+            DisconnectReason.Text = _state.LastDisconnectReason;
+    }
 
-            if (page == LauncherConnecting.Page.Disconnected)
-                DisconnectReason.Text = _state.LastDisconnectReason;
-        }
-
-        private void ConnectionStateChanged(ClientConnectionState state)
-        {
-            ConnectStatus.Text = Loc.GetString($"connecting-state-{state}");
-        }
+    private void ConnectionStateChanged(ClientConnectionState state)
+    {
+        ConnectStatus.Text = Loc.GetString($"connecting-state-{state}");
     }
 }

@@ -14,83 +14,82 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 
-namespace Content.Server.Sandbox.Commands
+namespace Content.Server.Sandbox.Commands;
+
+[AnyCommand]
+public class ColorNetworkCommand : IConsoleCommand
 {
-    [AnyCommand]
-    public class ColorNetworkCommand : IConsoleCommand
+    public string Command => "colornetwork";
+    public string Description => Loc.GetString("color-network-command-description");
+    public string Help => Loc.GetString("color-network-command-help-text", ("command",Command));
+
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        public string Command => "colornetwork";
-        public string Description => Loc.GetString("color-network-command-description");
-        public string Help => Loc.GetString("color-network-command-help-text", ("command",Command));
-
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        var sandboxManager = IoCManager.Resolve<ISandboxManager>();
+        var adminManager = IoCManager.Resolve<IAdminManager>();
+        if (shell.IsClient && (!sandboxManager.IsSandboxEnabled && !adminManager.HasAdminFlag((IPlayerSession)shell.Player!, AdminFlags.Mapping)))
         {
-            var sandboxManager = IoCManager.Resolve<ISandboxManager>();
-            var adminManager = IoCManager.Resolve<IAdminManager>();
-            if (shell.IsClient && (!sandboxManager.IsSandboxEnabled && !adminManager.HasAdminFlag((IPlayerSession)shell.Player!, AdminFlags.Mapping)))
-            {
-                shell.WriteError("You are not currently able to use mapping commands.");
-            }
-
-            if (args.Length != 3)
-            {
-                shell.WriteLine(Loc.GetString("shell-wrong-arguments-number"));
-                return;
-            }
-
-
-
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-
-            if (!int.TryParse(args[0], out var targetId))
-            {
-                shell.WriteLine(Loc.GetString("shell-argument-must-be-number"));
-                return;
-            }
-
-            var eUid = new EntityUid(targetId);
-
-            if (!eUid.IsValid() || !entityManager.EntityExists(eUid))
-            {
-                shell.WriteLine(Loc.GetString("shell-invalid-entity-id"));
-                return;
-            }
-
-            var target = entityManager.GetEntity(eUid);
-            if (!target.TryGetComponent(out NodeContainerComponent? nodeContainerComponent))
-            {
-                shell.WriteLine(Loc.GetString("shell-entity-is-not-node-container"));
-                return;
-            }
-
-            if (!Enum.TryParse(args[1], out NodeGroupID nodeGroupId))
-            {
-                shell.WriteLine(Loc.GetString("shell-node-group-is-invalid"));
-                return;
-            }
-
-            var color = Color.TryFromHex(args[2]);
-            if (!color.HasValue)
-            {
-                shell.WriteError(Loc.GetString("shell-invalid-color-hex"));
-                return;
-            }
-
-            PaintNodes(nodeContainerComponent, nodeGroupId, color.Value);
+            shell.WriteError("You are not currently able to use mapping commands.");
         }
 
-        private void PaintNodes(NodeContainerComponent nodeContainerComponent, NodeGroupID nodeGroupId, Color color)
+        if (args.Length != 3)
         {
-            var group = nodeContainerComponent.Nodes[nodeGroupId.ToString().ToLower()].NodeGroup;
+            shell.WriteLine(Loc.GetString("shell-wrong-arguments-number"));
+            return;
+        }
 
-            if (group == null) return;
 
-            foreach (var x in group.Nodes)
-            {
-                if (!x.Owner.TryGetComponent<AtmosPipeColorComponent>(out var atmosPipeColorComponent)) continue;
 
-                EntitySystem.Get<AtmosPipeColorSystem>().SetColor(x.Owner.Uid, atmosPipeColorComponent, color);
-            }
+        var entityManager = IoCManager.Resolve<IEntityManager>();
+
+        if (!int.TryParse(args[0], out var targetId))
+        {
+            shell.WriteLine(Loc.GetString("shell-argument-must-be-number"));
+            return;
+        }
+
+        var eUid = new EntityUid(targetId);
+
+        if (!eUid.IsValid() || !entityManager.EntityExists(eUid))
+        {
+            shell.WriteLine(Loc.GetString("shell-invalid-entity-id"));
+            return;
+        }
+
+        var target = entityManager.GetEntity(eUid);
+        if (!target.TryGetComponent(out NodeContainerComponent? nodeContainerComponent))
+        {
+            shell.WriteLine(Loc.GetString("shell-entity-is-not-node-container"));
+            return;
+        }
+
+        if (!Enum.TryParse(args[1], out NodeGroupID nodeGroupId))
+        {
+            shell.WriteLine(Loc.GetString("shell-node-group-is-invalid"));
+            return;
+        }
+
+        var color = Color.TryFromHex(args[2]);
+        if (!color.HasValue)
+        {
+            shell.WriteError(Loc.GetString("shell-invalid-color-hex"));
+            return;
+        }
+
+        PaintNodes(nodeContainerComponent, nodeGroupId, color.Value);
+    }
+
+    private void PaintNodes(NodeContainerComponent nodeContainerComponent, NodeGroupID nodeGroupId, Color color)
+    {
+        var group = nodeContainerComponent.Nodes[nodeGroupId.ToString().ToLower()].NodeGroup;
+
+        if (group == null) return;
+
+        foreach (var x in group.Nodes)
+        {
+            if (!x.Owner.TryGetComponent<AtmosPipeColorComponent>(out var atmosPipeColorComponent)) continue;
+
+            EntitySystem.Get<AtmosPipeColorSystem>().SetColor(x.Owner.Uid, atmosPipeColorComponent, color);
         }
     }
 }

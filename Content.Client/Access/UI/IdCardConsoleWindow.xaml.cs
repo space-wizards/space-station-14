@@ -10,112 +10,111 @@ using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using static Content.Shared.Access.SharedIdCardConsoleComponent;
 
-namespace Content.Client.Access.UI
+namespace Content.Client.Access.UI;
+
+[GenerateTypedNameReferences]
+public partial class IdCardConsoleWindow : SS14Window
 {
-    [GenerateTypedNameReferences]
-    public partial class IdCardConsoleWindow : SS14Window
+    private readonly IdCardConsoleBoundUserInterface _owner;
+
+    private readonly Dictionary<string, Button> _accessButtons = new();
+
+    private string? _lastFullName;
+    private string? _lastJobTitle;
+
+    public IdCardConsoleWindow(IdCardConsoleBoundUserInterface owner, IPrototypeManager prototypeManager)
     {
-        private readonly IdCardConsoleBoundUserInterface _owner;
+        RobustXamlLoader.Load(this);
 
-        private readonly Dictionary<string, Button> _accessButtons = new();
+        _owner = owner;
 
-        private string? _lastFullName;
-        private string? _lastJobTitle;
+        PrivilegedIdButton.OnPressed += _ => _owner.ButtonPressed(UiButton.PrivilegedId);
+        TargetIdButton.OnPressed += _ => _owner.ButtonPressed(UiButton.TargetId);
 
-        public IdCardConsoleWindow(IdCardConsoleBoundUserInterface owner, IPrototypeManager prototypeManager)
+        FullNameLineEdit.OnTextEntered += _ => SubmitData();
+        FullNameLineEdit.OnTextChanged += _ =>
         {
-            RobustXamlLoader.Load(this);
+            FullNameSaveButton.Disabled = FullNameSaveButton.Text == _lastFullName;
+        };
+        FullNameSaveButton.OnPressed += _ => SubmitData();
 
-            _owner = owner;
+        JobTitleLineEdit.OnTextEntered += _ => SubmitData();
+        JobTitleLineEdit.OnTextChanged += _ =>
+        {
+            JobTitleSaveButton.Disabled = JobTitleLineEdit.Text == _lastJobTitle;
+        };
+        JobTitleSaveButton.OnPressed += _ => SubmitData();
 
-            PrivilegedIdButton.OnPressed += _ => _owner.ButtonPressed(UiButton.PrivilegedId);
-            TargetIdButton.OnPressed += _ => _owner.ButtonPressed(UiButton.TargetId);
-
-            FullNameLineEdit.OnTextEntered += _ => SubmitData();
-            FullNameLineEdit.OnTextChanged += _ =>
+        foreach (var accessLevel in prototypeManager.EnumeratePrototypes<AccessLevelPrototype>())
+        {
+            var newButton = new Button
             {
-                FullNameSaveButton.Disabled = FullNameSaveButton.Text == _lastFullName;
+                Text = accessLevel.Name,
+                ToggleMode = true,
             };
-            FullNameSaveButton.OnPressed += _ => SubmitData();
-
-            JobTitleLineEdit.OnTextEntered += _ => SubmitData();
-            JobTitleLineEdit.OnTextChanged += _ =>
-            {
-                JobTitleSaveButton.Disabled = JobTitleLineEdit.Text == _lastJobTitle;
-            };
-            JobTitleSaveButton.OnPressed += _ => SubmitData();
-
-            foreach (var accessLevel in prototypeManager.EnumeratePrototypes<AccessLevelPrototype>())
-            {
-                var newButton = new Button
-                {
-                    Text = accessLevel.Name,
-                    ToggleMode = true,
-                };
-                AccessLevelGrid.AddChild(newButton);
-                _accessButtons.Add(accessLevel.ID, newButton);
-                newButton.OnPressed += _ => SubmitData();
-            }
+            AccessLevelGrid.AddChild(newButton);
+            _accessButtons.Add(accessLevel.ID, newButton);
+            newButton.OnPressed += _ => SubmitData();
         }
+    }
 
-        public void UpdateState(IdCardConsoleBoundUserInterfaceState state)
+    public void UpdateState(IdCardConsoleBoundUserInterfaceState state)
+    {
+        PrivilegedIdButton.Text = state.IsPrivilegedIdPresent
+            ? Loc.GetString("id-card-console-window-eject-button")
+            : Loc.GetString("id-card-console-window-insert-button");
+
+        PrivilegedIdLabel.Text = state.PrivilegedIdName;
+
+        TargetIdButton.Text = state.IsTargetIdPresent
+            ? Loc.GetString("id-card-console-window-eject-button")
+            : Loc.GetString("id-card-console-window-insert-button");
+
+        TargetIdLabel.Text = state.TargetIdName;
+
+        var interfaceEnabled =
+            state.IsPrivilegedIdPresent && state.IsPrivilegedIdAuthorized && state.IsTargetIdPresent;
+
+        var fullNameDirty = _lastFullName != null && FullNameLineEdit.Text != state.TargetIdFullName;
+        var jobTitleDirty = _lastJobTitle != null && JobTitleLineEdit.Text != state.TargetIdJobTitle;
+
+        FullNameLabel.Modulate = interfaceEnabled ? Color.White : Color.Gray;
+        FullNameLineEdit.Editable = interfaceEnabled;
+        if (!fullNameDirty)
         {
-            PrivilegedIdButton.Text = state.IsPrivilegedIdPresent
-                ? Loc.GetString("id-card-console-window-eject-button")
-                : Loc.GetString("id-card-console-window-insert-button");
-
-            PrivilegedIdLabel.Text = state.PrivilegedIdName;
-
-            TargetIdButton.Text = state.IsTargetIdPresent
-                ? Loc.GetString("id-card-console-window-eject-button")
-                : Loc.GetString("id-card-console-window-insert-button");
-
-            TargetIdLabel.Text = state.TargetIdName;
-
-            var interfaceEnabled =
-                state.IsPrivilegedIdPresent && state.IsPrivilegedIdAuthorized && state.IsTargetIdPresent;
-
-            var fullNameDirty = _lastFullName != null && FullNameLineEdit.Text != state.TargetIdFullName;
-            var jobTitleDirty = _lastJobTitle != null && JobTitleLineEdit.Text != state.TargetIdJobTitle;
-
-            FullNameLabel.Modulate = interfaceEnabled ? Color.White : Color.Gray;
-            FullNameLineEdit.Editable = interfaceEnabled;
-            if (!fullNameDirty)
-            {
-                FullNameLineEdit.Text = state.TargetIdFullName ?? string.Empty;
-            }
-
-            FullNameSaveButton.Disabled = !interfaceEnabled || !fullNameDirty;
-
-            JobTitleLabel.Modulate = interfaceEnabled ? Color.White : Color.Gray;
-            JobTitleLineEdit.Editable = interfaceEnabled;
-            if (!jobTitleDirty)
-            {
-                JobTitleLineEdit.Text = state.TargetIdJobTitle ?? string.Empty;
-            }
-
-            JobTitleSaveButton.Disabled = !interfaceEnabled || !jobTitleDirty;
-
-            foreach (var (accessName, button) in _accessButtons)
-            {
-                button.Disabled = !interfaceEnabled;
-                if (interfaceEnabled)
-                {
-                    button.Pressed = state.TargetIdAccessList?.Contains(accessName) ?? false;
-                }
-            }
-
-            _lastFullName = state.TargetIdFullName;
-            _lastJobTitle = state.TargetIdJobTitle;
+            FullNameLineEdit.Text = state.TargetIdFullName ?? string.Empty;
         }
 
-        private void SubmitData()
+        FullNameSaveButton.Disabled = !interfaceEnabled || !fullNameDirty;
+
+        JobTitleLabel.Modulate = interfaceEnabled ? Color.White : Color.Gray;
+        JobTitleLineEdit.Editable = interfaceEnabled;
+        if (!jobTitleDirty)
         {
-            _owner.SubmitData(
-                FullNameLineEdit.Text,
-                JobTitleLineEdit.Text,
-                // Iterate over the buttons dictionary, filter by `Pressed`, only get key from the key/value pair
-                _accessButtons.Where(x => x.Value.Pressed).Select(x => x.Key).ToList());
+            JobTitleLineEdit.Text = state.TargetIdJobTitle ?? string.Empty;
         }
+
+        JobTitleSaveButton.Disabled = !interfaceEnabled || !jobTitleDirty;
+
+        foreach (var (accessName, button) in _accessButtons)
+        {
+            button.Disabled = !interfaceEnabled;
+            if (interfaceEnabled)
+            {
+                button.Pressed = state.TargetIdAccessList?.Contains(accessName) ?? false;
+            }
+        }
+
+        _lastFullName = state.TargetIdFullName;
+        _lastJobTitle = state.TargetIdJobTitle;
+    }
+
+    private void SubmitData()
+    {
+        _owner.SubmitData(
+            FullNameLineEdit.Text,
+            JobTitleLineEdit.Text,
+            // Iterate over the buttons dictionary, filter by `Pressed`, only get key from the key/value pair
+            _accessButtons.Where(x => x.Value.Pressed).Select(x => x.Key).ToList());
     }
 }

@@ -6,122 +6,121 @@ using NUnit.Framework;
 using Robust.Server.Console;
 using Robust.Server.Player;
 
-namespace Content.IntegrationTests.Tests.Commands
+namespace Content.IntegrationTests.Tests.Commands;
+
+[TestFixture]
+[TestOf(typeof(PardonCommand))]
+public class PardonCommand : ContentIntegrationTest
 {
-    [TestFixture]
-    [TestOf(typeof(PardonCommand))]
-    public class PardonCommand : ContentIntegrationTest
+    private static readonly TimeSpan MarginOfError = TimeSpan.FromMinutes(1);
+
+    [Test]
+    public async Task PardonTest()
     {
-        private static readonly TimeSpan MarginOfError = TimeSpan.FromMinutes(1);
+        var (client, server) = await StartConnectedServerClientPair();
 
-        [Test]
-        public async Task PardonTest()
+        await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
+
+        var sPlayerManager = server.ResolveDependency<IPlayerManager>();
+        var sConsole = server.ResolveDependency<IServerConsoleHost>();
+        var sDatabase = server.ResolveDependency<IServerDbManager>();
+
+        await server.WaitAssertion(async () =>
         {
-            var (client, server) = await StartConnectedServerClientPair();
+            var clientSession = sPlayerManager.GetAllPlayers().Single();
+            var clientId = clientSession.UserId;
 
-            await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
+            // No bans on record
+            Assert.That(await sDatabase.GetServerBanAsync(null, clientId, null), Is.Null);
+            Assert.That(await sDatabase.GetServerBanAsync(1), Is.Null);
+            Assert.That(await sDatabase.GetServerBansAsync(null, clientId, null), Is.Empty);
 
-            var sPlayerManager = server.ResolveDependency<IPlayerManager>();
-            var sConsole = server.ResolveDependency<IServerConsoleHost>();
-            var sDatabase = server.ResolveDependency<IServerDbManager>();
+            // Try to pardon a ban that does not exist
+            sConsole.ExecuteCommand("pardon 1");
 
-            await server.WaitAssertion(async () =>
-            {
-                var clientSession = sPlayerManager.GetAllPlayers().Single();
-                var clientId = clientSession.UserId;
+            // Still no bans on record
+            Assert.That(await sDatabase.GetServerBanAsync(null, clientId, null), Is.Null);
+            Assert.That(await sDatabase.GetServerBanAsync(1), Is.Null);
+            Assert.That(await sDatabase.GetServerBansAsync(null, clientId, null), Is.Empty);
 
-                // No bans on record
-                Assert.That(await sDatabase.GetServerBanAsync(null, clientId, null), Is.Null);
-                Assert.That(await sDatabase.GetServerBanAsync(1), Is.Null);
-                Assert.That(await sDatabase.GetServerBansAsync(null, clientId, null), Is.Empty);
+            var banReason = "test";
 
-                // Try to pardon a ban that does not exist
-                sConsole.ExecuteCommand("pardon 1");
+            // Ban the client for 24 hours
+            sConsole.ExecuteCommand($"ban {clientSession.Name} {banReason} 1440");
 
-                // Still no bans on record
-                Assert.That(await sDatabase.GetServerBanAsync(null, clientId, null), Is.Null);
-                Assert.That(await sDatabase.GetServerBanAsync(1), Is.Null);
-                Assert.That(await sDatabase.GetServerBansAsync(null, clientId, null), Is.Empty);
+            // Should have one ban on record now
+            Assert.That(await sDatabase.GetServerBanAsync(null, clientId, null), Is.Not.Null);
+            Assert.That(await sDatabase.GetServerBanAsync(1), Is.Not.Null);
+            Assert.That(await sDatabase.GetServerBansAsync(null, clientId, null), Has.Count.EqualTo(1));
 
-                var banReason = "test";
+            // Try to pardon a ban that does not exist
+            sConsole.ExecuteCommand("pardon 2");
 
-                // Ban the client for 24 hours
-                sConsole.ExecuteCommand($"ban {clientSession.Name} {banReason} 1440");
+            // The existing ban is unaffected
+            Assert.That(await sDatabase.GetServerBanAsync(null, clientId, null), Is.Not.Null);
 
-                // Should have one ban on record now
-                Assert.That(await sDatabase.GetServerBanAsync(null, clientId, null), Is.Not.Null);
-                Assert.That(await sDatabase.GetServerBanAsync(1), Is.Not.Null);
-                Assert.That(await sDatabase.GetServerBansAsync(null, clientId, null), Has.Count.EqualTo(1));
+            var ban = await sDatabase.GetServerBanAsync(1);
+            Assert.That(ban, Is.Not.Null);
 
-                // Try to pardon a ban that does not exist
-                sConsole.ExecuteCommand("pardon 2");
+            Assert.That(await sDatabase.GetServerBansAsync(null, clientId, null), Has.Count.EqualTo(1));
 
-                // The existing ban is unaffected
-                Assert.That(await sDatabase.GetServerBanAsync(null, clientId, null), Is.Not.Null);
+            // Check that it matches
+            Assert.That(ban.Id, Is.EqualTo(1));
+            Assert.That(ban.UserId, Is.EqualTo(clientId));
+            Assert.That(ban.BanTime.UtcDateTime - DateTime.UtcNow, Is.LessThanOrEqualTo(MarginOfError));
+            Assert.NotNull(ban.ExpirationTime);
+            Assert.That(ban.ExpirationTime.Value.UtcDateTime - DateTime.UtcNow.AddHours(24), Is.LessThanOrEqualTo(MarginOfError));
+            Assert.That(ban.Reason, Is.EqualTo(banReason));
 
-                var ban = await sDatabase.GetServerBanAsync(1);
-                Assert.That(ban, Is.Not.Null);
+            // Done through the console
+            Assert.That(ban.BanningAdmin, Is.Null);
 
-                Assert.That(await sDatabase.GetServerBansAsync(null, clientId, null), Has.Count.EqualTo(1));
+            Assert.That(ban.Unban, Is.Null);
 
-                // Check that it matches
-                Assert.That(ban.Id, Is.EqualTo(1));
-                Assert.That(ban.UserId, Is.EqualTo(clientId));
-                Assert.That(ban.BanTime.UtcDateTime - DateTime.UtcNow, Is.LessThanOrEqualTo(MarginOfError));
-                Assert.NotNull(ban.ExpirationTime);
-                Assert.That(ban.ExpirationTime.Value.UtcDateTime - DateTime.UtcNow.AddHours(24), Is.LessThanOrEqualTo(MarginOfError));
-                Assert.That(ban.Reason, Is.EqualTo(banReason));
+            // Pardon the actual ban
+            sConsole.ExecuteCommand("pardon 1");
 
-                // Done through the console
-                Assert.That(ban.BanningAdmin, Is.Null);
+            // No bans should be returned
+            Assert.That(await sDatabase.GetServerBanAsync(null, clientId, null), Is.Null);
 
-                Assert.That(ban.Unban, Is.Null);
+            // Direct id lookup returns a pardoned ban
+            var pardonedBan = await sDatabase.GetServerBanAsync(1);
+            Assert.That(pardonedBan, Is.Not.Null);
 
-                // Pardon the actual ban
-                sConsole.ExecuteCommand("pardon 1");
+            // The list is still returned since that ignores pardons
+            Assert.That(await sDatabase.GetServerBansAsync(null, clientId, null), Has.Count.EqualTo(1));
 
-                // No bans should be returned
-                Assert.That(await sDatabase.GetServerBanAsync(null, clientId, null), Is.Null);
+            // Check that it matches
+            Assert.That(pardonedBan.Id, Is.EqualTo(1));
+            Assert.That(pardonedBan.UserId, Is.EqualTo(clientId));
+            Assert.That(pardonedBan.BanTime.UtcDateTime - DateTime.UtcNow, Is.LessThanOrEqualTo(MarginOfError));
+            Assert.NotNull(pardonedBan.ExpirationTime);
+            Assert.That(pardonedBan.ExpirationTime.Value.UtcDateTime - DateTime.UtcNow.AddHours(24), Is.LessThanOrEqualTo(MarginOfError));
+            Assert.That(pardonedBan.Reason, Is.EqualTo(banReason));
 
-                // Direct id lookup returns a pardoned ban
-                var pardonedBan = await sDatabase.GetServerBanAsync(1);
-                Assert.That(pardonedBan, Is.Not.Null);
+            // Done through the console
+            Assert.That(pardonedBan.BanningAdmin, Is.Null);
 
-                // The list is still returned since that ignores pardons
-                Assert.That(await sDatabase.GetServerBansAsync(null, clientId, null), Has.Count.EqualTo(1));
+            Assert.That(pardonedBan.Unban, Is.Not.Null);
+            Assert.That(pardonedBan.Unban.BanId, Is.EqualTo(1));
 
-                // Check that it matches
-                Assert.That(pardonedBan.Id, Is.EqualTo(1));
-                Assert.That(pardonedBan.UserId, Is.EqualTo(clientId));
-                Assert.That(pardonedBan.BanTime.UtcDateTime - DateTime.UtcNow, Is.LessThanOrEqualTo(MarginOfError));
-                Assert.NotNull(pardonedBan.ExpirationTime);
-                Assert.That(pardonedBan.ExpirationTime.Value.UtcDateTime - DateTime.UtcNow.AddHours(24), Is.LessThanOrEqualTo(MarginOfError));
-                Assert.That(pardonedBan.Reason, Is.EqualTo(banReason));
+            // Done through the console
+            Assert.That(pardonedBan.Unban.UnbanningAdmin, Is.Null);
 
-                // Done through the console
-                Assert.That(pardonedBan.BanningAdmin, Is.Null);
+            Assert.That(pardonedBan.Unban.UnbanTime.UtcDateTime - DateTime.UtcNow, Is.LessThanOrEqualTo(MarginOfError));
 
-                Assert.That(pardonedBan.Unban, Is.Not.Null);
-                Assert.That(pardonedBan.Unban.BanId, Is.EqualTo(1));
+            // Try to pardon it again
+            sConsole.ExecuteCommand("pardon 1");
 
-                // Done through the console
-                Assert.That(pardonedBan.Unban.UnbanningAdmin, Is.Null);
+            // Nothing changes
+            // No bans should be returned
+            Assert.That(await sDatabase.GetServerBanAsync(null, clientId, null), Is.Null);
 
-                Assert.That(pardonedBan.Unban.UnbanTime.UtcDateTime - DateTime.UtcNow, Is.LessThanOrEqualTo(MarginOfError));
+            // Direct id lookup returns a pardoned ban
+            Assert.That(await sDatabase.GetServerBanAsync(1), Is.Not.Null);
 
-                // Try to pardon it again
-                sConsole.ExecuteCommand("pardon 1");
-
-                // Nothing changes
-                // No bans should be returned
-                Assert.That(await sDatabase.GetServerBanAsync(null, clientId, null), Is.Null);
-
-                // Direct id lookup returns a pardoned ban
-                Assert.That(await sDatabase.GetServerBanAsync(1), Is.Not.Null);
-
-                // The list is still returned since that ignores pardons
-                Assert.That(await sDatabase.GetServerBansAsync(null, clientId, null), Has.Count.EqualTo(1));
-            });
-        }
+            // The list is still returned since that ignores pardons
+            Assert.That(await sDatabase.GetServerBansAsync(null, clientId, null), Has.Count.EqualTo(1));
+        });
     }
 }

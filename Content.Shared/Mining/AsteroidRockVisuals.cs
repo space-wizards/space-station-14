@@ -1,11 +1,10 @@
 ﻿using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Mining
+namespace Content.Shared.Mining;
+
+[Serializable, NetSerializable]
+public enum AsteroidRockVisuals
 {
-    [Serializable, NetSerializable]
-    public enum AsteroidRockVisuals
-    {
-        State
-    }
+    State
 }

@@ -3,39 +3,38 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Projectiles
+namespace Content.Shared.Projectiles;
+
+[NetworkedComponent()]
+public abstract class SharedProjectileComponent : Component
 {
-    [NetworkedComponent()]
-    public abstract class SharedProjectileComponent : Component
+    private bool _ignoreShooter = true;
+    public override string Name => "Projectile";
+
+    public EntityUid Shooter { get; protected set; }
+
+    public bool IgnoreShooter
     {
-        private bool _ignoreShooter = true;
-        public override string Name => "Projectile";
-
-        public EntityUid Shooter { get; protected set; }
-
-        public bool IgnoreShooter
+        get => _ignoreShooter;
+        set
         {
-            get => _ignoreShooter;
-            set
-            {
-                if (_ignoreShooter == value) return;
+            if (_ignoreShooter == value) return;
 
-                _ignoreShooter = value;
-                Dirty();
-            }
+            _ignoreShooter = value;
+            Dirty();
+        }
+    }
+
+    [NetSerializable, Serializable]
+    protected class ProjectileComponentState : ComponentState
+    {
+        public ProjectileComponentState(EntityUid shooter, bool ignoreShooter)
+        {
+            Shooter = shooter;
+            IgnoreShooter = ignoreShooter;
         }
 
-        [NetSerializable, Serializable]
-        protected class ProjectileComponentState : ComponentState
-        {
-            public ProjectileComponentState(EntityUid shooter, bool ignoreShooter)
-            {
-                Shooter = shooter;
-                IgnoreShooter = ignoreShooter;
-            }
-
-            public EntityUid Shooter { get; }
-            public bool IgnoreShooter { get; }
-        }
+        public EntityUid Shooter { get; }
+        public bool IgnoreShooter { get; }
     }
 }

@@ -11,93 +11,92 @@ using Robust.Shared.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Timing;
 
-namespace Content.Server.Afk
+namespace Content.Server.Afk;
+
+/// <summary>
+/// Tracks AFK (away from keyboard) status for players.
+/// </summary>
+/// <seealso cref="CCVars.AfkTime"/>
+public interface IAfkManager
 {
     /// <summary>
-    /// Tracks AFK (away from keyboard) status for players.
+    /// Check whether this player is currently AFK.
     /// </summary>
-    /// <seealso cref="CCVars.AfkTime"/>
-    public interface IAfkManager
+    /// <param name="player">The player to check.</param>
+    /// <returns>True if the player is AFK, false otherwise.</returns>
+    bool IsAfk(IPlayerSession player);
+
+    /// <summary>
+    /// Resets AFK status for the player as if they just did an action and are definitely not AFK.
+    /// </summary>
+    /// <param name="player">The player to set AFK status for.</param>
+    void PlayerDidAction(IPlayerSession player);
+
+    void Initialize();
+}
+
+[UsedImplicitly]
+public class AfkManager : IAfkManager, IEntityEventSubscriber
+{
+    [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly IConsoleHost _consoleHost = default!;
+
+    private readonly Dictionary<IPlayerSession, TimeSpan> _lastActionTimes = new();
+
+    public void Initialize()
     {
-        /// <summary>
-        /// Check whether this player is currently AFK.
-        /// </summary>
-        /// <param name="player">The player to check.</param>
-        /// <returns>True if the player is AFK, false otherwise.</returns>
-        bool IsAfk(IPlayerSession player);
+        // Connecting, console commands and input commands all reset AFK status.
 
-        /// <summary>
-        /// Resets AFK status for the player as if they just did an action and are definitely not AFK.
-        /// </summary>
-        /// <param name="player">The player to set AFK status for.</param>
-        void PlayerDidAction(IPlayerSession player);
+        _playerManager.PlayerStatusChanged += PlayerStatusChanged;
+        _consoleHost.AnyCommandExecuted += ConsoleHostOnAnyCommandExecuted;
 
-        void Initialize();
+        _entityManager.EventBus.SubscribeSessionEvent<FullInputCmdMessage>(
+            EventSource.Network,
+            this,
+            HandleInputCmd);
     }
 
-    [UsedImplicitly]
-    public class AfkManager : IAfkManager, IEntityEventSubscriber
+    public void PlayerDidAction(IPlayerSession player)
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IConfigurationManager _cfg = default!;
-        [Dependency] private readonly IConsoleHost _consoleHost = default!;
+        if (player.Status == SessionStatus.Disconnected)
+            // Make sure we don't re-add to the dictionary if the player is disconnected now.
+            return;
 
-        private readonly Dictionary<IPlayerSession, TimeSpan> _lastActionTimes = new();
+        _lastActionTimes[player] = _gameTiming.RealTime;
+    }
 
-        public void Initialize()
+    public bool IsAfk(IPlayerSession player)
+    {
+        if (!_lastActionTimes.TryGetValue(player, out var time))
+            // Some weird edge case like disconnected clients. Just say true I guess.
+            return true;
+
+        var timeOut = TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.AfkTime));
+        return _gameTiming.RealTime - time > timeOut;
+    }
+
+    private void PlayerStatusChanged(object? sender, SessionStatusEventArgs e)
+    {
+        if (e.NewStatus == SessionStatus.Disconnected)
         {
-            // Connecting, console commands and input commands all reset AFK status.
-
-            _playerManager.PlayerStatusChanged += PlayerStatusChanged;
-            _consoleHost.AnyCommandExecuted += ConsoleHostOnAnyCommandExecuted;
-
-            _entityManager.EventBus.SubscribeSessionEvent<FullInputCmdMessage>(
-                EventSource.Network,
-                this,
-                HandleInputCmd);
+            _lastActionTimes.Remove(e.Session);
+            return;
         }
 
-        public void PlayerDidAction(IPlayerSession player)
-        {
-            if (player.Status == SessionStatus.Disconnected)
-                // Make sure we don't re-add to the dictionary if the player is disconnected now.
-                return;
+        PlayerDidAction(e.Session);
+    }
 
-            _lastActionTimes[player] = _gameTiming.RealTime;
-        }
+    private void ConsoleHostOnAnyCommandExecuted(IConsoleShell shell, string commandname, string argstr, string[] args)
+    {
+        if (shell.Player is IPlayerSession player)
+            PlayerDidAction(player);
+    }
 
-        public bool IsAfk(IPlayerSession player)
-        {
-            if (!_lastActionTimes.TryGetValue(player, out var time))
-                // Some weird edge case like disconnected clients. Just say true I guess.
-                return true;
-
-            var timeOut = TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.AfkTime));
-            return _gameTiming.RealTime - time > timeOut;
-        }
-
-        private void PlayerStatusChanged(object? sender, SessionStatusEventArgs e)
-        {
-            if (e.NewStatus == SessionStatus.Disconnected)
-            {
-                _lastActionTimes.Remove(e.Session);
-                return;
-            }
-
-            PlayerDidAction(e.Session);
-        }
-
-        private void ConsoleHostOnAnyCommandExecuted(IConsoleShell shell, string commandname, string argstr, string[] args)
-        {
-            if (shell.Player is IPlayerSession player)
-                PlayerDidAction(player);
-        }
-
-        private void HandleInputCmd(FullInputCmdMessage msg, EntitySessionEventArgs args)
-        {
-            PlayerDidAction((IPlayerSession) args.SenderSession);
-        }
+    private void HandleInputCmd(FullInputCmdMessage msg, EntitySessionEventArgs args)
+    {
+        PlayerDidAction((IPlayerSession) args.SenderSession);
     }
 }

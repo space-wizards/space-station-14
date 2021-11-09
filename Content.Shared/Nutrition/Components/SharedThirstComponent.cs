@@ -5,37 +5,36 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.Nutrition.Components
+namespace Content.Shared.Nutrition.Components;
+
+[NetworkedComponent()]
+public abstract class SharedThirstComponent : Component
 {
-    [NetworkedComponent()]
-    public abstract class SharedThirstComponent : Component
+    public sealed override string Name => "Thirst";
+
+    [ViewVariables]
+    public abstract ThirstThreshold CurrentThirstThreshold { get; }
+
+    [Serializable, NetSerializable]
+    protected sealed class ThirstComponentState : ComponentState
     {
-        public sealed override string Name => "Thirst";
+        public ThirstThreshold CurrentThreshold { get; }
 
-        [ViewVariables]
-        public abstract ThirstThreshold CurrentThirstThreshold { get; }
-
-        [Serializable, NetSerializable]
-        protected sealed class ThirstComponentState : ComponentState
+        public ThirstComponentState(ThirstThreshold currentThreshold)
         {
-            public ThirstThreshold CurrentThreshold { get; }
-
-            public ThirstComponentState(ThirstThreshold currentThreshold)
-            {
-                CurrentThreshold = currentThreshold;
-            }
+            CurrentThreshold = currentThreshold;
         }
-
     }
 
-    [NetSerializable, Serializable]
-    public enum ThirstThreshold : byte
-    {
-        // Hydrohomies
-        OverHydrated,
-        Okay,
-        Thirsty,
-        Parched,
-        Dead,
-    }
+}
+
+[NetSerializable, Serializable]
+public enum ThirstThreshold : byte
+{
+    // Hydrohomies
+    OverHydrated,
+    Okay,
+    Thirsty,
+    Parched,
+    Dead,
 }

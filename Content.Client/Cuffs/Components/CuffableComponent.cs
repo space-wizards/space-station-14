@@ -6,55 +6,54 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Client.Cuffs.Components
+namespace Content.Client.Cuffs.Components;
+
+[RegisterComponent]
+[ComponentReference(typeof(SharedCuffableComponent))]
+public class CuffableComponent : SharedCuffableComponent
 {
-    [RegisterComponent]
-    [ComponentReference(typeof(SharedCuffableComponent))]
-    public class CuffableComponent : SharedCuffableComponent
+    [ViewVariables]
+    private string? _currentRSI;
+
+    [ViewVariables] [ComponentDependency] private readonly SpriteComponent? _spriteComponent = null;
+
+    public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
     {
-        [ViewVariables]
-        private string? _currentRSI;
-
-        [ViewVariables] [ComponentDependency] private readonly SpriteComponent? _spriteComponent = null;
-
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
+        if (curState is not CuffableComponentState cuffState)
         {
-            if (curState is not CuffableComponentState cuffState)
+            return;
+        }
+
+        CanStillInteract = cuffState.CanStillInteract;
+
+        if (_spriteComponent != null)
+        {
+            _spriteComponent.LayerSetVisible(HumanoidVisualLayers.Handcuffs, cuffState.NumHandsCuffed > 0);
+            _spriteComponent.LayerSetColor(HumanoidVisualLayers.Handcuffs, cuffState.Color);
+
+            if (cuffState.NumHandsCuffed > 0)
             {
-                return;
-            }
-
-            CanStillInteract = cuffState.CanStillInteract;
-
-            if (_spriteComponent != null)
-            {
-                _spriteComponent.LayerSetVisible(HumanoidVisualLayers.Handcuffs, cuffState.NumHandsCuffed > 0);
-                _spriteComponent.LayerSetColor(HumanoidVisualLayers.Handcuffs, cuffState.Color);
-
-                if (cuffState.NumHandsCuffed > 0)
+                if (_currentRSI != cuffState.RSI) // we don't want to keep loading the same RSI
                 {
-                    if (_currentRSI != cuffState.RSI) // we don't want to keep loading the same RSI
-                    {
-                        _currentRSI = cuffState.RSI;
+                    _currentRSI = cuffState.RSI;
 
-                        if (_currentRSI != null)
-                        {
-                            _spriteComponent.LayerSetState(HumanoidVisualLayers.Handcuffs, new RSI.StateId(cuffState.IconState), new ResourcePath(_currentRSI));
-                        }
-                    }
-                    else
+                    if (_currentRSI != null)
                     {
-                        _spriteComponent.LayerSetState(HumanoidVisualLayers.Handcuffs, new RSI.StateId(cuffState.IconState)); // TODO: safety check to see if RSI contains the state?
+                        _spriteComponent.LayerSetState(HumanoidVisualLayers.Handcuffs, new RSI.StateId(cuffState.IconState), new ResourcePath(_currentRSI));
                     }
+                }
+                else
+                {
+                    _spriteComponent.LayerSetState(HumanoidVisualLayers.Handcuffs, new RSI.StateId(cuffState.IconState)); // TODO: safety check to see if RSI contains the state?
                 }
             }
         }
+    }
 
-        protected override void OnRemove()
-        {
-            base.OnRemove();
+    protected override void OnRemove()
+    {
+        base.OnRemove();
 
-            _spriteComponent?.LayerSetVisible(HumanoidVisualLayers.Handcuffs, false);
-        }
+        _spriteComponent?.LayerSetVisible(HumanoidVisualLayers.Handcuffs, false);
     }
 }

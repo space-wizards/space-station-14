@@ -4,39 +4,38 @@ using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Client.MachineLinking
+namespace Content.Client.MachineLinking;
+
+[UsedImplicitly]
+public class SignalSwitchVisualizer : AppearanceVisualizer
 {
-    [UsedImplicitly]
-    public class SignalSwitchVisualizer : AppearanceVisualizer
+    [DataField("layer")]
+    private int Layer { get; }
+
+    public override void InitializeEntity(IEntity entity)
     {
-        [DataField("layer")]
-        private int Layer { get; }
+        base.InitializeEntity(entity);
 
-        public override void InitializeEntity(IEntity entity)
+        if (entity.TryGetComponent(out SpriteComponent? sprite))
         {
-            base.InitializeEntity(entity);
+            sprite.LayerMapReserveBlank(Layer);
+        }
+    }
 
-            if (entity.TryGetComponent(out SpriteComponent? sprite))
-            {
-                sprite.LayerMapReserveBlank(Layer);
-            }
+    public override void OnChangeData(AppearanceComponent component)
+    {
+        base.OnChangeData(component);
+
+        if (!component.Owner.TryGetComponent(out SpriteComponent? sprite))
+        {
+            return;
         }
 
-        public override void OnChangeData(AppearanceComponent component)
+        if (!component.TryGetData(SignalSwitchVisuals.On, out bool on))
         {
-            base.OnChangeData(component);
-
-            if (!component.Owner.TryGetComponent(out SpriteComponent? sprite))
-            {
-                return;
-            }
-
-            if (!component.TryGetData(SignalSwitchVisuals.On, out bool on))
-            {
-                return;
-            }
-
-            sprite.LayerSetState(0, on ? "on" : "off");
+            return;
         }
+
+        sprite.LayerSetState(0, on ? "on" : "off");
     }
 }

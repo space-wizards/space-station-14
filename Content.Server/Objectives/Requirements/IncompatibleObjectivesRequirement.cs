@@ -2,25 +2,24 @@
 using Content.Server.Objectives.Interfaces;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.Objectives.Requirements
+namespace Content.Server.Objectives.Requirements;
+
+[DataDefinition]
+public class IncompatibleObjectivesRequirement : IObjectiveRequirement
 {
-    [DataDefinition]
-    public class IncompatibleObjectivesRequirement : IObjectiveRequirement
+    [DataField("objectives")]
+    private readonly List<string> _incompatibleObjectives = new();
+
+    public bool CanBeAssigned(Mind.Mind mind)
     {
-        [DataField("objectives")]
-        private readonly List<string> _incompatibleObjectives = new();
-
-        public bool CanBeAssigned(Mind.Mind mind)
+        foreach (var objective in mind.AllObjectives)
         {
-            foreach (var objective in mind.AllObjectives)
+            foreach (var incompatibleObjective in _incompatibleObjectives)
             {
-                foreach (var incompatibleObjective in _incompatibleObjectives)
-                {
-                    if (incompatibleObjective == objective.Prototype.ID) return false;
-                }
+                if (incompatibleObjective == objective.Prototype.ID) return false;
             }
-
-            return true;
         }
+
+        return true;
     }
 }

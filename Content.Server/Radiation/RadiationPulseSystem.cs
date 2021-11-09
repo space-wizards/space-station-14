@@ -6,45 +6,44 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
-namespace Content.Server.Radiation
+namespace Content.Server.Radiation;
+
+[UsedImplicitly]
+public sealed class RadiationPulseSystem : EntitySystem
 {
-    [UsedImplicitly]
-    public sealed class RadiationPulseSystem : EntitySystem
+    [Dependency] private readonly IEntityLookup _lookup = default!;
+
+    private const float RadiationCooldown = 0.5f;
+    private float _accumulator;
+
+    public override void Update(float frameTime)
     {
-        [Dependency] private readonly IEntityLookup _lookup = default!;
+        base.Update(frameTime);
 
-        private const float RadiationCooldown = 0.5f;
-        private float _accumulator;
+        _accumulator += frameTime;
 
-        public override void Update(float frameTime)
+        while (_accumulator > RadiationCooldown)
         {
-            base.Update(frameTime);
+            _accumulator -= RadiationCooldown;
 
-            _accumulator += frameTime;
-
-            while (_accumulator > RadiationCooldown)
+            // All code here runs effectively every RadiationCooldown seconds, so use that as the "frame time".
+            foreach (var comp in EntityManager.EntityQuery<RadiationPulseComponent>())
             {
-                _accumulator -= RadiationCooldown;
+                comp.Update(RadiationCooldown);
+                var ent = comp.Owner;
 
-                // All code here runs effectively every RadiationCooldown seconds, so use that as the "frame time".
-                foreach (var comp in EntityManager.EntityQuery<RadiationPulseComponent>())
+                if (ent.Deleted) continue;
+
+                foreach (var entity in _lookup.GetEntitiesInRange(ent.Transform.Coordinates, comp.Range))
                 {
-                    comp.Update(RadiationCooldown);
-                    var ent = comp.Owner;
+                    // For now at least still need this because it uses a list internally then returns and this may be deleted before we get to it.
+                    if (entity.Deleted) continue;
 
-                    if (ent.Deleted) continue;
-
-                    foreach (var entity in _lookup.GetEntitiesInRange(ent.Transform.Coordinates, comp.Range))
+                    // Note: Radiation is liable for a refactor (stinky Sloth coding a basic version when he did StationEvents)
+                    // so this ToArray doesn't really matter.
+                    foreach (var radiation in entity.GetAllComponents<IRadiationAct>().ToArray())
                     {
-                        // For now at least still need this because it uses a list internally then returns and this may be deleted before we get to it.
-                        if (entity.Deleted) continue;
-
-                        // Note: Radiation is liable for a refactor (stinky Sloth coding a basic version when he did StationEvents)
-                        // so this ToArray doesn't really matter.
-                        foreach (var radiation in entity.GetAllComponents<IRadiationAct>().ToArray())
-                        {
-                            radiation.RadiationAct(RadiationCooldown, comp);
-                        }
+                        radiation.RadiationAct(RadiationCooldown, comp);
                     }
                 }
             }

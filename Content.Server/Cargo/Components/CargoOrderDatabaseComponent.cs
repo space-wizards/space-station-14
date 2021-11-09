@@ -2,26 +2,25 @@ using Content.Shared.Cargo.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Players;
 
-namespace Content.Server.Cargo.Components
+namespace Content.Server.Cargo.Components;
+
+[RegisterComponent]
+public class CargoOrderDatabaseComponent : SharedCargoOrderDatabaseComponent
 {
-    [RegisterComponent]
-    public class CargoOrderDatabaseComponent : SharedCargoOrderDatabaseComponent
+    public CargoOrderDatabase? Database { get; set; }
+    public bool ConnectedToDatabase => Database != null;
+
+    protected override void Initialize()
     {
-        public CargoOrderDatabase? Database { get; set; }
-        public bool ConnectedToDatabase => Database != null;
+        base.Initialize();
 
-        protected override void Initialize()
-        {
-            base.Initialize();
+        Database = EntitySystem.Get<CargoConsoleSystem>().StationOrderDatabase;
+    }
 
-            Database = EntitySystem.Get<CargoConsoleSystem>().StationOrderDatabase;
-        }
-
-        public override ComponentState GetComponentState(ICommonSession player)
-        {
-            if (!ConnectedToDatabase)
-                return new CargoOrderDatabaseState(null);
-            return new CargoOrderDatabaseState(Database?.GetOrders());
-        }
+    public override ComponentState GetComponentState(ICommonSession player)
+    {
+        if (!ConnectedToDatabase)
+            return new CargoOrderDatabaseState(null);
+        return new CargoOrderDatabaseState(Database?.GetOrders());
     }
 }

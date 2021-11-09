@@ -8,12 +8,11 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.Stunnable
+namespace Content.Shared.Stunnable;
+
+[Friend(typeof(SharedStunSystem))]
+[RegisterComponent, NetworkedComponent]
+public sealed class StunnedComponent : Component
 {
-    [Friend(typeof(SharedStunSystem))]
-    [RegisterComponent, NetworkedComponent]
-    public sealed class StunnedComponent : Component
-    {
-        public sealed override string Name => "Stunned";
-    }
+    public sealed override string Name => "Stunned";
 }

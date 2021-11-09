@@ -4,14 +4,13 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Client.Kitchen.Components
-{
-    [RegisterComponent]
-    public class MicrowaveComponent : SharedMicrowaveComponent
-    {
-        public IPlayingAudioStream? PlayingStream { get; set; }
+namespace Content.Client.Kitchen.Components;
 
-        [DataField("loopingSound")]
-        public SoundSpecifier LoopingSound = new SoundPathSpecifier("/Audio/Machines/microwave_loop.ogg");
-    }
+[RegisterComponent]
+public class MicrowaveComponent : SharedMicrowaveComponent
+{
+    public IPlayingAudioStream? PlayingStream { get; set; }
+
+    [DataField("loopingSound")]
+    public SoundSpecifier LoopingSound = new SoundPathSpecifier("/Audio/Machines/microwave_loop.ogg");
 }

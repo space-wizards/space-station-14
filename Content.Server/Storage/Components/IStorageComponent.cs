@@ -1,11 +1,10 @@
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.Storage.Components
+namespace Content.Server.Storage.Components;
+
+public interface IStorageComponent
 {
-    public interface IStorageComponent
-    {
-        bool Remove(IEntity entity);
-        bool Insert(IEntity entity);
-        bool CanInsert(IEntity entity);
-    }
+    bool Remove(IEntity entity);
+    bool Insert(IEntity entity);
+    bool CanInsert(IEntity entity);
 }

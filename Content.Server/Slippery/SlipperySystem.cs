@@ -3,13 +3,12 @@ using Content.Shared.Slippery;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 
-namespace Content.Server.Slippery
+namespace Content.Server.Slippery;
+
+internal sealed class SlipperySystem : SharedSlipperySystem
 {
-    internal sealed class SlipperySystem : SharedSlipperySystem
+    protected override void PlaySound(SlipperyComponent component)
     {
-        protected override void PlaySound(SlipperyComponent component)
-        {
-            SoundSystem.Play(Filter.Pvs(component.Owner), component.SlipSound.GetSound(), component.Owner, AudioHelpers.WithVariation(0.2f));
-        }
+        SoundSystem.Play(Filter.Pvs(component.Owner), component.SlipSound.GetSound(), component.Owner, AudioHelpers.WithVariation(0.2f));
     }
 }

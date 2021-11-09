@@ -2,29 +2,28 @@
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 
-namespace Content.Client.Morgue.Visualizers
+namespace Content.Client.Morgue.Visualizers;
+
+[UsedImplicitly]
+public sealed class BodyBagVisualizer : AppearanceVisualizer
 {
-    [UsedImplicitly]
-    public sealed class BodyBagVisualizer : AppearanceVisualizer
+    public override void OnChangeData(AppearanceComponent component)
     {
-        public override void OnChangeData(AppearanceComponent component)
+        base.OnChangeData(component);
+
+        if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite))
         {
-            base.OnChangeData(component);
+            return;
+        }
 
-            if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite))
-            {
-                return;
-            }
-
-            if (component.TryGetData(BodyBagVisuals.Label, out bool labelVal))
-            {
-                sprite.LayerSetVisible(BodyBagVisualLayers.Label, labelVal);
-            }
+        if (component.TryGetData(BodyBagVisuals.Label, out bool labelVal))
+        {
+            sprite.LayerSetVisible(BodyBagVisualLayers.Label, labelVal);
         }
     }
+}
 
-    public enum BodyBagVisualLayers : byte
-    {
-        Label,
-    }
+public enum BodyBagVisualLayers : byte
+{
+    Label,
 }

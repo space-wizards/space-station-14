@@ -5,59 +5,58 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.VendingMachines.SharedVendingMachineComponent;
 
-namespace Content.Client.VendingMachines
+namespace Content.Client.VendingMachines;
+
+public class VendingMachineBoundUserInterface : BoundUserInterface
 {
-    public class VendingMachineBoundUserInterface : BoundUserInterface
+    [ViewVariables] private VendingMachineMenu? _menu;
+
+    public SharedVendingMachineComponent? VendingMachine { get; private set; }
+
+    public VendingMachineBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
     {
-        [ViewVariables] private VendingMachineMenu? _menu;
+        SendMessage(new InventorySyncRequestMessage());
+    }
 
-        public SharedVendingMachineComponent? VendingMachine { get; private set; }
+    protected override void Open()
+    {
+        base.Open();
 
-        public VendingMachineBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        if (!Owner.Owner.TryGetComponent(out SharedVendingMachineComponent? vendingMachine))
         {
-            SendMessage(new InventorySyncRequestMessage());
+            return;
         }
 
-        protected override void Open()
+        VendingMachine = vendingMachine;
+
+        _menu = new VendingMachineMenu(this) {Title = Owner.Owner.Name};
+        _menu.Populate(VendingMachine.Inventory);
+
+        _menu.OnClose += Close;
+        _menu.OpenCentered();
+    }
+
+    public void Eject(string ID)
+    {
+        SendMessage(new VendingMachineEjectMessage(ID));
+    }
+
+    protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+    {
+        switch (message)
         {
-            base.Open();
-
-            if (!Owner.Owner.TryGetComponent(out SharedVendingMachineComponent? vendingMachine))
-            {
-                return;
-            }
-
-            VendingMachine = vendingMachine;
-
-            _menu = new VendingMachineMenu(this) {Title = Owner.Owner.Name};
-            _menu.Populate(VendingMachine.Inventory);
-
-            _menu.OnClose += Close;
-            _menu.OpenCentered();
+            case VendingMachineInventoryMessage msg:
+                _menu?.Populate(msg.Inventory);
+                break;
         }
+    }
 
-        public void Eject(string ID)
-        {
-            SendMessage(new VendingMachineEjectMessage(ID));
-        }
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+        if (!disposing)
+            return;
 
-        protected override void ReceiveMessage(BoundUserInterfaceMessage message)
-        {
-            switch (message)
-            {
-                case VendingMachineInventoryMessage msg:
-                    _menu?.Populate(msg.Inventory);
-                    break;
-            }
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-            if (!disposing)
-                return;
-
-            _menu?.Dispose();
-        }
+        _menu?.Dispose();
     }
 }

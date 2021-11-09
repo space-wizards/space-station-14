@@ -5,29 +5,28 @@ using Content.Server.Weapon.Melee.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.AI.WorldState.States.Combat.Nearby
+namespace Content.Server.AI.WorldState.States.Combat.Nearby;
+
+[UsedImplicitly]
+public sealed class NearbyMeleeWeapons : CachedStateData<List<IEntity>>
 {
-    [UsedImplicitly]
-    public sealed class NearbyMeleeWeapons : CachedStateData<List<IEntity>>
+    public override string Name => "NearbyMeleeWeapons";
+
+    protected override List<IEntity> GetTrueValue()
     {
-        public override string Name => "NearbyMeleeWeapons";
+        var result = new List<IEntity>();
 
-        protected override List<IEntity> GetTrueValue()
+        if (!Owner.TryGetComponent(out AiControllerComponent? controller))
         {
-            var result = new List<IEntity>();
-
-            if (!Owner.TryGetComponent(out AiControllerComponent? controller))
-            {
-                return result;
-            }
-
-            foreach (var entity in Visibility
-                .GetNearestEntities(Owner.Transform.Coordinates, typeof(MeleeWeaponComponent), controller.VisionRadius))
-            {
-                result.Add(entity);
-            }
-
             return result;
         }
+
+        foreach (var entity in Visibility
+                     .GetNearestEntities(Owner.Transform.Coordinates, typeof(MeleeWeaponComponent), controller.VisionRadius))
+        {
+            result.Add(entity);
+        }
+
+        return result;
     }
 }

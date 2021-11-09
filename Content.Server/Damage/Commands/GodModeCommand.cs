@@ -6,67 +6,66 @@ using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Server.Damage.Commands
+namespace Content.Server.Damage.Commands;
+
+[AdminCommand(AdminFlags.Admin)]
+public class GodModeCommand : IConsoleCommand
 {
-    [AdminCommand(AdminFlags.Admin)]
-    public class GodModeCommand : IConsoleCommand
+    public string Command => "godmode";
+    public string Description => "Makes your entity or another invulnerable to almost anything. May have irreversible changes.";
+    public string Help => $"Usage: {Command} / {Command} <entityUid>";
+
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        public string Command => "godmode";
-        public string Description => "Makes your entity or another invulnerable to almost anything. May have irreversible changes.";
-        public string Help => $"Usage: {Command} / {Command} <entityUid>";
+        var player = shell.Player as IPlayerSession;
+        EntityUid entity;
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        var entityManager = IoCManager.Resolve<IEntityManager>();
+
+        switch (args.Length)
         {
-            var player = shell.Player as IPlayerSession;
-            EntityUid entity;
-
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-
-            switch (args.Length)
-            {
-                case 0:
-                    if (player == null)
-                    {
-                        shell.WriteLine("An entity needs to be specified when the command isn't used by a player.");
-                        return;
-                    }
-
-                    if (player.AttachedEntityUid == null)
-                    {
-                        shell.WriteLine("An entity needs to be specified when you aren't attached to an entity.");
-                        return;
-                    }
-
-                    entity = player.AttachedEntityUid.Value;
-                    break;
-                case 1:
-                    if (!EntityUid.TryParse(args[0], out var id))
-                    {
-                        shell.WriteLine($"{args[0]} isn't a valid entity id.");
-                        return;
-                    }
-
-                    if (!entityManager.EntityExists(id))
-                    {
-                        shell.WriteLine($"No entity found with id {id}.");
-                        return;
-                    }
-
-                    entity = id;
-                    break;
-                default:
-                    shell.WriteLine(Help);
+            case 0:
+                if (player == null)
+                {
+                    shell.WriteLine("An entity needs to be specified when the command isn't used by a player.");
                     return;
-            }
+                }
 
-            var godmodeSystem = EntitySystem.Get<GodmodeSystem>();
-            var enabled = godmodeSystem.ToggleGodmode(entity);
+                if (player.AttachedEntityUid == null)
+                {
+                    shell.WriteLine("An entity needs to be specified when you aren't attached to an entity.");
+                    return;
+                }
 
-            var name = entityManager.GetComponent<MetaDataComponent>(entity).EntityName;
+                entity = player.AttachedEntityUid.Value;
+                break;
+            case 1:
+                if (!EntityUid.TryParse(args[0], out var id))
+                {
+                    shell.WriteLine($"{args[0]} isn't a valid entity id.");
+                    return;
+                }
 
-            shell.WriteLine(enabled
-                ? $"Enabled godmode for entity {name} with id {entity}"
-                : $"Disabled godmode for entity {name} with id {entity}");
+                if (!entityManager.EntityExists(id))
+                {
+                    shell.WriteLine($"No entity found with id {id}.");
+                    return;
+                }
+
+                entity = id;
+                break;
+            default:
+                shell.WriteLine(Help);
+                return;
         }
+
+        var godmodeSystem = EntitySystem.Get<GodmodeSystem>();
+        var enabled = godmodeSystem.ToggleGodmode(entity);
+
+        var name = entityManager.GetComponent<MetaDataComponent>(entity).EntityName;
+
+        shell.WriteLine(enabled
+                            ? $"Enabled godmode for entity {name} with id {entity}"
+                            : $"Disabled godmode for entity {name} with id {entity}");
     }
 }

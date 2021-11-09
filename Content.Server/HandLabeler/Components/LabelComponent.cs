@@ -2,17 +2,16 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.HandLabeler.Components
+namespace Content.Server.HandLabeler.Components;
+
+[RegisterComponent]
+public class LabelComponent : Component
 {
-    [RegisterComponent]
-    public class LabelComponent : Component
-    {
-        public override string Name => "Label";
+    public override string Name => "Label";
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("currentLabel")]
-        public string? CurrentLabel { get; set; }
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("currentLabel")]
+    public string? CurrentLabel { get; set; }
 
-        public string? OriginalName { get; set; }
-    }
+    public string? OriginalName { get; set; }
 }

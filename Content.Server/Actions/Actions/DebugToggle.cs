@@ -4,41 +4,40 @@ using Content.Shared.Actions.Behaviors.Item;
 using JetBrains.Annotations;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.Actions.Actions
+namespace Content.Server.Actions.Actions;
+
+[UsedImplicitly]
+[DataDefinition]
+public class DebugToggle : IToggleAction, IToggleItemAction
 {
-    [UsedImplicitly]
-    [DataDefinition]
-    public class DebugToggle : IToggleAction, IToggleItemAction
+    [DataField("messageOn")] public string MessageOn { get; private set; } = "on!";
+    [DataField("messageOff")] public string MessageOff { get; private set; } = "off!";
+
+    public bool DoToggleAction(ToggleItemActionEventArgs args)
     {
-        [DataField("messageOn")] public string MessageOn { get; private set; } = "on!";
-        [DataField("messageOff")] public string MessageOff { get; private set; } = "off!";
-
-        public bool DoToggleAction(ToggleItemActionEventArgs args)
+        if (args.ToggledOn)
         {
-            if (args.ToggledOn)
-            {
-                args.Performer.PopupMessageEveryone(args.Item.Name + ": " + MessageOn);
-            }
-            else
-            {
-                args.Performer.PopupMessageEveryone(args.Item.Name + ": " +MessageOff);
-            }
-
-            return true;
+            args.Performer.PopupMessageEveryone(args.Item.Name + ": " + MessageOn);
+        }
+        else
+        {
+            args.Performer.PopupMessageEveryone(args.Item.Name + ": " +MessageOff);
         }
 
-        public bool DoToggleAction(ToggleActionEventArgs args)
-        {
-            if (args.ToggledOn)
-            {
-                args.Performer.PopupMessageEveryone(MessageOn);
-            }
-            else
-            {
-                args.Performer.PopupMessageEveryone(MessageOff);
-            }
+        return true;
+    }
 
-            return true;
+    public bool DoToggleAction(ToggleActionEventArgs args)
+    {
+        if (args.ToggledOn)
+        {
+            args.Performer.PopupMessageEveryone(MessageOn);
         }
+        else
+        {
+            args.Performer.PopupMessageEveryone(MessageOff);
+        }
+
+        return true;
     }
 }

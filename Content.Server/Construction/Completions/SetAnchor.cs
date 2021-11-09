@@ -6,18 +6,17 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 
-namespace Content.Server.Construction.Completions
-{
-    [UsedImplicitly]
-    [DataDefinition]
-    public class SetAnchor : IGraphAction
-    {
-        [DataField("value")] public bool Value { get; private set; } = true;
+namespace Content.Server.Construction.Completions;
 
-        public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
-        {
-            var transform = entityManager.GetComponent<TransformComponent>(uid);
-            transform.Anchored = Value;
-        }
+[UsedImplicitly]
+[DataDefinition]
+public class SetAnchor : IGraphAction
+{
+    [DataField("value")] public bool Value { get; private set; } = true;
+
+    public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
+    {
+        var transform = entityManager.GetComponent<TransformComponent>(uid);
+        transform.Anchored = Value;
     }
 }

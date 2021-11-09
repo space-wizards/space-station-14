@@ -5,19 +5,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Content.Shared.Security
+namespace Content.Shared.Security;
+
+[Serializable, NetSerializable]
+public enum DeployableBarrierVisuals : byte
 {
-    [Serializable, NetSerializable]
-    public enum DeployableBarrierVisuals : byte
-    {
-        State
-    }
+    State
+}
 
 
-    [Serializable, NetSerializable]
-    public enum DeployableBarrierState : byte
-    {
-        Idle,
-        Deployed
-    }
+[Serializable, NetSerializable]
+public enum DeployableBarrierState : byte
+{
+    Idle,
+    Deployed
 }

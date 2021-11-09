@@ -5,48 +5,47 @@ using Robust.Shared.Animations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 
-namespace Content.Client.Animations
+namespace Content.Client.Animations;
+
+[RegisterComponent]
+public sealed class AnimationsTestComponent : Component
 {
-    [RegisterComponent]
-    public sealed class AnimationsTestComponent : Component
+    public override string Name => "AnimationsTest";
+
+    protected override void Initialize()
     {
-        public override string Name => "AnimationsTest";
+        base.Initialize();
 
-        protected override void Initialize()
+        var animations = Owner.GetComponent<AnimationPlayerComponent>();
+        animations.Play(new Animation
         {
-            base.Initialize();
-
-            var animations = Owner.GetComponent<AnimationPlayerComponent>();
-            animations.Play(new Animation
+            Length = TimeSpan.FromSeconds(20),
+            AnimationTracks =
             {
-                Length = TimeSpan.FromSeconds(20),
-                AnimationTracks =
+                new AnimationTrackComponentProperty
                 {
-                    new AnimationTrackComponentProperty
+                    ComponentType = typeof(TransformComponent),
+                    Property = nameof(TransformComponent.LocalRotation),
+                    InterpolationMode = AnimationInterpolationMode.Linear,
+                    KeyFrames =
                     {
-                        ComponentType = typeof(TransformComponent),
-                        Property = nameof(TransformComponent.LocalRotation),
-                        InterpolationMode = AnimationInterpolationMode.Linear,
-                        KeyFrames =
-                        {
-                            new AnimationTrackProperty.KeyFrame(Angle.Zero, 0),
-                            new AnimationTrackProperty.KeyFrame(Angle.FromDegrees(1440), 20)
-                        }
-                    },
-                    new AnimationTrackComponentProperty
+                        new AnimationTrackProperty.KeyFrame(Angle.Zero, 0),
+                        new AnimationTrackProperty.KeyFrame(Angle.FromDegrees(1440), 20)
+                    }
+                },
+                new AnimationTrackComponentProperty
+                {
+                    ComponentType = typeof(ISpriteComponent),
+                    Property = "layer/0/texture",
+                    KeyFrames =
                     {
-                        ComponentType = typeof(ISpriteComponent),
-                        Property = "layer/0/texture",
-                        KeyFrames =
-                        {
-                            new AnimationTrackProperty.KeyFrame("Objects/toolbox_r.png", 0),
-                            new AnimationTrackProperty.KeyFrame("Objects/Toolbox_b.png", 5),
-                            new AnimationTrackProperty.KeyFrame("Objects/Toolbox_y.png", 5),
-                            new AnimationTrackProperty.KeyFrame("Objects/toolbox_r.png", 5),
-                        }
+                        new AnimationTrackProperty.KeyFrame("Objects/toolbox_r.png", 0),
+                        new AnimationTrackProperty.KeyFrame("Objects/Toolbox_b.png", 5),
+                        new AnimationTrackProperty.KeyFrame("Objects/Toolbox_y.png", 5),
+                        new AnimationTrackProperty.KeyFrame("Objects/toolbox_r.png", 5),
                     }
                 }
-            }, "yes");
-        }
+            }
+        }, "yes");
     }
 }

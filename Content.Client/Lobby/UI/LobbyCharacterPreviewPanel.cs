@@ -18,150 +18,149 @@ using Robust.Shared.Prototypes;
 using static Content.Shared.Inventory.EquipmentSlotDefines;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
-namespace Content.Client.Lobby.UI
+namespace Content.Client.Lobby.UI;
+
+public class LobbyCharacterPreviewPanel : Control
 {
-    public class LobbyCharacterPreviewPanel : Control
+    private readonly IClientPreferencesManager _preferencesManager;
+    private IEntity _previewDummy;
+    private readonly Label _summaryLabel;
+    private readonly BoxContainer _loaded;
+    private readonly Label _unloaded;
+
+    public LobbyCharacterPreviewPanel(IEntityManager entityManager,
+        IClientPreferencesManager preferencesManager)
     {
-        private readonly IClientPreferencesManager _preferencesManager;
-        private IEntity _previewDummy;
-        private readonly Label _summaryLabel;
-        private readonly BoxContainer _loaded;
-        private readonly Label _unloaded;
+        _preferencesManager = preferencesManager;
+        _previewDummy = entityManager.SpawnEntity("MobHumanDummy", MapCoordinates.Nullspace);
 
-        public LobbyCharacterPreviewPanel(IEntityManager entityManager,
-            IClientPreferencesManager preferencesManager)
+        var header = new NanoHeading
         {
-            _preferencesManager = preferencesManager;
-            _previewDummy = entityManager.SpawnEntity("MobHumanDummy", MapCoordinates.Nullspace);
+            Text = Loc.GetString("lobby-character-preview-panel-header")
+        };
 
-            var header = new NanoHeading
-            {
-                Text = Loc.GetString("lobby-character-preview-panel-header")
-            };
+        CharacterSetupButton = new Button
+        {
+            Text = Loc.GetString("lobby-character-preview-panel-character-setup-button"),
+            HorizontalAlignment = HAlignment.Left
+        };
 
-            CharacterSetupButton = new Button
-            {
-                Text = Loc.GetString("lobby-character-preview-panel-character-setup-button"),
-                HorizontalAlignment = HAlignment.Left
-            };
+        _summaryLabel = new Label();
 
-            _summaryLabel = new Label();
+        var viewSouth = MakeSpriteView(_previewDummy, Direction.South);
+        var viewNorth = MakeSpriteView(_previewDummy, Direction.North);
+        var viewWest = MakeSpriteView(_previewDummy, Direction.West);
+        var viewEast = MakeSpriteView(_previewDummy, Direction.East);
 
-            var viewSouth = MakeSpriteView(_previewDummy, Direction.South);
-            var viewNorth = MakeSpriteView(_previewDummy, Direction.North);
-            var viewWest = MakeSpriteView(_previewDummy, Direction.West);
-            var viewEast = MakeSpriteView(_previewDummy, Direction.East);
+        var vBox = new BoxContainer
+        {
+            Orientation = LayoutOrientation.Vertical
+        };
 
-            var vBox = new BoxContainer
-            {
-                Orientation = LayoutOrientation.Vertical
-            };
+        vBox.AddChild(header);
 
-            vBox.AddChild(header);
+        _unloaded = new Label {Text = Loc.GetString("lobby-character-preview-panel-unloaded-preferences-label")};
 
-            _unloaded = new Label {Text = Loc.GetString("lobby-character-preview-panel-unloaded-preferences-label")};
+        _loaded = new BoxContainer
+        {
+            Orientation = LayoutOrientation.Vertical,
+            Visible = false
+        };
 
-            _loaded = new BoxContainer
-            {
-                Orientation = LayoutOrientation.Vertical,
-                Visible = false
-            };
+        _loaded.AddChild(CharacterSetupButton);
+        _loaded.AddChild(_summaryLabel);
 
-            _loaded.AddChild(CharacterSetupButton);
-            _loaded.AddChild(_summaryLabel);
+        var hBox = new BoxContainer
+        {
+            Orientation = LayoutOrientation.Horizontal
+        };
+        hBox.AddChild(viewSouth);
+        hBox.AddChild(viewNorth);
+        hBox.AddChild(viewWest);
+        hBox.AddChild(viewEast);
 
-            var hBox = new BoxContainer
-            {
-                Orientation = LayoutOrientation.Horizontal
-            };
-            hBox.AddChild(viewSouth);
-            hBox.AddChild(viewNorth);
-            hBox.AddChild(viewWest);
-            hBox.AddChild(viewEast);
+        _loaded.AddChild(hBox);
 
-            _loaded.AddChild(hBox);
+        vBox.AddChild(_loaded);
+        vBox.AddChild(_unloaded);
+        AddChild(vBox);
 
-            vBox.AddChild(_loaded);
-            vBox.AddChild(_unloaded);
-            AddChild(vBox);
+        UpdateUI();
 
-            UpdateUI();
+        _preferencesManager.OnServerDataLoaded += UpdateUI;
+    }
 
-            _preferencesManager.OnServerDataLoaded += UpdateUI;
+    public Button CharacterSetupButton { get; }
+
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+        _preferencesManager.OnServerDataLoaded -= UpdateUI;
+
+        if (!disposing) return;
+        _previewDummy.Delete();
+        _previewDummy = null!;
+    }
+
+    private static SpriteView MakeSpriteView(IEntity entity, Direction direction)
+    {
+        return new()
+        {
+            Sprite = entity.GetComponent<ISpriteComponent>(),
+            OverrideDirection = direction,
+            Scale = (2, 2)
+        };
+    }
+
+    public void UpdateUI()
+    {
+        if (!_preferencesManager.ServerDataLoaded)
+        {
+            _loaded.Visible = false;
+            _unloaded.Visible = true;
         }
-
-        public Button CharacterSetupButton { get; }
-
-        protected override void Dispose(bool disposing)
+        else
         {
-            base.Dispose(disposing);
-            _preferencesManager.OnServerDataLoaded -= UpdateUI;
-
-            if (!disposing) return;
-            _previewDummy.Delete();
-            _previewDummy = null!;
-        }
-
-        private static SpriteView MakeSpriteView(IEntity entity, Direction direction)
-        {
-            return new()
+            _loaded.Visible = true;
+            _unloaded.Visible = false;
+            if (_preferencesManager.Preferences?.SelectedCharacter is not HumanoidCharacterProfile selectedCharacter)
             {
-                Sprite = entity.GetComponent<ISpriteComponent>(),
-                OverrideDirection = direction,
-                Scale = (2, 2)
-            };
-        }
-
-        public void UpdateUI()
-        {
-            if (!_preferencesManager.ServerDataLoaded)
-            {
-                _loaded.Visible = false;
-                _unloaded.Visible = true;
+                _summaryLabel.Text = string.Empty;
             }
             else
             {
-                _loaded.Visible = true;
-                _unloaded.Visible = false;
-                if (_preferencesManager.Preferences?.SelectedCharacter is not HumanoidCharacterProfile selectedCharacter)
-                {
-                    _summaryLabel.Text = string.Empty;
-                }
-                else
-                {
-                    _summaryLabel.Text = selectedCharacter.Summary;
-                    EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(_previewDummy.Uid, selectedCharacter);
-                    GiveDummyJobClothes(_previewDummy, selectedCharacter);
-                }
+                _summaryLabel.Text = selectedCharacter.Summary;
+                EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(_previewDummy.Uid, selectedCharacter);
+                GiveDummyJobClothes(_previewDummy, selectedCharacter);
             }
         }
+    }
 
-        public static void GiveDummyJobClothes(IEntity dummy, HumanoidCharacterProfile profile)
+    public static void GiveDummyJobClothes(IEntity dummy, HumanoidCharacterProfile profile)
+    {
+        var protoMan = IoCManager.Resolve<IPrototypeManager>();
+
+        var inventory = dummy.GetComponent<ClientInventoryComponent>();
+
+        var highPriorityJob = profile.JobPriorities.FirstOrDefault(p => p.Value == JobPriority.High).Key;
+
+        var job = protoMan.Index<JobPrototype>(highPriorityJob ?? SharedGameTicker.OverflowJob);
+
+        inventory.ClearAllSlotVisuals();
+
+        if (job.StartingGear != null)
         {
-            var protoMan = IoCManager.Resolve<IPrototypeManager>();
+            var entityMan = IoCManager.Resolve<IEntityManager>();
+            var gear = protoMan.Index<StartingGearPrototype>(job.StartingGear);
 
-            var inventory = dummy.GetComponent<ClientInventoryComponent>();
-
-            var highPriorityJob = profile.JobPriorities.FirstOrDefault(p => p.Value == JobPriority.High).Key;
-
-            var job = protoMan.Index<JobPrototype>(highPriorityJob ?? SharedGameTicker.OverflowJob);
-
-            inventory.ClearAllSlotVisuals();
-
-            if (job.StartingGear != null)
+            foreach (var slot in AllSlots)
             {
-                var entityMan = IoCManager.Resolve<IEntityManager>();
-                var gear = protoMan.Index<StartingGearPrototype>(job.StartingGear);
-
-                foreach (var slot in AllSlots)
+                var itemType = gear.GetGear(slot, profile);
+                if (itemType != string.Empty)
                 {
-                    var itemType = gear.GetGear(slot, profile);
-                    if (itemType != string.Empty)
-                    {
-                        var item = entityMan.SpawnEntity(itemType, MapCoordinates.Nullspace);
-                        inventory.SetSlotVisuals(slot, item);
-                        item.Delete();
-                    }
+                    var item = entityMan.SpawnEntity(itemType, MapCoordinates.Nullspace);
+                    inventory.SetSlotVisuals(slot, item);
+                    item.Delete();
                 }
             }
         }

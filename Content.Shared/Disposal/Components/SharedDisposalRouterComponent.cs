@@ -3,52 +3,51 @@ using System.Text.RegularExpressions;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Disposal.Components
+namespace Content.Shared.Disposal.Components;
+
+public class SharedDisposalRouterComponent : Component
 {
-    public class SharedDisposalRouterComponent : Component
+    public override string Name => "DisposalRouter";
+
+    public static readonly Regex TagRegex = new("^[a-zA-Z0-9, ]*$", RegexOptions.Compiled);
+
+    [Serializable, NetSerializable]
+    public class DisposalRouterUserInterfaceState : BoundUserInterfaceState
     {
-        public override string Name => "DisposalRouter";
+        public readonly string Tags;
 
-        public static readonly Regex TagRegex = new("^[a-zA-Z0-9, ]*$", RegexOptions.Compiled);
-
-        [Serializable, NetSerializable]
-        public class DisposalRouterUserInterfaceState : BoundUserInterfaceState
+        public DisposalRouterUserInterfaceState(string tags)
         {
-            public readonly string Tags;
+            Tags = tags;
+        }
+    }
 
-            public DisposalRouterUserInterfaceState(string tags)
+    [Serializable, NetSerializable]
+    public class UiActionMessage : BoundUserInterfaceMessage
+    {
+        public readonly UiAction Action;
+        public readonly string Tags = "";
+
+        public UiActionMessage(UiAction action, string tags)
+        {
+            Action = action;
+
+            if (Action == UiAction.Ok)
             {
-                Tags = tags;
+                Tags = tags.Substring(0, Math.Min(tags.Length, 150));
             }
         }
+    }
 
-        [Serializable, NetSerializable]
-        public class UiActionMessage : BoundUserInterfaceMessage
-        {
-            public readonly UiAction Action;
-            public readonly string Tags = "";
+    [Serializable, NetSerializable]
+    public enum UiAction
+    {
+        Ok
+    }
 
-            public UiActionMessage(UiAction action, string tags)
-            {
-                Action = action;
-
-                if (Action == UiAction.Ok)
-                {
-                    Tags = tags.Substring(0, Math.Min(tags.Length, 150));
-                }
-            }
-        }
-
-        [Serializable, NetSerializable]
-        public enum UiAction
-        {
-            Ok
-        }
-
-        [Serializable, NetSerializable]
-        public enum DisposalRouterUiKey
-        {
-            Key
-        }
+    [Serializable, NetSerializable]
+    public enum DisposalRouterUiKey
+    {
+        Key
     }
 }

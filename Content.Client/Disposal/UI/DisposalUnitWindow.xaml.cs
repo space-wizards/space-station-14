@@ -11,74 +11,73 @@ using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using static Content.Shared.Disposal.Components.SharedDisposalUnitComponent;
 
-namespace Content.Client.Disposal.UI
+namespace Content.Client.Disposal.UI;
+
+/// <summary>
+/// Client-side UI used to control a <see cref="SharedDisposalUnitComponent"/>
+/// </summary>
+[GenerateTypedNameReferences]
+public partial class DisposalUnitWindow : SS14Window
 {
-    /// <summary>
-    /// Client-side UI used to control a <see cref="SharedDisposalUnitComponent"/>
-    /// </summary>
-    [GenerateTypedNameReferences]
-    public partial class DisposalUnitWindow : SS14Window
+    public DisposalUnitWindow()
     {
-        public DisposalUnitWindow()
+        IoCManager.InjectDependencies(this);
+        RobustXamlLoader.Load(this);
+    }
+
+    private void UpdatePressureBar(float pressure)
+    {
+        PressureBar.Value = pressure;
+
+        var normalized = pressure / PressureBar.MaxValue;
+
+        const float leftHue = 0.0f; // Red
+        const float middleHue = 0.066f; // Orange
+        const float rightHue = 0.33f; // Green
+        const float saturation = 1.0f; // Uniform saturation
+        const float value = 0.8f; // Uniform value / brightness
+        const float alpha = 1.0f; // Uniform alpha
+
+        // These should add up to 1.0 or your transition won't be smooth
+        const float leftSideSize = 0.5f; // Fraction of _chargeBar lerped from leftHue to middleHue
+        const float rightSideSize = 0.5f; // Fraction of _chargeBar lerped from middleHue to rightHue
+
+        float finalHue;
+        if (normalized <= leftSideSize)
         {
-            IoCManager.InjectDependencies(this);
-            RobustXamlLoader.Load(this);
+            normalized /= leftSideSize; // Adjust range to 0.0 to 1.0
+            finalHue = MathHelper.Lerp(leftHue, middleHue, normalized);
+        }
+        else
+        {
+            normalized = (normalized - leftSideSize) / rightSideSize; // Adjust range to 0.0 to 1.0.
+            finalHue = MathHelper.Lerp(middleHue, rightHue, normalized);
         }
 
-        private void UpdatePressureBar(float pressure)
-        {
-            PressureBar.Value = pressure;
+        // Check if null first to avoid repeatedly creating this.
+        PressureBar.ForegroundStyleBoxOverride ??= new StyleBoxFlat();
 
-            var normalized = pressure / PressureBar.MaxValue;
+        var foregroundStyleBoxOverride = (StyleBoxFlat) PressureBar.ForegroundStyleBoxOverride;
+        foregroundStyleBoxOverride.BackgroundColor =
+            Color.FromHsv(new Vector4(finalHue, saturation, value, alpha));
+    }
 
-            const float leftHue = 0.0f; // Red
-            const float middleHue = 0.066f; // Orange
-            const float rightHue = 0.33f; // Green
-            const float saturation = 1.0f; // Uniform saturation
-            const float value = 0.8f; // Uniform value / brightness
-            const float alpha = 1.0f; // Uniform alpha
+    /// <summary>
+    /// Update the interface state for the disposals window.
+    /// </summary>
+    /// <returns>true if we should stop updating every frame.</returns>
+    public bool UpdateState(DisposalUnitBoundUserInterfaceState state)
+    {
+        var currentTime = IoCManager.Resolve<IGameTiming>().CurTime;
+        var fullTime = state.FullPressureTime;
+        var pressure = (float) Math.Min(1.0f, 1.0f - (fullTime.TotalSeconds - currentTime.TotalSeconds) * SharedDisposalUnitSystem.PressurePerSecond);
 
-            // These should add up to 1.0 or your transition won't be smooth
-            const float leftSideSize = 0.5f; // Fraction of _chargeBar lerped from leftHue to middleHue
-            const float rightSideSize = 0.5f; // Fraction of _chargeBar lerped from middleHue to rightHue
+        Title = state.UnitName;
+        UnitState.Text = state.UnitState;
+        UpdatePressureBar(pressure);
+        Power.Pressed = state.Powered;
+        Engage.Pressed = state.Engaged;
 
-            float finalHue;
-            if (normalized <= leftSideSize)
-            {
-                normalized /= leftSideSize; // Adjust range to 0.0 to 1.0
-                finalHue = MathHelper.Lerp(leftHue, middleHue, normalized);
-            }
-            else
-            {
-                normalized = (normalized - leftSideSize) / rightSideSize; // Adjust range to 0.0 to 1.0.
-                finalHue = MathHelper.Lerp(middleHue, rightHue, normalized);
-            }
-
-            // Check if null first to avoid repeatedly creating this.
-            PressureBar.ForegroundStyleBoxOverride ??= new StyleBoxFlat();
-
-            var foregroundStyleBoxOverride = (StyleBoxFlat) PressureBar.ForegroundStyleBoxOverride;
-            foregroundStyleBoxOverride.BackgroundColor =
-                Color.FromHsv(new Vector4(finalHue, saturation, value, alpha));
-        }
-
-        /// <summary>
-        /// Update the interface state for the disposals window.
-        /// </summary>
-        /// <returns>true if we should stop updating every frame.</returns>
-        public bool UpdateState(DisposalUnitBoundUserInterfaceState state)
-        {
-            var currentTime = IoCManager.Resolve<IGameTiming>().CurTime;
-            var fullTime = state.FullPressureTime;
-            var pressure = (float) Math.Min(1.0f, 1.0f - (fullTime.TotalSeconds - currentTime.TotalSeconds) * SharedDisposalUnitSystem.PressurePerSecond);
-
-            Title = state.UnitName;
-            UnitState.Text = state.UnitState;
-            UpdatePressureBar(pressure);
-            Power.Pressed = state.Powered;
-            Engage.Pressed = state.Engaged;
-
-            return !state.Powered || pressure >= 1.0f;
-        }
+        return !state.Powered || pressure >= 1.0f;
     }
 }

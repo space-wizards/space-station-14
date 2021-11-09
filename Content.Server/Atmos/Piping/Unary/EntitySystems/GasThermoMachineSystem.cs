@@ -9,53 +9,52 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Server.Atmos.Piping.Unary.EntitySystems
+namespace Content.Server.Atmos.Piping.Unary.EntitySystems;
+
+[UsedImplicitly]
+public class GasThermoMachineSystem : EntitySystem
 {
-    [UsedImplicitly]
-    public class GasThermoMachineSystem : EntitySystem
+    [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+        base.Initialize();
 
-        public override void Initialize()
+        SubscribeLocalEvent<GasThermoMachineComponent, AtmosDeviceUpdateEvent>(OnThermoMachineUpdated);
+        SubscribeLocalEvent<GasThermoMachineComponent, AtmosDeviceDisabledEvent>(OnThermoMachineLeaveAtmosphere);
+    }
+
+    private void OnThermoMachineUpdated(EntityUid uid, GasThermoMachineComponent thermoMachine, AtmosDeviceUpdateEvent args)
+    {
+        var appearance = thermoMachine.Owner.GetComponentOrNull<AppearanceComponent>();
+
+        if (!thermoMachine.Enabled
+            || !EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
+            || !nodeContainer.TryGetNode(thermoMachine.InletName, out PipeNode? inlet))
         {
-            base.Initialize();
-
-            SubscribeLocalEvent<GasThermoMachineComponent, AtmosDeviceUpdateEvent>(OnThermoMachineUpdated);
-            SubscribeLocalEvent<GasThermoMachineComponent, AtmosDeviceDisabledEvent>(OnThermoMachineLeaveAtmosphere);
+            appearance?.SetData(ThermoMachineVisuals.Enabled, false);
+            return;
         }
 
-        private void OnThermoMachineUpdated(EntityUid uid, GasThermoMachineComponent thermoMachine, AtmosDeviceUpdateEvent args)
+        var airHeatCapacity = _atmosphereSystem.GetHeatCapacity(inlet.Air);
+        var combinedHeatCapacity = airHeatCapacity + thermoMachine.HeatCapacity;
+        var oldTemperature = inlet.Air.Temperature;
+
+        if (combinedHeatCapacity > 0)
         {
-            var appearance = thermoMachine.Owner.GetComponentOrNull<AppearanceComponent>();
-
-            if (!thermoMachine.Enabled
-                || !EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
-                || !nodeContainer.TryGetNode(thermoMachine.InletName, out PipeNode? inlet))
-            {
-                appearance?.SetData(ThermoMachineVisuals.Enabled, false);
-                return;
-            }
-
-            var airHeatCapacity = _atmosphereSystem.GetHeatCapacity(inlet.Air);
-            var combinedHeatCapacity = airHeatCapacity + thermoMachine.HeatCapacity;
-            var oldTemperature = inlet.Air.Temperature;
-
-            if (combinedHeatCapacity > 0)
-            {
-                appearance?.SetData(ThermoMachineVisuals.Enabled, true);
-                var combinedEnergy = thermoMachine.HeatCapacity * thermoMachine.TargetTemperature + airHeatCapacity * inlet.Air.Temperature;
-                inlet.Air.Temperature = combinedEnergy / combinedHeatCapacity;
-            }
-
-            // TODO ATMOS: Active power usage.
+            appearance?.SetData(ThermoMachineVisuals.Enabled, true);
+            var combinedEnergy = thermoMachine.HeatCapacity * thermoMachine.TargetTemperature + airHeatCapacity * inlet.Air.Temperature;
+            inlet.Air.Temperature = combinedEnergy / combinedHeatCapacity;
         }
 
-        private void OnThermoMachineLeaveAtmosphere(EntityUid uid, GasThermoMachineComponent component, AtmosDeviceDisabledEvent args)
+        // TODO ATMOS: Active power usage.
+    }
+
+    private void OnThermoMachineLeaveAtmosphere(EntityUid uid, GasThermoMachineComponent component, AtmosDeviceDisabledEvent args)
+    {
+        if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
         {
-            if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
-            {
-                appearance.SetData(ThermoMachineVisuals.Enabled, false);
-            }
+            appearance.SetData(ThermoMachineVisuals.Enabled, false);
         }
     }
 }

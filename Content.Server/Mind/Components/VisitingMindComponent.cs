@@ -1,24 +1,23 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Mind.Components
+namespace Content.Server.Mind.Components;
+
+[RegisterComponent]
+public sealed class VisitingMindComponent : Component
 {
-    [RegisterComponent]
-    public sealed class VisitingMindComponent : Component
+    public override string Name => "VisitingMind";
+
+    [ViewVariables] public Mind Mind { get; set; } = default!;
+
+    protected override void OnRemove()
     {
-        public override string Name => "VisitingMind";
+        base.OnRemove();
 
-        [ViewVariables] public Mind Mind { get; set; } = default!;
-
-        protected override void OnRemove()
-        {
-            base.OnRemove();
-
-            Mind?.UnVisit();
-        }
+        Mind?.UnVisit();
     }
+}
 
-    public class MindUnvisitedMessage : EntityEventArgs
-    {
-    }
+public class MindUnvisitedMessage : EntityEventArgs
+{
 }

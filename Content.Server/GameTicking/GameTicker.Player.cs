@@ -10,134 +10,133 @@ using Robust.Shared.Localization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
-namespace Content.Server.GameTicking
+namespace Content.Server.GameTicking;
+
+[UsedImplicitly]
+public partial class GameTicker
 {
-    [UsedImplicitly]
-    public partial class GameTicker
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
+
+    private void InitializePlayer()
     {
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        _playerManager.PlayerStatusChanged += PlayerStatusChanged;
+    }
 
-        private void InitializePlayer()
+    private void PlayerStatusChanged(object? sender, SessionStatusEventArgs args)
+    {
+        var session = args.Session;
+
+        switch (args.NewStatus)
         {
-            _playerManager.PlayerStatusChanged += PlayerStatusChanged;
-        }
+            case SessionStatus.Connecting:
+                // Cancel shutdown update timer in progress.
+                _updateShutdownCts?.Cancel();
+                break;
 
-        private void PlayerStatusChanged(object? sender, SessionStatusEventArgs args)
-        {
-            var session = args.Session;
-
-            switch (args.NewStatus)
+            case SessionStatus.Connected:
             {
-                case SessionStatus.Connecting:
-                    // Cancel shutdown update timer in progress.
-                    _updateShutdownCts?.Cancel();
-                    break;
+                // Always make sure the client has player data. Mind gets assigned on spawn.
+                if (session.Data.ContentDataUncast == null)
+                    session.Data.ContentDataUncast = new PlayerData(session.UserId);
 
-                case SessionStatus.Connected:
+                // Make the player actually join the game.
+                // timer time must be > tick length
+                Timer.Spawn(0, args.Session.JoinGame);
+
+                _chatManager.SendAdminAnnouncement(Loc.GetString("player-join-message", ("name", args.Session.Name)));
+
+                if (LobbyEnabled && _roundStartCountdownHasNotStartedYetDueToNoPlayers)
                 {
-                    // Always make sure the client has player data. Mind gets assigned on spawn.
-                    if (session.Data.ContentDataUncast == null)
-                        session.Data.ContentDataUncast = new PlayerData(session.UserId);
-
-                    // Make the player actually join the game.
-                    // timer time must be > tick length
-                    Timer.Spawn(0, args.Session.JoinGame);
-
-                    _chatManager.SendAdminAnnouncement(Loc.GetString("player-join-message", ("name", args.Session.Name)));
-
-                    if (LobbyEnabled && _roundStartCountdownHasNotStartedYetDueToNoPlayers)
-                    {
-                        _roundStartCountdownHasNotStartedYetDueToNoPlayers = false;
-                        _roundStartTime = _gameTiming.CurTime + LobbyDuration;
-                    }
-
-                    break;
+                    _roundStartCountdownHasNotStartedYetDueToNoPlayers = false;
+                    _roundStartTime = _gameTiming.CurTime + LobbyDuration;
                 }
 
-                case SessionStatus.InGame:
+                break;
+            }
+
+            case SessionStatus.InGame:
+            {
+                _prefsManager.OnClientConnected(session);
+
+                var data = session.ContentData();
+
+                DebugTools.AssertNotNull(data);
+
+                if (data!.Mind == null)
                 {
-                    _prefsManager.OnClientConnected(session);
-
-                    var data = session.ContentData();
-
-                    DebugTools.AssertNotNull(data);
-
-                    if (data!.Mind == null)
+                    if (LobbyEnabled)
                     {
-                        if (LobbyEnabled)
-                        {
-                            PlayerJoinLobby(session);
-                            return;
-                        }
+                        PlayerJoinLobby(session);
+                        return;
+                    }
 
 
+                    SpawnWaitPrefs();
+                }
+                else
+                {
+                    if (data.Mind.CurrentEntity == null)
+                    {
                         SpawnWaitPrefs();
                     }
                     else
                     {
-                        if (data.Mind.CurrentEntity == null)
-                        {
-                            SpawnWaitPrefs();
-                        }
-                        else
-                        {
-                            session.AttachToEntity(data.Mind.CurrentEntity);
-                            PlayerJoinGame(session);
-                        }
+                        session.AttachToEntity(data.Mind.CurrentEntity);
+                        PlayerJoinGame(session);
                     }
-
-                    break;
                 }
 
-                case SessionStatus.Disconnected:
-                {
-                    if (_playersInLobby.ContainsKey(session)) _playersInLobby.Remove(session);
-
-                    _chatManager.SendAdminAnnouncement(Loc.GetString("player-leave-message", ("name", args.Session.Name)));
-
-                    ServerEmptyUpdateRestartCheck();
-                    _prefsManager.OnClientDisconnected(session);
-                    break;
-                }
+                break;
             }
 
-            async void SpawnWaitPrefs()
+            case SessionStatus.Disconnected:
             {
-                await _prefsManager.WaitPreferencesLoaded(session);
-                SpawnPlayer(session);
+                if (_playersInLobby.ContainsKey(session)) _playersInLobby.Remove(session);
+
+                _chatManager.SendAdminAnnouncement(Loc.GetString("player-leave-message", ("name", args.Session.Name)));
+
+                ServerEmptyUpdateRestartCheck();
+                _prefsManager.OnClientDisconnected(session);
+                break;
             }
         }
 
-        private HumanoidCharacterProfile GetPlayerProfile(IPlayerSession p)
+        async void SpawnWaitPrefs()
         {
-            return (HumanoidCharacterProfile) _prefsManager.GetPreferences(p.UserId).SelectedCharacter;
+            await _prefsManager.WaitPreferencesLoaded(session);
+            SpawnPlayer(session);
         }
+    }
 
-        private void PlayerJoinGame(IPlayerSession session)
-        {
-            _chatManager.DispatchServerMessage(session, Loc.GetString("game-ticker-player-join-game-message"));
+    private HumanoidCharacterProfile GetPlayerProfile(IPlayerSession p)
+    {
+        return (HumanoidCharacterProfile) _prefsManager.GetPreferences(p.UserId).SelectedCharacter;
+    }
 
-            if (_playersInLobby.ContainsKey(session))
-                _playersInLobby.Remove(session);
+    private void PlayerJoinGame(IPlayerSession session)
+    {
+        _chatManager.DispatchServerMessage(session, Loc.GetString("game-ticker-player-join-game-message"));
 
-            RaiseNetworkEvent(new TickerJoinGameEvent(), session.ConnectedClient);
-        }
+        if (_playersInLobby.ContainsKey(session))
+            _playersInLobby.Remove(session);
 
-        private void PlayerJoinLobby(IPlayerSession session)
-        {
-            _playersInLobby[session] = LobbyPlayerStatus.NotReady;
+        RaiseNetworkEvent(new TickerJoinGameEvent(), session.ConnectedClient);
+    }
 
-            var client = session.ConnectedClient;
-            RaiseNetworkEvent(new TickerJoinLobbyEvent(), client);
-            RaiseNetworkEvent(GetStatusMsg(session), client);
-            RaiseNetworkEvent(GetInfoMsg(), client);
-            RaiseNetworkEvent(GetPlayerStatus(), client);
-            RaiseNetworkEvent(GetJobsAvailable(), client);
-        }
+    private void PlayerJoinLobby(IPlayerSession session)
+    {
+        _playersInLobby[session] = LobbyPlayerStatus.NotReady;
 
-        private void ReqWindowAttentionAll()
-        {
-            RaiseNetworkEvent(new RequestWindowAttentionEvent());
-        }
+        var client = session.ConnectedClient;
+        RaiseNetworkEvent(new TickerJoinLobbyEvent(), client);
+        RaiseNetworkEvent(GetStatusMsg(session), client);
+        RaiseNetworkEvent(GetInfoMsg(), client);
+        RaiseNetworkEvent(GetPlayerStatus(), client);
+        RaiseNetworkEvent(GetJobsAvailable(), client);
+    }
+
+    private void ReqWindowAttentionAll()
+    {
+        RaiseNetworkEvent(new RequestWindowAttentionEvent());
     }
 }

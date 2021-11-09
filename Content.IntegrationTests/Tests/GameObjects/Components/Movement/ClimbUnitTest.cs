@@ -8,14 +8,14 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 
-namespace Content.IntegrationTests.Tests.GameObjects.Components.Movement
+namespace Content.IntegrationTests.Tests.GameObjects.Components.Movement;
+
+[TestFixture]
+[TestOf(typeof(ClimbableComponent))]
+[TestOf(typeof(ClimbingComponent))]
+public class ClimbUnitTest : ContentIntegrationTest
 {
-    [TestFixture]
-    [TestOf(typeof(ClimbableComponent))]
-    [TestOf(typeof(ClimbingComponent))]
-    public class ClimbUnitTest : ContentIntegrationTest
-    {
-        private const string Prototypes = @"
+    private const string Prototypes = @"
 - type: entity
   name: HumanDummy
   id: HumanDummy
@@ -31,44 +31,43 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Movement
   - type: Physics
 ";
 
-        [Test]
-        public async Task Test()
+    [Test]
+    public async Task Test()
+    {
+        var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
+        var server = StartServer(options);
+
+        IEntity human;
+        IEntity table;
+        ClimbingComponent climbing;
+
+        server.Assert(() =>
         {
-            var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
-            var server = StartServer(options);
+            var mapManager = IoCManager.Resolve<IMapManager>();
+            mapManager.CreateNewMapEntity(MapId.Nullspace);
 
-            IEntity human;
-            IEntity table;
-            ClimbingComponent climbing;
+            var entityManager = IoCManager.Resolve<IEntityManager>();
 
-            server.Assert(() =>
-            {
-                var mapManager = IoCManager.Resolve<IMapManager>();
-                mapManager.CreateNewMapEntity(MapId.Nullspace);
+            // Spawn the entities
+            human = entityManager.SpawnEntity("HumanDummy", MapCoordinates.Nullspace);
+            table = entityManager.SpawnEntity("TableDummy", MapCoordinates.Nullspace);
 
-                var entityManager = IoCManager.Resolve<IEntityManager>();
+            // Test for climb components existing
+            // Players and tables should have these in their prototypes.
+            Assert.That(human.TryGetComponent(out climbing!), "Human has no climbing");
+            Assert.That(table.TryGetComponent(out ClimbableComponent? _), "Table has no climbable");
 
-                // Spawn the entities
-                human = entityManager.SpawnEntity("HumanDummy", MapCoordinates.Nullspace);
-                table = entityManager.SpawnEntity("TableDummy", MapCoordinates.Nullspace);
+            // Now let's make the player enter a climbing transitioning state.
+            climbing.IsClimbing = true;
+            climbing.TryMoveTo(human.Transform.WorldPosition, table.Transform.WorldPosition);
+            var body = human.GetComponent<IPhysBody>();
+            // TODO: Check it's climbing
 
-                // Test for climb components existing
-                // Players and tables should have these in their prototypes.
-                Assert.That(human.TryGetComponent(out climbing!), "Human has no climbing");
-                Assert.That(table.TryGetComponent(out ClimbableComponent? _), "Table has no climbable");
+            // Force the player out of climb state. It should immediately remove the ClimbController.
+            climbing.IsClimbing = false;
 
-                // Now let's make the player enter a climbing transitioning state.
-                climbing.IsClimbing = true;
-                climbing.TryMoveTo(human.Transform.WorldPosition, table.Transform.WorldPosition);
-                var body = human.GetComponent<IPhysBody>();
-                // TODO: Check it's climbing
+        });
 
-                // Force the player out of climb state. It should immediately remove the ClimbController.
-                climbing.IsClimbing = false;
-
-            });
-
-            await server.WaitIdleAsync();
-        }
+        await server.WaitIdleAsync();
     }
 }

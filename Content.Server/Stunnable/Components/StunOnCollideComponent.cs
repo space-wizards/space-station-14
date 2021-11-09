@@ -2,31 +2,30 @@ using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.Stunnable.Components
+namespace Content.Server.Stunnable.Components;
+
+/// <summary>
+/// Adds stun when it collides with an entity
+/// </summary>
+[RegisterComponent, Friend(typeof(StunOnCollideSystem))]
+public sealed class StunOnCollideComponent : Component
 {
-    /// <summary>
-    /// Adds stun when it collides with an entity
-    /// </summary>
-    [RegisterComponent, Friend(typeof(StunOnCollideSystem))]
-    public sealed class StunOnCollideComponent : Component
-    {
-        // TODO: Can probably predict this.
-        public override string Name => "StunOnCollide";
+    // TODO: Can probably predict this.
+    public override string Name => "StunOnCollide";
 
-        // See stunsystem for what these do
-        [DataField("stunAmount")]
-        public int StunAmount;
+    // See stunsystem for what these do
+    [DataField("stunAmount")]
+    public int StunAmount;
 
-        [DataField("knockdownAmount")]
-        public int KnockdownAmount;
+    [DataField("knockdownAmount")]
+    public int KnockdownAmount;
 
-        [DataField("slowdownAmount")]
-        public int SlowdownAmount;
+    [DataField("slowdownAmount")]
+    public int SlowdownAmount;
 
-        [DataField("walkSpeedMultiplier")]
-        public float WalkSpeedMultiplier = 1f;
+    [DataField("walkSpeedMultiplier")]
+    public float WalkSpeedMultiplier = 1f;
 
-        [DataField("runSpeedMultiplier")]
-        public float RunSpeedMultiplier = 1f;
-    }
+    [DataField("runSpeedMultiplier")]
+    public float RunSpeedMultiplier = 1f;
 }

@@ -13,168 +13,167 @@ using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
-namespace Content.Client.Info
+namespace Content.Client.Info;
+
+public sealed class InfoWindow : SS14Window
 {
-    public sealed class InfoWindow : SS14Window
+    [Dependency] private readonly IResourceCache _resourceManager = default!;
+
+    private OptionsMenu optionsMenu;
+
+    public InfoWindow()
     {
-        [Dependency] private readonly IResourceCache _resourceManager = default!;
+        IoCManager.InjectDependencies(this);
 
-        private OptionsMenu optionsMenu;
+        optionsMenu = new OptionsMenu();
 
-        public InfoWindow()
+        Title = Loc.GetString("ui-info-title");
+
+        var rootContainer = new TabContainer();
+
+        var rulesList = new ScrollContainer
         {
-            IoCManager.InjectDependencies(this);
-
-            optionsMenu = new OptionsMenu();
-
-            Title = Loc.GetString("ui-info-title");
-
-            var rootContainer = new TabContainer();
-
-            var rulesList = new ScrollContainer
-            {
-                HScrollEnabled = false
-            };
-            var tutorialList = new ScrollContainer
-            {
-                HScrollEnabled = false
-            };
-
-
-            rootContainer.AddChild(rulesList);
-            rootContainer.AddChild(tutorialList);
-
-            TabContainer.SetTabTitle(rulesList, Loc.GetString("ui-info-tab-rules"));
-            TabContainer.SetTabTitle(tutorialList, Loc.GetString("ui-info-tab-tutorial"));
-
-            PopulateRules(rulesList);
-            PopulateTutorial(tutorialList);
-
-            Contents.AddChild(rootContainer);
-
-            SetSize = (650, 650);
-        }
-
-        private void PopulateRules(Control rulesList)
+            HScrollEnabled = false
+        };
+        var tutorialList = new ScrollContainer
         {
-            var vBox = new BoxContainer
+            HScrollEnabled = false
+        };
+
+
+        rootContainer.AddChild(rulesList);
+        rootContainer.AddChild(tutorialList);
+
+        TabContainer.SetTabTitle(rulesList, Loc.GetString("ui-info-tab-rules"));
+        TabContainer.SetTabTitle(tutorialList, Loc.GetString("ui-info-tab-tutorial"));
+
+        PopulateRules(rulesList);
+        PopulateTutorial(tutorialList);
+
+        Contents.AddChild(rootContainer);
+
+        SetSize = (650, 650);
+    }
+
+    private void PopulateRules(Control rulesList)
+    {
+        var vBox = new BoxContainer
+        {
+            Orientation = LayoutOrientation.Vertical,
+            Margin = new Thickness(2, 2, 0, 0)
+        };
+
+        var first = true;
+
+        void AddSection(string title, string path, bool markup = false)
+        {
+            if (!first)
             {
-                Orientation = LayoutOrientation.Vertical,
-                Margin = new Thickness(2, 2, 0, 0)
-            };
-
-            var first = true;
-
-            void AddSection(string title, string path, bool markup = false)
-            {
-                if (!first)
-                {
-                    vBox.AddChild(new Control { MinSize = (0, 10) });
-                }
-
-                first = false;
-                vBox.AddChild(new Label { StyleClasses = { StyleBase.StyleClassLabelHeading }, Text = title });
-
-                var label = new RichTextLabel();
-                var text = _resourceManager.ContentFileReadAllText($"/Server Info/{path}");
-                if (markup)
-                {
-                    label.SetMessage(FormattedMessage.FromMarkup(text.Trim()));
-                }
-                else
-                {
-                    label.SetMessage(text);
-                }
-
-                vBox.AddChild(label);
+                vBox.AddChild(new Control { MinSize = (0, 10) });
             }
 
-            AddSection(Loc.GetString("ui-info-header-rules"), "Rules.txt", true);
+            first = false;
+            vBox.AddChild(new Label { StyleClasses = { StyleBase.StyleClassLabelHeading }, Text = title });
 
-            rulesList.AddChild(vBox);
-
-        }
-
-        private void PopulateTutorial(Control tutorialList)
-        {
-            Button controlsButton;
-
-            var vBox = new BoxContainer
+            var label = new RichTextLabel();
+            var text = _resourceManager.ContentFileReadAllText($"/Server Info/{path}");
+            if (markup)
             {
-                Orientation = LayoutOrientation.Vertical,
-                Margin = new Thickness(2, 2, 0, 0)
-            };
-
-            var first = true;
-
-            void AddSection(string title, string path, bool markup = false)
+                label.SetMessage(FormattedMessage.FromMarkup(text.Trim()));
+            }
+            else
             {
-                if (!first)
-                {
-                    vBox.AddChild(new Control { MinSize = (0, 10) });
-                }
-
-                first = false;
-                vBox.AddChild(new Label { StyleClasses = { StyleBase.StyleClassLabelHeading }, Text = title });
-
-                var label = new RichTextLabel();
-                var text = _resourceManager.ContentFileReadAllText($"/Server Info/{path}");
-                if (markup)
-                {
-                    label.SetMessage(FormattedMessage.FromMarkup(text.Trim()));
-                }
-                else
-                {
-                    label.SetMessage(text);
-                }
-
-                vBox.AddChild(label);
+                label.SetMessage(text);
             }
 
-            AddSection(Loc.GetString("ui-info-header-intro"), "Intro.txt");
-
-            vBox.AddChild(new BoxContainer
-            {
-                Orientation = LayoutOrientation.Horizontal,
-                MinSize = (0, 10),
-                Children =
-                {
-                    new Label {StyleClasses = { StyleBase.StyleClassLabelHeading }, Text = Loc.GetString("ui-info-header-controls")},
-                }
-            });
-
-            vBox.AddChild(new BoxContainer
-            {
-                Orientation = LayoutOrientation.Horizontal,
-                SeparationOverride = 5,
-                Children =
-                {
-                     new Label {Text = Loc.GetString("ui-info-text-controls")},
-                     (controlsButton = new Button {Text = Loc.GetString("ui-info-button-controls")})
-                }
-            });
-
-            AddSection(Loc.GetString("ui-info-header-gameplay"), "Gameplay.txt", true);
-            AddSection(Loc.GetString("ui-info-header-sandbox"), "Sandbox.txt", true);
-
-            tutorialList.AddChild(vBox);
-
-            controlsButton.OnPressed += _ =>
-                optionsMenu.OpenCentered();
+            vBox.AddChild(label);
         }
 
-        private static IEnumerable<string> Lines(TextReader reader)
-        {
-            while (true)
-            {
-                var line = reader.ReadLine();
-                if (line == null)
-                {
-                    yield break;
-                }
+        AddSection(Loc.GetString("ui-info-header-rules"), "Rules.txt", true);
 
-                yield return line;
+        rulesList.AddChild(vBox);
+
+    }
+
+    private void PopulateTutorial(Control tutorialList)
+    {
+        Button controlsButton;
+
+        var vBox = new BoxContainer
+        {
+            Orientation = LayoutOrientation.Vertical,
+            Margin = new Thickness(2, 2, 0, 0)
+        };
+
+        var first = true;
+
+        void AddSection(string title, string path, bool markup = false)
+        {
+            if (!first)
+            {
+                vBox.AddChild(new Control { MinSize = (0, 10) });
             }
+
+            first = false;
+            vBox.AddChild(new Label { StyleClasses = { StyleBase.StyleClassLabelHeading }, Text = title });
+
+            var label = new RichTextLabel();
+            var text = _resourceManager.ContentFileReadAllText($"/Server Info/{path}");
+            if (markup)
+            {
+                label.SetMessage(FormattedMessage.FromMarkup(text.Trim()));
+            }
+            else
+            {
+                label.SetMessage(text);
+            }
+
+            vBox.AddChild(label);
+        }
+
+        AddSection(Loc.GetString("ui-info-header-intro"), "Intro.txt");
+
+        vBox.AddChild(new BoxContainer
+        {
+            Orientation = LayoutOrientation.Horizontal,
+            MinSize = (0, 10),
+            Children =
+            {
+                new Label {StyleClasses = { StyleBase.StyleClassLabelHeading }, Text = Loc.GetString("ui-info-header-controls")},
+            }
+        });
+
+        vBox.AddChild(new BoxContainer
+        {
+            Orientation = LayoutOrientation.Horizontal,
+            SeparationOverride = 5,
+            Children =
+            {
+                new Label {Text = Loc.GetString("ui-info-text-controls")},
+                (controlsButton = new Button {Text = Loc.GetString("ui-info-button-controls")})
+            }
+        });
+
+        AddSection(Loc.GetString("ui-info-header-gameplay"), "Gameplay.txt", true);
+        AddSection(Loc.GetString("ui-info-header-sandbox"), "Sandbox.txt", true);
+
+        tutorialList.AddChild(vBox);
+
+        controlsButton.OnPressed += _ =>
+            optionsMenu.OpenCentered();
+    }
+
+    private static IEnumerable<string> Lines(TextReader reader)
+    {
+        while (true)
+        {
+            var line = reader.ReadLine();
+            if (line == null)
+            {
+                yield break;
+            }
+
+            yield return line;
         }
     }
 }

@@ -3,28 +3,27 @@ using Content.Shared.DragDrop;
 using Content.Shared.Interaction.Helpers;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.Movement.Components
+namespace Content.Client.Movement.Components;
+
+[RegisterComponent]
+[ComponentReference(typeof(IClimbable))]
+public class ClimbableComponent : SharedClimbableComponent
 {
-    [RegisterComponent]
-    [ComponentReference(typeof(IClimbable))]
-    public class ClimbableComponent : SharedClimbableComponent
+    public override bool CanDragDropOn(DragDropEvent eventArgs)
     {
-        public override bool CanDragDropOn(DragDropEvent eventArgs)
-        {
-            if (!base.CanDragDropOn(eventArgs))
-                return false;
-
-            var user = eventArgs.User;
-            var target = eventArgs.Target;
-            var dragged = eventArgs.Dragged;
-            bool Ignored(IEntity entity) => entity == target || entity == user || entity == dragged;
-
-            return user.InRangeUnobstructed(target, Range, predicate: Ignored) && user.InRangeUnobstructed(dragged, Range, predicate: Ignored);
-        }
-
-        public override bool DragDropOn(DragDropEvent eventArgs)
-        {
+        if (!base.CanDragDropOn(eventArgs))
             return false;
-        }
+
+        var user = eventArgs.User;
+        var target = eventArgs.Target;
+        var dragged = eventArgs.Dragged;
+        bool Ignored(IEntity entity) => entity == target || entity == user || entity == dragged;
+
+        return user.InRangeUnobstructed(target, Range, predicate: Ignored) && user.InRangeUnobstructed(dragged, Range, predicate: Ignored);
+    }
+
+    public override bool DragDropOn(DragDropEvent eventArgs)
+    {
+        return false;
     }
 }

@@ -11,52 +11,51 @@ using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using static Content.Shared.VendingMachines.SharedVendingMachineComponent;
 
-namespace Content.Client.VendingMachines.UI
+namespace Content.Client.VendingMachines.UI;
+
+[GenerateTypedNameReferences]
+public partial class VendingMachineMenu : SS14Window
 {
-    [GenerateTypedNameReferences]
-    public partial class VendingMachineMenu : SS14Window
+    [Dependency] private readonly IResourceCache _resourceCache = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
+    private VendingMachineBoundUserInterface Owner { get; }
+
+    private List<VendingMachineInventoryEntry> _cachedInventory = new();
+
+    public VendingMachineMenu(VendingMachineBoundUserInterface owner)
     {
-        [Dependency] private readonly IResourceCache _resourceCache = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        IoCManager.InjectDependencies(this);
+        RobustXamlLoader.Load(this);
 
-        private VendingMachineBoundUserInterface Owner { get; }
+        Owner = owner;
+        VendingContents.OnItemSelected += ItemSelected;
+    }
 
-        private List<VendingMachineInventoryEntry> _cachedInventory = new();
-
-        public VendingMachineMenu(VendingMachineBoundUserInterface owner)
+    public void Populate(List<VendingMachineInventoryEntry> inventory)
+    {
+        VendingContents.Clear();
+        _cachedInventory = inventory;
+        var longestEntry = "";
+        foreach (VendingMachineInventoryEntry entry in inventory)
         {
-            IoCManager.InjectDependencies(this);
-            RobustXamlLoader.Load(this);
+            var itemName = _prototypeManager.Index<EntityPrototype>(entry.ID).Name;
+            if (itemName.Length > longestEntry.Length)
+                longestEntry = itemName;
 
-            Owner = owner;
-            VendingContents.OnItemSelected += ItemSelected;
+            Texture? icon = null;
+            if(_prototypeManager.TryIndex(entry.ID, out EntityPrototype? prototype))
+                icon = SpriteComponent.GetPrototypeIcon(prototype, _resourceCache).Default;
+
+            VendingContents.AddItem($"{itemName} [{entry.Amount}]", icon);
         }
 
-        public void Populate(List<VendingMachineInventoryEntry> inventory)
-        {
-            VendingContents.Clear();
-            _cachedInventory = inventory;
-            var longestEntry = "";
-            foreach (VendingMachineInventoryEntry entry in inventory)
-            {
-                var itemName = _prototypeManager.Index<EntityPrototype>(entry.ID).Name;
-                if (itemName.Length > longestEntry.Length)
-                    longestEntry = itemName;
+        SetSize = (Math.Clamp((longestEntry.Length + 2) * 12, 250, 300),
+            Math.Clamp(VendingContents.Count * 30, 150, 350));
+    }
 
-                Texture? icon = null;
-                if(_prototypeManager.TryIndex(entry.ID, out EntityPrototype? prototype))
-                    icon = SpriteComponent.GetPrototypeIcon(prototype, _resourceCache).Default;
-
-                VendingContents.AddItem($"{itemName} [{entry.Amount}]", icon);
-            }
-
-            SetSize = (Math.Clamp((longestEntry.Length + 2) * 12, 250, 300),
-                Math.Clamp(VendingContents.Count * 30, 150, 350));
-        }
-
-        public void ItemSelected(ItemList.ItemListSelectedEventArgs args)
-        {
-            Owner.Eject(_cachedInventory[args.ItemIndex].ID);
-        }
+    public void ItemSelected(ItemList.ItemListSelectedEventArgs args)
+    {
+        Owner.Eject(_cachedInventory[args.ItemIndex].ID);
     }
 }

@@ -23,370 +23,369 @@ using Robust.Shared.Player;
 using Robust.Shared.Maths;
 using Content.Shared.Audio;
 
-namespace Content.Server.Light.EntitySystems
+namespace Content.Server.Light.EntitySystems;
+
+/// <summary>
+///     System for the PoweredLightComponens
+/// </summary>
+public class PoweredLightSystem : EntitySystem
 {
-    /// <summary>
-    ///     System for the PoweredLightComponens
-    /// </summary>
-    public class PoweredLightSystem : EntitySystem
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+    [Dependency] private readonly SharedAmbientSoundSystem _ambientSystem = default!;
+    [Dependency] private readonly LightBulbSystem _bulbSystem = default!;
+    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+
+    private static readonly TimeSpan ThunkDelay = TimeSpan.FromSeconds(2);
+
+    public override void Initialize()
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-        [Dependency] private readonly SharedAmbientSoundSystem _ambientSystem = default!;
-        [Dependency] private readonly LightBulbSystem _bulbSystem = default!;
-        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+        base.Initialize();
+        SubscribeLocalEvent<PoweredLightComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<PoweredLightComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<PoweredLightComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<PoweredLightComponent, InteractHandEvent>(OnInteractHand);
 
-        private static readonly TimeSpan ThunkDelay = TimeSpan.FromSeconds(2);
+        SubscribeLocalEvent<PoweredLightComponent, GhostBooEvent>(OnGhostBoo);
+        SubscribeLocalEvent<PoweredLightComponent, DamageChangedEvent>(HandleLightDamaged);
 
-        public override void Initialize()
+        SubscribeLocalEvent<PoweredLightComponent, SignalReceivedEvent>(OnSignalReceived);
+        SubscribeLocalEvent<PoweredLightComponent, PacketSentEvent>(OnPacketReceived);
+
+        SubscribeLocalEvent<PoweredLightComponent, PowerChangedEvent>(OnPowerChanged);
+    }
+
+    private void OnInit(EntityUid uid, PoweredLightComponent light, ComponentInit args)
+    {
+        light.LightBulbContainer = light.Owner.EnsureContainer<ContainerSlot>("light_bulb");
+    }
+
+    private void OnMapInit(EntityUid uid, PoweredLightComponent light, MapInitEvent args)
+    {
+        if (light.HasLampOnSpawn)
         {
-            base.Initialize();
-            SubscribeLocalEvent<PoweredLightComponent, ComponentInit>(OnInit);
-            SubscribeLocalEvent<PoweredLightComponent, MapInitEvent>(OnMapInit);
-            SubscribeLocalEvent<PoweredLightComponent, InteractUsingEvent>(OnInteractUsing);
-            SubscribeLocalEvent<PoweredLightComponent, InteractHandEvent>(OnInteractHand);
-
-            SubscribeLocalEvent<PoweredLightComponent, GhostBooEvent>(OnGhostBoo);
-            SubscribeLocalEvent<PoweredLightComponent, DamageChangedEvent>(HandleLightDamaged);
-
-            SubscribeLocalEvent<PoweredLightComponent, SignalReceivedEvent>(OnSignalReceived);
-            SubscribeLocalEvent<PoweredLightComponent, PacketSentEvent>(OnPacketReceived);
-
-            SubscribeLocalEvent<PoweredLightComponent, PowerChangedEvent>(OnPowerChanged);
-        }
-
-        private void OnInit(EntityUid uid, PoweredLightComponent light, ComponentInit args)
-        {
-            light.LightBulbContainer = light.Owner.EnsureContainer<ContainerSlot>("light_bulb");
-        }
-
-        private void OnMapInit(EntityUid uid, PoweredLightComponent light, MapInitEvent args)
-        {
-            if (light.HasLampOnSpawn)
+            var prototype = light.BulbType switch
             {
-                var prototype = light.BulbType switch
-                {
-                    LightBulbType.Bulb => "LightBulb",
-                    LightBulbType.Tube => "LightTube",
-                    _ => throw new ArgumentOutOfRangeException()
-                };
+                LightBulbType.Bulb => "LightBulb",
+                LightBulbType.Tube => "LightTube",
+                _ => throw new ArgumentOutOfRangeException()
+            };
 
-                var entity = EntityManager.SpawnEntity(prototype, light.Owner.Transform.Coordinates);
-                light.LightBulbContainer.Insert(entity);
-            }
-
-            // need this to update visualizers
-            UpdateLight(uid, light);
+            var entity = EntityManager.SpawnEntity(prototype, light.Owner.Transform.Coordinates);
+            light.LightBulbContainer.Insert(entity);
         }
 
-        private void OnInteractUsing(EntityUid uid, PoweredLightComponent component, InteractUsingEvent args)
+        // need this to update visualizers
+        UpdateLight(uid, light);
+    }
+
+    private void OnInteractUsing(EntityUid uid, PoweredLightComponent component, InteractUsingEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        args.Handled = InsertBulb(uid, args.Used.Uid, component);
+    }
+
+    private void OnInteractHand(EntityUid uid, PoweredLightComponent light, InteractHandEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        // check if light has bulb to eject
+        var bulbUid = GetBulb(uid, light);
+        if (bulbUid == null)
+            return;
+
+        // check if it's possible to apply burn damage to user
+        var userUid = args.User.Uid;
+        if (EntityManager.TryGetComponent(userUid, out HeatResistanceComponent? heatResist) &&
+            EntityManager.TryGetComponent(bulbUid.Value, out LightBulbComponent? lightBulb))
         {
-            if (args.Handled)
-                return;
+            // get users heat resistance
+            var res = heatResist.GetHeatResistance();
 
-            args.Handled = InsertBulb(uid, args.Used.Uid, component);
-        }
-
-        private void OnInteractHand(EntityUid uid, PoweredLightComponent light, InteractHandEvent args)
-        {
-            if (args.Handled)
-                return;
-
-            // check if light has bulb to eject
-            var bulbUid = GetBulb(uid, light);
-            if (bulbUid == null)
-                return;
-
-            // check if it's possible to apply burn damage to user
-            var userUid = args.User.Uid;
-            if (EntityManager.TryGetComponent(userUid, out HeatResistanceComponent? heatResist) &&
-                EntityManager.TryGetComponent(bulbUid.Value, out LightBulbComponent? lightBulb))
+            // check heat resistance against user
+            var burnedHand = light.CurrentLit && res < lightBulb.BurningTemperature;
+            if (burnedHand)
             {
-                // get users heat resistance
-                var res = heatResist.GetHeatResistance();
+                // apply damage to users hands and show message with sound
+                var burnMsg = Loc.GetString("powered-light-component-burn-hand");
+                _popupSystem.PopupEntity(burnMsg, uid, Filter.Entities(userUid));
+                _damageableSystem.TryChangeDamage(userUid, light.Damage);
+                SoundSystem.Play(Filter.Pvs(uid), light.BurnHandSound.GetSound(), uid);
 
-                // check heat resistance against user
-                var burnedHand = light.CurrentLit && res < lightBulb.BurningTemperature;
-                if (burnedHand)
-                {
-                    // apply damage to users hands and show message with sound
-                    var burnMsg = Loc.GetString("powered-light-component-burn-hand");
-                    _popupSystem.PopupEntity(burnMsg, uid, Filter.Entities(userUid));
-                    _damageableSystem.TryChangeDamage(userUid, light.Damage);
-                    SoundSystem.Play(Filter.Pvs(uid), light.BurnHandSound.GetSound(), uid);
-
-                    args.Handled = true;
-                    return;
-                }
-            }
-
-            // all checks passed
-            // just try to eject bulb
-            args.Handled = EjectBulb(uid, userUid, light) != null;
-        }
-
-        #region Bulb Logic API
-        /// <summary>
-        ///     Inserts the bulb if possible.
-        /// </summary>
-        /// <returns>True if it could insert it, false if it couldn't.</returns>
-        public bool InsertBulb(EntityUid uid, EntityUid bulbUid, PoweredLightComponent? light = null)
-        {
-            if (!Resolve(uid, ref light))
-                return false;
-
-            // check if light already has bulb
-            if (GetBulb(uid, light) != null)
-                return false;
-
-            // check if bulb fits
-            if (!EntityManager.TryGetComponent(bulbUid, out LightBulbComponent? lightBulb))
-                return false;
-            if (lightBulb.Type != light.BulbType)
-                return false;
-
-            // try to insert bulb in container
-            if (!light.LightBulbContainer.Insert(EntityManager.GetEntity(bulbUid)))
-                return false;
-
-            UpdateLight(uid, light);
-
-            return true;
-        }
-
-        /// <summary>
-        ///     Ejects the bulb to a mob's hand if possible.
-        /// </summary>
-        /// <returns>Bulb uid if it was successfully ejected, null otherwise</returns>
-        public EntityUid? EjectBulb(EntityUid uid, EntityUid? userUid = null, PoweredLightComponent? light = null)
-        {
-            if (!Resolve(uid, ref light))
-                return null;
-
-            // check if light has bulb
-            var bulbUid = GetBulb(uid, light);
-            if (bulbUid == null)
-                return null;
-
-            // try to remove bulb from container
-            var bulbEnt = EntityManager.GetEntity(bulbUid.Value);
-            if (!light.LightBulbContainer.Remove(bulbEnt))
-                return null;
-
-            // try to place bulb in hands
-            if (userUid != null)
-            {
-                if (EntityManager.TryGetComponent(userUid.Value, out SharedHandsComponent? hands))
-                    hands.TryPutInActiveHandOrAny(bulbEnt);
-            }
-
-            UpdateLight(uid, light);
-            return bulbUid;
-        }
-
-        /// <summary>
-        ///     Try to replace current bulb with a new one
-        ///     If succeed old bulb just drops on floor
-        /// </summary>
-        public bool ReplaceBulb(EntityUid uid, EntityUid bulb, PoweredLightComponent? light = null)
-        {
-            EjectBulb(uid, null, light);
-            return InsertBulb(uid, bulb, light);
-        }
-
-        /// <summary>
-        ///     Try to get light bulb inserted in powered light
-        /// </summary>
-        /// <returns>Bulb uid if it exist, null otherwise</returns>
-        public EntityUid? GetBulb(EntityUid uid, PoweredLightComponent? light = null)
-        {
-            if (!Resolve(uid, ref light))
-                return null;
-
-            return light.LightBulbContainer.ContainedEntity?.Uid;
-        }
-
-        /// <summary>
-        ///     Try to break bulb inside light fixture
-        /// </summary>
-        public void TryDestroyBulb(EntityUid uid, PoweredLightComponent? light = null)
-        {
-            // check bulb state
-            var bulbUid = GetBulb(uid, light);
-            if (bulbUid == null || !EntityManager.TryGetComponent(bulbUid.Value, out LightBulbComponent? lightBulb))
-                return;
-            if (lightBulb.State == LightBulbState.Broken)
-                return;
-
-            // break it
-            _bulbSystem.SetState(bulbUid.Value, LightBulbState.Broken, lightBulb);
-            _bulbSystem.PlayBreakSound(bulbUid.Value, lightBulb);
-            UpdateLight(uid, light);
-        }
-        #endregion
-
-        private void UpdateLight(EntityUid uid,
-            PoweredLightComponent? light = null,
-            ApcPowerReceiverComponent? powerReceiver = null,
-            AppearanceComponent? appearance = null)
-        {
-            if (!Resolve(uid, ref light, ref powerReceiver, ref appearance))
-                return;
-
-            // check if light has bulb
-            var bulbUid = GetBulb(uid, light);
-            if (bulbUid == null || !EntityManager.TryGetComponent(bulbUid.Value, out LightBulbComponent? lightBulb))
-            {
-                SetLight(uid, false, light: light);
-                powerReceiver.Load = 0;
-                appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Empty);
+                args.Handled = true;
                 return;
             }
-            else
-            {
-                powerReceiver.Load = (light.On && lightBulb.State == LightBulbState.Normal) ? lightBulb.PowerUse : 0;
+        }
 
-                switch (lightBulb.State)
-                {
-                    case LightBulbState.Normal:
-                        if (powerReceiver.Powered && light.On)
+        // all checks passed
+        // just try to eject bulb
+        args.Handled = EjectBulb(uid, userUid, light) != null;
+    }
+
+    #region Bulb Logic API
+    /// <summary>
+    ///     Inserts the bulb if possible.
+    /// </summary>
+    /// <returns>True if it could insert it, false if it couldn't.</returns>
+    public bool InsertBulb(EntityUid uid, EntityUid bulbUid, PoweredLightComponent? light = null)
+    {
+        if (!Resolve(uid, ref light))
+            return false;
+
+        // check if light already has bulb
+        if (GetBulb(uid, light) != null)
+            return false;
+
+        // check if bulb fits
+        if (!EntityManager.TryGetComponent(bulbUid, out LightBulbComponent? lightBulb))
+            return false;
+        if (lightBulb.Type != light.BulbType)
+            return false;
+
+        // try to insert bulb in container
+        if (!light.LightBulbContainer.Insert(EntityManager.GetEntity(bulbUid)))
+            return false;
+
+        UpdateLight(uid, light);
+
+        return true;
+    }
+
+    /// <summary>
+    ///     Ejects the bulb to a mob's hand if possible.
+    /// </summary>
+    /// <returns>Bulb uid if it was successfully ejected, null otherwise</returns>
+    public EntityUid? EjectBulb(EntityUid uid, EntityUid? userUid = null, PoweredLightComponent? light = null)
+    {
+        if (!Resolve(uid, ref light))
+            return null;
+
+        // check if light has bulb
+        var bulbUid = GetBulb(uid, light);
+        if (bulbUid == null)
+            return null;
+
+        // try to remove bulb from container
+        var bulbEnt = EntityManager.GetEntity(bulbUid.Value);
+        if (!light.LightBulbContainer.Remove(bulbEnt))
+            return null;
+
+        // try to place bulb in hands
+        if (userUid != null)
+        {
+            if (EntityManager.TryGetComponent(userUid.Value, out SharedHandsComponent? hands))
+                hands.TryPutInActiveHandOrAny(bulbEnt);
+        }
+
+        UpdateLight(uid, light);
+        return bulbUid;
+    }
+
+    /// <summary>
+    ///     Try to replace current bulb with a new one
+    ///     If succeed old bulb just drops on floor
+    /// </summary>
+    public bool ReplaceBulb(EntityUid uid, EntityUid bulb, PoweredLightComponent? light = null)
+    {
+        EjectBulb(uid, null, light);
+        return InsertBulb(uid, bulb, light);
+    }
+
+    /// <summary>
+    ///     Try to get light bulb inserted in powered light
+    /// </summary>
+    /// <returns>Bulb uid if it exist, null otherwise</returns>
+    public EntityUid? GetBulb(EntityUid uid, PoweredLightComponent? light = null)
+    {
+        if (!Resolve(uid, ref light))
+            return null;
+
+        return light.LightBulbContainer.ContainedEntity?.Uid;
+    }
+
+    /// <summary>
+    ///     Try to break bulb inside light fixture
+    /// </summary>
+    public void TryDestroyBulb(EntityUid uid, PoweredLightComponent? light = null)
+    {
+        // check bulb state
+        var bulbUid = GetBulb(uid, light);
+        if (bulbUid == null || !EntityManager.TryGetComponent(bulbUid.Value, out LightBulbComponent? lightBulb))
+            return;
+        if (lightBulb.State == LightBulbState.Broken)
+            return;
+
+        // break it
+        _bulbSystem.SetState(bulbUid.Value, LightBulbState.Broken, lightBulb);
+        _bulbSystem.PlayBreakSound(bulbUid.Value, lightBulb);
+        UpdateLight(uid, light);
+    }
+    #endregion
+
+    private void UpdateLight(EntityUid uid,
+        PoweredLightComponent? light = null,
+        ApcPowerReceiverComponent? powerReceiver = null,
+        AppearanceComponent? appearance = null)
+    {
+        if (!Resolve(uid, ref light, ref powerReceiver, ref appearance))
+            return;
+
+        // check if light has bulb
+        var bulbUid = GetBulb(uid, light);
+        if (bulbUid == null || !EntityManager.TryGetComponent(bulbUid.Value, out LightBulbComponent? lightBulb))
+        {
+            SetLight(uid, false, light: light);
+            powerReceiver.Load = 0;
+            appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Empty);
+            return;
+        }
+        else
+        {
+            powerReceiver.Load = (light.On && lightBulb.State == LightBulbState.Normal) ? lightBulb.PowerUse : 0;
+
+            switch (lightBulb.State)
+            {
+                case LightBulbState.Normal:
+                    if (powerReceiver.Powered && light.On)
+                    {
+                        SetLight(uid, true, lightBulb.Color, light);
+                        appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.On);
+                        var time = _gameTiming.CurTime;
+                        if (time > light.LastThunk + ThunkDelay)
                         {
-                            SetLight(uid, true, lightBulb.Color, light);
-                            appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.On);
-                            var time = _gameTiming.CurTime;
-                            if (time > light.LastThunk + ThunkDelay)
-                            {
-                                light.LastThunk = time;
-                                SoundSystem.Play(Filter.Pvs(uid), light.TurnOnSound.GetSound(), uid, AudioParams.Default.WithVolume(-10f));
-                            }
+                            light.LastThunk = time;
+                            SoundSystem.Play(Filter.Pvs(uid), light.TurnOnSound.GetSound(), uid, AudioParams.Default.WithVolume(-10f));
                         }
-                        else
-                        {
-                            SetLight(uid, false, light: light);
-                            appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Off);
-                        }
-                        break;
-                    case LightBulbState.Broken:
+                    }
+                    else
+                    {
                         SetLight(uid, false, light: light);
-                        appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Broken);
-                        break;
-                    case LightBulbState.Burned:
-                        SetLight(uid, false, light: light);
-                        appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Burned);
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
-        ///     Destroy the light bulb if the light took any damage.
-        /// </summary>
-        public void HandleLightDamaged(EntityUid uid, PoweredLightComponent component, DamageChangedEvent args)
-        {
-            // Was it being repaired, or did it take damage?
-            if (args.DamageIncreased)
-            {
-                // Eventually, this logic should all be done by this (or some other) system, not a component.
-                TryDestroyBulb(uid, component);
-            }
-        }
-
-        private void OnGhostBoo(EntityUid uid, PoweredLightComponent light, GhostBooEvent args)
-        {
-            if (light.IgnoreGhostsBoo)
-                return;
-
-            // check cooldown first to prevent abuse
-            var time = _gameTiming.CurTime;
-            if (light.LastGhostBlink != null)
-            {
-                if (time <= light.LastGhostBlink + light.GhostBlinkingCooldown)
-                    return;
-            }
-
-            light.LastGhostBlink = time;
-
-            ToggleBlinkingLight(light, true);
-            light.Owner.SpawnTimer(light.GhostBlinkingTime, () =>
-            {
-                ToggleBlinkingLight(light, false);
-            });
-
-            args.Handled = true;
-        }
-
-        private void OnPowerChanged(EntityUid uid, PoweredLightComponent component, PowerChangedEvent args)
-        {
-            UpdateLight(uid, component);
-        }
-
-        public void ToggleBlinkingLight(PoweredLightComponent light, bool isNowBlinking)
-        {
-            if (light.IsBlinking == isNowBlinking)
-                return;
-
-            light.IsBlinking = isNowBlinking;
-
-            if (!light.Owner.TryGetComponent(out AppearanceComponent? appearance))
-                return;
-            appearance.SetData(PoweredLightVisuals.Blinking, isNowBlinking);
-        }
-
-        private void OnSignalReceived(EntityUid uid, PoweredLightComponent component, SignalReceivedEvent args)
-        {
-            switch (args.Port)
-            {
-                case "state":
-                    ToggleLight(uid, component);
+                        appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Off);
+                    }
+                    break;
+                case LightBulbState.Broken:
+                    SetLight(uid, false, light: light);
+                    appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Broken);
+                    break;
+                case LightBulbState.Burned:
+                    SetLight(uid, false, light: light);
+                    appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Burned);
                     break;
             }
         }
+    }
 
-        /// <summary>
-        /// Turns the light on or of when receiving a <see cref="DeviceNetworkConstants.CmdSetState"/> command.
-        /// The light is turned on or of according to the <see cref="DeviceNetworkConstants.StateEnabled"/> value
-         /// </summary>
-        private void OnPacketReceived(EntityUid uid, PoweredLightComponent component, PacketSentEvent args)
+    /// <summary>
+    ///     Destroy the light bulb if the light took any damage.
+    /// </summary>
+    public void HandleLightDamaged(EntityUid uid, PoweredLightComponent component, DamageChangedEvent args)
+    {
+        // Was it being repaired, or did it take damage?
+        if (args.DamageIncreased)
         {
-            if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? command) || command != DeviceNetworkConstants.CmdSetState) return;
-            if (!args.Data.TryGetValue(DeviceNetworkConstants.StateEnabled, out bool enabled)) return;
-
-            SetState(uid, enabled, component);
+            // Eventually, this logic should all be done by this (or some other) system, not a component.
+            TryDestroyBulb(uid, component);
         }
+    }
 
-        private void SetLight(EntityUid uid, bool value, Color? color = null, PoweredLightComponent? light = null)
+    private void OnGhostBoo(EntityUid uid, PoweredLightComponent light, GhostBooEvent args)
+    {
+        if (light.IgnoreGhostsBoo)
+            return;
+
+        // check cooldown first to prevent abuse
+        var time = _gameTiming.CurTime;
+        if (light.LastGhostBlink != null)
         {
-            if (!Resolve(uid, ref light))
+            if (time <= light.LastGhostBlink + light.GhostBlinkingCooldown)
                 return;
-
-            light.CurrentLit = value;
-            _ambientSystem.SetAmbience(uid, value);
-
-            if (EntityManager.TryGetComponent(uid, out PointLightComponent? pointLight))
-            {
-                pointLight.Enabled = value;
-
-                if (color != null)
-                    pointLight.Color = color.Value;
-            }
         }
 
-        public void ToggleLight(EntityUid uid, PoweredLightComponent? light = null)
+        light.LastGhostBlink = time;
+
+        ToggleBlinkingLight(light, true);
+        light.Owner.SpawnTimer(light.GhostBlinkingTime, () =>
         {
-            if (!Resolve(uid, ref light))
-                return;
+            ToggleBlinkingLight(light, false);
+        });
 
-            light.On = !light.On;
-            UpdateLight(uid, light);
-        }
+        args.Handled = true;
+    }
 
-        public void SetState(EntityUid uid, bool state, PoweredLightComponent? light = null)
+    private void OnPowerChanged(EntityUid uid, PoweredLightComponent component, PowerChangedEvent args)
+    {
+        UpdateLight(uid, component);
+    }
+
+    public void ToggleBlinkingLight(PoweredLightComponent light, bool isNowBlinking)
+    {
+        if (light.IsBlinking == isNowBlinking)
+            return;
+
+        light.IsBlinking = isNowBlinking;
+
+        if (!light.Owner.TryGetComponent(out AppearanceComponent? appearance))
+            return;
+        appearance.SetData(PoweredLightVisuals.Blinking, isNowBlinking);
+    }
+
+    private void OnSignalReceived(EntityUid uid, PoweredLightComponent component, SignalReceivedEvent args)
+    {
+        switch (args.Port)
         {
-            if (!Resolve(uid, ref light))
-                return;
-
-            light.On = state;
-            UpdateLight(uid, light);
+            case "state":
+                ToggleLight(uid, component);
+                break;
         }
+    }
+
+    /// <summary>
+    /// Turns the light on or of when receiving a <see cref="DeviceNetworkConstants.CmdSetState"/> command.
+    /// The light is turned on or of according to the <see cref="DeviceNetworkConstants.StateEnabled"/> value
+    /// </summary>
+    private void OnPacketReceived(EntityUid uid, PoweredLightComponent component, PacketSentEvent args)
+    {
+        if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? command) || command != DeviceNetworkConstants.CmdSetState) return;
+        if (!args.Data.TryGetValue(DeviceNetworkConstants.StateEnabled, out bool enabled)) return;
+
+        SetState(uid, enabled, component);
+    }
+
+    private void SetLight(EntityUid uid, bool value, Color? color = null, PoweredLightComponent? light = null)
+    {
+        if (!Resolve(uid, ref light))
+            return;
+
+        light.CurrentLit = value;
+        _ambientSystem.SetAmbience(uid, value);
+
+        if (EntityManager.TryGetComponent(uid, out PointLightComponent? pointLight))
+        {
+            pointLight.Enabled = value;
+
+            if (color != null)
+                pointLight.Color = color.Value;
+        }
+    }
+
+    public void ToggleLight(EntityUid uid, PoweredLightComponent? light = null)
+    {
+        if (!Resolve(uid, ref light))
+            return;
+
+        light.On = !light.On;
+        UpdateLight(uid, light);
+    }
+
+    public void SetState(EntityUid uid, bool state, PoweredLightComponent? light = null)
+    {
+        if (!Resolve(uid, ref light))
+            return;
+
+        light.On = state;
+        UpdateLight(uid, light);
     }
 }

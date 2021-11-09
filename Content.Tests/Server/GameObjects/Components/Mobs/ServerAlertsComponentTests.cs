@@ -7,13 +7,13 @@ using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
 
-namespace Content.Tests.Server.GameObjects.Components.Mobs
+namespace Content.Tests.Server.GameObjects.Components.Mobs;
+
+[TestFixture]
+[TestOf(typeof(ServerAlertsComponent))]
+public class ServerAlertsComponentTests : ContentUnitTest
 {
-    [TestFixture]
-    [TestOf(typeof(ServerAlertsComponent))]
-    public class ServerAlertsComponentTests : ContentUnitTest
-    {
-        const string PROTOTYPES = @"
+    const string PROTOTYPES = @"
 - type: alert
   name: AlertLowPressure
   alertType: LowPressure
@@ -27,44 +27,43 @@ namespace Content.Tests.Server.GameObjects.Components.Mobs
   icon: /Textures/Interface/Alerts/Pressure/highpressure.png
 ";
 
-        [Test]
-        public void ShowAlerts()
-        {
-            // this is kind of unnecessary because there's integration test coverage of Alert components
-            // but wanted to keep it anyway to see what's possible w.r.t. testing components
-            // in a unit test
+    [Test]
+    public void ShowAlerts()
+    {
+        // this is kind of unnecessary because there's integration test coverage of Alert components
+        // but wanted to keep it anyway to see what's possible w.r.t. testing components
+        // in a unit test
 
-            IoCManager.Resolve<ISerializationManager>().Initialize();
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            prototypeManager.Initialize();
-            var factory = IoCManager.Resolve<IComponentFactory>();
-            factory.RegisterClass<ServerAlertsComponent>();
-            prototypeManager.LoadFromStream(new StringReader(PROTOTYPES));
-            prototypeManager.Resync();
-            var alertManager = IoCManager.Resolve<AlertManager>();
-            alertManager.Initialize();
+        IoCManager.Resolve<ISerializationManager>().Initialize();
+        var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+        prototypeManager.Initialize();
+        var factory = IoCManager.Resolve<IComponentFactory>();
+        factory.RegisterClass<ServerAlertsComponent>();
+        prototypeManager.LoadFromStream(new StringReader(PROTOTYPES));
+        prototypeManager.Resync();
+        var alertManager = IoCManager.Resolve<AlertManager>();
+        alertManager.Initialize();
 
 
-            var alertsComponent = new ServerAlertsComponent();
-            alertsComponent = IoCManager.InjectDependencies(alertsComponent);
+        var alertsComponent = new ServerAlertsComponent();
+        alertsComponent = IoCManager.InjectDependencies(alertsComponent);
 
-            Assert.That(alertManager.TryGet(AlertType.LowPressure, out var lowpressure));
-            Assert.That(alertManager.TryGet(AlertType.HighPressure, out var highpressure));
+        Assert.That(alertManager.TryGet(AlertType.LowPressure, out var lowpressure));
+        Assert.That(alertManager.TryGet(AlertType.HighPressure, out var highpressure));
 
-            alertsComponent.ShowAlert(AlertType.LowPressure);
-            var alertState = alertsComponent.GetComponentState(null) as AlertsComponentState;
-            Assert.NotNull(alertState);
-            Assert.That(alertState.Alerts.Count, Is.EqualTo(1));
-            Assert.That(alertState.Alerts.ContainsKey(lowpressure.AlertKey));
+        alertsComponent.ShowAlert(AlertType.LowPressure);
+        var alertState = alertsComponent.GetComponentState(null) as AlertsComponentState;
+        Assert.NotNull(alertState);
+        Assert.That(alertState.Alerts.Count, Is.EqualTo(1));
+        Assert.That(alertState.Alerts.ContainsKey(lowpressure.AlertKey));
 
-            alertsComponent.ShowAlert(AlertType.HighPressure);
-            alertState = alertsComponent.GetComponentState(null) as AlertsComponentState;
-            Assert.That(alertState.Alerts.Count, Is.EqualTo(1));
-            Assert.That(alertState.Alerts.ContainsKey(highpressure.AlertKey));
+        alertsComponent.ShowAlert(AlertType.HighPressure);
+        alertState = alertsComponent.GetComponentState(null) as AlertsComponentState;
+        Assert.That(alertState.Alerts.Count, Is.EqualTo(1));
+        Assert.That(alertState.Alerts.ContainsKey(highpressure.AlertKey));
 
-            alertsComponent.ClearAlertCategory(AlertCategory.Pressure);
-            alertState = alertsComponent.GetComponentState(null) as AlertsComponentState;
-            Assert.That(alertState.Alerts.Count, Is.EqualTo(0));
-        }
+        alertsComponent.ClearAlertCategory(AlertCategory.Pressure);
+        alertState = alertsComponent.GetComponentState(null) as AlertsComponentState;
+        Assert.That(alertState.Alerts.Count, Is.EqualTo(0));
     }
 }

@@ -5,21 +5,20 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Damage.Components
+namespace Content.Server.Damage.Components;
+
+[Friend(typeof(DamageOtherOnHitSystem))]
+[RegisterComponent]
+public class DamageOtherOnHitComponent : Component
 {
-    [Friend(typeof(DamageOtherOnHitSystem))]
-    [RegisterComponent]
-    public class DamageOtherOnHitComponent : Component
-    {
-        public override string Name => "DamageOtherOnHit";
+    public override string Name => "DamageOtherOnHit";
 
-        [DataField("ignoreResistances")]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool IgnoreResistances = false;
+    [DataField("ignoreResistances")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool IgnoreResistances = false;
 
-        [DataField("damage", required: true)]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public DamageSpecifier Damage = default!;
+    [DataField("damage", required: true)]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public DamageSpecifier Damage = default!;
 
-    }
 }

@@ -6,65 +6,64 @@ using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
-namespace Content.Client.ContextMenu.UI
+namespace Content.Client.ContextMenu.UI;
+
+/// <summary>
+///     The base context-menu pop-up window used for both the entity and verb menus.
+/// </summary>
+[GenerateTypedNameReferences]
+public partial class ContextMenuPopup : Popup
 {
+    public const string StyleClassContextMenuPopup = "contextMenuPopup";
+
     /// <summary>
-    ///     The base context-menu pop-up window used for both the entity and verb menus.
+    ///     How many items to list before limiting the size and adding a scroll bar.
     /// </summary>
-    [GenerateTypedNameReferences]
-    public partial class ContextMenuPopup : Popup
+    public const int MaxItemsBeforeScroll = 10;
+
+    /// <summary>
+    ///     If this pop-up is created by hovering over some element in another pop-up, this is that element.
+    /// </summary>
+    public ContextMenuElement? ParentElement;
+
+    /// <summary>
+    ///     This is the main body of the menu. The menu entries should be added to this object.
+    /// </summary>
+    public BoxContainer MenuBody = new() { Orientation = LayoutOrientation.Vertical };
+
+    private ContextMenuPresenter _presenter;
+
+    public ContextMenuPopup (ContextMenuPresenter presenter, ContextMenuElement? parentElement) : base()
     {
-        public const string StyleClassContextMenuPopup = "contextMenuPopup";
+        RobustXamlLoader.Load(this);
+        MenuPanel.SetOnlyStyleClass(StyleClassContextMenuPopup);
 
-        /// <summary>
-        ///     How many items to list before limiting the size and adding a scroll bar.
-        /// </summary>
-        public const int MaxItemsBeforeScroll = 10;
+        _presenter = presenter;
+        ParentElement = parentElement;
 
-        /// <summary>
-        ///     If this pop-up is created by hovering over some element in another pop-up, this is that element.
-        /// </summary>
-        public ContextMenuElement? ParentElement;
+        //XAML controls are private. So defining and adding MenuBody here instead.
+        Scroll.AddChild(MenuBody);
 
-        /// <summary>
-        ///     This is the main body of the menu. The menu entries should be added to this object.
-        /// </summary>
-        public BoxContainer MenuBody = new() { Orientation = LayoutOrientation.Vertical };
+        // Set Max Height based on MaxItemsBeforeScroll and the panel's style box
+        MenuPanel.ForceRunStyleUpdate();
+        MenuPanel.TryGetStyleProperty<StyleBox>(PanelContainer.StylePropertyPanel, out var box);
+        var styleSize = (box?.MinimumSize ?? Vector2.Zero) / UIScale;
+        MenuPanel.MaxHeight = MaxItemsBeforeScroll * (ContextMenuElement.ElementHeight + 2 * ContextMenuElement.ElementMargin) + styleSize.Y;
 
-        private ContextMenuPresenter _presenter;
-
-        public ContextMenuPopup (ContextMenuPresenter presenter, ContextMenuElement? parentElement) : base()
-        {
-            RobustXamlLoader.Load(this);
-            MenuPanel.SetOnlyStyleClass(StyleClassContextMenuPopup);
-
-            _presenter = presenter;
-            ParentElement = parentElement;
-
-            //XAML controls are private. So defining and adding MenuBody here instead.
-            Scroll.AddChild(MenuBody);
-
-            // Set Max Height based on MaxItemsBeforeScroll and the panel's style box
-            MenuPanel.ForceRunStyleUpdate();
-            MenuPanel.TryGetStyleProperty<StyleBox>(PanelContainer.StylePropertyPanel, out var box);
-            var styleSize = (box?.MinimumSize ?? Vector2.Zero) / UIScale;
-            MenuPanel.MaxHeight = MaxItemsBeforeScroll * (ContextMenuElement.ElementHeight + 2 * ContextMenuElement.ElementMargin) + styleSize.Y;
-
-            UserInterfaceManager.ModalRoot.AddChild(this);
-            MenuBody.OnChildRemoved += ctrl => _presenter.OnRemoveElement(this, ctrl);
+        UserInterfaceManager.ModalRoot.AddChild(this);
+        MenuBody.OnChildRemoved += ctrl => _presenter.OnRemoveElement(this, ctrl);
             
-            if (ParentElement != null)
-            {
-                DebugTools.Assert(ParentElement.SubMenu == null);
-                ParentElement.SubMenu = this;
-            }
-        }
-
-        protected override void Dispose(bool disposing)
+        if (ParentElement != null)
         {
-            MenuBody.OnChildRemoved -= ctrl => _presenter.OnRemoveElement(this, ctrl);
-            ParentElement = null;
-            base.Dispose(disposing);
+            DebugTools.Assert(ParentElement.SubMenu == null);
+            ParentElement.SubMenu = this;
         }
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        MenuBody.OnChildRemoved -= ctrl => _presenter.OnRemoveElement(this, ctrl);
+        ParentElement = null;
+        base.Dispose(disposing);
     }
 }

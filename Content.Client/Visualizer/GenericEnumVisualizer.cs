@@ -9,55 +9,54 @@ using Robust.Shared.Reflection;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Client.Visualizer
+namespace Content.Client.Visualizer;
+
+[UsedImplicitly]
+public class GenericEnumVisualizer : AppearanceVisualizer, ISerializationHooks
 {
-    [UsedImplicitly]
-    public class GenericEnumVisualizer : AppearanceVisualizer, ISerializationHooks
+    public Enum Key { get; set; } = default!;
+
+    public Dictionary<object, string> States { get; set; } = default!;
+
+    [DataField("layer")]
+    public int Layer { get; set; } = 0;
+
+    [DataField("key", readOnly: true, required: true)]
+    private string _keyRaw = default!;
+
+    [DataField("states", readOnly: true, required: true)]
+    private Dictionary<string, string> _statesRaw { get; set; } = default!;
+
+    void ISerializationHooks.AfterDeserialization()
     {
-        public Enum Key { get; set; } = default!;
+        var reflectionManager = IoCManager.Resolve<IReflectionManager>();
 
-        public Dictionary<object, string> States { get; set; } = default!;
-
-        [DataField("layer")]
-        public int Layer { get; set; } = 0;
-
-        [DataField("key", readOnly: true, required: true)]
-        private string _keyRaw = default!;
-
-        [DataField("states", readOnly: true, required: true)]
-        private Dictionary<string, string> _statesRaw { get; set; } = default!;
-
-        void ISerializationHooks.AfterDeserialization()
+        object ResolveRef(string raw)
         {
-            var reflectionManager = IoCManager.Resolve<IReflectionManager>();
-
-            object ResolveRef(string raw)
+            if (reflectionManager.TryParseEnumReference(raw, out var @enum))
             {
-                if (reflectionManager.TryParseEnumReference(raw, out var @enum))
-                {
-                    return @enum;
-                }
-                else
-                {
-                    Logger.WarningS("c.c.v.genum", $"Unable to convert enum reference: {raw}");
-                }
-
-                return raw;
+                return @enum;
+            }
+            else
+            {
+                Logger.WarningS("c.c.v.genum", $"Unable to convert enum reference: {raw}");
             }
 
-            // It's important that this conversion be done here so that it may "fail-fast".
-            Key = (Enum) ResolveRef(_keyRaw);
-            States = _statesRaw.ToDictionary(kvp => ResolveRef(kvp.Key), kvp => kvp.Value);
+            return raw;
         }
 
-        public override void OnChangeData(AppearanceComponent component)
-        {
-            base.OnChangeData(component);
+        // It's important that this conversion be done here so that it may "fail-fast".
+        Key = (Enum) ResolveRef(_keyRaw);
+        States = _statesRaw.ToDictionary(kvp => ResolveRef(kvp.Key), kvp => kvp.Value);
+    }
 
-            if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite)) return;
-            if (!component.TryGetData(Key, out object status)) return;
-            if (!States.TryGetValue(status, out var val)) return;
-            sprite.LayerSetState(Layer, val);
-        }
+    public override void OnChangeData(AppearanceComponent component)
+    {
+        base.OnChangeData(component);
+
+        if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite)) return;
+        if (!component.TryGetData(Key, out object status)) return;
+        if (!States.TryGetValue(status, out var val)) return;
+        sprite.LayerSetState(Layer, val);
     }
 }

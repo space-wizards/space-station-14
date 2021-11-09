@@ -3,24 +3,23 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Throwing
+namespace Content.Shared.Throwing;
+
+[RegisterComponent, NetworkedComponent]
+public class ThrownItemComponent : Component
 {
-    [RegisterComponent, NetworkedComponent]
-    public class ThrownItemComponent : Component
+    public override string Name => "ThrownItem";
+
+    public IEntity? Thrower { get; set; }
+}
+
+[Serializable, NetSerializable]
+public class ThrownItemComponentState : ComponentState
+{
+    public EntityUid? Thrower { get; }
+
+    public ThrownItemComponentState(EntityUid? thrower)
     {
-        public override string Name => "ThrownItem";
-
-        public IEntity? Thrower { get; set; }
-    }
-
-    [Serializable, NetSerializable]
-    public class ThrownItemComponentState : ComponentState
-    {
-        public EntityUid? Thrower { get; }
-
-        public ThrownItemComponentState(EntityUid? thrower)
-        {
-            Thrower = thrower;
-        }
+        Thrower = thrower;
     }
 }

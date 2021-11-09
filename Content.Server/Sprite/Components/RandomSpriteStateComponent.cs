@@ -5,26 +5,25 @@ using Robust.Shared.IoC;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.Sprite.Components
+namespace Content.Server.Sprite.Components;
+
+[RegisterComponent]
+public class RandomSpriteStateComponent : Component
 {
-    [RegisterComponent]
-    public class RandomSpriteStateComponent : Component
+    [Dependency] private readonly IRobustRandom _random = default!;
+    public override string Name => "RandomSpriteState";
+
+    [DataField("spriteStates")]
+    private List<string>? _spriteStates;
+
+    [DataField("spriteLayer")]
+    private int _spriteLayer;
+
+    protected override void Initialize()
     {
-        [Dependency] private readonly IRobustRandom _random = default!;
-        public override string Name => "RandomSpriteState";
-
-        [DataField("spriteStates")]
-        private List<string>? _spriteStates;
-
-        [DataField("spriteLayer")]
-        private int _spriteLayer;
-
-        protected override void Initialize()
-        {
-            base.Initialize();
-            if (_spriteStates == null) return;
-            if (!Owner.TryGetComponent(out SpriteComponent? spriteComponent)) return;
-            spriteComponent.LayerSetState(_spriteLayer, _random.Pick(_spriteStates));
-        }
+        base.Initialize();
+        if (_spriteStates == null) return;
+        if (!Owner.TryGetComponent(out SpriteComponent? spriteComponent)) return;
+        spriteComponent.LayerSetState(_spriteLayer, _random.Pick(_spriteStates));
     }
 }

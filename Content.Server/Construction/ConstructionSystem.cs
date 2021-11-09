@@ -14,90 +14,89 @@ using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
-namespace Content.Server.Construction
+namespace Content.Server.Construction;
+
+/// <summary>
+/// The server-side implementation of the construction system, which is used for constructing entities in game.
+/// </summary>
+[UsedImplicitly]
+public partial class ConstructionSystem : SharedConstructionSystem
 {
-    /// <summary>
-    /// The server-side implementation of the construction system, which is used for constructing entities in game.
-    /// </summary>
-    [UsedImplicitly]
-    public partial class ConstructionSystem : SharedConstructionSystem
+    [Dependency] private readonly ILogManager _logManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IRobustRandom _robustRandom = default!;
+    [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly StackSystem _stackSystem = default!;
+    [Dependency] private readonly ToolSystem _toolSystem = default!;
+
+    private const string SawmillName = "Construction";
+    private ISawmill _sawmill = default!;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly ILogManager _logManager = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IRobustRandom _robustRandom = default!;
-        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
-        [Dependency] private readonly StackSystem _stackSystem = default!;
-        [Dependency] private readonly ToolSystem _toolSystem = default!;
+        base.Initialize();
 
-        private const string SawmillName = "Construction";
-        private ISawmill _sawmill = default!;
+        _sawmill = _logManager.GetSawmill(SawmillName);
 
-        public override void Initialize()
+        InitializeGraphs();
+        InitializeGuided();
+        InitializeInteractions();
+        InitializeInitial();
+
+        SubscribeLocalEvent<ConstructionComponent, ComponentInit>(OnConstructionInit);
+        SubscribeLocalEvent<ConstructionComponent, ComponentStartup>(OnConstructionStartup);
+    }
+
+    private void OnConstructionInit(EntityUid uid, ConstructionComponent construction, ComponentInit args)
+    {
+        if (GetCurrentGraph(uid, construction) is not {} graph)
         {
-            base.Initialize();
-
-            _sawmill = _logManager.GetSawmill(SawmillName);
-
-            InitializeGraphs();
-            InitializeGuided();
-            InitializeInteractions();
-            InitializeInitial();
-
-            SubscribeLocalEvent<ConstructionComponent, ComponentInit>(OnConstructionInit);
-            SubscribeLocalEvent<ConstructionComponent, ComponentStartup>(OnConstructionStartup);
+            _sawmill.Warning($"Prototype {construction.Owner.Prototype?.ID}'s construction component has an invalid graph specified.");
+            return;
         }
 
-        private void OnConstructionInit(EntityUid uid, ConstructionComponent construction, ComponentInit args)
+        if (GetNodeFromGraph(graph, construction.Node) is not {} node)
         {
-            if (GetCurrentGraph(uid, construction) is not {} graph)
+            _sawmill.Warning($"Prototype {construction.Owner.Prototype?.ID}'s construction component has an invalid node specified.");
+            return;
+        }
+
+        ConstructionGraphEdge? edge = null;
+        if (construction.EdgeIndex is {} edgeIndex)
+        {
+            if (GetEdgeFromNode(node, edgeIndex) is not {} currentEdge)
             {
-                _sawmill.Warning($"Prototype {construction.Owner.Prototype?.ID}'s construction component has an invalid graph specified.");
+                _sawmill.Warning($"Prototype {construction.Owner.Prototype?.ID}'s construction component has an invalid edge index specified.");
                 return;
             }
 
-            if (GetNodeFromGraph(graph, construction.Node) is not {} node)
+            edge = currentEdge;
+        }
+
+        if (construction.TargetNode is {} targetNodeId)
+        {
+            if (GetNodeFromGraph(graph, targetNodeId) is not { } targetNode)
             {
-                _sawmill.Warning($"Prototype {construction.Owner.Prototype?.ID}'s construction component has an invalid node specified.");
+                _sawmill.Warning($"Prototype {construction.Owner.Prototype?.ID}'s construction component has an invalid target node specified.");
                 return;
             }
 
-            ConstructionGraphEdge? edge = null;
-            if (construction.EdgeIndex is {} edgeIndex)
-            {
-                if (GetEdgeFromNode(node, edgeIndex) is not {} currentEdge)
-                {
-                    _sawmill.Warning($"Prototype {construction.Owner.Prototype?.ID}'s construction component has an invalid edge index specified.");
-                    return;
-                }
-
-                edge = currentEdge;
-            }
-
-            if (construction.TargetNode is {} targetNodeId)
-            {
-                if (GetNodeFromGraph(graph, targetNodeId) is not { } targetNode)
-                {
-                    _sawmill.Warning($"Prototype {construction.Owner.Prototype?.ID}'s construction component has an invalid target node specified.");
-                    return;
-                }
-
-                UpdatePathfinding(uid, graph, node, targetNode, edge, construction);
-            }
+            UpdatePathfinding(uid, graph, node, targetNode, edge, construction);
         }
+    }
 
-        private void OnConstructionStartup(EntityUid uid, ConstructionComponent construction, ComponentStartup args)
-        {
-            if (GetCurrentNode(uid, construction) is not {} node)
-                return;
+    private void OnConstructionStartup(EntityUid uid, ConstructionComponent construction, ComponentStartup args)
+    {
+        if (GetCurrentNode(uid, construction) is not {} node)
+            return;
 
-            PerformActions(uid, null, node.Actions);
-        }
+        PerformActions(uid, null, node.Actions);
+    }
 
-        public override void Update(float frameTime)
-        {
-            base.Update(frameTime);
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
 
-            UpdateInteractions();
-        }
+        UpdateInteractions();
     }
 }

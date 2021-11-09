@@ -4,22 +4,21 @@ using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.IntegrationTests.Tests
+namespace Content.IntegrationTests.Tests;
+
+[TestFixture]
+public class RestartRoundTest : ContentIntegrationTest
 {
-    [TestFixture]
-    public class RestartRoundTest : ContentIntegrationTest
+    [Test]
+    public async Task Test()
     {
-        [Test]
-        public async Task Test()
+        var (client, server) = await StartConnectedServerClientPair();
+
+        server.Post(() =>
         {
-            var (client, server) = await StartConnectedServerClientPair();
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<GameTicker>().RestartRound();
+        });
 
-            server.Post(() =>
-            {
-                IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<GameTicker>().RestartRound();
-            });
-
-            await RunTicksSync(client, server, 10);
-        }
+        await RunTicksSync(client, server, 10);
     }
 }

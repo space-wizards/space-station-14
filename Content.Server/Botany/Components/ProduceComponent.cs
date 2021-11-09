@@ -11,53 +11,52 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Botany.Components
+namespace Content.Server.Botany.Components;
+
+[RegisterComponent]
+public class ProduceComponent : Component, ISerializationHooks
 {
-    [RegisterComponent]
-    public class ProduceComponent : Component, ISerializationHooks
+    public override string Name => "Produce";
+    [DataField("targetSolution")] public string SolutionName { get; set; } = "food";
+
+    [DataField("seed")] private string? _seedName;
+
+    [ViewVariables]
+    public Seed? Seed
     {
-        public override string Name => "Produce";
-        [DataField("targetSolution")] public string SolutionName { get; set; } = "food";
+        get => _seedName != null ? IoCManager.Resolve<IPrototypeManager>().Index<Seed>(_seedName) : null;
+        set => _seedName = value?.ID;
+    }
 
-        [DataField("seed")] private string? _seedName;
+    public float Potency => Seed?.Potency ?? 0;
 
-        [ViewVariables]
-        public Seed? Seed
+    public void Grown()
+    {
+        if (Seed == null)
+            return;
+
+        if (Owner.TryGetComponent(out SpriteComponent? sprite))
         {
-            get => _seedName != null ? IoCManager.Resolve<IPrototypeManager>().Index<Seed>(_seedName) : null;
-            set => _seedName = value?.ID;
+            sprite.LayerSetRSI(0, Seed.PlantRsi);
+            sprite.LayerSetState(0, Seed.PlantIconState);
         }
 
-        public float Potency => Seed?.Potency ?? 0;
-
-        public void Grown()
+        var solutionContainer = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner.Uid, SolutionName);
+        if (solutionContainer == null)
         {
-            if (Seed == null)
-                return;
+            Logger.Warning($"No solution container found in {nameof(ProduceComponent)}.");
+            return;
+        }
 
-            if (Owner.TryGetComponent(out SpriteComponent? sprite))
-            {
-                sprite.LayerSetRSI(0, Seed.PlantRsi);
-                sprite.LayerSetState(0, Seed.PlantIconState);
-            }
-
-            var solutionContainer = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner.Uid, SolutionName);
-            if (solutionContainer == null)
-            {
-                Logger.Warning($"No solution container found in {nameof(ProduceComponent)}.");
-                return;
-            }
-
-            solutionContainer.RemoveAllSolution();
-            foreach (var (chem, quantity) in Seed.Chemicals)
-            {
-                var amount = FixedPoint2.New(quantity.Min);
-                if (quantity.PotencyDivisor > 0 && Potency > 0)
-                    amount += FixedPoint2.New(Potency / quantity.PotencyDivisor);
-                amount = FixedPoint2.New((int) MathHelper.Clamp(amount.Float(), quantity.Min, quantity.Max));
-                solutionContainer.MaxVolume += amount;
-                solutionContainer.AddReagent(chem, amount);
-            }
+        solutionContainer.RemoveAllSolution();
+        foreach (var (chem, quantity) in Seed.Chemicals)
+        {
+            var amount = FixedPoint2.New(quantity.Min);
+            if (quantity.PotencyDivisor > 0 && Potency > 0)
+                amount += FixedPoint2.New(Potency / quantity.PotencyDivisor);
+            amount = FixedPoint2.New((int) MathHelper.Clamp(amount.Float(), quantity.Min, quantity.Max));
+            solutionContainer.MaxVolume += amount;
+            solutionContainer.AddReagent(chem, amount);
         }
     }
 }

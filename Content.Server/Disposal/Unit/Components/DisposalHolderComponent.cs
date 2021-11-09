@@ -16,184 +16,183 @@ using Robust.Shared.Physics;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Disposal.Unit.Components
+namespace Content.Server.Disposal.Unit.Components;
+
+// TODO: Add gas
+[RegisterComponent]
+public class DisposalHolderComponent : Component, IGasMixtureHolder
 {
-    // TODO: Add gas
-    [RegisterComponent]
-    public class DisposalHolderComponent : Component, IGasMixtureHolder
+    public override string Name => "DisposalHolder";
+
+    private Container _contents = null!;
+
+    /// <summary>
+    ///     The total amount of time that it will take for this entity to
+    ///     be pushed to the next tube
+    /// </summary>
+    [ViewVariables]
+    private float StartingTime { get; set; }
+
+    /// <summary>
+    ///     Time left until the entity is pushed to the next tube
+    /// </summary>
+    [ViewVariables]
+    private float TimeLeft { get; set; }
+
+    [ViewVariables]
+    public IDisposalTubeComponent? PreviousTube { get; set; }
+
+    [ViewVariables]
+    public Direction PreviousDirection { get; private set; } = Direction.Invalid;
+
+    [ViewVariables]
+    public Direction PreviousDirectionFrom => (PreviousDirection == Direction.Invalid) ? Direction.Invalid : PreviousDirection.GetOpposite();
+
+    [ViewVariables]
+    public IDisposalTubeComponent? CurrentTube { get; private set; }
+
+    // CurrentDirection is not null when CurrentTube isn't null.
+    [ViewVariables]
+    public Direction CurrentDirection { get; private set; } = Direction.Invalid;
+
+    /// <summary>
+    ///     A list of tags attached to the content, used for sorting
+    /// </summary>
+    [ViewVariables]
+    public HashSet<string> Tags { get; set; } = new();
+
+    [ViewVariables]
+    [DataField("air")]
+    public GasMixture Air { get; set; } = new GasMixture(Atmospherics.CellVolume);
+
+    protected override void Initialize()
     {
-        public override string Name => "DisposalHolder";
+        base.Initialize();
 
-        private Container _contents = null!;
+        _contents = ContainerHelpers.EnsureContainer<Container>(Owner, nameof(DisposalHolderComponent));
+    }
 
-        /// <summary>
-        ///     The total amount of time that it will take for this entity to
-        ///     be pushed to the next tube
-        /// </summary>
-        [ViewVariables]
-        private float StartingTime { get; set; }
+    protected override void OnRemove()
+    {
+        base.OnRemove();
+        ExitDisposals();
+    }
 
-        /// <summary>
-        ///     Time left until the entity is pushed to the next tube
-        /// </summary>
-        [ViewVariables]
-        private float TimeLeft { get; set; }
-
-        [ViewVariables]
-        public IDisposalTubeComponent? PreviousTube { get; set; }
-
-        [ViewVariables]
-        public Direction PreviousDirection { get; private set; } = Direction.Invalid;
-
-        [ViewVariables]
-        public Direction PreviousDirectionFrom => (PreviousDirection == Direction.Invalid) ? Direction.Invalid : PreviousDirection.GetOpposite();
-
-        [ViewVariables]
-        public IDisposalTubeComponent? CurrentTube { get; private set; }
-
-        // CurrentDirection is not null when CurrentTube isn't null.
-        [ViewVariables]
-        public Direction CurrentDirection { get; private set; } = Direction.Invalid;
-
-        /// <summary>
-        ///     A list of tags attached to the content, used for sorting
-        /// </summary>
-        [ViewVariables]
-        public HashSet<string> Tags { get; set; } = new();
-
-        [ViewVariables]
-        [DataField("air")]
-        public GasMixture Air { get; set; } = new GasMixture(Atmospherics.CellVolume);
-
-        protected override void Initialize()
+    private bool CanInsert(IEntity entity)
+    {
+        if (!_contents.CanInsert(entity))
         {
-            base.Initialize();
-
-            _contents = ContainerHelpers.EnsureContainer<Container>(Owner, nameof(DisposalHolderComponent));
+            return false;
         }
 
-        protected override void OnRemove()
+        return entity.HasComponent<ItemComponent>() ||
+               entity.HasComponent<SharedBodyComponent>();
+    }
+
+    public bool TryInsert(IEntity entity)
+    {
+        if (!CanInsert(entity) || !_contents.Insert(entity))
         {
-            base.OnRemove();
-            ExitDisposals();
+            return false;
         }
 
-        private bool CanInsert(IEntity entity)
+        if (entity.TryGetComponent(out IPhysBody? physics))
         {
-            if (!_contents.CanInsert(entity))
-            {
-                return false;
-            }
-
-            return entity.HasComponent<ItemComponent>() ||
-                   entity.HasComponent<SharedBodyComponent>();
+            physics.CanCollide = false;
         }
 
-        public bool TryInsert(IEntity entity)
-        {
-            if (!CanInsert(entity) || !_contents.Insert(entity))
-            {
-                return false;
-            }
+        return true;
+    }
 
+    public void EnterTube(IDisposalTubeComponent tube)
+    {
+        if (CurrentTube != null)
+        {
+            PreviousTube = CurrentTube;
+            PreviousDirection = CurrentDirection;
+        }
+
+        Owner.Transform.Coordinates = tube.Owner.Transform.Coordinates;
+        CurrentTube = tube;
+        CurrentDirection = tube.NextDirection(this);
+        StartingTime = 0.1f;
+        TimeLeft = 0.1f;
+    }
+
+    public void ExitDisposals()
+    {
+        if (Deleted)
+            return;
+
+        PreviousTube = null;
+        PreviousDirection = Direction.Invalid;
+        CurrentTube = null;
+        CurrentDirection = Direction.Invalid;
+        StartingTime = 0;
+        TimeLeft = 0;
+
+        foreach (var entity in _contents.ContainedEntities.ToArray())
+        {
             if (entity.TryGetComponent(out IPhysBody? physics))
             {
-                physics.CanCollide = false;
+                physics.CanCollide = true;
             }
 
-            return true;
+            _contents.ForceRemove(entity);
+
+            if (entity.Transform.Parent == Owner.Transform)
+            {
+                entity.Transform.AttachParentToContainerOrGrid();
+            }
         }
 
-        public void EnterTube(IDisposalTubeComponent tube)
-        {
-            if (CurrentTube != null)
-            {
-                PreviousTube = CurrentTube;
-                PreviousDirection = CurrentDirection;
-            }
+        var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
 
-            Owner.Transform.Coordinates = tube.Owner.Transform.Coordinates;
-            CurrentTube = tube;
-            CurrentDirection = tube.NextDirection(this);
-            StartingTime = 0.1f;
-            TimeLeft = 0.1f;
+        if (atmosphereSystem.GetTileMixture(Owner.Transform.Coordinates, true) is {} environment)
+        {
+            atmosphereSystem.Merge(environment, Air);
+            Air.Clear();
         }
 
-        public void ExitDisposals()
+        Owner.Delete();
+    }
+
+    public void Update(float frameTime)
+    {
+        while (frameTime > 0)
         {
-            if (Deleted)
-                return;
-
-            PreviousTube = null;
-            PreviousDirection = Direction.Invalid;
-            CurrentTube = null;
-            CurrentDirection = Direction.Invalid;
-            StartingTime = 0;
-            TimeLeft = 0;
-
-            foreach (var entity in _contents.ContainedEntities.ToArray())
+            var time = frameTime;
+            if (time > TimeLeft)
             {
-                if (entity.TryGetComponent(out IPhysBody? physics))
-                {
-                    physics.CanCollide = true;
-                }
-
-                _contents.ForceRemove(entity);
-
-                if (entity.Transform.Parent == Owner.Transform)
-                {
-                    entity.Transform.AttachParentToContainerOrGrid();
-                }
+                time = TimeLeft;
             }
 
-            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
+            TimeLeft -= time;
+            frameTime -= time;
 
-            if (atmosphereSystem.GetTileMixture(Owner.Transform.Coordinates, true) is {} environment)
+            if (CurrentTube == null || CurrentTube.Deleted)
             {
-                atmosphereSystem.Merge(environment, Air);
-                Air.Clear();
+                ExitDisposals();
+                break;
             }
 
-            Owner.Delete();
-        }
-
-        public void Update(float frameTime)
-        {
-            while (frameTime > 0)
+            if (TimeLeft > 0)
             {
-                var time = frameTime;
-                if (time > TimeLeft)
-                {
-                    time = TimeLeft;
-                }
+                var progress = 1 - TimeLeft / StartingTime;
+                var origin = CurrentTube.Owner.Transform.Coordinates;
+                var destination = CurrentDirection.ToVec();
+                var newPosition = destination * progress;
 
-                TimeLeft -= time;
-                frameTime -= time;
+                Owner.Transform.Coordinates = origin.Offset(newPosition);
 
-                if (CurrentTube == null || CurrentTube.Deleted)
-                {
-                    ExitDisposals();
-                    break;
-                }
+                continue;
+            }
 
-                if (TimeLeft > 0)
-                {
-                    var progress = 1 - TimeLeft / StartingTime;
-                    var origin = CurrentTube.Owner.Transform.Coordinates;
-                    var destination = CurrentDirection.ToVec();
-                    var newPosition = destination * progress;
-
-                    Owner.Transform.Coordinates = origin.Offset(newPosition);
-
-                    continue;
-                }
-
-                var nextTube = EntitySystem.Get<DisposalTubeSystem>().NextTubeFor(CurrentTube.Owner.Uid, CurrentDirection);
-                if (nextTube == null || nextTube.Deleted || !CurrentTube.TransferTo(this, nextTube))
-                {
-                    CurrentTube.Remove(this);
-                    break;
-                }
+            var nextTube = EntitySystem.Get<DisposalTubeSystem>().NextTubeFor(CurrentTube.Owner.Uid, CurrentDirection);
+            if (nextTube == null || nextTube.Deleted || !CurrentTube.TransferTo(this, nextTube))
+            {
+                CurrentTube.Remove(this);
+                break;
             }
         }
     }

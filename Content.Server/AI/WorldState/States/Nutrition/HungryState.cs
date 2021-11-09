@@ -3,38 +3,37 @@ using Content.Server.Nutrition.Components;
 using Content.Shared.Nutrition.Components;
 using JetBrains.Annotations;
 
-namespace Content.Server.AI.WorldState.States.Nutrition
+namespace Content.Server.AI.WorldState.States.Nutrition;
+
+[UsedImplicitly]
+public sealed class HungryState : StateData<bool>
 {
-    [UsedImplicitly]
-    public sealed class HungryState : StateData<bool>
+    public override string Name => "Hungry";
+
+    public override bool GetValue()
     {
-        public override string Name => "Hungry";
-
-        public override bool GetValue()
+        if (!Owner.TryGetComponent(out HungerComponent? hungerComponent))
         {
-            if (!Owner.TryGetComponent(out HungerComponent? hungerComponent))
-            {
-                return false;
-            }
+            return false;
+        }
 
-            switch (hungerComponent.CurrentHungerThreshold)
-            {
-                case HungerThreshold.Overfed:
-                    return false;
-                case HungerThreshold.Okay:
-                    return false;
-                case HungerThreshold.Peckish:
-                    return true;
-                case HungerThreshold.Starving:
-                    return true;
-                case HungerThreshold.Dead:
-                    return true;
-                default:
-                    throw new ArgumentOutOfRangeException(
-                        nameof(hungerComponent.CurrentHungerThreshold),
-                        hungerComponent.CurrentHungerThreshold,
-                        null);
-            }
+        switch (hungerComponent.CurrentHungerThreshold)
+        {
+            case HungerThreshold.Overfed:
+                return false;
+            case HungerThreshold.Okay:
+                return false;
+            case HungerThreshold.Peckish:
+                return true;
+            case HungerThreshold.Starving:
+                return true;
+            case HungerThreshold.Dead:
+                return true;
+            default:
+                throw new ArgumentOutOfRangeException(
+                    nameof(hungerComponent.CurrentHungerThreshold),
+                    hungerComponent.CurrentHungerThreshold,
+                    null);
         }
     }
 }

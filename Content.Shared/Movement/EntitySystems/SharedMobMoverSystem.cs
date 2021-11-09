@@ -7,45 +7,44 @@ using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 
-namespace Content.Shared.Movement.EntitySystems
+namespace Content.Shared.Movement.EntitySystems;
+
+public sealed class SharedMobMoverSystem : EntitySystem
 {
-    public sealed class SharedMobMoverSystem : EntitySystem
+    private bool _pushingEnabled;
+
+    public override void Initialize()
     {
-        private bool _pushingEnabled;
+        base.Initialize();
+        Get<SharedPhysicsSystem>().KinematicControllerCollision += HandleCollisionMessage;
+        IoCManager.Resolve<IConfigurationManager>().OnValueChanged(CCVars.MobPushing, SetPushing, true);
+    }
 
-        public override void Initialize()
-        {
-            base.Initialize();
-            Get<SharedPhysicsSystem>().KinematicControllerCollision += HandleCollisionMessage;
-            IoCManager.Resolve<IConfigurationManager>().OnValueChanged(CCVars.MobPushing, SetPushing, true);
-        }
+    private void SetPushing(bool value)
+    {
+        _pushingEnabled = value;
+    }
 
-        private void SetPushing(bool value)
-        {
-            _pushingEnabled = value;
-        }
+    public override void Shutdown()
+    {
+        base.Shutdown();
+        IoCManager.Resolve<IConfigurationManager>().UnsubValueChanged(CCVars.MobPushing, SetPushing);
+        Get<SharedPhysicsSystem>().KinematicControllerCollision -= HandleCollisionMessage;
+    }
 
-        public override void Shutdown()
-        {
-            base.Shutdown();
-            IoCManager.Resolve<IConfigurationManager>().UnsubValueChanged(CCVars.MobPushing, SetPushing);
-            Get<SharedPhysicsSystem>().KinematicControllerCollision -= HandleCollisionMessage;
-        }
+    /// <summary>
+    ///     Fake pushing for player collisions.
+    /// </summary>
+    private void HandleCollisionMessage(Fixture ourFixture, Fixture otherFixture, float frameTime, Vector2 worldNormal)
+    {
+        if (!_pushingEnabled) return;
 
-        /// <summary>
-        ///     Fake pushing for player collisions.
-        /// </summary>
-        private void HandleCollisionMessage(Fixture ourFixture, Fixture otherFixture, float frameTime, Vector2 worldNormal)
-        {
-            if (!_pushingEnabled) return;
+        var otherBody = otherFixture.Body;
 
-            var otherBody = otherFixture.Body;
+        if (otherBody.BodyType != BodyType.Dynamic || !otherFixture.Hard) return;
 
-            if (otherBody.BodyType != BodyType.Dynamic || !otherFixture.Hard) return;
+        if (!ourFixture.Body.Owner.TryGetComponent(out IMobMoverComponent? mobMover) || worldNormal == Vector2.Zero) return;
 
-            if (!ourFixture.Body.Owner.TryGetComponent(out IMobMoverComponent? mobMover) || worldNormal == Vector2.Zero) return;
-
-            otherBody.ApplyLinearImpulse(-worldNormal * mobMover.PushStrength * frameTime);
-        }
+        otherBody.ApplyLinearImpulse(-worldNormal * mobMover.PushStrength * frameTime);
     }
 }

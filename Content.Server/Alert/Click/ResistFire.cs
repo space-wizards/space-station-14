@@ -5,21 +5,20 @@ using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.Alert.Click
+namespace Content.Server.Alert.Click;
+
+/// <summary>
+/// Resist fire
+/// </summary>
+[UsedImplicitly]
+[DataDefinition]
+public class ResistFire : IAlertClick
 {
-    /// <summary>
-    /// Resist fire
-    /// </summary>
-    [UsedImplicitly]
-    [DataDefinition]
-    public class ResistFire : IAlertClick
+    public void AlertClicked(ClickAlertEventArgs args)
     {
-        public void AlertClicked(ClickAlertEventArgs args)
+        if (args.Player.TryGetComponent(out FlammableComponent? flammable))
         {
-            if (args.Player.TryGetComponent(out FlammableComponent? flammable))
-            {
-                EntitySystem.Get<FlammableSystem>().Resist(args.Player.Uid, flammable);
-            }
+            EntitySystem.Get<FlammableSystem>().Resist(args.Player.Uid, flammable);
         }
     }
 }

@@ -5,23 +5,22 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.Nutrition.Components
+namespace Content.Shared.Nutrition.Components;
+
+[Friend(typeof(SharedCreamPieSystem))]
+[RegisterComponent]
+public class CreamPieComponent : Component
 {
-    [Friend(typeof(SharedCreamPieSystem))]
-    [RegisterComponent]
-    public class CreamPieComponent : Component
-    {
-        public override string Name => "CreamPie";
+    public override string Name => "CreamPie";
 
-        [ViewVariables]
-        [DataField("paralyzeTime")]
-        public float ParalyzeTime { get; } = 1f;
+    [ViewVariables]
+    [DataField("paralyzeTime")]
+    public float ParalyzeTime { get; } = 1f;
 
-        [ViewVariables]
-        [DataField("sound")]
-        public SoundSpecifier Sound { get; } = new SoundCollectionSpecifier("desecration");
+    [ViewVariables]
+    [DataField("sound")]
+    public SoundSpecifier Sound { get; } = new SoundCollectionSpecifier("desecration");
 
-        [ViewVariables]
-        public bool Splatted { get; set; } = false;
-    }
+    [ViewVariables]
+    public bool Splatted { get; set; } = false;
 }

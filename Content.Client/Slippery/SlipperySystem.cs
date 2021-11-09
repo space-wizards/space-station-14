@@ -1,9 +1,8 @@
 using Content.Shared.Slippery;
 
-namespace Content.Client.Slippery
+namespace Content.Client.Slippery;
+
+internal sealed class SlipperySystem : SharedSlipperySystem
 {
-    internal sealed class SlipperySystem : SharedSlipperySystem
-    {
-        protected override void PlaySound(SlipperyComponent component) {}
-    }
+    protected override void PlaySound(SlipperyComponent component) {}
 }

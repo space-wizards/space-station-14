@@ -4,52 +4,51 @@ using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Client.NodeContainer
+namespace Content.Client.NodeContainer;
+
+public sealed class NodeVisCommand : IConsoleCommand
 {
-    public sealed class NodeVisCommand : IConsoleCommand
+    public string Command => "nodevis";
+    public string Description => "Toggles node group visualization";
+    public string Help => "";
+
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        public string Command => "nodevis";
-        public string Description => "Toggles node group visualization";
-        public string Help => "";
-
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        var adminMan = IoCManager.Resolve<IClientAdminManager>();
+        if (!adminMan.HasFlag(AdminFlags.Debug))
         {
-            var adminMan = IoCManager.Resolve<IClientAdminManager>();
-            if (!adminMan.HasFlag(AdminFlags.Debug))
-            {
-                shell.WriteError("You need +DEBUG for this command");
-                return;
-            }
-
-            var sys = EntitySystem.Get<NodeGroupSystem>();
-            sys.SetVisEnabled(!sys.VisEnabled);
+            shell.WriteError("You need +DEBUG for this command");
+            return;
         }
+
+        var sys = EntitySystem.Get<NodeGroupSystem>();
+        sys.SetVisEnabled(!sys.VisEnabled);
     }
+}
 
-    public sealed class NodeVisFilterCommand : IConsoleCommand
+public sealed class NodeVisFilterCommand : IConsoleCommand
+{
+    public string Command => "nodevisfilter";
+    public string Description => "Toggles showing a specific group on nodevis";
+    public string Help => "Usage: nodevis [filter]\nOmit filter to list currently masked-off";
+
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        public string Command => "nodevisfilter";
-        public string Description => "Toggles showing a specific group on nodevis";
-        public string Help => "Usage: nodevis [filter]\nOmit filter to list currently masked-off";
+        var sys = EntitySystem.Get<NodeGroupSystem>();
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        if (args.Length == 0)
         {
-            var sys = EntitySystem.Get<NodeGroupSystem>();
-
-            if (args.Length == 0)
+            foreach (var filtered in sys.Filtered)
             {
-                foreach (var filtered in sys.Filtered)
-                {
-                    shell.WriteLine(filtered);
-                }
+                shell.WriteLine(filtered);
             }
-            else
+        }
+        else
+        {
+            var filter = args[0];
+            if (!sys.Filtered.Add(filter))
             {
-                var filter = args[0];
-                if (!sys.Filtered.Add(filter))
-                {
-                    sys.Filtered.Remove(filter);
-                }
+                sys.Filtered.Remove(filter);
             }
         }
     }

@@ -1,40 +1,39 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.ParticleAccelerator.Components
+namespace Content.Server.ParticleAccelerator.Components;
+
+public abstract class ParticleAcceleratorPartComponent : Component
 {
-    public abstract class ParticleAcceleratorPartComponent : Component
+    [ViewVariables] public ParticleAcceleratorControlBoxComponent? Master;
+
+    protected override void Initialize()
     {
-        [ViewVariables] public ParticleAcceleratorControlBoxComponent? Master;
+        base.Initialize();
+        // FIXME: this has to be an entity system, full stop.
 
-        protected override void Initialize()
-        {
-            base.Initialize();
-            // FIXME: this has to be an entity system, full stop.
+        Owner.Transform.Anchored = true;
+    }
 
-            Owner.Transform.Anchored = true;
-        }
+    public void OnAnchorChanged()
+    {
+        RescanIfPossible();
+    }
 
-        public void OnAnchorChanged()
-        {
-            RescanIfPossible();
-        }
+    protected override void OnRemove()
+    {
+        base.OnRemove();
 
-        protected override void OnRemove()
-        {
-            base.OnRemove();
+        RescanIfPossible();
+    }
 
-            RescanIfPossible();
-        }
+    private void RescanIfPossible()
+    {
+        Master?.RescanParts();
+    }
 
-        private void RescanIfPossible()
-        {
-            Master?.RescanParts();
-        }
-
-        public virtual void Rotated()
-        {
-            RescanIfPossible();
-        }
+    public virtual void Rotated()
+    {
+        RescanIfPossible();
     }
 }

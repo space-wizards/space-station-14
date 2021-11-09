@@ -2,20 +2,19 @@
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.Commands
+namespace Content.Client.Commands;
+
+public class ToggleHealthOverlayCommand : IConsoleCommand
 {
-    public class ToggleHealthOverlayCommand : IConsoleCommand
+    public string Command => "togglehealthoverlay";
+    public string Description => "Toggles a health bar above mobs.";
+    public string Help => $"Usage: {Command}";
+
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        public string Command => "togglehealthoverlay";
-        public string Description => "Toggles a health bar above mobs.";
-        public string Help => $"Usage: {Command}";
+        var system = EntitySystem.Get<HealthOverlaySystem>();
+        system.Enabled = !system.Enabled;
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
-        {
-            var system = EntitySystem.Get<HealthOverlaySystem>();
-            system.Enabled = !system.Enabled;
-
-            shell.WriteLine($"Health overlay system {(system.Enabled ? "enabled" : "disabled")}.");
-        }
+        shell.WriteLine($"Health overlay system {(system.Enabled ? "enabled" : "disabled")}.");
     }
 }

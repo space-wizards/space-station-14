@@ -7,36 +7,35 @@ using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.AI.WorldState.States.Nutrition
+namespace Content.Server.AI.WorldState.States.Nutrition;
+
+[UsedImplicitly]
+public sealed class NearbyDrinkState: CachedStateData<List<IEntity>>
 {
-    [UsedImplicitly]
-    public sealed class NearbyDrinkState: CachedStateData<List<IEntity>>
+    public override string Name => "NearbyDrink";
+
+    protected override List<IEntity> GetTrueValue()
     {
-        public override string Name => "NearbyDrink";
+        var result = new List<IEntity>();
 
-        protected override List<IEntity> GetTrueValue()
+        if (!Owner.TryGetComponent(out AiControllerComponent? controller))
         {
-            var result = new List<IEntity>();
-
-            if (!Owner.TryGetComponent(out AiControllerComponent? controller))
-            {
-                return result;
-            }
-
-            foreach (var entity in Visibility
-                .GetNearestEntities(Owner.Transform.Coordinates, typeof(DrinkComponent), controller.VisionRadius))
-            {
-                if (entity.TryGetContainer(out var container))
-                {
-                    if (!container.Owner.HasComponent<EntityStorageComponent>())
-                    {
-                        continue;
-                    }
-                }
-                result.Add(entity);
-            }
-
             return result;
         }
+
+        foreach (var entity in Visibility
+                     .GetNearestEntities(Owner.Transform.Coordinates, typeof(DrinkComponent), controller.VisionRadius))
+        {
+            if (entity.TryGetContainer(out var container))
+            {
+                if (!container.Owner.HasComponent<EntityStorageComponent>())
+                {
+                    continue;
+                }
+            }
+            result.Add(entity);
+        }
+
+        return result;
     }
 }

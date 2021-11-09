@@ -3,81 +3,80 @@ using Content.Server.Research.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.Research
+namespace Content.Server.Research;
+
+[UsedImplicitly]
+public class ResearchSystem : EntitySystem
 {
-    [UsedImplicitly]
-    public class ResearchSystem : EntitySystem
+    private const float ResearchConsoleUIUpdateTime = 30f;
+
+    private float _timer = ResearchConsoleUIUpdateTime;
+    private readonly List<ResearchServerComponent> _servers = new();
+    public IReadOnlyList<ResearchServerComponent> Servers => _servers;
+
+    public bool RegisterServer(ResearchServerComponent server)
     {
-        private const float ResearchConsoleUIUpdateTime = 30f;
+        if (_servers.Contains(server)) return false;
+        _servers.Add(server);
+        return true;
+    }
 
-        private float _timer = ResearchConsoleUIUpdateTime;
-        private readonly List<ResearchServerComponent> _servers = new();
-        public IReadOnlyList<ResearchServerComponent> Servers => _servers;
+    public void UnregisterServer(ResearchServerComponent server)
+    {
+        _servers.Remove(server);
+    }
 
-        public bool RegisterServer(ResearchServerComponent server)
+    public ResearchServerComponent? GetServerById(int id)
+    {
+        foreach (var server in Servers)
         {
-            if (_servers.Contains(server)) return false;
-            _servers.Add(server);
-            return true;
+            if (server.Id == id) return server;
         }
 
-        public void UnregisterServer(ResearchServerComponent server)
+        return null;
+    }
+
+    public string[] GetServerNames()
+    {
+        var list = new string[Servers.Count];
+
+        for (var i = 0; i < Servers.Count; i++)
         {
-            _servers.Remove(server);
+            list[i] = Servers[i].ServerName;
         }
 
-        public ResearchServerComponent? GetServerById(int id)
-        {
-            foreach (var server in Servers)
-            {
-                if (server.Id == id) return server;
-            }
+        return list;
+    }
 
-            return null;
+    public int[] GetServerIds()
+    {
+        var list = new int[Servers.Count];
+
+        for (var i = 0; i < Servers.Count; i++)
+        {
+            list[i] = Servers[i].Id;
         }
 
-        public string[] GetServerNames()
+        return list;
+    }
+
+    public override void Update(float frameTime)
+    {
+        _timer += frameTime;
+
+        foreach (var server in _servers)
         {
-            var list = new string[Servers.Count];
-
-            for (var i = 0; i < Servers.Count; i++)
-            {
-                list[i] = Servers[i].ServerName;
-            }
-
-            return list;
+            server.Update(frameTime);
         }
 
-        public int[] GetServerIds()
+        if (_timer >= ResearchConsoleUIUpdateTime)
         {
-            var list = new int[Servers.Count];
-
-            for (var i = 0; i < Servers.Count; i++)
+            foreach (var console in EntityManager.EntityQuery<ResearchConsoleComponent>())
             {
-                list[i] = Servers[i].Id;
+                console.UpdateUserInterface();
             }
 
-            return list;
-        }
-
-        public override void Update(float frameTime)
-        {
-            _timer += frameTime;
-
-            foreach (var server in _servers)
-            {
-                server.Update(frameTime);
-            }
-
-            if (_timer >= ResearchConsoleUIUpdateTime)
-            {
-                foreach (var console in EntityManager.EntityQuery<ResearchConsoleComponent>())
-                {
-                    console.UpdateUserInterface();
-                }
-
-                _timer = 0f;
-            }
+            _timer = 0f;
         }
     }
 }

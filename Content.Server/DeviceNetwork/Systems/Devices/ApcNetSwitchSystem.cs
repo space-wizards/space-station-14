@@ -4,51 +4,50 @@ using Content.Shared.Interaction;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Server.DeviceNetwork.Systems.Devices
+namespace Content.Server.DeviceNetwork.Systems.Devices;
+
+public sealed class ApcNetSwitchSystem : EntitySystem
 {
-    public sealed class ApcNetSwitchSystem : EntitySystem
+    [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
+        base.Initialize();
 
-        public override void Initialize()
+        SubscribeLocalEvent<ApcNetSwitchComponent, InteractHandEvent>(OnInteracted);
+        SubscribeLocalEvent<ApcNetSwitchComponent, PacketSentEvent>(OnPackedReceived);
+    }
+
+    /// <summary>
+    /// Toggles the state of the switch and sents a <see cref="DeviceNetworkConstants.CmdSetState"/> command with the
+    /// <see cref="DeviceNetworkConstants.StateEnabled"/> value set to state.
+    /// </summary>
+    private void OnInteracted(EntityUid uid, ApcNetSwitchComponent component, InteractHandEvent args)
+    {
+        if (!EntityManager.TryGetComponent(uid, out DeviceNetworkComponent? networkComponent)) return;
+
+        component.State = !component.State;
+
+        var payload = new NetworkPayload
         {
-            base.Initialize();
+            [DeviceNetworkConstants.Command] = DeviceNetworkConstants.CmdSetState,
+            [DeviceNetworkConstants.StateEnabled] = component.State,
+        };
 
-            SubscribeLocalEvent<ApcNetSwitchComponent, InteractHandEvent>(OnInteracted);
-            SubscribeLocalEvent<ApcNetSwitchComponent, PacketSentEvent>(OnPackedReceived);
-        }
+        _deviceNetworkSystem.QueuePacket(uid, DeviceNetworkConstants.NullAddress, networkComponent.Frequency, payload, true);
 
-        /// <summary>
-        /// Toggles the state of the switch and sents a <see cref="DeviceNetworkConstants.CmdSetState"/> command with the
-        /// <see cref="DeviceNetworkConstants.StateEnabled"/> value set to state.
-        /// </summary>
-        private void OnInteracted(EntityUid uid, ApcNetSwitchComponent component, InteractHandEvent args)
-        {
-            if (!EntityManager.TryGetComponent(uid, out DeviceNetworkComponent? networkComponent)) return;
+        args.Handled = true;
+    }
 
-            component.State = !component.State;
+    /// <summary>
+    /// Listens to the <see cref="DeviceNetworkConstants.CmdSetState"/> command of other switches to sync state
+    /// </summary>
+    private void OnPackedReceived(EntityUid uid, ApcNetSwitchComponent component, PacketSentEvent args)
+    {
+        if (!EntityManager.TryGetComponent(uid, out DeviceNetworkComponent? networkComponent) || args.SenderAddress == networkComponent.Address) return;
+        if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? command) || command != DeviceNetworkConstants.CmdSetState) return;
+        if (!args.Data.TryGetValue(DeviceNetworkConstants.StateEnabled, out bool enabled)) return;
 
-            var payload = new NetworkPayload
-            {
-                [DeviceNetworkConstants.Command] = DeviceNetworkConstants.CmdSetState,
-                [DeviceNetworkConstants.StateEnabled] = component.State,
-            };
-
-            _deviceNetworkSystem.QueuePacket(uid, DeviceNetworkConstants.NullAddress, networkComponent.Frequency, payload, true);
-
-            args.Handled = true;
-        }
-
-        /// <summary>
-        /// Listens to the <see cref="DeviceNetworkConstants.CmdSetState"/> command of other switches to sync state
-        /// </summary>
-        private void OnPackedReceived(EntityUid uid, ApcNetSwitchComponent component, PacketSentEvent args)
-        {
-            if (!EntityManager.TryGetComponent(uid, out DeviceNetworkComponent? networkComponent) || args.SenderAddress == networkComponent.Address) return;
-            if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? command) || command != DeviceNetworkConstants.CmdSetState) return;
-            if (!args.Data.TryGetValue(DeviceNetworkConstants.StateEnabled, out bool enabled)) return;
-
-            component.State = enabled;
-        }
+        component.State = enabled;
     }
 }

@@ -11,39 +11,38 @@ using Content.Server.AI.WorldState.States.Combat;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Server.AI.Utility.Actions.Combat.Melee
+namespace Content.Server.AI.Utility.Actions.Combat.Melee;
+
+public sealed class PickUpMeleeWeapon : UtilityAction
 {
-    public sealed class PickUpMeleeWeapon : UtilityAction
+    public IEntity Target { get; set; } = default!;
+
+    public override void SetupOperators(Blackboard context)
     {
-        public IEntity Target { get; set; } = default!;
+        ActionOperators = new GoPickupEntitySequence(Owner, Target).Sequence;
+    }
 
-        public override void SetupOperators(Blackboard context)
+    protected override void UpdateBlackboard(Blackboard context)
+    {
+        base.UpdateBlackboard(context);
+        context.GetState<TargetEntityState>().SetValue(Target);
+        context.GetState<WeaponEntityState>().SetValue(Target);
+    }
+
+    protected override IReadOnlyCollection<Func<float>> GetConsiderations(Blackboard context)
+    {
+        var considerationsManager = IoCManager.Resolve<ConsiderationsManager>();
+
+        return new[]
         {
-            ActionOperators = new GoPickupEntitySequence(Owner, Target).Sequence;
-        }
-
-        protected override void UpdateBlackboard(Blackboard context)
-        {
-            base.UpdateBlackboard(context);
-            context.GetState<TargetEntityState>().SetValue(Target);
-            context.GetState<WeaponEntityState>().SetValue(Target);
-        }
-
-        protected override IReadOnlyCollection<Func<float>> GetConsiderations(Blackboard context)
-        {
-            var considerationsManager = IoCManager.Resolve<ConsiderationsManager>();
-
-            return new[]
-            {
-                considerationsManager.Get<TargetDistanceCon>()
-                    .PresetCurve(context, PresetCurve.Distance),
-                considerationsManager.Get<MeleeWeaponDamageCon>()
-                    .QuadraticCurve(context, 1.0f, 0.25f, 0.0f, 0.0f),
-                considerationsManager.Get<MeleeWeaponSpeedCon>()
-                    .QuadraticCurve(context, -1.0f, 0.5f, 1.0f, 0.0f),
-                considerationsManager.Get<TargetAccessibleCon>()
-                    .BoolCurve(context),
-            };
-        }
+            considerationsManager.Get<TargetDistanceCon>()
+                                 .PresetCurve(context, PresetCurve.Distance),
+            considerationsManager.Get<MeleeWeaponDamageCon>()
+                                 .QuadraticCurve(context, 1.0f, 0.25f, 0.0f, 0.0f),
+            considerationsManager.Get<MeleeWeaponSpeedCon>()
+                                 .QuadraticCurve(context, -1.0f, 0.5f, 1.0f, 0.0f),
+            considerationsManager.Get<TargetAccessibleCon>()
+                                 .BoolCurve(context),
+        };
     }
 }

@@ -5,27 +5,26 @@ using Content.Shared.Movement.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Server.Body
+namespace Content.Server.Body;
+
+public sealed class BodySystem : EntitySystem
 {
-    public sealed class BodySystem : EntitySystem
+    [Dependency] private readonly GameTicker _ticker = default!;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly GameTicker _ticker = default!;
+        base.Initialize();
+        SubscribeLocalEvent<BodyComponent, RelayMoveInputEvent>(OnRelayMoveInput);
+    }
 
-        public override void Initialize()
+    private void OnRelayMoveInput(EntityUid uid, BodyComponent component, RelayMoveInputEvent args)
+    {
+        if (EntityManager.TryGetComponent<MobStateComponent>(uid, out var mobState) &&
+            mobState.IsDead() &&
+            EntityManager.TryGetComponent<MindComponent>(uid, out var mind) &&
+            mind.HasMind)
         {
-            base.Initialize();
-            SubscribeLocalEvent<BodyComponent, RelayMoveInputEvent>(OnRelayMoveInput);
-        }
-
-        private void OnRelayMoveInput(EntityUid uid, BodyComponent component, RelayMoveInputEvent args)
-        {
-            if (EntityManager.TryGetComponent<MobStateComponent>(uid, out var mobState) &&
-                mobState.IsDead() &&
-                EntityManager.TryGetComponent<MindComponent>(uid, out var mind) &&
-                mind.HasMind)
-            {
-                _ticker.OnGhostAttempt(mind.Mind!, true);
-            }
+            _ticker.OnGhostAttempt(mind.Mind!, true);
         }
     }
 }

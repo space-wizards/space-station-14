@@ -1,31 +1,30 @@
 using Content.Client.Stylesheets;
 using Robust.Client.UserInterface.Controls;
 
-namespace Content.Client.HUD.UI
+namespace Content.Client.HUD.UI;
+
+public class NanoHeading : Container
 {
-    public class NanoHeading : Container
+    private readonly Label _label;
+    private readonly PanelContainer _panel;
+
+    public NanoHeading()
     {
-        private readonly Label _label;
-        private readonly PanelContainer _panel;
-
-        public NanoHeading()
+        _panel = new PanelContainer
         {
-            _panel = new PanelContainer
+            Children = {(_label = new Label
             {
-                Children = {(_label = new Label
-                {
-                    StyleClasses = {StyleNano.StyleClassLabelHeading}
-                })}
-            };
-            AddChild(_panel);
+                StyleClasses = {StyleNano.StyleClassLabelHeading}
+            })}
+        };
+        AddChild(_panel);
 
-            HorizontalAlignment = HAlignment.Left;
-        }
+        HorizontalAlignment = HAlignment.Left;
+    }
 
-        public string? Text
-        {
-            get => _label.Text;
-            set => _label.Text = value;
-        }
+    public string? Text
+    {
+        get => _label.Text;
+        set => _label.Text = value;
     }
 }

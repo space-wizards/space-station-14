@@ -7,31 +7,30 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.Construction.Completions
+namespace Content.Server.Construction.Completions;
+
+[UsedImplicitly]
+[DataDefinition]
+public class MoveContainer : IGraphAction
 {
-    [UsedImplicitly]
-    [DataDefinition]
-    public class MoveContainer : IGraphAction
+    [DataField("from")] public string? FromContainer { get; } = null;
+    [DataField("to")] public string? ToContainer { get; } = null;
+
+    public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
     {
-        [DataField("from")] public string? FromContainer { get; } = null;
-        [DataField("to")] public string? ToContainer { get; } = null;
+        if (string.IsNullOrEmpty(FromContainer) || string.IsNullOrEmpty(ToContainer))
+            return;
 
-        public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
+        var containerSystem = entityManager.EntitySysManager.GetEntitySystem<ContainerSystem>();
+        var containerManager = entityManager.EnsureComponent<ContainerManagerComponent>(uid);
+
+        var from = containerSystem.EnsureContainer<Container>(uid, FromContainer, containerManager);
+        var to = containerSystem.EnsureContainer<Container>(uid, ToContainer, containerManager);
+
+        foreach (var contained in from.ContainedEntities.ToArray())
         {
-            if (string.IsNullOrEmpty(FromContainer) || string.IsNullOrEmpty(ToContainer))
-                return;
-
-            var containerSystem = entityManager.EntitySysManager.GetEntitySystem<ContainerSystem>();
-            var containerManager = entityManager.EnsureComponent<ContainerManagerComponent>(uid);
-
-            var from = containerSystem.EnsureContainer<Container>(uid, FromContainer, containerManager);
-            var to = containerSystem.EnsureContainer<Container>(uid, ToContainer, containerManager);
-
-            foreach (var contained in from.ContainedEntities.ToArray())
-            {
-                if (from.Remove(contained))
-                    to.Insert(contained);
-            }
+            if (from.Remove(contained))
+                to.Insert(contained);
         }
     }
 }

@@ -10,47 +10,46 @@ using Robust.Shared.Localization;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Client.Stack
-{
-    [RegisterComponent, Friend(typeof(StackSystem), typeof(StatusControl))]
-    [ComponentReference(typeof(SharedStackComponent))]
-    public class StackComponent : SharedStackComponent, IItemStatus
-    {
-        [ViewVariables]
-        public bool UiUpdateNeeded { get; set; }
+namespace Content.Client.Stack;
 
-        public Control MakeControl()
+[RegisterComponent, Friend(typeof(StackSystem), typeof(StatusControl))]
+[ComponentReference(typeof(SharedStackComponent))]
+public class StackComponent : SharedStackComponent, IItemStatus
+{
+    [ViewVariables]
+    public bool UiUpdateNeeded { get; set; }
+
+    public Control MakeControl()
+    {
+        return new StatusControl(this);
+    }
+
+    private sealed class StatusControl : Control
+    {
+        private readonly StackComponent _parent;
+        private readonly RichTextLabel _label;
+
+        public StatusControl(StackComponent parent)
         {
-            return new StatusControl(this);
+            _parent = parent;
+            _label = new RichTextLabel {StyleClasses = {StyleNano.StyleClassItemStatus}};
+            AddChild(_label);
+
+            parent.UiUpdateNeeded = true;
         }
 
-        private sealed class StatusControl : Control
+        protected override void FrameUpdate(FrameEventArgs args)
         {
-            private readonly StackComponent _parent;
-            private readonly RichTextLabel _label;
+            base.FrameUpdate(args);
 
-            public StatusControl(StackComponent parent)
+            if (!_parent.UiUpdateNeeded)
             {
-                _parent = parent;
-                _label = new RichTextLabel {StyleClasses = {StyleNano.StyleClassItemStatus}};
-                AddChild(_label);
-
-                parent.UiUpdateNeeded = true;
+                return;
             }
 
-            protected override void FrameUpdate(FrameEventArgs args)
-            {
-                base.FrameUpdate(args);
+            _parent.UiUpdateNeeded = false;
 
-                if (!_parent.UiUpdateNeeded)
-                {
-                    return;
-                }
-
-                _parent.UiUpdateNeeded = false;
-
-                _label.SetMarkup(Loc.GetString("comp-stack-status", ("count", _parent.Count)));
-            }
+            _label.SetMarkup(Loc.GetString("comp-stack-status", ("count", _parent.Count)));
         }
     }
 }

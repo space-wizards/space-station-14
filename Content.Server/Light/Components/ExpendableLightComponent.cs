@@ -8,165 +8,164 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Light.Components
+namespace Content.Server.Light.Components;
+
+/// <summary>
+///     Component that represents a handheld expendable light which can be activated and eventually dies over time.
+/// </summary>
+[RegisterComponent]
+public class ExpendableLightComponent : SharedExpendableLightComponent, IUse
 {
     /// <summary>
-    ///     Component that represents a handheld expendable light which can be activated and eventually dies over time.
+    ///     Status of light, whether or not it is emitting light.
     /// </summary>
-    [RegisterComponent]
-    public class ExpendableLightComponent : SharedExpendableLightComponent, IUse
+    [ViewVariables]
+    public bool Activated => CurrentState == ExpendableLightState.Lit || CurrentState == ExpendableLightState.Fading;
+
+    [ViewVariables]
+    private float _stateExpiryTime = default;
+    private AppearanceComponent? _appearance = default;
+
+    bool IUse.UseEntity(UseEntityEventArgs eventArgs)
     {
-        /// <summary>
-        ///     Status of light, whether or not it is emitting light.
-        /// </summary>
-        [ViewVariables]
-        public bool Activated => CurrentState == ExpendableLightState.Lit || CurrentState == ExpendableLightState.Fading;
+        return TryActivate();
+    }
 
-        [ViewVariables]
-        private float _stateExpiryTime = default;
-        private AppearanceComponent? _appearance = default;
+    protected override void Initialize()
+    {
+        base.Initialize();
 
-        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
+        if (Owner.TryGetComponent<ItemComponent>(out var item))
         {
-            return TryActivate();
+            item.EquippedPrefix = "unlit";
         }
 
-        protected override void Initialize()
-        {
-            base.Initialize();
+        CurrentState = ExpendableLightState.BrandNew;
+        Owner.EnsureComponent<PointLightComponent>();
+        Owner.TryGetComponent(out _appearance);
+    }
 
+    /// <summary>
+    ///     Enables the light if it is not active. Once active it cannot be turned off.
+    /// </summary>
+    public bool TryActivate()
+    {
+        if (!Activated && CurrentState == ExpendableLightState.BrandNew)
+        {
             if (Owner.TryGetComponent<ItemComponent>(out var item))
             {
-                item.EquippedPrefix = "unlit";
+                item.EquippedPrefix = "lit";
             }
 
-            CurrentState = ExpendableLightState.BrandNew;
-            Owner.EnsureComponent<PointLightComponent>();
-            Owner.TryGetComponent(out _appearance);
+            CurrentState = ExpendableLightState.Lit;
+            _stateExpiryTime = GlowDuration;
+
+            UpdateSpriteAndSounds(Activated);
+            UpdateVisualizer();
+
+            return true;
         }
 
-        /// <summary>
-        ///     Enables the light if it is not active. Once active it cannot be turned off.
-        /// </summary>
-        public bool TryActivate()
+        return false;
+    }
+
+    private void UpdateVisualizer()
+    {
+        _appearance?.SetData(ExpendableLightVisuals.State, CurrentState);
+
+        switch (CurrentState)
         {
-            if (!Activated && CurrentState == ExpendableLightState.BrandNew)
-            {
-                if (Owner.TryGetComponent<ItemComponent>(out var item))
-                {
-                    item.EquippedPrefix = "lit";
-                }
+            case ExpendableLightState.Lit:
+                _appearance?.SetData(ExpendableLightVisuals.Behavior, TurnOnBehaviourID);
+                break;
 
-                CurrentState = ExpendableLightState.Lit;
-                _stateExpiryTime = GlowDuration;
+            case ExpendableLightState.Fading:
+                _appearance?.SetData(ExpendableLightVisuals.Behavior, FadeOutBehaviourID);
+                break;
 
-                UpdateSpriteAndSounds(Activated);
-                UpdateVisualizer();
-
-                return true;
-            }
-
-            return false;
+            case ExpendableLightState.Dead:
+                _appearance?.SetData(ExpendableLightVisuals.Behavior, string.Empty);
+                break;
         }
+    }
 
-        private void UpdateVisualizer()
+    private void UpdateSpriteAndSounds(bool on)
+    {
+        if (Owner.TryGetComponent(out SpriteComponent? sprite))
         {
-            _appearance?.SetData(ExpendableLightVisuals.State, CurrentState);
-
             switch (CurrentState)
             {
                 case ExpendableLightState.Lit:
-                    _appearance?.SetData(ExpendableLightVisuals.Behavior, TurnOnBehaviourID);
-                    break;
+                {
+                    SoundSystem.Play(Filter.Pvs(Owner), LitSound.GetSound(), Owner);
 
+                    if (IconStateLit != string.Empty)
+                    {
+                        sprite.LayerSetState(2, IconStateLit);
+                        sprite.LayerSetShader(2, "shaded");
+                    }
+
+                    sprite.LayerSetVisible(1, true);
+                    break;
+                }
                 case ExpendableLightState.Fading:
-                    _appearance?.SetData(ExpendableLightVisuals.Behavior, FadeOutBehaviourID);
+                {
                     break;
-
+                }
+                default:
                 case ExpendableLightState.Dead:
-                    _appearance?.SetData(ExpendableLightVisuals.Behavior, string.Empty);
+                {
+                    if (DieSound != null) SoundSystem.Play(Filter.Pvs(Owner), DieSound.GetSound(), Owner);
+
+                    sprite.LayerSetState(0, IconStateSpent);
+                    sprite.LayerSetShader(0, "shaded");
+                    sprite.LayerSetVisible(1, false);
                     break;
+                }
             }
         }
 
-        private void UpdateSpriteAndSounds(bool on)
+        if (Owner.TryGetComponent(out ClothingComponent? clothing))
         {
-            if (Owner.TryGetComponent(out SpriteComponent? sprite))
-            {
-                switch (CurrentState)
-                {
-                    case ExpendableLightState.Lit:
-                    {
-                        SoundSystem.Play(Filter.Pvs(Owner), LitSound.GetSound(), Owner);
-
-                        if (IconStateLit != string.Empty)
-                        {
-                            sprite.LayerSetState(2, IconStateLit);
-                            sprite.LayerSetShader(2, "shaded");
-                        }
-
-                        sprite.LayerSetVisible(1, true);
-                        break;
-                    }
-                    case ExpendableLightState.Fading:
-                    {
-                        break;
-                    }
-                    default:
-                    case ExpendableLightState.Dead:
-                    {
-                        if (DieSound != null) SoundSystem.Play(Filter.Pvs(Owner), DieSound.GetSound(), Owner);
-
-                        sprite.LayerSetState(0, IconStateSpent);
-                        sprite.LayerSetShader(0, "shaded");
-                        sprite.LayerSetVisible(1, false);
-                        break;
-                    }
-                }
-            }
-
-            if (Owner.TryGetComponent(out ClothingComponent? clothing))
-            {
-                clothing.ClothingEquippedPrefix = on ? "Activated" : string.Empty;
-            }
+            clothing.ClothingEquippedPrefix = on ? "Activated" : string.Empty;
         }
+    }
 
-        public void Update(float frameTime)
+    public void Update(float frameTime)
+    {
+        if (!Activated) return;
+
+        _stateExpiryTime -= frameTime;
+
+        if (_stateExpiryTime <= 0f)
         {
-            if (!Activated) return;
-
-            _stateExpiryTime -= frameTime;
-
-            if (_stateExpiryTime <= 0f)
+            switch (CurrentState)
             {
-                switch (CurrentState)
-                {
-                    case ExpendableLightState.Lit:
+                case ExpendableLightState.Lit:
 
-                        CurrentState = ExpendableLightState.Fading;
-                        _stateExpiryTime = FadeOutDuration;
+                    CurrentState = ExpendableLightState.Fading;
+                    _stateExpiryTime = FadeOutDuration;
 
-                        UpdateVisualizer();
+                    UpdateVisualizer();
 
-                        break;
+                    break;
 
-                    default:
-                    case ExpendableLightState.Fading:
+                default:
+                case ExpendableLightState.Fading:
 
-                        CurrentState = ExpendableLightState.Dead;
-                        Owner.Name = SpentName;
-                        Owner.Description = SpentDesc;
+                    CurrentState = ExpendableLightState.Dead;
+                    Owner.Name = SpentName;
+                    Owner.Description = SpentDesc;
 
-                        UpdateSpriteAndSounds(Activated);
-                        UpdateVisualizer();
+                    UpdateSpriteAndSounds(Activated);
+                    UpdateVisualizer();
 
-                        if (Owner.TryGetComponent<ItemComponent>(out var item))
-                        {
-                            item.EquippedPrefix = "unlit";
-                        }
+                    if (Owner.TryGetComponent<ItemComponent>(out var item))
+                    {
+                        item.EquippedPrefix = "unlit";
+                    }
 
-                        break;
-                }
+                    break;
             }
         }
     }

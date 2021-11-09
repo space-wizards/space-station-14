@@ -6,20 +6,19 @@ using Robust.Shared.Map;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Chemistry.Components
-{
-    [RegisterComponent]
-    internal sealed class VaporComponent : SharedVaporComponent
-    {
-        [ViewVariables]
-        [DataField("transferAmount")]
-        internal FixedPoint2 TransferAmount = FixedPoint2.New(0.5);
+namespace Content.Server.Chemistry.Components;
 
-        internal bool Reached;
-        internal float ReactTimer;
-        internal float Timer;
-        internal EntityCoordinates Target;
-        internal bool Active;
-        internal float AliveTime;
-    }
+[RegisterComponent]
+internal sealed class VaporComponent : SharedVaporComponent
+{
+    [ViewVariables]
+    [DataField("transferAmount")]
+    internal FixedPoint2 TransferAmount = FixedPoint2.New(0.5);
+
+    internal bool Reached;
+    internal float ReactTimer;
+    internal float Timer;
+    internal EntityCoordinates Target;
+    internal bool Active;
+    internal float AliveTime;
 }

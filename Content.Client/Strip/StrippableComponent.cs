@@ -2,16 +2,15 @@
 using Content.Shared.Strip.Components;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.Strip
+namespace Content.Client.Strip;
+
+[RegisterComponent]
+[ComponentReference(typeof(SharedStrippableComponent))]
+public class StrippableComponent : SharedStrippableComponent
 {
-    [RegisterComponent]
-    [ComponentReference(typeof(SharedStrippableComponent))]
-    public class StrippableComponent : SharedStrippableComponent
+    public override bool Drop(DragDropEvent args)
     {
-        public override bool Drop(DragDropEvent args)
-        {
-            // TODO: Prediction
-            return false;
-        }
+        // TODO: Prediction
+        return false;
     }
 }

@@ -9,20 +9,19 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
-namespace Content.Server.Chemistry.ReagentEntityReactions
+namespace Content.Server.Chemistry.ReagentEntityReactions;
+
+[UsedImplicitly]
+public class WashCreamPieReaction : ReagentEntityReaction
 {
-    [UsedImplicitly]
-    public class WashCreamPieReaction : ReagentEntityReaction
+    [DataField("reagents", true, customTypeSerializer:typeof(PrototypeIdHashSetSerializer<ReagentPrototype>))]
+    // ReSharper disable once CollectionNeverUpdated.Local
+    private readonly HashSet<string> _reagents = new ();
+
+    protected override void React(EntityUid uid, ReagentPrototype reagent, FixedPoint2 volume, Solution? source, IEntityManager entityManager)
     {
-        [DataField("reagents", true, customTypeSerializer:typeof(PrototypeIdHashSetSerializer<ReagentPrototype>))]
-        // ReSharper disable once CollectionNeverUpdated.Local
-        private readonly HashSet<string> _reagents = new ();
+        if (!entityManager.TryGetComponent(uid, out CreamPiedComponent? creamPied) || !_reagents.Contains(reagent.ID)) return;
 
-        protected override void React(EntityUid uid, ReagentPrototype reagent, FixedPoint2 volume, Solution? source, IEntityManager entityManager)
-        {
-            if (!entityManager.TryGetComponent(uid, out CreamPiedComponent? creamPied) || !_reagents.Contains(reagent.ID)) return;
-
-            EntitySystem.Get<CreamPieSystem>().SetCreamPied(uid, creamPied, false);
-        }
+        EntitySystem.Get<CreamPieSystem>().SetCreamPied(uid, creamPied, false);
     }
 }

@@ -9,22 +9,21 @@ using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.GameTicking.Rules
+namespace Content.Server.GameTicking.Rules;
+
+public class RuleTraitor : GameRule
 {
-    public class RuleTraitor : GameRule
+    [Dependency] private readonly IChatManager _chatManager = default!;
+
+    [DataField("addedSound")] private SoundSpecifier _addedSound = new SoundPathSpecifier("/Audio/Misc/tatoralert.ogg");
+
+    public override void Added()
     {
-        [Dependency] private readonly IChatManager _chatManager = default!;
+        _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-traitor-added-announcement"));
 
-        [DataField("addedSound")] private SoundSpecifier _addedSound = new SoundPathSpecifier("/Audio/Misc/tatoralert.ogg");
+        var filter = Filter.Empty()
+                           .AddWhere(session => ((IPlayerSession)session).ContentData()?.Mind?.HasRole<TraitorRole>() ?? false);
 
-        public override void Added()
-        {
-            _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-traitor-added-announcement"));
-
-            var filter = Filter.Empty()
-                .AddWhere(session => ((IPlayerSession)session).ContentData()?.Mind?.HasRole<TraitorRole>() ?? false);
-
-            SoundSystem.Play(filter, _addedSound.GetSound(), AudioParams.Default);
-        }
+        SoundSystem.Play(filter, _addedSound.GetSound(), AudioParams.Default);
     }
 }

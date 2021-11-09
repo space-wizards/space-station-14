@@ -6,53 +6,52 @@ using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.Shuttles
+namespace Content.Shared.Shuttles;
+
+/// <summary>
+/// Stores what shuttle this entity is currently piloting.
+/// </summary>
+[RegisterComponent]
+[NetworkedComponent()]
+public sealed class PilotComponent : Component
 {
-    /// <summary>
-    /// Stores what shuttle this entity is currently piloting.
-    /// </summary>
-    [RegisterComponent]
-    [NetworkedComponent()]
-    public sealed class PilotComponent : Component
+    public override string Name => "Pilot";
+    [ViewVariables] public SharedShuttleConsoleComponent? Console { get; set; }
+
+    public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
     {
-        public override string Name => "Pilot";
-        [ViewVariables] public SharedShuttleConsoleComponent? Console { get; set; }
+        base.HandleComponentState(curState, nextState);
+        if (curState is not PilotComponentState state) return;
 
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
+        if (state.Console == null)
         {
-            base.HandleComponentState(curState, nextState);
-            if (curState is not PilotComponentState state) return;
-
-            if (state.Console == null)
-            {
-                Console = null;
-                return;
-            }
-
-            if (!Owner.EntityManager.TryGetEntity(state.Console.Value, out var consoleEnt) ||
-                !consoleEnt.TryGetComponent(out SharedShuttleConsoleComponent? shuttleConsoleComponent))
-            {
-                Logger.Warning($"Unable to set Helmsman console to {state.Console.Value}");
-                return;
-            }
-
-            Console = shuttleConsoleComponent;
+            Console = null;
+            return;
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        if (!Owner.EntityManager.TryGetEntity(state.Console.Value, out var consoleEnt) ||
+            !consoleEnt.TryGetComponent(out SharedShuttleConsoleComponent? shuttleConsoleComponent))
         {
-            return new PilotComponentState(Console?.OwnerUid);
+            Logger.Warning($"Unable to set Helmsman console to {state.Console.Value}");
+            return;
         }
 
-        [Serializable, NetSerializable]
-        private sealed class PilotComponentState : ComponentState
-        {
-            public EntityUid? Console { get; }
+        Console = shuttleConsoleComponent;
+    }
 
-            public PilotComponentState(EntityUid? uid)
-            {
-                Console = uid;
-            }
+    public override ComponentState GetComponentState(ICommonSession player)
+    {
+        return new PilotComponentState(Console?.OwnerUid);
+    }
+
+    [Serializable, NetSerializable]
+    private sealed class PilotComponentState : ComponentState
+    {
+        public EntityUid? Console { get; }
+
+        public PilotComponentState(EntityUid? uid)
+        {
+            Console = uid;
         }
     }
 }

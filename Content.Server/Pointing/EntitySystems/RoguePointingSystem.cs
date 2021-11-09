@@ -14,105 +14,104 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
-namespace Content.Server.Pointing.EntitySystems
+namespace Content.Server.Pointing.EntitySystems;
+
+[UsedImplicitly]
+internal sealed class RoguePointingSystem : EntitySystem
 {
-    [UsedImplicitly]
-    internal sealed class RoguePointingSystem : EntitySystem
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+
+    [Dependency] private readonly ExplosionSystem _explosions = default!;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
+        base.Initialize();
 
-        [Dependency] private readonly ExplosionSystem _explosions = default!;
+        SubscribeLocalEvent<RoguePointingArrowComponent, ComponentStartup>(OnStartup);
+    }
 
-        public override void Initialize()
+    private void OnStartup(EntityUid uid, RoguePointingArrowComponent component, ComponentStartup args)
+    {
+        if (EntityManager.TryGetComponent(uid, out SpriteComponent? sprite))
         {
-            base.Initialize();
+            sprite.DrawDepth = (int) DrawDepth.Overlays;
+        }
+    }
 
-            SubscribeLocalEvent<RoguePointingArrowComponent, ComponentStartup>(OnStartup);
+    private IEntity? RandomNearbyPlayer(EntityUid uid, RoguePointingArrowComponent? component = null, TransformComponent? transform = null)
+    {
+        if (!Resolve(uid, ref component, ref transform))
+            return null;
+
+        var players = _playerManager
+                      .GetPlayersInRange(transform.Coordinates, 15)
+                      .Where(player => player.AttachedEntity != null && player.AttachedEntity.TryGetComponent(out MobStateComponent? mobStateComponent) && !mobStateComponent.IsDead())
+                      .ToArray();
+
+        if (players.Length == 0)
+        {
+            return null;
         }
 
-        private void OnStartup(EntityUid uid, RoguePointingArrowComponent component, ComponentStartup args)
+        return _random.Pick(players).AttachedEntity;
+    }
+
+    private void UpdateAppearance(EntityUid uid, RoguePointingArrowComponent? component = null, TransformComponent? transform = null, AppearanceComponent? appearance = null)
+    {
+        if (!Resolve(uid, ref component, ref transform, ref appearance) || component.Chasing == null)
+            return;
+
+        appearance.SetData(RoguePointingArrowVisuals.Rotation, transform.LocalRotation.Degrees);
+    }
+
+    public override void Update(float frameTime)
+    {
+        foreach (var (component, transform) in EntityManager.EntityQuery<RoguePointingArrowComponent, TransformComponent>())
         {
-            if (EntityManager.TryGetComponent(uid, out SpriteComponent? sprite))
+            var uid = component.Owner.Uid;
+            component.Chasing ??= RandomNearbyPlayer(uid, component, transform);
+
+            if (component.Chasing == null)
             {
-                sprite.DrawDepth = (int) DrawDepth.Overlays;
-            }
-        }
-
-        private IEntity? RandomNearbyPlayer(EntityUid uid, RoguePointingArrowComponent? component = null, TransformComponent? transform = null)
-        {
-            if (!Resolve(uid, ref component, ref transform))
-                return null;
-
-            var players = _playerManager
-                .GetPlayersInRange(transform.Coordinates, 15)
-                .Where(player => player.AttachedEntity != null && player.AttachedEntity.TryGetComponent(out MobStateComponent? mobStateComponent) && !mobStateComponent.IsDead())
-                .ToArray();
-
-            if (players.Length == 0)
-            {
-                return null;
-            }
-
-            return _random.Pick(players).AttachedEntity;
-        }
-
-        private void UpdateAppearance(EntityUid uid, RoguePointingArrowComponent? component = null, TransformComponent? transform = null, AppearanceComponent? appearance = null)
-        {
-            if (!Resolve(uid, ref component, ref transform, ref appearance) || component.Chasing == null)
+                EntityManager.QueueDeleteEntity(uid);
                 return;
+            }
 
-            appearance.SetData(RoguePointingArrowVisuals.Rotation, transform.LocalRotation.Degrees);
-        }
+            component.TurningDelay -= frameTime;
 
-        public override void Update(float frameTime)
-        {
-            foreach (var (component, transform) in EntityManager.EntityQuery<RoguePointingArrowComponent, TransformComponent>())
+            if (component.TurningDelay > 0)
             {
-                var uid = component.Owner.Uid;
-                component.Chasing ??= RandomNearbyPlayer(uid, component, transform);
+                var difference = component.Chasing.Transform.WorldPosition - transform.WorldPosition;
+                var angle = difference.ToAngle();
+                var adjusted = angle.Degrees + 90;
+                var newAngle = Angle.FromDegrees(adjusted);
 
-                if (component.Chasing == null)
-                {
-                    EntityManager.QueueDeleteEntity(uid);
-                    return;
-                }
-
-                component.TurningDelay -= frameTime;
-
-                if (component.TurningDelay > 0)
-                {
-                    var difference = component.Chasing.Transform.WorldPosition - transform.WorldPosition;
-                    var angle = difference.ToAngle();
-                    var adjusted = angle.Degrees + 90;
-                    var newAngle = Angle.FromDegrees(adjusted);
-
-                    transform.LocalRotation = newAngle;
-
-                    UpdateAppearance(uid, component, transform);
-                    return;
-                }
-
-                transform.WorldRotation += Angle.FromDegrees(20);
+                transform.LocalRotation = newAngle;
 
                 UpdateAppearance(uid, component, transform);
-
-                var toChased = component.Chasing.Transform.WorldPosition - transform.WorldPosition;
-
-                transform.WorldPosition += toChased * frameTime * component.ChasingSpeed;
-
-                component.ChasingTime -= frameTime;
-
-                if (component.ChasingTime > 0)
-                {
-                    return;
-                }
-
-                _explosions.SpawnExplosion(uid, 0, 2, 1, 1);
-                SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), component.ExplosionSound.GetSound(), uid);
-
-                EntityManager.QueueDeleteEntity(uid);
+                return;
             }
+
+            transform.WorldRotation += Angle.FromDegrees(20);
+
+            UpdateAppearance(uid, component, transform);
+
+            var toChased = component.Chasing.Transform.WorldPosition - transform.WorldPosition;
+
+            transform.WorldPosition += toChased * frameTime * component.ChasingSpeed;
+
+            component.ChasingTime -= frameTime;
+
+            if (component.ChasingTime > 0)
+            {
+                return;
+            }
+
+            _explosions.SpawnExplosion(uid, 0, 2, 1, 1);
+            SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), component.ExplosionSound.GetSound(), uid);
+
+            EntityManager.QueueDeleteEntity(uid);
         }
     }
 }

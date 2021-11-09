@@ -7,36 +7,35 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
-namespace Content.Client.Administration.UI
+namespace Content.Client.Administration.UI;
+
+[GenerateTypedNameReferences]
+public partial class AdminAnnounceWindow : SS14Window
 {
-    [GenerateTypedNameReferences]
-    public partial class AdminAnnounceWindow : SS14Window
+    [Dependency] private readonly ILocalizationManager _localization = default!;
+
+    public AdminAnnounceWindow()
     {
-        [Dependency] private readonly ILocalizationManager _localization = default!;
+        RobustXamlLoader.Load(this);
+        IoCManager.InjectDependencies(this);
 
-        public AdminAnnounceWindow()
-        {
-            RobustXamlLoader.Load(this);
-            IoCManager.InjectDependencies(this);
-
-            AnnounceMethod.AddItem(_localization.GetString("announce-type-station"));
-            AnnounceMethod.SetItemMetadata(0, AdminAnnounceType.Station);
-            AnnounceMethod.AddItem(_localization.GetString("announce-type-server"));
-            AnnounceMethod.SetItemMetadata(1, AdminAnnounceType.Server);
-            AnnounceMethod.OnItemSelected += AnnounceMethodOnOnItemSelected;
-            Announcement.OnTextChanged += AnnouncementOnOnTextChanged;
-        }
+        AnnounceMethod.AddItem(_localization.GetString("announce-type-station"));
+        AnnounceMethod.SetItemMetadata(0, AdminAnnounceType.Station);
+        AnnounceMethod.AddItem(_localization.GetString("announce-type-server"));
+        AnnounceMethod.SetItemMetadata(1, AdminAnnounceType.Server);
+        AnnounceMethod.OnItemSelected += AnnounceMethodOnOnItemSelected;
+        Announcement.OnTextChanged += AnnouncementOnOnTextChanged;
+    }
 
 
-        private void AnnouncementOnOnTextChanged(LineEdit.LineEditEventArgs args)
-        {
-            AnnounceButton.Disabled = args.Text.TrimStart() == "";
-        }
+    private void AnnouncementOnOnTextChanged(LineEdit.LineEditEventArgs args)
+    {
+        AnnounceButton.Disabled = args.Text.TrimStart() == "";
+    }
 
-        private void AnnounceMethodOnOnItemSelected(OptionButton.ItemSelectedEventArgs args)
-        {
-            AnnounceMethod.SelectId(args.Id);
-            Announcer.Editable = ((AdminAnnounceType?)args.Button.SelectedMetadata ?? AdminAnnounceType.Station) == AdminAnnounceType.Station;
-        }
+    private void AnnounceMethodOnOnItemSelected(OptionButton.ItemSelectedEventArgs args)
+    {
+        AnnounceMethod.SelectId(args.Id);
+        Announcer.Editable = ((AdminAnnounceType?)args.Button.SelectedMetadata ?? AdminAnnounceType.Station) == AdminAnnounceType.Station;
     }
 }

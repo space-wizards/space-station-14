@@ -4,54 +4,53 @@ using Content.Client.Disposal.UI;
 using Content.Shared.Disposal;
 using Robust.Client.GameObjects;
 
-namespace Content.Client.Disposal.Systems
+namespace Content.Client.Disposal.Systems;
+
+public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 {
-    public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
+    public List<DisposalUnitComponent> PressuringDisposals = new();
+
+    public void UpdateActive(DisposalUnitComponent component, bool active)
     {
-        public List<DisposalUnitComponent> PressuringDisposals = new();
-
-        public void UpdateActive(DisposalUnitComponent component, bool active)
+        if (active)
         {
-            if (active)
+            if (!PressuringDisposals.Contains(component))
+                PressuringDisposals.Add(component);
+        }
+        else
+        {
+            PressuringDisposals.Remove(component);
+        }
+    }
+
+    public override void FrameUpdate(float frameTime)
+    {
+        base.FrameUpdate(frameTime);
+        for (var i = PressuringDisposals.Count - 1; i >= 0; i--)
+        {
+            var comp = PressuringDisposals[i];
+            if (!UpdateInterface(comp)) continue;
+            PressuringDisposals.RemoveAt(i);
+        }
+    }
+
+    private bool UpdateInterface(DisposalUnitComponent component)
+    {
+        if (component.Deleted) return true;
+
+        if (!component.Owner.TryGetComponent(out ClientUserInterfaceComponent? userInterface)) return true;
+
+        var state = component.UiState;
+        if (state == null) return true;
+
+        foreach (var inter in userInterface.Interfaces)
+        {
+            if (inter is DisposalUnitBoundUserInterface disposals)
             {
-                if (!PressuringDisposals.Contains(component))
-                    PressuringDisposals.Add(component);
-            }
-            else
-            {
-                PressuringDisposals.Remove(component);
+                return disposals.Window?.UpdateState(state) != false;
             }
         }
 
-        public override void FrameUpdate(float frameTime)
-        {
-            base.FrameUpdate(frameTime);
-            for (var i = PressuringDisposals.Count - 1; i >= 0; i--)
-            {
-                var comp = PressuringDisposals[i];
-                if (!UpdateInterface(comp)) continue;
-                PressuringDisposals.RemoveAt(i);
-            }
-        }
-
-        private bool UpdateInterface(DisposalUnitComponent component)
-        {
-            if (component.Deleted) return true;
-
-            if (!component.Owner.TryGetComponent(out ClientUserInterfaceComponent? userInterface)) return true;
-
-            var state = component.UiState;
-            if (state == null) return true;
-
-            foreach (var inter in userInterface.Interfaces)
-            {
-                if (inter is DisposalUnitBoundUserInterface disposals)
-                {
-                    return disposals.Window?.UpdateState(state) != false;
-                }
-            }
-
-            return true;
-        }
+        return true;
     }
 }

@@ -5,29 +5,28 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 
-namespace Content.Server.Coordinates.Helpers
+namespace Content.Server.Coordinates.Helpers;
+
+public static class GridTileLookupHelpers
 {
-    public static class GridTileLookupHelpers
+    /// <summary>
+    ///     Helper that returns all entities in a turf very fast.
+    /// </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static IEnumerable<IEntity> GetEntitiesInTileFast(this TileRef turf, GridTileLookupSystem? gridTileLookup = null)
     {
-        /// <summary>
-        ///     Helper that returns all entities in a turf very fast.
-        /// </summary>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerable<IEntity> GetEntitiesInTileFast(this TileRef turf, GridTileLookupSystem? gridTileLookup = null)
-        {
-            gridTileLookup ??= EntitySystem.Get<GridTileLookupSystem>();
+        gridTileLookup ??= EntitySystem.Get<GridTileLookupSystem>();
 
-            return gridTileLookup.GetEntitiesIntersecting(turf.GridIndex, turf.GridIndices);
-        }
+        return gridTileLookup.GetEntitiesIntersecting(turf.GridIndex, turf.GridIndices);
+    }
 
-        /// <summary>
-        ///     Helper that returns all entities in a turf.
-        /// </summary>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerable<IEntity> GetEntitiesInTileFast(this Vector2i indices, GridId gridId, GridTileLookupSystem? gridTileLookup = null)
-        {
-            gridTileLookup ??= EntitySystem.Get<GridTileLookupSystem>();
-            return gridTileLookup.GetEntitiesIntersecting(gridId, indices);
-        }
+    /// <summary>
+    ///     Helper that returns all entities in a turf.
+    /// </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static IEnumerable<IEntity> GetEntitiesInTileFast(this Vector2i indices, GridId gridId, GridTileLookupSystem? gridTileLookup = null)
+    {
+        gridTileLookup ??= EntitySystem.Get<GridTileLookupSystem>();
+        return gridTileLookup.GetEntitiesIntersecting(gridId, indices);
     }
 }

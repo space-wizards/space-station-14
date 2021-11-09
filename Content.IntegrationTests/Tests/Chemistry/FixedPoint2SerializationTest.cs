@@ -8,37 +8,36 @@ using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Serialization.Markdown.Value;
 using Robust.UnitTesting.Shared.Serialization;
 
-namespace Content.IntegrationTests.Tests.Chemistry
+namespace Content.IntegrationTests.Tests.Chemistry;
+
+public class FixedPoint2SerializationTest : SerializationTest
 {
-    public class FixedPoint2SerializationTest : SerializationTest
+    protected override Assembly[] Assemblies => new[]
     {
-        protected override Assembly[] Assemblies => new[]
-        {
-            typeof(FixedPoint2SerializationTest).Assembly
-        };
+        typeof(FixedPoint2SerializationTest).Assembly
+    };
 
-        [Test]
-        public void DeserializeNullTest()
-        {
-            var node = new ValueDataNode("null");
-            var unit = Serialization.ReadValue<FixedPoint2?>(node);
+    [Test]
+    public void DeserializeNullTest()
+    {
+        var node = new ValueDataNode("null");
+        var unit = Serialization.ReadValue<FixedPoint2?>(node);
 
-            Assert.That(unit, Is.Null);
-        }
-
-        [Test]
-        public void DeserializeNullDefinitionTest()
-        {
-            var node = new MappingDataNode().Add("unit", "null");
-            var definition = Serialization.ReadValueOrThrow<FixedPoint2TestDefinition>(node);
-
-            Assert.That(definition.Unit, Is.Null);
-        }
+        Assert.That(unit, Is.Null);
     }
 
-    [DataDefinition]
-    public class FixedPoint2TestDefinition
+    [Test]
+    public void DeserializeNullDefinitionTest()
     {
-        [DataField("unit")] public FixedPoint2? Unit { get; set; } = FixedPoint2.New(5);
+        var node = new MappingDataNode().Add("unit", "null");
+        var definition = Serialization.ReadValueOrThrow<FixedPoint2TestDefinition>(node);
+
+        Assert.That(definition.Unit, Is.Null);
     }
+}
+
+[DataDefinition]
+public class FixedPoint2TestDefinition
+{
+    [DataField("unit")] public FixedPoint2? Unit { get; set; } = FixedPoint2.New(5);
 }

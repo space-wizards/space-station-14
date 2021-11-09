@@ -1,20 +1,19 @@
 ﻿using Content.Shared.Damage;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.Armor
+namespace Content.Server.Armor;
+
+public class ArmorSystem : EntitySystem
 {
-    public class ArmorSystem : EntitySystem
+    public override void Initialize()
     {
-        public override void Initialize()
-        {
-            base.Initialize();
+        base.Initialize();
 
-            SubscribeLocalEvent<ArmorComponent, DamageModifyEvent>(OnDamageModify);
-        }
+        SubscribeLocalEvent<ArmorComponent, DamageModifyEvent>(OnDamageModify);
+    }
 
-        private void OnDamageModify(EntityUid uid, ArmorComponent component, DamageModifyEvent args)
-        {
-            args.Damage = DamageSpecifier.ApplyModifierSet(args.Damage, component.Modifiers);
-        }
+    private void OnDamageModify(EntityUid uid, ArmorComponent component, DamageModifyEvent args)
+    {
+        args.Damage = DamageSpecifier.ApplyModifierSet(args.Damage, component.Modifiers);
     }
 }

@@ -1,20 +1,19 @@
 ﻿using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Singularity.Components
-{
-    [NetSerializable, Serializable]
-    public enum RadiationCollectorVisuals
-    {
-        VisualState
-    }
+namespace Content.Shared.Singularity.Components;
 
-    [NetSerializable, Serializable]
-    public enum RadiationCollectorVisualState
-    {
-        Active,
-        Activating,
-        Deactivating,
-        Deactive
-    }
+[NetSerializable, Serializable]
+public enum RadiationCollectorVisuals
+{
+    VisualState
+}
+
+[NetSerializable, Serializable]
+public enum RadiationCollectorVisualState
+{
+    Active,
+    Activating,
+    Deactivating,
+    Deactive
 }

@@ -8,46 +8,45 @@ using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Server.Atmos.Piping.Unary.EntitySystems
+namespace Content.Server.Atmos.Piping.Unary.EntitySystems;
+
+[UsedImplicitly]
+public class GasOutletInjectorSystem : EntitySystem
 {
-    [UsedImplicitly]
-    public class GasOutletInjectorSystem : EntitySystem
+    [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+        base.Initialize();
 
-        public override void Initialize()
+        SubscribeLocalEvent<GasOutletInjectorComponent, AtmosDeviceUpdateEvent>(OnOutletInjectorUpdated);
+    }
+
+    private void OnOutletInjectorUpdated(EntityUid uid, GasOutletInjectorComponent injector, AtmosDeviceUpdateEvent args)
+    {
+        injector.Injecting = false;
+
+        if (!injector.Enabled)
+            return;
+
+        if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
+            return;
+
+        if (!nodeContainer.TryGetNode(injector.InletName, out PipeNode? inlet))
+            return;
+
+        var environment = _atmosphereSystem.GetTileMixture(injector.Owner.Transform.Coordinates, true);
+
+        if (environment == null)
+            return;
+
+        if (inlet.Air.Temperature > 0)
         {
-            base.Initialize();
+            var transferMoles = inlet.Air.Pressure * injector.VolumeRate / (inlet.Air.Temperature * Atmospherics.R);
 
-            SubscribeLocalEvent<GasOutletInjectorComponent, AtmosDeviceUpdateEvent>(OnOutletInjectorUpdated);
-        }
+            var removed = inlet.Air.Remove(transferMoles);
 
-        private void OnOutletInjectorUpdated(EntityUid uid, GasOutletInjectorComponent injector, AtmosDeviceUpdateEvent args)
-        {
-            injector.Injecting = false;
-
-            if (!injector.Enabled)
-                return;
-
-            if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
-                return;
-
-            if (!nodeContainer.TryGetNode(injector.InletName, out PipeNode? inlet))
-                return;
-
-            var environment = _atmosphereSystem.GetTileMixture(injector.Owner.Transform.Coordinates, true);
-
-            if (environment == null)
-                return;
-
-            if (inlet.Air.Temperature > 0)
-            {
-                var transferMoles = inlet.Air.Pressure * injector.VolumeRate / (inlet.Air.Temperature * Atmospherics.R);
-
-                var removed = inlet.Air.Remove(transferMoles);
-
-                _atmosphereSystem.Merge(environment, removed);
-            }
+            _atmosphereSystem.Merge(environment, removed);
         }
     }
 }

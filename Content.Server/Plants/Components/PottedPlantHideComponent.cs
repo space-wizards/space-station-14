@@ -11,44 +11,43 @@ using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Plants.Components
+namespace Content.Server.Plants.Components;
+
+[RegisterComponent]
+public class PottedPlantHideComponent : Component, IInteractUsing, IInteractHand
 {
-    [RegisterComponent]
-    public class PottedPlantHideComponent : Component, IInteractUsing, IInteractHand
+    public override string Name => "PottedPlantHide";
+
+    [ViewVariables] private SecretStashComponent _secretStash = default!;
+    [DataField("rustleSound")] private SoundSpecifier _rustleSound = new SoundPathSpecifier("/Audio/Effects/plant_rustle.ogg");
+
+    protected override void Initialize()
     {
-        public override string Name => "PottedPlantHide";
+        base.Initialize();
+        _secretStash = Owner.EnsureComponent<SecretStashComponent>();
+    }
 
-        [ViewVariables] private SecretStashComponent _secretStash = default!;
-        [DataField("rustleSound")] private SoundSpecifier _rustleSound = new SoundPathSpecifier("/Audio/Effects/plant_rustle.ogg");
+    async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+    {
+        Rustle();
+        return _secretStash.TryHideItem(eventArgs.User, eventArgs.Using);
+    }
 
-        protected override void Initialize()
+    bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
+    {
+        Rustle();
+
+        var gotItem = _secretStash.TryGetItem(eventArgs.User);
+        if (!gotItem)
         {
-            base.Initialize();
-            _secretStash = Owner.EnsureComponent<SecretStashComponent>();
+            Owner.PopupMessage(eventArgs.User, Loc.GetString("potted-plant-hide-component-interact-hand-got-no-item-message"));
         }
 
-        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
-        {
-            Rustle();
-            return _secretStash.TryHideItem(eventArgs.User, eventArgs.Using);
-        }
+        return gotItem;
+    }
 
-        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
-        {
-            Rustle();
-
-            var gotItem = _secretStash.TryGetItem(eventArgs.User);
-            if (!gotItem)
-            {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("potted-plant-hide-component-interact-hand-got-no-item-message"));
-            }
-
-            return gotItem;
-        }
-
-        private void Rustle()
-        {
-            SoundSystem.Play(Filter.Pvs(Owner), _rustleSound.GetSound(), Owner, AudioHelpers.WithVariation(0.25f));
-        }
+    private void Rustle()
+    {
+        SoundSystem.Play(Filter.Pvs(Owner), _rustleSound.GetSound(), Owner, AudioHelpers.WithVariation(0.25f));
     }
 }

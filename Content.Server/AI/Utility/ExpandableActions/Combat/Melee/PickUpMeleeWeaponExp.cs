@@ -10,33 +10,32 @@ using Content.Server.AI.WorldState.States;
 using Content.Server.AI.WorldState.States.Combat.Nearby;
 using Robust.Shared.IoC;
 
-namespace Content.Server.AI.Utility.ExpandableActions.Combat.Melee
+namespace Content.Server.AI.Utility.ExpandableActions.Combat.Melee;
+
+public sealed class PickUpMeleeWeaponExp : ExpandableUtilityAction
 {
-    public sealed class PickUpMeleeWeaponExp : ExpandableUtilityAction
+    public override float Bonus => UtilityAction.CombatPrepBonus;
+
+    protected override IEnumerable<Func<float>> GetCommonConsiderations(Blackboard context)
     {
-        public override float Bonus => UtilityAction.CombatPrepBonus;
+        var considerationsManager = IoCManager.Resolve<ConsiderationsManager>();
 
-        protected override IEnumerable<Func<float>> GetCommonConsiderations(Blackboard context)
+        return new[]
         {
-            var considerationsManager = IoCManager.Resolve<ConsiderationsManager>();
+            considerationsManager.Get<FreeHandCon>()
+                                 .BoolCurve(context),
+            considerationsManager.Get<HasMeleeWeaponCon>()
+                                 .InverseBoolCurve(context),
+        };
+    }
 
-            return new[]
-            {
-                considerationsManager.Get<FreeHandCon>()
-                    .BoolCurve(context),
-                considerationsManager.Get<HasMeleeWeaponCon>()
-                    .InverseBoolCurve(context),
-            };
-        }
+    public override IEnumerable<UtilityAction> GetActions(Blackboard context)
+    {
+        var owner = context.GetState<SelfState>().GetValue();
 
-        public override IEnumerable<UtilityAction> GetActions(Blackboard context)
+        foreach (var entity in context.GetState<NearbyMeleeWeapons>().GetValue())
         {
-            var owner = context.GetState<SelfState>().GetValue();
-
-            foreach (var entity in context.GetState<NearbyMeleeWeapons>().GetValue())
-            {
-                yield return new PickUpMeleeWeapon() {Owner = owner, Target = entity, Bonus = Bonus};
-            }
+            yield return new PickUpMeleeWeapon() {Owner = owner, Target = entity, Bonus = Bonus};
         }
     }
 }

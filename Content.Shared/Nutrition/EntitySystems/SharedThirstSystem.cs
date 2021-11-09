@@ -2,21 +2,20 @@
 using Content.Shared.Nutrition.Components;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.Nutrition.EntitySystems
+namespace Content.Shared.Nutrition.EntitySystems;
+
+public class SharedThirstSystem : EntitySystem
 {
-    public class SharedThirstSystem : EntitySystem
+    public override void Initialize()
     {
-        public override void Initialize()
-        {
-            base.Initialize();
+        base.Initialize();
 
-            SubscribeLocalEvent<SharedThirstComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
-        }
+        SubscribeLocalEvent<SharedThirstComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
+    }
 
-        private void OnRefreshMovespeed(EntityUid uid, SharedThirstComponent component, RefreshMovementSpeedModifiersEvent args)
-        {
-            float mod = component.CurrentThirstThreshold == ThirstThreshold.Parched ? 0.75f : 1.0f;
-            args.ModifySpeed(mod, mod);
-        }
+    private void OnRefreshMovespeed(EntityUid uid, SharedThirstComponent component, RefreshMovementSpeedModifiersEvent args)
+    {
+        float mod = component.CurrentThirstThreshold == ThirstThreshold.Parched ? 0.75f : 1.0f;
+        args.ModifySpeed(mod, mod);
     }
 }

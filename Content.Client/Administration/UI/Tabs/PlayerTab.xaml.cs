@@ -11,44 +11,89 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
-namespace Content.Client.Administration.UI.Tabs
+namespace Content.Client.Administration.UI.Tabs;
+
+[GenerateTypedNameReferences]
+public partial class PlayerTab : Control
 {
-    [GenerateTypedNameReferences]
-    public partial class PlayerTab : Control
+    public delegate void PlayerListRefresh();
+
+    public delegate void AdminNameOverlayToggle();
+
+    public event PlayerListRefresh? OnPlayerListRefresh;
+    public event AdminNameOverlayToggle? OnAdminNameOverlayOn;
+    public event AdminNameOverlayToggle? OnAdminNameOverlayOff;
+
+
+    public PlayerTab()
     {
-        public delegate void PlayerListRefresh();
+        IoCManager.InjectDependencies(this);
+        RobustXamlLoader.Load(this);
+        RefreshButton.OnPressed += (_) => OnPlayerListRefresh?.Invoke();
+        OverlayButtonOn.OnPressed += (_) => OnAdminNameOverlayOn?.Invoke();
+        OverlayButtonOff.OnPressed += (_) => OnAdminNameOverlayOff?.Invoke();
+    }
 
-        public delegate void AdminNameOverlayToggle();
+    protected override void EnteredTree()
+    {
+        OnPlayerListRefresh?.Invoke();
+    }
 
-        public event PlayerListRefresh? OnPlayerListRefresh;
-        public event AdminNameOverlayToggle? OnAdminNameOverlayOn;
-        public event AdminNameOverlayToggle? OnAdminNameOverlayOff;
+    public void RefreshPlayerList(IEnumerable<AdminMenuPlayerListMessage.PlayerInfo> players)
+    {
+        PlayerList.RemoveAllChildren();
+        var playerManager = IoCManager.Resolve<IPlayerManager>();
+        PlayerCount.Text = $"Players: {playerManager.PlayerCount}";
 
+        var altColor = Color.FromHex("#292B38");
+        var defaultColor = Color.FromHex("#2F2F3B");
 
-        public PlayerTab()
+        var header = new BoxContainer
         {
-            IoCManager.InjectDependencies(this);
-            RobustXamlLoader.Load(this);
-            RefreshButton.OnPressed += (_) => OnPlayerListRefresh?.Invoke();
-            OverlayButtonOn.OnPressed += (_) => OnAdminNameOverlayOn?.Invoke();
-            OverlayButtonOff.OnPressed += (_) => OnAdminNameOverlayOff?.Invoke();
-        }
-
-        protected override void EnteredTree()
+            Orientation = LayoutOrientation.Horizontal,
+            HorizontalExpand = true,
+            SeparationOverride = 4,
+            Children =
+            {
+                new Label
+                {
+                    Text = "Username",
+                    SizeFlagsStretchRatio = 2f,
+                    HorizontalExpand = true
+                },
+                new VSeparator(),
+                new Label
+                {
+                    Text = "Character",
+                    SizeFlagsStretchRatio = 2f,
+                    HorizontalExpand = true
+                },
+                new VSeparator(),
+                new Label()
+                {
+                    Text = "Antagonist",
+                    SizeFlagsStretchRatio = 2f,
+                    HorizontalExpand = true,
+                }
+            }
+        };
+        PlayerList.AddChild(new PanelContainer
         {
-            OnPlayerListRefresh?.Invoke();
-        }
+            PanelOverride = new StyleBoxFlat
+            {
+                BackgroundColor = altColor,
+            },
+            Children =
+            {
+                header
+            }
+        });
+        PlayerList.AddChild(new HSeparator());
 
-        public void RefreshPlayerList(IEnumerable<AdminMenuPlayerListMessage.PlayerInfo> players)
+        var useAltColor = false;
+        foreach (var player in players)
         {
-            PlayerList.RemoveAllChildren();
-            var playerManager = IoCManager.Resolve<IPlayerManager>();
-            PlayerCount.Text = $"Players: {playerManager.PlayerCount}";
-
-            var altColor = Color.FromHex("#292B38");
-            var defaultColor = Color.FromHex("#2F2F3B");
-
-            var header = new BoxContainer
+            var hBox = new BoxContainer
             {
                 Orientation = LayoutOrientation.Horizontal,
                 HorizontalExpand = true,
@@ -57,23 +102,26 @@ namespace Content.Client.Administration.UI.Tabs
                 {
                     new Label
                     {
-                        Text = "Username",
+                        Text = player.Username,
                         SizeFlagsStretchRatio = 2f,
-                        HorizontalExpand = true
+                        HorizontalExpand = true,
+                        ClipText = true
                     },
                     new VSeparator(),
                     new Label
                     {
-                        Text = "Character",
+                        Text = player.CharacterName,
                         SizeFlagsStretchRatio = 2f,
-                        HorizontalExpand = true
+                        HorizontalExpand = true,
+                        ClipText = true
                     },
                     new VSeparator(),
                     new Label()
                     {
-                        Text = "Antagonist",
+                        Text = player.Antag ? "YES" : "NO",
                         SizeFlagsStretchRatio = 2f,
                         HorizontalExpand = true,
+                        ClipText = true,
                     }
                 }
             };
@@ -81,95 +129,46 @@ namespace Content.Client.Administration.UI.Tabs
             {
                 PanelOverride = new StyleBoxFlat
                 {
-                    BackgroundColor = altColor,
+                    BackgroundColor = useAltColor ? altColor : defaultColor,
                 },
                 Children =
                 {
-                    header
+                    hBox
                 }
             });
-            PlayerList.AddChild(new HSeparator());
-
-            var useAltColor = false;
-            foreach (var player in players)
-            {
-                var hBox = new BoxContainer
-                {
-                    Orientation = LayoutOrientation.Horizontal,
-                    HorizontalExpand = true,
-                    SeparationOverride = 4,
-                    Children =
-                    {
-                        new Label
-                        {
-                            Text = player.Username,
-                            SizeFlagsStretchRatio = 2f,
-                            HorizontalExpand = true,
-                            ClipText = true
-                        },
-                        new VSeparator(),
-                        new Label
-                        {
-                            Text = player.CharacterName,
-                            SizeFlagsStretchRatio = 2f,
-                            HorizontalExpand = true,
-                            ClipText = true
-                        },
-                        new VSeparator(),
-                        new Label()
-                        {
-                            Text = player.Antag ? "YES" : "NO",
-                            SizeFlagsStretchRatio = 2f,
-                            HorizontalExpand = true,
-                            ClipText = true,
-                        }
-                    }
-                };
-                PlayerList.AddChild(new PanelContainer
-                {
-                    PanelOverride = new StyleBoxFlat
-                    {
-                        BackgroundColor = useAltColor ? altColor : defaultColor,
-                    },
-                    Children =
-                    {
-                        hBox
-                    }
-                });
-                useAltColor ^= true;
-            }
+            useAltColor ^= true;
         }
+    }
 
-        private static readonly Color SeparatorColor = Color.FromHex("#3D4059");
+    private static readonly Color SeparatorColor = Color.FromHex("#3D4059");
 
-        private class VSeparator : PanelContainer
+    private class VSeparator : PanelContainer
+    {
+        public VSeparator()
         {
-            public VSeparator()
+            MinSize = (2, 5);
+            AddChild(new PanelContainer
             {
-                MinSize = (2, 5);
-                AddChild(new PanelContainer
+                PanelOverride = new StyleBoxFlat
                 {
-                    PanelOverride = new StyleBoxFlat
-                    {
-                        BackgroundColor = SeparatorColor
-                    }
-                });
-            }
+                    BackgroundColor = SeparatorColor
+                }
+            });
         }
+    }
 
-        private class HSeparator : Control
+    private class HSeparator : Control
+    {
+        public HSeparator()
         {
-            public HSeparator()
+            AddChild(new PanelContainer
             {
-                AddChild(new PanelContainer
+                PanelOverride = new StyleBoxFlat
                 {
-                    PanelOverride = new StyleBoxFlat
-                    {
-                        BackgroundColor = SeparatorColor,
-                        ContentMarginBottomOverride = 2, ContentMarginLeftOverride = 2
-                    }
-                });
-            }
+                    BackgroundColor = SeparatorColor,
+                    ContentMarginBottomOverride = 2, ContentMarginLeftOverride = 2
+                }
+            });
         }
     }
 }

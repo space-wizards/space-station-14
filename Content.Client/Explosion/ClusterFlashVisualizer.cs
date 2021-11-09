@@ -3,28 +3,27 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Client.Explosion
+namespace Content.Client.Explosion;
+
+[UsedImplicitly]
+// ReSharper disable once InconsistentNaming
+public class ClusterFlashVisualizer : AppearanceVisualizer
 {
-    [UsedImplicitly]
-    // ReSharper disable once InconsistentNaming
-    public class ClusterFlashVisualizer : AppearanceVisualizer
+    [DataField("state")]
+    private string? _state;
+
+    public override void OnChangeData(AppearanceComponent component)
     {
-        [DataField("state")]
-        private string? _state;
+        base.OnChangeData(component);
 
-        public override void OnChangeData(AppearanceComponent component)
+        if (!component.Owner.TryGetComponent<ISpriteComponent>(out var sprite))
         {
-            base.OnChangeData(component);
+            return;
+        }
 
-            if (!component.Owner.TryGetComponent<ISpriteComponent>(out var sprite))
-            {
-                return;
-            }
-
-            if (component.TryGetData(ClusterFlashVisuals.GrenadesCounter, out int grenadesCounter))
-            {
-                sprite.LayerSetState(0, $"{_state}-{grenadesCounter}");
-            }
+        if (component.TryGetData(ClusterFlashVisuals.GrenadesCounter, out int grenadesCounter))
+        {
+            sprite.LayerSetState(0, $"{_state}-{grenadesCounter}");
         }
     }
 }

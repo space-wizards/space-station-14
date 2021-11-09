@@ -4,58 +4,57 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Localization;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
-namespace Content.Client.Cloning.UI
+namespace Content.Client.Cloning.UI;
+
+public sealed class AcceptCloningWindow : SS14Window
 {
-    public sealed class AcceptCloningWindow : SS14Window
+    public readonly Button DenyButton;
+    public readonly Button AcceptButton;
+
+    public AcceptCloningWindow()
     {
-        public readonly Button DenyButton;
-        public readonly Button AcceptButton;
 
-        public AcceptCloningWindow()
+        Title = Loc.GetString("accept-cloning-window-title");
+
+        Contents.AddChild(new BoxContainer
         {
-
-            Title = Loc.GetString("accept-cloning-window-title");
-
-            Contents.AddChild(new BoxContainer
+            Orientation = LayoutOrientation.Vertical,
+            Children =
             {
-                Orientation = LayoutOrientation.Vertical,
-                Children =
+                new BoxContainer
                 {
-                    new BoxContainer
+                    Orientation = LayoutOrientation.Vertical,
+                    Children =
                     {
-                        Orientation = LayoutOrientation.Vertical,
-                        Children =
+                        (new Label()
                         {
-                            (new Label()
+                            Text = Loc.GetString("accept-cloning-window-prompt-text-part")
+                        }),
+                        new BoxContainer
+                        {
+                            Orientation = LayoutOrientation.Horizontal,
+                            Align = AlignMode.Center,
+                            Children =
                             {
-                                Text = Loc.GetString("accept-cloning-window-prompt-text-part")
-                            }),
-                            new BoxContainer
-                            {
-                                Orientation = LayoutOrientation.Horizontal,
-                                Align = AlignMode.Center,
-                                Children =
+                                (AcceptButton = new Button
                                 {
-                                    (AcceptButton = new Button
-                                    {
-                                        Text = Loc.GetString("accept-cloning-window-accept-button"),
-                                    }),
+                                    Text = Loc.GetString("accept-cloning-window-accept-button"),
+                                }),
 
-                                    (new Control()
-                                    {
-                                        MinSize = (20, 0)
-                                    }),
+                                (new Control()
+                                {
+                                    MinSize = (20, 0)
+                                }),
 
-                                    (DenyButton = new Button
-                                    {
-                                        Text = Loc.GetString("accept-cloning-window-deny-button"),
-                                    })
-                                }
-                            },
-                        }
-                    },
-                }
-            });
-        }
+                                (DenyButton = new Button
+                                {
+                                    Text = Loc.GetString("accept-cloning-window-deny-button"),
+                                })
+                            }
+                        },
+                    }
+                },
+            }
+        });
     }
 }

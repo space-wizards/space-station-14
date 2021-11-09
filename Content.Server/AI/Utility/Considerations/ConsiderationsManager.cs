@@ -3,27 +3,26 @@ using System.Collections.Generic;
 using Robust.Shared.IoC;
 using Robust.Shared.Reflection;
 
-namespace Content.Server.AI.Utility.Considerations
+namespace Content.Server.AI.Utility.Considerations;
+
+public class ConsiderationsManager
 {
-    public class ConsiderationsManager
+    private readonly Dictionary<Type, Consideration> _considerations = new();
+
+    public void Initialize()
     {
-        private readonly Dictionary<Type, Consideration> _considerations = new();
+        var reflectionManager = IoCManager.Resolve<IReflectionManager>();
+        var typeFactory = IoCManager.Resolve<IDynamicTypeFactory>();
 
-        public void Initialize()
+        foreach (var conType in reflectionManager.GetAllChildren(typeof(Consideration)))
         {
-            var reflectionManager = IoCManager.Resolve<IReflectionManager>();
-            var typeFactory = IoCManager.Resolve<IDynamicTypeFactory>();
-
-            foreach (var conType in reflectionManager.GetAllChildren(typeof(Consideration)))
-            {
-                var con = (Consideration) typeFactory.CreateInstance(conType);
-                _considerations.Add(conType, con);
-            }
+            var con = (Consideration) typeFactory.CreateInstance(conType);
+            _considerations.Add(conType, con);
         }
+    }
 
-        public T Get<T>() where T : Consideration
-        {
-            return (T) _considerations[typeof(T)];
-        }
+    public T Get<T>() where T : Consideration
+    {
+        return (T) _considerations[typeof(T)];
     }
 }

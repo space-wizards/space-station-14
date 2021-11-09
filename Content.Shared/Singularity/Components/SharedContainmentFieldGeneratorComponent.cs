@@ -1,9 +1,8 @@
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.Singularity.Components
+namespace Content.Shared.Singularity.Components;
+
+public abstract class SharedContainmentFieldGeneratorComponent : Component
 {
-    public abstract class SharedContainmentFieldGeneratorComponent : Component
-    {
-        public override string Name => "ContainmentFieldGenerator";
-    }
+    public override string Name => "ContainmentFieldGenerator";
 }

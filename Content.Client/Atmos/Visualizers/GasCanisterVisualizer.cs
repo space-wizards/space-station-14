@@ -4,51 +4,50 @@ using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Client.Atmos.Visualizers
+namespace Content.Client.Atmos.Visualizers;
+
+[UsedImplicitly]
+public class GasCanisterVisualizer : AppearanceVisualizer
 {
-    [UsedImplicitly]
-    public class GasCanisterVisualizer : AppearanceVisualizer
+    [DataField("pressureStates")]
+    private readonly string[] _statePressure = {"", "", "", ""};
+
+    [DataField("insertedTankState")]
+    private readonly string _insertedTankState = string.Empty;
+
+    public override void InitializeEntity(IEntity entity)
     {
-        [DataField("pressureStates")]
-        private readonly string[] _statePressure = {"", "", "", ""};
+        base.InitializeEntity(entity);
 
-        [DataField("insertedTankState")]
-        private readonly string _insertedTankState = string.Empty;
+        var sprite = entity.GetComponent<ISpriteComponent>();
 
-        public override void InitializeEntity(IEntity entity)
+        sprite.LayerMapSet(Layers.PressureLight, sprite.AddLayerState(_statePressure[0]));
+        sprite.LayerSetShader(Layers.PressureLight, "unshaded");
+        sprite.LayerMapSet(Layers.TankInserted, sprite.AddLayerState(_insertedTankState));
+        sprite.LayerSetVisible(Layers.TankInserted, false);
+    }
+
+    public override void OnChangeData(AppearanceComponent component)
+    {
+        base.OnChangeData(component);
+
+        if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite))
         {
-            base.InitializeEntity(entity);
-
-            var sprite = entity.GetComponent<ISpriteComponent>();
-
-            sprite.LayerMapSet(Layers.PressureLight, sprite.AddLayerState(_statePressure[0]));
-            sprite.LayerSetShader(Layers.PressureLight, "unshaded");
-            sprite.LayerMapSet(Layers.TankInserted, sprite.AddLayerState(_insertedTankState));
-            sprite.LayerSetVisible(Layers.TankInserted, false);
+            return;
         }
 
-        public override void OnChangeData(AppearanceComponent component)
-        {
-            base.OnChangeData(component);
+        // Update the canister lights
+        if (component.TryGetData(GasCanisterVisuals.PressureState, out int pressureState))
+            if ((pressureState >= 0) && (pressureState < _statePressure.Length))
+                sprite.LayerSetState(Layers.PressureLight, _statePressure[pressureState]);
 
-            if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite))
-            {
-                return;
-            }
+        if(component.TryGetData(GasCanisterVisuals.TankInserted, out bool inserted))
+            sprite.LayerSetVisible(Layers.TankInserted, inserted);
+    }
 
-            // Update the canister lights
-            if (component.TryGetData(GasCanisterVisuals.PressureState, out int pressureState))
-                if ((pressureState >= 0) && (pressureState < _statePressure.Length))
-                    sprite.LayerSetState(Layers.PressureLight, _statePressure[pressureState]);
-
-            if(component.TryGetData(GasCanisterVisuals.TankInserted, out bool inserted))
-                sprite.LayerSetVisible(Layers.TankInserted, inserted);
-        }
-
-        private enum Layers
-        {
-            PressureLight,
-            TankInserted,
-        }
+    private enum Layers
+    {
+        PressureLight,
+        TankInserted,
     }
 }

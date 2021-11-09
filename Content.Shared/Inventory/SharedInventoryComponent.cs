@@ -11,92 +11,91 @@ using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.Inventory.EquipmentSlotDefines;
 
-namespace Content.Shared.Inventory
+namespace Content.Shared.Inventory;
+
+[NetworkedComponent()]
+public abstract class SharedInventoryComponent : Component
 {
-    [NetworkedComponent()]
-    public abstract class SharedInventoryComponent : Component
+    [Dependency] protected readonly IReflectionManager ReflectionManager = default!;
+    [Dependency] protected readonly IDynamicTypeFactory DynamicTypeFactory = default!;
+
+    public sealed override string Name => "Inventory";
+
+    [ViewVariables]
+    protected Inventory InventoryInstance { get; private set; } = default!;
+
+    [ViewVariables]
+    [DataField("Template")]
+    private string _templateName = "HumanInventory"; //stored for serialization purposes
+
+    protected override void Initialize()
     {
-        [Dependency] protected readonly IReflectionManager ReflectionManager = default!;
-        [Dependency] protected readonly IDynamicTypeFactory DynamicTypeFactory = default!;
+        base.Initialize();
 
-        public sealed override string Name => "Inventory";
+        CreateInventory();
+    }
 
-        [ViewVariables]
-        protected Inventory InventoryInstance { get; private set; } = default!;
+    private void CreateInventory()
+    {
+        var type = ReflectionManager.LooseGetType(_templateName);
+        DebugTools.Assert(type != null);
+        InventoryInstance = DynamicTypeFactory.CreateInstance<Inventory>(type!);
+    }
 
-        [ViewVariables]
-        [DataField("Template")]
-        private string _templateName = "HumanInventory"; //stored for serialization purposes
+    /// <returns>true if the item is equipped to an equip slot (NOT inside an equipped container
+    /// like inside a backpack)</returns>
+    public abstract bool IsEquipped(IEntity item);
 
-        protected override void Initialize()
+    [Serializable, NetSerializable]
+    protected class InventoryComponentState : ComponentState
+    {
+        public List<KeyValuePair<Slots, EntityUid>> Entities { get; }
+        public KeyValuePair<Slots, (EntityUid entity, bool fits)>? HoverEntity { get; }
+
+        public InventoryComponentState(List<KeyValuePair<Slots, EntityUid>> entities, KeyValuePair<Slots, (EntityUid entity, bool fits)>? hoverEntity = null)
         {
-            base.Initialize();
-
-            CreateInventory();
+            Entities = entities;
+            HoverEntity = hoverEntity;
         }
+    }
 
-        private void CreateInventory()
-        {
-            var type = ReflectionManager.LooseGetType(_templateName);
-            DebugTools.Assert(type != null);
-            InventoryInstance = DynamicTypeFactory.CreateInstance<Inventory>(type!);
-        }
-
-        /// <returns>true if the item is equipped to an equip slot (NOT inside an equipped container
-        /// like inside a backpack)</returns>
-        public abstract bool IsEquipped(IEntity item);
-
-        [Serializable, NetSerializable]
-        protected class InventoryComponentState : ComponentState
-        {
-            public List<KeyValuePair<Slots, EntityUid>> Entities { get; }
-            public KeyValuePair<Slots, (EntityUid entity, bool fits)>? HoverEntity { get; }
-
-            public InventoryComponentState(List<KeyValuePair<Slots, EntityUid>> entities, KeyValuePair<Slots, (EntityUid entity, bool fits)>? hoverEntity = null)
-            {
-                Entities = entities;
-                HoverEntity = hoverEntity;
-            }
-        }
-
-        [Serializable, NetSerializable]
+    [Serializable, NetSerializable]
 #pragma warning disable 618
-        public class ClientInventoryMessage : ComponentMessage
+    public class ClientInventoryMessage : ComponentMessage
 #pragma warning restore 618
+    {
+        public Slots Inventoryslot;
+        public ClientInventoryUpdate Updatetype;
+
+        public ClientInventoryMessage(Slots inventoryslot, ClientInventoryUpdate updatetype)
         {
-            public Slots Inventoryslot;
-            public ClientInventoryUpdate Updatetype;
-
-            public ClientInventoryMessage(Slots inventoryslot, ClientInventoryUpdate updatetype)
-            {
-                Directed = true;
-                Inventoryslot = inventoryslot;
-                Updatetype = updatetype;
-            }
-
-            public enum ClientInventoryUpdate
-            {
-                Equip = 0,
-                Use = 1,
-                Hover = 2
-            }
+            Directed = true;
+            Inventoryslot = inventoryslot;
+            Updatetype = updatetype;
         }
 
-        /// <summary>
-        /// Component message for opening the Storage UI of item in Slot
-        /// </summary>
-        [Serializable, NetSerializable]
-#pragma warning disable 618
-        public class OpenSlotStorageUIMessage : ComponentMessage
-#pragma warning restore 618
+        public enum ClientInventoryUpdate
         {
-            public Slots Slot;
+            Equip = 0,
+            Use = 1,
+            Hover = 2
+        }
+    }
 
-            public OpenSlotStorageUIMessage(Slots slot)
-            {
-                Directed = true;
-                Slot = slot;
-            }
+    /// <summary>
+    /// Component message for opening the Storage UI of item in Slot
+    /// </summary>
+    [Serializable, NetSerializable]
+#pragma warning disable 618
+    public class OpenSlotStorageUIMessage : ComponentMessage
+#pragma warning restore 618
+    {
+        public Slots Slot;
+
+        public OpenSlotStorageUIMessage(Slots slot)
+        {
+            Directed = true;
+            Slot = slot;
         }
     }
 }

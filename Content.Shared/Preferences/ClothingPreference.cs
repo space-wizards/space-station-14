@@ -1,11 +1,10 @@
-namespace Content.Shared.Preferences
+namespace Content.Shared.Preferences;
+
+/// <summary>
+/// The clothing preference for a profile. Stored in database!
+/// </summary>
+public enum ClothingPreference
 {
-    /// <summary>
-    /// The clothing preference for a profile. Stored in database!
-    /// </summary>
-    public enum ClothingPreference
-    {
-        Jumpsuit,
-        Jumpskirt
-    }
+    Jumpsuit,
+    Jumpskirt
 }

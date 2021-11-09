@@ -1,20 +1,19 @@
 ﻿using Robust.Shared.GameObjects;
 
-namespace Content.Shared.Speech
+namespace Content.Shared.Speech;
+
+public class SpeechSystem : EntitySystem
 {
-    public class SpeechSystem : EntitySystem
+    public override void Initialize()
     {
-        public override void Initialize()
-        {
-            base.Initialize();
+        base.Initialize();
 
-            SubscribeLocalEvent<SharedSpeechComponent, SpeakAttemptEvent>(OnSpeakAttempt);
-        }
+        SubscribeLocalEvent<SharedSpeechComponent, SpeakAttemptEvent>(OnSpeakAttempt);
+    }
 
-        private void OnSpeakAttempt(EntityUid uid, SharedSpeechComponent component, SpeakAttemptEvent args)
-        {
-            if (!component.Enabled)
-                args.Cancel();
-        }
+    private void OnSpeakAttempt(EntityUid uid, SharedSpeechComponent component, SpeakAttemptEvent args)
+    {
+        if (!component.Enabled)
+            args.Cancel();
     }
 }

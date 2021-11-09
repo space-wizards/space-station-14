@@ -10,59 +10,58 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Client.Tools.Components
+namespace Content.Client.Tools.Components;
+
+[RegisterComponent]
+public class MultipleToolComponent : SharedMultipleToolComponent, IItemStatus
 {
-    [RegisterComponent]
-    public class MultipleToolComponent : SharedMultipleToolComponent, IItemStatus
+    private string? _behavior;
+    [DataField("statusShowBehavior")]
+    private bool _statusShowBehavior = true;
+
+    [ViewVariables(VVAccess.ReadWrite)] private bool _uiUpdateNeeded;
+    [ViewVariables] public bool StatusShowBehavior => _statusShowBehavior;
+    [ViewVariables] public string? Behavior => _behavior;
+
+    public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
     {
-        private string? _behavior;
-        [DataField("statusShowBehavior")]
-        private bool _statusShowBehavior = true;
+        base.HandleComponentState(curState, nextState);
 
-        [ViewVariables(VVAccess.ReadWrite)] private bool _uiUpdateNeeded;
-        [ViewVariables] public bool StatusShowBehavior => _statusShowBehavior;
-        [ViewVariables] public string? Behavior => _behavior;
+        if (curState is not MultipleToolComponentState tool) return;
 
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
+        _behavior = tool.QualityName;
+        _uiUpdateNeeded = true;
+
+    }
+
+    public Control MakeControl() => new StatusControl(this);
+
+    private sealed class StatusControl : Control
+    {
+        private readonly MultipleToolComponent _parent;
+        private readonly RichTextLabel _label;
+
+        public StatusControl(MultipleToolComponent parent)
         {
-            base.HandleComponentState(curState, nextState);
+            _parent = parent;
+            _label = new RichTextLabel {StyleClasses = {StyleNano.StyleClassItemStatus}};
+            AddChild(_label);
 
-            if (curState is not MultipleToolComponentState tool) return;
-
-            _behavior = tool.QualityName;
-            _uiUpdateNeeded = true;
-
+            parent._uiUpdateNeeded = true;
         }
 
-        public Control MakeControl() => new StatusControl(this);
-
-        private sealed class StatusControl : Control
+        protected override void FrameUpdate(FrameEventArgs args)
         {
-            private readonly MultipleToolComponent _parent;
-            private readonly RichTextLabel _label;
+            base.FrameUpdate(args);
 
-            public StatusControl(MultipleToolComponent parent)
+            if (!_parent._uiUpdateNeeded)
             {
-                _parent = parent;
-                _label = new RichTextLabel {StyleClasses = {StyleNano.StyleClassItemStatus}};
-                AddChild(_label);
-
-                parent._uiUpdateNeeded = true;
+                return;
             }
 
-            protected override void FrameUpdate(FrameEventArgs args)
-            {
-                base.FrameUpdate(args);
+            _parent._uiUpdateNeeded = false;
 
-                if (!_parent._uiUpdateNeeded)
-                {
-                    return;
-                }
-
-                _parent._uiUpdateNeeded = false;
-
-                _label.SetMarkup(_parent.StatusShowBehavior ? _parent.Behavior ?? string.Empty : string.Empty);
-            }
+            _label.SetMarkup(_parent.StatusShowBehavior ? _parent.Behavior ?? string.Empty : string.Empty);
         }
     }
 }

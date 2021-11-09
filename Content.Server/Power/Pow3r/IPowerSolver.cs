@@ -1,7 +1,6 @@
-﻿namespace Content.Server.Power.Pow3r
+﻿namespace Content.Server.Power.Pow3r;
+
+public interface IPowerSolver
 {
-    public interface IPowerSolver
-    {
-        void Tick(float frameTime, PowerState state);
-    }
+    void Tick(float frameTime, PowerState state);
 }

@@ -4,55 +4,54 @@ using Robust.Client.GameObjects;
 using static Content.Shared.MedicalScanner.SharedMedicalScannerComponent;
 using static Content.Shared.MedicalScanner.SharedMedicalScannerComponent.MedicalScannerStatus;
 
-namespace Content.Client.MedicalScanner
+namespace Content.Client.MedicalScanner;
+
+[UsedImplicitly]
+public class MedicalScannerVisualizer : AppearanceVisualizer
 {
-    [UsedImplicitly]
-    public class MedicalScannerVisualizer : AppearanceVisualizer
+    public override void OnChangeData(AppearanceComponent component)
     {
-        public override void OnChangeData(AppearanceComponent component)
-        {
-            base.OnChangeData(component);
+        base.OnChangeData(component);
 
-            var sprite = component.Owner.GetComponent<ISpriteComponent>();
-            if (!component.TryGetData(MedicalScannerVisuals.Status, out MedicalScannerStatus status)) return;
-            sprite.LayerSetState(MedicalScannerVisualLayers.Machine, StatusToMachineStateId(status));
-            sprite.LayerSetState(MedicalScannerVisualLayers.Terminal, StatusToTerminalStateId(status));
-        }
+        var sprite = component.Owner.GetComponent<ISpriteComponent>();
+        if (!component.TryGetData(MedicalScannerVisuals.Status, out MedicalScannerStatus status)) return;
+        sprite.LayerSetState(MedicalScannerVisualLayers.Machine, StatusToMachineStateId(status));
+        sprite.LayerSetState(MedicalScannerVisualLayers.Terminal, StatusToTerminalStateId(status));
+    }
 
-        private string StatusToMachineStateId(MedicalScannerStatus status)
+    private string StatusToMachineStateId(MedicalScannerStatus status)
+    {
+        switch (status)
         {
-            switch (status)
-            {
-                case Off: return "closed";
-                case Open: return "open";
-                case Red: return "closed";
-                case Death: return "closed";
-                case Green: return "occupied";
-                case Yellow: return "closed";
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(status), status, "unknown MedicalScannerStatus");
-            }
+            case Off: return "closed";
+            case Open: return "open";
+            case Red: return "closed";
+            case Death: return "closed";
+            case Green: return "occupied";
+            case Yellow: return "closed";
+            default:
+                throw new ArgumentOutOfRangeException(nameof(status), status, "unknown MedicalScannerStatus");
         }
+    }
 
-        private string StatusToTerminalStateId(MedicalScannerStatus status)
+    private string StatusToTerminalStateId(MedicalScannerStatus status)
+    {
+        switch (status)
         {
-            switch (status)
-            {
-                case Off: return "off_unlit";
-                case Open: return "idle_unlit";
-                case Red: return "red_unlit";
-                case Death: return "red_unlit";
-                case Green: return "idle_unlit";
-                case Yellow: return "maint_unlit";
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(status), status, "unknown MedicalScannerStatus");
-            }
+            case Off: return "off_unlit";
+            case Open: return "idle_unlit";
+            case Red: return "red_unlit";
+            case Death: return "red_unlit";
+            case Green: return "idle_unlit";
+            case Yellow: return "maint_unlit";
+            default:
+                throw new ArgumentOutOfRangeException(nameof(status), status, "unknown MedicalScannerStatus");
         }
+    }
 
-        public enum MedicalScannerVisualLayers : byte
-        {
-            Machine,
-            Terminal,
-        }
+    public enum MedicalScannerVisualLayers : byte
+    {
+        Machine,
+        Terminal,
     }
 }

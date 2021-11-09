@@ -11,29 +11,28 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.Chemistry.TileReactions
+namespace Content.Server.Chemistry.TileReactions;
+
+[UsedImplicitly]
+[DataDefinition]
+public class FlammableTileReaction : ITileReaction
 {
-    [UsedImplicitly]
-    [DataDefinition]
-    public class FlammableTileReaction : ITileReaction
+    [DataField("temperatureMultiplier")] private float _temperatureMultiplier = 1.15f;
+
+    public FixedPoint2 TileReact(TileRef tile, ReagentPrototype reagent, FixedPoint2 reactVolume)
     {
-        [DataField("temperatureMultiplier")] private float _temperatureMultiplier = 1.15f;
+        if (reactVolume <= FixedPoint2.Zero || tile.Tile.IsEmpty)
+            return FixedPoint2.Zero;
 
-        public FixedPoint2 TileReact(TileRef tile, ReagentPrototype reagent, FixedPoint2 reactVolume)
-        {
-            if (reactVolume <= FixedPoint2.Zero || tile.Tile.IsEmpty)
-                return FixedPoint2.Zero;
+        var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
 
-            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
+        var environment = atmosphereSystem.GetTileMixture(tile.GridIndex, tile.GridIndices, true);
+        if (environment == null || !atmosphereSystem.IsHotspotActive(tile.GridIndex, tile.GridIndices))
+            return FixedPoint2.Zero;
 
-            var environment = atmosphereSystem.GetTileMixture(tile.GridIndex, tile.GridIndices, true);
-            if (environment == null || !atmosphereSystem.IsHotspotActive(tile.GridIndex, tile.GridIndices))
-                return FixedPoint2.Zero;
+        environment.Temperature *= MathF.Max(_temperatureMultiplier * reactVolume.Float(), 1f);
+        atmosphereSystem.React(tile.GridIndex, tile.GridIndices);
 
-            environment.Temperature *= MathF.Max(_temperatureMultiplier * reactVolume.Float(), 1f);
-            atmosphereSystem.React(tile.GridIndex, tile.GridIndices);
-
-            return reactVolume;
-        }
+        return reactVolume;
     }
 }

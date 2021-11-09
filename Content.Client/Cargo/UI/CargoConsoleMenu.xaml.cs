@@ -14,199 +14,198 @@ using Robust.Shared.Maths;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
-namespace Content.Client.Cargo.UI
+namespace Content.Client.Cargo.UI;
+
+[GenerateTypedNameReferences]
+public partial class CargoConsoleMenu : SS14Window
 {
-    [GenerateTypedNameReferences]
-    public partial class CargoConsoleMenu : SS14Window
+    public CargoConsoleBoundUserInterface Owner { get; private set; }
+
+    public event Action<ButtonEventArgs>? OnItemSelected;
+    public event Action<ButtonEventArgs>? OnOrderApproved;
+    public event Action<ButtonEventArgs>? OnOrderCanceled;
+
+    private readonly List<string> _categoryStrings = new();
+    private string? _category;
+
+    public CargoConsoleMenu(CargoConsoleBoundUserInterface owner)
     {
-        public CargoConsoleBoundUserInterface Owner { get; private set; }
+        RobustXamlLoader.Load(this);
+        IoCManager.InjectDependencies(this);
+        Owner = owner;
 
-        public event Action<ButtonEventArgs>? OnItemSelected;
-        public event Action<ButtonEventArgs>? OnOrderApproved;
-        public event Action<ButtonEventArgs>? OnOrderCanceled;
+        Title = Loc.GetString(Owner.RequestOnly
+                                  ? "cargo-console-menu-request-only-title"
+                                  : "cargo-console-menu-title");
 
-        private readonly List<string> _categoryStrings = new();
-        private string? _category;
+        CallShuttleButton.OnPressed += OnCallShuttleButtonPressed;
+        SearchBar.OnTextChanged += OnSearchBarTextChanged;
+        Categories.OnItemSelected += OnCategoryItemSelected;
+    }
 
-        public CargoConsoleMenu(CargoConsoleBoundUserInterface owner)
+    private void OnCallShuttleButtonPressed(ButtonEventArgs args)
+    {
+    }
+
+    private void OnCategoryItemSelected(OptionButton.ItemSelectedEventArgs args)
+    {
+        SetCategoryText(args.Id);
+        PopulateProducts();
+    }
+
+    private void OnSearchBarTextChanged(LineEdit.LineEditEventArgs args)
+    {
+        PopulateProducts();
+    }
+
+    private void SetCategoryText(int id)
+    {
+        _category = id == 0 ? null : _categoryStrings[id];
+        Categories.SelectId(id);
+    }
+
+    /// <summary>
+    ///     Populates the list of products that will actually be shown, using the current filters.
+    /// </summary>
+    public void PopulateProducts()
+    {
+        Products.RemoveAllChildren();
+
+        if (Owner.Market == null)
         {
-            RobustXamlLoader.Load(this);
-            IoCManager.InjectDependencies(this);
-            Owner = owner;
-
-            Title = Loc.GetString(Owner.RequestOnly
-                                      ? "cargo-console-menu-request-only-title"
-                                      : "cargo-console-menu-title");
-
-            CallShuttleButton.OnPressed += OnCallShuttleButtonPressed;
-            SearchBar.OnTextChanged += OnSearchBarTextChanged;
-            Categories.OnItemSelected += OnCategoryItemSelected;
+            return;
         }
 
-        private void OnCallShuttleButtonPressed(ButtonEventArgs args)
+        var search = SearchBar.Text.Trim().ToLowerInvariant();
+        foreach (var prototype in Owner.Market.Products)
         {
-        }
-
-        private void OnCategoryItemSelected(OptionButton.ItemSelectedEventArgs args)
-        {
-            SetCategoryText(args.Id);
-            PopulateProducts();
-        }
-
-        private void OnSearchBarTextChanged(LineEdit.LineEditEventArgs args)
-        {
-            PopulateProducts();
-        }
-
-        private void SetCategoryText(int id)
-        {
-            _category = id == 0 ? null : _categoryStrings[id];
-            Categories.SelectId(id);
-        }
-
-        /// <summary>
-        ///     Populates the list of products that will actually be shown, using the current filters.
-        /// </summary>
-        public void PopulateProducts()
-        {
-            Products.RemoveAllChildren();
-
-            if (Owner.Market == null)
+            // if no search or category
+            // else if search
+            // else if category and not search
+            if (search.Length == 0 && _category == null ||
+                search.Length != 0 && prototype.Name.ToLowerInvariant().Contains(search) ||
+                search.Length == 0 && _category != null && prototype.Category.Equals(_category))
             {
-                return;
-            }
-
-            var search = SearchBar.Text.Trim().ToLowerInvariant();
-            foreach (var prototype in Owner.Market.Products)
-            {
-                // if no search or category
-                // else if search
-                // else if category and not search
-                if (search.Length == 0 && _category == null ||
-                    search.Length != 0 && prototype.Name.ToLowerInvariant().Contains(search) ||
-                    search.Length == 0 && _category != null && prototype.Category.Equals(_category))
+                var button = new CargoProductRow
                 {
-                    var button = new CargoProductRow
-                    {
-                        Product = prototype,
-                        ProductName = { Text = prototype.Name },
-                        PointCost = { Text = prototype.PointCost.ToString() },
-                        Icon = { Texture = prototype.Icon.Frame0() },
-                    };
-                    button.MainButton.OnPressed += args =>
-                    {
-                        OnItemSelected?.Invoke(args);
-                    };
-                    Products.AddChild(button);
-                }
-            }
-        }
-
-        /// <summary>
-        ///     Populates the list of products that will actually be shown, using the current filters.
-        /// </summary>
-        public void PopulateCategories()
-        {
-            _categoryStrings.Clear();
-            Categories.Clear();
-
-            if (Owner.Market == null)
-            {
-                return;
-            }
-
-            _categoryStrings.Add(Loc.GetString("cargo-console-menu-populate-categories-all-text"));
-
-            foreach (var prototype in Owner.Market.Products)
-            {
-                if (!_categoryStrings.Contains(prototype.Category))
-                {
-                    _categoryStrings.Add(Loc.GetString(prototype.Category));
-                }
-            }
-            _categoryStrings.Sort();
-            foreach (var str in _categoryStrings)
-            {
-                Categories.AddItem(str);
-            }
-        }
-
-        /// <summary>
-        ///     Populates the list of orders and requests.
-        /// </summary>
-        public void PopulateOrders()
-        {
-            Orders.RemoveAllChildren();
-            Requests.RemoveAllChildren();
-
-            if (Owner.Orders == null || Owner.Market == null)
-            {
-                return;
-            }
-
-            foreach (var order in Owner.Orders.Orders)
-            {
-                var row = new CargoOrderRow
-                {
-                    Order = order,
-                    Icon = { Texture = Owner.Market.GetProduct(order.ProductId)?.Icon.Frame0() },
-                    ProductName =
-                    {
-                        Text = Loc.GetString(
-                            "cargo-console-menu-populate-orders-cargo-order-row-product-name-text",
-                            ("productName", Owner.Market.GetProduct(order.ProductId)?.Name!),
-                            ("orderAmount", order.Amount),
-                            ("orderRequester", order.Requester))
-                    },
-                    Description = {Text = Loc.GetString("cargo-console-menu-order-reason-description",
-                                                        ("reason", order.Reason))}
+                    Product = prototype,
+                    ProductName = { Text = prototype.Name },
+                    PointCost = { Text = prototype.PointCost.ToString() },
+                    Icon = { Texture = prototype.Icon.Frame0() },
                 };
-                row.Cancel.OnPressed += (args) => { OnOrderCanceled?.Invoke(args); };
-                if (order.Approved)
+                button.MainButton.OnPressed += args =>
                 {
-                    row.Approve.Visible = false;
-                    row.Cancel.Visible = false;
-                    Orders.AddChild(row);
-                }
-                else
-                {
-                    if (Owner.RequestOnly)
-                        row.Approve.Visible = false;
-                    else
-                        row.Approve.OnPressed += (args) => { OnOrderApproved?.Invoke(args); };
-                    Requests.AddChild(row);
-                }
+                    OnItemSelected?.Invoke(args);
+                };
+                Products.AddChild(button);
             }
         }
+    }
 
-        public void Populate()
+    /// <summary>
+    ///     Populates the list of products that will actually be shown, using the current filters.
+    /// </summary>
+    public void PopulateCategories()
+    {
+        _categoryStrings.Clear();
+        Categories.Clear();
+
+        if (Owner.Market == null)
         {
-            PopulateProducts();
-            PopulateCategories();
-            PopulateOrders();
+            return;
         }
 
-        public void UpdateCargoCapacity()
-        {
-            ShuttleCapacityLabel.Text = $"{Owner.ShuttleCapacity.CurrentCapacity}/{Owner.ShuttleCapacity.MaxCapacity}";
-        }
+        _categoryStrings.Add(Loc.GetString("cargo-console-menu-populate-categories-all-text"));
 
-        public void UpdateBankData()
+        foreach (var prototype in Owner.Market.Products)
         {
-            AccountNameLabel.Text = Owner.BankName;
-            PointsLabel.Text = Owner.BankBalance.ToString();
-        }
-
-        /// <summary>
-        ///     Show/Hide Call Shuttle button and Approve buttons
-        /// </summary>
-        public void UpdateRequestOnly()
-        {
-            CallShuttleButton.Visible = !Owner.RequestOnly;
-            foreach (CargoOrderRow row in Requests.Children)
+            if (!_categoryStrings.Contains(prototype.Category))
             {
-                row.Approve.Visible = !Owner.RequestOnly;
+                _categoryStrings.Add(Loc.GetString(prototype.Category));
             }
+        }
+        _categoryStrings.Sort();
+        foreach (var str in _categoryStrings)
+        {
+            Categories.AddItem(str);
+        }
+    }
+
+    /// <summary>
+    ///     Populates the list of orders and requests.
+    /// </summary>
+    public void PopulateOrders()
+    {
+        Orders.RemoveAllChildren();
+        Requests.RemoveAllChildren();
+
+        if (Owner.Orders == null || Owner.Market == null)
+        {
+            return;
+        }
+
+        foreach (var order in Owner.Orders.Orders)
+        {
+            var row = new CargoOrderRow
+            {
+                Order = order,
+                Icon = { Texture = Owner.Market.GetProduct(order.ProductId)?.Icon.Frame0() },
+                ProductName =
+                {
+                    Text = Loc.GetString(
+                        "cargo-console-menu-populate-orders-cargo-order-row-product-name-text",
+                        ("productName", Owner.Market.GetProduct(order.ProductId)?.Name!),
+                        ("orderAmount", order.Amount),
+                        ("orderRequester", order.Requester))
+                },
+                Description = {Text = Loc.GetString("cargo-console-menu-order-reason-description",
+                                                    ("reason", order.Reason))}
+            };
+            row.Cancel.OnPressed += (args) => { OnOrderCanceled?.Invoke(args); };
+            if (order.Approved)
+            {
+                row.Approve.Visible = false;
+                row.Cancel.Visible = false;
+                Orders.AddChild(row);
+            }
+            else
+            {
+                if (Owner.RequestOnly)
+                    row.Approve.Visible = false;
+                else
+                    row.Approve.OnPressed += (args) => { OnOrderApproved?.Invoke(args); };
+                Requests.AddChild(row);
+            }
+        }
+    }
+
+    public void Populate()
+    {
+        PopulateProducts();
+        PopulateCategories();
+        PopulateOrders();
+    }
+
+    public void UpdateCargoCapacity()
+    {
+        ShuttleCapacityLabel.Text = $"{Owner.ShuttleCapacity.CurrentCapacity}/{Owner.ShuttleCapacity.MaxCapacity}";
+    }
+
+    public void UpdateBankData()
+    {
+        AccountNameLabel.Text = Owner.BankName;
+        PointsLabel.Text = Owner.BankBalance.ToString();
+    }
+
+    /// <summary>
+    ///     Show/Hide Call Shuttle button and Approve buttons
+    /// </summary>
+    public void UpdateRequestOnly()
+    {
+        CallShuttleButton.Visible = !Owner.RequestOnly;
+        foreach (CargoOrderRow row in Requests.Children)
+        {
+            row.Approve.Visible = !Owner.RequestOnly;
         }
     }
 }

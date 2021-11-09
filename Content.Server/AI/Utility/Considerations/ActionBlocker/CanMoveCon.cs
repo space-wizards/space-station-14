@@ -4,20 +4,19 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Movement;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.AI.Utility.Considerations.ActionBlocker
+namespace Content.Server.AI.Utility.Considerations.ActionBlocker;
+
+public sealed class CanMoveCon : Consideration
 {
-    public sealed class CanMoveCon : Consideration
+    protected override float GetScore(Blackboard context)
     {
-        protected override float GetScore(Blackboard context)
+        var self = context.GetState<SelfState>().GetValue();
+
+        if (self == null || !EntitySystem.Get<ActionBlockerSystem>().CanMove(self.Uid))
         {
-            var self = context.GetState<SelfState>().GetValue();
-
-            if (self == null || !EntitySystem.Get<ActionBlockerSystem>().CanMove(self.Uid))
-            {
-                return 0.0f;
-            }
-
-            return 1.0f;
+            return 0.0f;
         }
+
+        return 1.0f;
     }
 }

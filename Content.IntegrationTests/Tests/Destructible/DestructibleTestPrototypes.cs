@@ -1,14 +1,14 @@
-namespace Content.IntegrationTests.Tests.Destructible
-{
-    public static class DestructibleTestPrototypes
-    {
-        public const string SpawnedEntityId = "DestructibleTestsSpawnedEntity";
-        public const string DestructibleEntityId = "DestructibleTestsDestructibleEntity";
-        public const string DestructibleDestructionEntityId = "DestructibleTestsDestructibleDestructionEntity";
-        public const string DestructibleDamageTypeEntityId = "DestructibleTestsDestructibleDamageTypeEntity";
-        public const string DestructibleDamageGroupEntityId = "DestructibleTestsDestructibleDamageGroupEntity";
+namespace Content.IntegrationTests.Tests.Destructible;
 
-        public static readonly string Prototypes = $@"
+public static class DestructibleTestPrototypes
+{
+    public const string SpawnedEntityId = "DestructibleTestsSpawnedEntity";
+    public const string DestructibleEntityId = "DestructibleTestsDestructibleEntity";
+    public const string DestructibleDestructionEntityId = "DestructibleTestsDestructibleDestructionEntity";
+    public const string DestructibleDamageTypeEntityId = "DestructibleTestsDestructibleDamageTypeEntity";
+    public const string DestructibleDamageGroupEntityId = "DestructibleTestsDestructibleDamageGroupEntity";
+
+    public static readonly string Prototypes = $@"
 - type: damageType
   id: TestBlunt
 
@@ -127,5 +127,4 @@ namespace Content.IntegrationTests.Tests.Destructible
         - !type:DamageGroupTrigger
           damageGroup: TestBurn
           damage: 10";
-    }
 }

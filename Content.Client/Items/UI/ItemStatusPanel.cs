@@ -16,190 +16,189 @@ using Robust.Shared.ViewVariables;
 using static Content.Client.IoC.StaticIoC;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
-namespace Content.Client.Items.UI
+namespace Content.Client.Items.UI;
+
+public class ItemStatusPanel : Control
 {
-    public class ItemStatusPanel : Control
+    [Dependency] private readonly IEntityManager _entityManager = default!;
+
+    [ViewVariables]
+    private readonly List<(IItemStatus, Control)> _activeStatusComponents = new();
+
+    [ViewVariables]
+    private readonly Label _itemNameLabel;
+    [ViewVariables]
+    private readonly BoxContainer _statusContents;
+    [ViewVariables]
+    private readonly PanelContainer _panel;
+
+    [ViewVariables]
+    private IEntity? _entity;
+
+    public ItemStatusPanel(Texture texture, StyleBox.Margin cutout, StyleBox.Margin flat, Label.AlignMode textAlign)
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
+        IoCManager.InjectDependencies(this);
 
-        [ViewVariables]
-        private readonly List<(IItemStatus, Control)> _activeStatusComponents = new();
-
-        [ViewVariables]
-        private readonly Label _itemNameLabel;
-        [ViewVariables]
-        private readonly BoxContainer _statusContents;
-        [ViewVariables]
-        private readonly PanelContainer _panel;
-
-        [ViewVariables]
-        private IEntity? _entity;
-
-        public ItemStatusPanel(Texture texture, StyleBox.Margin cutout, StyleBox.Margin flat, Label.AlignMode textAlign)
+        var panel = new StyleBoxTexture
         {
-            IoCManager.InjectDependencies(this);
+            Texture = texture
+        };
+        panel.SetContentMarginOverride(StyleBox.Margin.Vertical, 4);
+        panel.SetContentMarginOverride(StyleBox.Margin.Horizontal, 6);
+        panel.SetPatchMargin(flat, 2);
+        panel.SetPatchMargin(cutout, 13);
 
-            var panel = new StyleBoxTexture
+        AddChild(_panel = new PanelContainer
+        {
+            PanelOverride = panel,
+            ModulateSelfOverride = Color.White.WithAlpha(0.9f),
+            Children =
             {
-                Texture = texture
-            };
-            panel.SetContentMarginOverride(StyleBox.Margin.Vertical, 4);
-            panel.SetContentMarginOverride(StyleBox.Margin.Horizontal, 6);
-            panel.SetPatchMargin(flat, 2);
-            panel.SetPatchMargin(cutout, 13);
-
-            AddChild(_panel = new PanelContainer
-            {
-                PanelOverride = panel,
-                ModulateSelfOverride = Color.White.WithAlpha(0.9f),
-                Children =
+                new BoxContainer
                 {
-                    new BoxContainer
+                    Orientation = LayoutOrientation.Vertical,
+                    SeparationOverride = 0,
+                    Children =
                     {
-                        Orientation = LayoutOrientation.Vertical,
-                        SeparationOverride = 0,
-                        Children =
+                        (_statusContents = new BoxContainer
                         {
-                            (_statusContents = new BoxContainer
-                            {
-                                Orientation = LayoutOrientation.Vertical
-                            }),
-                            (_itemNameLabel = new Label
-                            {
-                                ClipText = true,
-                                StyleClasses = {StyleNano.StyleClassItemStatus},
-                                Align = textAlign
-                            })
-                        }
+                            Orientation = LayoutOrientation.Vertical
+                        }),
+                        (_itemNameLabel = new Label
+                        {
+                            ClipText = true,
+                            StyleClasses = {StyleNano.StyleClassItemStatus},
+                            Align = textAlign
+                        })
                     }
                 }
-            });
-            VerticalAlignment = VAlignment.Bottom;
-
-            // TODO: Depending on if its a two-hand panel or not
-            MinSize = (150, 0);
-        }
-
-        /// <summary>
-        ///     Creates a new instance of <see cref="ItemStatusPanel"/>
-        ///     based on whether or not it is being created for the right
-        ///     or left hand.
-        /// </summary>
-        /// <param name="location">
-        ///     The location of the hand that this panel is for
-        /// </param>
-        /// <returns>the new <see cref="ItemStatusPanel"/> instance</returns>
-        public static ItemStatusPanel FromSide(HandLocation location)
-        {
-            string texture;
-            StyleBox.Margin cutOut;
-            StyleBox.Margin flat;
-            Label.AlignMode textAlign;
-
-            switch (location)
-            {
-                case HandLocation.Left:
-                    texture = "/Textures/Interface/Nano/item_status_right.svg.96dpi.png";
-                    cutOut = StyleBox.Margin.Left | StyleBox.Margin.Top;
-                    flat = StyleBox.Margin.Right | StyleBox.Margin.Bottom;
-                    textAlign = Label.AlignMode.Right;
-                    break;
-                case HandLocation.Middle:
-                    texture = "/Textures/Interface/Nano/item_status_middle.svg.96dpi.png";
-                    cutOut = StyleBox.Margin.Right | StyleBox.Margin.Top;
-                    flat = StyleBox.Margin.Left | StyleBox.Margin.Bottom;
-                    textAlign = Label.AlignMode.Left;
-                    break;
-                case HandLocation.Right:
-                    texture = "/Textures/Interface/Nano/item_status_left.svg.96dpi.png";
-                    cutOut = StyleBox.Margin.Right | StyleBox.Margin.Top;
-                    flat = StyleBox.Margin.Left | StyleBox.Margin.Bottom;
-                    textAlign = Label.AlignMode.Left;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(location), location, null);
             }
+        });
+        VerticalAlignment = VAlignment.Bottom;
 
-            return new ItemStatusPanel(ResC.GetTexture(texture), cutOut, flat, textAlign);
+        // TODO: Depending on if its a two-hand panel or not
+        MinSize = (150, 0);
+    }
+
+    /// <summary>
+    ///     Creates a new instance of <see cref="ItemStatusPanel"/>
+    ///     based on whether or not it is being created for the right
+    ///     or left hand.
+    /// </summary>
+    /// <param name="location">
+    ///     The location of the hand that this panel is for
+    /// </param>
+    /// <returns>the new <see cref="ItemStatusPanel"/> instance</returns>
+    public static ItemStatusPanel FromSide(HandLocation location)
+    {
+        string texture;
+        StyleBox.Margin cutOut;
+        StyleBox.Margin flat;
+        Label.AlignMode textAlign;
+
+        switch (location)
+        {
+            case HandLocation.Left:
+                texture = "/Textures/Interface/Nano/item_status_right.svg.96dpi.png";
+                cutOut = StyleBox.Margin.Left | StyleBox.Margin.Top;
+                flat = StyleBox.Margin.Right | StyleBox.Margin.Bottom;
+                textAlign = Label.AlignMode.Right;
+                break;
+            case HandLocation.Middle:
+                texture = "/Textures/Interface/Nano/item_status_middle.svg.96dpi.png";
+                cutOut = StyleBox.Margin.Right | StyleBox.Margin.Top;
+                flat = StyleBox.Margin.Left | StyleBox.Margin.Bottom;
+                textAlign = Label.AlignMode.Left;
+                break;
+            case HandLocation.Right:
+                texture = "/Textures/Interface/Nano/item_status_left.svg.96dpi.png";
+                cutOut = StyleBox.Margin.Right | StyleBox.Margin.Top;
+                flat = StyleBox.Margin.Left | StyleBox.Margin.Bottom;
+                textAlign = Label.AlignMode.Left;
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(location), location, null);
         }
 
-        protected override void FrameUpdate(FrameEventArgs args)
+        return new ItemStatusPanel(ResC.GetTexture(texture), cutOut, flat, textAlign);
+    }
+
+    protected override void FrameUpdate(FrameEventArgs args)
+    {
+        base.FrameUpdate(args);
+
+        UpdateItemName();
+    }
+
+    public void Update(IEntity? entity)
+    {
+        if (entity == null)
         {
-            base.FrameUpdate(args);
+            ClearOldStatus();
+            _entity = null;
+            _panel.Visible = false;
+            return;
+        }
+
+        if (entity != _entity)
+        {
+            _entity = entity;
+            BuildNewEntityStatus();
 
             UpdateItemName();
         }
 
-        public void Update(IEntity? entity)
+        _panel.Visible = true;
+    }
+
+    private void UpdateItemName()
+    {
+        if (_entity == null)
+            return;
+
+        if (_entity.TryGetComponent(out HandVirtualItemComponent? virtualItem)
+            && _entityManager.TryGetEntity(virtualItem.BlockingEntity, out var blockEnt))
         {
-            if (entity == null)
-            {
-                ClearOldStatus();
-                _entity = null;
-                _panel.Visible = false;
-                return;
-            }
+            _itemNameLabel.Text = blockEnt.Name;
+        }
+        else
+        {
+            _itemNameLabel.Text = _entity.Name;
+        }
+    }
 
-            if (entity != _entity)
-            {
-                _entity = entity;
-                BuildNewEntityStatus();
+    private void ClearOldStatus()
+    {
+        _statusContents.RemoveAllChildren();
 
-                UpdateItemName();
-            }
-
-            _panel.Visible = true;
+        foreach (var (itemStatus, control) in _activeStatusComponents)
+        {
+            itemStatus.DestroyControl(control);
         }
 
-        private void UpdateItemName()
-        {
-            if (_entity == null)
-                return;
+        _activeStatusComponents.Clear();
+    }
 
-            if (_entity.TryGetComponent(out HandVirtualItemComponent? virtualItem)
-                && _entityManager.TryGetEntity(virtualItem.BlockingEntity, out var blockEnt))
-            {
-                _itemNameLabel.Text = blockEnt.Name;
-            }
-            else
-            {
-                _itemNameLabel.Text = _entity.Name;
-            }
+    private void BuildNewEntityStatus()
+    {
+        DebugTools.AssertNotNull(_entity);
+
+        ClearOldStatus();
+
+        foreach (var statusComponent in _entity!.GetAllComponents<IItemStatus>())
+        {
+            var control = statusComponent.MakeControl();
+            _statusContents.AddChild(control);
+
+            _activeStatusComponents.Add((statusComponent, control));
         }
 
-        private void ClearOldStatus()
+        var collectMsg = new ItemStatusCollectMessage();
+        _entity.EntityManager.EventBus.RaiseLocalEvent(_entity.Uid, collectMsg);
+
+        foreach (var control in collectMsg.Controls)
         {
-            _statusContents.RemoveAllChildren();
-
-            foreach (var (itemStatus, control) in _activeStatusComponents)
-            {
-                itemStatus.DestroyControl(control);
-            }
-
-            _activeStatusComponents.Clear();
-        }
-
-        private void BuildNewEntityStatus()
-        {
-            DebugTools.AssertNotNull(_entity);
-
-            ClearOldStatus();
-
-            foreach (var statusComponent in _entity!.GetAllComponents<IItemStatus>())
-            {
-                var control = statusComponent.MakeControl();
-                _statusContents.AddChild(control);
-
-                _activeStatusComponents.Add((statusComponent, control));
-            }
-
-            var collectMsg = new ItemStatusCollectMessage();
-            _entity.EntityManager.EventBus.RaiseLocalEvent(_entity.Uid, collectMsg);
-
-            foreach (var control in collectMsg.Controls)
-            {
-                _statusContents.AddChild(control);
-            }
+            _statusContents.AddChild(control);
         }
     }
 }

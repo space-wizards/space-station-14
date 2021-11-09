@@ -5,94 +5,93 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Localization;
 
-namespace Content.Client.Atmos.UI
+namespace Content.Client.Atmos.UI;
+
+/// <summary>
+/// Client-side UI used to control a canister.
+/// </summary>
+[GenerateTypedNameReferences]
+public partial class GasCanisterWindow : SS14Window
 {
-    /// <summary>
-    /// Client-side UI used to control a canister.
-    /// </summary>
-    [GenerateTypedNameReferences]
-    public partial class GasCanisterWindow : SS14Window
+    private readonly ButtonGroup _buttonGroup = new();
+
+    public event Action? TankEjectButtonPressed;
+    public event Action<float>? ReleasePressureSliderChanged;
+    public event Action? ReleaseValveCloseButtonPressed;
+    public event Action? ReleaseValveOpenButtonPressed;
+
+    public GasCanisterWindow()
     {
-        private readonly ButtonGroup _buttonGroup = new();
+        RobustXamlLoader.Load(this);
 
-        public event Action? TankEjectButtonPressed;
-        public event Action<float>? ReleasePressureSliderChanged;
-        public event Action? ReleaseValveCloseButtonPressed;
-        public event Action? ReleaseValveOpenButtonPressed;
+        ReleaseValveCloseButton.Group = _buttonGroup;
+        ReleaseValveOpenButton.Group = _buttonGroup;
 
-        public GasCanisterWindow()
+        ReleaseValveCloseButton.OnPressed += _ => ReleaseValveCloseButtonPressed?.Invoke();
+        ReleaseValveOpenButton.OnPressed += _ => ReleaseValveOpenButtonPressed?.Invoke();
+
+        TankEjectButton.OnPressed += _ => TankEjectButtonPressed?.Invoke();
+        ReleasePressureSlider.OnValueChanged += r => ReleasePressureSliderChanged?.Invoke(r.Value);
+    }
+
+    public void SetCanisterLabel(string label)
+    {
+        Title = label;
+    }
+
+    public void SetCanisterPressure(float pressure)
+    {
+        CanisterPressureLabel.Text = Loc.GetString("comp-gas-canister-ui-pressure", ("pressure", Math.Round(pressure)));
+    }
+
+    public void SetPortStatus(bool status)
+    {
+        if (status)
         {
-            RobustXamlLoader.Load(this);
+            PortStatusLabel.Text = Loc.GetString("comp-gas-canister-ui-port-connected");
+        }
+        else
+        {
+            PortStatusLabel.Text = Loc.GetString("comp-gas-canister-ui-port-disconnected");
+        }
+    }
 
-            ReleaseValveCloseButton.Group = _buttonGroup;
-            ReleaseValveOpenButton.Group = _buttonGroup;
-
-            ReleaseValveCloseButton.OnPressed += _ => ReleaseValveCloseButtonPressed?.Invoke();
-            ReleaseValveOpenButton.OnPressed += _ => ReleaseValveOpenButtonPressed?.Invoke();
-
-            TankEjectButton.OnPressed += _ => TankEjectButtonPressed?.Invoke();
-            ReleasePressureSlider.OnValueChanged += r => ReleasePressureSliderChanged?.Invoke(r.Value);
+    public void SetTankLabel(string? label)
+    {
+        if (label == null)
+        {
+            TankEjectButton.Disabled = true;
+            TankLabelLabel.Text = Loc.GetString("comp-gas-canister-ui-holding-tank-label-empty");
+            return;
         }
 
-        public void SetCanisterLabel(string label)
-        {
-            Title = label;
-        }
+        TankEjectButton.Disabled = false;
+        TankLabelLabel.Text = label;
+    }
 
-        public void SetCanisterPressure(float pressure)
-        {
-            CanisterPressureLabel.Text = Loc.GetString("comp-gas-canister-ui-pressure", ("pressure", Math.Round(pressure)));
-        }
+    public void SetTankPressure(float pressure)
+    {
+        TankPressureLabel.Text = Loc.GetString("comp-gas-canister-ui-pressure", ("pressure", Math.Round(pressure)));
+    }
 
-        public void SetPortStatus(bool status)
-        {
-            if (status)
-            {
-                PortStatusLabel.Text = Loc.GetString("comp-gas-canister-ui-port-connected");
-            }
-            else
-            {
-                PortStatusLabel.Text = Loc.GetString("comp-gas-canister-ui-port-disconnected");
-            }
-        }
+    public void SetReleasePressureRange(float min, float max)
+    {
+        ReleasePressureSlider.MinValue = min;
+        ReleasePressureSlider.MaxValue = max;
+    }
 
-        public void SetTankLabel(string? label)
-        {
-            if (label == null)
-            {
-                TankEjectButton.Disabled = true;
-                TankLabelLabel.Text = Loc.GetString("comp-gas-canister-ui-holding-tank-label-empty");
-                return;
-            }
+    public void SetReleasePressure(float pressure)
+    {
+        if(!ReleasePressureSlider.Grabbed)
+            ReleasePressureSlider.SetValueWithoutEvent(pressure);
+        ReleasePressureLabel.Text = Loc.GetString("comp-gas-canister-ui-pressure", ("pressure", Math.Round(pressure)));
+    }
 
-            TankEjectButton.Disabled = false;
-            TankLabelLabel.Text = label;
-        }
-
-        public void SetTankPressure(float pressure)
-        {
-            TankPressureLabel.Text = Loc.GetString("comp-gas-canister-ui-pressure", ("pressure", Math.Round(pressure)));
-        }
-
-        public void SetReleasePressureRange(float min, float max)
-        {
-            ReleasePressureSlider.MinValue = min;
-            ReleasePressureSlider.MaxValue = max;
-        }
-
-        public void SetReleasePressure(float pressure)
-        {
-            if(!ReleasePressureSlider.Grabbed)
-                ReleasePressureSlider.SetValueWithoutEvent(pressure);
-            ReleasePressureLabel.Text = Loc.GetString("comp-gas-canister-ui-pressure", ("pressure", Math.Round(pressure)));
-        }
-
-        public void SetReleaseValve(bool valve)
-        {
-            if (valve)
-                ReleaseValveOpenButton.Pressed = true;
-            else
-                ReleaseValveCloseButton.Pressed = true;
-        }
+    public void SetReleaseValve(bool valve)
+    {
+        if (valve)
+            ReleaseValveOpenButton.Pressed = true;
+        else
+            ReleaseValveCloseButton.Pressed = true;
     }
 }

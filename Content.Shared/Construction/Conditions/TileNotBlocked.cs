@@ -5,31 +5,30 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Shared.Construction.Conditions
+namespace Content.Shared.Construction.Conditions;
+
+[UsedImplicitly]
+[DataDefinition]
+public class TileNotBlocked : IConstructionCondition
 {
-    [UsedImplicitly]
-    [DataDefinition]
-    public class TileNotBlocked : IConstructionCondition
+    [DataField("filterMobs")] private bool _filterMobs = false;
+    [DataField("failIfSpace")] private bool _failIfSpace = true;
+
+    public bool Condition(IEntity user, EntityCoordinates location, Direction direction)
     {
-        [DataField("filterMobs")] private bool _filterMobs = false;
-        [DataField("failIfSpace")] private bool _failIfSpace = true;
+        var tileRef = location.GetTileRef();
 
-        public bool Condition(IEntity user, EntityCoordinates location, Direction direction)
+        if (tileRef == null || tileRef.Value.IsSpace())
+            return !_failIfSpace;
+
+        return !tileRef.Value.IsBlockedTurf(_filterMobs);
+    }
+
+    public ConstructionGuideEntry? GenerateGuideEntry()
+    {
+        return new ConstructionGuideEntry()
         {
-            var tileRef = location.GetTileRef();
-
-            if (tileRef == null || tileRef.Value.IsSpace())
-                return !_failIfSpace;
-
-            return !tileRef.Value.IsBlockedTurf(_filterMobs);
-        }
-
-        public ConstructionGuideEntry? GenerateGuideEntry()
-        {
-            return new ConstructionGuideEntry()
-            {
-                Localization = "construction-step-condition-tile-not-blocked",
-            };
-        }
+            Localization = "construction-step-condition-tile-not-blocked",
+        };
     }
 }

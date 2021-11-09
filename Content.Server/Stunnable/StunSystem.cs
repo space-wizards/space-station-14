@@ -12,44 +12,43 @@ using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
-namespace Content.Server.Stunnable
+namespace Content.Server.Stunnable;
+
+public sealed class StunSystem : SharedStunSystem
 {
-    public sealed class StunSystem : SharedStunSystem
+    [Dependency] private readonly IRobustRandom _random = default!;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly IRobustRandom _random = default!;
+        base.Initialize();
 
-        public override void Initialize()
+        SubscribeLocalEvent<StatusEffectsComponent, DisarmedActEvent>(OnDisarmed);
+    }
+
+    private void OnDisarmed(EntityUid uid, StatusEffectsComponent status, DisarmedActEvent args)
+    {
+        if (args.Handled || !_random.Prob(args.PushProbability))
+            return;
+
+        if (!TryParalyze(uid, TimeSpan.FromSeconds(4f), status))
+            return;
+
+        var source = args.Source;
+        var target = args.Target;
+
+        if (source != null)
         {
-            base.Initialize();
+            var knock = EntityManager.GetComponent<KnockedDownComponent>(uid);
+            SoundSystem.Play(Filter.Pvs(source), knock.StunAttemptSound.GetSound(), source, AudioHelpers.WithVariation(0.025f));
 
-            SubscribeLocalEvent<StatusEffectsComponent, DisarmedActEvent>(OnDisarmed);
-        }
-
-        private void OnDisarmed(EntityUid uid, StatusEffectsComponent status, DisarmedActEvent args)
-        {
-            if (args.Handled || !_random.Prob(args.PushProbability))
-                return;
-
-            if (!TryParalyze(uid, TimeSpan.FromSeconds(4f), status))
-                return;
-
-            var source = args.Source;
-            var target = args.Target;
-
-            if (source != null)
+            if (target != null)
             {
-                var knock = EntityManager.GetComponent<KnockedDownComponent>(uid);
-                SoundSystem.Play(Filter.Pvs(source), knock.StunAttemptSound.GetSound(), source, AudioHelpers.WithVariation(0.025f));
-
-                if (target != null)
-                {
-                    // TODO: Use PopupSystem
-                    source.PopupMessageOtherClients(Loc.GetString("stunned-component-disarm-success-others", ("source", source.Name), ("target", target.Name)));
-                    source.PopupMessageCursor(Loc.GetString("stunned-component-disarm-success", ("target", target.Name)));
-                }
+                // TODO: Use PopupSystem
+                source.PopupMessageOtherClients(Loc.GetString("stunned-component-disarm-success-others", ("source", source.Name), ("target", target.Name)));
+                source.PopupMessageCursor(Loc.GetString("stunned-component-disarm-success", ("target", target.Name)));
             }
-
-            args.Handled = true;
         }
+
+        args.Handled = true;
     }
 }

@@ -11,71 +11,70 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Timing;
 
-namespace Content.Shared.Disposal
+namespace Content.Shared.Disposal;
+
+[UsedImplicitly]
+public abstract class SharedDisposalUnitSystem : EntitySystem
 {
-    [UsedImplicitly]
-    public abstract class SharedDisposalUnitSystem : EntitySystem
+    [Dependency] protected readonly IGameTiming GameTiming = default!;
+
+    protected static TimeSpan ExitAttemptDelay = TimeSpan.FromSeconds(0.5);
+
+    // Percentage
+    public const float PressurePerSecond = 0.05f;
+
+    public override void Initialize()
     {
-        [Dependency] protected readonly IGameTiming GameTiming = default!;
+        base.Initialize();
+        SubscribeLocalEvent<SharedDisposalUnitComponent, PreventCollideEvent>(HandlePreventCollide);
+    }
 
-        protected static TimeSpan ExitAttemptDelay = TimeSpan.FromSeconds(0.5);
+    private void HandlePreventCollide(EntityUid uid, SharedDisposalUnitComponent component, PreventCollideEvent args)
+    {
+        var otherBody = args.BodyB.OwnerUid;
 
-        // Percentage
-        public const float PressurePerSecond = 0.05f;
-
-        public override void Initialize()
+        // Items dropped shouldn't collide but items thrown should
+        if (EntityManager.HasComponent<SharedItemComponent>(otherBody) &&
+            !EntityManager.HasComponent<ThrownItemComponent>(otherBody))
         {
-            base.Initialize();
-            SubscribeLocalEvent<SharedDisposalUnitComponent, PreventCollideEvent>(HandlePreventCollide);
+            args.Cancel();
+            return;
         }
 
-        private void HandlePreventCollide(EntityUid uid, SharedDisposalUnitComponent component, PreventCollideEvent args)
+        if (component.RecentlyEjected.Contains(otherBody))
         {
-            var otherBody = args.BodyB.OwnerUid;
+            args.Cancel();
+        }
+    }
 
-            // Items dropped shouldn't collide but items thrown should
-            if (EntityManager.HasComponent<SharedItemComponent>(otherBody) &&
-                !EntityManager.HasComponent<ThrownItemComponent>(otherBody))
-            {
-                args.Cancel();
-                return;
-            }
+    public virtual bool CanInsert(SharedDisposalUnitComponent component, IEntity entity)
+    {
+        if (!component.Owner.Transform.Anchored)
+            return false;
 
-            if (component.RecentlyEjected.Contains(otherBody))
-            {
-                args.Cancel();
-            }
+        // TODO: Probably just need a disposable tag.
+        if (!entity.TryGetComponent(out SharedItemComponent? storable) &&
+            !entity.HasComponent<SharedBodyComponent>())
+        {
+            return false;
         }
 
-        public virtual bool CanInsert(SharedDisposalUnitComponent component, IEntity entity)
+
+        if (!entity.TryGetComponent(out IPhysBody? physics) ||
+            !physics.CanCollide && storable == null)
         {
-            if (!component.Owner.Transform.Anchored)
+            if (!(entity.TryGetComponent(out MobStateComponent? damageState) && damageState.IsDead()))
+            {
                 return false;
-
-            // TODO: Probably just need a disposable tag.
-            if (!entity.TryGetComponent(out SharedItemComponent? storable) &&
-                !entity.HasComponent<SharedBodyComponent>())
-            {
-                return false;
             }
-
-
-            if (!entity.TryGetComponent(out IPhysBody? physics) ||
-                !physics.CanCollide && storable == null)
-            {
-                if (!(entity.TryGetComponent(out MobStateComponent? damageState) && damageState.IsDead()))
-                {
-                    return false;
-                }
-            }
-
-            return true;
         }
 
-        public bool CanInsert(SharedDisposalUnitComponent component, EntityUid entityId)
-        {
-            var entity = EntityManager.GetEntity(entityId);
-            return CanInsert(component, entity);
-        }
+        return true;
+    }
+
+    public bool CanInsert(SharedDisposalUnitComponent component, EntityUid entityId)
+    {
+        var entity = EntityManager.GetEntity(entityId);
+        return CanInsert(component, entity);
     }
 }

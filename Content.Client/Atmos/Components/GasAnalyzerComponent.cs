@@ -9,64 +9,63 @@ using Robust.Shared.Localization;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Client.Atmos.Components
-{
-    [RegisterComponent]
-    internal class GasAnalyzerComponent : SharedGasAnalyzerComponent, IItemStatus
-    {
-        [ViewVariables(VVAccess.ReadWrite)] private bool _uiUpdateNeeded;
-        [ViewVariables] private GasAnalyzerDanger Danger { get; set; }
+namespace Content.Client.Atmos.Components;
 
-        Control IItemStatus.MakeControl()
+[RegisterComponent]
+internal class GasAnalyzerComponent : SharedGasAnalyzerComponent, IItemStatus
+{
+    [ViewVariables(VVAccess.ReadWrite)] private bool _uiUpdateNeeded;
+    [ViewVariables] private GasAnalyzerDanger Danger { get; set; }
+
+    Control IItemStatus.MakeControl()
+    {
+        return new StatusControl(this);
+    }
+
+    /// <inheritdoc />
+    public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
+    {
+        if (curState is not GasAnalyzerComponentState state)
+            return;
+
+        Danger = state.Danger;
+        _uiUpdateNeeded = true;
+    }
+
+    private sealed class StatusControl : Control
+    {
+        private readonly GasAnalyzerComponent _parent;
+        private readonly RichTextLabel _label;
+
+        public StatusControl(GasAnalyzerComponent parent)
         {
-            return new StatusControl(this);
+            _parent = parent;
+            _label = new RichTextLabel { StyleClasses = { StyleNano.StyleClassItemStatus } };
+            AddChild(_label);
+
+            parent._uiUpdateNeeded = true;
         }
 
         /// <inheritdoc />
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
+        protected override void FrameUpdate(FrameEventArgs args)
         {
-            if (curState is not GasAnalyzerComponentState state)
+            base.FrameUpdate(args);
+
+            if (!_parent._uiUpdateNeeded)
+            {
                 return;
-
-            Danger = state.Danger;
-            _uiUpdateNeeded = true;
-        }
-
-        private sealed class StatusControl : Control
-        {
-            private readonly GasAnalyzerComponent _parent;
-            private readonly RichTextLabel _label;
-
-            public StatusControl(GasAnalyzerComponent parent)
-            {
-                _parent = parent;
-                _label = new RichTextLabel { StyleClasses = { StyleNano.StyleClassItemStatus } };
-                AddChild(_label);
-
-                parent._uiUpdateNeeded = true;
             }
 
-            /// <inheritdoc />
-            protected override void FrameUpdate(FrameEventArgs args)
+            _parent._uiUpdateNeeded = false;
+
+            var color = _parent.Danger switch
             {
-                base.FrameUpdate(args);
+                GasAnalyzerDanger.Warning => "orange",
+                GasAnalyzerDanger.Hazard => "red",
+                _ => "green",
+            };
 
-                if (!_parent._uiUpdateNeeded)
-                {
-                    return;
-                }
-
-                _parent._uiUpdateNeeded = false;
-
-                var color = _parent.Danger switch
-                {
-                    GasAnalyzerDanger.Warning => "orange",
-                    GasAnalyzerDanger.Hazard => "red",
-                    _ => "green",
-                };
-
-                _label.SetMarkup(Loc.GetString("itemstatus-pressure-warn", ("color", color), ("danger", _parent.Danger)));
-            }
+            _label.SetMarkup(Loc.GetString("itemstatus-pressure-warn", ("color", color), ("danger", _parent.Danger)));
         }
     }
 }

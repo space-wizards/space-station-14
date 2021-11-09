@@ -10,56 +10,55 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using static Robust.Shared.Utility.SpriteSpecifier;
 
-namespace Content.Client.Storage.Visualizers
+namespace Content.Client.Storage.Visualizers;
+
+[UsedImplicitly]
+public class BagOpenCloseVisualizer : AppearanceVisualizer, ISerializationHooks
 {
-    [UsedImplicitly]
-    public class BagOpenCloseVisualizer : AppearanceVisualizer, ISerializationHooks
+    private const string OpenIcon = "openIcon";
+    [DataField(OpenIcon)]
+    private string? _openIcon;
+
+    void ISerializationHooks.AfterDeserialization()
     {
-        private const string OpenIcon = "openIcon";
-        [DataField(OpenIcon)]
-        private string? _openIcon;
-
-        void ISerializationHooks.AfterDeserialization()
-        {
-            if(_openIcon == null){
-                Logger.Warning("BagOpenCloseVisualizer is useless with no `openIcon`");
-            }
+        if(_openIcon == null){
+            Logger.Warning("BagOpenCloseVisualizer is useless with no `openIcon`");
         }
+    }
 
-        public override void InitializeEntity(IEntity entity)
+    public override void InitializeEntity(IEntity entity)
+    {
+        base.InitializeEntity(entity);
+
+        if (_openIcon != null &&
+            entity.TryGetComponent<SpriteComponent>(out var spriteComponent) &&
+            spriteComponent.BaseRSI?.Path != null)
         {
-            base.InitializeEntity(entity);
-
-            if (_openIcon != null &&
-                entity.TryGetComponent<SpriteComponent>(out var spriteComponent) &&
-                spriteComponent.BaseRSI?.Path != null)
-            {
-                spriteComponent.LayerMapReserveBlank(OpenIcon);
-                spriteComponent.LayerSetSprite(OpenIcon, new Rsi(spriteComponent.BaseRSI.Path, _openIcon));
-                spriteComponent.LayerSetVisible(OpenIcon, false);
-            }
+            spriteComponent.LayerMapReserveBlank(OpenIcon);
+            spriteComponent.LayerSetSprite(OpenIcon, new Rsi(spriteComponent.BaseRSI.Path, _openIcon));
+            spriteComponent.LayerSetVisible(OpenIcon, false);
         }
+    }
 
-        public override void OnChangeData(AppearanceComponent component)
+    public override void OnChangeData(AppearanceComponent component)
+    {
+        base.OnChangeData(component);
+
+        if (_openIcon != null
+            && component.Owner.TryGetComponent<SpriteComponent>(out var spriteComponent))
         {
-            base.OnChangeData(component);
-
-            if (_openIcon != null
-                && component.Owner.TryGetComponent<SpriteComponent>(out var spriteComponent))
+            if (component.TryGetData<SharedBagState>(SharedBagOpenVisuals.BagState, out var bagState))
             {
-                if (component.TryGetData<SharedBagState>(SharedBagOpenVisuals.BagState, out var bagState))
+                switch (bagState)
                 {
-                    switch (bagState)
-                    {
-                        case SharedBagState.Open:
-                            spriteComponent.LayerSetVisible(OpenIcon, true);
-                            break;
-                        default:
-                            spriteComponent.LayerSetVisible(OpenIcon, false);
-                            break;
-                    }
-
+                    case SharedBagState.Open:
+                        spriteComponent.LayerSetVisible(OpenIcon, true);
+                        break;
+                    default:
+                        spriteComponent.LayerSetVisible(OpenIcon, false);
+                        break;
                 }
+
             }
         }
     }

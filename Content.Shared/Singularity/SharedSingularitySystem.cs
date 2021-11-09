@@ -6,106 +6,105 @@ using Robust.Shared.Maths;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Dynamics;
 
-namespace Content.Shared.Singularity
+namespace Content.Shared.Singularity;
+
+public abstract class SharedSingularitySystem : EntitySystem
 {
-    public abstract class SharedSingularitySystem : EntitySystem
+    public const string DeleteFixture = "DeleteCircle";
+
+    private float GetFalloff(int level)
     {
-        public const string DeleteFixture = "DeleteCircle";
-
-        private float GetFalloff(int level)
+        return level switch
         {
-            return level switch
-            {
-                0 => 9999f,
-                1 => 6.4f,
-                2 => 7.0f,
-                3 => 8.0f,
-                4 => 10.0f,
-                5 => 12.0f,
-                6 => 12.0f,
-                _ => -1.0f
-            };
+            0 => 9999f,
+            1 => 6.4f,
+            2 => 7.0f,
+            3 => 8.0f,
+            4 => 10.0f,
+            5 => 12.0f,
+            6 => 12.0f,
+            _ => -1.0f
+        };
+    }
+
+    private float GetIntensity(int level)
+    {
+        return level switch
+        {
+            0 => 0.0f,
+            1 => 2.7f,
+            2 => 14.4f,
+            3 => 47.2f,
+            4 => 180.0f,
+            5 => 600.0f,
+            6 => 800.0f,
+            _ => -1.0f
+        };
+    }
+
+    public void ChangeSingularityLevel(SharedSingularityComponent singularity, int value)
+    {
+        if (value == singularity.Level)
+        {
+            return;
         }
 
-        private float GetIntensity(int level)
+        value = Math.Clamp(value, 0, 6);
+
+        var physics = singularity.Owner.GetComponentOrNull<PhysicsComponent>();
+
+        if (singularity.Level > 1 && value <= 1)
         {
-            return level switch
+            // Prevents it getting stuck (see SingularityController.MoveSingulo)
+            if (physics != null)
             {
-                0 => 0.0f,
-                1 => 2.7f,
-                2 => 14.4f,
-                3 => 47.2f,
-                4 => 180.0f,
-                5 => 600.0f,
-                6 => 800.0f,
-                _ => -1.0f
-            };
+                physics.LinearVelocity = Vector2.Zero;
+            }
         }
 
-        public void ChangeSingularityLevel(SharedSingularityComponent singularity, int value)
+        singularity.Level = value;
+
+        if (singularity.Owner.TryGetComponent(out SharedRadiationPulseComponent? pulse))
         {
-            if (value == singularity.Level)
-            {
-                return;
-            }
-
-            value = Math.Clamp(value, 0, 6);
-
-            var physics = singularity.Owner.GetComponentOrNull<PhysicsComponent>();
-
-            if (singularity.Level > 1 && value <= 1)
-            {
-                // Prevents it getting stuck (see SingularityController.MoveSingulo)
-                if (physics != null)
-                {
-                    physics.LinearVelocity = Vector2.Zero;
-                }
-            }
-
-            singularity.Level = value;
-
-            if (singularity.Owner.TryGetComponent(out SharedRadiationPulseComponent? pulse))
-            {
-                pulse.RadsPerSecond = 10 * value;
-            }
-
-            if (singularity.Owner.TryGetComponent(out SharedAppearanceComponent? appearance))
-            {
-                appearance.SetData(SingularityVisuals.Level, value);
-            }
-
-            if (physics != null &&
-                physics.GetFixture(DeleteFixture) is {Shape: PhysShapeCircle circle})
-            {
-                circle.Radius = value - 0.5f;
-            }
-
-            if (singularity.Owner.TryGetComponent(out SingularityDistortionComponent? distortion))
-            {
-                distortion.Falloff = GetFalloff(value);
-                distortion.Intensity = GetIntensity(value);
-            }
-
-            singularity.Dirty();
+            pulse.RadsPerSecond = 10 * value;
         }
 
-        public override void Initialize()
+        if (singularity.Owner.TryGetComponent(out SharedAppearanceComponent? appearance))
         {
-            base.Initialize();
-            SubscribeLocalEvent<SharedSingularityComponent, PreventCollideEvent>(HandleFieldCollision);
+            appearance.SetData(SingularityVisuals.Level, value);
         }
 
-        private void HandleFieldCollision(EntityUid uid, SharedSingularityComponent component, PreventCollideEvent args)
+        if (physics != null &&
+            physics.GetFixture(DeleteFixture) is {Shape: PhysShapeCircle circle})
         {
-            var other = args.BodyB.Owner;
+            circle.Radius = value - 0.5f;
+        }
 
-            if ((!other.HasComponent<SharedContainmentFieldComponent>() &&
-                !other.HasComponent<SharedContainmentFieldGeneratorComponent>()) ||
-                component.Level >= 4)
-            {
-                args.Cancel();
-                return;
-            }
+        if (singularity.Owner.TryGetComponent(out SingularityDistortionComponent? distortion))
+        {
+            distortion.Falloff = GetFalloff(value);
+            distortion.Intensity = GetIntensity(value);
+        }
+
+        singularity.Dirty();
+    }
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<SharedSingularityComponent, PreventCollideEvent>(HandleFieldCollision);
+    }
+
+    private void HandleFieldCollision(EntityUid uid, SharedSingularityComponent component, PreventCollideEvent args)
+    {
+        var other = args.BodyB.Owner;
+
+        if ((!other.HasComponent<SharedContainmentFieldComponent>() &&
+             !other.HasComponent<SharedContainmentFieldGeneratorComponent>()) ||
+            component.Level >= 4)
+        {
+            args.Cancel();
+            return;
         }
     }
 }

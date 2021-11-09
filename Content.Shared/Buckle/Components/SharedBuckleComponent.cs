@@ -7,124 +7,123 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.Buckle.Components
+namespace Content.Shared.Buckle.Components;
+
+[NetworkedComponent()]
+public abstract class SharedBuckleComponent : Component, IDraggable
 {
-    [NetworkedComponent()]
-    public abstract class SharedBuckleComponent : Component, IDraggable
+    public sealed override string Name => "Buckle";
+
+    /// <summary>
+    ///     The range from which this entity can buckle to a <see cref="SharedStrapComponent"/>.
+    /// </summary>
+    [ViewVariables]
+    [DataField("range")]
+    public float Range { get; protected set; } = SharedInteractionSystem.InteractionRange / 1.4f;
+
+    /// <summary>
+    ///     True if the entity is buckled, false otherwise.
+    /// </summary>
+    public abstract bool Buckled { get; }
+
+    public EntityUid? LastEntityBuckledTo { get; set; }
+
+    public bool IsOnStrapEntityThisFrame { get; set; }
+
+    public bool DontCollide { get; set; }
+
+    public abstract bool TryBuckle(IEntity? user, IEntity to);
+
+    bool IDraggable.CanDrop(CanDropEvent args)
     {
-        public sealed override string Name => "Buckle";
-
-        /// <summary>
-        ///     The range from which this entity can buckle to a <see cref="SharedStrapComponent"/>.
-        /// </summary>
-        [ViewVariables]
-        [DataField("range")]
-        public float Range { get; protected set; } = SharedInteractionSystem.InteractionRange / 1.4f;
-
-        /// <summary>
-        ///     True if the entity is buckled, false otherwise.
-        /// </summary>
-        public abstract bool Buckled { get; }
-
-        public EntityUid? LastEntityBuckledTo { get; set; }
-
-        public bool IsOnStrapEntityThisFrame { get; set; }
-
-        public bool DontCollide { get; set; }
-
-        public abstract bool TryBuckle(IEntity? user, IEntity to);
-
-        bool IDraggable.CanDrop(CanDropEvent args)
-        {
-            return args.Target.HasComponent<SharedStrapComponent>();
-        }
-
-        bool IDraggable.Drop(DragDropEvent args)
-        {
-            return TryBuckle(args.User, args.Target);
-        }
+        return args.Target.HasComponent<SharedStrapComponent>();
     }
 
-    [Serializable, NetSerializable]
-    public sealed class BuckleComponentState : ComponentState
+    bool IDraggable.Drop(DragDropEvent args)
     {
-        public BuckleComponentState(bool buckled, int? drawDepth, EntityUid? lastEntityBuckledTo, bool dontCollide)
-        {
-            Buckled = buckled;
-            DrawDepth = drawDepth;
-            LastEntityBuckledTo = lastEntityBuckledTo;
-            DontCollide = dontCollide;
-        }
+        return TryBuckle(args.User, args.Target);
+    }
+}
 
-        public bool Buckled { get; }
-        public EntityUid? LastEntityBuckledTo { get; }
-        public bool DontCollide { get; }
-        public int? DrawDepth;
+[Serializable, NetSerializable]
+public sealed class BuckleComponentState : ComponentState
+{
+    public BuckleComponentState(bool buckled, int? drawDepth, EntityUid? lastEntityBuckledTo, bool dontCollide)
+    {
+        Buckled = buckled;
+        DrawDepth = drawDepth;
+        LastEntityBuckledTo = lastEntityBuckledTo;
+        DontCollide = dontCollide;
     }
 
-    [Serializable, NetSerializable]
-    public enum BuckleVisuals
-    {
-        Buckled
-    }
+    public bool Buckled { get; }
+    public EntityUid? LastEntityBuckledTo { get; }
+    public bool DontCollide { get; }
+    public int? DrawDepth;
+}
 
-    [Serializable, NetSerializable]
+[Serializable, NetSerializable]
+public enum BuckleVisuals
+{
+    Buckled
+}
+
+[Serializable, NetSerializable]
 #pragma warning disable 618
-    public abstract class BuckleChangeMessage : ComponentMessage
+public abstract class BuckleChangeMessage : ComponentMessage
 #pragma warning restore 618
+{
+    /// <summary>
+    ///     Constructs a new instance of <see cref="BuckleChangeMessage"/>
+    /// </summary>
+    /// <param name="entity">The entity that had its buckling status changed</param>
+    /// <param name="strap">The strap that the entity was buckled to or unbuckled from</param>
+    /// <param name="buckled">True if the entity was buckled, false otherwise</param>
+    protected BuckleChangeMessage(IEntity entity, IEntity strap, bool buckled)
     {
-        /// <summary>
-        ///     Constructs a new instance of <see cref="BuckleChangeMessage"/>
-        /// </summary>
-        /// <param name="entity">The entity that had its buckling status changed</param>
-        /// <param name="strap">The strap that the entity was buckled to or unbuckled from</param>
-        /// <param name="buckled">True if the entity was buckled, false otherwise</param>
-        protected BuckleChangeMessage(IEntity entity, IEntity strap, bool buckled)
-        {
-            Entity = entity;
-            Strap = strap;
-            Buckled = buckled;
-        }
-
-        /// <summary>
-        ///     The entity that had its buckling status changed
-        /// </summary>
-        public IEntity Entity { get; }
-
-        /// <summary>
-        ///     The strap that the entity was buckled to or unbuckled from
-        /// </summary>
-        public IEntity Strap { get; }
-
-        /// <summary>
-        ///     True if the entity was buckled, false otherwise.
-        /// </summary>
-        public bool Buckled { get; }
+        Entity = entity;
+        Strap = strap;
+        Buckled = buckled;
     }
 
-    [Serializable, NetSerializable]
-    public class BuckleMessage : BuckleChangeMessage
-    {
-        /// <summary>
-        ///     Constructs a new instance of <see cref="BuckleMessage"/>
-        /// </summary>
-        /// <param name="entity">The entity that had its buckling status changed</param>
-        /// <param name="strap">The strap that the entity was buckled to or unbuckled from</param>
-        public BuckleMessage(IEntity entity, IEntity strap) : base(entity, strap, true)
-        {
-        }
-    }
+    /// <summary>
+    ///     The entity that had its buckling status changed
+    /// </summary>
+    public IEntity Entity { get; }
 
-    [Serializable, NetSerializable]
-    public class UnbuckleMessage : BuckleChangeMessage
+    /// <summary>
+    ///     The strap that the entity was buckled to or unbuckled from
+    /// </summary>
+    public IEntity Strap { get; }
+
+    /// <summary>
+    ///     True if the entity was buckled, false otherwise.
+    /// </summary>
+    public bool Buckled { get; }
+}
+
+[Serializable, NetSerializable]
+public class BuckleMessage : BuckleChangeMessage
+{
+    /// <summary>
+    ///     Constructs a new instance of <see cref="BuckleMessage"/>
+    /// </summary>
+    /// <param name="entity">The entity that had its buckling status changed</param>
+    /// <param name="strap">The strap that the entity was buckled to or unbuckled from</param>
+    public BuckleMessage(IEntity entity, IEntity strap) : base(entity, strap, true)
     {
-        /// <summary>
-        ///     Constructs a new instance of <see cref="UnbuckleMessage"/>
-        /// </summary>
-        /// <param name="entity">The entity that had its buckling status changed</param>
-        /// <param name="strap">The strap that the entity was buckled to or unbuckled from</param>
-        public UnbuckleMessage(IEntity entity, IEntity strap) : base(entity, strap, false)
-        {
-        }
+    }
+}
+
+[Serializable, NetSerializable]
+public class UnbuckleMessage : BuckleChangeMessage
+{
+    /// <summary>
+    ///     Constructs a new instance of <see cref="UnbuckleMessage"/>
+    /// </summary>
+    /// <param name="entity">The entity that had its buckling status changed</param>
+    /// <param name="strap">The strap that the entity was buckled to or unbuckled from</param>
+    public UnbuckleMessage(IEntity entity, IEntity strap) : base(entity, strap, false)
+    {
     }
 }

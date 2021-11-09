@@ -10,65 +10,63 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
-namespace Content.IntegrationTests.Tests.Chemistry
+namespace Content.IntegrationTests.Tests.Chemistry;
+
+[TestFixture]
+[TestOf(typeof(ReactionPrototype))]
+public class TryAllReactionsTest : ContentIntegrationTest
 {
-    [TestFixture]
-    [TestOf(typeof(ReactionPrototype))]
-    public class TryAllReactionsTest : ContentIntegrationTest
+    [Test]
+    public async Task TryAllTest()
     {
-        [Test]
-        public async Task TryAllTest()
+        var server = StartServer();
+
+        await server.WaitIdleAsync();
+
+        var entityManager = server.ResolveDependency<IEntityManager>();
+        var prototypeManager = server.ResolveDependency<IPrototypeManager>();
+        var mapManager = server.ResolveDependency<IMapManager>();
+        var coordinates = GetMainEntityCoordinates(mapManager);
+
+        foreach (var reactionPrototype in prototypeManager.EnumeratePrototypes<ReactionPrototype>())
         {
-            var server = StartServer();
+            //since i have no clue how to isolate each loop assert-wise im just gonna throw this one in for good measure
+            Console.WriteLine($"Testing {reactionPrototype.ID}");
+
+            IEntity beaker;
+            Solution component = null;
+
+            server.Assert(() =>
+            {
+                beaker = entityManager.SpawnEntity("BluespaceBeaker", coordinates);
+                Assert.That(EntitySystem.Get<SolutionContainerSystem>()
+                                        .TryGetSolution(beaker.Uid, "beaker", out component));
+                foreach (var (id, reactant) in reactionPrototype.Reactants)
+                {
+                    Assert.That(EntitySystem.Get<SolutionContainerSystem>()
+                                            .TryAddReagent(beaker.Uid, component, id, reactant.Amount, out var quantity));
+                    Assert.That(reactant.Amount, Is.EqualTo(quantity));
+                }
+            });
 
             await server.WaitIdleAsync();
 
-            var entityManager = server.ResolveDependency<IEntityManager>();
-            var prototypeManager = server.ResolveDependency<IPrototypeManager>();
-            var mapManager = server.ResolveDependency<IMapManager>();
-            var coordinates = GetMainEntityCoordinates(mapManager);
-
-            foreach (var reactionPrototype in prototypeManager.EnumeratePrototypes<ReactionPrototype>())
+            server.Assert(() =>
             {
-                //since i have no clue how to isolate each loop assert-wise im just gonna throw this one in for good measure
-                Console.WriteLine($"Testing {reactionPrototype.ID}");
-
-                IEntity beaker;
-                Solution component = null;
-
-                server.Assert(() =>
+                //you just got linq'd fool
+                //(i'm sorry)
+                var foundProductsMap = reactionPrototype.Products
+                                                        .Concat(reactionPrototype.Reactants.Where(x => x.Value.Catalyst).ToDictionary(x => x.Key, x => x.Value.Amount))
+                                                        .ToDictionary(x => x, x => false);
+                foreach (var reagent in component.Contents)
                 {
-                    beaker = entityManager.SpawnEntity("BluespaceBeaker", coordinates);
-                    Assert.That(EntitySystem.Get<SolutionContainerSystem>()
-                        .TryGetSolution(beaker.Uid, "beaker", out component));
-                    foreach (var (id, reactant) in reactionPrototype.Reactants)
-                    {
-                        Assert.That(EntitySystem.Get<SolutionContainerSystem>()
-                            .TryAddReagent(beaker.Uid, component, id, reactant.Amount, out var quantity));
-                        Assert.That(reactant.Amount, Is.EqualTo(quantity));
-                    }
-                });
+                    Assert.That(foundProductsMap.TryFirstOrNull(x => x.Key.Key == reagent.ReagentId && x.Key.Value == reagent.Quantity, out var foundProduct));
+                    foundProductsMap[foundProduct.Value.Key] = true;
+                }
 
-                await server.WaitIdleAsync();
-
-                server.Assert(() =>
-                {
-                    //you just got linq'd fool
-                    //(i'm sorry)
-                    var foundProductsMap = reactionPrototype.Products
-                        .Concat(reactionPrototype.Reactants.Where(x => x.Value.Catalyst).ToDictionary(x => x.Key, x => x.Value.Amount))
-                        .ToDictionary(x => x, x => false);
-                    foreach (var reagent in component.Contents)
-                    {
-                        Assert.That(foundProductsMap.TryFirstOrNull(x => x.Key.Key == reagent.ReagentId && x.Key.Value == reagent.Quantity, out var foundProduct));
-                        foundProductsMap[foundProduct.Value.Key] = true;
-                    }
-
-                    Assert.That(foundProductsMap.All(x => x.Value));
-                });
-            }
-
+                Assert.That(foundProductsMap.All(x => x.Value));
+            });
         }
-    }
 
+    }
 }

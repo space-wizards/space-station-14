@@ -5,25 +5,24 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Utility;
 
-namespace Content.Client.Paper.UI
-{
-    [GenerateTypedNameReferences]
-    public partial class PaperWindow : SS14Window
-    {
-        public PaperWindow()
-        {
-            RobustXamlLoader.Load(this);
-        }
+namespace Content.Client.Paper.UI;
 
-        public void Populate(SharedPaperComponent.PaperBoundUserInterfaceState state)
+[GenerateTypedNameReferences]
+public partial class PaperWindow : SS14Window
+{
+    public PaperWindow()
+    {
+        RobustXamlLoader.Load(this);
+    }
+
+    public void Populate(SharedPaperComponent.PaperBoundUserInterfaceState state)
+    {
+        if (state.Mode == SharedPaperComponent.PaperAction.Write)
         {
-            if (state.Mode == SharedPaperComponent.PaperAction.Write)
-            {
-                Input.Visible = true;
-            }
-            var msg = new FormattedMessage();
-            msg.AddMarkupPermissive(state.Text);
-            Label.SetMessage(msg);
+            Input.Visible = true;
         }
+        var msg = new FormattedMessage();
+        msg.AddMarkupPermissive(state.Text);
+        Label.SetMessage(msg);
     }
 }

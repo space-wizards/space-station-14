@@ -2,22 +2,21 @@ using Content.Shared.Stacks;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.Stack
+namespace Content.Client.Stack;
+
+[UsedImplicitly]
+public class StackSystem : SharedStackSystem
 {
-    [UsedImplicitly]
-    public class StackSystem : SharedStackSystem
+    public override void Initialize()
     {
-        public override void Initialize()
-        {
-            base.Initialize();
+        base.Initialize();
 
-            SubscribeLocalEvent<StackComponent, StackCountChangedEvent>(OnStackCountChanged);
-        }
+        SubscribeLocalEvent<StackComponent, StackCountChangedEvent>(OnStackCountChanged);
+    }
 
-        private void OnStackCountChanged(EntityUid uid, StackComponent component, StackCountChangedEvent args)
-        {
-            // Dirty the UI now that the stack count has changed.
-            component.UiUpdateNeeded = true;
-        }
+    private void OnStackCountChanged(EntityUid uid, StackComponent component, StackCountChangedEvent args)
+    {
+        // Dirty the UI now that the stack count has changed.
+        component.UiUpdateNeeded = true;
     }
 }

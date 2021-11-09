@@ -1,9 +1,8 @@
 ﻿using Content.Server.Roles;
 
-namespace Content.Server.Suspicion.Roles
+namespace Content.Server.Suspicion.Roles;
+
+public abstract class SuspicionRole : Role
 {
-    public abstract class SuspicionRole : Role
-    {
-        protected SuspicionRole(Mind.Mind mind) : base(mind) { }
-    }
+    protected SuspicionRole(Mind.Mind mind) : base(mind) { }
 }

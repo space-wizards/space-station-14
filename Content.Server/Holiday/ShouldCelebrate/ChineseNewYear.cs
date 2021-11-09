@@ -2,17 +2,16 @@ using System;
 using System.Globalization;
 using Content.Server.Holiday.Interfaces;
 
-namespace Content.Server.Holiday.ShouldCelebrate
+namespace Content.Server.Holiday.ShouldCelebrate;
+
+public class ChineseNewYear : IHolidayShouldCelebrate
 {
-    public class ChineseNewYear : IHolidayShouldCelebrate
+    public bool ShouldCelebrate(DateTime date, HolidayPrototype holiday)
     {
-        public bool ShouldCelebrate(DateTime date, HolidayPrototype holiday)
-        {
-            var chinese = new ChineseLunisolarCalendar();
+        var chinese = new ChineseLunisolarCalendar();
 
-            var chineseNewYear = chinese.ToDateTime(date.Year, 1, 1, 0, 0, 0, 0);
+        var chineseNewYear = chinese.ToDateTime(date.Year, 1, 1, 0, 0, 0, 0);
 
-            return date.Day == chineseNewYear.Day && date.Month == chineseNewYear.Month;
-        }
+        return date.Day == chineseNewYear.Day && date.Month == chineseNewYear.Month;
     }
 }

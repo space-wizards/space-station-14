@@ -1,11 +1,10 @@
 ﻿using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Smoking
+namespace Content.Shared.Smoking;
+
+[Serializable, NetSerializable]
+public enum SmokeVisuals : byte
 {
-    [Serializable, NetSerializable]
-    public enum SmokeVisuals : byte
-    {
-        Color
-    }
+    Color
 }

@@ -4,68 +4,67 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.Roles
+namespace Content.Shared.Roles;
+
+/// <summary>
+///     Describes information for a single job on the station.
+/// </summary>
+[Prototype("job")]
+public class JobPrototype : IPrototype
 {
+    private string _name = string.Empty;
+
+    [ViewVariables]
+    [DataField("id", required: true)]
+    public string ID { get; } = default!;
+
+    [DataField("supervisors")]
+    public string Supervisors { get; } = "nobody";
+
     /// <summary>
-    ///     Describes information for a single job on the station.
+    ///     The name of this job as displayed to players.
     /// </summary>
-    [Prototype("job")]
-    public class JobPrototype : IPrototype
-    {
-        private string _name = string.Empty;
+    [DataField("name")]
+    public string Name { get; } = string.Empty;
 
-        [ViewVariables]
-        [DataField("id", required: true)]
-        public string ID { get; } = default!;
+    [DataField("joinNotifyCrew")]
+    public bool JoinNotifyCrew { get; } = false;
 
-        [DataField("supervisors")]
-        public string Supervisors { get; } = "nobody";
+    [DataField("requireAdminNotify")]
+    public bool RequireAdminNotify { get; } = false;
 
-        /// <summary>
-        ///     The name of this job as displayed to players.
-        /// </summary>
-        [DataField("name")]
-        public string Name { get; } = string.Empty;
+    /// <summary>
+    ///     Whether this job is a head.
+    ///     The job system will try to pick heads before other jobs on the same priority level.
+    /// </summary>
+    [DataField("head")]
+    public bool IsHead { get; private set; }
 
-        [DataField("joinNotifyCrew")]
-        public bool JoinNotifyCrew { get; } = false;
+    /// <summary>
+    ///     The total amount of people that can start with this job round-start.
+    /// </summary>
+    public int SpawnPositions => _spawnPositions ?? TotalPositions;
 
-        [DataField("requireAdminNotify")]
-        public bool RequireAdminNotify { get; } = false;
+    [DataField("spawnPositions")]
+    private int? _spawnPositions;
 
-        /// <summary>
-        ///     Whether this job is a head.
-        ///     The job system will try to pick heads before other jobs on the same priority level.
-        /// </summary>
-        [DataField("head")]
-        public bool IsHead { get; private set; }
+    /// <summary>
+    ///     The total amount of positions available.
+    /// </summary>
+    [DataField("positions")]
+    public int TotalPositions { get; private set; }
 
-        /// <summary>
-        ///     The total amount of people that can start with this job round-start.
-        /// </summary>
-        public int SpawnPositions => _spawnPositions ?? TotalPositions;
+    [DataField("startingGear")]
+    public string? StartingGear { get; private set; }
 
-        [DataField("spawnPositions")]
-        private int? _spawnPositions;
+    [DataField("icon")] public string Icon { get; } = string.Empty;
 
-        /// <summary>
-        ///     The total amount of positions available.
-        /// </summary>
-        [DataField("positions")]
-        public int TotalPositions { get; private set; }
+    [DataField("special", serverOnly:true)]
+    public JobSpecial[] Special { get; private set; } = Array.Empty<JobSpecial>();
 
-        [DataField("startingGear")]
-        public string? StartingGear { get; private set; }
+    [DataField("departments")]
+    public IReadOnlyCollection<string> Departments { get; } = Array.Empty<string>();
 
-        [DataField("icon")] public string Icon { get; } = string.Empty;
-
-        [DataField("special", serverOnly:true)]
-        public JobSpecial[] Special { get; private set; } = Array.Empty<JobSpecial>();
-
-        [DataField("departments")]
-        public IReadOnlyCollection<string> Departments { get; } = Array.Empty<string>();
-
-        [DataField("access")]
-        public IReadOnlyCollection<string> Access { get; } = Array.Empty<string>();
-    }
+    [DataField("access")]
+    public IReadOnlyCollection<string> Access { get; } = Array.Empty<string>();
 }

@@ -4,60 +4,59 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Sound
+namespace Content.Shared.Sound;
+
+[ImplicitDataDefinitionForInheritors]
+public abstract class SoundSpecifier
 {
-    [ImplicitDataDefinitionForInheritors]
-    public abstract class SoundSpecifier
+    public abstract string GetSound();
+}
+
+public sealed class SoundPathSpecifier : SoundSpecifier
+{
+    public const string Node = "path";
+
+    [DataField(Node, customTypeSerializer: typeof(ResourcePathSerializer), required: true)]
+    public ResourcePath? Path { get; }
+
+    public SoundPathSpecifier()
     {
-        public abstract string GetSound();
     }
 
-    public sealed class SoundPathSpecifier : SoundSpecifier
+    public SoundPathSpecifier(string path)
     {
-        public const string Node = "path";
-
-        [DataField(Node, customTypeSerializer: typeof(ResourcePathSerializer), required: true)]
-        public ResourcePath? Path { get; }
-
-        public SoundPathSpecifier()
-        {
-        }
-
-        public SoundPathSpecifier(string path)
-        {
-            Path = new ResourcePath(path);
-        }
-
-        public SoundPathSpecifier(ResourcePath path)
-        {
-            Path = path;
-        }
-
-        public override string GetSound()
-        {
-            return Path == null ? string.Empty : Path.ToString();
-        }
+        Path = new ResourcePath(path);
     }
 
-    public sealed class SoundCollectionSpecifier : SoundSpecifier
+    public SoundPathSpecifier(ResourcePath path)
     {
-        public const string Node = "collection";
+        Path = path;
+    }
 
-        [DataField(Node, customTypeSerializer: typeof(PrototypeIdSerializer<SoundCollectionPrototype>), required: true)]
-        public string? Collection { get; }
+    public override string GetSound()
+    {
+        return Path == null ? string.Empty : Path.ToString();
+    }
+}
 
-        public SoundCollectionSpecifier()
-        {
-        }
+public sealed class SoundCollectionSpecifier : SoundSpecifier
+{
+    public const string Node = "collection";
 
-        public SoundCollectionSpecifier(string collection)
-        {
-            Collection = collection;
-        }
+    [DataField(Node, customTypeSerializer: typeof(PrototypeIdSerializer<SoundCollectionPrototype>), required: true)]
+    public string? Collection { get; }
 
-        public override string GetSound()
-        {
-            return Collection == null ? string.Empty : AudioHelpers.GetRandomFileFromSoundCollection(Collection);
-        }
+    public SoundCollectionSpecifier()
+    {
+    }
+
+    public SoundCollectionSpecifier(string collection)
+    {
+        Collection = collection;
+    }
+
+    public override string GetSound()
+    {
+        return Collection == null ? string.Empty : AudioHelpers.GetRandomFileFromSoundCollection(Collection);
     }
 }

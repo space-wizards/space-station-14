@@ -8,40 +8,39 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Shared.Lathe
+namespace Content.Shared.Lathe;
+
+[ComponentReference(typeof(SharedLatheDatabaseComponent))]
+[NetworkedComponent()]
+public class SharedProtolatheDatabaseComponent : SharedLatheDatabaseComponent, ISerializationHooks
 {
-    [ComponentReference(typeof(SharedLatheDatabaseComponent))]
-    [NetworkedComponent()]
-    public class SharedProtolatheDatabaseComponent : SharedLatheDatabaseComponent, ISerializationHooks
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
+    public override string Name => "ProtolatheDatabase";
+
+    [DataField("protolatherecipes")] private List<string> _recipeIds = new();
+
+    /// <summary>
+    ///    A full list of recipes this protolathe can print.
+    /// </summary>
+    public IEnumerable<LatheRecipePrototype> ProtolatheRecipes
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
-        public override string Name => "ProtolatheDatabase";
-
-        [DataField("protolatherecipes")] private List<string> _recipeIds = new();
-
-        /// <summary>
-        ///    A full list of recipes this protolathe can print.
-        /// </summary>
-        public IEnumerable<LatheRecipePrototype> ProtolatheRecipes
+        get
         {
-            get
+            foreach (var id in _recipeIds)
             {
-                foreach (var id in _recipeIds)
-                {
-                    yield return _prototypeManager.Index<LatheRecipePrototype>(id);
-                }
+                yield return _prototypeManager.Index<LatheRecipePrototype>(id);
             }
         }
     }
+}
 
-    [NetSerializable, Serializable]
-    public class ProtolatheDatabaseState : ComponentState
+[NetSerializable, Serializable]
+public class ProtolatheDatabaseState : ComponentState
+{
+    public readonly List<string> Recipes;
+    public ProtolatheDatabaseState(List<string> recipes)
     {
-        public readonly List<string> Recipes;
-        public ProtolatheDatabaseState(List<string> recipes)
-        {
-            Recipes = recipes;
-        }
+        Recipes = recipes;
     }
 }

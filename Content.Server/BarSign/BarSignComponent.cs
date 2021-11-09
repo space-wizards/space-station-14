@@ -10,14 +10,13 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.BarSign
-{
-    [RegisterComponent]
-    public class BarSignComponent : Component
-    {
-        public override string Name => "BarSign";
+namespace Content.Server.BarSign;
 
-        [DataField("current")] [ViewVariables(VVAccess.ReadOnly)]
-        public string? CurrentSign;
-    }
+[RegisterComponent]
+public class BarSignComponent : Component
+{
+    public override string Name => "BarSign";
+
+    [DataField("current")] [ViewVariables(VVAccess.ReadOnly)]
+    public string? CurrentSign;
 }

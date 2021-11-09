@@ -5,52 +5,51 @@ using Robust.Shared.GameObjects;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Power.Nodes;
 
-namespace Content.Server.DeviceNetwork.Systems
+namespace Content.Server.DeviceNetwork.Systems;
+
+[UsedImplicitly]
+public class ApcNetworkSystem : EntitySystem
 {
-    [UsedImplicitly]
-    public class ApcNetworkSystem : EntitySystem
+    public override void Initialize()
     {
-        public override void Initialize()
+        base.Initialize();
+
+        SubscribeLocalEvent<ApcNetworkComponent, BeforePacketSentEvent>(OnBeforePacketSent);
+
+        SubscribeLocalEvent<ApcNetworkComponent, ExtensionCableSystem.ProviderConnectedEvent>(OnProviderConnected);
+        SubscribeLocalEvent<ApcNetworkComponent, ExtensionCableSystem.ProviderDisconnectedEvent>(OnProviderDisconnected);
+    }
+
+    /// <summary>
+    /// Checks if both devices are connected to the same apc
+    /// </summary>
+    private void OnBeforePacketSent(EntityUid uid, ApcNetworkComponent receiver, BeforePacketSentEvent args)
+    {
+        if (!EntityManager.TryGetComponent(args.Sender, out ApcNetworkComponent? sender)) return;
+
+        if (sender.ConnectedNode?.NodeGroup == null || !sender.ConnectedNode.NodeGroup.Equals(receiver.ConnectedNode?.NodeGroup))
         {
-            base.Initialize();
+            args.Cancel();
+        }
+    }
 
-            SubscribeLocalEvent<ApcNetworkComponent, BeforePacketSentEvent>(OnBeforePacketSent);
+    private void OnProviderConnected(EntityUid uid, ApcNetworkComponent component, ExtensionCableSystem.ProviderConnectedEvent args)
+    {
+        if (!args.Provider.Owner.TryGetComponent(out NodeContainerComponent? nodeContainer)) return;
 
-            SubscribeLocalEvent<ApcNetworkComponent, ExtensionCableSystem.ProviderConnectedEvent>(OnProviderConnected);
-            SubscribeLocalEvent<ApcNetworkComponent, ExtensionCableSystem.ProviderDisconnectedEvent>(OnProviderDisconnected);
+        if (nodeContainer.TryGetNode("power", out CableNode? node))
+        {
+            component.ConnectedNode = node;
+        }
+        else if (nodeContainer.TryGetNode("output", out CableDeviceNode? deviceNode))
+        {
+            component.ConnectedNode = deviceNode;
         }
 
-        /// <summary>
-        /// Checks if both devices are connected to the same apc
-        /// </summary>
-        private void OnBeforePacketSent(EntityUid uid, ApcNetworkComponent receiver, BeforePacketSentEvent args)
-        {
-            if (!EntityManager.TryGetComponent(args.Sender, out ApcNetworkComponent? sender)) return;
+    }
 
-            if (sender.ConnectedNode?.NodeGroup == null || !sender.ConnectedNode.NodeGroup.Equals(receiver.ConnectedNode?.NodeGroup))
-            {
-                args.Cancel();
-            }
-        }
-
-        private void OnProviderConnected(EntityUid uid, ApcNetworkComponent component, ExtensionCableSystem.ProviderConnectedEvent args)
-        {
-            if (!args.Provider.Owner.TryGetComponent(out NodeContainerComponent? nodeContainer)) return;
-
-            if (nodeContainer.TryGetNode("power", out CableNode? node))
-            {
-                component.ConnectedNode = node;
-            }
-            else if (nodeContainer.TryGetNode("output", out CableDeviceNode? deviceNode))
-            {
-                component.ConnectedNode = deviceNode;
-            }
-
-        }
-
-        private void OnProviderDisconnected(EntityUid uid, ApcNetworkComponent component, ExtensionCableSystem.ProviderDisconnectedEvent args)
-        {
-            component.ConnectedNode = null;
-        }
+    private void OnProviderDisconnected(EntityUid uid, ApcNetworkComponent component, ExtensionCableSystem.ProviderDisconnectedEvent args)
+    {
+        component.ConnectedNode = null;
     }
 }

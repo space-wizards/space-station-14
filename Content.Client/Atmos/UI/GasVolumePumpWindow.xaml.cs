@@ -10,56 +10,55 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Localization;
 
-namespace Content.Client.Atmos.UI
+namespace Content.Client.Atmos.UI;
+
+/// <summary>
+/// Client-side UI used to control a gas volume pump.
+/// </summary>
+[GenerateTypedNameReferences]
+public partial class GasVolumePumpWindow : SS14Window
 {
-    /// <summary>
-    /// Client-side UI used to control a gas volume pump.
-    /// </summary>
-    [GenerateTypedNameReferences]
-    public partial class GasVolumePumpWindow : SS14Window
+    public bool PumpStatus = true;
+
+    public event Action? ToggleStatusButtonPressed;
+    public event Action<string>? PumpTransferRateChanged;
+
+    public GasVolumePumpWindow()
     {
-        public bool PumpStatus = true;
+        RobustXamlLoader.Load(this);
 
-        public event Action? ToggleStatusButtonPressed;
-        public event Action<string>? PumpTransferRateChanged;
+        ToggleStatusButton.OnPressed += _ => SetPumpStatus(!PumpStatus);
+        ToggleStatusButton.OnPressed += _ => ToggleStatusButtonPressed?.Invoke();
 
-        public GasVolumePumpWindow()
+        PumpTransferRateInput.OnTextChanged += _ => SetTransferRateButton.Disabled = false;
+        SetTransferRateButton.OnPressed += _ =>
         {
-            RobustXamlLoader.Load(this);
+            PumpTransferRateChanged?.Invoke(PumpTransferRateInput.Text ??= "");
+            SetTransferRateButton.Disabled = true;
+        };
 
-            ToggleStatusButton.OnPressed += _ => SetPumpStatus(!PumpStatus);
-            ToggleStatusButton.OnPressed += _ => ToggleStatusButtonPressed?.Invoke();
+        SetMaxRateButton.OnPressed += _ =>
+        {
+            PumpTransferRateInput.Text = Atmospherics.MaxTransferRate.ToString(CultureInfo.InvariantCulture);
+            SetTransferRateButton.Disabled = false;
+        };
+    }
 
-            PumpTransferRateInput.OnTextChanged += _ => SetTransferRateButton.Disabled = false;
-            SetTransferRateButton.OnPressed += _ =>
-            {
-                PumpTransferRateChanged?.Invoke(PumpTransferRateInput.Text ??= "");
-                SetTransferRateButton.Disabled = true;
-            };
+    public void SetTransferRate(float rate)
+    {
+        PumpTransferRateInput.Text = rate.ToString(CultureInfo.InvariantCulture);
+    }
 
-            SetMaxRateButton.OnPressed += _ =>
-            {
-                PumpTransferRateInput.Text = Atmospherics.MaxTransferRate.ToString(CultureInfo.InvariantCulture);
-                SetTransferRateButton.Disabled = false;
-            };
+    public void SetPumpStatus(bool enabled)
+    {
+        PumpStatus = enabled;
+        if (enabled)
+        {
+            ToggleStatusButton.Text = Loc.GetString("comp-gas-pump-ui-status-enabled");
         }
-
-        public void SetTransferRate(float rate)
+        else
         {
-            PumpTransferRateInput.Text = rate.ToString(CultureInfo.InvariantCulture);
-        }
-
-        public void SetPumpStatus(bool enabled)
-        {
-            PumpStatus = enabled;
-            if (enabled)
-            {
-                ToggleStatusButton.Text = Loc.GetString("comp-gas-pump-ui-status-enabled");
-            }
-            else
-            {
-                ToggleStatusButton.Text = Loc.GetString("comp-gas-pump-ui-status-disabled");
-            }
+            ToggleStatusButton.Text = Loc.GetString("comp-gas-pump-ui-status-disabled");
         }
     }
 }

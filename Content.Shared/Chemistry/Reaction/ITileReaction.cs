@@ -2,10 +2,9 @@
 using Content.Shared.FixedPoint;
 using Robust.Shared.Map;
 
-namespace Content.Shared.Chemistry.Reaction
+namespace Content.Shared.Chemistry.Reaction;
+
+public interface ITileReaction
 {
-    public interface ITileReaction
-    {
-        FixedPoint2 TileReact(TileRef tile, ReagentPrototype reagent, FixedPoint2 reactVolume);
-    }
+    FixedPoint2 TileReact(TileRef tile, ReagentPrototype reagent, FixedPoint2 reactVolume);
 }

@@ -6,60 +6,59 @@ using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
 using Robust.Shared.Maths;
 
-namespace Content.Client.Buckle
+namespace Content.Client.Buckle;
+
+[UsedImplicitly]
+public class BuckleVisualizer : AppearanceVisualizer
 {
-    [UsedImplicitly]
-    public class BuckleVisualizer : AppearanceVisualizer
+    public override void OnChangeData(AppearanceComponent component)
     {
-        public override void OnChangeData(AppearanceComponent component)
+        if (!component.TryGetData<bool>(BuckleVisuals.Buckled, out var buckled) ||
+            !buckled)
         {
-            if (!component.TryGetData<bool>(BuckleVisuals.Buckled, out var buckled) ||
-                !buckled)
-            {
-                return;
-            }
-
-            if (!component.TryGetData<int>(StrapVisuals.RotationAngle, out var angle))
-            {
-                return;
-            }
-
-            SetRotation(component, Angle.FromDegrees(angle));
+            return;
         }
 
-        private void SetRotation(AppearanceComponent component, Angle rotation)
+        if (!component.TryGetData<int>(StrapVisuals.RotationAngle, out var angle))
         {
-            var sprite = component.Owner.GetComponent<ISpriteComponent>();
+            return;
+        }
 
-            if (!sprite.Owner.TryGetComponent(out AnimationPlayerComponent? animation))
-            {
-                sprite.Rotation = rotation;
-                return;
-            }
+        SetRotation(component, Angle.FromDegrees(angle));
+    }
 
-            if (animation.HasRunningAnimation("rotate"))
-            {
-                animation.Stop("rotate");
-            }
+    private void SetRotation(AppearanceComponent component, Angle rotation)
+    {
+        var sprite = component.Owner.GetComponent<ISpriteComponent>();
 
-            animation.Play(new Animation
+        if (!sprite.Owner.TryGetComponent(out AnimationPlayerComponent? animation))
+        {
+            sprite.Rotation = rotation;
+            return;
+        }
+
+        if (animation.HasRunningAnimation("rotate"))
+        {
+            animation.Stop("rotate");
+        }
+
+        animation.Play(new Animation
+        {
+            Length = TimeSpan.FromSeconds(0.125),
+            AnimationTracks =
             {
-                Length = TimeSpan.FromSeconds(0.125),
-                AnimationTracks =
+                new AnimationTrackComponentProperty
                 {
-                    new AnimationTrackComponentProperty
+                    ComponentType = typeof(ISpriteComponent),
+                    Property = nameof(ISpriteComponent.Rotation),
+                    InterpolationMode = AnimationInterpolationMode.Linear,
+                    KeyFrames =
                     {
-                        ComponentType = typeof(ISpriteComponent),
-                        Property = nameof(ISpriteComponent.Rotation),
-                        InterpolationMode = AnimationInterpolationMode.Linear,
-                        KeyFrames =
-                        {
-                            new AnimationTrackProperty.KeyFrame(sprite.Rotation, 0),
-                            new AnimationTrackProperty.KeyFrame(rotation, 0.125f)
-                        }
+                        new AnimationTrackProperty.KeyFrame(sprite.Rotation, 0),
+                        new AnimationTrackProperty.KeyFrame(rotation, 0.125f)
                     }
                 }
-            }, "rotate");
-        }
+            }
+        }, "rotate");
     }
 }

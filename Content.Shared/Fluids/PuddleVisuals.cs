@@ -1,12 +1,11 @@
 ﻿using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Fluids
+namespace Content.Shared.Fluids;
+
+[Serializable, NetSerializable]
+public enum PuddleVisuals : byte
 {
-    [Serializable, NetSerializable]
-    public enum PuddleVisuals : byte
-    {
-        VolumeScale,
-        SolutionColor
-    }
+    VolumeScale,
+    SolutionColor
 }

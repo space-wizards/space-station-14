@@ -10,90 +10,89 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.IoC;
 
-namespace Content.Client.Inventory
+namespace Content.Client.Inventory;
+
+public abstract class InventoryInterfaceController : IDisposable
 {
-    public abstract class InventoryInterfaceController : IDisposable
+    [Dependency] protected readonly IGameHud GameHud = default!;
+
+    protected InventoryInterfaceController(ClientInventoryComponent owner)
     {
-        [Dependency] protected readonly IGameHud GameHud = default!;
+        Owner = owner;
+    }
 
-        protected InventoryInterfaceController(ClientInventoryComponent owner)
+    public virtual void Initialize()
+    {
+    }
+
+    public abstract SS14Window? Window { get; }
+    protected ClientInventoryComponent Owner { get; }
+
+    public virtual void PlayerAttached()
+    {
+        GameHud.InventoryButtonVisible = true;
+    }
+
+    public virtual void PlayerDetached()
+    {
+        GameHud.InventoryButtonVisible = false;
+    }
+
+    public virtual void Dispose()
+    {
+    }
+
+    /// <returns>the button controls associated with the
+    /// specified slot, if any. Empty if none.</returns>
+    public abstract IEnumerable<ItemSlotButton> GetItemSlotButtons(EquipmentSlotDefines.Slots slot);
+
+    public virtual void AddToSlot(EquipmentSlotDefines.Slots slot, IEntity entity)
+    {
+    }
+
+    public virtual void HoverInSlot(EquipmentSlotDefines.Slots slot, IEntity entity, bool fits)
+    {
+    }
+
+    public virtual void RemoveFromSlot(EquipmentSlotDefines.Slots slot)
+    {
+    }
+
+    protected virtual void HandleInventoryKeybind(GUIBoundKeyEventArgs args, EquipmentSlotDefines.Slots slot)
+    {
+        if (args.Function == EngineKeyFunctions.UIClick)
         {
-            Owner = owner;
+            UseItemOnInventory(slot);
+        }
+    }
+
+    protected void AddToInventory(GUIBoundKeyEventArgs args, EquipmentSlotDefines.Slots slot)
+    {
+        if (args.Function != EngineKeyFunctions.UIClick)
+        {
+            return;
         }
 
-        public virtual void Initialize()
+        Owner.SendEquipMessage(slot);
+    }
+
+    protected void UseItemOnInventory(EquipmentSlotDefines.Slots slot)
+    {
+        Owner.SendUseMessage(slot);
+    }
+
+    protected void OpenStorage(GUIBoundKeyEventArgs args, EquipmentSlotDefines.Slots slot)
+    {
+        if (args.Function != EngineKeyFunctions.UIClick && args.Function != ContentKeyFunctions.ActivateItemInWorld)
         {
+            return;
         }
 
-        public abstract SS14Window? Window { get; }
-        protected ClientInventoryComponent Owner { get; }
+        Owner.SendOpenStorageUIMessage(slot);
+    }
 
-        public virtual void PlayerAttached()
-        {
-            GameHud.InventoryButtonVisible = true;
-        }
-
-        public virtual void PlayerDetached()
-        {
-            GameHud.InventoryButtonVisible = false;
-        }
-
-        public virtual void Dispose()
-        {
-        }
-
-        /// <returns>the button controls associated with the
-        /// specified slot, if any. Empty if none.</returns>
-        public abstract IEnumerable<ItemSlotButton> GetItemSlotButtons(EquipmentSlotDefines.Slots slot);
-
-        public virtual void AddToSlot(EquipmentSlotDefines.Slots slot, IEntity entity)
-        {
-        }
-
-        public virtual void HoverInSlot(EquipmentSlotDefines.Slots slot, IEntity entity, bool fits)
-        {
-        }
-
-        public virtual void RemoveFromSlot(EquipmentSlotDefines.Slots slot)
-        {
-        }
-
-        protected virtual void HandleInventoryKeybind(GUIBoundKeyEventArgs args, EquipmentSlotDefines.Slots slot)
-        {
-            if (args.Function == EngineKeyFunctions.UIClick)
-            {
-                UseItemOnInventory(slot);
-            }
-        }
-
-        protected void AddToInventory(GUIBoundKeyEventArgs args, EquipmentSlotDefines.Slots slot)
-        {
-            if (args.Function != EngineKeyFunctions.UIClick)
-            {
-                return;
-            }
-
-            Owner.SendEquipMessage(slot);
-        }
-
-        protected void UseItemOnInventory(EquipmentSlotDefines.Slots slot)
-        {
-            Owner.SendUseMessage(slot);
-        }
-
-        protected void OpenStorage(GUIBoundKeyEventArgs args, EquipmentSlotDefines.Slots slot)
-        {
-            if (args.Function != EngineKeyFunctions.UIClick && args.Function != ContentKeyFunctions.ActivateItemInWorld)
-            {
-                return;
-            }
-
-            Owner.SendOpenStorageUIMessage(slot);
-        }
-
-        protected void RequestItemHover(EquipmentSlotDefines.Slots slot)
-        {
-            Owner.SendHoverMessage(slot);
-        }
+    protected void RequestItemHover(EquipmentSlotDefines.Slots slot)
+    {
+        Owner.SendHoverMessage(slot);
     }
 }

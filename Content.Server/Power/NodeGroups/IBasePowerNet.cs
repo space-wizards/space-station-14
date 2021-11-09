@@ -1,14 +1,13 @@
 ﻿using Content.Server.Power.Components;
 using Content.Server.Power.Pow3r;
 
-namespace Content.Server.Power.NodeGroups
+namespace Content.Server.Power.NodeGroups;
+
+public interface IBasePowerNet
 {
-    public interface IBasePowerNet
-    {
-        void AddConsumer(PowerConsumerComponent consumer);
+    void AddConsumer(PowerConsumerComponent consumer);
 
-        void RemoveConsumer(PowerConsumerComponent consumer);
+    void RemoveConsumer(PowerConsumerComponent consumer);
 
-        PowerState.Network NetworkNode { get; }
-    }
+    PowerState.Network NetworkNode { get; }
 }

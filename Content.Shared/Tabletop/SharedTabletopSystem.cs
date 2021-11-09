@@ -10,57 +10,56 @@ using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Tabletop
+namespace Content.Shared.Tabletop;
+
+public abstract class SharedTabletopSystem : EntitySystem
 {
-    public abstract class SharedTabletopSystem : EntitySystem
+    [Dependency] protected readonly ActionBlockerSystem _actionBlockerSystem = default!;
+
+    [Serializable, NetSerializable]
+    public sealed class TabletopDraggableComponentState : ComponentState
     {
-        [Dependency] protected readonly ActionBlockerSystem _actionBlockerSystem = default!;
+        public NetUserId? DraggingPlayer;
 
-        [Serializable, NetSerializable]
-        public sealed class TabletopDraggableComponentState : ComponentState
+        public TabletopDraggableComponentState(NetUserId? draggingPlayer)
         {
-            public NetUserId? DraggingPlayer;
-
-            public TabletopDraggableComponentState(NetUserId? draggingPlayer)
-            {
-                DraggingPlayer = draggingPlayer;
-            }
+            DraggingPlayer = draggingPlayer;
         }
-
-        #region Utility
-
-        /// <summary>
-        /// Whether the table exists, and the player can interact with it.
-        /// </summary>
-        /// <param name="playerEntity">The player entity to check.</param>
-        /// <param name="table">The table entity to check.</param>
-        protected bool CanSeeTable(EntityUid playerEntity, EntityUid? table)
-        {
-            if (table == null)
-                return false;
-
-            if (EntityManager.GetComponent<TransformComponent>(table.Value).Parent?.Owner is not { } parent)
-            {
-                return false;
-            }
-
-            if (!parent.HasComponent<MapComponent>() && !parent.HasComponent<IMapGridComponent>())
-            {
-                return false;
-            }
-
-            return playerEntity.InRangeUnobstructed(table.Value) && _actionBlockerSystem.CanInteract(playerEntity);
-        }
-
-        protected bool StunnedOrNoHands(EntityUid playerEntity)
-        {
-            var stunned = EntityManager.HasComponent<StunnedComponent>(playerEntity);
-            var hasHand = EntityManager.TryGetComponent<SharedHandsComponent>(playerEntity, out var handsComponent) &&
-                          handsComponent.Hands.Count > 0;
-
-            return stunned || !hasHand;
-        }
-
-        #endregion
     }
+
+    #region Utility
+
+    /// <summary>
+    /// Whether the table exists, and the player can interact with it.
+    /// </summary>
+    /// <param name="playerEntity">The player entity to check.</param>
+    /// <param name="table">The table entity to check.</param>
+    protected bool CanSeeTable(EntityUid playerEntity, EntityUid? table)
+    {
+        if (table == null)
+            return false;
+
+        if (EntityManager.GetComponent<TransformComponent>(table.Value).Parent?.Owner is not { } parent)
+        {
+            return false;
+        }
+
+        if (!parent.HasComponent<MapComponent>() && !parent.HasComponent<IMapGridComponent>())
+        {
+            return false;
+        }
+
+        return playerEntity.InRangeUnobstructed(table.Value) && _actionBlockerSystem.CanInteract(playerEntity);
+    }
+
+    protected bool StunnedOrNoHands(EntityUid playerEntity)
+    {
+        var stunned = EntityManager.HasComponent<StunnedComponent>(playerEntity);
+        var hasHand = EntityManager.TryGetComponent<SharedHandsComponent>(playerEntity, out var handsComponent) &&
+                      handsComponent.Hands.Count > 0;
+
+        return stunned || !hasHand;
+    }
+
+    #endregion
 }

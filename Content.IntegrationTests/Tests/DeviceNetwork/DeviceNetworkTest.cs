@@ -7,15 +7,15 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
-namespace Content.IntegrationTests.Tests.DeviceNetwork
+namespace Content.IntegrationTests.Tests.DeviceNetwork;
+
+[TestFixture]
+[TestOf(typeof(DeviceNetworkComponent))]
+[TestOf(typeof(WiredNetworkComponent))]
+[TestOf(typeof(WirelessNetworkComponent))]
+public class DeviceNetworkTest : ContentIntegrationTest
 {
-    [TestFixture]
-    [TestOf(typeof(DeviceNetworkComponent))]
-    [TestOf(typeof(WiredNetworkComponent))]
-    [TestOf(typeof(WirelessNetworkComponent))]
-    public class DeviceNetworkTest : ContentIntegrationTest
-    {
-        private const string Prototypes = @"
+    private const string Prototypes = @"
 - type: entity
   name: DummyNetworkDevice
   id: DummyNetworkDevice
@@ -43,230 +43,229 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
       range: 100
         ";
 
-        [Test]
-        public async Task NetworkDeviceSendAndReceive()
+    [Test]
+    public async Task NetworkDeviceSendAndReceive()
+    {
+        var options = new ServerContentIntegrationOption
         {
-            var options = new ServerContentIntegrationOption
-            {
-                ExtraPrototypes = Prototypes,
-                ContentBeforeIoC = () => {
-                    IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<DeviceNetworkTestSystem>();
-                }
-            };
+            ExtraPrototypes = Prototypes,
+            ContentBeforeIoC = () => {
+                IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<DeviceNetworkTestSystem>();
+            }
+        };
 
-            var server = StartServer(options);
+        var server = StartServer(options);
 
-            await server.WaitIdleAsync();
+        await server.WaitIdleAsync();
 
-            var mapManager = server.ResolveDependency<IMapManager>();
-            var entityManager = server.ResolveDependency<IEntityManager>();
-            var deviceNetSystem = entityManager.EntitySysManager.GetEntitySystem<DeviceNetworkSystem>();
-            var deviceNetTestSystem = entityManager.EntitySysManager.GetEntitySystem<DeviceNetworkTestSystem>();
+        var mapManager = server.ResolveDependency<IMapManager>();
+        var entityManager = server.ResolveDependency<IEntityManager>();
+        var deviceNetSystem = entityManager.EntitySysManager.GetEntitySystem<DeviceNetworkSystem>();
+        var deviceNetTestSystem = entityManager.EntitySysManager.GetEntitySystem<DeviceNetworkTestSystem>();
 
 
-            IEntity device1 = null;
-            IEntity device2 = null;
-            DeviceNetworkComponent networkComponent1 = null;
-            DeviceNetworkComponent networkComponent2 = null;
+        IEntity device1 = null;
+        IEntity device2 = null;
+        DeviceNetworkComponent networkComponent1 = null;
+        DeviceNetworkComponent networkComponent2 = null;
 
-            var testValue = "test";
-            var payload = new NetworkPayload
-            {
-                ["Test"] = testValue,
-                ["testnumber"] = 1,
-                ["testbool"] = true
-            };
-
-            server.Assert(() => {
-                mapManager.CreateNewMapEntity(MapId.Nullspace);
-
-                device1 = entityManager.SpawnEntity("DummyNetworkDevice", MapCoordinates.Nullspace);
-
-                Assert.That(device1.TryGetComponent(out networkComponent1), Is.True);
-                Assert.That(networkComponent1.Open, Is.True);
-                Assert.That(networkComponent1.Address, Is.Not.EqualTo(string.Empty));
-
-                device2 = entityManager.SpawnEntity("DummyNetworkDevice", MapCoordinates.Nullspace);
-
-                Assert.That(device2.TryGetComponent(out networkComponent2), Is.True);
-                Assert.That(networkComponent2.Open, Is.True);
-                Assert.That(networkComponent2.Address, Is.Not.EqualTo(string.Empty));
-
-                Assert.That(networkComponent1.Address, Is.Not.EqualTo(networkComponent2.Address));
-
-                deviceNetSystem.QueuePacket(device1.Uid, networkComponent2.Address, networkComponent2.Frequency, payload);
-            });
-
-            await server.WaitRunTicks(1);
-            await server.WaitIdleAsync();
-
-            server.Assert(() => {
-                CollectionAssert.AreEquivalent(deviceNetTestSystem.LastPayload, payload);
-            });
-        }
-
-        [Test]
-        public async Task WirelessNetworkDeviceSendAndReceive()
+        var testValue = "test";
+        var payload = new NetworkPayload
         {
-            var options = new ServerContentIntegrationOption
-            {
-                ExtraPrototypes = Prototypes,
-                ContentBeforeIoC = () => {
-                    IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<DeviceNetworkTestSystem>();
-                }
-            };
+            ["Test"] = testValue,
+            ["testnumber"] = 1,
+            ["testbool"] = true
+        };
 
-            var server = StartServer(options);
+        server.Assert(() => {
+            mapManager.CreateNewMapEntity(MapId.Nullspace);
 
-            await server.WaitIdleAsync();
+            device1 = entityManager.SpawnEntity("DummyNetworkDevice", MapCoordinates.Nullspace);
 
-            var mapManager = server.ResolveDependency<IMapManager>();
-            var entityManager = server.ResolveDependency<IEntityManager>();
-            var deviceNetSystem = entityManager.EntitySysManager.GetEntitySystem<DeviceNetworkSystem>();
-            var deviceNetTestSystem = entityManager.EntitySysManager.GetEntitySystem<DeviceNetworkTestSystem>();
+            Assert.That(device1.TryGetComponent(out networkComponent1), Is.True);
+            Assert.That(networkComponent1.Open, Is.True);
+            Assert.That(networkComponent1.Address, Is.Not.EqualTo(string.Empty));
 
+            device2 = entityManager.SpawnEntity("DummyNetworkDevice", MapCoordinates.Nullspace);
 
-            IEntity device1 = null;
-            IEntity device2 = null;
-            DeviceNetworkComponent networkComponent1 = null;
-            DeviceNetworkComponent networkComponent2 = null;
-            WirelessNetworkComponent wirelessNetworkComponent = null;
+            Assert.That(device2.TryGetComponent(out networkComponent2), Is.True);
+            Assert.That(networkComponent2.Open, Is.True);
+            Assert.That(networkComponent2.Address, Is.Not.EqualTo(string.Empty));
 
-            var testValue = "test";
-            var payload = new NetworkPayload
-            {
-                ["Test"] = testValue,
-                ["testnumber"] = 1,
-                ["testbool"] = true
-            };
+            Assert.That(networkComponent1.Address, Is.Not.EqualTo(networkComponent2.Address));
 
-            server.Assert(() => {
-                mapManager.CreateNewMapEntity(MapId.Nullspace);
+            deviceNetSystem.QueuePacket(device1.Uid, networkComponent2.Address, networkComponent2.Frequency, payload);
+        });
 
-                device1 = entityManager.SpawnEntity("DummyWirelessNetworkDevice", MapCoordinates.Nullspace);
+        await server.WaitRunTicks(1);
+        await server.WaitIdleAsync();
 
-                Assert.That(device1.TryGetComponent(out networkComponent1), Is.True);
-                Assert.That(device1.TryGetComponent(out wirelessNetworkComponent), Is.True);
-                Assert.That(networkComponent1.Open, Is.True);
-                Assert.That(networkComponent1.Address, Is.Not.EqualTo(string.Empty));
+        server.Assert(() => {
+            CollectionAssert.AreEquivalent(deviceNetTestSystem.LastPayload, payload);
+        });
+    }
 
-                device2 = entityManager.SpawnEntity("DummyWirelessNetworkDevice", new MapCoordinates(new Robust.Shared.Maths.Vector2(0,50), MapId.Nullspace));
-
-                Assert.That(device2.TryGetComponent(out networkComponent2), Is.True);
-                Assert.That(networkComponent2.Open, Is.True);
-                Assert.That(networkComponent2.Address, Is.Not.EqualTo(string.Empty));
-
-                Assert.That(networkComponent1.Address, Is.Not.EqualTo(networkComponent2.Address));
-
-                deviceNetSystem.QueuePacket(device1.Uid, networkComponent2.Address, networkComponent2.Frequency, payload);
-            });
-
-            await server.WaitRunTicks(1);
-            await server.WaitIdleAsync();
-
-            server.Assert(() => {
-                CollectionAssert.AreEqual(deviceNetTestSystem.LastPayload, payload);
-
-                payload = new NetworkPayload
-                {
-                    ["Wirelesstest"] = 5
-                };
-
-                wirelessNetworkComponent.Range = 0;
-
-                deviceNetSystem.QueuePacket(device1.Uid, networkComponent2.Address, networkComponent2.Frequency, payload);
-            });
-
-            await server.WaitRunTicks(1);
-            await server.WaitIdleAsync();
-
-            server.Assert(() => {
-                CollectionAssert.AreNotEqual(deviceNetTestSystem.LastPayload, payload);
-            });
-
-            await server.WaitIdleAsync();
-        }
-
-        [Test]
-        public async Task WiredNetworkDeviceSendAndReceive()
+    [Test]
+    public async Task WirelessNetworkDeviceSendAndReceive()
+    {
+        var options = new ServerContentIntegrationOption
         {
-            var options = new ServerContentIntegrationOption
+            ExtraPrototypes = Prototypes,
+            ContentBeforeIoC = () => {
+                IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<DeviceNetworkTestSystem>();
+            }
+        };
+
+        var server = StartServer(options);
+
+        await server.WaitIdleAsync();
+
+        var mapManager = server.ResolveDependency<IMapManager>();
+        var entityManager = server.ResolveDependency<IEntityManager>();
+        var deviceNetSystem = entityManager.EntitySysManager.GetEntitySystem<DeviceNetworkSystem>();
+        var deviceNetTestSystem = entityManager.EntitySysManager.GetEntitySystem<DeviceNetworkTestSystem>();
+
+
+        IEntity device1 = null;
+        IEntity device2 = null;
+        DeviceNetworkComponent networkComponent1 = null;
+        DeviceNetworkComponent networkComponent2 = null;
+        WirelessNetworkComponent wirelessNetworkComponent = null;
+
+        var testValue = "test";
+        var payload = new NetworkPayload
+        {
+            ["Test"] = testValue,
+            ["testnumber"] = 1,
+            ["testbool"] = true
+        };
+
+        server.Assert(() => {
+            mapManager.CreateNewMapEntity(MapId.Nullspace);
+
+            device1 = entityManager.SpawnEntity("DummyWirelessNetworkDevice", MapCoordinates.Nullspace);
+
+            Assert.That(device1.TryGetComponent(out networkComponent1), Is.True);
+            Assert.That(device1.TryGetComponent(out wirelessNetworkComponent), Is.True);
+            Assert.That(networkComponent1.Open, Is.True);
+            Assert.That(networkComponent1.Address, Is.Not.EqualTo(string.Empty));
+
+            device2 = entityManager.SpawnEntity("DummyWirelessNetworkDevice", new MapCoordinates(new Robust.Shared.Maths.Vector2(0,50), MapId.Nullspace));
+
+            Assert.That(device2.TryGetComponent(out networkComponent2), Is.True);
+            Assert.That(networkComponent2.Open, Is.True);
+            Assert.That(networkComponent2.Address, Is.Not.EqualTo(string.Empty));
+
+            Assert.That(networkComponent1.Address, Is.Not.EqualTo(networkComponent2.Address));
+
+            deviceNetSystem.QueuePacket(device1.Uid, networkComponent2.Address, networkComponent2.Frequency, payload);
+        });
+
+        await server.WaitRunTicks(1);
+        await server.WaitIdleAsync();
+
+        server.Assert(() => {
+            CollectionAssert.AreEqual(deviceNetTestSystem.LastPayload, payload);
+
+            payload = new NetworkPayload
             {
-                ExtraPrototypes = Prototypes,
-                ContentBeforeIoC = () => {
-                   IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<DeviceNetworkTestSystem>();
-                }
+                ["Wirelesstest"] = 5
             };
 
-            var server = StartServer(options);
+            wirelessNetworkComponent.Range = 0;
 
-            await server.WaitIdleAsync();
+            deviceNetSystem.QueuePacket(device1.Uid, networkComponent2.Address, networkComponent2.Frequency, payload);
+        });
 
-            var mapManager = server.ResolveDependency<IMapManager>();
-            var entityManager = server.ResolveDependency<IEntityManager>();
-            var deviceNetSystem = entityManager.EntitySysManager.GetEntitySystem<DeviceNetworkSystem>();
-            var deviceNetTestSystem = entityManager.EntitySysManager.GetEntitySystem<DeviceNetworkTestSystem>();
+        await server.WaitRunTicks(1);
+        await server.WaitIdleAsync();
+
+        server.Assert(() => {
+            CollectionAssert.AreNotEqual(deviceNetTestSystem.LastPayload, payload);
+        });
+
+        await server.WaitIdleAsync();
+    }
+
+    [Test]
+    public async Task WiredNetworkDeviceSendAndReceive()
+    {
+        var options = new ServerContentIntegrationOption
+        {
+            ExtraPrototypes = Prototypes,
+            ContentBeforeIoC = () => {
+                IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<DeviceNetworkTestSystem>();
+            }
+        };
+
+        var server = StartServer(options);
+
+        await server.WaitIdleAsync();
+
+        var mapManager = server.ResolveDependency<IMapManager>();
+        var entityManager = server.ResolveDependency<IEntityManager>();
+        var deviceNetSystem = entityManager.EntitySysManager.GetEntitySystem<DeviceNetworkSystem>();
+        var deviceNetTestSystem = entityManager.EntitySysManager.GetEntitySystem<DeviceNetworkTestSystem>();
 
 
-            IEntity device1 = null;
-            IEntity device2 = null;
-            DeviceNetworkComponent networkComponent1 = null;
-            DeviceNetworkComponent networkComponent2 = null;
-            WiredNetworkComponent wiredNetworkComponent = null;
-            IMapGrid grid = null;
+        IEntity device1 = null;
+        IEntity device2 = null;
+        DeviceNetworkComponent networkComponent1 = null;
+        DeviceNetworkComponent networkComponent2 = null;
+        WiredNetworkComponent wiredNetworkComponent = null;
+        IMapGrid grid = null;
 
-            var testValue = "test";
-            var payload = new NetworkPayload
-            {
-                ["Test"] = testValue,
-                ["testnumber"] = 1,
-                ["testbool"] = true
-            };
+        var testValue = "test";
+        var payload = new NetworkPayload
+        {
+            ["Test"] = testValue,
+            ["testnumber"] = 1,
+            ["testbool"] = true
+        };
 
-            await server.WaitRunTicks(1);
-            await server.WaitIdleAsync();
+        await server.WaitRunTicks(1);
+        await server.WaitIdleAsync();
 
-            server.Assert(() => {
-                var map = mapManager.CreateNewMapEntity(MapId.Nullspace);
-                grid = mapManager.CreateGrid(MapId.Nullspace);
+        server.Assert(() => {
+            var map = mapManager.CreateNewMapEntity(MapId.Nullspace);
+            grid = mapManager.CreateGrid(MapId.Nullspace);
 
-                device1 = entityManager.SpawnEntity("DummyWiredNetworkDevice", MapCoordinates.Nullspace);
+            device1 = entityManager.SpawnEntity("DummyWiredNetworkDevice", MapCoordinates.Nullspace);
 
-                Assert.That(device1.TryGetComponent(out networkComponent1), Is.True);
-                Assert.That(device1.TryGetComponent(out wiredNetworkComponent), Is.True);
-                Assert.That(networkComponent1.Open, Is.True);
-                Assert.That(networkComponent1.Address, Is.Not.EqualTo(string.Empty));
+            Assert.That(device1.TryGetComponent(out networkComponent1), Is.True);
+            Assert.That(device1.TryGetComponent(out wiredNetworkComponent), Is.True);
+            Assert.That(networkComponent1.Open, Is.True);
+            Assert.That(networkComponent1.Address, Is.Not.EqualTo(string.Empty));
 
-                device2 = entityManager.SpawnEntity("DummyWiredNetworkDevice", new MapCoordinates(new Robust.Shared.Maths.Vector2(0, 2), MapId.Nullspace));
+            device2 = entityManager.SpawnEntity("DummyWiredNetworkDevice", new MapCoordinates(new Robust.Shared.Maths.Vector2(0, 2), MapId.Nullspace));
 
-                Assert.That(device2.TryGetComponent(out networkComponent2), Is.True);
-                Assert.That(networkComponent2.Open, Is.True);
-                Assert.That(networkComponent2.Address, Is.Not.EqualTo(string.Empty));
+            Assert.That(device2.TryGetComponent(out networkComponent2), Is.True);
+            Assert.That(networkComponent2.Open, Is.True);
+            Assert.That(networkComponent2.Address, Is.Not.EqualTo(string.Empty));
 
-                Assert.That(networkComponent1.Address, Is.Not.EqualTo(networkComponent2.Address));
+            Assert.That(networkComponent1.Address, Is.Not.EqualTo(networkComponent2.Address));
 
-                deviceNetSystem.QueuePacket(device1.Uid, networkComponent2.Address, networkComponent2.Frequency, payload);
-            });
+            deviceNetSystem.QueuePacket(device1.Uid, networkComponent2.Address, networkComponent2.Frequency, payload);
+        });
 
-            await server.WaitRunTicks(1);
-            await server.WaitIdleAsync();
+        await server.WaitRunTicks(1);
+        await server.WaitIdleAsync();
 
-            server.Assert(() => {
-                //CollectionAssert.AreNotEqual(deviceNetTestSystem.LastPayload, payload);
+        server.Assert(() => {
+            //CollectionAssert.AreNotEqual(deviceNetTestSystem.LastPayload, payload);
 
-                entityManager.SpawnEntity("CableApcExtension", grid.MapToGrid(new MapCoordinates(new Robust.Shared.Maths.Vector2(0, 1), MapId.Nullspace)));
+            entityManager.SpawnEntity("CableApcExtension", grid.MapToGrid(new MapCoordinates(new Robust.Shared.Maths.Vector2(0, 1), MapId.Nullspace)));
 
-                deviceNetSystem.QueuePacket(device1.Uid, networkComponent2.Address, networkComponent2.Frequency, payload);
-            });
+            deviceNetSystem.QueuePacket(device1.Uid, networkComponent2.Address, networkComponent2.Frequency, payload);
+        });
 
-            await server.WaitRunTicks(1);
-            await server.WaitIdleAsync();
+        await server.WaitRunTicks(1);
+        await server.WaitIdleAsync();
 
-            server.Assert(() => {
-                CollectionAssert.AreEqual(deviceNetTestSystem.LastPayload, payload);
-            });
+        server.Assert(() => {
+            CollectionAssert.AreEqual(deviceNetTestSystem.LastPayload, payload);
+        });
 
-            await server.WaitIdleAsync();
-        }
+        await server.WaitIdleAsync();
     }
 }

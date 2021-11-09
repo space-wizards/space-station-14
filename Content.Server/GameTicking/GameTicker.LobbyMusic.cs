@@ -3,66 +3,65 @@ using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameTicking
+namespace Content.Server.GameTicking;
+
+public partial class GameTicker
 {
-    public partial class GameTicker
+    private const string LobbyMusicCollection = "LobbyMusic";
+
+    [ViewVariables]
+    private bool _lobbyMusicInitialized = false;
+
+    [ViewVariables]
+    private SoundCollectionPrototype _lobbyMusicCollection = default!;
+
+    [ViewVariables]
+    public string? LobbySong { get; private set; }
+
+    private void InitializeLobbyMusic()
     {
-        private const string LobbyMusicCollection = "LobbyMusic";
+        DebugTools.Assert(!_lobbyMusicInitialized);
+        _lobbyMusicCollection = _prototypeManager.Index<SoundCollectionPrototype>(LobbyMusicCollection);
 
-        [ViewVariables]
-        private bool _lobbyMusicInitialized = false;
+        // Now that the collection is set, the lobby music has been initialized and we can choose a random song.
+        _lobbyMusicInitialized = true;
 
-        [ViewVariables]
-        private SoundCollectionPrototype _lobbyMusicCollection = default!;
+        ChooseRandomLobbySong();
+    }
 
-        [ViewVariables]
-        public string? LobbySong { get; private set; }
+    /// <summary>
+    ///     Sets the current lobby song, or stops it if null.
+    /// </summary>
+    /// <param name="song">The lobby song to play, or null to stop any lobby songs.</param>
+    public void SetLobbySong(string? song)
+    {
+        DebugTools.Assert(_lobbyMusicInitialized);
 
-        private void InitializeLobbyMusic()
+        if (song == null)
         {
-            DebugTools.Assert(!_lobbyMusicInitialized);
-            _lobbyMusicCollection = _prototypeManager.Index<SoundCollectionPrototype>(LobbyMusicCollection);
-
-            // Now that the collection is set, the lobby music has been initialized and we can choose a random song.
-            _lobbyMusicInitialized = true;
-
-            ChooseRandomLobbySong();
+            LobbySong = null;
+            return;
+            // TODO GAMETICKER send song stop event
         }
 
-        /// <summary>
-        ///     Sets the current lobby song, or stops it if null.
-        /// </summary>
-        /// <param name="song">The lobby song to play, or null to stop any lobby songs.</param>
-        public void SetLobbySong(string? song)
-        {
-            DebugTools.Assert(_lobbyMusicInitialized);
+        LobbySong = song;
+        // TODO GAMETICKER send song change event
+    }
 
-            if (song == null)
-            {
-                LobbySong = null;
-                return;
-                // TODO GAMETICKER send song stop event
-            }
+    /// <summary>
+    ///     Plays a random song from the LobbyMusic sound collection.
+    /// </summary>
+    public void ChooseRandomLobbySong()
+    {
+        DebugTools.Assert(_lobbyMusicInitialized);
+        SetLobbySong(_robustRandom.Pick(_lobbyMusicCollection.PickFiles).ToString());
+    }
 
-            LobbySong = song;
-            // TODO GAMETICKER send song change event
-        }
-
-        /// <summary>
-        ///     Plays a random song from the LobbyMusic sound collection.
-        /// </summary>
-        public void ChooseRandomLobbySong()
-        {
-            DebugTools.Assert(_lobbyMusicInitialized);
-            SetLobbySong(_robustRandom.Pick(_lobbyMusicCollection.PickFiles).ToString());
-        }
-
-        /// <summary>
-        ///     Stops the current lobby song being played.
-        /// </summary>
-        public void StopLobbySong()
-        {
-            SetLobbySong(null);
-        }
+    /// <summary>
+    ///     Stops the current lobby song being played.
+    /// </summary>
+    public void StopLobbySong()
+    {
+        SetLobbySong(null);
     }
 }

@@ -5,22 +5,21 @@ using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.Alert.Click
+namespace Content.Server.Alert.Click;
+
+/// <summary>
+/// Stop piloting shuttle
+/// </summary>
+[UsedImplicitly]
+[DataDefinition]
+public class StopPiloting : IAlertClick
 {
-    /// <summary>
-    /// Stop piloting shuttle
-    /// </summary>
-    [UsedImplicitly]
-    [DataDefinition]
-    public class StopPiloting : IAlertClick
+    public void AlertClicked(ClickAlertEventArgs args)
     {
-        public void AlertClicked(ClickAlertEventArgs args)
+        if (args.Player.TryGetComponent(out PilotComponent? pilotComponent) &&
+            pilotComponent.Console != null)
         {
-            if (args.Player.TryGetComponent(out PilotComponent? pilotComponent) &&
-                pilotComponent.Console != null)
-            {
-                EntitySystem.Get<ShuttleConsoleSystem>().RemovePilot(pilotComponent);
-            }
+            EntitySystem.Get<ShuttleConsoleSystem>().RemovePilot(pilotComponent);
         }
     }
 }

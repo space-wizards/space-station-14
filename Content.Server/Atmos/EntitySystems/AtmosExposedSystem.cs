@@ -5,22 +5,20 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
-namespace Content.Server.Atmos.EntitySystems
+namespace Content.Server.Atmos.EntitySystems;
+/* doesn't seem to be a use for this at the moment, so it's disabled
+public class AtmosExposedSystem : EntitySystem
+{}
+*/
+
+public readonly struct AtmosExposedUpdateEvent
 {
-    /* doesn't seem to be a use for this at the moment, so it's disabled
-    public class AtmosExposedSystem : EntitySystem
-    {}
-    */
+    public readonly EntityCoordinates Coordinates;
+    public readonly GasMixture GasMixture;
 
-    public readonly struct AtmosExposedUpdateEvent
+    public AtmosExposedUpdateEvent(EntityCoordinates coordinates, GasMixture mixture)
     {
-        public readonly EntityCoordinates Coordinates;
-        public readonly GasMixture GasMixture;
-
-        public AtmosExposedUpdateEvent(EntityCoordinates coordinates, GasMixture mixture)
-        {
-            Coordinates = coordinates;
-            GasMixture = mixture;
-        }
+        Coordinates = coordinates;
+        GasMixture = mixture;
     }
 }

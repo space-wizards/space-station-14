@@ -2,15 +2,14 @@
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Power.Components
-{
-    [RegisterComponent]
-    public sealed class CableVisComponent : Component
-    {
-        public override string Name => "CableVis";
+namespace Content.Server.Power.Components;
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("node")]
-        public string? Node;
-    }
+[RegisterComponent]
+public sealed class CableVisComponent : Component
+{
+    public override string Name => "CableVis";
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("node")]
+    public string? Node;
 }

@@ -7,16 +7,15 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Chemistry.Components.SolutionManager
-{
-    [RegisterComponent]
-    [Friend(typeof(SolutionContainerSystem))]
-    public class SolutionContainerManagerComponent : Component
-    {
-        public override string Name => "SolutionContainerManager";
+namespace Content.Server.Chemistry.Components.SolutionManager;
 
-        [ViewVariables]
-        [DataField("solutions")]
-        public readonly Dictionary<string, Solution> Solutions = new();
-    }
+[RegisterComponent]
+[Friend(typeof(SolutionContainerSystem))]
+public class SolutionContainerManagerComponent : Component
+{
+    public override string Name => "SolutionContainerManager";
+
+    [ViewVariables]
+    [DataField("solutions")]
+    public readonly Dictionary<string, Solution> Solutions = new();
 }

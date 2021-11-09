@@ -4,18 +4,17 @@ using Content.Shared.Standing;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.MobState.States
-{
-    public class DeadMobState : SharedDeadMobState
-    {
-        public override void EnterState(EntityUid uid, IEntityManager entityManager)
-        {
-            base.EnterState(uid, entityManager);
+namespace Content.Client.MobState.States;
 
-            if (entityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
-            {
-                appearance.SetData(DamageStateVisuals.State, DamageState.Dead);
-            }
+public class DeadMobState : SharedDeadMobState
+{
+    public override void EnterState(EntityUid uid, IEntityManager entityManager)
+    {
+        base.EnterState(uid, entityManager);
+
+        if (entityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+        {
+            appearance.SetData(DamageStateVisuals.State, DamageState.Dead);
         }
     }
 }

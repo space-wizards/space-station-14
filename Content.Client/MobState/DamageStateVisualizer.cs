@@ -6,84 +6,83 @@ using Robust.Client.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Client.MobState
+namespace Content.Client.MobState;
+
+[UsedImplicitly]
+public sealed class DamageStateVisualizer : AppearanceVisualizer, ISerializationHooks
 {
-    [UsedImplicitly]
-    public sealed class DamageStateVisualizer : AppearanceVisualizer, ISerializationHooks
+    private DamageState _data = DamageState.Alive;
+    private Dictionary<DamageState, string> _stateMap = new();
+    private int? _originalDrawDepth;
+
+    [DataField("normal")]
+    private string? normal;
+    [DataField("crit")]
+    private string? crit;
+    [DataField("dead")]
+    private string? dead;
+
+    void ISerializationHooks.BeforeSerialization()
     {
-        private DamageState _data = DamageState.Alive;
-        private Dictionary<DamageState, string> _stateMap = new();
-        private int? _originalDrawDepth;
+        _stateMap.TryGetValue(DamageState.Alive, out normal);
+        _stateMap.TryGetValue(DamageState.Critical, out crit);
+        _stateMap.TryGetValue(DamageState.Dead, out dead);
+    }
 
-        [DataField("normal")]
-        private string? normal;
-        [DataField("crit")]
-        private string? crit;
-        [DataField("dead")]
-        private string? dead;
-
-        void ISerializationHooks.BeforeSerialization()
+    void ISerializationHooks.AfterDeserialization()
+    {
+        if (normal != null)
         {
-            _stateMap.TryGetValue(DamageState.Alive, out normal);
-            _stateMap.TryGetValue(DamageState.Critical, out crit);
-            _stateMap.TryGetValue(DamageState.Dead, out dead);
+            _stateMap.Add(DamageState.Alive, normal);
         }
 
-        void ISerializationHooks.AfterDeserialization()
+        if (crit != null)
         {
-            if (normal != null)
-            {
-                _stateMap.Add(DamageState.Alive, normal);
-            }
-
-            if (crit != null)
-            {
-                _stateMap.Add(DamageState.Critical, crit);
-            }
-
-            if (dead != null)
-            {
-                _stateMap.Add(DamageState.Dead, dead);
-            }
+            _stateMap.Add(DamageState.Critical, crit);
         }
 
-        public override void OnChangeData(AppearanceComponent component)
+        if (dead != null)
         {
-            base.OnChangeData(component);
-            var sprite = component.Owner.GetComponent<ISpriteComponent>();
-            if (!component.TryGetData(DamageStateVisuals.State, out DamageState data))
-            {
-                return;
-            }
-
-            if (_data == data)
-            {
-                return;
-            }
-
-            _data = data;
-
-            if (_stateMap.TryGetValue(_data, out var state))
-            {
-                sprite.LayerSetState(DamageStateVisualLayers.Base, state);
-            }
-
-            // So they don't draw over mobs anymore
-            if (_data == DamageState.Dead && sprite.DrawDepth > (int) DrawDepth.Items)
-            {
-                _originalDrawDepth = sprite.DrawDepth;
-                sprite.DrawDepth = (int) DrawDepth.Items;
-            }
-            else if (_originalDrawDepth != null)
-            {
-                sprite.DrawDepth = _originalDrawDepth.Value;
-                _originalDrawDepth = null;
-            }
+            _stateMap.Add(DamageState.Dead, dead);
         }
     }
 
-    public enum DamageStateVisualLayers : byte
+    public override void OnChangeData(AppearanceComponent component)
     {
-        Base
+        base.OnChangeData(component);
+        var sprite = component.Owner.GetComponent<ISpriteComponent>();
+        if (!component.TryGetData(DamageStateVisuals.State, out DamageState data))
+        {
+            return;
+        }
+
+        if (_data == data)
+        {
+            return;
+        }
+
+        _data = data;
+
+        if (_stateMap.TryGetValue(_data, out var state))
+        {
+            sprite.LayerSetState(DamageStateVisualLayers.Base, state);
+        }
+
+        // So they don't draw over mobs anymore
+        if (_data == DamageState.Dead && sprite.DrawDepth > (int) DrawDepth.Items)
+        {
+            _originalDrawDepth = sprite.DrawDepth;
+            sprite.DrawDepth = (int) DrawDepth.Items;
+        }
+        else if (_originalDrawDepth != null)
+        {
+            sprite.DrawDepth = _originalDrawDepth.Value;
+            _originalDrawDepth = null;
+        }
     }
+}
+
+public enum DamageStateVisualLayers : byte
+{
+    Base
 }

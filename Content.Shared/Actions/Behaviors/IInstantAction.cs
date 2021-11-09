@@ -1,25 +1,24 @@
 ﻿using Robust.Shared.GameObjects;
 
-namespace Content.Shared.Actions.Behaviors
+namespace Content.Shared.Actions.Behaviors;
+
+/// <summary>
+/// Action which does something immediately when used and has
+/// no target.
+/// </summary>
+public interface IInstantAction : IActionBehavior
 {
+
     /// <summary>
-    /// Action which does something immediately when used and has
-    /// no target.
+    /// Invoked when the instant action should be performed.
+    /// Implementation should perform the server side logic of the action.
     /// </summary>
-    public interface IInstantAction : IActionBehavior
-    {
+    void DoInstantAction(InstantActionEventArgs args);
+}
 
-        /// <summary>
-        /// Invoked when the instant action should be performed.
-        /// Implementation should perform the server side logic of the action.
-        /// </summary>
-        void DoInstantAction(InstantActionEventArgs args);
-    }
-
-    public class InstantActionEventArgs : ActionEventArgs
+public class InstantActionEventArgs : ActionEventArgs
+{
+    public InstantActionEventArgs(IEntity performer, ActionType actionType) : base(performer, actionType)
     {
-        public InstantActionEventArgs(IEntity performer, ActionType actionType) : base(performer, actionType)
-        {
-        }
     }
 }

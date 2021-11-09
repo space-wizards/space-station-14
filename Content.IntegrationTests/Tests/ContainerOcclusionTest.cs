@@ -10,11 +10,11 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 
-namespace Content.IntegrationTests.Tests
+namespace Content.IntegrationTests.Tests;
+
+public class ContainerOcclusionTest : ContentIntegrationTest
 {
-    public class ContainerOcclusionTest : ContentIntegrationTest
-    {
-        private const string ExtraPrototypes = @"
+    private const string ExtraPrototypes = @"
 - type: entity
   id: ContainerOcclusionA
   components:
@@ -35,136 +35,135 @@ namespace Content.IntegrationTests.Tests
   - type: PointLight
 ";
 
-        private async Task<(ClientIntegrationInstance c, ServerIntegrationInstance s)> Start()
+    private async Task<(ClientIntegrationInstance c, ServerIntegrationInstance s)> Start()
+    {
+        var optsServer = new ServerIntegrationOptions
         {
-            var optsServer = new ServerIntegrationOptions
+            CVarOverrides =
             {
-                CVarOverrides =
-                {
-                    {CVars.NetPVS.Name, "false"}
-                },
-                ExtraPrototypes = ExtraPrototypes
-            };
-            var optsClient = new ClientIntegrationOptions
-            {
-
-                CVarOverrides =
-                {
-                    {CVars.NetPVS.Name, "false"}
-                },
-                ExtraPrototypes = ExtraPrototypes
-            };
-
-            var (c, s) = await StartConnectedServerDummyTickerClientPair(optsClient, optsServer);
-
-            s.Post(() =>
-            {
-                IoCManager.Resolve<IPlayerManager>()
-                    .GetAllPlayers()
-                    .Single()
-                    .JoinGame();
-
-                var mapMan = IoCManager.Resolve<IMapManager>();
-
-                mapMan.CreateMap(new MapId(1));
-            });
-
-            return (c, s);
-        }
-
-        [Test]
-        public async Task TestA()
+                {CVars.NetPVS.Name, "false"}
+            },
+            ExtraPrototypes = ExtraPrototypes
+        };
+        var optsClient = new ClientIntegrationOptions
         {
-            var (c, s) = await Start();
 
-            EntityUid dummyUid = default;
-            s.Post(() =>
+            CVarOverrides =
             {
-                var pos = new MapCoordinates(Vector2.Zero, new MapId(1));
-                var ent = IoCManager.Resolve<IEntityManager>();
-                var container = ent.SpawnEntity("ContainerOcclusionA", pos);
-                var dummy = ent.SpawnEntity("ContainerOcclusionDummy", pos);
-                dummyUid = dummy.Uid;
+                {CVars.NetPVS.Name, "false"}
+            },
+            ExtraPrototypes = ExtraPrototypes
+        };
 
-                container.GetComponent<EntityStorageComponent>().Insert(dummy);
-            });
+        var (c, s) = await StartConnectedServerDummyTickerClientPair(optsClient, optsServer);
 
-            await RunTicksSync(c, s, 5);
-
-            c.Assert(() =>
-            {
-                var dummy = IoCManager.Resolve<IEntityManager>().GetEntity(dummyUid);
-                var sprite = dummy.GetComponent<SpriteComponent>();
-                var light = dummy.GetComponent<PointLightComponent>();
-                Assert.True(sprite.ContainerOccluded);
-                Assert.True(light.ContainerOccluded);
-            });
-
-            await Task.WhenAll(c.WaitIdleAsync(), s.WaitIdleAsync());
-        }
-
-        [Test]
-        public async Task TestB()
+        s.Post(() =>
         {
-            var (c, s) = await Start();
+            IoCManager.Resolve<IPlayerManager>()
+                      .GetAllPlayers()
+                      .Single()
+                      .JoinGame();
 
-            EntityUid dummyUid = default;
-            s.Post(() =>
-            {
-                var pos = new MapCoordinates(Vector2.Zero, new MapId(1));
-                var ent = IoCManager.Resolve<IEntityManager>();
-                var container = ent.SpawnEntity("ContainerOcclusionB", pos);
-                var dummy = ent.SpawnEntity("ContainerOcclusionDummy", pos);
-                dummyUid = dummy.Uid;
+            var mapMan = IoCManager.Resolve<IMapManager>();
 
-                container.GetComponent<EntityStorageComponent>().Insert(dummy);
-            });
+            mapMan.CreateMap(new MapId(1));
+        });
 
-            await RunTicksSync(c, s, 5);
+        return (c, s);
+    }
 
-            c.Assert(() =>
-            {
-                var dummy = IoCManager.Resolve<IEntityManager>().GetEntity(dummyUid);
-                var sprite = dummy.GetComponent<SpriteComponent>();
-                var light = dummy.GetComponent<PointLightComponent>();
-                Assert.False(sprite.ContainerOccluded);
-                Assert.False(light.ContainerOccluded);
-            });
+    [Test]
+    public async Task TestA()
+    {
+        var (c, s) = await Start();
 
-            await Task.WhenAll(c.WaitIdleAsync(), s.WaitIdleAsync());
-        }
-
-        [Test]
-        public async Task TestAb()
+        EntityUid dummyUid = default;
+        s.Post(() =>
         {
-            var (c, s) = await Start();
+            var pos = new MapCoordinates(Vector2.Zero, new MapId(1));
+            var ent = IoCManager.Resolve<IEntityManager>();
+            var container = ent.SpawnEntity("ContainerOcclusionA", pos);
+            var dummy = ent.SpawnEntity("ContainerOcclusionDummy", pos);
+            dummyUid = dummy.Uid;
 
-            EntityUid dummyUid = default;
-            s.Post(() =>
-            {
-                var pos = new MapCoordinates(Vector2.Zero, new MapId(1));
-                var ent = IoCManager.Resolve<IEntityManager>();
-                var containerA = ent.SpawnEntity("ContainerOcclusionA", pos);
-                var containerB = ent.SpawnEntity("ContainerOcclusionB", pos);
-                var dummy = ent.SpawnEntity("ContainerOcclusionDummy", pos);
-                dummyUid = dummy.Uid;
+            container.GetComponent<EntityStorageComponent>().Insert(dummy);
+        });
 
-                containerA.GetComponent<EntityStorageComponent>().Insert(containerB);
-                containerB.GetComponent<EntityStorageComponent>().Insert(dummy);
-            });
+        await RunTicksSync(c, s, 5);
 
-            await RunTicksSync(c, s, 5);
+        c.Assert(() =>
+        {
+            var dummy = IoCManager.Resolve<IEntityManager>().GetEntity(dummyUid);
+            var sprite = dummy.GetComponent<SpriteComponent>();
+            var light = dummy.GetComponent<PointLightComponent>();
+            Assert.True(sprite.ContainerOccluded);
+            Assert.True(light.ContainerOccluded);
+        });
 
-            c.Assert(() =>
-            {
-                var dummy = IoCManager.Resolve<IEntityManager>().GetEntity(dummyUid);
-                var sprite = dummy.GetComponent<SpriteComponent>();
-                var light = dummy.GetComponent<PointLightComponent>();
-                Assert.True(sprite.ContainerOccluded);
-                Assert.True(light.ContainerOccluded);
-            });
+        await Task.WhenAll(c.WaitIdleAsync(), s.WaitIdleAsync());
+    }
 
-            await Task.WhenAll(c.WaitIdleAsync(), s.WaitIdleAsync());
-        }
+    [Test]
+    public async Task TestB()
+    {
+        var (c, s) = await Start();
+
+        EntityUid dummyUid = default;
+        s.Post(() =>
+        {
+            var pos = new MapCoordinates(Vector2.Zero, new MapId(1));
+            var ent = IoCManager.Resolve<IEntityManager>();
+            var container = ent.SpawnEntity("ContainerOcclusionB", pos);
+            var dummy = ent.SpawnEntity("ContainerOcclusionDummy", pos);
+            dummyUid = dummy.Uid;
+
+            container.GetComponent<EntityStorageComponent>().Insert(dummy);
+        });
+
+        await RunTicksSync(c, s, 5);
+
+        c.Assert(() =>
+        {
+            var dummy = IoCManager.Resolve<IEntityManager>().GetEntity(dummyUid);
+            var sprite = dummy.GetComponent<SpriteComponent>();
+            var light = dummy.GetComponent<PointLightComponent>();
+            Assert.False(sprite.ContainerOccluded);
+            Assert.False(light.ContainerOccluded);
+        });
+
+        await Task.WhenAll(c.WaitIdleAsync(), s.WaitIdleAsync());
+    }
+
+    [Test]
+    public async Task TestAb()
+    {
+        var (c, s) = await Start();
+
+        EntityUid dummyUid = default;
+        s.Post(() =>
+        {
+            var pos = new MapCoordinates(Vector2.Zero, new MapId(1));
+            var ent = IoCManager.Resolve<IEntityManager>();
+            var containerA = ent.SpawnEntity("ContainerOcclusionA", pos);
+            var containerB = ent.SpawnEntity("ContainerOcclusionB", pos);
+            var dummy = ent.SpawnEntity("ContainerOcclusionDummy", pos);
+            dummyUid = dummy.Uid;
+
+            containerA.GetComponent<EntityStorageComponent>().Insert(containerB);
+            containerB.GetComponent<EntityStorageComponent>().Insert(dummy);
+        });
+
+        await RunTicksSync(c, s, 5);
+
+        c.Assert(() =>
+        {
+            var dummy = IoCManager.Resolve<IEntityManager>().GetEntity(dummyUid);
+            var sprite = dummy.GetComponent<SpriteComponent>();
+            var light = dummy.GetComponent<PointLightComponent>();
+            Assert.True(sprite.ContainerOccluded);
+            Assert.True(light.ContainerOccluded);
+        });
+
+        await Task.WhenAll(c.WaitIdleAsync(), s.WaitIdleAsync());
     }
 }

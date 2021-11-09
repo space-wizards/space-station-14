@@ -1,10 +1,9 @@
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.Security
+namespace Content.Server.Security;
+
+[RegisterComponent]
+public class DeployableBarrierComponent : Component
 {
-    [RegisterComponent]
-    public class DeployableBarrierComponent : Component
-    {
-        public override string Name => "DeployableBarrier";
-    }
+    public override string Name => "DeployableBarrier";
 }

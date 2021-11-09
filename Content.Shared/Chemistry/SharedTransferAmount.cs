@@ -4,35 +4,34 @@ using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Chemistry
+namespace Content.Shared.Chemistry;
+
+[Serializable, NetSerializable]
+public class TransferAmountBoundInterfaceState : BoundUserInterfaceState
 {
-    [Serializable, NetSerializable]
-    public class TransferAmountBoundInterfaceState : BoundUserInterfaceState
+    public FixedPoint2 Max;
+    public FixedPoint2 Min;
+
+    public TransferAmountBoundInterfaceState(FixedPoint2 max, FixedPoint2 min)
     {
-        public FixedPoint2 Max;
-        public FixedPoint2 Min;
-
-        public TransferAmountBoundInterfaceState(FixedPoint2 max, FixedPoint2 min)
-        {
-            Max = max;
-            Min = min;
-        }
+        Max = max;
+        Min = min;
     }
+}
 
-    [Serializable, NetSerializable]
-    public class TransferAmountSetValueMessage : BoundUserInterfaceMessage
+[Serializable, NetSerializable]
+public class TransferAmountSetValueMessage : BoundUserInterfaceMessage
+{
+    public FixedPoint2 Value;
+
+    public TransferAmountSetValueMessage(FixedPoint2 value)
     {
-        public FixedPoint2 Value;
-
-        public TransferAmountSetValueMessage(FixedPoint2 value)
-        {
-            Value = value;
-        }
+        Value = value;
     }
+}
 
-    [Serializable, NetSerializable]
-    public enum TransferAmountUiKey
-    {
-        Key,
-    }
+[Serializable, NetSerializable]
+public enum TransferAmountUiKey
+{
+    Key,
 }

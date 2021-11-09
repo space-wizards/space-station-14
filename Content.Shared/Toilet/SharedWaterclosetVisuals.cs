@@ -1,12 +1,11 @@
 using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Toilet
+namespace Content.Shared.Toilet;
+
+[Serializable, NetSerializable]
+public enum ToiletVisuals
 {
-    [Serializable, NetSerializable]
-    public enum ToiletVisuals
-    {
-        LidOpen,
-        SeatUp
-    }
+    LidOpen,
+    SeatUp
 }

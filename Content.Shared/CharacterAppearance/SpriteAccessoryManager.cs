@@ -3,65 +3,64 @@ using System.Collections.Generic;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.CharacterAppearance
+namespace Content.Shared.CharacterAppearance;
+
+public sealed class SpriteAccessoryManager
 {
-    public sealed class SpriteAccessoryManager
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
+    private readonly Dictionary<SpriteAccessoryCategories, List<SpriteAccessoryPrototype>> _index = new();
+
+    public void Initialize()
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        _prototypeManager.PrototypesReloaded += OnPrototypesReloaded;
 
-        private readonly Dictionary<SpriteAccessoryCategories, List<SpriteAccessoryPrototype>> _index = new();
-
-        public void Initialize()
+        foreach (var category in Enum.GetValues<SpriteAccessoryCategories>())
         {
-            _prototypeManager.PrototypesReloaded += OnPrototypesReloaded;
-
-            foreach (var category in Enum.GetValues<SpriteAccessoryCategories>())
-            {
-                _index.Add(category, new List<SpriteAccessoryPrototype>());
-            }
-
-            foreach (var prototype in _prototypeManager.EnumeratePrototypes<SpriteAccessoryPrototype>())
-            {
-                AddToIndexes(prototype);
-            }
+            _index.Add(category, new List<SpriteAccessoryPrototype>());
         }
 
-        public IReadOnlyList<SpriteAccessoryPrototype> AccessoriesForCategory(SpriteAccessoryCategories categories)
+        foreach (var prototype in _prototypeManager.EnumeratePrototypes<SpriteAccessoryPrototype>())
         {
-            return _index[categories];
+            AddToIndexes(prototype);
+        }
+    }
+
+    public IReadOnlyList<SpriteAccessoryPrototype> AccessoriesForCategory(SpriteAccessoryCategories categories)
+    {
+        return _index[categories];
+    }
+
+    public bool IsValidAccessoryInCategory(string accessory, SpriteAccessoryCategories categories)
+    {
+        return _prototypeManager.TryIndex(accessory, out SpriteAccessoryPrototype? accessoryPrototype)
+               && (accessoryPrototype.Categories & categories) != 0;
+    }
+
+    private void OnPrototypesReloaded(PrototypesReloadedEventArgs eventArgs)
+    {
+        if (!eventArgs.ByType.TryGetValue(typeof(SpriteAccessoryPrototype), out var set))
+            return;
+
+        foreach (var list in _index.Values)
+        {
+            list.RemoveAll(a => set.Modified.ContainsKey(a.ID));
         }
 
-        public bool IsValidAccessoryInCategory(string accessory, SpriteAccessoryCategories categories)
+        foreach (var prototype in set.Modified.Values)
         {
-            return _prototypeManager.TryIndex(accessory, out SpriteAccessoryPrototype? accessoryPrototype)
-                   && (accessoryPrototype.Categories & categories) != 0;
+            var accessoryPrototype = (SpriteAccessoryPrototype) prototype;
+            AddToIndexes(accessoryPrototype);
         }
+    }
 
-        private void OnPrototypesReloaded(PrototypesReloadedEventArgs eventArgs)
+    private void AddToIndexes(SpriteAccessoryPrototype accessoryPrototype)
+    {
+        for (var i = 0; i < sizeof(SpriteAccessoryCategories) * 8; i++)
         {
-            if (!eventArgs.ByType.TryGetValue(typeof(SpriteAccessoryPrototype), out var set))
-                return;
-
-            foreach (var list in _index.Values)
-            {
-                list.RemoveAll(a => set.Modified.ContainsKey(a.ID));
-            }
-
-            foreach (var prototype in set.Modified.Values)
-            {
-                var accessoryPrototype = (SpriteAccessoryPrototype) prototype;
-                AddToIndexes(accessoryPrototype);
-            }
-        }
-
-        private void AddToIndexes(SpriteAccessoryPrototype accessoryPrototype)
-        {
-            for (var i = 0; i < sizeof(SpriteAccessoryCategories) * 8; i++)
-            {
-                var flag = (SpriteAccessoryCategories) (1 << i);
-                if ((accessoryPrototype.Categories & flag) != 0)
-                    _index[flag].Add(accessoryPrototype);
-            }
+            var flag = (SpriteAccessoryCategories) (1 << i);
+            if ((accessoryPrototype.Categories & flag) != 0)
+                _index[flag].Add(accessoryPrototype);
         }
     }
 }

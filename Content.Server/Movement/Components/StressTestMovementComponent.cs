@@ -1,21 +1,20 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 
-namespace Content.Server.Movement.Components
+namespace Content.Server.Movement.Components;
+
+[RegisterComponent]
+public class StressTestMovementComponent : Component
 {
-    [RegisterComponent]
-    public class StressTestMovementComponent : Component
+    public override string Name => "StressTestMovement";
+
+    public float Progress { get; set; }
+    public Vector2 Origin { get; set; }
+
+    protected override void Startup()
     {
-        public override string Name => "StressTestMovement";
+        base.Startup();
 
-        public float Progress { get; set; }
-        public Vector2 Origin { get; set; }
-
-        protected override void Startup()
-        {
-            base.Startup();
-
-            Origin = Owner.Transform.WorldPosition;
-        }
+        Origin = Owner.Transform.WorldPosition;
     }
 }

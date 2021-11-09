@@ -26,32 +26,31 @@ using Content.Shared.Kitchen;
 using Content.Shared.Module;
 using Robust.Shared.IoC;
 
-namespace Content.Server.IoC
+namespace Content.Server.IoC;
+
+internal static class ServerContentIoC
 {
-    internal static class ServerContentIoC
+    public static void Register()
     {
-        public static void Register()
-        {
-            IoCManager.Register<IChatManager, ChatManager>();
-            IoCManager.Register<IMoMMILink, MoMMILink>();
-            IoCManager.Register<ISandboxManager, SandboxManager>();
-            IoCManager.Register<IModuleManager, ServerModuleManager>();
-            IoCManager.Register<IServerPreferencesManager, ServerPreferencesManager>();
-            IoCManager.Register<IServerDbManager, ServerDbManager>();
-            IoCManager.Register<RecipeManager, RecipeManager>();
-            IoCManager.Register<AlertManager, AlertManager>();
-            IoCManager.Register<ActionManager, ActionManager>();
-            IoCManager.Register<INodeGroupFactory, NodeGroupFactory>();
-            IoCManager.Register<BlackboardManager, BlackboardManager>();
-            IoCManager.Register<ConsiderationsManager, ConsiderationsManager>();
-            IoCManager.Register<IConnectionManager, ConnectionManager>();
-            IoCManager.Register<IObjectivesManager, ObjectivesManager>();
-            IoCManager.Register<IAdminManager, AdminManager>();
-            IoCManager.Register<EuiManager, EuiManager>();
-            IoCManager.Register<IVoteManager, VoteManager>();
-            IoCManager.Register<INpcBehaviorManager, NpcBehaviorManager>();
-            IoCManager.Register<IPlayerLocator, PlayerLocator>();
-            IoCManager.Register<IAfkManager, AfkManager>();
-        }
+        IoCManager.Register<IChatManager, ChatManager>();
+        IoCManager.Register<IMoMMILink, MoMMILink>();
+        IoCManager.Register<ISandboxManager, SandboxManager>();
+        IoCManager.Register<IModuleManager, ServerModuleManager>();
+        IoCManager.Register<IServerPreferencesManager, ServerPreferencesManager>();
+        IoCManager.Register<IServerDbManager, ServerDbManager>();
+        IoCManager.Register<RecipeManager, RecipeManager>();
+        IoCManager.Register<AlertManager, AlertManager>();
+        IoCManager.Register<ActionManager, ActionManager>();
+        IoCManager.Register<INodeGroupFactory, NodeGroupFactory>();
+        IoCManager.Register<BlackboardManager, BlackboardManager>();
+        IoCManager.Register<ConsiderationsManager, ConsiderationsManager>();
+        IoCManager.Register<IConnectionManager, ConnectionManager>();
+        IoCManager.Register<IObjectivesManager, ObjectivesManager>();
+        IoCManager.Register<IAdminManager, AdminManager>();
+        IoCManager.Register<EuiManager, EuiManager>();
+        IoCManager.Register<IVoteManager, VoteManager>();
+        IoCManager.Register<INpcBehaviorManager, NpcBehaviorManager>();
+        IoCManager.Register<IPlayerLocator, PlayerLocator>();
+        IoCManager.Register<IAfkManager, AfkManager>();
     }
 }

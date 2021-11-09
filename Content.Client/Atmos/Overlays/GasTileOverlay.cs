@@ -6,49 +6,48 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 
-namespace Content.Client.Atmos.Overlays
+namespace Content.Client.Atmos.Overlays;
+
+public class GasTileOverlay : Overlay
 {
-    public class GasTileOverlay : Overlay
+    private readonly GasTileOverlaySystem _gasTileOverlaySystem;
+
+    [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly IEyeManager _eyeManager = default!;
+
+    public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
+
+    public GasTileOverlay()
     {
-        private readonly GasTileOverlaySystem _gasTileOverlaySystem;
+        IoCManager.InjectDependencies(this);
 
-        [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IEyeManager _eyeManager = default!;
+        _gasTileOverlaySystem = EntitySystem.Get<GasTileOverlaySystem>();
+    }
 
-        public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
+    protected override void Draw(in OverlayDrawArgs args)
+    {
+        var drawHandle = args.WorldHandle;
 
-        public GasTileOverlay()
+        var mapId = _eyeManager.CurrentMap;
+        var worldBounds = _eyeManager.GetWorldViewbounds();
+
+        foreach (var mapGrid in _mapManager.FindGridsIntersecting(mapId, worldBounds))
         {
-            IoCManager.InjectDependencies(this);
+            if (!_gasTileOverlaySystem.HasData(mapGrid.Index))
+                continue;
 
-            _gasTileOverlaySystem = EntitySystem.Get<GasTileOverlaySystem>();
-        }
+            drawHandle.SetTransform(mapGrid.WorldMatrix);
 
-        protected override void Draw(in OverlayDrawArgs args)
-        {
-            var drawHandle = args.WorldHandle;
-
-            var mapId = _eyeManager.CurrentMap;
-            var worldBounds = _eyeManager.GetWorldViewbounds();
-
-            foreach (var mapGrid in _mapManager.FindGridsIntersecting(mapId, worldBounds))
+            foreach (var tile in mapGrid.GetTilesIntersecting(worldBounds))
             {
-                if (!_gasTileOverlaySystem.HasData(mapGrid.Index))
-                    continue;
-
-                drawHandle.SetTransform(mapGrid.WorldMatrix);
-
-                foreach (var tile in mapGrid.GetTilesIntersecting(worldBounds))
+                var enumerator = _gasTileOverlaySystem.GetOverlays(mapGrid.Index, tile.GridIndices);
+                while (enumerator.MoveNext(out var tuple))
                 {
-                    var enumerator = _gasTileOverlaySystem.GetOverlays(mapGrid.Index, tile.GridIndices);
-                    while (enumerator.MoveNext(out var tuple))
-                    {
-                        drawHandle.DrawTexture(tuple.Texture, new Vector2(tile.X, tile.Y), tuple.Color);
-                    }
+                    drawHandle.DrawTexture(tuple.Texture, new Vector2(tile.X, tile.Y), tuple.Color);
                 }
             }
-
-            drawHandle.SetTransform(Matrix3.Identity);
         }
+
+        drawHandle.SetTransform(Matrix3.Identity);
     }
 }

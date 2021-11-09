@@ -2,36 +2,35 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using System;
 
-namespace Content.Shared.Traitor.Uplink
+namespace Content.Shared.Traitor.Uplink;
+
+[Serializable, NetSerializable]
+public sealed class UplinkBuyListingMessage : BoundUserInterfaceMessage
 {
-    [Serializable, NetSerializable]
-    public sealed class UplinkBuyListingMessage : BoundUserInterfaceMessage
-    {
-        public string ItemId;
+    public string ItemId;
 
-        public UplinkBuyListingMessage(string itemId)
-        {
-            ItemId = itemId;
-        }
+    public UplinkBuyListingMessage(string itemId)
+    {
+        ItemId = itemId;
     }
+}
 
-    [Serializable, NetSerializable]
-    public sealed class UplinkRequestUpdateInterfaceMessage : BoundUserInterfaceMessage
+[Serializable, NetSerializable]
+public sealed class UplinkRequestUpdateInterfaceMessage : BoundUserInterfaceMessage
+{
+    public UplinkRequestUpdateInterfaceMessage()
     {
-        public UplinkRequestUpdateInterfaceMessage()
-        {
 
-        }
     }
+}
 
-    [Serializable, NetSerializable]
-    public sealed class UplinkTryWithdrawTC : BoundUserInterfaceMessage
+[Serializable, NetSerializable]
+public sealed class UplinkTryWithdrawTC : BoundUserInterfaceMessage
+{
+    public int TC;
+
+    public UplinkTryWithdrawTC(int tc)
     {
-        public int TC;
-
-        public UplinkTryWithdrawTC(int tc)
-        {
-            TC = tc;
-        }
+        TC = tc;
     }
 }

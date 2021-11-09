@@ -1,11 +1,10 @@
 ﻿using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.MachineLinking
+namespace Content.Shared.MachineLinking;
+
+[Serializable, NetSerializable]
+public enum SignalSwitchVisuals
 {
-    [Serializable, NetSerializable]
-    public enum SignalSwitchVisuals
-    {
-        On
-    }
+    On
 }

@@ -1,10 +1,9 @@
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.Explosion.Components
+namespace Content.Server.Explosion.Components;
+
+[RegisterComponent]
+public class TriggerOnCollideComponent : Component
 {
-    [RegisterComponent]
-    public class TriggerOnCollideComponent : Component
-    {
-        public override string Name => "TriggerOnCollide";
-    }
+    public override string Name => "TriggerOnCollide";
 }

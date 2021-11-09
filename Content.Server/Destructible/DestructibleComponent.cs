@@ -5,20 +5,19 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Destructible
+namespace Content.Server.Destructible;
+
+/// <summary>
+///     When attached to an <see cref="IEntity"/>, allows it to take damage
+///     and triggers thresholds when reached.
+/// </summary>
+[RegisterComponent]
+public class DestructibleComponent : Component
 {
-    /// <summary>
-    ///     When attached to an <see cref="IEntity"/>, allows it to take damage
-    ///     and triggers thresholds when reached.
-    /// </summary>
-    [RegisterComponent]
-    public class DestructibleComponent : Component
-    {
-        public override string Name => "Destructible";
+    public override string Name => "Destructible";
 
-        [ViewVariables]
-        [DataField("thresholds")]
-        public List<DamageThreshold> Thresholds = new();
+    [ViewVariables]
+    [DataField("thresholds")]
+    public List<DamageThreshold> Thresholds = new();
 
-    }
 }

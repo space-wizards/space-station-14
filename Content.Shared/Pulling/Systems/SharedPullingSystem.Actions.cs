@@ -18,179 +18,178 @@ using Robust.Shared.Physics;
 using Robust.Shared.Players;
 using Robust.Shared.Log;
 
-namespace Content.Shared.Pulling
+namespace Content.Shared.Pulling;
+
+public abstract partial class SharedPullingSystem : EntitySystem
 {
-    public abstract partial class SharedPullingSystem : EntitySystem
+    public bool CanPull(IEntity puller, IEntity pulled)
     {
-        public bool CanPull(IEntity puller, IEntity pulled)
+        if (!puller.HasComponent<SharedPullerComponent>())
         {
-            if (!puller.HasComponent<SharedPullerComponent>())
-            {
-                return false;
-            }
-
-            if (!pulled.TryGetComponent<IPhysBody>(out var _physics))
-            {
-                return false;
-            }
-
-            if (_physics.BodyType == BodyType.Static)
-            {
-                return false;
-            }
-
-            if (puller == pulled)
-            {
-                return false;
-            }
-
-            if (!puller.IsInSameOrNoContainer(pulled))
-            {
-                return false;
-            }
-
-            var startPull = new StartPullAttemptEvent(puller, pulled);
-            RaiseLocalEvent(puller.Uid, startPull);
-            return !startPull.Cancelled;
+            return false;
         }
 
-        public bool TogglePull(IEntity puller, SharedPullableComponent pullable)
+        if (!pulled.TryGetComponent<IPhysBody>(out var _physics))
         {
-            if (pullable.Puller == puller)
-            {
-                return TryStopPull(pullable);
-            }
-            return TryStartPull(puller, pullable.Owner);
+            return false;
         }
 
-        // -- Core attempted actions --
-
-        public bool TryStopPull(SharedPullableComponent pullable, IEntity? user = null)
+        if (_physics.BodyType == BodyType.Static)
         {
-            if (!pullable.BeingPulled)
-            {
-                return false;
-            }
+            return false;
+        }
 
-            var msg = new StopPullingEvent(user?.Uid);
-            RaiseLocalEvent(pullable.OwnerUid, msg);
+        if (puller == pulled)
+        {
+            return false;
+        }
 
-            if (msg.Cancelled) return false;
+        if (!puller.IsInSameOrNoContainer(pulled))
+        {
+            return false;
+        }
 
-            _pullSm.ForceRelationship(null, pullable);
+        var startPull = new StartPullAttemptEvent(puller, pulled);
+        RaiseLocalEvent(puller.Uid, startPull);
+        return !startPull.Cancelled;
+    }
+
+    public bool TogglePull(IEntity puller, SharedPullableComponent pullable)
+    {
+        if (pullable.Puller == puller)
+        {
+            return TryStopPull(pullable);
+        }
+        return TryStartPull(puller, pullable.Owner);
+    }
+
+    // -- Core attempted actions --
+
+    public bool TryStopPull(SharedPullableComponent pullable, IEntity? user = null)
+    {
+        if (!pullable.BeingPulled)
+        {
+            return false;
+        }
+
+        var msg = new StopPullingEvent(user?.Uid);
+        RaiseLocalEvent(pullable.OwnerUid, msg);
+
+        if (msg.Cancelled) return false;
+
+        _pullSm.ForceRelationship(null, pullable);
+        return true;
+    }
+
+    public bool TryStartPull(IEntity puller, IEntity pullable)
+    {
+        if (!puller.TryGetComponent<SharedPullerComponent>(out var pullerComp))
+        {
+            return false;
+        }
+        if (!pullable.TryGetComponent<SharedPullableComponent>(out var pullableComp))
+        {
+            return false;
+        }
+        return TryStartPull(pullerComp, pullableComp);
+    }
+
+    // The main "start pulling" function.
+    public bool TryStartPull(SharedPullerComponent puller, SharedPullableComponent pullable)
+    {
+        if (puller.Pulling == pullable)
             return true;
+
+        // Pulling a new object : Perform sanity checks.
+
+        if (!EntitySystem.Get<SharedPullingSystem>().CanPull(puller.Owner, pullable.Owner))
+        {
+            return false;
         }
 
-        public bool TryStartPull(IEntity puller, IEntity pullable)
+        if (!puller.Owner.TryGetComponent<PhysicsComponent>(out var pullerPhysics))
         {
-            if (!puller.TryGetComponent<SharedPullerComponent>(out var pullerComp))
-            {
-                return false;
-            }
-            if (!pullable.TryGetComponent<SharedPullableComponent>(out var pullableComp))
-            {
-                return false;
-            }
-            return TryStartPull(pullerComp, pullableComp);
+            return false;
         }
 
-        // The main "start pulling" function.
-        public bool TryStartPull(SharedPullerComponent puller, SharedPullableComponent pullable)
+        if (!pullable.Owner.TryGetComponent<PhysicsComponent>(out var pullablePhysics))
         {
-            if (puller.Pulling == pullable)
-                return true;
+            return false;
+        }
 
-            // Pulling a new object : Perform sanity checks.
+        // Ensure that the puller is not currently pulling anything.
+        // If this isn't done, then it happens too late, and the start/stop messages go out of order,
+        //  and next thing you know it thinks it's not pulling anything even though it is!
 
-            if (!EntitySystem.Get<SharedPullingSystem>().CanPull(puller.Owner, pullable.Owner))
+        var oldPullable = puller.Pulling;
+        if (oldPullable != null)
+        {
+            if (oldPullable.TryGetComponent<SharedPullableComponent>(out var oldPullableComp))
             {
-                return false;
-            }
-
-            if (!puller.Owner.TryGetComponent<PhysicsComponent>(out var pullerPhysics))
-            {
-                return false;
-            }
-
-            if (!pullable.Owner.TryGetComponent<PhysicsComponent>(out var pullablePhysics))
-            {
-                return false;
-            }
-
-            // Ensure that the puller is not currently pulling anything.
-            // If this isn't done, then it happens too late, and the start/stop messages go out of order,
-            //  and next thing you know it thinks it's not pulling anything even though it is!
-
-            var oldPullable = puller.Pulling;
-            if (oldPullable != null)
-            {
-                if (oldPullable.TryGetComponent<SharedPullableComponent>(out var oldPullableComp))
-                {
-                    if (!TryStopPull(oldPullableComp))
-                    {
-                        return false;
-                    }
-                }
-                else
-                {
-                    Logger.WarningS("c.go.c.pulling", "Well now you've done it, haven't you? Someone transferred pulling (onto {0}) while presently pulling something that has no Pullable component (on {1})!", pullable.Owner, oldPullable);
-                    return false;
-                }
-            }
-
-            // Ensure that the pullable is not currently being pulled.
-            // Same sort of reasons as before.
-
-            var oldPuller = pullable.Puller;
-            if (oldPuller != null)
-            {
-                if (!TryStopPull(pullable))
+                if (!TryStopPull(oldPullableComp))
                 {
                     return false;
                 }
             }
-
-            // Continue with pulling process.
-
-            var pullAttempt = new PullAttemptMessage(pullerPhysics, pullablePhysics);
-
-            RaiseLocalEvent(puller.OwnerUid, pullAttempt, broadcast: false);
-
-            if (pullAttempt.Cancelled)
+            else
             {
+                Logger.WarningS("c.go.c.pulling", "Well now you've done it, haven't you? Someone transferred pulling (onto {0}) while presently pulling something that has no Pullable component (on {1})!", pullable.Owner, oldPullable);
                 return false;
             }
-
-            RaiseLocalEvent(pullable.OwnerUid, pullAttempt);
-
-            if (pullAttempt.Cancelled)
-            {
-                return false;
-            }
-
-            _pullSm.ForceRelationship(puller, pullable);
-            return true;
         }
 
-        public bool TryMoveTo(SharedPullableComponent pullable, EntityCoordinates to)
+        // Ensure that the pullable is not currently being pulled.
+        // Same sort of reasons as before.
+
+        var oldPuller = pullable.Puller;
+        if (oldPuller != null)
         {
-            if (pullable.Puller == null)
+            if (!TryStopPull(pullable))
             {
                 return false;
             }
-
-            if (!pullable.Owner.HasComponent<PhysicsComponent>())
-            {
-                return false;
-            }
-
-            _pullSm.ForceSetMovingTo(pullable, to);
-            return true;
         }
 
-        public void StopMoveTo(SharedPullableComponent pullable)
+        // Continue with pulling process.
+
+        var pullAttempt = new PullAttemptMessage(pullerPhysics, pullablePhysics);
+
+        RaiseLocalEvent(puller.OwnerUid, pullAttempt, broadcast: false);
+
+        if (pullAttempt.Cancelled)
         {
-            _pullSm.ForceSetMovingTo(pullable, null);
+            return false;
         }
+
+        RaiseLocalEvent(pullable.OwnerUid, pullAttempt);
+
+        if (pullAttempt.Cancelled)
+        {
+            return false;
+        }
+
+        _pullSm.ForceRelationship(puller, pullable);
+        return true;
+    }
+
+    public bool TryMoveTo(SharedPullableComponent pullable, EntityCoordinates to)
+    {
+        if (pullable.Puller == null)
+        {
+            return false;
+        }
+
+        if (!pullable.Owner.HasComponent<PhysicsComponent>())
+        {
+            return false;
+        }
+
+        _pullSm.ForceSetMovingTo(pullable, to);
+        return true;
+    }
+
+    public void StopMoveTo(SharedPullableComponent pullable)
+    {
+        _pullSm.ForceSetMovingTo(pullable, null);
     }
 }

@@ -1,14 +1,13 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.Atmos.Piping.Unary.Components
-{
-    [RegisterComponent]
-    public class GasPassiveVentComponent : Component
-    {
-        public override string Name => "GasPassiveVent";
+namespace Content.Server.Atmos.Piping.Unary.Components;
 
-        [DataField("inlet")]
-        public string InletName = "pipe";
-    }
+[RegisterComponent]
+public class GasPassiveVentComponent : Component
+{
+    public override string Name => "GasPassiveVent";
+
+    [DataField("inlet")]
+    public string InletName = "pipe";
 }

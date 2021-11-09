@@ -7,45 +7,44 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
-namespace Content.Server.Chemistry.EntitySystems
+namespace Content.Server.Chemistry.EntitySystems;
+
+[UsedImplicitly]
+public class RehydratableSystem : EntitySystem
 {
-    [UsedImplicitly]
-    public class RehydratableSystem : EntitySystem
+    [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
+    public override void Initialize()
     {
-        [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
-        public override void Initialize()
-        {
-            base.Initialize();
+        base.Initialize();
 
-            SubscribeLocalEvent<RehydratableComponent, SolutionChangedEvent>(OnSolutionChange);
+        SubscribeLocalEvent<RehydratableComponent, SolutionChangedEvent>(OnSolutionChange);
+    }
+
+    private void OnSolutionChange(EntityUid uid, RehydratableComponent component, SolutionChangedEvent args)
+    {
+        if (_solutionsSystem.GetReagentQuantity(uid, component.CatalystPrototype) > FixedPoint2.Zero)
+        {
+            Expand(component, component.Owner);
+        }
+    }
+
+    // Try not to make this public if you can help it.
+    private void Expand(RehydratableComponent component, IEntity owner)
+    {
+        if (component.Expanding)
+        {
+            return;
         }
 
-        private void OnSolutionChange(EntityUid uid, RehydratableComponent component, SolutionChangedEvent args)
+        component.Expanding = true;
+        owner.PopupMessageEveryone(Loc.GetString("rehydratable-component-expands-message", ("owner", owner)));
+        if (!string.IsNullOrEmpty(component.TargetPrototype))
         {
-            if (_solutionsSystem.GetReagentQuantity(uid, component.CatalystPrototype) > FixedPoint2.Zero)
-            {
-                Expand(component, component.Owner);
-            }
+            var ent = component.Owner.EntityManager.SpawnEntity(component.TargetPrototype,
+                                                                owner.Transform.Coordinates);
+            ent.Transform.AttachToGridOrMap();
         }
 
-        // Try not to make this public if you can help it.
-        private void Expand(RehydratableComponent component, IEntity owner)
-        {
-            if (component.Expanding)
-            {
-                return;
-            }
-
-            component.Expanding = true;
-            owner.PopupMessageEveryone(Loc.GetString("rehydratable-component-expands-message", ("owner", owner)));
-            if (!string.IsNullOrEmpty(component.TargetPrototype))
-            {
-                var ent = component.Owner.EntityManager.SpawnEntity(component.TargetPrototype,
-                    owner.Transform.Coordinates);
-                ent.Transform.AttachToGridOrMap();
-            }
-
-            owner.QueueDelete();
-        }
+        owner.QueueDelete();
     }
 }

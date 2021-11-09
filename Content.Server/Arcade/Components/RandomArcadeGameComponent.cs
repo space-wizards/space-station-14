@@ -2,28 +2,27 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Random;
 
-namespace Content.Server.Arcade.Components
+namespace Content.Server.Arcade.Components;
+
+[RegisterComponent]
+public class RandomArcadeGameComponent : Component, IMapInit
 {
-    [RegisterComponent]
-    public class RandomArcadeGameComponent : Component, IMapInit
+    public override string Name => "RandomArcade";
+
+    public void MapInit()
     {
-        public override string Name => "RandomArcade";
-
-        public void MapInit()
+        var arcades = new[]
         {
-            var arcades = new[]
-            {
-                "BlockGameArcade",
-                "SpaceVillainArcade"
-            };
+            "BlockGameArcade",
+            "SpaceVillainArcade"
+        };
 
-            var entityManager = IoCManager.Resolve<IEntityManager>();
+        var entityManager = IoCManager.Resolve<IEntityManager>();
 
-            entityManager.SpawnEntity(
-                IoCManager.Resolve<IRobustRandom>().Pick(arcades),
-                Owner.Transform.Coordinates);
+        entityManager.SpawnEntity(
+            IoCManager.Resolve<IRobustRandom>().Pick(arcades),
+            Owner.Transform.Coordinates);
 
-            Owner.Delete();
-        }
+        Owner.Delete();
     }
 }

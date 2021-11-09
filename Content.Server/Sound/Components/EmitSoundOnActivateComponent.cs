@@ -1,14 +1,13 @@
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.Sound.Components
+namespace Content.Server.Sound.Components;
+
+/// <summary>
+/// Simple sound emitter that emits sound on ActivateInWorld
+/// </summary>
+[RegisterComponent]
+public class EmitSoundOnActivateComponent : BaseEmitSoundComponent
 {
-    /// <summary>
-    /// Simple sound emitter that emits sound on ActivateInWorld
-    /// </summary>
-    [RegisterComponent]
-    public class EmitSoundOnActivateComponent : BaseEmitSoundComponent
-    {
-        /// <inheritdoc />
-        public override string Name => "EmitSoundOnActivate";
-    }
+    /// <inheritdoc />
+    public override string Name => "EmitSoundOnActivate";
 }

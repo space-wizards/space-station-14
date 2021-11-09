@@ -1,12 +1,11 @@
 ﻿using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Cabinet
+namespace Content.Shared.Cabinet;
+
+[Serializable, NetSerializable]
+public enum ItemCabinetVisuals : byte
 {
-    [Serializable, NetSerializable]
-    public enum ItemCabinetVisuals : byte
-    {
-        IsOpen,
-        ContainsItem
-    }
+    IsOpen,
+    ContainsItem
 }

@@ -14,147 +14,146 @@ using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Body.Mechanism
+namespace Content.Server.Body.Mechanism;
+
+[RegisterComponent]
+[ComponentReference(typeof(SharedMechanismComponent))]
+public class MechanismComponent : SharedMechanismComponent, IAfterInteract
 {
-    [RegisterComponent]
-    [ComponentReference(typeof(SharedMechanismComponent))]
-    public class MechanismComponent : SharedMechanismComponent, IAfterInteract
+    [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(SurgeryUIKey.Key);
+
+    protected override void Initialize()
     {
-        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(SurgeryUIKey.Key);
+        base.Initialize();
 
-        protected override void Initialize()
+        if (UserInterface != null)
         {
-            base.Initialize();
+            UserInterface.OnReceiveMessage += OnUIMessage;
+        }
+    }
 
-            if (UserInterface != null)
+    async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+    {
+        if (eventArgs.Target == null)
+        {
+            return false;
+        }
+
+        CloseAllSurgeryUIs();
+        OptionsCache.Clear();
+        PerformerCache = null;
+        BodyCache = null;
+
+        if (eventArgs.Target.TryGetComponent(out SharedBodyComponent? body))
+        {
+            SendBodyPartListToUser(eventArgs, body);
+        }
+        else if (eventArgs.Target.TryGetComponent<SharedBodyPartComponent>(out var part))
+        {
+            DebugTools.AssertNotNull(part);
+
+            if (!part.TryAddMechanism(this))
             {
-                UserInterface.OnReceiveMessage += OnUIMessage;
+                eventArgs.Target.PopupMessage(eventArgs.User, Loc.GetString("mechanism-component-cannot-fit-message"));
             }
         }
 
-        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        return true;
+    }
+
+    private void SendBodyPartListToUser(AfterInteractEventArgs eventArgs, SharedBodyComponent body)
+    {
+        // Create dictionary to send to client (text to be shown : data sent back if selected)
+        var toSend = new Dictionary<string, int>();
+
+        foreach (var (part, slot) in body.Parts)
         {
-            if (eventArgs.Target == null)
+            // For each limb in the target, add it to our cache if it is a valid option.
+            if (part.CanAddMechanism(this))
             {
-                return false;
-            }
-
-            CloseAllSurgeryUIs();
-            OptionsCache.Clear();
-            PerformerCache = null;
-            BodyCache = null;
-
-            if (eventArgs.Target.TryGetComponent(out SharedBodyComponent? body))
-            {
-                SendBodyPartListToUser(eventArgs, body);
-            }
-            else if (eventArgs.Target.TryGetComponent<SharedBodyPartComponent>(out var part))
-            {
-                DebugTools.AssertNotNull(part);
-
-                if (!part.TryAddMechanism(this))
-                {
-                    eventArgs.Target.PopupMessage(eventArgs.User, Loc.GetString("mechanism-component-cannot-fit-message"));
-                }
-            }
-
-            return true;
-        }
-
-        private void SendBodyPartListToUser(AfterInteractEventArgs eventArgs, SharedBodyComponent body)
-        {
-            // Create dictionary to send to client (text to be shown : data sent back if selected)
-            var toSend = new Dictionary<string, int>();
-
-            foreach (var (part, slot) in body.Parts)
-            {
-                // For each limb in the target, add it to our cache if it is a valid option.
-                if (part.CanAddMechanism(this))
-                {
-                    OptionsCache.Add(IdHash, slot);
-                    toSend.Add(part + ": " + part.Name, IdHash++);
-                }
-            }
-
-            if (OptionsCache.Count > 0 &&
-                eventArgs.User.TryGetComponent(out ActorComponent? actor))
-            {
-                OpenSurgeryUI(actor.PlayerSession);
-                UpdateSurgeryUIBodyPartRequest(actor.PlayerSession, toSend);
-                PerformerCache = eventArgs.User;
-                BodyCache = body;
-            }
-            else // If surgery cannot be performed, show message saying so.
-            {
-                eventArgs.Target?.PopupMessage(eventArgs.User,
-                    Loc.GetString("mechanism-component-no-way-to-install-message", ("partName", Owner.Name)));
+                OptionsCache.Add(IdHash, slot);
+                toSend.Add(part + ": " + part.Name, IdHash++);
             }
         }
 
-        /// <summary>
-        ///     Called after the client chooses from a list of possible BodyParts that can be operated on.
-        /// </summary>
-        private void HandleReceiveBodyPart(int key)
+        if (OptionsCache.Count > 0 &&
+            eventArgs.User.TryGetComponent(out ActorComponent? actor))
         {
-            if (PerformerCache == null ||
-                !PerformerCache.TryGetComponent(out ActorComponent? actor))
-            {
-                return;
-            }
+            OpenSurgeryUI(actor.PlayerSession);
+            UpdateSurgeryUIBodyPartRequest(actor.PlayerSession, toSend);
+            PerformerCache = eventArgs.User;
+            BodyCache = body;
+        }
+        else // If surgery cannot be performed, show message saying so.
+        {
+            eventArgs.Target?.PopupMessage(eventArgs.User,
+                                           Loc.GetString("mechanism-component-no-way-to-install-message", ("partName", Owner.Name)));
+        }
+    }
 
-            CloseSurgeryUI(actor.PlayerSession);
-
-            if (BodyCache == null)
-            {
-                return;
-            }
-
-            // TODO: sanity checks to see whether user is in range, user is still able-bodied, target is still the same, etc etc
-            if (!OptionsCache.TryGetValue(key, out var targetObject))
-            {
-                BodyCache.Owner.PopupMessage(PerformerCache,
-                    Loc.GetString("mechanism-component-no-useful-way-to-use-message",("partName", Owner.Name)));
-                return;
-            }
-
-            var target = (SharedBodyPartComponent) targetObject;
-            var message = target.TryAddMechanism(this)
-                ? Loc.GetString("mechanism-component-jam-inside-message",("ownerName", Owner),("them", PerformerCache))
-                : Loc.GetString("mechanism-component-cannot-fit-message");
-
-            BodyCache.Owner.PopupMessage(PerformerCache, message);
-
-            // TODO: {1:theName}
+    /// <summary>
+    ///     Called after the client chooses from a list of possible BodyParts that can be operated on.
+    /// </summary>
+    private void HandleReceiveBodyPart(int key)
+    {
+        if (PerformerCache == null ||
+            !PerformerCache.TryGetComponent(out ActorComponent? actor))
+        {
+            return;
         }
 
-        private void OpenSurgeryUI(IPlayerSession session)
+        CloseSurgeryUI(actor.PlayerSession);
+
+        if (BodyCache == null)
         {
-            UserInterface?.Open(session);
+            return;
         }
 
-        private void UpdateSurgeryUIBodyPartRequest(IPlayerSession session, Dictionary<string, int> options)
+        // TODO: sanity checks to see whether user is in range, user is still able-bodied, target is still the same, etc etc
+        if (!OptionsCache.TryGetValue(key, out var targetObject))
         {
-            UserInterface?.SendMessage(new RequestBodyPartSurgeryUIMessage(options), session);
+            BodyCache.Owner.PopupMessage(PerformerCache,
+                                         Loc.GetString("mechanism-component-no-useful-way-to-use-message",("partName", Owner.Name)));
+            return;
         }
 
-        private void CloseSurgeryUI(IPlayerSession session)
-        {
-            UserInterface?.Close(session);
-        }
+        var target = (SharedBodyPartComponent) targetObject;
+        var message = target.TryAddMechanism(this)
+            ? Loc.GetString("mechanism-component-jam-inside-message",("ownerName", Owner),("them", PerformerCache))
+            : Loc.GetString("mechanism-component-cannot-fit-message");
 
-        private void CloseAllSurgeryUIs()
-        {
-            UserInterface?.CloseAll();
-        }
+        BodyCache.Owner.PopupMessage(PerformerCache, message);
 
-        private void OnUIMessage(ServerBoundUserInterfaceMessage message)
+        // TODO: {1:theName}
+    }
+
+    private void OpenSurgeryUI(IPlayerSession session)
+    {
+        UserInterface?.Open(session);
+    }
+
+    private void UpdateSurgeryUIBodyPartRequest(IPlayerSession session, Dictionary<string, int> options)
+    {
+        UserInterface?.SendMessage(new RequestBodyPartSurgeryUIMessage(options), session);
+    }
+
+    private void CloseSurgeryUI(IPlayerSession session)
+    {
+        UserInterface?.Close(session);
+    }
+
+    private void CloseAllSurgeryUIs()
+    {
+        UserInterface?.CloseAll();
+    }
+
+    private void OnUIMessage(ServerBoundUserInterfaceMessage message)
+    {
+        switch (message.Message)
         {
-            switch (message.Message)
-            {
-                case ReceiveBodyPartSurgeryUIMessage msg:
-                    HandleReceiveBodyPart(msg.SelectedOptionId);
-                    break;
-            }
+            case ReceiveBodyPartSurgeryUIMessage msg:
+                HandleReceiveBodyPart(msg.SelectedOptionId);
+                break;
         }
     }
 }

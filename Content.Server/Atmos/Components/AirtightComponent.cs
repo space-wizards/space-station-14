@@ -8,40 +8,39 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Atmos.Components
+namespace Content.Server.Atmos.Components;
+
+[RegisterComponent]
+public class AirtightComponent : Component
 {
-    [RegisterComponent]
-    public class AirtightComponent : Component
-    {
-        public override string Name => "Airtight";
+    public override string Name => "Airtight";
 
-        public (GridId Grid, Vector2i Tile) LastPosition { get; set; }
+    public (GridId Grid, Vector2i Tile) LastPosition { get; set; }
 
-        [DataField("airBlockedDirection", customTypeSerializer: typeof(FlagSerializer<AtmosDirectionFlags>))]
-        [ViewVariables]
-        public int InitialAirBlockedDirection { get; set; } = (int) AtmosDirection.All;
+    [DataField("airBlockedDirection", customTypeSerializer: typeof(FlagSerializer<AtmosDirectionFlags>))]
+    [ViewVariables]
+    public int InitialAirBlockedDirection { get; set; } = (int) AtmosDirection.All;
 
-        [ViewVariables]
-        public int CurrentAirBlockedDirection;
+    [ViewVariables]
+    public int CurrentAirBlockedDirection;
 
-        [DataField("airBlocked")]
-        public bool AirBlocked { get; set; } = true;
+    [DataField("airBlocked")]
+    public bool AirBlocked { get; set; } = true;
 
-        [DataField("fixVacuum")]
-        public bool FixVacuum { get; set; } = true;
+    [DataField("fixVacuum")]
+    public bool FixVacuum { get; set; } = true;
 
-        [ViewVariables]
-        [DataField("rotateAirBlocked")]
-        public bool RotateAirBlocked { get; set; } = true;
+    [ViewVariables]
+    [DataField("rotateAirBlocked")]
+    public bool RotateAirBlocked { get; set; } = true;
 
-        [ViewVariables]
-        [DataField("fixAirBlockedDirectionInitialize")]
-        public bool FixAirBlockedDirectionInitialize { get; set; } = true;
+    [ViewVariables]
+    [DataField("fixAirBlockedDirectionInitialize")]
+    public bool FixAirBlockedDirectionInitialize { get; set; } = true;
 
-        [ViewVariables]
-        [DataField("noAirWhenFullyAirBlocked")]
-        public bool NoAirWhenFullyAirBlocked { get; set; } = true;
+    [ViewVariables]
+    [DataField("noAirWhenFullyAirBlocked")]
+    public bool NoAirWhenFullyAirBlocked { get; set; } = true;
 
-        public AtmosDirection AirBlockedDirection => (AtmosDirection)CurrentAirBlockedDirection;
-    }
+    public AtmosDirection AirBlockedDirection => (AtmosDirection)CurrentAirBlockedDirection;
 }

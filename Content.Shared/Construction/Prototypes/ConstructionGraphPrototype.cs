@@ -8,146 +8,145 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.Construction.Prototypes
+namespace Content.Shared.Construction.Prototypes;
+
+[Prototype("constructionGraph")]
+public class ConstructionGraphPrototype : IPrototype, ISerializationHooks
 {
-    [Prototype("constructionGraph")]
-    public class ConstructionGraphPrototype : IPrototype, ISerializationHooks
+    private readonly Dictionary<string, ConstructionGraphNode> _nodes = new();
+    private readonly Dictionary<(string, string), ConstructionGraphNode[]?> _paths = new();
+    private readonly Dictionary<string, Dictionary<ConstructionGraphNode, ConstructionGraphNode?>> _pathfinding = new();
+
+    [ViewVariables]
+    [DataField("id", required: true)]
+    public string ID { get; } = default!;
+
+    [ViewVariables]
+    [DataField("start")]
+    public string? Start { get; }
+
+    [DataField("graph", priority: 0)]
+    private List<ConstructionGraphNode> _graph = new();
+
+    [ViewVariables]
+    public IReadOnlyDictionary<string, ConstructionGraphNode> Nodes => _nodes;
+
+    void ISerializationHooks.AfterDeserialization()
     {
-        private readonly Dictionary<string, ConstructionGraphNode> _nodes = new();
-        private readonly Dictionary<(string, string), ConstructionGraphNode[]?> _paths = new();
-        private readonly Dictionary<string, Dictionary<ConstructionGraphNode, ConstructionGraphNode?>> _pathfinding = new();
+        _nodes.Clear();
 
-        [ViewVariables]
-        [DataField("id", required: true)]
-        public string ID { get; } = default!;
-
-        [ViewVariables]
-        [DataField("start")]
-        public string? Start { get; }
-
-        [DataField("graph", priority: 0)]
-        private List<ConstructionGraphNode> _graph = new();
-
-        [ViewVariables]
-        public IReadOnlyDictionary<string, ConstructionGraphNode> Nodes => _nodes;
-
-        void ISerializationHooks.AfterDeserialization()
+        foreach (var graphNode in _graph)
         {
-            _nodes.Clear();
-
-            foreach (var graphNode in _graph)
+            if (string.IsNullOrEmpty(graphNode.Name))
             {
-                if (string.IsNullOrEmpty(graphNode.Name))
-                {
-                    throw new InvalidDataException($"Name of graph node is null in construction graph {ID}!");
-                }
-
-                _nodes[graphNode.Name] = graphNode;
+                throw new InvalidDataException($"Name of graph node is null in construction graph {ID}!");
             }
 
-            if (string.IsNullOrEmpty(Start) || !_nodes.ContainsKey(Start))
-                throw new InvalidDataException($"Starting node for construction graph {ID} is null, empty or invalid!");
+            _nodes[graphNode.Name] = graphNode;
         }
 
-        public ConstructionGraphEdge? Edge(string startNode, string nextNode)
+        if (string.IsNullOrEmpty(Start) || !_nodes.ContainsKey(Start))
+            throw new InvalidDataException($"Starting node for construction graph {ID} is null, empty or invalid!");
+    }
+
+    public ConstructionGraphEdge? Edge(string startNode, string nextNode)
+    {
+        var start = _nodes[startNode];
+        return start.GetEdge(nextNode);
+    }
+
+    public bool TryPath(string startNode, string finishNode, [NotNullWhen(true)] out ConstructionGraphNode[]? path)
+    {
+        return (path = Path(startNode, finishNode)) != null;
+    }
+
+    public string[]? PathId(string startNode, string finishNode)
+    {
+        if (Path(startNode, finishNode) is not {} path)
+            return null;
+
+        var nodes = new string[path.Length];
+
+        for (var i = 0; i < path.Length; i++)
         {
-            var start = _nodes[startNode];
-            return start.GetEdge(nextNode);
+            nodes[i] = path[i].Name;
         }
 
-        public bool TryPath(string startNode, string finishNode, [NotNullWhen(true)] out ConstructionGraphNode[]? path)
+        return nodes;
+    }
+
+    public ConstructionGraphNode[]? Path(string startNode, string finishNode)
+    {
+        var tuple = (startNode, finishNode);
+
+        if (_paths.ContainsKey(tuple))
+            return _paths[tuple];
+
+        // Get graph given the current start.
+
+        Dictionary<ConstructionGraphNode, ConstructionGraphNode?> pathfindingForStart;
+        if (_pathfinding.ContainsKey(startNode))
         {
-            return (path = Path(startNode, finishNode)) != null;
+            pathfindingForStart = _pathfinding[startNode];
+        }
+        else
+        {
+            pathfindingForStart = _pathfinding[startNode] = PathsForStart(startNode);
         }
 
-        public string[]? PathId(string startNode, string finishNode)
+        // Follow the chain backwards.
+
+        var start = _nodes[startNode];
+        var finish = _nodes[finishNode];
+
+        var current = finish;
+        var path = new List<ConstructionGraphNode>();
+        while (current != start)
         {
-            if (Path(startNode, finishNode) is not {} path)
+            // No path.
+            if (current == null || !pathfindingForStart.ContainsKey(current))
+            {
+                // We remember this for next time.
+                _paths[tuple] = null;
                 return null;
-
-            var nodes = new string[path.Length];
-
-            for (var i = 0; i < path.Length; i++)
-            {
-                nodes[i] = path[i].Name;
             }
 
-            return nodes;
+            path.Add(current);
+
+            current = pathfindingForStart[current];
         }
 
-        public ConstructionGraphNode[]? Path(string startNode, string finishNode)
+        path.Reverse();
+        return _paths[tuple] = path.ToArray();
+    }
+
+    /// <summary>
+    ///     Uses breadth first search for pathfinding.
+    /// </summary>
+    /// <param name="start"></param>
+    private Dictionary<ConstructionGraphNode, ConstructionGraphNode?> PathsForStart(string start)
+    {
+        // TODO: Make this use A* or something, although it's not that important.
+        var startNode = _nodes[start];
+
+        var frontier = new Queue<ConstructionGraphNode>();
+        var cameFrom = new Dictionary<ConstructionGraphNode, ConstructionGraphNode?>();
+
+        frontier.Enqueue(startNode);
+        cameFrom[startNode] = null;
+
+        while (frontier.Count != 0)
         {
-            var tuple = (startNode, finishNode);
-
-            if (_paths.ContainsKey(tuple))
-                return _paths[tuple];
-
-            // Get graph given the current start.
-
-            Dictionary<ConstructionGraphNode, ConstructionGraphNode?> pathfindingForStart;
-            if (_pathfinding.ContainsKey(startNode))
+            var current = frontier.Dequeue();
+            foreach (var edge in current.Edges)
             {
-                pathfindingForStart = _pathfinding[startNode];
+                var edgeNode = _nodes[edge.Target];
+                if(cameFrom.ContainsKey(edgeNode)) continue;
+                frontier.Enqueue(edgeNode);
+                cameFrom[edgeNode] = current;
             }
-            else
-            {
-                pathfindingForStart = _pathfinding[startNode] = PathsForStart(startNode);
-            }
-
-            // Follow the chain backwards.
-
-            var start = _nodes[startNode];
-            var finish = _nodes[finishNode];
-
-            var current = finish;
-            var path = new List<ConstructionGraphNode>();
-            while (current != start)
-            {
-                // No path.
-                if (current == null || !pathfindingForStart.ContainsKey(current))
-                {
-                    // We remember this for next time.
-                    _paths[tuple] = null;
-                    return null;
-                }
-
-                path.Add(current);
-
-                current = pathfindingForStart[current];
-            }
-
-            path.Reverse();
-            return _paths[tuple] = path.ToArray();
         }
 
-        /// <summary>
-        ///     Uses breadth first search for pathfinding.
-        /// </summary>
-        /// <param name="start"></param>
-        private Dictionary<ConstructionGraphNode, ConstructionGraphNode?> PathsForStart(string start)
-        {
-            // TODO: Make this use A* or something, although it's not that important.
-            var startNode = _nodes[start];
-
-            var frontier = new Queue<ConstructionGraphNode>();
-            var cameFrom = new Dictionary<ConstructionGraphNode, ConstructionGraphNode?>();
-
-            frontier.Enqueue(startNode);
-            cameFrom[startNode] = null;
-
-            while (frontier.Count != 0)
-            {
-                var current = frontier.Dequeue();
-                foreach (var edge in current.Edges)
-                {
-                    var edgeNode = _nodes[edge.Target];
-                    if(cameFrom.ContainsKey(edgeNode)) continue;
-                    frontier.Enqueue(edgeNode);
-                    cameFrom[edgeNode] = current;
-                }
-            }
-
-            return cameFrom;
-        }
+        return cameFrom;
     }
 }

@@ -1,13 +1,12 @@
 ﻿using Content.Shared.Dataset;
 using Robust.Shared.Random;
 
-namespace Content.Shared.Random.Helpers
+namespace Content.Shared.Random.Helpers;
+
+public static class SharedRandomExtensions
 {
-    public static class SharedRandomExtensions
+    public static string Pick(this IRobustRandom random, DatasetPrototype prototype)
     {
-        public static string Pick(this IRobustRandom random, DatasetPrototype prototype)
-        {
-            return random.Pick(prototype.Values);
-        }
+        return random.Pick(prototype.Values);
     }
 }

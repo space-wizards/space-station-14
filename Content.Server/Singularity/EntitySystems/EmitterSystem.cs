@@ -20,203 +20,202 @@ using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Timer = Robust.Shared.Timing.Timer;
 
-namespace Content.Server.Singularity.EntitySystems
+namespace Content.Server.Singularity.EntitySystems;
+
+[UsedImplicitly]
+public class EmitterSystem : EntitySystem
 {
-    [UsedImplicitly]
-    public class EmitterSystem : EntitySystem
+    [Dependency] private readonly IRobustRandom _random = default!;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly IRobustRandom _random = default!;
+        base.Initialize();
 
-        public override void Initialize()
+        SubscribeLocalEvent<EmitterComponent, PowerConsumerReceivedChanged>(ReceivedChanged);
+        SubscribeLocalEvent<EmitterComponent, InteractHandEvent>(OnInteractHand);
+    }
+
+    private void OnInteractHand(EntityUid uid, EmitterComponent component, InteractHandEvent args)
+    {
+        args.Handled = true;
+        if (EntityManager.TryGetComponent(uid, out LockComponent? lockComp) && lockComp.Locked)
         {
-            base.Initialize();
-
-            SubscribeLocalEvent<EmitterComponent, PowerConsumerReceivedChanged>(ReceivedChanged);
-            SubscribeLocalEvent<EmitterComponent, InteractHandEvent>(OnInteractHand);
+            component.Owner.PopupMessage(args.User, Loc.GetString("comp-emitter-access-locked", ("target", component.Owner)));
+            return;
         }
 
-        private void OnInteractHand(EntityUid uid, EmitterComponent component, InteractHandEvent args)
-        {
-            args.Handled = true;
-            if (EntityManager.TryGetComponent(uid, out LockComponent? lockComp) && lockComp.Locked)
-            {
-                component.Owner.PopupMessage(args.User, Loc.GetString("comp-emitter-access-locked", ("target", component.Owner)));
-                return;
-            }
-
-            if (component.Owner.TryGetComponent(out PhysicsComponent? phys) && phys.BodyType == BodyType.Static)
-            {
-                if (!component.IsOn)
-                {
-                    SwitchOn(component);
-                    component.Owner.PopupMessage(args.User, Loc.GetString("comp-emitter-turned-on", ("target", component.Owner)));
-                }
-                else
-                {
-                    SwitchOff(component);
-                    component.Owner.PopupMessage(args.User, Loc.GetString("comp-emitter-turned-off", ("target", component.Owner)));
-                }
-            }
-            else
-            {
-                component.Owner.PopupMessage(args.User, Loc.GetString("comp-emitter-not-anchored", ("target", component.Owner)));
-            }
-        }
-
-        private void ReceivedChanged(
-            EntityUid uid,
-            EmitterComponent component,
-            PowerConsumerReceivedChanged args)
+        if (component.Owner.TryGetComponent(out PhysicsComponent? phys) && phys.BodyType == BodyType.Static)
         {
             if (!component.IsOn)
             {
-                return;
-            }
-
-            if (args.ReceivedPower < args.DrawRate)
-            {
-                PowerOff(component);
+                SwitchOn(component);
+                component.Owner.PopupMessage(args.User, Loc.GetString("comp-emitter-turned-on", ("target", component.Owner)));
             }
             else
             {
-                PowerOn(component);
+                SwitchOff(component);
+                component.Owner.PopupMessage(args.User, Loc.GetString("comp-emitter-turned-off", ("target", component.Owner)));
             }
         }
-
-        public void SwitchOff(EmitterComponent component)
+        else
         {
-            component.IsOn = false;
-            if (component.PowerConsumer != null) component.PowerConsumer.DrawRate = 0;
+            component.Owner.PopupMessage(args.User, Loc.GetString("comp-emitter-not-anchored", ("target", component.Owner)));
+        }
+    }
+
+    private void ReceivedChanged(
+        EntityUid uid,
+        EmitterComponent component,
+        PowerConsumerReceivedChanged args)
+    {
+        if (!component.IsOn)
+        {
+            return;
+        }
+
+        if (args.ReceivedPower < args.DrawRate)
+        {
             PowerOff(component);
-            UpdateAppearance(component);
+        }
+        else
+        {
+            PowerOn(component);
+        }
+    }
+
+    public void SwitchOff(EmitterComponent component)
+    {
+        component.IsOn = false;
+        if (component.PowerConsumer != null) component.PowerConsumer.DrawRate = 0;
+        PowerOff(component);
+        UpdateAppearance(component);
+    }
+
+    public void SwitchOn(EmitterComponent component)
+    {
+        component.IsOn = true;
+        if (component.PowerConsumer != null) component.PowerConsumer.DrawRate = component.PowerUseActive;
+        // Do not directly PowerOn().
+        // OnReceivedPowerChanged will get fired due to DrawRate change which will turn it on.
+        UpdateAppearance(component);
+    }
+
+    public void PowerOff(EmitterComponent component)
+    {
+        if (!component.IsPowered)
+        {
+            return;
         }
 
-        public void SwitchOn(EmitterComponent component)
+        component.IsPowered = false;
+
+        // Must be set while emitter powered.
+        DebugTools.AssertNotNull(component.TimerCancel);
+        component.TimerCancel?.Cancel();
+
+        UpdateAppearance(component);
+    }
+
+    public void PowerOn(EmitterComponent component)
+    {
+        if (component.IsPowered)
         {
-            component.IsOn = true;
-            if (component.PowerConsumer != null) component.PowerConsumer.DrawRate = component.PowerUseActive;
-            // Do not directly PowerOn().
-            // OnReceivedPowerChanged will get fired due to DrawRate change which will turn it on.
-            UpdateAppearance(component);
+            return;
         }
 
-        public void PowerOff(EmitterComponent component)
+        component.IsPowered = true;
+
+        component.FireShotCounter = 0;
+        component.TimerCancel = new CancellationTokenSource();
+
+        Timer.Spawn(component.FireBurstDelayMax, () => ShotTimerCallback(component), component.TimerCancel.Token);
+
+        UpdateAppearance(component);
+    }
+
+    private void ShotTimerCallback(EmitterComponent component)
+    {
+        if (component.Deleted) return;
+
+        // Any power-off condition should result in the timer for this method being cancelled
+        // and thus not firing
+        DebugTools.Assert(component.IsPowered);
+        DebugTools.Assert(component.IsOn);
+        DebugTools.Assert(component.PowerConsumer != null && (component.PowerConsumer.DrawRate <= component.PowerConsumer.ReceivedPower));
+
+        Fire(component);
+
+        TimeSpan delay;
+        if (component.FireShotCounter < component.FireBurstSize)
         {
-            if (!component.IsPowered)
-            {
-                return;
-            }
-
-            component.IsPowered = false;
-
-            // Must be set while emitter powered.
-            DebugTools.AssertNotNull(component.TimerCancel);
-            component.TimerCancel?.Cancel();
-
-            UpdateAppearance(component);
+            component.FireShotCounter += 1;
+            delay = component.FireInterval;
         }
-
-        public void PowerOn(EmitterComponent component)
+        else
         {
-            if (component.IsPowered)
-            {
-                return;
-            }
-
-            component.IsPowered = true;
-
             component.FireShotCounter = 0;
-            component.TimerCancel = new CancellationTokenSource();
-
-            Timer.Spawn(component.FireBurstDelayMax, () => ShotTimerCallback(component), component.TimerCancel.Token);
-
-            UpdateAppearance(component);
+            var diff = component.FireBurstDelayMax - component.FireBurstDelayMin;
+            // TIL you can do TimeSpan * double.
+            delay = component.FireBurstDelayMin + _random.NextFloat() * diff;
         }
 
-        private void ShotTimerCallback(EmitterComponent component)
+        // Must be set while emitter powered.
+        DebugTools.AssertNotNull(component.TimerCancel);
+        Timer.Spawn(delay, () => ShotTimerCallback(component), component.TimerCancel!.Token);
+    }
+
+    private void Fire(EmitterComponent component)
+    {
+        var projectile = component.Owner.EntityManager.SpawnEntity(component.BoltType, component.Owner.Transform.Coordinates);
+
+        if (!projectile.TryGetComponent<PhysicsComponent>(out var physicsComponent))
         {
-            if (component.Deleted) return;
-
-            // Any power-off condition should result in the timer for this method being cancelled
-            // and thus not firing
-            DebugTools.Assert(component.IsPowered);
-            DebugTools.Assert(component.IsOn);
-            DebugTools.Assert(component.PowerConsumer != null && (component.PowerConsumer.DrawRate <= component.PowerConsumer.ReceivedPower));
-
-            Fire(component);
-
-            TimeSpan delay;
-            if (component.FireShotCounter < component.FireBurstSize)
-            {
-                component.FireShotCounter += 1;
-                delay = component.FireInterval;
-            }
-            else
-            {
-                component.FireShotCounter = 0;
-                var diff = component.FireBurstDelayMax - component.FireBurstDelayMin;
-                // TIL you can do TimeSpan * double.
-                delay = component.FireBurstDelayMin + _random.NextFloat() * diff;
-            }
-
-            // Must be set while emitter powered.
-            DebugTools.AssertNotNull(component.TimerCancel);
-            Timer.Spawn(delay, () => ShotTimerCallback(component), component.TimerCancel!.Token);
+            Logger.Error("Emitter tried firing a bolt, but it was spawned without a PhysicsComponent");
+            return;
         }
 
-        private void Fire(EmitterComponent component)
+        physicsComponent.BodyStatus = BodyStatus.InAir;
+
+        if (!projectile.TryGetComponent<ProjectileComponent>(out var projectileComponent))
         {
-            var projectile = component.Owner.EntityManager.SpawnEntity(component.BoltType, component.Owner.Transform.Coordinates);
-
-            if (!projectile.TryGetComponent<PhysicsComponent>(out var physicsComponent))
-            {
-                Logger.Error("Emitter tried firing a bolt, but it was spawned without a PhysicsComponent");
-                return;
-            }
-
-            physicsComponent.BodyStatus = BodyStatus.InAir;
-
-            if (!projectile.TryGetComponent<ProjectileComponent>(out var projectileComponent))
-            {
-                Logger.Error("Emitter tried firing a bolt, but it was spawned without a ProjectileComponent");
-                return;
-            }
-
-            projectileComponent.IgnoreEntity(component.Owner);
-
-            physicsComponent
-                .LinearVelocity = component.Owner.Transform.WorldRotation.ToWorldVec() * 20f;
-            projectile.Transform.WorldRotation = component.Owner.Transform.WorldRotation;
-
-            // TODO: Move to projectile's code.
-            Timer.Spawn(3000, () => projectile.Delete());
-
-            SoundSystem.Play(Filter.Pvs(component.Owner), component.FireSound.GetSound(), component.Owner,
-                AudioHelpers.WithVariation(EmitterComponent.Variation).WithVolume(EmitterComponent.Volume).WithMaxDistance(EmitterComponent.Distance));
+            Logger.Error("Emitter tried firing a bolt, but it was spawned without a ProjectileComponent");
+            return;
         }
 
-        private void UpdateAppearance(EmitterComponent component)
+        projectileComponent.IgnoreEntity(component.Owner);
+
+        physicsComponent
+            .LinearVelocity = component.Owner.Transform.WorldRotation.ToWorldVec() * 20f;
+        projectile.Transform.WorldRotation = component.Owner.Transform.WorldRotation;
+
+        // TODO: Move to projectile's code.
+        Timer.Spawn(3000, () => projectile.Delete());
+
+        SoundSystem.Play(Filter.Pvs(component.Owner), component.FireSound.GetSound(), component.Owner,
+                         AudioHelpers.WithVariation(EmitterComponent.Variation).WithVolume(EmitterComponent.Volume).WithMaxDistance(EmitterComponent.Distance));
+    }
+
+    private void UpdateAppearance(EmitterComponent component)
+    {
+        if (component.Appearance == null)
         {
-            if (component.Appearance == null)
-            {
-                return;
-            }
-
-            EmitterVisualState state;
-            if (component.IsPowered)
-            {
-                state = EmitterVisualState.On;
-            }
-            else if (component.IsOn)
-            {
-                state = EmitterVisualState.Underpowered;
-            }
-            else
-            {
-                state = EmitterVisualState.Off;
-            }
-
-            component.Appearance.SetData(EmitterVisuals.VisualState, state);
+            return;
         }
+
+        EmitterVisualState state;
+        if (component.IsPowered)
+        {
+            state = EmitterVisualState.On;
+        }
+        else if (component.IsOn)
+        {
+            state = EmitterVisualState.Underpowered;
+        }
+        else
+        {
+            state = EmitterVisualState.Off;
+        }
+
+        component.Appearance.SetData(EmitterVisuals.VisualState, state);
     }
 }

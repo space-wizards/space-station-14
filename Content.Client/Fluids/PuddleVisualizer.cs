@@ -11,63 +11,61 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 
-namespace Content.Client.Fluids
+namespace Content.Client.Fluids;
+
+[UsedImplicitly]
+public class PuddleVisualizer : AppearanceVisualizer
 {
-    [UsedImplicitly]
-    public class PuddleVisualizer : AppearanceVisualizer
+    [Dependency] private readonly IRobustRandom _random = default!;
+
+    // Whether the underlying solution color should be used
+    [DataField("recolor")] public bool Recolor;
+
+    public override void InitializeEntity(IEntity entity)
     {
-        [Dependency] private readonly IRobustRandom _random = default!;
+        base.InitializeEntity(entity);
 
-        // Whether the underlying solution color should be used
-        [DataField("recolor")] public bool Recolor;
-
-        public override void InitializeEntity(IEntity entity)
+        if (!entity.TryGetComponent(out SpriteComponent? spriteComponent))
         {
-            base.InitializeEntity(entity);
-
-            if (!entity.TryGetComponent(out SpriteComponent? spriteComponent))
-            {
-                Logger.Warning($"Missing SpriteComponent for PuddleVisualizer on entityUid = {entity.Uid}");
-                return;
-            }
-
-            IoCManager.InjectDependencies(this);
-
-            var maxStates = spriteComponent.BaseRSI?.ToArray();
-
-            if (maxStates is not { Length: > 0 }) return;
-
-            var variant = _random.Next(0, maxStates.Length - 1);
-            spriteComponent.LayerSetState(0, maxStates[variant].StateId);
-            spriteComponent.Rotation = Angle.FromDegrees(_random.Next(0, 359));
+            Logger.Warning($"Missing SpriteComponent for PuddleVisualizer on entityUid = {entity.Uid}");
+            return;
         }
 
-        public override void OnChangeData(AppearanceComponent component)
+        IoCManager.InjectDependencies(this);
+
+        var maxStates = spriteComponent.BaseRSI?.ToArray();
+
+        if (maxStates is not { Length: > 0 }) return;
+
+        var variant = _random.Next(0, maxStates.Length - 1);
+        spriteComponent.LayerSetState(0, maxStates[variant].StateId);
+        spriteComponent.Rotation = Angle.FromDegrees(_random.Next(0, 359));
+    }
+
+    public override void OnChangeData(AppearanceComponent component)
+    {
+        base.OnChangeData(component);
+
+        if (component.TryGetData<float>(PuddleVisuals.VolumeScale, out var volumeScale) &&
+            component.Owner.TryGetComponent<SpriteComponent>(out var spriteComponent))
         {
-            base.OnChangeData(component);
-
-            if (component.TryGetData<float>(PuddleVisuals.VolumeScale, out var volumeScale) &&
-                component.Owner.TryGetComponent<SpriteComponent>(out var spriteComponent))
-            {
-                var cappedScale = Math.Min(1.0f, volumeScale * 0.75f +0.25f);
-                UpdateVisual(component, spriteComponent, cappedScale);
-            }
-        }
-
-        private void UpdateVisual(AppearanceComponent component, SpriteComponent spriteComponent, float cappedScale)
-        {
-            Color newColor;
-            if (Recolor && component.TryGetData<Color>(PuddleVisuals.SolutionColor, out var solutionColor))
-            {
-                newColor = solutionColor.WithAlpha(cappedScale);
-            }
-            else
-            {
-                newColor = spriteComponent.Color.WithAlpha(cappedScale);
-            }
-
-            spriteComponent.Color = newColor;
+            var cappedScale = Math.Min(1.0f, volumeScale * 0.75f +0.25f);
+            UpdateVisual(component, spriteComponent, cappedScale);
         }
     }
-    
+
+    private void UpdateVisual(AppearanceComponent component, SpriteComponent spriteComponent, float cappedScale)
+    {
+        Color newColor;
+        if (Recolor && component.TryGetData<Color>(PuddleVisuals.SolutionColor, out var solutionColor))
+        {
+            newColor = solutionColor.WithAlpha(cappedScale);
+        }
+        else
+        {
+            newColor = spriteComponent.Color.WithAlpha(cappedScale);
+        }
+
+        spriteComponent.Color = newColor;
+    }
 }

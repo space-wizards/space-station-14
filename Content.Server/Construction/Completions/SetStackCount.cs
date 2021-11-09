@@ -5,17 +5,16 @@ using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.Construction.Completions
-{
-    [UsedImplicitly]
-    [DataDefinition]
-    public class SetStackCount : IGraphAction
-    {
-        [DataField("amount")] public int Amount { get; } = 1;
+namespace Content.Server.Construction.Completions;
 
-        public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
-        {
-            EntitySystem.Get<StackSystem>().SetCount(uid, Amount);
-        }
+[UsedImplicitly]
+[DataDefinition]
+public class SetStackCount : IGraphAction
+{
+    [DataField("amount")] public int Amount { get; } = 1;
+
+    public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
+    {
+        EntitySystem.Get<StackSystem>().SetCount(uid, Amount);
     }
 }

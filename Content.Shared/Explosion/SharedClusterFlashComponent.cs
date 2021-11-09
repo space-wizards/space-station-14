@@ -1,11 +1,10 @@
 using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Explosion
+namespace Content.Shared.Explosion;
+
+[Serializable, NetSerializable]
+public enum ClusterFlashVisuals : byte
 {
-    [Serializable, NetSerializable]
-    public enum ClusterFlashVisuals : byte
-    {
-        GrenadesCounter
-    }
+    GrenadesCounter
 }

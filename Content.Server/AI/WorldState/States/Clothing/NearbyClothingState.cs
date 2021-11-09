@@ -7,36 +7,35 @@ using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.AI.WorldState.States.Clothing
+namespace Content.Server.AI.WorldState.States.Clothing;
+
+[UsedImplicitly]
+public sealed class NearbyClothingState : CachedStateData<List<IEntity>>
 {
-    [UsedImplicitly]
-    public sealed class NearbyClothingState : CachedStateData<List<IEntity>>
+    public override string Name => "NearbyClothing";
+
+    protected override List<IEntity> GetTrueValue()
     {
-        public override string Name => "NearbyClothing";
+        var result = new List<IEntity>();
 
-        protected override List<IEntity> GetTrueValue()
+        if (!Owner.TryGetComponent(out AiControllerComponent? controller))
         {
-            var result = new List<IEntity>();
-
-            if (!Owner.TryGetComponent(out AiControllerComponent? controller))
-            {
-                return result;
-            }
-
-            foreach (var entity in Visibility
-                .GetNearestEntities(Owner.Transform.Coordinates, typeof(ClothingComponent), controller.VisionRadius))
-            {
-                if (entity.TryGetContainer(out var container))
-                {
-                    if (!container.Owner.HasComponent<EntityStorageComponent>())
-                    {
-                        continue;
-                    }
-                }
-                result.Add(entity);
-            }
-
             return result;
         }
+
+        foreach (var entity in Visibility
+                     .GetNearestEntities(Owner.Transform.Coordinates, typeof(ClothingComponent), controller.VisionRadius))
+        {
+            if (entity.TryGetContainer(out var container))
+            {
+                if (!container.Owner.HasComponent<EntityStorageComponent>())
+                {
+                    continue;
+                }
+            }
+            result.Add(entity);
+        }
+
+        return result;
     }
 }

@@ -5,57 +5,56 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 
-namespace Content.Server.GameTicking.Commands
-{
-    class RespawnCommand : IConsoleCommand
-    {
-        public string Command => "respawn";
-        public string Description => "Respawns a player, kicking them back to the lobby.";
-        public string Help => "respawn [player]";
+namespace Content.Server.GameTicking.Commands;
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+class RespawnCommand : IConsoleCommand
+{
+    public string Command => "respawn";
+    public string Description => "Respawns a player, kicking them back to the lobby.";
+    public string Help => "respawn [player]";
+
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    {
+        var player = shell.Player as IPlayerSession;
+        if (args.Length > 1)
         {
-            var player = shell.Player as IPlayerSession;
-            if (args.Length > 1)
+            shell.WriteLine("Must provide <= 1 argument.");
+            return;
+        }
+
+        var playerMgr = IoCManager.Resolve<IPlayerManager>();
+        var ticker = EntitySystem.Get<GameTicker>();
+
+        NetUserId userId;
+        if (args.Length == 0)
+        {
+            if (player == null)
             {
-                shell.WriteLine("Must provide <= 1 argument.");
+                shell.WriteLine("If not a player, an argument must be given.");
                 return;
             }
 
-            var playerMgr = IoCManager.Resolve<IPlayerManager>();
-            var ticker = EntitySystem.Get<GameTicker>();
+            userId = player.UserId;
+        }
+        else if (!playerMgr.TryGetUserId(args[0], out userId))
+        {
+            shell.WriteLine("Unknown player");
+            return;
+        }
 
-            NetUserId userId;
-            if (args.Length == 0)
-            {
-                if (player == null)
-                {
-                    shell.WriteLine("If not a player, an argument must be given.");
-                    return;
-                }
-
-                userId = player.UserId;
-            }
-            else if (!playerMgr.TryGetUserId(args[0], out userId))
+        if (!playerMgr.TryGetSessionById(userId, out var targetPlayer))
+        {
+            if (!playerMgr.TryGetPlayerData(userId, out var data))
             {
                 shell.WriteLine("Unknown player");
                 return;
             }
 
-            if (!playerMgr.TryGetSessionById(userId, out var targetPlayer))
-            {
-                if (!playerMgr.TryGetPlayerData(userId, out var data))
-                {
-                    shell.WriteLine("Unknown player");
-                    return;
-                }
-
-                data.ContentData()?.WipeMind();
-                shell.WriteLine("Player is not currently online, but they will respawn if they come back online");
-                return;
-            }
-
-            ticker.Respawn(targetPlayer);
+            data.ContentData()?.WipeMind();
+            shell.WriteLine("Player is not currently online, but they will respawn if they come back online");
+            return;
         }
+
+        ticker.Respawn(targetPlayer);
     }
 }

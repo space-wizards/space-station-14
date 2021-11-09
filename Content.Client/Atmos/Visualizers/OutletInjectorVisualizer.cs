@@ -2,17 +2,16 @@ using System;
 using Content.Shared.Atmos.Piping;
 using JetBrains.Annotations;
 
-namespace Content.Client.Atmos.Visualizers
-{
-    [UsedImplicitly]
-    public class OutletInjectorVisualizer : EnabledAtmosDeviceVisualizer
-    {
-        protected override object LayerMap => Layers.Enabled;
-        protected override Enum DataKey => OutletInjectorVisuals.Enabled;
+namespace Content.Client.Atmos.Visualizers;
 
-        enum Layers : byte
-        {
-            Enabled,
-        }
+[UsedImplicitly]
+public class OutletInjectorVisualizer : EnabledAtmosDeviceVisualizer
+{
+    protected override object LayerMap => Layers.Enabled;
+    protected override Enum DataKey => OutletInjectorVisuals.Enabled;
+
+    enum Layers : byte
+    {
+        Enabled,
     }
 }

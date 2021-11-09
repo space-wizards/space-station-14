@@ -2,36 +2,35 @@
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.IoC;
 
-namespace Content.Client.Administration.UI.CustomControls
+namespace Content.Client.Administration.UI.CustomControls;
+
+public class CommandButton : Button
 {
-    public class CommandButton : Button
+    public string? Command { get; set; }
+
+    public CommandButton()
     {
-        public string? Command { get; set; }
+        OnPressed += Execute;
+    }
 
-        public CommandButton()
-        {
-            OnPressed += Execute;
-        }
+    protected virtual bool CanPress()
+    {
+        return string.IsNullOrEmpty(Command) ||
+               IoCManager.Resolve<IClientConGroupController>().CanCommand(Command.Split(' ')[0]);
+    }
 
-        protected virtual bool CanPress()
+    protected override void EnteredTree()
+    {
+        if (!CanPress())
         {
-            return string.IsNullOrEmpty(Command) ||
-                   IoCManager.Resolve<IClientConGroupController>().CanCommand(Command.Split(' ')[0]);
+            Visible = false;
         }
+    }
 
-        protected override void EnteredTree()
-        {
-            if (!CanPress())
-            {
-                Visible = false;
-            }
-        }
-
-        protected virtual void Execute(ButtonEventArgs obj)
-        {
-            // Default is to execute command
-            if (!string.IsNullOrEmpty(Command))
-                IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand(Command);
-        }
+    protected virtual void Execute(ButtonEventArgs obj)
+    {
+        // Default is to execute command
+        if (!string.IsNullOrEmpty(Command))
+            IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand(Command);
     }
 }

@@ -1,12 +1,11 @@
 using Robust.Server;
 
-namespace Content.Server
+namespace Content.Server;
+
+internal static class Program
 {
-    internal static class Program
+    public static void Main(string[] args)
     {
-        public static void Main(string[] args)
-        {
-            ContentStart.Start(args);
-        }
+        ContentStart.Start(args);
     }
 }

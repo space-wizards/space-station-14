@@ -2,20 +2,19 @@
 using Content.Shared.Movement.EntitySystems;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.Clothing
+namespace Content.Client.Clothing;
+
+public class MagbootsSystem : EntitySystem
 {
-    public class MagbootsSystem : EntitySystem
+    public override void Initialize()
     {
-        public override void Initialize()
-        {
-            base.Initialize();
+        base.Initialize();
 
-            SubscribeLocalEvent<MagbootsComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
-        }
+        SubscribeLocalEvent<MagbootsComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
+    }
 
-        private void OnRefreshMovespeed(EntityUid uid, MagbootsComponent component, RefreshMovementSpeedModifiersEvent args)
-        {
-            args.ModifySpeed(component.WalkSpeedModifier, component.SprintSpeedModifier);
-        }
+    private void OnRefreshMovespeed(EntityUid uid, MagbootsComponent component, RefreshMovementSpeedModifiersEvent args)
+    {
+        args.ModifySpeed(component.WalkSpeedModifier, component.SprintSpeedModifier);
     }
 }

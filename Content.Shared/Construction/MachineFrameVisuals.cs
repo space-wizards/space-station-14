@@ -1,10 +1,9 @@
 ﻿using Robust.Shared.Serialization;
 
-namespace Content.Shared.Construction
+namespace Content.Shared.Construction;
+
+[NetSerializable]
+public enum MachineFrameVisuals
 {
-    [NetSerializable]
-    public enum MachineFrameVisuals
-    {
-        State,
-    }
+    State,
 }

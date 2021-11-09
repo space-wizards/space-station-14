@@ -14,199 +14,198 @@ using Robust.Shared.Prototypes;
 using static Content.Shared.Chemistry.Dispenser.SharedReagentDispenserComponent;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
-namespace Content.Client.Chemistry.UI
+namespace Content.Client.Chemistry.UI;
+
+/// <summary>
+/// Client-side UI used to control a <see cref="SharedReagentDispenserComponent"/>
+/// </summary>
+[GenerateTypedNameReferences]
+public partial class ReagentDispenserWindow : SS14Window
 {
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
     /// <summary>
-    /// Client-side UI used to control a <see cref="SharedReagentDispenserComponent"/>
+    /// Create and initialize the dispenser UI client-side. Creates the basic layout,
+    /// actual data isn't filled in until the server sends data about the dispenser.
     /// </summary>
-    [GenerateTypedNameReferences]
-    public partial class ReagentDispenserWindow : SS14Window
+    public ReagentDispenserWindow()
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        RobustXamlLoader.Load(this);
+        IoCManager.InjectDependencies(this);
 
-        /// <summary>
-        /// Create and initialize the dispenser UI client-side. Creates the basic layout,
-        /// actual data isn't filled in until the server sends data about the dispenser.
-        /// </summary>
-        public ReagentDispenserWindow()
+        var dispenseAmountGroup = new ButtonGroup();
+        DispenseButton1.Group = dispenseAmountGroup;
+        DispenseButton5.Group = dispenseAmountGroup;
+        DispenseButton10.Group = dispenseAmountGroup;
+        DispenseButton15.Group = dispenseAmountGroup;
+        DispenseButton20.Group = dispenseAmountGroup;
+        DispenseButton25.Group = dispenseAmountGroup;
+        DispenseButton30.Group = dispenseAmountGroup;
+        DispenseButton50.Group = dispenseAmountGroup;
+        DispenseButton100.Group = dispenseAmountGroup;
+    }
+
+    /// <summary>
+    /// Update the button grid of reagents which can be dispensed.
+    /// <para>The actions for these buttons are set in <see cref="ReagentDispenserBoundUserInterface.UpdateReagentsList"/>.</para>
+    /// </summary>
+    /// <param name="inventory">Reagents which can be dispensed by this dispenser</param>
+    public void UpdateReagentsList(List<ReagentDispenserInventoryEntry> inventory)
+    {
+        if (ChemicalList == null) return;
+        if (inventory == null) return;
+
+        ChemicalList.Children.Clear();
+
+        foreach (var entry in inventory)
         {
-            RobustXamlLoader.Load(this);
-            IoCManager.InjectDependencies(this);
+            if (_prototypeManager.TryIndex(entry.ID, out ReagentPrototype? proto))
+            {
+                ChemicalList.AddChild(new Button {Text = proto.Name});
+            }
+            else
+            {
+                ChemicalList.AddChild(new Button {Text = Loc.GetString("reagent-dispenser-window-reagent-name-not-found-text") });
+            }
+        }
+    }
 
-            var dispenseAmountGroup = new ButtonGroup();
-            DispenseButton1.Group = dispenseAmountGroup;
-            DispenseButton5.Group = dispenseAmountGroup;
-            DispenseButton10.Group = dispenseAmountGroup;
-            DispenseButton15.Group = dispenseAmountGroup;
-            DispenseButton20.Group = dispenseAmountGroup;
-            DispenseButton25.Group = dispenseAmountGroup;
-            DispenseButton30.Group = dispenseAmountGroup;
-            DispenseButton50.Group = dispenseAmountGroup;
-            DispenseButton100.Group = dispenseAmountGroup;
+    /// <summary>
+    /// Update the UI state when new state data is received from the server.
+    /// </summary>
+    /// <param name="state">State data sent by the server.</param>
+    public void UpdateState(BoundUserInterfaceState state)
+    {
+        var castState = (ReagentDispenserBoundUserInterfaceState) state;
+        Title = castState.DispenserName;
+        UpdateContainerInfo(castState);
+
+        // Disable all buttons if not powered
+        if (Contents.Children != null)
+        {
+            ButtonHelpers.SetButtonDisabledRecursive(Contents, !castState.HasPower);
+            EjectButton.Disabled = false;
         }
 
-        /// <summary>
-        /// Update the button grid of reagents which can be dispensed.
-        /// <para>The actions for these buttons are set in <see cref="ReagentDispenserBoundUserInterface.UpdateReagentsList"/>.</para>
-        /// </summary>
-        /// <param name="inventory">Reagents which can be dispensed by this dispenser</param>
-        public void UpdateReagentsList(List<ReagentDispenserInventoryEntry> inventory)
+        // Disable the Clear & Eject button if no beaker
+        if (!castState.HasBeaker)
         {
-            if (ChemicalList == null) return;
-            if (inventory == null) return;
+            ClearButton.Disabled = true;
+            EjectButton.Disabled = true;
+        }
 
-            ChemicalList.Children.Clear();
+        switch (castState.SelectedDispenseAmount.Int())
+        {
+            case 1:
+                DispenseButton1.Pressed = true;
+                break;
+            case 5:
+                DispenseButton5.Pressed = true;
+                break;
+            case 10:
+                DispenseButton10.Pressed = true;
+                break;
+            case 15:
+                DispenseButton15.Pressed = true;
+                break;
+            case 20:
+                DispenseButton20.Pressed = true;
+                break;
+            case 25:
+                DispenseButton25.Pressed = true;
+                break;
+            case 30:
+                DispenseButton30.Pressed = true;
+                break;
+            case 50:
+                DispenseButton50.Pressed = true;
+                break;
+            case 100:
+                DispenseButton100.Pressed = true;
+                break;
+        }
+    }
 
-            foreach (var entry in inventory)
+    /// <summary>
+    /// Update the fill state and list of reagents held by the current reagent container, if applicable.
+    /// <para>Also highlights a reagent if it's dispense button is being mouse hovered.</para>
+    /// </summary>
+    /// <param name="state">State data for the dispenser.</param>
+    /// <param name="highlightedReagentId">Prototype id of the reagent whose dispense button is currently being mouse hovered.</param>
+    public void UpdateContainerInfo(ReagentDispenserBoundUserInterfaceState state, string highlightedReagentId = "")
+    {
+        ContainerInfo.Children.Clear();
+
+        if (!state.HasBeaker)
+        {
+            ContainerInfo.Children.Add(new Label {Text = Loc.GetString("reagent-dispenser-window-no-container-loaded-text") });
+            return;
+        }
+
+        ContainerInfo.Children.Add(new BoxContainer // Name of the container and its fill status (Ex: 44/100u)
+        {
+            Orientation = LayoutOrientation.Horizontal,
+            Children =
             {
-                if (_prototypeManager.TryIndex(entry.ID, out ReagentPrototype? proto))
+                new Label {Text = $"{state.ContainerName}: "},
+                new Label
                 {
-                    ChemicalList.AddChild(new Button {Text = proto.Name});
+                    Text = $"{state.BeakerCurrentVolume}/{state.BeakerMaxVolume}",
+                    StyleClasses = {StyleNano.StyleClassLabelSecondaryColor}
                 }
-                else
-                {
-                    ChemicalList.AddChild(new Button {Text = Loc.GetString("reagent-dispenser-window-reagent-name-not-found-text") });
-                }
             }
+        });
+
+        if (state.ContainerReagents == null)
+        {
+            return;
         }
 
-        /// <summary>
-        /// Update the UI state when new state data is received from the server.
-        /// </summary>
-        /// <param name="state">State data sent by the server.</param>
-        public void UpdateState(BoundUserInterfaceState state)
+        foreach (var reagent in state.ContainerReagents)
         {
-            var castState = (ReagentDispenserBoundUserInterfaceState) state;
-            Title = castState.DispenserName;
-            UpdateContainerInfo(castState);
-
-            // Disable all buttons if not powered
-            if (Contents.Children != null)
+            var name = Loc.GetString("reagent-dispenser-window-unknown-reagent-text");
+            //Try to the prototype for the given reagent. This gives us it's name.
+            if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto))
             {
-                ButtonHelpers.SetButtonDisabledRecursive(Contents, !castState.HasPower);
-                EjectButton.Disabled = false;
+                name = proto.Name;
             }
 
-            // Disable the Clear & Eject button if no beaker
-            if (!castState.HasBeaker)
+            //Check if the reagent is being moused over. If so, color it green.
+            if (proto != null && proto.ID == highlightedReagentId)
             {
-                ClearButton.Disabled = true;
-                EjectButton.Disabled = true;
-            }
-
-            switch (castState.SelectedDispenseAmount.Int())
-            {
-                case 1:
-                    DispenseButton1.Pressed = true;
-                    break;
-                case 5:
-                    DispenseButton5.Pressed = true;
-                    break;
-                case 10:
-                    DispenseButton10.Pressed = true;
-                    break;
-                case 15:
-                    DispenseButton15.Pressed = true;
-                    break;
-                case 20:
-                    DispenseButton20.Pressed = true;
-                    break;
-                case 25:
-                    DispenseButton25.Pressed = true;
-                    break;
-                case 30:
-                    DispenseButton30.Pressed = true;
-                    break;
-                case 50:
-                    DispenseButton50.Pressed = true;
-                    break;
-                case 100:
-                    DispenseButton100.Pressed = true;
-                    break;
-            }
-        }
-
-        /// <summary>
-        /// Update the fill state and list of reagents held by the current reagent container, if applicable.
-        /// <para>Also highlights a reagent if it's dispense button is being mouse hovered.</para>
-        /// </summary>
-        /// <param name="state">State data for the dispenser.</param>
-        /// <param name="highlightedReagentId">Prototype id of the reagent whose dispense button is currently being mouse hovered.</param>
-        public void UpdateContainerInfo(ReagentDispenserBoundUserInterfaceState state, string highlightedReagentId = "")
-        {
-            ContainerInfo.Children.Clear();
-
-            if (!state.HasBeaker)
-            {
-                ContainerInfo.Children.Add(new Label {Text = Loc.GetString("reagent-dispenser-window-no-container-loaded-text") });
-                return;
-            }
-
-            ContainerInfo.Children.Add(new BoxContainer // Name of the container and its fill status (Ex: 44/100u)
-            {
-                Orientation = LayoutOrientation.Horizontal,
-                Children =
+                ContainerInfo.Children.Add(new BoxContainer
                 {
-                    new Label {Text = $"{state.ContainerName}: "},
-                    new Label
+                    Orientation = LayoutOrientation.Horizontal,
+                    Children =
                     {
-                        Text = $"{state.BeakerCurrentVolume}/{state.BeakerMaxVolume}",
-                        StyleClasses = {StyleNano.StyleClassLabelSecondaryColor}
+                        new Label
+                        {
+                            Text = $"{name}: ",
+                            StyleClasses = {StyleNano.StyleClassPowerStateGood}
+                        },
+                        new Label
+                        {
+                            Text = Loc.GetString("reagent-dispenser-window-quantity-label-text", ("quantity", reagent.Quantity)),
+                            StyleClasses = {StyleNano.StyleClassPowerStateGood}
+                        }
                     }
-                }
-            });
-
-            if (state.ContainerReagents == null)
-            {
-                return;
+                });
             }
-
-            foreach (var reagent in state.ContainerReagents)
+            else //Otherwise, color it the normal colors.
             {
-                var name = Loc.GetString("reagent-dispenser-window-unknown-reagent-text");
-                //Try to the prototype for the given reagent. This gives us it's name.
-                if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto))
+                ContainerInfo.Children.Add(new BoxContainer
                 {
-                    name = proto.Name;
-                }
-
-                //Check if the reagent is being moused over. If so, color it green.
-                if (proto != null && proto.ID == highlightedReagentId)
-                {
-                    ContainerInfo.Children.Add(new BoxContainer
+                    Orientation = LayoutOrientation.Horizontal,
+                    Children =
                     {
-                        Orientation = LayoutOrientation.Horizontal,
-                        Children =
+                        new Label {Text = $"{name}: "},
+                        new Label
                         {
-                            new Label
-                            {
-                                Text = $"{name}: ",
-                                StyleClasses = {StyleNano.StyleClassPowerStateGood}
-                            },
-                            new Label
-                            {
-                                Text = Loc.GetString("reagent-dispenser-window-quantity-label-text", ("quantity", reagent.Quantity)),
-                                StyleClasses = {StyleNano.StyleClassPowerStateGood}
-                            }
+                            Text = Loc.GetString("reagent-dispenser-window-quantity-label-text", ("quantity", reagent.Quantity)),
+                            StyleClasses = {StyleNano.StyleClassLabelSecondaryColor}
                         }
-                    });
-                }
-                else //Otherwise, color it the normal colors.
-                {
-                    ContainerInfo.Children.Add(new BoxContainer
-                    {
-                        Orientation = LayoutOrientation.Horizontal,
-                        Children =
-                        {
-                            new Label {Text = $"{name}: "},
-                            new Label
-                            {
-                                Text = Loc.GetString("reagent-dispenser-window-quantity-label-text", ("quantity", reagent.Quantity)),
-                                StyleClasses = {StyleNano.StyleClassLabelSecondaryColor}
-                            }
-                        }
-                    });
-                }
+                    }
+                });
             }
         }
     }

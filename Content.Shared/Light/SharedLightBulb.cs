@@ -1,27 +1,26 @@
 using Robust.Shared.Serialization;
 using System;
 
-namespace Content.Shared.Light
+namespace Content.Shared.Light;
+
+[Serializable, NetSerializable]
+public enum LightBulbState : byte
 {
-    [Serializable, NetSerializable]
-    public enum LightBulbState : byte
-    {
-        Normal,
-        Broken,
-        Burned,
-    }
+    Normal,
+    Broken,
+    Burned,
+}
 
-    [Serializable, NetSerializable]
-    public enum LightBulbVisuals : byte
-    {
-        State,
-        Color
-    }
+[Serializable, NetSerializable]
+public enum LightBulbVisuals : byte
+{
+    State,
+    Color
+}
 
-    [Serializable, NetSerializable]
-    public enum LightBulbType : byte
-    {
-        Bulb,
-        Tube,
-    }
+[Serializable, NetSerializable]
+public enum LightBulbType : byte
+{
+    Bulb,
+    Tube,
 }

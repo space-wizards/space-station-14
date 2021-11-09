@@ -3,28 +3,27 @@ using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.Cuffs.Components
+namespace Content.Client.Cuffs.Components;
+
+[RegisterComponent]
+[ComponentReference(typeof(SharedHandcuffComponent))]
+public class HandcuffComponent : SharedHandcuffComponent
 {
-    [RegisterComponent]
-    [ComponentReference(typeof(SharedHandcuffComponent))]
-    public class HandcuffComponent : SharedHandcuffComponent
+    public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
     {
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
+        if (curState is not HandcuffedComponentState state)
         {
-            if (curState is not HandcuffedComponentState state)
-            {
-                return;
-            }
+            return;
+        }
 
-            if (state.IconState == string.Empty)
-            {
-                return;
-            }
+        if (state.IconState == string.Empty)
+        {
+            return;
+        }
 
-            if (Owner.TryGetComponent<SpriteComponent>(out var sprite))
-            {
-                sprite.LayerSetState(0, new RSI.StateId(state.IconState)); // TODO: safety check to see if RSI contains the state?
-            }
+        if (Owner.TryGetComponent<SpriteComponent>(out var sprite))
+        {
+            sprite.LayerSetState(0, new RSI.StateId(state.IconState)); // TODO: safety check to see if RSI contains the state?
         }
     }
 }

@@ -4,22 +4,21 @@ using Content.Shared.Interaction;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.MachineLinking.System
+namespace Content.Server.MachineLinking.System;
+
+[UsedImplicitly]
+public class SignalButtonSystem : EntitySystem
 {
-    [UsedImplicitly]
-    public class SignalButtonSystem : EntitySystem
+    public override void Initialize()
     {
-        public override void Initialize()
-        {
-            base.Initialize();
+        base.Initialize();
 
-            SubscribeLocalEvent<SignalButtonComponent, InteractHandEvent>(OnInteractHand);
-        }
+        SubscribeLocalEvent<SignalButtonComponent, InteractHandEvent>(OnInteractHand);
+    }
 
-        private void OnInteractHand(EntityUid uid, SignalButtonComponent component, InteractHandEvent args)
-        {
-            RaiseLocalEvent(uid, new InvokePortEvent("pressed"), false);
-            args.Handled = true;
-        }
+    private void OnInteractHand(EntityUid uid, SignalButtonComponent component, InteractHandEvent args)
+    {
+        RaiseLocalEvent(uid, new InvokePortEvent("pressed"), false);
+        args.Handled = true;
     }
 }

@@ -5,30 +5,29 @@ using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.Atmos.Commands
+namespace Content.Server.Atmos.Commands;
+
+[AdminCommand(AdminFlags.Debug)]
+public class ShowAtmos : IConsoleCommand
 {
-    [AdminCommand(AdminFlags.Debug)]
-    public class ShowAtmos : IConsoleCommand
+    public string Command => "showatmos";
+    public string Description => "Toggles seeing atmos debug overlay.";
+    public string Help => $"Usage: {Command}";
+
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        public string Command => "showatmos";
-        public string Description => "Toggles seeing atmos debug overlay.";
-        public string Help => $"Usage: {Command}";
-
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        var player = shell.Player as IPlayerSession;
+        if (player == null)
         {
-            var player = shell.Player as IPlayerSession;
-            if (player == null)
-            {
-                shell.WriteLine("You must be a player to use this command.");
-                return;
-            }
-
-            var atmosDebug = EntitySystem.Get<AtmosDebugOverlaySystem>();
-            var enabled = atmosDebug.ToggleObserver(player);
-
-            shell.WriteLine(enabled
-                ? "Enabled the atmospherics debug overlay."
-                : "Disabled the atmospherics debug overlay.");
+            shell.WriteLine("You must be a player to use this command.");
+            return;
         }
+
+        var atmosDebug = EntitySystem.Get<AtmosDebugOverlaySystem>();
+        var enabled = atmosDebug.ToggleObserver(player);
+
+        shell.WriteLine(enabled
+                            ? "Enabled the atmospherics debug overlay."
+                            : "Disabled the atmospherics debug overlay.");
     }
 }

@@ -4,34 +4,33 @@ using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Client.Atmos.Visualizers
+namespace Content.Client.Atmos.Visualizers;
+
+[UsedImplicitly]
+public class AtmosPlaqueVisualizer : AppearanceVisualizer
 {
-    [UsedImplicitly]
-    public class AtmosPlaqueVisualizer : AppearanceVisualizer
+    [DataField("layer")]
+    private int Layer { get; }
+
+    public override void InitializeEntity(IEntity entity)
     {
-        [DataField("layer")]
-        private int Layer { get; }
+        base.InitializeEntity(entity);
 
-        public override void InitializeEntity(IEntity entity)
+        entity.GetComponentOrNull<SpriteComponent>()?.LayerMapReserveBlank(Layer);
+    }
+
+    public override void OnChangeData(AppearanceComponent component)
+    {
+        base.OnChangeData(component);
+
+        if (!component.Owner.TryGetComponent(out SpriteComponent? sprite))
         {
-            base.InitializeEntity(entity);
-
-            entity.GetComponentOrNull<SpriteComponent>()?.LayerMapReserveBlank(Layer);
+            return;
         }
 
-        public override void OnChangeData(AppearanceComponent component)
+        if (!component.TryGetData(AtmosPlaqueVisuals.State, out string state))
         {
-            base.OnChangeData(component);
-
-            if (!component.Owner.TryGetComponent(out SpriteComponent? sprite))
-            {
-                return;
-            }
-
-            if (!component.TryGetData(AtmosPlaqueVisuals.State, out string state))
-            {
-                sprite.LayerSetState(Layer, state);
-            }
+            sprite.LayerSetState(Layer, state);
         }
     }
 }

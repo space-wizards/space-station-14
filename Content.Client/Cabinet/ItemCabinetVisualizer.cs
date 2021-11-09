@@ -4,36 +4,35 @@ using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Client.Cabinet
+namespace Content.Client.Cabinet;
+
+[UsedImplicitly]
+public class ItemCabinetVisualizer : AppearanceVisualizer
 {
-    [UsedImplicitly]
-    public class ItemCabinetVisualizer : AppearanceVisualizer
+    [DataField("openState", required: true)]
+    private string _openState = default!;
+
+    [DataField("closedState", required: true)]
+    private string _closedState = default!;
+
+    public override void OnChangeData(AppearanceComponent component)
     {
-        [DataField("openState", required: true)]
-        private string _openState = default!;
+        base.OnChangeData(component);
 
-        [DataField("closedState", required: true)]
-        private string _closedState = default!;
-
-        public override void OnChangeData(AppearanceComponent component)
+        if (component.Owner.TryGetComponent<SpriteComponent>(out var sprite)
+            && component.TryGetData(ItemCabinetVisuals.IsOpen, out bool isOpen)
+            && component.TryGetData(ItemCabinetVisuals.ContainsItem, out bool contains))
         {
-            base.OnChangeData(component);
-
-            if (component.Owner.TryGetComponent<SpriteComponent>(out var sprite)
-                && component.TryGetData(ItemCabinetVisuals.IsOpen, out bool isOpen)
-                && component.TryGetData(ItemCabinetVisuals.ContainsItem, out bool contains))
-            {
-                var state = isOpen ? _openState : _closedState;
-                sprite.LayerSetState(ItemCabinetVisualLayers.Door, state);
-                sprite.LayerSetVisible(ItemCabinetVisualLayers.ContainsItem, contains);
-            }
+            var state = isOpen ? _openState : _closedState;
+            sprite.LayerSetState(ItemCabinetVisualLayers.Door, state);
+            sprite.LayerSetVisible(ItemCabinetVisualLayers.ContainsItem, contains);
         }
     }
+}
 
-    public enum ItemCabinetVisualLayers : byte
-    {
-        Door,
-        ContainsItem
-        //Welded
-    }
+public enum ItemCabinetVisualLayers : byte
+{
+    Door,
+    ContainsItem
+    //Welded
 }

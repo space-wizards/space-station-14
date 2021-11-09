@@ -1,9 +1,8 @@
 using Content.Shared.Interaction;
 
-namespace Content.Client.Interactable
-{
-    public sealed class InteractionSystem : SharedInteractionSystem
-    {
+namespace Content.Client.Interactable;
 
-    }
+public sealed class InteractionSystem : SharedInteractionSystem
+{
+
 }

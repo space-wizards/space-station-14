@@ -11,84 +11,83 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using static Content.IntegrationTests.Tests.Destructible.DestructibleTestPrototypes;
 
-namespace Content.IntegrationTests.Tests.Destructible
+namespace Content.IntegrationTests.Tests.Destructible;
+
+public class DestructibleDestructionTest : ContentIntegrationTest
 {
-    public class DestructibleDestructionTest : ContentIntegrationTest
+    [Test]
+    public async Task Test()
     {
-        [Test]
-        public async Task Test()
+        var server = StartServer(new ServerContentIntegrationOption
         {
-            var server = StartServer(new ServerContentIntegrationOption
+            ExtraPrototypes = Prototypes
+        });
+
+        await server.WaitIdleAsync();
+
+        var sEntityManager = server.ResolveDependency<IEntityManager>();
+        var sMapManager = server.ResolveDependency<IMapManager>();
+        var sPrototypeManager = server.ResolveDependency<IPrototypeManager>();
+        var sEntitySystemManager = server.ResolveDependency<IEntitySystemManager>();
+
+        IEntity sDestructibleEntity = null;
+        DamageableComponent sDamageableComponent = null;
+        TestDestructibleListenerSystem sTestThresholdListenerSystem = null;
+
+        await server.WaitPost(() =>
+        {
+            var gridId = GetMainGrid(sMapManager).GridEntityId;
+            var coordinates = new EntityCoordinates(gridId, 0, 0);
+
+            sDestructibleEntity = sEntityManager.SpawnEntity(DestructibleDestructionEntityId, coordinates);
+            sDamageableComponent = sDestructibleEntity.GetComponent<DamageableComponent>();
+            sTestThresholdListenerSystem = sEntitySystemManager.GetEntitySystem<TestDestructibleListenerSystem>();
+        });
+
+        await server.WaitAssertion(() =>
+        {
+            var coordinates = sDestructibleEntity.Transform.Coordinates;
+            var bruteDamageGroup = sPrototypeManager.Index<DamageGroupPrototype>("TestBrute");
+            DamageSpecifier bruteDamage = new(bruteDamageGroup,50);
+
+            Assert.DoesNotThrow(() =>
             {
-                ExtraPrototypes = Prototypes
+                EntitySystem.Get<DamageableSystem>().TryChangeDamage(sDestructibleEntity.Uid, bruteDamage, true);
             });
 
-            await server.WaitIdleAsync();
+            Assert.That(sTestThresholdListenerSystem.ThresholdsReached.Count, Is.EqualTo(1));
 
-            var sEntityManager = server.ResolveDependency<IEntityManager>();
-            var sMapManager = server.ResolveDependency<IMapManager>();
-            var sPrototypeManager = server.ResolveDependency<IPrototypeManager>();
-            var sEntitySystemManager = server.ResolveDependency<IEntitySystemManager>();
+            var threshold = sTestThresholdListenerSystem.ThresholdsReached[0].Threshold;
 
-            IEntity sDestructibleEntity = null;
-            DamageableComponent sDamageableComponent = null;
-            TestDestructibleListenerSystem sTestThresholdListenerSystem = null;
+            Assert.That(threshold.Triggered, Is.True);
+            Assert.That(threshold.Behaviors.Count, Is.EqualTo(3));
 
-            await server.WaitPost(() =>
+            var spawnEntitiesBehavior = (SpawnEntitiesBehavior) threshold.Behaviors.Single(b => b is SpawnEntitiesBehavior);
+
+            Assert.That(spawnEntitiesBehavior.Spawn.Count, Is.EqualTo(1));
+            Assert.That(spawnEntitiesBehavior.Spawn.Keys.Single(), Is.EqualTo(SpawnedEntityId));
+            Assert.That(spawnEntitiesBehavior.Spawn.Values.Single(), Is.EqualTo(new MinMax {Min = 1, Max = 1}));
+
+            var entitiesInRange = IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(coordinates, 2);
+            var found = false;
+
+            foreach (var entity in entitiesInRange)
             {
-                var gridId = GetMainGrid(sMapManager).GridEntityId;
-                var coordinates = new EntityCoordinates(gridId, 0, 0);
-
-                sDestructibleEntity = sEntityManager.SpawnEntity(DestructibleDestructionEntityId, coordinates);
-                sDamageableComponent = sDestructibleEntity.GetComponent<DamageableComponent>();
-                sTestThresholdListenerSystem = sEntitySystemManager.GetEntitySystem<TestDestructibleListenerSystem>();
-            });
-
-            await server.WaitAssertion(() =>
-            {
-                var coordinates = sDestructibleEntity.Transform.Coordinates;
-                var bruteDamageGroup = sPrototypeManager.Index<DamageGroupPrototype>("TestBrute");
-                DamageSpecifier bruteDamage = new(bruteDamageGroup,50);
-
-                Assert.DoesNotThrow(() =>
+                if (entity.Prototype == null)
                 {
-                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(sDestructibleEntity.Uid, bruteDamage, true);
-                });
-
-                Assert.That(sTestThresholdListenerSystem.ThresholdsReached.Count, Is.EqualTo(1));
-
-                var threshold = sTestThresholdListenerSystem.ThresholdsReached[0].Threshold;
-
-                Assert.That(threshold.Triggered, Is.True);
-                Assert.That(threshold.Behaviors.Count, Is.EqualTo(3));
-
-                var spawnEntitiesBehavior = (SpawnEntitiesBehavior) threshold.Behaviors.Single(b => b is SpawnEntitiesBehavior);
-
-                Assert.That(spawnEntitiesBehavior.Spawn.Count, Is.EqualTo(1));
-                Assert.That(spawnEntitiesBehavior.Spawn.Keys.Single(), Is.EqualTo(SpawnedEntityId));
-                Assert.That(spawnEntitiesBehavior.Spawn.Values.Single(), Is.EqualTo(new MinMax {Min = 1, Max = 1}));
-
-                var entitiesInRange = IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(coordinates, 2);
-                var found = false;
-
-                foreach (var entity in entitiesInRange)
-                {
-                    if (entity.Prototype == null)
-                    {
-                        continue;
-                    }
-
-                    if (entity.Prototype.Name != SpawnedEntityId)
-                    {
-                        continue;
-                    }
-
-                    found = true;
-                    break;
+                    continue;
                 }
 
-                Assert.That(found, Is.True);
-            });
-        }
+                if (entity.Prototype.Name != SpawnedEntityId)
+                {
+                    continue;
+                }
+
+                found = true;
+                break;
+            }
+
+            Assert.That(found, Is.True);
+        });
     }
 }

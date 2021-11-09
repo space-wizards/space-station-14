@@ -11,36 +11,35 @@ using Content.Server.Clothing.Components;
 using Content.Shared.Inventory;
 using Robust.Shared.IoC;
 
-namespace Content.Server.AI.Utility.ExpandableActions.Clothing.Shoes
+namespace Content.Server.AI.Utility.ExpandableActions.Clothing.Shoes;
+
+public sealed class PickUpAnyNearbyShoesExp : ExpandableUtilityAction
 {
-    public sealed class PickUpAnyNearbyShoesExp : ExpandableUtilityAction
+    public override float Bonus => UtilityAction.NormalBonus;
+
+    protected override IEnumerable<Func<float>> GetCommonConsiderations(Blackboard context)
     {
-        public override float Bonus => UtilityAction.NormalBonus;
+        var considerationsManager = IoCManager.Resolve<ConsiderationsManager>();
 
-        protected override IEnumerable<Func<float>> GetCommonConsiderations(Blackboard context)
+        return new[]
         {
-            var considerationsManager = IoCManager.Resolve<ConsiderationsManager>();
+            considerationsManager.Get<ClothingInSlotCon>().Slot(EquipmentSlotDefines.Slots.SHOES, context)
+                                 .InverseBoolCurve(context),
+            considerationsManager.Get<ClothingInInventoryCon>().Slot(EquipmentSlotDefines.SlotFlags.SHOES, context)
+                                 .InverseBoolCurve(context)
+        };
+    }
 
-            return new[]
-            {
-                considerationsManager.Get<ClothingInSlotCon>().Slot(EquipmentSlotDefines.Slots.SHOES, context)
-                    .InverseBoolCurve(context),
-                considerationsManager.Get<ClothingInInventoryCon>().Slot(EquipmentSlotDefines.SlotFlags.SHOES, context)
-                    .InverseBoolCurve(context)
-            };
-        }
+    public override IEnumerable<UtilityAction> GetActions(Blackboard context)
+    {
+        var owner = context.GetState<SelfState>().GetValue();
 
-        public override IEnumerable<UtilityAction> GetActions(Blackboard context)
+        foreach (var entity in context.GetState<NearbyClothingState>().GetValue())
         {
-            var owner = context.GetState<SelfState>().GetValue();
-
-            foreach (var entity in context.GetState<NearbyClothingState>().GetValue())
+            if (entity.TryGetComponent(out ClothingComponent? clothing) &&
+                (clothing.SlotFlags & EquipmentSlotDefines.SlotFlags.SHOES) != 0)
             {
-                if (entity.TryGetComponent(out ClothingComponent? clothing) &&
-                    (clothing.SlotFlags & EquipmentSlotDefines.SlotFlags.SHOES) != 0)
-                {
-                    yield return new PickUpShoes {Owner = owner, Target = entity, Bonus = Bonus};
-                }
+                yield return new PickUpShoes {Owner = owner, Target = entity, Bonus = Bonus};
             }
         }
     }

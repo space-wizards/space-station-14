@@ -9,63 +9,62 @@ using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Timing;
 
-namespace Content.IntegrationTests.Tests.Commands
+namespace Content.IntegrationTests.Tests.Commands;
+
+[TestFixture]
+[TestOf(typeof(RestartRoundNowCommand))]
+public class RestartRoundNowTest : ContentIntegrationTest
 {
-    [TestFixture]
-    [TestOf(typeof(RestartRoundNowCommand))]
-    public class RestartRoundNowTest : ContentIntegrationTest
+    [Test]
+    [TestCase(true)]
+    [TestCase(false)]
+    public async Task RestartRoundAfterStart(bool lobbyEnabled)
     {
-        [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task RestartRoundAfterStart(bool lobbyEnabled)
+        var (_, server) = await StartConnectedServerClientPair(serverOptions: new ServerContentIntegrationOption
         {
-            var (_, server) = await StartConnectedServerClientPair(serverOptions: new ServerContentIntegrationOption
+            CVarOverrides =
             {
-                CVarOverrides =
-                {
-                    [CCVars.GameMap.Name] = "Maps/saltern.yml"
-                }
-            });
+                [CCVars.GameMap.Name] = "Maps/saltern.yml"
+            }
+        });
 
-            await server.WaitIdleAsync();
+        await server.WaitIdleAsync();
 
-            var configManager = server.ResolveDependency<IConfigurationManager>();
-            var entityManager = server.ResolveDependency<IEntityManager>();
-            var gameTicker = entityManager.EntitySysManager.GetEntitySystem<GameTicker>();
+        var configManager = server.ResolveDependency<IConfigurationManager>();
+        var entityManager = server.ResolveDependency<IEntityManager>();
+        var gameTicker = entityManager.EntitySysManager.GetEntitySystem<GameTicker>();
 
-            await server.WaitRunTicks(30);
+        await server.WaitRunTicks(30);
 
-            GameTick tickBeforeRestart = default;
+        GameTick tickBeforeRestart = default;
 
-            server.Assert(() =>
+        server.Assert(() =>
+        {
+            configManager.SetCVar(CCVars.GameLobbyEnabled, lobbyEnabled);
+
+            Assert.That(gameTicker.RunLevel, Is.EqualTo(GameRunLevel.InRound));
+
+            tickBeforeRestart = entityManager.CurrentTick;
+
+            var command = new RestartRoundNowCommand();
+            command.Execute(null, string.Empty, Array.Empty<string>());
+
+            if (lobbyEnabled)
             {
-                configManager.SetCVar(CCVars.GameLobbyEnabled, lobbyEnabled);
+                Assert.That(gameTicker.RunLevel, Is.Not.EqualTo(GameRunLevel.InRound));
+            }
+        });
 
-                Assert.That(gameTicker.RunLevel, Is.EqualTo(GameRunLevel.InRound));
+        await server.WaitIdleAsync();
+        await server.WaitRunTicks(5);
 
-                tickBeforeRestart = entityManager.CurrentTick;
+        server.Assert(() =>
+        {
+            var tickAfterRestart = entityManager.CurrentTick;
 
-                var command = new RestartRoundNowCommand();
-                command.Execute(null, string.Empty, Array.Empty<string>());
+            Assert.That(tickBeforeRestart < tickAfterRestart);
+        });
 
-                if (lobbyEnabled)
-                {
-                    Assert.That(gameTicker.RunLevel, Is.Not.EqualTo(GameRunLevel.InRound));
-                }
-            });
-
-            await server.WaitIdleAsync();
-            await server.WaitRunTicks(5);
-
-            server.Assert(() =>
-            {
-                var tickAfterRestart = entityManager.CurrentTick;
-
-                Assert.That(tickBeforeRestart < tickAfterRestart);
-            });
-
-            await server.WaitRunTicks(60);
-        }
+        await server.WaitRunTicks(60);
     }
 }

@@ -2,17 +2,16 @@
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.Atmos.EntitySystems
+namespace Content.Server.Atmos.EntitySystems;
+
+[UsedImplicitly]
+public class GasAnalyzerSystem : EntitySystem
 {
-    [UsedImplicitly]
-    public class GasAnalyzerSystem : EntitySystem
+    public override void Update(float frameTime)
     {
-        public override void Update(float frameTime)
+        foreach (var analyzer in EntityManager.EntityQuery<GasAnalyzerComponent>(true))
         {
-            foreach (var analyzer in EntityManager.EntityQuery<GasAnalyzerComponent>(true))
-            {
-                analyzer.Update(frameTime);
-            }
+            analyzer.Update(frameTime);
         }
     }
 }

@@ -18,260 +18,259 @@ using Robust.Shared.Log;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Body.Surgery.Components
+namespace Content.Server.Body.Surgery.Components;
+
+/// <summary>
+///     Server-side component representing a generic tool capable of performing surgery.
+///     For instance, the scalpel.
+/// </summary>
+[RegisterComponent]
+public class SurgeryToolComponent : Component, ISurgeon, IAfterInteract
 {
-    /// <summary>
-    ///     Server-side component representing a generic tool capable of performing surgery.
-    ///     For instance, the scalpel.
-    /// </summary>
-    [RegisterComponent]
-    public class SurgeryToolComponent : Component, ISurgeon, IAfterInteract
+    public override string Name => "SurgeryTool";
+
+    private readonly Dictionary<int, object> _optionsCache = new();
+
+    [DataField("baseOperateTime")]
+    private float _baseOperateTime = 5;
+
+    private ISurgeon.MechanismRequestCallback? _callbackCache;
+
+    private int _idHash;
+
+    [DataField("surgeryType")]
+    private SurgeryType _surgeryType = SurgeryType.Incision;
+
+    [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(SurgeryUIKey.Key);
+
+    public SharedBodyComponent? BodyCache { get; private set; }
+
+    public IEntity? PerformerCache { get; private set; }
+
+    async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
     {
-        public override string Name => "SurgeryTool";
-
-        private readonly Dictionary<int, object> _optionsCache = new();
-
-        [DataField("baseOperateTime")]
-        private float _baseOperateTime = 5;
-
-        private ISurgeon.MechanismRequestCallback? _callbackCache;
-
-        private int _idHash;
-
-        [DataField("surgeryType")]
-        private SurgeryType _surgeryType = SurgeryType.Incision;
-
-        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(SurgeryUIKey.Key);
-
-        public SharedBodyComponent? BodyCache { get; private set; }
-
-        public IEntity? PerformerCache { get; private set; }
-
-        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        if (eventArgs.Target == null)
         {
-            if (eventArgs.Target == null)
-            {
-                return false;
-            }
-
-            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
-            {
-                return false;
-            }
-
-            CloseAllSurgeryUIs();
-
-            // Attempt surgery on a body by sending a list of operable parts for the client to choose from
-            if (eventArgs.Target.TryGetComponent(out SharedBodyComponent? body))
-            {
-                // Create dictionary to send to client (text to be shown : data sent back if selected)
-                var toSend = new Dictionary<string, int>();
-
-                foreach (var (part, slot) in body.Parts)
-                {
-                    // For each limb in the target, add it to our cache if it is a valid option.
-                    if (part.SurgeryCheck(_surgeryType))
-                    {
-                        _optionsCache.Add(_idHash, part);
-                        toSend.Add(slot.Id + ": " + part.Name, _idHash++);
-                    }
-                }
-
-                if (_optionsCache.Count > 0)
-                {
-                    OpenSurgeryUI(actor.PlayerSession);
-                    UpdateSurgeryUIBodyPartRequest(actor.PlayerSession, toSend);
-                    PerformerCache = eventArgs.User; // Also, cache the data.
-                    BodyCache = body;
-                }
-                else // If surgery cannot be performed, show message saying so.
-                {
-                    NotUsefulPopup();
-                }
-            }
-            else if (eventArgs.Target.TryGetComponent<SharedBodyPartComponent>(out var part))
-            {
-                // Attempt surgery on a DroppedBodyPart - there's only one possible target so no need for selection UI
-                PerformerCache = eventArgs.User;
-
-                // If surgery can be performed...
-                if (!part.SurgeryCheck(_surgeryType))
-                {
-                    NotUsefulPopup();
-                    return true;
-                }
-
-                // ...do the surgery.
-                if (part.AttemptSurgery(_surgeryType, part, this,
-                    eventArgs.User))
-                {
-                    return true;
-                }
-
-                // Log error if the surgery fails somehow.
-                Logger.Debug($"Error when trying to perform surgery on ${nameof(SharedBodyPartComponent)} {eventArgs.User.Name}");
-                throw new InvalidOperationException();
-            }
-
-            return true;
+            return false;
         }
 
-        public float BaseOperationTime { get => _baseOperateTime; set => _baseOperateTime = value; }
-
-        public void RequestMechanism(IEnumerable<SharedMechanismComponent> options, ISurgeon.MechanismRequestCallback callback)
+        if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
         {
+            return false;
+        }
+
+        CloseAllSurgeryUIs();
+
+        // Attempt surgery on a body by sending a list of operable parts for the client to choose from
+        if (eventArgs.Target.TryGetComponent(out SharedBodyComponent? body))
+        {
+            // Create dictionary to send to client (text to be shown : data sent back if selected)
             var toSend = new Dictionary<string, int>();
-            foreach (var mechanism in options)
+
+            foreach (var (part, slot) in body.Parts)
             {
-                _optionsCache.Add(_idHash, mechanism);
-                toSend.Add(mechanism.Name, _idHash++);
+                // For each limb in the target, add it to our cache if it is a valid option.
+                if (part.SurgeryCheck(_surgeryType))
+                {
+                    _optionsCache.Add(_idHash, part);
+                    toSend.Add(slot.Id + ": " + part.Name, _idHash++);
+                }
             }
 
-            if (_optionsCache.Count > 0 && PerformerCache != null)
+            if (_optionsCache.Count > 0)
             {
-                OpenSurgeryUI(PerformerCache.GetComponent<ActorComponent>().PlayerSession);
-                UpdateSurgeryUIMechanismRequest(PerformerCache.GetComponent<ActorComponent>().PlayerSession,
-                    toSend);
-                _callbackCache = callback;
+                OpenSurgeryUI(actor.PlayerSession);
+                UpdateSurgeryUIBodyPartRequest(actor.PlayerSession, toSend);
+                PerformerCache = eventArgs.User; // Also, cache the data.
+                BodyCache = body;
             }
-            else
+            else // If surgery cannot be performed, show message saying so.
             {
-                Logger.Debug("Error on callback from mechanisms: there were no viable options to choose from!");
-                throw new InvalidOperationException();
-            }
-        }
-
-        protected override void Initialize()
-        {
-            base.Initialize();
-
-            if (UserInterface != null)
-            {
-                UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
+                NotUsefulPopup();
             }
         }
-
-        private void OpenSurgeryUI(IPlayerSession session)
+        else if (eventArgs.Target.TryGetComponent<SharedBodyPartComponent>(out var part))
         {
-            UserInterface?.Open(session);
+            // Attempt surgery on a DroppedBodyPart - there's only one possible target so no need for selection UI
+            PerformerCache = eventArgs.User;
 
-            var message = new SurgeryWindowOpenMessage(this);
+            // If surgery can be performed...
+            if (!part.SurgeryCheck(_surgeryType))
+            {
+                NotUsefulPopup();
+                return true;
+            }
+
+            // ...do the surgery.
+            if (part.AttemptSurgery(_surgeryType, part, this,
+                                    eventArgs.User))
+            {
+                return true;
+            }
+
+            // Log error if the surgery fails somehow.
+            Logger.Debug($"Error when trying to perform surgery on ${nameof(SharedBodyPartComponent)} {eventArgs.User.Name}");
+            throw new InvalidOperationException();
+        }
+
+        return true;
+    }
+
+    public float BaseOperationTime { get => _baseOperateTime; set => _baseOperateTime = value; }
+
+    public void RequestMechanism(IEnumerable<SharedMechanismComponent> options, ISurgeon.MechanismRequestCallback callback)
+    {
+        var toSend = new Dictionary<string, int>();
+        foreach (var mechanism in options)
+        {
+            _optionsCache.Add(_idHash, mechanism);
+            toSend.Add(mechanism.Name, _idHash++);
+        }
+
+        if (_optionsCache.Count > 0 && PerformerCache != null)
+        {
+            OpenSurgeryUI(PerformerCache.GetComponent<ActorComponent>().PlayerSession);
+            UpdateSurgeryUIMechanismRequest(PerformerCache.GetComponent<ActorComponent>().PlayerSession,
+                                            toSend);
+            _callbackCache = callback;
+        }
+        else
+        {
+            Logger.Debug("Error on callback from mechanisms: there were no viable options to choose from!");
+            throw new InvalidOperationException();
+        }
+    }
+
+    protected override void Initialize()
+    {
+        base.Initialize();
+
+        if (UserInterface != null)
+        {
+            UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
+        }
+    }
+
+    private void OpenSurgeryUI(IPlayerSession session)
+    {
+        UserInterface?.Open(session);
+
+        var message = new SurgeryWindowOpenMessage(this);
 
 #pragma warning disable 618
-            SendMessage(message);
+        SendMessage(message);
 #pragma warning restore 618
-            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, message);
-        }
+        Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, message);
+    }
 
-        private void UpdateSurgeryUIBodyPartRequest(IPlayerSession session, Dictionary<string, int> options)
+    private void UpdateSurgeryUIBodyPartRequest(IPlayerSession session, Dictionary<string, int> options)
+    {
+        UserInterface?.SendMessage(new RequestBodyPartSurgeryUIMessage(options), session);
+    }
+
+    private void UpdateSurgeryUIMechanismRequest(IPlayerSession session, Dictionary<string, int> options)
+    {
+        UserInterface?.SendMessage(new RequestMechanismSurgeryUIMessage(options), session);
+    }
+
+    private void ClearUIData()
+    {
+        _optionsCache.Clear();
+
+        PerformerCache = null;
+        BodyCache = null;
+        _callbackCache = null;
+    }
+
+    private void CloseSurgeryUI(IPlayerSession session)
+    {
+        UserInterface?.Close(session);
+        ClearUIData();
+    }
+
+    public void CloseAllSurgeryUIs()
+    {
+        UserInterface?.CloseAll();
+        ClearUIData();
+    }
+
+    private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage message)
+    {
+        switch (message.Message)
         {
-            UserInterface?.SendMessage(new RequestBodyPartSurgeryUIMessage(options), session);
+            case ReceiveBodyPartSurgeryUIMessage msg:
+                HandleReceiveBodyPart(msg.SelectedOptionId);
+                break;
+            case ReceiveMechanismSurgeryUIMessage msg:
+                HandleReceiveMechanism(msg.SelectedOptionId);
+                break;
         }
+    }
 
-        private void UpdateSurgeryUIMechanismRequest(IPlayerSession session, Dictionary<string, int> options)
+    /// <summary>
+    ///     Called after the client chooses from a list of possible
+    ///     <see cref="SharedBodyPartComponent"/> that can be operated on.
+    /// </summary>
+    private void HandleReceiveBodyPart(int key)
+    {
+        if (PerformerCache == null ||
+            !PerformerCache.TryGetComponent(out ActorComponent? actor))
         {
-            UserInterface?.SendMessage(new RequestMechanismSurgeryUIMessage(options), session);
+            return;
         }
 
-        private void ClearUIData()
+        CloseSurgeryUI(actor.PlayerSession);
+        // TODO: sanity checks to see whether user is in range, user is still able-bodied, target is still the same, etc etc
+        if (!_optionsCache.TryGetValue(key, out var targetObject) ||
+            BodyCache == null)
         {
-            _optionsCache.Clear();
-
-            PerformerCache = null;
-            BodyCache = null;
-            _callbackCache = null;
+            NotUsefulAnymorePopup();
+            return;
         }
 
-        private void CloseSurgeryUI(IPlayerSession session)
+        var target = (SharedBodyPartComponent) targetObject!;
+
+        // TODO BODY Reconsider
+        if (!target.AttemptSurgery(_surgeryType, BodyCache, this, PerformerCache))
         {
-            UserInterface?.Close(session);
-            ClearUIData();
+            NotUsefulAnymorePopup();
         }
+    }
 
-        public void CloseAllSurgeryUIs()
+    /// <summary>
+    ///     Called after the client chooses from a list of possible
+    ///     <see cref="SharedMechanismComponent"/> to choose from.
+    /// </summary>
+    private void HandleReceiveMechanism(int key)
+    {
+        // TODO: sanity checks to see whether user is in range, user is still able-bodied, target is still the same, etc etc
+        if (BodyCache == null ||
+            !_optionsCache.TryGetValue(key, out var targetObject) ||
+            targetObject is not MechanismComponent target ||
+            PerformerCache == null ||
+            !PerformerCache.TryGetComponent(out ActorComponent? actor))
         {
-            UserInterface?.CloseAll();
-            ClearUIData();
+            NotUsefulAnymorePopup();
+            return;
         }
 
-        private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage message)
-        {
-            switch (message.Message)
-            {
-                case ReceiveBodyPartSurgeryUIMessage msg:
-                    HandleReceiveBodyPart(msg.SelectedOptionId);
-                    break;
-                case ReceiveMechanismSurgeryUIMessage msg:
-                    HandleReceiveMechanism(msg.SelectedOptionId);
-                    break;
-            }
-        }
+        CloseSurgeryUI(actor.PlayerSession);
+        _callbackCache?.Invoke(target, BodyCache, this, PerformerCache);
+    }
 
-        /// <summary>
-        ///     Called after the client chooses from a list of possible
-        ///     <see cref="SharedBodyPartComponent"/> that can be operated on.
-        /// </summary>
-        private void HandleReceiveBodyPart(int key)
-        {
-            if (PerformerCache == null ||
-                !PerformerCache.TryGetComponent(out ActorComponent? actor))
-            {
-                return;
-            }
+    private void NotUsefulPopup()
+    {
+        if (PerformerCache == null) return;
 
-            CloseSurgeryUI(actor.PlayerSession);
-            // TODO: sanity checks to see whether user is in range, user is still able-bodied, target is still the same, etc etc
-            if (!_optionsCache.TryGetValue(key, out var targetObject) ||
-                BodyCache == null)
-            {
-                NotUsefulAnymorePopup();
-                return;
-            }
+        BodyCache?.Owner.PopupMessage(PerformerCache,
+                                      Loc.GetString("surgery-tool-component-not-useful-message", ("bodyPart", Owner)));
+    }
 
-            var target = (SharedBodyPartComponent) targetObject!;
+    private void NotUsefulAnymorePopup()
+    {
+        if (PerformerCache == null) return;
 
-            // TODO BODY Reconsider
-            if (!target.AttemptSurgery(_surgeryType, BodyCache, this, PerformerCache))
-            {
-                NotUsefulAnymorePopup();
-            }
-        }
-
-        /// <summary>
-        ///     Called after the client chooses from a list of possible
-        ///     <see cref="SharedMechanismComponent"/> to choose from.
-        /// </summary>
-        private void HandleReceiveMechanism(int key)
-        {
-            // TODO: sanity checks to see whether user is in range, user is still able-bodied, target is still the same, etc etc
-            if (BodyCache == null ||
-                !_optionsCache.TryGetValue(key, out var targetObject) ||
-                targetObject is not MechanismComponent target ||
-                PerformerCache == null ||
-                !PerformerCache.TryGetComponent(out ActorComponent? actor))
-            {
-                NotUsefulAnymorePopup();
-                return;
-            }
-
-            CloseSurgeryUI(actor.PlayerSession);
-            _callbackCache?.Invoke(target, BodyCache, this, PerformerCache);
-        }
-
-        private void NotUsefulPopup()
-        {
-            if (PerformerCache == null) return;
-
-            BodyCache?.Owner.PopupMessage(PerformerCache,
-                Loc.GetString("surgery-tool-component-not-useful-message", ("bodyPart", Owner)));
-        }
-
-        private void NotUsefulAnymorePopup()
-        {
-            if (PerformerCache == null) return;
-
-            BodyCache?.Owner.PopupMessage(PerformerCache,
-                Loc.GetString("surgery-tool-component-not-useful-anymore-message", ("bodyPart", Owner)));
-        }
+        BodyCache?.Owner.PopupMessage(PerformerCache,
+                                      Loc.GetString("surgery-tool-component-not-useful-anymore-message", ("bodyPart", Owner)));
     }
 }

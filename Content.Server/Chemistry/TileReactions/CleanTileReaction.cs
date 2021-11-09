@@ -9,30 +9,29 @@ using Content.Shared.FixedPoint;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.Chemistry.TileReactions
+namespace Content.Server.Chemistry.TileReactions;
+
+[DataDefinition]
+public class CleanTileReaction : ITileReaction
 {
-    [DataDefinition]
-    public class CleanTileReaction : ITileReaction
+    FixedPoint2 ITileReaction.TileReact(TileRef tile, ReagentPrototype reagent, FixedPoint2 reactVolume)
     {
-        FixedPoint2 ITileReaction.TileReact(TileRef tile, ReagentPrototype reagent, FixedPoint2 reactVolume)
+        var entities = tile.GetEntitiesInTileFast().ToArray();
+        var amount = FixedPoint2.Zero;
+        foreach (var entity in entities)
         {
-            var entities = tile.GetEntitiesInTileFast().ToArray();
-            var amount = FixedPoint2.Zero;
-            foreach (var entity in entities)
+            if (entity.TryGetComponent(out CleanableComponent? cleanable))
             {
-                if (entity.TryGetComponent(out CleanableComponent? cleanable))
-                {
-                    var next = amount + cleanable.CleanAmount;
-                    // Nothing left?
-                    if (reactVolume < next)
-                        break;
+                var next = amount + cleanable.CleanAmount;
+                // Nothing left?
+                if (reactVolume < next)
+                    break;
 
-                    amount = next;
-                    entity.QueueDelete();
-                }
+                amount = next;
+                entity.QueueDelete();
             }
-
-            return amount;
         }
+
+        return amount;
     }
 }

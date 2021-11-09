@@ -1,25 +1,24 @@
 ﻿using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Rotation
+namespace Content.Shared.Rotation;
+
+[Serializable, NetSerializable]
+public enum RotationVisuals
 {
-    [Serializable, NetSerializable]
-    public enum RotationVisuals
-    {
-        RotationState
-    }
+    RotationState
+}
 
-    [Serializable, NetSerializable]
-    public enum RotationState
-    {
-        /// <summary>
-        ///     Standing up
-        /// </summary>
-        Vertical,
+[Serializable, NetSerializable]
+public enum RotationState
+{
+    /// <summary>
+    ///     Standing up
+    /// </summary>
+    Vertical,
 
-        /// <summary>
-        ///     Laying down
-        /// </summary>
-        Horizontal,
-    }
+    /// <summary>
+    ///     Laying down
+    /// </summary>
+    Horizontal,
 }

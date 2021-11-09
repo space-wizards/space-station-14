@@ -7,82 +7,81 @@ using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 
-namespace Content.Client.EscapeMenu
+namespace Content.Client.EscapeMenu;
+
+internal sealed class EscapeMenuOwner : IEscapeMenuOwner
 {
-    internal sealed class EscapeMenuOwner : IEscapeMenuOwner
+    [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
+    [Dependency] private readonly IInputManager _inputManager = default!;
+    [Dependency] private readonly IStateManager _stateManager = default!;
+    [Dependency] private readonly IGameHud _gameHud = default!;
+
+    private UI.EscapeMenu? _escapeMenu;
+
+    public void Initialize()
     {
-        [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
-        [Dependency] private readonly IInputManager _inputManager = default!;
-        [Dependency] private readonly IStateManager _stateManager = default!;
-        [Dependency] private readonly IGameHud _gameHud = default!;
+        _stateManager.OnStateChanged += StateManagerOnOnStateChanged;
 
-        private UI.EscapeMenu? _escapeMenu;
+        _gameHud.EscapeButtonToggled += _setOpenValue;
+    }
 
-        public void Initialize()
+    private void StateManagerOnOnStateChanged(StateChangedEventArgs obj)
+    {
+        if (obj.NewState is GameScreenBase)
         {
-            _stateManager.OnStateChanged += StateManagerOnOnStateChanged;
+            // Switched TO GameScreen.
+            _escapeMenu = new UI.EscapeMenu(_consoleHost);
 
-            _gameHud.EscapeButtonToggled += _setOpenValue;
+            _escapeMenu.OnClose += () => _gameHud.EscapeButtonDown = false;
+
+            _inputManager.SetInputCommand(EngineKeyFunctions.EscapeMenu,
+                                          InputCmdHandler.FromDelegate(_ => Enabled()));
         }
-
-        private void StateManagerOnOnStateChanged(StateChangedEventArgs obj)
+        else if (obj.OldState is GameScreenBase)
         {
-            if (obj.NewState is GameScreenBase)
-            {
-                // Switched TO GameScreen.
-                _escapeMenu = new UI.EscapeMenu(_consoleHost);
+            // Switched FROM GameScreen.
+            _escapeMenu?.Dispose();
+            _escapeMenu = null;
 
-                _escapeMenu.OnClose += () => _gameHud.EscapeButtonDown = false;
-
-                _inputManager.SetInputCommand(EngineKeyFunctions.EscapeMenu,
-                    InputCmdHandler.FromDelegate(_ => Enabled()));
-            }
-            else if (obj.OldState is GameScreenBase)
-            {
-                // Switched FROM GameScreen.
-                _escapeMenu?.Dispose();
-                _escapeMenu = null;
-
-                _inputManager.SetInputCommand(EngineKeyFunctions.EscapeMenu, null);
-            }
-        }
-
-        private void Enabled()
-        {
-            if (_escapeMenu != null && _escapeMenu.IsOpen)
-            {
-                if (_escapeMenu.IsAtFront())
-                {
-                    _setOpenValue(false);
-                }
-                else
-                {
-                    _escapeMenu.MoveToFront();
-                }
-            }
-            else
-            {
-                _setOpenValue(true);
-            }
-        }
-
-        private void _setOpenValue(bool value)
-        {
-            if (value)
-            {
-                _gameHud.EscapeButtonDown = true;
-                _escapeMenu?.OpenCentered();
-            }
-            else
-            {
-                _gameHud.EscapeButtonDown = false;
-                _escapeMenu?.Close();
-            }
+            _inputManager.SetInputCommand(EngineKeyFunctions.EscapeMenu, null);
         }
     }
 
-    public interface IEscapeMenuOwner
+    private void Enabled()
     {
-        void Initialize();
+        if (_escapeMenu != null && _escapeMenu.IsOpen)
+        {
+            if (_escapeMenu.IsAtFront())
+            {
+                _setOpenValue(false);
+            }
+            else
+            {
+                _escapeMenu.MoveToFront();
+            }
+        }
+        else
+        {
+            _setOpenValue(true);
+        }
     }
+
+    private void _setOpenValue(bool value)
+    {
+        if (value)
+        {
+            _gameHud.EscapeButtonDown = true;
+            _escapeMenu?.OpenCentered();
+        }
+        else
+        {
+            _gameHud.EscapeButtonDown = false;
+            _escapeMenu?.Close();
+        }
+    }
+}
+
+public interface IEscapeMenuOwner
+{
+    void Initialize();
 }

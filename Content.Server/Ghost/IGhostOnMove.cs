@@ -1,6 +1,5 @@
-namespace Content.Server.Ghost
+namespace Content.Server.Ghost;
+
+public interface IGhostOnMove
 {
-    public interface IGhostOnMove
-    {
-    }
 }

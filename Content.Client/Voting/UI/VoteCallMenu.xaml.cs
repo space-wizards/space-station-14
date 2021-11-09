@@ -12,145 +12,144 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 
-namespace Content.Client.Voting.UI
+namespace Content.Client.Voting.UI;
+
+[GenerateTypedNameReferences]
+public partial class VoteCallMenu : BaseWindow
 {
-    [GenerateTypedNameReferences]
-    public partial class VoteCallMenu : BaseWindow
+    [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
+    [Dependency] private readonly IVoteManager _voteManager = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+
+    public static readonly (string name, StandardVoteType type, (string name, string id)[]? secondaries)[]
+        AvailableVoteTypes =
+        {
+            ("ui-vote-type-restart", StandardVoteType.Restart, null),
+            ("ui-vote-type-gamemode", StandardVoteType.Preset, null)
+        };
+
+    public VoteCallMenu()
     {
-        [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
-        [Dependency] private readonly IVoteManager _voteManager = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        IoCManager.InjectDependencies(this);
+        RobustXamlLoader.Load(this);
 
-        public static readonly (string name, StandardVoteType type, (string name, string id)[]? secondaries)[]
-            AvailableVoteTypes =
-            {
-                ("ui-vote-type-restart", StandardVoteType.Restart, null),
-                ("ui-vote-type-gamemode", StandardVoteType.Preset, null)
-            };
+        Stylesheet = IoCManager.Resolve<IStylesheetManager>().SheetSpace;
+        CloseButton.OnPressed += _ => Close();
 
-        public VoteCallMenu()
+        for (var i = 0; i < AvailableVoteTypes.Length; i++)
         {
-            IoCManager.InjectDependencies(this);
-            RobustXamlLoader.Load(this);
-
-            Stylesheet = IoCManager.Resolve<IStylesheetManager>().SheetSpace;
-            CloseButton.OnPressed += _ => Close();
-
-            for (var i = 0; i < AvailableVoteTypes.Length; i++)
-            {
-                var (text, _, _) = AvailableVoteTypes[i];
-                VoteTypeButton.AddItem(Loc.GetString(text), i);
-            }
-
-            VoteTypeButton.OnItemSelected += VoteTypeSelected;
-            VoteSecondButton.OnItemSelected += VoteSecondSelected;
-            CreateButton.OnPressed += CreatePressed;
+            var (text, _, _) = AvailableVoteTypes[i];
+            VoteTypeButton.AddItem(Loc.GetString(text), i);
         }
 
-        protected override void Opened()
-        {
-            base.Opened();
+        VoteTypeButton.OnItemSelected += VoteTypeSelected;
+        VoteSecondButton.OnItemSelected += VoteSecondSelected;
+        CreateButton.OnPressed += CreatePressed;
+    }
 
-            _voteManager.CanCallVoteChanged += CanCallVoteChanged;
-        }
+    protected override void Opened()
+    {
+        base.Opened();
 
-        public override void Close()
-        {
-            base.Close();
+        _voteManager.CanCallVoteChanged += CanCallVoteChanged;
+    }
 
-            _voteManager.CanCallVoteChanged -= CanCallVoteChanged;
-        }
+    public override void Close()
+    {
+        base.Close();
 
-        protected override void FrameUpdate(FrameEventArgs args)
-        {
-            base.FrameUpdate(args);
+        _voteManager.CanCallVoteChanged -= CanCallVoteChanged;
+    }
 
-            UpdateVoteTimeout();
-        }
+    protected override void FrameUpdate(FrameEventArgs args)
+    {
+        base.FrameUpdate(args);
 
-        private void CanCallVoteChanged(bool obj)
-        {
-            if (!obj)
-                Close();
-        }
+        UpdateVoteTimeout();
+    }
 
-        private void CreatePressed(BaseButton.ButtonEventArgs obj)
-        {
-            var typeId = VoteTypeButton.SelectedId;
-            var (_, typeKey, secondaries) = AvailableVoteTypes[typeId];
-
-            if (secondaries != null)
-            {
-                var secondaryId = VoteSecondButton.SelectedId;
-                var (_, secondKey) = secondaries[secondaryId];
-
-                _consoleHost.LocalShell.RemoteExecuteCommand($"createvote {typeKey} {secondKey}");
-            }
-            else
-            {
-                _consoleHost.LocalShell.RemoteExecuteCommand($"createvote {typeKey}");
-            }
-
+    private void CanCallVoteChanged(bool obj)
+    {
+        if (!obj)
             Close();
+    }
+
+    private void CreatePressed(BaseButton.ButtonEventArgs obj)
+    {
+        var typeId = VoteTypeButton.SelectedId;
+        var (_, typeKey, secondaries) = AvailableVoteTypes[typeId];
+
+        if (secondaries != null)
+        {
+            var secondaryId = VoteSecondButton.SelectedId;
+            var (_, secondKey) = secondaries[secondaryId];
+
+            _consoleHost.LocalShell.RemoteExecuteCommand($"createvote {typeKey} {secondKey}");
+        }
+        else
+        {
+            _consoleHost.LocalShell.RemoteExecuteCommand($"createvote {typeKey}");
         }
 
-        private void UpdateVoteTimeout()
+        Close();
+    }
+
+    private void UpdateVoteTimeout()
+    {
+        var (_, typeKey, _) = AvailableVoteTypes[VoteTypeButton.SelectedId];
+        var isAvailable = _voteManager.CanCallStandardVote(typeKey, out var timeout);
+        CreateButton.Disabled = !isAvailable;
+        VoteTypeTimeoutLabel.Visible = !isAvailable;
+
+        if (!isAvailable)
         {
-            var (_, typeKey, _) = AvailableVoteTypes[VoteTypeButton.SelectedId];
-            var isAvailable = _voteManager.CanCallStandardVote(typeKey, out var timeout);
-            CreateButton.Disabled = !isAvailable;
-            VoteTypeTimeoutLabel.Visible = !isAvailable;
-
-            if (!isAvailable)
-            {
-                var remaining = timeout - _gameTiming.RealTime;
-                VoteTypeTimeoutLabel.Text = Loc.GetString("ui-vote-type-timeout", ("remaining", remaining.ToString("mm\\:ss")));
-            }
-        }
-
-        private static void VoteSecondSelected(OptionButton.ItemSelectedEventArgs obj)
-        {
-            obj.Button.SelectId(obj.Id);
-        }
-
-        private void VoteTypeSelected(OptionButton.ItemSelectedEventArgs obj)
-        {
-            VoteTypeButton.SelectId(obj.Id);
-
-            var (_, _, options) = AvailableVoteTypes[obj.Id];
-            if (options == null)
-            {
-                VoteSecondButton.Visible = false;
-            }
-            else
-            {
-                VoteSecondButton.Visible = true;
-                VoteSecondButton.Clear();
-
-                for (var i = 0; i < options.Length; i++)
-                {
-                    var (text, _) = options[i];
-                    VoteSecondButton.AddItem(Loc.GetString(text), i);
-                }
-            }
-        }
-
-        protected override DragMode GetDragModeFor(Vector2 relativeMousePos)
-        {
-            return DragMode.Move;
+            var remaining = timeout - _gameTiming.RealTime;
+            VoteTypeTimeoutLabel.Text = Loc.GetString("ui-vote-type-timeout", ("remaining", remaining.ToString("mm\\:ss")));
         }
     }
 
-    [UsedImplicitly]
-    public sealed class VoteMenuCommand : IConsoleCommand
+    private static void VoteSecondSelected(OptionButton.ItemSelectedEventArgs obj)
     {
-        public string Command => "votemenu";
-        public string Description => Loc.GetString("ui-vote-menu-command-description");
-        public string Help => Loc.GetString("ui-vote-menu-command-help-text");
+        obj.Button.SelectId(obj.Id);
+    }
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+    private void VoteTypeSelected(OptionButton.ItemSelectedEventArgs obj)
+    {
+        VoteTypeButton.SelectId(obj.Id);
+
+        var (_, _, options) = AvailableVoteTypes[obj.Id];
+        if (options == null)
         {
-            new VoteCallMenu().OpenCentered();
+            VoteSecondButton.Visible = false;
         }
+        else
+        {
+            VoteSecondButton.Visible = true;
+            VoteSecondButton.Clear();
+
+            for (var i = 0; i < options.Length; i++)
+            {
+                var (text, _) = options[i];
+                VoteSecondButton.AddItem(Loc.GetString(text), i);
+            }
+        }
+    }
+
+    protected override DragMode GetDragModeFor(Vector2 relativeMousePos)
+    {
+        return DragMode.Move;
+    }
+}
+
+[UsedImplicitly]
+public sealed class VoteMenuCommand : IConsoleCommand
+{
+    public string Command => "votemenu";
+    public string Description => Loc.GetString("ui-vote-menu-command-description");
+    public string Help => Loc.GetString("ui-vote-menu-command-help-text");
+
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    {
+        new VoteCallMenu().OpenCentered();
     }
 }

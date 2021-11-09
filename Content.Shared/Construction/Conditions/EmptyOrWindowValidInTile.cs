@@ -7,37 +7,36 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Shared.Construction.Conditions
+namespace Content.Shared.Construction.Conditions;
+
+[UsedImplicitly]
+[DataDefinition]
+public class EmptyOrWindowValidInTile : IConstructionCondition
 {
-    [UsedImplicitly]
-    [DataDefinition]
-    public class EmptyOrWindowValidInTile : IConstructionCondition
+    [DataField("tileNotBlocked")]
+    private readonly TileNotBlocked _tileNotBlocked = new();
+
+    public bool Condition(IEntity user, EntityCoordinates location, Direction direction)
     {
-        [DataField("tileNotBlocked")]
-        private readonly TileNotBlocked _tileNotBlocked = new();
+        var result = false;
 
-        public bool Condition(IEntity user, EntityCoordinates location, Direction direction)
+        foreach (var entity in location.GetEntitiesInTile(LookupFlags.Approximate | LookupFlags.IncludeAnchored))
         {
-            var result = false;
-
-            foreach (var entity in location.GetEntitiesInTile(LookupFlags.Approximate | LookupFlags.IncludeAnchored))
-            {
-                if (entity.HasComponent<SharedCanBuildWindowOnTopComponent>())
-                    result = true;
-            }
-
-            if (!result)
-                result = _tileNotBlocked.Condition(user, location, direction);
-
-            return result;
+            if (entity.HasComponent<SharedCanBuildWindowOnTopComponent>())
+                result = true;
         }
 
-        public ConstructionGuideEntry? GenerateGuideEntry()
+        if (!result)
+            result = _tileNotBlocked.Condition(user, location, direction);
+
+        return result;
+    }
+
+    public ConstructionGuideEntry? GenerateGuideEntry()
+    {
+        return new ConstructionGuideEntry()
         {
-            return new ConstructionGuideEntry()
-            {
-                Localization = "construction-guide-condition-empty-or-window-valid-in-tile"
-            };
-        }
+            Localization = "construction-guide-condition-empty-or-window-valid-in-tile"
+        };
     }
 }

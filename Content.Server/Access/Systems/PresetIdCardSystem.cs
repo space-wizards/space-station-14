@@ -6,35 +6,34 @@ using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using System;
 
-namespace Content.Server.Access.Systems
+namespace Content.Server.Access.Systems;
+
+public class PresetIdCardSystem : EntitySystem
 {
-    public class PresetIdCardSystem : EntitySystem
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IdCardSystem _cardSystem = default!;
+    [Dependency] private readonly AccessSystem _accessSystem = default!;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IdCardSystem _cardSystem = default!;
-        [Dependency] private readonly AccessSystem _accessSystem = default!;
+        base.Initialize();
+        SubscribeLocalEvent<PresetIdCardComponent, MapInitEvent>(OnMapInit);
+    }
 
-        public override void Initialize()
+    private void OnMapInit(EntityUid uid, PresetIdCardComponent id, MapInitEvent args)
+    {
+        if (id.JobName == null) return;
+
+        if (!_prototypeManager.TryIndex(id.JobName, out JobPrototype? job))
         {
-            base.Initialize();
-            SubscribeLocalEvent<PresetIdCardComponent, MapInitEvent>(OnMapInit);
+            Logger.ErrorS("access", $"Invalid job id ({id.JobName}) for preset card");
+            return;
         }
 
-        private void OnMapInit(EntityUid uid, PresetIdCardComponent id, MapInitEvent args)
-        {
-            if (id.JobName == null) return;
+        // set access for access component
+        _accessSystem.TrySetTags(uid, job.Access);
 
-            if (!_prototypeManager.TryIndex(id.JobName, out JobPrototype? job))
-            {
-                Logger.ErrorS("access", $"Invalid job id ({id.JobName}) for preset card");
-                return;
-            }
-
-            // set access for access component
-            _accessSystem.TrySetTags(uid, job.Access);
-
-            // and also change job title on a card id
-            _cardSystem.TryChangeJobTitle(uid, job.Name);
-        }
+        // and also change job title on a card id
+        _cardSystem.TryChangeJobTitle(uid, job.Name);
     }
 }

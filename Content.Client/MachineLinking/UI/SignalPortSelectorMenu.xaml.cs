@@ -5,32 +5,31 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 
-namespace Content.Client.MachineLinking.UI
+namespace Content.Client.MachineLinking.UI;
+
+[GenerateTypedNameReferences]
+public partial class SignalPortSelectorMenu : SS14Window
 {
-    [GenerateTypedNameReferences]
-    public partial class SignalPortSelectorMenu : SS14Window
+    private SignalPortSelectorBoundUserInterface _bui;
+
+    public SignalPortSelectorMenu(SignalPortSelectorBoundUserInterface boundUserInterface)
     {
-        private SignalPortSelectorBoundUserInterface _bui;
+        RobustXamlLoader.Load(this);
+        _bui = boundUserInterface;
+    }
 
-        public SignalPortSelectorMenu(SignalPortSelectorBoundUserInterface boundUserInterface)
+    public void UpdateState(SignalPortsState state)
+    {
+        ButtonContainer.Clear();
+        foreach (var port in state.Ports)
         {
-            RobustXamlLoader.Load(this);
-            _bui = boundUserInterface;
-        }
-
-        public void UpdateState(SignalPortsState state)
-        {
-            ButtonContainer.Clear();
-            foreach (var port in state.Ports)
+            var portBtn = new ItemList.Item(ButtonContainer)
             {
-                var portBtn = new ItemList.Item(ButtonContainer)
-                {
-                    Text = port.Key,
-                    Disabled = !port.Value
-                };
-                portBtn.OnSelected += _ => _bui.OnPortSelected(port.Key);
-                ButtonContainer.Add(portBtn);
-            }
+                Text = port.Key,
+                Disabled = !port.Value
+            };
+            portBtn.OnSelected += _ => _bui.OnPortSelected(port.Key);
+            ButtonContainer.Add(portBtn);
         }
     }
 }

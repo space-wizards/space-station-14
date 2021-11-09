@@ -13,137 +13,136 @@ using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 
-namespace Content.Server.MoMMI
+namespace Content.Server.MoMMI;
+
+internal sealed class MoMMILink : IMoMMILink, IPostInjectInit
 {
-    internal sealed class MoMMILink : IMoMMILink, IPostInjectInit
+    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+    [Dependency] private readonly IStatusHost _statusHost = default!;
+    [Dependency] private readonly IChatManager _chatManager = default!;
+    [Dependency] private readonly ITaskManager _taskManager = default!;
+
+    private readonly HttpClient _httpClient = new();
+
+    void IPostInjectInit.PostInject()
     {
-        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-        [Dependency] private readonly IStatusHost _statusHost = default!;
-        [Dependency] private readonly IChatManager _chatManager = default!;
-        [Dependency] private readonly ITaskManager _taskManager = default!;
+        _statusHost.AddHandler(_handleChatPost);
+    }
 
-        private readonly HttpClient _httpClient = new();
-
-        void IPostInjectInit.PostInject()
+    public async void SendOOCMessage(string sender, string message)
+    {
+        var sentMessage = new MoMMIMessageOOC
         {
-            _statusHost.AddHandler(_handleChatPost);
+            Sender = sender,
+            Contents = message
+        };
+
+        await _sendMessageInternal("ooc", sentMessage);
+    }
+
+    private async Task _sendMessageInternal(string type, object messageObject)
+    {
+        var url = _configurationManager.GetCVar(CCVars.StatusMoMMIUrl);
+        var password = _configurationManager.GetCVar(CCVars.StatusMoMMIPassword);
+        if (string.IsNullOrWhiteSpace(url))
+        {
+            return;
         }
 
-        public async void SendOOCMessage(string sender, string message)
+        if (string.IsNullOrWhiteSpace(password))
         {
-            var sentMessage = new MoMMIMessageOOC
-            {
-                Sender = sender,
-                Contents = message
-            };
-
-            await _sendMessageInternal("ooc", sentMessage);
+            Logger.WarningS("mommi", "MoMMI URL specified but not password!");
+            return;
         }
 
-        private async Task _sendMessageInternal(string type, object messageObject)
+        var sentMessage = new MoMMIMessageBase
         {
-            var url = _configurationManager.GetCVar(CCVars.StatusMoMMIUrl);
-            var password = _configurationManager.GetCVar(CCVars.StatusMoMMIPassword);
-            if (string.IsNullOrWhiteSpace(url))
-            {
-                return;
-            }
+            Password = password,
+            Type = type,
+            Contents = messageObject
+        };
 
-            if (string.IsNullOrWhiteSpace(password))
-            {
-                Logger.WarningS("mommi", "MoMMI URL specified but not password!");
-                return;
-            }
+        var jsonMessage = JsonConvert.SerializeObject(sentMessage);
+        var request =
+            await _httpClient.PostAsync(url, new StringContent(jsonMessage, Encoding.UTF8, "application/json"));
 
-            var sentMessage = new MoMMIMessageBase
-            {
-                Password = password,
-                Type = type,
-                Contents = messageObject
-            };
+        if (!request.IsSuccessStatusCode)
+        {
+            throw new Exception($"MoMMI returned bad status code: {request.StatusCode}");
+        }
+    }
 
-            var jsonMessage = JsonConvert.SerializeObject(sentMessage);
-            var request =
-                await _httpClient.PostAsync(url, new StringContent(jsonMessage, Encoding.UTF8, "application/json"));
-
-            if (!request.IsSuccessStatusCode)
-            {
-                throw new Exception($"MoMMI returned bad status code: {request.StatusCode}");
-            }
+    private bool _handleChatPost(IStatusHandlerContext context)
+    {
+        if (context.RequestMethod != HttpMethod.Post || context.Url!.AbsolutePath != "/ooc")
+        {
+            return false;
         }
 
-        private bool _handleChatPost(IStatusHandlerContext context)
+        var password = _configurationManager.GetCVar(CCVars.StatusMoMMIPassword);
+
+        if (string.IsNullOrEmpty(password))
         {
-            if (context.RequestMethod != HttpMethod.Post || context.Url!.AbsolutePath != "/ooc")
-            {
-                return false;
-            }
-
-            var password = _configurationManager.GetCVar(CCVars.StatusMoMMIPassword);
-
-            if (string.IsNullOrEmpty(password))
-            {
-                context.RespondError(HttpStatusCode.Forbidden);
-                return true;
-            }
-
-            OOCPostMessage? message = null;
-            try
-            {
-                message = context.RequestBodyJson<OOCPostMessage>();
-            }
-            catch (JsonSerializationException)
-            {
-                // message null so enters block down below.
-            }
-
-            if (message == null)
-            {
-                context.RespondError(HttpStatusCode.BadRequest);
-                return true;
-            }
-
-            if (message.Password != password)
-            {
-                context.RespondError(HttpStatusCode.Forbidden);
-                return true;
-            }
-
-            _taskManager.RunOnMainThread(() => _chatManager.SendHookOOC(message.Sender, message.Contents));
-
-            context.Respond("Success", HttpStatusCode.OK);
-
+            context.RespondError(HttpStatusCode.Forbidden);
             return true;
         }
 
-        [JsonObject(MemberSerialization.Fields)]
-        private class MoMMIMessageBase
+        OOCPostMessage? message = null;
+        try
         {
-            [JsonProperty("password")] public string Password = null!;
-
-            [JsonProperty("type")] public string Type = null!;
-
-            [JsonProperty("contents")] public object Contents = null!;
+            message = context.RequestBodyJson<OOCPostMessage>();
+        }
+        catch (JsonSerializationException)
+        {
+            // message null so enters block down below.
         }
 
-        [JsonObject(MemberSerialization.Fields)]
-        private class MoMMIMessageOOC
+        if (message == null)
         {
-            [JsonProperty("sender")] public string Sender = null!;
-
-            [JsonProperty("contents")] public string Contents = null!;
+            context.RespondError(HttpStatusCode.BadRequest);
+            return true;
         }
 
-        [JsonObject(MemberSerialization.Fields, ItemRequired = Required.Always)]
-        private class OOCPostMessage
+        if (message.Password != password)
         {
-            #pragma warning disable CS0649
-            [JsonProperty("password")] public string Password = null!;
-
-            [JsonProperty("sender")] public string Sender = null!;
-
-            [JsonProperty("contents")] public string Contents = null!;
-            #pragma warning restore CS0649
+            context.RespondError(HttpStatusCode.Forbidden);
+            return true;
         }
+
+        _taskManager.RunOnMainThread(() => _chatManager.SendHookOOC(message.Sender, message.Contents));
+
+        context.Respond("Success", HttpStatusCode.OK);
+
+        return true;
+    }
+
+    [JsonObject(MemberSerialization.Fields)]
+    private class MoMMIMessageBase
+    {
+        [JsonProperty("password")] public string Password = null!;
+
+        [JsonProperty("type")] public string Type = null!;
+
+        [JsonProperty("contents")] public object Contents = null!;
+    }
+
+    [JsonObject(MemberSerialization.Fields)]
+    private class MoMMIMessageOOC
+    {
+        [JsonProperty("sender")] public string Sender = null!;
+
+        [JsonProperty("contents")] public string Contents = null!;
+    }
+
+    [JsonObject(MemberSerialization.Fields, ItemRequired = Required.Always)]
+    private class OOCPostMessage
+    {
+#pragma warning disable CS0649
+        [JsonProperty("password")] public string Password = null!;
+
+        [JsonProperty("sender")] public string Sender = null!;
+
+        [JsonProperty("contents")] public string Contents = null!;
+#pragma warning restore CS0649
     }
 }

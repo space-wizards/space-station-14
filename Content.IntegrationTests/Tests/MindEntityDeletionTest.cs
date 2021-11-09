@@ -10,151 +10,150 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
-namespace Content.IntegrationTests.Tests
+namespace Content.IntegrationTests.Tests;
+
+// Tests various scenarios of deleting the entity that a player's mind is connected to.
+[TestFixture]
+public class MindEntityDeletionTest : ContentIntegrationTest
 {
-    // Tests various scenarios of deleting the entity that a player's mind is connected to.
-    [TestFixture]
-    public class MindEntityDeletionTest : ContentIntegrationTest
+    [Test]
+    public async Task TestDeleteVisiting()
     {
-        [Test]
-        public async Task TestDeleteVisiting()
+        var (_, server) = await StartConnectedServerDummyTickerClientPair();
+
+        IEntity playerEnt = null;
+        IEntity visitEnt = null;
+        Mind mind = null;
+        server.Assert(() =>
         {
-            var (_, server) = await StartConnectedServerDummyTickerClientPair();
+            var player = IoCManager.Resolve<IPlayerManager>().GetAllPlayers().Single();
 
-            IEntity playerEnt = null;
-            IEntity visitEnt = null;
-            Mind mind = null;
-            server.Assert(() =>
-            {
-                var player = IoCManager.Resolve<IPlayerManager>().GetAllPlayers().Single();
+            var mapMan = IoCManager.Resolve<IMapManager>();
+            var entMgr = IoCManager.Resolve<IServerEntityManager>();
 
-                var mapMan = IoCManager.Resolve<IMapManager>();
-                var entMgr = IoCManager.Resolve<IServerEntityManager>();
+            mapMan.CreateNewMapEntity(MapId.Nullspace);
 
-                mapMan.CreateNewMapEntity(MapId.Nullspace);
+            playerEnt = entMgr.SpawnEntity(null, MapCoordinates.Nullspace);
+            visitEnt = entMgr.SpawnEntity(null, MapCoordinates.Nullspace);
 
-                playerEnt = entMgr.SpawnEntity(null, MapCoordinates.Nullspace);
-                visitEnt = entMgr.SpawnEntity(null, MapCoordinates.Nullspace);
+            mind = new Mind(player.UserId);
+            player.ContentData().Mind = mind;
 
-                mind = new Mind(player.UserId);
-                player.ContentData().Mind = mind;
+            mind.TransferTo(playerEnt);
+            mind.Visit(visitEnt);
 
-                mind.TransferTo(playerEnt);
-                mind.Visit(visitEnt);
+            Assert.That(player.AttachedEntity, Is.EqualTo(visitEnt));
+            Assert.That(mind.VisitingEntity, Is.EqualTo(visitEnt));
+        });
 
-                Assert.That(player.AttachedEntity, Is.EqualTo(visitEnt));
-                Assert.That(mind.VisitingEntity, Is.EqualTo(visitEnt));
-            });
+        server.RunTicks(1);
 
-            server.RunTicks(1);
-
-            server.Assert(() =>
-            {
-                visitEnt.Delete();
-
-                Assert.That(mind.VisitingEntity, Is.Null);
-
-                // This used to throw so make sure it doesn't.
-                playerEnt.Delete();
-            });
-
-            await server.WaitIdleAsync();
-        }
-
-        [Test]
-        public async Task TestGhostOnDelete()
+        server.Assert(() =>
         {
-            // Has to be a non-dummy ticker so we have a proper map.
-            var (_, server) = await StartConnectedServerClientPair();
+            visitEnt.Delete();
 
-            IEntity playerEnt = null;
-            Mind mind = null;
-            server.Assert(() =>
-            {
-                var player = IoCManager.Resolve<IPlayerManager>().GetAllPlayers().Single();
+            Assert.That(mind.VisitingEntity, Is.Null);
 
-                var mapMan = IoCManager.Resolve<IMapManager>();
-                var entMgr = IoCManager.Resolve<IServerEntityManager>();
+            // This used to throw so make sure it doesn't.
+            playerEnt.Delete();
+        });
 
-                mapMan.CreateNewMapEntity(MapId.Nullspace);
+        await server.WaitIdleAsync();
+    }
 
-                playerEnt = entMgr.SpawnEntity(null, MapCoordinates.Nullspace);
+    [Test]
+    public async Task TestGhostOnDelete()
+    {
+        // Has to be a non-dummy ticker so we have a proper map.
+        var (_, server) = await StartConnectedServerClientPair();
 
-                mind = new Mind(player.UserId);
-                player.ContentData().Mind = mind;
-
-                mind.TransferTo(playerEnt);
-
-                Assert.That(mind.CurrentEntity, Is.EqualTo(playerEnt));
-            });
-
-            server.RunTicks(1);
-
-            server.Post(() =>
-            {
-                playerEnt.Delete();
-            });
-
-            server.RunTicks(1);
-
-            server.Assert(() =>
-            {
-                Assert.That(mind.CurrentEntity.IsValid(), Is.True);
-            });
-
-            await server.WaitIdleAsync();
-        }
-
-        [Test]
-        public async Task TestGhostOnDeleteMap()
+        IEntity playerEnt = null;
+        Mind mind = null;
+        server.Assert(() =>
         {
-            // Has to be a non-dummy ticker so we have a proper map.
-            var (_, server) = await StartConnectedServerClientPair();
+            var player = IoCManager.Resolve<IPlayerManager>().GetAllPlayers().Single();
 
-            IEntity playerEnt = null;
-            Mind mind = null;
-            MapId map = default;
-            server.Assert(() =>
-            {
-                var player = IoCManager.Resolve<IPlayerManager>().GetAllPlayers().Single();
+            var mapMan = IoCManager.Resolve<IMapManager>();
+            var entMgr = IoCManager.Resolve<IServerEntityManager>();
 
-                var mapMan = IoCManager.Resolve<IMapManager>();
+            mapMan.CreateNewMapEntity(MapId.Nullspace);
 
-                map = mapMan.CreateMap();
-                var grid = mapMan.CreateGrid(map);
+            playerEnt = entMgr.SpawnEntity(null, MapCoordinates.Nullspace);
 
-                var entMgr = IoCManager.Resolve<IServerEntityManager>();
+            mind = new Mind(player.UserId);
+            player.ContentData().Mind = mind;
 
-                mapMan.CreateNewMapEntity(MapId.Nullspace);
+            mind.TransferTo(playerEnt);
 
-                playerEnt = entMgr.SpawnEntity(null, grid.ToCoordinates());
+            Assert.That(mind.CurrentEntity, Is.EqualTo(playerEnt));
+        });
 
-                mind = new Mind(player.UserId);
-                player.ContentData().Mind = mind;
+        server.RunTicks(1);
 
-                mind.TransferTo(playerEnt);
+        server.Post(() =>
+        {
+            playerEnt.Delete();
+        });
 
-                Assert.That(mind.CurrentEntity, Is.EqualTo(playerEnt));
-            });
+        server.RunTicks(1);
 
-            server.RunTicks(1);
+        server.Assert(() =>
+        {
+            Assert.That(mind.CurrentEntity.IsValid(), Is.True);
+        });
 
-            server.Post(() =>
-            {
-                var mapMan = IoCManager.Resolve<IMapManager>();
+        await server.WaitIdleAsync();
+    }
 
-                mapMan.DeleteMap(map);
-            });
+    [Test]
+    public async Task TestGhostOnDeleteMap()
+    {
+        // Has to be a non-dummy ticker so we have a proper map.
+        var (_, server) = await StartConnectedServerClientPair();
 
-            server.RunTicks(1);
+        IEntity playerEnt = null;
+        Mind mind = null;
+        MapId map = default;
+        server.Assert(() =>
+        {
+            var player = IoCManager.Resolve<IPlayerManager>().GetAllPlayers().Single();
 
-            server.Assert(() =>
-            {
-                Assert.That(mind.CurrentEntity.IsValid(), Is.True);
-                Assert.That(mind.CurrentEntity, Is.Not.EqualTo(playerEnt));
-            });
+            var mapMan = IoCManager.Resolve<IMapManager>();
 
-            await server.WaitIdleAsync();
-        }
+            map = mapMan.CreateMap();
+            var grid = mapMan.CreateGrid(map);
+
+            var entMgr = IoCManager.Resolve<IServerEntityManager>();
+
+            mapMan.CreateNewMapEntity(MapId.Nullspace);
+
+            playerEnt = entMgr.SpawnEntity(null, grid.ToCoordinates());
+
+            mind = new Mind(player.UserId);
+            player.ContentData().Mind = mind;
+
+            mind.TransferTo(playerEnt);
+
+            Assert.That(mind.CurrentEntity, Is.EqualTo(playerEnt));
+        });
+
+        server.RunTicks(1);
+
+        server.Post(() =>
+        {
+            var mapMan = IoCManager.Resolve<IMapManager>();
+
+            mapMan.DeleteMap(map);
+        });
+
+        server.RunTicks(1);
+
+        server.Assert(() =>
+        {
+            Assert.That(mind.CurrentEntity.IsValid(), Is.True);
+            Assert.That(mind.CurrentEntity, Is.Not.EqualTo(playerEnt));
+        });
+
+        await server.WaitIdleAsync();
     }
 }

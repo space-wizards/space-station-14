@@ -10,52 +10,51 @@ using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Storage.Components
+namespace Content.Server.Storage.Components;
+
+[RegisterComponent]
+public sealed class StorageFillComponent : Component, IMapInit
 {
-    [RegisterComponent]
-    public sealed class StorageFillComponent : Component, IMapInit
+    public override string Name => "StorageFill";
+
+    [DataField("contents")] private List<EntitySpawnEntry> _contents = new();
+
+    public IReadOnlyList<EntitySpawnEntry> Contents => _contents;
+
+    void IMapInit.MapInit()
     {
-        public override string Name => "StorageFill";
-
-        [DataField("contents")] private List<EntitySpawnEntry> _contents = new();
-
-        public IReadOnlyList<EntitySpawnEntry> Contents => _contents;
-
-        void IMapInit.MapInit()
+        if (_contents.Count == 0)
         {
-            if (_contents.Count == 0)
+            return;
+        }
+
+        if (!Owner.TryGetComponent(out IStorageComponent? storage))
+        {
+            Logger.Error($"StorageFillComponent couldn't find any StorageComponent ({Owner})");
+            return;
+        }
+
+        var random = IoCManager.Resolve<IRobustRandom>();
+
+        var alreadySpawnedGroups = new List<string>();
+        foreach (var storageItem in _contents)
+        {
+            if (!string.IsNullOrEmpty(storageItem.GroupId) &&
+                alreadySpawnedGroups.Contains(storageItem.GroupId)) continue;
+
+            if (storageItem.SpawnProbability != 1f &&
+                !random.Prob(storageItem.SpawnProbability))
             {
-                return;
+                continue;
             }
 
-            if (!Owner.TryGetComponent(out IStorageComponent? storage))
+            for (var i = 0; i < storageItem.Amount; i++)
             {
-                Logger.Error($"StorageFillComponent couldn't find any StorageComponent ({Owner})");
-                return;
+                storage.Insert(
+                    Owner.EntityManager.SpawnEntity(storageItem.PrototypeId, Owner.Transform.Coordinates));
             }
 
-            var random = IoCManager.Resolve<IRobustRandom>();
-
-            var alreadySpawnedGroups = new List<string>();
-            foreach (var storageItem in _contents)
-            {
-                if (!string.IsNullOrEmpty(storageItem.GroupId) &&
-                    alreadySpawnedGroups.Contains(storageItem.GroupId)) continue;
-
-                if (storageItem.SpawnProbability != 1f &&
-                    !random.Prob(storageItem.SpawnProbability))
-                {
-                    continue;
-                }
-
-                for (var i = 0; i < storageItem.Amount; i++)
-                {
-                    storage.Insert(
-                        Owner.EntityManager.SpawnEntity(storageItem.PrototypeId, Owner.Transform.Coordinates));
-                }
-
-                if (!string.IsNullOrEmpty(storageItem.GroupId)) alreadySpawnedGroups.Add(storageItem.GroupId);
-            }
+            if (!string.IsNullOrEmpty(storageItem.GroupId)) alreadySpawnedGroups.Add(storageItem.GroupId);
         }
     }
 }

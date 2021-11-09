@@ -1,8 +1,7 @@
 using Content.Shared.PAI;
 
-namespace Content.Client.PAI
+namespace Content.Client.PAI;
+
+public class PAISystem : SharedPAISystem
 {
-    public class PAISystem : SharedPAISystem
-    {
-    }
 }

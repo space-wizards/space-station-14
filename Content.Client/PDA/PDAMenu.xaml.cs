@@ -3,16 +3,15 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Localization;
 
-namespace Content.Client.PDA
-{
-    [GenerateTypedNameReferences]
-    public partial class PDAMenu : SS14Window
-    {
-        public PDAMenu()
-        {
-            RobustXamlLoader.Load(this);
+namespace Content.Client.PDA;
 
-            MasterTabContainer.SetTabTitle(0, Loc.GetString("pda-bound-user-interface-main-menu-tab-title"));
-        }
+[GenerateTypedNameReferences]
+public partial class PDAMenu : SS14Window
+{
+    public PDAMenu()
+    {
+        RobustXamlLoader.Load(this);
+
+        MasterTabContainer.SetTabTitle(0, Loc.GetString("pda-bound-user-interface-main-menu-tab-title"));
     }
 }

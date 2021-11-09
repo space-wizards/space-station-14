@@ -1,11 +1,10 @@
 ﻿using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Singularity
+namespace Content.Shared.Singularity;
+
+[Serializable, NetSerializable]
+public enum SingularityVisuals
 {
-    [Serializable, NetSerializable]
-    public enum SingularityVisuals
-    {
-        Level
-    }
+    Level
 }

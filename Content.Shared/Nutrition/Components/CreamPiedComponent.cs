@@ -5,21 +5,20 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.Nutrition.Components
+namespace Content.Shared.Nutrition.Components;
+
+[Friend(typeof(SharedCreamPieSystem))]
+[RegisterComponent]
+public class CreamPiedComponent : Component
 {
-    [Friend(typeof(SharedCreamPieSystem))]
-    [RegisterComponent]
-    public class CreamPiedComponent : Component
-    {
-        public override string Name => "CreamPied";
+    public override string Name => "CreamPied";
 
-        [ViewVariables]
-        public bool CreamPied { get; set; } = false;
-    }
+    [ViewVariables]
+    public bool CreamPied { get; set; } = false;
+}
 
-    [Serializable, NetSerializable]
-    public enum CreamPiedVisuals
-    {
-        Creamed,
-    }
+[Serializable, NetSerializable]
+public enum CreamPiedVisuals
+{
+    Creamed,
 }

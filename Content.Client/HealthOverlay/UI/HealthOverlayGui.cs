@@ -11,154 +11,153 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 
-namespace Content.Client.HealthOverlay.UI
+namespace Content.Client.HealthOverlay.UI;
+
+public class HealthOverlayGui : BoxContainer
 {
-    public class HealthOverlayGui : BoxContainer
+    [Dependency] private readonly IEyeManager _eyeManager = default!;
+
+    public HealthOverlayGui(IEntity entity)
     {
-        [Dependency] private readonly IEyeManager _eyeManager = default!;
+        IoCManager.InjectDependencies(this);
+        IoCManager.Resolve<IUserInterfaceManager>().StateRoot.AddChild(this);
+        SeparationOverride = 0;
+        Orientation = LayoutOrientation.Vertical;
 
-        public HealthOverlayGui(IEntity entity)
+        CritBar = new HealthOverlayBar
         {
-            IoCManager.InjectDependencies(this);
-            IoCManager.Resolve<IUserInterfaceManager>().StateRoot.AddChild(this);
-            SeparationOverride = 0;
-            Orientation = LayoutOrientation.Vertical;
+            Visible = false,
+            VerticalAlignment = VAlignment.Center,
+            Color = Color.Red
+        };
 
-            CritBar = new HealthOverlayBar
-            {
-                Visible = false,
-                VerticalAlignment = VAlignment.Center,
-                Color = Color.Red
-            };
+        HealthBar = new HealthOverlayBar
+        {
+            Visible = false,
+            VerticalAlignment = VAlignment.Center,
+            Color = Color.LimeGreen
+        };
 
-            HealthBar = new HealthOverlayBar
+        AddChild(Panel = new PanelContainer
+        {
+            Children =
             {
-                Visible = false,
-                VerticalAlignment = VAlignment.Center,
-                Color = Color.LimeGreen
-            };
-
-            AddChild(Panel = new PanelContainer
-            {
-                Children =
+                new TextureRect
                 {
-                    new TextureRect
-                    {
-                        Texture = StaticIoC.ResC.GetTexture("/Textures/Interface/Misc/health_bar.rsi/icon.png"),
-                        TextureScale = Vector2.One * HealthOverlayBar.HealthBarScale,
-                        VerticalAlignment = VAlignment.Center,
-                    },
-                    CritBar,
-                    HealthBar
-                }
-            });
-
-            Entity = entity;
-        }
-
-        public PanelContainer Panel { get; }
-
-        public HealthOverlayBar HealthBar { get; }
-
-        public HealthOverlayBar CritBar { get; }
-
-        public IEntity Entity { get; }
-
-        public void SetVisibility(bool val)
-        {
-            Visible = val;
-            Panel.Visible = val;
-        }
-
-        private void MoreFrameUpdate(FrameEventArgs args)
-        {
-            if (Entity.Deleted)
-            {
-                return;
+                    Texture = StaticIoC.ResC.GetTexture("/Textures/Interface/Misc/health_bar.rsi/icon.png"),
+                    TextureScale = Vector2.One * HealthOverlayBar.HealthBarScale,
+                    VerticalAlignment = VAlignment.Center,
+                },
+                CritBar,
+                HealthBar
             }
+        });
 
-            if (!Entity.TryGetComponent(out MobStateComponent? mobState) ||
-                !Entity.TryGetComponent(out DamageableComponent? damageable))
+        Entity = entity;
+    }
+
+    public PanelContainer Panel { get; }
+
+    public HealthOverlayBar HealthBar { get; }
+
+    public HealthOverlayBar CritBar { get; }
+
+    public IEntity Entity { get; }
+
+    public void SetVisibility(bool val)
+    {
+        Visible = val;
+        Panel.Visible = val;
+    }
+
+    private void MoreFrameUpdate(FrameEventArgs args)
+    {
+        if (Entity.Deleted)
+        {
+            return;
+        }
+
+        if (!Entity.TryGetComponent(out MobStateComponent? mobState) ||
+            !Entity.TryGetComponent(out DamageableComponent? damageable))
+        {
+            CritBar.Visible = false;
+            HealthBar.Visible = false;
+            return;
+        }
+
+        FixedPoint2 threshold;
+
+        if (mobState.IsAlive())
+        {
+            if (!mobState.TryGetEarliestCriticalState(damageable.TotalDamage, out _, out threshold))
             {
                 CritBar.Visible = false;
                 HealthBar.Visible = false;
                 return;
             }
 
-            FixedPoint2 threshold;
-
-            if (mobState.IsAlive())
-            {
-                if (!mobState.TryGetEarliestCriticalState(damageable.TotalDamage, out _, out threshold))
-                {
-                    CritBar.Visible = false;
-                    HealthBar.Visible = false;
-                    return;
-                }
-
-                CritBar.Ratio = 1;
-                CritBar.Visible = true;
-                HealthBar.Ratio = 1 - (damageable.TotalDamage / threshold).Float();
-                HealthBar.Visible = true;
-            }
-            else if (mobState.IsCritical())
-            {
-                HealthBar.Ratio = 0;
-                HealthBar.Visible = false;
-
-                if (!mobState.TryGetPreviousCriticalState(damageable.TotalDamage, out _, out var critThreshold) ||
-                    !mobState.TryGetEarliestDeadState(damageable.TotalDamage, out _, out var deadThreshold))
-                {
-                    CritBar.Visible = false;
-                    return;
-                }
-
-                CritBar.Visible = true;
-                CritBar.Ratio = 1 -
-                    ((damageable.TotalDamage - critThreshold) /
-                    (deadThreshold - critThreshold)).Float();
-            }
-            else if (mobState.IsDead())
-            {
-                CritBar.Ratio = 0;
-                CritBar.Visible = false;
-                HealthBar.Ratio = 0;
-                HealthBar.Visible = true;
-            }
-            else
-            {
-                CritBar.Visible = false;
-                HealthBar.Visible = false;
-            }
+            CritBar.Ratio = 1;
+            CritBar.Visible = true;
+            HealthBar.Ratio = 1 - (damageable.TotalDamage / threshold).Float();
+            HealthBar.Visible = true;
         }
-
-        protected override void FrameUpdate(FrameEventArgs args)
+        else if (mobState.IsCritical())
         {
-            base.FrameUpdate(args);
+            HealthBar.Ratio = 0;
+            HealthBar.Visible = false;
 
-            MoreFrameUpdate(args);
-
-            if (Entity.Deleted ||
-                _eyeManager.CurrentMap != Entity.Transform.MapID)
+            if (!mobState.TryGetPreviousCriticalState(damageable.TotalDamage, out _, out var critThreshold) ||
+                !mobState.TryGetEarliestDeadState(damageable.TotalDamage, out _, out var deadThreshold))
             {
-                Visible = false;
+                CritBar.Visible = false;
                 return;
             }
 
-            Visible = true;
-
-            var screenCoordinates = _eyeManager.CoordinatesToScreen(Entity.Transform.Coordinates);
-            var playerPosition = UserInterfaceManager.ScreenToUIPosition(screenCoordinates);
-            LayoutContainer.SetPosition(this, new Vector2(playerPosition.X - Width / 2, playerPosition.Y - Height - 30.0f));
+            CritBar.Visible = true;
+            CritBar.Ratio = 1 -
+                            ((damageable.TotalDamage - critThreshold) /
+                             (deadThreshold - critThreshold)).Float();
         }
-
-        protected override void Dispose(bool disposing)
+        else if (mobState.IsDead())
         {
-            base.Dispose(disposing);
-
-            if (!disposing) return;
-
-            HealthBar.Dispose();
+            CritBar.Ratio = 0;
+            CritBar.Visible = false;
+            HealthBar.Ratio = 0;
+            HealthBar.Visible = true;
         }
+        else
+        {
+            CritBar.Visible = false;
+            HealthBar.Visible = false;
+        }
+    }
+
+    protected override void FrameUpdate(FrameEventArgs args)
+    {
+        base.FrameUpdate(args);
+
+        MoreFrameUpdate(args);
+
+        if (Entity.Deleted ||
+            _eyeManager.CurrentMap != Entity.Transform.MapID)
+        {
+            Visible = false;
+            return;
+        }
+
+        Visible = true;
+
+        var screenCoordinates = _eyeManager.CoordinatesToScreen(Entity.Transform.Coordinates);
+        var playerPosition = UserInterfaceManager.ScreenToUIPosition(screenCoordinates);
+        LayoutContainer.SetPosition(this, new Vector2(playerPosition.X - Width / 2, playerPosition.Y - Height - 30.0f));
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+
+        if (!disposing) return;
+
+        HealthBar.Dispose();
     }
 }

@@ -8,38 +8,37 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
-namespace Content.Server.AI.Utility.Actions.Test
+namespace Content.Server.AI.Utility.Actions.Test;
+
+/// <summary>
+/// Used for pathfinding debugging
+/// </summary>
+public class MoveRightAndLeftTen : UtilityAction
 {
-    /// <summary>
-    /// Used for pathfinding debugging
-    /// </summary>
-    public class MoveRightAndLeftTen : UtilityAction
+    public override bool CanOverride => false;
+
+    public override void SetupOperators(Blackboard context)
     {
-        public override bool CanOverride => false;
+        var currentPosition = Owner.Transform.Coordinates;
+        var nextPosition = Owner.Transform.Coordinates.Offset(new Vector2(10.0f, 0.0f));
+        var originalPosOp = new MoveToGridOperator(Owner, currentPosition, 0.25f);
+        var newPosOp = new MoveToGridOperator(Owner, nextPosition, 0.25f);
 
-        public override void SetupOperators(Blackboard context)
+        ActionOperators = new Queue<AiOperator>(new AiOperator[]
         {
-            var currentPosition = Owner.Transform.Coordinates;
-            var nextPosition = Owner.Transform.Coordinates.Offset(new Vector2(10.0f, 0.0f));
-            var originalPosOp = new MoveToGridOperator(Owner, currentPosition, 0.25f);
-            var newPosOp = new MoveToGridOperator(Owner, nextPosition, 0.25f);
+            newPosOp,
+            originalPosOp
+        });
+    }
 
-            ActionOperators = new Queue<AiOperator>(new AiOperator[]
-            {
-                newPosOp,
-                originalPosOp
-            });
-        }
+    protected override IReadOnlyCollection<Func<float>> GetConsiderations(Blackboard context)
+    {
+        var considerationsManager = IoCManager.Resolve<ConsiderationsManager>();
 
-        protected override IReadOnlyCollection<Func<float>> GetConsiderations(Blackboard context)
+        return new[]
         {
-            var considerationsManager = IoCManager.Resolve<ConsiderationsManager>();
-
-            return new[]
-            {
-                considerationsManager.Get<DummyCon>()
-                    .BoolCurve(context),
-            };
-        }
+            considerationsManager.Get<DummyCon>()
+                                 .BoolCurve(context),
+        };
     }
 }

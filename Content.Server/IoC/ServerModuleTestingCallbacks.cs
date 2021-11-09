@@ -2,10 +2,9 @@ using System;
 using Content.Shared;
 using Content.Shared.Module;
 
-namespace Content.Server.IoC
+namespace Content.Server.IoC;
+
+public sealed class ServerModuleTestingCallbacks : SharedModuleTestingCallbacks
 {
-    public sealed class ServerModuleTestingCallbacks : SharedModuleTestingCallbacks
-    {
-        public Action? ServerBeforeIoC { get; set; }
-    }
+    public Action? ServerBeforeIoC { get; set; }
 }

@@ -2,51 +2,50 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using System;
 
-namespace Content.Shared.PDA
+namespace Content.Shared.PDA;
+
+[Serializable, NetSerializable]
+public sealed class PDAToggleFlashlightMessage : BoundUserInterfaceMessage
 {
-    [Serializable, NetSerializable]
-    public sealed class PDAToggleFlashlightMessage : BoundUserInterfaceMessage
+    public PDAToggleFlashlightMessage()
     {
-        public PDAToggleFlashlightMessage()
-        {
 
-        }
     }
+}
 
-    [Serializable, NetSerializable]
-    public sealed class PDAEjectIDMessage : BoundUserInterfaceMessage
+[Serializable, NetSerializable]
+public sealed class PDAEjectIDMessage : BoundUserInterfaceMessage
+{
+    public PDAEjectIDMessage()
     {
-        public PDAEjectIDMessage()
-        {
 
-        }
     }
+}
 
-    [Serializable, NetSerializable]
-    public sealed class PDAEjectPenMessage : BoundUserInterfaceMessage
+[Serializable, NetSerializable]
+public sealed class PDAEjectPenMessage : BoundUserInterfaceMessage
+{
+    public PDAEjectPenMessage()
     {
-        public PDAEjectPenMessage()
-        {
 
-        }
     }
+}
 
-    [Serializable, NetSerializable]
-    public sealed class PDAShowUplinkMessage : BoundUserInterfaceMessage
+[Serializable, NetSerializable]
+public sealed class PDAShowUplinkMessage : BoundUserInterfaceMessage
+{
+    public PDAShowUplinkMessage()
     {
-        public PDAShowUplinkMessage()
-        {
 
-        }
     }
+}
 
 
-    [Serializable, NetSerializable]
-    public sealed class PDARequestUpdateInterfaceMessage : BoundUserInterfaceMessage
+[Serializable, NetSerializable]
+public sealed class PDARequestUpdateInterfaceMessage : BoundUserInterfaceMessage
+{
+    public PDARequestUpdateInterfaceMessage()
     {
-        public PDARequestUpdateInterfaceMessage()
-        {
 
-        }
     }
 }

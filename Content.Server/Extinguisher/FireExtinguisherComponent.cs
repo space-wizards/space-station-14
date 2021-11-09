@@ -17,101 +17,100 @@ using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.Extinguisher
+namespace Content.Server.Extinguisher;
+
+[RegisterComponent]
+public class FireExtinguisherComponent : SharedFireExtinguisherComponent, IAfterInteract, IUse, IActivate, IDropped
 {
-    [RegisterComponent]
-    public class FireExtinguisherComponent : SharedFireExtinguisherComponent, IAfterInteract, IUse, IActivate, IDropped
+    public override string Name => "FireExtinguisher";
+
+    [DataField("refillSound")]
+    SoundSpecifier _refillSound = new SoundPathSpecifier("/Audio/Effects/refill.ogg");
+    [DataField("hasSafety")]
+    private bool _hasSafety;
+    [DataField("safety")]
+    private bool _safety = true;
+    [DataField("safetySound")]
+    public SoundSpecifier SafetySound { get; } = new SoundPathSpecifier("/Audio/Machines/button.ogg");
+
+    // Higher priority than sprays.
+    int IAfterInteract.Priority => 1;
+
+    protected override void Initialize()
     {
-        public override string Name => "FireExtinguisher";
+        base.Initialize();
 
-        [DataField("refillSound")]
-        SoundSpecifier _refillSound = new SoundPathSpecifier("/Audio/Effects/refill.ogg");
-        [DataField("hasSafety")]
-        private bool _hasSafety;
-        [DataField("safety")]
-        private bool _safety = true;
-        [DataField("safetySound")]
-        public SoundSpecifier SafetySound { get; } = new SoundPathSpecifier("/Audio/Machines/button.ogg");
-
-        // Higher priority than sprays.
-        int IAfterInteract.Priority => 1;
-
-        protected override void Initialize()
+        if (_hasSafety)
         {
-            base.Initialize();
-
-            if (_hasSafety)
-            {
-                SetSafety(Owner, _safety);
-            }
+            SetSafety(Owner, _safety);
         }
+    }
 
-        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+    async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+    {
+        var solutionContainerSystem = EntitySystem.Get<SolutionContainerSystem>();
+        if (eventArgs.Target == null || !eventArgs.CanReach)
         {
-            var solutionContainerSystem = EntitySystem.Get<SolutionContainerSystem>();
-            if (eventArgs.Target == null || !eventArgs.CanReach)
+            if (_hasSafety && _safety)
             {
-                if (_hasSafety && _safety)
-                {
-                    Owner.PopupMessage(eventArgs.User, Loc.GetString("fire-extinguisher-component-safety-on-message"));
-                    return true;
-                }
-                return false;
-            }
-
-            var targetEntity = eventArgs.Target;
-            if (eventArgs.Target.HasComponent<ReagentTankComponent>()
-                && solutionContainerSystem.TryGetDrainableSolution(targetEntity.Uid, out var targetSolution)
-                && solutionContainerSystem.TryGetDrainableSolution(Owner.Uid, out var container))
-            {
-                var transfer = FixedPoint2.Min(container.AvailableVolume, targetSolution.DrainAvailable);
-                if (transfer > 0)
-                {
-                    var drained = solutionContainerSystem.Drain(targetEntity.Uid, targetSolution, transfer);
-                    solutionContainerSystem.TryAddSolution(Owner.Uid, container, drained);
-
-                    SoundSystem.Play(Filter.Pvs(Owner), _refillSound.GetSound(), Owner);
-                    eventArgs.Target.PopupMessage(eventArgs.User,
-                        Loc.GetString("fire-extingusiher-component-after-interact-refilled-message", ("owner", Owner)));
-                }
-
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("fire-extinguisher-component-safety-on-message"));
                 return true;
             }
-
             return false;
         }
-        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
+
+        var targetEntity = eventArgs.Target;
+        if (eventArgs.Target.HasComponent<ReagentTankComponent>()
+            && solutionContainerSystem.TryGetDrainableSolution(targetEntity.Uid, out var targetSolution)
+            && solutionContainerSystem.TryGetDrainableSolution(Owner.Uid, out var container))
         {
-            ToggleSafety(eventArgs.User);
+            var transfer = FixedPoint2.Min(container.AvailableVolume, targetSolution.DrainAvailable);
+            if (transfer > 0)
+            {
+                var drained = solutionContainerSystem.Drain(targetEntity.Uid, targetSolution, transfer);
+                solutionContainerSystem.TryAddSolution(Owner.Uid, container, drained);
+
+                SoundSystem.Play(Filter.Pvs(Owner), _refillSound.GetSound(), Owner);
+                eventArgs.Target.PopupMessage(eventArgs.User,
+                                              Loc.GetString("fire-extingusiher-component-after-interact-refilled-message", ("owner", Owner)));
+            }
+
             return true;
         }
 
-        void IActivate.Activate(ActivateEventArgs eventArgs)
-        {
-            ToggleSafety(eventArgs.User);
-        }
+        return false;
+    }
+    bool IUse.UseEntity(UseEntityEventArgs eventArgs)
+    {
+        ToggleSafety(eventArgs.User);
+        return true;
+    }
 
-        private void ToggleSafety(IEntity user)
-        {
-            SoundSystem.Play(Filter.Pvs(Owner), SafetySound.GetSound(), Owner, AudioHelpers.WithVariation(0.125f).WithVolume(-4f));
-            SetSafety(user, !_safety);
-        }
+    void IActivate.Activate(ActivateEventArgs eventArgs)
+    {
+        ToggleSafety(eventArgs.User);
+    }
 
-        private void SetSafety(IEntity user, bool state)
-        {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user.Uid) || !_hasSafety)
-                return;
+    private void ToggleSafety(IEntity user)
+    {
+        SoundSystem.Play(Filter.Pvs(Owner), SafetySound.GetSound(), Owner, AudioHelpers.WithVariation(0.125f).WithVolume(-4f));
+        SetSafety(user, !_safety);
+    }
 
-            _safety = state;
+    private void SetSafety(IEntity user, bool state)
+    {
+        if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user.Uid) || !_hasSafety)
+            return;
 
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
-                appearance.SetData(FireExtinguisherVisuals.Safety, _safety);
-        }
+        _safety = state;
 
-        void IDropped.Dropped(DroppedEventArgs eventArgs)
-        {
-            if (_hasSafety && Owner.TryGetComponent(out AppearanceComponent? appearance))
-                appearance.SetData(FireExtinguisherVisuals.Safety, _safety);
-        }
+        if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            appearance.SetData(FireExtinguisherVisuals.Safety, _safety);
+    }
+
+    void IDropped.Dropped(DroppedEventArgs eventArgs)
+    {
+        if (_hasSafety && Owner.TryGetComponent(out AppearanceComponent? appearance))
+            appearance.SetData(FireExtinguisherVisuals.Safety, _safety);
     }
 }

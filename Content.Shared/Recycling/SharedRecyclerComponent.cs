@@ -1,11 +1,10 @@
 ﻿using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Recycling
+namespace Content.Shared.Recycling;
+
+[NetSerializable, Serializable]
+public enum RecyclerVisuals
 {
-    [NetSerializable, Serializable]
-    public enum RecyclerVisuals
-    {
-        Bloody
-    }
+    Bloody
 }

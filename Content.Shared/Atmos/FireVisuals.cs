@@ -1,12 +1,11 @@
 ﻿using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Atmos
+namespace Content.Shared.Atmos;
+
+[Serializable, NetSerializable]
+public enum FireVisuals
 {
-    [Serializable, NetSerializable]
-    public enum FireVisuals
-    {
-        OnFire,
-        FireStacks,
-    }
+    OnFire,
+    FireStacks,
 }

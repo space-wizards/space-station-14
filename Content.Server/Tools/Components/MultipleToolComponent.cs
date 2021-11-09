@@ -9,37 +9,36 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Tools.Components
+namespace Content.Server.Tools.Components;
+
+/// <summary>
+///     Not to be confused with Multitool (power)
+/// </summary>
+[RegisterComponent]
+public class MultipleToolComponent : SharedMultipleToolComponent
 {
-    /// <summary>
-    ///     Not to be confused with Multitool (power)
-    /// </summary>
-    [RegisterComponent]
-    public class MultipleToolComponent : SharedMultipleToolComponent
+    [DataDefinition]
+    public class ToolEntry
     {
-        [DataDefinition]
-        public class ToolEntry
-        {
-            [DataField("behavior", required:true)]
-            public PrototypeFlags<ToolQualityPrototype> Behavior { get; } = new();
+        [DataField("behavior", required:true)]
+        public PrototypeFlags<ToolQualityPrototype> Behavior { get; } = new();
 
-            [DataField("useSound")]
-            public SoundSpecifier? Sound { get; } = null;
+        [DataField("useSound")]
+        public SoundSpecifier? Sound { get; } = null;
 
-            [DataField("changeSound")]
-            public SoundSpecifier? ChangeSound { get; } = null;
+        [DataField("changeSound")]
+        public SoundSpecifier? ChangeSound { get; } = null;
 
-            [DataField("sprite")]
-            public SpriteSpecifier? Sprite { get; } = null;
-        }
-        
-        [DataField("entries", required:true)]
-        public ToolEntry[] Entries { get; } = Array.Empty<ToolEntry>();
-
-        [ViewVariables]
-        public int CurrentEntry = 0;
-
-        [ViewVariables]
-        public string CurrentQualityName = string.Empty;
+        [DataField("sprite")]
+        public SpriteSpecifier? Sprite { get; } = null;
     }
+        
+    [DataField("entries", required:true)]
+    public ToolEntry[] Entries { get; } = Array.Empty<ToolEntry>();
+
+    [ViewVariables]
+    public int CurrentEntry = 0;
+
+    [ViewVariables]
+    public string CurrentQualityName = string.Empty;
 }

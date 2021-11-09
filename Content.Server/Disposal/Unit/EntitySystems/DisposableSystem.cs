@@ -2,18 +2,17 @@
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.Disposal.Unit.EntitySystems
-{
-    [UsedImplicitly]
-    internal sealed class DisposableSystem : EntitySystem
-    {
+namespace Content.Server.Disposal.Unit.EntitySystems;
 
-        public override void Update(float frameTime)
+[UsedImplicitly]
+internal sealed class DisposableSystem : EntitySystem
+{
+
+    public override void Update(float frameTime)
+    {
+        foreach (var comp in EntityManager.EntityQuery<DisposalHolderComponent>())
         {
-            foreach (var comp in EntityManager.EntityQuery<DisposalHolderComponent>())
-            {
-                comp.Update(frameTime);
-            }
+            comp.Update(frameTime);
         }
     }
 }

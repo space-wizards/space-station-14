@@ -9,34 +9,33 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
-namespace Content.Client.Administration.UI.Tabs.AtmosTab
+namespace Content.Client.Administration.UI.Tabs.AtmosTab;
+
+[GenerateTypedNameReferences]
+[UsedImplicitly]
+public partial class AddAtmosWindow : SS14Window
 {
-    [GenerateTypedNameReferences]
-    [UsedImplicitly]
-    public partial class AddAtmosWindow : SS14Window
+    private IEnumerable<IMapGrid>? _data;
+
+    protected override void EnteredTree()
     {
-        private IEnumerable<IMapGrid>? _data;
-
-        protected override void EnteredTree()
+        _data = IoCManager.Resolve<IMapManager>().GetAllGrids().Where(g => (int) g.Index != 0);
+        foreach (var grid in _data)
         {
-            _data = IoCManager.Resolve<IMapManager>().GetAllGrids().Where(g => (int) g.Index != 0);
-            foreach (var grid in _data)
-            {
-                var playerGrid = IoCManager.Resolve<IPlayerManager>().LocalPlayer?.ControlledEntity?.Transform.GridID;
-                GridOptions.AddItem($"{grid.Index} {(playerGrid == grid.Index ? " (Current)" : "")}");
-            }
-
-            GridOptions.OnItemSelected += eventArgs => GridOptions.SelectId(eventArgs.Id);
-            SubmitButton.OnPressed += SubmitButtonOnOnPressed;
+            var playerGrid = IoCManager.Resolve<IPlayerManager>().LocalPlayer?.ControlledEntity?.Transform.GridID;
+            GridOptions.AddItem($"{grid.Index} {(playerGrid == grid.Index ? " (Current)" : "")}");
         }
 
-        private void SubmitButtonOnOnPressed(BaseButton.ButtonEventArgs obj)
-        {
-            if (_data == null)
-                return;
-            var dataList = _data.ToList();
-            var selectedGrid = dataList[GridOptions.SelectedId].Index;
-            IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand($"addatmos {selectedGrid}");
-        }
+        GridOptions.OnItemSelected += eventArgs => GridOptions.SelectId(eventArgs.Id);
+        SubmitButton.OnPressed += SubmitButtonOnOnPressed;
+    }
+
+    private void SubmitButtonOnOnPressed(BaseButton.ButtonEventArgs obj)
+    {
+        if (_data == null)
+            return;
+        var dataList = _data.ToList();
+        var selectedGrid = dataList[GridOptions.SelectedId].Index;
+        IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand($"addatmos {selectedGrid}");
     }
 }

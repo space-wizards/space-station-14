@@ -6,42 +6,41 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Client.Commands
+namespace Content.Client.Commands;
+
+public class HideMechanismsCommand : IConsoleCommand
 {
-    public class HideMechanismsCommand : IConsoleCommand
+    public string Command => "hidemechanisms";
+    public string Description => $"Reverts the effects of {ShowMechanismsCommand.CommandName}";
+    public string Help => $"{Command}";
+
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        public string Command => "hidemechanisms";
-        public string Description => $"Reverts the effects of {ShowMechanismsCommand.CommandName}";
-        public string Help => $"{Command}";
+        var entityManager = IoCManager.Resolve<IEntityManager>();
+        var mechanisms = entityManager.EntityQuery<SharedMechanismComponent>(true);
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        foreach (var mechanism in mechanisms)
         {
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            var mechanisms = entityManager.EntityQuery<SharedMechanismComponent>(true);
-
-            foreach (var mechanism in mechanisms)
+            if (!mechanism.Owner.TryGetComponent(out SpriteComponent? sprite))
             {
-                if (!mechanism.Owner.TryGetComponent(out SpriteComponent? sprite))
-                {
-                    continue;
-                }
-
-                sprite.ContainerOccluded = false;
-
-                var tempParent = mechanism.Owner;
-                while (tempParent.TryGetContainer(out var container))
-                {
-                    if (!container.ShowContents)
-                    {
-                        sprite.ContainerOccluded = true;
-                        break;
-                    }
-
-                    tempParent = container.Owner;
-                }
+                continue;
             }
 
-            IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand("hidecontainedcontext");
+            sprite.ContainerOccluded = false;
+
+            var tempParent = mechanism.Owner;
+            while (tempParent.TryGetContainer(out var container))
+            {
+                if (!container.ShowContents)
+                {
+                    sprite.ContainerOccluded = true;
+                    break;
+                }
+
+                tempParent = container.Owner;
+            }
         }
+
+        IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand("hidecontainedcontext");
     }
 }

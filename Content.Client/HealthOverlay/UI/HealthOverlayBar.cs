@@ -4,43 +4,42 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client.HealthOverlay.UI
+namespace Content.Client.HealthOverlay.UI;
+
+public class HealthOverlayBar : Control
 {
-    public class HealthOverlayBar : Control
+    public const byte HealthBarScale = 2;
+
+    private const int XPixelDiff = 20 * HealthBarScale;
+
+    public HealthOverlayBar()
     {
-        public const byte HealthBarScale = 2;
+        IoCManager.InjectDependencies(this);
+        Shader = IoCManager.Resolve<IPrototypeManager>().Index<ShaderPrototype>("unshaded").Instance();
+    }
 
-        private const int XPixelDiff = 20 * HealthBarScale;
+    private ShaderInstance Shader { get; }
 
-        public HealthOverlayBar()
-        {
-            IoCManager.InjectDependencies(this);
-            Shader = IoCManager.Resolve<IPrototypeManager>().Index<ShaderPrototype>("unshaded").Instance();
-        }
+    /// <summary>
+    ///     From -1 (dead) to 0 (crit) and 1 (alive)
+    /// </summary>
+    public float Ratio { get; set; }
 
-        private ShaderInstance Shader { get; }
+    public Color Color { get; set; }
 
-        /// <summary>
-        ///     From -1 (dead) to 0 (crit) and 1 (alive)
-        /// </summary>
-        public float Ratio { get; set; }
+    protected override void Draw(DrawingHandleScreen handle)
+    {
+        base.Draw(handle);
 
-        public Color Color { get; set; }
+        handle.UseShader(Shader);
 
-        protected override void Draw(DrawingHandleScreen handle)
-        {
-            base.Draw(handle);
+        var leftOffset = 2 * HealthBarScale;
+        var box = new UIBox2i(
+            leftOffset,
+            -2 + 2 * HealthBarScale,
+            leftOffset + (int) (XPixelDiff * Ratio * UIScale),
+            -2);
 
-            handle.UseShader(Shader);
-
-            var leftOffset = 2 * HealthBarScale;
-            var box = new UIBox2i(
-                leftOffset,
-                -2 + 2 * HealthBarScale,
-                leftOffset + (int) (XPixelDiff * Ratio * UIScale),
-                -2);
-
-            handle.DrawRect(box, Color);
-        }
+        handle.DrawRect(box, Color);
     }
 }

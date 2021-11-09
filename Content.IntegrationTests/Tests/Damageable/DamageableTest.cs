@@ -8,14 +8,14 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
-namespace Content.IntegrationTests.Tests.Damageable
+namespace Content.IntegrationTests.Tests.Damageable;
+
+[TestFixture]
+[TestOf(typeof(DamageableComponent))]
+[TestOf(typeof(DamageableSystem))]
+public class DamageableTest : ContentIntegrationTest
 {
-    [TestFixture]
-    [TestOf(typeof(DamageableComponent))]
-    [TestOf(typeof(DamageableSystem))]
-    public class DamageableTest : ContentIntegrationTest
-    {
-        private const string Prototypes = @"
+    private const string Prototypes = @"
 # Define some damage groups
 - type: damageType
   id: TestDamage1
@@ -70,172 +70,171 @@ namespace Content.IntegrationTests.Tests.Damageable
     damageContainer: testDamageContainer
 ";
 
-        // public bool & function to determine whether dealing damage resulted in actual damage change
-        public bool DamageChanged = false;
-        public void DamageChangedListener(EntityUid _, DamageableComponent comp, DamageChangedEvent args)
+    // public bool & function to determine whether dealing damage resulted in actual damage change
+    public bool DamageChanged = false;
+    public void DamageChangedListener(EntityUid _, DamageableComponent comp, DamageChangedEvent args)
+    {
+        DamageChanged = true;
+    }
+
+    [Test]
+    public async Task TestDamageableComponents()
+    {
+        var server = StartServerDummyTicker(new ServerContentIntegrationOption
         {
-            DamageChanged = true;
-        }
+            ExtraPrototypes = Prototypes
+        });
 
-        [Test]
-        public async Task TestDamageableComponents()
+        await server.WaitIdleAsync();
+
+        var sEntityManager = server.ResolveDependency<IEntityManager>();
+        var sMapManager = server.ResolveDependency<IMapManager>();
+        var sPrototypeManager = server.ResolveDependency<IPrototypeManager>();
+        var sEntitySystemManager = server.ResolveDependency<IEntitySystemManager>();
+
+        sEntityManager.EventBus.SubscribeLocalEvent<DamageableComponent, DamageChangedEvent>(DamageChangedListener);
+
+        IEntity sDamageableEntity = null;
+        DamageableComponent sDamageableComponent = null;
+        DamageableSystem sDamageableSystem = null;
+
+        DamageGroupPrototype group1 = default!;
+        DamageGroupPrototype group2 = default!;
+        DamageGroupPrototype group3 = default!;
+
+        DamageTypePrototype type1 = default!;
+        DamageTypePrototype type2a = default!;
+        DamageTypePrototype type2b = default!;
+        DamageTypePrototype type3a = default!;
+        DamageTypePrototype type3b = default!;
+        DamageTypePrototype type3c = default!;
+
+        FixedPoint2 typeDamage, groupDamage;
+
+        await server.WaitPost(() =>
         {
-            var server = StartServerDummyTicker(new ServerContentIntegrationOption
+            var mapId = sMapManager.NextMapId();
+            var coordinates = new MapCoordinates(0, 0, mapId);
+            sMapManager.CreateMap(mapId);
+
+            sDamageableEntity = sEntityManager.SpawnEntity("TestDamageableEntityId", coordinates);
+            sDamageableComponent = sDamageableEntity.GetComponent<DamageableComponent>();
+            sDamageableSystem = sEntitySystemManager.GetEntitySystem<DamageableSystem>();
+
+            group1 = sPrototypeManager.Index<DamageGroupPrototype>("TestGroup1");
+            group2 = sPrototypeManager.Index<DamageGroupPrototype>("TestGroup2");
+            group3 = sPrototypeManager.Index<DamageGroupPrototype>("TestGroup3");
+
+            type1 = sPrototypeManager.Index<DamageTypePrototype>("TestDamage1");
+            type2a = sPrototypeManager.Index<DamageTypePrototype>("TestDamage2a");
+            type2b = sPrototypeManager.Index<DamageTypePrototype>("TestDamage2b");
+            type3a = sPrototypeManager.Index<DamageTypePrototype>("TestDamage3a");
+            type3b = sPrototypeManager.Index<DamageTypePrototype>("TestDamage3b");
+            type3c = sPrototypeManager.Index<DamageTypePrototype>("TestDamage3c");
+        });
+
+        await server.WaitRunTicks(5);
+
+        await server.WaitAssertion(() =>
+        {
+            var uid = sDamageableEntity.Uid;
+
+            // Check that the correct types are supported.
+            Assert.That(sDamageableComponent.Damage.DamageDict.ContainsKey(type1.ID), Is.False);
+            Assert.That(sDamageableComponent.Damage.DamageDict.ContainsKey(type2a.ID), Is.True);
+            Assert.That(sDamageableComponent.Damage.DamageDict.ContainsKey(type2b.ID), Is.False);
+            Assert.That(sDamageableComponent.Damage.DamageDict.ContainsKey(type3a.ID), Is.True);
+            Assert.That(sDamageableComponent.Damage.DamageDict.ContainsKey(type3b.ID), Is.True);
+            Assert.That(sDamageableComponent.Damage.DamageDict.ContainsKey(type3c.ID), Is.True);
+
+            // Check that damage is evenly distributed over a group if its a nice multiple
+            var types = group3.DamageTypes;
+            var damageToDeal = FixedPoint2.New(types.Count() * 5);
+            DamageSpecifier damage = new(group3, damageToDeal);
+
+            sDamageableSystem.TryChangeDamage(uid, damage, true);
+            Assert.That(DamageChanged);
+            DamageChanged = false;
+            Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(damageToDeal));
+            Assert.That(sDamageableComponent.DamagePerGroup[group3.ID], Is.EqualTo(damageToDeal));
+            foreach (var type in types)
             {
-                ExtraPrototypes = Prototypes
-            });
+                Assert.That(sDamageableComponent.Damage.DamageDict.TryGetValue(type, out typeDamage));
+                Assert.That(typeDamage, Is.EqualTo(damageToDeal / types.Count()));
+            }
 
-            await server.WaitIdleAsync();
-
-            var sEntityManager = server.ResolveDependency<IEntityManager>();
-            var sMapManager = server.ResolveDependency<IMapManager>();
-            var sPrototypeManager = server.ResolveDependency<IPrototypeManager>();
-            var sEntitySystemManager = server.ResolveDependency<IEntitySystemManager>();
-
-            sEntityManager.EventBus.SubscribeLocalEvent<DamageableComponent, DamageChangedEvent>(DamageChangedListener);
-
-            IEntity sDamageableEntity = null;
-            DamageableComponent sDamageableComponent = null;
-            DamageableSystem sDamageableSystem = null;
-
-            DamageGroupPrototype group1 = default!;
-            DamageGroupPrototype group2 = default!;
-            DamageGroupPrototype group3 = default!;
-
-            DamageTypePrototype type1 = default!;
-            DamageTypePrototype type2a = default!;
-            DamageTypePrototype type2b = default!;
-            DamageTypePrototype type3a = default!;
-            DamageTypePrototype type3b = default!;
-            DamageTypePrototype type3c = default!;
-
-            FixedPoint2 typeDamage, groupDamage;
-
-            await server.WaitPost(() =>
+            // Heal
+            sDamageableSystem.TryChangeDamage(uid, -damage);
+            Assert.That(DamageChanged);
+            DamageChanged = false;
+            Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(FixedPoint2.Zero));
+            Assert.That(sDamageableComponent.DamagePerGroup[group3.ID], Is.EqualTo(FixedPoint2.Zero));
+            foreach (var type in types)
             {
-                var mapId = sMapManager.NextMapId();
-                var coordinates = new MapCoordinates(0, 0, mapId);
-                sMapManager.CreateMap(mapId);
+                Assert.That(sDamageableComponent.Damage.DamageDict.TryGetValue(type, out typeDamage));
+                Assert.That(typeDamage, Is.EqualTo(FixedPoint2.Zero));
+            }
 
-                sDamageableEntity = sEntityManager.SpawnEntity("TestDamageableEntityId", coordinates);
-                sDamageableComponent = sDamageableEntity.GetComponent<DamageableComponent>();
-                sDamageableSystem = sEntitySystemManager.GetEntitySystem<DamageableSystem>();
+            // Check that damage works properly if it is NOT perfectly divisible among group members
+            types = group3.DamageTypes;
+            damageToDeal = FixedPoint2.New(types.Count() * 5 - 1);
+            damage = new DamageSpecifier(group3, damageToDeal);
+            sDamageableSystem.TryChangeDamage(uid, damage, true);
+            Assert.That(DamageChanged);
+            DamageChanged = false;
+            Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(damageToDeal));
+            Assert.That(sDamageableComponent.DamagePerGroup[group3.ID], Is.EqualTo(damageToDeal));
+            Assert.That(sDamageableComponent.Damage.DamageDict[type3a.ID], Is.EqualTo(damageToDeal / types.Count()));
+            Assert.That(sDamageableComponent.Damage.DamageDict[type3b.ID], Is.EqualTo(damageToDeal / types.Count()));
 
-                group1 = sPrototypeManager.Index<DamageGroupPrototype>("TestGroup1");
-                group2 = sPrototypeManager.Index<DamageGroupPrototype>("TestGroup2");
-                group3 = sPrototypeManager.Index<DamageGroupPrototype>("TestGroup3");
+            // last one will get 0.01 less, since its not perfectly divisble by 3
+            Assert.That(sDamageableComponent.Damage.DamageDict[type3c.ID], Is.EqualTo(damageToDeal / types.Count() - 0.01));
 
-                type1 = sPrototypeManager.Index<DamageTypePrototype>("TestDamage1");
-                type2a = sPrototypeManager.Index<DamageTypePrototype>("TestDamage2a");
-                type2b = sPrototypeManager.Index<DamageTypePrototype>("TestDamage2b");
-                type3a = sPrototypeManager.Index<DamageTypePrototype>("TestDamage3a");
-                type3b = sPrototypeManager.Index<DamageTypePrototype>("TestDamage3b");
-                type3c = sPrototypeManager.Index<DamageTypePrototype>("TestDamage3c");
-            });
-
-            await server.WaitRunTicks(5);
-
-            await server.WaitAssertion(() =>
+            // Heal
+            sDamageableSystem.TryChangeDamage(uid, -damage);
+            Assert.That(DamageChanged);
+            DamageChanged = false;
+            Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(FixedPoint2.Zero));
+            Assert.That(sDamageableComponent.DamagePerGroup[group3.ID], Is.EqualTo(FixedPoint2.Zero));
+            foreach (var type in types)
             {
-                var uid = sDamageableEntity.Uid;
+                Assert.That(sDamageableComponent.Damage.DamageDict.TryGetValue(type, out typeDamage));
+                Assert.That(typeDamage, Is.EqualTo(FixedPoint2.Zero));
+            }
 
-                // Check that the correct types are supported.
-                Assert.That(sDamageableComponent.Damage.DamageDict.ContainsKey(type1.ID), Is.False);
-                Assert.That(sDamageableComponent.Damage.DamageDict.ContainsKey(type2a.ID), Is.True);
-                Assert.That(sDamageableComponent.Damage.DamageDict.ContainsKey(type2b.ID), Is.False);
-                Assert.That(sDamageableComponent.Damage.DamageDict.ContainsKey(type3a.ID), Is.True);
-                Assert.That(sDamageableComponent.Damage.DamageDict.ContainsKey(type3b.ID), Is.True);
-                Assert.That(sDamageableComponent.Damage.DamageDict.ContainsKey(type3c.ID), Is.True);
+            // Test that unsupported groups return false when setting/getting damage (and don't change damage)
+            Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(FixedPoint2.Zero));
+            damage = new DamageSpecifier(group1, FixedPoint2.New(10)) + new DamageSpecifier(type2b, FixedPoint2.New(10));
+            sDamageableSystem.TryChangeDamage(uid, damage, true);
+            Assert.That(DamageChanged, Is.False);
+            Assert.That(sDamageableComponent.DamagePerGroup.TryGetValue(group1.ID, out groupDamage), Is.False);
+            Assert.That(sDamageableComponent.Damage.DamageDict.TryGetValue(type1.ID, out typeDamage), Is.False);
+            Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(FixedPoint2.Zero));
 
-                // Check that damage is evenly distributed over a group if its a nice multiple
-                var types = group3.DamageTypes;
-                var damageToDeal = FixedPoint2.New(types.Count() * 5);
-                DamageSpecifier damage = new(group3, damageToDeal);
+            // Test SetAll function
+            sDamageableSystem.SetAllDamage(sDamageableComponent, 10);
+            Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(FixedPoint2.New(10 * sDamageableComponent.Damage.DamageDict.Count())));
+            sDamageableSystem.SetAllDamage(sDamageableComponent, 0);
+            Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(FixedPoint2.Zero));
 
-                sDamageableSystem.TryChangeDamage(uid, damage, true);
-                Assert.That(DamageChanged);
-                DamageChanged = false;
-                Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(damageToDeal));
-                Assert.That(sDamageableComponent.DamagePerGroup[group3.ID], Is.EqualTo(damageToDeal));
-                foreach (var type in types)
-                {
-                    Assert.That(sDamageableComponent.Damage.DamageDict.TryGetValue(type, out typeDamage));
-                    Assert.That(typeDamage, Is.EqualTo(damageToDeal / types.Count()));
-                }
+            // Test 'wasted' healing
+            sDamageableSystem.TryChangeDamage(uid, new DamageSpecifier(type3a, 5));
+            sDamageableSystem.TryChangeDamage(uid, new DamageSpecifier(type3b, 7));
+            sDamageableSystem.TryChangeDamage(uid, new DamageSpecifier(group3, -11));
+            Assert.That(sDamageableComponent.Damage.DamageDict[type3a.ID], Is.EqualTo(FixedPoint2.New(1.33)));
+            Assert.That(sDamageableComponent.Damage.DamageDict[type3b.ID], Is.EqualTo(FixedPoint2.New(3.33)));
+            Assert.That(sDamageableComponent.Damage.DamageDict[type3c.ID], Is.EqualTo(FixedPoint2.New(0)));
 
-                // Heal
-                sDamageableSystem.TryChangeDamage(uid, -damage);
-                Assert.That(DamageChanged);
-                DamageChanged = false;
-                Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(FixedPoint2.Zero));
-                Assert.That(sDamageableComponent.DamagePerGroup[group3.ID], Is.EqualTo(FixedPoint2.Zero));
-                foreach (var type in types)
-                {
-                    Assert.That(sDamageableComponent.Damage.DamageDict.TryGetValue(type, out typeDamage));
-                    Assert.That(typeDamage, Is.EqualTo(FixedPoint2.Zero));
-                }
+            // Test Over-Healing
+            sDamageableSystem.TryChangeDamage(uid, new DamageSpecifier(group3, FixedPoint2.New(-100)));
+            Assert.That(DamageChanged);
+            DamageChanged = false;
+            Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(FixedPoint2.Zero));
 
-                // Check that damage works properly if it is NOT perfectly divisible among group members
-                types = group3.DamageTypes;
-                damageToDeal = FixedPoint2.New(types.Count() * 5 - 1);
-                damage = new DamageSpecifier(group3, damageToDeal);
-                sDamageableSystem.TryChangeDamage(uid, damage, true);
-                Assert.That(DamageChanged);
-                DamageChanged = false;
-                Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(damageToDeal));
-                Assert.That(sDamageableComponent.DamagePerGroup[group3.ID], Is.EqualTo(damageToDeal));
-                Assert.That(sDamageableComponent.Damage.DamageDict[type3a.ID], Is.EqualTo(damageToDeal / types.Count()));
-                Assert.That(sDamageableComponent.Damage.DamageDict[type3b.ID], Is.EqualTo(damageToDeal / types.Count()));
-
-                // last one will get 0.01 less, since its not perfectly divisble by 3
-                Assert.That(sDamageableComponent.Damage.DamageDict[type3c.ID], Is.EqualTo(damageToDeal / types.Count() - 0.01));
-
-                // Heal
-                sDamageableSystem.TryChangeDamage(uid, -damage);
-                Assert.That(DamageChanged);
-                DamageChanged = false;
-                Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(FixedPoint2.Zero));
-                Assert.That(sDamageableComponent.DamagePerGroup[group3.ID], Is.EqualTo(FixedPoint2.Zero));
-                foreach (var type in types)
-                {
-                    Assert.That(sDamageableComponent.Damage.DamageDict.TryGetValue(type, out typeDamage));
-                    Assert.That(typeDamage, Is.EqualTo(FixedPoint2.Zero));
-                }
-
-                // Test that unsupported groups return false when setting/getting damage (and don't change damage)
-                Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(FixedPoint2.Zero));
-                damage = new DamageSpecifier(group1, FixedPoint2.New(10)) + new DamageSpecifier(type2b, FixedPoint2.New(10));
-                sDamageableSystem.TryChangeDamage(uid, damage, true);
-                Assert.That(DamageChanged, Is.False);
-                Assert.That(sDamageableComponent.DamagePerGroup.TryGetValue(group1.ID, out groupDamage), Is.False);
-                Assert.That(sDamageableComponent.Damage.DamageDict.TryGetValue(type1.ID, out typeDamage), Is.False);
-                Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(FixedPoint2.Zero));
-
-                // Test SetAll function
-                sDamageableSystem.SetAllDamage(sDamageableComponent, 10);
-                Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(FixedPoint2.New(10 * sDamageableComponent.Damage.DamageDict.Count())));
-                sDamageableSystem.SetAllDamage(sDamageableComponent, 0);
-                Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(FixedPoint2.Zero));
-
-                // Test 'wasted' healing
-                sDamageableSystem.TryChangeDamage(uid, new DamageSpecifier(type3a, 5));
-                sDamageableSystem.TryChangeDamage(uid, new DamageSpecifier(type3b, 7));
-                sDamageableSystem.TryChangeDamage(uid, new DamageSpecifier(group3, -11));
-                Assert.That(sDamageableComponent.Damage.DamageDict[type3a.ID], Is.EqualTo(FixedPoint2.New(1.33)));
-                Assert.That(sDamageableComponent.Damage.DamageDict[type3b.ID], Is.EqualTo(FixedPoint2.New(3.33)));
-                Assert.That(sDamageableComponent.Damage.DamageDict[type3c.ID], Is.EqualTo(FixedPoint2.New(0)));
-
-                // Test Over-Healing
-                sDamageableSystem.TryChangeDamage(uid, new DamageSpecifier(group3, FixedPoint2.New(-100)));
-                Assert.That(DamageChanged);
-                DamageChanged = false;
-                Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(FixedPoint2.Zero));
-
-                // Test that if no health change occurred, returns false
-                sDamageableSystem.TryChangeDamage(uid, new DamageSpecifier(group3, -100));
-                Assert.That(DamageChanged, Is.False);
-                Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(FixedPoint2.Zero));
-            });
-        }
+            // Test that if no health change occurred, returns false
+            sDamageableSystem.TryChangeDamage(uid, new DamageSpecifier(group3, -100));
+            Assert.That(DamageChanged, Is.False);
+            Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(FixedPoint2.Zero));
+        });
     }
 }

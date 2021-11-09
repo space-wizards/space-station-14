@@ -8,141 +8,140 @@ using static Content.Shared.Configurable.SharedConfigurationComponent;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
-namespace Content.Client.Configurable.UI
+namespace Content.Client.Configurable.UI;
+
+public class ConfigurationMenu : SS14Window
 {
-    public class ConfigurationMenu : SS14Window
+    public ConfigurationBoundUserInterface Owner { get; }
+
+    private readonly BoxContainer _column;
+    private readonly BoxContainer _row;
+
+    private readonly List<(string  name, LineEdit input)> _inputs;
+
+    public ConfigurationMenu(ConfigurationBoundUserInterface owner)
     {
-        public ConfigurationBoundUserInterface Owner { get; }
+        MinSize = SetSize = (300, 250);
+        Owner = owner;
 
-        private readonly BoxContainer _column;
-        private readonly BoxContainer _row;
+        _inputs = new List<(string name, LineEdit input)>();
 
-        private readonly List<(string  name, LineEdit input)> _inputs;
+        Title = Loc.GetString("configuration-menu-device-title");
 
-        public ConfigurationMenu(ConfigurationBoundUserInterface owner)
+        BoxContainer baseContainer = new BoxContainer
         {
-            MinSize = SetSize = (300, 250);
-            Owner = owner;
+            Orientation = LayoutOrientation.Vertical,
+            VerticalExpand = true,
+            HorizontalExpand = true
+        };
 
-            _inputs = new List<(string name, LineEdit input)>();
+        _column = new BoxContainer
+        {
+            Orientation = LayoutOrientation.Vertical,
+            Margin = new Thickness(8),
+            SeparationOverride = 16,
+        };
 
-            Title = Loc.GetString("configuration-menu-device-title");
+        _row = new BoxContainer
+        {
+            Orientation = LayoutOrientation.Horizontal,
+            SeparationOverride = 16,
+            HorizontalExpand = true
+        };
 
-            BoxContainer baseContainer = new BoxContainer
+        var confirmButton = new Button
+        {
+            Text = Loc.GetString("configuration-menu-confirm"),
+            HorizontalAlignment = HAlignment.Center,
+            VerticalAlignment = VAlignment.Center
+        };
+
+        confirmButton.OnButtonUp += OnConfirm;
+
+        var outerColumn = new ScrollContainer
+        {
+            VerticalExpand = true,
+            HorizontalExpand = true,
+            ModulateSelfOverride = Color.FromHex("#202025")
+        };
+
+        outerColumn.AddChild(_column);
+        baseContainer.AddChild(outerColumn);
+        baseContainer.AddChild(confirmButton);
+        Contents.AddChild(baseContainer);
+    }
+
+    public void Populate(ConfigurationBoundUserInterfaceState state)
+    {
+        _column.Children.Clear();
+        _inputs.Clear();
+
+        foreach (var field in state.Config)
+        {
+            var label = new Label
             {
-                Orientation = LayoutOrientation.Vertical,
-                VerticalExpand = true,
-                HorizontalExpand = true
-            };
-
-            _column = new BoxContainer
-            {
-                Orientation = LayoutOrientation.Vertical,
-                Margin = new Thickness(8),
-                SeparationOverride = 16,
-            };
-
-            _row = new BoxContainer
-            {
-                Orientation = LayoutOrientation.Horizontal,
-                SeparationOverride = 16,
-                HorizontalExpand = true
-            };
-
-            var confirmButton = new Button
-            {
-                Text = Loc.GetString("configuration-menu-confirm"),
-                HorizontalAlignment = HAlignment.Center,
-                VerticalAlignment = VAlignment.Center
-            };
-
-            confirmButton.OnButtonUp += OnConfirm;
-
-            var outerColumn = new ScrollContainer
-            {
-                VerticalExpand = true,
+                Margin = new Thickness(0, 0, 8, 0),
+                Name = field.Key,
+                Text = field.Key + ":",
+                VerticalAlignment = VAlignment.Center,
                 HorizontalExpand = true,
-                ModulateSelfOverride = Color.FromHex("#202025")
+                SizeFlagsStretchRatio = .2f,
+                MinSize = new Vector2(60, 0)
             };
 
-            outerColumn.AddChild(_column);
-            baseContainer.AddChild(outerColumn);
-            baseContainer.AddChild(confirmButton);
-            Contents.AddChild(baseContainer);
-        }
-
-        public void Populate(ConfigurationBoundUserInterfaceState state)
-        {
-            _column.Children.Clear();
-            _inputs.Clear();
-
-            foreach (var field in state.Config)
+            var input = new LineEdit
             {
-                var label = new Label
-                {
-                    Margin = new Thickness(0, 0, 8, 0),
-                    Name = field.Key,
-                    Text = field.Key + ":",
-                    VerticalAlignment = VAlignment.Center,
-                    HorizontalExpand = true,
-                    SizeFlagsStretchRatio = .2f,
-                    MinSize = new Vector2(60, 0)
-                };
+                Name = field.Key + "-input",
+                Text = field.Value,
+                IsValid = Validate,
+                HorizontalExpand = true,
+                SizeFlagsStretchRatio = .8f
+            };
 
-                var input = new LineEdit
-                {
-                    Name = field.Key + "-input",
-                    Text = field.Value,
-                    IsValid = Validate,
-                    HorizontalExpand = true,
-                    SizeFlagsStretchRatio = .8f
-                };
+            _inputs.Add((field.Key, input));
 
-                _inputs.Add((field.Key, input));
-
-                var row = new BoxContainer
-                {
-                    Orientation = LayoutOrientation.Horizontal
-                };
-                CopyProperties(_row, row);
-
-                row.AddChild(label);
-                row.AddChild(input);
-                _column.AddChild(row);
-            }
-        }
-
-        private void OnConfirm(ButtonEventArgs args)
-        {
-            var config = GenerateDictionary(_inputs, "Text");
-
-            Owner.SendConfiguration(config);
-            Close();
-        }
-
-        private bool Validate(string value)
-        {
-            return Owner.Validation == null || Owner.Validation.IsMatch(value);
-        }
-
-        private Dictionary<string, string> GenerateDictionary(IEnumerable<(string name, LineEdit input)> inputs, string propertyName)
-        {
-            var dictionary = new Dictionary<string, string>();
-
-            foreach (var input in inputs)
+            var row = new BoxContainer
             {
-                dictionary.Add(input.name, input.input.Text);
-            }
+                Orientation = LayoutOrientation.Horizontal
+            };
+            CopyProperties(_row, row);
 
-            return dictionary;
+            row.AddChild(label);
+            row.AddChild(input);
+            _column.AddChild(row);
+        }
+    }
+
+    private void OnConfirm(ButtonEventArgs args)
+    {
+        var config = GenerateDictionary(_inputs, "Text");
+
+        Owner.SendConfiguration(config);
+        Close();
+    }
+
+    private bool Validate(string value)
+    {
+        return Owner.Validation == null || Owner.Validation.IsMatch(value);
+    }
+
+    private Dictionary<string, string> GenerateDictionary(IEnumerable<(string name, LineEdit input)> inputs, string propertyName)
+    {
+        var dictionary = new Dictionary<string, string>();
+
+        foreach (var input in inputs)
+        {
+            dictionary.Add(input.name, input.input.Text);
         }
 
-        private static void CopyProperties<T>(T from, T to) where T : Control
+        return dictionary;
+    }
+
+    private static void CopyProperties<T>(T from, T to) where T : Control
+    {
+        foreach (var property in from.AllAttachedProperties)
         {
-            foreach (var property in from.AllAttachedProperties)
-            {
-                to.SetValue(property.Key, property.Value);
-            }
+            to.SetValue(property.Key, property.Value);
         }
     }
 }

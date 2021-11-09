@@ -3,22 +3,21 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Cuffs.Components
+namespace Content.Shared.Cuffs.Components;
+
+[NetworkedComponent()]
+public abstract class SharedHandcuffComponent : Component
 {
-    [NetworkedComponent()]
-    public abstract class SharedHandcuffComponent : Component
+    public override string Name => "Handcuff";
+
+    [Serializable, NetSerializable]
+    protected sealed class HandcuffedComponentState : ComponentState
     {
-        public override string Name => "Handcuff";
+        public string? IconState { get; }
 
-        [Serializable, NetSerializable]
-        protected sealed class HandcuffedComponentState : ComponentState
+        public HandcuffedComponentState(string? iconState)
         {
-            public string? IconState { get; }
-
-            public HandcuffedComponentState(string? iconState)
-            {
-                IconState = iconState;
-            }
+            IconState = iconState;
         }
     }
 }

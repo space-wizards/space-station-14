@@ -19,250 +19,249 @@ using Robust.Shared.IoC;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Client.Hands
+namespace Content.Client.Hands;
+
+[GenerateTypedNameReferences]
+public sealed partial class HandsGui : Control
 {
-    [GenerateTypedNameReferences]
-    public sealed partial class HandsGui : Control
+    [Dependency] private readonly IResourceCache _resourceCache = default!;
+    [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
+    [Dependency] private readonly IGameHud _gameHud = default!;
+    [Dependency] private readonly INetConfigurationManager _configManager = default!;
+
+    private readonly HandsSystem _handsSystem;
+    private readonly HandsComponent _handsComponent;
+
+    private Texture StorageTexture => _gameHud.GetHudTexture("back.png");
+    private Texture BlockedTexture => _resourceCache.GetTexture("/Textures/Interface/Inventory/blocked.png");
+
+    private ItemStatusPanel StatusPanel { get; }
+
+    [ViewVariables] private GuiHand[] _hands = Array.Empty<GuiHand>();
+
+    private string? ActiveHand { get; set; }
+
+    public HandsGui(HandsComponent hands, HandsSystem handsSystem)
     {
-        [Dependency] private readonly IResourceCache _resourceCache = default!;
-        [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
-        [Dependency] private readonly IGameHud _gameHud = default!;
-        [Dependency] private readonly INetConfigurationManager _configManager = default!;
+        _handsComponent = hands;
+        _handsSystem = handsSystem;
 
-        private readonly HandsSystem _handsSystem;
-        private readonly HandsComponent _handsComponent;
+        RobustXamlLoader.Load(this);
+        IoCManager.InjectDependencies(this);
 
-        private Texture StorageTexture => _gameHud.GetHudTexture("back.png");
-        private Texture BlockedTexture => _resourceCache.GetTexture("/Textures/Interface/Inventory/blocked.png");
+        StatusPanel = ItemStatusPanel.FromSide(HandLocation.Middle);
+        StatusContainer.AddChild(StatusPanel);
+        StatusPanel.SetPositionFirst();
+    }
 
-        private ItemStatusPanel StatusPanel { get; }
+    protected override void EnteredTree()
+    {
+        base.EnteredTree();
 
-        [ViewVariables] private GuiHand[] _hands = Array.Empty<GuiHand>();
+        _handsSystem.GuiStateUpdated += HandsSystemOnGuiStateUpdated;
+        _configManager.OnValueChanged(CCVars.HudTheme, UpdateHudTheme);
 
-        private string? ActiveHand { get; set; }
+        HandsSystemOnGuiStateUpdated();
+    }
 
-        public HandsGui(HandsComponent hands, HandsSystem handsSystem)
+    protected override void ExitedTree()
+    {
+        base.ExitedTree();
+
+        _handsSystem.GuiStateUpdated -= HandsSystemOnGuiStateUpdated;
+        _configManager.UnsubValueChanged(CCVars.HudTheme, UpdateHudTheme);
+    }
+
+    private void HandsSystemOnGuiStateUpdated()
+    {
+        var state = _handsSystem.GetGuiState();
+
+        ActiveHand = state.ActiveHand;
+        _hands = state.GuiHands;
+        Array.Sort(_hands, HandOrderComparer.Instance);
+        UpdateGui();
+    }
+
+    private void UpdateGui()
+    {
+        HandsContainer.DisposeAllChildren();
+
+        foreach (var hand in _hands)
         {
-            _handsComponent = hands;
-            _handsSystem = handsSystem;
+            var newButton = MakeHandButton(hand.HandLocation);
+            HandsContainer.AddChild(newButton);
+            hand.HandButton = newButton;
 
-            RobustXamlLoader.Load(this);
-            IoCManager.InjectDependencies(this);
+            var handName = hand.Name;
+            newButton.OnPressed += args => OnHandPressed(args, handName);
+            newButton.OnStoragePressed += _ => OnStoragePressed(handName);
 
-            StatusPanel = ItemStatusPanel.FromSide(HandLocation.Middle);
-            StatusContainer.AddChild(StatusPanel);
-            StatusPanel.SetPositionFirst();
+            _itemSlotManager.SetItemSlot(newButton, hand.HeldItem);
+
+            // Show blocked overlay if hand is blocked.
+            newButton.Blocked.Visible =
+                hand.HeldItem != null && hand.HeldItem.HasComponent<HandVirtualItemComponent>();
         }
 
-        protected override void EnteredTree()
+        if (TryGetActiveHand(out var activeHand))
         {
-            base.EnteredTree();
+            activeHand.HandButton.SetActiveHand(true);
+            StatusPanel.Update(activeHand.HeldItem);
+        }
+    }
 
-            _handsSystem.GuiStateUpdated += HandsSystemOnGuiStateUpdated;
-            _configManager.OnValueChanged(CCVars.HudTheme, UpdateHudTheme);
+    private void OnHandPressed(GUIBoundKeyEventArgs args, string handName)
+    {
+        if (args.Function == EngineKeyFunctions.UIClick)
+        {
+            _handsSystem.UIHandClick(_handsComponent, handName);
+        }
+        else if (TryGetHand(handName, out var hand))
+        {
+            _itemSlotManager.OnButtonPressed(args, hand.HeldItem);
+        }
+    }
 
-            HandsSystemOnGuiStateUpdated();
+    private void OnStoragePressed(string handName)
+    {
+        _handsSystem.UIHandActivate(handName);
+    }
+
+    private bool TryGetActiveHand([NotNullWhen(true)] out GuiHand? activeHand)
+    {
+        TryGetHand(ActiveHand, out activeHand);
+        return activeHand != null;
+    }
+
+    private bool TryGetHand(string? handName, [NotNullWhen(true)] out GuiHand? foundHand)
+    {
+        foundHand = null;
+
+        if (handName == null)
+            return false;
+
+        foreach (var hand in _hands)
+        {
+            if (hand.Name == handName)
+                foundHand = hand;
         }
 
-        protected override void ExitedTree()
-        {
-            base.ExitedTree();
+        return foundHand != null;
+    }
 
-            _handsSystem.GuiStateUpdated -= HandsSystemOnGuiStateUpdated;
-            _configManager.UnsubValueChanged(CCVars.HudTheme, UpdateHudTheme);
+    protected override void FrameUpdate(FrameEventArgs args)
+    {
+        base.FrameUpdate(args);
+
+        foreach (var hand in _hands)
+        {
+            _itemSlotManager.UpdateCooldown(hand.HandButton, hand.HeldItem);
         }
+    }
 
-        private void HandsSystemOnGuiStateUpdated()
+    private HandButton MakeHandButton(HandLocation buttonLocation)
+    {
+        var buttonTextureName = buttonLocation switch
         {
-            var state = _handsSystem.GetGuiState();
+            HandLocation.Right => "hand_r.png",
+            _ => "hand_l.png"
+        };
+        var buttonTexture = _gameHud.GetHudTexture(buttonTextureName);
 
-            ActiveHand = state.ActiveHand;
-            _hands = state.GuiHands;
-            Array.Sort(_hands, HandOrderComparer.Instance);
-            UpdateGui();
-        }
+        return new HandButton(buttonTexture, StorageTexture, buttonTextureName, BlockedTexture, buttonLocation);
+    }
 
-        private void UpdateGui()
+    private void UpdateHudTheme(int idx)
+    {
+        UpdateGui();
+    }
+
+    private sealed class HandOrderComparer : IComparer<GuiHand>
+    {
+        public static readonly HandOrderComparer Instance = new();
+
+        public int Compare(GuiHand? x, GuiHand? y)
         {
-            HandsContainer.DisposeAllChildren();
+            if (ReferenceEquals(x, y)) return 0;
+            if (ReferenceEquals(null, y)) return 1;
+            if (ReferenceEquals(null, x)) return -1;
 
-            foreach (var hand in _hands)
+            var orderX = Map(x.HandLocation);
+            var orderY = Map(y.HandLocation);
+
+            return orderX.CompareTo(orderY);
+
+            static int Map(HandLocation loc)
             {
-                var newButton = MakeHandButton(hand.HandLocation);
-                HandsContainer.AddChild(newButton);
-                hand.HandButton = newButton;
-
-                var handName = hand.Name;
-                newButton.OnPressed += args => OnHandPressed(args, handName);
-                newButton.OnStoragePressed += _ => OnStoragePressed(handName);
-
-                _itemSlotManager.SetItemSlot(newButton, hand.HeldItem);
-
-                // Show blocked overlay if hand is blocked.
-                newButton.Blocked.Visible =
-                    hand.HeldItem != null && hand.HeldItem.HasComponent<HandVirtualItemComponent>();
-            }
-
-            if (TryGetActiveHand(out var activeHand))
-            {
-                activeHand.HandButton.SetActiveHand(true);
-                StatusPanel.Update(activeHand.HeldItem);
-            }
-        }
-
-        private void OnHandPressed(GUIBoundKeyEventArgs args, string handName)
-        {
-            if (args.Function == EngineKeyFunctions.UIClick)
-            {
-                _handsSystem.UIHandClick(_handsComponent, handName);
-            }
-            else if (TryGetHand(handName, out var hand))
-            {
-                _itemSlotManager.OnButtonPressed(args, hand.HeldItem);
-            }
-        }
-
-        private void OnStoragePressed(string handName)
-        {
-            _handsSystem.UIHandActivate(handName);
-        }
-
-        private bool TryGetActiveHand([NotNullWhen(true)] out GuiHand? activeHand)
-        {
-            TryGetHand(ActiveHand, out activeHand);
-            return activeHand != null;
-        }
-
-        private bool TryGetHand(string? handName, [NotNullWhen(true)] out GuiHand? foundHand)
-        {
-            foundHand = null;
-
-            if (handName == null)
-                return false;
-
-            foreach (var hand in _hands)
-            {
-                if (hand.Name == handName)
-                    foundHand = hand;
-            }
-
-            return foundHand != null;
-        }
-
-        protected override void FrameUpdate(FrameEventArgs args)
-        {
-            base.FrameUpdate(args);
-
-            foreach (var hand in _hands)
-            {
-                _itemSlotManager.UpdateCooldown(hand.HandButton, hand.HeldItem);
-            }
-        }
-
-        private HandButton MakeHandButton(HandLocation buttonLocation)
-        {
-            var buttonTextureName = buttonLocation switch
-            {
-                HandLocation.Right => "hand_r.png",
-                _ => "hand_l.png"
-            };
-            var buttonTexture = _gameHud.GetHudTexture(buttonTextureName);
-
-            return new HandButton(buttonTexture, StorageTexture, buttonTextureName, BlockedTexture, buttonLocation);
-        }
-
-        private void UpdateHudTheme(int idx)
-        {
-            UpdateGui();
-        }
-
-        private sealed class HandOrderComparer : IComparer<GuiHand>
-        {
-            public static readonly HandOrderComparer Instance = new();
-
-            public int Compare(GuiHand? x, GuiHand? y)
-            {
-                if (ReferenceEquals(x, y)) return 0;
-                if (ReferenceEquals(null, y)) return 1;
-                if (ReferenceEquals(null, x)) return -1;
-
-                var orderX = Map(x.HandLocation);
-                var orderY = Map(y.HandLocation);
-
-                return orderX.CompareTo(orderY);
-
-                static int Map(HandLocation loc)
+                return loc switch
                 {
-                    return loc switch
-                    {
-                        HandLocation.Left => 3,
-                        HandLocation.Middle => 2,
-                        HandLocation.Right => 1,
-                        _ => throw new ArgumentOutOfRangeException(nameof(loc), loc, null)
-                    };
-                }
+                    HandLocation.Left => 3,
+                    HandLocation.Middle => 2,
+                    HandLocation.Right => 1,
+                    _ => throw new ArgumentOutOfRangeException(nameof(loc), loc, null)
+                };
             }
         }
     }
+}
+
+/// <summary>
+///     Info on a set of hands to be displayed.
+/// </summary>
+public class HandsGuiState
+{
+    /// <summary>
+    ///     The set of hands to be displayed.
+    /// </summary>
+    [ViewVariables]
+    public GuiHand[] GuiHands { get; }
 
     /// <summary>
-    ///     Info on a set of hands to be displayed.
+    ///     The name of the currently active hand.
     /// </summary>
-    public class HandsGuiState
+    [ViewVariables]
+    public string? ActiveHand { get; }
+
+    public HandsGuiState(GuiHand[] guiHands, string? activeHand = null)
     {
-        /// <summary>
-        ///     The set of hands to be displayed.
-        /// </summary>
-        [ViewVariables]
-        public GuiHand[] GuiHands { get; }
-
-        /// <summary>
-        ///     The name of the currently active hand.
-        /// </summary>
-        [ViewVariables]
-        public string? ActiveHand { get; }
-
-        public HandsGuiState(GuiHand[] guiHands, string? activeHand = null)
-        {
-            GuiHands = guiHands;
-            ActiveHand = activeHand;
-        }
+        GuiHands = guiHands;
+        ActiveHand = activeHand;
     }
+}
+
+/// <summary>
+///     Info on an individual hand to be displayed.
+/// </summary>
+public class GuiHand
+{
+    /// <summary>
+    ///     The name of this hand.
+    /// </summary>
+    [ViewVariables]
+    public string Name { get; }
 
     /// <summary>
-    ///     Info on an individual hand to be displayed.
+    ///     Where this hand is located.
     /// </summary>
-    public class GuiHand
+    [ViewVariables]
+    public HandLocation HandLocation { get; }
+
+    /// <summary>
+    ///     The item being held in this hand.
+    /// </summary>
+    [ViewVariables]
+    public IEntity? HeldItem { get; }
+
+    /// <summary>
+    ///     The button in the gui associated with this hand. Assumed to be set by gui shortly after being received from the client HandsComponent.
+    /// </summary>
+    [ViewVariables]
+    public HandButton HandButton { get; set; } = default!;
+
+    public GuiHand(string name, HandLocation handLocation, IEntity? heldItem)
     {
-        /// <summary>
-        ///     The name of this hand.
-        /// </summary>
-        [ViewVariables]
-        public string Name { get; }
-
-        /// <summary>
-        ///     Where this hand is located.
-        /// </summary>
-        [ViewVariables]
-        public HandLocation HandLocation { get; }
-
-        /// <summary>
-        ///     The item being held in this hand.
-        /// </summary>
-        [ViewVariables]
-        public IEntity? HeldItem { get; }
-
-        /// <summary>
-        ///     The button in the gui associated with this hand. Assumed to be set by gui shortly after being received from the client HandsComponent.
-        /// </summary>
-        [ViewVariables]
-        public HandButton HandButton { get; set; } = default!;
-
-        public GuiHand(string name, HandLocation handLocation, IEntity? heldItem)
-        {
-            Name = name;
-            HandLocation = handLocation;
-            HeldItem = heldItem;
-        }
+        Name = name;
+        HandLocation = handLocation;
+        HeldItem = heldItem;
     }
 }

@@ -1,20 +1,19 @@
 using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Preferences
-{
-    /// <summary>
-    /// Information needed for character setup.
-    /// </summary>
-    [Serializable, NetSerializable]
-    public sealed class GameSettings
-    {
-        private int _maxCharacterSlots;
+namespace Content.Shared.Preferences;
 
-        public int MaxCharacterSlots
-        {
-            get => _maxCharacterSlots;
-            set => _maxCharacterSlots = value;
-        }
+/// <summary>
+/// Information needed for character setup.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class GameSettings
+{
+    private int _maxCharacterSlots;
+
+    public int MaxCharacterSlots
+    {
+        get => _maxCharacterSlots;
+        set => _maxCharacterSlots = value;
     }
 }

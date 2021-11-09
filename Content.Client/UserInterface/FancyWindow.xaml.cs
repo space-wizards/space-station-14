@@ -3,28 +3,27 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Maths;
 
-namespace Content.Client.UserInterface
+namespace Content.Client.UserInterface;
+
+[GenerateTypedNameReferences]
+public partial class FancyWindow : BaseWindow
 {
-    [GenerateTypedNameReferences]
-    public partial class FancyWindow : BaseWindow
+    public FancyWindow()
     {
-        public FancyWindow()
-        {
-            RobustXamlLoader.Load(this);
+        RobustXamlLoader.Load(this);
 
-            CloseButton.OnPressed += _ => Close();
-            XamlChildren = ContentsContainer.Children;
-        }
+        CloseButton.OnPressed += _ => Close();
+        XamlChildren = ContentsContainer.Children;
+    }
 
-        public string? Title
-        {
-            get => WindowTitle.Text;
-            set => WindowTitle.Text = value;
-        }
+    public string? Title
+    {
+        get => WindowTitle.Text;
+        set => WindowTitle.Text = value;
+    }
 
-        protected override DragMode GetDragModeFor(Vector2 relativeMousePos)
-        {
-            return DragMode.Move;
-        }
+    protected override DragMode GetDragModeFor(Vector2 relativeMousePos)
+    {
+        return DragMode.Move;
     }
 }

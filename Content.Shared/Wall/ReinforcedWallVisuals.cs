@@ -1,11 +1,10 @@
 ﻿using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Wall
+namespace Content.Shared.Wall;
+
+[Serializable, NetSerializable]
+public enum ReinforcedWallVisuals
 {
-    [Serializable, NetSerializable]
-    public enum ReinforcedWallVisuals
-    {
-        DeconstructionStage,
-    }
+    DeconstructionStage,
 }

@@ -6,41 +6,40 @@ using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.Sprite.Components
+namespace Content.Server.Sprite.Components;
+
+[RegisterComponent]
+public class RandomSpriteColorComponent : Component, IMapInit
 {
-    [RegisterComponent]
-    public class RandomSpriteColorComponent : Component, IMapInit
+    public override string Name => "RandomSpriteColor";
+
+    [DataField("selected")]
+    private string? _selectedColor;
+    [DataField("state")]
+    private string _baseState = "error";
+
+    [DataField("colors")] private readonly Dictionary<string, Color> _colors = new();
+
+    void IMapInit.MapInit()
     {
-        public override string Name => "RandomSpriteColor";
+        var random = IoCManager.Resolve<IRobustRandom>();
+        _selectedColor = random.Pick(_colors.Keys);
+        UpdateColor();
+    }
 
-        [DataField("selected")]
-        private string? _selectedColor;
-        [DataField("state")]
-        private string _baseState = "error";
+    protected override void Startup()
+    {
+        base.Startup();
 
-        [DataField("colors")] private readonly Dictionary<string, Color> _colors = new();
+        UpdateColor();
+    }
 
-        void IMapInit.MapInit()
+    private void UpdateColor()
+    {
+        if (Owner.TryGetComponent(out SpriteComponent? spriteComponent) && _selectedColor != null)
         {
-            var random = IoCManager.Resolve<IRobustRandom>();
-            _selectedColor = random.Pick(_colors.Keys);
-            UpdateColor();
-        }
-
-        protected override void Startup()
-        {
-            base.Startup();
-
-            UpdateColor();
-        }
-
-        private void UpdateColor()
-        {
-            if (Owner.TryGetComponent(out SpriteComponent? spriteComponent) && _selectedColor != null)
-            {
-                spriteComponent.LayerSetState(0, _baseState);
-                spriteComponent.LayerSetColor(0, _colors[_selectedColor]);
-            }
+            spriteComponent.LayerSetState(0, _baseState);
+            spriteComponent.LayerSetColor(0, _colors[_selectedColor]);
         }
     }
 }

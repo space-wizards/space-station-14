@@ -4,24 +4,23 @@ using Content.Shared.Pulling.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Shared.Pulling.Systems
+namespace Content.Shared.Pulling.Systems;
+
+public class SharedPullableSystem : EntitySystem
 {
-    public class SharedPullableSystem : EntitySystem
+    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
+    [Dependency] private readonly SharedPullingSystem _pullSystem = default!;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly ActionBlockerSystem _blocker = default!;
-        [Dependency] private readonly SharedPullingSystem _pullSystem = default!;
+        base.Initialize();
+        SubscribeLocalEvent<SharedPullableComponent, RelayMoveInputEvent>(OnRelayMoveInput);
+    }
 
-        public override void Initialize()
-        {
-            base.Initialize();
-            SubscribeLocalEvent<SharedPullableComponent, RelayMoveInputEvent>(OnRelayMoveInput);
-        }
-
-        private void OnRelayMoveInput(EntityUid uid, SharedPullableComponent component, RelayMoveInputEvent args)
-        {
-            var entity = args.Session.AttachedEntityUid;
-            if (entity == null || !_blocker.CanMove(entity.Value)) return;
-            _pullSystem.TryStopPull(component);
-        }
+    private void OnRelayMoveInput(EntityUid uid, SharedPullableComponent component, RelayMoveInputEvent args)
+    {
+        var entity = args.Session.AttachedEntityUid;
+        if (entity == null || !_blocker.CanMove(entity.Value)) return;
+        _pullSystem.TryStopPull(component);
     }
 }

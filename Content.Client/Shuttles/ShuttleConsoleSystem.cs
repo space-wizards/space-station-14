@@ -1,9 +1,8 @@
 using Content.Shared.Shuttles;
 
-namespace Content.Client.Shuttles
-{
-    internal sealed class ShuttleConsoleSystem : SharedShuttleConsoleSystem
-    {
+namespace Content.Client.Shuttles;
 
-    }
+internal sealed class ShuttleConsoleSystem : SharedShuttleConsoleSystem
+{
+
 }

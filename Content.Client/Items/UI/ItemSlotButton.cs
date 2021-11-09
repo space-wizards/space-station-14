@@ -10,171 +10,170 @@ using Robust.Shared.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
-namespace Content.Client.Items.UI
+namespace Content.Client.Items.UI;
+
+public class ItemSlotButton : Control, IEntityEventSubscriber
 {
-    public class ItemSlotButton : Control, IEntityEventSubscriber
+    private const string HighlightShader = "SelectionOutlineInrange";
+
+    [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
+
+    public EntityUid Entity { get; set; }
+    public TextureRect Button { get; }
+    public SpriteView SpriteView { get; }
+    public SpriteView HoverSpriteView { get; }
+    public TextureButton StorageButton { get; }
+    public CooldownGraphic CooldownDisplay { get; }
+
+    public Action<GUIBoundKeyEventArgs>? OnPressed { get; set; }
+    public Action<GUIBoundKeyEventArgs>? OnStoragePressed { get; set; }
+    public Action<GUIMouseHoverEventArgs>? OnHover { get; set; }
+
+    public bool EntityHover => HoverSpriteView.Sprite != null;
+    public bool MouseIsHovering;
+
+    private readonly PanelContainer _highlightRect;
+
+    public string TextureName { get; set; }
+
+    public ItemSlotButton(Texture texture, Texture storageTexture, string textureName)
     {
-        private const string HighlightShader = "SelectionOutlineInrange";
+        IoCManager.InjectDependencies(this);
 
-        [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
+        MinSize = (64, 64);
 
-        public EntityUid Entity { get; set; }
-        public TextureRect Button { get; }
-        public SpriteView SpriteView { get; }
-        public SpriteView HoverSpriteView { get; }
-        public TextureButton StorageButton { get; }
-        public CooldownGraphic CooldownDisplay { get; }
+        TextureName = textureName;
 
-        public Action<GUIBoundKeyEventArgs>? OnPressed { get; set; }
-        public Action<GUIBoundKeyEventArgs>? OnStoragePressed { get; set; }
-        public Action<GUIMouseHoverEventArgs>? OnHover { get; set; }
-
-        public bool EntityHover => HoverSpriteView.Sprite != null;
-        public bool MouseIsHovering;
-
-        private readonly PanelContainer _highlightRect;
-
-        public string TextureName { get; set; }
-
-        public ItemSlotButton(Texture texture, Texture storageTexture, string textureName)
+        AddChild(Button = new TextureRect
         {
-            IoCManager.InjectDependencies(this);
+            Texture = texture,
+            TextureScale = (2, 2),
+            MouseFilter = MouseFilterMode.Stop
+        });
 
-            MinSize = (64, 64);
-
-            TextureName = textureName;
-
-            AddChild(Button = new TextureRect
-            {
-                Texture = texture,
-                TextureScale = (2, 2),
-                MouseFilter = MouseFilterMode.Stop
-            });
-
-            AddChild(_highlightRect = new PanelContainer
-            {
-                StyleClasses = { StyleNano.StyleClassHandSlotHighlight },
-                MinSize = (32, 32),
-                Visible = false
-            });
-
-            Button.OnKeyBindDown += OnButtonPressed;
-
-            AddChild(SpriteView = new SpriteView
-            {
-                Scale = (2, 2),
-                OverrideDirection = Direction.South
-            });
-
-            AddChild(HoverSpriteView = new SpriteView
-            {
-                Scale = (2, 2),
-                OverrideDirection = Direction.South
-            });
-
-            AddChild(StorageButton = new TextureButton
-            {
-                TextureNormal = storageTexture,
-                Scale = (0.75f, 0.75f),
-                HorizontalAlignment = HAlignment.Right,
-                VerticalAlignment = VAlignment.Bottom,
-                Visible = false,
-            });
-
-            StorageButton.OnKeyBindDown += args =>
-            {
-                if (args.Function != EngineKeyFunctions.UIClick)
-                {
-                    OnButtonPressed(args);
-                }
-            };
-
-            StorageButton.OnPressed += OnStorageButtonPressed;
-
-            Button.OnMouseEntered += _ =>
-            {
-                MouseIsHovering = true;
-            };
-            Button.OnMouseEntered += OnButtonHover;
-
-            Button.OnMouseExited += _ =>
-            {
-                MouseIsHovering = false;
-                ClearHover();
-            };
-
-            AddChild(CooldownDisplay = new CooldownGraphic
-            {
-                Visible = false,
-            });
-        }
-
-        protected override void EnteredTree()
+        AddChild(_highlightRect = new PanelContainer
         {
-            base.EnteredTree();
+            StyleClasses = { StyleNano.StyleClassHandSlotHighlight },
+            MinSize = (32, 32),
+            Visible = false
+        });
 
-            _itemSlotManager.EntityHighlightedUpdated += HandleEntitySlotHighlighted;
-            UpdateSlotHighlighted();
-        }
+        Button.OnKeyBindDown += OnButtonPressed;
 
-        protected override void ExitedTree()
+        AddChild(SpriteView = new SpriteView
         {
-            base.ExitedTree();
+            Scale = (2, 2),
+            OverrideDirection = Direction.South
+        });
 
-            _itemSlotManager.EntityHighlightedUpdated -= HandleEntitySlotHighlighted;
-        }
-
-        private void HandleEntitySlotHighlighted(EntitySlotHighlightedEventArgs entitySlotHighlightedEventArgs)
+        AddChild(HoverSpriteView = new SpriteView
         {
-            UpdateSlotHighlighted();
-        }
+            Scale = (2, 2),
+            OverrideDirection = Direction.South
+        });
 
-        public void UpdateSlotHighlighted()
+        AddChild(StorageButton = new TextureButton
         {
-            Highlight(_itemSlotManager.IsHighlighted(Entity));
-        }
+            TextureNormal = storageTexture,
+            Scale = (0.75f, 0.75f),
+            HorizontalAlignment = HAlignment.Right,
+            VerticalAlignment = VAlignment.Bottom,
+            Visible = false,
+        });
 
-        public void ClearHover()
+        StorageButton.OnKeyBindDown += args =>
         {
-            if (EntityHover)
+            if (args.Function != EngineKeyFunctions.UIClick)
             {
-                HoverSpriteView.Sprite?.Owner.Delete();
-                HoverSpriteView.Sprite = null;
+                OnButtonPressed(args);
             }
-        }
+        };
 
-        public virtual void Highlight(bool highlight)
-        {
-            if (highlight)
-            {
-                _highlightRect.Visible = true;
-            }
-            else
-            {
-                _highlightRect.Visible = false;
-            }
-        }
+        StorageButton.OnPressed += OnStorageButtonPressed;
 
-        private void OnButtonPressed(GUIBoundKeyEventArgs args)
+        Button.OnMouseEntered += _ =>
         {
-            OnPressed?.Invoke(args);
-        }
+            MouseIsHovering = true;
+        };
+        Button.OnMouseEntered += OnButtonHover;
 
-        private void OnStorageButtonPressed(BaseButton.ButtonEventArgs args)
+        Button.OnMouseExited += _ =>
         {
-            if (args.Event.Function == EngineKeyFunctions.UIClick)
-            {
-                OnStoragePressed?.Invoke(args.Event);
-            }
-            else
-            {
-                OnPressed?.Invoke(args.Event);
-            }
-        }
+            MouseIsHovering = false;
+            ClearHover();
+        };
 
-        private void OnButtonHover(GUIMouseHoverEventArgs args)
+        AddChild(CooldownDisplay = new CooldownGraphic
         {
-            OnHover?.Invoke(args);
+            Visible = false,
+        });
+    }
+
+    protected override void EnteredTree()
+    {
+        base.EnteredTree();
+
+        _itemSlotManager.EntityHighlightedUpdated += HandleEntitySlotHighlighted;
+        UpdateSlotHighlighted();
+    }
+
+    protected override void ExitedTree()
+    {
+        base.ExitedTree();
+
+        _itemSlotManager.EntityHighlightedUpdated -= HandleEntitySlotHighlighted;
+    }
+
+    private void HandleEntitySlotHighlighted(EntitySlotHighlightedEventArgs entitySlotHighlightedEventArgs)
+    {
+        UpdateSlotHighlighted();
+    }
+
+    public void UpdateSlotHighlighted()
+    {
+        Highlight(_itemSlotManager.IsHighlighted(Entity));
+    }
+
+    public void ClearHover()
+    {
+        if (EntityHover)
+        {
+            HoverSpriteView.Sprite?.Owner.Delete();
+            HoverSpriteView.Sprite = null;
         }
+    }
+
+    public virtual void Highlight(bool highlight)
+    {
+        if (highlight)
+        {
+            _highlightRect.Visible = true;
+        }
+        else
+        {
+            _highlightRect.Visible = false;
+        }
+    }
+
+    private void OnButtonPressed(GUIBoundKeyEventArgs args)
+    {
+        OnPressed?.Invoke(args);
+    }
+
+    private void OnStorageButtonPressed(BaseButton.ButtonEventArgs args)
+    {
+        if (args.Event.Function == EngineKeyFunctions.UIClick)
+        {
+            OnStoragePressed?.Invoke(args.Event);
+        }
+        else
+        {
+            OnPressed?.Invoke(args.Event);
+        }
+    }
+
+    private void OnButtonHover(GUIMouseHoverEventArgs args)
+    {
+        OnHover?.Invoke(args);
     }
 }

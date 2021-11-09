@@ -9,76 +9,75 @@ using Content.Shared.Movement.Components;
 using Content.Shared.Movement.EntitySystems;
 using static Content.Shared.Chemistry.Components.MovespeedModifierMetabolismComponent;
 
-namespace Content.Shared.Chemistry
+namespace Content.Shared.Chemistry;
+
+// TODO CONVERT THIS TO A STATUS EFFECT!!!!!!!!!!!!!!!!!!!!!!!!
+public class MetabolismMovespeedModifierSystem : EntitySystem
 {
-    // TODO CONVERT THIS TO A STATUS EFFECT!!!!!!!!!!!!!!!!!!!!!!!!
-    public class MetabolismMovespeedModifierSystem : EntitySystem
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly MovementSpeedModifierSystem _movespeed = default!;
+
+    private readonly List<MovespeedModifierMetabolismComponent> _components = new();
+
+    public override void Initialize()
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly MovementSpeedModifierSystem _movespeed = default!;
+        base.Initialize();
 
-        private readonly List<MovespeedModifierMetabolismComponent> _components = new();
+        SubscribeLocalEvent<MovespeedModifierMetabolismComponent, ComponentHandleState>(OnMovespeedHandleState);
+        SubscribeLocalEvent<MovespeedModifierMetabolismComponent, ComponentStartup>(AddComponent);
+        SubscribeLocalEvent<MovespeedModifierMetabolismComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
+    }
 
-        public override void Initialize()
+    private void OnMovespeedHandleState(EntityUid uid, MovespeedModifierMetabolismComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is not MovespeedModifierMetabolismComponentState cast)
+            return;
+
+        if (EntityManager.TryGetComponent<MovementSpeedModifierComponent>(uid, out var modifier) &&
+            (!component.WalkSpeedModifier.Equals(cast.WalkSpeedModifier) ||
+             !component.SprintSpeedModifier.Equals(cast.SprintSpeedModifier)))
         {
-            base.Initialize();
-
-            SubscribeLocalEvent<MovespeedModifierMetabolismComponent, ComponentHandleState>(OnMovespeedHandleState);
-            SubscribeLocalEvent<MovespeedModifierMetabolismComponent, ComponentStartup>(AddComponent);
-            SubscribeLocalEvent<MovespeedModifierMetabolismComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
+            _movespeed.RefreshMovementSpeedModifiers(uid);
         }
 
-        private void OnMovespeedHandleState(EntityUid uid, MovespeedModifierMetabolismComponent component, ref ComponentHandleState args)
-        {
-            if (args.Current is not MovespeedModifierMetabolismComponentState cast)
-                return;
+        component.WalkSpeedModifier = cast.WalkSpeedModifier;
+        component.SprintSpeedModifier = cast.SprintSpeedModifier;
+        component.ModifierTimer = cast.ModifierTimer;
 
-            if (EntityManager.TryGetComponent<MovementSpeedModifierComponent>(uid, out var modifier) &&
-                (!component.WalkSpeedModifier.Equals(cast.WalkSpeedModifier) ||
-                 !component.SprintSpeedModifier.Equals(cast.SprintSpeedModifier)))
+    }
+
+    private void OnRefreshMovespeed(EntityUid uid, MovespeedModifierMetabolismComponent component, RefreshMovementSpeedModifiersEvent args)
+    {
+        args.ModifySpeed(component.WalkSpeedModifier, component.SprintSpeedModifier);
+    }
+
+    private void AddComponent(EntityUid uid, MovespeedModifierMetabolismComponent component, ComponentStartup args)
+    {
+        _components.Add(component);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var currentTime = _gameTiming.CurTime;
+
+        for (var i = _components.Count - 1; i >= 0; i--)
+        {
+            var component = _components[i];
+
+            if (component.Deleted)
             {
-                _movespeed.RefreshMovementSpeedModifiers(uid);
-            }
-
-            component.WalkSpeedModifier = cast.WalkSpeedModifier;
-            component.SprintSpeedModifier = cast.SprintSpeedModifier;
-            component.ModifierTimer = cast.ModifierTimer;
-
-        }
-
-        private void OnRefreshMovespeed(EntityUid uid, MovespeedModifierMetabolismComponent component, RefreshMovementSpeedModifiersEvent args)
-        {
-            args.ModifySpeed(component.WalkSpeedModifier, component.SprintSpeedModifier);
-        }
-
-        private void AddComponent(EntityUid uid, MovespeedModifierMetabolismComponent component, ComponentStartup args)
-        {
-            _components.Add(component);
-        }
-
-        public override void Update(float frameTime)
-        {
-            base.Update(frameTime);
-
-            var currentTime = _gameTiming.CurTime;
-
-            for (var i = _components.Count - 1; i >= 0; i--)
-            {
-                var component = _components[i];
-
-                if (component.Deleted)
-                {
-                    _components.RemoveAt(i);
-                    continue;
-                }
-
-                if (component.ModifierTimer > currentTime) continue;
-
                 _components.RemoveAt(i);
-                EntityManager.RemoveComponent<MovespeedModifierMetabolismComponent>(component.OwnerUid);
-
-                _movespeed.RefreshMovementSpeedModifiers(component.OwnerUid);
+                continue;
             }
+
+            if (component.ModifierTimer > currentTime) continue;
+
+            _components.RemoveAt(i);
+            EntityManager.RemoveComponent<MovespeedModifierMetabolismComponent>(component.OwnerUid);
+
+            _movespeed.RefreshMovementSpeedModifiers(component.OwnerUid);
         }
     }
 }

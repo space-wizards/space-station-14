@@ -4,21 +4,20 @@ using Content.Shared.Throwing;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Server.Damage.Systems
+namespace Content.Server.Damage.Systems;
+
+public sealed class DamageOnLandSystem : EntitySystem
 {
-    public sealed class DamageOnLandSystem : EntitySystem
+    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        base.Initialize();
+        SubscribeLocalEvent<DamageOnLandComponent, LandEvent>(DamageOnLand);
+    }
 
-        public override void Initialize()
-        {
-            base.Initialize();
-            SubscribeLocalEvent<DamageOnLandComponent, LandEvent>(DamageOnLand);
-        }
-
-        private void DamageOnLand(EntityUid uid, DamageOnLandComponent component, LandEvent args)
-        {
-            _damageableSystem.TryChangeDamage(uid, component.Damage, component.IgnoreResistances);
-        }
+    private void DamageOnLand(EntityUid uid, DamageOnLandComponent component, LandEvent args)
+    {
+        _damageableSystem.TryChangeDamage(uid, component.Damage, component.IgnoreResistances);
     }
 }

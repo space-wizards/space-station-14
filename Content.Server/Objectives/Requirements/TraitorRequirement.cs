@@ -3,15 +3,14 @@ using Content.Server.Traitor;
 using JetBrains.Annotations;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.Objectives.Requirements
+namespace Content.Server.Objectives.Requirements;
+
+[UsedImplicitly]
+[DataDefinition]
+public class TraitorRequirement : IObjectiveRequirement
 {
-    [UsedImplicitly]
-    [DataDefinition]
-    public class TraitorRequirement : IObjectiveRequirement
+    public bool CanBeAssigned(Mind.Mind mind)
     {
-        public bool CanBeAssigned(Mind.Mind mind)
-        {
-            return mind.HasRole<TraitorRole>();
-        }
+        return mind.HasRole<TraitorRole>();
     }
 }

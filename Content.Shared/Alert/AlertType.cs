@@ -1,57 +1,55 @@
-﻿namespace Content.Shared.Alert
+﻿namespace Content.Shared.Alert;
+
+/// <summary>
+/// Every category of alert. Corresponds to category field in alert prototypes defined in YML
+/// </summary>
+public enum AlertCategory
 {
-    /// <summary>
-    /// Every category of alert. Corresponds to category field in alert prototypes defined in YML
-    /// </summary>
-    public enum AlertCategory
-    {
-        Pressure,
-        Temperature,
-        Breathing,
-        Buckled,
-        Health,
-        Piloting,
-        Hunger,
-        Thirst
-    }
+    Pressure,
+    Temperature,
+    Breathing,
+    Buckled,
+    Health,
+    Piloting,
+    Hunger,
+    Thirst
+}
 
-    /// <summary>
-    /// Every kind of alert. Corresponds to alertType field in alert prototypes defined in YML
-    /// NOTE: Using byte for a compact encoding when sending this in messages, can upgrade
-    /// to ushort
-    /// </summary>
-    public enum AlertType : byte
-    {
-        Error,
-        LowOxygen,
-        LowPressure,
-        HighPressure,
-        Fire,
-        Cold,
-        Hot,
-        Weightless,
-        Stun,
-        Handcuffed,
-        Buckled,
-        HumanCrit,
-        HumanDead,
-        HumanHealth,
-        PilotingShuttle,
-        Overfed,
-        Peckish,
-        Starving,
-        Overhydrated,
-        Thirsty,
-        Parched,
-        Pulled,
-        Pulling,
-        Magboots,
-        Debug1,
-        Debug2,
-        Debug3,
-        Debug4,
-        Debug5,
-        Debug6
-    }
-
+/// <summary>
+/// Every kind of alert. Corresponds to alertType field in alert prototypes defined in YML
+/// NOTE: Using byte for a compact encoding when sending this in messages, can upgrade
+/// to ushort
+/// </summary>
+public enum AlertType : byte
+{
+    Error,
+    LowOxygen,
+    LowPressure,
+    HighPressure,
+    Fire,
+    Cold,
+    Hot,
+    Weightless,
+    Stun,
+    Handcuffed,
+    Buckled,
+    HumanCrit,
+    HumanDead,
+    HumanHealth,
+    PilotingShuttle,
+    Overfed,
+    Peckish,
+    Starving,
+    Overhydrated,
+    Thirsty,
+    Parched,
+    Pulled,
+    Pulling,
+    Magboots,
+    Debug1,
+    Debug2,
+    Debug3,
+    Debug4,
+    Debug5,
+    Debug6
 }

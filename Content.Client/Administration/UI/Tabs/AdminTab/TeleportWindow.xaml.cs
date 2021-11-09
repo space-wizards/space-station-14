@@ -6,33 +6,32 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
 using Robust.Shared.Players;
 
-namespace Content.Client.Administration.UI.Tabs.AdminTab
+namespace Content.Client.Administration.UI.Tabs.AdminTab;
+
+[GenerateTypedNameReferences]
+[UsedImplicitly]
+public partial class TeleportWindow : SS14Window
 {
-    [GenerateTypedNameReferences]
-    [UsedImplicitly]
-    public partial class TeleportWindow : SS14Window
+    private ICommonSession? _selectedSession;
+
+    protected override void EnteredTree()
     {
-        private ICommonSession? _selectedSession;
+        SubmitButton.OnPressed += SubmitButtonOnOnPressed;
+        PlayerList.OnSelectionChanged += OnListOnOnSelectionChanged;
+    }
 
-        protected override void EnteredTree()
-        {
-            SubmitButton.OnPressed += SubmitButtonOnOnPressed;
-            PlayerList.OnSelectionChanged += OnListOnOnSelectionChanged;
-        }
+    private void OnListOnOnSelectionChanged(ICommonSession? obj)
+    {
+        _selectedSession = obj;
+        SubmitButton.Disabled = _selectedSession == null;
+    }
 
-        private void OnListOnOnSelectionChanged(ICommonSession? obj)
-        {
-            _selectedSession = obj;
-            SubmitButton.Disabled = _selectedSession == null;
-        }
-
-        private void SubmitButtonOnOnPressed(BaseButton.ButtonEventArgs obj)
-        {
-            if (_selectedSession == null)
-                return;
-            // Execute command
-            IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand(
-                $"tpto \"{_selectedSession.Name}\"");
-        }
+    private void SubmitButtonOnOnPressed(BaseButton.ButtonEventArgs obj)
+    {
+        if (_selectedSession == null)
+            return;
+        // Execute command
+        IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand(
+            $"tpto \"{_selectedSession.Name}\"");
     }
 }

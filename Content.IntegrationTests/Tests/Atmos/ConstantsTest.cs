@@ -6,27 +6,26 @@ using Content.Shared.Atmos;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 
-namespace Content.IntegrationTests.Tests.Atmos
+namespace Content.IntegrationTests.Tests.Atmos;
+
+[TestFixture]
+[TestOf(typeof(Atmospherics))]
+public class ConstantsTest : ContentIntegrationTest
 {
-    [TestFixture]
-    [TestOf(typeof(Atmospherics))]
-    public class ConstantsTest : ContentIntegrationTest
+    [Test]
+    public async Task TotalGasesTest()
     {
-        [Test]
-        public async Task TotalGasesTest()
+        var server = StartServer();
+
+        await server.WaitIdleAsync();
+
+        await server.WaitPost(() =>
         {
-            var server = StartServer();
+            var atmosSystem = EntitySystem.Get<AtmosphereSystem>();
 
-            await server.WaitIdleAsync();
+            Assert.That(atmosSystem.Gases.Count(), Is.EqualTo(Atmospherics.TotalNumberOfGases));
 
-            await server.WaitPost(() =>
-            {
-                var atmosSystem = EntitySystem.Get<AtmosphereSystem>();
-
-                Assert.That(atmosSystem.Gases.Count(), Is.EqualTo(Atmospherics.TotalNumberOfGases));
-
-                Assert.That(Enum.GetValues(typeof(Gas)).Length, Is.EqualTo(Atmospherics.TotalNumberOfGases));
-            });
-        }
+            Assert.That(Enum.GetValues(typeof(Gas)).Length, Is.EqualTo(Atmospherics.TotalNumberOfGases));
+        });
     }
 }

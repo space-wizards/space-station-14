@@ -4,98 +4,97 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Atmos.Components
+namespace Content.Shared.Atmos.Components;
+
+[NetworkedComponent()]
+public class SharedGasAnalyzerComponent : Component
 {
-    [NetworkedComponent()]
-    public class SharedGasAnalyzerComponent : Component
+    public override string Name => "GasAnalyzer";
+
+    [Serializable, NetSerializable]
+    public enum GasAnalyzerUiKey
     {
-        public override string Name => "GasAnalyzer";
+        Key,
+    }
 
-        [Serializable, NetSerializable]
-        public enum GasAnalyzerUiKey
+    [Serializable, NetSerializable]
+    public class GasAnalyzerBoundUserInterfaceState : BoundUserInterfaceState
+    {
+        public float Pressure;
+        public float Temperature;
+        public GasEntry[]? Gases;
+        public string? Error;
+
+        public GasAnalyzerBoundUserInterfaceState(float pressure, float temperature, GasEntry[]? gases, string? error = null)
         {
-            Key,
-        }
-
-        [Serializable, NetSerializable]
-        public class GasAnalyzerBoundUserInterfaceState : BoundUserInterfaceState
-        {
-            public float Pressure;
-            public float Temperature;
-            public GasEntry[]? Gases;
-            public string? Error;
-
-            public GasAnalyzerBoundUserInterfaceState(float pressure, float temperature, GasEntry[]? gases, string? error = null)
-            {
-                Pressure = pressure;
-                Temperature = temperature;
-                Gases = gases;
-                Error = error;
-            }
-        }
-
-        [Serializable, NetSerializable]
-        public struct GasEntry
-        {
-            public readonly string Name;
-            public readonly float Amount;
-            public readonly string Color;
-
-            public GasEntry(string name, float amount, string color)
-            {
-                Name = name;
-                Amount = amount;
-                Color = color;
-            }
-
-            public override string ToString()
-            {
-                // e.g. "Plasma: 2000 mol"
-                return Loc.GetString(
-                    "gas-entry-info",
-                     ("gasName", Name),
-                     ("gasAmount", Amount));
-            }
-        }
-
-        [Serializable, NetSerializable]
-        public class GasAnalyzerRefreshMessage : BoundUserInterfaceMessage
-        {
-            public GasAnalyzerRefreshMessage() {}
-        }
-
-        [Serializable, NetSerializable]
-        public enum GasAnalyzerDanger
-        {
-            Nominal,
-            Warning,
-            Hazard
-        }
-
-        [Serializable, NetSerializable]
-        public class GasAnalyzerComponentState : ComponentState
-        {
-            public GasAnalyzerDanger Danger;
-
-            public GasAnalyzerComponentState(GasAnalyzerDanger danger)
-            {
-                Danger = danger;
-            }
+            Pressure = pressure;
+            Temperature = temperature;
+            Gases = gases;
+            Error = error;
         }
     }
 
-    [NetSerializable]
-    [Serializable]
-    public enum GasAnalyzerVisuals
+    [Serializable, NetSerializable]
+    public struct GasEntry
     {
-        VisualState,
+        public readonly string Name;
+        public readonly float Amount;
+        public readonly string Color;
+
+        public GasEntry(string name, float amount, string color)
+        {
+            Name = name;
+            Amount = amount;
+            Color = color;
+        }
+
+        public override string ToString()
+        {
+            // e.g. "Plasma: 2000 mol"
+            return Loc.GetString(
+                "gas-entry-info",
+                ("gasName", Name),
+                ("gasAmount", Amount));
+        }
     }
 
-    [NetSerializable]
-    [Serializable]
-    public enum GasAnalyzerVisualState
+    [Serializable, NetSerializable]
+    public class GasAnalyzerRefreshMessage : BoundUserInterfaceMessage
     {
-        Off,
-        Working,
+        public GasAnalyzerRefreshMessage() {}
     }
+
+    [Serializable, NetSerializable]
+    public enum GasAnalyzerDanger
+    {
+        Nominal,
+        Warning,
+        Hazard
+    }
+
+    [Serializable, NetSerializable]
+    public class GasAnalyzerComponentState : ComponentState
+    {
+        public GasAnalyzerDanger Danger;
+
+        public GasAnalyzerComponentState(GasAnalyzerDanger danger)
+        {
+            Danger = danger;
+        }
+    }
+}
+
+[NetSerializable]
+[Serializable]
+public enum GasAnalyzerVisuals
+{
+    VisualState,
+}
+
+[NetSerializable]
+[Serializable]
+public enum GasAnalyzerVisualState
+{
+    Off,
+    Working,
 }
