@@ -67,7 +67,7 @@ namespace Content.Server.Morgue.Components
                 return false;
             }
 
-            var handsComponent = eventArgs.User.GetComponent<IHandsComponent>();
+            var handsComponent = eventArgs.User.GetComponent<HandsComponent>();
             if (!handsComponent.Drop(eventArgs.Using, LabelContainer))
             {
                 return false;

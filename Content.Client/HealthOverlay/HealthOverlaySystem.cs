@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Content.Client.HealthOverlay.UI;
 using Content.Shared.Damage;
 using Content.Shared.GameTicking;
-using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -79,7 +79,7 @@ namespace Content.Client.HealthOverlay
 
             var viewBox = _eyeManager.GetWorldViewport().Enlarged(2.0f);
 
-            foreach (var (mobState, _) in EntityManager.EntityQuery<IMobStateComponent, DamageableComponent>())
+            foreach (var (mobState, _) in EntityManager.EntityQuery<MobStateComponent, DamageableComponent>())
             {
                 var entity = mobState.Owner;
 

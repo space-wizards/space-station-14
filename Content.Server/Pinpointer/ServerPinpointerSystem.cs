@@ -40,7 +40,7 @@ namespace Content.Server.Pinpointer
             foreach (var uid in ActivePinpointers)
             {
                 UpdateDirectionToTarget(uid);
-            }    
+            }
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Content.Server.Pinpointer
         ///     Will return null if can't find anything
         /// </summary>
         private EntityUid? FindTargetFromWhitelist(EntityUid uid, EntityWhitelist whitelist,
-            ITransformComponent? transform = null)
+            TransformComponent? transform = null)
         {
             if (!Resolve(uid, ref transform))
                 return null;
@@ -125,9 +125,9 @@ namespace Content.Server.Pinpointer
         private Vector2? CalculateDirection(EntityUid pinUid, EntityUid trgUid)
         {
             // check if entities have transform component
-            if (!EntityManager.TryGetComponent(pinUid, out ITransformComponent? pin))
+            if (!EntityManager.TryGetComponent(pinUid, out TransformComponent? pin))
                 return null;
-            if (!EntityManager.TryGetComponent(trgUid, out ITransformComponent? trg))
+            if (!EntityManager.TryGetComponent(trgUid, out TransformComponent? trg))
                 return null;
 
             // check if they are on same map

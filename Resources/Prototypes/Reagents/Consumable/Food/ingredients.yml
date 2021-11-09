@@ -4,6 +4,11 @@
   desc: Used for baking.
   physicalDesc: powdery
   color: white
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateHunger
+        factor: 1
 
 - type: reagent
   id: Oats
@@ -11,12 +16,22 @@
   desc: Used for a variety of tasty purposes.
   physicalDesc: coarse
   color: tan
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateHunger
+        factor: 1
 
 - type: reagent
   id: Enzyme
   name: universal enzyme
   desc: Used in cooking various dishes.
   color: "#009900"
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateHunger
+        nutritionFactor: 1
 
 - type: reagent
   id: Egg
@@ -24,6 +39,11 @@
   desc: Used for baking.
   physicalDesc: mucus-like
   color: white
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateHunger
+        factor: 1
 
 - type: reagent
   id: Sugar
@@ -31,6 +51,11 @@
   desc: Tasty spacey sugar!
   physicalDesc:
   color: white
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateHunger
+        factor: 1
 
 - type: reagent
   id: Blackpepper
@@ -38,21 +63,40 @@
   desc: Often used to flavor food or make people sneeze.
   physicalDesc: Grainy.
   color: black
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateHunger
+        factor: 1
 
 - type: reagent
   id: Vinegar
   name: vinegar
   desc: Often used to flavor food.
   color: tan
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateHunger
+        factor: 1
 
 - type: reagent
   id: Rice
   name: rice
   desc: Hard, small white grains.
   color: white
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateHunger
 
 - type: reagent
   id: OilOlive
   name: olive oil
   desc: Viscous and fragrant.
   color: olive
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateHunger
+        factor: 1

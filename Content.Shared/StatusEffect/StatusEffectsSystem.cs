@@ -320,6 +320,7 @@ namespace Content.Shared.StatusEffect
 
             var timer = status.ActiveEffects[key].Cooldown;
             timer.Item2 += time;
+            status.ActiveEffects[key].Cooldown = timer;
 
             return true;
         }
@@ -347,6 +348,7 @@ namespace Content.Shared.StatusEffect
                 return false;
 
             timer.Item2 -= time;
+            status.ActiveEffects[key].Cooldown = timer;
 
             return true;
         }

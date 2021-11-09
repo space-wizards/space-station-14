@@ -10,6 +10,7 @@ using Content.Server.Popups;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.Botany;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
@@ -561,11 +562,11 @@ namespace Content.Server.Botany.Components
             }
             else
             {
-                var one = FixedPoint2.New(1);
-                foreach (var reagent in solutionSystem.RemoveEachReagent(Owner.Uid, solution, one))
+                var amt = FixedPoint2.New(1);
+                foreach (var reagent in solutionSystem.RemoveEachReagent(OwnerUid, solution, amt))
                 {
                     var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagent);
-                    reagentProto.ReactionPlant(Owner);
+                    reagentProto.ReactionPlant(OwnerUid, new Solution.ReagentQuantity(reagent, amt));
                 }
             }
 

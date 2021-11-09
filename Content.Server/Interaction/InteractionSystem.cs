@@ -2,12 +2,10 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.Buckle.Components;
 using Content.Server.CombatMode;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.Pulling;
-using Content.Server.Verbs;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;
 using Content.Shared.Input;
@@ -15,8 +13,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
 using Content.Shared.Pulling.Components;
-using Content.Shared.Rotatable;
-using Content.Shared.Timing;
 using Content.Shared.Weapons.Melee;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -29,9 +25,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Players;
-using Robust.Shared.Random;
 
 namespace Content.Server.Interaction
 {
@@ -314,7 +308,7 @@ namespace Content.Server.Interaction
             }
 
             // Verify user has a hand, and find what object they are currently holding in their active hand
-            if (!user.TryGetComponent<IHandsComponent>(out var hands))
+            if (!user.TryGetComponent<HandsComponent>(out var hands))
                 return;
 
             var item = hands.GetActiveHand?.Owner;
@@ -460,7 +454,7 @@ namespace Content.Server.Interaction
             }
 
             // Verify user has a hand, and find what object they are currently holding in their active hand
-            if (user.TryGetComponent<IHandsComponent>(out var hands))
+            if (user.TryGetComponent<HandsComponent>(out var hands))
             {
                 var item = hands.GetActiveHand?.Owner;
 

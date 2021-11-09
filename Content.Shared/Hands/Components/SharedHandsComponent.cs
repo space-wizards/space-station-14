@@ -19,8 +19,8 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Hands.Components
 {
-    [NetworkedComponent()]
-    public abstract class SharedHandsComponent : Component, ISharedHandsComponent
+    [NetworkedComponent]
+    public abstract class SharedHandsComponent : Component
     {
         public sealed override string Name => "Hands";
 
@@ -124,13 +124,12 @@ namespace Content.Shared.Hands.Components
             if (HasHand(handName))
                 return;
 
-            var container = ContainerHelpers.CreateContainer<ContainerSlot>(Owner, handName);
+            var container = Owner.CreateContainer<ContainerSlot>(handName);
             container.OccludesLight = false;
 
             Hands.Add(new Hand(handName, handLocation, container));
 
-            if (ActiveHand == null)
-                ActiveHand = handName;
+            ActiveHand ??= handName;
 
             HandCountChanged();
 
@@ -353,7 +352,7 @@ namespace Content.Shared.Hands.Components
         }
 
         /// <summary>
-        ///     Attempts to move a held item from a hand into a container that is not another hand, without dropping it on the floor inbetween.
+        ///     Attempts to move a held item from a hand into a container that is not another hand, without dropping it on the floor in-between.
         /// </summary>
         public bool Drop(IEntity entity, BaseContainer targetContainer, bool checkActionBlocker = true)
         {
@@ -391,8 +390,9 @@ namespace Content.Shared.Hands.Components
 
         /// <summary>
         ///     Tries to remove the item in the active hand, without dropping it.
-        ///     For transfering the held item to anothe rlocation, like an inventory slot,
-        ///     which souldn't trigger the drop interaction
+        ///     For transferring the held item to another location, like an inventory slot,
+        ///     which shouldn't trigger the drop interaction
+        /// </summary>
         public bool TryDropNoInteraction()
         {
             if (!TryGetActiveHand(out var hand))
