@@ -72,11 +72,11 @@ namespace Content.IntegrationTests.Tests.Utility
                 var mapId = GetMainMapId(mapManager);
                 var mapCoordinates = new MapCoordinates(0, 0, mapId);
 
-                var validComponent = entityManager.SpawnEntity("ValidComponentDummy", mapCoordinates);
-                var validTag = entityManager.SpawnEntity("ValidTagDummy", mapCoordinates);
+                var validComponent = entityManager.SpawnEntity("ValidComponentDummy", mapCoordinates).Uid;
+                var validTag = entityManager.SpawnEntity("ValidTagDummy", mapCoordinates).Uid;
 
-                var invalidComponent = entityManager.SpawnEntity("InvalidComponentDummy", mapCoordinates);
-                var invalidTag = entityManager.SpawnEntity("InvalidTagDummy", mapCoordinates);
+                var invalidComponent = entityManager.SpawnEntity("InvalidComponentDummy", mapCoordinates).Uid;
+                var invalidTag = entityManager.SpawnEntity("InvalidTagDummy", mapCoordinates).Uid;
 
                 // Test instantiated on its own
                 var whitelistInst = new EntityWhitelist

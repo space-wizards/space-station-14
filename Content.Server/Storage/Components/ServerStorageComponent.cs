@@ -135,7 +135,7 @@ namespace Content.Server.Storage.Components
                 return false;
             }
 
-            if (_whitelist != null && !_whitelist.IsValid(entity))
+            if (_whitelist != null && !_whitelist.IsValid(entity.Uid))
             {
                 return false;
             }
