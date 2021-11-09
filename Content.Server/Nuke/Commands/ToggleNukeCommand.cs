@@ -54,7 +54,7 @@ namespace Content.Server.Nuke.Commands
                     return;
                 }
 
-                nukeSys.SetTimer(bombUid, timer, bomb);
+                nukeSys.SetRemainingTime(bombUid, timer, bomb);
             }
 
             nukeSys.ToggleBomb(bombUid, bomb);

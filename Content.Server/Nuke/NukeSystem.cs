@@ -17,6 +17,9 @@ using Robust.Shared.Player;
 using System.Collections.Generic;
 using Robust.Shared.Timing;
 using System;
+using Content.Shared.Audio;
+using Content.Shared.Sound;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Nuke
 {
@@ -183,6 +186,8 @@ namespace Content.Server.Nuke
 
         private void OnKeypadButtonPressed(EntityUid uid, NukeComponent component, NukeKeypadMessage args)
         {
+            PlaydSound(uid, component.KeypadPressSound, 0.125f, component);
+
             if (component.Status != NukeStatus.AWAIT_CODE)
                 return;
 
@@ -195,6 +200,8 @@ namespace Content.Server.Nuke
 
         private void OnClearButtonPressed(EntityUid uid, NukeComponent component, NukeKeypadClearMessage args)
         {
+            PlaydSound(uid, component.KeypadPressSound, 0f, component);
+
             if (component.Status != NukeStatus.AWAIT_CODE)
                 return;
 
@@ -243,10 +250,12 @@ namespace Content.Server.Nuke
                         {
                             component.Status = NukeStatus.AWAIT_ARM;
                             component.RemainingTime = component.Timer;
+                            PlaydSound(uid, component.AccessGrantedSound, 0, component);
                         }
                         else
                         {
                             component.EnteredCode = "";
+                            PlaydSound(uid, component.AccessDeniedSound, 0, component);
                         }
                         break;
                     }
@@ -301,6 +310,17 @@ namespace Content.Server.Nuke
             ui.SetState(state);
         }
 
+        private void PlaydSound(EntityUid uid, SoundSpecifier sound, float varyPitch = 0f,
+            NukeComponent? component = null)
+        {
+            if (!Resolve(uid, ref component))
+                return;
+
+            SoundSystem.Play(Filter.Pvs(uid), sound.GetSound(),
+                uid, AudioHelpers.WithVariation(varyPitch));
+        }
+
+        #region Public API
         /// <summary>
         ///     Force a nuclear bomb to start a countdown timer
         /// </summary>
@@ -344,6 +364,9 @@ namespace Content.Server.Nuke
             UpdateUserInterface(uid, component);
         }
 
+        /// <summary>
+        ///     Toggle bomb arm button
+        /// </summary>
         public void ToggleBomb(EntityUid uid, NukeComponent? component = null)
         {
             if (!Resolve(uid, ref component))
@@ -356,7 +379,7 @@ namespace Content.Server.Nuke
         }
 
         /// <summary>
-        ///     Force bomb to explode
+        ///     Force bomb to explode immediately
         /// </summary>
         public void ActivateBomb(EntityUid uid, NukeComponent? component = null,
             TransformComponent? transform = null)
@@ -381,7 +404,10 @@ namespace Content.Server.Nuke
             EntityManager.DeleteEntity(uid);
         }
 
-        public void SetTimer(EntityUid uid, float timer, NukeComponent? component = null)
+        /// <summary>
+        ///     Set remaining time value
+        /// </summary>
+        public void SetRemainingTime(EntityUid uid, float timer, NukeComponent? component = null)
         {
             if (!Resolve(uid, ref component))
                 return;
@@ -389,5 +415,6 @@ namespace Content.Server.Nuke
             component.RemainingTime = timer;
             UpdateUserInterface(uid, component);
         }
+        #endregion
     }
 }

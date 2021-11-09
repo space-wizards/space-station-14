@@ -1,5 +1,6 @@
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Nuke;
+using Content.Shared.Sound;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -39,6 +40,15 @@ namespace Content.Server.Nuke
         [DataField("blastRadius")]
         [ViewVariables(VVAccess.ReadWrite)]
         public int BlastRadius = 200;
+
+        [DataField("keypadPressSound")]
+        public SoundSpecifier KeypadPressSound = new SoundPathSpecifier("/Audio/Machines/Nuke/general_beep.ogg");
+
+        [DataField("accessGrantedSound")]
+        public SoundSpecifier AccessGrantedSound = new SoundPathSpecifier("/Audio/Machines/Nuke/confirm_beep.ogg");
+
+        [DataField("accessDeniedSound")]
+        public SoundSpecifier AccessDeniedSound = new SoundPathSpecifier("/Audio/Machines/Nuke/angry_beep.ogg");
 
         /// <summary>
         ///     Time until explosion in seconds.

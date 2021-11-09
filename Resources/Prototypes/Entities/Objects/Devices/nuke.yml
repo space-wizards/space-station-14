@@ -28,9 +28,9 @@
         DiskSlot:
           name: Disk
           insertSound:
-            path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+            path: /Audio/Machines/terminal_insert_disc.ogg
           ejectSound:
-            path: /Audio/Machines/id_swipe.ogg
+            path: /Audio/Machines/terminal_insert_disc.ogg
           whitelist:
             tags:
               - NukeDisk
