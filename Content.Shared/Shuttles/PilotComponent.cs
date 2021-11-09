@@ -41,7 +41,7 @@ namespace Content.Shared.Shuttles
 
         public override ComponentState GetComponentState(ICommonSession player)
         {
-            return new PilotComponentState(Console?.Owner.Uid);
+            return new PilotComponentState(Console?.OwnerUid);
         }
 
         [Serializable, NetSerializable]

@@ -18,12 +18,9 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         [DataField("spawn")]
         public Dictionary<string, MinMax> Spawn { get; set; } = new();
 
-        public void Execute(EntityUid owner, DestructibleSystem system)
+        public void Execute(EntityUid owner, DestructibleSystem system, IEntityManager entityManager)
         {
-            if (!system.EntityManager.TryGetComponent(owner, out TransformComponent? transform))
-            {
-                return;
-            }
+            var position = entityManager.GetComponent<TransformComponent>(owner).MapPosition;
 
             foreach (var (entityId, minMax) in Spawn)
             {
@@ -35,7 +32,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
 
                 if (EntityPrototypeHelpers.HasComponent<StackComponent>(entityId))
                 {
-                    var spawned = system.EntityManager.SpawnEntity(entityId, transform.MapPosition);
+                    var spawned = entityManager.SpawnEntity(entityId, position);
                     var stack = spawned.GetComponent<StackComponent>();
                     EntitySystem.Get<StackSystem>().SetCount(spawned.Uid, count, stack);
                     spawned.RandomOffset(0.5f);
@@ -44,7 +41,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                 {
                     for (var i = 0; i < count; i++)
                     {
-                        var spawned = system.EntityManager.SpawnEntity(entityId, transform.MapPosition);
+                        var spawned = entityManager.SpawnEntity(entityId, position);
                         spawned.RandomOffset(0.5f);
                     }
                 }

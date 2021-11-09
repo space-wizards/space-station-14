@@ -2,7 +2,7 @@ using Content.Client.IoC;
 using Content.Client.Resources;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
-using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -77,7 +77,7 @@ namespace Content.Client.HealthOverlay.UI
                 return;
             }
 
-            if (!Entity.TryGetComponent(out IMobStateComponent? mobState) ||
+            if (!Entity.TryGetComponent(out MobStateComponent? mobState) ||
                 !Entity.TryGetComponent(out DamageableComponent? damageable))
             {
                 CritBar.Visible = false;

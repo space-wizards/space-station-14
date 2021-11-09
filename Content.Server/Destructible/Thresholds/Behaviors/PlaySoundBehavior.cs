@@ -17,9 +17,9 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         /// </summary>
         [DataField("sound", required: true)] public SoundSpecifier Sound { get; set; } = default!;
 
-        public void Execute(EntityUid owner, DestructibleSystem system)
+        public void Execute(EntityUid owner, DestructibleSystem system, IEntityManager entityManager)
         {
-            var pos = system.EntityManager.GetComponent<TransformComponent>(owner).Coordinates;
+            var pos = entityManager.GetComponent<TransformComponent>(owner).Coordinates;
             SoundSystem.Play(Filter.Pvs(pos), Sound.GetSound(), pos, AudioHelpers.WithVariation(0.125f));
         }
     }

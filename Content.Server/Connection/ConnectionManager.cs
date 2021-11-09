@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Immutable;
 using System.Threading.Tasks;
+using Content.Server.Administration.Managers;
 using Content.Server.Database;
 using Content.Server.Preferences.Managers;
 using Content.Shared;
 using Content.Shared.CCVar;
+using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
@@ -22,6 +24,8 @@ namespace Content.Server.Connection
     /// </summary>
     public sealed class ConnectionManager : IConnectionManager
     {
+        [Dependency] private readonly IServerDbManager _dbManager = default!;
+        [Dependency] private readonly IPlayerManager _plyMgr = default!;
         [Dependency] private readonly IServerNetManager _netMgr = default!;
         [Dependency] private readonly IServerDbManager _db = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
@@ -68,6 +72,12 @@ The ban reason is: ""{ban.Reason}""
                 // HWId not available for user's platform, don't look it up.
                 // Or hardware ID checks disabled.
                 hwId = null;
+            }
+
+            if (_plyMgr.PlayerCount >= _cfg.GetCVar(CCVars.SoftMaxPlayers) && await _dbManager.GetAdminDataForAsync(e.UserId) is null)
+            {
+                e.Deny("The server is full!");
+                return;
             }
 
             var ban = await _db.GetServerBanAsync(addr, userId, hwId);

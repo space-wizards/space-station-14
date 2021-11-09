@@ -39,7 +39,7 @@ namespace Content.Server.Destructible
                 {
                     RaiseLocalEvent(uid, new DamageThresholdReached(component, threshold));
 
-                    threshold.Execute(component.Owner, this);
+                    threshold.Execute(uid, this, EntityManager);
                 }
             }
         }

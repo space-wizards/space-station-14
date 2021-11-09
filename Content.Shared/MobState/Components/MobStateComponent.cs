@@ -22,9 +22,8 @@ namespace Content.Shared.MobState.Components
     ///     (such as blur effect for unconsciousness) and managing the health HUD.
     /// </summary>
     [RegisterComponent]
-    [ComponentReference(typeof(IMobStateComponent))]
-    [NetworkedComponent()]
-    public class MobStateComponent : Component, IMobStateComponent
+    [NetworkedComponent]
+    public class MobStateComponent : Component
     {
         public override string Name => "MobState";
 
@@ -291,7 +290,7 @@ namespace Content.Shared.MobState.Components
         {
             if (!current.HasValue)
             {
-                old?.ExitState(Owner);
+                old?.ExitState(OwnerUid, Owner.EntityManager);
                 return;
             }
 
@@ -301,16 +300,16 @@ namespace Content.Shared.MobState.Components
 
             if (state == old)
             {
-                state.UpdateState(Owner, threshold);
+                state.UpdateState(OwnerUid, threshold, Owner.EntityManager);
                 return;
             }
 
-            old?.ExitState(Owner);
+            old?.ExitState(OwnerUid, Owner.EntityManager);
 
             CurrentState = state;
 
-            state.EnterState(Owner);
-            state.UpdateState(Owner, threshold);
+            state.EnterState(OwnerUid, Owner.EntityManager);
+            state.UpdateState(OwnerUid, threshold, Owner.EntityManager);
 
             var message = new MobStateChangedMessage(this, old, state);
 #pragma warning disable 618

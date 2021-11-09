@@ -176,7 +176,7 @@ namespace Content.Server.Nutrition.Components
 
             // TODO: Account for partial transfer.
 
-            split.DoEntityReaction(trueTarget, ReactionMethod.Ingestion);
+            split.DoEntityReaction(trueTarget.Uid, ReactionMethod.Ingestion);
 
             firstStomach.TryTransferSolution(split);
 

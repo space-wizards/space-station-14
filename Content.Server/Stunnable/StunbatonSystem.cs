@@ -73,7 +73,7 @@ namespace Content.Server.Stunnable
 
         private void OnUseInHand(EntityUid uid, StunbatonComponent comp, UseInHandEvent args)
         {
-            if (!Get<ActionBlockerSystem>().CanUse(args.User))
+            if (!Get<ActionBlockerSystem>().CanUse(args.User.Uid))
                 return;
 
             if (comp.Activated)
@@ -104,7 +104,7 @@ namespace Content.Server.Stunnable
 
         private void OnInteractUsing(EntityUid uid, StunbatonComponent comp, InteractUsingEvent args)
         {
-            if (!Get<ActionBlockerSystem>().CanInteract(args.User))
+            if (!Get<ActionBlockerSystem>().CanInteract(args.User.Uid))
                 return;
 
             if (EntityManager.TryGetComponent<PowerCellSlotComponent>(uid, out var cellslot))

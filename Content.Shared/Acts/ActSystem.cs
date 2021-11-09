@@ -19,12 +19,12 @@ namespace Content.Shared.Acts
 
     public class DestructionEventArgs : EntityEventArgs
     {
-        public EntityUid Owner { get; set; }
+        public EntityUid Owner { get; init; } = default!;
     }
 
     public class BreakageEventArgs : EventArgs
     {
-        public EntityUid Owner { get; set; }
+        public EntityUid Owner { get; init; } = default!;
     }
 
     public interface IBreakAct

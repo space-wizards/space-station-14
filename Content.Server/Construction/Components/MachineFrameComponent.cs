@@ -125,7 +125,7 @@ namespace Content.Server.Construction.Components
             if (Owner.TryGetComponent<ConstructionComponent>(out var construction))
             {
                 // Attempt to set pathfinding to the machine node...
-                EntitySystem.Get<ConstructionSystem>().SetPathfindingTarget(Owner.Uid, "machine", construction);
+                EntitySystem.Get<ConstructionSystem>().SetPathfindingTarget(OwnerUid, "machine", construction);
             }
         }
 
@@ -272,7 +272,7 @@ namespace Content.Server.Construction.Components
                     if (Owner.TryGetComponent(out ConstructionComponent? construction))
                     {
                         // So prying the components off works correctly.
-                        EntitySystem.Get<ConstructionSystem>().ResetEdge(Owner.Uid, construction);
+                        EntitySystem.Get<ConstructionSystem>().ResetEdge(OwnerUid, construction);
                     }
 
                     return true;
@@ -319,7 +319,7 @@ namespace Content.Server.Construction.Components
                     if (splitStack == null)
                         return false;
 
-                    if(!_partContainer.Insert(splitStack))
+                    if(!_partContainer.Insert(Owner.EntityManager.GetEntity(splitStack.Value)))
                         return false;
 
                     _materialProgress[type] += needed;
