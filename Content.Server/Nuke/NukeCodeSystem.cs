@@ -1,7 +1,10 @@
+using Content.Server.Chat.Managers;
 using Content.Server.Communications;
 using Content.Server.Paper;
+using Content.Shared.GameTicking;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Random;
 
 namespace Content.Server.Nuke
@@ -13,6 +16,7 @@ namespace Content.Server.Nuke
     public class NukeCodeSystem : EntitySystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly IChatManager _chat = default!;
 
         public const int CodeLength = 6;
         public string Code { get; private set; } = default!;
@@ -20,6 +24,13 @@ namespace Content.Server.Nuke
         public override void Initialize()
         {
             base.Initialize();
+            GenerateNewCode();
+
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRestart);
+        }
+
+        private void OnRestart(RoundRestartCleanupEvent ev)
+        {
             GenerateNewCode();
         }
 
@@ -49,9 +60,11 @@ namespace Content.Server.Nuke
         /// <summary>
         ///     Send a nuclear code to all communication consoles
         /// </summary>
-        public void SendNukeCodes()
+        /// <returns>True if at least one console received codes</returns>
+        public bool SendNukeCodes()
         {
             // todo: this should probably be handled by fax system
+            var wasSent = false;
             var consoles = EntityManager.EntityQuery<CommunicationsConsoleComponent>();
             foreach (var console in consoles)
             {
@@ -60,7 +73,17 @@ namespace Content.Server.Nuke
 
                 var consolePos = transform.MapPosition;
                 EntityManager.SpawnEntity("NukeCodePaper", consolePos);
+
+                wasSent = true;
             }
+
+            if (wasSent)
+            {
+                var msg = Loc.GetString("nuke-component-announcement-send-codes");
+                _chat.DispatchStationAnnouncement(msg);
+            }
+
+            return wasSent;
         }
     }
 }

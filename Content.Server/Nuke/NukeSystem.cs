@@ -379,7 +379,15 @@ namespace Content.Server.Nuke
             }
 
             EntityManager.DeleteEntity(uid);
+        }
 
+        public void SetTimer(EntityUid uid, float timer, NukeComponent? component = null)
+        {
+            if (!Resolve(uid, ref component))
+                return;
+
+            component.RemainingTime = timer;
+            UpdateUserInterface(uid, component);
         }
     }
 }

@@ -13,18 +13,18 @@ namespace Content.Server.Nuke.Commands
     [AdminCommand(AdminFlags.Fun)]
     public class ToggleNukeCommand : IConsoleCommand
     {
-        public string Command => "armnuke";
-        public string Description => "Toggle nuclear bomb timer";
-        public string Help => "armnuke <uid>";
+        public string Command => "nukearm";
+        public string Description => "Toggle nuclear bomb timer. You can set timer directly. Uid is optional.";
+        public string Help => "nukearm <timer> <uid>";
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             EntityUid bombUid;
             NukeComponent? bomb = null;
 
-            if (args.Length > 1)
+            if (args.Length >= 2)
             {
-                if (!EntityUid.TryParse(args[0], out bombUid))
+                if (!EntityUid.TryParse(args[1], out bombUid))
                 {
                     shell.WriteError(Loc.GetString("shell-entity-uid-must-be-number"));
                     return;
@@ -45,7 +45,19 @@ namespace Content.Server.Nuke.Commands
                 bombUid = bomb.OwnerUid;
             }
 
-            EntitySystem.Get<NukeSystem>().ToggleBomb(bombUid, bomb);
+            var nukeSys = EntitySystem.Get<NukeSystem>();
+            if (args.Length >= 1)
+            {
+                if (!float.TryParse(args[0], out var timer))
+                {
+                    shell.WriteError("shell-argument-must-be-number");
+                    return;
+                }
+
+                nukeSys.SetTimer(bombUid, timer, bomb);
+            }
+
+            nukeSys.ToggleBomb(bombUid, bomb);
         }
     }
 }
