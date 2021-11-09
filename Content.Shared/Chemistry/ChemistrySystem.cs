@@ -37,7 +37,7 @@ namespace Content.Shared.Chemistry
             foreach (var reaction in reactive.Reactions)
             {
                 // If we have a source solution, use the reagent quantity we have left. Otherwise, use the reaction volume specified.
-                reaction.React(method, entity, reagent, source?.GetReagentQuantity(reagent.ID) ?? reactVolume, source);
+                reaction.React(method, entity.Uid, reagent, source?.GetReagentQuantity(reagent.ID) ?? reactVolume, source, EntityManager);
 
                 // Make sure we still have enough reagent to go...
                 if (source != null && !source.ContainsReagent(reagent.ID))
