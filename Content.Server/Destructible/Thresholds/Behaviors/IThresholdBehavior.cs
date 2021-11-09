@@ -12,7 +12,6 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         ///     An instance of <see cref="DestructibleSystem"/> to pull dependencies
         ///     and other systems from.
         /// </param>
-        /// <param name="entityManager"></param>
-        void Execute(EntityUid owner, DestructibleSystem system, IEntityManager entityManager);
+        void Execute(EntityUid owner, DestructibleSystem system);
     }
 }
