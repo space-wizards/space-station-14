@@ -2,6 +2,7 @@ using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Log;
+using Robust.Shared.Map;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -17,6 +18,14 @@ namespace Content.Shared.Shuttles
     {
         public override string Name => "Pilot";
         [ViewVariables] public SharedShuttleConsoleComponent? Console { get; set; }
+
+        /// <summary>
+        /// Position from where we started piloting to determine if we should break.
+        /// </summary>
+        [ViewVariables]
+        public EntityCoordinates? PilotPosition { get; set; }
+
+        public const float BreakDistance = 0.5f;
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {

@@ -72,7 +72,9 @@ namespace Content.Server.Shuttles
         /// </summary>
         private void HandlePilotMove(EntityUid uid, PilotComponent component, ref MoveEvent args)
         {
-            if (component.Console == null) return;
+            if (component.Console == null ||
+                args.NewPosition.TryDistance(EntityManager, component.PilotPosition!.Value, out var distance) && distance >= PilotComponent.BreakDistance) return;
+
             RemovePilot(component);
         }
 
@@ -138,6 +140,7 @@ namespace Content.Server.Shuttles
 
             entity.PopupMessage(Loc.GetString("shuttle-pilot-start"));
             pilotComponent.Console = component;
+            pilotComponent.PilotPosition = EntityManager.GetComponent<ITransformComponent>(entity.Uid).Coordinates;
             pilotComponent.Dirty();
         }
 
@@ -148,6 +151,7 @@ namespace Content.Server.Shuttles
             if (console is not ShuttleConsoleComponent helmsman) return;
 
             pilotComponent.Console = null;
+            pilotComponent.PilotPosition = null;
 
             if (!helmsman.SubscribedPilots.Remove(pilotComponent)) return;
 

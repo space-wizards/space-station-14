@@ -1,8 +1,6 @@
-using System;
 using Content.Server.Doors.Components;
 using Content.Server.Power.Components;
 using Content.Shared.Doors;
-using Content.Shared.Physics;
 using Content.Shared.Shuttles;
 using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
@@ -27,7 +25,7 @@ namespace Content.Server.Shuttles
         public DockingComponent? DockedWith;
 
         [ViewVariables]
-        public WeldJoint? DockJoint;
+        public Joint? DockJoint;
 
         [ViewVariables]
         public override bool Docked => DockedWith != null;
@@ -293,44 +291,48 @@ namespace Content.Server.Shuttles
 
             Logger.DebugS("docking", $"Docking between {dockA.Owner} and {dockB.Owner}");
 
-            var swap = false;
+            // Sloth why didn't you use that fancy new weldjoint?
+            // Well you see it's mainly angular restriction and it's hard as shit to make it use the correct position
+            // https://gamedev.stackexchange.com/questions/98772/b2distancejoint-with-frequency-equal-to-0-vs-b2weldjoint
 
-            // Not sure if this is just how weldjoint works or what but I'll just swap the order as I can't seem
-            // to replicate the behavior no matter what referenceangle I try (best case the shuttle is inverted)
             // TODO: NEED A TEST FOR THIS DO NOT LET SLOTH MERGE WITHOUT IT!!!
-            switch (dockAXform.LocalRotation.GetCardinalDir())
-            {
-                case Direction.East:
-                    swap = true;
-                    break;
-            }
-
-            if (swap)
-            {
-                var dock = dockA;
-                var dockXForm = dockAXform;
-
-                dockA = dockB;
-                dockAXform = dockBXform;
-
-                dockB = dock;
-                dockBXform = dockXForm;
-            }
-
             var gridA = _mapManager.GetGrid(dockA.Owner.Transform.GridID).GridEntityId;
             var gridB = _mapManager.GetGrid(dockB.Owner.Transform.GridID).GridEntityId;
+            var gridAXform = EntityManager.GetComponent<ITransformComponent>(gridA);
+            var gridBXform = EntityManager.GetComponent<ITransformComponent>(gridB);
 
-            var weld = _jointSystem.CreateWeldJoint(gridA, gridB, DockingJoint);
+            SharedJointSystem.LinearStiffness(
+                2f,
+                1f,
+                EntityManager.GetComponent<PhysicsComponent>(gridA).Mass,
+                EntityManager.GetComponent<PhysicsComponent>(gridB).Mass,
+                out var stiffness,
+                out var damping);
 
-            weld.LocalAnchorA = dockAXform.LocalPosition + dockAXform.LocalRotation.ToWorldVec() / 2f;
-            weld.LocalAnchorB = dockBXform.LocalPosition + dockBXform.LocalRotation.ToWorldVec() / 2f;
-            weld.ReferenceAngle = 0f;
-            weld.CollideConnected = false;
+            var anchorA = dockAXform.LocalPosition + dockAXform.LocalRotation.ToWorldVec() / 2f;
+            var anchorB = dockBXform.LocalPosition + dockBXform.LocalRotation.ToWorldVec() / 2f;
+
+            var joint = _jointSystem.CreateWeldJoint(gridA, gridB, DockingJoint);
+            joint.LocalAnchorA = anchorA;
+            joint.LocalAnchorB = anchorB;
+            joint.CollideConnected = false;
+            //joint.Damping = damping;
+            //joint.Stiffness = stiffness;
+            joint.ReferenceAngle = (float) (dockAXform.WorldPosition - dockBXform.WorldPosition).ToAngle().Theta;
+
+            /*
+            var joint = _jointSystem.CreateDistanceJoint(gridA, gridB, anchorA, anchorB, DockingJoint);
+            joint.CollideConnected = false;
+            joint.MaxLength = 0.1f;
+            joint.Length = 0.0f;
+            joint.Damping = damping;
+            joint.Stiffness = stiffness;
+            */
 
             dockA.DockedWith = dockB;
             dockB.DockedWith = dockA;
-            dockA.DockJoint = weld;
-            dockB.DockJoint = weld;
+            dockA.DockJoint = joint;
+            dockB.DockJoint = joint;
 
             if (EntityManager.TryGetComponent(dockA.OwnerUid, out ServerDoorComponent? doorA))
             {
