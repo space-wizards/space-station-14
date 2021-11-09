@@ -40,9 +40,19 @@ namespace Content.Shared.Interaction
         public IEntity User { get; }
 
         /// <summary>
+        ///     Entity that dropped the item.
+        /// </summary>
+        public EntityUid UserUid => User.Uid;
+
+        /// <summary>
         ///     Item that was dropped.
         /// </summary>
         public IEntity Dropped { get; }
+
+        /// <summary>
+        ///     Item that was dropped.
+        /// </summary>
+        public EntityUid DroppedUid => Dropped.Uid;
 
         /// <summary>
         ///     If the item was dropped intentionally.
