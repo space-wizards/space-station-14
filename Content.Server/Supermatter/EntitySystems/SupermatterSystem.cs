@@ -16,7 +16,6 @@ using Content.Shared.Item;
 using Content.Shared.Tag;
 using Content.Server.Projectiles.Components;
 using Content.Server.Explosion;
-using Content.Server.Radio.EntitySystems;
 using Content.Server.Chat.Managers;
 using Content.Shared.Damage.Prototypes;
 using Robust.Shared.Prototypes;
@@ -37,7 +36,7 @@ namespace Content.Server.Supermatter.EntitySystems
         [Dependency] private readonly RadiationSystem _radiationSystem = default!;
         [Dependency] private IEntityManager _entityManager = default!;
         [Dependency] private TagComponent _tag = default!;
-        [Dependency] private readonly ITransformComponent _transform = default!;
+        [Dependency] private readonly TransformComponent _transform = default!;
         [Dependency] private readonly IChatManager _chat = default!;
 
         public override void Initialize()
