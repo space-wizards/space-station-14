@@ -21,14 +21,7 @@
     behaviorSets:
     # - Clothing
     - Idle
-  - type: Hunger
-    damage:
-      types:
-        Blunt: 2
-  - type: Thirst
-    damage:
-      types:
-        Blunt: 2
+    # No hunger and thirst for space mobs (need a way to eat station tiles for space carps)
   - type: Input
     context: "human"
   - type: AiFactionTag
@@ -142,8 +135,16 @@
   - type: UtilityAI
     behaviorSets:
     - Idle
-    # - Hunger TODO: eating on the floor, fix weird monkey endless stomach
+    # - Hunger TODO: eating on the floor and fix weird AI endless stomach
     # - Thirst
+  - type: Hunger
+    damage:
+      types:
+        Blunt: 2
+  - type: Thirst
+    damage:
+      types:
+        Blunt: 2
   - type: Barotrauma
     damage:
       types:

@@ -257,6 +257,15 @@
     - state: chocolate
   - type: SliceableFood
     slice: FoodCakeChocolateSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 26
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 20
+        - ReagentId: Theobromine
+          Quantity: 5
 
 - type: entity
   name: slice of chocolate cake
@@ -267,6 +276,15 @@
     layers:
     - state: plate-small
     - state: chocolate-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10 # There is something weird about SliceBase: SliceableFoodComp has 5 default slices, which leads to total volume of 40, but CakeBase has only 26 total volume
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 7 # TODO: Recalculate volumes and nutrition for sliceable food
+        - ReagentId: Theobromine
+          Quantity: 1
 # Tastes like sweetness, cake, chocolate.
 
 - type: entity

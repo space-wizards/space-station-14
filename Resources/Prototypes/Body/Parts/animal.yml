@@ -61,6 +61,8 @@
     mechanisms:
     - OrganAnimalLungs
     - OrganAnimalStomach
+    - OrganAnimalLiver
+    - OrganAnimalHeart
   - type: Damageable
     damageContainer: Biological
 
@@ -101,87 +103,40 @@
       stomach:
         maxVol: 100
   - type: Metabolizer
-    metabolisms:
-      Flour:
-        effects:
-        - !type:SatiateHunger
-      JuiceApple:
-        effects:
-        - !type:SatiateThirst
-      JuiceBerry:
-        effects:
-        - !type:SatiateThirst
-      JuiceBanana:
-        effects:
-        - !type:SatiateThirst
-      JuiceCarrot:
-        effects:
-        - !type:SatiateThirst
-      JuiceLime:
-        effects:
-        - !type:SatiateThirst
-      JuiceLemon:
-        effects:
-        - !type:SatiateThirst
-      JuiceGrape:
-        effects:
-        - !type:SatiateThirst
-      JuiceOrange:
-        effects:
-        - !type:SatiateThirst
-      JuiceTomato:
-        effects:
-        - !type:SatiateThirst
-      JuiceBerryPoison:
-        effects:
-        - !type:SatiateThirst
-        - !type:HealthChange
-          damage:
-            types:
-              Poison: 1
-      JuiceWatermelon:
-        effects:
-        - !type:SatiateThirst
-      JuicePineapple:
-        effects:
-        - !type:SatiateThirst
-      Nutriment:
-        effects:
-        - !type:SatiateHunger
-      Water:
-        effects:
-        - !type:SatiateThirst
-          hydrationFactor: 2
-      Coffee:
-        effects:
-        - !type:SatiateThirst
-      Tea:
-        effects:
-        - !type:SatiateThirst
-      Milk:
-        effects:
-        - !type:SatiateThirst
-      MilkSpoiled:
-        effects:
-        - !type:SatiateThirst
-          hydrationFactor: -2
-      MilkSoy:
-        effects:
-        - !type:SatiateThirst
-          hydrationFactor: 2
-      MilkOat:
-        effects:
-        - !type:SatiateThirst
-          hydrationFactor: 2
-      Cola:
-        effects:
-        - !type:SatiateThirst
-          hydrationFactor: 0.5
-      FourteenLoko:
-        effects:
-        - !type:SatiateThirst
-          hydrationFactor: 2
-        - !type:HealthChange
-          damage:
-            types:
-              Poison: 1
+    metabolizerTypes: [Human, Animal]
+    groups:
+    - id: Food
+    - id: Drink
+
+- type: entity
+  id: OrganAnimalLiver
+  parent: BaseAnimalOrgan
+  name: liver
+  abstract: true
+  components:
+  - type: Mechanism
+    size: 1
+    compatibility: Biological
+  - type: Metabolizer
+    metabolizerTypes: [Human, Animal]
+    groups:
+    - id: Alcohol
+      rateModifier: 0.1
+
+- type: entity
+  id: OrganAnimalHeart
+  parent: BaseAnimalOrgan
+  name: heart
+  abstract: true
+  components:
+  - type: Mechanism
+    size: 1
+    compatibility: Biological
+    behaviors:
+    - !type:HeartBehavior {}
+  - type: Metabolizer
+    metabolizerTypes: [Human, Animal]
+    groups:
+    - id: Medicine
+    - id: Poison
+    - id: Narcotic

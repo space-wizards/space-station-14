@@ -3,3 +3,6 @@
 
 - type: metabolizerType
   id: Human
+
+- type: metabolizerType
+  id: Animal
