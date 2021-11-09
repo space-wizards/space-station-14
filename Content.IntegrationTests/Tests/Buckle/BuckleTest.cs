@@ -82,7 +82,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.NotNull(buckle);
                 Assert.Null(buckle.BuckledTo);
                 Assert.False(buckle.Buckled);
-                Assert.True(actionBlocker.CanMove(human));
+                Assert.True(actionBlocker.CanMove(human.Uid));
                 Assert.True(actionBlocker.CanChangeDirection(human));
                 Assert.True(standingState.Down(human.Uid));
                 Assert.True(standingState.Stand(human.Uid));
@@ -100,7 +100,7 @@ namespace Content.IntegrationTests.Tests.Buckle
 
                 var player = IoCManager.Resolve<IPlayerManager>().GetAllPlayers().Single();
                 Assert.True(((BuckleComponentState) buckle.GetComponentState(player)).Buckled);
-                Assert.False(actionBlocker.CanMove(human));
+                Assert.False(actionBlocker.CanMove(human.Uid));
                 Assert.False(actionBlocker.CanChangeDirection(human));
                 Assert.False(standingState.Down(human.Uid));
                 Assert.That((human.Transform.WorldPosition - chair.Transform.WorldPosition).Length, Is.LessThanOrEqualTo(buckle.BuckleOffset.Length));
@@ -134,7 +134,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.True(buckle.TryUnbuckle(human));
                 Assert.Null(buckle.BuckledTo);
                 Assert.False(buckle.Buckled);
-                Assert.True(actionBlocker.CanMove(human));
+                Assert.True(actionBlocker.CanMove(human.Uid));
                 Assert.True(actionBlocker.CanChangeDirection(human));
                 Assert.True(standingState.Down(human.Uid));
 
@@ -192,7 +192,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 // Force unbuckle
                 Assert.True(buckle.TryUnbuckle(human, true));
                 Assert.False(buckle.Buckled);
-                Assert.True(actionBlocker.CanMove(human));
+                Assert.True(actionBlocker.CanMove(human.Uid));
                 Assert.True(actionBlocker.CanChangeDirection(human));
                 Assert.True(standingState.Down(human.Uid));
 

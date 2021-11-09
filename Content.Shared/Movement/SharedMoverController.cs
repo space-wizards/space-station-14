@@ -163,7 +163,7 @@ namespace Content.Shared.Movement
                    body.Owner.HasComponent<MobStateComponent>() &&
                    // If we're being pulled then don't mess with our velocity.
                    (!body.Owner.TryGetComponent(out SharedPullableComponent? pullable) || !pullable.BeingPulled) &&
-                   _blocker.CanMove(body.Owner);
+                   _blocker.CanMove(body.OwnerUid);
         }
 
         /// <summary>

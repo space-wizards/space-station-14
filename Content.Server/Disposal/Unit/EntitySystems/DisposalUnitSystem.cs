@@ -98,7 +98,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             if (!args.CanAccess ||
                 !args.CanInteract ||
                 component.ContainedEntities.Contains(args.User) ||
-                !_actionBlockerSystem.CanMove(args.User))
+                !_actionBlockerSystem.CanMove(args.User.Uid))
                 return;
 
             // Add verb to climb inside of the unit,

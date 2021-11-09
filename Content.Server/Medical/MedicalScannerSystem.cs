@@ -60,7 +60,7 @@ namespace Content.Server.Medical
             // Self-insert verb
             if (!component.IsOccupied &&
                 component.CanInsert(args.User) &&
-                _actionBlockerSystem.CanMove(args.User))
+                _actionBlockerSystem.CanMove(args.User.Uid))
             {
                 Verb verb = new();
                 verb.Act = () => component.InsertBody(args.User);

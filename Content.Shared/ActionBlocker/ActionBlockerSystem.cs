@@ -21,17 +21,12 @@ namespace Content.Shared.ActionBlocker
         // TODO: Make the EntityUid the main overload for all these methods.
         // TODO: Move each of these to their relevant EntitySystems?
 
-        public bool CanMove(IEntity entity)
-        {
-            var ev = new MovementAttemptEvent(entity);
-
-            RaiseLocalEvent(entity.Uid, ev);
-            return !ev.Cancelled;
-        }
-
         public bool CanMove(EntityUid uid)
         {
-            return CanMove(EntityManager.GetEntity(uid));
+            var ev = new MovementAttemptEvent(uid);
+            RaiseLocalEvent(uid, ev);
+
+            return !ev.Cancelled;
         }
 
         public bool CanInteract(IEntity entity)
