@@ -66,7 +66,7 @@ namespace Content.Shared.ActionBlocker
 
             return !ev.Cancelled;
         }
-        
+
         public bool CanDrop(EntityUid uid)
         {
             var ev = new DropAttemptEvent(uid);
@@ -103,18 +103,12 @@ namespace Content.Shared.ActionBlocker
             return CanEmote(EntityManager.GetEntity(uid));
         }
 
-        public bool CanAttack(IEntity entity)
-        {
-            var ev = new AttackAttemptEvent(entity);
-
-            RaiseLocalEvent(entity.Uid, ev);
-
-            return !ev.Cancelled;
-        }
-
         public bool CanAttack(EntityUid uid)
         {
-            return CanAttack(EntityManager.GetEntity(uid));
+            var ev = new AttackAttemptEvent(uid);
+            RaiseLocalEvent(uid, ev);
+
+            return !ev.Cancelled;
         }
 
         public bool CanEquip(IEntity entity)
