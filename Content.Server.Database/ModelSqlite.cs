@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
 using System.Net;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
@@ -25,6 +26,11 @@ namespace Content.Server.Database
                 options.UseSqlite("dummy connection string");
 
             ((IDbContextOptionsBuilderInfrastructure) options).AddOrUpdateExtension(new SnakeCaseExtension());
+
+            options.ConfigureWarnings(x =>
+            {
+                x.Ignore(CoreEventId.ManyServiceProvidersCreatedWarning);
+            });
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

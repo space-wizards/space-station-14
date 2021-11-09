@@ -93,6 +93,11 @@ namespace Content.Server.Database
                 .Where(p => p.Preference.UserId == userId.UserId && p.Slot == slot)
                 .SingleOrDefaultAsync();
 
+            if (profile == null)
+            {
+                return;
+            }
+
             db.Profile.Remove(profile);
         }
 

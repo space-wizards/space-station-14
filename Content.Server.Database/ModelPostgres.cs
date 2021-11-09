@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Net;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
 
@@ -28,6 +29,11 @@ namespace Content.Server.Database
             options.ReplaceService<IRelationalTypeMappingSource, CustomNpgsqlTypeMappingSource>();
 
             ((IDbContextOptionsBuilderInfrastructure) options).AddOrUpdateExtension(new SnakeCaseExtension());
+
+            options.ConfigureWarnings(x =>
+            {
+                x.Ignore(CoreEventId.ManyServiceProvidersCreatedWarning);
+            });
         }
 
         public PostgresServerDbContext(DbContextOptions<ServerDbContext> options) : base(options)
@@ -82,7 +88,7 @@ namespace Content.Server.Database
             {
                 foreach(var property in entity.GetProperties())
                 {
-                    if (property.FieldInfo.FieldType == typeof(DateTime) || property.FieldInfo.FieldType == typeof(DateTime?))
+                    if (property.FieldInfo?.FieldType == typeof(DateTime) || property.FieldInfo?.FieldType == typeof(DateTime?))
                         property.SetColumnType("timestamp with time zone");
                 }
             }
