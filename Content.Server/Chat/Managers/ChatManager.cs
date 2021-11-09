@@ -110,7 +110,7 @@ namespace Content.Server.Chat.Managers
 
         public void EntitySay(IEntity source, string message)
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanSpeak(source))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanSpeak(source.Uid))
             {
                 return;
             }
