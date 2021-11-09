@@ -14,30 +14,30 @@ namespace Content.Shared.Chemistry
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-        public void ReactionEntity(IEntity entity, ReactionMethod method, Solution solution)
+        public void ReactionEntity(EntityUid uid, ReactionMethod method, Solution solution)
         {
             foreach (var (id, quantity) in solution)
             {
-                ReactionEntity(entity, method, id, quantity, solution);
+                ReactionEntity(uid, method, id, quantity, solution);
             }
         }
 
-        public void ReactionEntity(IEntity entity, ReactionMethod method, string reagentId, FixedPoint2 reactVolume, Solution? source)
+        public void ReactionEntity(EntityUid uid, ReactionMethod method, string reagentId, FixedPoint2 reactVolume, Solution? source)
         {
             // We throw if the reagent specified doesn't exist.
-            ReactionEntity(entity, method, _prototypeManager.Index<ReagentPrototype>(reagentId), reactVolume, source);
+            ReactionEntity(uid, method, _prototypeManager.Index<ReagentPrototype>(reagentId), reactVolume, source);
         }
 
-        public void ReactionEntity(IEntity entity, ReactionMethod method, ReagentPrototype reagent,
+        public void ReactionEntity(EntityUid uid, ReactionMethod method, ReagentPrototype reagent,
             FixedPoint2 reactVolume, Solution? source)
         {
-            if (entity == null || entity.Deleted || !entity.TryGetComponent(out ReactiveComponent? reactive))
+            if (!EntityManager.TryGetComponent(uid, out ReactiveComponent? reactive))
                 return;
 
             foreach (var reaction in reactive.Reactions)
             {
                 // If we have a source solution, use the reagent quantity we have left. Otherwise, use the reaction volume specified.
-                reaction.React(method, entity.Uid, reagent, source?.GetReagentQuantity(reagent.ID) ?? reactVolume, source, EntityManager);
+                reaction.React(method, uid, reagent, source?.GetReagentQuantity(reagent.ID) ?? reactVolume, source, EntityManager);
 
                 // Make sure we still have enough reagent to go...
                 if (source != null && !source.ContainsReagent(reagent.ID))
