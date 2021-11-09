@@ -430,7 +430,7 @@ namespace Content.Shared.Hands.Components
         /// </summary>
         private bool PlayerCanDrop()
         {
-            if (!IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ActionBlockerSystem>().CanDrop(Owner))
+            if (!IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ActionBlockerSystem>().CanDrop(OwnerUid))
                 return false;
 
             return true;

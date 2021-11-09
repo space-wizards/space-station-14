@@ -48,7 +48,7 @@ namespace Content.Server.PowerCell
                 !args.CanInteract ||
                 component.HasCell ||
                 !args.Using.HasComponent<PowerCellComponent>() ||
-                !_actionBlockerSystem.CanDrop(args.User))
+                !_actionBlockerSystem.CanDrop(args.User.Uid))
                 return;
 
             Verb verb = new();

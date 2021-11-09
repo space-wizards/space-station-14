@@ -660,7 +660,7 @@ namespace Content.Shared.Interaction
         /// </summary>
         public bool TryDroppedInteraction(IEntity user, IEntity item, bool intentional)
         {
-            if (user == null || item == null || !_actionBlockerSystem.CanDrop(user)) return false;
+            if (user == null || item == null || !_actionBlockerSystem.CanDrop(user.Uid)) return false;
 
             DroppedInteraction(user, item, intentional);
             return true;

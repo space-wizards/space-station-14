@@ -89,7 +89,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (args.Using == null ||
                 !args.CanAccess ||
                 !args.CanInteract ||
-                !_actionBlockerSystem.CanDrop(args.User))
+                !_actionBlockerSystem.CanDrop(args.User.Uid))
                 return;
 
             foreach (var (slotName, slot) in component.Slots)

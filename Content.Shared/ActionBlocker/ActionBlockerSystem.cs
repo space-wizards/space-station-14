@@ -54,7 +54,6 @@ namespace Content.Shared.ActionBlocker
         public bool CanThrow(EntityUid uid)
         {
             var ev = new ThrowAttemptEvent(uid);
-
             RaiseLocalEvent(uid, ev);
 
             return !ev.Cancelled;
@@ -63,24 +62,17 @@ namespace Content.Shared.ActionBlocker
         public bool CanSpeak(EntityUid uid)
         {
             var ev = new SpeakAttemptEvent(uid);
-
             RaiseLocalEvent(uid, ev);
 
             return !ev.Cancelled;
         }
-
-        public bool CanDrop(IEntity entity)
-        {
-            var ev = new DropAttemptEvent(entity);
-
-            RaiseLocalEvent(entity.Uid, ev);
-
-            return !ev.Cancelled;
-        }
-
+        
         public bool CanDrop(EntityUid uid)
         {
-            return CanDrop(EntityManager.GetEntity(uid));
+            var ev = new DropAttemptEvent(uid);
+            RaiseLocalEvent(uid, ev);
+
+            return !ev.Cancelled;
         }
 
         public bool CanPickup(IEntity entity)
