@@ -672,7 +672,7 @@ namespace Content.Shared.Interaction
         /// </summary>
         public void DroppedInteraction(IEntity user, IEntity item, bool intentional)
         {
-            var dropMsg = new DroppedEvent(user, item, intentional);
+            var dropMsg = new DroppedEvent(user.Uid, item.Uid, intentional);
             RaiseLocalEvent(item.Uid, dropMsg);
             if (dropMsg.Handled)
                 return;
