@@ -129,7 +129,7 @@ namespace Content.Server.Chat.Managers
             foreach (var handler in _chatTransformHandlers)
             {
                 //TODO: rather return a bool and use a out var?
-                message = handler(source, message);
+                message = handler(source.Uid, message);
             }
 
             message = message.Trim();
