@@ -170,7 +170,7 @@ namespace Content.Server.Cuffs.Components
                 return true;
             }
 
-            if (cuffed.CuffedHandCount == hands.Count)
+            if (cuffed.CuffedHandCount >= hands.Count)
             {
                 eventArgs.User.PopupMessage(Loc.GetString("handcuff-component-target-has-no-free-hands-error",("targetName", eventArgs.Target)));
                 return true;
