@@ -6,6 +6,7 @@ using Content.Server.UserInterface;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
@@ -35,21 +36,21 @@ namespace Content.Server.Chemistry.Components
         /// </summary>
         [DataField("transferAmount")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public ReagentUnit TransferAmount { get; set; } = ReagentUnit.New(5);
+        public FixedPoint2 TransferAmount { get; set; } = FixedPoint2.New(5);
 
         /// <summary>
         ///     The minimum amount of solution that can be transferred at once from this solution.
         /// </summary>
         [DataField("minTransferAmount")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public ReagentUnit MinimumTransferAmount { get; set; } = ReagentUnit.New(5);
+        public FixedPoint2 MinimumTransferAmount { get; set; } = FixedPoint2.New(5);
 
         /// <summary>
         ///     The maximum amount of solution that can be transferred at once from this solution.
         /// </summary>
         [DataField("maxTransferAmount")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public ReagentUnit MaximumTransferAmount { get; set; } = ReagentUnit.New(50);
+        public FixedPoint2 MaximumTransferAmount { get; set; } = FixedPoint2.New(50);
 
         /// <summary>
         ///     Can this entity take reagent from reagent tanks?
@@ -95,14 +96,14 @@ namespace Content.Server.Chemistry.Components
 
                     serverMsg.Session.AttachedEntity?.PopupMessage(Loc.GetString("comp-solution-transfer-set-amount",
                         ("amount", amount)));
-                    SetTransferAmount(ReagentUnit.New(amount));
+                    SetTransferAmount(FixedPoint2.New(amount));
                     break;
             }
         }
 
-        public void SetTransferAmount(ReagentUnit amount)
+        public void SetTransferAmount(FixedPoint2 amount)
         {
-            amount = ReagentUnit.New(Math.Clamp(amount.Int(), MinimumTransferAmount.Int(),
+            amount = FixedPoint2.New(Math.Clamp(amount.Int(), MinimumTransferAmount.Int(),
                 MaximumTransferAmount.Int()));
             TransferAmount = amount;
         }
@@ -162,30 +163,30 @@ namespace Content.Server.Chemistry.Components
         }
 
         /// <returns>The actual amount transferred.</returns>
-        private static ReagentUnit DoTransfer(IEntity user,
+        private static FixedPoint2 DoTransfer(IEntity user,
             IEntity sourceEntity,
             Solution source,
             IEntity targetEntity,
             Solution target,
-            ReagentUnit amount)
+            FixedPoint2 amount)
         {
 
             if (source.DrainAvailable == 0)
             {
                 sourceEntity.PopupMessage(user,
                     Loc.GetString("comp-solution-transfer-is-empty", ("target", sourceEntity)));
-                return ReagentUnit.Zero;
+                return FixedPoint2.Zero;
             }
 
             if (target.AvailableVolume == 0)
             {
                 targetEntity.PopupMessage(user,
                     Loc.GetString("comp-solution-transfer-is-full", ("target", targetEntity)));
-                return ReagentUnit.Zero;
+                return FixedPoint2.Zero;
             }
 
             var actualAmount =
-                ReagentUnit.Min(amount, ReagentUnit.Min(source.DrainAvailable, target.AvailableVolume));
+                FixedPoint2.Min(amount, FixedPoint2.Min(source.DrainAvailable, target.AvailableVolume));
 
             var solution = EntitySystem.Get<SolutionContainerSystem>().Drain(sourceEntity.Uid, source, actualAmount);
             EntitySystem.Get<SolutionContainerSystem>().Refill(targetEntity.Uid, target, solution);

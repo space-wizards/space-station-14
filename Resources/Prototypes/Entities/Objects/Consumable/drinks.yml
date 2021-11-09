@@ -453,23 +453,6 @@
 
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkBrownStar
-  name: brown star
-  description: It's not what it sounds like...
-  components:
-  - type: Drink
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: BrownStar
-          Quantity: 50
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/brownstar.rsi
-
-- type: entity
-  parent: DrinkGlassBase
   id: DrinkCarrotJuice
   name: carrot juice
   description: It is just like a carrot but without crunching.

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 
 namespace Content.Client.Damage
@@ -17,10 +18,10 @@ namespace Content.Client.Damage
         public List<object> TargetLayerMapKeys = new();
         public bool Disabled = false;
         public bool Valid = true;
-        public int LastDamageThreshold = 0;
+        public FixedPoint2 LastDamageThreshold = FixedPoint2.Zero;
         public Dictionary<object, bool> DisabledLayers = new();
         public Dictionary<object, string> LayerMapKeyStates = new();
-        public Dictionary<string, int> LastThresholdPerGroup = new();
+        public Dictionary<string, FixedPoint2> LastThresholdPerGroup = new();
         public string TopMostLayerKey = default!;
     }
 }

@@ -153,7 +153,7 @@ namespace Content.Server.Construction
         private EntityUid? ChangeEntity(EntityUid uid, EntityUid? userUid, string newEntity,
             ConstructionComponent? construction = null,
             MetaDataComponent? metaData = null,
-            ITransformComponent? transform = null,
+            TransformComponent? transform = null,
             ContainerManagerComponent? containerManager = null)
         {
             if (!Resolve(uid, ref construction, ref metaData, ref transform))
@@ -187,7 +187,7 @@ namespace Content.Server.Construction
             }
 
             // Transform transferring.
-            var newTransform = EntityManager.GetComponent<ITransformComponent>(newUid);
+            var newTransform = EntityManager.GetComponent<TransformComponent>(newUid);
             newTransform.LocalRotation = transform.LocalRotation;
             newTransform.Anchored = transform.Anchored;
 

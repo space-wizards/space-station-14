@@ -142,7 +142,7 @@ namespace Content.Shared.SubFloor
 
         private void UpdateEntity(EntityUid uid)
         {
-            var transform = EntityManager.GetComponent<ITransformComponent>(uid);
+            var transform = EntityManager.GetComponent<TransformComponent>(uid);
 
             if (!_mapManager.TryGetGrid(transform.GridID, out var grid))
             {
@@ -175,7 +175,7 @@ namespace Content.Shared.SubFloor
                     subFloor = true;
                 }
                 // We only need to query the TransformComp if the SubfloorHide is enabled and requires anchoring.
-                else if (subFloorHideComponent.RequireAnchored && EntityManager.TryGetComponent(uid, out ITransformComponent? transformComponent))
+                else if (subFloorHideComponent.RequireAnchored && EntityManager.TryGetComponent(uid, out TransformComponent? transformComponent))
                 {
                     // If we require the entity to be anchored but it's not, this will set subfloor to true, unhiding it.
                     subFloor = !transformComponent.Anchored;

@@ -1,10 +1,9 @@
 using System;
 using System.Threading;
 using Content.Server.Chat.Managers;
-using Content.Shared;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
-using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
@@ -63,7 +62,7 @@ namespace Content.Server.GameTicking.Rules
             {
                 var playerEntity = playerSession.AttachedEntity;
                 if (playerEntity == null
-                    || !playerEntity.TryGetComponent(out IMobStateComponent? state))
+                    || !playerEntity.TryGetComponent(out MobStateComponent? state))
                 {
                     continue;
                 }

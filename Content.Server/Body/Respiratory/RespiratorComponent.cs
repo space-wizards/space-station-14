@@ -13,7 +13,7 @@ using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
 using Content.Shared.Damage;
-using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
 using Content.Shared.Popups;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -190,7 +190,7 @@ namespace Content.Server.Body.Respiratory
 
                 if (bloodstreamAmount < amountNeeded)
                 {
-                    if (!Owner.GetComponent<IMobStateComponent>().IsCritical())
+                    if (!Owner.GetComponent<MobStateComponent>().IsCritical())
                     {
                         // Panic inhale
                         foreach (var lung in lungs)
@@ -313,7 +313,7 @@ namespace Content.Server.Body.Respiratory
         /// </param>
         public void Update(float frameTime)
         {
-            if (!Owner.TryGetComponent<IMobStateComponent>(out var state) ||
+            if (!Owner.TryGetComponent<MobStateComponent>(out var state) ||
                 state.IsDead())
             {
                 return;

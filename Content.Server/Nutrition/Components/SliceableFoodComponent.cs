@@ -5,6 +5,7 @@ using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Examine;
+using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Sound;
 using Robust.Shared.Audio;
@@ -75,7 +76,7 @@ namespace Content.Server.Nutrition.Components
             // Basically, we want to:
             // 1. Split off a representative chunk
             var lostSolution = scs.SplitSolution(Owner.Uid, solution,
-                solution.CurrentVolume / ReagentUnit.New(Count));
+                solution.CurrentVolume / FixedPoint2.New(Count));
             // 2. Delete the Nutriment (it's already in the target) so we just have additives
             // It might be an idea to remove the removal of Nutriment & clear the food
             lostSolution.RemoveReagent("Nutriment", lostSolution.GetReagentQuantity("Nutriment"));

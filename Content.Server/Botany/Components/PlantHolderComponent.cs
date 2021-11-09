@@ -10,8 +10,10 @@ using Content.Server.Popups;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.Botany;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Examine;
+using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
@@ -560,11 +562,11 @@ namespace Content.Server.Botany.Components
             }
             else
             {
-                var one = ReagentUnit.New(1);
-                foreach (var reagent in solutionSystem.RemoveEachReagent(solution, one))
+                var amt = FixedPoint2.New(1);
+                foreach (var reagent in solutionSystem.RemoveEachReagent(OwnerUid, solution, amt))
                 {
                     var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagent);
-                    reagentProto.ReactionPlant(Owner);
+                    reagentProto.ReactionPlant(OwnerUid, new Solution.ReagentQuantity(reagent, amt));
                 }
             }
 
@@ -727,7 +729,7 @@ namespace Content.Server.Botany.Components
             if (solutionSystem.TryGetDrainableSolution(usingItem.Uid, out var solution)
                 && solutionSystem.TryGetSolution(Owner.Uid, SoilSolutionName, out var targetSolution))
             {
-                var amount = ReagentUnit.New(5);
+                var amount = FixedPoint2.New(5);
                 var sprayed = false;
                 var targetEntity = Owner.Uid;
                 var solutionEntity = usingItem.Uid;
@@ -735,7 +737,7 @@ namespace Content.Server.Botany.Components
                 if (usingItem.TryGetComponent(out SprayComponent? spray))
                 {
                     sprayed = true;
-                    amount = ReagentUnit.New(1);
+                    amount = FixedPoint2.New(1);
 
                     SoundSystem.Play(Filter.Pvs(usingItem), spray.SpraySound.GetSound(), usingItem,
                         AudioHelpers.WithVariation(0.125f));

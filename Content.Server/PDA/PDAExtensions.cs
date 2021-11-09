@@ -18,7 +18,7 @@ namespace Content.Server.PDA
         {
             IdCardComponent? firstIdInPda = null;
 
-            if (player.TryGetComponent(out IHandsComponent? hands))
+            if (player.TryGetComponent(out HandsComponent? hands))
             {
                 foreach (var item in hands.GetAllHeldItems())
                 {

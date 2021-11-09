@@ -12,6 +12,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
 using Content.Shared.Inventory;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Server.Console;
@@ -57,46 +58,6 @@ namespace Content.Server.Inventory.Components
                 {
                     AddSlot(slotName);
                 }
-            }
-        }
-
-        public override float WalkSpeedModifier
-        {
-            get
-            {
-                var mod = 1f;
-                foreach (var slot in _slotContainers.Values)
-                {
-                    if (slot.ContainedEntity != null)
-                    {
-                        foreach (var modifier in slot.ContainedEntity.GetAllComponents<IMoveSpeedModifier>())
-                        {
-                            mod *= modifier.WalkSpeedModifier;
-                        }
-                    }
-                }
-
-                return mod;
-            }
-        }
-
-        public override float SprintSpeedModifier
-        {
-            get
-            {
-                var mod = 1f;
-                foreach (var slot in _slotContainers.Values)
-                {
-                    if (slot.ContainedEntity != null)
-                    {
-                        foreach (var modifier in slot.ContainedEntity.GetAllComponents<IMoveSpeedModifier>())
-                        {
-                            mod *= modifier.SprintSpeedModifier;
-                        }
-                    }
-                }
-
-                return mod;
             }
         }
 
@@ -333,10 +294,7 @@ namespace Content.Server.Inventory.Components
 
         private void UpdateMovementSpeed()
         {
-            if (Owner.TryGetComponent(out MovementSpeedModifierComponent? mod))
-            {
-                mod.RefreshMovementSpeedModifiers();
-            }
+            EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(OwnerUid);
         }
 
         public void ForceUnequip(Slots slot)

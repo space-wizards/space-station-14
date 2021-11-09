@@ -113,8 +113,8 @@ namespace Content.Client.NodeContainer
             var cursorBox = Box2.CenteredAround(mouseWorldPos, (nodeSize, nodeSize));
 
             // Group visible nodes by grid tiles.
-            var worldBounds = overlayDrawArgs.WorldBounds;
-            _lookup.FastEntitiesIntersecting(map, ref worldBounds, entity =>
+            var worldAABB = overlayDrawArgs.WorldAABB;
+            _lookup.FastEntitiesIntersecting(map, ref worldAABB, entity =>
             {
                 if (!_system.Entities.TryGetValue(entity.Uid, out var nodeData))
                     return;

@@ -47,8 +47,9 @@ namespace Content.Shared.Pulling
         ///     If difference between puller and pulled angle  lower that this threshold,
         ///     pulled entity will not change its rotation.
         ///     Helps with diagonal movement jittering
+        ///     As of further adjustments, should divide cleanly into 90 degrees
         /// </summary>
-        private const float ThresholdRotAngle = 30;
+        private const float ThresholdRotAngle = 22.5f;
 
         public IReadOnlySet<SharedPullableComponent> Moving => _moving;
 
@@ -177,11 +178,6 @@ namespace Content.Shared.Pulling
             UpdatePulledRotation(puller, pulled);
 
             physics.WakeBody();
-
-            if (pulled.TryGetComponent(out SharedPullableComponent? pullable))
-            {
-                _pullSm.ForceSetMovingTo(pullable, null);
-            }
         }
 
         // TODO: When Joint networking is less shitcodey fix this to use a dedicated joints message.
@@ -224,7 +220,7 @@ namespace Content.Shared.Pulling
                 return false;
             }
 
-            TryMoveTo(pullable, coords.ToMap(EntityManager));
+            TryMoveTo(pullable, coords);
 
             return false;
         }
@@ -270,8 +266,17 @@ namespace Content.Shared.Pulling
                 var newAngle = Angle.FromWorldVec(dir);
 
                 var diff = newAngle - oldAngle;
-                if (Math.Abs(diff.Degrees) > ThresholdRotAngle)
-                    pulled.Transform.WorldRotation = newAngle;
+                if (Math.Abs(diff.Degrees) > (ThresholdRotAngle / 2f))
+                {
+                    // Ok, so this bit is difficult because ideally it would look like it's snapping to sane angles.
+                    // Otherwise PIANO DOOR STUCK! happens.
+                    // But it also needs to work with station rotation / align to the local parent.
+                    // So...
+                    var baseRotation = pulled.Transform.Parent?.WorldRotation ?? 0f;
+                    var localRotation = newAngle - baseRotation;
+                    var localRotationSnapped = Angle.FromDegrees(Math.Floor((localRotation.Degrees / ThresholdRotAngle) + 0.5f) * ThresholdRotAngle);
+                    pulled.Transform.LocalRotation = localRotationSnapped;
+                }
             }
         }
     }

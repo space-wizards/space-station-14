@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Shared.Construction.Prototypes;
 using NUnit.Framework;
@@ -12,7 +11,7 @@ namespace Content.IntegrationTests.Tests.Construction
         [Test]
         public async Task TestStartIsValid()
         {
-            var server = StartServerDummyTicker();
+            var server = StartServer();
 
             await server.WaitIdleAsync();
 
@@ -30,7 +29,7 @@ namespace Content.IntegrationTests.Tests.Construction
         [Test]
         public async Task TestTargetIsValid()
         {
-            var server = StartServerDummyTicker();
+            var server = StartServer();
 
             await server.WaitIdleAsync();
 
@@ -48,7 +47,7 @@ namespace Content.IntegrationTests.Tests.Construction
         [Test]
         public async Task TestStartReachesTarget()
         {
-            var server = StartServerDummyTicker();
+            var server = StartServer();
 
             await server.WaitIdleAsync();
 

@@ -5,7 +5,6 @@ using Content.Server.Hands.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
-using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
@@ -161,7 +160,7 @@ namespace Content.Server.Atmos.Components
                 if (session.AttachedEntity == null)
                     return;
 
-                if (!session.AttachedEntity.TryGetComponent(out IHandsComponent? handsComponent))
+                if (!session.AttachedEntity.TryGetComponent(out HandsComponent? handsComponent))
                     return;
 
                 var activeHandEntity = handsComponent?.GetActiveHand?.Owner;
@@ -226,7 +225,7 @@ namespace Content.Server.Atmos.Components
                         return;
                     }
 
-                    if (!player.TryGetComponent(out IHandsComponent? handsComponent))
+                    if (!player.TryGetComponent(out HandsComponent? handsComponent))
                     {
                         Owner.PopupMessage(player, Loc.GetString("gas-analyzer-component-player-has-no-hands-message"));
                         return;
