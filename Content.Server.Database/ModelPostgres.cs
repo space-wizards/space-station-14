@@ -82,7 +82,7 @@ namespace Content.Server.Database
             {
                 foreach(var property in entity.GetProperties())
                 {
-                    if (property.FieldInfo?.FieldType == typeof(DateTime) || property.FieldInfo.FieldType == typeof(DateTime?))
+                    if (property.FieldInfo?.FieldType == typeof(DateTime) || property.FieldInfo?.FieldType == typeof(DateTime?))
                         property.SetColumnType("timestamp with time zone");
                 }
             }
