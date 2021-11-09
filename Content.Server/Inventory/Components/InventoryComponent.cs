@@ -330,7 +330,7 @@ namespace Content.Server.Inventory.Components
         /// </returns>
         public bool CanUnequip(Slots slot, bool mobCheck = true)
         {
-            if (mobCheck && !EntitySystem.Get<ActionBlockerSystem>().CanUnequip(Owner))
+            if (mobCheck && !EntitySystem.Get<ActionBlockerSystem>().CanUnequip(OwnerUid))
                 return false;
 
             var inventorySlot = _slotContainers[slot];

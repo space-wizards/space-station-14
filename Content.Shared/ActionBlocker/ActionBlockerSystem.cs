@@ -107,18 +107,12 @@ namespace Content.Shared.ActionBlocker
             return !ev.Cancelled;
         }
 
-        public bool CanUnequip(IEntity entity)
-        {
-            var ev = new UnequipAttemptEvent(entity);
-
-            RaiseLocalEvent(entity.Uid, ev);
-
-            return !ev.Cancelled;
-        }
-
         public bool CanUnequip(EntityUid uid)
         {
-            return CanUnequip(EntityManager.GetEntity(uid));
+            var ev = new UnequipAttemptEvent(uid);
+            RaiseLocalEvent(uid, ev);
+
+            return !ev.Cancelled;
         }
 
         public bool CanChangeDirection(IEntity entity)
