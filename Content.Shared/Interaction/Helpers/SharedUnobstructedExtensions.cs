@@ -8,6 +8,7 @@ using static Content.Shared.Interaction.SharedInteractionSystem;
 
 namespace Content.Shared.Interaction.Helpers
 {
+    // TODO: Kill these with fire.
     public static class SharedUnobstructedExtensions
     {
         private static SharedInteractionSystem SharedInteractionSystem => EntitySystem.Get<SharedInteractionSystem>();
@@ -24,6 +25,22 @@ namespace Content.Shared.Interaction.Helpers
         {
             return SharedInteractionSystem.InRangeUnobstructed(origin, other, range, collisionMask, predicate,
                 ignoreInsideBlocker, popup);
+        }
+
+        public static bool InRangeUnobstructed(
+            this EntityUid origin,
+            EntityUid other,
+            float range = InteractionRange,
+            CollisionGroup collisionMask = CollisionGroup.Impassable,
+            Ignored? predicate = null,
+            bool ignoreInsideBlocker = false,
+            bool popup = false,
+            IEntityManager? entityManager = null)
+        {
+            entityManager ??= IoCManager.Resolve<IEntityManager>();
+
+            return InRangeUnobstructed(entityManager.GetEntity(origin), entityManager.GetEntity(other),
+                range, collisionMask, predicate, ignoreInsideBlocker, popup);
         }
 
         public static bool InRangeUnobstructed(

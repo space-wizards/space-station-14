@@ -99,11 +99,14 @@ namespace Content.Shared.CCVar
         /// <summary>
         ///     When enabled, guests will be assigned permanent UIDs and will have their preferences stored.
         /// </summary>
-        public static readonly CVarDef<bool>
-            GamePersistGuests = CVarDef.Create("game.persistguests", true, CVar.ARCHIVE | CVar.SERVERONLY);
+        public static readonly CVarDef<bool> GamePersistGuests =
+            CVarDef.Create("game.persistguests", true, CVar.ARCHIVE | CVar.SERVERONLY);
 
         public static readonly CVarDef<bool> GameDiagonalMovement =
             CVarDef.Create("game.diagonalmovement", true, CVar.ARCHIVE);
+
+        public static readonly CVarDef<int> SoftMaxPlayers =
+            CVarDef.Create("game.soft_max_players", 30, CVar.SERVERONLY | CVar.ARCHIVE);
 
         /*
          * Suspicion
