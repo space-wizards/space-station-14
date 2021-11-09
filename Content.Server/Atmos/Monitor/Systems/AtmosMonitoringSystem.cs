@@ -45,6 +45,7 @@ namespace Content.Server.Atmos.Monitor.Systems
         {
             SubscribeLocalEvent<AtmosMonitorComponent, ComponentInit>(OnAtmosMonitorInit);
             SubscribeLocalEvent<AtmosMonitorComponent, ComponentStartup>(OnAtmosMonitorStartup);
+            SubscribeLocalEvent<AtmosMonitorComponent, ComponentShutdown>(OnAtmosMonitorShutdown);
             SubscribeLocalEvent<AtmosMonitorComponent, AtmosDeviceUpdateEvent>(OnAtmosUpdate);
             SubscribeLocalEvent<AtmosMonitorComponent, TileFireEvent>(OnFireEvent);
             SubscribeLocalEvent<AtmosMonitorComponent, PowerChangedEvent>(OnPowerChangedEvent);
@@ -79,6 +80,11 @@ namespace Content.Server.Atmos.Monitor.Systems
             }
 
             _checkPos.Add(uid);
+        }
+
+        private void OnAtmosMonitorShutdown(EntityUid uid, AtmosMonitorComponent component, ComponentShutdown args)
+        {
+            if (_checkPos.Contains(uid)) _checkPos.Remove(uid);
         }
 
         // hackiest shit ever but there's no PostStartup event
