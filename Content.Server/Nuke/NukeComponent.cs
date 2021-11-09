@@ -2,6 +2,7 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Nuke;
 using Content.Shared.Sound;
 using Robust.Shared.Analyzers;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -21,11 +22,10 @@ namespace Content.Server.Nuke
 
         /// <summary>
         ///     Default bomb timer value in seconds.
-        ///     Bomb always reset to this when armed.
         /// </summary>
         [DataField("timer")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public int Timer = 5;
+        public int Timer = 15;
 
         /// <summary>
         ///     Slot name for to store nuclear disk inside bomb.
@@ -41,14 +41,23 @@ namespace Content.Server.Nuke
         [ViewVariables(VVAccess.ReadWrite)]
         public int BlastRadius = 200;
 
+        /// <summary>
+        ///     After this time nuke will play last alert sound
+        /// </summary>
+        [DataField("alertTime")]
+        public float AlertSoundTime = 10.0f;
+
         [DataField("keypadPressSound")]
         public SoundSpecifier KeypadPressSound = new SoundPathSpecifier("/Audio/Machines/Nuke/general_beep.ogg");
 
         [DataField("accessGrantedSound")]
-        public SoundSpecifier AccessGrantedSound = new SoundPathSpecifier("/Audio/Machines/Nuke/confirm_beep.ogg");
+        public SoundSpecifier AccessGrantedSound = new SoundPathSpecifier("/Audio/Machines/Nuke/general_beep.ogg");
 
         [DataField("accessDeniedSound")]
         public SoundSpecifier AccessDeniedSound = new SoundPathSpecifier("/Audio/Machines/Nuke/angry_beep.ogg");
+
+        [DataField("alertSounds")]
+        public SoundSpecifier AlertSound = new SoundPathSpecifier("/Audio/Machines/alarm.ogg");
 
         /// <summary>
         ///     Time until explosion in seconds.
@@ -75,5 +84,12 @@ namespace Content.Server.Nuke
         /// </summary>
         [ViewVariables]
         public NukeStatus Status = NukeStatus.AWAIT_DISK;
+
+        /// <summary>
+        ///     Check if nuke has already played last alert sound
+        /// </summary>
+        public bool PlayedAlertSound = false;
+
+        public IPlayingAudioStream? AlertAudioStream = default;
     }
 }

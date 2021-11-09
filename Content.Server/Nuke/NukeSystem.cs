@@ -71,6 +71,14 @@ namespace Content.Server.Nuke
                     continue;
 
                 nuke.RemainingTime -= frameTime;
+
+                // play alert sound if time is running out
+                if (nuke.RemainingTime <= nuke.AlertSoundTime && !nuke.PlayedAlertSound)
+                {
+                    nuke.AlertAudioStream = SoundSystem.Play(Filter.Broadcast(), nuke.AlertSound.GetSound());
+                    nuke.PlayedAlertSound = true;
+                }
+
                 if (nuke.RemainingTime <= 0)
                 {
                     nuke.RemainingTime = 0;
@@ -358,6 +366,10 @@ namespace Content.Server.Nuke
             var announcement = Loc.GetString("nuke-component-announcement-unarmed");
             var sender = Loc.GetString("nuke-component-announcement-sender");
             _chat.DispatchStationAnnouncement(announcement, sender);
+
+            // disable sound and reset it
+            component.PlayedAlertSound = false;
+            component.AlertAudioStream?.Stop();
 
             component.Status = NukeStatus.AWAIT_ARM;
             _tickingBombs.Remove(uid);
