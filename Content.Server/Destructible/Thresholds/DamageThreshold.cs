@@ -94,7 +94,7 @@ namespace Content.Server.Destructible.Thresholds
                 if (!entityManager.EntityExists(owner))
                     return;
 
-                behavior.Execute(owner, system, entityManager);
+                behavior.Execute(owner, system);
             }
         }
     }

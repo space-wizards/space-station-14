@@ -49,7 +49,7 @@ namespace Content.Server.Chemistry.ReactionEffects
             var finalHeavyImpactRange = (int)MathF.Round(_heavyImpactRange * floatIntensity);
             var finalLightImpactRange = (int)MathF.Round(_lightImpactRange * floatIntensity);
             var finalFlashRange = (int)MathF.Round(_flashRange * floatIntensity);
-            EntitySystem.Get<ExplosionSystem>().SpawnExplosion(solutionEntity.Uid, finalDevastationRange,
+            EntitySystem.Get<ExplosionSystem>().SpawnExplosion(solutionEntity, finalDevastationRange,
                 finalHeavyImpactRange, finalLightImpactRange, finalFlashRange);
         }
     }
