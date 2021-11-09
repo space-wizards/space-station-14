@@ -122,6 +122,8 @@
   - type: Buckle
   - type: Recyclable
     safe: false
+  - type: Butcherable
+    meat: FoodMeat
   - type: StandingState
   - type: Alerts
 
