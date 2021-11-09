@@ -543,7 +543,7 @@ namespace Content.Shared.Interaction
         /// </summary>
         public bool TryThrowInteraction(IEntity user, IEntity item)
         {
-            if (user == null || item == null || !_actionBlockerSystem.CanThrow(user)) return false;
+            if (user == null || item == null || !_actionBlockerSystem.CanThrow(user.Uid)) return false;
 
             ThrownInteraction(user, item);
             return true;

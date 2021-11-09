@@ -51,18 +51,13 @@ namespace Content.Shared.ActionBlocker
             return !ev.Cancelled;
         }
 
-        public bool CanThrow(IEntity entity)
-        {
-            var ev = new ThrowAttemptEvent(entity);
-
-            RaiseLocalEvent(entity.Uid, ev);
-
-            return !ev.Cancelled;
-        }
-
         public bool CanThrow(EntityUid uid)
         {
-            return CanThrow(EntityManager.GetEntity(uid));
+            var ev = new ThrowAttemptEvent(uid);
+
+            RaiseLocalEvent(uid, ev);
+
+            return !ev.Cancelled;
         }
 
         public bool CanSpeak(IEntity entity)
