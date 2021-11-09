@@ -8,9 +8,7 @@ using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Coordinates;
-using Content.Shared.EffectBlocker;
-using Content.Shared.Interaction.Events;
-using Content.Shared.Movement;
+using Content.Shared.Standing;
 using NUnit.Framework;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
@@ -69,10 +67,11 @@ namespace Content.IntegrationTests.Tests.Buckle
             {
                 var mapManager = IoCManager.Resolve<IMapManager>();
                 var entityManager = IoCManager.Resolve<IEntityManager>();
-                var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
 
-                var gridId = new GridId(1);
-                var grid = mapManager.GetGrid(gridId);
+                var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
+                var standingState = EntitySystem.Get<StandingStateSystem>();
+
+                var grid = GetMainGrid(mapManager);
                 var coordinates = grid.GridEntityId.ToCoordinates();
 
                 human = entityManager.SpawnEntity(BuckleDummyId, coordinates);
@@ -83,9 +82,10 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.NotNull(buckle);
                 Assert.Null(buckle.BuckledTo);
                 Assert.False(buckle.Buckled);
-                Assert.True(actionBlocker.CanMove(human));
-                Assert.True(actionBlocker.CanChangeDirection(human));
-                Assert.True(EffectBlockerSystem.CanFall(human));
+                Assert.True(actionBlocker.CanMove(human.Uid));
+                Assert.True(actionBlocker.CanChangeDirection(human.Uid));
+                Assert.True(standingState.Down(human.Uid));
+                Assert.True(standingState.Stand(human.Uid));
 
                 // Default state, no buckled entities, strap
                 Assert.True(chair.TryGetComponent(out strap));
@@ -100,10 +100,10 @@ namespace Content.IntegrationTests.Tests.Buckle
 
                 var player = IoCManager.Resolve<IPlayerManager>().GetAllPlayers().Single();
                 Assert.True(((BuckleComponentState) buckle.GetComponentState(player)).Buckled);
-                Assert.False(actionBlocker.CanMove(human));
-                Assert.False(actionBlocker.CanChangeDirection(human));
-                Assert.False(EffectBlockerSystem.CanFall(human));
-                Assert.That(human.Transform.WorldPosition, Is.EqualTo(chair.Transform.WorldPosition));
+                Assert.False(actionBlocker.CanMove(human.Uid));
+                Assert.False(actionBlocker.CanChangeDirection(human.Uid));
+                Assert.False(standingState.Down(human.Uid));
+                Assert.That((human.Transform.WorldPosition - chair.Transform.WorldPosition).Length, Is.LessThanOrEqualTo(buckle.BuckleOffset.Length));
 
                 // Side effects of buckling for the strap
                 Assert.That(strap.BuckledEntities, Does.Contain(human));
@@ -125,6 +125,7 @@ namespace Content.IntegrationTests.Tests.Buckle
             await server.WaitAssertion(() =>
             {
                 var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
+                var standingState = EntitySystem.Get<StandingStateSystem>();
 
                 // Still buckled
                 Assert.True(buckle.Buckled);
@@ -133,9 +134,9 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.True(buckle.TryUnbuckle(human));
                 Assert.Null(buckle.BuckledTo);
                 Assert.False(buckle.Buckled);
-                Assert.True(actionBlocker.CanMove(human));
-                Assert.True(actionBlocker.CanChangeDirection(human));
-                Assert.True(EffectBlockerSystem.CanFall(human));
+                Assert.True(actionBlocker.CanMove(human.Uid));
+                Assert.True(actionBlocker.CanChangeDirection(human.Uid));
+                Assert.True(standingState.Down(human.Uid));
 
                 // Unbuckle, strap
                 Assert.IsEmpty(strap.BuckledEntities);
@@ -160,6 +161,7 @@ namespace Content.IntegrationTests.Tests.Buckle
             await server.WaitAssertion(() =>
             {
                 var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
+                var standingState = EntitySystem.Get<StandingStateSystem>();
 
                 // Still buckled
                 Assert.True(buckle.Buckled);
@@ -190,9 +192,9 @@ namespace Content.IntegrationTests.Tests.Buckle
                 // Force unbuckle
                 Assert.True(buckle.TryUnbuckle(human, true));
                 Assert.False(buckle.Buckled);
-                Assert.True(actionBlocker.CanMove(human));
-                Assert.True(actionBlocker.CanChangeDirection(human));
-                Assert.True(EffectBlockerSystem.CanFall(human));
+                Assert.True(actionBlocker.CanMove(human.Uid));
+                Assert.True(actionBlocker.CanChangeDirection(human.Uid));
+                Assert.True(standingState.Down(human.Uid));
 
                 // Re-buckle
                 Assert.True(buckle.TryBuckle(human, chair));
@@ -230,8 +232,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 var mapManager = IoCManager.Resolve<IMapManager>();
                 var entityManager = IoCManager.Resolve<IEntityManager>();
 
-                var gridId = new GridId(1);
-                var grid = mapManager.GetGrid(gridId);
+                var grid = GetMainGrid(mapManager);
                 var coordinates = grid.GridEntityId.ToCoordinates();
 
                 human = entityManager.SpawnEntity(BuckleDummyId, coordinates);
@@ -316,8 +317,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 var mapManager = IoCManager.Resolve<IMapManager>();
                 var entityManager = IoCManager.Resolve<IEntityManager>();
 
-                var gridId = new GridId(1);
-                var grid = mapManager.GetGrid(gridId);
+                var grid = GetMainGrid(mapManager);
                 var coordinates = grid.GridEntityId.ToCoordinates();
 
                 human = entityManager.SpawnEntity(BuckleDummyId, coordinates);
@@ -333,7 +333,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.True(buckle.Buckled);
 
                 // Move the buckled entity away
-                human.Transform.LocalPosition += (100, 0);
+                human.Transform.WorldPosition += (100, 0);
             });
 
             await WaitUntil(server, () => !buckle.Buckled, 10);
@@ -343,7 +343,7 @@ namespace Content.IntegrationTests.Tests.Buckle
             await server.WaitAssertion(() =>
             {
                 // Move the now unbuckled entity back onto the chair
-                human.Transform.LocalPosition -= (100, 0);
+                human.Transform.WorldPosition -= (100, 0);
 
                 // Buckle
                 Assert.True(buckle.TryBuckle(human, chair));

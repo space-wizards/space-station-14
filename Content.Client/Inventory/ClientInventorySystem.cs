@@ -1,5 +1,9 @@
 using Content.Client.HUD;
+using Content.Client.Items.Components;
 using Content.Shared.Input;
+using Content.Shared.Inventory;
+using Content.Shared.Movement.EntitySystems;
+using Content.Shared.Slippery;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
@@ -24,6 +28,29 @@ namespace Content.Client.Inventory
 
             SubscribeLocalEvent<ClientInventoryComponent, PlayerAttachedEvent>((_, component, _) => component.PlayerAttached());
             SubscribeLocalEvent<ClientInventoryComponent, PlayerDetachedEvent>((_, component, _) => component.PlayerDetached());
+
+            SubscribeLocalEvent<ClientInventoryComponent, SlipAttemptEvent>(OnSlipAttemptEvent);
+            SubscribeLocalEvent<ClientInventoryComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
+        }
+
+        // jesus christ, this is duplicated to server/client, should really just be shared..
+        private void OnSlipAttemptEvent(EntityUid uid, ClientInventoryComponent component, SlipAttemptEvent args)
+        {
+            if (component.TryGetSlot(EquipmentSlotDefines.Slots.SHOES, out IEntity? shoes))
+            {
+                RaiseLocalEvent(shoes.Uid, args, false);
+            }
+        }
+
+        private void OnRefreshMovespeed(EntityUid uid, ClientInventoryComponent component, RefreshMovementSpeedModifiersEvent args)
+        {
+            foreach (var (_, ent) in component.AllSlots)
+            {
+                if (ent != null)
+                {
+                    RaiseLocalEvent(ent.Uid, args, false);
+                }
+            }
         }
 
         public override void Shutdown()

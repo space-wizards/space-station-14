@@ -1,11 +1,10 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Hands.Components;
-using Content.Server.Tools.Components;
+using Content.Server.Tools;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
-using Content.Shared.Tools.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -36,13 +35,13 @@ namespace Content.Server.AME.Components
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs args)
         {
-            if (!args.User.TryGetComponent<IHandsComponent>(out var hands))
+            if (!args.User.HasComponent<HandsComponent>())
             {
                 Owner.PopupMessage(args.User, Loc.GetString("ame-part-component-interact-using-no-hands"));
                 return false;
             }
 
-            if (!args.Using.TryGetComponent<ToolComponent>(out var tool) || !tool.Qualities.Contains(_qualityNeeded))
+            if (!EntitySystem.Get<ToolSystem>().HasQuality(args.Using.Uid, _qualityNeeded))
                 return false;
 
             if (!_mapManager.TryGetGrid(args.ClickLocation.GetGridId(_serverEntityManager), out var mapGrid))

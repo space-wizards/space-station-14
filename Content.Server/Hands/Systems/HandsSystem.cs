@@ -140,7 +140,7 @@ namespace Content.Server.Hands.Systems
             if (!TryGetHandsComp(args.SenderSession, out var hands))
                 return;
 
-            hands.UseActiveHeldEntity();
+            hands.ActivateItem();
         }
 
         private void HandleInteractUsingInHand(ClientInteractUsingInHandMsg msg, EntitySessionEventArgs args)
@@ -170,11 +170,11 @@ namespace Content.Server.Hands.Systems
         {
             base.DropAllItemsInHands(entity, doMobChecks);
 
-            if (!entity.TryGetComponent(out IHandsComponent? hands)) return;
+            if (!entity.TryGetComponent(out HandsComponent? hands)) return;
 
             foreach (var heldItem in hands.GetAllHeldItems())
             {
-                hands.Drop(heldItem.Owner, doMobChecks, intentional:false);
+                hands.Drop(heldItem.Owner, doMobChecks, false);
             }
         }
 
@@ -212,7 +212,7 @@ namespace Content.Server.Hands.Systems
             if (!TryGetHandsComp(session, out var hands))
                 return;
 
-            hands.UseActiveHeldEntity();
+            hands.ActivateItem();
         }
 
         private void HandleAltActivateItem(ICommonSession? session)
@@ -220,7 +220,7 @@ namespace Content.Server.Hands.Systems
             if (!TryGetHandsComp(session, out var hands))
                 return;
 
-            hands.UseActiveHeldEntity(altInteract: true);
+            hands.ActivateItem(altInteract: true);
         }
 
         private bool HandleThrowItem(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
@@ -245,9 +245,9 @@ namespace Content.Server.Hands.Systems
                 if (splitStack == null)
                     return false;
 
-                throwEnt = splitStack;
+                throwEnt = EntityManager.GetEntity(splitStack.Value);
             }
-            else if (!hands.TryDropEntityToFloor(throwEnt))
+            else if (!hands.Drop(throwEnt))
                 return false;
 
             var direction = coords.ToMapPos(EntityManager) - playerEnt.Transform.WorldPosition;

@@ -22,7 +22,9 @@ namespace Content.Server.Morgue.Components
     [ComponentReference(typeof(EntityStorageComponent))]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
+#pragma warning disable 618
     public class BodyBagEntityStorageComponent : EntityStorageComponent, IExamine, IInteractUsing
+#pragma warning restore 618
     {
         public override string Name => "BodyBagEntityStorage";
 
@@ -65,7 +67,7 @@ namespace Content.Server.Morgue.Components
                 return false;
             }
 
-            var handsComponent = eventArgs.User.GetComponent<IHandsComponent>();
+            var handsComponent = eventArgs.User.GetComponent<HandsComponent>();
             if (!handsComponent.Drop(eventArgs.Using, LabelContainer))
             {
                 return false;

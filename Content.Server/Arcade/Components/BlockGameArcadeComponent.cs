@@ -33,9 +33,12 @@ namespace Content.Server.Arcade.Components
         private IPlayerSession? _player;
         private readonly List<IPlayerSession> _spectators = new();
 
+        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
         public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
+#pragma warning disable 618
             base.HandleMessage(message, component);
+#pragma warning restore 618
             switch (message)
             {
                 case PowerChangedMessage powerChanged:
@@ -49,7 +52,7 @@ namespace Content.Server.Arcade.Components
             if(!Powered || !eventArgs.User.TryGetComponent(out ActorComponent? actor))
                 return;
 
-            if(!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
+            if(!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User.Uid))
                 return;
 
             UserInterface?.Toggle(actor.PlayerSession);
@@ -128,7 +131,7 @@ namespace Content.Server.Arcade.Components
                     if (obj.Session != _player) break;
 
                     // TODO: Should this check if the Owner can interact...?
-                    if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(Owner))
+                    if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(OwnerUid))
                     {
                         DeactivePlayer(obj.Session);
                         break;

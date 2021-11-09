@@ -5,3 +5,9 @@ uplink-bound-user-interface-tc-balance-popup = TC Balance: [color={$weightedColo
 uplink-user-interface-title = Uplink
 
 uplink-user-interface-search-label = Search
+
+# Withdraw UI
+
+uplink-user-interface-withdraw-title = Withdraw TC
+uplink-user-interface-withdraw-withdraw-button = Withdraw
+uplink-user-interface-withdraw-cancel-button = Cancel

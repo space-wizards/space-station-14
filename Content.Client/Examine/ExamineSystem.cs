@@ -73,19 +73,19 @@ namespace Content.Client.Examine
 
         private bool HandleExamine(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
-            if (!uid.IsValid() || !EntityManager.TryGetEntity(uid, out _examinedEntity))
+            if (!uid.IsValid() || !EntityManager.TryGetEntity(uid, out var entity))
             {
                 return false;
             }
 
             _playerEntity = _playerManager.LocalPlayer?.ControlledEntity;
 
-            if (_playerEntity == null || !CanExamine(_playerEntity, _examinedEntity))
+            if (_playerEntity == null || !CanExamine(_playerEntity, entity))
             {
                 return false;
             }
 
-            DoExamine(_examinedEntity);
+            DoExamine(entity);
             return true;
         }
 
@@ -98,6 +98,7 @@ namespace Content.Client.Examine
             verb.Act = () => DoExamine(args.Target) ;
             verb.Text = Loc.GetString("examine-verb-name");
             verb.IconTexture = "/Textures/Interface/VerbIcons/examine.svg.192dpi.png";
+            verb.ClientExclusive = true;
             args.Verbs.Add(verb);
         }
 
@@ -105,6 +106,9 @@ namespace Content.Client.Examine
         {
             // Close any examine tooltip that might already be opened
             CloseTooltip();
+
+            // cache entity for Update function
+            _examinedEntity = entity;
 
             const float minWidth = 300;
             var popupPos = _userInterfaceManager.MousePositionScaled;

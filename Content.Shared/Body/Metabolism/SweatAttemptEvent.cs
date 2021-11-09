@@ -4,11 +4,11 @@ namespace Content.Shared.Body.Metabolism
 {
     public class SweatAttemptEvent : CancellableEntityEventArgs
     {
-        public SweatAttemptEvent(IEntity entity)
+        public SweatAttemptEvent(EntityUid uid)
         {
-            Entity = entity;
+            Uid = uid;
         }
 
-        public IEntity Entity { get; }
+        public EntityUid Uid { get; }
     }
 }

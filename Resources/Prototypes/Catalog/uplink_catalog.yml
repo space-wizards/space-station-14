@@ -4,12 +4,16 @@
   id: UplinkPistolClarissa
   category: Weapons
   itemId: PistolClarissa
+  listingName: Clarissa
+  description: A small, easily concealable, but somewhat underpowered gun. Use pistol magazines (.35 auto).
   price: 6
 
 - type: uplinkListing
   id: UplinkRevolverInspector
   category: Weapons
   itemId: RevolverInspector
+  listingName: Inspector
+  description: A .40 magnum caliber revolver. Still quite deadly, despite its ancient design.
   price: 8
 
 # Inbuilt suppressor so it's sneaky + more expensive.
@@ -17,6 +21,8 @@
   id: UplinkPistolMandella
   category: Weapons
   itemId: PistolMandella
+  listingName: Mandella
+  description: A rugged, robust operator handgun with inbuilt silencer. Use pistol magazines (.25 caseless).
   price: 8
 
 #- type: uplinkListing
@@ -99,6 +105,7 @@
   category: Ammo
   itemId: SLMagnum
   price: 2
+  icon: /Textures/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_sl.rsi/icon.png
 
 # Bundles
 
@@ -107,24 +114,28 @@
   category: Bundles
   itemId: ClothingBackpackDuffelSyndicateFilledSMG
   price: 14
+  icon: /Textures/Objects/Weapons/Guns/SMGs/c20r.rsi/icon.png
 
 - type: uplinkListing
   id: UplinkBojevicBundle
   category: Bundles
   itemId: ClothingBackpackDuffelSyndicateFilledShotgun
   price: 13
+  icon: /Textures/Objects/Weapons/Guns/Shotguns/bojevic.rsi/icon.png
 
 - type: uplinkListing
   id: UplinkL6SawBundle
   category: Bundles
   itemId: ClothingBackpackDuffelSyndicateFilledLMG
   price: 18
+  icon: /Textures/Objects/Weapons/Guns/LMGs/l6.rsi/icon.png
 
 - type: uplinkListing
   id: UplinkGrenadeLauncherBundle
   category: Bundles
   itemId: ClothingBackpackDuffelSyndicateFilledGrenadeLauncher
   price: 25
+  icon: /Textures/Objects/Weapons/Guns/Launchers/china_lake.rsi/icon.png
 
 # Tools
 
@@ -216,34 +227,6 @@
   category: Misc
   itemId: lanternextrabright
   price: 2
-
-- type: uplinkListing
-  id: UplinkTelecrystal
-  category: Misc
-  itemId: Telecrystal1
-  price: 1
-  listingName: telecrystal [1]
-
-- type: uplinkListing
-  id: UplinkTelecrystal5
-  category: Misc
-  itemId: Telecrystal5
-  price: 5
-  listingName: telecrystal [5]
-
-- type: uplinkListing
-  id: UplinkTelecrystal10
-  category: Misc
-  itemId: Telecrystal10
-  price: 10
-  listingName: telecrystal [10]
-
-- type: uplinkListing
-  id: UplinkTelecrystal20
-  category: Misc
-  itemId: Telecrystal
-  price: 20
-  listingName: telecrystal [20]
 
 # Pointless
 

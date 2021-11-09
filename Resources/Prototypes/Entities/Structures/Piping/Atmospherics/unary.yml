@@ -142,7 +142,6 @@
     - type: Sprite
       netsync: false
       sprite: Structures/Piping/Atmospherics/thermomachine.rsi
-      noRot: true # TODO: This is a hack so pipe connectors don't look wrong. Also see GasPipeBase.
     - type: Appearance
       visuals:
         - type: PipeConnectorVisualizer

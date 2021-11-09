@@ -2,26 +2,17 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.Buckle.Components;
 using Content.Server.CombatMode;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.Pulling;
-using Content.Server.Timing;
-using Content.Server.Verbs;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;
-using Content.Shared.Hands;
-using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Inventory;
 using Content.Shared.Popups;
 using Content.Shared.Pulling.Components;
-using Content.Shared.Rotatable;
-using Content.Shared.Throwing;
-using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -34,9 +25,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Players;
-using Robust.Shared.Random;
 
 namespace Content.Server.Interaction
 {
@@ -47,10 +36,9 @@ namespace Content.Server.Interaction
     public sealed class InteractionSystem : SharedInteractionSystem
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-        [Dependency] private readonly VerbSystem _verbSystem = default!;
         [Dependency] private readonly PullingSystem _pullSystem = default!;
+        [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
 
         public override void Initialize()
         {
@@ -145,6 +133,9 @@ namespace Content.Server.Interaction
                 return;
             }
 
+            if (!_actionBlockerSystem.CanInteract(userEntity.Uid))
+                return;
+
             if (!EntityManager.TryGetEntity(msg.Dropped, out var dropped))
                 return;
             if (!EntityManager.TryGetEntity(msg.Target, out var target))
@@ -195,47 +186,6 @@ namespace Content.Server.Interaction
 
             InteractionActivate(user, used);
             return true;
-        }
-
-        /// <summary>
-        /// Activates the IActivate behavior of an object
-        /// Verifies that the user is capable of doing the use interaction first
-        /// </summary>
-        public void TryInteractionActivate(IEntity? user, IEntity? used)
-        {
-            if (user == null || used == null)
-                return;
-
-            InteractionActivate(user, used);
-        }
-
-        private void InteractionActivate(IEntity user, IEntity used)
-        {
-            if (used.TryGetComponent<UseDelayComponent>(out var delayComponent))
-            {
-                if (delayComponent.ActiveDelay)
-                    return;
-
-                delayComponent.BeginDelay();
-            }
-
-            if (!_actionBlockerSystem.CanInteract(user) || ! _actionBlockerSystem.CanUse(user))
-                return;
-
-            // all activates should only fire when in range / unobstructed
-            if (!InRangeUnobstructed(user, used, ignoreInsideBlocker: true, popup: true))
-                return;
-
-            var activateMsg = new ActivateInWorldEvent(user, used);
-            RaiseLocalEvent(used.Uid, activateMsg);
-            if (activateMsg.Handled)
-                return;
-
-            if (!used.TryGetComponent(out IActivate? activateComp))
-                return;
-
-            var activateEventArgs = new ActivateEventArgs(user, used);
-            activateComp.Activate(activateEventArgs);
         }
         #endregion
 
@@ -343,7 +293,7 @@ namespace Content.Server.Interaction
             if (!ValidateInteractAndFace(user, coordinates))
                 return;
 
-            if (!_actionBlockerSystem.CanInteract(user))
+            if (!_actionBlockerSystem.CanInteract(user.Uid))
                 return;
 
             // Get entity clicked upon from UID if valid UID, if not assume no entity clicked upon and null
@@ -358,7 +308,7 @@ namespace Content.Server.Interaction
             }
 
             // Verify user has a hand, and find what object they are currently holding in their active hand
-            if (!user.TryGetComponent<IHandsComponent>(out var hands))
+            if (!user.TryGetComponent<HandsComponent>(out var hands))
                 return;
 
             var item = hands.GetActiveHand?.Owner;
@@ -405,125 +355,9 @@ namespace Content.Server.Interaction
                 return false;
             }
 
-            FaceClickCoordinates(user, coordinates);
+            _rotateToFaceSystem.TryFaceCoordinates(user, coordinates.ToMapPos(EntityManager));
 
             return true;
-        }
-
-        private void FaceClickCoordinates(IEntity user, EntityCoordinates coordinates)
-        {
-            var diff = coordinates.ToMapPos(EntityManager) - user.Transform.MapPosition.Position;
-            if (diff.LengthSquared <= 0.01f)
-                return;
-            var diffAngle = Angle.FromWorldVec(diff);
-            if (_actionBlockerSystem.CanChangeDirection(user))
-            {
-                user.Transform.WorldRotation = diffAngle;
-            }
-            else
-            {
-                if (user.TryGetComponent(out BuckleComponent? buckle) && (buckle.BuckledTo != null))
-                {
-                    // We're buckled to another object. Is that object rotatable?
-                    if (buckle.BuckledTo!.Owner.TryGetComponent(out RotatableComponent? rotatable) && rotatable.RotateWhileAnchored)
-                    {
-                        // Note the assumption that even if unanchored, user can only do spinnychair with an "independent wheel".
-                        // (Since the user being buckled to it holds it down with their weight.)
-                        // This is logically equivalent to RotateWhileAnchored.
-                        // Barstools and office chairs have independent wheels, while regular chairs don't.
-                        rotatable.Owner.Transform.LocalRotation = diffAngle;
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        ///     We didn't click on any entity, try doing an AfterInteract on the click location
-        /// </summary>
-        private async Task<bool> InteractDoAfter(IEntity user, IEntity used, IEntity? target, EntityCoordinates clickLocation, bool canReach)
-        {
-            var afterInteractEvent = new AfterInteractEvent(user, used, target, clickLocation, canReach);
-            RaiseLocalEvent(used.Uid, afterInteractEvent, false);
-            if (afterInteractEvent.Handled)
-                return true;
-
-            var afterInteractEventArgs = new AfterInteractEventArgs(user, clickLocation, target, canReach);
-            var afterInteracts = used.GetAllComponents<IAfterInteract>().OrderByDescending(x => x.Priority).ToList();
-
-            foreach (var afterInteract in afterInteracts)
-            {
-                if (await afterInteract.AfterInteract(afterInteractEventArgs))
-                    return true;
-            }
-
-            return false;
-        }
-
-        private async Task<bool> InteractDoBefore(
-            IEntity user,
-            IEntity used,
-            IEntity? target,
-            EntityCoordinates clickLocation,
-            bool canReach)
-        {
-            var ev = new BeforeInteractEvent(user, used, target, clickLocation, canReach);
-            RaiseLocalEvent(used.Uid, ev, false);
-            return ev.Handled;
-        }
-
-        /// <summary>
-        /// Uses a item/object on an entity
-        /// Finds components with the InteractUsing interface and calls their function
-        /// NOTE: Does not have an InRangeUnobstructed check
-        /// </summary>
-        public async Task InteractUsing(IEntity user, IEntity used, IEntity target, EntityCoordinates clickLocation)
-        {
-            if (!_actionBlockerSystem.CanInteract(user))
-                return;
-
-            if (await InteractDoBefore(user, used, target, clickLocation, true))
-                return;
-
-            // all interactions should only happen when in range / unobstructed, so no range check is needed
-            var interactUsingEvent = new InteractUsingEvent(user, used, target, clickLocation);
-            RaiseLocalEvent(target.Uid, interactUsingEvent);
-            if (interactUsingEvent.Handled)
-                return;
-
-            var interactUsingEventArgs = new InteractUsingEventArgs(user, clickLocation, used, target);
-
-            var interactUsings = target.GetAllComponents<IInteractUsing>().OrderByDescending(x => x.Priority);
-            foreach (var interactUsing in interactUsings)
-            {
-                // If an InteractUsing returns a status completion we finish our interaction
-                if (await interactUsing.InteractUsing(interactUsingEventArgs))
-                    return;
-            }
-
-            // If we aren't directly interacting with the nearby object, lets see if our item has an after interact we can do
-            await InteractDoAfter(user, used, target, clickLocation, true);
-        }
-
-        /// <summary>
-        ///     Alternative interactions on an entity.
-        /// </summary>
-        /// <remarks>
-        ///     Uses the context menu verb list, and acts out the highest priority alternative interaction verb.
-        /// </remarks>
-        public void AltInteract(IEntity user, IEntity target)
-        {
-            // Get list of alt-interact verbs
-            GetAlternativeVerbsEvent getVerbEvent = new(user, target);
-            RaiseLocalEvent(target.Uid, getVerbEvent);
-
-            foreach (var verb in getVerbEvent.Verbs)
-            {
-                if (verb.Disabled)
-                    continue;
-
-                _verbSystem.TryExecuteVerb(verb);
-                break;
-            }
         }
 
         /// <summary>
@@ -533,7 +367,7 @@ namespace Content.Server.Interaction
         /// </summary>
         public void InteractHand(IEntity user, IEntity target)
         {
-            if (!_actionBlockerSystem.CanInteract(user))
+            if (!_actionBlockerSystem.CanInteract(user.Uid))
                 return;
 
             // all interactions should only happen when in range / unobstructed, so no range check is needed
@@ -548,7 +382,9 @@ namespace Content.Server.Interaction
             foreach (var interactHandComp in interactHandComps)
             {
                 // If an InteractHand returns a status completion we finish our interaction
+#pragma warning disable 618
                 if (interactHandComp.InteractHand(interactHandEventArgs))
+#pragma warning restore 618
                     return;
             }
 
@@ -556,264 +392,18 @@ namespace Content.Server.Interaction
             InteractionActivate(user, target);
         }
 
-        #region Hands
-        #region Use
-        /// <summary>
-        /// Activates the IUse behaviors of an entity
-        /// Verifies that the user is capable of doing the use interaction first
-        /// </summary>
-        /// <param name="user"></param>
-        /// <param name="used"></param>
-        public void TryUseInteraction(IEntity user, IEntity used, bool altInteract = false)
-        {
-            if (user != null && used != null && _actionBlockerSystem.CanUse(user))
-            {
-                if (altInteract)
-                    AltInteract(user, used);
-                else
-                    UseInteraction(user, used);
-            }
-        }
-
-        /// <summary>
-        /// Activates the IUse behaviors of an entity without first checking
-        /// if the user is capable of doing the use interaction.
-        /// </summary>
-        public void UseInteraction(IEntity user, IEntity used)
-        {
-            if (used.TryGetComponent<UseDelayComponent>(out var delayComponent))
-            {
-                if (delayComponent.ActiveDelay)
-                    return;
-
-                delayComponent.BeginDelay();
-            }
-
-            var useMsg = new UseInHandEvent(user, used);
-            RaiseLocalEvent(used.Uid, useMsg);
-            if (useMsg.Handled)
-                return;
-
-            var uses = used.GetAllComponents<IUse>().ToList();
-
-            // Try to use item on any components which have the interface
-            foreach (var use in uses)
-            {
-                // If a Use returns a status completion we finish our interaction
-                if (use.UseEntity(new UseEntityEventArgs(user)))
-                    return;
-            }
-        }
-        #endregion
-
-        #region Throw
-        /// <summary>
-        /// Activates the Throw behavior of an object
-        /// Verifies that the user is capable of doing the throw interaction first
-        /// </summary>
-        public bool TryThrowInteraction(IEntity user, IEntity item)
-        {
-            if (user == null || item == null || !_actionBlockerSystem.CanThrow(user)) return false;
-
-            ThrownInteraction(user, item);
-            return true;
-        }
-
-        /// <summary>
-        ///     Calls Thrown on all components that implement the IThrown interface
-        ///     on an entity that has been thrown.
-        /// </summary>
-        public void ThrownInteraction(IEntity user, IEntity thrown)
-        {
-            var throwMsg = new ThrownEvent(user, thrown);
-            RaiseLocalEvent(thrown.Uid, throwMsg);
-            if (throwMsg.Handled)
-                return;
-
-            var comps = thrown.GetAllComponents<IThrown>().ToList();
-            var args = new ThrownEventArgs(user);
-
-            // Call Thrown on all components that implement the interface
-            foreach (var comp in comps)
-            {
-                comp.Thrown(args);
-            }
-        }
-        #endregion
-
-        #region Equip
-        /// <summary>
-        ///     Calls Equipped on all components that implement the IEquipped interface
-        ///     on an entity that has been equipped.
-        /// </summary>
-        public void EquippedInteraction(IEntity user, IEntity equipped, EquipmentSlotDefines.Slots slot)
-        {
-            var equipMsg = new EquippedEvent(user, equipped, slot);
-            RaiseLocalEvent(equipped.Uid, equipMsg);
-            if (equipMsg.Handled)
-                return;
-
-            var comps = equipped.GetAllComponents<IEquipped>().ToList();
-
-            // Call Thrown on all components that implement the interface
-            foreach (var comp in comps)
-            {
-                comp.Equipped(new EquippedEventArgs(user, slot));
-            }
-        }
-
-        /// <summary>
-        ///     Calls Unequipped on all components that implement the IUnequipped interface
-        ///     on an entity that has been equipped.
-        /// </summary>
-        public void UnequippedInteraction(IEntity user, IEntity equipped, EquipmentSlotDefines.Slots slot)
-        {
-            var unequipMsg = new UnequippedEvent(user, equipped, slot);
-            RaiseLocalEvent(equipped.Uid, unequipMsg);
-            if (unequipMsg.Handled)
-                return;
-
-            var comps = equipped.GetAllComponents<IUnequipped>().ToList();
-
-            // Call Thrown on all components that implement the interface
-            foreach (var comp in comps)
-            {
-                comp.Unequipped(new UnequippedEventArgs(user, slot));
-            }
-        }
-
-        #region Equip Hand
-        /// <summary>
-        ///     Calls EquippedHand on all components that implement the IEquippedHand interface
-        ///     on an item.
-        /// </summary>
-        public void EquippedHandInteraction(IEntity user, IEntity item, HandState hand)
-        {
-            var equippedHandMessage = new EquippedHandEvent(user, item, hand);
-            RaiseLocalEvent(item.Uid, equippedHandMessage);
-            if (equippedHandMessage.Handled)
-                return;
-
-            var comps = item.GetAllComponents<IEquippedHand>().ToList();
-
-            foreach (var comp in comps)
-            {
-                comp.EquippedHand(new EquippedHandEventArgs(user, hand));
-            }
-        }
-
-        /// <summary>
-        ///     Calls UnequippedHand on all components that implement the IUnequippedHand interface
-        ///     on an item.
-        /// </summary>
-        public void UnequippedHandInteraction(IEntity user, IEntity item, HandState hand)
-        {
-            var unequippedHandMessage = new UnequippedHandEvent(user, item, hand);
-            RaiseLocalEvent(item.Uid, unequippedHandMessage);
-            if (unequippedHandMessage.Handled)
-                return;
-
-            var comps = item.GetAllComponents<IUnequippedHand>().ToList();
-
-            foreach (var comp in comps)
-            {
-                comp.UnequippedHand(new UnequippedHandEventArgs(user, hand));
-            }
-        }
-        #endregion
-        #endregion
-
-        #region Drop
-        /// <summary>
-        /// Activates the Dropped behavior of an object
-        /// Verifies that the user is capable of doing the drop interaction first
-        /// </summary>
-        public bool TryDroppedInteraction(IEntity user, IEntity item, bool intentional)
-        {
-            if (user == null || item == null || !_actionBlockerSystem.CanDrop(user)) return false;
-
-            DroppedInteraction(user, item, intentional);
-            return true;
-        }
-
-        /// <summary>
-        ///     Calls Dropped on all components that implement the IDropped interface
-        ///     on an entity that has been dropped.
-        /// </summary>
-        public void DroppedInteraction(IEntity user, IEntity item, bool intentional)
-        {
-            var dropMsg = new DroppedEvent(user, item, intentional);
-            RaiseLocalEvent(item.Uid, dropMsg);
-            if (dropMsg.Handled)
-                return;
-
-            item.Transform.LocalRotation = intentional ? Angle.Zero : (_random.Next(0, 100) / 100f) * MathHelper.TwoPi;
-
-            var comps = item.GetAllComponents<IDropped>().ToList();
-
-            // Call Land on all components that implement the interface
-            foreach (var comp in comps)
-            {
-                comp.Dropped(new DroppedEventArgs(user, intentional));
-            }
-        }
-        #endregion
-
-        #region Hand Selected
-        /// <summary>
-        ///     Calls HandSelected on all components that implement the IHandSelected interface
-        ///     on an item entity on a hand that has just been selected.
-        /// </summary>
-        public void HandSelectedInteraction(IEntity user, IEntity item)
-        {
-            var handSelectedMsg = new HandSelectedEvent(user, item);
-            RaiseLocalEvent(item.Uid, handSelectedMsg);
-            if (handSelectedMsg.Handled)
-                return;
-
-            var comps = item.GetAllComponents<IHandSelected>().ToList();
-
-            // Call Land on all components that implement the interface
-            foreach (var comp in comps)
-            {
-                comp.HandSelected(new HandSelectedEventArgs(user));
-            }
-        }
-
-        /// <summary>
-        ///     Calls HandDeselected on all components that implement the IHandDeselected interface
-        ///     on an item entity on a hand that has just been deselected.
-        /// </summary>
-        public void HandDeselectedInteraction(IEntity user, IEntity item)
-        {
-            var handDeselectedMsg = new HandDeselectedEvent(user, item);
-            RaiseLocalEvent(item.Uid, handDeselectedMsg);
-            if (handDeselectedMsg.Handled)
-                return;
-
-            var comps = item.GetAllComponents<IHandDeselected>().ToList();
-
-            // Call Land on all components that implement the interface
-            foreach (var comp in comps)
-            {
-                comp.HandDeselected(new HandDeselectedEventArgs(user));
-            }
-        }
-        #endregion
-        #endregion
-
         /// <summary>
         /// Will have two behaviors, either "uses" the used entity at range on the target entity if it is capable of accepting that action
         /// Or it will use the used entity itself on the position clicked, regardless of what was there
         /// </summary>
         public async Task<bool> InteractUsingRanged(IEntity user, IEntity used, IEntity? target, EntityCoordinates clickLocation, bool inRangeUnobstructed)
         {
-            if (await InteractDoBefore(user, used, inRangeUnobstructed ? target : null, clickLocation, false))
+            if (InteractDoBefore(user, used, inRangeUnobstructed ? target : null, clickLocation, false))
                 return true;
 
             if (target != null)
             {
-                var rangedMsg = new RangedInteractEvent(user, used, target, clickLocation);
+                var rangedMsg = new RangedInteractEvent(user.Uid, used.Uid, target.Uid, clickLocation);
                 RaiseLocalEvent(target.Uid, rangedMsg);
                 if (rangedMsg.Handled)
                     return true;
@@ -825,7 +415,9 @@ namespace Content.Server.Interaction
                 foreach (var t in rangedInteractions)
                 {
                     // If an InteractUsingRanged returns a status completion we finish our interaction
+#pragma warning disable 618
                     if (t.RangedInteract(rangedInteractionEventArgs))
+#pragma warning restore 618
                         return true;
                 }
             }
@@ -838,7 +430,7 @@ namespace Content.Server.Interaction
             if (!ValidateInteractAndFace(user, coordinates))
                 return;
 
-            if (!_actionBlockerSystem.CanAttack(user))
+            if (!_actionBlockerSystem.CanAttack(user.Uid))
                 return;
 
             IEntity? targetEnt = null;
@@ -862,7 +454,7 @@ namespace Content.Server.Interaction
             }
 
             // Verify user has a hand, and find what object they are currently holding in their active hand
-            if (user.TryGetComponent<IHandsComponent>(out var hands))
+            if (user.TryGetComponent<HandsComponent>(out var hands))
             {
                 var item = hands.GetActiveHand?.Owner;
 

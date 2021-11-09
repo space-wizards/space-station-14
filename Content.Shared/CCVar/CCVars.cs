@@ -91,13 +91,22 @@ namespace Content.Shared.CCVar
             CVarDef.Create("game.maxstationoffset", 1000.0f);
 
         /// <summary>
+        ///     Whether a random rotation will be applied to the station on roundstart.
+        /// </summary>
+        public static readonly CVarDef<bool> StationRotation =
+            CVarDef.Create("game.station_rotation", true);
+
+        /// <summary>
         ///     When enabled, guests will be assigned permanent UIDs and will have their preferences stored.
         /// </summary>
-        public static readonly CVarDef<bool>
-            GamePersistGuests = CVarDef.Create("game.persistguests", true, CVar.ARCHIVE | CVar.SERVERONLY);
+        public static readonly CVarDef<bool> GamePersistGuests =
+            CVarDef.Create("game.persistguests", true, CVar.ARCHIVE | CVar.SERVERONLY);
 
         public static readonly CVarDef<bool> GameDiagonalMovement =
             CVarDef.Create("game.diagonalmovement", true, CVar.ARCHIVE);
+
+        public static readonly CVarDef<int> SoftMaxPlayers =
+            CVarDef.Create("game.soft_max_players", 30, CVar.SERVERONLY | CVar.ARCHIVE);
 
         /*
          * Suspicion
@@ -398,9 +407,9 @@ namespace Content.Shared.CCVar
             CVarDef.Create("ooc.enabled_admin", true, CVar.NOTIFY);
 
         /*
-         * Context Menu Grouping Types
+         * Entity Menu Grouping Types
          */
-        public static readonly CVarDef<int> ContextMenuGroupingType = CVarDef.Create("context_menu", 0, CVar.CLIENTONLY);
+        public static readonly CVarDef<int> EntityMenuGroupingType = CVarDef.Create("entity_menu", 0, CVar.CLIENTONLY);
 
         /*
          * VOTE
@@ -423,7 +432,7 @@ namespace Content.Shared.CCVar
          */
 
         public static readonly CVarDef<bool> BanHardwareIds =
-            CVarDef.Create("ban.hardware_ids", false, CVar.SERVERONLY);
+            CVarDef.Create("ban.hardware_ids", true, CVar.SERVERONLY);
 
         /*
          * Shuttles

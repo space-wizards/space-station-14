@@ -79,7 +79,7 @@ namespace Content.Server.Power.EntitySystems
 
             foreach (var entity in nearbyEntities)
             {
-                if (entity.TryGetComponent<ExtensionCableReceiverComponent>(out var receiver) &&
+                if (EntityManager.TryGetComponent<ExtensionCableReceiverComponent>(entity.Uid, out var receiver) &&
                     receiver.Connectable &&
                     receiver.Provider == null &&
                     entity.Transform.Coordinates.TryDistance(owner.EntityManager, owner.Transform.Coordinates, out var distance) &&
@@ -104,7 +104,10 @@ namespace Content.Server.Power.EntitySystems
             RaiseLocalEvent(uid, new ProviderDisconnectedEvent(provider), broadcast: false);
 
             if (provider != null)
+            {
                 RaiseLocalEvent(provider.Owner.Uid, new ReceiverDisconnectedEvent(receiver), broadcast: false);
+                provider.LinkedReceivers.Remove(receiver);
+            }
 
             receiver.ReceptionRange = range;
             TryFindAndSetProvider(receiver);
@@ -146,9 +149,11 @@ namespace Content.Server.Power.EntitySystems
             {
                 receiver.Connectable = false;
                 RaiseLocalEvent(uid, new ProviderDisconnectedEvent(receiver.Provider), broadcast: false);
-
                 if (receiver.Provider != null)
+                {
                     RaiseLocalEvent(receiver.Provider.Owner.Uid, new ReceiverDisconnectedEvent(receiver), broadcast: false);
+                    receiver.Provider.LinkedReceivers.Remove(receiver);
+                }
 
                 receiver.Provider = null;
             }
@@ -159,6 +164,7 @@ namespace Content.Server.Power.EntitySystems
             if (!TryFindAvailableProvider(receiver.Owner, receiver.ReceptionRange, out var provider)) return;
 
             receiver.Provider = provider;
+            provider.LinkedReceivers.Add(receiver);
             RaiseLocalEvent(receiver.Owner.Uid, new ProviderConnectedEvent(provider), broadcast: false);
             RaiseLocalEvent(provider.Owner.Uid, new ReceiverConnectedEvent(receiver), broadcast: false);
         }

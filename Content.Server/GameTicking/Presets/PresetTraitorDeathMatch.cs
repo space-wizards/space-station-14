@@ -11,25 +11,25 @@ using Content.Server.PDA;
 using Content.Server.Players;
 using Content.Server.Spawners.Components;
 using Content.Server.Traitor;
+using Content.Server.Traitor.Uplink;
+using Content.Server.Traitor.Uplink.Account;
+using Content.Server.Traitor.Uplink.Components;
 using Content.Server.TraitorDeathMatch.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.Inventory;
-using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
+using Content.Shared.Traitor.Uplink;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Content.Server.Traitor.Uplink.Components;
-using Content.Shared.Traitor.Uplink;
-using Content.Server.Traitor.Uplink;
-using Content.Shared.Damage.Prototypes;
-using Content.Server.Traitor.Uplink.Account;
 
 namespace Content.Server.GameTicking.Presets
 {
@@ -151,7 +151,7 @@ namespace Content.Server.GameTicking.Presets
                 var avoidMeEntity = avoidMeMind.OwnedEntity;
                 if (avoidMeEntity == null)
                     continue;
-                if (avoidMeEntity.TryGetComponent(out IMobStateComponent? mobState))
+                if (avoidMeEntity.TryGetComponent(out MobStateComponent? mobState))
                 {
                     // Does have mob state component; if critical or dead, they don't really matter for spawn checks
                     if (mobState.IsCritical() || mobState.IsDead())
@@ -198,7 +198,7 @@ namespace Content.Server.GameTicking.Presets
         public override bool OnGhostAttempt(Mind.Mind mind, bool canReturnGlobal)
         {
             var entity = mind.OwnedEntity;
-            if ((entity != null) && (entity.TryGetComponent(out IMobStateComponent? mobState)))
+            if ((entity != null) && (entity.TryGetComponent(out MobStateComponent? mobState)))
             {
                 if (mobState.IsCritical())
                 {

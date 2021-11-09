@@ -47,7 +47,7 @@ namespace Content.Server.Ghost.Roles.Components
             var mob = Owner.EntityManager.SpawnEntity(Prototype, Owner.Transform.Coordinates);
 
             if(_makeSentient)
-                MakeSentientCommand.MakeSentient(mob);
+                MakeSentientCommand.MakeSentient(mob.Uid, Owner.EntityManager);
 
             mob.EnsureComponent<MindComponent>();
 

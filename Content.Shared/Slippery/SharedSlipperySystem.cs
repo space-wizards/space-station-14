@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Shared.EffectBlocker;
 using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
 using JetBrains.Annotations;
@@ -26,11 +25,12 @@ namespace Content.Shared.Slippery
         {
             base.Initialize();
             SubscribeLocalEvent<SlipperyComponent, StartCollideEvent>(HandleCollide);
+            SubscribeLocalEvent<NoSlipComponent, SlipAttemptEvent>(OnNoSlipAttempt);
         }
 
         private void HandleCollide(EntityUid uid, SlipperyComponent component, StartCollideEvent args)
         {
-            var otherUid = args.OtherFixture.Body.Owner.Uid;
+            var otherUid = args.OtherFixture.Body.OwnerUid;
 
             if (!CanSlip(component, otherUid)) return;
 
@@ -38,6 +38,11 @@ namespace Content.Shared.Slippery
                 _slipped.Add(component);
 
             component.Colliding.Add(otherUid);
+        }
+
+        private void OnNoSlipAttempt(EntityUid uid, NoSlipComponent component, SlipAttemptEvent args)
+        {
+            args.Cancel();
         }
 
         /// <inheritdoc />
@@ -66,7 +71,7 @@ namespace Content.Shared.Slippery
 
         private bool TrySlip(SlipperyComponent component, IPhysBody ourBody, IPhysBody otherBody)
         {
-            if (!CanSlip(component, otherBody.Owner.Uid)) return false;
+            if (!CanSlip(component, otherBody.OwnerUid)) return false;
 
             if (otherBody.LinearVelocity.Length < component.RequiredSlipSpeed)
             {
@@ -80,15 +85,15 @@ namespace Content.Shared.Slippery
                 return false;
             }
 
-            if (!EffectBlockerSystem.CanSlip(otherBody.Owner))
-            {
+            var ev = new SlipAttemptEvent();
+            RaiseLocalEvent(otherBody.OwnerUid, ev, false);
+            if (ev.Cancelled)
                 return false;
-            }
 
             otherBody.LinearVelocity *= component.LaunchForwardsMultiplier;
 
-            _stunSystem.TryParalyze(otherBody.Owner.Uid, TimeSpan.FromSeconds(5));
-            component.Slipped.Add(otherBody.Owner.Uid);
+            _stunSystem.TryParalyze(otherBody.OwnerUid, TimeSpan.FromSeconds(5));
+            component.Slipped.Add(otherBody.OwnerUid);
             component.Dirty();
 
             PlaySound(component);
@@ -135,5 +140,12 @@ namespace Content.Shared.Slippery
 
             return false;
         }
+    }
+
+    /// <summary>
+    ///     Raised on an entity to determine if it can slip or not.
+    /// </summary>
+    public class SlipAttemptEvent : CancellableEntityEventArgs
+    {
     }
 }

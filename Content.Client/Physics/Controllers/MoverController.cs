@@ -1,5 +1,4 @@
-using Content.Shared.Body.Components;
-using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
 using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
 using Content.Shared.Pulling.Components;
@@ -57,7 +56,7 @@ namespace Content.Client.Physics.Controllers
                 var pulling = pullerComp.Pulling;
 
                 if (pulling != null &&
-                    pulling.HasComponent<IMobStateComponent>() &&
+                    pulling.HasComponent<MobStateComponent>() &&
                     pulling.TryGetComponent(out PhysicsComponent? pullingBody))
                 {
                     pullingBody.Predict = false;

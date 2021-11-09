@@ -18,7 +18,6 @@ namespace Content.Server.Stunnable
     internal sealed class StunOnCollideSystem : EntitySystem
     {
         [Dependency] private readonly StunSystem _stunSystem = default!;
-        [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
 
         public override void Initialize()
         {
@@ -35,10 +34,9 @@ namespace Content.Server.Stunnable
                 ServerAlertsComponent? alerts = null;
                 StandingStateComponent? standingState = null;
                 AppearanceComponent? appearance = null;
-                MovementSpeedModifierComponent? speedModifier = null;
 
                 // Let the actual methods log errors for these.
-                Resolve(otherUid, ref alerts, ref standingState, ref appearance, ref speedModifier, false);
+                Resolve(otherUid, ref alerts, ref standingState, ref appearance, false);
 
                 _stunSystem.TryStun(otherUid, TimeSpan.FromSeconds(component.StunAmount), status, alerts);
 
@@ -46,7 +44,7 @@ namespace Content.Server.Stunnable
                     status, alerts);
 
                 _stunSystem.TrySlowdown(otherUid, TimeSpan.FromSeconds(component.SlowdownAmount),
-                    component.WalkSpeedMultiplier, component.RunSpeedMultiplier, status, speedModifier, alerts);
+                    component.WalkSpeedMultiplier, component.RunSpeedMultiplier, status, alerts);
             }
         }
     }

@@ -31,7 +31,7 @@ namespace Content.Server.Power.Components
         /// <inheritdoc />
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User.Uid))
                 return false;
 
             if (_cablePrototypeID == null)
@@ -46,7 +46,7 @@ namespace Content.Server.Power.Components
             var snapPos = grid.TileIndicesFor(eventArgs.ClickLocation);
             var tileDef = grid.GetTileRef(snapPos).Tile.GetContentTileDefinition();
 
-            if(!tileDef.IsSubFloor || tileDef.IsSpace)
+            if(!tileDef.IsSubFloor || !tileDef.Sturdy)
                 return false;
 
             foreach (var anchored in grid.GetAnchoredEntities(snapPos))

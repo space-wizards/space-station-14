@@ -1,8 +1,11 @@
 using Content.Server.Atmos.Components;
 using Content.Server.NodeContainer.EntitySystems;
+using Content.Server.Temperature.Components;
+using Content.Server.Temperature.Systems;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
@@ -70,10 +73,10 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 foreach (var exposed in EntityManager.EntityQuery<AtmosExposedComponent>())
                 {
-                    // TODO ATMOS: Kill this with fire.
                     var tile = GetTileMixture(exposed.Owner.Transform.Coordinates);
                     if (tile == null) continue;
-                    exposed.Update(tile, _exposedTimer, this);
+                    var updateEvent = new AtmosExposedUpdateEvent(exposed.Owner.Transform.Coordinates, tile);
+                    RaiseLocalEvent(exposed.Owner.Uid, ref updateEvent);
                 }
 
                 _exposedTimer -= ExposedUpdateDelay;

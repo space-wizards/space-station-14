@@ -6,6 +6,7 @@ using Content.Server.Pointing.Components;
 using Content.Server.Visible;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Input;
+using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
@@ -32,6 +33,7 @@ namespace Content.Server.Pointing.EntitySystems
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+        [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
 
         private static readonly TimeSpan PointDelay = TimeSpan.FromSeconds(0.5f);
 
@@ -114,14 +116,7 @@ namespace Content.Server.Pointing.EntitySystems
                 return false;
             }
 
-            if (_actionBlockerSystem.CanChangeDirection(player))
-            {
-                var diff = mapCoords.Position - player.Transform.MapPosition.Position;
-                if (diff.LengthSquared > 0.01f)
-                {
-                    player.Transform.LocalRotation = new Angle(diff);
-                }
-            }
+            _rotateToFaceSystem.TryFaceCoordinates(player, mapCoords.Position);
 
             var arrow = EntityManager.SpawnEntity("pointingarrow", mapCoords);
 

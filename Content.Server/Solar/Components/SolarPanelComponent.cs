@@ -70,15 +70,6 @@ namespace Content.Server.Solar.Components
             }
         }
 
-        protected override void Initialize()
-        {
-            base.Initialize();
-
-            Owner.EnsureComponentWarn<PowerSupplierComponent>();
-
-            UpdateSupply();
-        }
-
         public void OnBreak(BreakageEventArgs args)
         {
             if (!Owner.TryGetComponent<SpriteComponent>(out var sprite))

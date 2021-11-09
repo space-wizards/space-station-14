@@ -9,11 +9,6 @@ namespace Content.Client.Cargo.UI
     public partial class CargoOrderRow : PanelContainer
     {
         public CargoOrderData? Order { get; set; }
-        public TextureRect Icon => IconProtected;
-        public Label ProductName => ProductNameProtected;
-        public Label Description => DescriptionProtected;
-        public Button Approve => ApproveProtected;
-        public Button Cancel => CancelProtected;
 
         public CargoOrderRow()
         {

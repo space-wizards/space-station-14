@@ -5,8 +5,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
+using Content.Server.Interaction;
 using Content.Server.Items;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
@@ -15,7 +15,6 @@ using Content.Shared.Placeable;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Storage;
-using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -24,7 +23,6 @@ using Robust.Shared.Containers;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
@@ -54,8 +52,13 @@ namespace Content.Server.Storage.Components
         [DataField("quickInsert")]
         private bool _quickInsert = false; // Can insert storables by "attacking" them with the storage entity
 
+        [DataField("clickInsert")]
+        private bool _clickInsert = true; // Can insert stuff by clicking the storage entity with it
+
         [DataField("areaInsert")]
         private bool _areaInsert = false;  // "Attacking" with the storage entity causes it to insert all nearby storables after a delay
+        [DataField("areaInsertRadius")]
+        private int _areaInsertRadius = 1;
 
         [DataField("whitelist")]
         private EntityWhitelist? _whitelist = null;
@@ -132,7 +135,12 @@ namespace Content.Server.Storage.Components
                 return false;
             }
 
-            if (_whitelist != null && !_whitelist.IsValid(entity))
+            if (_whitelist != null && !_whitelist.IsValid(entity.Uid))
+            {
+                return false;
+            }
+
+            if (entity.Transform.Anchored)
             {
                 return false;
             }
@@ -211,7 +219,7 @@ namespace Content.Server.Storage.Components
         {
             EnsureInitialCalculated();
 
-            if (!player.TryGetComponent(out IHandsComponent? hands) ||
+            if (!player.TryGetComponent(out HandsComponent? hands) ||
                 hands.GetActiveHand == null)
             {
                 return false;
@@ -267,7 +275,9 @@ namespace Content.Server.Storage.Components
             Logger.DebugS(LoggerName, $"Storage (UID {Owner.Uid}) \"used\" by player session (UID {userSession.AttachedEntityUid}).");
 
             SubscribeSession(userSession);
+#pragma warning disable 618
             SendNetworkMessage(new OpenStorageUIMessage(), userSession.ConnectedClient);
+#pragma warning restore 618
             UpdateClientInventory(userSession);
         }
 
@@ -312,7 +322,9 @@ namespace Content.Server.Storage.Components
 
             var stored = StoredEntities.Select(e => e.Uid).ToArray();
 
+#pragma warning disable 618
             SendNetworkMessage(new StorageHeldItemsMessage(stored, _storageUsed, _storageCapacityMax), session.ConnectedClient);
+#pragma warning restore 618
         }
 
         /// <summary>
@@ -345,7 +357,9 @@ namespace Content.Server.Storage.Components
                 Logger.DebugS(LoggerName, $"Storage (UID {Owner.Uid}) unsubscribed player session (UID {session.AttachedEntityUid}).");
 
                 SubscribedSessions.Remove(session);
+#pragma warning disable 618
                 SendNetworkMessage(new CloseStorageUIMessage(), session.ConnectedClient);
+#pragma warning restore 618
 
                 UpdateDoorState();
             }
@@ -378,6 +392,7 @@ namespace Content.Server.Storage.Components
             _storage.OccludesLight = _occludesLight;
         }
 
+        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
         {
             base.HandleNetworkMessage(message, channel, session);
@@ -468,6 +483,8 @@ namespace Content.Server.Storage.Components
         /// <returns>true if inserted, false otherwise</returns>
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
+            if (!_clickInsert)
+                return false;
             Logger.DebugS(LoggerName, $"Storage (UID {Owner.Uid}) attacked by user (UID {eventArgs.User.Uid}) with entity (UID {eventArgs.Using.Uid}).");
 
             if (Owner.HasComponent<PlaceableSurfaceComponent>())
@@ -492,7 +509,9 @@ namespace Content.Server.Storage.Components
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
+#pragma warning disable 618
             ((IUse) this).UseEntity(new UseEntityEventArgs(eventArgs.User));
+#pragma warning restore 618
         }
 
         /// <summary>
@@ -510,11 +529,12 @@ namespace Content.Server.Storage.Components
             if (_areaInsert && (eventArgs.Target == null || !eventArgs.Target.HasComponent<SharedItemComponent>()))
             {
                 var validStorables = new List<IEntity>();
-                foreach (var entity in IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(eventArgs.ClickLocation, 1))
+                foreach (var entity in IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(eventArgs.ClickLocation, _areaInsertRadius, LookupFlags.None))
                 {
                     if (entity.IsInContainer()
                         || entity == eventArgs.User
-                        || !entity.HasComponent<SharedItemComponent>())
+                        || !entity.HasComponent<SharedItemComponent>()
+                        || !EntitySystem.Get<InteractionSystem>().InRangeUnobstructed(eventArgs.User, entity))
                         continue;
                     validStorables.Add(entity);
                 }
@@ -555,7 +575,9 @@ namespace Content.Server.Storage.Components
                 if (successfullyInserted.Count > 0)
                 {
                     PlaySoundCollection();
+#pragma warning disable 618
                     SendNetworkMessage(
+#pragma warning restore 618
                         new AnimateInsertingEntitiesMessage(
                             successfullyInserted,
                             successfullyInsertedPositions
@@ -575,7 +597,9 @@ namespace Content.Server.Storage.Components
                 var position = EntityCoordinates.FromMap(Owner.Transform.Parent?.Owner ?? Owner, eventArgs.Target.Transform.MapPosition);
                 if (PlayerInsertEntityInWorld(eventArgs.User, eventArgs.Target))
                 {
+#pragma warning disable 618
                     SendNetworkMessage(new AnimateInsertingEntitiesMessage(
+#pragma warning restore 618
                         new List<EntityUid>() { eventArgs.Target.Uid },
                         new List<EntityCoordinates>() { position }
                     ));

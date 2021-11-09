@@ -1,9 +1,7 @@
 using System;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Respiratory;
-using Content.Server.Explosion;
-using Content.Server.NodeContainer;
-using Content.Server.NodeContainer.Nodes;
+using Content.Server.Explosion.EntitySystems;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
@@ -12,7 +10,6 @@ using Content.Shared.Actions.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Audio;
-using Content.Shared.DragDrop;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Sound;
@@ -32,7 +29,9 @@ namespace Content.Server.Atmos.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
+#pragma warning disable 618
     public class GasTankComponent : Component, IExamine, IGasMixtureHolder, IUse, IDropped, IActivate
+#pragma warning restore 618
     {
         public override string Name => "GasTank";
 
@@ -216,7 +215,7 @@ namespace Content.Server.Atmos.Components
         {
             var user = GetInternalsComponent()?.Owner;
 
-            if (user == null || !EntitySystem.Get<ActionBlockerSystem>().CanUse(user))
+            if (user == null || !EntitySystem.Get<ActionBlockerSystem>().CanUse(user.Uid))
                 return;
 
             if (IsConnected)
@@ -269,7 +268,7 @@ namespace Content.Server.Atmos.Components
                     range = MaxExplosionRange;
                 }
 
-                Owner.SpawnExplosion((int) (range * 0.25f), (int) (range * 0.5f), (int) (range * 1.5f), 1);
+                EntitySystem.Get<ExplosionSystem>().SpawnExplosion(OwnerUid, (int) (range * 0.25f), (int) (range * 0.5f), (int) (range * 1.5f), 1);
 
                 Owner.QueueDelete();
                 return;

@@ -102,7 +102,12 @@ namespace Content.Client.CharacterAppearance.Systems
             var layers = args.Args.Part.ToHumanoidLayers();
             // TODO BODY Layer color, sprite and state
             foreach (var layer in layers)
+            {
+                if (!sprite.LayerMapTryGet(layer, out _))
+                    continue;
+
                 sprite.LayerSetVisible(layer, true);
+            }
         }
 
         private void BodyPartRemoved(HumanoidAppearanceBodyPartRemovedEvent args)

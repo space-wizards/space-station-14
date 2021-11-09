@@ -18,6 +18,7 @@
       layer: [ Passable ]
   - type: Sprite
     sprite: Structures/Wallmounts/Lighting/light_tube.rsi
+    drawdepth: WallMountedItems
     layers:
     - state: on
       map: ["enum.PoweredLightLayers.Base"]
@@ -53,6 +54,7 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   placement:
+    mode: SnapgridCenter
     snap:
     - Wallmount
 

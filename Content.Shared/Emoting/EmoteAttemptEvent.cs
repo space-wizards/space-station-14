@@ -4,11 +4,11 @@ namespace Content.Shared.Emoting
 {
     public class EmoteAttemptEvent : CancellableEntityEventArgs
     {
-        public EmoteAttemptEvent(IEntity entity)
+        public EmoteAttemptEvent(EntityUid uid)
         {
-            Entity = entity;
+            Uid = uid;
         }
 
-        public IEntity Entity { get; }
+        public EntityUid Uid { get; }
     }
 }

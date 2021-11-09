@@ -3,6 +3,7 @@ using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -17,13 +18,13 @@ namespace Content.Server.Chemistry.ReagentEntityReactions
         // ReSharper disable once CollectionNeverUpdated.Local
         private readonly HashSet<string> _reagents = new ();
 
-        protected override void React(IEntity entity, ReagentPrototype reagent, ReagentUnit volume, Solution? source)
+        protected override void React(EntityUid uid, ReagentPrototype reagent, FixedPoint2 volume, Solution? source, IEntityManager entityManager)
         {
-            if (!entity.TryGetComponent(out FlammableComponent? flammable) || !_reagents.Contains(reagent.ID)) return;
+            if (!entityManager.TryGetComponent(uid, out FlammableComponent? flammable) || !_reagents.Contains(reagent.ID)) return;
 
             var flammableSystem = EntitySystem.Get<FlammableSystem>();
-            flammableSystem.Extinguish(entity.Uid, flammable);
-            flammableSystem.AdjustFireStacks(entity.Uid, -1.5f, flammable);
+            flammableSystem.Extinguish(uid, flammable);
+            flammableSystem.AdjustFireStacks(uid, -1.5f, flammable);
         }
     }
 }
