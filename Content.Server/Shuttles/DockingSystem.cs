@@ -84,7 +84,7 @@ namespace Content.Server.Shuttles
             // TODO: Have it open the UI and have the UI do this.
             if (!component.Docked &&
                 EntityManager.TryGetComponent(uid, out PhysicsComponent? body) &&
-                EntityManager.TryGetComponent(uid, out ITransformComponent? xform))
+                EntityManager.TryGetComponent(uid, out TransformComponent? xform))
             {
                 DockingComponent? otherDock = null;
 
@@ -124,7 +124,7 @@ namespace Content.Server.Shuttles
             args.Verbs.Add(verb);
         }
 
-        private DockingComponent? GetDockable(PhysicsComponent body, ITransformComponent dockingXform)
+        private DockingComponent? GetDockable(PhysicsComponent body, TransformComponent dockingXform)
         {
             // Assume the docking port itself (and its body) is valid
 
@@ -287,36 +287,67 @@ namespace Content.Server.Shuttles
         /// </summary>
         private void Dock(DockingComponent dockA, DockingComponent dockB)
         {
-            var dockAXform = EntityManager.GetComponent<ITransformComponent>(dockA.OwnerUid);
-            var dockBXform = EntityManager.GetComponent<ITransformComponent>(dockB.OwnerUid);
+            var dockAXform = EntityManager.GetComponent<TransformComponent>(dockA.OwnerUid);
+            var dockBXform = EntityManager.GetComponent<TransformComponent>(dockB.OwnerUid);
 
             Logger.DebugS("docking", $"Docking between {dockA.Owner} and {dockB.Owner}");
 
-            // Sloth why didn't you use that fancy new weldjoint?
-            // Well you see it's mainly angular restriction and it's hard as shit to make it use the correct position
             // https://gamedev.stackexchange.com/questions/98772/b2distancejoint-with-frequency-equal-to-0-vs-b2weldjoint
 
             // TODO: NEED A TEST FOR THIS DO NOT LET SLOTH MERGE WITHOUT IT!!!
+
+            var aDirection = dockAXform.LocalRotation.GetCardinalDir();
+            var bDirection = dockBXform.LocalRotation.GetCardinalDir();
+            var swap = false;
+
+            // You see we need to stuff with the ordering to make sure it's correct and just end me.
+            switch (aDirection)
+            {
+                case Direction.East:
+                    switch (bDirection)
+                    {
+                        case Direction.West:
+                            swap = true;
+                            break;
+                    }
+
+                    break;
+            }
+
+            if (swap)
+            {
+                var dock = dockA;
+                var dockXform = dockAXform;
+
+                dockA = dockB;
+                dockAXform = dockBXform;
+                dockB = dock;
+                dockBXform = dockXform;
+            }
+
             var gridA = _mapManager.GetGrid(dockA.Owner.Transform.GridID).GridEntityId;
             var gridB = _mapManager.GetGrid(dockB.Owner.Transform.GridID).GridEntityId;
-            var gridAXform = EntityManager.GetComponent<ITransformComponent>(gridA);
-            var gridBXform = EntityManager.GetComponent<ITransformComponent>(gridB);
+            var gridAXform = EntityManager.GetComponent<TransformComponent>(gridA);
+            var gridBXform = EntityManager.GetComponent<TransformComponent>(gridB);
 
             SharedJointSystem.LinearStiffness(
                 2f,
-                1f,
+                0.7f,
                 EntityManager.GetComponent<PhysicsComponent>(gridA).Mass,
                 EntityManager.GetComponent<PhysicsComponent>(gridB).Mass,
                 out var stiffness,
                 out var damping);
 
-            var anchorA = dockAXform.LocalPosition + dockAXform.LocalRotation.ToWorldVec() / 2f * 1.01f;
-            var anchorB = dockBXform.LocalPosition + dockBXform.LocalRotation.ToWorldVec() / 2f * 1.01f;
+            var anchorA = dockAXform.LocalPosition + dockAXform.LocalRotation.ToWorldVec() / 2f;
+            var anchorB = dockBXform.LocalPosition + dockBXform.LocalRotation.ToWorldVec() / 2f;
 
             var joint = _jointSystem.CreateWeldJoint(gridA, gridB, DockingJoint + dockA.OwnerUid);
             joint.LocalAnchorA = anchorA;
             joint.LocalAnchorB = anchorB;
-            joint.ReferenceAngle = 0f;
+            joint.ReferenceAngle = (float) (gridBXform.WorldRotation - gridAXform.WorldRotation);
+            joint.CollideConnected = false;
+            // joint.Stiffness = stiffness;
+            // joint.Damping = damping;
 
             /*
             var joint = _jointSystem.CreatePrismaticJoint(gridA, gridB, DockingJoint);

@@ -140,7 +140,7 @@ namespace Content.Server.Shuttles
 
             entity.PopupMessage(Loc.GetString("shuttle-pilot-start"));
             pilotComponent.Console = component;
-            pilotComponent.PilotPosition = EntityManager.GetComponent<ITransformComponent>(entity.Uid).Coordinates;
+            pilotComponent.PilotPosition = EntityManager.GetComponent<TransformComponent>(entity.Uid).Coordinates;
             pilotComponent.Dirty();
         }
 
