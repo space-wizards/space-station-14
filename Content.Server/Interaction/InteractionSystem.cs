@@ -403,7 +403,7 @@ namespace Content.Server.Interaction
 
             if (target != null)
             {
-                var rangedMsg = new RangedInteractEvent(user, used, target, clickLocation);
+                var rangedMsg = new RangedInteractEvent(user.Uid, used.Uid, target.Uid, clickLocation);
                 RaiseLocalEvent(target.Uid, rangedMsg);
                 if (rangedMsg.Handled)
                     return true;

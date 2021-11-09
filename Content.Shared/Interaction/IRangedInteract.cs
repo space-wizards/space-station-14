@@ -44,43 +44,28 @@ namespace Content.Shared.Interaction
         /// <summary>
         ///     Entity that triggered the interaction.
         /// </summary>
-        public IEntity User { get; }
-
-        /// <summary>
-        ///     Entity that triggered the interaction.
-        /// </summary>
-        public EntityUid UserUid => User.Uid;
+        public EntityUid UserUid { get; }
 
         /// <summary>
         ///     Entity that the user used to interact.
         /// </summary>
-        public IEntity Used { get; }
-
-        /// <summary>
-        ///     Entity that the user used to interact.
-        /// </summary>
-        public EntityUid UsedUid => Used.Uid;
+        public EntityUid UsedUid { get; }
 
         /// <summary>
         ///     Entity that was interacted on.
         /// </summary>
-        public IEntity Target { get; }
-
-        /// <summary>
-        ///     Entity that was interacted on.
-        /// </summary>
-        public EntityUid TargetUid => Target.Uid;
+        public EntityUid TargetUid { get; }
 
         /// <summary>
         ///     Location that the user clicked outside of their interaction range.
         /// </summary>
         public EntityCoordinates ClickLocation { get; }
 
-        public RangedInteractEvent(IEntity user, IEntity used, IEntity target, EntityCoordinates clickLocation)
+        public RangedInteractEvent(EntityUid user, EntityUid used, EntityUid target, EntityCoordinates clickLocation)
         {
-            User = user;
-            Used = used;
-            Target = target;
+            UserUid = user;
+            UsedUid = used;
+            TargetUid = target;
             ClickLocation = clickLocation;
         }
     }
