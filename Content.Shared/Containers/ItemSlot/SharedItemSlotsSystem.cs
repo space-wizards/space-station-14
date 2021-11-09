@@ -67,7 +67,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (args.Hands == null ||
                 !args.CanAccess ||
                 !args.CanInteract ||
-                !_actionBlockerSystem.CanPickup(args.User))
+                !_actionBlockerSystem.CanPickup(args.User.Uid))
                 return;
 
             foreach (var (slotName, slot) in component.Slots)

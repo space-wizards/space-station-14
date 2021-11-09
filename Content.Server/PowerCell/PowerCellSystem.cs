@@ -31,7 +31,7 @@ namespace Content.Server.PowerCell
                 !args.CanInteract ||
                 !component.ShowVerb ||
                 !component.HasCell ||
-                !_actionBlockerSystem.CanPickup(args.User))
+                !_actionBlockerSystem.CanPickup(args.User.Uid))
                 return;
 
             Verb verb = new();
