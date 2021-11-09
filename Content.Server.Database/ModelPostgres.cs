@@ -15,6 +15,11 @@ namespace Content.Server.Database
         {
         }
 
+        static PostgresServerDbContext()
+        {
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+        }
+
         public DbSet<PostgresServerBan> Ban { get; set; } = default!;
         public DbSet<PostgresServerUnban> Unban { get; set; } = default!;
         public DbSet<PostgresPlayer> Player { get; set; } = default!;
