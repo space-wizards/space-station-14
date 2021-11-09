@@ -83,7 +83,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.Null(buckle.BuckledTo);
                 Assert.False(buckle.Buckled);
                 Assert.True(actionBlocker.CanMove(human.Uid));
-                Assert.True(actionBlocker.CanChangeDirection(human));
+                Assert.True(actionBlocker.CanChangeDirection(human.Uid));
                 Assert.True(standingState.Down(human.Uid));
                 Assert.True(standingState.Stand(human.Uid));
 
@@ -101,7 +101,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 var player = IoCManager.Resolve<IPlayerManager>().GetAllPlayers().Single();
                 Assert.True(((BuckleComponentState) buckle.GetComponentState(player)).Buckled);
                 Assert.False(actionBlocker.CanMove(human.Uid));
-                Assert.False(actionBlocker.CanChangeDirection(human));
+                Assert.False(actionBlocker.CanChangeDirection(human.Uid));
                 Assert.False(standingState.Down(human.Uid));
                 Assert.That((human.Transform.WorldPosition - chair.Transform.WorldPosition).Length, Is.LessThanOrEqualTo(buckle.BuckleOffset.Length));
 
@@ -135,7 +135,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.Null(buckle.BuckledTo);
                 Assert.False(buckle.Buckled);
                 Assert.True(actionBlocker.CanMove(human.Uid));
-                Assert.True(actionBlocker.CanChangeDirection(human));
+                Assert.True(actionBlocker.CanChangeDirection(human.Uid));
                 Assert.True(standingState.Down(human.Uid));
 
                 // Unbuckle, strap
@@ -193,7 +193,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.True(buckle.TryUnbuckle(human, true));
                 Assert.False(buckle.Buckled);
                 Assert.True(actionBlocker.CanMove(human.Uid));
-                Assert.True(actionBlocker.CanChangeDirection(human));
+                Assert.True(actionBlocker.CanChangeDirection(human.Uid));
                 Assert.True(standingState.Down(human.Uid));
 
                 // Re-buckle

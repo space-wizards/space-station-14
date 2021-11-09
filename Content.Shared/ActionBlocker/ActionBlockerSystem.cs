@@ -115,18 +115,12 @@ namespace Content.Shared.ActionBlocker
             return !ev.Cancelled;
         }
 
-        public bool CanChangeDirection(IEntity entity)
-        {
-            var ev = new ChangeDirectionAttemptEvent(entity);
-
-            RaiseLocalEvent(entity.Uid, ev);
-
-            return !ev.Cancelled;
-        }
-
         public bool CanChangeDirection(EntityUid uid)
         {
-            return CanChangeDirection(EntityManager.GetEntity(uid));
+            var ev = new ChangeDirectionAttemptEvent(uid);
+            RaiseLocalEvent(uid, ev);
+
+            return !ev.Cancelled;
         }
 
         public bool CanShiver(IEntity entity)

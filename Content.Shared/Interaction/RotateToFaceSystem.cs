@@ -45,7 +45,7 @@ namespace Content.Shared.Interaction
 
         public bool TryFaceAngle(IEntity user, Angle diffAngle)
         {
-            if (_actionBlockerSystem.CanChangeDirection(user))
+            if (_actionBlockerSystem.CanChangeDirection(user.Uid))
             {
                 user.Transform.WorldRotation = diffAngle;
                 return true;
