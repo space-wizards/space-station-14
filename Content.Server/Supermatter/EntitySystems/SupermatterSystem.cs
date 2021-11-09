@@ -35,7 +35,6 @@ namespace Content.Server.Supermatter.EntitySystems
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly RadiationSystem _radiationSystem = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly TransformComponent _transformComponent = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly ExplosionSystem _explosions = default!;
 
@@ -49,7 +48,7 @@ namespace Content.Server.Supermatter.EntitySystems
 
             foreach (var supermatter in EntityManager.EntityQuery<SupermatterComponent>())
             {
-                HandleBehavour(supermatter.OwnerUid, _transformComponent.WorldPosition, frameTime, supermatter);
+                HandleBehavour(supermatter.OwnerUid, _entityManager.GetComponent<TransformComponent>(supermatter.OwnerUid).Coordinates.Position, frameTime, supermatter);
             }
         }
 
@@ -67,7 +66,7 @@ namespace Content.Server.Supermatter.EntitySystems
             return;
 
             _atmosUpdateAccumulator += frameTime;
-            if(_atmosphereSystem.GetTileMixture(_transformComponent.Coordinates) is { } mixture && _atmosUpdateAccumulator > _atmosUpdateTimer)
+            if(_atmosphereSystem.GetTileMixture(_entityManager.GetComponent<TransformComponent>(Uid).Coordinates) is { } mixture && _atmosUpdateAccumulator > _atmosUpdateTimer)
             {
                 _atmosUpdateAccumulator -= _atmosUpdateTimer;
                 component.Mix = mixture;
@@ -234,14 +233,14 @@ namespace Content.Server.Supermatter.EntitySystems
             {
                 _damageUpdateAccumulator -= _damageUpdateTimer;
                 //if in space
-                if(!_transformComponent.GridID.IsValid())
+                if(!_entityManager.GetComponent<TransformComponent>(Uid).GridID.IsValid())
                 {
                     damage = Math.Max((component.Power / 1000) * SupermatterComponent.DamageIncreaseMultiplier, 0.1f);
                 }
 
                 //*
                 //if in an atmosphere
-                if(_atmosphereSystem.GetTileMixture(_transformComponent.Coordinates) is { } mixture)
+                if(_atmosphereSystem.GetTileMixture(_entityManager.GetComponent<TransformComponent>(Uid).Coordinates) is { } mixture)
                 {
                     //((((some value between 0.5 and 1 * temp - ((273.15 + 40) * some values between 1 and 10)) * some number between 0.25 and knock your socks off / 150) * 0.25
                     //Heat and mols account for each other, a lot of hot mols are more damaging then a few
@@ -263,7 +262,7 @@ namespace Content.Server.Supermatter.EntitySystems
                         damage = Math.Max(-(2 * (1 - (mixture.Temperature / heatcap))),-2);
                     }
                     //if there are space tiles next to SM
-                    foreach(var adjacent in _atmosphereSystem.GetAdjacentTileMixtures(_transformComponent.Coordinates))
+                    foreach(var adjacent in _atmosphereSystem.GetAdjacentTileMixtures(_entityManager.GetComponent<TransformComponent>(Uid).Coordinates))
                     {
                         if(adjacent.TotalMoles == 0)
                         {
@@ -337,16 +336,16 @@ namespace Content.Server.Supermatter.EntitySystems
             }
             if(_delamTimerAccumulator >= _delamTimerTimer)
             {
-                if(_atmosphereSystem.GetTileMixture(_transformComponent.Coordinates) is { } mixture)
+                if(_atmosphereSystem.GetTileMixture(_entityManager.GetComponent<TransformComponent>(Uid).Coordinates) is { } mixture)
                 {
                     if(mixture.TotalMoles >= SupermatterComponent.MolePenaltyThreshold)
                     {
-                        _entityManager.SpawnEntity("Singularity", _transformComponent.Coordinates);
+                        _entityManager.SpawnEntity("Singularity", _entityManager.GetComponent<TransformComponent>(Uid).Coordinates);
                         return;
                     }
                 }
                 //TODO: tune this after explosion refactor
-                _explosions.SpawnExplosion(_transformComponent.Coordinates, 75, 75, 75, 100);
+                _explosions.SpawnExplosion(_entityManager.GetComponent<TransformComponent>(Uid).Coordinates, 75, 75, 75, 100);
                 _entityManager.QueueDeleteEntity(Uid);
             }
 
@@ -375,7 +374,7 @@ namespace Content.Server.Supermatter.EntitySystems
                 return;
             if(!CanDestroy(Uid) || CannotDestroy(Uid)) return;
 
-            _entityManager.SpawnEntity("Ash", _transformComponent.MapPosition);
+            _entityManager.SpawnEntity("Ash", _entityManager.GetComponent<TransformComponent>(Uid).Coordinates);
             _entityManager.QueueDeleteEntity(Uid);
 
             if(_entityManager.TryGetComponent<SupermatterFoodComponent>(Uid, out var SupermatterFood))
@@ -401,7 +400,7 @@ namespace Content.Server.Supermatter.EntitySystems
                 return;
             HandleRads(Uid, frameTime, component);
             HandleDamage(Uid, frameTime, component);
-            foreach(var entity in _lookup.GetEntitiesInRange(_transformComponent.MapID, worldPos, 0.5f))
+            foreach(var entity in _lookup.GetEntitiesInRange(_entityManager.GetComponent<TransformComponent>(Uid).MapID, worldPos, 0.5f))
             {
                 HandleDestroy(Uid, component);
             }
