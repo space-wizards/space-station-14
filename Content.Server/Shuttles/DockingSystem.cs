@@ -257,32 +257,27 @@ namespace Content.Server.Shuttles
 
         private void EnableDocking(EntityUid uid, DockingComponent component)
         {
-            if (component.Enabled) return;
+            if (component.Enabled)
+                return;
 
             if (!EntityManager.TryGetComponent(uid, out PhysicsComponent? physicsComponent))
-            {
                 return;
-            }
 
             component.Enabled = true;
-
-            var xform = EntityManager.GetComponent<ITransformComponent>(uid);
 
             // TODO: WTF IS THIS GARBAGE
             var shape = new PhysShapeCircle
             {
                 // Want half of the unit vector
-                Position = xform.LocalRotation.ToWorldVec() / 2f,
+                Position = new Vector2(0f, -0.5f),
                 Radius = DockingRadius
             };
 
-            // TODO: Its own collision mask / layer probably
+            // Listen it makes intersection tests easier; you can probably dump this but it requires a bunch more boilerplate
             var fixture = new Fixture(physicsComponent, shape)
             {
                 ID = DockingFixture,
                 Hard = false,
-                CollisionMask = (int) CollisionGroup.Docking,
-                CollisionLayer = (int) CollisionGroup.Docking,
             };
 
             _broadphaseSystem.CreateFixture(physicsComponent, fixture);
@@ -293,20 +288,43 @@ namespace Content.Server.Shuttles
         /// </summary>
         private void Dock(DockingComponent dockA, DockingComponent dockB)
         {
-            var gridA = _mapManager.GetGrid(dockA.Owner.Transform.GridID).GridEntityId;
-            var gridB = _mapManager.GetGrid(dockB.Owner.Transform.GridID).GridEntityId;
-
             var dockAXform = EntityManager.GetComponent<ITransformComponent>(dockA.OwnerUid);
             var dockBXform = EntityManager.GetComponent<ITransformComponent>(dockB.OwnerUid);
 
             Logger.DebugS("docking", $"Docking between {dockA.Owner} and {dockB.Owner}");
 
+            var swap = false;
+
+            // Not sure if this is just how weldjoint works or what but I'll just swap the order as I can't seem
+            // to replicate the behavior no matter what referenceangle I try (best case the shuttle is inverted)
+            // TODO: NEED A TEST FOR THIS DO NOT LET SLOTH MERGE WITHOUT IT!!!
+            switch (dockAXform.LocalRotation.GetCardinalDir())
+            {
+                case Direction.East:
+                    swap = true;
+                    break;
+            }
+
+            if (swap)
+            {
+                var dock = dockA;
+                var dockXForm = dockAXform;
+
+                dockA = dockB;
+                dockAXform = dockBXform;
+
+                dockB = dock;
+                dockBXform = dockXForm;
+            }
+
+            var gridA = _mapManager.GetGrid(dockA.Owner.Transform.GridID).GridEntityId;
+            var gridB = _mapManager.GetGrid(dockB.Owner.Transform.GridID).GridEntityId;
+
             var weld = _jointSystem.CreateWeldJoint(gridA, gridB, DockingJoint);
 
-            weld.LocalAnchorA = dockBXform.LocalPosition + dockBXform.LocalRotation.ToWorldVec() / 2f;
-            weld.LocalAnchorB = dockAXform.LocalPosition + dockAXform.LocalRotation.ToWorldVec() / 2f;
-            // TODO: Get the cardinal you numpty
-            weld.ReferenceAngle = (float) dockAXform.LocalRotation.Theta - MathF.PI / 2;
+            weld.LocalAnchorA = dockAXform.LocalPosition + dockAXform.LocalRotation.ToWorldVec() / 2f;
+            weld.LocalAnchorB = dockBXform.LocalPosition + dockBXform.LocalRotation.ToWorldVec() / 2f;
+            weld.ReferenceAngle = 0f;
             weld.CollideConnected = false;
 
             dockA.DockedWith = dockB;

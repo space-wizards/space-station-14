@@ -23,7 +23,6 @@ namespace Content.Shared.Physics
         GhostImpassable = 1 <<  5, // 32 Things impassible by ghosts/observers, ie blessed tiles or forcefields
         Underplating    = 1 <<  6, // 64 Things that are under plating
         Passable        = 1 <<  7, // 128 Things that are passable
-        Docking         = 1 << 8, // 256 Docking ports that only collide with each other.
         MapGrid         = MapGridHelpers.CollisionGroup, // Map grids, like shuttles. This is the actual grid itself, not the walls or other entities connected to the grid.
 
         MobMask = Impassable | MobImpassable | VaultImpassable | SmallImpassable,
