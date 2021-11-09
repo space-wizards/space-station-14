@@ -15,8 +15,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using System.Collections.Generic;
-using Robust.Shared.Timing;
-using System;
+using Content.Server.Coordinates.Helpers;
 using Content.Shared.Audio;
 using Content.Shared.Sound;
 using Robust.Shared.Audio;
@@ -114,7 +113,7 @@ namespace Content.Server.Nuke
             // standard interactions check
             if (!args.InRangeUnobstructed())
                 return;
-            if (!_actionBlocker.CanInteract(args.User) || !_actionBlocker.CanUse(args.User))
+            if (!_actionBlocker.CanInteract(args.User.Uid) || !_actionBlocker.CanUse(args.User.Uid))
                 return;
 
             if (!EntityManager.TryGetComponent(args.User.Uid, out ActorComponent? actor))
@@ -141,7 +140,7 @@ namespace Content.Server.Nuke
             if (!component.DiskInserted)
             {
                 var msg = Loc.GetString("nuke-component-cant-anchor");
-                _popups.PopupEntity(msg, uid, Filter.Entities(args.User.Uid));
+                _popups.PopupEntity(msg, uid, Filter.Entities(args.User));
 
                 args.Cancel();
             }
@@ -172,15 +171,15 @@ namespace Content.Server.Nuke
             if (!component.DiskInserted)
                 return;
 
-            if (!EntityManager.TryGetComponent(uid, out AnchorableComponent anchorable))
+            if (!EntityManager.TryGetComponent(uid, out TransformComponent? transform))
                 return;
 
-            var user = args.Session.AttachedEntity;
-            if (user == null)
-                return;
+            // manually set transform anchor (bypassing anchorable)
+            // todo: it will break pullable system
+            transform.Coordinates = transform.Coordinates.SnapToGrid();
+            transform.Anchored = !transform.Anchored;
 
-            // this is async only to supress warning
-            await anchorable.TryToggleAnchor(user);
+            UpdateUserInterface(uid, component);
         }
 
         private void OnEnterButtonPressed(EntityUid uid, NukeComponent component, NukeKeypadEnterMessage args)
