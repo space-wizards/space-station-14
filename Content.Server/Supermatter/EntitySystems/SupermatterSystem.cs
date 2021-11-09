@@ -15,7 +15,7 @@ using Content.Shared.Damage;
 using Content.Shared.Item;
 using Content.Shared.Tag;
 using Content.Server.Projectiles.Components;
-using Content.Server.Explosion;
+using Content.Server.Explosion.EntitySystems;
 using Content.Server.Chat.Managers;
 using Content.Shared.Damage.Prototypes;
 using Robust.Shared.Prototypes;
@@ -34,9 +34,10 @@ namespace Content.Server.Supermatter.EntitySystems
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly RadiationSystem _radiationSystem = default!;
-        [Dependency] private IEntityManager _entityManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly TransformComponent _transformComponent = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
+        [Dependency] private readonly ExplosionSystem _explosions = default!;
 
         public override void Initialize()
         {
@@ -200,9 +201,8 @@ namespace Content.Server.Supermatter.EntitySystems
                 return;
 
             _damageUpdateAccumulator += frameTime;
-            var entity = component.Owner;
             float damage = 0;
-            component.DamageArchived = component.Owner.GetComponent<DamageableComponent>().TotalDamage.Float();
+            component.DamageArchived = _entityManager.GetComponent<DamageableComponent>(Uid).TotalDamage.Float();
             var integrity = GetIntegrity(Uid, component);
 
             if(component.DamageArchived >= SupermatterComponent.ExplosionPoint)
@@ -346,8 +346,8 @@ namespace Content.Server.Supermatter.EntitySystems
                     }
                 }
                 //TODO: tune this after explosion refactor
-                component.Owner.SpawnExplosion(50, 50, 50, 75);
-                component.Owner.QueueDelete();
+                _explosions.SpawnExplosion(_transformComponent.Coordinates, 75, 75, 75, 100);
+                _entityManager.QueueDeleteEntity(Uid);
             }
 
             if(component.FinalCountdown && !AlarmPlaying && RoundSeconds <= 13)
