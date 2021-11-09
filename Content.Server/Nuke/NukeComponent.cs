@@ -25,7 +25,7 @@ namespace Content.Server.Nuke
         /// </summary>
         [DataField("timer")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public int Timer = 15;
+        public int Timer = 180;
 
         /// <summary>
         ///     Slot name for to store nuclear disk inside bomb.
