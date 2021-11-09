@@ -335,7 +335,7 @@ namespace Content.Server.Buckle.Components
                 EntitySystem.Get<StandingStateSystem>().Stand(Owner.Uid);
             }
 
-            _mobState?.CurrentState?.EnterState(Owner);
+            _mobState?.CurrentState?.EnterState(Owner.Uid, Owner.EntityManager);
 
             UpdateBuckleStatus();
 
