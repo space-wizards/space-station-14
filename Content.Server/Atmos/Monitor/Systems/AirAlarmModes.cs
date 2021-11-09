@@ -6,6 +6,7 @@ using Content.Server.Atmos.Piping.Unary.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor.Components;
+using Content.Shared.Atmos.Piping.Unary.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 

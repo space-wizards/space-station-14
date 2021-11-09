@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Atmos;
-using Content.Shared.Atmos.Monitor.Components;
+using Content.Shared.Atmos.Piping.Unary.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -24,15 +24,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         public string OutletName { get; set; } = "pipe";
 
         [ViewVariables]
-        public readonly HashSet<Gas> FilterGases = DefaultFilterGases;
-
-        public static HashSet<Gas> DefaultFilterGases = new()
-        {
-            Gas.CarbonDioxide,
-            Gas.Plasma,
-            Gas.Tritium,
-            Gas.WaterVapor,
-        };
+        public readonly HashSet<Gas> FilterGases = GasVentScrubberData.DefaultFilterGases;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public ScrubberPumpDirection PumpDirection { get; set; } = ScrubberPumpDirection.Scrubbing;
@@ -72,7 +64,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         public static GasVentScrubberData FilterModePreset = new GasVentScrubberData
         {
             Enabled = true,
-            FilterGases = DefaultFilterGases,
+            FilterGases = GasVentScrubberData.DefaultFilterGases,
             PumpDirection = ScrubberPumpDirection.Scrubbing,
             VolumeRate = 200f,
             WideNet = false
@@ -81,7 +73,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         public static GasVentScrubberData FillModePreset = new GasVentScrubberData
         {
             Enabled = false,
-            FilterGases = DefaultFilterGases,
+            FilterGases = GasVentScrubberData.DefaultFilterGases,
             PumpDirection = ScrubberPumpDirection.Scrubbing,
             VolumeRate = 200f,
             WideNet = false
@@ -90,7 +82,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         public static GasVentScrubberData PanicModePreset = new GasVentScrubberData
         {
             Enabled = true,
-            FilterGases = DefaultFilterGases,
+            FilterGases = GasVentScrubberData.DefaultFilterGases,
             PumpDirection = ScrubberPumpDirection.Siphoning,
             VolumeRate = 200f,
             WideNet = false

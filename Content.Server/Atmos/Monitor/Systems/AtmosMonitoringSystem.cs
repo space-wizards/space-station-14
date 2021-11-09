@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.EntitySystems;
@@ -8,15 +7,11 @@ using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Power.Components;
-using Content.Server.WireHacking;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
-using Content.Shared.Wires;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
@@ -83,7 +78,6 @@ namespace Content.Server.Atmos.Monitor.Systems
                 return;
             }
 
-            Logger.DebugS("AtmosMonitor", $"{component.Owner.Transform.LocalRotation}");
             _checkPos.Add(uid);
         }
 
@@ -104,35 +98,13 @@ namespace Content.Server.Atmos.Monitor.Systems
             // instead place itself directly in front of the tile
             // it is facing, and then visually shift itself back
             // via sprite offsets (SS13 style but fuck it)
-            //
-            // this introduces some Edge Cases (such as people
-            // putting air alarms in the wrong direction and making
-            // them visually in the wrong spot
-            //
-            // This could probably be mitigated like so:
-            // - Make a construction step that ensure that offsets
-            //   don't get set if the offset is facing away from the user
-            //   (i.e., the user must be facing the object
-            //   in order to complete it)
-            //
-            // This cannot be mitigated when spawning any atmos monitors,
-            // and this also requires a new system potentially
-            //
-            // (this also potentially issues the issue with creating
-            // wall lights)
-            //
-            // if that doesn't work, then nothing is done about it
             var coords = component.Owner.Transform.Coordinates;
 
             if (_atmosphereSystem.IsTileAirBlocked(coords))
             {
-                Logger.DebugS("AtmosMonitor", $"airblocked, attempting to reposition: {coords}");
                 var rotPos = component.Owner.Transform.LocalRotation.RotateVec(new Vector2(0, -1));
-                Logger.DebugS("AtmosMonitor", $"worldRot: {component.Owner.Transform.LocalRotation - MathHelper.PiOver2}");
-                Logger.DebugS("AtmosMonitor", $"rotPos: {rotPos}");
                 component.Owner.Transform.Anchored = false;
                 coords = coords.Offset(rotPos);
-                Logger.DebugS("AtmosMonitor", $"newCoords: {coords}");
                 component.Owner.Transform.Coordinates = coords;
 
                 appearance.SetData("offset", -rotPos);
@@ -268,18 +240,6 @@ namespace Content.Server.Atmos.Monitor.Systems
                 && component.PressureThreshold == null
                 && component.GasThresholds == null)
                 return;
-
-            // why is this in update? because transform rotation
-            // doesn't occur at startup! wow! :death:
-            if (component.TileGas == null)
-            {
-
-            }
-
-            /*
-            var coords = component.Owner.Transform.Coordinates;
-            var air = _atmosphereSystem.GetTileMixture(coords);
-            */
 
             UpdateState(component, component.TileGas);
         }

@@ -5,7 +5,7 @@ using Content.Server.Atmos.Piping.Components;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
-using Content.Shared.Atmos.Monitor.Components;
+using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Atmos.Visuals;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;

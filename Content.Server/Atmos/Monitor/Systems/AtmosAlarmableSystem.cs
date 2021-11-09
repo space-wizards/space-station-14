@@ -4,7 +4,6 @@ using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Shared.Atmos.Monitor;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Log;
 
 namespace Content.Server.Atmos.Monitor.Systems
 {
@@ -19,8 +18,7 @@ namespace Content.Server.Atmos.Monitor.Systems
         {
             if (component.IgnoreAlarms) return;
 
-            if (!EntityManager.TryGetComponent(uid, out DeviceNetworkComponent netConn)
-                || args.Frequency != netConn.Frequency)
+            if (!EntityManager.TryGetComponent(uid, out DeviceNetworkComponent netConn))
                 return;
 
             if (args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? cmd)
