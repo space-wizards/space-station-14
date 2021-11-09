@@ -26,6 +26,9 @@ namespace Content.Server.Construction
 
         private async void OnInteractUsing(EntityUid uid, AnchorableComponent anchorable, InteractUsingEvent args)
         {
+            if (args.Handled)
+                return;
+
             // If the used entity doesn't have a tool, return early.
             if (!EntityManager.TryGetComponent(args.Used.Uid, out ToolComponent? usedTool))
                 return;
