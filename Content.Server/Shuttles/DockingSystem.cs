@@ -1,3 +1,4 @@
+using System;
 using Content.Server.Doors.Components;
 using Content.Server.Power.Components;
 using Content.Shared.Doors;
@@ -309,16 +310,27 @@ namespace Content.Server.Shuttles
                 out var stiffness,
                 out var damping);
 
-            var anchorA = dockAXform.LocalPosition + dockAXform.LocalRotation.ToWorldVec() / 2f;
-            var anchorB = dockBXform.LocalPosition + dockBXform.LocalRotation.ToWorldVec() / 2f;
+            var anchorA = dockAXform.LocalPosition + dockAXform.LocalRotation.ToWorldVec() / 2f * 1.01f;
+            var anchorB = dockBXform.LocalPosition + dockBXform.LocalRotation.ToWorldVec() / 2f * 1.01f;
 
-            var joint = _jointSystem.CreateWeldJoint(gridA, gridB, DockingJoint);
+            var joint = _jointSystem.CreateWeldJoint(gridA, gridB, DockingJoint + dockA.OwnerUid);
+            joint.LocalAnchorA = anchorA;
+            joint.LocalAnchorB = anchorB;
+            joint.ReferenceAngle = 0f;
+
+            /*
+            var joint = _jointSystem.CreatePrismaticJoint(gridA, gridB, DockingJoint);
             joint.LocalAnchorA = anchorA;
             joint.LocalAnchorB = anchorB;
             joint.CollideConnected = false;
+            joint.EnableLimit = true;
+            joint.LowerTranslation = -0.5f;
+            joint.UpperTranslation = 0.5f;
+            joint.LocalAxisA = new Vector2(-1f, 0f);
             //joint.Damping = damping;
             //joint.Stiffness = stiffness;
-            joint.ReferenceAngle = (float) (dockAXform.WorldPosition - dockBXform.WorldPosition).ToAngle().Theta;
+            joint.ReferenceAngle = 0f + MathF.PI;
+            */
 
             /*
             var joint = _jointSystem.CreateDistanceJoint(gridA, gridB, anchorA, anchorB, DockingJoint);
