@@ -12,7 +12,6 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Chat
@@ -27,38 +26,30 @@ namespace Content.Client.Chat
 		private readonly Dictionary<EntityUid, TypingIndicatorGui> _guis = new();
 
 		private IEntity? _attachedEntity;
-		public bool Enabled => _cfg.GetCVar(CCVars.ChatTypingIndicatorSystemEnabled);
+        /// <summary>
+        /// The system needs to be enabled by default client side for handling remote players
+        /// but clients can opt in to use this feature.
+        /// </summary>
+		public bool EnabledLocally => _cfg.GetCVar(CCVars.ChatTypingIndicatorSystemEnabled);
 
 		/// <summary>
 		/// Time since the chatbox input field had active input.
 		/// </summary>
 		public TimeSpan TimeSinceType { get; private set; }
 
-		/// <summary>
-		/// We need this so we essentially throttle
-		/// </summary>
-		private TimeSpan _onClientTypeCooldown;
-
-        private bool _shouldTick = false;
-
-		public override void Initialize()
+        private bool _flag = false;
+        public override void Initialize()
 		{
 			base.Initialize();
 			SubscribeNetworkEvent<ClientTypingMessage>(HandleRemoteTyping);
-			SubscribeNetworkEvent<ClientStoppedTypingMessage>(HandleRemoteStoppedTyping);
-			SubscribeLocalEvent<PlayerAttachSysMessage>(HandlePlayerAttached);
+            SubscribeLocalEvent<PlayerAttachSysMessage>(HandlePlayerAttached);
         }
 
         public void HandleClientTyping()
         {
-            //As to not flood this from every keystroke, we give it a cooldown of 2 seconds.
-            var difference = _timing.RealTime.Subtract(_onClientTypeCooldown);
-            if (!Enabled &&  difference >= TimeSpan.FromSeconds(2)) return;
             TimeSinceType = _timing.RealTime;
-            _shouldTick = true;
-            _onClientTypeCooldown = _timing.RealTime;
+            _flag = true;
         }
-
 
         public void ResetTypingTime()
 		{
@@ -69,15 +60,8 @@ namespace Content.Client.Chat
 		{
 			var entity = EntityManager.GetEntity(ev.EnityId.GetValueOrDefault());
 			var comp = entity.EnsureComponent<TypingIndicatorComponent>();
-			comp.Enabled = true;
-		}
-
-		private void HandleRemoteStoppedTyping(ClientStoppedTypingMessage ev)
-		{
-			var entity = EntityManager.GetEntity(ev.EnityId.GetValueOrDefault());
-			var comp = entity.EnsureComponent<TypingIndicatorComponent>();
-			comp.Enabled = false;
-		}
+            comp.TimeAtTyping = _timing.RealTime;
+        }
 
 		private void HandlePlayerAttached(PlayerAttachSysMessage message)
 		{
@@ -87,31 +71,28 @@ namespace Content.Client.Chat
 		public override void Update(float frameTime)
 		{
 			base.Update(frameTime);
-            if (!_shouldTick) return;
 
-			var pollRate = TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.ChatTypingIndicatorPollRate));
-            var player = _playerManager.LocalPlayer;
-            if (player == null) return;
+            if (!EnabledLocally) return; //The user has not opted in to use the typing indicator, do not inform the server they are typing.
+            if (_flag)
+            {
+                var localPlayer = _playerManager.LocalPlayer;
+                RaiseNetworkEvent(new ClientTypingMessage(localPlayer?.UserId, _attachedEntity?.Uid));
+            }
 
-			if (_timing.RealTime.Subtract(TimeSinceType) >= pollRate)
-			{
-                RaiseNetworkEvent(new ClientTypingMessage(player.UserId, player.ControlledEntity?.Uid));
-                Logger.Info($"typing: {_timing.RealTime}");
+            var pollRate = TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.ChatTypingIndicatorPollRate));
+            if (_timing.RealTime.Subtract(TimeSinceType) >= pollRate)
+            {
+                //user hasn't flipped the flag (typed in a while)
+                _flag = false;
             }
-			else
-			{
-                RaiseNetworkEvent(new ClientStoppedTypingMessage(player.UserId, player.ControlledEntity?.Uid));
-                _shouldTick = false;
-                Logger.Info($"DONE TYPING!: {_timing.RealTime}");
-            }
+
 		}
 
 		public override void FrameUpdate(float frameTime)
 		{
 			base.FrameUpdate(frameTime);
-			if (!Enabled) return;
 
-			if (_attachedEntity == null || _attachedEntity.Deleted)
+            if (_attachedEntity == null || _attachedEntity.Deleted)
 			{
 				return;
 			}
@@ -138,9 +119,10 @@ namespace Content.Client.Chat
 				if (_guis.ContainsKey(entity.Uid))
 				{
 					if (_guis.TryGetValue(entity.Uid, out var typGui))
-					{
-						typGui.Visible = typingIndicatorComp.Enabled;
-					}
+                    {
+                        var difference = _timing.RealTime.Subtract(typingIndicatorComp.TimeAtTyping);
+                        typGui.Visible = difference <= TimeSpan.FromSeconds(3f);
+                    }
 
 					continue;
 				}

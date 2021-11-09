@@ -22,7 +22,6 @@ using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using static Content.Client.Chat.TypingIndicatorSystem;
 
 namespace Content.Client.Chat.UI
 {
