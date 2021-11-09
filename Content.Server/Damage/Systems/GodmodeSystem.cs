@@ -11,7 +11,7 @@ namespace Content.Server.Damage.Systems
     [UsedImplicitly]
     public class GodmodeSystem : EntitySystem
     {
-        private readonly Dictionary<IEntity, OldEntityInformation> _entities = new();
+        private readonly Dictionary<EntityUid, OldEntityInformation> _entities = new();
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
 
         public override void Initialize()
@@ -26,21 +26,21 @@ namespace Content.Server.Damage.Systems
             _entities.Clear();
         }
 
-        public bool EnableGodmode(IEntity entity)
+        public bool EnableGodmode(EntityUid entity)
         {
             if (_entities.ContainsKey(entity))
             {
                 return false;
             }
 
-            _entities[entity] = new OldEntityInformation(entity);
+            _entities[entity] = new OldEntityInformation(entity, EntityManager);
 
-            if (entity.TryGetComponent(out MovedByPressureComponent? moved))
+            if (EntityManager.TryGetComponent(entity, out MovedByPressureComponent? moved))
             {
                 moved.Enabled = false;
             }
 
-            if (entity.TryGetComponent(out DamageableComponent? damageable))
+            if (EntityManager.TryGetComponent(entity, out DamageableComponent? damageable))
             {
                 _damageableSystem.SetDamage(damageable, new DamageSpecifier());
             }
@@ -48,24 +48,24 @@ namespace Content.Server.Damage.Systems
             return true;
         }
 
-        public bool HasGodmode(IEntity entity)
+        public bool HasGodmode(EntityUid entity)
         {
             return _entities.ContainsKey(entity);
         }
 
-        public bool DisableGodmode(IEntity entity)
+        public bool DisableGodmode(EntityUid entity)
         {
             if (!_entities.Remove(entity, out var old))
             {
                 return false;
             }
 
-            if (entity.TryGetComponent(out MovedByPressureComponent? moved))
+            if (EntityManager.TryGetComponent(entity, out MovedByPressureComponent? moved))
             {
                 moved.Enabled = old.MovedByPressure;
             }
 
-            if (entity.TryGetComponent(out DamageableComponent? damageable))
+            if (EntityManager.TryGetComponent(entity, out DamageableComponent? damageable))
             {
                 if (old.Damage != null)
                 {
@@ -81,7 +81,7 @@ namespace Content.Server.Damage.Systems
         /// </summary>
         /// <param name="entity">The entity to toggle godmode for.</param>
         /// <returns>true if enabled, false if disabled.</returns>
-        public bool ToggleGodmode(IEntity entity)
+        public bool ToggleGodmode(EntityUid entity)
         {
             if (HasGodmode(entity))
             {
@@ -97,18 +97,18 @@ namespace Content.Server.Damage.Systems
 
         public class OldEntityInformation
         {
-            public OldEntityInformation(IEntity entity)
+            public OldEntityInformation(EntityUid entity, IEntityManager entityManager)
             {
                 Entity = entity;
-                MovedByPressure = entity.IsMovedByPressure();
+                MovedByPressure = entityManager.HasComponent<MovedByPressureComponent>(entity);
 
-                if (entity.TryGetComponent(out DamageableComponent? damageable))
+                if (entityManager.TryGetComponent(entity, out DamageableComponent? damageable))
                 {
                     Damage = damageable.Damage;
                 }
             }
 
-            public IEntity Entity { get; }
+            public EntityUid Entity { get; }
 
             public bool MovedByPressure { get; }
 
