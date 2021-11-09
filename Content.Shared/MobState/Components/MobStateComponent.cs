@@ -290,7 +290,7 @@ namespace Content.Shared.MobState.Components
         {
             if (!current.HasValue)
             {
-                old?.ExitState(Owner.Uid, Owner.EntityManager);
+                old?.ExitState(OwnerUid, Owner.EntityManager);
                 return;
             }
 
@@ -300,16 +300,16 @@ namespace Content.Shared.MobState.Components
 
             if (state == old)
             {
-                state.UpdateState(Owner.Uid, threshold, Owner.EntityManager);
+                state.UpdateState(OwnerUid, threshold, Owner.EntityManager);
                 return;
             }
 
-            old?.ExitState(Owner.Uid, Owner.EntityManager);
+            old?.ExitState(OwnerUid, Owner.EntityManager);
 
             CurrentState = state;
 
-            state.EnterState(Owner.Uid, Owner.EntityManager);
-            state.UpdateState(Owner.Uid, threshold, Owner.EntityManager);
+            state.EnterState(OwnerUid, Owner.EntityManager);
+            state.UpdateState(OwnerUid, threshold, Owner.EntityManager);
 
             var message = new MobStateChangedMessage(this, old, state);
 #pragma warning disable 618
