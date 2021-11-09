@@ -21,13 +21,13 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         /// <param name="owner">Entity on which behavior is executed</param>
         /// <param name="system">system calling the behavior</param>
         /// <param name="entityManager"></param>
-        public void Execute(EntityUid owner, DestructibleSystem system, IEntityManager entityManager)
+        public void Execute(EntityUid owner, DestructibleSystem system)
         {
             var solutionContainerSystem = EntitySystem.Get<SolutionContainerSystem>();
 
-            var coordinates = entityManager.GetComponent<TransformComponent>(owner).Coordinates;
+            var coordinates = system.EntityManager.GetComponent<TransformComponent>(owner).Coordinates;
 
-            if (entityManager.TryGetComponent(owner, out SpillableComponent? spillableComponent) &&
+            if (system.EntityManager.TryGetComponent(owner, out SpillableComponent? spillableComponent) &&
                 solutionContainerSystem.TryGetSolution(owner, spillableComponent.SolutionName,
                     out var compSolution))
             {
