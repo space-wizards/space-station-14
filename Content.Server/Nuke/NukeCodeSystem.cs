@@ -1,6 +1,5 @@
 using Content.Server.Chat.Managers;
 using Content.Server.Communications;
-using Content.Server.Paper;
 using Content.Shared.GameTicking;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;

@@ -346,6 +346,9 @@ namespace Content.Server.Nuke
             var sender = Loc.GetString("nuke-component-announcement-sender");
             _chat.DispatchStationAnnouncement(announcement, sender);
 
+            // todo: move it to announcements system
+            SoundSystem.Play(Filter.Broadcast(), component.ArmSound.GetSound());
+
             component.Status = NukeStatus.ARMED;
             _tickingBombs.Add(uid);
             UpdateUserInterface(uid, component);
@@ -366,6 +369,9 @@ namespace Content.Server.Nuke
             var announcement = Loc.GetString("nuke-component-announcement-unarmed");
             var sender = Loc.GetString("nuke-component-announcement-sender");
             _chat.DispatchStationAnnouncement(announcement, sender);
+
+            // todo: move it to announcements system
+            SoundSystem.Play(Filter.Broadcast(), component.DisarmSound.GetSound());
 
             // disable sound and reset it
             component.PlayedAlertSound = false;

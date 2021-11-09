@@ -302,6 +302,8 @@ namespace Content.Client.Entry
             "ApcNetSwitch",
             "HandLabeler",
             "Label",
+            "Nuke",
+            "NukeCodePaper",
             "GhostRadio",
             "Armor",
             "PneumaticCannon"
