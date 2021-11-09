@@ -99,18 +99,12 @@ namespace Content.Shared.ActionBlocker
             return !ev.Cancelled;
         }
 
-        public bool CanEquip(IEntity entity)
-        {
-            var ev = new EquipAttemptEvent(entity);
-
-            RaiseLocalEvent(entity.Uid, ev);
-
-            return !ev.Cancelled;
-        }
-
         public bool CanEquip(EntityUid uid)
         {
-            return CanEquip(EntityManager.GetEntity(uid));
+            var ev = new EquipAttemptEvent(uid);
+            RaiseLocalEvent(uid, ev);
+
+            return !ev.Cancelled;
         }
 
         public bool CanUnequip(IEntity entity)

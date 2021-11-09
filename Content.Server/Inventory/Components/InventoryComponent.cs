@@ -207,7 +207,7 @@ namespace Content.Server.Inventory.Components
             var pass = false;
             reason = null;
 
-            if (mobCheck && !EntitySystem.Get<ActionBlockerSystem>().CanEquip(Owner))
+            if (mobCheck && !EntitySystem.Get<ActionBlockerSystem>().CanEquip(OwnerUid))
             {
                 reason = Loc.GetString("inventory-component-can-equip-cannot");
                 return false;
