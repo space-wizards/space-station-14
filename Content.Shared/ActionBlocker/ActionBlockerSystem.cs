@@ -123,16 +123,12 @@ namespace Content.Shared.ActionBlocker
             return !ev.Cancelled;
         }
 
-        public bool CanShiver(IEntity entity)
-        {
-            var ev = new ShiverAttemptEvent(entity);
-
-            return !ev.Cancelled;
-        }
-
         public bool CanShiver(EntityUid uid)
         {
-            return CanShiver(EntityManager.GetEntity(uid));
+            var ev = new ShiverAttemptEvent(uid);
+            RaiseLocalEvent(uid, ev);
+
+            return !ev.Cancelled;
         }
 
         public bool CanSweat(IEntity entity)
