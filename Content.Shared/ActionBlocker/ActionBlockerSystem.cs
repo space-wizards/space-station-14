@@ -89,18 +89,12 @@ namespace Content.Shared.ActionBlocker
             return CanPickup(EntityManager.GetEntity(uid));
         }
 
-        public bool CanEmote(IEntity entity)
-        {
-            var ev = new EmoteAttemptEvent(entity);
-
-            RaiseLocalEvent(entity.Uid, ev);
-
-            return !ev.Cancelled;
-        }
-
         public bool CanEmote(EntityUid uid)
         {
-            return CanEmote(EntityManager.GetEntity(uid));
+            var ev = new EmoteAttemptEvent(uid);
+            RaiseLocalEvent(uid, ev);
+
+            return !ev.Cancelled;
         }
 
         public bool CanAttack(EntityUid uid)
