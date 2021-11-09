@@ -131,18 +131,12 @@ namespace Content.Shared.ActionBlocker
             return !ev.Cancelled;
         }
 
-        public bool CanSweat(IEntity entity)
-        {
-            var ev = new SweatAttemptEvent(entity);
-
-            RaiseLocalEvent(entity.Uid, ev);
-
-            return !ev.Cancelled;
-        }
-
         public bool CanSweat(EntityUid uid)
         {
-            return CanSweat(EntityManager.GetEntity(uid));
+            var ev = new SweatAttemptEvent(uid);
+            RaiseLocalEvent(uid, ev);
+
+            return !ev.Cancelled;
         }
     }
 }

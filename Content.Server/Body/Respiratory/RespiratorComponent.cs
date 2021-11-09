@@ -279,7 +279,7 @@ namespace Content.Server.Body.Respiratory
 
             if (temperatureComponent.CurrentTemperature > NormalBodyTemperature)
             {
-                if (!actionBlocker.CanSweat(Owner)) return;
+                if (!actionBlocker.CanSweat(OwnerUid)) return;
                 if (!_isSweating)
                 {
                     Owner.PopupMessage(Loc.GetString("metabolism-component-is-sweating"));
