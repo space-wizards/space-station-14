@@ -79,7 +79,7 @@ namespace Content.Server.Body.Systems
         public bool CanTransferSolution(EntityUid uid, Solution solution,
             SolutionContainerManagerComponent? solutions=null)
         {
-            if (!Resolve(uid, ref solutions))
+            if (!Resolve(uid, ref solutions, false))
                 return false;
 
             if (!_solutionContainerSystem.TryGetSolution(uid, DefaultSolutionName, out var stomachSolution, solutions))
@@ -96,7 +96,7 @@ namespace Content.Server.Body.Systems
             StomachComponent? stomach=null,
             SolutionContainerManagerComponent? solutions=null)
         {
-            if (!Resolve(uid, ref stomach, ref solutions))
+            if (!Resolve(uid, ref stomach, ref solutions, false))
                 return false;
 
             if (!_solutionContainerSystem.TryGetSolution(uid, DefaultSolutionName, out var stomachSolution, solutions)
