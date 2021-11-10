@@ -8,11 +8,11 @@ namespace Content.Client.MobState.States
 {
     public class DeadMobState : SharedDeadMobState
     {
-        public override void EnterState(IEntity entity)
+        public override void EnterState(EntityUid uid, IEntityManager entityManager)
         {
-            base.EnterState(entity);
+            base.EnterState(uid, entityManager);
 
-            if (entity.TryGetComponent(out AppearanceComponent? appearance))
+            if (entityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
             {
                 appearance.SetData(DamageStateVisuals.State, DamageState.Dead);
             }

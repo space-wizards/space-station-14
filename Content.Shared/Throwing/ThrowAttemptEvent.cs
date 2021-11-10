@@ -4,12 +4,12 @@ namespace Content.Shared.Throwing
 {
     public class ThrowAttemptEvent : CancellableEntityEventArgs
     {
-        public ThrowAttemptEvent(IEntity entity)
+        public ThrowAttemptEvent(EntityUid uid)
         {
-            Entity = entity;
+            Uid = uid;
         }
 
-        public IEntity Entity { get; }
+        public EntityUid Uid { get; }
     }
 
     /// <summary>

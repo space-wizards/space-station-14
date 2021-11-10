@@ -152,7 +152,7 @@ namespace Content.Shared.Body.Components
 
             var argsAdded = new BodyPartAddedEventArgs(slot.Id, part);
 
-            EntitySystem.Get<SharedHumanoidAppearanceSystem>().BodyPartAdded(Owner.Uid, argsAdded);
+            EntitySystem.Get<SharedHumanoidAppearanceSystem>().BodyPartAdded(OwnerUid, argsAdded);
             foreach (var component in Owner.GetAllComponents<IBodyPartAdded>().ToArray())
             {
                 component.BodyPartAdded(argsAdded);
@@ -180,7 +180,7 @@ namespace Content.Shared.Body.Components
             var args = new BodyPartRemovedEventArgs(slot.Id, part);
 
 
-            EntitySystem.Get<SharedHumanoidAppearanceSystem>().BodyPartRemoved(Owner.Uid, args);
+            EntitySystem.Get<SharedHumanoidAppearanceSystem>().BodyPartRemoved(OwnerUid, args);
             foreach (var component in Owner.GetAllComponents<IBodyPartRemoved>())
             {
                 component.BodyPartRemoved(args);
@@ -190,14 +190,14 @@ namespace Content.Shared.Body.Components
             if (part.PartType == BodyPartType.Leg &&
                 GetPartsOfType(BodyPartType.Leg).ToArray().Length == 0)
             {
-                EntitySystem.Get<StandingStateSystem>().Down(Owner.Uid);
+                EntitySystem.Get<StandingStateSystem>().Down(OwnerUid);
             }
 
             if (part.IsVital && SlotParts.Count(x => x.Value.PartType == part.PartType) == 0)
             {
                 // TODO BODY SYSTEM KILL : Find a more elegant way of killing em than just dumping bloodloss damage.
                 var damage = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Bloodloss"), 300);
-                EntitySystem.Get<DamageableSystem>().TryChangeDamage(part.Owner.Uid, damage);
+                EntitySystem.Get<DamageableSystem>().TryChangeDamage(part.OwnerUid, damage);
             }
 
             OnBodyChanged();
@@ -556,7 +556,7 @@ namespace Content.Shared.Body.Components
             var i = 0;
             foreach (var (part, slot) in SlotParts)
             {
-                parts[i] = (slot.Id, part.Owner.Uid);
+                parts[i] = (slot.Id, part.OwnerUid);
                 i++;
             }
 

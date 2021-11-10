@@ -18,7 +18,9 @@ namespace Content.Server.Damage.Commands
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
-            IEntity entity;
+            EntityUid entity;
+
+            var entityManager = IoCManager.Resolve<IEntityManager>();
 
             switch (args.Length)
             {
@@ -29,13 +31,13 @@ namespace Content.Server.Damage.Commands
                         return;
                     }
 
-                    if (player.AttachedEntity == null)
+                    if (player.AttachedEntityUid == null)
                     {
                         shell.WriteLine("An entity needs to be specified when you aren't attached to an entity.");
                         return;
                     }
 
-                    entity = player.AttachedEntity;
+                    entity = player.AttachedEntityUid.Value;
                     break;
                 case 1:
                     if (!EntityUid.TryParse(args[0], out var id))
@@ -44,14 +46,13 @@ namespace Content.Server.Damage.Commands
                         return;
                     }
 
-                    var entityManager = IoCManager.Resolve<IEntityManager>();
-                    if (!entityManager.TryGetEntity(id, out var parsedEntity))
+                    if (!entityManager.EntityExists(id))
                     {
                         shell.WriteLine($"No entity found with id {id}.");
                         return;
                     }
 
-                    entity = parsedEntity;
+                    entity = id;
                     break;
                 default:
                     shell.WriteLine(Help);
@@ -61,9 +62,11 @@ namespace Content.Server.Damage.Commands
             var godmodeSystem = EntitySystem.Get<GodmodeSystem>();
             var enabled = godmodeSystem.ToggleGodmode(entity);
 
+            var name = entityManager.GetComponent<MetaDataComponent>(entity).EntityName;
+
             shell.WriteLine(enabled
-                ? $"Enabled godmode for entity {entity.Name} with id {entity.Uid}"
-                : $"Disabled godmode for entity {entity.Name} with id {entity.Uid}");
+                ? $"Enabled godmode for entity {name} with id {entity}"
+                : $"Disabled godmode for entity {name} with id {entity}");
         }
     }
 }

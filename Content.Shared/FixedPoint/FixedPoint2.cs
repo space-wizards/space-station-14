@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Content.Shared.ActionBlocker;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.FixedPoint
@@ -208,6 +209,16 @@ namespace Content.Shared.FixedPoint
         public static FixedPoint2 Max(FixedPoint2 a, FixedPoint2 b)
         {
             return a > b ? a : b;
+        }
+
+        public static FixedPoint2 Abs(FixedPoint2 a)
+        {
+            return FixedPoint2.New(Math.Abs(a._value));
+        }
+
+        public static FixedPoint2 Dist(FixedPoint2 a, FixedPoint2 b)
+        {
+            return FixedPoint2.Abs(a - b);
         }
 
         public static FixedPoint2 Clamp(FixedPoint2 reagent, FixedPoint2 min, FixedPoint2 max)

@@ -319,7 +319,7 @@ namespace Content.Server.Instruments
 
             if ((!Handheld && InstrumentPlayer != null)
                 || (Handheld && actor.PlayerSession != InstrumentPlayer)
-                || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user)) return;
+                || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user.Uid)) return;
 
             InstrumentPlayer = actor.PlayerSession;
             OpenUserInterface(InstrumentPlayer);
@@ -351,8 +351,8 @@ namespace Content.Server.Instruments
             var maxMidiBatchDropped = _instrumentSystem.MaxMidiBatchesDropped;
 
             if (_instrumentPlayer != null
-                && (_instrumentPlayer.AttachedEntity == null
-                    || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(_instrumentPlayer.AttachedEntity)))
+                && (_instrumentPlayer.AttachedEntityUid == null
+                    || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(_instrumentPlayer.AttachedEntityUid.Value)))
             {
                 InstrumentPlayer = null;
                 Clean();

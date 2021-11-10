@@ -5,7 +5,6 @@ using System.IO;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using Content.Shared;
 using Content.Shared.CCVar;
 using Content.Shared.Preferences;
 using Microsoft.Data.Sqlite;
@@ -382,8 +381,8 @@ namespace Content.Server.Database
                 _sawmill = sawmill;
             }
 
-            public void Log<TState>(MSLogLevel logLevel, EventId eventId, TState state, Exception exception,
-                Func<TState, Exception, string> formatter)
+            public void Log<TState>(MSLogLevel logLevel, EventId eventId, TState state, Exception? exception,
+                Func<TState, Exception?, string> formatter)
             {
                 var lvl = logLevel switch
                 {

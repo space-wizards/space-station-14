@@ -46,7 +46,7 @@ namespace Content.Shared.Hands
             if (entity.TryGetContainerMan(out var containerManager))
             {
                 var parentMsg = new ContainedEntityDropHandItemsAttemptEvent(uid);
-                eventBus.RaiseLocalEvent(containerManager.Owner.Uid, parentMsg);
+                eventBus.RaiseLocalEvent(containerManager.OwnerUid, parentMsg);
 
                 if (parentMsg.Cancelled)
                     return;

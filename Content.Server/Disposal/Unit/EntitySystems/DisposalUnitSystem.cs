@@ -98,7 +98,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             if (!args.CanAccess ||
                 !args.CanInteract ||
                 component.ContainedEntities.Contains(args.User) ||
-                !_actionBlockerSystem.CanMove(args.User))
+                !_actionBlockerSystem.CanMove(args.User.Uid))
                 return;
 
             // Add verb to climb inside of the unit,
@@ -379,7 +379,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
         private bool IsValidInteraction(ITargetedInteractEventArgs eventArgs)
         {
-            if (!Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
+            if (!Get<ActionBlockerSystem>().CanInteract(eventArgs.User.Uid))
             {
                 eventArgs.Target.PopupMessage(eventArgs.User, Loc.GetString("ui-disposal-unit-is-valid-interaction-cannot=interact"));
                 return false;

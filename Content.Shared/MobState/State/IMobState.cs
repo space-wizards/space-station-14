@@ -27,16 +27,16 @@ namespace Content.Shared.MobState.State
         /// <summary>
         ///     Called when this state is entered.
         /// </summary>
-        void EnterState(IEntity entity);
+        void EnterState(EntityUid uid, IEntityManager entityManager);
 
         /// <summary>
         ///     Called when this state is left for a different state.
         /// </summary>
-        void ExitState(IEntity entity);
+        void ExitState(EntityUid uid, IEntityManager entityManager);
 
         /// <summary>
         ///     Called when this state is updated.
         /// </summary>
-        void UpdateState(IEntity entity, FixedPoint2 threshold);
+        void UpdateState(EntityUid entity, FixedPoint2 threshold, IEntityManager entityManager);
     }
 }

@@ -46,9 +46,19 @@ namespace Content.Shared.Interaction
         public IEntity User { get; }
 
         /// <summary>
+        ///     Entity that activated the target world entity.
+        /// </summary>
+        public EntityUid UserUid => User.Uid;
+
+        /// <summary>
         ///     Entity that was activated in the world.
         /// </summary>
         public IEntity Target { get; }
+
+        /// <summary>
+        ///     Entity that was activated in the world.
+        /// </summary>
+        public EntityUid TargetUid => Target.Uid;
 
         public ActivateInWorldEvent(IEntity user, IEntity target)
         {

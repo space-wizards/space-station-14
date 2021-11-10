@@ -6,17 +6,14 @@
   components:
   - type: Reactive
     reactions:
+    - reagents: [Water]
+      methods: [Touch]
+      effects:
       - !type:ExtinguishReaction
-        touch: true
-        reagents:
-          - Water
+    - reagents: [WeldingFuel, Thermite, Plasma, Ethanol]
+      methods: [Touch]
+      effects:
       - !type:FlammableReaction
-        touch: true
-        reagents:
-          - WeldingFuel
-          - Thermite
-          - Plasma
-          - Ethanol
   - type: UtilityAI
     behaviorSets:
     # - Clothing
