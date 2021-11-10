@@ -30,7 +30,9 @@ namespace Content.Server.Administration
             // TODO: Sanitize text?
             // Confirm that this person is actually allowed to send a message here.
             var senderPersonalChannel = senderSession.UserId == message.ChannelId;
-            if (senderPersonalChannel && (_adminManager.GetAdminData(senderSession) == null))
+            var senderAdmin = _adminManager.GetAdminData(senderSession) != null;
+            var authorized = senderPersonalChannel || senderAdmin;
+            if (!authorized)
             {
                 // Unauthorized bwoink (log?)
                 return;
