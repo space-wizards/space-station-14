@@ -198,7 +198,16 @@ namespace Content.Server.Shuttles
             dockA.DockJoint = null;
             dockA.DockedWith = null;
 
-            var msg = new UndockEvent {DockA = dockA, DockB = dockB};
+            var gridAUid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(dockA.OwnerUid).GridID).GridEntityId;
+            var gridBUid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(dockB.OwnerUid).GridID).GridEntityId;
+
+            var msg = new UndockEvent
+            {
+                DockA = dockA,
+                DockB = dockB,
+                GridAUid = gridAUid,
+                GridBUid = gridBUid,
+            };
 
             EntityManager.EventBus.RaiseLocalEvent(dockA.OwnerUid, msg, false);
             EntityManager.EventBus.RaiseLocalEvent(dockB.OwnerUid, msg, false);
@@ -287,71 +296,19 @@ namespace Content.Server.Shuttles
         /// </summary>
         private void Dock(DockingComponent dockA, DockingComponent dockB)
         {
-            var dockAXform = EntityManager.GetComponent<TransformComponent>(dockA.OwnerUid);
-            var dockBXform = EntityManager.GetComponent<TransformComponent>(dockB.OwnerUid);
-
             Logger.DebugS("docking", $"Docking between {dockA.Owner} and {dockB.Owner}");
 
             // https://gamedev.stackexchange.com/questions/98772/b2distancejoint-with-frequency-equal-to-0-vs-b2weldjoint
 
-            // We could also potentially use a prismatic joint
+            // We could also potentially use a prismatic joint? Depending if we want clamps that can extend or whatever
 
             // TODO: NEED A TEST FOR THIS DO NOT LET SLOTH MERGE WITHOUT IT!!!
 
-            var aDirection = dockAXform.LocalRotation.GetCardinalDir();
-            var bDirection = dockBXform.LocalRotation.GetCardinalDir();
-            var swap = false;
+            var dockAXform = EntityManager.GetComponent<TransformComponent>(dockA.OwnerUid);
+            var dockBXform = EntityManager.GetComponent<TransformComponent>(dockB.OwnerUid);
 
-            // You see we need to stuff with the ordering to make sure it's correct and just end me.
-            switch (aDirection)
-            {
-                case Direction.North:
-                {
-                    switch (bDirection)
-                    {
-                        case Direction.West:
-                        case Direction.South:
-                            swap = true;
-                            break;
-                    }
-                    break;
-                }
-                case Direction.East:
-                    switch (bDirection)
-                    {
-                        case Direction.North:
-                        case Direction.West:
-                            swap = true;
-                            break;
-                    }
-                    break;
-                case Direction.South:
-                    switch (bDirection)
-                    {
-                        case Direction.West:
-                        case Direction.North:
-                            swap = true;
-                            break;
-                    }
-
-                    break;
-            }
-
-            if (swap)
-            {
-                var dock = dockA;
-                var dockXform = dockAXform;
-
-                dockA = dockB;
-                dockAXform = dockBXform;
-                dockB = dock;
-                dockBXform = dockXform;
-            }
-
-            var gridA = _mapManager.GetGrid(dockA.Owner.Transform.GridID).GridEntityId;
-            var gridB = _mapManager.GetGrid(dockB.Owner.Transform.GridID).GridEntityId;
-            var gridAXform = EntityManager.GetComponent<TransformComponent>(gridA);
-            var gridBXform = EntityManager.GetComponent<TransformComponent>(gridB);
+            var gridA = _mapManager.GetGrid(dockAXform.GridID).GridEntityId;
+            var gridB = _mapManager.GetGrid(dockBXform.GridID).GridEntityId;
 
             SharedJointSystem.LinearStiffness(
                 2f,
@@ -361,17 +318,37 @@ namespace Content.Server.Shuttles
                 out var stiffness,
                 out var damping);
 
-            var anchorA = dockAXform.LocalPosition + dockAXform.LocalRotation.ToWorldVec() / 2f * 1.01f;
-            var anchorB = dockBXform.LocalPosition + dockBXform.LocalRotation.ToWorldVec() / 2f * 1.01f;
-
             // These need playing around with
             // Could also potentially have collideconnected false and stiffness 0 but it was a bit more suss???
             var joint = _jointSystem.CreateWeldJoint(gridA, gridB, DockingJoint + dockA.OwnerUid);
+
+            // Joints can mess with the ordering to make its own solving easier.
+            if (gridA != joint.BodyAUid)
+            {
+                var grid = gridA;
+                var dock = dockA;
+                var dockXform = dockAXform;
+                gridA = gridB;
+                gridB = grid;
+                dockA = dockB;
+                dockB = dock;
+                dockAXform = dockBXform;
+                dockBXform = dockXform;
+            }
+
+            var gridAXform = EntityManager.GetComponent<TransformComponent>(gridA);
+            var gridBXform = EntityManager.GetComponent<TransformComponent>(gridB);
+
+            var anchorA = dockAXform.LocalPosition + dockAXform.LocalRotation.ToWorldVec() / 2f * 1.01f;
+            var anchorB = dockBXform.LocalPosition + dockBXform.LocalRotation.ToWorldVec() / 2f * 1.01f;
+
             joint.LocalAnchorA = anchorA;
             joint.LocalAnchorB = anchorB;
             joint.ReferenceAngle = (float) (gridBXform.WorldRotation - gridAXform.WorldRotation);
             joint.CollideConnected = true;
-            joint.Stiffness = 0.2f;
+            joint.Stiffness = stiffness;
+            joint.Damping = damping;
+
             // joint.Stiffness = stiffness;
             // joint.Damping = damping;
 
@@ -413,7 +390,13 @@ namespace Content.Server.Shuttles
                 doorB.Open();
             }
 
-            var msg = new DockEvent {DockA = dockA, DockB = dockB};
+            var msg = new DockEvent
+            {
+                DockA = dockA,
+                DockB = dockB,
+                GridAUid = gridA,
+                GridBUid = gridB,
+            };
 
             EntityManager.EventBus.RaiseLocalEvent(dockA.OwnerUid, msg, false);
             EntityManager.EventBus.RaiseLocalEvent(dockB.OwnerUid, msg, false);
@@ -498,6 +481,9 @@ namespace Content.Server.Shuttles
         {
             public DockingComponent DockA = default!;
             public DockingComponent DockB = default!;
+
+            public EntityUid GridAUid = default!;
+            public EntityUid GridBUid = default!;
         }
 
         /// <summary>
@@ -507,6 +493,9 @@ namespace Content.Server.Shuttles
         {
             public DockingComponent DockA = default!;
             public DockingComponent DockB = default!;
+
+            public EntityUid GridAUid = default!;
+            public EntityUid GridBUid = default!;
         }
     }
 }
