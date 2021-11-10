@@ -55,7 +55,7 @@ namespace Content.Server.UserInterface
 
             if (aui.AdminOnly && !_adminManager.IsAdmin(actor.PlayerSession)) return false;
 
-            if (!_actionBlockerSystem.CanInteract(user))
+            if (!_actionBlockerSystem.CanInteract(user.Uid))
             {
                 user.PopupMessageCursor(Loc.GetString("base-computer-ui-component-cannot-interact"));
                 return true;
