@@ -4,9 +4,10 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Shuttles
 {
-    [NetworkedComponent]
     public abstract class SharedDockingComponent : Component
     {
+        // Yes I left this in for now because there's no overhead and we'll need a client one later anyway
+        // and I was too lazy to delete it.
         public override string Name => "Docking";
 
         [ViewVariables]
