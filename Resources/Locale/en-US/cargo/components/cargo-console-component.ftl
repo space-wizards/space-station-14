@@ -18,3 +18,10 @@ cargo-console-menu-populate-categories-all-text = All
 cargo-console-menu-populate-orders-cargo-order-row-product-name-text = {$productName} (x{$orderAmount}) by {$orderRequester}
 cargo-console-menu-cargo-order-row-approve-button = Approve
 cargo-console-menu-cargo-order-row-cancel-button = Cancel
+
+cargo-console-paper-print-name = Order #{$orderNumber}
+cargo-console-paper-print-text = 
+    Order #{$orderNumber}
+    Requested by: {$requester}
+    Reason: {$reason}
+    Approved by: {$approver}
