@@ -73,7 +73,7 @@ namespace Content.Server.Administration.Commands
                 };
                 mind.ChangeOwningPlayer(session.UserId);
             }
-            mind.TransferTo(target);
+            mind.TransferTo(target.Uid);
         }
     }
 }

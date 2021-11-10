@@ -39,7 +39,7 @@ namespace Content.IntegrationTests.Tests
                 mind = new Mind(player.UserId);
                 mind.ChangeOwningPlayer(player.UserId);
 
-                mind.TransferTo(playerEnt);
+                mind.TransferTo(playerEnt.Uid);
                 mind.Visit(visitEnt);
 
                 Assert.That(player.AttachedEntity, Is.EqualTo(visitEnt));
@@ -83,7 +83,7 @@ namespace Content.IntegrationTests.Tests
                 mind = new Mind(player.UserId);
                 mind.ChangeOwningPlayer(player.UserId);
 
-                mind.TransferTo(playerEnt);
+                mind.TransferTo(playerEnt.Uid);
 
                 Assert.That(mind.CurrentEntity, Is.EqualTo(playerEnt));
             });
@@ -132,7 +132,7 @@ namespace Content.IntegrationTests.Tests
                 mind = new Mind(player.UserId);
                 mind.ChangeOwningPlayer(player.UserId);
 
-                mind.TransferTo(playerEnt);
+                mind.TransferTo(playerEnt.Uid);
 
                 Assert.That(mind.CurrentEntity, Is.EqualTo(playerEnt));
             });

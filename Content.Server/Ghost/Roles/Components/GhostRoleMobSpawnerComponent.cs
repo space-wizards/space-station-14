@@ -52,7 +52,7 @@ namespace Content.Server.Ghost.Roles.Components
             mob.EnsureComponent<MindComponent>();
 
             var ghostRoleSystem = EntitySystem.Get<GhostRoleSystem>();
-            ghostRoleSystem.GhostRoleInternalCreateMindAndTransfer(session, this, mob);
+            ghostRoleSystem.GhostRoleInternalCreateMindAndTransfer(session, OwnerUid, mob.Uid, this);
 
             if (++_currentTakeovers < _availableTakeovers)
                 return true;

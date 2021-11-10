@@ -243,12 +243,10 @@ namespace Content.Server.Mind
             return true;
         }
 
-
-
         /// <summary>
         ///     Transfer this mind's control over to a new entity.
         /// </summary>
-        /// <param name="entity">
+        /// <param name="entityUid">
         ///     The entity to control.
         ///     Can be null, in which case it will simply detach the mind from any entity.
         /// </param>
@@ -258,28 +256,31 @@ namespace Content.Server.Mind
         /// <exception cref="ArgumentException">
         ///     Thrown if <paramref name="entity"/> is already owned by another mind.
         /// </exception>
-        public void TransferTo(IEntity? entity, bool ghostCheckOverride = false)
+        public void TransferTo(EntityUid? entityUid, bool ghostCheckOverride = false)
         {
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            IEntity? entity = (entityUid != null) ? entMan.GetEntity(entityUid.Value) : null;
+
             MindComponent? component = null;
             var alreadyAttached = false;
 
-            if (entity != null)
+            if (entityUid != null)
             {
-                if (!entity.TryGetComponent(out component))
+                if (!entMan.TryGetComponent<MindComponent>(entityUid.Value, out component))
                 {
-                    component = entity.AddComponent<MindComponent>();
+                    component = entMan.AddComponent<MindComponent>(entityUid.Value);
                 }
-                else if (component.HasMind)
+                else if (component!.HasMind)
                 {
                     EntitySystem.Get<GameTicker>().OnGhostAttempt(component.Mind!, false);
                 }
 
-                if (entity.TryGetComponent(out ActorComponent? actor))
+                if (entMan.TryGetComponent<ActorComponent>(entityUid.Value, out var actor))
                 {
                     // Happens when transferring to your currently visited entity.
                     if (actor.PlayerSession != Session)
                     {
-                        throw new ArgumentException("Visit target already has a session.", nameof(entity));
+                        throw new ArgumentException("Visit target already has a session.", nameof(entityUid));
                     }
 
                     alreadyAttached = true;

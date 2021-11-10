@@ -155,15 +155,17 @@ namespace Content.Server.Ghost.Roles
             CloseEui(player);
         }
 
-        public void GhostRoleInternalCreateMindAndTransfer(IPlayerSession player, GhostRoleComponent role, IEntity mob)
+        public void GhostRoleInternalCreateMindAndTransfer(IPlayerSession player, EntityUid roleUid, EntityUid mob, GhostRoleComponent? role = null)
         {
+            if (!Resolve(roleUid, ref role)) return;
+
             var contentData = player.ContentData();
 
             DebugTools.AssertNotNull(contentData);
 
             var newMind = new Mind.Mind(player.UserId)
             {
-                CharacterName = mob.Name
+                CharacterName = EntityManager.GetComponent<MetaDataComponent>(mob).EntityName
             };
             newMind.AddRole(new GhostRoleMarkerRole(newMind, role.RoleName));
 

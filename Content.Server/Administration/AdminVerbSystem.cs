@@ -93,7 +93,7 @@ namespace Content.Server.Administration
                 // TODO VERB ICON control mob icon
                 verb.Act = () =>
                 {
-                    player.ContentData()?.Mind?.TransferTo(args.Target, ghostCheckOverride: true);
+                    player.ContentData()?.Mind?.TransferTo(args.Target.Uid, ghostCheckOverride: true);
                 };
                 args.Verbs.Add(verb);
             }
