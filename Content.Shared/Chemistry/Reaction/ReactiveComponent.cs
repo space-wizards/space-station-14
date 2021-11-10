@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Shared.Chemistry.Reaction
 {
@@ -10,7 +12,19 @@ namespace Content.Shared.Chemistry.Reaction
     {
         public override string Name => "Reactive";
 
-        [DataField("reactions", true, serverOnly:true)]
-        public ReagentEntityReaction[] Reactions { get; } = Array.Empty<ReagentEntityReaction>();
+        [DataField("reactions", required: true, readOnly: true, serverOnly: true)]
+        public List<ReactiveReagentEffectEntry> Reactions { get; } = default!;
+    }
+
+    public class ReactiveReagentEffectEntry
+    {
+        [DataField("methods")]
+        public HashSet<ReactionMethod> Methods = default!;
+
+        [DataField("reagents")]
+        public HashSet<string>? Reagents = null;
+
+        [DataField("effects", required: true, customTypeSerializer: typeof(PrototypeIdHashSetSerializer<ReagentPrototype>))]
+        public List<ReagentEffect> Effects = default!;
     }
 }

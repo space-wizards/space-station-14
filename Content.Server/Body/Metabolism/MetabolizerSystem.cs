@@ -154,16 +154,18 @@ namespace Content.Server.Body.Metabolism
                             continue;
                     }
 
+                    var args = new ReagentEffectArgs(solutionEntityUid.Value, meta.OwnerUid, solution, proto, entry.MetabolismRate,
+                        EntityManager, ReactionMethod.Ingestion);
+
                     // do all effects, if conditions apply
                     foreach (var effect in entry.Effects)
                     {
                         bool failed = false;
-                        var quant = new Solution.ReagentQuantity(reagent.ReagentId, reagent.Quantity);
                         if (effect.Conditions != null)
                         {
                             foreach (var cond in effect.Conditions)
                             {
-                                if (!cond.Condition(solutionEntityUid.Value, meta.OwnerUid, quant, EntityManager))
+                                if (!cond.Condition(args))
                                     failed = true;
                             }
 
@@ -171,7 +173,7 @@ namespace Content.Server.Body.Metabolism
                                 continue;
                         }
 
-                        effect.Metabolize(solutionEntityUid.Value, meta.OwnerUid, quant, EntityManager);
+                        effect.Metabolize(args);
                     }
                 }
 
