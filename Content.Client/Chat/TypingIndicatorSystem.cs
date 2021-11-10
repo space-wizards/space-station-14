@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Content.Client.Chat.UI;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
-using Content.Shared.MobState;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -13,7 +12,6 @@ using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Timing;
-
 
 namespace Content.Client.Chat
 {
@@ -90,11 +88,9 @@ namespace Content.Client.Chat
 
 			var viewBox = _eyeManager.GetWorldViewport().Enlarged(2.0f);
 
-			foreach (var (mobState, typingIndicatorComp) in EntityManager.EntityQuery<IMobStateComponent, TypingIndicatorComponent>())
+			foreach (var typingIndicatorComp in EntityManager.EntityQuery<TypingIndicatorComponent>())
 			{
-
-				var entity = mobState.Owner;
-
+                var entity = typingIndicatorComp.Owner;
 				if (_attachedEntity.Transform.MapID != entity.Transform.MapID ||
 					!viewBox.Contains(entity.Transform.WorldPosition))
 				{
