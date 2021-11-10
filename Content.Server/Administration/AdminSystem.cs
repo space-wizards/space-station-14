@@ -76,12 +76,12 @@ namespace Content.Server.Administration
 
             if(args == null) return;
 
-            foreach (var admin in _adminManager.ActiveAdmins)
+            foreach (var admin in _adminManager.AllAdmins)
             {
                 RaiseNetworkEvent(args, admin.ConnectedClient);
             }
 
-            if (e.NewStatus != SessionStatus.Disconnected && _adminManager.IsAdmin(e.Session))
+            if (e.NewStatus != SessionStatus.Disconnected && _adminManager.IsAdmin(e.Session, true))
             {
                 SendFullPlayerList(e.Session);
             }
