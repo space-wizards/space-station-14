@@ -5,6 +5,7 @@
         <RichTextLabel Name="Title" VerticalExpand="True"/>
         <Button Name="RequestButton"
                 Text="{Loc 'ghost-roles-window-request-role-button'}"
+                Disabled="True"
                 TextAlign="Center"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center" />
