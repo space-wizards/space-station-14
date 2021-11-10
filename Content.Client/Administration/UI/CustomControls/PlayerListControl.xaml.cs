@@ -16,10 +16,9 @@ namespace Content.Client.Administration.UI.CustomControls
     [GenerateTypedNameReferences]
     public partial class PlayerListControl : BoxContainer
     {
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
         private readonly AdminSystem _adminSystem;
 
-        public event Action<ICommonSession?>? OnSelectionChanged;
+        public event Action<PlayerInfo?>? OnSelectionChanged;
 
         public PlayerListControl()
         {
@@ -45,7 +44,7 @@ namespace Content.Client.Administration.UI.CustomControls
 
         private void PlayerItemListOnOnItemSelected(ItemList.ItemListSelectedEventArgs obj)
         {
-            var selectedPlayer = (ICommonSession) obj.ItemList[obj.ItemIndex].Metadata!;
+            var selectedPlayer = (PlayerInfo) obj.ItemList[obj.ItemIndex].Metadata!;
             OnSelectionChanged?.Invoke(selectedPlayer);
         }
 
@@ -68,7 +67,7 @@ namespace Content.Client.Administration.UI.CustomControls
 
                 PlayerItemList.Add(new ItemList.Item(PlayerItemList)
                 {
-                    Metadata = _playerManager.SessionsDict[info.SessionId],
+                    Metadata = info,
                     Text = displayName
                 });
             }

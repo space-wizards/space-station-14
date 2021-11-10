@@ -28,6 +28,8 @@ namespace Content.Server.Administration
 
         private void OnPlayerDetached(PlayerDetachedEvent ev)
         {
+            if(ev.Player.Status == SessionStatus.Disconnected) return;
+
             foreach (var admin in _adminManager.ActiveAdmins)
             {
                 RaiseNetworkEvent(GetChangedEvent(ev.Player), admin.ConnectedClient);
@@ -36,6 +38,8 @@ namespace Content.Server.Administration
 
         private void OnPlayerAttached(PlayerAttachedEvent ev)
         {
+            if(ev.Player.Status == SessionStatus.Disconnected) return;
+
             foreach (var admin in _adminManager.ActiveAdmins)
             {
                 RaiseNetworkEvent(GetChangedEvent(ev.Player), admin.ConnectedClient);
