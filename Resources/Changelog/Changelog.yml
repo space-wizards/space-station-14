@@ -1,9 +1,4 @@
 Entries:
-- author: Tarlan2
-  changes:
-  - {message: Adds combat knife and fire axe., type: Add}
-  id: 61
-  time: '2021-03-08T18:16:09.0000000+00:00'
 - author: Swept
   changes:
   - {message: Assistants won't spawn in walls anymore, type: Fix}
@@ -2825,3 +2820,8 @@ Entries:
       pizza).', type: Add}
   id: 560
   time: '2021-11-10T13:15:23.0000000+00:00'
+- author: Efruit
+  changes:
+  - {message: Enabled tab complete in the Server-side C# Interpreter, type: Add}
+  id: 561
+  time: '2021-11-10T19:35:34.0000000+00:00'
