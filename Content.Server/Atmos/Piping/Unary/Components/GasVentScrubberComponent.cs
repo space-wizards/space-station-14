@@ -68,34 +68,5 @@ namespace Content.Server.Atmos.Piping.Unary.Components
                     FilterGases.Add(gas);
             }
         }
-
-        // Presets for 'dumb' air alarm modes
-
-        public static GasVentScrubberData FilterModePreset = new GasVentScrubberData
-        {
-            Enabled = true,
-            FilterGases = GasVentScrubberData.DefaultFilterGases,
-            PumpDirection = ScrubberPumpDirection.Scrubbing,
-            VolumeRate = 200f,
-            WideNet = false
-        };
-
-        public static GasVentScrubberData FillModePreset = new GasVentScrubberData
-        {
-            Enabled = false,
-            FilterGases = GasVentScrubberData.DefaultFilterGases,
-            PumpDirection = ScrubberPumpDirection.Scrubbing,
-            VolumeRate = 200f,
-            WideNet = false
-        };
-
-        public static GasVentScrubberData PanicModePreset = new GasVentScrubberData
-        {
-            Enabled = true,
-            FilterGases = GasVentScrubberData.DefaultFilterGases,
-            PumpDirection = ScrubberPumpDirection.Siphoning,
-            VolumeRate = 200f,
-            WideNet = false
-        };
     }
 }
