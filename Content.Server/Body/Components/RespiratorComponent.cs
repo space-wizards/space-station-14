@@ -5,7 +5,6 @@ using Content.Server.Alert;
 using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Behavior;
-using Content.Server.Body.Circulatory;
 using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
 using Content.Shared.ActionBlocker;
@@ -20,7 +19,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Body.Respiratory
+namespace Content.Server.Body.Components
 {
     [RegisterComponent]
     public class RespiratorComponent : Component

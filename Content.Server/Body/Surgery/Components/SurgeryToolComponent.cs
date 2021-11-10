@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Content.Server.Body.Mechanism;
+using Content.Server.Body.Components;
 using Content.Server.Body.Surgery.Messages;
 using Content.Server.UserInterface;
 using Content.Shared.Body.Components;

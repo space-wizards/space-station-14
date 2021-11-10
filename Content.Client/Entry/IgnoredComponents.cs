@@ -72,6 +72,7 @@ namespace Content.Client.Entry
             "Bucket",
             "CableVis",
             "Puddle",
+            "Stomach",
             "CanSpill",
             "SpeedLoader",
             "Hitscan",

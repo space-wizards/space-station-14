@@ -12,7 +12,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.Body
+namespace Content.Server.Body.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedBodyComponent))]

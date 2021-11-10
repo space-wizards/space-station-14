@@ -1,5 +1,4 @@
-﻿using Content.Server.Body.Circulatory;
-using Content.Server.Body.Respiratory;
+﻿using Content.Server.Body.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;

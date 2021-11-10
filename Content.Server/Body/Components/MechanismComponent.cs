@@ -14,7 +14,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Body.Mechanism
+namespace Content.Server.Body.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedMechanismComponent))]

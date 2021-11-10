@@ -1,4 +1,4 @@
-﻿using Content.Server.Body.Metabolism;
+﻿using Content.Server.Body.Components;
 using Content.Shared.Body.Metabolism;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;

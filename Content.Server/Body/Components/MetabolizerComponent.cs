@@ -1,18 +1,15 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using Content.Server.Body.Systems;
 using Content.Shared.Body.Metabolism;
 using Content.Shared.Body.Networks;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
-namespace Content.Server.Body.Metabolism
+namespace Content.Server.Body.Components
 {
     /// <summary>
     ///     Handles metabolizing various reagents with given effects.

@@ -1,7 +1,7 @@
 ﻿using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.Body.Respiratory
+namespace Content.Server.Body.Components
 {
     [UsedImplicitly]
     public class RespiratorSystem : EntitySystem

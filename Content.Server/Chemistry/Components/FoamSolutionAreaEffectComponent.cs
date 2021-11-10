@@ -1,4 +1,4 @@
-﻿using Content.Server.Body.Circulatory;
+﻿using Content.Server.Body.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;

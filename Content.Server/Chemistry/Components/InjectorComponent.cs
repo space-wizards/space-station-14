@@ -1,6 +1,6 @@
 using System;
 using System.Threading.Tasks;
-using Content.Server.Body.Circulatory;
+using Content.Server.Body.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Body.Networks;
