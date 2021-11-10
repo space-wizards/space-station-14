@@ -29,16 +29,40 @@ namespace Content.Server.Atmos.Monitor.Systems
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         // Commands
+        /// <summary>
+        ///     Command to alarm the network that something has happened.
+        /// </summary>
         public const string AtmosMonitorAlarmCmd = "atmos_monitor_alarm_update";
+
+        /// <summary>
+        ///     Command to sync this monitor's alarm state with the rest of the network.
+        /// </summary>
         public const string AtmosMonitorAlarmSyncCmd = "atmos_monitor_alarm_sync";
+
+        /// <summary>
+        ///     Command to reset all alarms on a network.
+        /// </summary>
         public const string AtmosMonitorAlarmResetAllCmd = "atmos_monitor_alarm_reset_all";
 
         // Packet data
+        /// <summary>
+        ///     Data response that contains the threshold types in an atmos monitor alarm.
+        /// </summary>
         public const string AtmosMonitorAlarmThresholdTypes = "atmos_monitor_alarm_threshold_types";
+
+        /// <summary>
+        ///     Data response that contains the source of an atmos alarm.
+        /// </summary>
         public const string AtmosMonitorAlarmSrc = "atmos_monitor_alarm_source";
+
+        /// <summary>
+        ///     Data response that contains the maximum alarm in an atmos alarm network.
+        /// </summary>
         public const string AtmosMonitorAlarmNetMax = "atmos_monitor_alarm_net_max";
 
-        // Frequency (all prototypes that use AtmosMonitor should use this)
+        /// <summary>
+        ///     Frequency (all prototypes that use AtmosMonitor should use this)
+        /// </summary>
         public const int AtmosMonitorApcFreq = 1621;
 
         public override void Initialize()
@@ -217,7 +241,7 @@ namespace Content.Server.Atmos.Monitor.Systems
             // somebody else can reset it :sunglasses:
             if (component.MonitorFire
                 && component.LastAlarmState != AtmosMonitorAlarmType.Danger)
-                Alert(component, AtmosMonitorAlarmType.Danger, new []{ AtmosMonitorThresholdType.Temperature }); // technically???
+                Alert(uid, AtmosMonitorAlarmType.Danger, new []{ AtmosMonitorThresholdType.Temperature }, component); // technically???
 
             // only monitor state elevation so that stuff gets alarmed quicker during a fire,
             // let the atmos update loop handle when temperature starts to reach different
@@ -225,7 +249,7 @@ namespace Content.Server.Atmos.Monitor.Systems
             if (component.TemperatureThreshold != null
                 && component.TemperatureThreshold.CheckThreshold(args.Temperature, out var temperatureState)
                 && temperatureState > component.LastAlarmState)
-                Alert(component, AtmosMonitorAlarmType.Danger, new []{ AtmosMonitorThresholdType.Temperature });
+                Alert(uid, AtmosMonitorAlarmType.Danger, new []{ AtmosMonitorThresholdType.Temperature }, component);
         }
 
         private void OnAtmosUpdate(EntityUid uid, AtmosMonitorComponent component, AtmosDeviceUpdateEvent args)
@@ -247,7 +271,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                 && component.GasThresholds == null)
                 return;
 
-            UpdateState(component, component.TileGas);
+            UpdateState(uid, component.TileGas, component);
         }
 
         // Update checks the current air if it exceeds thresholds of
@@ -258,9 +282,11 @@ namespace Content.Server.Atmos.Monitor.Systems
         //
         // If the threshold does not match the current state
         // of the monitor, it is set in the Alert call.
-        private void UpdateState(AtmosMonitorComponent monitor, GasMixture? air)
+        private void UpdateState(EntityUid uid, GasMixture? air, AtmosMonitorComponent? monitor = null)
         {
             if (air == null) return;
+
+            if (!Resolve(uid, ref monitor)) return;
 
             AtmosMonitorAlarmType state = AtmosMonitorAlarmType.Normal;
             List<AtmosMonitorThresholdType> alarmTypes = new();
@@ -299,14 +325,18 @@ namespace Content.Server.Atmos.Monitor.Systems
             // we update the state
             if (state != monitor.LastAlarmState)
             {
-                Alert(monitor, state, alarmTypes, air);
+                Alert(uid, state, alarmTypes, monitor);
             }
         }
 
-        // Alerts the network that the state of this monitor has changed.
-        // Also changes the look of the monitor, if applicable.
-        public void Alert(AtmosMonitorComponent monitor, AtmosMonitorAlarmType state, IEnumerable<AtmosMonitorThresholdType>? alarms = null, GasMixture? air = null)
+        /// <summary>
+        ///     Alerts the network that the state of a monitor has changed.
+        /// </summary>
+        /// <param name="state">The alarm state to set this monitor to.</param>
+        /// <param name="alarms">The alarms that caused this alarm state.</param>
+        public void Alert(EntityUid uid, AtmosMonitorAlarmType state, IEnumerable<AtmosMonitorThresholdType>? alarms = null, AtmosMonitorComponent? monitor = null)
         {
+            if (!Resolve(uid, ref monitor)) return;
             monitor.LastAlarmState = state;
             if (EntityManager.TryGetComponent(monitor.Owner.Uid, out SharedAppearanceComponent? appearanceComponent))
                 appearanceComponent.SetData("alarmType", monitor.LastAlarmState);
@@ -319,23 +349,20 @@ namespace Content.Server.Atmos.Monitor.Systems
             // TODO: Central system that grabs *all* alarms from wired network
         }
 
-        // Resets this single entity. This probably isn't that useful,
-        public void Reset(EntityUid uid, AtmosMonitorComponent? monitor = null)
+        /// <summary>
+        ///     Resets a single monitor's alarm.
+        /// </summary>
+        public void Reset(EntityUid uid)
         {
-            if (!Resolve(uid, ref monitor)) return;
-
-            Alert(monitor, AtmosMonitorAlarmType.Normal);
+            Alert(uid, AtmosMonitorAlarmType.Normal);
         }
 
-        // useful for fire alarms, might be useful for other things in the future
-        //
-        // Sends a reset command to everything on the network, from this specific entity,
-        // with the source of the prototype ID it has. The reset command will resync
-        // the state of whatever accepts it with the rest of the network.
-        //
-        // Sends a single alert to reset anything that was alarmed, while
-        // also clearing out the cached network alarm states on the current
-        // monitor (which will be repopulated by broadcast pings)
+        /// <summary>
+        ///     Resets a network's alarms, using this monitor as a source.
+        /// </summary>
+        /// <remarks>
+        ///     The resulting packet will have this monitor set as the source, using its prototype ID if it has one - otherwise just sending an empty string.
+        /// </remarks>
         public void ResetAll(EntityUid uid, AtmosMonitorComponent? monitor = null)
         {
             if (!Resolve(uid, ref monitor)) return;
@@ -352,13 +379,13 @@ namespace Content.Server.Atmos.Monitor.Systems
 
             // final alert will auto-sync this monitor's state
             // to everyone else
-            Alert(monitor, AtmosMonitorAlarmType.Normal);
+            Alert(uid, AtmosMonitorAlarmType.Normal, null, monitor);
         }
 
-        // Syncs the current state of this monitor
-        // to the network. Separate command,
-        // to avoid alerting alarmables. (TODO: maybe
-        // just cache monitors in other monitors?)
+        // (TODO: maybe just cache monitors in other monitors?)
+        /// <summary>
+        ///     Syncs the current state of this monitor to the network (to avoid alerting other monitors).
+        /// </summary>
         private void Sync(AtmosMonitorComponent monitor)
         {
             if (!monitor.NetEnabled) return;
@@ -373,16 +400,19 @@ namespace Content.Server.Atmos.Monitor.Systems
             _deviceNetSystem.QueuePacket(monitor.Owner.Uid, string.Empty, AtmosMonitorApcFreq, payload, true);
         }
 
-        // Broadcasts an alert packet to all devices on the network,
-        // which consists of the current alarm types,
-        // the highest alarm currently cached by this monitor,
-        // and the current alarm state of the monitor (so other
-        // alarms can sync to it).
-        //
-        // Alarmables use the highest alarm to ensure that a monitor's
-        // state doesn't override if the alarm is lower. The state
-        // is synced between monitors the moment a monitor sends out an alarm,
-        // or if it is explicitly synced (see ResetAll/Sync).
+        /// <summary>
+        ///	Broadcasts an alert packet to all devices on the network,
+        ///	which consists of the current alarm types,
+        ///	the highest alarm currently cached by this monitor,
+        ///	and the current alarm state of the monitor (so other
+        ///	alarms can sync to it).
+        /// </summary>
+        /// <remarks>
+        ///	Alarmables use the highest alarm to ensure that a monitor's
+        ///	state doesn't override if the alarm is lower. The state
+        ///	is synced between monitors the moment a monitor sends out an alarm,
+        ///	or if it is explicitly synced (see ResetAll/Sync).
+        /// </remarks>
         private void BroadcastAlertPacket(AtmosMonitorComponent monitor, IEnumerable<AtmosMonitorThresholdType>? alarms = null)
         {
             if (!monitor.NetEnabled) return;
@@ -403,6 +433,12 @@ namespace Content.Server.Atmos.Monitor.Systems
             _deviceNetSystem.QueuePacket(monitor.Owner.Uid, string.Empty, AtmosMonitorApcFreq, payload, true);
         }
 
+        /// <summary>
+        ///     Set a monitor's threshold.
+        /// </summary>
+        /// <param name="type">The type of threshold to change.</param>
+        /// <param name="threshold">Threshold data.</param>
+        /// <param name="gas">Gas, if applicable.</param>
         public void SetThreshold(EntityUid uid, AtmosMonitorThresholdType type, AtmosAlarmThreshold threshold, Gas? gas = null, AtmosMonitorComponent? monitor = null)
         {
             if (!Resolve(uid, ref monitor)) return;

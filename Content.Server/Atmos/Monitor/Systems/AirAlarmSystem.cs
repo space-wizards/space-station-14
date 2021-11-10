@@ -42,63 +42,45 @@ namespace Content.Server.Atmos.Monitor.Systems
         [Dependency] private readonly AccessReaderSystem _accessSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
+        #region Device Network API
+
         public const int Freq = AtmosMonitorSystem.AtmosMonitorApcFreq;
 
-        // -- Atmos Device Commands --
-
-        // Toggles the device on or off.
-        //
-        // Disabled. Sync/set device data should do this already.
-        // public const string AirAlarmToggleCmd = "air_alarm_toggle_device";
-
-        // Gets the type of atmos device.
-        //
-        // Disabled, since sync should technically get this already.
-        //
-        // public const string AirAlarmGetType = "air_alarm_get_type";
-
-        // Sets the data on the atmos device. This can be any object,
-        // and as long as the type matches to the data, it will
-        // succeed. This is both a command and data key.
+        /// <summary>
+        ///     Command to set device data within the air alarm's network.
+        /// </summary>
         public const string AirAlarmSetData = "air_alarm_set_device_data";
 
-        // Request a sync from the devices in the network.
+        /// <summary>
+        ///     Command to request a sync from devices in an air alarm's network.
+        /// </summary>
         public const string AirAlarmSyncCmd = "air_alarm_sync_devices";
 
-        // Sets the air alarm's program.
+        /// <summary>
+        ///     Command to set an air alarm's mode.
+        /// </summary>
         public const string AirAlarmSetMode = "air_alarm_set_mode";
 
         // -- Packet Data --
 
-        // ToggleData. This should just echo what the device's
-        // enabled/disabled state is.
-        //
-        // Disabled. This should also be in set_device_data.
-        // public const string AirAlarmToggleData = "air_alarm_toggle_device_data";
-
-        // TypeData. This should hold the type of device that it is,
-        // so that the UI knows what kind of widget to draw, or
-        // to ensure that the data being sent is considered
-        // correct.
-        //
-        // Disabled. This should be in the sync data packet.
-        // public const string AirAlarmTypeData = "air_alarm_type_data";
-
-        // SetDataStatus. This should be a bool
-        // that returns true if the op succeeded,
-        // or false if it failed.
+        /// <summary>
+        ///     Data response to an AirAlarmSetData command.
+        /// </summary>
         public const string AirAlarmSetDataStatus = "air_alarm_set_device_data_status";
 
-        // Sync data. This could be a number of things, depending
-        // on the atmos devices in the network. A successful sync
-        // will have this as the packet command, with data
-        // keyed by this string containing all the sync data required.
-        //
-        // (fyi this might be literal component data passed through)
+        /// <summary>
+        ///     Data response to an AirAlarmSync command. Contains
+        ///     IAtmosDeviceData in this system's implementation.
+        /// </summary>
         public const string AirAlarmSyncData = "air_alarm_device_sync_data";
 
         // -- API --
 
+        /// <summary>
+        ///     Set the data for an air alarm managed device.
+        /// </summary>
+        /// <param name="address">The address of the device.</param>
+        /// <param name="data">The data to send to the device.</param>
         public void SetData(EntityUid uid, string address, IAtmosDeviceData data)
         {
             if (EntityManager.TryGetComponent(uid, out AtmosMonitorComponent monitor)
@@ -115,6 +97,9 @@ namespace Content.Server.Atmos.Monitor.Systems
             _deviceNet.QueuePacket(uid, address, Freq, payload);
         }
 
+        /// <summary>
+        ///     Broadcast a sync packet to an air alarm's local network.
+        /// </summary>
         public void SyncAllDevices(EntityUid uid)
         {
             if (EntityManager.TryGetComponent(uid, out AtmosMonitorComponent monitor)
@@ -129,6 +114,10 @@ namespace Content.Server.Atmos.Monitor.Systems
             _deviceNet.QueuePacket(uid, string.Empty, Freq, payload, true);
         }
 
+        /// <summary>
+        ///     Send a sync packet to a specific device from an air alarm.
+        /// </summary>
+        /// <param name="address">The address of the device.</param>
         public void SyncDevice(EntityUid uid, string address)
         {
             if (EntityManager.TryGetComponent(uid, out AtmosMonitorComponent monitor)
@@ -144,6 +133,10 @@ namespace Content.Server.Atmos.Monitor.Systems
             _deviceNet.QueuePacket(uid, address, Freq, payload);
         }
 
+        /// <summary>
+        ///     Sync this air alarm's mode with the rest of the network.
+        /// </summary>
+        /// <param name="mode">The mode to sync with the rest of the network.</param>
         public void SyncMode(EntityUid uid, AirAlarmMode mode)
         {
             if (EntityManager.TryGetComponent(uid, out AtmosMonitorComponent monitor)
@@ -159,7 +152,9 @@ namespace Content.Server.Atmos.Monitor.Systems
             _deviceNet.QueuePacket(uid, string.Empty, Freq, payload, true);
         }
 
-        // -- Internal --
+        #endregion
+
+        #region Events
 
         public override void Initialize()
         {
@@ -300,6 +295,14 @@ namespace Content.Server.Atmos.Monitor.Systems
             }
         }
 
+        #endregion
+
+        #region Air Alarm Settings
+
+        /// <summary>
+        ///     Set a threshold on an air alarm.
+        /// </summary>
+        /// <param name="threshold">New threshold data.</param>
         public void SetThreshold(EntityUid uid, AtmosAlarmThreshold threshold, AtmosMonitorThresholdType type, Gas? gas = null, AirAlarmComponent? controller = null)
         {
             if (!Resolve(uid, ref controller)) return;
@@ -309,6 +312,13 @@ namespace Content.Server.Atmos.Monitor.Systems
             _uiSystem.TrySendUiMessage(uid, SharedAirAlarmInterfaceKey.Key, new AirAlarmUpdateAlarmThresholdMessage(type, threshold, gas));
         }
 
+        /// <summary>
+        ///     Set an air alarm's mode.
+        /// </summary>
+        /// <param name="origin">The origin address of this mode set. Used for network sync.</param>
+        /// <param name="mode">The mode to set the alarm to.</param>
+        /// <param name="sync">Whether to sync this mode change to the network or not. Defaults to false.</param>
+        /// <param name="uiOnly">Whether this change is for the UI only, or if it changes the air alarm's operating mode. Defaults to true.</param>
         public void SetMode(EntityUid uid, string origin, AirAlarmMode mode, bool sync = false, bool uiOnly = true, AirAlarmComponent? controller = null)
         {
             if (!Resolve(uid, ref controller)) return;
@@ -351,6 +361,11 @@ namespace Content.Server.Atmos.Monitor.Systems
             if (sync) SyncMode(uid, mode);
         }
 
+        /// <summary>
+        ///     Sets device data. Practically a wrapper around the packet sending function, SetData.
+        /// </summary>
+        /// <param name="address">The address to send the new data to.</param>
+        /// <param name="devData">The device data to be sent.</param>
         public void SetDeviceData(EntityUid uid, string address, IAtmosDeviceData devData, AirAlarmComponent? controller = null)
         {
             if (!Resolve(uid, ref controller)) return;
@@ -400,23 +415,32 @@ namespace Content.Server.Atmos.Monitor.Systems
             }
         }
 
-        // <-- UI stuff -->
+        #endregion
+
+        #region UI
 
         // List of active user interfaces.
         private HashSet<EntityUid> _activeUserInterfaces = new();
 
-        // Add an active interface for updating.
+        /// <summary>
+        ///     Adds an active interface to be updated.
+        /// </summary>
         public void AddActiveInterface(EntityUid uid)
         {
             _activeUserInterfaces.Add(uid);
         }
 
-        // Remove an active interface from updating.
+        /// <summary>
+        ///     Removes an active interface from the system update loop.
+        /// </summary>
         public void RemoveActiveInterface(EntityUid uid)
         {
             _activeUserInterfaces.Remove(uid);
         }
 
+        /// <summary>
+        ///     Force closes all interfaces currently open related to this air alarm.
+        /// </summary>
         public void ForceCloseAllInterfaces(EntityUid uid)
         {
             _uiSystem.TryCloseAll(uid, SharedAirAlarmInterfaceKey.Key);
@@ -429,9 +453,11 @@ namespace Content.Server.Atmos.Monitor.Systems
             _uiSystem.TrySendUiMessage(uid, SharedAirAlarmInterfaceKey.Key, new AirAlarmSetAddressMessage(netConn.Address));
         }
 
-        // Update an interface's air data. This is all the 'hot' data
-        // that an air alarm contains server-side. Updated with a whopping 16
-        // delay automatically once a UI is in the loop.
+        /// <summary>
+        ///     Update an interface's air data. This is all the 'hot' data
+        ///     that an air alarm contains server-side. Updated with a whopping 8
+        ///     delay automatically once a UI is in the loop.
+        /// </summary>
         public void SendAirData(EntityUid uid, AirAlarmComponent? alarm = null, AtmosMonitorComponent? monitor = null, ApcPowerReceiverComponent? power = null)
         {
             if (!Resolve(uid, ref alarm, ref monitor, ref power)) return;
@@ -454,6 +480,9 @@ namespace Content.Server.Atmos.Monitor.Systems
             }
         }
 
+        /// <summary>
+        ///     Send an air alarm mode to any open interface related to an air alarm.
+        /// </summary>
         public void SendAlarmMode(EntityUid uid, AtmosMonitorComponent? monitor = null, ApcPowerReceiverComponent? power = null, AirAlarmComponent? controller = null)
         {
             if (!Resolve(uid, ref monitor, ref power, ref controller)
@@ -462,6 +491,9 @@ namespace Content.Server.Atmos.Monitor.Systems
             _uiSystem.TrySendUiMessage(uid, SharedAirAlarmInterfaceKey.Key, new AirAlarmUpdateAlarmModeMessage(controller.CurrentMode));
         }
 
+        /// <summary>
+        ///     Send all thresholds to any open interface related to a given air alarm.
+        /// </summary>
         public void SendThresholds(EntityUid uid, AtmosMonitorComponent? monitor = null, ApcPowerReceiverComponent? power = null, AirAlarmComponent? controller = null)
         {
             if (!Resolve(uid, ref monitor, ref power, ref controller)
@@ -511,5 +543,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                 }
             }
         }
+
+        #endregion
     }
 }
