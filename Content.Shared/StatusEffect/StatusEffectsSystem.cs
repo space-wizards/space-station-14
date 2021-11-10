@@ -107,6 +107,33 @@ namespace Content.Shared.StatusEffect
             return false;
         }
 
+        public bool TryAddStatusEffect(EntityUid uid, string key, TimeSpan time, string component,
+            StatusEffectsComponent? status = null,
+            SharedAlertsComponent? alerts = null)
+        {
+            if (!Resolve(uid, ref status, false))
+                return false;
+
+            Resolve(uid, ref alerts, false);
+
+            if (TryAddStatusEffect(uid, key, time, status, alerts))
+            {
+                // Fuck this shit I hate it
+                var newComponent = (Component) _componentFactory.GetComponent(component);
+                newComponent.Owner = EntityManager.GetEntity(uid);
+
+                // If they already have the comp, we just won't bother updating anything.
+                if (!EntityManager.HasComponent(uid, _componentFactory.GetRegistration(component).Type))
+                {
+                    EntityManager.AddComponent(uid, newComponent);
+                    status.ActiveEffects[key].RelevantComponent = component;
+                }
+                return true;
+            }
+
+            return false;
+        }
+
         /// <summary>
         ///     Tries to add a status effect to an entity with a certain timer.
         /// </summary>
@@ -144,6 +171,7 @@ namespace Content.Shared.StatusEffect
             // and keep the relevant component the same.
             if (HasStatusEffect(uid, key, status))
             {
+                cooldown.Item2 += status.ActiveEffects[key].Cooldown.Item2 - status.ActiveEffects[key].Cooldown.Item1;
                 status.ActiveEffects[key] = new StatusEffectState(cooldown, status.ActiveEffects[key].RelevantComponent);
             }
             else

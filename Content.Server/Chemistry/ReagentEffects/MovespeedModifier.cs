@@ -48,11 +48,11 @@ namespace Content.Server.Chemistry.ReagentEffects
             status.WalkSpeedModifier = WalkSpeedModifier;
             status.SprintSpeedModifier = SprintSpeedModifier;
 
+            // TODO OOPS DONT DO THAT
             IncreaseTimer(status, StatusLifetime * reagent.Quantity.Float());
 
             if (modified)
                 EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(solutionEntity);
-
         }
         public void IncreaseTimer(MovespeedModifierMetabolismComponent status, float time)
         {

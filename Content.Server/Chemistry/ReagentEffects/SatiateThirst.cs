@@ -21,7 +21,7 @@ namespace Content.Server.Chemistry.ReagentEffects
         public override void Metabolize(EntityUid solutionEntity, EntityUid organEntity, Solution.ReagentQuantity reagent, IEntityManager entityManager)
         {
             if (entityManager.TryGetComponent(solutionEntity, out ThirstComponent? thirst))
-                thirst.UpdateThirst(HydrationFactor);
+                thirst.UpdateThirst(HydrationFactor * reagent.Quantity.Float());
         }
     }
 }
