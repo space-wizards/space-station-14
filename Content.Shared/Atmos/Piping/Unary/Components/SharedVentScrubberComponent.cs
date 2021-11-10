@@ -24,8 +24,6 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
             Gas.WaterVapor,
         };
 
-        public static GasVentScrubberData Default = FilterModePreset!;
-
         // Presets for 'dumb' air alarm modes
 
         public static GasVentScrubberData FilterModePreset = new GasVentScrubberData
@@ -56,6 +54,18 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
             VolumeRate = 200f,
             WideNet = false
         };
+
+        public static GasVentScrubberData Default()
+        {
+            return new GasVentScrubberData
+            {
+                Enabled = true,
+                FilterGases = GasVentScrubberData.DefaultFilterGases,
+                PumpDirection = ScrubberPumpDirection.Scrubbing,
+                VolumeRate = 200f,
+                WideNet = false
+            };
+        }
     }
 
     [Serializable, NetSerializable]

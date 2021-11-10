@@ -15,8 +15,6 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
         public float? ExternalPressureBound { get; set; }
         public float? InternalPressureBound { get; set; }
 
-        public static GasVentPumpData Default = FilterModePreset!;
-
         // Presets for 'dumb' air alarm modes
 
         public static GasVentPumpData FilterModePreset = new GasVentPumpData
@@ -47,6 +45,18 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
             ExternalPressureBound = Atmospherics.OneAtmosphere,
             InternalPressureBound = 0f
         };
+
+        public static GasVentPumpData Default()
+        {
+            return new GasVentPumpData
+            {
+                Enabled = true,
+                PumpDirection = VentPumpDirection.Releasing,
+                PressureChecks = VentPressureBound.ExternalBound,
+                ExternalPressureBound = Atmospherics.OneAtmosphere,
+                InternalPressureBound = 0f
+            };
+        }
     }
 
     [Serializable, NetSerializable]

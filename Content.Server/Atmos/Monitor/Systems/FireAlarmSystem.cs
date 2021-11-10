@@ -30,7 +30,7 @@ namespace Content.Server.Atmos.Monitor.Systems
             {
                 if (monitor.HighestAlarmInNetwork() == AtmosMonitorAlarmType.Normal)
                 {
-                    _monitorSystem.Alert(monitor, AtmosMonitorAlarmType.Danger);
+                    _monitorSystem.Alert(uid, AtmosMonitorAlarmType.Danger);
                 }
                 else
                 {

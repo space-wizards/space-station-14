@@ -128,7 +128,7 @@ namespace Content.Server.Atmos.Monitor.Components
                             break;
                         case Wires.Alarm:
                             if (AtmosMonitorComponent != null)
-                                _atmosMonitorSystem.Alert(AtmosMonitorComponent, AtmosMonitorAlarmType.Danger);
+                                _atmosMonitorSystem.Alert(OwnerUid, AtmosMonitorAlarmType.Danger);
                             break;
                     }
 
