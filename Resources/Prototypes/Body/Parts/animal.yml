@@ -63,6 +63,7 @@
     - OrganAnimalStomach
     - OrganAnimalLiver
     - OrganAnimalHeart
+    - OrganAnimalKidneys
   - type: Damageable
     damageContainer: Biological
 
@@ -95,7 +96,7 @@
     size: 1
     compatibility: Biological
     behaviors:
-    - !type:StomachBehavior
+    - !type:StomachBehavior #TODO: delete on #5249 merge
       max_volume: 100
       digestionDelay: 20
   - type: SolutionContainerManager
@@ -103,6 +104,7 @@
       stomach:
         maxVol: 100
   - type: Metabolizer
+    maxReagents: 3
     metabolizerTypes: [Human, Animal]
     groups:
     - id: Food
@@ -118,6 +120,7 @@
     size: 1
     compatibility: Biological
   - type: Metabolizer
+    maxReagents: 1
     metabolizerTypes: [Human, Animal]
     groups:
     - id: Alcohol
@@ -132,11 +135,24 @@
   - type: Mechanism
     size: 1
     compatibility: Biological
-    behaviors:
-    - !type:HeartBehavior {}
   - type: Metabolizer
+    maxReagents: 2
     metabolizerTypes: [Human, Animal]
     groups:
     - id: Medicine
     - id: Poison
     - id: Narcotic
+
+- type: entity
+  id: OrganAnimalKidneys
+  parent: BaseAnimalOrgan
+  name: kidneys
+  abstract: true
+  components:
+  - type: Mechanism
+    size: 1
+    compatibility: Biological
+  - type: Metabolizer
+    maxReagents: 5
+    metabolizerTypes: [Human, Animal]
+    removeEmpty: true
