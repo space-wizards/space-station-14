@@ -1,8 +1,8 @@
-using Content.Shared.HandLabeler;
+using Content.Shared.Labels;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.HandLabeler.UI
+namespace Content.Client.Labels.UI
 {
     /// <summary>
     /// Initializes a <see cref="HandLabelerWindow"/> and updates it when new server messages are received.

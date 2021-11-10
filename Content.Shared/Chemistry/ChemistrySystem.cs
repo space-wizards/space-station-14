@@ -34,14 +34,36 @@ namespace Content.Shared.Chemistry
             if (!EntityManager.TryGetComponent(uid, out ReactiveComponent? reactive))
                 return;
 
-            foreach (var reaction in reactive.Reactions)
-            {
-                // If we have a source solution, use the reagent quantity we have left. Otherwise, use the reaction volume specified.
-                reaction.React(method, uid, reagent, source?.GetReagentQuantity(reagent.ID) ?? reactVolume, source, EntityManager);
+            // If we have a source solution, use the reagent quantity we have left. Otherwise, use the reaction volume specified.
+            var args = new ReagentEffectArgs(uid, null, source, reagent,
+                source?.GetReagentQuantity(reagent.ID) ?? reactVolume, EntityManager, method);
 
-                // Make sure we still have enough reagent to go...
-                if (source != null && !source.ContainsReagent(reagent.ID))
-                    break;
+            foreach (var entry in reactive.Reactions)
+            {
+                if (!entry.Methods.Contains(method))
+                    continue;
+
+                if (entry.Reagents != null && !entry.Reagents.Contains(reagent.ID))
+                    continue;
+
+                foreach (var effect in entry.Effects)
+                {
+                    bool failed = false;
+                    foreach (var cond in effect.Conditions ?? new ReagentEffectCondition[] { })
+                    {
+                        if (!cond.Condition(args))
+                            failed = true;
+                    }
+
+                    if (failed)
+                        continue;
+
+                    effect.Metabolize(args);
+
+                    // Make sure we still have enough reagent to go...
+                    if (source != null && !source.ContainsReagent(reagent.ID))
+                        break;
+                }
             }
         }
     }

@@ -9,6 +9,6 @@ namespace Content.Shared.Chemistry.Reagent
     [MeansImplicitUse]
     public abstract class ReagentEffectCondition
     {
-        public abstract bool Condition(EntityUid solutionEntity, EntityUid organEntity, Solution.ReagentQuantity reagent, IEntityManager entityManager);
+        public abstract bool Condition(ReagentEffectArgs args);
     }
 }
