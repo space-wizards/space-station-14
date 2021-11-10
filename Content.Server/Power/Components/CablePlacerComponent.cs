@@ -31,7 +31,7 @@ namespace Content.Server.Power.Components
         /// <inheritdoc />
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User.Uid))
                 return false;
 
             if (_cablePrototypeID == null)

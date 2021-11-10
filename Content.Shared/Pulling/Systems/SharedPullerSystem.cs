@@ -45,7 +45,7 @@ namespace Content.Shared.Pulling.Systems
             SharedPullerComponent component,
             PullStartedMessage args)
         {
-            if (args.Puller.Owner.Uid != uid)
+            if (args.Puller.OwnerUid != uid)
                 return;
 
             if (component.Owner.TryGetComponent(out SharedAlertsComponent? alerts))
@@ -59,7 +59,7 @@ namespace Content.Shared.Pulling.Systems
             SharedPullerComponent component,
             PullStoppedMessage args)
         {
-            if (args.Puller.Owner.Uid != uid)
+            if (args.Puller.OwnerUid != uid)
                 return;
 
             if (component.Owner.TryGetComponent(out SharedAlertsComponent? alerts))

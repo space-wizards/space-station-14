@@ -38,7 +38,7 @@ namespace Content.Server.Shuttles
             {
                 if (comp.Console == null) continue;
 
-                if (!_blocker.CanInteract(comp.Owner))
+                if (!_blocker.CanInteract(comp.OwnerUid))
                 {
                     toRemove.Add(comp);
                 }
@@ -124,7 +124,7 @@ namespace Content.Server.Shuttles
 
         public void AddPilot(IEntity entity, ShuttleConsoleComponent component)
         {
-            if (!_blocker.CanInteract(entity) ||
+            if (!_blocker.CanInteract(entity.Uid) ||
                 !entity.TryGetComponent(out PilotComponent? pilotComponent) ||
                 component.SubscribedPilots.Contains(pilotComponent))
             {

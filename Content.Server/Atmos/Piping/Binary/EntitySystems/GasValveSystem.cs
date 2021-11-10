@@ -48,7 +48,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
         private void OnActivate(EntityUid uid, GasValveComponent component, ActivateInWorldEvent args)
         {
-            if (args.User.InRangeUnobstructed(args.Target) && Get<ActionBlockerSystem>().CanInteract(args.User))
+            if (args.User.InRangeUnobstructed(args.Target) && Get<ActionBlockerSystem>().CanInteract(args.User.Uid))
             {
                 Toggle(uid, component);
                 SoundSystem.Play(Filter.Pvs(component.Owner), component._valveSound.GetSound(), component.Owner, AudioHelpers.WithVariation(0.25f));

@@ -76,7 +76,7 @@ namespace Content.Server.Light.Components
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User)) return false;
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User.Uid)) return false;
             if (!_cellSlot.InsertCell(eventArgs.Using)) return false;
             Dirty();
             return true;

@@ -104,7 +104,7 @@ namespace Content.Server.Stunnable
 
         private void OnInteractUsing(EntityUid uid, StunbatonComponent comp, InteractUsingEvent args)
         {
-            if (!Get<ActionBlockerSystem>().CanInteract(args.User))
+            if (!Get<ActionBlockerSystem>().CanInteract(args.User.Uid))
                 return;
 
             if (EntityManager.TryGetComponent<PowerCellSlotComponent>(uid, out var cellslot))

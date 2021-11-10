@@ -59,7 +59,7 @@ namespace Content.Server.Tabletop
                 return;
 
             // Check that the entity can interact with the game board.
-            if(_actionBlockerSystem.CanInteract(args.User))
+            if(_actionBlockerSystem.CanInteract(args.User.Uid))
                 OpenSessionFor(actor.PlayerSession, uid);
         }
 

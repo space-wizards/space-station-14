@@ -160,7 +160,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!Resolve(uid, ref flammable, ref alerts))
                 return;
 
-            if (!flammable.OnFire || !_actionBlockerSystem.CanInteract(flammable.Owner) || flammable.Resisting)
+            if (!flammable.OnFire || !_actionBlockerSystem.CanInteract(flammable.Owner.Uid) || flammable.Resisting)
                 return;
 
             flammable.Resisting = true;

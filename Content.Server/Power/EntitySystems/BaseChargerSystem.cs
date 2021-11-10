@@ -39,7 +39,7 @@ namespace Content.Server.Power.EntitySystems
                 !args.CanAccess ||
                 !args.CanInteract ||
                 !component.HasCell ||
-                !_actionBlockerSystem.CanPickup(args.User))
+                !_actionBlockerSystem.CanPickup(args.User.Uid))
                 return;
 
             Verb verb = new();

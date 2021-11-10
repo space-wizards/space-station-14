@@ -53,7 +53,7 @@ namespace Content.Server.Access
             if (args.Hands == null ||
                 !args.CanAccess ||
                 !args.CanInteract ||
-                !_actionBlockerSystem.CanPickup(args.User))
+                !_actionBlockerSystem.CanPickup(args.User.Uid))
                 return;
 
             // Can we eject a privileged ID?

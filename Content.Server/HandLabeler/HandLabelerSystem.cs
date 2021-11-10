@@ -80,9 +80,9 @@ namespace Content.Server.HandLabeler
 
         private bool CheckInteract(ICommonSession session)
         {
-            if (session.AttachedEntity is not { } entity
-                || !Get<ActionBlockerSystem>().CanInteract(entity)
-                || !Get<ActionBlockerSystem>().CanUse(entity.Uid))
+            if (session.AttachedEntityUid is not { } uid
+                || !Get<ActionBlockerSystem>().CanInteract(uid)
+                || !Get<ActionBlockerSystem>().CanUse(uid))
                 return false;
 
             return true;

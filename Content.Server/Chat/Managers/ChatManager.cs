@@ -195,7 +195,7 @@ namespace Content.Server.Chat.Managers
 
         public void EntityMe(IEntity source, string action)
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanEmote(source))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanEmote(source.Uid))
             {
                 return;
             }

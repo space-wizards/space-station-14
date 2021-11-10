@@ -31,7 +31,7 @@ namespace Content.Shared.Disposal
 
         private void HandlePreventCollide(EntityUid uid, SharedDisposalUnitComponent component, PreventCollideEvent args)
         {
-            var otherBody = args.BodyB.Owner.Uid;
+            var otherBody = args.BodyB.OwnerUid;
 
             // Items dropped shouldn't collide but items thrown should
             if (EntityManager.HasComponent<SharedItemComponent>(otherBody) &&

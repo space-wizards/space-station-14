@@ -46,7 +46,7 @@ namespace Content.Shared.Acts
     public class ExplosionEventArgs : EventArgs
     {
         public EntityCoordinates Source { get; set; }
-        public IEntity Target { get; set; } = default!;
+        public EntityUid Target { get; set; }
         public ExplosionSeverity Severity { get; set; }
     }
 
@@ -70,7 +70,7 @@ namespace Content.Shared.Acts
             EntityManager.QueueDeleteEntity(owner);
         }
 
-        public void HandleExplosion(EntityCoordinates source, IEntity target, ExplosionSeverity severity)
+        public void HandleExplosion(EntityCoordinates source, EntityUid target, ExplosionSeverity severity)
         {
             var eventArgs = new ExplosionEventArgs
             {
@@ -78,7 +78,7 @@ namespace Content.Shared.Acts
                 Target = target,
                 Severity = severity
             };
-            var exActs = target.GetAllComponents<IExAct>().ToList();
+            var exActs = EntityManager.GetComponents<IExAct>(target).ToList();
 
             foreach (var exAct in exActs)
             {

@@ -67,7 +67,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (args.Hands == null ||
                 !args.CanAccess ||
                 !args.CanInteract ||
-                !_actionBlockerSystem.CanPickup(args.User))
+                !_actionBlockerSystem.CanPickup(args.User.Uid))
                 return;
 
             foreach (var (slotName, slot) in component.Slots)
@@ -163,7 +163,7 @@ namespace Content.Shared.Containers.ItemSlots
         {
             // insert item
             slot.ContainerSlot.Insert(item);
-            RaiseLocalEvent(itemSlots.Owner.Uid, new ItemSlotChangedEvent(itemSlots, slotName, slot));
+            RaiseLocalEvent(itemSlots.OwnerUid, new ItemSlotChangedEvent(itemSlots, slotName, slot));
 
             // play sound
             if (slot.InsertSound != null)
@@ -248,7 +248,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (slot.EjectSound != null)
                 SoundSystem.Play(Filter.Pvs(itemSlots.Owner), slot.EjectSound.GetSound(), itemSlots.Owner);
 
-            RaiseLocalEvent(itemSlots.Owner.Uid, new ItemSlotChangedEvent(itemSlots, slotName, slot));
+            RaiseLocalEvent(itemSlots.OwnerUid, new ItemSlotChangedEvent(itemSlots, slotName, slot));
             return true;
         }
     }

@@ -95,15 +95,15 @@ namespace Content.Shared.Movement
         protected void HandleMobMovement(IMoverComponent mover, PhysicsComponent physicsComponent,
             IMobMoverComponent mobMover)
         {
-            DebugTools.Assert(!UsedMobMovement.ContainsKey(mover.Owner.Uid));
+            DebugTools.Assert(!UsedMobMovement.ContainsKey(mover.OwnerUid));
 
             if (!UseMobMovement(physicsComponent))
             {
-                UsedMobMovement[mover.Owner.Uid] = false;
+                UsedMobMovement[mover.OwnerUid] = false;
                 return;
             }
 
-            UsedMobMovement[mover.Owner.Uid] = true;
+            UsedMobMovement[mover.OwnerUid] = true;
             var transform = mover.Owner.Transform;
             var weightless = mover.Owner.IsWeightless(physicsComponent, mapManager: _mapManager, entityManager: _entityManager);
             var (walkDir, sprintDir) = mover.VelocityDir;

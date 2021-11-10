@@ -71,7 +71,7 @@ namespace Content.Server.Weapon.Ranged.Barrels
                 !args.CanInteract ||
                 !component.PowerCellRemovable ||
                 component.PowerCell == null ||
-                !_actionBlockerSystem.CanPickup(args.User))
+                !_actionBlockerSystem.CanPickup(args.User.Uid))
                 return;
 
             Verb verb = new();
@@ -104,7 +104,7 @@ namespace Content.Server.Weapon.Ranged.Barrels
                 !args.CanAccess ||
                 !args.CanInteract ||
                 !component.HasMagazine ||
-                !_actionBlockerSystem.CanPickup(args.User))
+                !_actionBlockerSystem.CanPickup(args.User.Uid))
                 return;
 
             if (component.MagNeedsOpenBolt && !component.BoltOpen)

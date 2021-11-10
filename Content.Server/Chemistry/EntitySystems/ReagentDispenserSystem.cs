@@ -34,7 +34,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 !args.CanAccess ||
                 !args.CanInteract ||
                 !component.HasBeaker ||
-                !_actionBlockerSystem.CanPickup(args.User))
+                !_actionBlockerSystem.CanPickup(args.User.Uid))
                 return;
 
             Verb verb = new();

@@ -18,9 +18,6 @@ namespace Content.Shared.ActionBlocker
     [UsedImplicitly]
     public class ActionBlockerSystem : EntitySystem
     {
-        // TODO: Make the EntityUid the main overload for all these methods.
-        // TODO: Move each of these to their relevant EntitySystems?
-
         public bool CanMove(EntityUid uid)
         {
             var ev = new MovementAttemptEvent(uid);
@@ -29,18 +26,12 @@ namespace Content.Shared.ActionBlocker
             return !ev.Cancelled;
         }
 
-        public bool CanInteract(IEntity entity)
-        {
-            var ev = new InteractionAttemptEvent(entity);
-
-            RaiseLocalEvent(entity.Uid, ev);
-
-            return !ev.Cancelled;
-        }
-
         public bool CanInteract(EntityUid uid)
         {
-            return CanInteract(EntityManager.GetEntity(uid));
+            var ev = new InteractionAttemptEvent(uid);
+            RaiseLocalEvent(uid, ev);
+
+            return !ev.Cancelled;
         }
 
         public bool CanUse(EntityUid uid)
@@ -66,7 +57,7 @@ namespace Content.Shared.ActionBlocker
 
             return !ev.Cancelled;
         }
-        
+
         public bool CanDrop(EntityUid uid)
         {
             var ev = new DropAttemptEvent(uid);
@@ -75,114 +66,68 @@ namespace Content.Shared.ActionBlocker
             return !ev.Cancelled;
         }
 
-        public bool CanPickup(IEntity entity)
-        {
-            var ev = new PickupAttemptEvent(entity);
-
-            RaiseLocalEvent(entity.Uid, ev);
-
-            return !ev.Cancelled;
-        }
-
         public bool CanPickup(EntityUid uid)
         {
-            return CanPickup(EntityManager.GetEntity(uid));
-        }
-
-        public bool CanEmote(IEntity entity)
-        {
-            var ev = new EmoteAttemptEvent(entity);
-
-            RaiseLocalEvent(entity.Uid, ev);
+            var ev = new PickupAttemptEvent(uid);
+            RaiseLocalEvent(uid, ev);
 
             return !ev.Cancelled;
         }
 
         public bool CanEmote(EntityUid uid)
         {
-            return CanEmote(EntityManager.GetEntity(uid));
-        }
-
-        public bool CanAttack(IEntity entity)
-        {
-            var ev = new AttackAttemptEvent(entity);
-
-            RaiseLocalEvent(entity.Uid, ev);
+            var ev = new EmoteAttemptEvent(uid);
+            RaiseLocalEvent(uid, ev);
 
             return !ev.Cancelled;
         }
 
         public bool CanAttack(EntityUid uid)
         {
-            return CanAttack(EntityManager.GetEntity(uid));
-        }
-
-        public bool CanEquip(IEntity entity)
-        {
-            var ev = new EquipAttemptEvent(entity);
-
-            RaiseLocalEvent(entity.Uid, ev);
+            var ev = new AttackAttemptEvent(uid);
+            RaiseLocalEvent(uid, ev);
 
             return !ev.Cancelled;
         }
 
         public bool CanEquip(EntityUid uid)
         {
-            return CanEquip(EntityManager.GetEntity(uid));
-        }
-
-        public bool CanUnequip(IEntity entity)
-        {
-            var ev = new UnequipAttemptEvent(entity);
-
-            RaiseLocalEvent(entity.Uid, ev);
+            var ev = new EquipAttemptEvent(uid);
+            RaiseLocalEvent(uid, ev);
 
             return !ev.Cancelled;
         }
 
         public bool CanUnequip(EntityUid uid)
         {
-            return CanUnequip(EntityManager.GetEntity(uid));
-        }
-
-        public bool CanChangeDirection(IEntity entity)
-        {
-            var ev = new ChangeDirectionAttemptEvent(entity);
-
-            RaiseLocalEvent(entity.Uid, ev);
+            var ev = new UnequipAttemptEvent(uid);
+            RaiseLocalEvent(uid, ev);
 
             return !ev.Cancelled;
         }
 
         public bool CanChangeDirection(EntityUid uid)
         {
-            return CanChangeDirection(EntityManager.GetEntity(uid));
-        }
-
-        public bool CanShiver(IEntity entity)
-        {
-            var ev = new ShiverAttemptEvent(entity);
+            var ev = new ChangeDirectionAttemptEvent(uid);
+            RaiseLocalEvent(uid, ev);
 
             return !ev.Cancelled;
         }
 
         public bool CanShiver(EntityUid uid)
         {
-            return CanShiver(EntityManager.GetEntity(uid));
-        }
-
-        public bool CanSweat(IEntity entity)
-        {
-            var ev = new SweatAttemptEvent(entity);
-
-            RaiseLocalEvent(entity.Uid, ev);
+            var ev = new ShiverAttemptEvent(uid);
+            RaiseLocalEvent(uid, ev);
 
             return !ev.Cancelled;
         }
 
         public bool CanSweat(EntityUid uid)
         {
-            return CanSweat(EntityManager.GetEntity(uid));
+            var ev = new SweatAttemptEvent(uid);
+            RaiseLocalEvent(uid, ev);
+
+            return !ev.Cancelled;
         }
     }
 }

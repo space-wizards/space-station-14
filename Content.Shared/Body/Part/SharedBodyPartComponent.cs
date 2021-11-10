@@ -146,7 +146,7 @@ namespace Content.Shared.Body.Part
             var i = 0;
             foreach (var mechanism in _mechanisms)
             {
-                mechanismIds[i] = mechanism.Owner.Uid;
+                mechanismIds[i] = mechanism.OwnerUid;
                 i++;
             }
 
