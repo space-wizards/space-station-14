@@ -1,12 +1,6 @@
 Entries:
 - author: Zumorica
   changes:
-  - {message: Having four edge firelocks in a single tile no longer destroys any air
-      within it., type: Fix}
-  id: 59
-  time: '2021-03-08T13:58:21.036238+00:00'
-- author: Zumorica
-  changes:
   - {message: Fixes bug where plasma and tritium fires would never occur no matter
       what., type: Fix}
   id: 60
@@ -2823,3 +2817,9 @@ Entries:
   - {message: Syringes now can draw from ChemMaster 4000 bottles, type: Fix}
   id: 558
   time: '2021-11-10T10:01:24.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: You no longer move at the speed of sound even though you're inches from
+      death., type: Tweak}
+  id: 559
+  time: '2021-11-10T10:06:28.0000000+00:00'
