@@ -1,13 +1,20 @@
 using System.Collections.Generic;
+using System.Linq;
 using Content.Server.Body.Circulatory;
+using Content.Server.Body.Mechanism;
+using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Mechanism;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
+using Content.Shared.MobState.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.Body.Metabolism
 {
@@ -15,9 +22,9 @@ namespace Content.Server.Body.Metabolism
     [UsedImplicitly]
     public class MetabolizerSystem : EntitySystem
     {
-        [Dependency]
-        private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-
+        [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         public override void Initialize()
         {
@@ -28,7 +35,20 @@ namespace Content.Server.Body.Metabolism
 
         private void OnMetabolizerInit(EntityUid uid, MetabolizerComponent component, ComponentInit args)
         {
-            _solutionContainerSystem.EnsureSolution(EntityManager.GetEntity(uid), component.SolutionName);
+            if (!component.SolutionOnBody)
+            {
+                _solutionContainerSystem.EnsureSolution(uid, component.SolutionName);
+            }
+            else
+            {
+                if (EntityManager.TryGetComponent<MechanismComponent>(uid, out var mech))
+                {
+                    if (mech.Body != null)
+                    {
+                        _solutionContainerSystem.EnsureSolution(mech.Body.OwnerUid, component.SolutionName);
+                    }
+                }
+            }
         }
 
         public override void Update(float frameTime)
@@ -42,81 +62,125 @@ namespace Content.Server.Body.Metabolism
                 // Only update as frequently as it should
                 if (metab.AccumulatedFrametime >= metab.UpdateFrequency)
                 {
-                    metab.AccumulatedFrametime = 0.0f;
-                    TryMetabolize(metab);
+                    metab.AccumulatedFrametime -= metab.UpdateFrequency;
+                    TryMetabolize(metab.OwnerUid, metab);
                 }
             }
         }
 
-        private void TryMetabolize(MetabolizerComponent comp)
+        private void TryMetabolize(EntityUid uid, MetabolizerComponent? meta=null, MechanismComponent? mech=null)
         {
-            var owner = comp.Owner;
-            IReadOnlyList<Solution.ReagentQuantity> reagentList = new List<Solution.ReagentQuantity>();
-            Solution? solution = null;
-            SharedBodyComponent? body = null;
-            var solutionsSys = Get<SolutionContainerSystem>();
+            if (!Resolve(uid, ref meta))
+                return;
 
-            // if this field is passed we should try and take from the bloodstream over anything else
-            if (owner.TryGetComponent<SharedMechanismComponent>(out var mech))
+            Resolve(uid, ref mech, false);
+
+            // First step is get the solution we actually care about
+            Solution? solution = null;
+            EntityUid? solutionEntityUid = null;
+            SolutionContainerManagerComponent? manager = null;
+
+            if (meta.SolutionOnBody)
             {
-                body = mech.Body;
-                if (body != null)
+                if (mech != null)
                 {
-                    if (body.Owner.HasComponent<BloodstreamComponent>()
-                        && solutionsSys.TryGetSolution(body.Owner, comp.SolutionName, out solution)
-                        && solution.CurrentVolume >= ReagentUnit.Zero)
+                    var body = mech.Body;
+
+                    if (body != null)
                     {
-                        reagentList = solution.Contents;
+                        if (!Resolve(body.OwnerUid, ref manager, false))
+                            return;
+                        _solutionContainerSystem.TryGetSolution(body.OwnerUid, meta.SolutionName, out solution, manager);
+                        solutionEntityUid = body.OwnerUid;
                     }
                 }
             }
-
-            if (solution == null || reagentList.Count == 0)
+            else
             {
-                // We're all outta ideas on where to metabolize from
-                return;
+                if (!Resolve(uid, ref manager, false))
+                    return;
+                _solutionContainerSystem.TryGetSolution(uid, meta.SolutionName, out solution, manager);
+                solutionEntityUid = uid;
             }
 
-            List<Solution.ReagentQuantity> removeReagents = new(5);
+            if (solutionEntityUid == null || solution == null)
+                return;
 
-            // Run metabolism for each reagent, remove metabolized reagents
-            foreach (var reagent in reagentList)
+            // randomize the reagent list so we don't have any weird quirks
+            // like alphabetical order or insertion order mattering for processing
+            var list = solution.Contents.ToArray();
+            _random.Shuffle(list);
+
+            int reagents = 0;
+            foreach (var reagent in list)
             {
-                if (!comp.Metabolisms.ContainsKey(reagent.ReagentId))
+                if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.ReagentId, out var proto))
                     continue;
 
-                var metabolism = comp.Metabolisms[reagent.ReagentId];
-                // Run metabolism code for each reagent
-                foreach (var effect in metabolism.Effects)
+                FixedPoint2 mostToRemove = FixedPoint2.Zero;
+                if (proto.Metabolisms == null)
                 {
-                    var ent = body != null ? body.Owner : owner;
-                    var conditionsMet = true;
-                    if (effect.Conditions != null)
-                    {
-                        // yes this is 3 nested for loops, but all of these lists are
-                        // basically guaranteed to be small or empty
-                        foreach (var condition in effect.Conditions)
-                        {
-                            if (!condition.Condition(ent, reagent))
-                            {
-                                conditionsMet = false;
-                                break;
-                            }
-                        }
-                    }
-
-                    if (!conditionsMet)
-                        continue;
-
-                    // If we're part of a body, pass that entity to Metabolize
-                    // Otherwise, just pass our owner entity, maybe we're a plant or something
-                    effect.Metabolize(ent, reagent);
+                    if (meta.RemoveEmpty)
+                        _solutionContainerSystem.TryRemoveReagent(solutionEntityUid.Value, solution, reagent.ReagentId, FixedPoint2.New(1));
+                    continue;
                 }
 
-                removeReagents.Add(new Solution.ReagentQuantity(reagent.ReagentId, metabolism.MetabolismRate));
-            }
+                // we're done here entirely if this is true
+                if (reagents >= meta.MaxReagentsProcessable)
+                    return;
+                reagents += 1;
 
-            solutionsSys.TryRemoveAllReagents(solution, removeReagents);
+                // loop over all our groups and see which ones apply
+                if (meta.MetabolismGroups == null)
+                    continue;
+
+                foreach (var group in meta.MetabolismGroups)
+                {
+                    if (!proto.Metabolisms.Keys.Contains(group.Id))
+                        continue;
+
+                    var entry = proto.Metabolisms[group.Id];
+
+                    // we don't remove reagent for every group, just whichever had the biggest rate
+                    if (entry.MetabolismRate > mostToRemove)
+                        mostToRemove = entry.MetabolismRate;
+
+                    // if it's possible for them to be dead, and they are,
+                    // then we shouldn't process any effects, but should probably
+                    // still remove reagents
+                    if (EntityManager.TryGetComponent<MobStateComponent>(solutionEntityUid.Value, out var state))
+                    {
+                        if (state.IsDead())
+                            continue;
+                    }
+
+                    var args = new ReagentEffectArgs(solutionEntityUid.Value, meta.OwnerUid, solution, proto, entry.MetabolismRate,
+                        EntityManager, null);
+
+                    // do all effects, if conditions apply
+                    foreach (var effect in entry.Effects)
+                    {
+                        bool failed = false;
+                        if (effect.Conditions != null)
+                        {
+                            foreach (var cond in effect.Conditions)
+                            {
+                                if (!cond.Condition(args))
+                                    failed = true;
+                            }
+
+                            if (failed)
+                                continue;
+                        }
+
+                        effect.Metabolize(args);
+                    }
+                }
+
+                // remove a certain amount of reagent
+                if (mostToRemove > FixedPoint2.Zero)
+                    _solutionContainerSystem.TryRemoveReagent(solutionEntityUid.Value, solution, reagent.ReagentId, mostToRemove);
+            }
         }
     }
 }

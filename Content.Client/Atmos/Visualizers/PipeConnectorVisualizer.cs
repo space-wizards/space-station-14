@@ -61,7 +61,7 @@ namespace Content.Client.Atmos.Visualizers
         {
             base.OnChangeData(component);
 
-            if (!component.Owner.TryGetComponent<ITransformComponent>(out var xform))
+            if (!component.Owner.TryGetComponent<TransformComponent>(out var xform))
                 return;
 
             if (!component.Owner.TryGetComponent<ISpriteComponent>(out var sprite))

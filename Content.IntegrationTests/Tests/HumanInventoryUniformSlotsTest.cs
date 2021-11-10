@@ -59,7 +59,7 @@ namespace Content.IntegrationTests.Tests
         public async Task Test()
         {
             var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
-            var server = StartServerDummyTicker(options);
+            var server = StartServer(options);
 
             IEntity human = null;
             IEntity uniform = null;

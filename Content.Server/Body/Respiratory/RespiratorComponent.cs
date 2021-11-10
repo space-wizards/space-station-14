@@ -13,7 +13,7 @@ using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
 using Content.Shared.Damage;
-using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
 using Content.Shared.Popups;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -190,7 +190,7 @@ namespace Content.Server.Body.Respiratory
 
                 if (bloodstreamAmount < amountNeeded)
                 {
-                    if (!Owner.GetComponent<IMobStateComponent>().IsCritical())
+                    if (!Owner.GetComponent<MobStateComponent>().IsCritical())
                     {
                         // Panic inhale
                         foreach (var lung in lungs)
@@ -279,7 +279,7 @@ namespace Content.Server.Body.Respiratory
 
             if (temperatureComponent.CurrentTemperature > NormalBodyTemperature)
             {
-                if (!actionBlocker.CanSweat(Owner)) return;
+                if (!actionBlocker.CanSweat(OwnerUid)) return;
                 if (!_isSweating)
                 {
                     Owner.PopupMessage(Loc.GetString("metabolism-component-is-sweating"));
@@ -289,19 +289,19 @@ namespace Content.Server.Body.Respiratory
                 // creadth: sweating does not help in airless environment
                 if (EntitySystem.Get<AtmosphereSystem>().GetTileMixture(Owner.Transform.Coordinates) is not {})
                 {
-                    temperatureSystem.RemoveHeat(Owner.Uid, Math.Min(targetHeat, SweatHeatRegulation), temperatureComponent);
+                    temperatureSystem.RemoveHeat(OwnerUid, Math.Min(targetHeat, SweatHeatRegulation), temperatureComponent);
                 }
             }
             else
             {
-                if (!actionBlocker.CanShiver(Owner)) return;
+                if (!actionBlocker.CanShiver(OwnerUid)) return;
                 if (!_isShivering)
                 {
                     Owner.PopupMessage(Loc.GetString("metabolism-component-is-shivering"));
                     _isShivering = true;
                 }
 
-                temperatureSystem.ReceiveHeat(Owner.Uid, Math.Min(targetHeat, ShiveringHeatRegulation), temperatureComponent);
+                temperatureSystem.ReceiveHeat(OwnerUid, Math.Min(targetHeat, ShiveringHeatRegulation), temperatureComponent);
             }
         }
 
@@ -313,7 +313,7 @@ namespace Content.Server.Body.Respiratory
         /// </param>
         public void Update(float frameTime)
         {
-            if (!Owner.TryGetComponent<IMobStateComponent>(out var state) ||
+            if (!Owner.TryGetComponent<MobStateComponent>(out var state) ||
                 state.IsDead())
             {
                 return;

@@ -188,7 +188,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatPirate
-  name: pirate
+  name: pirate hat
   description: 'Yo ho ho and a bottle of rum!'
   components:
   - type: Sprite
@@ -199,7 +199,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatPlaguedoctor
-  name: plague doctor
+  name: plague doctor mask
   description: These were once used by plague doctors.
   components:
   - type: Sprite
@@ -210,7 +210,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatRedwizard
-  name: red wizard
+  name: red wizard hat
   description: Strange-looking red hat-wear that most certainly belongs to a real magic user.
   components:
   - type: Sprite
@@ -243,7 +243,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatSurgcapBlue
-  name: surgcap blue
+  name: surgical cap
   description: A blue cap surgeons wear during operations. Keeps their hair from tickling your internal organs.
   components:
   - type: Sprite
@@ -254,7 +254,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatSurgcapGreen
-  name: surgcap green
+  name: surgical cap
   description: A green cap surgeons wear during operations. Keeps their hair from tickling your internal organs.
   components:
   - type: Sprite
@@ -265,7 +265,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatSurgcapPurple
-  name: surgcap purple
+  name: surgical cap
   description: A purple cap surgeons wear during operations. Keeps their hair from tickling your internal organs.
   components:
   - type: Sprite
@@ -298,7 +298,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatVioletwizard
-  name: violetwizard
+  name: violet wizard hat
   description: "Strange-looking violet hat-wear that most certainly belongs to a real magic user."
   components:
   - type: Sprite
@@ -320,7 +320,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatWitch
-  name: witch
+  name: witch hat
   description: A witch hat.
   components:
   - type: Sprite
@@ -331,7 +331,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatWizardFake
-  name: wizardFake
+  name: fake wizard hat
   description: It has WIZZARD written across it in sequins. Comes with a cool beard.
   components:
   - type: Sprite

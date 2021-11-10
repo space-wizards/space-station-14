@@ -57,7 +57,7 @@ namespace Content.Shared.Buckle
 
         private void PreventCollision(EntityUid uid, SharedBuckleComponent component, PreventCollideEvent args)
         {
-            if (args.BodyB.Owner.Uid != component.LastEntityBuckledTo) return;
+            if (args.BodyB.OwnerUid != component.LastEntityBuckledTo) return;
 
             component.IsOnStrapEntityThisFrame = true;
             if (component.Buckled || component.DontCollide)

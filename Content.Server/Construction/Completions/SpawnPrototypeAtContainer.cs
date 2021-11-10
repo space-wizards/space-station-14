@@ -24,7 +24,7 @@ namespace Content.Server.Construction.Completions
             var containerSystem = entityManager.EntitySysManager.GetEntitySystem<ContainerSystem>();
             var container = containerSystem.EnsureContainer<Container>(uid, Container);
 
-            var coordinates = entityManager.GetComponent<ITransformComponent>(uid).Coordinates;
+            var coordinates = entityManager.GetComponent<TransformComponent>(uid).Coordinates;
             for (var i = 0; i < Amount; i++)
             {
                 container.Insert(entityManager.SpawnEntity(Prototype, coordinates));

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Content.Shared.Sound;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -14,7 +15,7 @@ namespace Content.Shared.Chemistry.Reaction
     public class ReactionPrototype : IPrototype
     {
         [DataField("reactants")] private Dictionary<string, ReactantPrototype> _reactants = new();
-        [DataField("products")] private Dictionary<string, ReagentUnit> _products = new();
+        [DataField("products")] private Dictionary<string, FixedPoint2> _products = new();
         [DataField("effects", serverOnly: true)] private List<IReactionEffect> _effects = new();
 
         [ViewVariables]
@@ -31,7 +32,7 @@ namespace Content.Shared.Chemistry.Reaction
         /// <summary>
         /// Reagents created when the reaction occurs.
         /// </summary>
-        public IReadOnlyDictionary<string, ReagentUnit> Products => _products;
+        public IReadOnlyDictionary<string, FixedPoint2> Products => _products;
         /// <summary>
         /// Effects to be triggered when the reaction occurs.
         /// </summary>
@@ -48,14 +49,14 @@ namespace Content.Shared.Chemistry.Reaction
     public class ReactantPrototype
     {
         [DataField("amount")]
-        private ReagentUnit _amount = ReagentUnit.New(1);
+        private FixedPoint2 _amount = FixedPoint2.New(1);
         [DataField("catalyst")]
         private bool _catalyst;
 
         /// <summary>
         /// Minimum amount of the reactant needed for the reaction to occur.
         /// </summary>
-        public ReagentUnit Amount => _amount;
+        public FixedPoint2 Amount => _amount;
         /// <summary>
         /// Whether or not the reactant is a catalyst. Catalysts aren't removed when a reaction occurs.
         /// </summary>

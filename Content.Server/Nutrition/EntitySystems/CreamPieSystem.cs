@@ -25,7 +25,7 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             SoundSystem.Play(Filter.Pvs(creamPie.Owner), creamPie.Sound.GetSound(), creamPie.Owner, AudioHelpers.WithVariation(0.125f));
 
-            if (creamPie.Owner.TryGetComponent<FoodComponent>(out var foodComp) && _solutionsSystem.TryGetSolution(creamPie.Owner, foodComp.SolutionName, out var solution))
+            if (creamPie.Owner.TryGetComponent<FoodComponent>(out var foodComp) && _solutionsSystem.TryGetSolution(creamPie.Owner.Uid, foodComp.SolutionName, out var solution))
             {
                 solution.SpillAt(creamPie.Owner, "PuddleSmear", false);
             }

@@ -29,7 +29,7 @@ namespace Content.Server.Climbing
 
         private void AddClimbVerb(EntityUid uid, ClimbableComponent component, GetAlternativeVerbsEvent args)
         {
-            if (!args.CanAccess || !args.CanInteract || !_actionBlockerSystem.CanMove(args.User))
+            if (!args.CanAccess || !args.CanInteract || !_actionBlockerSystem.CanMove(args.User.Uid))
                 return;
 
             // Check that the user climb.

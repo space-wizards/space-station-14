@@ -34,7 +34,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
         private void TransferSolution(BarrelFiredMessage barrelFired)
         {
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var ammoSolution))
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var ammoSolution))
                 return;
 
             var projectiles = barrelFired.FiredProjectiles;
@@ -44,7 +44,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             foreach (var projectile in projectiles)
             {
                 if (EntitySystem.Get<SolutionContainerSystem>()
-                    .TryGetSolution(projectile, SolutionName, out var projectileSolutionContainer))
+                    .TryGetSolution(projectile.Uid, SolutionName, out var projectileSolutionContainer))
                 {
                     projectileSolutionContainers.Add((projectile.Uid, projectileSolutionContainer));
                 }

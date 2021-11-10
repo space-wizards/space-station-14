@@ -7,6 +7,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Body.Networks;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -23,7 +24,7 @@ namespace Content.Server.Body.Circulatory
         ///     Max volume of internal solution storage
         /// </summary>
         [DataField("maxVolume")] [ViewVariables]
-        private ReagentUnit _initialMaxVolume = ReagentUnit.New(250);
+        private FixedPoint2 _initialMaxVolume = FixedPoint2.New(250);
 
         /// <summary>
         ///     Internal solution for reagent storage
@@ -34,7 +35,7 @@ namespace Content.Server.Body.Circulatory
         ///     Empty volume of internal solution
         /// </summary>
         [ViewVariables]
-        public ReagentUnit EmptyVolume => _internalSolution?.AvailableVolume ?? ReagentUnit.Zero;
+        public FixedPoint2 EmptyVolume => _internalSolution?.AvailableVolume ?? FixedPoint2.Zero;
 
         [ViewVariables]
         public GasMixture Air { get; set; } = new(6)
@@ -44,7 +45,7 @@ namespace Content.Server.Body.Circulatory
         {
             base.Initialize();
 
-            _internalSolution = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, DefaultSolutionName);
+            _internalSolution = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner.Uid, DefaultSolutionName);
             if (_internalSolution != null)
             {
                 _internalSolution.MaxVolume = _initialMaxVolume;
@@ -60,8 +61,8 @@ namespace Content.Server.Body.Circulatory
         public override bool TryTransferSolution(Solution solution)
         {
             // For now doesn't support partial transfers
-            var current = _internalSolution?.CurrentVolume ?? ReagentUnit.Zero;
-            var max = _internalSolution?.MaxVolume ?? ReagentUnit.Zero;
+            var current = _internalSolution?.CurrentVolume ?? FixedPoint2.Zero;
+            var max = _internalSolution?.MaxVolume ?? FixedPoint2.Zero;
             if (solution.TotalVolume + current > max)
             {
                 return false;

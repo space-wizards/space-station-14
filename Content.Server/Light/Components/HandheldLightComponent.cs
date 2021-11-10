@@ -76,7 +76,7 @@ namespace Content.Server.Light.Components
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User)) return false;
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User.Uid)) return false;
             if (!_cellSlot.InsertCell(eventArgs.Using)) return false;
             Dirty();
             return true;
@@ -105,7 +105,7 @@ namespace Content.Server.Light.Components
         /// <returns>True if the light's status was toggled, false otherwise.</returns>
         public bool ToggleStatus(IEntity user)
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanUse(user)) return false;
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanUse(user.Uid)) return false;
             return Activated ? TurnOff() : TurnOn(user);
         }
 

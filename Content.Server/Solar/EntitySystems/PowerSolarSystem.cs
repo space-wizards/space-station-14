@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Content.Server.Power.Components;
 using Content.Server.Solar.Components;
 using Content.Shared.Physics;
 using JetBrains.Annotations;
@@ -7,7 +8,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -71,9 +71,16 @@ namespace Content.Server.Solar.EntitySystems
 
         public override void Initialize()
         {
+            SubscribeLocalEvent<SolarPanelComponent, MapInitEvent>(OnMapInit);
+
             // Initialize the sun to something random
             TowardsSun = MathHelper.TwoPi * _robustRandom.NextDouble();
             SunAngularVelocity = Angle.FromDegrees(0.1 + ((_robustRandom.NextDouble() - 0.5) * 0.05));
+        }
+
+        private void OnMapInit(EntityUid uid, SolarPanelComponent component, MapInitEvent args)
+        {
+            UpdateSupply(uid, component);
         }
 
         public override void Update(float frameTime)
@@ -144,6 +151,19 @@ namespace Content.Server.Solar.EntitySystems
 
             // Total coverage calculated; apply it to the panel.
             panel.Coverage = coverage;
+        }
+
+        private void UpdateSupply(
+            EntityUid uid,
+            SolarPanelComponent? solar = null,
+            PowerSupplierComponent? supplier = null)
+        {
+            if (!Resolve(uid, ref solar, ref supplier))
+            {
+                return;
+            }
+
+            supplier.MaxSupply = (int) (solar.MaxSupply * solar.Coverage);
         }
     }
 }

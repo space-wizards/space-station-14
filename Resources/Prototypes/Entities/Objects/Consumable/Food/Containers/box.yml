@@ -144,7 +144,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
-    drawdepth: FloorObjects
+    drawdepth: SmallObjects
     layers:
     - state: box
     - state: box-open

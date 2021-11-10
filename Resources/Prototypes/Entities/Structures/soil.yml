@@ -38,7 +38,6 @@
   - type: Sprite
     sprite: Structures/Hydroponics/misc.rsi
     state: soil
-    drawdepth: FloorObjects
   - type: PlantHolder
     drawWarnings: false
   - type: SolutionContainerManager
@@ -51,6 +50,9 @@
     anchored: true
   - type: Reactive
     reactions:
+    - reagents: [Water]
+      methods: [Touch, Ingestion, Injection]
+      effects:
       - !type:AddToSolutionReaction
         solution: soil
   - type: Appearance

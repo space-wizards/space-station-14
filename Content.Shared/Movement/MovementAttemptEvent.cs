@@ -4,11 +4,11 @@ namespace Content.Shared.Movement
 {
     public class MovementAttemptEvent : CancellableEntityEventArgs
     {
-        public MovementAttemptEvent(IEntity entity)
+        public MovementAttemptEvent(EntityUid uid)
         {
-            Entity = entity;
+            Uid = uid;
         }
 
-        public IEntity Entity { get; }
+        public EntityUid Uid { get; }
     }
 }

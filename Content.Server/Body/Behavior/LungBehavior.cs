@@ -8,6 +8,7 @@ using Content.Server.Popups;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
 using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -92,7 +93,7 @@ namespace Content.Server.Body.Behavior
 
         public override void Update(float frameTime)
         {
-            if (Body != null && Body.Owner.TryGetComponent(out IMobStateComponent? mobState) && mobState.IsCritical())
+            if (Body != null && Body.Owner.TryGetComponent(out MobStateComponent? mobState) && mobState.IsCritical())
             {
                 return;
             }

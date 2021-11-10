@@ -5,6 +5,7 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Body.Networks;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -65,7 +66,7 @@ namespace Content.Server.Body.Behavior
                     // This reagent has been in the stomach long enough, TRY to transfer it.
                     // But first, check if the reagent still exists, and how much is left.
                     // Some poor spessman may have washed down a potassium snack with some water.
-                    if (StomachSolution.ContainsReagent(delta.ReagentId, out ReagentUnit quantity))
+                    if (StomachSolution.ContainsReagent(delta.ReagentId, out FixedPoint2 quantity))
                     {
                         if (quantity > delta.Quantity)
                         {
@@ -89,7 +90,7 @@ namespace Content.Server.Body.Behavior
         {
             get
             {
-                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, DefaultSolutionName, out var solution);
+                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, DefaultSolutionName, out var solution);
                 return solution;
             }
         }
@@ -97,10 +98,10 @@ namespace Content.Server.Body.Behavior
         /// <summary>
         ///     Max volume of internal solution storage
         /// </summary>
-        public ReagentUnit MaxVolume
+        public FixedPoint2 MaxVolume
         {
             get =>
-                StomachSolution?.MaxVolume ?? ReagentUnit.Zero;
+                StomachSolution?.MaxVolume ?? FixedPoint2.Zero;
 
             set
             {
@@ -116,7 +117,7 @@ namespace Content.Server.Body.Behavior
         /// </summary>
         [DataField("maxVolume")]
         [ViewVariables]
-        protected ReagentUnit InitialMaxVolume { get; private set; } = ReagentUnit.New(100);
+        protected FixedPoint2 InitialMaxVolume { get; private set; } = FixedPoint2.New(100);
 
         /// <summary>
         ///     Time in seconds between reagents being ingested and them being
@@ -134,7 +135,7 @@ namespace Content.Server.Body.Behavior
         {
             base.Startup();
 
-            var solution = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, DefaultSolutionName);
+            var solution = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner.Uid, DefaultSolutionName);
             solution.MaxVolume = InitialMaxVolume;
         }
 
@@ -181,10 +182,10 @@ namespace Content.Server.Body.Behavior
         protected class ReagentDelta
         {
             public readonly string ReagentId;
-            public readonly ReagentUnit Quantity;
+            public readonly FixedPoint2 Quantity;
             public float Lifetime { get; private set; }
 
-            public ReagentDelta(string reagentId, ReagentUnit quantity)
+            public ReagentDelta(string reagentId, FixedPoint2 quantity)
             {
                 ReagentId = reagentId;
                 Quantity = quantity;

@@ -160,7 +160,7 @@ namespace Content.Server.Strip
 
             bool Check()
             {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user.Uid))
                     return false;
 
                 if (item == null)
@@ -178,7 +178,7 @@ namespace Content.Server.Strip
                 if (!inventory.HasSlot(slot))
                     return false;
 
-                if (inventory.TryGetSlotItem(slot, out ItemComponent _))
+                if (inventory.TryGetSlotItem(slot, out ItemComponent? _))
                 {
                     user.PopupMessageCursor(Loc.GetString("strippable-component-item-slot-occupied",("owner", Owner)));
                     return false;
@@ -225,7 +225,7 @@ namespace Content.Server.Strip
 
             bool Check()
             {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user.Uid))
                     return false;
 
                 if (item == null)
@@ -290,7 +290,7 @@ namespace Content.Server.Strip
 
             bool Check()
             {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user.Uid))
                     return false;
 
                 if (!inventory.HasSlot(slot))
@@ -346,7 +346,7 @@ namespace Content.Server.Strip
 
             bool Check()
             {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user.Uid))
                     return false;
 
                 if (!hands.HasHand(hand))
@@ -403,7 +403,7 @@ namespace Content.Server.Strip
 
                     if (Owner.TryGetComponent<InventoryComponent>(out var inventory))
                     {
-                        if (inventory.TryGetSlotItem(inventoryMessage.Slot, out ItemComponent _))
+                        if (inventory.TryGetSlotItem(inventoryMessage.Slot, out ItemComponent? _))
                             placingItem = false;
 
                         if (placingItem)

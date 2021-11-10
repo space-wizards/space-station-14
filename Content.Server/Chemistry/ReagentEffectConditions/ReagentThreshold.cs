@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -12,14 +13,20 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
     public class ReagentThreshold : ReagentEffectCondition
     {
         [DataField("min")]
-        public ReagentUnit Min = ReagentUnit.Zero;
+        public FixedPoint2 Min = FixedPoint2.Zero;
 
         [DataField("max")]
-        public ReagentUnit Max = ReagentUnit.MaxValue;
+        public FixedPoint2 Max = FixedPoint2.MaxValue;
 
-        public override bool Condition(IEntity solutionEntity, Solution.ReagentQuantity reagent)
+        public override bool Condition(ReagentEffectArgs args)
         {
-            return reagent.Quantity >= Min && reagent.Quantity < Max;
+            if (args.Source != null)
+            {
+                var quant = args.Source.GetReagentQuantity(args.Reagent.ID);
+                return quant >= Min && quant <= Max;
+            }
+
+            return false;
         }
     }
 }

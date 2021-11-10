@@ -17,11 +17,11 @@ namespace Content.Server.Speech
             _chatManager.RegisterChatTransform(AccentHandler);
         }
 
-        public string AccentHandler(IEntity player, string message)
+        public string AccentHandler(EntityUid playerUid, string message)
         {
-            var accentEvent = new AccentGetEvent(player.Uid, message);
+            var accentEvent = new AccentGetEvent(playerUid, message);
 
-            RaiseLocalEvent(player.Uid, accentEvent);
+            RaiseLocalEvent(playerUid, accentEvent);
 
             return accentEvent.Message;
         }

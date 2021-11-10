@@ -6,7 +6,6 @@
   components:
   - type: Sprite
     netsync: false
-    drawdepth: Mobs # They're on the same layer as mobs, perspective.
     sprite: Structures/Doors/Shutters/blastdoor.rsi
     layers:
     - state: closed

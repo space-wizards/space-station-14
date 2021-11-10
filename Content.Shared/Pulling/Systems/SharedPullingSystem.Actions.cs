@@ -73,7 +73,7 @@ namespace Content.Shared.Pulling
             }
 
             var msg = new StopPullingEvent(user?.Uid);
-            RaiseLocalEvent(pullable.Owner.Uid, msg);
+            RaiseLocalEvent(pullable.OwnerUid, msg);
 
             if (msg.Cancelled) return false;
 
@@ -154,14 +154,14 @@ namespace Content.Shared.Pulling
 
             var pullAttempt = new PullAttemptMessage(pullerPhysics, pullablePhysics);
 
-            RaiseLocalEvent(puller.Owner.Uid, pullAttempt, broadcast: false);
+            RaiseLocalEvent(puller.OwnerUid, pullAttempt, broadcast: false);
 
             if (pullAttempt.Cancelled)
             {
                 return false;
             }
 
-            RaiseLocalEvent(pullable.Owner.Uid, pullAttempt);
+            RaiseLocalEvent(pullable.OwnerUid, pullAttempt);
 
             if (pullAttempt.Cancelled)
             {
@@ -172,7 +172,7 @@ namespace Content.Shared.Pulling
             return true;
         }
 
-        public bool TryMoveTo(SharedPullableComponent pullable, MapCoordinates to)
+        public bool TryMoveTo(SharedPullableComponent pullable, EntityCoordinates to)
         {
             if (pullable.Puller == null)
             {

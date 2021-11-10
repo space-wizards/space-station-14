@@ -2,12 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
 using Content.Server.Mind.Components;
 using Content.Server.Objectives;
 using Content.Server.Players;
 using Content.Server.Roles;
-using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
@@ -138,7 +139,7 @@ namespace Content.Server.Mind
                 // This can be null if they're deleted (spike / brain nom)
                 if (OwnedEntity == null)
                     return true;
-                var targetMobState = OwnedEntity.GetComponentOrNull<IMobStateComponent>();
+                var targetMobState = OwnedEntity.GetComponentOrNull<MobStateComponent>();
                 // This can be null if it's a brain (this happens very often)
                 // Brains are the result of gibbing so should definitely count as dead
                 if (targetMobState == null)
@@ -254,8 +255,7 @@ namespace Content.Server.Mind
                 }
                 else if (component.HasMind)
                 {
-                    // TODO: Kick them out, maybe?
-                    throw new ArgumentException("That entity already has a mind.", nameof(entity));
+                    EntitySystem.Get<GameTicker>().OnGhostAttempt(component.Mind!, false);
                 }
 
                 if (entity.TryGetComponent(out ActorComponent? actor))

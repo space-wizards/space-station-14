@@ -179,6 +179,5 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
         Dart, // Placeholder
         Grenade,
         Energy,
-        CreamPie, // I can't wait for this enum to be a prototype type...
     }
 }

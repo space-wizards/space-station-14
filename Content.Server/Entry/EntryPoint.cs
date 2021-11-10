@@ -18,6 +18,7 @@ using Content.Server.Voting.Managers;
 using Content.Shared.Actions;
 using Content.Shared.Alert;
 using Content.Shared.Kitchen;
+using Robust.Server.Bql;
 using Robust.Server.Player;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
@@ -91,6 +92,7 @@ namespace Content.Server.Entry
             _euiManager.Initialize();
 
             IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<GameTicker>().PostInitialize();
+            IoCManager.Resolve<IBqlQueryManager>().DoAutoRegistrations();
         }
 
         public override void Update(ModUpdateLevel level, FrameEventArgs frameEventArgs)

@@ -1,13 +1,10 @@
-using System.Collections.Generic;
 using Content.Shared.Hands.Components;
-using Content.Shared.Item;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 
 namespace Content.Client.Hands
 {
     [RegisterComponent]
-    [ComponentReference(typeof(ISharedHandsComponent))]
     [ComponentReference(typeof(SharedHandsComponent))]
     public class HandsComponent : SharedHandsComponent
     {
