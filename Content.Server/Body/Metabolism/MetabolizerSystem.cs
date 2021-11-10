@@ -9,10 +9,12 @@ using Content.Shared.Body.Mechanism;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
+using Content.Shared.MobState.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.Body.Metabolism
 {
@@ -22,6 +24,7 @@ namespace Content.Server.Body.Metabolism
     {
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         public override void Initialize()
         {
@@ -102,17 +105,35 @@ namespace Content.Server.Body.Metabolism
 
             if (solutionEntityUid == null || solution == null)
                 return;
-            // we found our guy
-            foreach (var reagent in solution.Contents.ToArray())
+
+            // randomize the reagent list so we don't have any weird quirks
+            // like alphabetical order or insertion order mattering for processing
+            var list = solution.Contents.ToArray();
+            _random.Shuffle(list);
+
+            int reagents = 0;
+            foreach (var reagent in list)
             {
                 if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.ReagentId, out var proto))
                     continue;
 
+                FixedPoint2 mostToRemove = FixedPoint2.Zero;
                 if (proto.Metabolisms == null)
+                {
+                    if (meta.RemoveEmpty)
+                        _solutionContainerSystem.TryRemoveReagent(solutionEntityUid.Value, solution, reagent.ReagentId, FixedPoint2.New(1));
                     continue;
+                }
+
+                // we're done here entirely if this is true
+                if (reagents >= meta.MaxReagentsProcessable)
+                    return;
+                reagents += 1;
 
                 // loop over all our groups and see which ones apply
-                FixedPoint2 mostToRemove = FixedPoint2.Zero;
+                if (meta.MetabolismGroups == null)
+                    continue;
+
                 foreach (var group in meta.MetabolismGroups)
                 {
                     if (!proto.Metabolisms.Keys.Contains(group.Id))
@@ -124,16 +145,27 @@ namespace Content.Server.Body.Metabolism
                     if (entry.MetabolismRate > mostToRemove)
                         mostToRemove = entry.MetabolismRate;
 
+                    // if it's possible for them to be dead, and they are,
+                    // then we shouldn't process any effects, but should probably
+                    // still remove reagents
+                    if (EntityManager.TryGetComponent<MobStateComponent>(solutionEntityUid.Value, out var state))
+                    {
+                        if (state.IsDead())
+                            continue;
+                    }
+
+                    var args = new ReagentEffectArgs(solutionEntityUid.Value, meta.OwnerUid, solution, proto, entry.MetabolismRate,
+                        EntityManager, null);
+
                     // do all effects, if conditions apply
                     foreach (var effect in entry.Effects)
                     {
                         bool failed = false;
-                        var quant = new Solution.ReagentQuantity(reagent.ReagentId, reagent.Quantity);
                         if (effect.Conditions != null)
                         {
                             foreach (var cond in effect.Conditions)
                             {
-                                if (!cond.Condition(solutionEntityUid.Value, meta.OwnerUid, quant, EntityManager))
+                                if (!cond.Condition(args))
                                     failed = true;
                             }
 
@@ -141,7 +173,7 @@ namespace Content.Server.Body.Metabolism
                                 continue;
                         }
 
-                        effect.Metabolize(solutionEntityUid.Value, meta.OwnerUid, quant, EntityManager);
+                        effect.Metabolize(args);
                     }
                 }
 

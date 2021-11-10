@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Reagent;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
@@ -7,9 +8,9 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
     [UsedImplicitly]
     public class PlantAdjustToxins : PlantAdjustAttribute
     {
-        public override void Metabolize(EntityUid plantHolder, EntityUid organEntity, Solution.ReagentQuantity reagent, IEntityManager entityManager)
+        public override void Metabolize(ReagentEffectArgs args)
         {
-            if (!CanMetabolize(plantHolder, out var plantHolderComp, entityManager))
+            if (!CanMetabolize(args.SolutionEntity, out var plantHolderComp, args.EntityManager))
                 return;
 
             plantHolderComp.Toxins += Amount;
