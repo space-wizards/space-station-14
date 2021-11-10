@@ -75,6 +75,7 @@ namespace Content.Server.Shuttles
         {
             if (component.Console == null)
             {
+                DebugTools.Assert(component.Position == null);
                 EntityManager.RemoveComponent<PilotComponent>(uid);
                 return;
             }
