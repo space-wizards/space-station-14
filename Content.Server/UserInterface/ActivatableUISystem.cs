@@ -33,9 +33,7 @@ namespace Content.Server.UserInterface
 
             SubscribeLocalEvent<ActivatableUIComponent, ActivateInWorldEvent>(OnActivate);
             SubscribeLocalEvent<ActivatableUIComponent, UseInHandEvent>(OnUseInHand);
-            SubscribeLocalEvent<ActivatableUIComponent, DroppedEvent>((uid, aui, _) => CloseAll(uid, aui));
-            SubscribeLocalEvent<ActivatableUIComponent, ThrownEvent>((uid, aui, _) => CloseAll(uid, aui));
-            SubscribeLocalEvent<ActivatableUIComponent, HandDeselectedEvent>((uid, aui, _) => CloseAll(uid, aui));
+            SubscribeLocalEvent<ActivatableUIComponent, UnequippedHandEvent>((uid, aui, _) => CloseAll(uid, aui));
         }
 
         private void OnActivate(EntityUid uid, ActivatableUIComponent component, ActivateInWorldEvent args)
