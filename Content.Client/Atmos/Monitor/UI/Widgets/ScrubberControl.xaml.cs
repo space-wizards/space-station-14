@@ -55,7 +55,7 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
                 ScrubberDataChanged?.Invoke(_address, _data);
             };
 
-            _volumeRate.Value = _data.VolumeRate;
+            _volumeRate.Value = (float) _data.VolumeRate!;
             _volumeRate.OnValueChanged += _ =>
             {
                 _data.VolumeRate = _volumeRate.Value;
@@ -72,7 +72,7 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
             foreach (var value in Enum.GetValues<ScrubberPumpDirection>())
                 _pumpDirection.AddItem(Loc.GetString($"{value}"), (int) value);
 
-            _pumpDirection.SelectId((int) _data.PumpDirection);
+            _pumpDirection.SelectId((int) _data.PumpDirection!);
             _pumpDirection.OnItemSelected += args =>
             {
                 _pumpDirection.SelectId(args.Id);
@@ -87,7 +87,7 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
                     Name = value.ToString(),
                     Text = Loc.GetString($"{value}"),
                     ToggleMode = true,
-                    Pressed = _data.FilterGases.Contains(value)
+                    Pressed = _data.FilterGases!.Contains(value)
                 };
                 gasButton.OnToggled += args =>
                 {
@@ -108,15 +108,15 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
             _enabled.Pressed = _data.Enabled;
 
             _data.PumpDirection = data.PumpDirection;
-            _pumpDirection.SelectId((int) _data.PumpDirection);
+            _pumpDirection.SelectId((int) _data.PumpDirection!);
 
             _data.VolumeRate = data.VolumeRate;
-            _volumeRate.Value = _data.VolumeRate;
+            _volumeRate.Value = (float) _data.VolumeRate!;
 
             _data.WideNet = data.WideNet;
             _wideNet.Pressed = _data.WideNet;
 
-            var intersect = _data.FilterGases.Intersect(data.FilterGases);
+            var intersect = _data.FilterGases!.Intersect(data.FilterGases!);
 
             foreach (var value in Enum.GetValues<Gas>())
                 if (!intersect.Contains(value))

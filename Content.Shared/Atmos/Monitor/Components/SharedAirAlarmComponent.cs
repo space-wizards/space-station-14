@@ -56,6 +56,7 @@ namespace Content.Shared.Atmos.Monitor.Components
     public interface IAtmosDeviceData
     {
         public bool Enabled { get; set; }
+        public bool Dirty { get; set; }
         public bool IgnoreAlarms { get; set; }
     }
 

@@ -16,6 +16,9 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Enabled { get; set; } = true;
 
+        [ViewVariables]
+        public bool IsDirty { get; set; } = false;
+
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Welded { get; set; } = false;
 
@@ -35,26 +38,33 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public bool WideNet { get; set; } = false;
 
-        public GasVentScrubberData ToAirAlarmData() => new GasVentScrubberData
+        public GasVentScrubberData ToAirAlarmData()
         {
-            Enabled = Enabled,
-            FilterGases = FilterGases,
-            PumpDirection = PumpDirection,
-            VolumeRate = VolumeRate,
-            WideNet = WideNet
-        };
+            if (!IsDirty) return new GasVentScrubberData { Dirty = IsDirty };
+
+            return new GasVentScrubberData
+            {
+                Enabled = Enabled,
+                Dirty = IsDirty,
+                FilterGases = FilterGases,
+                PumpDirection = PumpDirection,
+                VolumeRate = VolumeRate,
+                WideNet = WideNet
+            };
+        }
 
         public void FromAirAlarmData(GasVentScrubberData data)
         {
             Enabled = data.Enabled;
-            PumpDirection = data.PumpDirection;
-            VolumeRate = data.VolumeRate;
+            IsDirty = data.Dirty;
+            PumpDirection = (ScrubberPumpDirection) data.PumpDirection!;
+            VolumeRate = (float) data.VolumeRate!;
             WideNet = data.WideNet;
 
-            if (!data.FilterGases.SequenceEqual(FilterGases))
+            if (!data.FilterGases!.SequenceEqual(FilterGases))
             {
                 FilterGases.Clear();
-                foreach (var gas in data.FilterGases)
+                foreach (var gas in data.FilterGases!)
                     FilterGases.Add(gas);
             }
         }

@@ -355,6 +355,7 @@ namespace Content.Server.Atmos.Monitor.Systems
         {
             if (!Resolve(uid, ref controller)) return;
 
+            devData.Dirty = true;
             SetData(uid, address, devData);
         }
 

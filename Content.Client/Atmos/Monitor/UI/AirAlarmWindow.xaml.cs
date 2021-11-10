@@ -111,6 +111,8 @@ namespace Content.Client.Atmos.Monitor.UI
             switch (device)
             {
                 case GasVentPumpData pump:
+                    if (!pump.Dirty) pump = GasVentPumpData.Default;
+
                     if (!_pumps.TryGetValue(addr, out var pumpControl))
                     {
                         var control= new PumpControl(pump, addr);
@@ -125,6 +127,8 @@ namespace Content.Client.Atmos.Monitor.UI
 
                     break;
                 case GasVentScrubberData scrubber:
+                    if (!scrubber.Dirty) scrubber = GasVentScrubberData.Default;
+
                     if (!_scrubbers.TryGetValue(addr, out var scrubberControl))
                     {
                         var control = new ScrubberControl(scrubber, addr);

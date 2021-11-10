@@ -15,6 +15,9 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Enabled { get; set; } = true;
 
+        [ViewVariables]
+        public bool IsDirty { get; set; } = false;
+
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Welded { get; set; } = false;
 
@@ -35,22 +38,29 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public float InternalPressureBound { get; set; } = 0f;
 
-        public GasVentPumpData ToAirAlarmData() => new GasVentPumpData
+        public GasVentPumpData ToAirAlarmData()
         {
-            Enabled = Enabled,
-            PumpDirection = PumpDirection,
-            PressureChecks = PressureChecks,
-            ExternalPressureBound = ExternalPressureBound,
-            InternalPressureBound = InternalPressureBound
-        };
+            if (!IsDirty) return new GasVentPumpData { Dirty = IsDirty };
+
+            return new GasVentPumpData
+            {
+                Enabled = Enabled,
+                Dirty = IsDirty,
+                PumpDirection = PumpDirection,
+                PressureChecks = PressureChecks,
+                ExternalPressureBound = ExternalPressureBound,
+                InternalPressureBound = InternalPressureBound
+            };
+        }
 
         public void FromAirAlarmData(GasVentPumpData data)
         {
             Enabled = data.Enabled;
-            PumpDirection = data.PumpDirection;
-            PressureChecks = data.PressureChecks;
-            ExternalPressureBound = data.ExternalPressureBound;
-            InternalPressureBound = data.InternalPressureBound;
+            IsDirty = data.Dirty;
+            PumpDirection = (VentPumpDirection) data.PumpDirection!;
+            PressureChecks = (VentPressureBound) data.PressureChecks!;
+            ExternalPressureBound = (float) data.ExternalPressureBound!;
+            InternalPressureBound = (float) data.InternalPressureBound!;
         }
 
         // Presets for 'dumb' air alarm modes
