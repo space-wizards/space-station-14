@@ -43,11 +43,10 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    bodyType: Dynamic
+    bodyType: KinematicController # Same for all inheritors
     fixtures:
     - shape:
-        # Circles with optional sprites offset, cuz rotation of rectangles looks very bad
-        # TODO: But looks like Jittering system ruins offset idea
+        # Circles, cuz rotation of rectangles looks very bad
         !type:PhysShapeCircle
         radius: 0.35
       mass: 20
