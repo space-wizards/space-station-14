@@ -52,9 +52,6 @@ namespace Content.Server.Stack
                 ? stackType.Spawn
                 : stack.Owner.Prototype?.ID;
 
-            if (prototype == null)
-                return null;
-
             // Try to remove the amount of things we want to split from the original stack...
             if (!Use(uid, amount, stack))
                 return null;
