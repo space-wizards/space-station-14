@@ -21,7 +21,7 @@ namespace Content.Server.Chemistry.ReagentEffects
 
         public override void Metabolize(ReagentEffectArgs args)
         {
-            EntitySystem.Get<DamageableSystem>().TryChangeDamage(args.SolutionEntity, Damage, true);
+            EntitySystem.Get<DamageableSystem>().TryChangeDamage(args.SolutionEntity, Damage * args.Metabolizing, true);
         }
     }
 }

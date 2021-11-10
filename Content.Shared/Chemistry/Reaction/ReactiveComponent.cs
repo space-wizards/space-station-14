@@ -16,15 +16,16 @@ namespace Content.Shared.Chemistry.Reaction
         public List<ReactiveReagentEffectEntry> Reactions { get; } = default!;
     }
 
+    [DataDefinition]
     public class ReactiveReagentEffectEntry
     {
         [DataField("methods")]
         public HashSet<ReactionMethod> Methods = default!;
 
-        [DataField("reagents")]
+        [DataField("reagents", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<ReagentPrototype>))]
         public HashSet<string>? Reagents = null;
 
-        [DataField("effects", required: true, customTypeSerializer: typeof(PrototypeIdHashSetSerializer<ReagentPrototype>))]
+        [DataField("effects", required: true)]
         public List<ReagentEffect> Effects = default!;
     }
 }

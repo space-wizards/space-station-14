@@ -21,7 +21,7 @@ namespace Content.Server.Chemistry.ReagentEffects
         public override void Metabolize(ReagentEffectArgs args)
         {
             if (args.EntityManager.TryGetComponent(args.SolutionEntity, out HungerComponent? hunger))
-                hunger.UpdateFood(NutritionFactor);
+                hunger.UpdateFood(NutritionFactor * (float) args.Metabolizing);
         }
     }
 }

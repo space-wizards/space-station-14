@@ -20,7 +20,7 @@ namespace Content.Server.Chemistry.ReagentEffects
 
             var flammableSystem = EntitySystem.Get<FlammableSystem>();
             flammableSystem.Extinguish(args.SolutionEntity, flammable);
-            flammableSystem.AdjustFireStacks(args.SolutionEntity, -1.5f, flammable);
+            flammableSystem.AdjustFireStacks(args.SolutionEntity, -1.5f * (float) args.Metabolizing, flammable);
         }
     }
 }
