@@ -73,8 +73,13 @@ namespace Content.Server.Shuttles
         /// </summary>
         private void HandlePilotMove(EntityUid uid, PilotComponent component, ref MoveEvent args)
         {
-            if (component.Console == null ||
-                args.NewPosition.TryDistance(EntityManager, component.Position!.Value, out var distance) &&
+            if (component.Console == null)
+            {
+                EntityManager.RemoveComponent<PilotComponent>(uid);
+                return;
+            }
+
+            if (args.NewPosition.TryDistance(EntityManager, component.Position!.Value, out var distance) &&
                 distance < PilotComponent.BreakDistance) return;
 
             RemovePilot(component);
@@ -163,7 +168,9 @@ namespace Content.Server.Shuttles
             }
 
             pilotComponent.Owner.PopupMessage(Loc.GetString("shuttle-pilot-end"));
-            EntityManager.RemoveComponent<PilotComponent>(pilotComponent.Owner.Uid);
+
+            if (pilotComponent.LifeStage < ComponentLifeStage.Stopping)
+                EntityManager.RemoveComponent<PilotComponent>(pilotComponent.Owner.Uid);
         }
 
         public void RemovePilot(IEntity entity)
