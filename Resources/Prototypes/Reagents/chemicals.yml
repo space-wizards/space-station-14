@@ -101,7 +101,7 @@
 - type: reagent
   id: Theobromine
   name: theobromine
-  desc: Theobromine, is a bitter alkaloid of the cacao plant, found in chocolate, and some other foods.
+  desc: Theobromine is a bitter alkaloid of the cacao plant found in chocolate, and some other foods.
   physicalDesc: grainy
   color: "#f5f5f5"
   meltingPoint: 351
