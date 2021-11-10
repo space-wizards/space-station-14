@@ -8,8 +8,6 @@ namespace Content.Server.Speech.EntitySystems
     [UsedImplicitly]
     public class TypingIndicatorSystem : SharedTypingIndicatorSystem
     {
-        [Dependency] private readonly IGameTiming _timing = default!;
-
         public override void Initialize()
         {
             base.Initialize();
