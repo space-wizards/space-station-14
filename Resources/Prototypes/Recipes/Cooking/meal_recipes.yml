@@ -370,6 +370,71 @@
   solids:
     FoodBanana: 3
 
+#Donks i guess
+- type: microwaveMealRecipe
+  id: RecipeWarmDonkpocket
+  name: warm donk pocket recipe
+  result: FoodDonkpocketWarm
+  time: 5
+  solids:
+    FoodDonkpocket: 1
+
+- type: microwaveMealRecipe
+  id: RecipeWarmDankpocket
+  name: warm dank pocket recipe
+  result: FoodDonkpocketDankWarm
+  time: 5
+  solids:
+    FoodDonkpocketDank: 1
+
+- type: microwaveMealRecipe
+  id: RecipeWarmDonkpocketSpicy
+  name: warm spicy donk-pocket recipe
+  result: FoodDonkpocketSpicyWarm
+  time: 5
+  solids:
+    FoodDonkpocketSpicy: 1
+
+- type: microwaveMealRecipe
+  id: RecipeWarmDonkpocketTeriyaki
+  name: warm teriyaki-pocket recipe
+  result: FoodDonkpocketTeriyakiWarm
+  time: 5
+  solids:
+    FoodDonkpocketTeriyaki: 1
+
+- type: microwaveMealRecipe
+  id: RecipeWarmDonkpocketPizza
+  name: warm pizza-pocket recipe
+  result: FoodDonkpocketPizzaWarm
+  time: 5
+  solids:
+    FoodDonkpocketPizza: 1
+
+- type: microwaveMealRecipe
+  id: RecipeDonkpocketHonk
+  name: warm honk-pocket recipe
+  result: FoodDonkpocketHonkWarm
+  time: 5
+  solids:
+    FoodDonkpocketHonk: 1
+
+- type: microwaveMealRecipe
+  id: RecipeDonkpocketBerry
+  name: warm berry-pocket recipe
+  result: FoodDonkpocketBerryWarm
+  time: 5
+  solids:
+    FoodDonkpocketBerry: 1
+
+- type: microwaveMealRecipe
+  id: RecipeDonkpocketGondola
+  name: warm gondola-pocket recipe
+  result: FoodDonkpocketGondolaWarm
+  time: 5
+  solids:
+    FoodDonkpocketGondola: 1
+
 # NOT ACTUAL FOOD
 
 - type: microwaveMealRecipe
