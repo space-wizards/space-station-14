@@ -294,6 +294,8 @@ namespace Content.Server.Shuttles
 
             // https://gamedev.stackexchange.com/questions/98772/b2distancejoint-with-frequency-equal-to-0-vs-b2weldjoint
 
+            // We could also potentially use a prismatic joint
+
             // TODO: NEED A TEST FOR THIS DO NOT LET SLOTH MERGE WITHOUT IT!!!
 
             var aDirection = dockAXform.LocalRotation.GetCardinalDir();
@@ -303,10 +305,31 @@ namespace Content.Server.Shuttles
             // You see we need to stuff with the ordering to make sure it's correct and just end me.
             switch (aDirection)
             {
-                case Direction.East:
+                case Direction.North:
+                {
                     switch (bDirection)
                     {
                         case Direction.West:
+                        case Direction.South:
+                            swap = true;
+                            break;
+                    }
+                    break;
+                }
+                case Direction.East:
+                    switch (bDirection)
+                    {
+                        case Direction.North:
+                        case Direction.West:
+                            swap = true;
+                            break;
+                    }
+                    break;
+                case Direction.South:
+                    switch (bDirection)
+                    {
+                        case Direction.West:
+                        case Direction.North:
                             swap = true;
                             break;
                     }
@@ -338,14 +361,17 @@ namespace Content.Server.Shuttles
                 out var stiffness,
                 out var damping);
 
-            var anchorA = dockAXform.LocalPosition + dockAXform.LocalRotation.ToWorldVec() / 2f;
-            var anchorB = dockBXform.LocalPosition + dockBXform.LocalRotation.ToWorldVec() / 2f;
+            var anchorA = dockAXform.LocalPosition + dockAXform.LocalRotation.ToWorldVec() / 2f * 1.01f;
+            var anchorB = dockBXform.LocalPosition + dockBXform.LocalRotation.ToWorldVec() / 2f * 1.01f;
 
+            // These need playing around with
+            // Could also potentially have collideconnected false and stiffness 0 but it was a bit more suss???
             var joint = _jointSystem.CreateWeldJoint(gridA, gridB, DockingJoint + dockA.OwnerUid);
             joint.LocalAnchorA = anchorA;
             joint.LocalAnchorB = anchorB;
             joint.ReferenceAngle = (float) (gridBXform.WorldRotation - gridAXform.WorldRotation);
-            joint.CollideConnected = false;
+            joint.CollideConnected = true;
+            joint.Stiffness = 0.2f;
             // joint.Stiffness = stiffness;
             // joint.Damping = damping;
 

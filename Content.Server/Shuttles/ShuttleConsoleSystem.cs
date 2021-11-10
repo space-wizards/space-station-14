@@ -73,7 +73,7 @@ namespace Content.Server.Shuttles
         private void HandlePilotMove(EntityUid uid, PilotComponent component, ref MoveEvent args)
         {
             if (component.Console == null ||
-                args.NewPosition.TryDistance(EntityManager, component.PilotPosition!.Value, out var distance) && distance >= PilotComponent.BreakDistance) return;
+                args.NewPosition.TryDistance(EntityManager, component.PilotPosition!.Value, out var distance) && distance < PilotComponent.BreakDistance) return;
 
             RemovePilot(component);
         }
