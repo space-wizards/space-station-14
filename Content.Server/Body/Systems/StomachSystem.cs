@@ -22,13 +22,10 @@ namespace Content.Server.Body.Systems
 
         public override void Update(float frameTime)
         {
-            foreach (var (stomach, mech)
-                in EntityManager.EntityQuery<StomachComponent, MechanismComponent>(false))
+            foreach (var (stomach, mech, sol)
+                in EntityManager.EntityQuery<StomachComponent, MechanismComponent, SolutionContainerManagerComponent>(false))
             {
                 if (mech.Body == null)
-                    continue;
-
-                if (!EntityManager.TryGetComponent<SolutionContainerManagerComponent>(stomach.OwnerUid, out var sol))
                     continue;
 
                 stomach.AccumulatedFrameTime += frameTime;
