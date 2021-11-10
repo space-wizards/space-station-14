@@ -250,7 +250,7 @@ namespace Content.Server.AI.Steering
             // Main optimisation to be done below is the redundant calls and adding more variables
             if (entity.Deleted ||
                 !entity.TryGetComponent(out AiControllerComponent? controller) ||
-                !EntitySystem.Get<ActionBlockerSystem>().CanMove(entity) ||
+                !EntitySystem.Get<ActionBlockerSystem>().CanMove(entity.Uid) ||
                 !entity.Transform.GridID.IsValid())
             {
                 return SteeringStatus.NoPath;

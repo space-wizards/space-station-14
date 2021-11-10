@@ -430,7 +430,7 @@ namespace Content.Shared.Hands.Components
         /// </summary>
         private bool PlayerCanDrop()
         {
-            if (!IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ActionBlockerSystem>().CanDrop(Owner))
+            if (!IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ActionBlockerSystem>().CanDrop(OwnerUid))
                 return false;
 
             return true;
@@ -625,7 +625,7 @@ namespace Content.Shared.Hands.Components
         /// <returns></returns>
         protected bool PlayerCanPickup()
         {
-            if (!IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ActionBlockerSystem>().CanPickup(Owner))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanPickup(Owner.Uid))
                 return false;
 
             return true;

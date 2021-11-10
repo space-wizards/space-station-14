@@ -64,7 +64,7 @@ namespace Content.Server.GameObjects.Components
                 return; // Not powered, so this computer should probably do nothing.
             }
             // Can we interact?
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(sessionEntity))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(sessionEntity.Uid))
             {
                 sessionEntity.PopupMessageCursor(Loc.GetString("base-computer-ui-component-cannot-interact"));
                 return;

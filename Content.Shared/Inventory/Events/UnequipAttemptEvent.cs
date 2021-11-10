@@ -4,11 +4,11 @@ namespace Content.Shared.Inventory.Events
 {
     public class UnequipAttemptEvent : CancellableEntityEventArgs
     {
-        public UnequipAttemptEvent(IEntity entity)
+        public UnequipAttemptEvent(EntityUid uid)
         {
-            Entity = entity;
+            Uid = uid;
         }
 
-        public IEntity Entity { get; }
+        public EntityUid Uid { get; }
     }
 }

@@ -19,12 +19,12 @@ namespace Content.Shared.Acts
 
     public class DestructionEventArgs : EntityEventArgs
     {
-        public IEntity Owner { get; set; } = default!;
+        public EntityUid Owner { get; init; } = default!;
     }
 
     public class BreakageEventArgs : EventArgs
     {
-        public IEntity Owner { get; set; } = default!;
+        public EntityUid Owner { get; init; } = default!;
     }
 
     public interface IBreakAct
@@ -46,31 +46,31 @@ namespace Content.Shared.Acts
     public class ExplosionEventArgs : EventArgs
     {
         public EntityCoordinates Source { get; set; }
-        public IEntity Target { get; set; } = default!;
+        public EntityUid Target { get; set; }
         public ExplosionSeverity Severity { get; set; }
     }
 
     [UsedImplicitly]
     public sealed class ActSystem : EntitySystem
     {
-        public void HandleDestruction(IEntity owner)
+        public void HandleDestruction(EntityUid owner)
         {
             var eventArgs = new DestructionEventArgs
             {
                 Owner = owner
             };
 
-            var destroyActs = owner.GetAllComponents<IDestroyAct>().ToList();
+            var destroyActs = EntityManager.GetComponents<IDestroyAct>(owner).ToList();
 
             foreach (var destroyAct in destroyActs)
             {
                 destroyAct.OnDestroy(eventArgs);
             }
 
-            owner.QueueDelete();
+            EntityManager.QueueDeleteEntity(owner);
         }
 
-        public void HandleExplosion(EntityCoordinates source, IEntity target, ExplosionSeverity severity)
+        public void HandleExplosion(EntityCoordinates source, EntityUid target, ExplosionSeverity severity)
         {
             var eventArgs = new ExplosionEventArgs
             {
@@ -78,7 +78,7 @@ namespace Content.Shared.Acts
                 Target = target,
                 Severity = severity
             };
-            var exActs = target.GetAllComponents<IExAct>().ToList();
+            var exActs = EntityManager.GetComponents<IExAct>(target).ToList();
 
             foreach (var exAct in exActs)
             {
@@ -86,13 +86,13 @@ namespace Content.Shared.Acts
             }
         }
 
-        public void HandleBreakage(IEntity owner)
+        public void HandleBreakage(EntityUid owner)
         {
             var eventArgs = new BreakageEventArgs
             {
                 Owner = owner,
             };
-            var breakActs = owner.GetAllComponents<IBreakAct>().ToList();
+            var breakActs = EntityManager.GetComponents<IBreakAct>(owner).ToList();
             foreach (var breakAct in breakActs)
             {
                 breakAct.OnBreak(eventArgs);

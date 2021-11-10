@@ -60,7 +60,7 @@ namespace Content.Server.Hands.Systems
 
         private void HandleItemDropped(EntityUid uid, HandVirtualItemComponent component, DroppedEvent args)
         {
-            Delete(component, args.User.Uid);
+            Delete(component, args.UserUid);
         }
 
         /// <summary>

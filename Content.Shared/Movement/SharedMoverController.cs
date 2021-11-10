@@ -95,15 +95,15 @@ namespace Content.Shared.Movement
         protected void HandleMobMovement(IMoverComponent mover, PhysicsComponent physicsComponent,
             IMobMoverComponent mobMover)
         {
-            DebugTools.Assert(!UsedMobMovement.ContainsKey(mover.Owner.Uid));
+            DebugTools.Assert(!UsedMobMovement.ContainsKey(mover.OwnerUid));
 
             if (!UseMobMovement(physicsComponent))
             {
-                UsedMobMovement[mover.Owner.Uid] = false;
+                UsedMobMovement[mover.OwnerUid] = false;
                 return;
             }
 
-            UsedMobMovement[mover.Owner.Uid] = true;
+            UsedMobMovement[mover.OwnerUid] = true;
             var transform = mover.Owner.Transform;
             var weightless = mover.Owner.IsWeightless(physicsComponent, mapManager: _mapManager, entityManager: _entityManager);
             var (walkDir, sprintDir) = mover.VelocityDir;
@@ -163,7 +163,7 @@ namespace Content.Shared.Movement
                    body.Owner.HasComponent<MobStateComponent>() &&
                    // If we're being pulled then don't mess with our velocity.
                    (!body.Owner.TryGetComponent(out SharedPullableComponent? pullable) || !pullable.BeingPulled) &&
-                   _blocker.CanMove(body.Owner);
+                   _blocker.CanMove(body.OwnerUid);
         }
 
         /// <summary>

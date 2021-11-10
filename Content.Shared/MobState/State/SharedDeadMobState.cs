@@ -8,37 +8,37 @@ namespace Content.Shared.MobState.State
     {
         protected override DamageState DamageState => DamageState.Dead;
 
-        public override void EnterState(IEntity entity)
+        public override void EnterState(EntityUid uid, IEntityManager entityManager)
         {
-            base.EnterState(entity);
-            var wake = entity.EnsureComponent<CollisionWakeComponent>();
+            base.EnterState(uid, entityManager);
+            var wake = entityManager.EnsureComponent<CollisionWakeComponent>(uid);
             wake.Enabled = true;
             var standingState = EntitySystem.Get<StandingStateSystem>();
-            standingState.Down(entity.Uid);
+            standingState.Down(uid);
 
-            if (standingState.IsDown(entity.Uid) && entity.TryGetComponent(out PhysicsComponent? physics))
+            if (standingState.IsDown(uid) && entityManager.TryGetComponent(uid, out PhysicsComponent? physics))
             {
                 physics.CanCollide = false;
             }
 
-            if (entity.TryGetComponent(out SharedAppearanceComponent? appearance))
+            if (entityManager.TryGetComponent(uid, out SharedAppearanceComponent? appearance))
             {
                 appearance.SetData(DamageStateVisuals.State, DamageState.Dead);
             }
         }
 
-        public override void ExitState(IEntity entity)
+        public override void ExitState(EntityUid uid, IEntityManager entityManager)
         {
-            base.ExitState(entity);
-            if (entity.HasComponent<CollisionWakeComponent>())
+            base.ExitState(uid, entityManager);
+            if (entityManager.HasComponent<CollisionWakeComponent>(uid))
             {
-                entity.RemoveComponent<CollisionWakeComponent>();
+                entityManager.RemoveComponent<CollisionWakeComponent>(uid);
             }
 
             var standingState = EntitySystem.Get<StandingStateSystem>();
-            standingState.Stand(entity.Uid);
+            standingState.Stand(uid);
 
-            if (!standingState.IsDown(entity.Uid) && entity.TryGetComponent(out PhysicsComponent? physics))
+            if (!standingState.IsDown(uid) && entityManager.TryGetComponent(uid, out PhysicsComponent? physics))
             {
                 physics.CanCollide = true;
             }

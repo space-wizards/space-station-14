@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
+using Content.Shared.Movement.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
@@ -85,9 +86,9 @@ namespace Content.Shared.Damage
             component.TotalDamage = component.Damage.Total;
             component.Dirty();
 
-            if (EntityManager.TryGetComponent<SharedAppearanceComponent>(component.Owner.Uid, out var appearance) && damageDelta != null)
+            if (EntityManager.TryGetComponent<SharedAppearanceComponent>(component.OwnerUid, out var appearance) && damageDelta != null)
                 appearance.SetData(DamageVisualizerKeys.DamageUpdateGroups, damageDelta.GetDamagePerGroup().Keys.ToList());
-            RaiseLocalEvent(component.Owner.Uid, new DamageChangedEvent(component, damageDelta), false);
+            RaiseLocalEvent(component.OwnerUid, new DamageChangedEvent(component, damageDelta), false);
         }
 
         /// <summary>

@@ -98,7 +98,7 @@ namespace Content.Server.Nutrition.EntitySystems
                     !containerManager.Owner.TryGetComponent(out BloodstreamComponent? bloodstream))
                     continue;
 
-                _chemistrySystem.ReactionEntity(containerManager.Owner, ReactionMethod.Ingestion, inhaledSolution);
+                _chemistrySystem.ReactionEntity(containerManager.Owner.Uid, ReactionMethod.Ingestion, inhaledSolution);
                 bloodstream.TryTransferSolution(inhaledSolution);
             }
 

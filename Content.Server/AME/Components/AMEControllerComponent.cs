@@ -174,7 +174,7 @@ namespace Content.Server.AME.Components
             var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
 
             //Check if player can interact in their current state
-            if (!actionBlocker.CanInteract(playerEntity) || !actionBlocker.CanUse(playerEntity))
+            if (!actionBlocker.CanInteract(playerEntity.Uid) || !actionBlocker.CanUse(playerEntity.Uid))
                 return false;
             //Check if device is powered
             if (needsPower && !Powered)

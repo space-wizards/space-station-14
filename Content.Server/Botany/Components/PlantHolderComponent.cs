@@ -421,7 +421,7 @@ namespace Content.Server.Botany.Components
 
         public bool DoHarvest(IEntity user)
         {
-            if (Seed == null || user.Deleted || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
+            if (Seed == null || user.Deleted || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user.Uid))
                 return false;
 
             if (Harvest && !Dead)
@@ -566,7 +566,7 @@ namespace Content.Server.Botany.Components
                 foreach (var reagent in solutionSystem.RemoveEachReagent(OwnerUid, solution, amt))
                 {
                     var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagent);
-                    reagentProto.ReactionPlant(OwnerUid, new Solution.ReagentQuantity(reagent, amt));
+                    reagentProto.ReactionPlant(OwnerUid, new Solution.ReagentQuantity(reagent, amt), solution);
                 }
             }
 
@@ -651,7 +651,7 @@ namespace Content.Server.Botany.Components
             var user = eventArgs.User;
             var usingItem = eventArgs.Using;
 
-            if (usingItem.Deleted || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
+            if (usingItem.Deleted || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user.Uid))
                 return false;
 
             if (usingItem.TryGetComponent(out SeedComponent? seeds))

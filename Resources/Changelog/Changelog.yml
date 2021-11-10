@@ -1,25 +1,4 @@
 Entries:
-- author: tmtmtl30
-  changes:
-  - {message: Crit overlay is now unaffected by lights., type: Fix}
-  id: 56
-  time: '2021-03-08T04:11:29.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Gas canisters to cargo computer, type: Add}
-  id: 57
-  time: '2021-03-08T04:15:48.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Monke kitchen spikes, type: Fix}
-  id: 58
-  time: '2021-03-08T10:24:35.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Having four edge firelocks in a single tile no longer destroys any air
-      within it., type: Fix}
-  id: 59
-  time: '2021-03-08T13:58:21.036238+00:00'
 - author: Zumorica
   changes:
   - {message: Fixes bug where plasma and tritium fires would never occur no matter
@@ -2821,3 +2800,26 @@ Entries:
     type: Fix}
   id: 555
   time: '2021-11-07T10:33:52.0000000+00:00'
+- author: moonheart08
+  changes:
+  - {message: The game rules have been updated to bring the server to Low Roleplay
+      standards. Go read 'em!, type: Tweak}
+  id: 556
+  time: '2021-11-10T00:12:46.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Labelers have been mapped in to Saltern. There''s some in the dorms,
+      chemistry, and cargo.', type: Add}
+  id: 557
+  time: '2021-11-10T06:45:18.0000000+00:00'
+- author: xRiriq
+  changes:
+  - {message: Syringes now can draw from ChemMaster 4000 bottles, type: Fix}
+  id: 558
+  time: '2021-11-10T10:01:24.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: You no longer move at the speed of sound even though you're inches from
+      death., type: Tweak}
+  id: 559
+  time: '2021-11-10T10:06:28.0000000+00:00'

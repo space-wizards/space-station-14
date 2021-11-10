@@ -46,7 +46,7 @@ namespace Content.Server.Chemistry.Components
             foreach (var reagentQuantity in transferSolution.Contents.ToArray())
             {
                 if (reagentQuantity.Quantity == FixedPoint2.Zero) continue;
-                chemistry.ReactionEntity(entity, ReactionMethod.Ingestion, reagentQuantity.ReagentId, reagentQuantity.Quantity, transferSolution);
+                chemistry.ReactionEntity(entity.Uid, ReactionMethod.Ingestion, reagentQuantity.ReagentId, reagentQuantity.Quantity, transferSolution);
             }
 
             bloodstream.TryTransferSolution(transferSolution);

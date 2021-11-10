@@ -15,9 +15,9 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
     [DataDefinition]
     public class RobustHarvest : ReagentEffect
     {
-        public override void Metabolize(EntityUid plantHolder, EntityUid organEntity, Solution.ReagentQuantity reagent, IEntityManager entityManager)
+        public override void Metabolize(ReagentEffectArgs args)
         {
-            if (!entityManager.TryGetComponent(plantHolder, out PlantHolderComponent? plantHolderComp)
+            if (!args.EntityManager.TryGetComponent(args.SolutionEntity, out PlantHolderComponent? plantHolderComp)
                                     || plantHolderComp.Seed == null || plantHolderComp.Dead ||
                                     plantHolderComp.Seed.Immutable)
                 return;

@@ -34,9 +34,12 @@ namespace Content.Shared.Tabletop
         /// </summary>
         /// <param name="playerEntity">The player entity to check.</param>
         /// <param name="table">The table entity to check.</param>
-        protected bool CanSeeTable(IEntity playerEntity, IEntity? table)
+        protected bool CanSeeTable(EntityUid playerEntity, EntityUid? table)
         {
-            if (table?.Transform.Parent?.Owner is not { } parent)
+            if (table == null)
+                return false;
+
+            if (EntityManager.GetComponent<TransformComponent>(table.Value).Parent?.Owner is not { } parent)
             {
                 return false;
             }
@@ -46,13 +49,13 @@ namespace Content.Shared.Tabletop
                 return false;
             }
 
-            return _actionBlockerSystem.CanInteract(playerEntity.Uid);
+            return playerEntity.InRangeUnobstructed(table.Value) && _actionBlockerSystem.CanInteract(playerEntity);
         }
 
-        protected static bool StunnedOrNoHands(IEntity playerEntity)
+        protected bool StunnedOrNoHands(EntityUid playerEntity)
         {
-            var stunned = playerEntity.HasComponent<StunnedComponent>();
-            var hasHand = playerEntity.TryGetComponent<SharedHandsComponent>(out var handsComponent) &&
+            var stunned = EntityManager.HasComponent<StunnedComponent>(playerEntity);
+            var hasHand = EntityManager.TryGetComponent<SharedHandsComponent>(playerEntity, out var handsComponent) &&
                           handsComponent.Hands.Count > 0;
 
             return stunned || !hasHand;

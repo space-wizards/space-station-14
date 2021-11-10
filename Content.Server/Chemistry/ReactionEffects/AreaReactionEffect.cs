@@ -89,9 +89,9 @@ namespace Content.Server.Chemistry.ReactionEffects
             IoCManager.InjectDependencies(this);
         }
 
-        public void React(Solution solution, IEntity solutionEntity, double intensity)
+        public void React(Solution solution, EntityUid solutionEntity, double intensity, IEntityManager entityManager)
         {
-            var splitSolution = EntitySystem.Get<SolutionContainerSystem>().SplitSolution(solutionEntity.Uid, solution, solution.MaxVolume);
+            var splitSolution = EntitySystem.Get<SolutionContainerSystem>().SplitSolution(solutionEntity, solution, solution.MaxVolume);
             // We take the square root so it becomes harder to reach higher amount values
             var amount = (int) Math.Round(_rangeConstant + _rangeMultiplier*Math.Sqrt(intensity));
             amount = Math.Min(amount, _maxRange);
@@ -117,11 +117,13 @@ namespace Content.Server.Chemistry.ReactionEffects
                 splitSolution.RemoveSolution(splitSolution.TotalVolume * solutionFraction);
             }
 
-            if (!_mapManager.TryFindGridAt(solutionEntity.Transform.MapPosition, out var grid)) return;
+            var transform = entityManager.GetComponent<TransformComponent>(solutionEntity);
 
-            var coords = grid.MapToGrid(solutionEntity.Transform.MapPosition);
+            if (!_mapManager.TryFindGridAt(transform.MapPosition, out var grid)) return;
 
-            var ent = solutionEntity.EntityManager.SpawnEntity(_prototypeId, coords.SnapToGrid());
+            var coords = grid.MapToGrid(transform.MapPosition);
+
+            var ent = entityManager.SpawnEntity(_prototypeId, coords.SnapToGrid());
 
             var areaEffectComponent = GetAreaEffectComponent(ent);
 

@@ -36,7 +36,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
             foreach (var (_, value) in contents.Solutions)
             {
-                value.DoEntityReaction(args.OtherFixture.Body.Owner, ReactionMethod.Touch);
+                value.DoEntityReaction(args.OtherFixture.Body.Owner.Uid, ReactionMethod.Touch);
             }
 
             // Check for collision with a impassable object (e.g. wall) and stop
