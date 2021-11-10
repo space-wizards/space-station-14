@@ -40,7 +40,7 @@ namespace Content.Server.Shuttles
 
         private const string DockingFixture = "docking";
         private const string DockingJoint = "docking";
-        private const float DockingRadius = 0.25f;
+        private const float DockingRadius = 0.20f;
 
         public override void Initialize()
         {
@@ -126,6 +126,8 @@ namespace Content.Server.Shuttles
 
         private DockingComponent? GetDockable(PhysicsComponent body, TransformComponent dockingXform)
         {
+            // Did you know Saltern is the most dockable station?
+
             // Assume the docking port itself (and its body) is valid
 
             if (!_mapManager.TryGetGrid(dockingXform.GridID, out var grid) ||
@@ -288,6 +290,8 @@ namespace Content.Server.Shuttles
                 Hard = false,
             };
 
+            // TODO: I want this to ideally be 2 fixtures to force them to have some level of alignment buuuttt
+            // I also need collisionmanager for that yet again so they get dis.
             _broadphaseSystem.CreateFixture(physicsComponent, fixture);
         }
 
@@ -301,8 +305,6 @@ namespace Content.Server.Shuttles
             // https://gamedev.stackexchange.com/questions/98772/b2distancejoint-with-frequency-equal-to-0-vs-b2weldjoint
 
             // We could also potentially use a prismatic joint? Depending if we want clamps that can extend or whatever
-
-            // TODO: NEED A TEST FOR THIS DO NOT LET SLOTH MERGE WITHOUT IT!!!
 
             var dockAXform = EntityManager.GetComponent<TransformComponent>(dockA.OwnerUid);
             var dockBXform = EntityManager.GetComponent<TransformComponent>(dockB.OwnerUid);
@@ -322,25 +324,11 @@ namespace Content.Server.Shuttles
             // Could also potentially have collideconnected false and stiffness 0 but it was a bit more suss???
             var joint = _jointSystem.CreateWeldJoint(gridA, gridB, DockingJoint + dockA.OwnerUid);
 
-            // Joints can mess with the ordering to make its own solving easier.
-            if (gridA != joint.BodyAUid)
-            {
-                var grid = gridA;
-                var dock = dockA;
-                var dockXform = dockAXform;
-                gridA = gridB;
-                gridB = grid;
-                dockA = dockB;
-                dockB = dock;
-                dockAXform = dockBXform;
-                dockBXform = dockXform;
-            }
-
             var gridAXform = EntityManager.GetComponent<TransformComponent>(gridA);
             var gridBXform = EntityManager.GetComponent<TransformComponent>(gridB);
 
-            var anchorA = dockAXform.LocalPosition + dockAXform.LocalRotation.ToWorldVec() / 2f * 1.01f;
-            var anchorB = dockBXform.LocalPosition + dockBXform.LocalRotation.ToWorldVec() / 2f * 1.01f;
+            var anchorA = dockAXform.LocalPosition + dockAXform.LocalRotation.ToWorldVec() / 2f;
+            var anchorB = dockBXform.LocalPosition + dockBXform.LocalRotation.ToWorldVec() / 2f;
 
             joint.LocalAnchorA = anchorA;
             joint.LocalAnchorB = anchorB;
@@ -348,32 +336,6 @@ namespace Content.Server.Shuttles
             joint.CollideConnected = true;
             joint.Stiffness = stiffness;
             joint.Damping = damping;
-
-            // joint.Stiffness = stiffness;
-            // joint.Damping = damping;
-
-            /*
-            var joint = _jointSystem.CreatePrismaticJoint(gridA, gridB, DockingJoint);
-            joint.LocalAnchorA = anchorA;
-            joint.LocalAnchorB = anchorB;
-            joint.CollideConnected = false;
-            joint.EnableLimit = true;
-            joint.LowerTranslation = -0.5f;
-            joint.UpperTranslation = 0.5f;
-            joint.LocalAxisA = new Vector2(-1f, 0f);
-            //joint.Damping = damping;
-            //joint.Stiffness = stiffness;
-            joint.ReferenceAngle = 0f + MathF.PI;
-            */
-
-            /*
-            var joint = _jointSystem.CreateDistanceJoint(gridA, gridB, anchorA, anchorB, DockingJoint);
-            joint.CollideConnected = false;
-            joint.MaxLength = 0.1f;
-            joint.Length = 0.0f;
-            joint.Damping = damping;
-            joint.Stiffness = stiffness;
-            */
 
             dockA.DockedWith = dockB;
             dockB.DockedWith = dockA;
