@@ -1,7 +1,7 @@
 ﻿using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Shared.Body.Metabolism
+namespace Content.Shared.Body.Prototypes
 {
     [Prototype("metabolizerType")]
     public class MetabolizerTypePrototype : IPrototype

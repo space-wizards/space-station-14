@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.Body.Slot
+namespace Content.Shared.Body
 {
     public class BodyPartSlot
     {

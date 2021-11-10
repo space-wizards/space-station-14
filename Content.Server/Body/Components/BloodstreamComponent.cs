@@ -3,7 +3,7 @@ using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Atmos;
-using Content.Shared.Body.Networks;
+using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;

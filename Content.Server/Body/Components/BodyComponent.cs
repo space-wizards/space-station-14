@@ -1,8 +1,8 @@
 using Content.Server.Ghost;
 using Content.Shared.Audio;
+using Content.Shared.Body;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
-using Content.Shared.Body.Slot;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Sound;
 using Robust.Shared.Audio;
