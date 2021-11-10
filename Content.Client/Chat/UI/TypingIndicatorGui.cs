@@ -45,8 +45,6 @@ namespace Content.Client.Chat.UI
                 return;
             }
 
-            Visible = Enabled;
-
             var screenCoordinates = _eyeManager.CoordinatesToScreen(Entity.Transform.Coordinates);
             var playerPosition = UserInterfaceManager.ScreenToUIPosition(screenCoordinates);
             LayoutContainer.SetPosition(this, new Vector2(playerPosition.X - Width / 2, playerPosition.Y - Height - 30.0f));

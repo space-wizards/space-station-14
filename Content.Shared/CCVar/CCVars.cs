@@ -471,7 +471,7 @@ namespace Content.Shared.CCVar
         /// Polling interval (in seconds) for activity in the chatbox input field after typing has begun.
         /// </summary>
         public static readonly CVarDef<float> ChatTypingIndicatorPollRate =
-            CVarDef.Create("chat.typing_indicator_poll_rate", 5.0f, CVar.SERVER | CVar.REPLICATED);
+            CVarDef.Create("chat.typing_indicator_poll_rate", 2.5f, CVar.SERVER | CVar.REPLICATED);
         /// <summary>
         /// Whether the client has enabled the typing indicator.
         /// </summary>

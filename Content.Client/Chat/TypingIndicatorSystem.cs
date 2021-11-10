@@ -14,53 +14,64 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Timing;
 
+
 namespace Content.Client.Chat
 {
 	public class TypingIndicatorSystem : SharedTypingIndicatorSystem
 	{
 		[Dependency] private readonly IPlayerManager _playerManager = default!;
-		[Dependency] private readonly IGameTiming _timing = default!;
 		[Dependency] private readonly IEyeManager _eyeManager = default!;
 		[Dependency] private readonly IConfigurationManager _cfg = default!;
 
 		private readonly Dictionary<EntityUid, TypingIndicatorGui> _guis = new();
 
 		private IEntity? _attachedEntity;
+
         /// <summary>
         /// The system needs to be enabled by default client side for handling remote players
         /// but clients can opt in to use this feature.
         /// </summary>
 		public bool EnabledLocally => _cfg.GetCVar(CCVars.ChatTypingIndicatorSystemEnabled);
 
-		/// <summary>
-		/// Time since the chatbox input field had active input.
-		/// </summary>
-		public TimeSpan TimeSinceType { get; private set; }
+        /// <summary>
+        /// Used for throttling how often we allow the client
+        /// to send messages informing the server they are typing.
+        /// </summary>
+        private bool _canTransmit = false;
 
-        private bool _flag = false;
         public override void Initialize()
+
 		{
 			base.Initialize();
-			SubscribeNetworkEvent<ClientTypingMessage>(HandleRemoteTyping);
+            _canTransmit = true;
+			SubscribeNetworkEvent<RemoteClientTypingMessage>(HandleRemoteTyping);
             SubscribeLocalEvent<PlayerAttachSysMessage>(HandlePlayerAttached);
         }
 
         public void HandleClientTyping()
         {
-            TimeSinceType = _timing.RealTime;
-            _flag = true;
+            if (!EnabledLocally || !_canTransmit) return;
+            RaiseNetworkEvent(new ClientTypingMessage(_playerManager?.LocalPlayer?.UserId, _attachedEntity?.Uid));
+            _canTransmit = false;
+            Timer.Spawn(1000 * (int)_cfg.GetCVar(CCVars.ChatTypingIndicatorPollRate), () =>
+            {
+                _canTransmit = true;
+            });
+
         }
 
-        public void ResetTypingTime()
+		private void HandleRemoteTyping(RemoteClientTypingMessage ev)
 		{
-			TimeSinceType = TimeSpan.Zero;
-		}
-
-		private void HandleRemoteTyping(ClientTypingMessage ev)
-		{
-			var entity = EntityManager.GetEntity(ev.EnityId.GetValueOrDefault());
+            var entity = EntityManager.GetEntity(ev.EnityId.GetValueOrDefault());
 			var comp = entity.EnsureComponent<TypingIndicatorComponent>();
-            comp.TimeAtTyping = _timing.RealTime;
+
+            //a remote client is typing. toggle their component so we can render the overlay locally.
+            comp.IsVisible = true;
+            Timer.Spawn(3000, () =>
+            {
+                comp.IsVisible = false;
+            });
+
         }
 
 		private void HandlePlayerAttached(PlayerAttachSysMessage message)
@@ -68,30 +79,10 @@ namespace Content.Client.Chat
 			_attachedEntity = message.AttachedEntity;
 		}
 
-		public override void Update(float frameTime)
-		{
-			base.Update(frameTime);
-
-            if (!EnabledLocally) return; //The user has not opted in to use the typing indicator, do not inform the server they are typing.
-            if (_flag)
-            {
-                var localPlayer = _playerManager.LocalPlayer;
-                RaiseNetworkEvent(new ClientTypingMessage(localPlayer?.UserId, _attachedEntity?.Uid));
-            }
-
-            var pollRate = TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.ChatTypingIndicatorPollRate));
-            if (_timing.RealTime.Subtract(TimeSinceType) >= pollRate)
-            {
-                //user hasn't flipped the flag (typed in a while)
-                _flag = false;
-            }
-
-		}
-
 		public override void FrameUpdate(float frameTime)
 		{
 			base.FrameUpdate(frameTime);
-
+            //this is ripped from debug health overlay. not good but it works.
             if (_attachedEntity == null || _attachedEntity.Deleted)
 			{
 				return;
@@ -110,6 +101,7 @@ namespace Content.Client.Chat
 					if (_guis.TryGetValue(entity.Uid, out var oldGui))
 					{
 						_guis.Remove(entity.Uid);
+                        oldGui.Visible = false;
 						oldGui.Dispose();
 					}
 
@@ -120,8 +112,7 @@ namespace Content.Client.Chat
 				{
 					if (_guis.TryGetValue(entity.Uid, out var typGui))
                     {
-                        var difference = _timing.RealTime.Subtract(typingIndicatorComp.TimeAtTyping);
-                        typGui.Visible = difference <= TimeSpan.FromSeconds(3f);
+                        typGui.Visible = typingIndicatorComp.IsVisible;
                     }
 
 					continue;
@@ -136,8 +127,8 @@ namespace Content.Client.Chat
 		public sealed class EnabledTypingIndicatorSystem : IConsoleCommand
 		{
 			public string Command => "typingindicator";
-			public string Description => "Enables the typing indicator";
-			public string Help => ""; //helpless
+			public string Description => "Enables the typing indicator for your character";
+			public string Help => "";
 
 			public void Execute(IConsoleShell shell, string argStr, string[] args)
 			{
