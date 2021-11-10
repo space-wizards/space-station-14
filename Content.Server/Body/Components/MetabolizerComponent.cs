@@ -50,10 +50,25 @@ namespace Content.Server.Body.Components
         public HashSet<string>? MetabolizerTypes = null;
 
         /// <summary>
+        ///     Should this metabolizer remove chemicals that have no metabolisms defined?
+        ///     As a stop-gap, basically.
+        /// </summary>
+        [DataField("removeEmpty")]
+        public bool RemoveEmpty = false;
+
+        /// <summary>
+        ///     How many reagents can this metabolizer process at once?
+        ///     Used to nerf 'stacked poisons' where having 5+ different poisons in a syringe, even at low
+        ///     quantity, would be muuuuch better than just one poison acting.
+        /// </summary>
+        [DataField("maxReagents")]
+        public int MaxReagentsProcessable = 3;
+
+        /// <summary>
         ///     A list of metabolism groups that this metabolizer will act on, in order of precedence.
         /// </summary>
-        [DataField("groups", required: true)]
-        public List<MetabolismGroupEntry> MetabolismGroups = default!;
+        [DataField("groups")]
+        public List<MetabolismGroupEntry>? MetabolismGroups = default!;
     }
 
     /// <summary>

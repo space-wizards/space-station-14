@@ -46,19 +46,6 @@
     damage:
       types:
         Heat : 1 #per second, scales with number of fire 'stacks'
-  - type: Reactive
-    reactions:
-      - !type:ExtinguishReaction
-        touch: true
-        reagents:
-          - Water
-      - !type:FlammableReaction
-        touch: true
-        reagents:
-          - WeldingFuel
-          - Thermite
-          - Plasma
-          - Ethanol
   - type: Appearance
     visuals:
     - type: FireVisualizer

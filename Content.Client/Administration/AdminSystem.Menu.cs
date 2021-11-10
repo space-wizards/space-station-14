@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
+using Content.Client.Administration.Managers;
 using Content.Client.Administration.UI;
 using Content.Client.HUD;
-using Content.Shared.Administration.Menu;
 using Content.Shared.Input;
 using Robust.Client.Console;
 using Robust.Client.Graphics;
@@ -13,9 +13,9 @@ using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 
-namespace Content.Client.Administration.Managers
+namespace Content.Client.Administration
 {
-    internal class AdminMenuManager : IAdminMenuManager
+    public partial class AdminSystem
     {
         [Dependency] private readonly INetManager _netManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
@@ -29,16 +29,10 @@ namespace Content.Client.Administration.Managers
         [Dependency] private readonly IEntityLookup _entityLookup = default!;
 
         private AdminMenuWindow? _window;
-        private List<SS14Window> _commandWindows = new();
-        private AdminNameOverlay _adminNameOverlay = default!;
+        private readonly List<SS14Window> _commandWindows = new();
 
-        public void Initialize()
+        private void InitializeMenu()
         {
-            _netManager.RegisterNetMessage<AdminMenuPlayerListRequest>();
-            _netManager.RegisterNetMessage<AdminMenuPlayerListMessage>(HandlePlayerListMessage);
-
-            _commandWindows = new List<SS14Window>();
-            _adminNameOverlay = new AdminNameOverlay(this, _entityManager, _eyeManager, _resourceCache, _entityLookup);
             // Reset the AdminMenu Window on disconnect
             _netManager.Disconnect += (_, _) => ResetWindow();
 
@@ -70,37 +64,19 @@ namespace Content.Client.Administration.Managers
             _gameHud.AdminButtonDown = false;
         }
 
-        private void RequestPlayerList()
-        {
-            var message = _netManager.CreateNetMessage<AdminMenuPlayerListRequest>();
-
-            _netManager.ClientSendMessage(message);
-        }
-
-        private void HandlePlayerListMessage(AdminMenuPlayerListMessage msg)
-        {
-            _window?.RefreshPlayerList(msg.PlayersInfo);
-            _adminNameOverlay.UpdatePlayerInfo(msg.PlayersInfo);
-        }
-
-        private void AdminNameOverlayOn()
-        {
-            if (!_overlayManager.HasOverlay<AdminNameOverlay>())
-                _overlayManager.AddOverlay(_adminNameOverlay);
-        }
-
-        private void AdminNameOverlayOff()
-        {
-            _overlayManager.RemoveOverlay<AdminNameOverlay>();
-        }
 
         public void ResetWindow()
         {
             _window?.Close();
+            _window?.Dispose();
             _window = null;
 
             foreach (var window in _commandWindows)
-                window?.Dispose();
+            {
+                window.Close();
+                window.Dispose();
+            }
+
             _commandWindows.Clear();
         }
 
@@ -113,9 +89,6 @@ namespace Content.Client.Administration.Managers
         public void Open()
         {
             _window ??= new AdminMenuWindow();
-            _window.OnPlayerListRefresh += RequestPlayerList;
-            _window.OnAdminNameOverlayOn += AdminNameOverlayOn;
-            _window.OnAdminNameOverlayOff += AdminNameOverlayOff;
             _window.OpenCentered();
         }
 
@@ -157,15 +130,5 @@ namespace Content.Client.Administration.Managers
                 TryOpen();
             }
         }
-    }
-
-    internal interface IAdminMenuManager
-    {
-        void Initialize();
-        void Open();
-        void OpenCommand(SS14Window window);
-        bool CanOpen();
-        void TryOpen();
-        void Toggle();
     }
 }

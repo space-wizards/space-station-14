@@ -1,21 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Monke kitchen spikes, type: Fix}
-  id: 58
-  time: '2021-03-08T10:24:35.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Having four edge firelocks in a single tile no longer destroys any air
-      within it., type: Fix}
-  id: 59
-  time: '2021-03-08T13:58:21.036238+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fixes bug where plasma and tritium fires would never occur no matter
-      what., type: Fix}
-  id: 60
-  time: '2021-03-08T14:23:04.819646+00:00'
 - author: Tarlan2
   changes:
   - {message: Adds combat knife and fire axe., type: Add}
@@ -2823,3 +2806,22 @@ Entries:
       chemistry, and cargo.', type: Add}
   id: 557
   time: '2021-11-10T06:45:18.0000000+00:00'
+- author: xRiriq
+  changes:
+  - {message: Syringes now can draw from ChemMaster 4000 bottles, type: Fix}
+  id: 558
+  time: '2021-11-10T10:01:24.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: You no longer move at the speed of sound even though you're inches from
+      death., type: Tweak}
+  id: 559
+  time: '2021-11-10T10:06:28.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Cargo crates now have paper labels that can be read by examining them.,
+    type: Add}
+  - {message: 'Added new crates to cargo console (medical supplies, cigarettes, and
+      pizza).', type: Add}
+  id: 560
+  time: '2021-11-10T13:15:23.0000000+00:00'

@@ -2,7 +2,7 @@ using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.HandLabeler
+namespace Content.Shared.Labels
 {
     /// <summary>
     /// Key representing which <see cref="BoundUserInterface"/> is currently open.
@@ -12,6 +12,12 @@ namespace Content.Shared.HandLabeler
     public enum HandLabelerUiKey
     {
         Key,
+    }
+
+    [Serializable, NetSerializable]
+    public enum PaperLabelVisuals
+    {
+        HasLabel,
     }
 
     /// <summary>
