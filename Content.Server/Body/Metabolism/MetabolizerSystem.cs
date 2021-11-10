@@ -155,7 +155,7 @@ namespace Content.Server.Body.Metabolism
                     }
 
                     var args = new ReagentEffectArgs(solutionEntityUid.Value, meta.OwnerUid, solution, proto, entry.MetabolismRate,
-                        EntityManager, ReactionMethod.Ingestion);
+                        EntityManager, null);
 
                     // do all effects, if conditions apply
                     foreach (var effect in entry.Effects)
