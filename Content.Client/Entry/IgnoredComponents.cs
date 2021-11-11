@@ -25,6 +25,7 @@ namespace Content.Client.Entry
             "MeleeWeapon",
             "MeleeChemicalInjector",
             "Dice",
+            "PaperLabel",
             "Construction",
             "PoweredLight",
             "Smes",
@@ -303,6 +304,8 @@ namespace Content.Client.Entry
             "ApcNetSwitch",
             "HandLabeler",
             "Label",
+            "Nuke",
+            "NukeCodePaper",
             "GhostRadio",
             "Armor",
             "PneumaticCannon"

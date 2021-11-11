@@ -170,6 +170,7 @@
     mode: SnapgridCenter
   components:
     - type: Sprite
+      drawdepth: FloorObjects
       netsync: false
       sprite: Structures/Piping/Atmospherics/vent.rsi
       layers:

@@ -1,31 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Fixes bug where plasma and tritium fires would never occur no matter
-      what., type: Fix}
-  id: 60
-  time: '2021-03-08T14:23:04.819646+00:00'
-- author: Tarlan2
-  changes:
-  - {message: Adds combat knife and fire axe., type: Add}
-  id: 61
-  time: '2021-03-08T18:16:09.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Assistants won't spawn in walls anymore, type: Fix}
-  - {message: More late-join spawn-points to arrivals, type: Tweak}
-  id: 62
-  time: '2021-03-08T19:17:06.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Water vapor canister from cargo console, type: Remove}
-  id: 63
-  time: '2021-03-09T07:54:22.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Items no longer collide with vending machines, type: Fix}
-  id: 64
-  time: '2021-03-09T08:47:29.0000000+00:00'
 - author: SweptWasTaken
   changes:
   - {message: Removed unused vending machines, type: Remove}
@@ -2823,3 +2796,33 @@ Entries:
       death., type: Tweak}
   id: 559
   time: '2021-11-10T10:06:28.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Cargo crates now have paper labels that can be read by examining them.,
+    type: Add}
+  - {message: 'Added new crates to cargo console (medical supplies, cigarettes, and
+      pizza).', type: Add}
+  id: 560
+  time: '2021-11-10T13:15:23.0000000+00:00'
+- author: Efruit
+  changes:
+  - {message: Enabled tab complete in the Server-side C# Interpreter, type: Add}
+  id: 561
+  time: '2021-11-10T19:35:34.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Storages that are unlocked can be escaped from by movement again., type: Fix}
+  id: 562
+  time: '2021-11-10T23:07:05.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: 'Added a nuclear bomb to game code. Not mapped yet,', type: Add}
+  - {message: Admins can send nuclear codes using communication consoles., type: Add}
+  id: 563
+  time: '2021-11-11T01:29:11.0000000+00:00'
+- author: xRiriq
+  changes:
+  - {message: Backpacks for CMO and Medical Doctors spawn with filled first aid kits,
+    type: Add}
+  id: 564
+  time: '2021-11-11T01:29:36.0000000+00:00'

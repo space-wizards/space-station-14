@@ -227,6 +227,7 @@
   - type: CargoOrderDatabase
   - type: GalacticMarket
     products:
+      - MedicalSupplies
       - EmergencyExplosive
       - EmergencyFire
       - EmergencyInternals
@@ -243,8 +244,11 @@
       - HydroponicsSeeds
       - HydroponicsSeedsExotic
       - LivestockMonkeyCube
+      - FoodPizza
       - ServiceJanitorial
       - ServiceLightsReplacement
+      - ServiceSmokeables
+      - ServiceCustomSmokable
       - EngineeringCableLv
       - EngineeringCableMv
       - EngineeringCableHv
@@ -283,6 +287,8 @@
     radius: 1.5
     energy: 1.6
     color: "#b89f25"
+  - type: AccessReader
+    access: [["Cargo"]]
 
 - type: entity
   id: ComputerSupplyRequest
