@@ -211,19 +211,44 @@ namespace Content.Server.Storage.Components
                 if (entity.IsInContainer())
                     continue;
 
-                // only items that can be stored in an inventory, or a mob, can be eaten by a locker
-                if (!entity.HasComponent<SharedItemComponent>() &&
-                    !entity.HasComponent<SharedBodyComponent>())
-                    continue;
+                // conditions are complicated because of pizzabox-related issues, so follow this guide
+                // 1. AddToContents can block anything
+                // 2. maximum item count can block anything
+                // 3. ghosts can NEVER be eaten
+                // 4. items can always be eaten unless a previous law prevents it
+                // 5. if this is NOT AN ITEM, then mobs can always be eaten unless unless a previous law prevents it
 
                 // Let's not insert admin ghosts, yeah? This is really a a hack and should be replaced by attempt events
-                if (entity.HasComponent<GhostComponent>())
+                if (Owner.EntityManager.HasComponent<GhostComponent>(entity.Uid))
                     continue;
 
-                if (!AddToContents(entity))
-                {
+                // checks
+
+                var targetIsItem = Owner.EntityManager.HasComponent<SharedItemComponent>(entity.Uid);
+                var targetIsMob = Owner.EntityManager.HasComponent<SharedBodyComponent>(entity.Uid);
+                var storageIsItem = Owner.EntityManager.HasComponent<SharedItemComponent>(OwnerUid);
+
+                var allowedToEat = false;
+
+                if (targetIsItem)
+                    allowedToEat = true;
+
+                // BEFORE REPLACING THIS WITH, I.E. A PROPERTY:
+                // Make absolutely 100% sure you have worked out how to stop people ending up in backpacks.
+                // Seriously, it is insanely hacky and weird to get someone out of a backpack once they end up in there.
+                // And to be clear, they should NOT be in there.
+                // For the record, what you need to do is empty the backpack onto a PlacableSurface (table, rack)
+                if (targetIsMob && !storageIsItem)
+                    allowedToEat = true;
+
+                if (!allowedToEat)
                     continue;
-                }
+
+                // finally, AddToContents
+
+                if (!AddToContents(entity))
+                    continue;
+
                 count++;
                 if (count >= _storageCapacityMax)
                 {
