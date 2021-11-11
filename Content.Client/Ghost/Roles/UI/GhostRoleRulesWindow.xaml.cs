@@ -24,6 +24,7 @@ namespace Content.Client.Ghost.Roles.UI
         protected override void FrameUpdate(FrameEventArgs args)
         {
             base.FrameUpdate(args);
+            if (!RequestButton.Disabled) return;
             if (_timer > 0.0)
             {
                 _timer -= args.DeltaSeconds;
