@@ -180,7 +180,7 @@ namespace Content.Server.Doors.Components
         /// Default time that the door should take to pry open.
         /// </summary>
         [DataField("pryTime")]
-        public float PryTime = 0.5f;
+        public float PryTime = 1.5f;
 
         /// <summary>
         ///     Minimum interval allowed between deny sounds in milliseconds.
