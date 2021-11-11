@@ -13,6 +13,7 @@
     base: carpet_
   - type: Physics
     canCollide: false
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb {}

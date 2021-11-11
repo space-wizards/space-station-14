@@ -42,6 +42,7 @@
   - type: Transform
     anchored: true
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -111,6 +112,7 @@
     netsync: false
     drawdepth: Walls
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb {}
