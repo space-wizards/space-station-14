@@ -9,4 +9,4 @@ comp-gas-pump-ui-pump-output-pressure = Output Pressure (kPa):
 
 comp-gas-pump-ui-pump-transfer-rate = Transfer Rate (L/s):
 
-comp-gas-pump-ui-needs-anchor = Anchor the pump first!
+comp-gas-pump-ui-needs-anchor = Anchor it first!
