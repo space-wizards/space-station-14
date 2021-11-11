@@ -205,14 +205,30 @@ namespace Content.Server.Shuttles
         {
             _jointSystem.RemoveJoint(dockA.DockJoint!);
 
-            var dockB = dockA.DockedWith!;
+            var dockB = dockA.DockedWith;
 
-            dockA.DockedWith!.DockedWith = null;
-            dockA.DockedWith.DockJoint = null;
+            if (dockB == null || dockA.DockJoint == null)
+            {
+                DebugTools.Assert(false);
+                Logger.Error("docking", $"Tried to cleanup {dockA.OwnerUid} but not docked?");
+
+                dockA.DockedWith = null;
+                if (dockA.DockJoint != null)
+                {
+                    // We'll still cleanup the dock joint on release at least
+                    _jointSystem.RemoveJoint(dockA.DockJoint);
+                }
+
+                return;
+            }
+
+            dockB.DockedWith = null;
+            dockB.DockJoint = null;
 
             dockA.DockJoint = null;
             dockA.DockedWith = null;
 
+            // If these grids are ever invalid then need to look at fixing ordering for unanchored events elsewhere.
             var gridAUid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(dockA.OwnerUid).GridID).GridEntityId;
             var gridBUid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(dockB.OwnerUid).GridID).GridEntityId;
 
