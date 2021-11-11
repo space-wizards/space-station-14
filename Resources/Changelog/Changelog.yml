@@ -1,10 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Fixes water vapor reaction removing oxygen instead of water vapor.,
-    type: Fix}
-  id: 66
-  time: '2021-03-09T20:32:22.626361+00:00'
 - author: Swept
   changes:
   - {message: Centcom Official ghost role, type: Add}
@@ -2827,3 +2821,8 @@ Entries:
     type: Tweak}
   id: 565
   time: '2021-11-11T07:42:34.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Shuttles can now dock., type: Add}
+  id: 566
+  time: '2021-11-11T09:06:38.0000000+00:00'
