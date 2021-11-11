@@ -82,6 +82,7 @@
     sprite: Clothing/Hands/Gloves/latex.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/latex.rsi
+    Sterile: 2 # mutliplier for healing consumables like BrutePacks
 
 - type: entity
   parent: ClothingHandsBase

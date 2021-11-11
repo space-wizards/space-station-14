@@ -33,11 +33,17 @@ namespace Content.Server.Clothing.Components
         [DataField("HeatResistance")]
         private int _heatResistance = 323;
 
+        [DataField("Sterile")]
+        private int _sterile = 0;
+
         [DataField("EquipSound")]
         public SoundSpecifier? EquipSound { get; set; } = default!;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public int HeatResistance => _heatResistance;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public int Sterile => _sterile;
 
         [DataField("ClothingPrefix")]
         private string? _clothingEquippedPrefix;

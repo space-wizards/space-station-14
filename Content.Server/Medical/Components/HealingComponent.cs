@@ -1,9 +1,12 @@
 using System.Threading.Tasks;
+using Content.Server.Clothing.Components;
+using Content.Server.Inventory.Components;
 using Content.Server.Stack;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
+using Content.Shared.Inventory;
 using Content.Shared.Stacks;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -48,7 +51,13 @@ namespace Content.Server.Medical.Components
                 return true;
             }
 
-            EntitySystem.Get<DamageableSystem>().TryChangeDamage(eventArgs.Target.Uid, Damage, true);
+            var scale = 1;
+            if (eventArgs.User.GetComponent<InventoryComponent>().TryGetSlotItem(EquipmentSlotDefines.Slots.GLOVES, out ClothingComponent? gloves))
+            {
+                scale = gloves?.Sterile ?? 1;
+            }
+
+            EntitySystem.Get<DamageableSystem>().TryChangeDamage(eventArgs.Target.Uid, Damage * scale, true);
 
             return true;
         }
