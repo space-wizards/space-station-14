@@ -219,6 +219,8 @@ namespace Content.Server.Shuttles
         private void OnStartup(EntityUid uid, DockingComponent component, ComponentStartup args)
         {
             // Use startup so transform already initialized
+            if (!EntityManager.GetComponent<TransformComponent>(uid).Anchored) return;
+
             EnableDocking(uid, component);
         }
 
