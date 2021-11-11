@@ -161,7 +161,14 @@ namespace Content.Server.Shuttles
                         !EntityManager.TryGetComponent(ent, out PhysicsComponent? otherBody)) continue;
 
                     var otherTransform = otherBody.GetTransform();
-                    var otherDockingFixture = otherBody.GetFixture(DockingFixture)!;
+                    var otherDockingFixture = otherBody.GetFixture(DockingFixture);
+
+                    if (otherDockingFixture == null)
+                    {
+                        DebugTools.Assert(false);
+                        Logger.ErrorS("docking", $"Found null docking fixture on {EntityManager.GetEntity(ent)}");
+                        continue;
+                    }
 
                     for (var i = 0; i < otherDockingFixture.Shape.ChildCount; i++)
                     {
