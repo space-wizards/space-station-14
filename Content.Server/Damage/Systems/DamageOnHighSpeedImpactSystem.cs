@@ -4,6 +4,7 @@ using Content.Server.Stunnable;
 using Content.Server.Stunnable.Components;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Stunnable;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
@@ -21,7 +22,7 @@ namespace Content.Server.Damage.Systems
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly SharedDamageableSystem _damageableSystem = default!;
         [Dependency] private readonly StunSystem _stunSystem = default!;
 
         public override void Initialize()

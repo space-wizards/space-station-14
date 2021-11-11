@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Content.Server.Weapon.Melee.Components;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Mining;
 using Robust.Server.GameObjects;
@@ -38,7 +39,7 @@ namespace Content.Server.Mining.Components
             if (!item.TryGetComponent(out MeleeWeaponComponent? meleeWeaponComponent))
                 return false;
 
-            EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner.Uid, meleeWeaponComponent.Damage);
+            EntitySystem.Get<SharedDamageableSystem>().TryChangeDamage(Owner.Uid, meleeWeaponComponent.Damage);
 
             if (!item.TryGetComponent(out PickaxeComponent? pickaxeComponent))
                 return true;

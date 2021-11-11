@@ -2,6 +2,7 @@
 using Content.Server.Administration.Commands;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.MobState.Components;
 using NUnit.Framework;
@@ -59,7 +60,7 @@ namespace Content.IntegrationTests.Tests.Commands
                 // Kill the entity
                 DamageSpecifier damage = new(prototypeManager.Index<DamageGroupPrototype>("Toxin"),
                     FixedPoint2.New(10000000));
-                EntitySystem.Get<DamageableSystem>().TryChangeDamage(human.Uid, damage, true);
+                EntitySystem.Get<SharedDamageableSystem>().TryChangeDamage(human.Uid, damage, true);
 
                 // Check that it is dead
                 Assert.That(mobState.IsAlive, Is.False);

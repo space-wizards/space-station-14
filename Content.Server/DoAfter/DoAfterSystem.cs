@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 

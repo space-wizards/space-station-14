@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Content.Server.Atmos.Components;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -12,7 +13,7 @@ namespace Content.Server.Damage.Systems
     public class GodmodeSystem : EntitySystem
     {
         private readonly Dictionary<EntityUid, OldEntityInformation> _entities = new();
-        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly SharedDamageableSystem _damageableSystem = default!;
 
         public override void Initialize()
         {

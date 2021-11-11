@@ -5,6 +5,7 @@ using Content.Server.Atmos.Components;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -14,7 +15,7 @@ namespace Content.Server.Atmos.EntitySystems
     public class BarotraumaSystem : EntitySystem
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly SharedDamageableSystem _damageableSystem = default!;
 
         private const float UpdateTimer = 1f;
 

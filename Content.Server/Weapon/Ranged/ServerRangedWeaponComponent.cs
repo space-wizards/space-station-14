@@ -8,6 +8,7 @@ using Content.Server.Stunnable.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Hands;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
@@ -173,7 +174,7 @@ namespace Content.Server.Weapon.Ranged
             if (ClumsyCheck && ClumsyDamage != null && ClumsyComponent.TryRollClumsy(user, ClumsyExplodeChance))
             {
                 //Wound them
-                EntitySystem.Get<DamageableSystem>().TryChangeDamage(user.Uid, ClumsyDamage);
+                EntitySystem.Get<SharedDamageableSystem>().TryChangeDamage(user.Uid, ClumsyDamage);
                 EntitySystem.Get<StunSystem>().TryParalyze(user.Uid, TimeSpan.FromSeconds(3f));
 
                 // Apply salt to the wound ("Honk!")

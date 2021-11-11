@@ -1,6 +1,7 @@
 using Content.Server.Tools;
 using Content.Server.Tools.Components;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Tools.Components;
@@ -13,7 +14,7 @@ namespace Content.Server.Repairable
     public class RepairableSystem : EntitySystem
     {
         [Dependency] private readonly ToolSystem _toolSystem = default!;
-        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly SharedDamageableSystem _damageableSystem = default!;
 
         public override void Initialize()
         {

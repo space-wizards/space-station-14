@@ -1,6 +1,7 @@
 using Content.Server.Damage.Components;
 using Content.Server.Tools.Components;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Interaction;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -9,7 +10,7 @@ namespace Content.Server.Damage.Systems
 {
     public class DamageOnToolInteractSystem : EntitySystem
     {
-        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly SharedDamageableSystem _damageableSystem = default!;
 
         public override void Initialize()
         {

@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Content.Server.Destructible.Thresholds.Triggers;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Damage.Systems;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -33,7 +34,7 @@ namespace Content.IntegrationTests.Tests.Destructible
             IEntity sDestructibleEntity = null;
             DamageableComponent sDamageableComponent = null;
             TestDestructibleListenerSystem sTestThresholdListenerSystem = null;
-            DamageableSystem sDamageableSystem = null;
+            SharedDamageableSystem sDamageableSystem = null;
 
             await server.WaitPost(() =>
             {
@@ -43,7 +44,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 sDestructibleEntity = sEntityManager.SpawnEntity(DestructibleDamageTypeEntityId, coordinates);
                 sDamageableComponent = sDestructibleEntity.GetComponent<DamageableComponent>();
                 sTestThresholdListenerSystem = sEntitySystemManager.GetEntitySystem<TestDestructibleListenerSystem>();
-                sDamageableSystem = sEntitySystemManager.GetEntitySystem<DamageableSystem>();
+                sDamageableSystem = sEntitySystemManager.GetEntitySystem<SharedDamageableSystem>();
             });
 
             await server.WaitRunTicks(5);

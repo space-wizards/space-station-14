@@ -4,6 +4,7 @@ using Content.Server.Nutrition.Components;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Jittering;
 using Content.Shared.MobState.Components;
 using Content.Shared.Nutrition.Components;
@@ -66,7 +67,7 @@ namespace Content.Server.Administration.Commands
 
             if (target.TryGetComponent(out DamageableComponent? damageable))
             {
-                EntitySystem.Get<DamageableSystem>().SetAllDamage(damageable, 0);
+                EntitySystem.Get<SharedDamageableSystem>().SetAllDamage(damageable, 0);
             }
 
             if (target.TryGetComponent(out CreamPiedComponent? creamPied))

@@ -16,7 +16,7 @@ namespace Content.Shared.FixedPoint
     public struct FixedPoint2 : ISelfSerialize, IComparable<FixedPoint2>, IEquatable<FixedPoint2>
     {
         private int _value;
-        private static readonly int Shift = 2;
+        public const int Shift = 2;
 
         public static FixedPoint2 MaxValue { get; } = new(int.MaxValue);
         public static FixedPoint2 Epsilon { get; } = new(1);
@@ -185,6 +185,11 @@ namespace Content.Shared.FixedPoint
         public readonly int Int()
         {
             return (int) ShiftDown();
+        }
+
+        public readonly int UnShiftedInt()
+        {
+            return _value;
         }
 
         // Implicit operators ftw

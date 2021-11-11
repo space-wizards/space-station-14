@@ -1,17 +1,15 @@
-using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
-using Content.Shared.Movement.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Damage
+namespace Content.Shared.Damage.Systems
 {
-    public class DamageableSystem : EntitySystem
+    public abstract class SharedDamageableSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -20,6 +18,11 @@ namespace Content.Shared.Damage
             SubscribeLocalEvent<DamageableComponent, ComponentInit>(DamageableInit);
             SubscribeLocalEvent<DamageableComponent, ComponentHandleState>(DamageableHandleState);
             SubscribeLocalEvent<DamageableComponent, ComponentGetState>(DamageableGetState);
+        }
+
+        protected virtual void SetTotalDamage(DamageableComponent damageable, FixedPoint2 amount)
+        {
+            damageable.TotalDamage = amount;
         }
 
         /// <summary>
@@ -83,7 +86,7 @@ namespace Content.Shared.Damage
         public void DamageChanged(DamageableComponent component, DamageSpecifier? damageDelta = null)
         {
             component.DamagePerGroup = component.Damage.GetDamagePerGroup();
-            component.TotalDamage = component.Damage.Total;
+            SetTotalDamage(component, component.Damage.Total);
             component.Dirty();
 
             if (EntityManager.TryGetComponent<SharedAppearanceComponent>(component.OwnerUid, out var appearance) && damageDelta != null)

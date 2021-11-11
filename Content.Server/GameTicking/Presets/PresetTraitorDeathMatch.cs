@@ -18,6 +18,7 @@ using Content.Server.TraitorDeathMatch.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Inventory;
 using Content.Shared.MobState.Components;
 using Content.Shared.Traitor.Uplink;
@@ -204,7 +205,7 @@ namespace Content.Server.GameTicking.Presets
                 {
                     // TODO BODY SYSTEM KILL
                     var damage = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Asphyxiation"), 100);
-                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(entity.Uid, damage, true);
+                    EntitySystem.Get<SharedDamageableSystem>().TryChangeDamage(entity.Uid, damage, true);
                 }
                 else if (!mobState.IsDead())
                 {
