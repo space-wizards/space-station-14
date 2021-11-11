@@ -1,14 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: Water vapor canister from cargo console, type: Remove}
-  id: 63
-  time: '2021-03-09T07:54:22.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Items no longer collide with vending machines, type: Fix}
-  id: 64
-  time: '2021-03-09T08:47:29.0000000+00:00'
 - author: SweptWasTaken
   changes:
   - {message: Removed unused vending machines, type: Remove}
@@ -2824,3 +2814,15 @@ Entries:
   - {message: Storages that are unlocked can be escaped from by movement again., type: Fix}
   id: 562
   time: '2021-11-10T23:07:05.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: 'Added a nuclear bomb to game code. Not mapped yet,', type: Add}
+  - {message: Admins can send nuclear codes using communication consoles., type: Add}
+  id: 563
+  time: '2021-11-11T01:29:11.0000000+00:00'
+- author: xRiriq
+  changes:
+  - {message: Backpacks for CMO and Medical Doctors spawn with filled first aid kits,
+    type: Add}
+  id: 564
+  time: '2021-11-11T01:29:36.0000000+00:00'
