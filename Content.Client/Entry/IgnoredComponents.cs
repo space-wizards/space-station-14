@@ -120,6 +120,7 @@ namespace Content.Client.Entry
             "SurgeryTool",
             "EmitSoundOnThrow",
             "Flash",
+            "Docking",
             "Telecrystal",
             "TrashSpawner",
             "RCD",

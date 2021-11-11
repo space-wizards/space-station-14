@@ -4,8 +4,5 @@ using Robust.Shared.GameObjects;
 namespace Content.Server.Shuttles
 {
     [RegisterComponent]
-    public class ShuttleComponent : SharedShuttleComponent
-    {
-
-    }
+    public sealed class ShuttleComponent : SharedShuttleComponent {}
 }

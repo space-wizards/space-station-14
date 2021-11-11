@@ -11,22 +11,18 @@ using Content.Server.Construction;
 using Content.Server.Construction.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Stunnable;
-using Content.Server.Stunnable.Components;
 using Content.Server.Tools;
 using Content.Server.Tools.Components;
 using Content.Shared.Damage;
 using Content.Shared.Doors;
 using Content.Shared.Interaction;
 using Content.Shared.Sound;
-using Content.Shared.Stunnable;
 using Content.Shared.Tools;
-using Content.Shared.Tools.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
-using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
@@ -276,6 +272,11 @@ namespace Content.Server.Doors.Components
 
         public void TryOpen(IEntity? user=null)
         {
+            var msg = new DoorOpenAttemptEvent();
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, msg);
+
+            if (msg.Cancelled) return;
+
             if (user == null)
             {
                 // a machine opened it or something, idk
@@ -412,6 +413,11 @@ namespace Content.Server.Doors.Components
 
         public void TryClose(IEntity? user=null)
         {
+            var msg = new DoorCloseAttemptEvent();
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, msg);
+
+            if (msg.Cancelled) return;
+
             if (user != null && !CanCloseByEntity(user))
             {
                 Deny();
@@ -495,7 +501,7 @@ namespace Content.Server.Doors.Components
             if (CloseSound != null)
             {
                 SoundSystem.Play(Filter.Pvs(Owner), CloseSound.GetSound(), Owner,
-                    AudioParams.Default.WithVolume(-10));
+                    AudioParams.Default.WithVolume(-5));
             }
 
             Owner.SpawnTimer(CloseTimeOne, async () =>
@@ -673,8 +679,10 @@ namespace Content.Server.Doors.Components
                 var canEv = new BeforeDoorPryEvent(eventArgs);
                 Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, canEv, false);
 
+                if (canEv.Cancelled) return false;
+
                 var successfulPry = await toolSystem.UseTool(eventArgs.Using.Uid, eventArgs.User.Uid, Owner.Uid,
-                        0f, ev.PryTimeModifier * PryTime, _pryingQuality, () => !canEv.Cancelled);
+                        0f, ev.PryTimeModifier * PryTime, _pryingQuality);
 
                 if (successfulPry && !IsWeldedShut)
                 {
