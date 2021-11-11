@@ -1,9 +1,4 @@
 Entries:
-- author: SweptWasTaken
-  changes:
-  - {message: Removed unused vending machines, type: Remove}
-  id: 65
-  time: '2021-03-09T09:42:26.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Fixes water vapor reaction removing oxygen instead of water vapor.,
@@ -2826,3 +2821,9 @@ Entries:
     type: Add}
   id: 564
   time: '2021-11-11T01:29:36.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Piloting now breaks on minimum distance (0.25 units) and not any distance,
+    type: Tweak}
+  id: 565
+  time: '2021-11-11T07:42:34.0000000+00:00'
