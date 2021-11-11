@@ -8,10 +8,12 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping;
 using Content.Shared.Atmos.Piping.Trinary.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
@@ -82,8 +84,15 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             if (!args.User.TryGetComponent(out ActorComponent? actor))
                 return;
 
-            _userInterfaceSystem.TryOpen(uid, GasFilterUiKey.Key, actor.PlayerSession);
-            DirtyUI(uid, component);
+            if (component.Owner.Transform.Anchored)
+            {
+                _userInterfaceSystem.TryOpen(uid, GasFilterUiKey.Key, actor.PlayerSession);
+                DirtyUI(uid, component);
+            }
+            else
+            {
+                args.User.PopupMessageCursor(Loc.GetString("comp-gas-filter-ui-needs-anchor"));
+            }
 
             args.Handled = true;
         }

@@ -76,6 +76,10 @@
         - type: SubFloorShowLayerVisualizer
         - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
+    - type: UserInterface
+      interfaces:
+        - key: enum.GasMixerUiKey.Key
+          type: GasMixerBoundUserInterface
     - type: GasMixer
       inletOne: inlet
       inletTwo: filter
