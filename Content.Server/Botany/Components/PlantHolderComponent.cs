@@ -566,7 +566,7 @@ namespace Content.Server.Botany.Components
                 foreach (var reagent in solutionSystem.RemoveEachReagent(OwnerUid, solution, amt))
                 {
                     var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagent);
-                    reagentProto.ReactionPlant(OwnerUid, new Solution.ReagentQuantity(reagent, amt));
+                    reagentProto.ReactionPlant(OwnerUid, new Solution.ReagentQuantity(reagent, amt), solution);
                 }
             }
 

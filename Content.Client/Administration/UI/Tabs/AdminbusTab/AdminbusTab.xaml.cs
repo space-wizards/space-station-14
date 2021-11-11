@@ -5,6 +5,7 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -27,20 +28,18 @@ namespace Content.Client.Administration.UI.Tabs.AdminbusTab
 
         private void SpawnEntitiesButtonOnOnPressed(BaseButton.ButtonEventArgs obj)
         {
-            var manager = IoCManager.Resolve<IAdminMenuManager>();
             _entitySpawnWindow ??= new EntitySpawnWindow(IoCManager.Resolve<IPlacementManager>(),
                 IoCManager.Resolve<IPrototypeManager>(),
                 IoCManager.Resolve<IResourceCache>());
-            manager.OpenCommand(_entitySpawnWindow);
+            EntitySystem.Get<AdminSystem>().OpenCommand(_entitySpawnWindow);
         }
 
         private void SpawnTilesButtonOnOnPressed(BaseButton.ButtonEventArgs obj)
         {
-            var manager = IoCManager.Resolve<IAdminMenuManager>();
             _tileSpawnWindow ??= new TileSpawnWindow(IoCManager.Resolve<ITileDefinitionManager>(),
                 IoCManager.Resolve<IPlacementManager>(),
                 IoCManager.Resolve<IResourceCache>());
-            manager.OpenCommand(_tileSpawnWindow);
+            EntitySystem.Get<AdminSystem>().OpenCommand(_tileSpawnWindow);
         }
     }
 }

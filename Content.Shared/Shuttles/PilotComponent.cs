@@ -13,19 +13,18 @@ namespace Content.Shared.Shuttles
     /// Stores what shuttle this entity is currently piloting.
     /// </summary>
     [RegisterComponent]
-    [NetworkedComponent()]
+    [NetworkedComponent]
     public sealed class PilotComponent : Component
     {
         public override string Name => "Pilot";
         [ViewVariables] public SharedShuttleConsoleComponent? Console { get; set; }
 
         /// <summary>
-        /// Position from where we started piloting to determine if we should break.
+        /// Where we started piloting from to check if we should break from moving too far.
         /// </summary>
-        [ViewVariables]
-        public EntityCoordinates? PilotPosition { get; set; }
+        [ViewVariables] public EntityCoordinates? Position { get; set; }
 
-        public const float BreakDistance = 0.5f;
+        public const float BreakDistance = 0.25f;
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {

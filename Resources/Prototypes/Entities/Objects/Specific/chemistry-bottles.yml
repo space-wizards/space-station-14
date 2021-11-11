@@ -24,6 +24,8 @@
     solution: drink
   - type: ExaminableSolution
     solution: drink
+  - type: DrawableSolution
+    solution: drink
   - type: SolutionTransfer
     maxTransferAmount: 30
     canChangeTransferAmount: true
