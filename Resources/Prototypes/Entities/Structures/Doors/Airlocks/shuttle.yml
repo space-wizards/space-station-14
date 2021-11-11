@@ -56,7 +56,6 @@
       simpleVisuals: true
   #  - type: WiresVisualizer
   - type: ApcPowerReceiver
-    needsPower: false
   - type: ExtensionCableReceiver
   #- type: Wires
   #  BoardName: "Airlock Control"

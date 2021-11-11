@@ -20,7 +20,6 @@
   - type: ShuttleConsole
   - type: ApcPowerReceiver
     powerLoad: 200
-    needsPower: false
   - type: ExtensionCableReceiver
   - type: PointLight
     radius: 1.5
