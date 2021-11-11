@@ -10,4 +10,4 @@ comp-gas-mixer-ui-mixer-node-side = Side Port:
 comp-gas-mixer-ui-mixer-set = Set
 comp-gas-mixer-ui-mixer-max = Max
 
-comp-gas-mixer-ui-needs-anchor = Anchor the mixer first!
+comp-gas-mixer-ui-needs-anchor = Anchor it first!
