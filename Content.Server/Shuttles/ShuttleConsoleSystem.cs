@@ -10,6 +10,7 @@ using Content.Shared.Tag;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Physics;
 using Robust.Shared.Utility;
 
@@ -73,14 +74,14 @@ namespace Content.Server.Shuttles
         /// </summary>
         private void HandlePilotMove(EntityUid uid, PilotComponent component, ref MoveEvent args)
         {
-            if (component.Console == null)
+            if (component.Console == null || component.Position == null)
             {
-                DebugTools.Assert(component.Position == null);
+                DebugTools.Assert(component.Position == null && component.Console == null);
                 EntityManager.RemoveComponent<PilotComponent>(uid);
                 return;
             }
 
-            if (args.NewPosition.TryDistance(EntityManager, component.Position!.Value, out var distance) &&
+            if (args.NewPosition.TryDistance(EntityManager, component.Position.Value, out var distance) &&
                 distance < PilotComponent.BreakDistance) return;
 
             RemovePilot(component);
