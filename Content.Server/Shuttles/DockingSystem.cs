@@ -79,7 +79,7 @@ namespace Content.Server.Shuttles
             if (!args.CanInteract ||
                 !args.CanAccess) return;
 
-            Verb verb = new();
+            Verb? verb;
 
             // TODO: Have it open the UI and have the UI do this.
             if (!component.Docked &&
