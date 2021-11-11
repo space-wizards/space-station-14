@@ -679,19 +679,21 @@ namespace Content.Server.Doors.Components
                 var canEv = new BeforeDoorPryEvent(eventArgs);
                 Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, canEv, false);
 
+                if (canEv.Cancelled) return false;
+
                 var successfulPry = await toolSystem.UseTool(eventArgs.Using.Uid, eventArgs.User.Uid, Owner.Uid,
-                        0f, ev.PryTimeModifier * PryTime, _pryingQuality, () => !canEv.Cancelled);
+                        0f, ev.PryTimeModifier * PryTime, _pryingQuality);
 
                 if (successfulPry && !IsWeldedShut)
                 {
                     Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new OnDoorPryEvent(eventArgs), false);
                     if (State == DoorState.Closed)
                     {
-                        TryOpen();
+                        Open();
                     }
                     else if (State == DoorState.Open)
                     {
-                        TryClose();
+                        Close();
                     }
                     return true;
                 }
