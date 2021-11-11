@@ -366,6 +366,11 @@ namespace Content.Server.Doors.Components
                 occluder.Enabled = false;
             }
 
+            if (Owner.TryGetComponent(out AirtightComponent? airtight))
+            {
+                EntitySystem.Get<AirtightSystem>().SetAirblocked(airtight, false);
+            }
+
             _stateChangeCancelTokenSource?.Cancel();
             _stateChangeCancelTokenSource = new();
 
@@ -387,11 +392,13 @@ namespace Content.Server.Doors.Components
 
         protected override void OnPartialOpen()
         {
+            base.OnPartialOpen();
+
             if (Owner.TryGetComponent(out AirtightComponent? airtight))
             {
                 EntitySystem.Get<AirtightSystem>().SetAirblocked(airtight, false);
             }
-            base.OnPartialOpen();
+
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new AccessReaderChangeMessage(Owner, false));
         }
 
