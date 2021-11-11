@@ -181,8 +181,7 @@ namespace Content.Server.Shuttles
 
         private void OnShutdown(EntityUid uid, DockingComponent component, ComponentShutdown args)
         {
-            if (component.DockJoint == null ||
-                component.DockedWith == null ||
+            if (component.DockedWith == null ||
                 EntityManager.GetComponent<MetaDataComponent>(uid).EntityLifeStage > EntityLifeStage.MapInitialized) return;
 
             Cleanup(component);
