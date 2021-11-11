@@ -11,8 +11,10 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Atmos.Monitor.Systems
@@ -182,16 +184,18 @@ namespace Content.Server.Atmos.Monitor.Systems
                         && alarmable.AlarmedByPrototypes.Contains(resetSrc))
                     {
                         component.LastAlarmState = AtmosMonitorAlarmType.Normal;
-                        // resync the alert state with the rest
-                        // of the network
-                        Sync(component);
+                        component.NetworkAlarmStates.Clear();
                     }
                     break;
             }
 
             if (component.DisplayMaxAlarmInNet)
+            {
                 if (EntityManager.TryGetComponent(component.Owner.Uid, out SharedAppearanceComponent? appearanceComponent))
-                    appearanceComponent.SetData("alarmType", component.HighestAlarmInNetwork());
+                    appearanceComponent.SetData("alarmType", component.HighestAlarmInNetwork);
+
+                if (component.HighestAlarmInNetwork == AtmosMonitorAlarmType.Danger) PlayAlertSound(uid, component);
+            }
 
         }
 
@@ -343,10 +347,19 @@ namespace Content.Server.Atmos.Monitor.Systems
 
             BroadcastAlertPacket(monitor, alarms);
 
+            if (state == AtmosMonitorAlarmType.Danger) PlayAlertSound(uid, monitor);
+
             if (EntityManager.TryGetComponent(monitor.Owner.Uid, out AtmosAlarmableComponent alarmable)
                 && !alarmable.IgnoreAlarms)
-                RaiseLocalEvent(monitor.Owner.Uid, new AtmosMonitorAlarmEvent(monitor.LastAlarmState, monitor.HighestAlarmInNetwork()));
+                RaiseLocalEvent(monitor.Owner.Uid, new AtmosMonitorAlarmEvent(monitor.LastAlarmState, monitor.HighestAlarmInNetwork));
             // TODO: Central system that grabs *all* alarms from wired network
+        }
+
+        private void PlayAlertSound(EntityUid uid, AtmosMonitorComponent? monitor = null)
+        {
+            if (!Resolve(uid, ref monitor)) return;
+
+            SoundSystem.Play(Filter.Pvs(uid), monitor.AlarmSound.GetSound(), uid, AudioParams.Default.WithVolume(-10));
         }
 
         /// <summary>
@@ -374,11 +387,8 @@ namespace Content.Server.Atmos.Monitor.Systems
             };
 
             _deviceNetSystem.QueuePacket(monitor.Owner.Uid, string.Empty, AtmosMonitorApcFreq, payload, true);
-            // this will be repopulated anyways
             monitor.NetworkAlarmStates.Clear();
 
-            // final alert will auto-sync this monitor's state
-            // to everyone else
             Alert(uid, AtmosMonitorAlarmType.Normal, null, monitor);
         }
 
@@ -425,7 +435,7 @@ namespace Content.Server.Atmos.Monitor.Systems
             {
                 [DeviceNetworkConstants.Command] = AtmosMonitorAlarmCmd,
                 [DeviceNetworkConstants.CmdSetState] = monitor.LastAlarmState,
-                [AtmosMonitorAlarmNetMax] = monitor.HighestAlarmInNetwork(),
+                [AtmosMonitorAlarmNetMax] = monitor.HighestAlarmInNetwork,
                 [AtmosMonitorAlarmThresholdTypes] = alarms,
                 [AtmosMonitorAlarmSrc] = source
             };

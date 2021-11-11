@@ -101,7 +101,7 @@ namespace Content.Server.Atmos.Monitor.Components
             if (AtmosMonitorComponent != null)
                 if (!AtmosMonitorComponent.NetEnabled)
                     syncLight = new StatusLightData(Color.Orange, StatusLightState.Off, "NET");
-                else if (AtmosMonitorComponent.HighestAlarmInNetwork() == AtmosMonitorAlarmType.Danger)
+                else if (AtmosMonitorComponent.HighestAlarmInNetwork == AtmosMonitorAlarmType.Danger)
                     syncLight = new StatusLightData(Color.Orange, StatusLightState.BlinkingFast, "NET");
 
             WiresComponent.SetStatus(FireAlarmWireStatus.Power, powerLight);

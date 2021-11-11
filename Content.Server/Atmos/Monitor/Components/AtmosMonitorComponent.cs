@@ -3,6 +3,7 @@ using Content.Server.Atmos.Piping.Components;
 using Content.Server.Power.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
+using Content.Shared.Sound;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -62,6 +63,9 @@ namespace Content.Server.Atmos.Monitor.Components
         [DataField("displayMaxAlarmInNet")]
         public bool DisplayMaxAlarmInNet = false;
 
+        [DataField("alarmSound")]
+        public SoundSpecifier AlarmSound { get; set; } = new SoundPathSpecifier("/Audio/Machines/alarm.ogg");
+
         // really messy but this is parsed at runtime after
         // prototypes are initialized, there's no
         // way without implementing a new
@@ -88,16 +92,20 @@ namespace Content.Server.Atmos.Monitor.Components
         public Dictionary<string, AtmosMonitorAlarmType> NetworkAlarmStates = new();
 
         // Calculates the highest alarm in the network, including itself.
-        public AtmosMonitorAlarmType HighestAlarmInNetwork()
+        [ViewVariables]
+        public AtmosMonitorAlarmType HighestAlarmInNetwork
         {
-            var state = AtmosMonitorAlarmType.Normal;
-            foreach (var (_, netState) in NetworkAlarmStates)
-                if (state < netState)
-                    state = netState;
+            get
+            {
+                var state = AtmosMonitorAlarmType.Normal;
+                foreach (var (_, netState) in NetworkAlarmStates)
+                    if (state < netState)
+                        state = netState;
 
-            if (LastAlarmState > state) state = LastAlarmState;
+                if (LastAlarmState > state) state = LastAlarmState;
 
-            return state;
+                return state;
+            }
         }
     }
 }

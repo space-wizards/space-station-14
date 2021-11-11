@@ -28,7 +28,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                 && EntityManager.TryGetComponent(uid, out ApcPowerReceiverComponent? power)
                 && power.Powered)
             {
-                if (monitor.HighestAlarmInNetwork() == AtmosMonitorAlarmType.Normal)
+                if (monitor.HighestAlarmInNetwork == AtmosMonitorAlarmType.Normal)
                 {
                     _monitorSystem.Alert(uid, AtmosMonitorAlarmType.Danger);
                 }
