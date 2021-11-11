@@ -23,10 +23,10 @@ namespace Content.Server.Chemistry.ReagentEffects.StatusEffects
         [DataField("time")]
         public float Time = 2.0f;
 
-        public override void Metabolize(EntityUid solutionEntity, EntityUid organEntity, Solution.ReagentQuantity reagent, IEntityManager entityManager)
+        public override void Metabolize(ReagentEffectArgs args)
         {
-            entityManager.EntitySysManager.GetEntitySystem<SharedJitteringSystem>()
-                .DoJitter(solutionEntity, TimeSpan.FromSeconds(Time), Amplitude, Frequency);
+            args.EntityManager.EntitySysManager.GetEntitySystem<SharedJitteringSystem>()
+                .DoJitter(args.SolutionEntity, TimeSpan.FromSeconds(Time), Amplitude, Frequency);
         }
     }
 }

@@ -160,6 +160,9 @@ namespace Content.Server.Body.Metabolism
                     // do all effects, if conditions apply
                     foreach (var effect in entry.Effects)
                     {
+                        if (!_random.Prob(effect.Probability))
+                            continue;
+
                         bool failed = false;
                         if (effect.Conditions != null)
                         {

@@ -6,6 +6,7 @@ using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Shared.Chemistry
 {
@@ -13,6 +14,7 @@ namespace Content.Shared.Chemistry
     public partial class ChemistrySystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         public void ReactionEntity(EntityUid uid, ReactionMethod method, Solution solution)
         {
@@ -48,6 +50,9 @@ namespace Content.Shared.Chemistry
 
                 foreach (var effect in entry.Effects)
                 {
+                    if (_robustRandom.Prob(effect.Probability))
+                        continue;
+
                     bool failed = false;
                     foreach (var cond in effect.Conditions ?? new ReagentEffectCondition[] { })
                     {

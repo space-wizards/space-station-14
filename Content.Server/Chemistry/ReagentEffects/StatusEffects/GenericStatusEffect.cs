@@ -24,16 +24,40 @@ namespace Content.Server.Chemistry.ReagentEffects.StatusEffects
         [DataField("key", required: true)]
         public string Key = default!;
 
-        [DataField("component", required: true)]
-        public string Component = default!;
+        [DataField("component")]
+        public string Component = String.Empty;
 
         [DataField("time")]
         public float Time = 2.0f;
 
-        public override void Metabolize(EntityUid solutionEntity, EntityUid organEntity, Solution.ReagentQuantity reagent, IEntityManager entityManager)
+        /// <summary>
+        ///     Should this effect add the status effect, remove time from it, or set its cooldown?
+        /// </summary>
+        [DataField("type")]
+        public StatusEffectMetabolismType Type = StatusEffectMetabolismType.Add;
+
+        public override void Metabolize(ReagentEffectArgs args)
         {
-            entityManager.EntitySysManager.GetEntitySystem<StatusEffectsSystem>()
-                .TryAddStatusEffect(solutionEntity, Key, TimeSpan.FromSeconds(Time), Component);
+            var statusSys = args.EntityManager.EntitySysManager.GetEntitySystem<StatusEffectsSystem>();
+            if (Type == StatusEffectMetabolismType.Add && Component != String.Empty)
+            {
+                statusSys.TryAddStatusEffect(args.SolutionEntity, Key, TimeSpan.FromSeconds(Time), Component);
+            }
+            else if (Type == StatusEffectMetabolismType.Remove)
+            {
+                statusSys.TryRemoveTime(args.SolutionEntity, Key, TimeSpan.FromSeconds(Time));
+            }
+            else if (Type == StatusEffectMetabolismType.Set)
+            {
+                statusSys.TrySetTime(args.SolutionEntity, Key, TimeSpan.FromSeconds(Time));
+            }
         }
+    }
+
+    public enum StatusEffectMetabolismType
+    {
+        Add,
+        Remove,
+        Set
     }
 }

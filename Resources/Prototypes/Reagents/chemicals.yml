@@ -16,10 +16,8 @@
       effects:
       - !type:HealthChange
         damage:
-          types:
-            # caustic
-            Poison: 0.5
-            Heat: 0.5
+          groups:
+            Caustic: 1
 
 - type: reagent
   id: Diethylamine
@@ -46,9 +44,8 @@
       effects:
       - !type:HealthChange
         damage:
-          types:
-            Poison: 0.5
-            Heat: 0.5
+          groups:
+            Caustic: 1
 
 - type: reagent
   id: Ethanol
@@ -66,9 +63,8 @@
       effects:
       - !type:HealthChange
         damage:
-          types:
-            # caustic
-            Poison: 1
+          groups:
+            Caustic: 1
 
 - type: reagent
   id: FoamingAgent
@@ -141,9 +137,9 @@
         damage:
           types:
             Poison: 3
-      #- !type:RemoveReagent
-      #  reagent: epinephrine
-      #  amount: 2
+      - !type:RemoveReagent
+        reagent: epinephrine
+        amount: 2
 
 - type: reagent
   id: PolytrinicAcid
@@ -318,19 +314,28 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 10
+          min: 30
         damage:
           types:
-            Poison: 4 # this is added to the base damage of the meth.
+            Poison: 2 # this is added to the base damage of the meth.
+            Asphyxiation: 2
     Narcotic:
       effects:
       - !type:MovespeedModifier
-        walkSpeedModifier: 1.3
-        sprintSpeedModifier: 1.3
+        walkSpeedModifier: 1.4
+        sprintSpeedModifier: 1.4
       - !type:GenericStatusEffect
         key: Stutter
         component: StutteringAccent
       - !type:Jitter
+      - !type:GenericStatusEffect
+        key: Stun
+        time: 0.5
+        type: Remove
+      - !type:GenericStatusEffect
+        key: KnockedDown
+        time: 0.5
+        type: Remove
 
 - type: reagent
   id: Iodine
@@ -344,7 +349,7 @@
 - type: reagent
   id: Ephedrine
   name: ephedrine
-  desc: Increases stun resistance and movement speed, giving you hand cramps. Overdose deals toxin damage and inhibits breathing
+  desc: Increases stun resistance and movement speed, giving you hand cramps. Overdose deals toxin damage and inhibits breathing.
   physicalDesc: Bone white
   color: "#D2FFFA"
   boilingPoint: 255.0
@@ -355,6 +360,27 @@
       - !type:MovespeedModifier
         walkSpeedModifier: 1.2
         sprintSpeedModifier: 1.2
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
+        damage:
+          types:
+            Poison: 2 # this is added to the base damage of the meth.
+            Asphyxiation: 2
+      - !type:Jitter
+      - !type:GenericStatusEffect
+        key: Stun
+        time: 0.5
+        type: Remove
+      - !type:GenericStatusEffect
+        key: KnockedDown
+        time: 0.5
+        type: Remove
+      - !type:PopupMessage
+        messages: ["ephedrine-effect-tight-pain", "ephedrine-effect-heart-pounds"]
+        type: Local
+        probability: 0.1
 
 - type: reagent
   id: Oil

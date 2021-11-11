@@ -32,6 +32,23 @@
       amount: 1
 
 - type: reagent
+  id: Diphenhydramine
+  name: diphenhydramine
+  desc: Rapidly purges the body of histamine and reduces jitteriness.
+  physicalDesc: chalky
+  color: "#64ffe6"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:RemoveReagent
+        reagent: Histamine
+        amount: 3.0
+      - !type:GenericStatusEffect
+        key: Jitter
+        time: 1.0
+        type: Remove
+
+- type: reagent
   id: Arithrazine
   name: arithrazine
   desc: A slightly unstable medication used for the most extreme any serious case of radiation poisoning. Lowers radiation level at over twice the rate Hyronalin does and will heal toxin damage at the same time. Deals very minor brute damage to the patient over time, but the patient's body will typically out-regenerate it easily.

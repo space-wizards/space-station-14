@@ -1,4 +1,5 @@
-﻿using Content.Shared.Chemistry.Components;
+﻿using Content.Server.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
@@ -17,9 +18,13 @@ namespace Content.Server.Chemistry.ReagentEffects
         [DataField("amount", required: true)]
         public FixedPoint2 Amount = default!;
 
-        public override void Metabolize(EntityUid solutionEntity, EntityUid organEntity, Solution.ReagentQuantity reagent, IEntityManager entityManager)
+        public override void Metabolize(ReagentEffectArgs args)
         {
-            // implement later lol its harder than i thought
+            if (args.Source != null && args.Source.ContainsReagent(Reagent))
+            {
+                var solutionSys = args.EntityManager.EntitySysManager.GetEntitySystem<SolutionContainerSystem>();
+                solutionSys.TryRemoveReagent(args.SolutionEntity, args.Source, Reagent, Amount);
+            }
         }
     }
 }

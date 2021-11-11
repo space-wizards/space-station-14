@@ -10,6 +10,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
@@ -112,11 +113,23 @@ namespace Content.Shared.Chemistry.Reagent
                 return;
 
             var entMan = IoCManager.Resolve<IEntityManager>();
+            var args = new ReagentEffectArgs(plantHolder.Value, null, solution, this, amount.Quantity, entMan, null);
             foreach (var plantMetabolizable in _plantMetabolism)
             {
-                plantMetabolizable.Metabolize(
-                    new ReagentEffectArgs(plantHolder.Value, null, solution, this, amount.Quantity, entMan, null)
-                    );
+                if (!IoCManager.Resolve<IRobustRandom>().Prob(plantMetabolizable.Probability))
+                    continue;
+                bool failed = false;
+
+                foreach (var cond in plantMetabolizable.Conditions ?? new ReagentEffectCondition[] {})
+                {
+                    if (!cond.Condition(args))
+                        failed = true;
+                }
+
+                if (failed)
+                    continue;
+
+                plantMetabolizable.Metabolize(args);
             }
         }
     }
