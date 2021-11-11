@@ -1,11 +1,10 @@
-﻿using System.Linq;
-using Content.Server.Body.Components;
+﻿using Content.Server.Body.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using YamlDotNet.Serialization.NodeTypeResolvers;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Body.Systems
 {
@@ -46,7 +45,8 @@ namespace Content.Server.Body.Systems
 
                 var transferSolution = new Solution();
 
-                foreach (var delta in stomach.ReagentDeltas.ToArray())
+                var queue = new RemQueue<StomachComponent.ReagentDelta>();
+                foreach (var delta in stomach.ReagentDeltas)
                 {
                     delta.Increment(stomach.UpdateInterval);
                     if (delta.Lifetime > stomach.DigestionDelay)
@@ -61,8 +61,13 @@ namespace Content.Server.Body.Systems
                             transferSolution.AddReagent(delta.ReagentId, quant);
                         }
 
-                        stomach.ReagentDeltas.Remove(delta);
+                        queue.Add(delta);
                     }
+                }
+
+                foreach (var item in queue)
+                {
+                    stomach.ReagentDeltas.Remove(item);
                 }
 
                 // Transfer everything to the body solution!

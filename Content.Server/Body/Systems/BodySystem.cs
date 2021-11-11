@@ -59,7 +59,7 @@ namespace Content.Server.Body.Systems
 
             comps = GetComponentsOnMechanisms<T>(uid, body).ToArray();
 
-            if (comps.Count() == 0)
+            if (!comps.Any())
             {
                 comps = null;
                 return false;
