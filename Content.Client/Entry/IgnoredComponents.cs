@@ -121,6 +121,7 @@ namespace Content.Client.Entry
             "SurgeryTool",
             "EmitSoundOnThrow",
             "Flash",
+            "Docking",
             "Telecrystal",
             "TrashSpawner",
             "RCD",
@@ -304,6 +305,8 @@ namespace Content.Client.Entry
             "ApcNetSwitch",
             "HandLabeler",
             "Label",
+            "Nuke",
+            "NukeCodePaper",
             "GhostRadio",
             "Armor",
             "PneumaticCannon"
