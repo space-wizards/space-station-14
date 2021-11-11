@@ -1,11 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: 'Beakers, syringes and chemistry bottles show fill level by different
-      sprites', type: Add}
-  - {message: Add bluespace beaker and cryostasis beaker (non-obtainable yet), type: Add}
-  id: 70
-  time: '2021-03-11T09:24:17.0000000+00:00'
 - author: ShadowCommander
   changes:
   - {message: Delete ghost when player respawns, type: Fix}
@@ -2825,3 +2818,9 @@ Entries:
   - {message: pizza boxes are now unable to contain people, type: Fix}
   id: 569
   time: '2021-11-11T12:56:38.0000000+00:00'
+- author: misnor
+  changes:
+  - {message: Fixed the death timer resetting when returning to body as a ghost.,
+    type: Fix}
+  id: 570
+  time: '2021-11-11T15:17:23.0000000+00:00'
