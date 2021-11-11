@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Net;
+using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 
 namespace Content.Server.Database
@@ -31,6 +32,8 @@ namespace Content.Server.Database
         public DbSet<Player> Player { get; set; } = default!;
         public DbSet<Admin> Admin { get; set; } = null!;
         public DbSet<AdminRank> AdminRank { get; set; } = null!;
+        public DbSet<Round> Round { get; set; } = null!;
+        public DbSet<AdminLog> AdminLog { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -178,6 +181,10 @@ namespace Content.Server.Database
         public DateTime LastSeenTime { get; set; }
         public IPAddress LastSeenAddress { get; set; } = null!;
         public byte[]? LastSeenHWId { get; set; }
+
+        // Data that changes with each round
+        public List<Round> Rounds { get; set; } = null!;
+        public List<AdminLog> AdminLogs { get; set; } = null!;
     }
 
     public class Admin
@@ -216,5 +223,30 @@ namespace Content.Server.Database
 
         public int AdminRankId { get; set; }
         public AdminRank Rank { get; set; } = default!;
+    }
+
+    public class Round
+    {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        public List<Player> Players { get; set; } = default!;
+
+        public List<AdminLog> AdminLogs { get; set; } = default!;
+    }
+
+    public class AdminLog
+    {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        [Required] public DateTime Date { get; set; }
+
+        public List<Player> Players { get; set; } = default!;
+
+        [ForeignKey("Round"), Required] public int RoundId { get; set; }
+        public Round Round { get; set; } = default!;
+
+        [Required] public JsonDocument Log { get; set; } = default!;
     }
 }

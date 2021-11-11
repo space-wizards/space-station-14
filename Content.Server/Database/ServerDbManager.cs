@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Server.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Preferences;
 using Microsoft.Data.Sqlite;
@@ -27,7 +29,7 @@ namespace Content.Server.Database
     {
         void Init();
 
-        // Preferences
+        #region Preferences
         Task<PlayerPreferences> InitPrefsAsync(NetUserId userId, ICharacterProfile defaultProfile);
         Task SaveSelectedCharacterIndexAsync(NetUserId userId, int index);
 
@@ -38,12 +40,15 @@ namespace Content.Server.Database
         // Single method for two operations for transaction.
         Task DeleteSlotAndSetSelectedIndex(NetUserId userId, int deleteSlot, int newSlot);
         Task<PlayerPreferences?> GetPlayerPreferencesAsync(NetUserId userId);
+        #endregion
 
+        #region User Ids
         // Username assignment (for guest accounts, so they persist GUID)
         Task AssignUserIdAsync(string name, NetUserId userId);
         Task<NetUserId?> GetAssignedUserIdAsync(string name);
+        #endregion
 
-        // Ban stuff
+        #region Bans
         /// <summary>
         ///     Looks up a ban by id.
         ///     This will return a pardoned ban as well.
@@ -82,8 +87,9 @@ namespace Content.Server.Database
 
         Task AddServerBanAsync(ServerBanDef serverBan);
         Task AddServerUnbanAsync(ServerUnbanDef serverBan);
+        #endregion
 
-        // Player records
+        #region Player Records
         Task UpdatePlayerRecordAsync(
             NetUserId userId,
             string userName,
@@ -91,15 +97,17 @@ namespace Content.Server.Database
             ImmutableArray<byte> hwId);
         Task<PlayerRecord?> GetPlayerRecordByUserName(string userName, CancellationToken cancel = default);
         Task<PlayerRecord?> GetPlayerRecordByUserId(NetUserId userId, CancellationToken cancel = default);
+        #endregion
 
-        // Connection log
+        #region Connection Logs
         Task AddConnectionLogAsync(
             NetUserId userId,
             string userName,
             IPAddress address,
             ImmutableArray<byte> hwId);
+        #endregion
 
-        // Admins
+        #region Admin Ranks
         Task<Admin?> GetAdminDataForAsync(NetUserId userId, CancellationToken cancel = default);
         Task<AdminRank?> GetAdminRankAsync(int id, CancellationToken cancel = default);
 
@@ -113,6 +121,25 @@ namespace Content.Server.Database
         Task RemoveAdminRankAsync(int rankId, CancellationToken cancel = default);
         Task AddAdminRankAsync(AdminRank rank, CancellationToken cancel = default);
         Task UpdateAdminRankAsync(AdminRank rank, CancellationToken cancel = default);
+        #endregion
+
+        #region Rounds
+        Task<int> AddNewRound();
+        #endregion
+
+        #region Admin Logs
+        Task AddAdminLog<T>(T log, int roundId);
+        Task AddAdminLog<T>(T log, int roundId, Guid playerId);
+        Task AddAdminLog<T>(T log, int roundId, params Guid[] playerIds);
+        Task AddAdminLog<T>(T log, int roundId, List<Guid> playerIds);
+
+        Task<IEnumerable<LogRecord<T>>> GetAdminLogsOfPlayer<T>(Guid id, CancellationToken cancel = default);
+        Task<IEnumerable<LogRecord<T>>> GetAdminLogsOfPlayers<T>(CancellationToken cancel = default, params Guid[] playerIds);
+
+        Task<IEnumerable<LogRecord<T>>> GetAdminLogsOfRound<T>(int id, CancellationToken cancel = default);
+        Task<IEnumerable<LogRecord<T>>> GetAdminLogsOfRoundAndPlayer<T>(int roundId, Guid player, CancellationToken cancel = default);
+        Task<IEnumerable<LogRecord<T>>> GetAdminLogsOfRoundWithAllPlayers<T>(int roundId, CancellationToken cancel = default, params Guid[] playerIds);
+        #endregion
     }
 
     public sealed class ServerDbManager : IServerDbManager
@@ -290,9 +317,59 @@ namespace Content.Server.Database
             return _db.AddAdminRankAsync(rank, cancel);
         }
 
+        public Task<int> AddNewRound()
+        {
+            return _db.AddNewRound();
+        }
+
         public Task UpdateAdminRankAsync(AdminRank rank, CancellationToken cancel = default)
         {
             return _db.UpdateAdminRankAsync(rank, cancel);
+        }
+
+        public Task AddAdminLog<T>(T log, int roundId)
+        {
+            return _db.AddAdminLog(log, roundId);
+        }
+
+        public Task AddAdminLog<T>(T log, int roundId, Guid playerId)
+        {
+            return _db.AddAdminLog(log, roundId, playerId);
+        }
+
+        public Task AddAdminLog<T>(T log, int roundId, params Guid[] playerIds)
+        {
+            return AddAdminLog(log, roundId, playerIds.ToList());
+        }
+
+        public Task AddAdminLog<T>(T log, int roundId, List<Guid> playerIds)
+        {
+            return _db.AddAdminLog(log, roundId, playerIds);
+        }
+
+        public Task<IEnumerable<LogRecord<T>>> GetAdminLogsOfPlayer<T>(Guid id, CancellationToken cancel = default)
+        {
+            return _db.GetAdminLogsOfPlayer<T>(id, cancel);
+        }
+
+        public Task<IEnumerable<LogRecord<T>>> GetAdminLogsOfPlayers<T>(CancellationToken cancel = default, params Guid[] playerIds)
+        {
+            return _db.GetAdminLogsOfPlayers<T>(cancel, playerIds);
+        }
+
+        public Task<IEnumerable<LogRecord<T>>> GetAdminLogsOfRound<T>(int id, CancellationToken cancel = default)
+        {
+            return _db.GetAdminLogsOfRound<T>(id, cancel);
+        }
+
+        public Task<IEnumerable<LogRecord<T>>> GetAdminLogsOfRoundAndPlayer<T>(int roundId, Guid player, CancellationToken cancel = default)
+        {
+            return _db.GetAdminLogsOfRoundAndPlayer<T>(roundId, player, cancel);
+        }
+
+        public Task<IEnumerable<LogRecord<T>>> GetAdminLogsOfRoundWithAllPlayers<T>(int roundId, CancellationToken cancel = default, params Guid[] playerIds)
+        {
+            return _db.GetAdminLogsOfRoundWithAllPlayers<T>(roundId, cancel, playerIds);
         }
 
         private DbContextOptions<ServerDbContext> CreatePostgresOptions()
