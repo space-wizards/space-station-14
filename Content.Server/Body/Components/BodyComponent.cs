@@ -1,8 +1,8 @@
 using Content.Server.Ghost;
 using Content.Shared.Audio;
+using Content.Shared.Body;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
-using Content.Shared.Body.Slot;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Sound;
 using Robust.Shared.Audio;
@@ -12,7 +12,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.Body
+namespace Content.Server.Body.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedBodyComponent))]

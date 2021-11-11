@@ -1,7 +1,8 @@
-﻿using JetBrains.Annotations;
+﻿using Content.Shared.Body.Components;
+using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.Body.Mechanism
+namespace Content.Shared.Body.Systems
 {
     [UsedImplicitly]
     public class MechanismSystem : EntitySystem

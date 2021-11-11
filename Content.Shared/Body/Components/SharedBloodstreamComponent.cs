@@ -1,7 +1,7 @@
 ﻿using Content.Shared.Chemistry.Components;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.Body.Networks
+namespace Content.Shared.Body.Components
 {
     public abstract class SharedBloodstreamComponent : Component
     {

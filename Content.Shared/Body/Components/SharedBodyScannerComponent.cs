@@ -2,7 +2,7 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Body.Scanner
+namespace Content.Shared.Body.Components
 {
     public abstract class SharedBodyScannerComponent : Component
     {

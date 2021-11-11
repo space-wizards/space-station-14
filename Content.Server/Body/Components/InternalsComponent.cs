@@ -2,7 +2,7 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Body.Respiratory
+namespace Content.Server.Body.Components
 {
     [RegisterComponent]
     public class InternalsComponent : Component

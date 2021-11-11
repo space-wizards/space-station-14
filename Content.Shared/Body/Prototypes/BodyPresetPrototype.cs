@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Content.Shared.Body.Components;
-using Content.Shared.Body.Part;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.Body.Preset
+namespace Content.Shared.Body.Prototypes
 {
     /// <summary>
     ///     Defines the parts used in a body.

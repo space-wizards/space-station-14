@@ -1,11 +1,7 @@
-using System.Collections.Generic;
 using System.Linq;
-using Content.Server.Body.Circulatory;
-using Content.Server.Body.Mechanism;
+using Content.Server.Body.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
-using Content.Shared.Body.Components;
-using Content.Shared.Body.Mechanism;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
@@ -16,7 +12,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
-namespace Content.Server.Body.Metabolism
+namespace Content.Server.Body.Systems
 {
     // TODO mirror in the future working on mechanisms move updating here to BodySystem so it can be ordered?
     [UsedImplicitly]

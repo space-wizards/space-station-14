@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Body.Behavior;
-using Content.Shared.Body.Components;
-using Content.Shared.Body.Mechanism;
+using Content.Shared.Body.Part;
 using Content.Shared.Body.Part.Property;
 using Content.Shared.Body.Surgery;
 using Robust.Shared.GameObjects;
@@ -17,7 +16,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.Body.Part
+namespace Content.Shared.Body.Components
 {
     [NetworkedComponent()]
     public abstract class SharedBodyPartComponent : Component, IBodyPartContainer
