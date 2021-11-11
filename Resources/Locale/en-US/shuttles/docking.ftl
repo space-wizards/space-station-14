@@ -1,2 +1,2 @@
 docking-component-dock = dock
-docking-component-undock = Undock
+docking-component-undock = undock
