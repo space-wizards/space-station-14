@@ -9,12 +9,14 @@ using Content.Shared.MobState.Components;
 using Content.Shared.Movement.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Body.Systems
 {
     public sealed class BodySystem : EntitySystem
     {
         [Dependency] private readonly GameTicker _ticker = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override void Initialize()
         {
@@ -29,6 +31,11 @@ namespace Content.Server.Body.Systems
                 EntityManager.TryGetComponent<MindComponent>(uid, out var mind) &&
                 mind.HasMind)
             {
+                if (!mind.Mind!.TimeOfDeath.HasValue)
+                {
+                    mind.Mind.TimeOfDeath = _gameTiming.RealTime;
+                }
+
                 _ticker.OnGhostAttempt(mind.Mind!, true);
             }
         }
