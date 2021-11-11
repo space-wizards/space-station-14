@@ -134,7 +134,14 @@ namespace Content.Server.Shuttles
                 !EntityManager.HasComponent<ShuttleComponent>(grid.GridEntityId)) return null;
 
             var transform = body.GetTransform();
-            var dockingFixture = body.GetFixture(DockingFixture)!;
+            var dockingFixture = body.GetFixture(DockingFixture);
+
+            if (dockingFixture == null)
+            {
+                DebugTools.Assert(false);
+                Logger.ErrorS("docking", $"Found null fixture on {EntityManager.GetEntity(body.OwnerUid)}");
+                return null;
+            }
 
             Box2? aabb = null;
 
