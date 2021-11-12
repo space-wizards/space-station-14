@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Content.Server.Afk;
 using Content.Server.Database;
 using Content.Server.Players;
 using Robust.Server.Player;
@@ -34,6 +35,7 @@ public class PlaytimeManager : IPlaytimeManager
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IServerDbManager _dbManager = default!;
+    [Dependency] private readonly IAfkManager _afkManager = default!;
 
     /// <summary>
     ///     Tracks time between updates. See <see cref="UpdateInterval"/>
@@ -126,6 +128,9 @@ public class PlaytimeManager : IPlaytimeManager
                 case SessionStatus.Connected:
                 case SessionStatus.InGame:
                 {
+                    //Disconnected sessions can be considered AFK so we check this here.
+                    if (_afkManager.IsAfk(session)) continue;
+
                     var difference = _gameTiming.RealTime - data.JoinTime;
                     //They joined since the last update and only get partial time
                     if (difference < intervalSpan)
