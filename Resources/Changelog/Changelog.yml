@@ -1,15 +1,4 @@
 Entries:
-- author: Swept
-  changes:
-  - {message: Remove Mouse spawns on Saltern, type: Remove}
-  id: 72
-  time: '2021-03-12T08:43:55.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: 'Added construction of wooden barricades, solar panels & solar trackers
-      (WIP)', type: Add}
-  id: 73
-  time: '2021-03-12T21:11:06.0000000+00:00'
 - author: ike709
   changes:
   - {message: Added lobby music. It can be disabled in the audio settings., type: Add}
@@ -2825,3 +2814,14 @@ Entries:
   - {message: Gas filters and pumps now need to be anchored to open their UIs, type: Fix}
   id: 571
   time: '2021-11-11T22:10:21.0000000+00:00'
+- author: xRiriq
+  changes:
+  - {message: Hyronalin now is effective against radiation damage, type: Add}
+  id: 572
+  time: '2021-11-12T04:22:29.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Expanded default ghost role rules and removed excuses to not see them
+      by adding a 5-second delay, type: Tweak}
+  id: 573
+  time: '2021-11-12T04:23:06.0000000+00:00'
