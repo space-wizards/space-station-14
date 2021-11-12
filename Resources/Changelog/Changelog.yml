@@ -1,36 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: Delete ghost when player respawns, type: Fix}
-  id: 71
-  time: '2021-03-11T09:37:17.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Remove Mouse spawns on Saltern, type: Remove}
-  id: 72
-  time: '2021-03-12T08:43:55.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: 'Added construction of wooden barricades, solar panels & solar trackers
-      (WIP)', type: Add}
-  id: 73
-  time: '2021-03-12T21:11:06.0000000+00:00'
-- author: ike709
-  changes:
-  - {message: Added lobby music. It can be disabled in the audio settings., type: Add}
-  - {message: Fixed the ambience continuing to play after you disconnect., type: Fix}
-  id: 74
-  time: '2021-03-12T22:40:28.0000000+00:00'
-- author: ike709
-  changes:
-  - {message: Lobby music volume has been significantly reduced., type: Tweak}
-  id: 75
-  time: '2021-03-13T01:06:52.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fixes structure instruments (like the piano) not playing at all., type: Fix}
-  id: 76
-  time: '2021-03-13T01:47:41.227978+00:00'
 - author: ike709
   changes:
   - {message: Significantly reduced the bounciness of thrown items., type: Tweak}
@@ -2824,3 +2792,37 @@ Entries:
     type: Fix}
   id: 570
   time: '2021-11-11T15:17:23.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: Gas mixers now have a UI, type: Add}
+  - {message: Gas filters and pumps now need to be anchored to open their UIs, type: Fix}
+  id: 571
+  time: '2021-11-11T22:10:21.0000000+00:00'
+- author: xRiriq
+  changes:
+  - {message: Hyronalin now is effective against radiation damage, type: Add}
+  id: 572
+  time: '2021-11-12T04:22:29.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Expanded default ghost role rules and removed excuses to not see them
+      by adding a 5-second delay, type: Tweak}
+  id: 573
+  time: '2021-11-12T04:23:06.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: You can now vote for a different map to be played next round., type: Add}
+  id: 574
+  time: '2021-11-12T06:25:58.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Added a beta version of Packed Station!, type: Add}
+  id: 575
+  time: '2021-11-12T06:26:05.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: 'Nanotrasen has extended its outreach, and has finally sent the person
+      who decided to hire people of exactly one skin color out an airlock. Expect
+      more variety in the co-workers you meet.', type: Add}
+  id: 576
+  time: '2021-11-12T09:55:50.0000000+00:00'

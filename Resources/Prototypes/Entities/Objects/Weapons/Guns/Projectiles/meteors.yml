@@ -15,6 +15,7 @@
   - type: DeleteOnTrigger
   - type: TriggerOnCollide
   - type: Projectile
+    damage: {}
     deleteOnCollide: false
   - type: Explosive
     devastationRange: 3

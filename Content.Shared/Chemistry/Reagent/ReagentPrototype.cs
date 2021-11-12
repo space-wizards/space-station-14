@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Content.Shared.Body.Metabolism;
+using Content.Shared.Body.Prototypes;
 using Content.Shared.Botany;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;

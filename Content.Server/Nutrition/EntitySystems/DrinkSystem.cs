@@ -1,5 +1,7 @@
 using System.Linq;
 using Content.Server.Body.Behavior;
+using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Fluids.Components;
@@ -31,6 +33,8 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly BodySystem _bodySystem = default!;
+        [Dependency] private readonly StomachSystem _stomachSystem = default!;
 
         public override void Initialize()
         {
@@ -211,7 +215,7 @@ namespace Content.Server.Nutrition.EntitySystems
             }
 
             if (!EntityManager.TryGetComponent(targetUid, out SharedBodyComponent? body) ||
-                !body.TryGetMechanismBehaviors<StomachBehavior>(out var stomachs))
+                !_bodySystem.TryGetComponentsOnMechanisms<StomachComponent>(targetUid, out var stomachs, body))
             {
                 _popupSystem.PopupEntity(Loc.GetString("drink-component-try-use-drink-cannot-drink", ("owner", owner)), targetUid, Filter.Entities(targetUid));
                 return false;
@@ -222,7 +226,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             var transferAmount = FixedPoint2.Min(component.TransferAmount, interactions.DrainAvailable);
             var drain = _solutionContainerSystem.Drain(owner.Uid, interactions, transferAmount);
-            var firstStomach = stomachs.FirstOrDefault(stomach => stomach.CanTransferSolution(drain));
+            var firstStomach = stomachs.FirstOrDefault(stomach => _stomachSystem.CanTransferSolution(stomach.OwnerUid, drain));
 
             // All stomach are full or can't handle whatever solution we have.
             if (firstStomach == null)
@@ -244,10 +248,8 @@ namespace Content.Server.Nutrition.EntitySystems
             _popupSystem.PopupEntity(Loc.GetString("drink-component-try-use-drink-success-slurp"), targetUid, Filter.Pvs(targetUid));
 
             // TODO: Account for partial transfer.
-
             drain.DoEntityReaction(targetUid, ReactionMethod.Ingestion);
-
-            firstStomach.TryTransferSolution(drain);
+            _stomachSystem.TryTransferSolution(firstStomach.OwnerUid, drain, firstStomach);
 
             return true;
         }
