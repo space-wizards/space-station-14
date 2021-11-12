@@ -125,7 +125,7 @@ namespace Content.Server.Administration
                 return;
             }
 
-            var logs = new LogsMessage(_logs.MessagesCurrentRound().ToList());
+            var logs = new LogsMessage(_logs.CurrentRoundMessages().ToList());
             RaiseNetworkEvent(logs);
         }
     }
