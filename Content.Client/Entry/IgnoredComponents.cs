@@ -305,7 +305,10 @@ namespace Content.Client.Entry
             "Label",
             "GhostRadio",
             "Armor",
-            "PneumaticCannon"
+            "PneumaticCannon",
+            "GuardianComponent",
+            "GuardianCreatorComponent",
+            "GuardianHostComponent"
         };
     }
 }
