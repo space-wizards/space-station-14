@@ -32,11 +32,11 @@ namespace Content.Server.Administration
 
         private void OnRoleAddedEvent(RoleAddedEvent ev)
         {
-            if (ev.Role is TraitorRole && ev.Mind.Session != null)
+            if (ev.Role.Antagonist && ev.Role.Mind.Session != null)
             {
                 foreach (var admin in _adminManager.ActiveAdmins)
                 {
-                    RaiseNetworkEvent(GetChangedEvent(ev.Mind.Session), admin.ConnectedClient);
+                    RaiseNetworkEvent(GetChangedEvent(ev.Role.Mind.Session), admin.ConnectedClient);
                 }
             }
         }
