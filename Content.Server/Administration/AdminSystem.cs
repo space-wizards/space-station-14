@@ -27,10 +27,11 @@ namespace Content.Server.Administration
             _adminManager.OnPermsChanged += OnAdminPermsChanged;
             SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
             SubscribeLocalEvent<PlayerDetachedEvent>(OnPlayerDetached);
-            SubscribeLocalEvent<RoleAddedEvent>(OnRoleAddedEvent);
+            SubscribeLocalEvent<RoleAddedEvent>(OnRoleEvent);
+            SubscribeLocalEvent<RoleRemovedEvent>(OnRoleEvent);
         }
 
-        private void OnRoleAddedEvent(RoleAddedEvent ev)
+        private void OnRoleEvent(RoleEvent ev)
         {
             if (ev.Role.Antagonist && ev.Role.Mind.Session != null)
             {
