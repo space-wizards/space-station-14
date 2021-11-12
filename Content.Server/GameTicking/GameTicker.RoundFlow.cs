@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.Administration;
 using Content.Server.Players;
 using Content.Shared.CCVar;
 using Content.Shared.Coordinates;
@@ -200,6 +201,8 @@ namespace Content.Server.GameTicking
             Logger.InfoS("ticker", "Ending round!");
 
             RunLevel = GameRunLevel.PostRound;
+
+            IoCManager.Resolve<IPlaytimeManager>().Shutdown();
 
             //Tell every client the round has ended.
             var gamemodeTitle = Preset?.ModeTitle ?? string.Empty;

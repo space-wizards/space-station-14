@@ -62,6 +62,7 @@ namespace Content.Server.Entry
 
             _euiManager = IoCManager.Resolve<EuiManager>();
             _voteManager = IoCManager.Resolve<IVoteManager>();
+            _playtimeManager = IoCManager.Resolve<IPlaytimeManager>();
 
             IoCManager.Resolve<IChatManager>().Initialize();
 
@@ -91,8 +92,6 @@ namespace Content.Server.Entry
             IoCManager.Resolve<IAdminManager>().Initialize();
             IoCManager.Resolve<INpcBehaviorManager>().Initialize();
             IoCManager.Resolve<IAfkManager>().Initialize();
-            _playtimeManager = IoCManager.Resolve<IPlaytimeManager>();
-            _playtimeManager.Initialize();
             _euiManager.Initialize();
 
             IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<GameTicker>().PostInitialize();

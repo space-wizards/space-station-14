@@ -158,7 +158,10 @@ namespace Content.Server.Database
                 record.LastSeenUserName,
                 new DateTimeOffset(record.LastSeenTime, TimeSpan.Zero),
                 record.LastSeenAddress,
-                record.LastSeenHWId?.ToImmutableArray());
+                record.LastSeenHWId?.ToImmutableArray(),
+                record.TotalPlaytime,
+                record.LivingPlaytime
+                );
         }
 
         private static ServerBanDef? ConvertBan(SqliteServerBan? ban)

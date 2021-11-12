@@ -178,6 +178,9 @@ namespace Content.Server.Database
         public DateTime LastSeenTime { get; set; }
         public IPAddress LastSeenAddress { get; set; } = null!;
         public byte[]? LastSeenHWId { get; set; }
+
+        public int TotalPlaytime { get; set; }
+        public int LivingPlaytime { get; set; }
     }
 
     public class Admin

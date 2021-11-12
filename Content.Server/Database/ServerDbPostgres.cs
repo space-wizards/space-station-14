@@ -229,7 +229,9 @@ namespace Content.Server.Database
                 record.LastSeenUserName,
                 new DateTimeOffset(record.LastSeenTime),
                 record.LastSeenAddress,
-                record.LastSeenHWId?.ToImmutableArray());
+                record.LastSeenHWId?.ToImmutableArray(),
+                record.TotalPlaytime,
+                record.LivingPlaytime);
         }
 
         public override async Task AddConnectionLogAsync(

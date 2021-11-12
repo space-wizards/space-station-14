@@ -1,3 +1,5 @@
+using Content.Server.Administration;
+using Content.Server.Database;
 using Content.Server.Players;
 using Content.Shared.GameTicking;
 using Content.Shared.GameWindow;
@@ -16,6 +18,7 @@ namespace Content.Server.GameTicking
     public partial class GameTicker
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IPlaytimeManager _playtimeManager = default!;
 
         private void InitializePlayer()
         {
@@ -43,10 +46,15 @@ namespace Content.Server.GameTicking
                     // timer time must be > tick length
                     Timer.Spawn(0, args.Session.JoinGame);
 
+                    // Player data persists so we need to update this on every connect
                     if (session.ContentData() is { } data)
                     {
                         data.DisconnectTime = null;
                         data.JoinTime = _gameTiming.RealTime;
+                        if (data.TotalPlaytime == 0)
+                        {
+                            _playtimeManager.TryLoadPlaytime(session, data);
+                        }
                     }
 
                     _chatManager.SendAdminAnnouncement(Loc.GetString("player-join-message", ("name", args.Session.Name)));

@@ -14,13 +14,19 @@ namespace Content.Server.Database
         public DateTimeOffset LastSeenTime { get; }
         public IPAddress LastSeenAddress { get; }
 
+        public int TotalPlaytime { get; }
+
+        public int LivingPlaytime { get; }
+
         public PlayerRecord(
             NetUserId userId,
             DateTimeOffset firstSeenTime,
             string lastSeenUserName,
             DateTimeOffset lastSeenTime,
             IPAddress lastSeenAddress,
-            ImmutableArray<byte>? hwId)
+            ImmutableArray<byte>? hwId,
+            int totalPlaytime,
+            int livingPlaytime)
         {
             UserId = userId;
             FirstSeenTime = firstSeenTime;
@@ -28,6 +34,8 @@ namespace Content.Server.Database
             LastSeenTime = lastSeenTime;
             LastSeenAddress = lastSeenAddress;
             HWId = hwId;
+            TotalPlaytime = totalPlaytime;
+            LivingPlaytime = livingPlaytime;
         }
     }
 }

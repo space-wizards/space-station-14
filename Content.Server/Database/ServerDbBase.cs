@@ -144,6 +144,24 @@ namespace Content.Server.Database
 
         }
 
+        public async Task SavePlaytimeAsync(NetUserId userId, int totalTime, int livingTime)
+        {
+            await using var db = await GetDb();
+            var record = await db.DbContext
+                .Player
+                //.Include(p => p.TotalPlaytime)
+                //.Include(p => p.LivingPlaytime)
+                .AsSingleQuery()
+                .SingleOrDefaultAsync(p => p.UserId == userId.UserId);
+
+            if (record is null) return;
+
+            record.TotalPlaytime = totalTime;
+            record.LivingPlaytime = livingTime;
+
+            await db.DbContext.SaveChangesAsync();
+        }
+
         private static async Task SetSelectedCharacterSlotAsync(NetUserId userId, int newSlot, ServerDbContext db)
         {
             var prefs = await db.Preference.SingleAsync(p => p.UserId == userId.UserId);

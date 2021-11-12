@@ -35,6 +35,8 @@ namespace Content.Server.Database
 
         Task SaveAdminOOCColorAsync(NetUserId userId, Color color);
 
+        Task SavePlaytimeAsync(NetUserId userId, int totalPlaytime, int livingPlaytime);
+
         // Single method for two operations for transaction.
         Task DeleteSlotAndSetSelectedIndex(NetUserId userId, int deleteSlot, int newSlot);
         Task<PlayerPreferences?> GetPlayerPreferencesAsync(NetUserId userId);
@@ -173,6 +175,11 @@ namespace Content.Server.Database
         public Task SaveAdminOOCColorAsync(NetUserId userId, Color color)
         {
             return _db.SaveAdminOOCColorAsync(userId, color);
+        }
+
+        public Task SavePlaytimeAsync(NetUserId userId, int totalTime, int livingTime)
+        {
+            return _db.SavePlaytimeAsync(userId, totalTime, livingTime);
         }
 
         public Task<PlayerPreferences?> GetPlayerPreferencesAsync(NetUserId userId)
