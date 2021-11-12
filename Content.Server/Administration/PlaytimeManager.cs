@@ -72,6 +72,7 @@ public class PlaytimeManager : IPlaytimeManager
 
         // Give it one last update and then pause until the next round begins.
         Ticking = false;
+        //This Max() should never be necessary but better safe than sorry.
         UpdateInterval = Math.Max(UpdateInterval -= SecondsSinceUpdate, 0);
         UpdatePlaytimes();
 
