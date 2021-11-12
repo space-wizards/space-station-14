@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Server.Database;
 using Content.Server.GameTicking;
 using Content.Shared.Administration.Logs;
@@ -15,14 +16,17 @@ public class AdminLogSystem : SharedAdminLogSystem
 
     public override void Add<T>(T log)
     {
-        var roundId = _ticker.RoundId;
-        _db.AddAdminLog(log, roundId);
+        Add(log, new List<Guid>());
     }
 
     public override void Add<T>(T log, Guid playerId)
     {
-        var roundId = _ticker.RoundId;
-        _db.AddAdminLog(log, roundId, playerId);
+        Add(log, new List<Guid> {playerId});
+    }
+
+    public override void Add<T>(T log, params Guid[] playerIds)
+    {
+        Add(log, playerIds.ToList());
     }
 
     public override void Add<T>(T log, List<Guid> players)
@@ -31,28 +35,27 @@ public class AdminLogSystem : SharedAdminLogSystem
         _db.AddAdminLog(log, roundId, players);
     }
 
-    public IEnumerable<LogRecord<T>> OfPlayer<T>(Guid id)
+    public IEnumerable<LogRecord<T>> Get<T>(LogFilter? filter = null)
     {
-        return _db.GetAdminLogsOfPlayer<T>(id).GetAwaiter().GetResult();
+        return _db.GetAdminLogs<T>(filter).GetAwaiter().GetResult();
     }
 
-    public IEnumerable<LogRecord<T>> OfRound<T>(int id)
+    public IEnumerable<LogRecord<T>> GetCurrent<T>(LogFilter? filter = null)
     {
-        return _db.GetAdminLogsOfRound<T>(id).GetAwaiter().GetResult();
+        filter ??= new LogFilter();
+        filter.Round = _ticker.RoundId;
+        return Get<T>(filter);
     }
 
-    public IEnumerable<LogRecord<T>> OfRoundAndPlayer<T>(int roundId, Guid playerId)
+    public IEnumerable<string> Messages(LogFilter? filter = null)
     {
-        return _db.GetAdminLogsOfRoundAndPlayer<T>(roundId, playerId).GetAwaiter().GetResult();
+        return _db.GetAdminLogMessages(filter).GetAwaiter().GetResult();
     }
 
-    public IEnumerable<LogRecord<T>> OfRoundWithAllPlayers<T>(int roundId, params Guid[] playerIds)
+    public IEnumerable<string> MessagesCurrent(LogFilter? filter = null)
     {
-        return _db.GetAdminLogsOfRoundWithAllPlayers<T>(roundId, playerIds: playerIds).GetAwaiter().GetResult();
-    }
-
-    public IEnumerable<LogRecord<T>> WithAllPlayers<T>(params Guid[] ids)
-    {
-        return _db.GetAdminLogsOfPlayers<T>(playerIds: ids).GetAwaiter().GetResult();
+        filter ??= new LogFilter();
+        filter.Round = _ticker.RoundId;
+        return Messages(filter);
     }
 }

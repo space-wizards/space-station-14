@@ -37,6 +37,11 @@ namespace Content.Shared.FixedPoint
             return new(value * (int) Math.Pow(10, Shift));
         }
 
+        public static FixedPoint2 NewShifted(int value)
+        {
+            return new(value);
+        }
+
         public static FixedPoint2 New(float value)
         {
             return new(FromFloat(value));

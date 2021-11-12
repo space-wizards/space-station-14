@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,7 +20,6 @@ using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using LogLevel = Robust.Shared.Log.LogLevel;
 using MSLogLevel = Microsoft.Extensions.Logging.LogLevel;
-
 
 namespace Content.Server.Database
 {
@@ -124,21 +122,17 @@ namespace Content.Server.Database
         #endregion
 
         #region Rounds
+
         Task<int> AddNewRound();
+
         #endregion
 
         #region Admin Logs
-        Task AddAdminLog<T>(T log, int roundId);
-        Task AddAdminLog<T>(T log, int roundId, Guid playerId);
-        Task AddAdminLog<T>(T log, int roundId, params Guid[] playerIds);
-        Task AddAdminLog<T>(T log, int roundId, List<Guid> playerIds);
 
-        Task<IEnumerable<LogRecord<T>>> GetAdminLogsOfPlayer<T>(Guid id, CancellationToken cancel = default);
-        Task<IEnumerable<LogRecord<T>>> GetAdminLogsOfPlayers<T>(CancellationToken cancel = default, params Guid[] playerIds);
+        Task AddAdminLog<T>(T log, int roundId, List<Guid> playerIds) where T : notnull;
+        Task<IEnumerable<string>> GetAdminLogMessages(LogFilter? filter = null);
+        Task<IEnumerable<LogRecord<T>>> GetAdminLogs<T>(LogFilter? filter = null);
 
-        Task<IEnumerable<LogRecord<T>>> GetAdminLogsOfRound<T>(int id, CancellationToken cancel = default);
-        Task<IEnumerable<LogRecord<T>>> GetAdminLogsOfRoundAndPlayer<T>(int roundId, Guid player, CancellationToken cancel = default);
-        Task<IEnumerable<LogRecord<T>>> GetAdminLogsOfRoundWithAllPlayers<T>(int roundId, CancellationToken cancel = default, params Guid[] playerIds);
         #endregion
     }
 
@@ -327,49 +321,19 @@ namespace Content.Server.Database
             return _db.UpdateAdminRankAsync(rank, cancel);
         }
 
-        public Task AddAdminLog<T>(T log, int roundId)
-        {
-            return _db.AddAdminLog(log, roundId);
-        }
-
-        public Task AddAdminLog<T>(T log, int roundId, Guid playerId)
-        {
-            return _db.AddAdminLog(log, roundId, playerId);
-        }
-
-        public Task AddAdminLog<T>(T log, int roundId, params Guid[] playerIds)
-        {
-            return AddAdminLog(log, roundId, playerIds.ToList());
-        }
-
-        public Task AddAdminLog<T>(T log, int roundId, List<Guid> playerIds)
+        public Task AddAdminLog<T>(T log, int roundId, List<Guid> playerIds) where T : notnull
         {
             return _db.AddAdminLog(log, roundId, playerIds);
         }
 
-        public Task<IEnumerable<LogRecord<T>>> GetAdminLogsOfPlayer<T>(Guid id, CancellationToken cancel = default)
+        public Task<IEnumerable<string>> GetAdminLogMessages(LogFilter? filter = null)
         {
-            return _db.GetAdminLogsOfPlayer<T>(id, cancel);
+            return _db.GetAdminLogMessages(filter);
         }
 
-        public Task<IEnumerable<LogRecord<T>>> GetAdminLogsOfPlayers<T>(CancellationToken cancel = default, params Guid[] playerIds)
+        public Task<IEnumerable<LogRecord<T>>> GetAdminLogs<T>(LogFilter? filter = null)
         {
-            return _db.GetAdminLogsOfPlayers<T>(cancel, playerIds);
-        }
-
-        public Task<IEnumerable<LogRecord<T>>> GetAdminLogsOfRound<T>(int id, CancellationToken cancel = default)
-        {
-            return _db.GetAdminLogsOfRound<T>(id, cancel);
-        }
-
-        public Task<IEnumerable<LogRecord<T>>> GetAdminLogsOfRoundAndPlayer<T>(int roundId, Guid player, CancellationToken cancel = default)
-        {
-            return _db.GetAdminLogsOfRoundAndPlayer<T>(roundId, player, cancel);
-        }
-
-        public Task<IEnumerable<LogRecord<T>>> GetAdminLogsOfRoundWithAllPlayers<T>(int roundId, CancellationToken cancel = default, params Guid[] playerIds)
-        {
-            return _db.GetAdminLogsOfRoundWithAllPlayers<T>(roundId, cancel, playerIds);
+            return _db.GetAdminLogs<T>(filter);
         }
 
         private DbContextOptions<ServerDbContext> CreatePostgresOptions()

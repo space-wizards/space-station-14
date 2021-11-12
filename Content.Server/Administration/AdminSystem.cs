@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Players;
 using Content.Shared.Administration;
@@ -9,6 +10,7 @@ using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 
 namespace Content.Server.Administration
 {
@@ -16,6 +18,8 @@ namespace Content.Server.Administration
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
+
+        [Dependency] private readonly AdminLogSystem _logs = default!;
 
         public override void Initialize()
         {
@@ -25,6 +29,7 @@ namespace Content.Server.Administration
             _adminManager.OnPermsChanged += OnAdminPermsChanged;
             SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
             SubscribeLocalEvent<PlayerDetachedEvent>(OnPlayerDetached);
+            SubscribeNetworkEvent<RequestLogsMessage>(OnLogsMessageRequest);
         }
 
         private void OnAdminPermsChanged(AdminPermsChangedEventArgs obj)
@@ -110,6 +115,18 @@ namespace Content.Server.Administration
             var uid = session.AttachedEntity?.Uid ?? EntityUid.Invalid;
 
             return new PlayerInfo(name, username, antag, uid, session.UserId);
+        }
+
+        private void OnLogsMessageRequest(RequestLogsMessage msg, EntitySessionEventArgs args)
+        {
+            if (!_adminManager.HasAdminFlag((IPlayerSession) args.SenderSession, AdminFlags.Logs))
+            {
+                Logger.Warning($"Player {args.SenderSession.Name} tried to access admin logs without permission.");
+                return;
+            }
+
+            var logs = new LogsMessage(_logs.MessagesCurrent().ToList());
+            RaiseNetworkEvent(logs);
         }
     }
 }

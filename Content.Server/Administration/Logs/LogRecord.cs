@@ -9,5 +9,6 @@ public sealed record LogRecord<T>(
     DateTime Date,
     ImmutableList<PlayerRecord> Players,
     int RoundId,
-    T Log
+    T Log,
+    string Message
 );

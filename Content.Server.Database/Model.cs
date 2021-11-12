@@ -248,5 +248,7 @@ namespace Content.Server.Database
         public Round Round { get; set; } = default!;
 
         [Required] public JsonDocument Log { get; set; } = default!;
+
+        [Required] public string Message { get; set; } = default!;
     }
 }

@@ -12,8 +12,13 @@ public readonly record struct TotalDamageAdminLog(
     int Shift = FixedPoint2.Shift)
 {
     [JsonIgnore]
-    public FixedPoint2 PreviousValue => FixedPoint2.New(PreviousRawValue);
+    public FixedPoint2 PreviousValue => FixedPoint2.NewShifted(PreviousRawValue);
 
     [JsonIgnore]
-    public FixedPoint2 NewValue => FixedPoint2.New(NewRawValue);
+    public FixedPoint2 NewValue => FixedPoint2.NewShifted(NewRawValue);
+
+    public override string ToString()
+    {
+        return $"Entity {Owner} received {NewValue - PreviousValue} damage. Old: {PreviousValue} | New: {NewValue}";
+    }
 }

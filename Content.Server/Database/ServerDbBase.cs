@@ -472,45 +472,7 @@ namespace Content.Server.Database
         #endregion
 
         #region Admin
-        public async Task AddAdminLog<T>(T log, int roundId)
-        {
-            await using var db = await GetDb();
-
-            var adminLog = new AdminLog
-            {
-                Date = DateTime.UtcNow,
-                Players = new List<Player>(0),
-                RoundId = roundId,
-                Log = JsonSerializer.SerializeToDocument(log)
-            };
-
-            db.DbContext.AdminLog.Add(adminLog);
-
-            await db.DbContext.SaveChangesAsync();
-        }
-
-        public async Task AddAdminLog<T>(T log, int roundId, Guid playerId)
-        {
-            await using var db = await GetDb();
-
-            var player = await db.DbContext.Player
-                .Where(player => player.UserId == playerId)
-                .SingleAsync();
-
-            var adminLog = new AdminLog
-            {
-                Date = DateTime.UtcNow,
-                Players = new List<Player> {player},
-                RoundId = roundId,
-                Log = JsonSerializer.SerializeToDocument(log)
-            };
-
-            db.DbContext.AdminLog.Add(adminLog);
-
-            await db.DbContext.SaveChangesAsync();
-        }
-
-        public async Task AddAdminLog<T>(T log, int roundId, List<Guid> playerIds)
+        public async Task AddAdminLog<T>(T log, int roundId, List<Guid> playerIds) where T : notnull
         {
             await using var db = await GetDb();
 
@@ -518,161 +480,103 @@ namespace Content.Server.Database
                 .Where(player => playerIds.Contains(player.UserId))
                 .ToListAsync();
 
-            var adminLog = new AdminLog
-            {
-                Date = DateTime.UtcNow,
-                Players = players,
-                RoundId = roundId,
-                Log = JsonSerializer.SerializeToDocument(log)
-            };
+            var adminLog = RecordToLog(log, roundId, players);
 
             db.DbContext.AdminLog.Add(adminLog);
 
             await db.DbContext.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<LogRecord<T>>> GetAdminLogsOfPlayer<T>(Guid id, CancellationToken cancel = default)
+        private async Task<IQueryable<AdminLog>> GetAdminLogsQuery(LogFilter? filter = null)
         {
             await using var db = await GetDb();
 
-            var player = await db.DbContext.Player
-                .Include(player => player.AdminLogs)
-                .ThenInclude(log => log.Players)
-                .Include(player => player.AdminLogs)
-                .ThenInclude(log => log.Round)
-                .SingleAsync(player => player.UserId == id, cancel);
+            IQueryable<AdminLog> query = db.DbContext.AdminLog;
 
-            return player.AdminLogs
-                .Select(log =>
-                {
-                    // TODO PERF reuse instances where possible so this method doesn't take a shat
-                    var players = log.Players.Select(MakePlayerRecord).ToImmutableList();
-                    var data = log.Log.Deserialize<T>();
-                    log.Log.Dispose();
+            if (filter == null)
+            {
+                return query.OrderBy(log => log.Date);
+            }
 
-                    if (data == null)
-                    {
-                        Logger.ErrorS("db.base", $"Error reading log of type {typeof(T)}");
-                        return null;
-                    }
+            if (filter.Round != null)
+            {
+                query = query.Where(log => log.RoundId == filter.Round);
+            }
 
-                    return new LogRecord<T>(log.Id, log.Date, players, log.RoundId, data);
-                })
-                .Where(log => log != null)!;
+            if (filter.AllPlayers != null)
+            {
+                var players = await db.DbContext.Player
+                    .Where(player => filter.AllPlayers.Contains(player.UserId))
+                    .ToListAsync(filter.CancellationToken);
+
+                query = query
+                    .Include(log => log.Players)
+                    .Where(log => players.All(log.Players.Contains));
+            }
+
+            if (filter.AnyPlayers != null)
+            {
+                var players = await db.DbContext.Player
+                    .Where(player => filter.AnyPlayers.Contains(player.UserId))
+                    .ToListAsync(filter.CancellationToken);
+
+                query = query
+                    .Include(log => log.Players)
+                    .Where(log => players.Any(log.Players.Contains));
+            }
+
+            query = filter.DateOrder switch
+            {
+                DateOrder.Ascending => query.OrderBy(log => log.Date),
+                DateOrder.Descending => query.OrderByDescending(log => log.Date),
+                _ => throw new ArgumentOutOfRangeException(nameof(filter),
+                    $"Unknown {nameof(DateOrder)} value {filter.DateOrder}")
+            };
+
+            return query;
         }
 
-        public async Task<IEnumerable<LogRecord<T>>> GetAdminLogsOfPlayers<T>(CancellationToken cancel = default, params Guid[] playerIds)
+        public async Task<IEnumerable<string>> GetAdminLogMessages(LogFilter? filter = null)
         {
-            await using var db = await GetDb();
-
-            var players = await db.DbContext.Player
-                .Where(id => playerIds.Contains(id.UserId))
-                .ToListAsync(cancel);
-
-            return db.DbContext.AdminLog
-                .Where(log => players.All(log.Players.Contains))
-                .Include(log => log.Players)
-                .Include(log => log.Round)
-                .AsEnumerable()
-                .Select(log =>
-                {
-                    // TODO PERF reuse instances where possible so this method doesn't take a shat
-                    var playersInvolved = log.Players.Select(MakePlayerRecord).ToImmutableList();
-                    var data = log.Log.Deserialize<T>();
-                    log.Log.Dispose();
-
-                    if (data == null)
-                    {
-                        Logger.ErrorS("db.base", $"Error reading log of type {typeof(T)}");
-                        return null;
-                    }
-
-                    return new LogRecord<T>(log.Id, log.Date, playersInvolved, log.RoundId, data);
-                })
-                .Where(log => log != null)!;
+            var query = await GetAdminLogsQuery(filter);
+            return query.Select(log => log.Message).AsEnumerable();
         }
 
-        public async Task<IEnumerable<LogRecord<T>>> GetAdminLogsOfRound<T>(int roundId, CancellationToken cancel = default)
+        public async Task<IEnumerable<LogRecord<T>>> GetAdminLogs<T>(LogFilter? filter = null)
         {
-            await using var db = await GetDb();
-
-            return db.DbContext.AdminLog
-                .Where(log => log.RoundId == roundId)
-                .Include(log => log.Players)
-                .Include(log => log.Round)
-                .AsEnumerable()
-                .Select(log =>
-                {
-                    // TODO PERF reuse instances where possible so this method doesn't take a shat
-                    var players = log.Players.Select(MakePlayerRecord).ToImmutableList();
-                    var data = log.Log.Deserialize<T>();
-                    log.Log.Dispose();
-
-                    if (data == null)
-                    {
-                        Logger.ErrorS("db.base", $"Error reading log of type {typeof(T)}");
-                        return null;
-                    }
-
-                    return new LogRecord<T>(log.Id, log.Date, players, log.RoundId, data);
-                })
-                .Where(log => log != null)!;
+            var query = await GetAdminLogsQuery(filter);
+            return LogsToRecords<T>(query.AsEnumerable());
         }
 
-        public async Task<IEnumerable<LogRecord<T>>> GetAdminLogsOfRoundAndPlayer<T>(int roundId, Guid playerId, CancellationToken cancel = default)
+        private AdminLog RecordToLog<T>(T record, int roundId, List<Player> players) where T : notnull
         {
-            await using var db = await GetDb();
-
-            return db.DbContext.AdminLog
-                .Where(log => log.RoundId == roundId)
-                .Where(log => log.Players.Any(p => p.UserId == playerId))
-                .AsEnumerable()
-                .Select(log =>
-                {
-                    // TODO PERF reuse instances where possible so this method doesn't take a shat
-                    var players = log.Players.Select(MakePlayerRecord).ToImmutableList();
-                    var data = log.Log.Deserialize<T>();
-                    log.Log.Dispose();
-
-                    if (data == null)
-                    {
-                        Logger.ErrorS("db.base", $"Error reading log of type {typeof(T)}");
-                        return null;
-                    }
-
-                    return new LogRecord<T>(log.Id, log.Date, players, log.RoundId, data);
-                })
-                .Where(log => log != null)!;
+            return new AdminLog
+            {
+                Date = DateTime.UtcNow,
+                Players = players,
+                RoundId = roundId,
+                Log = JsonSerializer.SerializeToDocument(record),
+                Message = record.ToString() ?? ""
+            };
         }
 
-        public async Task<IEnumerable<LogRecord<T>>> GetAdminLogsOfRoundWithAllPlayers<T>(int roundId, CancellationToken cancel = default, params Guid[] playerIds)
+        private IEnumerable<LogRecord<T>> LogsToRecords<T>(IEnumerable<AdminLog> logs)
         {
-            await using var db = await GetDb();
+            foreach (var log in logs)
+            {
+                // TODO PERF reuse instances where possible so this method doesn't take a shat
+                var playersInvolved = log.Players.Select(MakePlayerRecord).ToImmutableList();
+                var data = log.Log.Deserialize<T>();
+                log.Log.Dispose();
 
-            var players = await db.DbContext.Player
-                .Where(id => playerIds.Contains(id.UserId))
-                .ToListAsync(cancel);
-
-            return db.DbContext.AdminLog
-                .Where(log => log.RoundId == roundId)
-                .Where(log => players.All(log.Players.Contains))
-                .AsEnumerable()
-                .Select(log =>
+                if (data == null)
                 {
-                    // TODO PERF reuse instances where possible so this method doesn't take a shat
-                    var playersInvolved = log.Players.Select(MakePlayerRecord).ToImmutableList();
-                    var data = log.Log.Deserialize<T>();
-                    log.Log.Dispose();
+                    Logger.ErrorS("db.base", $"Error reading log of type {typeof(T)}");
+                    continue;
+                }
 
-                    if (data == null)
-                    {
-                        Logger.ErrorS("db.base", $"Error reading log of type {typeof(T)}");
-                        return null;
-                    }
-
-                    return new LogRecord<T>(log.Id, log.Date, playersInvolved, log.RoundId, data);
-                })
-                .Where(log => log != null)!;
+                yield return new LogRecord<T>(log.Id, log.Date, playersInvolved, log.RoundId, data, log.Message);
+            }
         }
         #endregion
 
