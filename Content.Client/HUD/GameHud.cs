@@ -556,8 +556,6 @@ namespace Content.Client.HUD
             public const string StyleClassRedTopButton = "topButtonLabel";
             private const float CustomTooltipDelay = 0.4f;
 
-            [Dependency] private readonly IConfigurationManager configManager = default!;
-
             private static readonly Color ColorNormal = Color.FromHex("#7b7e9e");
             private static readonly Color ColorRedNormal = Color.FromHex("#FEFEFE");
             private static readonly Color ColorHovered = Color.FromHex("#9699bb");
@@ -609,8 +607,6 @@ namespace Content.Client.HUD
                 );
 
                 ToggleMode = true;
-
-                configManager = IoCManager.Resolve<IConfigurationManager>();
             }
 
             protected override void EnteredTree()
