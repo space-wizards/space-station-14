@@ -44,6 +44,8 @@ namespace Content.Server.Administration.Managers
             .Where(p => p.Value.Data.Active)
             .Select(p => p.Key);
 
+        public IEnumerable<IPlayerSession> AllAdmins => _admins.Select(p => p.Key);
+
         // If a command isn't in this list it's server-console only.
         // if a command is in but the flags value is null it's available to everybody.
         private readonly HashSet<string> _anyCommands = new();

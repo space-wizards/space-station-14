@@ -298,6 +298,9 @@ binds:
   type: State
   key: Delete
   canRepeat: true
+- function: TextTabComplete
+  type: State
+  key: Tab
 - function: OpenEntitySpawnWindow
   type: State
   key: F5

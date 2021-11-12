@@ -8,6 +8,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
@@ -99,8 +100,15 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             if (!args.User.TryGetComponent(out ActorComponent? actor))
                 return;
 
-            _userInterfaceSystem.TryOpen(uid, GasVolumePumpUiKey.Key, actor.PlayerSession);
-            DirtyUI(uid, component);
+            if (component.Owner.Transform.Anchored)
+            {
+                _userInterfaceSystem.TryOpen(uid, GasVolumePumpUiKey.Key, actor.PlayerSession);
+                DirtyUI(uid, component);
+            }
+            else
+            {
+                args.User.PopupMessageCursor(Loc.GetString("comp-gas-pump-ui-needs-anchor"));
+            }
 
             args.Handled = true;
         }

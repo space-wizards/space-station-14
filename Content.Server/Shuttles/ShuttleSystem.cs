@@ -126,7 +126,7 @@ namespace Content.Server.Shuttles
             //component.FixedRotation = false; TODO WHEN ROTATING SHUTTLES FIXED.
             component.FixedRotation = false;
             component.LinearDamping = 0.2f;
-            component.AngularDamping = 0.1f;
+            component.AngularDamping = 0.3f;
         }
 
         private void Disable(PhysicsComponent component)

@@ -13,6 +13,9 @@ namespace Content.Shared.Administration
 {
     public abstract class SharedBwoinkSystem : EntitySystem
     {
+        // System users
+        public static NetUserId SystemUserId { get; } = new NetUserId(Guid.Empty);
+
         public override void Initialize()
         {
             base.Initialize();

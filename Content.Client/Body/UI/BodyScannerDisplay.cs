@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Shared.Body.Components;
-using Content.Shared.Body.Mechanism;
 using Content.Shared.Body.Part;
 using Content.Shared.Damage;
 using Robust.Client.UserInterface.Controls;
