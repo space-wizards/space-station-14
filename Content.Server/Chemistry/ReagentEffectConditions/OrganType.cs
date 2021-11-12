@@ -1,5 +1,5 @@
-﻿using Content.Server.Body.Metabolism;
-using Content.Shared.Body.Metabolism;
+﻿using Content.Server.Body.Components;
+using Content.Shared.Body.Prototypes;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.GameObjects;
@@ -22,9 +22,12 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
         [DataField("shouldHave")]
         public bool ShouldHave = true;
 
-        public override bool Condition(EntityUid solutionEntity, EntityUid organEntity, Solution.ReagentQuantity reagent, IEntityManager entityManager)
+        public override bool Condition(ReagentEffectArgs args)
         {
-            if (entityManager.TryGetComponent<MetabolizerComponent>(organEntity, out var metabolizer)
+            if (args.OrganEntity == null)
+                return false;
+
+            if (args.EntityManager.TryGetComponent<MetabolizerComponent>(args.OrganEntity.Value, out var metabolizer)
                 && metabolizer.MetabolizerTypes != null
                 && metabolizer.MetabolizerTypes.Contains(Type))
                 return ShouldHave;

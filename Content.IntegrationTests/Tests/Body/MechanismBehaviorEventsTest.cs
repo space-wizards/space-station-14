@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Body.Behavior;
 using Content.Shared.Body.Components;
-using Content.Shared.Body.Mechanism;
 using Content.Shared.Body.Part;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;

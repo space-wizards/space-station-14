@@ -5,6 +5,7 @@
   components:
   - type: Sprite
     netsync: false
+    drawdepth: SmallObjects # I guess body bags need appear above a coroner's table? 
     sprite: Objects/Specific/Medical/Morgue/bodybags.rsi
     layers:
     - state: bag
@@ -32,6 +33,13 @@
       path: /Audio/Misc/zip.ogg
     openSound:
       path: /Audio/Misc/zip.ogg
+  - type: PaperLabel
+  - type: ItemSlots
+    slots:
+      labelSlot:
+        whitelist:
+          components:
+          - Paper
   - type: Appearance
     visuals:
     - type: StorageVisualizer
