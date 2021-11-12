@@ -66,6 +66,6 @@
     innateActions:
       - CombatMode
   - type: Guardian
-    distanceAllowed: 8
+    distanceAllowed: 10
     damageShare: 0.85
     
