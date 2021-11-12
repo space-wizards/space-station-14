@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Power.Components;
 using Content.Server.Solar.Components;
@@ -69,13 +70,30 @@ namespace Content.Server.Solar.EntitySystems
         /// </summary>
         public float TotalPanelPower = 0;
 
+        /// <summary>
+        /// All currently active panels
+        /// </summary>
+        private List<SolarPanelComponent> _activePanels = new();
+
         public override void Initialize()
         {
             SubscribeLocalEvent<SolarPanelComponent, MapInitEvent>(OnMapInit);
+            SubscribeLocalEvent<SolarPanelComponent, ComponentInit>(OnInit);
+            SubscribeLocalEvent<SolarPanelComponent, ComponentShutdown>(OnShutdown);
 
             // Initialize the sun to something random
             TowardsSun = MathHelper.TwoPi * _robustRandom.NextDouble();
             SunAngularVelocity = Angle.FromDegrees(0.1 + ((_robustRandom.NextDouble() - 0.5) * 0.05));
+        }
+
+        private void OnShutdown(EntityUid uid, SolarPanelComponent component, ComponentShutdown args)
+        {
+            _activePanels.Add(component);
+        }
+
+        private void OnInit(EntityUid uid, SolarPanelComponent component, ComponentInit args)
+        {
+            _activePanels.Add(component);
         }
 
         private void OnMapInit(EntityUid uid, SolarPanelComponent component, MapInitEvent args)
@@ -88,12 +106,14 @@ namespace Content.Server.Solar.EntitySystems
             TowardsSun += SunAngularVelocity * frameTime;
             TowardsSun = TowardsSun.Reduced();
 
+
+
             TargetPanelRotation += TargetPanelVelocity * frameTime;
             TargetPanelRotation = TargetPanelRotation.Reduced();
 
             TotalPanelPower = 0;
 
-            foreach (var panel in EntityManager.EntityQuery<SolarPanelComponent>())
+            foreach (var panel in _activePanels)
             {
                 // There's supposed to be rotational logic here, but that implies putting it somewhere.
                 panel.Owner.Transform.WorldRotation = TargetPanelRotation;
