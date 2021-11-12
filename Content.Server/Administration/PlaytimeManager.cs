@@ -68,9 +68,16 @@ public class PlaytimeManager : IPlaytimeManager
     /// </summary>
     public void Shutdown()
     {
+        var initialUpdateInterval = UpdateInterval;
+
+        // Give it one last update and then pause until the next round begins.
         Ticking = false;
         UpdateInterval = Math.Max(UpdateInterval -= SecondsSinceUpdate, 0);
         UpdatePlaytimes();
+
+        // Reset everything for next round.
+        UpdateInterval = initialUpdateInterval;
+        SecondsSinceUpdate = 0;
     }
 
     /// <summary>

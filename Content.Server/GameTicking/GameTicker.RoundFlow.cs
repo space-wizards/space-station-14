@@ -85,6 +85,9 @@ namespace Content.Server.GameTicking
 
             var timeSpan = _gameTiming.RealTime - startTime;
             Logger.InfoS("ticker", $"Loaded map in {timeSpan.TotalMilliseconds:N2}ms.");
+
+            // Start playtime tracking
+            _playtimeManager.Ticking = true;
         }
 
         public void StartRound(bool force = false)
