@@ -175,6 +175,22 @@
     - type: DamageStateVisualizer
       normal: cow
       dead: dead
+  - type: SolutionContainerManager
+    solutions:
+      udder:
+        maxVol: 250
+        reagents:
+        - ReagentId: Milk
+          Quantity: 30
+  - type: DrainableSolution
+    solution: udder
+  - type: ReagentTank
+    soluteion: udder
+  - type: Udder
+    reagentId: Milk
+    targetSolution: udder
+    quantity: 25
+    updateRate: 30
 
 - type: entity
   name: crab
