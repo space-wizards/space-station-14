@@ -35,27 +35,27 @@ public class AdminLogSystem : SharedAdminLogSystem
         _db.AddAdminLog(log, roundId, players);
     }
 
-    public IEnumerable<LogRecord<T>> Get<T>(LogFilter? filter = null)
+    public IEnumerable<LogRecord<T>> All<T>(LogFilter? filter = null)
     {
         return _db.GetAdminLogs<T>(filter).GetAwaiter().GetResult();
     }
 
-    public IEnumerable<LogRecord<T>> GetCurrent<T>(LogFilter? filter = null)
+    public IEnumerable<LogRecord<T>> CurrentRound<T>(LogFilter? filter = null)
     {
         filter ??= new LogFilter();
         filter.Round = _ticker.RoundId;
-        return Get<T>(filter);
+        return All<T>(filter);
     }
 
-    public IEnumerable<string> Messages(LogFilter? filter = null)
+    public IEnumerable<string> AllMessages(LogFilter? filter = null)
     {
         return _db.GetAdminLogMessages(filter).GetAwaiter().GetResult();
     }
 
-    public IEnumerable<string> MessagesCurrent(LogFilter? filter = null)
+    public IEnumerable<string> MessagesCurrentRound(LogFilter? filter = null)
     {
         filter ??= new LogFilter();
         filter.Round = _ticker.RoundId;
-        return Messages(filter);
+        return AllMessages(filter);
     }
 }
