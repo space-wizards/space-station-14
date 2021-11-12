@@ -240,12 +240,10 @@ namespace Content.Server.Database
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Required] public DateTime Date { get; set; }
-
-        public List<Player> Players { get; set; } = default!;
-
-        [ForeignKey("Round"), Required] public int RoundId { get; set; }
+        [Key, ForeignKey("Round")] public int RoundId { get; set; }
         public Round Round { get; set; } = default!;
+
+        [Required] public DateTime Date { get; set; }
 
         [Required] public JsonDocument Log { get; set; } = default!;
 
