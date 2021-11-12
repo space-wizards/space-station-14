@@ -115,6 +115,7 @@ namespace Content.Server.Guardian
                         guardiancomp.Host = args.User.Uid;
                         //Grant the user the recall action and notify them
                         action.Grant(ActionType.ManifestGuardian);
+                        SoundSystem.Play(Filter.Entities(uid), "/Audio/Effects/guardian_inject.ogg", uid);
                         args.User.PopupMessage(Loc.GetString("guardian-created"));
                         //Exhaust the activator
                         component.Used = true;

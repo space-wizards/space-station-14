@@ -247,9 +247,9 @@
   description: A truly.. bizarre acessory.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Soft/bizzaresoft.rsi
+    sprite: Clothing/Head/Soft/bizarresoft.rsi
   - type: Clothing
-    sprite: Clothing/Head/Soft/bizzaresoft.rsi
+    sprite: Clothing/Head/Soft/bizarresoft.rsi
 
 - type: entity
   parent: ClothingHeadBase
