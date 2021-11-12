@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Server.Power.Components;
 using Content.Server.Solar.Components;
 using Content.Shared.Physics;
+using Content.Shared.GameTicking;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -72,7 +73,20 @@ namespace Content.Server.Solar.EntitySystems
         public override void Initialize()
         {
             SubscribeLocalEvent<SolarPanelComponent, MapInitEvent>(OnMapInit);
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
+            RandomizeSun();
+        }
 
+        public void Reset(RoundRestartCleanupEvent ev)
+        {
+            RandomizeSun();
+            TargetPanelRotation = Angle.Zero;
+            TargetPanelVelocity = Angle.Zero;
+            TotalPanelPower = 0;
+        }
+
+        private void RandomizeSun()
+        {
             // Initialize the sun to something random
             TowardsSun = MathHelper.TwoPi * _robustRandom.NextDouble();
             SunAngularVelocity = Angle.FromDegrees(0.1 + ((_robustRandom.NextDouble() - 0.5) * 0.05));
