@@ -14,7 +14,7 @@ public sealed class LogFilter
 
     public HashSet<Guid>? AnyPlayers { get; set; }
 
-    public DateOrder DateOrder { get; set; }
+    public DateOrder DateOrder { get; set; } = DateOrder.Ascending;
 }
 
 public enum DateOrder

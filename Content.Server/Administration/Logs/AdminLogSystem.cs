@@ -16,7 +16,7 @@ public class AdminLogSystem : SharedAdminLogSystem
 
     public override void Add<T>(T log)
     {
-        // TODO ADMIN LOGGING batch all these adds per tick?
+        // TODO ADMIN LOGGING batch all these adds per tick
         Add(log, new List<Guid>());
     }
 
@@ -41,16 +41,16 @@ public class AdminLogSystem : SharedAdminLogSystem
         return _db.GetAdminLogs<T>(filter).GetAwaiter().GetResult();
     }
 
+    public IEnumerable<string> AllMessages(LogFilter? filter = null)
+    {
+        return _db.GetAdminLogMessages(filter).GetAwaiter().GetResult();
+    }
+
     public IEnumerable<LogRecord<T>> CurrentRound<T>(LogFilter? filter = null)
     {
         filter ??= new LogFilter();
         filter.Round = _ticker.RoundId;
         return All<T>(filter);
-    }
-
-    public IEnumerable<string> AllMessages(LogFilter? filter = null)
-    {
-        return _db.GetAdminLogMessages(filter).GetAwaiter().GetResult();
     }
 
     public IEnumerable<string> CurrentRoundMessages(LogFilter? filter = null)
