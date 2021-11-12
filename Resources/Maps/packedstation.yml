@@ -31933,7 +31933,7 @@ entities:
   type: Poweredlight
   components:
   - rot: 1.5707963267948966 rad
-    pos: 21.023598,42.719597
+    pos: 21.5,42.5
     parent: 0
     type: Transform
   - powerLoad: 0
@@ -31966,7 +31966,7 @@ entities:
   type: Poweredlight
   components:
   - rot: -1.5707963267948966 rad
-    pos: 28.898598,40.594597
+    pos: 28.5,40.5
     parent: 0
     type: Transform
   - powerLoad: 0
@@ -32636,7 +32636,7 @@ entities:
 - uid: 2913
   type: BarSign
   components:
-  - pos: 67.5,-18.5
+  - pos: 67.998146,-18.498177
     parent: 0
     type: Transform
 - uid: 2914
@@ -110199,4 +110199,332 @@ entities:
     type: Physics
   - color: '#0000FFFF'
     type: AtmosPipeColor
+- uid: 11216
+  type: SignDirectionalEng
+  components:
+  - pos: 24.558588,-1.6299205
+    parent: 0
+    type: Transform
+- uid: 11217
+  type: SignDirectionalMed
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 24.542963,-1.3699353
+    parent: 0
+    type: Transform
+- uid: 11218
+  type: SignDirectionalSec
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 28.54057,12.66816
+    parent: 0
+    type: Transform
+- uid: 11219
+  type: SignDirectionalBridge
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 28.54057,12.41816
+    parent: 0
+    type: Transform
+- uid: 11220
+  type: SignDirectionalSci
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 28.5195,12.147359
+    parent: 0
+    type: Transform
+- uid: 11221
+  type: SignDirectionalSupply
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 24.429626,19.525848
+    parent: 0
+    type: Transform
+- uid: 11222
+  type: SignDirectionalMed
+  components:
+  - pos: 39.55419,12.695712
+    parent: 0
+    type: Transform
+- uid: 11223
+  type: SignDirectionalEng
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 2.5122795,1.3194735
+    parent: 0
+    type: Transform
+- uid: 11224
+  type: SignDirectionalSupply
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 2.5122795,1.6007235
+    parent: 0
+    type: Transform
+- uid: 11225
+  type: SignDirectionalMed
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 1.6617951,1.465758
+    parent: 0
+    type: Transform
+- uid: 11226
+  type: SignDirectionalSci
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 39.557316,12.409777
+    parent: 0
+    type: Transform
+- uid: 11227
+  type: SignToxins
+  components:
+  - pos: 61.497017,25.506691
+    parent: 0
+    type: Transform
+- uid: 11228
+  type: SignRND
+  components:
+  - pos: 57.499714,16.503765
+    parent: 0
+    type: Transform
+- uid: 11229
+  type: SignScience
+  components:
+  - pos: 48.50537,15.474182
+    parent: 0
+    type: Transform
+- uid: 11230
+  type: SignConference
+  components:
+  - pos: 25.484035,39.437214
+    parent: 0
+    type: Transform
+- uid: 11231
+  type: SignChapel
+  components:
+  - pos: 39.519363,4.4919653
+    parent: 0
+    type: Transform
+- uid: 11232
+  type: SignChem
+  components:
+  - pos: 54.504036,-2.467749
+    parent: 0
+    type: Transform
+- uid: 11233
+  type: SignCloning
+  components:
+  - pos: 72.516014,3.5315685
+    parent: 0
+    type: Transform
+- uid: 11234
+  type: SignMorgue
+  components:
+  - pos: 71.560074,0.5078441
+    parent: 0
+    type: Transform
+- uid: 11235
+  type: SignMedical
+  components:
+  - pos: 51.496513,-2.476531
+    parent: 0
+    type: Transform
+- uid: 11236
+  type: SignBar
+  components:
+  - pos: 36.515213,-1.5077809
+    parent: 0
+    type: Transform
+- uid: 11237
+  type: SignGravity
+  components:
+  - pos: 16.482166,37.47681
+    parent: 0
+    type: Transform
+- uid: 11238
+  type: SignToolStorage
+  components:
+  - pos: 28.472525,-18.512623
+    parent: 0
+    type: Transform
+- uid: 11239
+  type: SignLibrary
+  components:
+  - pos: 7.478853,8.535535
+    parent: 0
+    type: Transform
+- uid: 11240
+  type: SignSurgery
+  components:
+  - pos: 63.483078,-4.4704685
+    parent: 0
+    type: Transform
+- uid: 11241
+  type: SignSurgery
+  components:
+  - pos: 54.505295,-16.448315
+    parent: 0
+    type: Transform
+- uid: 11242
+  type: SignEngineering
+  components:
+  - pos: 24.546726,-25.498436
+    parent: 0
+    type: Transform
+- uid: 11243
+  type: SignToolStorage
+  components:
+  - pos: 24.476265,-30.473106
+    parent: 0
+    type: Transform
+- uid: 11244
+  type: SignTelecomms
+  components:
+  - pos: 24.48286,-16.522787
+    parent: 0
+    type: Transform
+- uid: 11245
+  type: SignScience
+  components:
+  - pos: 24.507164,-13.486421
+    parent: 0
+    type: Transform
+- uid: 11246
+  type: SignPrison
+  components:
+  - pos: 35.478874,29.508991
+    parent: 0
+    type: Transform
+- uid: 11247
+  type: SignInterrogation
+  components:
+  - pos: 31.49329,27.493366
+    parent: 0
+    type: Transform
+- uid: 11248
+  type: SignArmory
+  components:
+  - pos: 42.47835,25.502422
+    parent: 0
+    type: Transform
+- uid: 11249
+  type: SignCargo
+  components:
+  - pos: 22.44822,19.533756
+    parent: 0
+    type: Transform
+- uid: 11250
+  type: SignCargoDock
+  components:
+  - pos: 6.565961,21.533756
+    parent: 0
+    type: Transform
+- uid: 11251
+  type: SignEVA
+  components:
+  - pos: 7.512704,-2.4972835
+    parent: 0
+    type: Transform
+- uid: 11252
+  type: SignDirectionalSci
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 39.572567,2.4248743
+    parent: 0
+    type: Transform
+- uid: 11253
+  type: SignDirectionalSec
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 39.579243,2.6668954
+    parent: 0
+    type: Transform
+- uid: 11254
+  type: PersonalAI
+  components:
+  - pos: 26.514572,47.589886
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 11255
+  type: PersonalAI
+  components:
+  - pos: 70.51922,36.549946
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 11256
+  type: PersonalAI
+  components:
+  - pos: 60.550816,10.53527
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 11257
+  type: VendingMachineSnack
+  components:
+  - pos: 20.5,35.5
+    parent: 0
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+- uid: 11258
+  type: VendingMachineCigs
+  components:
+  - name: Cigarette machine
+    type: MetaData
+  - pos: 19.5,35.5
+    parent: 0
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+- uid: 11259
+  type: PottedPlantRandom
+  components:
+  - pos: 18.5,35.5
+    parent: 0
+    type: Transform
+  - containers:
+      stash: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 11260
+  type: PottedPlantRandom
+  components:
+  - pos: 22.5,35.5
+    parent: 0
+    type: Transform
+  - containers:
+      stash: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 11261
+  type: VendingMachineCola
+  components:
+  - pos: 21.5,35.5
+    parent: 0
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+- uid: 11262
+  type: VendingMachineCoffee
+  components:
+  - name: Hot drinks machine
+    type: MetaData
+  - pos: 45.5,20.5
+    parent: 0
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+- uid: 11263
+  type: Poweredlight
+  components:
+  - pos: 14.5,41.5
+    parent: 0
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
 ...
