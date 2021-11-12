@@ -2,6 +2,8 @@ using System;
 using System.Linq;
 using Content.Server.Administration.Managers;
 using Content.Server.Players;
+using Content.Server.Roles;
+using Content.Server.Traitor;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Events;
 using Robust.Server.GameObjects;
@@ -25,6 +27,18 @@ namespace Content.Server.Administration
             _adminManager.OnPermsChanged += OnAdminPermsChanged;
             SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
             SubscribeLocalEvent<PlayerDetachedEvent>(OnPlayerDetached);
+            SubscribeLocalEvent<RoleAddedEvent>(OnRoleAddedEvent);
+        }
+
+        private void OnRoleAddedEvent(RoleAddedEvent ev)
+        {
+            if (ev.Role is TraitorRole && ev.Mind.Session != null)
+            {
+                foreach (var admin in _adminManager.ActiveAdmins)
+                {
+                    RaiseNetworkEvent(GetChangedEvent(ev.Mind.Session), admin.ConnectedClient);
+                }
+            }
         }
 
         private void OnAdminPermsChanged(AdminPermsChangedEventArgs obj)

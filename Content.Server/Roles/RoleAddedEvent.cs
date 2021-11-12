@@ -2,6 +2,6 @@
 {
     public sealed class RoleAddedEvent : RoleEvent
     {
-        public RoleAddedEvent(Role role) : base(role) { }
+        public RoleAddedEvent(Mind.Mind mind, Role role) : base(mind, role) { }
     }
 }
