@@ -29,7 +29,12 @@ namespace Content.Server.Administration
 
         private void OnAdminPermsChanged(AdminPermsChangedEventArgs obj)
         {
-            if(!obj.IsAdmin) return;
+            if(!obj.IsAdmin)
+            {
+                RaiseNetworkEvent(new FullPlayerListEvent(), obj.Player.ConnectedClient);
+                return;
+            }
+
             SendFullPlayerList(obj.Player);
         }
 
