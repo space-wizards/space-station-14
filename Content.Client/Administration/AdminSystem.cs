@@ -1,15 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Client.Administration.UI;
+using Content.Client.Administration.UI.Tabs;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Events;
 using Robust.Client.Player;
+using Robust.Client.UserInterface;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Network;
-using Robust.Shared.Players;
 
 namespace Content.Client.Administration
 {
@@ -75,9 +74,9 @@ namespace Content.Client.Administration
             LogsChanged?.Invoke(Logs);
         }
 
-        public void TabChanged(int i)
+        public void TabChanged(Control control)
         {
-            if (i == AdminMenuWindow.LogsTabIndex)
+            if (control is LogsTab)
             {
                 RaiseNetworkEvent(new RequestLogsMessage());
             }
