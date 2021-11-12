@@ -24,6 +24,11 @@ namespace Content.Server.Solar.EntitySystems
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         /// <summary>
+        /// Maximum panel angular velocity range - used to stop people rotating panels fast enough that the lag prevention becomes noticable
+        /// </summary>
+        public const float MaxPanelVelocityDegrees = 1f;
+
+        /// <summary>
         /// The current sun angle.
         /// </summary>
         public Angle TowardsSun = Angle.Zero;
@@ -45,12 +50,12 @@ namespace Content.Server.Solar.EntitySystems
         /// to within sane boundaries.
         /// Keep in mind, this is not exact, as the random interval is also applied.
         /// </summary>
-        public TimeSpan SolarCoverageUpdateInterval = TimeSpan.FromSeconds(0.5);
+        public TimeSpan SolarCoverageUpdateInterval = TimeSpan.FromSeconds(5);
 
         /// <summary>
         /// A random interval used to stagger solar coverage updates reliably.
         /// </summary>
-        public TimeSpan SolarCoverageUpdateRandomInterval = TimeSpan.FromSeconds(0.5);
+        public TimeSpan SolarCoverageUpdateRandomInterval = TimeSpan.FromSeconds(5);
 
         /// <summary>
         /// TODO: *Should be moved into the solar tracker when powernet allows for it.*
@@ -109,11 +114,11 @@ namespace Content.Server.Solar.EntitySystems
 
             foreach (var panel in EntityManager.EntityQuery<SolarPanelComponent>())
             {
-                // There's supposed to be rotational logic here, but that implies putting it somewhere.
-                panel.Owner.Transform.WorldRotation = TargetPanelRotation;
-
                 if (panel.TimeOfNextCoverageUpdate < _gameTiming.CurTime)
                 {
+                    // Coverage update time!
+                    // There's supposed to be rotational logic here, but that implies putting it somewhere.
+                    panel.Owner.Transform.WorldRotation = TargetPanelRotation;
                     // Setup the next coverage check.
                     TimeSpan future = SolarCoverageUpdateInterval + (SolarCoverageUpdateRandomInterval * _robustRandom.NextDouble());
                     panel.TimeOfNextCoverageUpdate = _gameTiming.CurTime + future;
