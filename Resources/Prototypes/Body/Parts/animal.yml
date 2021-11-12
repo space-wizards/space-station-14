@@ -95,14 +95,13 @@
   - type: Mechanism
     size: 1
     compatibility: Biological
-    behaviors:
-    - !type:StomachBehavior #TODO: delete on #5249 merge
-      max_volume: 100
-      digestionDelay: 20
   - type: SolutionContainerManager
     solutions:
       stomach:
         maxVol: 100
+  - type: Stomach
+    maxVolume: 100
+    digestionDelay: 20
   - type: Metabolizer
     maxReagents: 3
     metabolizerTypes: [Human, Animal]
