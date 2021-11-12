@@ -119,6 +119,11 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("jsonb")
                         .HasColumnName("log");
 
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("message");
+
                     b.Property<int>("RoundId")
                         .HasColumnType("integer")
                         .HasColumnName("round_id");
