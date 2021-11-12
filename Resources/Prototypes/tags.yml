@@ -225,3 +225,7 @@
 
 - type: Tag
   id: NukeDisk
+
+- type: Tag
+  id: ForceFixRotations # fixrotations command WILL target this
+

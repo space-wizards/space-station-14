@@ -11,6 +11,7 @@
   - type: Tag
     tags:
       - RCDDeconstructWhitelist
+      - ForceFixRotations
   - type: Sprite
     netsync: false
     drawdepth: WallTops
