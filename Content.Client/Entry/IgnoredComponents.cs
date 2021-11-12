@@ -306,9 +306,9 @@ namespace Content.Client.Entry
             "GhostRadio",
             "Armor",
             "PneumaticCannon",
-            "GuardianComponent",
-            "GuardianCreatorComponent",
-            "GuardianHostComponent"
+            "Guardian",
+            "GuardianCreator",
+            "GuardianHost"
         };
     }
 }
