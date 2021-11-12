@@ -1,3 +1,4 @@
+using Content.Server.Administration;
 using Content.Server.Administration.Managers;
 using Content.Server.Afk;
 using Content.Server.AI.Utility;
@@ -32,6 +33,7 @@ namespace Content.Server.Entry
     {
         private EuiManager _euiManager = default!;
         private IVoteManager _voteManager = default!;
+        private IPlaytimeManager _playtimeManager = default!;
 
         /// <inheritdoc />
         public override void Init()
@@ -89,6 +91,8 @@ namespace Content.Server.Entry
             IoCManager.Resolve<IAdminManager>().Initialize();
             IoCManager.Resolve<INpcBehaviorManager>().Initialize();
             IoCManager.Resolve<IAfkManager>().Initialize();
+            _playtimeManager = IoCManager.Resolve<IPlaytimeManager>();
+            _playtimeManager.Initialize();
             _euiManager.Initialize();
 
             IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<GameTicker>().PostInitialize();
@@ -105,6 +109,8 @@ namespace Content.Server.Entry
                 {
                     _euiManager.SendUpdates();
                     _voteManager.Update();
+                    _playtimeManager.Update(frameEventArgs.DeltaSeconds);
+
                     break;
                 }
             }

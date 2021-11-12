@@ -43,6 +43,12 @@ namespace Content.Server.GameTicking
                     // timer time must be > tick length
                     Timer.Spawn(0, args.Session.JoinGame);
 
+                    if (session.ContentData() is { } data)
+                    {
+                        data.DisconnectTime = null;
+                        data.JoinTime = _gameTiming.RealTime;
+                    }
+
                     _chatManager.SendAdminAnnouncement(Loc.GetString("player-join-message", ("name", args.Session.Name)));
 
                     if (LobbyEnabled && _roundStartCountdownHasNotStartedYetDueToNoPlayers)
@@ -92,6 +98,8 @@ namespace Content.Server.GameTicking
                 case SessionStatus.Disconnected:
                 {
                     if (_playersInLobby.ContainsKey(session)) _playersInLobby.Remove(session);
+
+                    if (session.ContentData() is { } data) data.DisconnectTime = _gameTiming.RealTime;
 
                     _chatManager.SendAdminAnnouncement(Loc.GetString("player-leave-message", ("name", args.Session.Name)));
 

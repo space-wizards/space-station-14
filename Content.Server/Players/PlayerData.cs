@@ -1,3 +1,4 @@
+using System;
 using Robust.Server.Player;
 using Robust.Shared.Network;
 using Robust.Shared.ViewVariables;
@@ -28,6 +29,18 @@ namespace Content.Server.Players
         ///     so they should not regain admin if they reconnect.
         /// </summary>
         public bool ExplicitlyDeadminned { get; set; }
+
+        [ViewVariables]
+        public TimeSpan JoinTime { get; set; }
+
+        [ViewVariables]
+        public TimeSpan? DisconnectTime { get; set; }
+
+        [ViewVariables]
+        public int LivingPlaytime { get; set; }
+
+        [ViewVariables]
+        public int TotalPlaytime { get; set; }
 
         public void WipeMind()
         {

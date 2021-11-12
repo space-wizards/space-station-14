@@ -52,6 +52,7 @@ namespace Content.Server.IoC
             IoCManager.Register<INpcBehaviorManager, NpcBehaviorManager>();
             IoCManager.Register<IPlayerLocator, PlayerLocator>();
             IoCManager.Register<IAfkManager, AfkManager>();
+            IoCManager.Register<IPlaytimeManager, PlaytimeManager>();
         }
     }
 }
