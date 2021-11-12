@@ -86,7 +86,7 @@ namespace Content.Client.EscapeMenu.UI.Tabs
                 _keyControls.Add(function, control);
             }
 
-            void AddCheckBox(string checkBoxName, bool currentState = false, Action<BaseButton.ButtonToggledEventArgs>? callBackOnClick = null)
+            void AddCheckBox(string checkBoxName, bool currentState, Action<BaseButton.ButtonToggledEventArgs>? callBackOnClick)
             {
                 CheckBox newCheckBox = new CheckBox() { Text = Loc.GetString(checkBoxName)};
                 newCheckBox.Pressed = currentState;
