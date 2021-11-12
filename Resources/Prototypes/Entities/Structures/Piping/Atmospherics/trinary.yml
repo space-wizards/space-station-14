@@ -11,15 +11,15 @@
         inlet:
           !type:PipeNode
           nodeGroupID: Pipe
-          pipeDirection: West
+          pipeDirection: North
         filter:
           !type:PipeNode
           nodeGroupID: Pipe
-          pipeDirection: South
+          pipeDirection: West
         outlet:
           !type:PipeNode
           nodeGroupID: Pipe
-          pipeDirection: East
+          pipeDirection: South
 
 - type: entity
   parent: GasTrinaryBase
@@ -36,6 +36,7 @@
       layers:
         - sprite: Structures/Piping/Atmospherics/pipe.rsi
           state: pipeTJunction
+          rotation: -90 # fuck you!!! who cares
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: gasFilter
           map: [ "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer", "enum.GasFilterVisualizer+Layers.Enabled" ]
@@ -69,25 +70,34 @@
     layers:
     - sprite: Structures/Piping/Atmospherics/pipe.rsi
       state: pipeTJunction
+      rotation: -90
       map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
     - state: gasFilterF
       map: [ "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer", "enum.GasFilterVisualizer+Layers.Enabled" ]
   - type: Flippable
     mirrorEntity: GasFilter
+  - type: Appearance
+    visuals:
+    - type: SubFloorShowLayerVisualizer
+    - type: PipeConnectorVisualizer
+    - type: PipeColorVisualizer
+    - type: GasFilterVisualizer
+      disabledState: gasFilterF
+      enabledState: gasFilterFOn
   - type: NodeContainer
     nodes:
       inlet:
         !type:PipeNode
         nodeGroupID: Pipe
-        pipeDirection: East
+        pipeDirection: South
       filter:
         !type:PipeNode
         nodeGroupID: Pipe
-        pipeDirection: South
+        pipeDirection: West
       outlet:
         !type:PipeNode
         nodeGroupID: Pipe
-        pipeDirection: West
+        pipeDirection: North
 
 - type: entity
   parent: GasTrinaryBase
@@ -103,6 +113,7 @@
       layers:
         - sprite: Structures/Piping/Atmospherics/pipe.rsi
           state: pipeTJunction
+          rotation: -90
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: gasMixer
           map: [ "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer" ]
@@ -122,7 +133,7 @@
       mirrorEntity: GasMixerFlipped
 
 - type: entity
-  parent: GasFilter
+  parent: GasMixer
   id: GasMixerFlipped
   name: gas mixer
   suffix: Flipped
@@ -135,6 +146,7 @@
     layers:
     - sprite: Structures/Piping/Atmospherics/pipe.rsi
       state: pipeTJunction
+      rotation: -90
       map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
     - state: gasMixerF
       map: [ "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer", "enum.GasFilterVisualizer+Layers.Enabled" ]
@@ -145,12 +157,12 @@
       inlet:
         !type:PipeNode
         nodeGroupID: Pipe
-        pipeDirection: East
+        pipeDirection: South
       filter:
         !type:PipeNode
         nodeGroupID: Pipe
-        pipeDirection: South
+        pipeDirection: West
       outlet:
         !type:PipeNode
         nodeGroupID: Pipe
-        pipeDirection: West
+        pipeDirection: North
