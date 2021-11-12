@@ -6,6 +6,7 @@ humanoid-profile-editor-sex-label = Sex:
 humanoid-profile-editor-sex-male-button = Male
 humanoid-profile-editor-sex-female-button = Female
 humanoid-profile-editor-age-label = Age:
+humanoid-profile-editor-skin-color-label = Skin color:
 humanoid-profile-editor-pronouns-label = Pronouns:
 humanoid-profile-editor-pronouns-male-text = He / Him
 humanoid-profile-editor-pronouns-female-text = She / Her

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Content.Client.Cuffs.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.CharacterAppearance;
@@ -25,6 +26,19 @@ namespace Content.Client.CharacterAppearance.Systems
             SubscribeLocalEvent<HumanoidAppearanceBodyPartRemovedEvent>(BodyPartRemoved);
         }
 
+        private List<HumanoidVisualLayers> _bodyPartLayers = new List<HumanoidVisualLayers>
+        {
+            HumanoidVisualLayers.Chest,
+            HumanoidVisualLayers.Head,
+            HumanoidVisualLayers.Eyes,
+            HumanoidVisualLayers.RArm,
+            HumanoidVisualLayers.LArm,
+            HumanoidVisualLayers.RHand,
+            HumanoidVisualLayers.LHand,
+            HumanoidVisualLayers.RLeg,
+            HumanoidVisualLayers.LLeg,
+        };
+
         private void UpdateLooks(EntityUid uid, HumanoidAppearanceComponent component, ChangedHumanoidAppearanceEvent args)
         {
             if(!EntityManager.TryGetComponent(uid, out SpriteComponent? sprite))
@@ -46,6 +60,9 @@ namespace Content.Client.CharacterAppearance.Systems
                 component.CanColorHair ? component.Appearance.HairColor : Color.White);
             sprite.LayerSetColor(HumanoidVisualLayers.FacialHair,
                 component.CanColorFacialHair ? component.Appearance.FacialHairColor : Color.White);
+
+            foreach (var layer in _bodyPartLayers)
+                sprite.LayerSetColor(layer, component.Appearance.SkinColor);
 
             sprite.LayerSetColor(HumanoidVisualLayers.Eyes, component.Appearance.EyeColor);
 
