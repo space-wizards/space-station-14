@@ -37,17 +37,13 @@ namespace Content.Server.Medical.Components
                 return false;
             }
 
-            if (!eventArgs.Target.HasComponent<DamageableComponent>())
+            if (!eventArgs.Target.TryGetComponent<DamageableComponent>(out DamageableComponent? targetDamage))
             {
                 return true;
             }
-            else
+            else if (DamageContainerID is not null && !DamageContainerID.Equals(targetDamage.DamageContainerID))
             {
-                var target = eventArgs.Target.GetComponent<DamageableComponent>();
-                if (DamageContainerID != null && target.DamageContainerID != null && DamageContainerID != target.DamageContainerID)
-                {
-                    return true;
-                }
+                return true;
             }
 
             if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User.Uid))
