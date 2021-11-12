@@ -40,6 +40,12 @@ namespace Content.Client.Administration
             SubscribeNetworkEvent<PlayerInfoRemovalMessage>(OnPlayerInfoRemoval);
         }
 
+        public override void Shutdown()
+        {
+            base.Shutdown();
+            ShutdownOverlay();
+        }
+
         private void OnPlayerInfoRemoval(PlayerInfoRemovalMessage ev)
         {
             if (_playerList == null) _playerList = new();
