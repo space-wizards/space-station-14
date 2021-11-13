@@ -184,10 +184,6 @@
         reagents:
         - ReagentId: Milk
           Quantity: 30
-  - type: DrainableSolution
-    solution: udder
-  - type: ReagentTank
-    soluteion: udder
   - type: Udder
     reagentId: Milk
     targetSolution: udder
