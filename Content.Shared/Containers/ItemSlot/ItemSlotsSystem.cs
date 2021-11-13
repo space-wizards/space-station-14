@@ -113,7 +113,7 @@ namespace Content.Shared.Containers.ItemSlots
                     continue;
 
                 args.Handled = true;
-                TryEjectToHands(uid, slot, args.User.Uid);
+                TryEjectToHands(uid, slot, args.UserUid);
                 break;
             }
         }
@@ -132,12 +132,12 @@ namespace Content.Shared.Containers.ItemSlots
             if (args.Handled)
                 return;
 
-            if (!EntityManager.TryGetComponent(args.User.Uid, out SharedHandsComponent? hands))
+            if (!EntityManager.TryGetComponent(args.UserUid, out SharedHandsComponent? hands))
                 return;
 
             foreach (var slot in itemSlots.Slots.Values)
             {
-                if (!CanInsert(args.Used, slot, swap: true))
+                if (!CanInsert(args.UsedUid, slot, swap: true))
                     continue;
 
                 // Drop the held item onto the floor. Return if the user cannot drop.
@@ -172,7 +172,7 @@ namespace Content.Shared.Containers.ItemSlots
         ///     Check whether a given item can be inserted into a slot. Unless otherwise specified, this will return
         ///     false if the slot is already filled.
         /// </summary>
-        public bool CanInsert(IEntity item, ItemSlot slot, bool swap = false)
+        public bool CanInsert(EntityUid uid, ItemSlot slot, bool swap = false)
         {
             if (slot.Locked)
                 return false;
@@ -180,7 +180,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (!swap && slot.HasItem)
                 return false;
 
-            if (slot.Whitelist != null && !slot.Whitelist.IsValid(item))
+            if (slot.Whitelist != null && !slot.Whitelist.IsValid(uid))
                 return false;
 
             // We should also check ContainerSlot.CanInsert, but that prevents swapping interactions. Given that
@@ -210,7 +210,7 @@ namespace Content.Shared.Containers.ItemSlots
         /// <returns>False if failed to insert item</returns>
         public bool TryInsert(EntityUid uid, ItemSlot slot, IEntity item)
         {
-            if (!CanInsert(item, slot))
+            if (!CanInsert(item.Uid, slot))
                 return false;
 
             Insert(uid, slot, item);
@@ -289,7 +289,7 @@ namespace Content.Shared.Containers.ItemSlots
         private void AddEjectVerbs(EntityUid uid, ItemSlotsComponent itemSlots, GetAlternativeVerbsEvent args)
         {
             if (args.Hands == null || !args.CanAccess ||!args.CanInteract ||
-                !_actionBlockerSystem.CanPickup(args.User))
+                !_actionBlockerSystem.CanPickup(args.User.Uid))
             {
                 return;
             }
@@ -332,7 +332,7 @@ namespace Content.Shared.Containers.ItemSlots
                 return;
 
             // If there are any slots that eject on left-click, add a "Take <item>" verb.
-            if (_actionBlockerSystem.CanPickup(args.User))
+            if (_actionBlockerSystem.CanPickup(args.User.Uid))
             {
                 foreach (var slot in itemSlots.Slots.Values)
                 {
@@ -357,12 +357,12 @@ namespace Content.Shared.Containers.ItemSlots
             }
 
             // Next, add the insert-item verbs
-            if (args.Using == null || !_actionBlockerSystem.CanDrop(args.User))
+            if (args.Using == null || !_actionBlockerSystem.CanDrop(args.User.Uid))
                 return;
 
             foreach (var slot in itemSlots.Slots.Values)
             {
-                if (!CanInsert(args.Using, slot))
+                if (!CanInsert(args.Using.Uid, slot))
                     continue;
 
                 var verbSubject = slot.Name != string.Empty
