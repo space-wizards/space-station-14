@@ -13,6 +13,7 @@ using Content.Server.Ghost.Roles;
 using Content.Server.Inventory.Components;
 using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
+using Content.Server.Mind.Systems;
 using Content.Server.Players;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
@@ -42,6 +43,7 @@ namespace Content.Server.Administration
         [Dependency] private readonly EuiManager _euiManager = default!;
         [Dependency] private readonly ExplosionSystem _explosions = default!;
         [Dependency] private readonly GhostRoleSystem _ghostRoleSystem = default!;
+        [Dependency] private readonly MindSystem _mindSys = default!;
 
         private readonly Dictionary<IPlayerSession, EditSolutionsEui> _openSolutionUis = new();
 
@@ -93,7 +95,12 @@ namespace Content.Server.Administration
                 // TODO VERB ICON control mob icon
                 verb.Act = () =>
                 {
-                    player.ContentData()?.Mind?.TransferTo(args.Target, ghostCheckOverride: true);
+                    var mind = player.ContentData()?.Mind;
+                    if (mind != null)
+                    {
+                        _mindSys.TransferTo(mind, args.Target.Uid, ghostCheckOverride: true);
+                    }
+
                 };
                 args.Verbs.Add(verb);
             }

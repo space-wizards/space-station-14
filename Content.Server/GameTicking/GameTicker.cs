@@ -87,5 +87,6 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly IWatchdogApi _watchdogApi = default!;
         [Dependency] private readonly IReflectionManager _reflectionManager = default!;
         [Dependency] private readonly RolesSystem _roleSys = default!;
+        [Dependency] private readonly MindSystem _mindSys = default!;
     }
 }

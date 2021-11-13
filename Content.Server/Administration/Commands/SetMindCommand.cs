@@ -1,4 +1,5 @@
 using Content.Server.Mind.Components;
+using Content.Server.Mind.Systems;
 using Content.Server.Players;
 using Content.Shared.Administration;
 using Robust.Server.Player;
@@ -73,7 +74,9 @@ namespace Content.Server.Administration.Commands
                 };
                 playerCData.Mind = mind;
             }
-            mind.TransferTo(target);
+
+            var mindSys = EntitySystem.Get<MindSystem>();
+            mindSys.TransferTo(mind, target.Uid);
         }
     }
 }

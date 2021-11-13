@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Mind;
+using Content.Server.Mind.Systems;
 using Content.Server.Players;
 using Content.Shared.Coordinates;
 using NUnit.Framework;
@@ -30,6 +31,7 @@ namespace Content.IntegrationTests.Tests
 
                 var mapMan = IoCManager.Resolve<IMapManager>();
                 var entMgr = IoCManager.Resolve<IServerEntityManager>();
+                var mindSys = EntitySystem.Get<MindSystem>();
 
                 mapMan.CreateNewMapEntity(MapId.Nullspace);
 
@@ -39,7 +41,7 @@ namespace Content.IntegrationTests.Tests
                 mind = new Mind(player.UserId);
                 player.ContentData().Mind = mind;
 
-                mind.TransferTo(playerEnt);
+                mindSys.TransferTo(mind, playerEnt.Uid);
                 mind.Visit(visitEnt);
 
                 Assert.That(player.AttachedEntity, Is.EqualTo(visitEnt));
@@ -75,6 +77,7 @@ namespace Content.IntegrationTests.Tests
 
                 var mapMan = IoCManager.Resolve<IMapManager>();
                 var entMgr = IoCManager.Resolve<IServerEntityManager>();
+                var mindSys = EntitySystem.Get<MindSystem>();
 
                 mapMan.CreateNewMapEntity(MapId.Nullspace);
 
@@ -83,7 +86,7 @@ namespace Content.IntegrationTests.Tests
                 mind = new Mind(player.UserId);
                 player.ContentData().Mind = mind;
 
-                mind.TransferTo(playerEnt);
+                mindSys.TransferTo(mind, playerEnt.Uid);
 
                 Assert.That(mind.CurrentEntity, Is.EqualTo(playerEnt));
             });
@@ -117,7 +120,7 @@ namespace Content.IntegrationTests.Tests
             server.Assert(() =>
             {
                 var player = IoCManager.Resolve<IPlayerManager>().GetAllPlayers().Single();
-
+                var mindSys = EntitySystem.Get<MindSystem>();
                 var mapMan = IoCManager.Resolve<IMapManager>();
 
                 map = mapMan.CreateMap();
@@ -132,7 +135,7 @@ namespace Content.IntegrationTests.Tests
                 mind = new Mind(player.UserId);
                 player.ContentData().Mind = mind;
 
-                mind.TransferTo(playerEnt);
+                mindSys.TransferTo(mind, playerEnt.Uid);
 
                 Assert.That(mind.CurrentEntity, Is.EqualTo(playerEnt));
             });

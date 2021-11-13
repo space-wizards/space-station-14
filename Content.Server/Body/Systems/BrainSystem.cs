@@ -2,14 +2,18 @@
 using Content.Server.Ghost;
 using Content.Server.Ghost.Components;
 using Content.Server.Mind.Components;
+using Content.Server.Mind.Systems;
 using Content.Shared.Body.Events;
 using Content.Shared.Movement.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Body.Systems
 {
     public class BrainSystem : EntitySystem
     {
+        [Dependency] private readonly MindSystem _mindSys = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -43,7 +47,10 @@ namespace Content.Server.Body.Systems
             if (!EntityManager.HasComponent<IMoverComponent>(newEntity))
                 EntityManager.AddComponent<SharedDummyInputMoverComponent>(newEntity);
 
-            oldMind.Mind?.TransferTo(EntityManager.GetEntity(newEntity));
+            if (oldMind.Mind != null)
+            {
+                _mindSys.TransferTo(oldMind.Mind, newEntity);
+            }
         }
     }
 }

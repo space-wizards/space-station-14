@@ -1,5 +1,6 @@
 using System;
 using Content.Server.Mind.Components;
+using Content.Server.Mind.Systems;
 using Content.Server.Players;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
@@ -31,7 +32,8 @@ namespace Content.Server.Ghost.Roles.Components
 
             DebugTools.AssertNotNull(sessionMind);
 
-            sessionMind!.TransferTo(Owner);
+            var mindSys = EntitySystem.Get<MindSystem>();
+            mindSys.TransferTo(sessionMind!, OwnerUid);
 
             EntitySystem.Get<GhostRoleSystem>().UnregisterGhostRole(this);
 

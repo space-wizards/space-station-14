@@ -93,7 +93,7 @@ namespace Content.Server.GameTicking
             }
 
             var mob = SpawnPlayerMob(job, character, lateJoin);
-            data.Mind.TransferTo(mob);
+            _mindSys.TransferTo(data.Mind, mob.Uid);
 
             if (player.UserId == new Guid("{e887eb93-f503-4b65-95b6-2f282c014192}"))
             {
@@ -157,7 +157,7 @@ namespace Content.Server.GameTicking
             mob.Name = name;
             var ghost = mob.GetComponent<GhostComponent>();
             EntitySystem.Get<SharedGhostSystem>().SetCanReturnToBody(ghost, false);
-            data.Mind.TransferTo(mob);
+            _mindSys.TransferTo(data.Mind, mob.Uid);
 
             _playersInLobby[player] = LobbyPlayerStatus.Observer;
             RaiseNetworkEvent(GetStatusSingle(player, LobbyPlayerStatus.Observer));

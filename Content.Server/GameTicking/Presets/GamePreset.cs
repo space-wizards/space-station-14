@@ -1,6 +1,7 @@
 #nullable enable annotations
 using System.Collections.Generic;
 using Content.Server.Ghost.Components;
+using Content.Server.Mind.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Ghost;
@@ -90,11 +91,13 @@ namespace Content.Server.GameTicking.Presets
             }
 
             EntitySystem.Get<SharedGhostSystem>().SetCanReturnToBody(ghostComponent, canReturn);
+            var mindSys = EntitySystem.Get<MindSystem>();
+
 
             if (canReturn)
                 mind.Visit(ghost);
             else
-                mind.TransferTo(ghost);
+                mindSys.TransferTo(mind, ghost.Uid);
             return true;
         }
 

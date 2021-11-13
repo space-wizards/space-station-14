@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Cloning.Components;
 using Content.Server.Mind.Components;
+using Content.Server.Mind.Systems;
 using Content.Server.Power.Components;
 using Content.Shared.GameTicking;
 using Content.Shared.Interaction;
@@ -18,6 +19,8 @@ namespace Content.Server.Cloning
     internal sealed class CloningSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private readonly MindSystem _mindSys = default!;
+
         public readonly Dictionary<Mind.Mind, int> MindToId = new();
         public readonly Dictionary<int, ClonerDNAEntry> IdToDNA = new();
         private int _nextAllocatedMindId = 0;
@@ -40,7 +43,7 @@ namespace Content.Server.Cloning
                 mindComp.Mind != null)
                 return;
 
-            mind.TransferTo(entity, ghostCheckOverride: true);
+            _mindSys.TransferTo(mind, entity.Uid, ghostCheckOverride: true);
             mind.UnVisit();
             ClonesWaitingForMind.Remove(mind);
         }

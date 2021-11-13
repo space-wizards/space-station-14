@@ -1,6 +1,7 @@
 ﻿using System;
 using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
+using Content.Server.Mind.Systems;
 using Content.Server.Players;
 using JetBrains.Annotations;
 using Robust.Server.Player;
@@ -55,7 +56,8 @@ namespace Content.Server.Ghost.Roles.Components
 
             DebugTools.AssertNotNull(mind);
 
-            mind!.TransferTo(mob);
+            var mindSys = EntitySystem.Get<MindSystem>();
+            mindSys.TransferTo(mind!, mob.Uid);
 
             if (++_currentTakeovers < _availableTakeovers)
                 return true;

@@ -1,4 +1,6 @@
+using Content.Server.Mind.Systems;
 using Robust.Server.Player;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Network;
 using Robust.Shared.ViewVariables;
 
@@ -31,8 +33,12 @@ namespace Content.Server.Players
 
         public void WipeMind()
         {
-            Mind?.TransferTo(null);
-            Mind?.RemoveOwningPlayer();
+            var mindSys = EntitySystem.Get<MindSystem>();
+            if (Mind != null)
+            {
+                mindSys.TransferTo(Mind, null);
+                Mind.RemoveOwningPlayer();
+            }
             Mind = null;
         }
 

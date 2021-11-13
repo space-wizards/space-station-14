@@ -1,12 +1,15 @@
-﻿using Content.Server.GameTicking;
+﻿using System;
+using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
 using Content.Server.Mind.Components;
 using Content.Shared.Examine;
 using Content.Shared.Ghost;
 using Content.Shared.MobState.Components;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
@@ -67,7 +70,7 @@ namespace Content.Server.Mind.Systems
                 {
                     _ghosts.SetCanReturnToBody(ghost, false);
                 }
-                component.Mind.TransferTo(visiting);
+                TransferTo(component.Mind, visiting.Uid);
             }
             else if (component.GhostOnShutdown)
             {
@@ -93,18 +96,85 @@ namespace Content.Server.Mind.Systems
                     if (component.Mind != null)
                     {
                         ghost.Name = component.Mind.CharacterName ?? string.Empty;
-                        component.Mind.TransferTo(ghost);
+                        TransferTo(component.Mind, ghost.Uid);
                     }
                 });
             }
         }
 
         /// <summary>
+        ///     Transfer this mind's control over to a new entity.
+        /// </summary>
+        /// <param name="mind">Mind that need to be transferred</param>
+        /// <param name="entity">
+        ///     The entity to control.
+        ///     Can be null, in which case it will simply detach the mind from any entity.
+        /// </param>
+        /// <param name="ghostCheckOverride">
+        ///     If true, skips ghost check for Visiting Entity
+        /// </param>
+        /// <exception cref="ArgumentException">
+        ///     Thrown if <paramref name="entity"/> is already owned by another mind.
+        /// </exception>
+        public void TransferTo(Mind mind, EntityUid? entity, bool ghostCheckOverride = false)
+        {
+            MindComponent? component = null;
+            var alreadyAttached = false;
+
+            if (entity != null)
+            {
+                if (!EntityManager.TryGetComponent(entity.Value, out component))
+                {
+                    component = EntityManager.AddComponent<MindComponent>(entity.Value);
+                }
+                else if (component.HasMind)
+                {
+                    _ticker.OnGhostAttempt(component.Mind!, false);
+                }
+
+                if (EntityManager.TryGetComponent(entity.Value, out ActorComponent? actor))
+                {
+                    // Happens when transferring to your currently visited entity.
+                    if (actor.PlayerSession != mind.Session)
+                    {
+                        throw new ArgumentException("Visit target already has a session.", nameof(entity));
+                    }
+
+                    alreadyAttached = true;
+                }
+            }
+
+
+            if (mind.OwnedComponent != null)
+                InternalEjectMind(mind.OwnedComponent.Owner.Uid, mind.OwnedComponent);
+
+            mind.OwnedComponent = component;
+            if (mind.OwnedComponent != null)
+                InternalAssignMind(mind.OwnedComponent.Owner.Uid, mind, mind.OwnedComponent);
+
+            if (mind.IsVisitingEntity
+                && (ghostCheckOverride // to force mind transfer, for example from ControlMobVerb
+                    || !mind.VisitingEntity!.TryGetComponent(out GhostComponent? ghostComponent) // visiting entity is not a Ghost
+                    || !ghostComponent.CanReturnToBody))  // it is a ghost, but cannot return to body anyway, so it's okay
+            {
+                mind.VisitingEntity = null;
+            }
+
+            // Player is CURRENTLY connected.
+            if (mind.Session != null && !alreadyAttached && mind.VisitingEntity == null)
+            {
+                var ent = entity != null ? EntityManager.GetEntity(entity.Value) : null;
+                mind.Session.AttachToEntity(ent);
+                Logger.Info($"Session {mind.Session.Name} transferred to entity {entity}.");
+            }
+        }
+
+        /// <summary>
         ///     Don't call this unless you know what the hell you're doing.
-        ///     Use <see cref="Mind.TransferTo"/> instead.
+        ///     Use <see cref="TransferTo"/> instead.
         ///     If that doesn't cover it, make something to cover it.
         /// </summary>
-        public void InternalAssignMind(EntityUid uid, Mind value, MindComponent? component = null)
+        private void InternalAssignMind(EntityUid uid, Mind value, MindComponent? component = null)
         {
             if (!Resolve(uid, ref component))
                 return;
@@ -115,10 +185,10 @@ namespace Content.Server.Mind.Systems
 
         /// <summary>
         ///     Don't call this unless you know what the hell you're doing.
-        ///     Use <see cref="Mind.TransferTo"/> instead.
+        ///     Use <see cref="TransferTo"/> instead.
         ///     If that doesn't cover it, make something to cover it.
         /// </summary>
-        public void InternalEjectMind(EntityUid uid, MindComponent? component = null)
+        private void InternalEjectMind(EntityUid uid, MindComponent? component = null)
         {
             // we don't log failed resolve, because entity
             // could be already deleted. It's ok

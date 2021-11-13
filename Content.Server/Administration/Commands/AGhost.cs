@@ -1,5 +1,6 @@
 ﻿using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
+using Content.Server.Mind.Systems;
 using Content.Server.Players;
 using Content.Shared.Administration;
 using Content.Shared.Ghost;
@@ -58,7 +59,9 @@ namespace Content.Server.Administration.Commands
             else
             {
                 ghost.Name = player.Name;
-                mind.TransferTo(ghost);
+
+                var mindSys = EntitySystem.Get<MindSystem>();
+                mindSys.TransferTo(mind, ghost.Uid);
             }
 
             var comp = ghost.GetComponent<GhostComponent>();
