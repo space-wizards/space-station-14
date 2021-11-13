@@ -1,9 +1,4 @@
 Entries:
-- author: Swept
-  changes:
-  - {message: Added icons for a bunch of verbs, type: Add}
-  id: 84
-  time: '2021-03-14T13:23:32.0000000+00:00'
 - author: Macoron
   changes:
   - {message: Fix nonexistent bulbs in built wall light, type: Fix}
@@ -2830,3 +2825,9 @@ Entries:
   - {message: The solars on Packed Station are now safer., type: Tweak}
   id: 583
   time: '2021-11-13T21:41:21.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: It is no longer possible to pull your chair while you're sitting on
+      it. They aren't motorized., type: Fix}
+  id: 584
+  time: '2021-11-13T21:43:37.0000000+00:00'
