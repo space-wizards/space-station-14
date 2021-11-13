@@ -273,12 +273,12 @@ namespace Content.Shared.Containers.ItemSlots
         ///     False if the id is not valid, the item slot is locked, or it has no item inserted. True otherwise, even
         ///     if the user has no hands.
         /// </returns>
-        public bool TryEjectToHands(EntityUid uid, ItemSlot slot, EntityUid user)
+        public bool TryEjectToHands(EntityUid uid, ItemSlot slot, EntityUid? user)
         {
             if (!TryEject(uid, slot, out var item))
                 return false;
 
-            if (EntityManager.TryGetComponent(user, out SharedHandsComponent? hands))
+            if (user != null && EntityManager.TryGetComponent(user.Value, out SharedHandsComponent? hands))
                 hands.TryPutInAnyHand(item);
 
             return true;
