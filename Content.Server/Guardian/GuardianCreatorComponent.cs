@@ -19,12 +19,12 @@ namespace Content.Server.Guardian
         public override string Name => "GuardianCreator";
 
         /// <summary>
-        /// Counts as spent upon exhausting uses
+        /// Counts as spent upon exhausting the injection
         /// </summary>
         public bool Used = false;
 
         /// <summary>
-        /// The uid of the guardian entity
+        /// The prototype of the guardian entity which will be created
         /// </summary>
         [ViewVariables] [DataField("GuardianID")] public string GuardianType { get; set; } = default!;
     }

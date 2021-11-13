@@ -5,11 +5,9 @@ using Content.Shared.Actions.Behaviors.Item;
 using Content.Shared.Cooldown;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
-using System;
 
 namespace Content.Server.Actions.Actions
 {

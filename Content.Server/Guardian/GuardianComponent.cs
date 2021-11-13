@@ -1,10 +1,4 @@
-using Content.Server.Construction.Components;
-using Content.Server.Power.Components;
-using Content.Shared.Computer;
-using Robust.Server.GameObjects;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Log;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -26,12 +20,12 @@ namespace Content.Server.Guardian
         /// <summary>
         /// Percentage of damage reflected from the guardian to the host, use f
         /// </summary>
-        [ViewVariables] [DataField("damageShare")] public float DamagePercent { get; set; } = default!;
+        [ViewVariables] [DataField("damageShare")] public float DamagePercent { get; set; }
 
         /// <summary>
         /// Maximum distance the guardian can travel before it's forced to recall, use YAML to set
         /// </summary>
-        [ViewVariables] [DataField("distanceAllowed")] public float DistanceAllowed { get; set; } = default!;
+        [ViewVariables] [DataField("distanceAllowed")] public float DistanceAllowed { get; set; }
 
         /// <summary>
         /// If the guardian is currently manifested

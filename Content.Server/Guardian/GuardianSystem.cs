@@ -94,15 +94,17 @@ namespace Content.Server.Guardian
                         var guardian = EntityManager.SpawnEntity(component.GuardianType, hostcomp.Owner.Transform.Coordinates);
                         hostcomp.GuardianContainer.Insert(guardian);
                         hostcomp.Hostedguardian = guardian.Uid;
-                        //Ensures the guardian component on the supposed guardian entity and fills out it's synced parametres
-                        var guardiancomp = guardian.EnsureComponent<GuardianComponent>();
-                        guardiancomp.Host = args.User.Uid;
-                        //Grant the user the recall action and notify them
-                        action.Grant(ActionType.ManifestGuardian);
-                        SoundSystem.Play(Filter.Entities(uid), "/Audio/Effects/guardian_inject.ogg", uid);
-                        args.User.PopupMessage(Loc.GetString("guardian-created"));
-                        //Exhaust the activator
-                        component.Used = true;
+                        //Takes the guardian component on the supposed guardian entity and fills out it's synced parametres
+                        if (guardian.TryGetComponent<GuardianComponent>(out GuardianComponent? guardiancomp))
+                        {
+                            guardiancomp.Host = args.User.Uid;
+                            //Grant the user the recall action and notify them
+                            action.Grant(ActionType.ManifestGuardian);
+                            SoundSystem.Play(Filter.Entities(uid), "/Audio/Effects/guardian_inject.ogg", uid);
+                            args.User.PopupMessage(Loc.GetString("guardian-created"));
+                            //Exhaust the activator
+                            component.Used = true;
+                        }                   
                     }
                     else
                     {
