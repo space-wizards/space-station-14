@@ -1,14 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Fixes structure instruments (like the piano) not playing at all., type: Fix}
-  id: 76
-  time: '2021-03-13T01:47:41.227978+00:00'
-- author: ike709
-  changes:
-  - {message: Significantly reduced the bounciness of thrown items., type: Tweak}
-  id: 77
-  time: '2021-03-13T02:10:55.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix pulling held items, type: Fix}
@@ -2824,3 +2814,16 @@ Entries:
   - {message: Added a beta version of Packed Station!, type: Add}
   id: 575
   time: '2021-11-12T06:26:05.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: 'Nanotrasen has extended its outreach, and has finally sent the person
+      who decided to hire people of exactly one skin color out an airlock. Expect
+      more variety in the co-workers you meet.', type: Add}
+  id: 576
+  time: '2021-11-12T09:55:50.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Solar panels and the related systems will no longer hold state between
+      rounds., type: Fix}
+  id: 577
+  time: '2021-11-12T19:00:39.0000000+00:00'
