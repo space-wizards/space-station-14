@@ -1,3 +1,4 @@
+using System;
 using Content.Shared.Solar;
 using Content.Server.Solar.EntitySystems;
 using Content.Server.GameObjects.Components;
@@ -5,6 +6,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.Maths;
 
 namespace Content.Server.Solar.Components
 {
@@ -42,7 +44,9 @@ namespace Content.Server.Solar.Components
                     }
                     if (double.IsFinite(msg.AngularVelocity))
                     {
-                        _powerSolarSystem.TargetPanelVelocity = msg.AngularVelocity.Reduced();
+                        var degrees = msg.AngularVelocity.Degrees;
+                        degrees = Math.Clamp(degrees, -PowerSolarSystem.MaxPanelVelocityDegrees, PowerSolarSystem.MaxPanelVelocityDegrees);
+                        _powerSolarSystem.TargetPanelVelocity = Angle.FromDegrees(degrees);
                     }
                     break;
             }

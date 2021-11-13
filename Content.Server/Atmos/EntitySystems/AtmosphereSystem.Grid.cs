@@ -217,113 +217,6 @@ namespace Content.Server.Atmos.EntitySystems
 
         #endregion
 
-        #region Grid Revalidate
-
-        /// <summary>
-        ///     Revalidates all invalid coordinates in a grid atmosphere.
-        /// </summary>
-        /// <param name="mapGrid">The grid in question.</param>
-        /// <param name="gridAtmosphere">The grid atmosphere in question.</param>
-        /// <returns>Whether the process succeeded or got paused due to time constrains.</returns>
-        private bool GridRevalidate(IMapGrid mapGrid, GridAtmosphereComponent gridAtmosphere)
-        {
-            var volume = GetVolumeForTiles(mapGrid, 1);
-
-            if (!gridAtmosphere.RevalidatePaused)
-                gridAtmosphere.CurrentRunInvalidatedCoordinates = new Queue<Vector2i>(gridAtmosphere.InvalidatedCoords);
-
-            gridAtmosphere.InvalidatedCoords.Clear();
-
-            var number = 0;
-            while (gridAtmosphere.CurrentRunInvalidatedCoordinates.TryDequeue(out var indices))
-            {
-                var tile = GetTileAtmosphere(gridAtmosphere, indices);
-
-                if (tile == null)
-                {
-                    tile = new TileAtmosphere(mapGrid.Index, indices, new GasMixture(volume){Temperature = Atmospherics.T20C});
-                    gridAtmosphere.Tiles[indices] = tile;
-                }
-
-                var isAirBlocked = IsTileAirBlocked(mapGrid, indices);
-
-                tile.BlockedAirflow = GetBlockedDirections(mapGrid, indices);
-                UpdateAdjacent(mapGrid, gridAtmosphere, tile);
-
-                if (IsTileSpace(mapGrid, indices) && !isAirBlocked)
-                {
-                    tile.Air = new GasMixture(volume);
-                    tile.Air.MarkImmutable();
-                    gridAtmosphere.Tiles[indices] = tile;
-
-                } else if (isAirBlocked)
-                {
-                    var nullAir = false;
-
-                    foreach (var airtight in GetObstructingComponents(mapGrid, indices))
-                    {
-                        if (!airtight.NoAirWhenFullyAirBlocked)
-                            continue;
-
-                        nullAir = true;
-                        break;
-                    }
-
-                    if (nullAir)
-                    {
-                        tile.Air = null;
-                        tile.Hotspot = new Hotspot();
-                    }
-                }
-                else
-                {
-                    if (tile.Air == null && NeedsVacuumFixing(mapGrid, indices))
-                    {
-                        FixVacuum(gridAtmosphere, tile.GridIndices);
-                    }
-
-                    // Tile used to be space, but isn't anymore.
-                    if (tile.Air?.Immutable ?? false)
-                    {
-                        tile.Air = null;
-                    }
-
-                    tile.Air ??= new GasMixture(volume){Temperature = Atmospherics.T20C};
-                }
-
-                // By removing the active tile, we effectively remove its excited group, if any.
-                RemoveActiveTile(gridAtmosphere, tile);
-
-                // Then we activate the tile again.
-                AddActiveTile(gridAtmosphere, tile);
-
-                // TODO ATMOS: Query all the contents of this tile (like walls) and calculate the correct thermal conductivity
-                tile.ThermalConductivity = tile.Tile?.Tile.GetContentTileDefinition().ThermalConductivity ?? 0.5f;
-                InvalidateVisuals(mapGrid.Index, indices);
-
-                for (var i = 0; i < Atmospherics.Directions; i++)
-                {
-                    var direction = (AtmosDirection) (1 << i);
-                    var otherIndices = indices.Offset(direction);
-                    var otherTile = GetTileAtmosphere(gridAtmosphere, otherIndices);
-                    if (otherTile != null)
-                        AddActiveTile(gridAtmosphere, otherTile);
-                }
-
-                if (number++ < InvalidCoordinatesLagCheckIterations) continue;
-                number = 0;
-                // Process the rest next time.
-                if (_simulationStopwatch.Elapsed.TotalMilliseconds >= AtmosMaxProcessTime)
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        #endregion
-
         #region Grid Repopulate
 
         /// <summary>
@@ -1095,6 +988,7 @@ namespace Content.Server.Atmos.EntitySystems
         private void UpdateAdjacent(IMapGrid mapGrid, GridAtmosphereComponent gridAtmosphere, TileAtmosphere tileAtmosphere)
         {
             tileAtmosphere.AdjacentBits = AtmosDirection.Invalid;
+            tileAtmosphere.BlockedAirflow = GetBlockedDirections(mapGrid, tileAtmosphere.GridIndices);
 
             for (var i = 0; i < Atmospherics.Directions; i++)
             {
@@ -1113,6 +1007,9 @@ namespace Content.Server.Atmos.EntitySystems
                     tileAtmosphere.AdjacentBits |= direction;
                 }
             }
+
+            if (!tileAtmosphere.AdjacentBits.IsFlagSet(tileAtmosphere.MonstermosInfo.CurrentTransferDirection))
+                tileAtmosphere.MonstermosInfo.CurrentTransferDirection = AtmosDirection.Invalid;
         }
 
         /// <summary>
@@ -1178,6 +1075,9 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 tile.AdjacentBits &= ~direction;
             }
+
+            if (!tile.AdjacentBits.IsFlagSet(tile.MonstermosInfo.CurrentTransferDirection))
+                tile.MonstermosInfo.CurrentTransferDirection = AtmosDirection.Invalid;
         }
 
         #endregion

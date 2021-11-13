@@ -11,7 +11,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Doors
 {
-    [NetworkedComponent()]
+    [NetworkedComponent]
     public abstract class SharedDoorComponent : Component
     {
         public override string Name => "Door";
@@ -176,5 +176,15 @@ namespace Content.Shared.Doors
             CurrentlyCrushing = currentlyCrushing;
             CurTime = curTime;
         }
+    }
+
+    public sealed class DoorOpenAttemptEvent : CancellableEntityEventArgs
+    {
+
+    }
+
+    public sealed class DoorCloseAttemptEvent : CancellableEntityEventArgs
+    {
+
     }
 }

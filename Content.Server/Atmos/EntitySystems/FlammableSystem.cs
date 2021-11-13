@@ -4,6 +4,7 @@ using Content.Server.Atmos.Components;
 using Content.Server.Stunnable;
 using Content.Server.Stunnable.Components;
 using Content.Server.Temperature.Components;
+using Content.Server.Temperature.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
@@ -27,6 +28,7 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly StunSystem _stunSystem = default!;
+        [Dependency] private readonly TemperatureSystem _temperatureSystem = default!;
 
         private const float MinimumFireStacks = -10f;
         private const float MaximumFireStacks = 20f;
@@ -158,7 +160,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!Resolve(uid, ref flammable, ref alerts))
                 return;
 
-            if (!flammable.OnFire || !_actionBlockerSystem.CanInteract(flammable.Owner) || flammable.Resisting)
+            if (!flammable.OnFire || !_actionBlockerSystem.CanInteract(flammable.Owner.Uid) || flammable.Resisting)
                 return;
 
             flammable.Resisting = true;
@@ -185,7 +187,7 @@ namespace Content.Server.Atmos.EntitySystems
             _timer -= UpdateTime;
 
             // TODO: This needs cleanup to take off the crust from TemperatureComponent and shit.
-            foreach (var (flammable, physics, transform) in EntityManager.EntityQuery<FlammableComponent, IPhysBody, ITransformComponent>())
+            foreach (var (flammable, physics, transform) in EntityManager.EntityQuery<FlammableComponent, IPhysBody, TransformComponent>())
             {
                 var uid = flammable.Owner.Uid;
 
@@ -207,14 +209,10 @@ namespace Content.Server.Atmos.EntitySystems
 
                 if (flammable.FireStacks > 0)
                 {
-                    if (flammable.Owner.TryGetComponent(out TemperatureComponent? temp))
-                    {
-                        temp.ReceiveHeat(200 * flammable.FireStacks);
-                    }
-
+                    _temperatureSystem.ReceiveHeat(uid, 200 * flammable.FireStacks);
                     // TODO ATMOS Fire resistance from armor
                     var damageScale = Math.Min((int) (flammable.FireStacks * 2.5f), 10);
-                    _damageableSystem.TryChangeDamage(flammable.Owner.Uid, flammable.Damage * damageScale);
+                    _damageableSystem.TryChangeDamage(uid, flammable.Damage * damageScale);
 
                     AdjustFireStacks(uid, -0.1f * (flammable.Resisting ? 10f : 1f), flammable);
                 }

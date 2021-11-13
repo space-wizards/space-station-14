@@ -174,29 +174,43 @@ namespace Content.Server.GameTicking.Presets
 
         public override string GetRoundEndDescription()
         {
-            var result = Loc.GetString(
-                "traitor-round-end-result",
-                ("traitorCount", _traitors.Count)
-            );
+            var result = Loc.GetString("traitor-round-end-result", ("traitorCount", _traitors.Count));
 
             foreach (var traitor in _traitors)
             {
-                if (traitor.Mind.TryGetSession(out var session))
-                {
-                    result += "\n" + Loc.GetString("traitor-user-was-a-traitor", ("user", session.Name));
-                }
+                var name = traitor.Mind.CharacterName;
+                traitor.Mind.TryGetSession(out var session);
+                var username = session?.Name;
 
                 var objectives = traitor.Mind.AllObjectives.ToArray();
                 if (objectives.Length == 0)
                 {
-                    result += ".\n";
+                    if (username != null)
+                    {
+                        if (name == null)
+                            result += "\n" + Loc.GetString("traitor-user-was-a-traitor", ("user", username));
+                        else
+                            result += "\n" + Loc.GetString("traitor-user-was-a-traitor-named", ("user", username), ("name", name));
+                    }
+                    else if (name != null)
+                        result += "\n" + Loc.GetString("traitor-was-a-traitor-named", ("name", name));
+
                     continue;
                 }
 
-                result += Loc.GetString("traitor-objective-list-start");
+                if (username != null)
+                {
+                    if (name == null)
+                        result += "\n" + Loc.GetString("traitor-user-was-a-traitor-with-objectives", ("user", username));
+                    else
+                        result += "\n" + Loc.GetString("traitor-user-was-a-traitor-with-objectives-named", ("user", username), ("name", name));
+                }
+                else if (name != null)
+                    result += "\n" + Loc.GetString("traitor-was-a-traitor-with-objectives-named", ("name", name));
+
                 foreach (var objectiveGroup in objectives.GroupBy(o => o.Prototype.Issuer))
                 {
-                    result += $"\n[color=#87cefa]{objectiveGroup.Key}[/color]";
+                    result += "\n" + Loc.GetString($"preset-traitor-objective-issuer-{objectiveGroup.Key}");
 
                     foreach (var objective in objectiveGroup)
                     {

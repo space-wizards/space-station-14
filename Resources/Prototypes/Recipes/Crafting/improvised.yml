@@ -1,0 +1,36 @@
+﻿- type: construction
+  name: baseball bat
+  id: bat
+  graph: WoodenBat
+  startNode: start
+  targetNode: bat
+  category: Weapons
+  description: A robust baseball bat.
+  icon:
+    sprite: Objects/Weapons/Melee/baseball_bat.rsi
+    state: icon
+  objectType: Item
+
+- type: construction
+  name: makeshift handcuffs
+  id: makeshifthandcuffs
+  graph: makeshifthandcuffs
+  startNode: start
+  targetNode: cuffscable
+  category: Utility
+  description: "Homemade handcuffs crafted from spare cables."
+  icon: Objects/Misc/cablecuffs.rsi/cuff.png
+  objectType: Item
+
+- type: construction
+  name: improvised pneumatic cannon
+  id: pneumaticcannon
+  graph: PneumaticCannon
+  startNode: start
+  targetNode: cannon
+  category: Weapons
+  objectType: Item
+  description: This son of a gun can fire anything that fits in it using just a little gas.
+  icon:
+    sprite: Objects/Weapons/Guns/Cannons/pneumatic_cannon.rsi
+    state: pneumaticCannon

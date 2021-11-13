@@ -19,8 +19,8 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Hands.Components
 {
-    [NetworkedComponent()]
-    public abstract class SharedHandsComponent : Component, ISharedHandsComponent
+    [NetworkedComponent]
+    public abstract class SharedHandsComponent : Component
     {
         public sealed override string Name => "Hands";
 
@@ -91,9 +91,32 @@ namespace Content.Shared.Hands.Components
         public virtual void HandsModified()
         {
             // todo axe all this for ECS.
+            // todo burn it all down.
+            UpdateHandVisualizer();
             Dirty();
 
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new HandsModifiedMessage { Hands = this });
+        }
+
+        public void UpdateHandVisualizer()
+        {
+            if (!Owner.TryGetComponent(out SharedAppearanceComponent? appearance))
+                return;
+
+            var hands = new List<HandVisualState>();
+            foreach (var hand in Hands)
+            {
+                if (hand.HeldEntity == null)
+                    continue;
+
+                if (!hand.HeldEntity.TryGetComponent(out SharedItemComponent? item) || item.RsiPath == null)
+                    continue;
+
+                var handState = new HandVisualState(item.RsiPath, item.EquippedPrefix, hand.Location, item.Color);
+                hands.Add(handState);
+            }
+
+            appearance.SetData(HandsVisuals.VisualState, new HandsVisualState(hands));
         }
 
         public void AddHand(string handName, HandLocation handLocation)
@@ -101,13 +124,12 @@ namespace Content.Shared.Hands.Components
             if (HasHand(handName))
                 return;
 
-            var container = ContainerHelpers.CreateContainer<ContainerSlot>(Owner, handName);
+            var container = Owner.CreateContainer<ContainerSlot>(handName);
             container.OccludesLight = false;
 
             Hands.Add(new Hand(handName, handLocation, container));
 
-            if (ActiveHand == null)
-                ActiveHand = handName;
+            ActiveHand ??= handName;
 
             HandCountChanged();
 
@@ -330,7 +352,7 @@ namespace Content.Shared.Hands.Components
         }
 
         /// <summary>
-        ///     Attempts to move a held item from a hand into a container that is not another hand, without dropping it on the floor inbetween.
+        ///     Attempts to move a held item from a hand into a container that is not another hand, without dropping it on the floor in-between.
         /// </summary>
         public bool Drop(IEntity entity, BaseContainer targetContainer, bool checkActionBlocker = true)
         {
@@ -368,8 +390,9 @@ namespace Content.Shared.Hands.Components
 
         /// <summary>
         ///     Tries to remove the item in the active hand, without dropping it.
-        ///     For transfering the held item to anothe rlocation, like an inventory slot,
-        ///     which souldn't trigger the drop interaction
+        ///     For transferring the held item to another location, like an inventory slot,
+        ///     which shouldn't trigger the drop interaction
+        /// </summary>
         public bool TryDropNoInteraction()
         {
             if (!TryGetActiveHand(out var hand))
@@ -407,7 +430,7 @@ namespace Content.Shared.Hands.Components
         /// </summary>
         private bool PlayerCanDrop()
         {
-            if (!IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ActionBlockerSystem>().CanDrop(Owner))
+            if (!IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ActionBlockerSystem>().CanDrop(OwnerUid))
                 return false;
 
             return true;
@@ -602,7 +625,7 @@ namespace Content.Shared.Hands.Components
         /// <returns></returns>
         protected bool PlayerCanPickup()
         {
-            if (!IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ActionBlockerSystem>().CanPickup(Owner))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanPickup(Owner.Uid))
                 return false;
 
             return true;
@@ -811,6 +834,42 @@ namespace Content.Shared.Hands.Components
 
         protected virtual void HandlePickupAnimation(IEntity entity) { }
     }
+
+    #region visualizerData
+    [Serializable, NetSerializable]
+    public enum HandsVisuals : byte
+    {
+        VisualState
+    }
+
+    [Serializable, NetSerializable]
+    public class HandsVisualState
+    {
+        public List<HandVisualState> Hands { get; } = new();
+
+        public HandsVisualState(List<HandVisualState> hands)
+        {
+            Hands = hands;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public class HandVisualState
+    {
+        public string RsiPath { get; }
+        public string? EquippedPrefix { get; }
+        public HandLocation Location { get; }
+        public Color Color { get; }
+
+        public HandVisualState(string rsiPath, string? equippedPrefix, HandLocation location, Color color)
+        {
+            RsiPath = rsiPath;
+            EquippedPrefix = equippedPrefix;
+            Location = location;
+            Color = color;
+        }
+    }
+    #endregion
 
     public class Hand
     {

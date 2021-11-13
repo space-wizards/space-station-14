@@ -14,11 +14,13 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Paper
 {
     [RegisterComponent]
+#pragma warning disable 618
     public class PaperComponent : SharedPaperComponent, IExamine, IInteractUsing, IUse
+#pragma warning restore 618
     {
         private PaperAction _mode;
         [DataField("content")]
-        public string Content { get; private set; } = "";
+        public string Content { get; set; } = "";
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(PaperUiKey.Key);
 
@@ -34,6 +36,22 @@ namespace Content.Server.Paper
             _mode = PaperAction.Read;
             UpdateUserInterface();
         }
+
+        public void SetContent(string content)
+        {
+            Content = content + '\n';
+            UpdateUserInterface();
+
+            if (!Owner.TryGetComponent(out AppearanceComponent? appearance))
+                return;
+
+            var status = string.IsNullOrWhiteSpace(content)
+                ? PaperStatus.Blank
+                : PaperStatus.Written;
+
+            appearance.SetData(PaperVisuals.Status, status);
+        }
+
         private void UpdateUserInterface()
         {
             UserInterface?.SetState(new PaperBoundUserInterfaceState(Content, _mode));

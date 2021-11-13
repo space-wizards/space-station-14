@@ -33,7 +33,9 @@ namespace Content.Client.Weapons.Ranged
 
         public void SyncFirePos(GridId targetGrid, Vector2 targetPosition)
         {
+#pragma warning disable 618
             SendNetworkMessage(new FirePosComponentMessage(targetGrid, targetPosition));
+#pragma warning restore 618
         }
     }
 }

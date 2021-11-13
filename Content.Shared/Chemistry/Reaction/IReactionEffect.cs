@@ -8,6 +8,6 @@ namespace Content.Shared.Chemistry.Reaction
     /// </summary>
     public interface IReactionEffect
     {
-        void React(Solution solution, IEntity solutionEntity, double intensity);
+        void React(Solution solution, EntityUid solutionEntity, double intensity, IEntityManager entityManager);
     }
 }

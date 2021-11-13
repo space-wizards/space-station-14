@@ -1,34 +1,24 @@
 - type: entity
   save: false
   abstract: true
-  id: SimpleMobBase
+  id: SimpleSpaceMobBase # Mob without barotrauma, freezing and asphyxiation (for space carps!?)
   suffix: AI
   components:
   - type: Reactive
     reactions:
+    - reagents: [Water]
+      methods: [Touch]
+      effects:
       - !type:ExtinguishReaction
-        touch: true
-        reagents:
-          - Water
+    - reagents: [WeldingFuel, Thermite, Plasma, Ethanol]
+      methods: [Touch]
+      effects:
       - !type:FlammableReaction
-        touch: true
-        reagents:
-          - WeldingFuel
-          - Thermite
-          - Plasma
-          - Ethanol
   - type: UtilityAI
     behaviorSets:
-    - Clothing
+    # - Clothing
     - Idle
-  - type: Hunger
-    damage:
-      types:
-        Blunt: 2
-  - type: Thirst
-    damage:
-      types:
-        Blunt: 2
+    # No hunger and thirst for space mobs (need a way to eat station tiles for space carps)
   - type: Input
     context: "human"
   - type: AiFactionTag
@@ -38,10 +28,6 @@
     baseWalkSpeed : 4
     baseSprintSpeed : 4
   - type: MovedByPressure
-  - type: Barotrauma
-    damage:
-      types:
-        Blunt: 1 #per second, scales with pressure and other constants.
   - type: DamageOnHighSpeedImpact
     damage:
       types:
@@ -54,18 +40,20 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    bodyType: Dynamic
+    bodyType: KinematicController # Same for all inheritors
     fixtures:
     - shape:
-        !type:PhysShapeAabb {}
-      mass: 50
+        # Circles, cuz rotation of rectangles looks very bad
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 20
       mask:
       - Impassable
-#      - MobImpassable Turns these off for now since humans don't have collisions either.
+      - MobImpassable #Bullets?!
       - VaultImpassable
       - SmallImpassable
       layer:
-      - MobImpassable
+      - Opaque
   - type: SolutionContainerManager
   - type: Bloodstream
     max_volume: 100
@@ -84,12 +72,81 @@
     currentTemperature: 310.15
     specificHeat: 42
     tempDamageCoefficient: 0.1
-    coldDamage:
-      types:
-        Cold : 1 #per second, scales with temperature & other constants
     heatDamage:
       types:
         Heat : 1 #per second, scales with temperature & other constants
+  - type: MobState
+    thresholds:
+      0: !type:NormalMobState {}
+      50: !type:CriticalMobState {}
+      100: !type:DeadMobState {}
+  - type: HeatResistance
+  - type: CombatMode
+  - type: Internals
+  - type: StatusEffects
+    allowed:
+    - Stun
+    - KnockedDown
+    - SlowedDown
+    - Stutter
+    - Electrocution
+  - type: Body
+    template: AnimalTemplate
+    preset: AnimalPreset
+  - type: Examiner
+  - type: UnarmedCombat
+    range: 1.5
+    arcwidth: 0
+    arc: bite
+    damage:
+      groups:
+        Brute: 5
+  - type: Appearance
+    visuals:
+    - type: BuckleVisualizer
+    - type: FireVisualizer
+      sprite: Mobs/Effects/onfire.rsi
+      normalState: Generic_mob_burning
+  - type: Actions
+    innateActions:
+      - CombatMode
+  - type: DoAfter
+  - type: Climbing
+  - type: Flashable
+  - type: Pullable
+  - type: Puller
+  - type: Buckle
+  - type: Recyclable
+    safe: false
+  - type: Butcherable
+    meat: FoodMeat
+  - type: StandingState
+  - type: Alerts
+
+- type: entity
+  save: false
+  abstract: true
+  id: SimpleMobBase # for air breathers
+  parent: SimpleSpaceMobBase
+  suffix: AI
+  components:
+  - type: UtilityAI
+    behaviorSets:
+    - Idle
+    # - Hunger TODO: eating on the floor and fix weird AI endless stomach
+    # - Thirst
+  - type: Hunger
+    damage:
+      types:
+        Blunt: 2
+  - type: Thirst
+    damage:
+      types:
+        Blunt: 2
+  - type: Barotrauma
+    damage:
+      types:
+        Blunt: 1 #per second, scales with pressure and other constants.
   - type: Respirator
     metabolismHeat: 5000
     radiatedHeat: 400
@@ -109,36 +166,15 @@
     damageRecovery:
       types:
         Asphyxiation: -1
-  - type: MobState
-    thresholds:
-      0: !type:NormalMobState {}
-      50: !type:CriticalMobState {}
-      100: !type:DeadMobState {}
-  - type: HeatResistance
-  - type: CombatMode
-  - type: Internals
-  - type: StatusEffects
-    allowed:
-    - Stun
-    - KnockedDown
-    - SlowedDown
-  - type: Examiner
-  - type: UnarmedCombat
-    range: 1.5
-    arcwidth: 0
-    arc: bite
-    damage:
-      groups:
-        Brute: 5
-  - type: Appearance
-    visuals:
-    - type: BuckleVisualizer
-    - type: FireVisualizer
-      sprite: Mobs/Effects/onfire.rsi
-      normalState: Generic_mob_burning
-  - type: Pullable
-  - type: Buckle
-  - type: Butcherable
-    meat: FoodMeat
-  - type: Recyclable
-    safe: false
+  - type: Temperature
+    heatDamageThreshold: 360
+    coldDamageThreshold: 260
+    currentTemperature: 310.15
+    specificHeat: 42
+    tempDamageCoefficient: 0.1
+    coldDamage:
+      types:
+        Cold : 1 #per second, scales with temperature & other constants
+    heatDamage:
+      types:
+        Heat : 1 #per second, scales with temperature & other constants

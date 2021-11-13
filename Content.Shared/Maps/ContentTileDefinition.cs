@@ -32,7 +32,7 @@ namespace Content.Shared.Maps
 
         [DataField("can_crowbar")] public bool CanCrowbar { get; private set; }
 
-        [DataField("footstep_sounds", required: true)] public SoundSpecifier FootstepSounds { get; } = default!;
+        [DataField("footstep_sounds")] public SoundSpecifier? FootstepSounds { get; }
 
         [DataField("friction")] public float Friction { get; set; }
 

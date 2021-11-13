@@ -31,7 +31,7 @@ namespace Content.Server.Chat.Managers
 
         void SendHookOOC(string sender, string message);
 
-        delegate string TransformChat(IEntity speaker, string message);
+        delegate string TransformChat(EntityUid speaker, string message);
         void RegisterChatTransform(TransformChat handler);
         void SendAdminAnnouncement(string message);
     }

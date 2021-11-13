@@ -4,6 +4,7 @@ using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.Preferences;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
@@ -37,6 +38,9 @@ namespace Content.Shared.CharacterAppearance.Systems
             component.Appearance = appearance;
             component.Sex = sex;
             component.Gender = gender;
+
+            if (EntityManager.TryGetComponent(uid, out GrammarComponent? g))
+                g.Gender = gender;
 
             component.Dirty();
 

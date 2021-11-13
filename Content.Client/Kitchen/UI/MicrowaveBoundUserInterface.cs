@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
@@ -6,16 +5,12 @@ using Content.Shared.Kitchen.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using static Robust.Client.UserInterface.Controls.BaseButton;
-using static Robust.Client.UserInterface.Controls.BoxContainer;
+using static Content.Shared.Kitchen.Components.SharedMicrowaveComponent;
 
 namespace Content.Client.Kitchen.UI
 {
@@ -32,7 +27,6 @@ namespace Content.Client.Kitchen.UI
 
         public MicrowaveBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner,uiKey)
         {
-
         }
 
         protected override void Open()
@@ -41,24 +35,22 @@ namespace Content.Client.Kitchen.UI
             _menu = new MicrowaveMenu(this);
             _menu.OpenCentered();
             _menu.OnClose += Close;
-            _menu.StartButton.OnPressed += _ => SendMessage(new SharedMicrowaveComponent.MicrowaveStartCookMessage());
-            _menu.EjectButton.OnPressed += _ => SendMessage(new SharedMicrowaveComponent.MicrowaveEjectMessage());
+            _menu.StartButton.OnPressed += _ => SendMessage(new MicrowaveStartCookMessage());
+            _menu.EjectButton.OnPressed += _ => SendMessage(new MicrowaveEjectMessage());
             _menu.IngredientsList.OnItemSelected += args =>
             {
-                SendMessage(new SharedMicrowaveComponent.MicrowaveEjectSolidIndexedMessage(_solids[args.ItemIndex]));
-
+                SendMessage(new MicrowaveEjectSolidIndexedMessage(_solids[args.ItemIndex]));
             };
 
             _menu.IngredientsListReagents.OnItemSelected += args =>
             {
-                SendMessage(
-                    new SharedMicrowaveComponent.MicrowaveVaporizeReagentIndexedMessage(_reagents[args.ItemIndex]));
+                SendMessage(new MicrowaveVaporizeReagentIndexedMessage(_reagents[args.ItemIndex]));
             };
 
             _menu.OnCookTimeSelected += (args,buttonIndex) =>
             {
                 var actualButton = (MicrowaveMenu.MicrowaveCookTimeButton) args.Button ;
-                SendMessage(new SharedMicrowaveComponent.MicrowaveSelectCookTimeMessage(buttonIndex,actualButton.CookTime));
+                SendMessage(new MicrowaveSelectCookTimeMessage(buttonIndex,actualButton.CookTime));
             };
         }
 
@@ -87,13 +79,15 @@ namespace Content.Client.Kitchen.UI
             _menu?.ToggleBusyDisableOverlayPanel(cState.IsMicrowaveBusy);
             RefreshContentsDisplay(cState.ReagentQuantities, cState.ContainedSolids);
 
-            if (_menu != null)
-            {
-                var currentlySelectedTimeButton = (Button) _menu.CookTimeButtonVbox.GetChild(cState.ActiveButtonIndex);
-                currentlySelectedTimeButton.Pressed = true;
-                var label = cState.ActiveButtonIndex <= 0 ? Loc.GetString("microwave-bound-user-interface-instant-button") : cState.CurrentCookTime.ToString();
-                _menu.CookTimeInfoLabel.Text = $"{Loc.GetString("microwave-bound-user-interface-cook-time-label")}: {label}";
-            }
+            if (_menu == null) return;
+
+            var currentlySelectedTimeButton = (Button) _menu.CookTimeButtonVbox.GetChild(cState.ActiveButtonIndex);
+            currentlySelectedTimeButton.Pressed = true;
+            var cookTime = cState.ActiveButtonIndex == 0
+                ? Loc.GetString("microwave-menu-instant-button")
+                : cState.CurrentCookTime.ToString();
+            _menu.CookTimeInfoLabel.Text = Loc.GetString("microwave-bound-user-interface-cook-time-label",
+                                                         ("time", cookTime));
         }
 
         private void RefreshContentsDisplay(Solution.ReagentQuantity[] reagents, EntityUid[] containedSolids)
@@ -105,19 +99,18 @@ namespace Content.Client.Kitchen.UI
             _menu.IngredientsListReagents.Clear();
             for (var i = 0; i < reagents.Length; i++)
             {
-                if (_prototypeManager.TryIndex(reagents[i].ReagentId, out ReagentPrototype? proto))
-                {
-                    var reagentAdded = _menu.IngredientsListReagents.AddItem($"{reagents[i].Quantity} {proto.Name}");
-                    var reagentIndex = _menu.IngredientsListReagents.IndexOf(reagentAdded);
-                    _reagents.Add(reagentIndex, reagents[i]);
-                }
+                if (!_prototypeManager.TryIndex(reagents[i].ReagentId, out ReagentPrototype? proto)) continue;
+
+                var reagentAdded = _menu.IngredientsListReagents.AddItem($"{reagents[i].Quantity} {proto.Name}");
+                var reagentIndex = _menu.IngredientsListReagents.IndexOf(reagentAdded);
+                _reagents.Add(reagentIndex, reagents[i]);
             }
 
             _solids.Clear();
             _menu.IngredientsList.Clear();
-            for (var j = 0; j < containedSolids.Length; j++)
+            foreach (var t in containedSolids)
             {
-                if (!_entityManager.TryGetEntity(containedSolids[j], out var entity))
+                if (!_entityManager.TryGetEntity(t, out var entity))
                 {
                     return;
                 }
@@ -143,218 +136,7 @@ namespace Content.Client.Kitchen.UI
 
                 var solidItem = _menu.IngredientsList.AddItem(entity.Name, texture);
                 var solidIndex = _menu.IngredientsList.IndexOf(solidItem);
-                _solids.Add(solidIndex, containedSolids[j]);
-            }
-        }
-
-        public class MicrowaveMenu : SS14Window
-        {
-            public class MicrowaveCookTimeButton : Button
-            {
-                public uint CookTime;
-            }
-
-
-            private MicrowaveBoundUserInterface Owner { get; set; }
-
-            public event Action<ButtonEventArgs, int>? OnCookTimeSelected;
-
-            public Button StartButton { get; }
-            public Button EjectButton { get; }
-
-            public PanelContainer TimerFacePlate { get; }
-
-            public ButtonGroup CookTimeButtonGroup { get; }
-
-            public BoxContainer CookTimeButtonVbox { get; }
-
-            private BoxContainer ButtonGridContainer { get; }
-
-            private PanelContainer DisableCookingPanelOverlay { get; }
-
-            public ItemList IngredientsList { get; }
-
-            public ItemList IngredientsListReagents { get; }
-            public Label CookTimeInfoLabel { get; }
-
-            public MicrowaveMenu(MicrowaveBoundUserInterface owner)
-            {
-                SetSize = MinSize = (512, 256);
-
-                Owner = owner;
-                Title = Loc.GetString("microwave-menu-title");
-                DisableCookingPanelOverlay = new PanelContainer
-                {
-                    MouseFilter = MouseFilterMode.Stop,
-                    PanelOverride = new StyleBoxFlat {BackgroundColor = Color.Black.WithAlpha(0.60f)},
-                };
-
-                var hSplit = new BoxContainer
-                {
-                    Orientation = LayoutOrientation.Horizontal
-                };
-
-                IngredientsListReagents = new ItemList
-                {
-                    VerticalExpand = true,
-                    HorizontalExpand = true,
-                    SelectMode = ItemList.ItemListSelectMode.Button,
-                    SizeFlagsStretchRatio = 2,
-                    MinSize = (100, 128)
-                };
-
-                IngredientsList = new ItemList
-                {
-                    VerticalExpand = true,
-                    HorizontalExpand = true,
-                    SelectMode = ItemList.ItemListSelectMode.Button,
-                    SizeFlagsStretchRatio = 2,
-                    MinSize = (100, 128)
-                };
-
-                hSplit.AddChild(IngredientsListReagents);
-                //Padding between the lists.
-                hSplit.AddChild(new Control
-                {
-                    MinSize = (0, 5),
-                });
-
-                hSplit.AddChild(IngredientsList);
-
-                var vSplit = new BoxContainer
-                {
-                    Orientation = LayoutOrientation.Vertical,
-                    VerticalExpand = true,
-                    HorizontalExpand = true,
-                };
-
-                hSplit.AddChild(vSplit);
-
-                ButtonGridContainer = new BoxContainer
-                {
-                    Orientation = LayoutOrientation.Vertical,
-                    Align = AlignMode.Center,
-                    SizeFlagsStretchRatio = 3
-                };
-
-                StartButton = new Button
-                {
-                    Text = Loc.GetString("microwave-menu-start-button"),
-                    TextAlign = Label.AlignMode.Center,
-                };
-
-                EjectButton = new Button
-                {
-                    Text = Loc.GetString("microwave-menu-eject-all-text"),
-                    ToolTip = Loc.GetString("microwave-menu-eject-all-tooltip"),
-                    TextAlign = Label.AlignMode.Center,
-                };
-
-                ButtonGridContainer.AddChild(StartButton);
-                ButtonGridContainer.AddChild(EjectButton);
-                vSplit.AddChild(ButtonGridContainer);
-
-                //Padding
-                vSplit.AddChild(new Control
-                {
-                    MinSize = (0, 15),
-                });
-
-                CookTimeButtonGroup = new ButtonGroup();
-                CookTimeButtonVbox = new BoxContainer
-                {
-                    Orientation = LayoutOrientation.Vertical,
-                    VerticalExpand = true,
-                    Align = AlignMode.Center,
-                };
-
-                var index = 0;
-                for (var i = 0; i <= 6; i++)
-                {
-                    var newButton = new MicrowaveCookTimeButton
-                    {
-                        Text = index <= 0 ? Loc.GetString("microwave-menu-instant-button") : index.ToString(),
-                        CookTime = (uint)index,
-                        TextAlign = Label.AlignMode.Center,
-                        ToggleMode = true,
-                        Group = CookTimeButtonGroup,
-                    };
-                    CookTimeButtonVbox.AddChild(newButton);
-                    newButton.OnToggled += args =>
-                    {
-                        OnCookTimeSelected?.Invoke(args, newButton.GetPositionInParent());
-
-                    };
-                    index += 5;
-                }
-
-                var cookTimeOneSecondButton = (Button) CookTimeButtonVbox.GetChild(0);
-                cookTimeOneSecondButton.Pressed = true;
-
-                CookTimeInfoLabel = new Label
-                {
-                    Text = Loc.GetString("microwave-menu-cook-time-label", ("time", 1)), // TODO, hardcoded value
-                    Align = Label.AlignMode.Center,
-                    Modulate = Color.White,
-                    VerticalAlignment = VAlignment.Center
-                };
-
-                var innerTimerPanel = new PanelContainer
-                {
-                    VerticalExpand = true,
-                    ModulateSelfOverride = Color.Red,
-                    MinSize = (100, 128),
-                    PanelOverride = new StyleBoxFlat {BackgroundColor = Color.Black.WithAlpha(0.5f)},
-
-                    Children =
-                    {
-                        new BoxContainer
-                        {
-                            Orientation = LayoutOrientation.Vertical,
-                            Children =
-                            {
-                                new PanelContainer
-                                {
-                                    PanelOverride = new StyleBoxFlat() {BackgroundColor = Color.Gray.WithAlpha(0.2f)},
-
-                                    Children =
-                                    {
-                                        CookTimeInfoLabel
-                                    }
-                                },
-
-                                new ScrollContainer()
-                                {
-                                    VerticalExpand = true,
-
-                                    Children =
-                                    {
-                                        CookTimeButtonVbox,
-                                    }
-                                },
-                            }
-                        }
-                    }
-                };
-
-                TimerFacePlate = new PanelContainer()
-                {
-                    VerticalExpand = true,
-                    HorizontalExpand = true,
-                    Children =
-                    {
-                        innerTimerPanel
-                    },
-                };
-
-                vSplit.AddChild(TimerFacePlate);
-                Contents.AddChild(hSplit);
-                Contents.AddChild(DisableCookingPanelOverlay);
-            }
-
-            public void ToggleBusyDisableOverlayPanel(bool shouldDisable)
-            {
-                DisableCookingPanelOverlay.Visible = shouldDisable;
+                _solids.Add(solidIndex, t);
             }
         }
     }

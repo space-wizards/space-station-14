@@ -1,6 +1,6 @@
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.PowerCell.Components;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -31,7 +31,7 @@ namespace Content.Server.PowerCell
                 !args.CanInteract ||
                 !component.ShowVerb ||
                 !component.HasCell ||
-                !_actionBlockerSystem.CanPickup(args.User))
+                !_actionBlockerSystem.CanPickup(args.User.Uid))
                 return;
 
             Verb verb = new();
@@ -48,7 +48,7 @@ namespace Content.Server.PowerCell
                 !args.CanInteract ||
                 component.HasCell ||
                 !args.Using.HasComponent<PowerCellComponent>() ||
-                !_actionBlockerSystem.CanDrop(args.User))
+                !_actionBlockerSystem.CanDrop(args.User.Uid))
                 return;
 
             Verb verb = new();

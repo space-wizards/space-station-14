@@ -1,8 +1,7 @@
 using System;
-using Content.Server.Chemistry.Components;
-using Content.Server.Explosion;
+using Content.Server.Chemistry.Components.SolutionManager;
+using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reaction;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -28,11 +27,11 @@ namespace Content.Server.Chemistry.ReactionEffects
         /// </summary>
         [DataField("maxScale")] private float _maxScale = 1;
 
-        public void React(Solution solution, IEntity solutionEntity, double intensity)
+        public void React(Solution solution, EntityUid solutionEntity, double intensity, IEntityManager entityManager)
         {
             var floatIntensity = (float) intensity;
-      
-            if (!solutionEntity.HasComponent<SolutionContainerManagerComponent>())
+
+            if (!entityManager.HasComponent<SolutionContainerManagerComponent>(solutionEntity))
                 return;
 
             //Handle scaling
@@ -50,7 +49,7 @@ namespace Content.Server.Chemistry.ReactionEffects
             var finalHeavyImpactRange = (int)MathF.Round(_heavyImpactRange * floatIntensity);
             var finalLightImpactRange = (int)MathF.Round(_lightImpactRange * floatIntensity);
             var finalFlashRange = (int)MathF.Round(_flashRange * floatIntensity);
-            solutionEntity.SpawnExplosion(finalDevastationRange,
+            EntitySystem.Get<ExplosionSystem>().SpawnExplosion(solutionEntity, finalDevastationRange,
                 finalHeavyImpactRange, finalLightImpactRange, finalFlashRange);
         }
     }

@@ -21,6 +21,7 @@ using Content.Shared.Speech.EntitySystems;
 using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
 using Content.Shared.Weapons.Melee;
+using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -35,9 +36,10 @@ namespace Content.Server.Electrocution
 {
     public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     {
+        [Dependency] private readonly IEntityLookup _entityLookup = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly QuerySystem _query = default!;
+        [Dependency] private readonly IConsoleHost _consoleHost = default!;
         [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
         [Dependency] private readonly SharedJitteringSystem _jitteringSystem = default!;
         [Dependency] private readonly SharedStunSystem _stunSystem = default!;
@@ -46,8 +48,8 @@ namespace Content.Server.Electrocution
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly NodeGroupSystem _nodeGroupSystem = default!;
 
-        protected const string StatusEffectKey = "Electrocution";
-        protected const string DamageType = "Shock";
+        private const string StatusEffectKey = "Electrocution";
+        private const string DamageType = "Shock";
 
         // Yes, this is absurdly small for a reason.
         private const float ElectrifiedDamagePerWatt = 0.0015f;
@@ -137,7 +139,7 @@ namespace Content.Server.Electrocution
         public bool TryDoElectrifiedAct(EntityUid uid, EntityUid targetUid,
             ElectrifiedComponent? electrified = null,
             NodeContainerComponent? nodeContainer = null,
-            ITransformComponent? transform = null)
+            TransformComponent? transform = null)
         {
             if (!Resolve(uid, ref electrified, ref transform, false))
                 return false;
@@ -147,12 +149,17 @@ namespace Content.Server.Electrocution
 
             if (electrified.NoWindowInTile)
             {
-                foreach (var entity in transform.Coordinates.GetEntitiesInTile(query: _query))
+                foreach (var entity in transform.Coordinates.GetEntitiesInTile(
+                    LookupFlags.Approximate | LookupFlags.IncludeAnchored, _entityLookup))
                 {
                     if (entity.HasComponent<WindowComponent>())
                         return false;
                 }
             }
+
+            var siemens = electrified.SiemensCoefficient;
+            if (!DoCommonElectrocutionAttempt(targetUid, uid, ref siemens) || siemens <= 0)
+                return false; // If electrocution would fail, do nothing.
 
             var targets = new List<(EntityUid entity, int depth)>();
             GetChainedElectrocutionTargets(targetUid, targets);
@@ -246,7 +253,7 @@ namespace Content.Server.Electrocution
             float siemensCoefficient = 1f,
             StatusEffectsComponent? statusEffects = null,
             SharedAlertsComponent? alerts = null,
-            ITransformComponent? sourceTransform = null)
+            TransformComponent? sourceTransform = null)
         {
             if (!DoCommonElectrocutionAttempt(uid, sourceUid, ref siemensCoefficient))
                 return false;

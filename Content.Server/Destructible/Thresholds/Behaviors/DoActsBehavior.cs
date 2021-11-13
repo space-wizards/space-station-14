@@ -21,7 +21,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
             return (Acts & act) != 0;
         }
 
-        public void Execute(IEntity owner, DestructibleSystem system)
+        public void Execute(EntityUid owner, DestructibleSystem system)
         {
             if (HasAct(ThresholdActs.Breakage))
             {

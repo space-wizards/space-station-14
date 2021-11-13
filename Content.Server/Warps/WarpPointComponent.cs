@@ -8,7 +8,9 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Warps
 {
     [RegisterComponent]
+#pragma warning disable 618
     public sealed class WarpPointComponent : Component, IExamine
+#pragma warning restore 618
     {
         public override string Name => "WarpPoint";
 

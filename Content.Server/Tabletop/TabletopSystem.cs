@@ -59,7 +59,7 @@ namespace Content.Server.Tabletop
                 return;
 
             // Check that the entity can interact with the game board.
-            if(_actionBlockerSystem.CanInteract(args.User))
+            if(_actionBlockerSystem.CanInteract(args.User.Uid))
                 OpenSessionFor(actor.PlayerSession, uid);
         }
 
@@ -94,7 +94,7 @@ namespace Content.Server.Tabletop
 
             foreach (var gamer in EntityManager.EntityQuery<TabletopGamerComponent>())
             {
-                if (!EntityManager.TryGetEntity(gamer.Tabletop, out var table))
+                if (!EntityManager.EntityExists(gamer.Tabletop))
                     continue;
 
                 if (!gamer.Owner.TryGetComponent(out ActorComponent? actor))
@@ -103,11 +103,13 @@ namespace Content.Server.Tabletop
                     return;
                 };
 
-                if (actor.PlayerSession.Status > SessionStatus.Connected || CanSeeTable(gamer.Owner, table)
-                                                                         || !StunnedOrNoHands(gamer.Owner))
+                var gamerUid = gamer.OwnerUid;
+
+                if (actor.PlayerSession.Status > SessionStatus.Connected || CanSeeTable(gamerUid, gamer.Tabletop)
+                                                                         || !StunnedOrNoHands(gamerUid))
                     continue;
 
-                CloseSessionFor(actor.PlayerSession, table.Uid);
+                CloseSessionFor(actor.PlayerSession, gamer.Tabletop);
             }
         }
     }

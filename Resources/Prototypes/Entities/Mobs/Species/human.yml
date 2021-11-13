@@ -12,23 +12,18 @@
     - FootstepSound
   - type: Reactive
     reactions:
-    - !type:ExtinguishReaction
-      touch: true
-      reagents:
-      - Water
-    - !type:FlammableReaction
-      touch: true
-      reagents:
-      - WeldingFuel
-      - Thermite
-      - Plasma
-      - Ethanol
-      - Oil
-    - !type:WashCreamPieReaction
-      touch: true
-      reagents:
-      - Water
-      - SpaceCleaner
+    - reagents: [Water]
+      methods: [Touch]
+      effects:
+      - !type:ExtinguishReaction
+    - reagents: [WeldingFuel, Thermite, Plasma, Ethanol]
+      methods: [Touch]
+      effects:
+      - !type:FlammableReaction
+    - reagents: [Water, SpaceCleaner]
+      methods: [Touch]
+      effects:
+      - !type:WashCreamPieReaction
   - type: Flashable
   - type: Hands
   - type: MovementSpeedModifier
@@ -232,6 +227,12 @@
         damage: 400
       behaviors:
       - !type:GibBehavior { }
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      40: 0.8
+      60: 0.6
+      80: 0.4
+      90: 0.2
   - type: HeatResistance
   - type: Appearance
     visuals:
@@ -245,6 +246,21 @@
     - type: CreamPiedVisualizer
       state: creampie_human
     - type: HandsVisualizer
+    - type: DamageVisualizer
+      thresholds: [20, 40, 100]
+      targetLayers:
+      - "enum.HumanoidVisualLayers.Chest"
+      - "enum.HumanoidVisualLayers.Head"
+      - "enum.HumanoidVisualLayers.LArm"
+      - "enum.HumanoidVisualLayers.LLeg"
+      - "enum.HumanoidVisualLayers.RArm"
+      - "enum.HumanoidVisualLayers.RLeg"
+      damageOverlayGroups:
+        Brute:
+          sprite: Mobs/Effects/brute_damage.rsi
+          color: "#FF0000"
+        Burn:
+          sprite: Mobs/Effects/burn_damage.rsi
   - type: CombatMode
   - type: Climbing
   - type: Cuffable

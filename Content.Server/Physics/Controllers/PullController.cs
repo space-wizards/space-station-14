@@ -65,15 +65,17 @@ namespace Content.Server.Physics.Controllers
                     continue;
                 }
 
-                if (pullable.Puller == null)
+                var puller = pullable.Puller;
+                if (puller == null)
                 {
                     continue;
                 }
 
                 // Now that's over with...
 
-                var pullerPosition = pullable.Puller!.Transform.MapPosition;
-                if (pullable.MovingTo.Value.MapId != pullerPosition.MapId)
+                var pullerPosition = puller.Transform.MapPosition;
+                var movingTo = pullable.MovingTo.Value.ToMap(pullable.Owner.EntityManager);
+                if (movingTo.MapId != pullerPosition.MapId)
                 {
                     _pullableSystem.StopMoveTo(pullable);
                     continue;
@@ -81,13 +83,13 @@ namespace Content.Server.Physics.Controllers
 
                 if (!pullable.Owner.TryGetComponent<PhysicsComponent>(out var physics) ||
                     physics.BodyType == BodyType.Static ||
-                    pullable.MovingTo.Value.MapId != pullable.Owner.Transform.MapID)
+                    movingTo.MapId != pullable.Owner.Transform.MapID)
                 {
                     _pullableSystem.StopMoveTo(pullable);
                     continue;
                 }
 
-                var movingPosition = pullable.MovingTo.Value.Position;
+                var movingPosition = movingTo.Position;
                 var ownerPosition = pullable.Owner.Transform.MapPosition.Position;
 
                 var diff = movingPosition - ownerPosition;
@@ -113,7 +115,14 @@ namespace Content.Server.Physics.Controllers
                     accel -= physics.LinearVelocity * SettleShutdownMultiplier * scaling;
                 }
                 physics.WakeBody();
-                physics.ApplyLinearImpulse(accel * physics.Mass * frameTime);
+                var impulse = accel * physics.Mass * frameTime;
+                physics.ApplyLinearImpulse(impulse);
+
+                if (puller.TryGetComponent<PhysicsComponent>(out var pullerPhysics))
+                {
+                    pullerPhysics.WakeBody();
+                    pullerPhysics.ApplyLinearImpulse(-impulse);
+                }
             }
         }
     }

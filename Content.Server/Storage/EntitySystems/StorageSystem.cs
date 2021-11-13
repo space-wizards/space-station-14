@@ -37,7 +37,7 @@ namespace Content.Server.Storage.EntitySystems
 
         private void OnRelayMovement(EntityUid uid, EntityStorageComponent component, RelayMovementEntityEvent args)
         {
-            if (EntityManager.HasComponent<HandsComponent>(uid))
+            if (EntityManager.HasComponent<HandsComponent>(args.Entity.Uid))
             {
                 if (_gameTiming.CurTime <
                     component.LastInternalOpenAttempt + EntityStorageComponent.InternalOpenAttemptDelay)
@@ -70,12 +70,12 @@ namespace Content.Server.Storage.EntitySystems
             Verb verb = new();
             if (component.Open)
             {
-                verb.Text = Loc.GetString("verb-categories-close");
+                verb.Text = Loc.GetString("verb-common-close");
                 verb.IconTexture = "/Textures/Interface/VerbIcons/close.svg.192dpi.png";
             }
             else
             {
-                verb.Text = Loc.GetString("verb-categories-open");
+                verb.Text = Loc.GetString("verb-common-open");
                 verb.IconTexture = "/Textures/Interface/VerbIcons/open.svg.192dpi.png";
             }
             verb.Act = () => component.ToggleOpen(args.User);
@@ -102,12 +102,12 @@ namespace Content.Server.Storage.EntitySystems
             verb.Act = () => component.OpenStorageUI(args.User);
             if (uiOpen)
             {
-                verb.Text = Loc.GetString("verb-categories-close");
+                verb.Text = Loc.GetString("verb-common-close-ui");
                 verb.IconTexture = "/Textures/Interface/VerbIcons/close.svg.192dpi.png";
             }
             else
             {
-                verb.Text = Loc.GetString("verb-categories-open");
+                verb.Text = Loc.GetString("verb-common-open-ui");
                 verb.IconTexture = "/Textures/Interface/VerbIcons/open.svg.192dpi.png";
             }
             args.Verbs.Add(verb);

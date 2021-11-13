@@ -2,8 +2,8 @@ using System;
 using System.Threading.Tasks;
 using Content.Server.Fluids.Components;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Coordinates;
+using Content.Shared.FixedPoint;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -18,46 +18,20 @@ namespace Content.IntegrationTests.Tests.Fluids
         [Test]
         public async Task TilePuddleTest()
         {
-            var server = StartServerDummyTicker();
+            var server = StartServer();
 
             await server.WaitIdleAsync();
 
             var mapManager = server.ResolveDependency<IMapManager>();
-            var pauseManager = server.ResolveDependency<IPauseManager>();
-            var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
-
-            EntityCoordinates coordinates = default;
-
-            // Build up test environment
-            server.Post(() =>
-            {
-                // Create a one tile grid to spill onto
-                var mapId = mapManager.CreateMap();
-
-                pauseManager.AddUninitializedMap(mapId);
-
-                var gridId = new GridId(1);
-
-                if (!mapManager.TryGetGrid(gridId, out var grid))
-                {
-                    grid = mapManager.CreateGrid(mapId, gridId);
-                }
-
-                var tileDefinition = tileDefinitionManager["underplating"];
-                var tile = new Tile(tileDefinition.TileId);
-                coordinates = grid.ToCoordinates();
-
-                grid.SetTile(coordinates, tile);
-
-                pauseManager.DoMapInitialize(mapId);
-            });
-
-            await server.WaitIdleAsync();
 
             server.Assert(() =>
             {
-                var solution = new Solution("water", ReagentUnit.New(20));
+                var solution = new Solution("water", FixedPoint2.New(20));
+                var grid = GetMainGrid(mapManager);
+                var (x, y) = GetMainTile(grid).GridIndices;
+                var coordinates = new EntityCoordinates(grid.GridEntityId, x, y);
                 var puddle = solution.SpillAt(coordinates, "PuddleSmear");
+
                 Assert.NotNull(puddle);
             });
 
@@ -67,25 +41,22 @@ namespace Content.IntegrationTests.Tests.Fluids
         [Test]
         public async Task SpaceNoPuddleTest()
         {
-            var server = StartServerDummyTicker();
+            var server = StartServer();
 
             await server.WaitIdleAsync();
+
             var mapManager = server.ResolveDependency<IMapManager>();
-            var pauseManager = server.ResolveDependency<IPauseManager>();
+
             IMapGrid grid = null;
 
-            // Build up test environment
+            // Remove all tiles
             server.Post(() =>
             {
-                var mapId = mapManager.CreateMap();
+                grid = GetMainGrid(mapManager);
 
-                pauseManager.AddUninitializedMap(mapId);
-
-                var gridId = new GridId(1);
-
-                if (!mapManager.TryGetGrid(gridId, out grid))
+                foreach (var tile in grid.GetAllTiles())
                 {
-                    grid = mapManager.CreateGrid(mapId, gridId);
+                    grid.SetTile(tile.GridIndices, Tile.Empty);
                 }
             });
 
@@ -94,7 +65,7 @@ namespace Content.IntegrationTests.Tests.Fluids
             server.Assert(() =>
             {
                 var coordinates = grid.ToCoordinates();
-                var solution = new Solution("water", ReagentUnit.New(20));
+                var solution = new Solution("water", FixedPoint2.New(20));
                 var puddle = solution.SpillAt(coordinates, "PuddleSmear");
                 Assert.Null(puddle);
             });
@@ -154,7 +125,7 @@ namespace Content.IntegrationTests.Tests.Fluids
             // Spawn a puddle
             await server.WaitAssertion(() =>
             {
-                var solution = new Solution("water", ReagentUnit.New(amount));
+                var solution = new Solution("water", FixedPoint2.New(amount));
                 puddle = solution.SpillAt(sCoordinates, "PuddleSmear");
 
                 // Check that the puddle was created

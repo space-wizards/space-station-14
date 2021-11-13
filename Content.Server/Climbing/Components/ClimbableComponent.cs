@@ -67,7 +67,7 @@ namespace Content.Server.Climbing.Components
         /// <returns></returns>
         private bool CanVault(IEntity user, IEntity target, out string reason)
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user.Uid))
             {
                 reason = Loc.GetString("comp-climbable-cant-interact");
                 return false;
@@ -107,7 +107,7 @@ namespace Content.Server.Climbing.Components
         /// <returns></returns>
         private bool CanVault(IEntity user, IEntity dragged, IEntity target, out string reason)
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user.Uid))
             {
                 reason = Loc.GetString("comp-climbable-cant-interact");
                 return false;

@@ -14,7 +14,7 @@ using static Content.Shared.Inventory.EquipmentSlotDefines;
 namespace Content.Shared.Inventory
 {
     [NetworkedComponent()]
-    public abstract class SharedInventoryComponent : Component, IMoveSpeedModifier
+    public abstract class SharedInventoryComponent : Component
     {
         [Dependency] protected readonly IReflectionManager ReflectionManager = default!;
         [Dependency] protected readonly IDynamicTypeFactory DynamicTypeFactory = default!;
@@ -60,7 +60,9 @@ namespace Content.Shared.Inventory
         }
 
         [Serializable, NetSerializable]
+#pragma warning disable 618
         public class ClientInventoryMessage : ComponentMessage
+#pragma warning restore 618
         {
             public Slots Inventoryslot;
             public ClientInventoryUpdate Updatetype;
@@ -84,7 +86,9 @@ namespace Content.Shared.Inventory
         /// Component message for opening the Storage UI of item in Slot
         /// </summary>
         [Serializable, NetSerializable]
+#pragma warning disable 618
         public class OpenSlotStorageUIMessage : ComponentMessage
+#pragma warning restore 618
         {
             public Slots Slot;
 
@@ -94,8 +98,5 @@ namespace Content.Shared.Inventory
                 Slot = slot;
             }
         }
-
-        public abstract float WalkSpeedModifier { get; }
-        public abstract float SprintSpeedModifier { get; }
     }
 }

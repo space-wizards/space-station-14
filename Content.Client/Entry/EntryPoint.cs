@@ -91,6 +91,8 @@ namespace Content.Client.Entry
             prototypes.RegisterIgnore("aiFaction");
             prototypes.RegisterIgnore("behaviorSet");
             prototypes.RegisterIgnore("advertisementsPack");
+            prototypes.RegisterIgnore("metabolizerType");
+            prototypes.RegisterIgnore("metabolismGroup");
 
             ClientContentIoC.Register();
 
@@ -176,7 +178,6 @@ namespace Content.Client.Entry
             IoCManager.Resolve<ISandboxManager>().Initialize();
             IoCManager.Resolve<IClientPreferencesManager>().Initialize();
             IoCManager.Resolve<IStationEventManager>().Initialize();
-            IoCManager.Resolve<IAdminMenuManager>().Initialize();
             IoCManager.Resolve<EuiManager>().Initialize();
             IoCManager.Resolve<AlertManager>().Initialize();
             IoCManager.Resolve<ActionManager>().Initialize();

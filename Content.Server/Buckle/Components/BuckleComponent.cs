@@ -148,7 +148,7 @@ namespace Content.Server.Buckle.Components
                 return false;
             }
 
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user.Uid))
             {
                 user.PopupMessage(Loc.GetString("buckle-component-cannot-do-that-message"));
                 return false;
@@ -251,7 +251,9 @@ namespace Content.Server.Buckle.Components
 
             UpdateBuckleStatus();
 
+#pragma warning disable 618
             SendMessage(new BuckleMessage(Owner, to));
+#pragma warning restore 618
 
             if (Owner.TryGetComponent(out SharedPullableComponent? ownerPullable))
             {
@@ -301,7 +303,7 @@ namespace Content.Server.Buckle.Components
                     return false;
                 }
 
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user.Uid))
                 {
                     user.PopupMessage(Loc.GetString("buckle-component-cannot-do-that-message"));
                     return false;
@@ -333,14 +335,16 @@ namespace Content.Server.Buckle.Components
                 EntitySystem.Get<StandingStateSystem>().Stand(Owner.Uid);
             }
 
-            _mobState?.CurrentState?.EnterState(Owner);
+            _mobState?.CurrentState?.EnterState(Owner.Uid, Owner.EntityManager);
 
             UpdateBuckleStatus();
 
             oldBuckledTo.Remove(this);
             SoundSystem.Play(Filter.Pvs(Owner), oldBuckledTo.UnbuckleSound.GetSound(), Owner);
 
+#pragma warning disable 618
             SendMessage(new UnbuckleMessage(Owner, oldBuckledTo.Owner));
+#pragma warning restore 618
 
             return true;
         }

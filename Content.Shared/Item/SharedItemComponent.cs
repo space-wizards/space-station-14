@@ -111,7 +111,7 @@ namespace Content.Shared.Item
         /// </summary>
         public bool CanPickup(IEntity user, bool popup = true)
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanPickup(user))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanPickup(user.Uid))
                 return false;
 
             if (user.Transform.MapID != Owner.Transform.MapID)

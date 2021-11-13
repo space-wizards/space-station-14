@@ -11,12 +11,12 @@ namespace Content.Shared.MobState.State
     {
         protected override DamageState DamageState => DamageState.Alive;
 
-        public override void EnterState(IEntity entity)
+        public override void EnterState(EntityUid uid, IEntityManager entityManager)
         {
-            base.EnterState(entity);
-            EntitySystem.Get<StandingStateSystem>().Stand(entity.Uid);
+            base.EnterState(uid, entityManager);
+            EntitySystem.Get<StandingStateSystem>().Stand(uid);
 
-            if (entity.TryGetComponent(out SharedAppearanceComponent? appearance))
+            if (entityManager.TryGetComponent(uid, out SharedAppearanceComponent? appearance))
             {
                 appearance.SetData(DamageStateVisuals.State, DamageState.Alive);
             }

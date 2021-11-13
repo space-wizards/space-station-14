@@ -1,9 +1,12 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Content.Server.Access.Components;
+using Content.Server.Access.Systems;
 using Content.Server.Cargo.Components;
 using Content.Shared.Cargo;
 using Content.Shared.GameTicking;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Cargo
 {
@@ -42,6 +45,9 @@ namespace Content.Server.Cargo
         public CargoBankAccount StationAccount => GetBankAccount(0);
 
         public CargoOrderDatabase StationOrderDatabase => GetOrderDatabase(0);
+
+        [Dependency] private readonly IdCardSystem _idCardSystem = default!;
+        [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
 
         public override void Initialize()
         {
@@ -171,12 +177,25 @@ namespace Content.Server.Cargo
             return true;
         }
 
-        public bool ApproveOrder(int id, int orderNumber)
+        public bool ApproveOrder(EntityUid uid, EntityUid approver, int id, int orderNumber, AccessReader? reader = null)
         {
+            // does the approver have permission to approve orders?
+            if (Resolve(uid, ref reader) && !_accessReaderSystem.IsAllowed(reader, approver))
+                return false;
+
+            // get the approver's name
+            _idCardSystem.TryFindIdCard(approver, out var idCard);
+            var approverName = idCard?.FullName ?? string.Empty;
+
             if (!TryGetOrderDatabase(id, out var database))
                 return false;
-            if (!database.ApproveOrder(orderNumber))
+
+            if (!database.TryGetOrder(orderNumber, out var order))
                 return false;
+
+            if (!database.ApproveOrder(approverName, orderNumber))
+                return false;
+
             SyncComponentsWithId(id);
             return true;
         }

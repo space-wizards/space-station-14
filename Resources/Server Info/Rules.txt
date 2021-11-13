@@ -2,23 +2,37 @@
 
 [color=#a4885c]1.[/color] Don’t be a dick. We’re all here to have fun. Antagonists have leeway here since ruining the round is kind of their job, but try to keep it interesting if you’re antag.
 
-[color=#a4885c]2.[/color] Erotic Roleplay (ERP) is [color=#ff0000]not allowed under any circumstance[/color].
+[color=#a4885c]2.[/color] These are english servers. Do not speak other languages in IC or OOC, our staff cannot moderate it and you will be asked to stop.
 
-[color=#a4885c]3.[/color] Harassment of other players for OOC/meta reasons is [color=#ff0000]not allowed[/color].
+[color=#a4885c]3.[/color] These servers are "Low Roleplay", meaning that while you don't need to be perfectly in character, basic roleplaying standards like not using emoji/emoticons or textspeak (:), :D, xD, lol, etc.) in speech, and using real names for characters, are expected to be followed.
+
+[color=#a4885c]4.[/color] Follow basic common sense, you cannot murder someone because they slipped you on a banana, or gun down the captain because the shuttle was recalled.
+    - This isn't a deathmatch, be humane.
+    - What is considered a reasonable reason to kill someone is at the discretion of staff.
+
+[color=#a4885c]5.[/color] Erotic Roleplay (ERP) is [color=#ff0000]not allowed under any circumstance[/color].
+
+[color=#a4885c]6.[/color] Harassment of other players for OOC/meta reasons is [color=#ff0000]not allowed[/color].
 	- Annoying somebody in a round for IC/RP reasons is fine. Doing it consistently across multiple rounds for OOC reasons (“I don’t like this 		  player” AKA metagrudging) to the point where it becomes seriously problematic for the other player(s) is [color=#ff0000]not[/color].
 
-[color=#a4885c]4.[/color] Hate speech, slurs and bigotry are not allowed.
+[color=#a4885c]7.[/color] Hate speech, slurs and bigotry are not allowed.
 	- Intentionally seeking to demean others due to their actual or perceived race, sex, gender, orientation or the like is not tolerated.
 	- Words that are closely tied to real life slurs are [color=#ff0000]not allowed[/color].
 
-[color=#a4885c]5.[/color] Offensive/bad character names put you at the mercy of administrators, from receiving brain damage to becoming valid to straight up getting banned on the spot depending on how bad they are.
+[color=#a4885c]8.[/color] Offensive/bad/out-of-character character names put you at the mercy of administrators, from receiving brain damage to becoming valid to straight up getting banned on the spot depending on how bad they are. Character names should be something a real person might have for a name.
 
-[color=#a4885c]6.[/color] Knowingly performing activities that can slowdown or crash the server is [color=#ff0000]not allowed[/color].
+[color=#a4885c]9.[/color] Knowingly using exploits or other unintended game mechanics to powergame, slow down, or crash the server is [color=#ff0000]not allowed[/color].
 
-[color=#a4885c]7.[/color] Multi-keying/Alts on the same server is [color=#ff0000]not allowed[/color].
+[color=#a4885c]10.[/color] Multi-keying/Alts on the same server is [color=#ff0000]not allowed[/color].
 	- Admins may ask players in possession of multiple alt accounts to choose one to play on and ban the other accounts.
 	- If you are caught knowingly using alt accounts you may have your main account banned as well.
 
-[color=#a4885c]8.[/color] Using information gained outside the game to your advantage is [color=#ff0000]not allowed[/color]. IC and OOC are to be kept separate at all times.
+[color=#a4885c]11.[/color] Using information gained outside the game to your advantage is [color=#ff0000]not allowed[/color]. IC and OOC are to be kept separate at all times.
 	- Metacommunication, or communicating with other players via out of game methods (such as Discord) to gain an unfair advantage is also strictly [color=#ff0000]prohibited[/color].
 	- Random PDA checks are also [color=#ff0000]prohibited[/color] under this rule.
+
+RULES FOR SECURITY
+[color=#a4885c]12.[/color] Security is expected to use non-lethal measures unless faced with lethal force or a situation where non-lethal measures aren't possible. Ideally, do not enter combat mode, as security stun batons do not deal damage, but still stun, when outside of combat mode.
+    - If you still manage to kill someone as security, get them cloned immediately, and make sure their stuff is returned.
+
+[color=#a4885c]13.[/color] Locking people in brig (jail) indefinitely is seldom necessary. Prison stays should be at most 5 minutes, and if you have reason to permabrig someone (consistent breakouts, murderous intent, etc.) you likely also have reason to execute.

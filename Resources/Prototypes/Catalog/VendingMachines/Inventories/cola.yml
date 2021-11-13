@@ -5,10 +5,11 @@
   spriteName: cola
   startingInventory:
     DrinkColaCan: 10
+    DrinkEnergyDrinkCan: 10
     DrinkGrapeCan: 10
-    DrinkIceTeaCan: 10
+    DrinkIcedTeaCan: 10
     DrinkLemonLimeCan: 10
     DrinkSpaceMountainWindCan: 10
     DrinkSpaceUpCan: 10
     DrinkStarkistCan: 10
-    DrinkThirteenLokoCan: 10
+    DrinkFourteenLokoCan: 10

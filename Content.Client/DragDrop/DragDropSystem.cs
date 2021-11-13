@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Content.Client.State;
 using Content.Client.Viewport;
+using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
@@ -37,7 +38,7 @@ namespace Content.Client.DragDrop
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
         [Dependency] private readonly InputSystem _inputSystem = default!;
-        [Dependency] private readonly QuerySystem _query = default!;
+        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
 
         // how often to recheck possible targets (prevents calling expensive
         // check logic each update)
@@ -193,7 +194,7 @@ namespace Content.Client.DragDrop
                 dragSprite.Color = dragSprite.Color.WithAlpha(0.7f);
                 // keep it on top of everything
                 dragSprite.DrawDepth = (int) DrawDepth.Overlays;
-                if (dragSprite.Directional)
+                if (!dragSprite.NoRotation)
                 {
                     _dragShadow.Transform.WorldRotation = _dragDropHelper.Dragged.Transform.WorldRotation;
                 }
@@ -370,7 +371,7 @@ namespace Content.Client.DragDrop
             // TODO: Duplicated in SpriteSystem
             var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition).Position;
             var bounds = new Box2(mousePos - 1.5f, mousePos + 1.5f);
-            var pvsEntities = _query.GetEntitiesIntersecting(_eyeManager.CurrentMap, bounds);
+            var pvsEntities = IoCManager.Resolve<IEntityLookup>().GetEntitiesIntersecting(_eyeManager.CurrentMap, bounds, LookupFlags.Approximate | LookupFlags.IncludeAnchored);
             foreach (var pvsEntity in pvsEntities)
             {
                 if (!pvsEntity.TryGetComponent(out ISpriteComponent? inRangeSprite) ||
@@ -414,6 +415,11 @@ namespace Content.Client.DragDrop
         /// <returns>null if the target doesn't support IDragDropOn</returns>
         private bool? ValidDragDrop(DragDropEvent eventArgs)
         {
+            if (!_actionBlockerSystem.CanInteract(eventArgs.User.Uid))
+            {
+                return false;
+            }
+
             bool? valid = null;
 
             foreach (var comp in eventArgs.Target.GetAllComponents<IDragDropOn>())

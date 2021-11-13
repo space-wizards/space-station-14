@@ -1,5 +1,5 @@
 using System;
-using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Maths;

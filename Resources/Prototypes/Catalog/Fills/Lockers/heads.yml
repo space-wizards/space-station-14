@@ -35,6 +35,8 @@
     contents:
       - id: NukeDisk
         prob: 1
+      - id: PinpointerNuclear
+        prob: 1
       - id: CaptainIDCard
         prob: 1
       - id: ClothingHeadHatCaptain

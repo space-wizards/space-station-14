@@ -5,7 +5,6 @@ using System.IO;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using Content.Shared;
 using Content.Shared.CCVar;
 using Content.Shared.Preferences;
 using Microsoft.Data.Sqlite;
@@ -313,6 +312,9 @@ namespace Content.Server.Database
                 Username = user,
                 Password = pass
             }.ConnectionString;
+
+            Logger.DebugS("db.manager", $"Using Postgres \"{host}:{port}/{db}\"");
+
             builder.UseNpgsql(connectionString);
             SetupLogging(builder);
             return builder.Options;
@@ -329,10 +331,12 @@ namespace Content.Server.Database
             if (!inMemory)
             {
                 var finalPreferencesDbPath = Path.Combine(_res.UserData.RootDir!, configPreferencesDbPath);
+                Logger.DebugS("db.manager", $"Using SQLite DB \"{finalPreferencesDbPath}\"");
                 connection = new SqliteConnection($"Data Source={finalPreferencesDbPath}");
             }
             else
             {
+                Logger.DebugS("db.manager", $"Using in-memory SQLite DB");
                 connection = new SqliteConnection("Data Source=:memory:");
                 // When using an in-memory DB we have to open it manually
                 // so EFCore doesn't open, close and wipe it.
@@ -377,8 +381,8 @@ namespace Content.Server.Database
                 _sawmill = sawmill;
             }
 
-            public void Log<TState>(MSLogLevel logLevel, EventId eventId, TState state, Exception exception,
-                Func<TState, Exception, string> formatter)
+            public void Log<TState>(MSLogLevel logLevel, EventId eventId, TState state, Exception? exception,
+                Func<TState, Exception?, string> formatter)
             {
                 var lvl = logLevel switch
                 {

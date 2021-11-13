@@ -20,7 +20,7 @@ namespace Content.Server.Storage.EntitySystems
             var count = 0;
             foreach (var entity in component.StoredEntities)
             {
-                if (itemCounter.Count.IsValid(entity)) count++;
+                if (itemCounter.Count.IsValid(entity.Uid)) count++;
             }
 
             return count;

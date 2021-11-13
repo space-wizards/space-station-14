@@ -56,4 +56,19 @@
       - id: CigarCase
         orGroup: Cigars
       - id: Matchbox
-        amount: 2
+        amount: 2 
+
+- type: entity
+  id: CrateServiceCustomSmokable
+  name: DIY smokeables crate
+  description: Want to get a little creative with what you use to destroy your lungs? Then this crate is for you! Has everything you need to roll your own Cigarettes.
+  parent: CrateGenericonimo
+  components:
+  - type: StorageFill
+    contents:
+    - id: PackPaperRolling
+    - id: CigaretteFilter
+      amount: 8
+    - id: GroundTobacco
+      amount: 4
+    - id: Matchbox

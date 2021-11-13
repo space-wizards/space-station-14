@@ -20,6 +20,8 @@ using Robust.Shared.Physics;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 
+#pragma warning disable 618
+
 namespace Content.Shared.Interaction
 {
     /// <summary>
@@ -352,7 +354,7 @@ namespace Content.Shared.Interaction
             return inRange;
         }
 
-        public async Task<bool> InteractDoBefore(
+        public bool InteractDoBefore(
             IEntity user,
             IEntity used,
             IEntity? target,
@@ -371,10 +373,10 @@ namespace Content.Shared.Interaction
         /// </summary>
         public async Task InteractUsing(IEntity user, IEntity used, IEntity target, EntityCoordinates clickLocation)
         {
-            if (!_actionBlockerSystem.CanInteract(user))
+            if (!_actionBlockerSystem.CanInteract(user.Uid))
                 return;
 
-            if (await InteractDoBefore(user, used, target, clickLocation, true))
+            if (InteractDoBefore(user, used, target, clickLocation, true))
                 return;
 
             // all interactions should only happen when in range / unobstructed, so no range check is needed
@@ -442,7 +444,7 @@ namespace Content.Shared.Interaction
                 delayComponent.BeginDelay();
             }
 
-            if (!_actionBlockerSystem.CanInteract(user) || !_actionBlockerSystem.CanUse(user))
+            if (!_actionBlockerSystem.CanInteract(user.Uid) || !_actionBlockerSystem.CanUse(user.Uid))
                 return;
 
             // all activates should only fire when in range / unobstructed
@@ -472,7 +474,7 @@ namespace Content.Shared.Interaction
         /// <param name="used"></param>
         public void TryUseInteraction(IEntity user, IEntity used, bool altInteract = false)
         {
-            if (user != null && used != null && _actionBlockerSystem.CanUse(user))
+            if (user != null && used != null && _actionBlockerSystem.CanUse(user.Uid))
             {
                 if (altInteract)
                     AltInteract(user, used);
@@ -528,7 +530,7 @@ namespace Content.Shared.Interaction
                 if (verb.Disabled)
                     continue;
 
-                _verbSystem.TryExecuteVerb(verb);
+                _verbSystem.ExecuteVerb(verb);
                 break;
             }
         }
@@ -541,7 +543,7 @@ namespace Content.Shared.Interaction
         /// </summary>
         public bool TryThrowInteraction(IEntity user, IEntity item)
         {
-            if (user == null || item == null || !_actionBlockerSystem.CanThrow(user)) return false;
+            if (user == null || item == null || !_actionBlockerSystem.CanThrow(user.Uid)) return false;
 
             ThrownInteraction(user, item);
             return true;
@@ -658,7 +660,7 @@ namespace Content.Shared.Interaction
         /// </summary>
         public bool TryDroppedInteraction(IEntity user, IEntity item, bool intentional)
         {
-            if (user == null || item == null || !_actionBlockerSystem.CanDrop(user)) return false;
+            if (user == null || item == null || !_actionBlockerSystem.CanDrop(user.Uid)) return false;
 
             DroppedInteraction(user, item, intentional);
             return true;
@@ -670,7 +672,7 @@ namespace Content.Shared.Interaction
         /// </summary>
         public void DroppedInteraction(IEntity user, IEntity item, bool intentional)
         {
-            var dropMsg = new DroppedEvent(user, item, intentional);
+            var dropMsg = new DroppedEvent(user.Uid, item.Uid, intentional);
             RaiseLocalEvent(item.Uid, dropMsg);
             if (dropMsg.Handled)
                 return;

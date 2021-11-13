@@ -69,10 +69,10 @@ namespace Content.Client.MobState
             }
 
             // So they don't draw over mobs anymore
-            if (_data == DamageState.Dead)
+            if (_data == DamageState.Dead && sprite.DrawDepth > (int) DrawDepth.Items)
             {
                 _originalDrawDepth = sprite.DrawDepth;
-                sprite.DrawDepth = (int) DrawDepth.FloorObjects;
+                sprite.DrawDepth = (int) DrawDepth.Items;
             }
             else if (_originalDrawDepth != null)
             {

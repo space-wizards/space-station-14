@@ -13,10 +13,12 @@ namespace Content.Server.Construction
             if (!Resolve(uid, ref construction))
                 return false;
 
-            // Null means clear pathfinding target.
+            // Clear current target, just in case.
+            ClearPathfinding(uid, construction);
+
+            // Null means clear pathfinding target only.
             if (targetNodeId == null)
             {
-                ClearPathfinding(uid, construction);
                 return true;
             }
 
