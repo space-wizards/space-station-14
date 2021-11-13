@@ -1,4 +1,5 @@
-﻿- type: action
+﻿#This is the action the host gets to control the guardian
+- type: action
   actionType: ManifestGuardian
   icon: Interface/Actions/manifest.png
   name: "Toggle guardian manifestation"
@@ -6,6 +7,6 @@
   filters:
     - guardian
   behaviorType: Instant
-  behavior: !type:ToggleGuarduanAction
-    cooldown: 2.5
+  behavior: !type:ToggleGuardianAction
+    cooldown: 2
   

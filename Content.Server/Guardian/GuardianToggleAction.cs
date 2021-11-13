@@ -18,7 +18,7 @@ namespace Content.Server.Actions.Actions
     /// </summary>
    [UsedImplicitly]
    [DataDefinition]
-    public class ToggleGuarduanAction : IInstantAction
+    public class ToggleGuardianAction : IInstantAction
     {
        [DataField("cooldown")] public float Cooldown { get; [UsedImplicitly] private set; }
 
