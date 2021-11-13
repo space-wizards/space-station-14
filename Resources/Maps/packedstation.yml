@@ -11275,6 +11275,9 @@ entities:
       15,47: 85
       16,47: 85
       17,47: 85
+      87,3: 85
+      87,4: 85
+      87,5: 85
     uniqueMixes:
     - volume: 2500
       temperature: 293.15
@@ -111799,6 +111802,372 @@ entities:
     type: Transform
   - visible: False
     type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 11462
+  type: WarpPoint
+  components:
+  - pos: 10.5,-6.5
+    parent: 0
+    type: Transform
+  - location: EVA Storage
+    type: WarpPoint
+- uid: 11463
+  type: WarpPoint
+  components:
+  - pos: -3.5,-0.5
+    parent: 0
+    type: Transform
+  - location: Arrivals
+    type: WarpPoint
+- uid: 11464
+  type: WarpPoint
+  components:
+  - desc: Head of Personnel
+    type: MetaData
+  - pos: 17.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 11465
+  type: WarpPoint
+  components:
+  - desc: Disposals
+    type: MetaData
+  - pos: 2.5,-30.5
+    parent: 0
+    type: Transform
+  - location: Solars Southeast
+    type: WarpPoint
+- uid: 11466
+  type: WarpPoint
+  components:
+  - pos: 18.5,-26.5
+    parent: 0
+    type: Transform
+  - location: Engineering (Meeting Room)
+    type: WarpPoint
+- uid: 11467
+  type: WarpPoint
+  components:
+  - desc: Atmos
+    type: MetaData
+  - pos: 38.5,-27.5
+    parent: 0
+    type: Transform
+  - location: Atmos
+    type: WarpPoint
+- uid: 11468
+  type: WarpPoint
+  components:
+  - desc: Kitchen and Bar
+    type: MetaData
+  - pos: 35.5,-8.5
+    parent: 0
+    type: Transform
+  - location: Kitchen and Bar
+    type: WarpPoint
+- uid: 11469
+  type: WarpPoint
+  components:
+  - desc: Medbay
+    type: MetaData
+  - pos: 58.5,-3.5
+    parent: 0
+    type: Transform
+  - location: Medbay (South)
+    type: WarpPoint
+- uid: 11470
+  type: WarpPoint
+  components:
+  - desc: Science North
+    type: MetaData
+  - pos: 56.5,24.5
+    parent: 0
+    type: Transform
+  - location: Science (North)
+    type: WarpPoint
+- uid: 11471
+  type: WarpPoint
+  components:
+  - desc: Science South
+    type: MetaData
+  - pos: 58.5,14.5
+    parent: 0
+    type: Transform
+  - location: Science (South)
+    type: WarpPoint
+- uid: 11472
+  type: WarpPoint
+  components:
+  - desc: Medbay East
+    type: MetaData
+  - pos: 75.5,1.5
+    parent: 0
+    type: Transform
+  - location: Medbay (East)
+    type: WarpPoint
+- uid: 11473
+  type: WarpPoint
+  components:
+  - desc: Security South
+    type: MetaData
+  - pos: 35.5,22.5
+    parent: 0
+    type: Transform
+  - location: Security (Central)
+    type: WarpPoint
+- uid: 11474
+  type: WarpPoint
+  components:
+  - desc: Security North
+    type: MetaData
+  - pos: 39.5,33.5
+    parent: 0
+    type: Transform
+  - location: Security (North)
+    type: WarpPoint
+- uid: 11475
+  type: WarpPoint
+  components:
+  - desc: Cargo
+    type: MetaData
+  - pos: 13.5,24.5
+    parent: 0
+    type: Transform
+  - location: Cargo
+    type: WarpPoint
+- uid: 11476
+  type: WarpPoint
+  components:
+  - desc: Bridge
+    type: MetaData
+  - pos: 27.5,45.5
+    parent: 0
+    type: Transform
+  - location: Bridge
+    type: WarpPoint
+- uid: 11477
+  type: WarpPoint
+  components:
+  - desc: Maintenance Northwest
+    type: MetaData
+  - pos: 71.5,43.5
+    parent: 0
+    type: Transform
+- uid: 11478
+  type: WarpPoint
+  components:
+  - desc: DJ Satellite
+    type: MetaData
+  - pos: 107.5,-17.5
+    parent: 0
+    type: Transform
+  - location: DJ Satellite
+    type: WarpPoint
+- uid: 11479
+  type: WarpPoint
+  components:
+  - desc: Maintenance West
+    type: MetaData
+  - pos: 58.5,-15.5
+    parent: 0
+    type: Transform
+  - location: Maint Bar
+    type: WarpPoint
+- uid: 11480
+  type: WarpPoint
+  components:
+  - desc: Library
+    type: MetaData
+  - pos: 14.5,5.5
+    parent: 0
+    type: Transform
+- uid: 11481
+  type: WarpPoint
+  components:
+  - desc: Chapel
+    type: MetaData
+  - pos: 33.5,6.5
+    parent: 0
+    type: Transform
+- uid: 11482
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 51.5,-22.5
+    parent: 0
+    type: Transform
+- uid: 11483
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 52.5,-22.5
+    parent: 0
+    type: Transform
+- uid: 11484
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 53.5,-22.5
+    parent: 0
+    type: Transform
+- uid: 11485
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 54.5,-22.5
+    parent: 0
+    type: Transform
+- uid: 11486
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 54.5,-24.5
+    parent: 0
+    type: Transform
+- uid: 11487
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 53.5,-24.5
+    parent: 0
+    type: Transform
+- uid: 11488
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 52.5,-24.5
+    parent: 0
+    type: Transform
+- uid: 11489
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 51.5,-24.5
+    parent: 0
+    type: Transform
+- uid: 11490
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 51.5,-26.5
+    parent: 0
+    type: Transform
+- uid: 11491
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 52.5,-26.5
+    parent: 0
+    type: Transform
+- uid: 11492
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 53.5,-26.5
+    parent: 0
+    type: Transform
+- uid: 11493
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 54.5,-26.5
+    parent: 0
+    type: Transform
+- uid: 11494
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 54.5,-28.5
+    parent: 0
+    type: Transform
+- uid: 11495
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 53.5,-28.5
+    parent: 0
+    type: Transform
+- uid: 11496
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 52.5,-28.5
+    parent: 0
+    type: Transform
+- uid: 11497
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 51.5,-28.5
+    parent: 0
+    type: Transform
+- uid: 11498
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 51.5,-30.5
+    parent: 0
+    type: Transform
+- uid: 11499
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 52.5,-30.5
+    parent: 0
+    type: Transform
+- uid: 11500
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 53.5,-30.5
+    parent: 0
+    type: Transform
+- uid: 11501
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 54.5,-30.5
+    parent: 0
+    type: Transform
+- uid: 11502
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 39.5,-28.5
+    parent: 0
+    type: Transform
+- uid: 11503
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 38.5,-28.5
+    parent: 0
+    type: Transform
+- uid: 11504
+  type: WarpPoint
+  components:
+  - pos: 20.5,-17.5
+    parent: 0
+    type: Transform
+  - location: Telecomms
+    type: WarpPoint
+- uid: 11505
+  type: WarpPoint
+  components:
+  - pos: 21.5,-40.5
+    parent: 0
+    type: Transform
+  - location: Engineering (PA Chamber)
+    type: WarpPoint
+- uid: 11506
+  type: WarpPoint
+  components:
+  - pos: 35.5,-42.5
+    parent: 0
+    type: Transform
+  - location: Engineering (TEG Room, Unused)
+    type: WarpPoint
+- uid: 11507
+  type: WarpPoint
+  components:
+  - pos: 48.5,1.5
+    parent: 0
+    type: Transform
+  - location: Medbay (Entrance)
+    type: WarpPoint
+- uid: 11508
+  type: WarpPoint
+  components:
+  - pos: 56.5,36.5
+    parent: 0
+    type: Transform
+  - location: AI Chamber (Unused)
+    type: WarpPoint
+- uid: 11509
+  type: ClothingEyesGlassesGarOrange
+  components:
+  - pos: 11.481974,-11.51241
+    parent: 0
+    type: Transform
   - canCollide: False
     type: Physics
 ...
