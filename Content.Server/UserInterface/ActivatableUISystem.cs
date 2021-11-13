@@ -35,22 +35,37 @@ namespace Content.Server.UserInterface
             SubscribeLocalEvent<ActivatableUIComponent, UseInHandEvent>(OnUseInHand);
             SubscribeLocalEvent<ActivatableUIComponent, HandDeselectedEvent>((uid, aui, _) => CloseAll(uid, aui));
             SubscribeLocalEvent<ActivatableUIComponent, UnequippedHandEvent>((uid, aui, _) => CloseAll(uid, aui));
+            // *THIS IS A BLATANT WORKAROUND!* RATIONALE: Microwaves need it
+            SubscribeLocalEvent<ActivatableUIComponent, EntParentChangedMessage>(OnParentChanged);
+            SubscribeLocalEvent<ActivatableUIComponent, BoundUIClosedEvent>(OnUIClose);
         }
 
         private void OnActivate(EntityUid uid, ActivatableUIComponent component, ActivateInWorldEvent args)
         {
             if (args.Handled) return;
             if (component.InHandsOnly) return;
-            args.Handled = InteractInstrument(args.User, component);
+            args.Handled = InteractUI(args.User, component);
         }
 
         private void OnUseInHand(EntityUid uid, ActivatableUIComponent component, UseInHandEvent args)
         {
             if (args.Handled) return;
-            args.Handled = InteractInstrument(args.User, component);
+            args.Handled = InteractUI(args.User, component);
         }
 
-        private bool InteractInstrument(IEntity user, ActivatableUIComponent aui)
+        private void OnParentChanged(EntityUid uid, ActivatableUIComponent aui, ref EntParentChangedMessage args)
+        {
+            CloseAll(uid, aui);
+        }
+
+        private void OnUIClose(EntityUid uid, ActivatableUIComponent component, BoundUIClosedEvent args)
+        {
+            if (args.Session != component.CurrentSingleUser) return;
+            if (args.UiKey != component.Key) return;
+            SetCurrentSingleUser(uid, null, component);
+        }
+
+        private bool InteractUI(IEntity user, ActivatableUIComponent aui)
         {
             if (!user.TryGetComponent(out ActorComponent? actor)) return false;
 

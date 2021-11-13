@@ -75,20 +75,7 @@ namespace Content.Server.UserInterface
         protected override void Initialize()
         {
             base.Initialize();
-
-            // Note the implicit exception thrown if the key is messed up
-            // This is on purpose for fail-fast
-            var ui = UserInterface;
-            if (ui != null)
-                ui.OnClosed += UserInterfaceOnClosed;
-
             _activatableUISystem = EntitySystem.Get<ActivatableUISystem>();
-        }
-
-        private void UserInterfaceOnClosed(IPlayerSession player)
-        {
-            if (player != CurrentSingleUser) return;
-            _activatableUISystem.SetCurrentSingleUser(OwnerUid, null, this);
         }
     }
 }
