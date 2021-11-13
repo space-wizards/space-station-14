@@ -3,6 +3,7 @@ using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
+using Content.Server.Mind.Systems;
 using Content.Server.Players;
 using Content.Server.Suspicion;
 using Content.Server.Suspicion.Roles;
@@ -109,13 +110,14 @@ namespace Content.Server.GameTicking.Presets
                 DebugTools.AssertNotNull(mind?.OwnedEntity);
 
                 var traitorRole = new SuspicionTraitorRole(mind!, antagPrototype);
-                mind!.AddRole(traitorRole);
+                var roleSys = EntitySystem.Get<RolesSystem>();
+                roleSys.AddRole(mind!, traitorRole);
                 traitors.Add(traitorRole);
 
                 // creadth: we need to create uplink for the antag.
                 // PDA should be in place already, so we just need to
                 // initiate uplink account.
-                var uplinkAccount = new UplinkAccount(TraitorStartingBalance, mind.OwnedEntity!.Uid);
+                var uplinkAccount = new UplinkAccount(TraitorStartingBalance, mind!.OwnedEntity!.Uid);
                 var accounts = EntityManager.EntitySysManager.GetEntitySystem<UplinkAccountsSystem>();
                 accounts.AddNewAccount(uplinkAccount);
 
@@ -132,7 +134,8 @@ namespace Content.Server.GameTicking.Presets
 
                 DebugTools.AssertNotNull(mind);
 
-                mind!.AddRole(new SuspicionInnocentRole(mind, antagPrototype));
+                var roleSys = EntitySystem.Get<RolesSystem>();
+                roleSys.AddRole(mind!, new SuspicionInnocentRole(mind!, antagPrototype));
             }
 
             foreach (var traitor in traitors)

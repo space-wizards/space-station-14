@@ -7,6 +7,7 @@ using Content.Server.GameTicking.Rules;
 using Content.Server.Hands.Components;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
+using Content.Server.Mind.Systems;
 using Content.Server.PDA;
 using Content.Server.Players;
 using Content.Server.Spawners.Components;
@@ -76,7 +77,8 @@ namespace Content.Server.GameTicking.Presets
             }
 
             var traitorRole = new TraitorRole(mind);
-            mind.AddRole(traitorRole);
+            var roleSys = EntitySystem.Get<RolesSystem>();
+            roleSys.AddRole(mind, traitorRole);
 
             // Delete anything that may contain "dangerous" role-specific items.
             // (This includes the PDA, as everybody gets the captain PDA in this mode for true-all-access reasons.)

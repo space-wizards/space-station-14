@@ -33,7 +33,7 @@ namespace Content.Server.Mind
     /// </remarks>
     public sealed class Mind
     {
-        private readonly ISet<Role> _roles = new HashSet<Role>();
+        public readonly ISet<Role> _roles = new HashSet<Role>();
 
         private readonly List<Objective> _objectives = new();
 
@@ -155,57 +155,6 @@ namespace Content.Server.Mind
                 // They might actually be alive.
                 return targetMobState.IsDead();
             }
-        }
-
-        /// <summary>
-        ///     Gives this mind a new role.
-        /// </summary>
-        /// <param name="role">The type of the role to give.</param>
-        /// <returns>The instance of the role.</returns>
-        /// <exception cref="ArgumentException">
-        ///     Thrown if we already have a role with this type.
-        /// </exception>
-        public Role AddRole(Role role)
-        {
-            if (_roles.Contains(role))
-            {
-                throw new ArgumentException($"We already have this role: {role}");
-            }
-
-            _roles.Add(role);
-            role.Greet();
-
-            var message = new RoleAddedEvent(role);
-            OwnedEntity?.EntityManager.EventBus.RaiseLocalEvent(OwnedEntity.Uid, message);
-
-            return role;
-        }
-
-        /// <summary>
-        ///     Removes a role from this mind.
-        /// </summary>
-        /// <param name="role">The type of the role to remove.</param>
-        /// <exception cref="ArgumentException">
-        ///     Thrown if we do not have this role.
-        /// </exception>
-        public void RemoveRole(Role role)
-        {
-            if (!_roles.Contains(role))
-            {
-                throw new ArgumentException($"We do not have this role: {role}");
-            }
-
-            _roles.Remove(role);
-
-            var message = new RoleRemovedEvent(role);
-            OwnedEntity?.EntityManager.EventBus.RaiseLocalEvent(OwnedEntity.Uid, message);
-        }
-
-        public bool HasRole<T>() where T : Role
-        {
-            var t = typeof(T);
-
-            return _roles.Any(role => role.GetType() == t);
         }
 
         /// <summary>

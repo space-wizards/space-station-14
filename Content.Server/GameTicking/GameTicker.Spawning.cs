@@ -8,6 +8,7 @@ using Content.Server.Ghost.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
+using Content.Server.Mind.Systems;
 using Content.Server.PDA;
 using Content.Server.Players;
 using Content.Server.Roles;
@@ -80,7 +81,7 @@ namespace Content.Server.GameTicking
 
             var jobPrototype = _prototypeManager.Index<JobPrototype>(jobId);
             var job = new Job(data.Mind, jobPrototype);
-            data.Mind.AddRole(job);
+            _roleSys.AddRole(data.Mind, job);
 
             if (lateJoin)
             {

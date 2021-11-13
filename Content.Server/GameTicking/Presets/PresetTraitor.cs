@@ -5,6 +5,7 @@ using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
+using Content.Server.Mind.Systems;
 using Content.Server.Objectives.Interfaces;
 using Content.Server.PDA;
 using Content.Server.Players;
@@ -131,7 +132,8 @@ namespace Content.Server.GameTicking.Presets
                     continue;
 
                 var traitorRole = new TraitorRole(mind);
-                mind.AddRole(traitorRole);
+                var roleSys = EntitySystem.Get<RolesSystem>();
+                roleSys.AddRole(mind, traitorRole);
                 _traitors.Add(traitorRole);
             }
 

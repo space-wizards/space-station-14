@@ -1,6 +1,8 @@
-﻿using Content.Server.Objectives.Interfaces;
+﻿using Content.Server.Mind.Systems;
+using Content.Server.Objectives.Interfaces;
 using Content.Server.Traitor;
 using JetBrains.Annotations;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Objectives.Requirements
@@ -11,7 +13,8 @@ namespace Content.Server.Objectives.Requirements
     {
         public bool CanBeAssigned(Mind.Mind mind)
         {
-            return mind.HasRole<TraitorRole>();
+            var roleSys = EntitySystem.Get<RolesSystem>();
+            return roleSys.HasRole<TraitorRole>(mind);
         }
     }
 }
