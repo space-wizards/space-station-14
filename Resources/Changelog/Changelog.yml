@@ -1,10 +1,4 @@
 Entries:
-- author: SweptWasTaken
-  changes:
-  - {message: Added corgi/cat spawners to Saltern, type: Add}
-  - {message: Chemistry is more secure on Saltern, type: Tweak}
-  id: 80
-  time: '2021-03-13T09:27:53.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Increased cloning time from 10 seconds to 2 minutes, type: Tweak}
@@ -2828,3 +2822,10 @@ Entries:
   - {message: Docking airlocks have been mapped onto Saltern's arrivals., type: Add}
   id: 579
   time: '2021-11-13T01:46:27.0000000+00:00'
+- author: FoLoKe
+  changes:
+  - {message: 'added "one hand" mechanic to the monkeys, improvise', type: Add}
+  - {message: added ability for animals to receive damage from bullets, type: Fix}
+  - {message: offcentered some sprites to match animal physical body, type: Fix}
+  id: 580
+  time: '2021-11-13T01:48:06.0000000+00:00'
