@@ -21,7 +21,7 @@ namespace Content.Server.Guardian
         /// <summary>
         /// Guardian hosted within the component
         /// </summary>
-        public EntityUid _hostedguardian;
+        public EntityUid Hostedguardian;
 
         /// <summary>
         /// Container which holds the guardian

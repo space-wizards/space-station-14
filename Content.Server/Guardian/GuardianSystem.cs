@@ -1,5 +1,3 @@
-using Content.Server.Actions.Actions;
-using Content.Server.Lathe.Components;
 using Content.Server.Popups;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
@@ -7,20 +5,12 @@ using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.MobState;
-using Content.Shared.MobState.Components;
 using Content.Shared.MobState.EntitySystems;
 using Content.Shared.Popups;
-using JetBrains.Annotations;
 using Robust.Shared.Audio;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
-using Robust.Shared.Map;
 using Robust.Shared.Player;
-using System;
-using System.Timers;
 
 namespace Content.Server.Guardian
 {
@@ -38,24 +28,21 @@ namespace Content.Server.Guardian
         }
 
         /// <summary>
-        /// Triggers when the host recives damage which puts in either critical or killed state
+        /// Triggers when the host recives damage which puts the host in either critical or killed state
         /// </summary>
-        /// <param name="uid"></param>
-        /// <param name="component"></param>
-        /// <param name="args"></param>
         private void OnHostStateChange(EntityUid uid, GuardianHostComponent component, MobStateChangedEvent args)
         {
-            if (EntityManager.GetEntity(component._hostedguardian) != null)
+            if (EntityManager.GetEntity(component.Hostedguardian) != null)
             {
                 if (args.State.IsCritical())
                 {
-                    var guard = EntityManager.GetEntity(component._hostedguardian);
+                    var guard = EntityManager.GetEntity(component.Hostedguardian);
                     guard.PopupMessage(Loc.GetString("guardian-host-critical-warn"));
                     SoundSystem.Play(Filter.Local(), "/Audio/Effects/guardian_warn.ogg", uid);
                 }
                 else if (args.State.IsDead())
                 {
-                    var guard = EntityManager.GetEntity(component._hostedguardian);
+                    var guard = EntityManager.GetEntity(component.Hostedguardian);
                     SoundSystem.Play(Filter.Pvs(guard), "/Audio/Voice/Human/malescream_guardian.ogg", uid, AudioHelpers.WithVariation(0.25f));
                     EntityManager.QueueDeleteEntity(guard);
                     EntityManager.QueueDeleteEntity(uid);
@@ -65,21 +52,22 @@ namespace Content.Server.Guardian
 
         private void OnGuardianDamaged(EntityUid uid, GuardianComponent component, DamageChangedEvent args)
         {
-            var guardiandamage = EntityManager.GetEntity(uid).EnsureComponent<DamageableComponent>();
-            var hostdamage = EntityManager.GetEntity(component.Host).EnsureComponent<DamageableComponent>();
-            if (args.DamageDelta != null)
+            if (EntityManager.GetEntity(uid).TryGetComponent<DamageableComponent>(out DamageableComponent? guardiandamage))
             {
-                EntitySystem.Get<DamageableSystem>().SetDamage(hostdamage, (hostdamage.Damage + args.DamageDelta * component.DamagePercent));
-                hostdamage.Owner.PopupMessage(Loc.GetString("guardian-entity-taking-damage"));
-            }
+                if (EntityManager.GetEntity(component.Host).TryGetComponent<DamageableComponent>(out DamageableComponent? hostdamage))
+                {
+                    if (args.DamageDelta != null)
+                    {
+                        EntitySystem.Get<DamageableSystem>().SetDamage(hostdamage, (hostdamage.Damage + args.DamageDelta * component.DamagePercent));
+                        hostdamage.Owner.PopupMessage(Loc.GetString("guardian-entity-taking-damage"));
+                    }
+                }          
+            }              
         }
 
         /// <summary>
         /// Triggers while trying to examine an activator to see if it's used
         /// </summary>
-        /// <param name="uid"></param>
-        /// <param name="component"></param>
-        /// <param name="args"></param>
         private void OnActivatorExamined(EntityUid uid, GuardianCreatorComponent component, ExaminedEvent args)
         {
            if (component.Used == true)
@@ -92,9 +80,6 @@ namespace Content.Server.Guardian
         /// <summary>
         /// Adds the guardian host component to the user and spawns the guardian inside said component
         /// </summary>
-        /// <param name="uid"></param>
-        /// <param name="component"></param>
-        /// <param name="args"></param>
         private void OnGuardianCreated(EntityUid uid, GuardianCreatorComponent component, UseInHandEvent args)
         {
             //Only works if the guardian isn't already present. NOTE: this is up to preference, we can probably later allow
@@ -108,10 +93,9 @@ namespace Content.Server.Guardian
                         var hostcomp = args.User.AddComponent<GuardianHostComponent>();
                         var guardian = EntityManager.SpawnEntity(component.GuardianType, hostcomp.Owner.Transform.Coordinates);
                         hostcomp.GuardianContainer.Insert(guardian);
-                        hostcomp._hostedguardian = guardian.Uid;
+                        hostcomp.Hostedguardian = guardian.Uid;
                         //Ensures the guardian component on the supposed guardian entity and fills out it's synced parametres
                         var guardiancomp = guardian.EnsureComponent<GuardianComponent>();
-                        guardiancomp.Guardian = guardian.Uid;
                         guardiancomp.Host = args.User.Uid;
                         //Grant the user the recall action and notify them
                         action.Grant(ActionType.ManifestGuardian);
@@ -139,16 +123,13 @@ namespace Content.Server.Guardian
         /// <summary>
         /// Called every time the host moves, to make sure the distance between the host and the guardian isn't too far
         /// </summary>
-        /// <param name="uid"></param>
-        /// <param name="component"></param>
-        /// <param name="args"></param>
         private void OnGuardianHostMove(EntityUid uid, GuardianHostComponent component, ref MoveEvent args)
         {
-            var guardcomp = EntityManager.GetEntity(component._hostedguardian).GetComponent<GuardianComponent>();
-            if (guardcomp.Guardianloose == true)
+            var guardcomp = EntityManager.GetEntity(component.Hostedguardian).GetComponent<GuardianComponent>();
+            if (guardcomp.guardianLoose == true)
             {
                 var host = EntityManager.GetEntity(uid);
-                var guardian = EntityManager.GetEntity(guardcomp.Guardian);
+                var guardian = EntityManager.GetEntity(guardcomp.OwnerUid);
                 //Compares the distance to allowed distance, otherwise forces a recall action from the host
                 if (!guardian.Transform.Coordinates.InRange(EntityManager, host.Transform.Coordinates, guardcomp.DistanceAllowed))
                 {
@@ -160,12 +141,9 @@ namespace Content.Server.Guardian
         /// <summary>
         /// Called every time the guardian moves: makes sure it's not out of it's allowed distance
         /// </summary>
-        /// <param name="uid"></param>
-        /// <param name="component"></param>
-        /// <param name="args"></param>
         private void OnGuardianMove(EntityUid uid, GuardianComponent component, ref MoveEvent args)
         {
-            if (component.Guardianloose == true)
+            if (component.guardianLoose == true)
             {
                 var guardian = EntityManager.GetEntity(uid);
                 var host = EntityManager.GetEntity(component.Host);
@@ -179,7 +157,7 @@ namespace Content.Server.Guardian
 
         public void OnGuardianManifestAction(EntityUid guardian, EntityUid host)
         {
-            var guardianloose = EntityManager.GetEntity(guardian).GetComponent<GuardianComponent>().Guardianloose;
+            var guardianloose = EntityManager.GetEntity(guardian).GetComponent<GuardianComponent>().guardianLoose;
             //the loose parameter toggling is inside the shared component
             if (guardianloose == false)
             {
@@ -194,7 +172,7 @@ namespace Content.Server.Guardian
                 EntityManager.GetEntity(host).GetComponent<GuardianHostComponent>().GuardianContainer.Insert(EntityManager.GetEntity(guardian));
             }
             //Update the guardian loose value
-            EntityManager.GetEntity(guardian).GetComponent<GuardianComponent>().Guardianloose = !guardianloose;
+            EntityManager.GetEntity(guardian).GetComponent<GuardianComponent>().guardianLoose = !guardianloose;
         }
     }
 }

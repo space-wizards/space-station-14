@@ -26,7 +26,7 @@ namespace Content.Server.Actions.Actions
         {
            if (args.Performer.TryGetComponent<GuardianHostComponent>(out GuardianHostComponent? comp))
            {
-                var actionguardian = comp._hostedguardian;
+                var actionguardian = comp.Hostedguardian;
                 EntitySystem.Get<GuardianSystem>().OnGuardianManifestAction(actionguardian, args.Performer.Uid);
                 args.PerformerActions?.Cooldown(args.ActionType, Cooldowns.SecondsFromNow(Cooldown));
            }

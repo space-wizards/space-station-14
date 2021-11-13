@@ -19,11 +19,6 @@ namespace Content.Server.Guardian
         public override string Name => "Guardian";
 
         /// <summary>
-        /// The guardian entity
-        /// </summary>
-        public EntityUid Guardian;
-
-        /// <summary>
         /// The guardian host entity
         /// </summary>
         public EntityUid Host;
@@ -41,7 +36,7 @@ namespace Content.Server.Guardian
         /// <summary>
         /// If the guardian is currently manifested
         /// </summary>
-        public bool Guardianloose = false;
+        public bool guardianLoose = false;
 
     }
 }
