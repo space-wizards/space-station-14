@@ -88,6 +88,8 @@ namespace Content.Server.Construction.Commands
                 valid |= childEntity.HasComponent<CableComponent>();
                 // anything else that might need this forced
                 valid |= childEntity.HasTag("ForceFixRotations");
+                // override
+                valid &= !childEntity.HasTag("ForceNoFixRotations");
 
                 if (!valid)
                 {

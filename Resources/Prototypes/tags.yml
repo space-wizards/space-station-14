@@ -229,3 +229,6 @@
 - type: Tag
   id: ForceFixRotations # fixrotations command WILL target this
 
+- type: Tag
+  id: ForceNoFixRotations # fixrotations command WON'T target this
+
