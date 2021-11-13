@@ -126,7 +126,7 @@ namespace Content.Server.Administration
         {
             var name = session.Name;
             var username = session.AttachedEntity?.Name ?? string.Empty;
-            var antag = session.ContentData()?.Mind?.AllRoles.Any(r => r.Antagonist) ?? false;
+            var antag = session.ContentData()?.Mind?.Roles.Any(r => r.Antagonist) ?? false;
             var uid = session.AttachedEntity?.Uid ?? EntityUid.Invalid;
 
             return new PlayerInfo(name, username, antag, uid, session.UserId);

@@ -186,7 +186,7 @@ namespace Content.Server.GameTicking.Presets
                 traitor.Mind.TryGetSession(out var session);
                 var username = session?.Name;
 
-                var objectives = traitor.Mind.AllObjectives.ToArray();
+                var objectives = traitor.Mind.Objectives.ToArray();
                 if (objectives.Length == 0)
                 {
                     if (username != null)

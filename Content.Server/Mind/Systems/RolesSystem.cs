@@ -20,12 +20,12 @@ namespace Content.Server.Mind.Systems
         /// </exception>
         public Role AddRole(Mind mind, Role role)
         {
-            if (mind._roles.Contains(role))
+            if (mind.Roles.Contains(role))
             {
                 throw new ArgumentException($"We already have this role: {role}");
             }
 
-            mind._roles.Add(role);
+            mind.Roles.Add(role);
             role.Greet();
 
             var message = new RoleAddedEvent(role);
@@ -44,12 +44,12 @@ namespace Content.Server.Mind.Systems
         /// </exception>
         public void RemoveRole(Mind mind, Role role)
         {
-            if (!mind._roles.Contains(role))
+            if (!mind.Roles.Contains(role))
             {
                 throw new ArgumentException($"We do not have this role: {role}");
             }
 
-            mind._roles.Remove(role);
+            mind.Roles.Remove(role);
 
             var message = new RoleRemovedEvent(role);
             mind.OwnedEntity?.EntityManager.EventBus.RaiseLocalEvent(mind.OwnedEntity.Uid, message);

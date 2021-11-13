@@ -46,7 +46,7 @@ namespace Content.Server.Objectives
 
             if (!CanBeDuplicateAssignment)
             {
-                foreach (var objective in mind.AllObjectives)
+                foreach (var objective in mind.Objectives)
                 {
                     if (objective.Prototype.ID == ID) return false;
                 }

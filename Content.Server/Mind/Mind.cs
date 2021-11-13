@@ -33,9 +33,19 @@ namespace Content.Server.Mind
     /// </remarks>
     public sealed class Mind
     {
-        public readonly ISet<Role> _roles = new HashSet<Role>();
+        /// <summary>
+        ///     A set of all the roles this mind has.
+        ///     Don't try to modify this directly, use <see cref="RolesSystem"/> instead.
+        /// </summary>
+        [ViewVariables]
+        public readonly HashSet<Role> Roles = new();
 
-        public readonly List<Objective> _objectives = new();
+        /// <summary>
+        ///     A list of all the objectives this mind has.
+        ///     Don't try to modify this directly, use <see cref="ObjectivesSystem"/> instead.
+        /// </summary>
+        [ViewVariables]
+        public readonly List<Objective> Objectives = new();
 
         /// <summary>
         ///     Creates the new mind attached to a specific player session.
@@ -62,7 +72,7 @@ namespace Content.Server.Mind
         [ViewVariables] public IEntity? CurrentEntity => VisitingEntity ?? OwnedEntity;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public string? CharacterName { get; set; }
+        public string? CharacterName = null;
 
         /// <summary>
         ///     The time of death for this Mind.
@@ -83,18 +93,6 @@ namespace Content.Server.Mind
         /// </summary>
         [ViewVariables]
         public IEntity? OwnedEntity => OwnedComponent?.Owner;
-
-        /// <summary>
-        ///     An enumerable over all the roles this mind has.
-        /// </summary>
-        [ViewVariables]
-        public IEnumerable<Role> AllRoles => _roles;
-
-        /// <summary>
-        ///     An enumerable over all the objectives this mind has.
-        /// </summary>
-        [ViewVariables]
-        public IEnumerable<Objective> AllObjectives => _objectives;
 
         /// <summary>
         ///     The session of the player owning this mind.
@@ -161,7 +159,7 @@ namespace Content.Server.Mind
         {
             var t = typeof(T);
 
-            return _roles.Any(role => role.GetType() == t);
+            return Roles.Any(role => role.GetType() == t);
         }
 
         public void RemoveOwningPlayer()

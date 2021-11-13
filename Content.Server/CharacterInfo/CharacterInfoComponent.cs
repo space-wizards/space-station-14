@@ -30,7 +30,7 @@ namespace Content.Server.CharacterInfo
                         if (mind != null)
                         {
                             // getting conditions
-                            foreach (var objective in mind.AllObjectives)
+                            foreach (var objective in mind.Objectives)
                             {
                                 if (!conditions.ContainsKey(objective.Prototype.Issuer))
                                     conditions[objective.Prototype.Issuer] = new List<ConditionInfo>();
@@ -42,7 +42,7 @@ namespace Content.Server.CharacterInfo
                             }
 
                             // getting jobtitle
-                            foreach (var role in mind.AllRoles)
+                            foreach (var role in mind.Roles)
                             {
                                 if (role.GetType() == typeof(Job))
                                 {

@@ -13,9 +13,9 @@ namespace Content.Server.Mind.Systems
             if (!objectivePrototype.CanBeAssigned(mind))
                 return false;
             var objective = objectivePrototype.GetObjective(mind);
-            if (mind._objectives.Contains(objective))
+            if (mind.Objectives.Contains(objective))
                 return false;
-            mind._objectives.Add(objective);
+            mind.Objectives.Add(objective);
             return true;
         }
 
@@ -25,10 +25,10 @@ namespace Content.Server.Mind.Systems
         /// <returns>Returns true if the removal succeeded.</returns>
         public bool TryRemoveObjective(Mind mind, int index)
         {
-            if (mind._objectives.Count >= index) return false;
+            if (mind.Objectives.Count >= index) return false;
 
-            var objective = mind._objectives[index];
-            mind._objectives.Remove(objective);
+            var objective = mind.Objectives[index];
+            mind.Objectives.Remove(objective);
             return true;
         }
     }

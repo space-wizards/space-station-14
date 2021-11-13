@@ -217,14 +217,14 @@ namespace Content.Server.GameTicking
                 if (mind != null)
                 {
                     _playersInLobby.TryGetValue(ply, out var status);
-                    var antag = mind.AllRoles.Any(role => role.Antagonist);
+                    var antag = mind.Roles.Any(role => role.Antagonist);
                     var playerEndRoundInfo = new RoundEndMessageEvent.RoundEndPlayerInfo()
                     {
                         PlayerOOCName = ply.Name,
                         PlayerICName = mind.CurrentEntity?.Name,
                         Role = antag
-                            ? mind.AllRoles.First(role => role.Antagonist).Name
-                            : mind.AllRoles.FirstOrDefault()?.Name ?? Loc.GetString("game-ticker-unknown-role"),
+                            ? mind.Roles.First(role => role.Antagonist).Name
+                            : mind.Roles.FirstOrDefault()?.Name ?? Loc.GetString("game-ticker-unknown-role"),
                         Antag = antag,
                         Observer = status == LobbyPlayerStatus.Observer,
                     };

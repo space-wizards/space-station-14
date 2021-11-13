@@ -12,7 +12,7 @@ namespace Content.Server.Objectives.Requirements
 
         public bool CanBeAssigned(Mind.Mind mind)
         {
-            foreach (var objective in mind.AllObjectives)
+            foreach (var objective in mind.Objectives)
             {
                 foreach (var condition in objective.Conditions)
                 {
