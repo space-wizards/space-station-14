@@ -10,6 +10,8 @@ using Content.Shared.Tag;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
+using Robust.Shared.Physics;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles
@@ -38,7 +40,7 @@ namespace Content.Server.Shuttles
             {
                 if (comp.Console == null) continue;
 
-                if (!_blocker.CanInteract(comp.Owner))
+                if (!_blocker.CanInteract(comp.OwnerUid))
                 {
                     toRemove.Add(comp);
                 }
@@ -72,7 +74,16 @@ namespace Content.Server.Shuttles
         /// </summary>
         private void HandlePilotMove(EntityUid uid, PilotComponent component, ref MoveEvent args)
         {
-            if (component.Console == null) return;
+            if (component.Console == null || component.Position == null)
+            {
+                DebugTools.Assert(component.Position == null && component.Console == null);
+                EntityManager.RemoveComponent<PilotComponent>(uid);
+                return;
+            }
+
+            if (args.NewPosition.TryDistance(EntityManager, component.Position.Value, out var distance) &&
+                distance < PilotComponent.BreakDistance) return;
+
             RemovePilot(component);
         }
 
@@ -122,7 +133,7 @@ namespace Content.Server.Shuttles
 
         public void AddPilot(IEntity entity, ShuttleConsoleComponent component)
         {
-            if (!_blocker.CanInteract(entity) ||
+            if (!_blocker.CanInteract(entity.Uid) ||
                 !entity.TryGetComponent(out PilotComponent? pilotComponent) ||
                 component.SubscribedPilots.Contains(pilotComponent))
             {
@@ -138,6 +149,7 @@ namespace Content.Server.Shuttles
 
             entity.PopupMessage(Loc.GetString("shuttle-pilot-start"));
             pilotComponent.Console = component;
+            pilotComponent.Position = EntityManager.GetComponent<TransformComponent>(entity.Uid).Coordinates;
             pilotComponent.Dirty();
         }
 
@@ -148,6 +160,7 @@ namespace Content.Server.Shuttles
             if (console is not ShuttleConsoleComponent helmsman) return;
 
             pilotComponent.Console = null;
+            pilotComponent.Position = null;
 
             if (!helmsman.SubscribedPilots.Remove(pilotComponent)) return;
 
@@ -157,7 +170,9 @@ namespace Content.Server.Shuttles
             }
 
             pilotComponent.Owner.PopupMessage(Loc.GetString("shuttle-pilot-end"));
-            EntityManager.RemoveComponent<PilotComponent>(pilotComponent.Owner.Uid);
+
+            if (pilotComponent.LifeStage < ComponentLifeStage.Stopping)
+                EntityManager.RemoveComponent<PilotComponent>(pilotComponent.Owner.Uid);
         }
 
         public void RemovePilot(IEntity entity)

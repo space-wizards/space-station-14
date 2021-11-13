@@ -4,8 +4,6 @@ using Content.Server.Inventory;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
 using Content.Server.Stunnable;
-using Content.Server.Stunnable.Components;
-using Content.Shared.Stunnable;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -49,7 +47,7 @@ namespace Content.IntegrationTests.Tests
         public async Task SpawnItemInSlotTest()
         {
             var options = new ServerIntegrationOptions {ExtraPrototypes = Prototypes};
-            var server = StartServerDummyTicker(options);
+            var server = StartServer(options);
 
             IEntity human = null;
             InventoryComponent inventory = null;

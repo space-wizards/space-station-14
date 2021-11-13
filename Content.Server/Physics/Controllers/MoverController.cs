@@ -99,7 +99,7 @@ namespace Content.Server.Physics.Controllers
             // inputs will do different things.
             // TODO: Do that
             float speedCap;
-            var angularSpeed = 0.75f;
+            var angularSpeed = 0.075f;
 
             // ShuttleSystem has already worked out the ratio so we'll just multiply it back by the mass.
             var movement = (mover.VelocityDir.walking + mover.VelocityDir.sprinting);
@@ -224,7 +224,7 @@ namespace Content.Server.Physics.Controllers
             {
                 // Walking on a tile.
                 var def = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
-                soundToPlay = def.FootstepSounds.GetSound();
+                soundToPlay = def.FootstepSounds?.GetSound();
                 if (string.IsNullOrEmpty(soundToPlay))
                     return;
             }

@@ -6,9 +6,8 @@ using Content.Server.Players;
 using Content.Server.Suspicion;
 using Content.Server.Suspicion.EntitySystems;
 using Content.Server.Suspicion.Roles;
-using Content.Shared;
 using Content.Shared.CCVar;
-using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
 using Content.Shared.Sound;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
@@ -90,7 +89,7 @@ namespace Content.Server.GameTicking.Rules
             foreach (var playerSession in _playerManager.GetAllPlayers())
             {
                 if (playerSession.AttachedEntity == null
-                    || !playerSession.AttachedEntity.TryGetComponent(out IMobStateComponent? mobState)
+                    || !playerSession.AttachedEntity.TryGetComponent(out MobStateComponent? mobState)
                     || !playerSession.AttachedEntity.HasComponent<SuspicionRoleComponent>())
                 {
                     continue;

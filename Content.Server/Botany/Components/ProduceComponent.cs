@@ -1,5 +1,6 @@
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -40,7 +41,7 @@ namespace Content.Server.Botany.Components
                 sprite.LayerSetState(0, Seed.PlantIconState);
             }
 
-            var solutionContainer = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, SolutionName);
+            var solutionContainer = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner.Uid, SolutionName);
             if (solutionContainer == null)
             {
                 Logger.Warning($"No solution container found in {nameof(ProduceComponent)}.");
@@ -50,10 +51,10 @@ namespace Content.Server.Botany.Components
             solutionContainer.RemoveAllSolution();
             foreach (var (chem, quantity) in Seed.Chemicals)
             {
-                var amount = ReagentUnit.New(quantity.Min);
+                var amount = FixedPoint2.New(quantity.Min);
                 if (quantity.PotencyDivisor > 0 && Potency > 0)
-                    amount += ReagentUnit.New(Potency / quantity.PotencyDivisor);
-                amount = ReagentUnit.New((int) MathHelper.Clamp(amount.Float(), quantity.Min, quantity.Max));
+                    amount += FixedPoint2.New(Potency / quantity.PotencyDivisor);
+                amount = FixedPoint2.New((int) MathHelper.Clamp(amount.Float(), quantity.Min, quantity.Max));
                 solutionContainer.MaxVolume += amount;
                 solutionContainer.AddReagent(chem, amount);
             }

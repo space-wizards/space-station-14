@@ -2,12 +2,10 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.Buckle.Components;
 using Content.Server.CombatMode;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.Pulling;
-using Content.Server.Verbs;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;
 using Content.Shared.Input;
@@ -15,8 +13,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
 using Content.Shared.Pulling.Components;
-using Content.Shared.Rotatable;
-using Content.Shared.Timing;
 using Content.Shared.Weapons.Melee;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -29,9 +25,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Players;
-using Robust.Shared.Random;
 
 namespace Content.Server.Interaction
 {
@@ -44,6 +38,7 @@ namespace Content.Server.Interaction
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly PullingSystem _pullSystem = default!;
+        [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
 
         public override void Initialize()
         {
@@ -137,6 +132,9 @@ namespace Content.Server.Interaction
                 Logger.InfoS("system.interaction", $"DragDropRequestEvent input validation failed");
                 return;
             }
+
+            if (!_actionBlockerSystem.CanInteract(userEntity.Uid))
+                return;
 
             if (!EntityManager.TryGetEntity(msg.Dropped, out var dropped))
                 return;
@@ -295,7 +293,7 @@ namespace Content.Server.Interaction
             if (!ValidateInteractAndFace(user, coordinates))
                 return;
 
-            if (!_actionBlockerSystem.CanInteract(user))
+            if (!_actionBlockerSystem.CanInteract(user.Uid))
                 return;
 
             // Get entity clicked upon from UID if valid UID, if not assume no entity clicked upon and null
@@ -310,7 +308,7 @@ namespace Content.Server.Interaction
             }
 
             // Verify user has a hand, and find what object they are currently holding in their active hand
-            if (!user.TryGetComponent<IHandsComponent>(out var hands))
+            if (!user.TryGetComponent<HandsComponent>(out var hands))
                 return;
 
             var item = hands.GetActiveHand?.Owner;
@@ -357,36 +355,9 @@ namespace Content.Server.Interaction
                 return false;
             }
 
-            FaceClickCoordinates(user, coordinates);
+            _rotateToFaceSystem.TryFaceCoordinates(user, coordinates.ToMapPos(EntityManager));
 
             return true;
-        }
-
-        private void FaceClickCoordinates(IEntity user, EntityCoordinates coordinates)
-        {
-            var diff = coordinates.ToMapPos(EntityManager) - user.Transform.MapPosition.Position;
-            if (diff.LengthSquared <= 0.01f)
-                return;
-            var diffAngle = Angle.FromWorldVec(diff);
-            if (_actionBlockerSystem.CanChangeDirection(user))
-            {
-                user.Transform.WorldRotation = diffAngle;
-            }
-            else
-            {
-                if (user.TryGetComponent(out BuckleComponent? buckle) && (buckle.BuckledTo != null))
-                {
-                    // We're buckled to another object. Is that object rotatable?
-                    if (buckle.BuckledTo!.Owner.TryGetComponent(out RotatableComponent? rotatable) && rotatable.RotateWhileAnchored)
-                    {
-                        // Note the assumption that even if unanchored, user can only do spinnychair with an "independent wheel".
-                        // (Since the user being buckled to it holds it down with their weight.)
-                        // This is logically equivalent to RotateWhileAnchored.
-                        // Barstools and office chairs have independent wheels, while regular chairs don't.
-                        rotatable.Owner.Transform.LocalRotation = diffAngle;
-                    }
-                }
-            }
         }
 
         /// <summary>
@@ -396,7 +367,7 @@ namespace Content.Server.Interaction
         /// </summary>
         public void InteractHand(IEntity user, IEntity target)
         {
-            if (!_actionBlockerSystem.CanInteract(user))
+            if (!_actionBlockerSystem.CanInteract(user.Uid))
                 return;
 
             // all interactions should only happen when in range / unobstructed, so no range check is needed
@@ -432,7 +403,7 @@ namespace Content.Server.Interaction
 
             if (target != null)
             {
-                var rangedMsg = new RangedInteractEvent(user, used, target, clickLocation);
+                var rangedMsg = new RangedInteractEvent(user.Uid, used.Uid, target.Uid, clickLocation);
                 RaiseLocalEvent(target.Uid, rangedMsg);
                 if (rangedMsg.Handled)
                     return true;
@@ -459,7 +430,7 @@ namespace Content.Server.Interaction
             if (!ValidateInteractAndFace(user, coordinates))
                 return;
 
-            if (!_actionBlockerSystem.CanAttack(user))
+            if (!_actionBlockerSystem.CanAttack(user.Uid))
                 return;
 
             IEntity? targetEnt = null;
@@ -483,7 +454,7 @@ namespace Content.Server.Interaction
             }
 
             // Verify user has a hand, and find what object they are currently holding in their active hand
-            if (user.TryGetComponent<IHandsComponent>(out var hands))
+            if (user.TryGetComponent<HandsComponent>(out var hands))
             {
                 var item = hands.GetActiveHand?.Owner;
 

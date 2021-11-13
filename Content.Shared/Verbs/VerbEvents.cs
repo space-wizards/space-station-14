@@ -74,7 +74,7 @@ namespace Content.Shared.Verbs
     /// </remarks>
     public class GetInteractionVerbsEvent : GetVerbsEvent
     {
-        public GetInteractionVerbsEvent(IEntity user, IEntity target) : base(user, target) { }
+        public GetInteractionVerbsEvent(IEntity user, IEntity target, bool force=false) : base(user, target, force) { }
     }
 
     /// <summary>
@@ -88,11 +88,11 @@ namespace Content.Shared.Verbs
     /// </remarks>
     public class GetActivationVerbsEvent : GetVerbsEvent
     {
-        public GetActivationVerbsEvent(IEntity user, IEntity target) : base(user, target) { }
+        public GetActivationVerbsEvent(IEntity user, IEntity target, bool force=false) : base(user, target, force) { }
     }
 
     /// <summary>
-    ///     Request alternative-interaction verbs.    
+    ///     Request alternative-interaction verbs.
     /// </summary>
     /// <remarks>
     ///     When interacting with an entity via alt + left-click/E/Z the highest priority alt-interact verb is executed.
@@ -100,11 +100,11 @@ namespace Content.Shared.Verbs
     /// </remarks>
     public class GetAlternativeVerbsEvent : GetVerbsEvent
     {
-        public GetAlternativeVerbsEvent(IEntity user, IEntity target) : base(user, target) { }
+        public GetAlternativeVerbsEvent(IEntity user, IEntity target, bool force=false) : base(user, target, force) { }
     }
 
     /// <summary>
-    ///     Request Miscellaneous verbs.    
+    ///     Request Miscellaneous verbs.
     /// </summary>
     /// <remarks>
     ///     Includes (nearly) global interactions like "examine", "pull", or "debug". These verbs are collectively shown
@@ -112,7 +112,7 @@ namespace Content.Shared.Verbs
     /// </remarks>
     public class GetOtherVerbsEvent : GetVerbsEvent
     {
-        public GetOtherVerbsEvent(IEntity user, IEntity target) : base(user, target) { }
+        public GetOtherVerbsEvent(IEntity user, IEntity target, bool force=false) : base(user, target, force) { }
     }
 
     /// <summary>
@@ -166,26 +166,26 @@ namespace Content.Shared.Verbs
         ///     The entity currently being held by the active hand.
         /// </summary>
         /// <remarks>
-        ///     This is only ever not null when <see cref="ActionBlockerSystem.CanUse(IEntity)"/> is true and the user
+        ///     This is only ever not null when <see cref="ActionBlockerSystem.CanUse(EntityUid)"/> is true and the user
         ///     has hands.
         /// </remarks>
         public IEntity? Using;
 
-        public GetVerbsEvent(IEntity user, IEntity target)
+        public GetVerbsEvent(IEntity user, IEntity target, bool force=false)
         {
             User = user;
             Target = target;
 
-            CanAccess = (Target == User) || user.IsInSameOrParentContainer(target) &&
+            CanAccess = force || (Target == User) || user.IsInSameOrParentContainer(target) &&
                 EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(user, target);
 
             // A large number of verbs need to check action blockers. Instead of repeatedly having each system individually
             // call ActionBlocker checks, just cache it for the verb request.
             var actionBlockerSystem = EntitySystem.Get<ActionBlockerSystem>();
-            CanInteract = actionBlockerSystem.CanInteract(user);
+            CanInteract = force || actionBlockerSystem.CanInteract(user.Uid);
 
             if (!user.TryGetComponent(out Hands) ||
-                !actionBlockerSystem.CanUse(user))
+                !actionBlockerSystem.CanUse(user.Uid))
                 return;
 
             Hands.TryGetActiveHeldEntity(out Using);

@@ -1,4 +1,5 @@
-﻿using Robust.Shared.GameObjects;
+﻿using Content.Shared.FixedPoint;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.MobState.State
@@ -28,10 +29,10 @@ namespace Content.Shared.MobState.State
             return IsCritical() || IsDead();
         }
 
-        public virtual void EnterState(IEntity entity) { }
+        public virtual void EnterState(EntityUid uid, IEntityManager entityManager) { }
 
-        public virtual void ExitState(IEntity entity) { }
+        public virtual void ExitState(EntityUid uid, IEntityManager entityManager) { }
 
-        public virtual void UpdateState(IEntity entity, int threshold) { }
+        public virtual void UpdateState(EntityUid entity, FixedPoint2 threshold, IEntityManager entityManager) { }
     }
 }

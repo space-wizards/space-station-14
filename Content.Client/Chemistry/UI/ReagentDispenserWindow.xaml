@@ -13,7 +13,7 @@
             <Button Name="DispenseButton15" Access="Public" Text="15" StyleClasses="OpenBoth"/>
             <Button Name="DispenseButton20" Access="Public" Text="20" StyleClasses="OpenBoth"/>
             <Button Name="DispenseButton25" Access="Public" Text="25" StyleClasses="OpenBoth"/>
-            <Button Name="DispenseButton30" Access="Public" Text="25" StyleClasses="OpenBoth"/>
+            <Button Name="DispenseButton30" Access="Public" Text="30" StyleClasses="OpenBoth"/>
             <Button Name="DispenseButton50" Access="Public" Text="50" StyleClasses="OpenBoth"/>
             <Button Name="DispenseButton100" Access="Public" Text="100" StyleClasses="OpenLeft"/>
         </BoxContainer>

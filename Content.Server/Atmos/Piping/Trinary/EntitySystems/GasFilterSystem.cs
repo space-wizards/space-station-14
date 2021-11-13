@@ -1,13 +1,19 @@
+using System;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Trinary.Components;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
+using Content.Server.UserInterface;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping;
+using Content.Shared.Atmos.Piping.Trinary.Components;
+using Content.Shared.Interaction;
+using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
@@ -16,12 +22,18 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
     public class GasFilterSystem : EntitySystem
     {
         [Dependency] private IGameTiming _gameTiming = default!;
+        [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<GasFilterComponent, AtmosDeviceUpdateEvent>(OnFilterUpdated);
+            SubscribeLocalEvent<GasFilterComponent, InteractHandEvent>(OnFilterInteractHand);
+            // Bound UI subscriptions
+            SubscribeLocalEvent<GasFilterComponent, GasFilterChangeRateMessage>(OnTransferRateChangeMessage);
+            SubscribeLocalEvent<GasFilterComponent, GasFilterSelectGasMessage>(OnSelectGasMessage);
+            SubscribeLocalEvent<GasFilterComponent, GasFilterToggleStatusMessage>(OnToggleStatusMessage);
         }
 
         private void OnFilterUpdated(EntityUid uid, GasFilterComponent filter, AtmosDeviceUpdateEvent args)
@@ -65,6 +77,57 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             }
 
             outletNode.AssumeAir(removed);
+        }
+
+        private void OnFilterInteractHand(EntityUid uid, GasFilterComponent component, InteractHandEvent args)
+        {
+            if (!args.User.TryGetComponent(out ActorComponent? actor))
+                return;
+
+            if (component.Owner.Transform.Anchored)
+            {
+                _userInterfaceSystem.TryOpen(uid, GasFilterUiKey.Key, actor.PlayerSession);
+                DirtyUI(uid, component);
+            }
+            else
+            {
+                args.User.PopupMessageCursor(Loc.GetString("comp-gas-filter-ui-needs-anchor"));
+            }
+
+            args.Handled = true;
+        }
+
+        private void DirtyUI(EntityUid uid, GasFilterComponent? filter)
+        {
+
+            if (!Resolve(uid, ref filter))
+                return;
+
+            _userInterfaceSystem.TrySetUiState(uid, GasFilterUiKey.Key,
+                new GasFilterBoundUserInterfaceState(filter.Owner.Name, filter.TransferRate, filter.Enabled, filter.FilteredGas));
+        }
+
+        private void OnToggleStatusMessage(EntityUid uid, GasFilterComponent filter, GasFilterToggleStatusMessage args)
+        {
+            filter.Enabled = args.Enabled;
+            DirtyUI(uid, filter);
+        }
+
+        private void OnTransferRateChangeMessage(EntityUid uid, GasFilterComponent filter, GasFilterChangeRateMessage args)
+        {
+            filter.TransferRate = Math.Clamp(args.Rate, 0f, Atmospherics.MaxTransferRate);
+            DirtyUI(uid, filter);
+
+        }
+
+        private void OnSelectGasMessage(EntityUid uid, GasFilterComponent filter, GasFilterSelectGasMessage args)
+        {
+            if (Enum.TryParse<Gas>(args.ID.ToString(), true, out var parsedGas))
+            {
+                filter.FilteredGas = parsedGas;
+                DirtyUI(uid, filter);
+            }
+
         }
     }
 }

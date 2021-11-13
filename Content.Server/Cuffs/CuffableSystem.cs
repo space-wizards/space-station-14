@@ -1,15 +1,15 @@
 using Content.Server.Cuffs.Components;
 using Content.Server.Hands.Components;
-using Content.Shared.Hands.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Cuffs;
+using Content.Shared.Hands.Components;
+using Content.Shared.MobState.Components;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 using Robust.Shared.IoC;
-using Content.Shared.MobState;
+using Robust.Shared.Localization;
 using Robust.Shared.Player;
 
 namespace Content.Server.Cuffs
@@ -66,7 +66,7 @@ namespace Content.Server.Cuffs
             if (args.User == args.Target)
             {
                 // This UncuffAttemptEvent check should probably be In MobStateSystem, not here?
-                if (userEntity.TryGetComponent<IMobStateComponent>(out var state))
+                if (userEntity.TryGetComponent<MobStateComponent>(out var state))
                 {
                     // Manually check this.
                     if (state.IsIncapacitated())
@@ -83,7 +83,7 @@ namespace Content.Server.Cuffs
             else
             {
                 // Check if the user can interact.
-                if (!_actionBlockerSystem.CanInteract(userEntity))
+                if (!_actionBlockerSystem.CanInteract(userEntity.Uid))
                 {
                     args.Cancel();
                 }

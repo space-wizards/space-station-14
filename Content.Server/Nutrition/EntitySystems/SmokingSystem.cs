@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.Body.Circulatory;
+using Content.Server.Body.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Content.Shared.Smoking;
 using Content.Shared.Temperature;
 using Robust.Server.GameObjects;
@@ -83,12 +84,12 @@ namespace Content.Server.Nutrition.EntitySystems
 
                 var inhaledSolution = _solutionContainerSystem.SplitSolution(uid, solution, smokable.InhaleAmount * _timer);
 
-                if (solution.TotalVolume == ReagentUnit.Zero)
+                if (solution.TotalVolume == FixedPoint2.Zero)
                 {
                     RaiseLocalEvent(uid, new SmokableSolutionEmptyEvent());
                 }
 
-                if (inhaledSolution.TotalVolume == ReagentUnit.Zero)
+                if (inhaledSolution.TotalVolume == FixedPoint2.Zero)
                     continue;
 
                 // This is awful. I hate this so much.
@@ -97,7 +98,7 @@ namespace Content.Server.Nutrition.EntitySystems
                     !containerManager.Owner.TryGetComponent(out BloodstreamComponent? bloodstream))
                     continue;
 
-                _chemistrySystem.ReactionEntity(containerManager.Owner, ReactionMethod.Ingestion, inhaledSolution);
+                _chemistrySystem.ReactionEntity(containerManager.Owner.Uid, ReactionMethod.Ingestion, inhaledSolution);
                 bloodstream.TryTransferSolution(inhaledSolution);
             }
 

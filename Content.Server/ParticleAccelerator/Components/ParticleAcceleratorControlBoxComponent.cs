@@ -153,8 +153,8 @@ namespace Content.Server.ParticleAccelerator.Components
             }
 
 
-            if (obj.Session.AttachedEntity == null ||
-                !EntitySystem.Get<ActionBlockerSystem>().CanInteract(obj.Session.AttachedEntity))
+            if (obj.Session.AttachedEntityUid == null ||
+                !EntitySystem.Get<ActionBlockerSystem>().CanInteract(obj.Session.AttachedEntityUid.Value))
             {
                 return;
             }

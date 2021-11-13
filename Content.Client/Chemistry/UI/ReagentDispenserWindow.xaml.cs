@@ -42,7 +42,7 @@ namespace Content.Client.Chemistry.UI
             DispenseButton25.Group = dispenseAmountGroup;
             DispenseButton30.Group = dispenseAmountGroup;
             DispenseButton50.Group = dispenseAmountGroup;
-            DispenseButton10.Group = dispenseAmountGroup;
+            DispenseButton100.Group = dispenseAmountGroup;
         }
 
         /// <summary>

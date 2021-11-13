@@ -16,7 +16,6 @@ namespace Content.Server.Database
 {
     public abstract class ServerDbBase
     {
-
         #region Preferences
         public async Task<PlayerPreferences?> GetPlayerPreferencesAsync(NetUserId userId)
         {
@@ -92,6 +91,11 @@ namespace Content.Server.Database
             var profile = await db.Profile.Include(p => p.Preference)
                 .Where(p => p.Preference.UserId == userId.UserId && p.Slot == slot)
                 .SingleOrDefaultAsync();
+
+            if (profile == null)
+            {
+                return;
+            }
 
             db.Profile.Remove(profile);
         }
@@ -224,6 +228,7 @@ namespace Content.Server.Database
         }
         #endregion
 
+        #region User Ids
         public async Task<NetUserId?> GetAssignedUserIdAsync(string name)
         {
             await using var db = await GetDb();
@@ -244,8 +249,9 @@ namespace Content.Server.Database
 
             await db.DbContext.SaveChangesAsync();
         }
+        #endregion
 
-
+        #region Bans
         /*
          * BAN STUFF
          */
@@ -287,18 +293,66 @@ namespace Content.Server.Database
 
         public abstract Task AddServerBanAsync(ServerBanDef serverBan);
         public abstract Task AddServerUnbanAsync(ServerUnbanDef serverUnban);
+        #endregion
 
+        #region Player Records
         /*
          * PLAYER RECORDS
          */
-        public abstract Task UpdatePlayerRecord(
+        public async Task UpdatePlayerRecord(
             NetUserId userId,
             string userName,
             IPAddress address,
-            ImmutableArray<byte> hwId);
-        public abstract Task<PlayerRecord?> GetPlayerRecordByUserName(string userName, CancellationToken cancel);
-        public abstract Task<PlayerRecord?> GetPlayerRecordByUserId(NetUserId userId, CancellationToken cancel);
+            ImmutableArray<byte> hwId)
+        {
+            await using var db = await GetDb();
 
+            var record = await db.DbContext.Player.SingleOrDefaultAsync(p => p.UserId == userId.UserId);
+            if (record == null)
+            {
+                db.DbContext.Player.Add(record = new Player
+                {
+                    FirstSeenTime = DateTime.UtcNow,
+                    UserId = userId.UserId,
+                });
+            }
+
+            record.LastSeenTime = DateTime.UtcNow;
+            record.LastSeenAddress = address;
+            record.LastSeenUserName = userName;
+            record.LastSeenHWId = hwId.ToArray();
+
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        public async Task<PlayerRecord?> GetPlayerRecordByUserName(string userName, CancellationToken cancel)
+        {
+            await using var db = await GetDb();
+
+            // Sort by descending last seen time.
+            // So if, due to account renames, we have two people with the same username in the DB,
+            // the most recent one is picked.
+            var record = await db.DbContext.Player
+                .OrderByDescending(p => p.LastSeenTime)
+                .FirstOrDefaultAsync(p => p.LastSeenUserName == userName, cancel);
+
+            return record == null ? null : MakePlayerRecord(record);
+        }
+
+        public async Task<PlayerRecord?> GetPlayerRecordByUserId(NetUserId userId, CancellationToken cancel)
+        {
+            await using var db = await GetDb();
+
+            var record = await db.DbContext.Player
+                .SingleOrDefaultAsync(p => p.UserId == userId.UserId, cancel);
+
+            return record == null ? null : MakePlayerRecord(record);
+        }
+
+        protected abstract PlayerRecord MakePlayerRecord(Player player);
+        #endregion
+
+        #region Connection Logs
         /*
          * CONNECTION LOG
          */
@@ -307,9 +361,11 @@ namespace Content.Server.Database
             string userName,
             IPAddress address,
             ImmutableArray<byte> hwId);
+        #endregion
 
+        #region Admin Ranks
         /*
-         * ADMIN STUFF
+         * ADMIN RANKS
          */
         public async Task<Admin?> GetAdminDataForAsync(NetUserId userId, CancellationToken cancel)
         {
@@ -397,6 +453,7 @@ namespace Content.Server.Database
 
             await db.DbContext.SaveChangesAsync(cancel);
         }
+        #endregion
 
         protected abstract Task<DbGuard> GetDb();
 

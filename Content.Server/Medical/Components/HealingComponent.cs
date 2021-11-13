@@ -32,7 +32,7 @@ namespace Content.Server.Medical.Components
                 return true;
             }
 
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User.Uid))
             {
                 return true;
             }

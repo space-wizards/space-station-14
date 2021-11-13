@@ -248,6 +248,15 @@
           - pancakescc1
           - pancakescc2
           - pancakescc3
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 6
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Theobromine
+          Quantity: 1
 
 - type: entity
   name: waffles

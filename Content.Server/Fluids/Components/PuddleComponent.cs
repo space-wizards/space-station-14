@@ -1,5 +1,6 @@
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Content.Shared.Sound;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
@@ -16,8 +17,8 @@ namespace Content.Server.Fluids.Components
     public sealed class PuddleComponent : Component
     {
         public const string DefaultSolutionName = "puddle";
-        private static readonly ReagentUnit DefaultSlipThreshold = ReagentUnit.New(3);
-        public static readonly ReagentUnit DefaultOverflowVolume = ReagentUnit.New(20);
+        private static readonly FixedPoint2 DefaultSlipThreshold = FixedPoint2.New(3);
+        public static readonly FixedPoint2 DefaultOverflowVolume = FixedPoint2.New(20);
 
         public override string Name => "Puddle";
 
@@ -35,7 +36,7 @@ namespace Content.Server.Fluids.Components
         // to check for low volumes for evaporation or whatever
 
 
-        [DataField("slipThreshold")] public ReagentUnit SlipThreshold = DefaultSlipThreshold;
+        [DataField("slipThreshold")] public FixedPoint2 SlipThreshold = DefaultSlipThreshold;
 
         [DataField("spillSound")]
         public SoundSpecifier SpillSound = new SoundPathSpecifier("/Audio/Effects/Fluids/splat.ogg");
@@ -46,12 +47,12 @@ namespace Content.Server.Fluids.Components
         public bool Overflown;
 
         [ViewVariables(VVAccess.ReadOnly)]
-        public ReagentUnit CurrentVolume => EntitySystem.Get<PuddleSystem>().CurrentVolume(Owner.Uid);
+        public FixedPoint2 CurrentVolume => EntitySystem.Get<PuddleSystem>().CurrentVolume(Owner.Uid);
 
         [ViewVariables] [DataField("overflowVolume")]
-        public ReagentUnit OverflowVolume = DefaultOverflowVolume;
+        public FixedPoint2 OverflowVolume = DefaultOverflowVolume;
 
-        public ReagentUnit OverflowLeft => CurrentVolume - OverflowVolume;
+        public FixedPoint2 OverflowLeft => CurrentVolume - OverflowVolume;
 
         [DataField("solution")] public string SolutionName { get; set; } = DefaultSolutionName;
     }

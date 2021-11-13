@@ -60,7 +60,7 @@ namespace Content.Server.Medical
             // Self-insert verb
             if (!component.IsOccupied &&
                 component.CanInsert(args.User) &&
-                _actionBlockerSystem.CanMove(args.User))
+                _actionBlockerSystem.CanMove(args.User.Uid))
             {
                 Verb verb = new();
                 verb.Act = () => component.InsertBody(args.User);
@@ -75,7 +75,7 @@ namespace Content.Server.Medical
 
         private void OnRelayMovement(EntityUid uid, MedicalScannerComponent component, RelayMovementEntityEvent args)
         {
-            if (_blocker.CanInteract(args.Entity))
+            if (_blocker.CanInteract(args.Entity.Uid))
             {
                 if (_gameTiming.CurTime <
                     component.LastInternalOpenAttempt + MedicalScannerComponent.InternalOpenAttemptDelay)

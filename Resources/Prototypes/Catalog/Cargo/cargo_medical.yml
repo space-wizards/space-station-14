@@ -1,0 +1,11 @@
+- type: cargoProduct
+  name: "Medical Supplies"
+  id: MedicalSupplies
+  description: Basic medical supplies.
+  icon:
+    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    state: firstaid
+  product: CrateMedicalSupplies
+  cost: 1000
+  category: Medical
+  group: market

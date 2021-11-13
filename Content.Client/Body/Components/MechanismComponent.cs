@@ -1,4 +1,4 @@
-﻿using Content.Shared.Body.Mechanism;
+﻿using Content.Shared.Body.Components;
 using Robust.Shared.GameObjects;
 
 namespace Content.Client.Body.Components

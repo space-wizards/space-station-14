@@ -64,7 +64,7 @@ namespace Content.Server.GameTicking
                 throw new InvalidOperationException($"No grid found for map {map}");
             }
 
-            var stationXform = EntityManager.GetComponent<ITransformComponent>(grid.GridEntityId);
+            var stationXform = EntityManager.GetComponent<TransformComponent>(grid.GridEntityId);
 
             if (StationOffset)
             {

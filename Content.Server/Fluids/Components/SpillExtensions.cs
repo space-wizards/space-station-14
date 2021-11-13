@@ -5,6 +5,7 @@ using Content.Server.Coordinates.Helpers;
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -12,6 +13,7 @@ using Robust.Shared.Map;
 
 namespace Content.Server.Fluids.Components
 {
+    // TODO: Kill these with fire
     public static class SpillExtensions
     {
         /// <summary>
@@ -28,6 +30,25 @@ namespace Content.Server.Fluids.Components
             bool sound = true)
         {
             return solution.SpillAt(entity.Transform.Coordinates, prototype, sound);
+        }
+
+        /// <summary>
+        ///     Spills the specified solution at the entity's location if possible.
+        /// </summary>
+        /// <param name="entity">
+        ///     The entity to use as a location to spill the solution at.
+        /// </param>
+        /// <param name="solution">Initial solution for the prototype.</param>
+        /// <param name="prototype">The prototype to use.</param>
+        /// <param name="sound">Play the spill sound.</param>
+        /// <param name="entityManager"></param>
+        /// <returns>The puddle if one was created, null otherwise.</returns>
+        public static PuddleComponent? SpillAt(this Solution solution, EntityUid entity, string prototype,
+            bool sound = true, IEntityManager? entityManager = null)
+        {
+            entityManager ??= IoCManager.Resolve<IEntityManager>();
+
+            return solution.SpillAt(entityManager.GetComponent<TransformComponent>(entity).Coordinates, prototype, sound);
         }
 
         /// <summary>
@@ -132,7 +153,7 @@ namespace Content.Server.Fluids.Components
                     .TryGetRefillableSolution(spillEntity.Uid, out var solutionContainerComponent))
                 {
                     EntitySystem.Get<SolutionContainerSystem>().Refill(spillEntity.Uid, solutionContainerComponent,
-                        solution.SplitSolution(ReagentUnit.Min(
+                        solution.SplitSolution(FixedPoint2.Min(
                             solutionContainerComponent.AvailableVolume,
                             solutionContainerComponent.MaxSpillRefill))
                     );
