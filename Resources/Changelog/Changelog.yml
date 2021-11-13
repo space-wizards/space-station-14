@@ -1,9 +1,4 @@
 Entries:
-- author: ike709
-  changes:
-  - {message: Added announcements to the comms console. Cooldown is 90 seconds., type: Add}
-  id: 82
-  time: '2021-03-14T05:21:57.0000000+00:00'
 - author: SweptWasTaken
   changes:
   - {message: Updated chemistry layout on Saltern, type: Add}
@@ -2829,3 +2824,8 @@ Entries:
   - {message: Flipping something no longer anchors or rotates it., type: Fix}
   id: 581
   time: '2021-11-13T01:54:04.0000000+00:00'
+- author: Tomeno
+  changes:
+  - {message: Added hard-drop ghosts to Nanotrasen Block Game, type: Add}
+  id: 582
+  time: '2021-11-13T20:43:54.0000000+00:00'
