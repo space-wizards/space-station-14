@@ -34,10 +34,11 @@ namespace Content.Server.Labels
 
         private void OnComponentInit(EntityUid uid, PaperLabelComponent component, ComponentInit args)
         {
+            _itemSlotsSystem.AddItemSlot(uid, component.Name, component.LabelSlot);
+
             if (!EntityManager.TryGetComponent(uid, out SharedAppearanceComponent appearance))
                 return;
 
-            _itemSlotsSystem.AddItemSlot(uid, component.Name, component.LabelSlot);
             appearance.SetData(PaperLabelVisuals.HasLabel, false);
         }
 
