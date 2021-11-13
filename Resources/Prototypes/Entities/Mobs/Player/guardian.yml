@@ -61,7 +61,7 @@
     arcCooldownTime: 0.2
     damage:
       types:
-        Blunt: 20
+        Blunt: 15
   - type: Actions
     innateActions:
       - CombatMode
