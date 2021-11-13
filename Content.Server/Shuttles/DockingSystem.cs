@@ -52,19 +52,6 @@ namespace Content.Server.Shuttles
 
             SubscribeLocalEvent<DockingComponent, GetInteractionVerbsEvent>(OnVerb);
             SubscribeLocalEvent<DockingComponent, BeforeDoorAutoCloseEvent>(OnAutoClose);
-            SubscribeLocalEvent<DockingComponent, DoorOpenAttemptEvent>(OnDoorOpenAttempt);
-            SubscribeLocalEvent<DockingComponent, DoorCloseAttemptEvent>(OnDoorCloseAttempt);
-        }
-
-        // Won't allow users to override door controls
-        private void OnDoorOpenAttempt(EntityUid uid, DockingComponent component, DoorOpenAttemptEvent args)
-        {
-            args.Cancel();
-        }
-
-        private void OnDoorCloseAttempt(EntityUid uid, DockingComponent component, DoorCloseAttemptEvent args)
-        {
-            args.Cancel();
         }
 
         private void OnAutoClose(EntityUid uid, DockingComponent component, BeforeDoorAutoCloseEvent args)

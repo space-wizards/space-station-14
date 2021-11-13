@@ -1,61 +1,4 @@
 Entries:
-- author: ike709
-  changes:
-  - {message: Added lobby music. It can be disabled in the audio settings., type: Add}
-  - {message: Fixed the ambience continuing to play after you disconnect., type: Fix}
-  id: 74
-  time: '2021-03-12T22:40:28.0000000+00:00'
-- author: ike709
-  changes:
-  - {message: Lobby music volume has been significantly reduced., type: Tweak}
-  id: 75
-  time: '2021-03-13T01:06:52.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fixes structure instruments (like the piano) not playing at all., type: Fix}
-  id: 76
-  time: '2021-03-13T01:47:41.227978+00:00'
-- author: ike709
-  changes:
-  - {message: Significantly reduced the bounciness of thrown items., type: Tweak}
-  id: 77
-  time: '2021-03-13T02:10:55.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix pulling held items, type: Fix}
-  id: 78
-  time: '2021-03-13T03:24:06.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Disable subfloor collisions server-side, type: Tweak}
-  id: 79
-  time: '2021-03-13T03:46:22.0000000+00:00'
-- author: SweptWasTaken
-  changes:
-  - {message: Added corgi/cat spawners to Saltern, type: Add}
-  - {message: Chemistry is more secure on Saltern, type: Tweak}
-  id: 80
-  time: '2021-03-13T09:27:53.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Increased cloning time from 10 seconds to 2 minutes, type: Tweak}
-  id: 81
-  time: '2021-03-13T09:57:52.0000000+00:00'
-- author: ike709
-  changes:
-  - {message: Added announcements to the comms console. Cooldown is 90 seconds., type: Add}
-  id: 82
-  time: '2021-03-14T05:21:57.0000000+00:00'
-- author: SweptWasTaken
-  changes:
-  - {message: Updated chemistry layout on Saltern, type: Add}
-  id: 83
-  time: '2021-03-14T05:24:22.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Added icons for a bunch of verbs, type: Add}
-  id: 84
-  time: '2021-03-14T13:23:32.0000000+00:00'
 - author: Macoron
   changes:
   - {message: Fix nonexistent bulbs in built wall light, type: Fix}
@@ -2825,3 +2768,66 @@ Entries:
       by adding a 5-second delay, type: Tweak}
   id: 573
   time: '2021-11-12T04:23:06.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: You can now vote for a different map to be played next round., type: Add}
+  id: 574
+  time: '2021-11-12T06:25:58.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Added a beta version of Packed Station!, type: Add}
+  id: 575
+  time: '2021-11-12T06:26:05.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: 'Nanotrasen has extended its outreach, and has finally sent the person
+      who decided to hire people of exactly one skin color out an airlock. Expect
+      more variety in the co-workers you meet.', type: Add}
+  id: 576
+  time: '2021-11-12T09:55:50.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Solar panels and the related systems will no longer hold state between
+      rounds., type: Fix}
+  id: 577
+  time: '2021-11-12T19:00:39.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Places firelocks on Packed to make it not Atmos Hell. Fixes a number
+      of access bugs and broken vents., type: Fix}
+  id: 578
+  time: '2021-11-13T01:31:31.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Docking airlocks have been mapped onto Saltern's arrivals., type: Add}
+  id: 579
+  time: '2021-11-13T01:46:27.0000000+00:00'
+- author: FoLoKe
+  changes:
+  - {message: 'added "one hand" mechanic to the monkeys, improvise', type: Add}
+  - {message: added ability for animals to receive damage from bullets, type: Fix}
+  - {message: offcentered some sprites to match animal physical body, type: Fix}
+  id: 580
+  time: '2021-11-13T01:48:06.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Flipping something no longer anchors or rotates it., type: Fix}
+  id: 581
+  time: '2021-11-13T01:54:04.0000000+00:00'
+- author: Tomeno
+  changes:
+  - {message: Added hard-drop ghosts to Nanotrasen Block Game, type: Add}
+  id: 582
+  time: '2021-11-13T20:43:54.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Fixes firelocks on Packed Station, type: Tweak}
+  - {message: The solars on Packed Station are now safer., type: Tweak}
+  id: 583
+  time: '2021-11-13T21:41:21.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: It is no longer possible to pull your chair while you're sitting on
+      it. They aren't motorized., type: Fix}
+  id: 584
+  time: '2021-11-13T21:43:37.0000000+00:00'

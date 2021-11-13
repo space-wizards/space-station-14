@@ -79,6 +79,7 @@ namespace Content.Client.Entry
             "Hitscan",
             "StunOnCollide",
             "RandomPottedPlant",
+            "Brain",
             "CommunicationsConsole",
             "BarSign",
             "DroppedBodyPart",
