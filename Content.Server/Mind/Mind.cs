@@ -5,6 +5,7 @@ using System.Linq;
 using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
 using Content.Server.Mind.Components;
+using Content.Server.Mind.Systems;
 using Content.Server.Objectives;
 using Content.Server.Players;
 using Content.Server.Roles;
@@ -277,10 +278,13 @@ namespace Content.Server.Mind
                 }
             }
 
-            OwnedComponent?.InternalEjectMind();
+
+            if (OwnedComponent != null)
+                EntitySystem.Get<MindSystem>().InternalEjectMind(OwnedComponent.Owner.Uid, OwnedComponent);
 
             OwnedComponent = component;
-            OwnedComponent?.InternalAssignMind(this);
+            if (OwnedComponent != null)
+                EntitySystem.Get<MindSystem>().InternalAssignMind(OwnedComponent.Owner.Uid, this, OwnedComponent);
 
             if (IsVisitingEntity
                 && (ghostCheckOverride // to force mind transfer, for example from ControlMobVerb
