@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Increased cloning time from 10 seconds to 2 minutes, type: Tweak}
-  id: 81
-  time: '2021-03-13T09:57:52.0000000+00:00'
 - author: ike709
   changes:
   - {message: Added announcements to the comms console. Cooldown is 90 seconds., type: Add}
@@ -2829,3 +2824,8 @@ Entries:
   - {message: offcentered some sprites to match animal physical body, type: Fix}
   id: 580
   time: '2021-11-13T01:48:06.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Flipping something no longer anchors or rotates it., type: Fix}
+  id: 581
+  time: '2021-11-13T01:54:04.0000000+00:00'
