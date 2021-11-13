@@ -5,11 +5,11 @@ using Robust.Shared.IoC;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Nutrition.Components;
-using Content.Shared.Interaction;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.DoAfter;
 using Content.Shared.Popups;
 using Robust.Shared.Localization;
+using Content.Shared.Verbs;
 
 namespace Content.Server.Animals.Systems
 {
@@ -25,7 +25,7 @@ namespace Content.Server.Animals.Systems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<UdderComponent, InteractUsingEvent>(OnInteractUsing);
+            SubscribeLocalEvent<UdderComponent, GetAlternativeVerbsEvent>(AddMilkVerb);
             SubscribeLocalEvent<UdderComponent, MilkingFinishedEvent>(OnMilkingFinished);
             SubscribeLocalEvent<UdderComponent, MilkingFailEvent>(OnMilkingFailed);
         }
@@ -56,20 +56,6 @@ namespace Content.Server.Animals.Systems
                 _solutionContainerSystem.TryAddReagent(udder.OwnerUid, solution, udder.ReagentId, udder.QuantityPerUpdate, out var accepted);
                 udder.AccumulatedFrameTime = 0;
             }
-        }
-
-        private void OnInteractUsing(EntityUid uid, UdderComponent component, InteractUsingEvent args)
-        {
-            // Milking available with empty refillable containers only
-            if (!args.Used.TryGetComponent<RefillableSolutionComponent>(out var refillable) ||
-                !_solutionContainerSystem.TryGetSolution(args.UsedUid, refillable.Solution, out var solution))
-                return;
-
-            if (solution.TotalVolume > 0)
-                return;
-
-            AttemtMilk(uid, args.UserUid, args.UsedUid, component);
-            args.Handled = true;
         }
 
         private void AttemtMilk(EntityUid uid, EntityUid userUid, EntityUid containerUid, UdderComponent udder)
@@ -130,6 +116,23 @@ namespace Content.Server.Animals.Systems
         {
             //TODO: fail PopupMessage?
             component.BeingMilked = false;
+        }
+
+        private void AddMilkVerb(EntityUid uid, UdderComponent component, GetAlternativeVerbsEvent args)
+        {
+            if (args.Using == null ||
+                 !args.CanInteract ||
+                 !args.Using.HasComponent<RefillableSolutionComponent>())
+                return;
+
+            Verb verb = new();
+            verb.Act = () =>
+            {
+                AttemtMilk(uid, args.User.Uid, args.Using.Uid, component);
+            };
+            verb.Text = Loc.GetString("udder-system-verb-milk");
+            verb.Priority = 2;
+            args.Verbs.Add(verb);
         }
 
         private class MilkingFinishedEvent : EntityEventArgs
