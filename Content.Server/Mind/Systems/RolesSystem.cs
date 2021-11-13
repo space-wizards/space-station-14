@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Content.Server.Roles;
 using Robust.Shared.GameObjects;
 
@@ -56,11 +55,5 @@ namespace Content.Server.Mind.Systems
             mind.OwnedEntity?.EntityManager.EventBus.RaiseLocalEvent(mind.OwnedEntity.Uid, message);
         }
 
-        public bool HasRole<T>(Mind mind) where T : Role
-        {
-            var t = typeof(T);
-
-            return mind._roles.Any(role => role.GetType() == t);
-        }
     }
 }

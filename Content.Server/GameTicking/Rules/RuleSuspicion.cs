@@ -2,7 +2,6 @@ using System;
 using System.Threading;
 using Content.Server.Chat.Managers;
 using Content.Server.Doors;
-using Content.Server.Mind.Systems;
 using Content.Server.Players;
 using Content.Server.Suspicion;
 using Content.Server.Suspicion.EntitySystems;
@@ -51,13 +50,8 @@ namespace Content.Server.GameTicking.Rules
 
             _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-suspicion-added-announcement"));
 
-            var roleSys = EntitySystem.Get<RolesSystem>();
             var filter = Filter.Empty()
-                .AddWhere(session =>
-                {
-                    var mind = ((IPlayerSession) session).ContentData()?.Mind;
-                    return mind != null && roleSys.HasRole<SuspicionTraitorRole>(mind);
-                });
+                .AddWhere(session => ((IPlayerSession) session).ContentData()?.Mind?.HasRole<SuspicionTraitorRole>() ?? false);
 
             SoundSystem.Play(filter, _addedSound.GetSound(), AudioParams.Default);
             EntitySystem.Get<SuspicionEndTimerSystem>().EndTime = _endTime;
@@ -107,8 +101,8 @@ namespace Content.Server.GameTicking.Rules
                 }
 
                 var mind = playerSession.ContentData()?.Mind;
-                var roleSys = EntitySystem.Get<RolesSystem>();
-                if (mind != null && roleSys.HasRole<SuspicionTraitorRole>(mind))
+
+                if (mind != null && mind.HasRole<SuspicionTraitorRole>())
                     traitorsAlive++;
                 else
                     innocentsAlive++;

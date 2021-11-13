@@ -157,6 +157,13 @@ namespace Content.Server.Mind
             }
         }
 
+        public bool HasRole<T>() where T : Role
+        {
+            var t = typeof(T);
+
+            return _roles.Any(role => role.GetType() == t);
+        }
+
         /// <summary>
         /// Adds an objective to this mind.
         /// </summary>
