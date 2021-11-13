@@ -224,7 +224,7 @@ namespace Content.Server.Physics.Controllers
             {
                 // Walking on a tile.
                 var def = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
-                soundToPlay = def.FootstepSounds.GetSound();
+                soundToPlay = def.FootstepSounds?.GetSound();
                 if (string.IsNullOrEmpty(soundToPlay))
                     return;
             }

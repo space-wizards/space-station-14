@@ -42,8 +42,9 @@
       effects:
       - !type:HealthChange
         damage:
-          groups:
+          types:
             Radiation: -3
+          groups:
             Brute: 0.5
 
 - type: reagent
