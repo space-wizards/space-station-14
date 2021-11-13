@@ -1,9 +1,4 @@
 Entries:
-- author: SweptWasTaken
-  changes:
-  - {message: Updated chemistry layout on Saltern, type: Add}
-  id: 83
-  time: '2021-03-14T05:24:22.0000000+00:00'
 - author: Swept
   changes:
   - {message: Added icons for a bunch of verbs, type: Add}
@@ -2829,3 +2824,9 @@ Entries:
   - {message: Added hard-drop ghosts to Nanotrasen Block Game, type: Add}
   id: 582
   time: '2021-11-13T20:43:54.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Fixes firelocks on Packed Station, type: Tweak}
+  - {message: The solars on Packed Station are now safer., type: Tweak}
+  id: 583
+  time: '2021-11-13T21:41:21.0000000+00:00'
