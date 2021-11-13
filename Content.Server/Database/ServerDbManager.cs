@@ -18,6 +18,8 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
+using Serilog.Core;
+using Logger = Robust.Shared.Log.Logger;
 using LogLevel = Robust.Shared.Log.LogLevel;
 using MSLogLevel = Microsoft.Extensions.Logging.LogLevel;
 
@@ -129,9 +131,9 @@ namespace Content.Server.Database
 
         #region Admin Logs
 
-        Task AddAdminLog<T>(T log, int roundId, List<Guid> playerIds) where T : notnull;
+        Task AddAdminLog(int roundId, string type, string message, string data);
         Task<IEnumerable<string>> GetAdminLogMessages(LogFilter? filter = null);
-        Task<IEnumerable<LogRecord<T>>> GetAdminLogs<T>(LogFilter? filter = null);
+        Task<IEnumerable<LogRecord>> GetAdminLogs<T>(LogFilter? filter = null);
 
         #endregion
     }
@@ -321,9 +323,9 @@ namespace Content.Server.Database
             return _db.UpdateAdminRankAsync(rank, cancel);
         }
 
-        public Task AddAdminLog<T>(T log, int roundId, List<Guid> playerIds) where T : notnull
+        public Task AddAdminLog(int roundId, string type, string message, string data)
         {
-            return _db.AddAdminLog(log, roundId, playerIds);
+            return _db.AddAdminLog(roundId, type, message, data);
         }
 
         public Task<IEnumerable<string>> GetAdminLogMessages(LogFilter? filter = null)
@@ -331,7 +333,7 @@ namespace Content.Server.Database
             return _db.GetAdminLogMessages(filter);
         }
 
-        public Task<IEnumerable<LogRecord<T>>> GetAdminLogs<T>(LogFilter? filter = null)
+        public Task<IEnumerable<LogRecord>> GetAdminLogs<T>(LogFilter? filter = null)
         {
             return _db.GetAdminLogs<T>(filter);
         }

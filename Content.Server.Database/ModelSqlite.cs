@@ -60,16 +60,6 @@ namespace Content.Server.Database
                 .Property(e => e.Address)
                 .HasColumnType("TEXT")
                 .HasConversion(ipMaskConverter);
-
-            var adminLogConverter = new ValueConverter<JsonDocument, string>(
-                v => JsonDocumentToString(v),
-                v => StringToJsonDocument(v));
-
-            modelBuilder
-                .Entity<AdminLog>()
-                .Property(e => e.Log)
-                .HasColumnType("TEXT")
-                .HasConversion(adminLogConverter);
         }
 
         public SqliteServerDbContext(DbContextOptions<ServerDbContext> options) : base(options)

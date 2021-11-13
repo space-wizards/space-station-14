@@ -82,6 +82,13 @@ namespace Content.Server.Database
             modelBuilder.Entity<AdminRankFlag>()
                 .HasIndex(f => new {f.Flag, f.AdminRankId})
                 .IsUnique();
+
+            modelBuilder.Entity<AdminLog>()
+                .HasKey(log => new {log.Id, log.RoundId});
+
+            modelBuilder.Entity<AdminLog>()
+                .Property(log => log.Id)
+                .ValueGeneratedOnAdd();
         }
     }
 
@@ -235,6 +242,7 @@ namespace Content.Server.Database
         public List<AdminLog> AdminLogs { get; set; } = default!;
     }
 
+    [Index(nameof(Type))]
     public class AdminLog
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -243,10 +251,12 @@ namespace Content.Server.Database
         [Key, ForeignKey("Round")] public int RoundId { get; set; }
         public Round Round { get; set; } = default!;
 
+        [Required] public string Type { get; set; } = default!;
+
         [Required] public DateTime Date { get; set; }
 
-        [Required] public JsonDocument Log { get; set; } = default!;
-
         [Required] public string Message { get; set; } = default!;
+
+        [Required, Column(TypeName = "jsonb")] public string Json { get; set; } = default!;
     }
 }

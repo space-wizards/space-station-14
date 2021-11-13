@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
+﻿using System.Threading;
 
 namespace Content.Server.Administration.Logs;
 
@@ -10,9 +8,7 @@ public sealed class LogFilter
 
     public int? Round { get; set; }
 
-    public HashSet<Guid>? AllPlayers { get; set; }
-
-    public HashSet<Guid>? AnyPlayers { get; set; }
+    public string? Type { get; set; }
 
     public DateOrder DateOrder { get; set; } = DateOrder.Ascending;
 }

@@ -246,6 +246,31 @@ namespace Content.Server.Database
             return (admins.Select(p => (p.a, p.LastSeenUserName)).ToArray(), adminRanks)!;
         }
 
+        public override async Task AddAdminLog(int roundId, string type, string message, string data)
+        {
+            await using var db = await GetDb();
+
+            var nextId = 1;
+            if (await db.DbContext.AdminLog.AnyAsync())
+            {
+                nextId = db.DbContext.AdminLog.Max(log => log.Id) + 1;
+            }
+
+            var log = new AdminLog
+            {
+                Id = nextId,
+                RoundId = roundId,
+                Type = type,
+                Date = DateTime.UtcNow,
+                Json = data,
+                Message = message
+            };
+
+            db.DbContext.AdminLog.Add(log);
+
+            await db.DbContext.SaveChangesAsync();
+        }
+
         private async Task<DbGuardImpl> GetDbImpl()
         {
             await _dbReadyTask;

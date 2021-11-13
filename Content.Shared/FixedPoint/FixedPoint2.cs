@@ -1,9 +1,6 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using Content.Shared.ActionBlocker;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.FixedPoint
@@ -13,10 +10,10 @@ namespace Content.Shared.FixedPoint
     ///     To enforce this level of precision, floats are shifted by 2 decimal points, rounded, and converted to an int.
     /// </summary>
     [Serializable]
-    public struct FixedPoint2 : ISelfSerialize, IComparable<FixedPoint2>, IEquatable<FixedPoint2>
+    public struct FixedPoint2 : ISelfSerialize, IComparable<FixedPoint2>, IEquatable<FixedPoint2>, IFormattable
     {
         private int _value;
-        public const int Shift = 2;
+        private const int Shift = 2;
 
         public static FixedPoint2 MaxValue { get; } = new(int.MaxValue);
         public static FixedPoint2 Epsilon { get; } = new(1);
@@ -35,11 +32,6 @@ namespace Content.Shared.FixedPoint
         public static FixedPoint2 New(int value)
         {
             return new(value * (int) Math.Pow(10, Shift));
-        }
-
-        public static FixedPoint2 NewShifted(int value)
-        {
-            return new(value);
         }
 
         public static FixedPoint2 New(float value)
@@ -192,11 +184,6 @@ namespace Content.Shared.FixedPoint
             return (int) ShiftDown();
         }
 
-        public readonly int UnShiftedInt()
-        {
-            return _value;
-        }
-
         // Implicit operators ftw
         public static implicit operator FixedPoint2(float n) => FixedPoint2.New(n);
         public static implicit operator FixedPoint2(double n) => FixedPoint2.New(n);
@@ -259,6 +246,11 @@ namespace Content.Shared.FixedPoint
         }
 
         public override readonly string ToString() => $"{ShiftDown().ToString(CultureInfo.InvariantCulture)}";
+
+        public string ToString(string? format, IFormatProvider? formatProvider)
+        {
+            return ToString();
+        }
 
         public readonly string Serialize()
         {
