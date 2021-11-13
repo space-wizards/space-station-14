@@ -46,9 +46,10 @@ namespace Content.Server.Supermatter.EntitySystems
         {
             base.Update(frameTime);
 
+            //SubscribeLocalEvent<HandleCollide>();
             foreach (var supermatter in EntityManager.EntityQuery<SupermatterComponent>())
             {
-                HandleBehavour(supermatter.OwnerUid, _entityManager.GetComponent<TransformComponent>(supermatter.OwnerUid).Coordinates.Position, frameTime, supermatter);
+                HandleBehavour(supermatter.OwnerUid, _entityManager.GetComponent<TransformComponent>(supermatter.OwnerUid).Coordinates, frameTime, supermatter);
             }
         }
 
@@ -63,7 +64,9 @@ namespace Content.Server.Supermatter.EntitySystems
         public void HandleRads(EntityUid Uid, float frameTime, SupermatterComponent? component = null)
         {
             if(!Resolve(Uid, ref component))
-            return;
+            {
+                return;
+            }
 
             _atmosUpdateAccumulator += frameTime;
             if(_atmosphereSystem.GetTileMixture(_entityManager.GetComponent<TransformComponent>(Uid).Coordinates) is { } mixture && _atmosUpdateAccumulator > _atmosUpdateTimer)
@@ -197,7 +200,9 @@ namespace Content.Server.Supermatter.EntitySystems
         public void HandleDamage(EntityUid Uid, float frameTime, SupermatterComponent? component = null, DamageableComponent? damageable = null)
         {
             if(!Resolve(Uid, ref component, ref damageable))
+            {
                 return;
+            }
 
             _damageUpdateAccumulator += frameTime;
             float damage = 0;
@@ -306,7 +311,10 @@ namespace Content.Server.Supermatter.EntitySystems
         public void Delamination(EntityUid Uid, float frameTime, SupermatterComponent? component = null)
         {
             if(!Resolve(Uid, ref component))
+            {
                 return;
+            }
+
             //TODO: make tesla spawn at SupermatterComponent.PowerPenaltyThreshold
             if(!component.FinalCountdown)
             {
@@ -358,30 +366,43 @@ namespace Content.Server.Supermatter.EntitySystems
 
         public bool CanDestroy(EntityUid Uid)
         {
-            return _entityManager.HasComponent<SharedBodyComponent>(Uid) || _entityManager.HasComponent<SharedItemComponent>(Uid) ||
-            _entityManager.GetComponent<TagComponent>(Uid).HasTag("EmitterBolt");
+            _entityManager.TryGetComponent<TagComponent>(Uid, out var _tag);
+
+            return
+            //_tag.HasTag("EmitterBolt") ||
+            _entityManager.HasComponent<SharedBodyComponent>(Uid) ||
+            _entityManager.HasComponent<SharedItemComponent>(Uid);
         }
 
         public bool CannotDestroy(EntityUid Uid)
         {
-            return _entityManager.GetComponent<TagComponent>(Uid).HasTag("SMimmune") ||
-            _entityManager.GetEntity(Uid).IsInContainer() || _entityManager.HasComponent<GhostComponent>(Uid) ||
-            _entityManager.HasComponent<SubFloorHideComponent>(Uid);
+            _entityManager.TryGetComponent<TagComponent>(Uid, out var _tag);
+            _entityManager.TryGetComponent<PhysicsComponent>(Uid, out var _physics);
+
+            return
+            _tag.HasTag("SMimmune") ||
+            (_physics.BodyType.ToString() == "Static") ||
+            _entityManager.GetEntity(Uid).IsInContainer() ||
+            _entityManager.HasComponent<GhostComponent>(Uid);
+
         }
-        public void HandleDestroy(EntityUid Uid, SupermatterComponent? component = null)
+        public void HandleDestroy(EntityUid TargetUid, EntityUid SMUid, SupermatterComponent? component = null)
         {
-            if(!Resolve(Uid, ref component))
+            if(!Resolve(SMUid, ref component))
+            {
                 return;
-            if(!CanDestroy(Uid) || CannotDestroy(Uid)) return;
+            }
 
-            _entityManager.SpawnEntity("Ash", _entityManager.GetComponent<TransformComponent>(Uid).Coordinates);
-            _entityManager.QueueDeleteEntity(Uid);
+            if(!CanDestroy(TargetUid) || CannotDestroy(TargetUid)) return;
 
-            if(_entityManager.TryGetComponent<SupermatterFoodComponent>(Uid, out var SupermatterFood))
+            _entityManager.SpawnEntity("Ash", _entityManager.GetComponent<TransformComponent>(TargetUid).Coordinates);
+            _entityManager.QueueDeleteEntity(TargetUid);
+
+            if(_entityManager.TryGetComponent<SupermatterFoodComponent>(TargetUid, out var SupermatterFood))
             {
                 component.Power += SupermatterFood.Energy;
             }
-            else if(_entityManager.TryGetComponent<ProjectileComponent>(Uid, out var Projectile))
+            else if(_entityManager.TryGetComponent<ProjectileComponent>(TargetUid, out var Projectile))
             {
                 component.Power += (float) Projectile.Damage.Total;
             }
@@ -394,15 +415,18 @@ namespace Content.Server.Supermatter.EntitySystems
         /// <summary>
         /// Handle getting entities in range and calling behavour
         /// </summary>
-        public void HandleBehavour(EntityUid Uid, Vector2 worldPos, float frameTime, SupermatterComponent? component = null)
+        public void HandleBehavour(EntityUid Uid, EntityCoordinates WorldPos, float FrameTime, SupermatterComponent? component = null)
         {
             if(!Resolve(Uid, ref component))
-                return;
-            HandleRads(Uid, frameTime, component);
-            HandleDamage(Uid, frameTime, component);
-            foreach(var entity in _lookup.GetEntitiesInRange(_entityManager.GetComponent<TransformComponent>(Uid).MapID, worldPos, 0.5f))
             {
-                HandleDestroy(Uid, component);
+                return;
+            }
+
+            HandleRads(Uid, FrameTime, component);
+            HandleDamage(Uid, FrameTime, component);
+            foreach(var Entity in _lookup.GetEntitiesInRange(WorldPos, 0.5f))
+            {
+                HandleDestroy(Entity.Uid, Uid, component);
             }
         }
     }
