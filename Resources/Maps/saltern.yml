@@ -6984,11 +6984,9 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 656
-  type: AirlockExternalLocked
+  type: AirlockShuttle
   components:
-  - name: Escape Shuttle Dock
-    type: MetaData
-  - rot: 4.371139006309477E-08 rad
+  - rot: -1.5707963267948966 rad
     pos: -41.5,8.5
     parent: 853
     type: Transform
@@ -7037,11 +7035,9 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 661
-  type: AirlockExternalLocked
+  type: AirlockShuttle
   components:
-  - name: Escape Shuttle Dock
-    type: MetaData
-  - rot: 4.371139006309477E-08 rad
+  - rot: -1.5707963267948966 rad
     pos: -41.5,4.5
     parent: 853
     type: Transform

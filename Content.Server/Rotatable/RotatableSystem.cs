@@ -75,8 +75,6 @@ namespace Content.Server.Rotatable
         /// </summary>
         public static void TryFlip(FlippableComponent component, IEntity user)
         {
-            // TODO FLIPPABLE Currently an entity needs to be un-anchored when flipping. But the newly spawned entity
-            // defaults to being anchored (and spawns under floor tiles). Fix this?
             if (component.Owner.TryGetComponent(out IPhysBody? physics) &&
                 physics.BodyType == BodyType.Static)
             {
@@ -84,7 +82,11 @@ namespace Content.Server.Rotatable
                 return;
             }
 
-            component.Owner.EntityManager.SpawnEntity(component.MirrorEntity, component.Owner.Transform.Coordinates);
+            var oldTransform = component.Owner.Transform;
+            var entity = component.Owner.EntityManager.SpawnEntity(component.MirrorEntity, oldTransform.Coordinates);
+            var newTransform = entity.Transform;
+            newTransform.LocalRotation = oldTransform.LocalRotation;
+            newTransform.Anchored = false;
             component.Owner.Delete();
         }
     }

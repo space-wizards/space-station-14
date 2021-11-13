@@ -1,11 +1,17 @@
 ﻿- type: stack
   id: Ointment
   name: ointment
+  icon: "/Textures/Objects/Specific/Medical/medical.rsi/ointment.png"
+  spawn: Ointment
 
 - type: stack
   id: Gauze
   name: gauze
+  icon: "/Textures/Objects/Specific/Medical/medical.rsi/gauze.png"
+  spawn: Gauze
 
 - type: stack
   id: Brutepack
   name: brutepack
+  icon: "/Textures/Objects/Specific/Medical/medical.rsi/gauze.png"
+  spawn: Brutepack

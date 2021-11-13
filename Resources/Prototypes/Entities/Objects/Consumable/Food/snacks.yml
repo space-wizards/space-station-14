@@ -80,6 +80,15 @@
       - id: FoodSnackChocolateBar
     sound:
       path: /Audio/Effects/unwrap.ogg
+  - type: SolutionContainerManager #seems like you can eat it unwrapped
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Theobromine
+          Quantity: 3
 
 - type: entity
   name: chocolate bar
@@ -92,6 +101,15 @@
     state: chocolatebar-open
   - type: Item
     color: brown
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Theobromine
+          Quantity: 3
 
 - type: entity
   name: energy bar
