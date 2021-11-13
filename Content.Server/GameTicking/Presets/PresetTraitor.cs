@@ -160,6 +160,8 @@ namespace Content.Server.GameTicking.Presets
         public override void OnGameStarted()
         {
             var objectivesMgr = IoCManager.Resolve<IObjectivesManager>();
+            var objSys = EntitySystem.Get<ObjectivesSystem>();
+
             foreach (var traitor in _traitors)
             {
                 //give traitors their objectives
@@ -168,7 +170,7 @@ namespace Content.Server.GameTicking.Presets
                 {
                     var objective = objectivesMgr.GetRandomObjective(traitor.Mind);
                     if (objective == null) continue;
-                    if (traitor.Mind.TryAddObjective(objective))
+                    if (objSys.TryAddObjective(traitor.Mind, objective))
                         difficulty += objective.Difficulty;
                 }
             }

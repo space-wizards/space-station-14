@@ -1,8 +1,10 @@
 ﻿using Content.Server.Administration;
+using Content.Server.Mind.Systems;
 using Content.Server.Players;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Objectives.Commands
@@ -31,9 +33,10 @@ namespace Content.Server.Objectives.Commands
                     return;
                 }
 
+                var objSys = EntitySystem.Get<ObjectivesSystem>();
                 if (int.TryParse(args[1], out var i))
                 {
-                    shell.WriteLine(mind.TryRemoveObjective(i)
+                    shell.WriteLine(objSys.TryRemoveObjective(mind, i)
                         ? "Objective successfully removed!"
                         : "Objective removing failed. Maybe the index is out of bounds? Check lsobjectives!");
                 }

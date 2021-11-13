@@ -35,7 +35,7 @@ namespace Content.Server.Mind
     {
         public readonly ISet<Role> _roles = new HashSet<Role>();
 
-        private readonly List<Objective> _objectives = new();
+        public readonly List<Objective> _objectives = new();
 
         /// <summary>
         ///     Creates the new mind attached to a specific player session.
@@ -163,34 +163,6 @@ namespace Content.Server.Mind
 
             return _roles.Any(role => role.GetType() == t);
         }
-
-        /// <summary>
-        /// Adds an objective to this mind.
-        /// </summary>
-        public bool TryAddObjective(ObjectivePrototype objectivePrototype)
-        {
-            if (!objectivePrototype.CanBeAssigned(this))
-                return false;
-            var objective = objectivePrototype.GetObjective(this);
-            if (_objectives.Contains(objective))
-                return false;
-            _objectives.Add(objective);
-            return true;
-        }
-
-        /// <summary>
-        /// Removes an objective to this mind.
-        /// </summary>
-        /// <returns>Returns true if the removal succeeded.</returns>
-        public bool TryRemoveObjective(int index)
-        {
-            if (_objectives.Count >= index) return false;
-
-            var objective = _objectives[index];
-            _objectives.Remove(objective);
-            return true;
-        }
-
 
 
         /// <summary>
