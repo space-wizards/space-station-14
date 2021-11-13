@@ -25,7 +25,51 @@ namespace Content.Shared.Arcade
             Green,
             Blue,
             LightBlue,
-            Purple
+            Purple,
+            GhostRed,
+            GhostOrange,
+            GhostYellow,
+            GhostGreen,
+            GhostBlue,
+            GhostLightBlue,
+            GhostPurple,
+        }
+
+        public static BlockGameBlockColor ToGhostBlockColor(BlockGameBlockColor inColor)
+        {
+            return inColor switch
+            {
+                BlockGameBlockColor.Red => BlockGameBlockColor.GhostRed,
+                BlockGameBlockColor.Orange => BlockGameBlockColor.GhostOrange,
+                BlockGameBlockColor.Yellow => BlockGameBlockColor.GhostYellow,
+                BlockGameBlockColor.Green => BlockGameBlockColor.GhostGreen,
+                BlockGameBlockColor.Blue => BlockGameBlockColor.GhostBlue,
+                BlockGameBlockColor.LightBlue => BlockGameBlockColor.GhostLightBlue,
+                BlockGameBlockColor.Purple => BlockGameBlockColor.GhostPurple,
+                _ => inColor
+            };
+        }
+
+        public static Color ToColor(BlockGameBlockColor inColor)
+        {
+            return inColor switch
+            {
+                BlockGameBlockColor.Red => Color.Red,
+                BlockGameBlockColor.Orange => Color.Orange,
+                BlockGameBlockColor.Yellow => Color.Yellow,
+                BlockGameBlockColor.Green => Color.Lime,
+                BlockGameBlockColor.Blue => Color.Blue,
+                BlockGameBlockColor.Purple => Color.DarkOrchid,
+                BlockGameBlockColor.LightBlue => Color.Cyan,
+                BlockGameBlockColor.GhostRed => Color.Red.WithAlpha(0.33f),
+                BlockGameBlockColor.GhostOrange => Color.Orange.WithAlpha(0.33f),
+                BlockGameBlockColor.GhostYellow => Color.Yellow.WithAlpha(0.33f),
+                BlockGameBlockColor.GhostGreen => Color.Lime.WithAlpha(0.33f),
+                BlockGameBlockColor.GhostBlue => Color.Blue.WithAlpha(0.33f),
+                BlockGameBlockColor.GhostPurple => Color.DarkOrchid.WithAlpha(0.33f),
+                BlockGameBlockColor.GhostLightBlue => Color.Cyan.WithAlpha(0.33f),
+                _ => Color.Olive //olive is error
+            };
         }
     }
 
