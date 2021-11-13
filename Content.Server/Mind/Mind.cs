@@ -235,47 +235,6 @@ namespace Content.Server.Mind
             UserId = null;
         }
 
-        public void ChangeOwningPlayer(NetUserId? newOwner)
-        {
-            var playerMgr = IoCManager.Resolve<IPlayerManager>();
-            PlayerData? newOwnerData = null;
-
-            if (newOwner.HasValue)
-            {
-                if (!playerMgr.TryGetPlayerData(newOwner.Value, out var uncast))
-                {
-                    // This restriction is because I'm too lazy to initialize the player data
-                    // for a client that hasn't logged in yet.
-                    // Go ahead and remove it if you need.
-                    throw new ArgumentException("new owner must have previously logged into the server.");
-                }
-
-                newOwnerData = uncast.ContentData();
-            }
-
-            // Make sure to remove control from our old owner if they're logged in.
-            var oldSession = Session;
-            oldSession?.AttachToEntity(null);
-
-            if (UserId.HasValue)
-            {
-                var data = playerMgr.GetPlayerData(UserId.Value).ContentData();
-                DebugTools.AssertNotNull(data);
-                data!.Mind = null;
-            }
-
-            UserId = newOwner;
-            if (!newOwner.HasValue)
-            {
-                return;
-            }
-
-            // Yank new owner out of their old mind too.
-            // Can I mention how much I love the word yank?
-            DebugTools.AssertNotNull(newOwnerData);
-            newOwnerData!.Mind?.ChangeOwningPlayer(null);
-            newOwnerData.Mind = this;
-        }
 
         public void Visit(IEntity entity)
         {
