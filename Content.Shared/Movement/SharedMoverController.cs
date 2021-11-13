@@ -68,17 +68,18 @@ namespace Content.Shared.Movement
             var (walkDir, sprintDir) = mover.VelocityDir;
 
             var transform = mover.Owner.Transform;
+            var parentRotation = transform.Parent!.WorldRotation;
 
             // Regular movement.
             // Target velocity.
             var total = walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed;
 
-            var worldTotal = _relativeMovement ? transform.Parent!.WorldRotation.RotateVec(total) : total;
+            var worldTotal = _relativeMovement ? parentRotation.RotateVec(total) : total;
 
             if (transform.GridID == GridId.Invalid)
                 worldTotal = mover.LastGridAngle.RotateVec(worldTotal);
             else
-                mover.LastGridAngle = transform.Parent!.WorldRotation;
+                mover.LastGridAngle = parentRotation;
 
             if (worldTotal != Vector2.Zero)
                 transform.WorldRotation = worldTotal.GetDir().ToAngle();
