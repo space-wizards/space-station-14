@@ -1,9 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: Fix nonexistent bulbs in built wall light, type: Fix}
-  id: 85
-  time: '2021-03-14T21:59:04.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'Fixes rotation bugs with emitters and containment fields, and some
@@ -2831,3 +2826,8 @@ Entries:
       it. They aren't motorized., type: Fix}
   id: 584
   time: '2021-11-13T21:43:37.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: There is now a MIDI volume slider in the options menu., type: Add}
+  id: 585
+  time: '2021-11-14T09:44:36.0000000+00:00'
