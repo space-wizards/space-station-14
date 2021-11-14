@@ -90,7 +90,7 @@ namespace Content.Shared.Decals
 
         private (Box2 view, MapId mapId) CalcViewBounds(in EntityUid euid)
         {
-            var xform = EntityManager.GetComponent<ITransformComponent>(euid);
+            var xform = EntityManager.GetComponent<TransformComponent>(euid);
 
             var view = Box2.UnitCentered.Scale(_viewSize).Translated(xform.WorldPosition);
             var map = xform.MapID;
@@ -144,21 +144,10 @@ namespace Content.Shared.Decals
                 _xIndex += 1;
             }
 
-            for (var x = _xIndex; x <= _chunkRT.X; x++)
-            {
-                for (var y = _yIndex; y <= _chunkRT.Y; y++)
-                {
-                    indices = new Vector2i(x, y);
-                    _xIndex = x;
-                    _yIndex = y + 1;
-                    return true;
-                }
+            indices = new Vector2i(_xIndex, _yIndex);
+            _yIndex += 1;
 
-                _yIndex = _chunkLB.Y;
-            }
-
-            indices = null;
-            return false;
+            return true;
         }
     }
 }
