@@ -1,9 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Fixes rotatable verbs not showing in the context menu., type: Fix}
-  id: 87
-  time: '2021-03-14T22:23:42.555325+00:00'
 - author: ShadowCommander
   changes:
   - {message: Fix gibbing causing ghosts to return to their brain, type: Fix}
@@ -2830,3 +2825,8 @@ Entries:
       crash the server, type: Fix}
   id: 586
   time: '2021-11-14T11:19:42.0000000+00:00'
+- author: Daemon
+  changes:
+  - {message: Handcuff box has too little of a storing size, type: Fix}
+  id: 587
+  time: '2021-11-14T16:29:49.0000000+00:00'
