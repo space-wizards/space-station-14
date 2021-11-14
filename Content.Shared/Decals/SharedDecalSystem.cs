@@ -147,7 +147,7 @@ namespace Content.Shared.Decals
             indices = new Vector2i(_xIndex, _yIndex);
             _yIndex += 1;
 
-            return true;
+            return _xIndex > _chunkRT.X && _yIndex > _chunkRT.Y;
         }
     }
 }
