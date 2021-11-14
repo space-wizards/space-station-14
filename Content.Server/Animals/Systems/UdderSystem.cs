@@ -7,9 +7,10 @@ using Content.Server.Nutrition.Components;
 using Content.Shared.Nutrition.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.DoAfter;
-using Content.Shared.Popups;
 using Robust.Shared.Localization;
 using Content.Shared.Verbs;
+using Robust.Shared.Player;
+using Content.Server.Popups;
 
 namespace Content.Server.Animals.Systems
 {
@@ -20,6 +21,7 @@ namespace Content.Server.Animals.Systems
     {
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         public override void Initialize()
         {
@@ -60,10 +62,9 @@ namespace Content.Server.Animals.Systems
 
         private void AttemtMilk(EntityUid uid, EntityUid userUid, EntityUid containerUid, UdderComponent udder)
         {
-            var user = EntityManager.GetEntity(userUid);
             if (udder.BeingMilked)
             {
-                udder.Owner.PopupMessage(user, Loc.GetString("udder-system-already-milking"));
+                _popupSystem.PopupEntity(Loc.GetString("udder-system-already-milking"), uid, Filter.Entities(userUid));
                 return;
             }
 
@@ -93,12 +94,10 @@ namespace Content.Server.Animals.Systems
             if (!_solutionContainerSystem.TryGetRefillableSolution(ev.ContainerUid, out var targetSolution))
                 return;
 
-            var user = EntityManager.GetEntity(ev.UserUid);
-
             var quantity = solution.TotalVolume;
             if(quantity == 0)
             {
-                udder.Owner.PopupMessage(user, Loc.GetString("udder-system-dry"));
+                _popupSystem.PopupEntity(Loc.GetString("udder-system-dry"), uid, Filter.Entities(ev.UserUid));
                 return;
             }
 
@@ -109,12 +108,11 @@ namespace Content.Server.Animals.Systems
             _solutionContainerSystem.TryAddSolution(ev.ContainerUid, targetSolution, split);
 
             var container = EntityManager.GetEntity(ev.ContainerUid);
-            udder.Owner.PopupMessage(user, Loc.GetString("udder-system-success", ("amount", quantity), ("target", container)));
+            _popupSystem.PopupEntity(Loc.GetString("udder-system-success", ("amount", quantity), ("target", container)), uid, Filter.Entities(ev.UserUid));
         }
 
         private void OnMilkingFailed(EntityUid uid, UdderComponent component, MilkingFailEvent ev)
         {
-            //TODO: fail PopupMessage?
             component.BeingMilked = false;
         }
 
