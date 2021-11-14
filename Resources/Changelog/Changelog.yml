@@ -1,10 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: 'Fixed burned, broken, and empty wall mounted light tube sprite positions',
-    type: Fix}
-  id: 91
-  time: '2021-03-15T05:40:25.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'Fixes default window sizes for vendors, chemistry machines, etc.',
@@ -2830,3 +2824,12 @@ Entries:
   - {message: Directional windows can now be constructed., type: Add}
   id: 590
   time: '2021-11-14T19:51:36.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Wires on Packed Station are less spaghetti than before., type: Tweak}
+  - {message: The Russians have sent their top atmos tech to fix the air on the DJ
+      satellite., type: Tweak}
+  - {message: The Chef now has a cow. Also made it so Ian spawns correctly in the
+      HoP's office., type: Add}
+  id: 591
+  time: '2021-11-14T19:52:46.0000000+00:00'
