@@ -8,14 +8,8 @@ namespace Content.Server.Mind.Components
     {
         public override string Name => "VisitingMind";
 
-        [ViewVariables] public Mind Mind { get; set; } = default!;
-
-        protected override void OnRemove()
-        {
-            base.OnRemove();
-
-            Mind?.UnVisit();
-        }
+        [ViewVariables]
+        public Mind Mind = default!;
     }
 
     public class MindUnvisitedMessage : EntityEventArgs
