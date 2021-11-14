@@ -607,10 +607,6 @@ namespace Content.Server.Doors.Components
             if (State == DoorState.Open || IsWeldedShut)
                 return;
 
-            _stateChangeCancelTokenSource?.Cancel();
-            _stateChangeCancelTokenSource = new();
-            SetAppearance(DoorVisualState.Deny);
-
             if (DenySound != null)
             {
                 if (LastDenySoundTime == TimeSpan.Zero)
@@ -629,6 +625,9 @@ namespace Content.Server.Doors.Components
                     AudioParams.Default.WithVolume(-3));
             }
 
+            _stateChangeCancelTokenSource?.Cancel();
+            _stateChangeCancelTokenSource = new();
+            SetAppearance(DoorVisualState.Deny);
             Owner.SpawnTimer(DenyTime, () =>
             {
                 SetAppearance(DoorVisualState.Closed);
