@@ -49,9 +49,6 @@ namespace Content.Server.Mind
         [ViewVariables]
         public TimeSpan? TimeOfDeath = null;
 
-        /// <summary>
-        ///     Wth is this?
-        /// </summary>
         [ViewVariables]
         public IEntity? VisitingEntity = null;
 
@@ -122,12 +119,6 @@ namespace Content.Server.Mind
 
             return Roles.Any(role => role.GetType() == t);
         }
-
-        public void RemoveOwningPlayer()
-        {
-            UserId = null;
-        }
-
 
         public void Visit(IEntity entity)
         {

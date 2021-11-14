@@ -37,7 +37,7 @@ namespace Content.Server.Players
             if (Mind != null)
             {
                 mindSys.TransferTo(Mind, null);
-                Mind.RemoveOwningPlayer();
+                mindSys.RemoveOwningPlayer(Mind);
             }
             Mind = null;
         }

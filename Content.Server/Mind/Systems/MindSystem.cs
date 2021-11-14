@@ -102,6 +102,11 @@ namespace Content.Server.Mind.Systems
             }
         }
 
+        public void RemoveOwningPlayer(Mind mind)
+        {
+            mind.UserId = null;
+        }
+
         /// <summary>
         ///     True if this Mind is 'sufficiently dead' IC (objectives, endtext).
         ///     Note that this is *IC logic*, it's not necessarily tied to any specific truth.
