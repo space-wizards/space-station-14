@@ -42,7 +42,7 @@ namespace Content.IntegrationTests.Tests
                 player.ContentData().Mind = mind;
 
                 mindSys.TransferTo(mind, playerEnt.Uid);
-                mind.Visit(visitEnt);
+                mindSys.Visit(mind, visitEnt);
 
                 Assert.That(player.AttachedEntity, Is.EqualTo(visitEnt));
                 Assert.That(mind.VisitingEntity, Is.EqualTo(visitEnt));

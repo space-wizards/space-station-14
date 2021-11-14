@@ -1,10 +1,13 @@
 ﻿using Content.Server.Mind.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Mind.Systems
 {
     public class VisitingMindSystem : EntitySystem
     {
+        [Dependency] private readonly MindSystem _mindSys = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -13,7 +16,10 @@ namespace Content.Server.Mind.Systems
 
         private void OnRemove(EntityUid uid, VisitingMindComponent component, ComponentRemove args)
         {
-            component.Mind?.UnVisit();
+            if (component.Mind == null)
+                return;
+
+            _mindSys.UnVisit(component.Mind);
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
 using Content.Server.Mind.Components;
+using Content.Server.Mind.Systems;
 using Content.Server.Players;
 using Content.Server.Visible;
 using Content.Server.Warps;
@@ -26,6 +27,7 @@ namespace Content.Server.Ghost
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly GameTicker _ticker = default!;
+        [Dependency] private readonly MindSystem _mindSys = default!;
 
         public override void Initialize()
         {
@@ -140,7 +142,9 @@ namespace Content.Server.Ghost
                 return;
             }
 
-            actor.PlayerSession.ContentData()!.Mind?.UnVisit();
+            var mind = actor.PlayerSession.ContentData()!.Mind;
+            if (mind != null)
+                _mindSys.UnVisit(mind);
         }
 
         private void OnGhostWarpToLocationRequest(GhostWarpToLocationRequestEvent msg, EntitySessionEventArgs args)

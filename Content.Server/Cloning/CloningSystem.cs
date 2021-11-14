@@ -44,7 +44,7 @@ namespace Content.Server.Cloning
                 return;
 
             _mindSys.TransferTo(mind, entity.Uid, ghostCheckOverride: true);
-            mind.UnVisit();
+            _mindSys.UnVisit(mind);
             ClonesWaitingForMind.Remove(mind);
         }
 

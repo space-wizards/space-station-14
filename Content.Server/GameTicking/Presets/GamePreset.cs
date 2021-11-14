@@ -43,9 +43,10 @@ namespace Content.Server.GameTicking.Presets
             if (playerEntity != null && playerEntity.HasComponent<GhostComponent>())
                 return false;
 
+            var mindSys = EntitySystem.Get<MindSystem>();
             if (mind.VisitingEntity != null)
             {
-                mind.UnVisit();
+                mindSys.UnVisit(mind);
             }
 
             var position = playerEntity?.Transform.Coordinates ?? EntitySystem.Get<GameTicker>().GetObserverSpawnPoint();
@@ -57,7 +58,6 @@ namespace Content.Server.GameTicking.Presets
             // + If we're in a mob that is critical, and we're supposed to be able to return if possible,
             ///   we're succumbing - the mob is killed. Therefore, character is dead. Ghosting OK.
             //   (If the mob survives, that's a bug. Ghosting is kept regardless.)
-            var mindSys = EntitySystem.Get<MindSystem>();
             var canReturn = canReturnGlobal && mindSys.IsCharacterDeadPhysically(mind);
 
             if (playerEntity != null && canReturnGlobal && playerEntity.TryGetComponent(out MobStateComponent? mobState))
@@ -95,7 +95,7 @@ namespace Content.Server.GameTicking.Presets
 
 
             if (canReturn)
-                mind.Visit(ghost);
+                mindSys.Visit(mind, ghost);
             else
                 mindSys.TransferTo(mind, ghost.Uid);
             return true;

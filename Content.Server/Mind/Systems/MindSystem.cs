@@ -12,6 +12,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Mind.Systems
 {
@@ -244,6 +245,39 @@ namespace Content.Server.Mind.Systems
 
             RaiseLocalEvent(uid, new MindRemovedMessage());
             component.Mind = null;
+        }
+
+        public void Visit(Mind mind, IEntity entity)
+        {
+            mind.Session?.AttachToEntity(entity);
+            mind.VisitingEntity = entity;
+
+            var comp = entity.AddComponent<VisitingMindComponent>();
+            comp.Mind = mind;
+
+            Logger.Info($"Session {mind.Session?.Name} visiting entity {entity}.");
+        }
+
+        public void UnVisit(Mind mind)
+        {
+            if (!mind.IsVisitingEntity)
+            {
+                return;
+            }
+
+            mind.Session?.AttachToEntity(mind.OwnedEntity);
+            var oldVisitingEnt = mind.VisitingEntity;
+            // Null this before removing the component to avoid any infinite loops.
+            mind.VisitingEntity = null;
+
+            DebugTools.AssertNotNull(oldVisitingEnt);
+
+            if (oldVisitingEnt!.HasComponent<VisitingMindComponent>())
+            {
+                oldVisitingEnt.RemoveComponent<VisitingMindComponent>();
+            }
+
+            RaiseLocalEvent(oldVisitingEnt.Uid, new MindUnvisitedMessage());
         }
     }
 }

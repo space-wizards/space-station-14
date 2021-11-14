@@ -9,7 +9,7 @@ namespace Content.Server.Mind.Components
         public override string Name => "VisitingMind";
 
         [ViewVariables]
-        public Mind Mind = default!;
+        public Mind? Mind = null;
     }
 
     public class MindUnvisitedMessage : EntityEventArgs

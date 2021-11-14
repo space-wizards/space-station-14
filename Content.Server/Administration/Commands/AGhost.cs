@@ -35,9 +35,12 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
+            var mindSys = EntitySystem.Get<MindSystem>();
             if (mind.VisitingEntity != null && mind.VisitingEntity.HasComponent<GhostComponent>())
             {
-                player.ContentData()!.Mind?.UnVisit();
+                var playerMind = player.ContentData()!.Mind;
+                if (playerMind != null)
+                    mindSys.UnVisit(playerMind);
                 return;
             }
 
@@ -54,13 +57,11 @@ namespace Content.Server.Administration.Commands
                 else if (!string.IsNullOrWhiteSpace(mind.Session?.Name))
                     ghost.Name = mind.Session.Name;
 
-                mind.Visit(ghost);
+                mindSys.Visit(mind, ghost);
             }
             else
             {
                 ghost.Name = player.Name;
-
-                var mindSys = EntitySystem.Get<MindSystem>();
                 mindSys.TransferTo(mind, ghost.Uid);
             }
 

@@ -120,39 +120,6 @@ namespace Content.Server.Mind
             return Roles.Any(role => role.GetType() == t);
         }
 
-        public void Visit(IEntity entity)
-        {
-            Session?.AttachToEntity(entity);
-            VisitingEntity = entity;
-
-            var comp = entity.AddComponent<VisitingMindComponent>();
-            comp.Mind = this;
-
-            Logger.Info($"Session {Session?.Name} visiting entity {entity}.");
-        }
-
-        public void UnVisit()
-        {
-            if (!IsVisitingEntity)
-            {
-                return;
-            }
-
-            Session?.AttachToEntity(OwnedEntity);
-            var oldVisitingEnt = VisitingEntity;
-            // Null this before removing the component to avoid any infinite loops.
-            VisitingEntity = null;
-
-            DebugTools.AssertNotNull(oldVisitingEnt);
-
-            if (oldVisitingEnt!.HasComponent<VisitingMindComponent>())
-            {
-                oldVisitingEnt.RemoveComponent<VisitingMindComponent>();
-            }
-
-            oldVisitingEnt.EntityManager.EventBus.RaiseLocalEvent(oldVisitingEnt.Uid, new MindUnvisitedMessage());
-        }
-
         public bool TryGetSession([NotNullWhen(true)] out IPlayerSession? session)
         {
             return (session = Session) != null;
