@@ -102,6 +102,7 @@ namespace Content.Server.Mind
         [ViewVariables]
         public MindComponent? OwnedComponent = null;
 
+        // TODO: move this to EntityUid
         /// <summary>
         ///     The entity currently owned by this mind.
         ///     Can be null.
@@ -109,6 +110,7 @@ namespace Content.Server.Mind
         [ViewVariables]
         public IEntity? OwnedEntity => OwnedComponent?.Owner;
 
+        // TODO: this should probably be moved to some system
         /// <summary>
         ///     The session of the player owning this mind.
         ///     Can be null, in which case the player is currently not logged in.
