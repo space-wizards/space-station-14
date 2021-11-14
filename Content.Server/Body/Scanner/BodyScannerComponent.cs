@@ -1,6 +1,5 @@
 ﻿using Content.Server.UserInterface;
 using Content.Shared.Body.Components;
-using Content.Shared.Body.Scanner;
 using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;

@@ -21,6 +21,7 @@ using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
@@ -59,6 +60,7 @@ namespace Content.Client.Preferences.UI
         private Button _sexFemaleButton => CSexFemale;
         private Button _sexMaleButton => CSexMale;
         private OptionButton _genderButton => CPronounsButton;
+        private Slider _skinColor => CSkin;
         private OptionButton _clothingButton => CClothingButton;
         private OptionButton _backpackButton => CBackpackButton;
         private HairStylePicker _hairPicker => CHairStylePicker;
@@ -169,6 +171,46 @@ namespace Content.Client.Preferences.UI
             };
 
             #endregion Gender
+
+            #region Skin
+
+            // 0 - 100, 0 being gold/yellowish and 100 being dark
+            // HSV based
+            //
+            // 0 - 20 changes the hue
+            // 20 - 100 changes the value
+            // 0 is 45 - 20 - 100
+            // 20 is 25 - 20 - 100
+            // 100 is 25 - 100 - 20
+            _skinColor.OnValueChanged += range =>
+            {
+                if (Profile is null)
+                    return;
+
+                int rangeOffset = (int) range.Value - 20;
+
+                float hue = 25;
+                float sat = 20;
+                float val = 100;
+
+                if (rangeOffset < 0)
+                {
+                    hue += Math.Abs(rangeOffset);
+                }
+                else if (rangeOffset > 0)
+                {
+                    sat += rangeOffset;
+                    val -= rangeOffset;
+                }
+
+                var color = Color.FromHsv(new Vector4(hue / 360, sat / 100, val / 100, 1.0f));
+
+                Profile = Profile.WithCharacterAppearance(
+                    Profile.Appearance.WithSkinColor(color));
+                IsDirty = true;
+            };
+
+            #endregion
 
             #region Hair
 
@@ -528,6 +570,27 @@ namespace Content.Client.Preferences.UI
                 _sexFemaleButton.Pressed = true;
         }
 
+        private void UpdateSkinColor()
+        {
+            if (Profile == null)
+                return;
+
+            var color = Color.ToHsv(Profile.Appearance.SkinColor);
+            // check for hue/value first, if hue is lower than this percentage
+            // and value is 1.0
+            // then it'll be hue
+            if (Math.Clamp(color.X, 25f / 360f, 1) > 25f / 360f
+                && color.Z == 1.0)
+            {
+                _skinColor.Value = Math.Abs(45 - (color.X * 360));
+            }
+            // otherwise it'll directly be the saturation
+            else
+            {
+                _skinColor.Value = color.Y * 100;
+            }
+        }
+
         private void UpdateGenderControls()
         {
             if (Profile == null)
@@ -607,6 +670,7 @@ namespace Content.Client.Preferences.UI
             UpdateNameEdit();
             UpdateSexControls();
             UpdateGenderControls();
+            UpdateSkinColor();
             UpdateClothingControls();
             UpdateBackpackControls();
             UpdateAgeEdit();

@@ -77,7 +77,7 @@ namespace Content.Server.Arcade.Components
             if (!Powered || !eventArgs.User.TryGetComponent(out ActorComponent? actor))
                 return;
 
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User.Uid))
                 return;
 
             _game ??= new SpaceVillainGame(this);

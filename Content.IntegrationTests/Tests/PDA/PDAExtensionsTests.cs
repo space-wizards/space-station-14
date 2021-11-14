@@ -1,11 +1,11 @@
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Access.Components;
-using Content.Shared.Containers.ItemSlots;
 using Content.Server.Hands.Components;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
 using Content.Server.PDA;
+using Content.Shared.Containers.ItemSlots;
 using NUnit.Framework;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
@@ -72,7 +72,7 @@ namespace Content.IntegrationTests.Tests.PDA
                 // Put PDA in hand
                 var dummyPda = sEntityManager.SpawnEntity(PdaDummy, player.Transform.MapPosition);
                 var pdaItemComponent = dummyPda.GetComponent<ItemComponent>();
-                player.GetComponent<IHandsComponent>().PutInHand(pdaItemComponent);
+                player.GetComponent<HandsComponent>().PutInHand(pdaItemComponent);
 
                 var pdaComponent = dummyPda.GetComponent<PDAComponent>();
                 var pdaIdCard = sEntityManager.SpawnEntity(IdCardDummy, player.Transform.MapPosition);
@@ -92,7 +92,7 @@ namespace Content.IntegrationTests.Tests.PDA
                 // Put ID card in hand
                 var idDummy = sEntityManager.SpawnEntity(IdCardDummy, player.Transform.MapPosition);
                 var idItemComponent = idDummy.GetComponent<ItemComponent>();
-                player.GetComponent<IHandsComponent>().PutInHand(idItemComponent);
+                player.GetComponent<HandsComponent>().PutInHand(idItemComponent);
 
                 var idCardComponent = idDummy.GetComponent<IdCardComponent>();
 
@@ -120,7 +120,7 @@ namespace Content.IntegrationTests.Tests.PDA
                     }
                 }
 
-                var hands = player.GetComponent<IHandsComponent>();
+                var hands = player.GetComponent<HandsComponent>();
 
                 hands.Drop(dummyPda, false);
                 hands.Drop(idDummy, false);

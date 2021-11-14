@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Content.Shared.ActionBlocker;
 using Content.Shared.CCVar;
 using Content.Shared.Friction;
-using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Pulling.Components;
 using Robust.Shared.Configuration;
@@ -95,15 +95,15 @@ namespace Content.Shared.Movement
         protected void HandleMobMovement(IMoverComponent mover, PhysicsComponent physicsComponent,
             IMobMoverComponent mobMover)
         {
-            DebugTools.Assert(!UsedMobMovement.ContainsKey(mover.Owner.Uid));
+            DebugTools.Assert(!UsedMobMovement.ContainsKey(mover.OwnerUid));
 
             if (!UseMobMovement(physicsComponent))
             {
-                UsedMobMovement[mover.Owner.Uid] = false;
+                UsedMobMovement[mover.OwnerUid] = false;
                 return;
             }
 
-            UsedMobMovement[mover.Owner.Uid] = true;
+            UsedMobMovement[mover.OwnerUid] = true;
             var transform = mover.Owner.Transform;
             var weightless = mover.Owner.IsWeightless(physicsComponent, mapManager: _mapManager, entityManager: _entityManager);
             var (walkDir, sprintDir) = mover.VelocityDir;
@@ -160,16 +160,16 @@ namespace Content.Shared.Movement
         protected bool UseMobMovement(PhysicsComponent body)
         {
             return body.BodyStatus == BodyStatus.OnGround &&
-                   body.Owner.HasComponent<IMobStateComponent>() &&
+                   body.Owner.HasComponent<MobStateComponent>() &&
                    // If we're being pulled then don't mess with our velocity.
                    (!body.Owner.TryGetComponent(out SharedPullableComponent? pullable) || !pullable.BeingPulled) &&
-                   _blocker.CanMove(body.Owner);
+                   _blocker.CanMove(body.OwnerUid);
         }
 
         /// <summary>
         ///     Used for weightlessness to determine if we are near a wall.
         /// </summary>
-        public static bool IsAroundCollider(SharedPhysicsSystem broadPhaseSystem, ITransformComponent transform, IMobMoverComponent mover, IPhysBody collider)
+        public static bool IsAroundCollider(SharedPhysicsSystem broadPhaseSystem, TransformComponent transform, IMobMoverComponent mover, IPhysBody collider)
         {
             var enlargedAABB = collider.GetWorldAABB().Enlarged(mover.GrabRange);
 

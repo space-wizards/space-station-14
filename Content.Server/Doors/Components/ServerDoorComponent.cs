@@ -11,22 +11,18 @@ using Content.Server.Construction;
 using Content.Server.Construction.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Stunnable;
-using Content.Server.Stunnable.Components;
 using Content.Server.Tools;
 using Content.Server.Tools.Components;
 using Content.Shared.Damage;
 using Content.Shared.Doors;
 using Content.Shared.Interaction;
 using Content.Shared.Sound;
-using Content.Shared.Stunnable;
 using Content.Shared.Tools;
-using Content.Shared.Tools.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
-using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
@@ -184,7 +180,7 @@ namespace Content.Server.Doors.Components
         /// Default time that the door should take to pry open.
         /// </summary>
         [DataField("pryTime")]
-        public float PryTime = 0.5f;
+        public float PryTime = 1.5f;
 
         /// <summary>
         ///     Minimum interval allowed between deny sounds in milliseconds.
@@ -276,6 +272,11 @@ namespace Content.Server.Doors.Components
 
         public void TryOpen(IEntity? user=null)
         {
+            var msg = new DoorOpenAttemptEvent();
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, msg);
+
+            if (msg.Cancelled) return;
+
             if (user == null)
             {
                 // a machine opened it or something, idk
@@ -365,6 +366,11 @@ namespace Content.Server.Doors.Components
                 occluder.Enabled = false;
             }
 
+            if (Owner.TryGetComponent(out AirtightComponent? airtight))
+            {
+                EntitySystem.Get<AirtightSystem>().SetAirblocked(airtight, false);
+            }
+
             _stateChangeCancelTokenSource?.Cancel();
             _stateChangeCancelTokenSource = new();
 
@@ -386,11 +392,13 @@ namespace Content.Server.Doors.Components
 
         protected override void OnPartialOpen()
         {
+            base.OnPartialOpen();
+
             if (Owner.TryGetComponent(out AirtightComponent? airtight))
             {
                 EntitySystem.Get<AirtightSystem>().SetAirblocked(airtight, false);
             }
-            base.OnPartialOpen();
+
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new AccessReaderChangeMessage(Owner, false));
         }
 
@@ -412,6 +420,11 @@ namespace Content.Server.Doors.Components
 
         public void TryClose(IEntity? user=null)
         {
+            var msg = new DoorCloseAttemptEvent();
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, msg);
+
+            if (msg.Cancelled) return;
+
             if (user != null && !CanCloseByEntity(user))
             {
                 Deny();
@@ -495,7 +508,7 @@ namespace Content.Server.Doors.Components
             if (CloseSound != null)
             {
                 SoundSystem.Play(Filter.Pvs(Owner), CloseSound.GetSound(), Owner,
-                    AudioParams.Default.WithVolume(-10));
+                    AudioParams.Default.WithVolume(-5));
             }
 
             Owner.SpawnTimer(CloseTimeOne, async () =>
@@ -673,8 +686,10 @@ namespace Content.Server.Doors.Components
                 var canEv = new BeforeDoorPryEvent(eventArgs);
                 Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, canEv, false);
 
+                if (canEv.Cancelled) return false;
+
                 var successfulPry = await toolSystem.UseTool(eventArgs.Using.Uid, eventArgs.User.Uid, Owner.Uid,
-                        0f, ev.PryTimeModifier * PryTime, _pryingQuality, () => !canEv.Cancelled);
+                        0f, ev.PryTimeModifier * PryTime, _pryingQuality);
 
                 if (successfulPry && !IsWeldedShut)
                 {

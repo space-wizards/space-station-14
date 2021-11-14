@@ -273,11 +273,11 @@ namespace Content.Server.Construction
                     if (doAfterState == DoAfterState.Cancelled)
                         return HandleResult.False;
 
-                    var insert = interactUsing.Used;
+                    var insert = interactUsing.UsedUid;
 
                     // Since many things inherit this step, we delegate the "is this entity valid?" logic to them.
                     // While this is very OOP and I find it icky, I must admit that it simplifies the code here a lot.
-                    if(!insertStep.EntityValid(insert))
+                    if(!insertStep.EntityValid(insert, EntityManager))
                         return HandleResult.False;
 
                     // If we're only testing whether this step would be handled by the given event, then we're done.
@@ -312,7 +312,7 @@ namespace Content.Server.Construction
                     // we split the stack in two and insert the split stack.
                     if (insertStep is MaterialConstructionGraphStep materialInsertStep)
                     {
-                        if (_stackSystem.Split(insert.Uid, materialInsertStep.Amount, interactUsing.User.Transform.Coordinates) is not { } stack)
+                        if (_stackSystem.Split(insert, materialInsertStep.Amount, EntityManager.GetComponent<TransformComponent>(interactUsing.UserUid).Coordinates) is not {} stack)
                             return HandleResult.False;
 
                         insert = stack;
@@ -330,12 +330,12 @@ namespace Content.Server.Construction
 
                         // The container doesn't necessarily need to exist, so we ensure it.
                         _containerSystem.EnsureContainer<Container>(uid, store)
-                            .Insert(insert);
+                            .Insert(EntityManager.GetEntity(insert));
                     }
                     else
                     {
                         // If we don't store the item in a container on the entity, we just delete it right away.
-                        insert.Delete();
+                        EntityManager.DeleteEntity(insert);
                     }
 
                     // Step has been handled correctly, so we signal this.

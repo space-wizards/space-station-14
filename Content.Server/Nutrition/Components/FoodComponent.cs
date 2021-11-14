@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Body.Behavior;
+using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
@@ -102,6 +104,9 @@ namespace Content.Server.Nutrition.Components
         public bool TryUseFood(IEntity? user, IEntity? target, UtensilComponent? utensilUsed = null)
         {
             var solutionContainerSys = EntitySystem.Get<SolutionContainerSystem>();
+            var bodySys = EntitySystem.Get<BodySystem>();
+            var stomachSys = EntitySystem.Get<StomachSystem>();
+
             if (!solutionContainerSys.TryGetSolution(Owner.Uid, SolutionName, out var solution))
             {
                 return false;
@@ -122,7 +127,7 @@ namespace Content.Server.Nutrition.Components
             var trueTarget = target ?? user;
 
             if (!trueTarget.TryGetComponent(out SharedBodyComponent? body) ||
-                !body.TryGetMechanismBehaviors<StomachBehavior>(out var stomachs))
+                !bodySys.TryGetComponentsOnMechanisms<StomachComponent>(body.OwnerUid, out var stomachs, body))
             {
                 return false;
             }
@@ -165,7 +170,7 @@ namespace Content.Server.Nutrition.Components
 
             var transferAmount = TransferAmount != null ?  FixedPoint2.Min((FixedPoint2)TransferAmount, solution.CurrentVolume) : solution.CurrentVolume;
             var split = solutionContainerSys.SplitSolution(Owner.Uid, solution, transferAmount);
-            var firstStomach = stomachs.FirstOrDefault(stomach => stomach.CanTransferSolution(split));
+            var firstStomach = stomachs.FirstOrDefault(stomach => stomachSys.CanTransferSolution(stomach.OwnerUid, split));
 
             if (firstStomach == null)
             {
@@ -175,13 +180,9 @@ namespace Content.Server.Nutrition.Components
             }
 
             // TODO: Account for partial transfer.
-
-            split.DoEntityReaction(trueTarget, ReactionMethod.Ingestion);
-
-            firstStomach.TryTransferSolution(split);
-
+            split.DoEntityReaction(trueTarget.Uid, ReactionMethod.Ingestion);
+            stomachSys.TryTransferSolution(firstStomach.OwnerUid, split, firstStomach);
             SoundSystem.Play(Filter.Pvs(trueTarget), UseSound.GetSound(), trueTarget, AudioParams.Default.WithVolume(-1f));
-
             trueTarget.PopupMessage(user, Loc.GetString(_eatMessage, ("food", Owner)));
 
             // If utensils were used

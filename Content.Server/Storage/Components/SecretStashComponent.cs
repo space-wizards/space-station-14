@@ -59,7 +59,7 @@ namespace Content.Server.Storage.Components
                 return false;
             }
 
-            if (!user.TryGetComponent(out IHandsComponent? hands))
+            if (!user.TryGetComponent(out HandsComponent? hands))
                 return false;
 
             if (!hands.Drop(itemToHide, _itemContainer))

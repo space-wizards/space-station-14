@@ -30,6 +30,9 @@ namespace Content.Client.Doors
         [DataField("animatedPanel")]
         private bool _animatedPanel = true;
 
+        /// <summary>
+        /// Means the door is simply open / closed / opening / closing. No wires or access.
+        /// </summary>
         [DataField("simpleVisuals")]
         private bool _simpleVisuals = false;
 

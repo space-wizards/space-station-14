@@ -10,7 +10,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using HandsComponent = Content.Client.Hands.HandsComponent;
 
 namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
 {
@@ -48,7 +47,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
             IEntity cuffs;
             IEntity secondCuffs;
             CuffableComponent cuffed;
-            IHandsComponent hands;
+            HandsComponent hands;
 
             server.Assert(() =>
             {
@@ -69,9 +68,9 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
                 // Test for components existing
                 Assert.True(human.TryGetComponent(out cuffed!), $"Human has no {nameof(CuffableComponent)}");
                 Assert.True(human.TryGetComponent(out hands!), $"Human has no {nameof(HandsComponent)}");
-                Assert.True(human.TryGetComponent(out SharedBodyComponent _), $"Human has no {nameof(SharedBodyComponent)}");
-                Assert.True(cuffs.TryGetComponent(out HandcuffComponent _), $"Handcuff has no {nameof(HandcuffComponent)}");
-                Assert.True(secondCuffs.TryGetComponent(out HandcuffComponent _), $"Second handcuffs has no {nameof(HandcuffComponent)}");
+                Assert.True(human.TryGetComponent(out SharedBodyComponent? _), $"Human has no {nameof(SharedBodyComponent)}");
+                Assert.True(cuffs.TryGetComponent(out HandcuffComponent? _), $"Handcuff has no {nameof(HandcuffComponent)}");
+                Assert.True(secondCuffs.TryGetComponent(out HandcuffComponent? _), $"Second handcuffs has no {nameof(HandcuffComponent)}");
 
                 // Test to ensure cuffed players register the handcuffs
                 cuffed.TryAddNewCuffs(human, cuffs);

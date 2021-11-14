@@ -4,8 +4,10 @@ using Content.Server.Atmos.Components;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Shared.Atmos;
+using Content.Shared.Maps;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.EntitySystems
@@ -31,6 +33,111 @@ namespace Content.Server.Atmos.EntitySystems
         private bool _simulationPaused = false;
 
         private readonly List<GridAtmosphereComponent> _currentRunAtmosphere = new();
+
+        /// <summary>
+        ///     Revalidates all invalid coordinates in a grid atmosphere.
+        /// </summary>
+        /// <param name="atmosphere">The grid atmosphere in question.</param>
+        /// <returns>Whether the process succeeded or got paused due to time constrains.</returns>
+        private bool ProcessRevalidate(GridAtmosphereComponent atmosphere)
+        {
+            if (!atmosphere.ProcessingPaused)
+            {
+                atmosphere.CurrentRunInvalidatedCoordinates = new Queue<Vector2i>(atmosphere.InvalidatedCoords);
+                atmosphere.InvalidatedCoords.Clear();
+            }
+
+            if (!TryGetMapGrid(atmosphere, out var mapGrid))
+                return true;
+
+            var volume = GetVolumeForTiles(mapGrid, 1);
+
+            var number = 0;
+            while (atmosphere.CurrentRunInvalidatedCoordinates.TryDequeue(out var indices))
+            {
+                var tile = GetTileAtmosphere(atmosphere, indices);
+
+                if (tile == null)
+                {
+                    tile = new TileAtmosphere(mapGrid.Index, indices, new GasMixture(volume){Temperature = Atmospherics.T20C});
+                    atmosphere.Tiles[indices] = tile;
+                }
+
+                var isAirBlocked = IsTileAirBlocked(mapGrid, indices);
+
+                UpdateAdjacent(mapGrid, atmosphere, tile);
+
+                if (IsTileSpace(mapGrid, indices) && !isAirBlocked)
+                {
+                    tile.Air = new GasMixture(volume);
+                    tile.Air.MarkImmutable();
+                    atmosphere.Tiles[indices] = tile;
+
+                } else if (isAirBlocked)
+                {
+                    var nullAir = false;
+
+                    foreach (var airtight in GetObstructingComponents(mapGrid, indices))
+                    {
+                        if (!airtight.NoAirWhenFullyAirBlocked)
+                            continue;
+
+                        nullAir = true;
+                        break;
+                    }
+
+                    if (nullAir)
+                    {
+                        tile.Air = null;
+                        tile.Hotspot = new Hotspot();
+                    }
+                }
+                else
+                {
+                    if (tile.Air == null && NeedsVacuumFixing(mapGrid, indices))
+                    {
+                        FixVacuum(atmosphere, tile.GridIndices);
+                    }
+
+                    // Tile used to be space, but isn't anymore.
+                    if (tile.Air?.Immutable ?? false)
+                    {
+                        tile.Air = null;
+                    }
+
+                    tile.Air ??= new GasMixture(volume){Temperature = Atmospherics.T20C};
+                }
+
+                // By removing the active tile, we effectively remove its excited group, if any.
+                RemoveActiveTile(atmosphere, tile);
+
+                // Then we activate the tile again.
+                AddActiveTile(atmosphere, tile);
+
+                // TODO ATMOS: Query all the contents of this tile (like walls) and calculate the correct thermal conductivity
+                tile.ThermalConductivity = tile.Tile?.Tile.GetContentTileDefinition().ThermalConductivity ?? 0.5f;
+                InvalidateVisuals(mapGrid.Index, indices);
+
+                for (var i = 0; i < Atmospherics.Directions; i++)
+                {
+                    var direction = (AtmosDirection) (1 << i);
+                    var otherIndices = indices.Offset(direction);
+                    var otherTile = GetTileAtmosphere(atmosphere, otherIndices);
+                    if (otherTile != null)
+                        AddActiveTile(atmosphere, otherTile);
+                }
+
+                if (number++ < InvalidCoordinatesLagCheckIterations) continue;
+                number = 0;
+                // Process the rest next time.
+                if (_simulationStopwatch.Elapsed.TotalMilliseconds >= AtmosMaxProcessTime)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
 
         private bool ProcessTileEqualize(GridAtmosphereComponent atmosphere)
         {
@@ -246,15 +353,6 @@ namespace Content.Server.Atmos.EntitySystems
 
                 atmosphere.Timer += frameTime;
 
-                if ((atmosphere.InvalidatedCoords.Count != 0 || atmosphere.RevalidatePaused) && TryGetMapGrid(atmosphere, out var mapGrid))
-                    if (!GridRevalidate(mapGrid, atmosphere))
-                    {
-                        atmosphere.RevalidatePaused = true;
-                        return;
-                    }
-
-                atmosphere.RevalidatePaused = false;
-
                 if (atmosphere.Timer < AtmosTime)
                     continue;
 
@@ -263,6 +361,21 @@ namespace Content.Server.Atmos.EntitySystems
 
                 switch (atmosphere.State)
                 {
+                    case AtmosphereProcessingState.Revalidate:
+                        if (!ProcessRevalidate(atmosphere))
+                        {
+                            atmosphere.ProcessingPaused = true;
+                            return;
+                        }
+
+                        atmosphere.ProcessingPaused = false;
+                        // Next state depends on whether monstermos equalization is enabled or not.
+                        // Note: We do this here instead of on the tile equalization step to prevent ending it early.
+                        //       Therefore, a change to this CVar might only be applied after that step is over.
+                        atmosphere.State = MonstermosEqualization
+                            ? AtmosphereProcessingState.TileEqualize
+                            : AtmosphereProcessingState.ActiveTiles;
+                        continue;
                     case AtmosphereProcessingState.TileEqualize:
                         if (!ProcessTileEqualize(atmosphere))
                         {
@@ -347,12 +460,7 @@ namespace Content.Server.Atmos.EntitySystems
                         }
 
                         atmosphere.ProcessingPaused = false;
-                        // Next state depends on whether monstermos equalization is enabled or not.
-                        // Note: We do this here instead of on the tile equalization step to prevent ending it early.
-                        //       Therefore, a change to this CVar might only be applied after that step is over.
-                        atmosphere.State = MonstermosEqualization
-                            ? AtmosphereProcessingState.TileEqualize
-                            : AtmosphereProcessingState.ActiveTiles;
+                        atmosphere.State = AtmosphereProcessingState.Revalidate;
 
                         // We reached the end of this atmosphere's update tick. Break out of the switch.
                         break;
@@ -369,6 +477,7 @@ namespace Content.Server.Atmos.EntitySystems
 
     public enum AtmosphereProcessingState : byte
     {
+        Revalidate,
         TileEqualize,
         ActiveTiles,
         ExcitedGroups,

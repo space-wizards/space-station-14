@@ -151,7 +151,7 @@ namespace Content.Server.Flash
 
         public void FlashArea(EntityUid source, EntityUid? user, float range, float duration, float slowTo = 0f, bool displayPopup = false, SoundSpecifier? sound = null)
         {
-            var transform = EntityManager.GetComponent<ITransformComponent>(source);
+            var transform = EntityManager.GetComponent<TransformComponent>(source);
 
             foreach (var entity in _entityLookup.GetEntitiesInRange(transform.Coordinates, range))
             {

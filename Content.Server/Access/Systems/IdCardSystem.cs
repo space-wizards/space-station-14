@@ -1,7 +1,13 @@
 using Content.Server.Access.Components;
+using Content.Server.Inventory.Components;
+using Content.Server.Items;
+using Content.Server.PDA;
 using Content.Shared.Access;
+using Content.Shared.Hands.Components;
+using Content.Shared.Inventory;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.Access.Systems
 {
@@ -73,6 +79,54 @@ namespace Content.Server.Access.Systems
                 : Loc.GetString("access-id-card-component-owner-full-name-job-title-text",
                                 ("fullName", id.FullName),
                                 ("jobSuffix", jobSuffix));
+        }
+
+        /// <summary>
+        ///     Attempt to find an ID card on an entity. This will look in the entity itself, in the entity's hands, and
+        ///     in the entity's inventory.
+        /// </summary>
+        public bool TryFindIdCard(EntityUid uid, [NotNullWhen(true)] out IdCardComponent? idCard)
+        {
+            // check held item?
+            if (EntityManager.TryGetComponent(uid, out SharedHandsComponent? hands) &&
+                hands.TryGetActiveHeldEntity(out var heldItem) &&
+                TryGetIdCard(heldItem.Uid, out idCard))
+            {
+                return true;
+            }
+
+            // check entity itself
+            if (TryGetIdCard(uid, out idCard))
+                return true;
+
+            // check inventory slot?
+            if (EntityManager.TryGetComponent(uid, out InventoryComponent? inventoryComponent) &&
+                inventoryComponent.HasSlot(EquipmentSlotDefines.Slots.IDCARD) &&
+                inventoryComponent.TryGetSlotItem(EquipmentSlotDefines.Slots.IDCARD, out ItemComponent? item) &&
+                TryGetIdCard(item.Owner.Uid, out idCard))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        ///     Attempt to get an id card component from an entity, either by getting it directly from the entity, or by
+        ///     getting the contained id from a <see cref="PDAComponent"/>.
+        /// </summary>
+        private bool TryGetIdCard(EntityUid uid, [NotNullWhen(true)] out IdCardComponent? idCard)
+        {
+            if (EntityManager.TryGetComponent(uid, out idCard))
+                return true;
+
+            if (EntityManager.TryGetComponent(uid, out PDAComponent? pda) && pda.ContainedID != null)
+            {
+                idCard = pda.ContainedID;
+                return true;
+            }
+
+            return false;
         }
     }
 }

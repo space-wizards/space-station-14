@@ -124,7 +124,7 @@ namespace Content.Server.AME.Components
                 return;
             }
 
-            if (!args.User.TryGetComponent(out IHandsComponent? hands))
+            if (!args.User.TryGetComponent(out HandsComponent? hands))
             {
                 Owner.PopupMessage(args.User, Loc.GetString("ame-controller-component-interact-no-hands-text"));
                 return;
@@ -174,7 +174,7 @@ namespace Content.Server.AME.Components
             var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
 
             //Check if player can interact in their current state
-            if (!actionBlocker.CanInteract(playerEntity) || !actionBlocker.CanUse(playerEntity))
+            if (!actionBlocker.CanInteract(playerEntity.Uid) || !actionBlocker.CanUse(playerEntity.Uid))
                 return false;
             //Check if device is powered
             if (needsPower && !Powered)
@@ -335,7 +335,7 @@ namespace Content.Server.AME.Components
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs args)
         {
-            if (!args.User.TryGetComponent(out IHandsComponent? hands))
+            if (!args.User.TryGetComponent(out HandsComponent? hands))
             {
                 Owner.PopupMessage(args.User, Loc.GetString("ame-controller-component-interact-using-no-hands-text"));
                 return true;

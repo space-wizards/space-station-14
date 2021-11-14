@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
-using Content.Client.Administration.Managers;
-using Content.Shared.Administration.Menu;
+using Content.Shared.Administration.Events;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Enums;
@@ -11,16 +10,15 @@ namespace Content.Client.Administration
 {
     internal class AdminNameOverlay : Overlay
     {
-        private readonly AdminMenuManager _manager;
+        private readonly AdminSystem _system;
         private readonly IEntityManager _entityManager;
         private readonly IEyeManager _eyeManager;
         private readonly IEntityLookup _entityLookup;
-        private IReadOnlyList<AdminMenuPlayerListMessage.PlayerInfo>? _playerInfos;
         private readonly Font _font;
 
-        public AdminNameOverlay(AdminMenuManager manager, IEntityManager entityManager, IEyeManager eyeManager, IResourceCache resourceCache, IEntityLookup entityLookup)
+        public AdminNameOverlay(AdminSystem system, IEntityManager entityManager, IEyeManager eyeManager, IResourceCache resourceCache, IEntityLookup entityLookup)
         {
-            _manager = manager;
+            _system = system;
             _entityManager = entityManager;
             _eyeManager = eyeManager;
             _entityLookup = entityLookup;
@@ -30,21 +28,11 @@ namespace Content.Client.Administration
 
         public override OverlaySpace Space => OverlaySpace.ScreenSpace;
 
-        public void UpdatePlayerInfo(List<AdminMenuPlayerListMessage.PlayerInfo> playerInfos)
-        {
-            _playerInfos = playerInfos;
-        }
-
         protected override void Draw(in OverlayDrawArgs args)
         {
-            if (_playerInfos == null)
-            {
-                return;
-            }
-
             var viewport = _eyeManager.GetWorldViewport();
 
-            foreach (var playerInfo in _playerInfos)
+            foreach (var playerInfo in _system.PlayerList)
             {
                 // Otherwise the entity can not exist yet
                 if (!_entityManager.TryGetEntity(playerInfo.EntityUid, out var entity))

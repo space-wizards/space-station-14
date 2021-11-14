@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.Popups;
@@ -28,7 +29,7 @@ namespace Content.Server.Stack
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
 
-        public static readonly List<int> DefaultSplitAmounts = new() { 1, 5, 10, 20, 30, 50 };
+        public static readonly int[] DefaultSplitAmounts = { 1, 5, 10, 20, 30, 50 };
 
         public override void Initialize()
         {
@@ -41,7 +42,7 @@ namespace Content.Server.Stack
         /// <summary>
         ///     Try to split this stack into two. Returns a non-null <see cref="IEntity"/> if successful.
         /// </summary>
-        public IEntity? Split(EntityUid uid, int amount, EntityCoordinates spawnPosition, SharedStackComponent? stack = null)
+        public EntityUid? Split(EntityUid uid, int amount, EntityCoordinates spawnPosition, SharedStackComponent? stack = null)
         {
             if (!Resolve(uid, ref stack))
                 return null;
@@ -49,19 +50,19 @@ namespace Content.Server.Stack
             // Get a prototype ID to spawn the new entity. Null is also valid, although it should rarely be picked...
             var prototype = _prototypeManager.TryIndex<StackPrototype>(stack.StackTypeId, out var stackType)
                 ? stackType.Spawn
-                : stack.Owner.Prototype?.ID ?? null;
+                : stack.Owner.Prototype?.ID;
 
             // Try to remove the amount of things we want to split from the original stack...
             if (!Use(uid, amount, stack))
                 return null;
 
             // Set the output parameter in the event instance to the newly split stack.
-            var entity = EntityManager.SpawnEntity(prototype, spawnPosition);
+            var entity = EntityManager.SpawnEntity(prototype, spawnPosition).Uid;
 
-            if (EntityManager.TryGetComponent(entity.Uid, out SharedStackComponent? stackComp))
+            if (EntityManager.TryGetComponent(entity, out SharedStackComponent? stackComp))
             {
                 // Set the split stack's count.
-                SetCount(entity.Uid, amount, stackComp);
+                SetCount(entity, amount, stackComp);
                 // Don't let people dupe unlimited stacks
                 stackComp.Unlimited = false;
             }
@@ -72,14 +73,14 @@ namespace Content.Server.Stack
         /// <summary>
         ///     Spawns a stack of a certain stack type. See <see cref="StackPrototype"/>.
         /// </summary>
-        public IEntity Spawn(int amount, StackPrototype prototype, EntityCoordinates spawnPosition)
+        public EntityUid Spawn(int amount, StackPrototype prototype, EntityCoordinates spawnPosition)
         {
             // Set the output result parameter to the new stack entity...
-            var entity = EntityManager.SpawnEntity(prototype.Spawn, spawnPosition);
-            var stack = EntityManager.GetComponent<StackComponent>(entity.Uid);
+            var entity = EntityManager.SpawnEntity(prototype.Spawn, spawnPosition).Uid;
+            var stack = EntityManager.GetComponent<StackComponent>(entity);
 
             // And finally, set the correct amount!
-            SetCount(entity.Uid, amount, stack);
+            SetCount(entity, amount, stack);
             return entity;
         }
 
@@ -136,7 +137,7 @@ namespace Content.Server.Stack
             Verb halve = new();
             halve.Text = Loc.GetString("comp-stack-split-halve");
             halve.Category = VerbCategory.Split;
-            halve.Act = () => UserSplit(args.User, stack, stack.Count / 2);
+            halve.Act = () => UserSplit(uid, args.User.Uid, stack.Count / 2, stack);
             halve.Priority = 1;
             args.Verbs.Add(halve);
 
@@ -149,7 +150,7 @@ namespace Content.Server.Stack
                 Verb verb = new();
                 verb.Text = amount.ToString();
                 verb.Category = VerbCategory.Split;
-                verb.Act = () => UserSplit(args.User, stack, amount);
+                verb.Act = () => UserSplit(uid, args.User.Uid, amount, stack);
 
                 // we want to sort by size, not alphabetically by the verb text.
                 verb.Priority = priority;
@@ -159,15 +160,23 @@ namespace Content.Server.Stack
             }
         }
 
-        private void UserSplit(IEntity user, StackComponent stack, int amount)
+        private void UserSplit(EntityUid uid, EntityUid userUid, int amount,
+            StackComponent? stack = null,
+            TransformComponent? userTransform = null)
         {
+            if (!Resolve(uid, ref stack))
+                return;
+
+            if (!Resolve(userUid, ref userTransform))
+                return;
+
             if (amount <= 0)
             {
-                user.PopupMessage(Loc.GetString("comp-stack-split-too-small"));
+                _popupSystem.PopupCursor(Loc.GetString("comp-stack-split-too-small"), Filter.Entities(userUid));
                 return;
             }
 
-            if (user.TryGetComponent<HandsComponent>(out var hands))
+            if (EntityManager.TryGetComponent<HandsComponent>(userUid, out var hands))
             {
                 if (hands.TryGetActiveHeldEntity(out var heldItem) && heldItem != stack.Owner)
                 {
@@ -179,12 +188,15 @@ namespace Content.Server.Stack
                 return;
             }
 
-            var secondStack = Split(stack.Owner.Uid, amount, user.Transform.Coordinates, stack);
-            user.PopupMessage(Loc.GetString("comp-stack-split"));
-            if (secondStack is not null && secondStack.TryGetComponent<ItemComponent>(out var itemComponent))
+            if(Split(uid, amount, userTransform.Coordinates, stack) is not {} splitStack)
+                return;
+
+            if (EntityManager.TryGetComponent<ItemComponent>(splitStack, out var item))
             {
-                hands.PutInHandOrDrop(itemComponent);
+                hands.PutInHandOrDrop(item);
             }
+
+            _popupSystem.PopupCursor(Loc.GetString("comp-stack-split"), Filter.Entities(userUid));
         }
     }
 }

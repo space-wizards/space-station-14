@@ -19,7 +19,7 @@ namespace Content.Server.Inventory
                 return false;
 
             // If we don't have that slot or there's already an item there, we do nothing.
-            if (!inventory.HasSlot(slot) || inventory.TryGetSlotItem(slot, out ItemComponent _))
+            if (!inventory.HasSlot(slot) || inventory.TryGetSlotItem(slot, out ItemComponent? _))
                 return false;
 
             // If the prototype in question doesn't exist, we do nothing.

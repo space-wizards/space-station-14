@@ -10,7 +10,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-        bounds: "-0.49,-0.49,0.49,-0.2"
+        bounds: "-0.49,-0.49,0.49,-0.3"
       mass: 50
       layer:
       - Impassable

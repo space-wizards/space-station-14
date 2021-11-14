@@ -113,7 +113,7 @@ namespace Content.Server.Tools
 
             SoundSystem.Play(Filter.Pvs(uid), welder.WelderOnSounds.GetSound(), uid, AudioHelpers.WithVariation(0.125f).WithVolume(-5f));
 
-            // TODO: Use ITransformComponent directly.
+            // TODO: Use TransformComponent directly.
             _atmosphereSystem.HotspotExpose(welder.Owner.Transform.Coordinates, 700, 50, true);
 
             welder.Dirty();
@@ -316,7 +316,7 @@ namespace Content.Server.Tools
                 if (!_solutionContainerSystem.TryGetSolution(tool, welder.FuelSolution, out var solution, solutionContainer))
                     continue;
 
-                // TODO: Use ITransformComponent directly.
+                // TODO: Use TransformComponent directly.
                 _atmosphereSystem.HotspotExpose(welder.Owner.Transform.Coordinates, 700, 50, true);
 
                 solution.RemoveReagent(welder.FuelReagent, welder.FuelConsumption * _welderTimer);

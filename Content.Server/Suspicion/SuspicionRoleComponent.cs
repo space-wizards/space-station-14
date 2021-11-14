@@ -6,9 +6,8 @@ using Content.Server.Roles;
 using Content.Server.Suspicion.EntitySystems;
 using Content.Server.Suspicion.Roles;
 using Content.Shared.Examine;
-using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
 using Content.Shared.Suspicion;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Players;
@@ -60,7 +59,7 @@ namespace Content.Server.Suspicion
 
         public bool IsDead()
         {
-            return Owner.TryGetComponent(out IMobStateComponent? state) &&
+            return Owner.TryGetComponent(out MobStateComponent? state) &&
                    state.IsDead();
         }
 

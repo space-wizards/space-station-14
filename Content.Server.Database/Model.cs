@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Net;
 using Microsoft.EntityFrameworkCore;
 
 namespace Content.Server.Database
@@ -27,6 +28,7 @@ namespace Content.Server.Database
         public DbSet<Preference> Preference { get; set; } = null!;
         public DbSet<Profile> Profile { get; set; } = null!;
         public DbSet<AssignedUserId> AssignedUserId { get; set; } = null!;
+        public DbSet<Player> Player { get; set; } = default!;
         public DbSet<Admin> Admin { get; set; } = null!;
         public DbSet<AdminRank> AdminRank { get; set; } = null!;
 
@@ -160,6 +162,22 @@ namespace Content.Server.Database
         public string UserName { get; set; } = null!;
 
         public Guid UserId { get; set; }
+    }
+
+    [Table("player")]
+    public class Player
+    {
+        public int Id { get; set; }
+
+        // Permanent data
+        public Guid UserId { get; set; }
+        public DateTime FirstSeenTime { get; set; }
+
+        // Data that gets updated on each join.
+        public string LastSeenUserName { get; set; } = null!;
+        public DateTime LastSeenTime { get; set; }
+        public IPAddress LastSeenAddress { get; set; } = null!;
+        public byte[]? LastSeenHWId { get; set; }
     }
 
     public class Admin

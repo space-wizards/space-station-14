@@ -32172,6 +32172,14 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
+- uid: 2876
+  type: HandLabeler
+  components:
+  - pos: -23.390205,-5.6188893
+    parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 2877
   type: CableApcExtension
   components:
@@ -33013,6 +33021,14 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
+- uid: 2956
+  type: HandLabeler
+  components:
+  - pos: 14.506557,1.3566204
+    parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 2957
   type: CableApcExtension
   components:
@@ -33185,6 +33201,14 @@ entities:
     type: Transform
   - visible: False
     type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 2973
+  type: HandLabeler
+  components:
+  - pos: 14.506557,1.5610027
+    parent: 853
+    type: Transform
   - canCollide: False
     type: Physics
 - uid: 2974
@@ -33845,6 +33869,14 @@ entities:
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 22.5,-3.5
+    parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 3035
+  type: HandLabeler
+  components:
+  - pos: 20.55635,7.826556
     parent: 853
     type: Transform
   - canCollide: False
@@ -35045,6 +35077,14 @@ entities:
     type: Transform
   - visible: False
     type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 3148
+  type: HandLabeler
+  components:
+  - pos: 20.665726,7.498431
+    parent: 853
+    type: Transform
   - canCollide: False
     type: Physics
 - uid: 3149
@@ -67170,7 +67210,7 @@ entities:
 - uid: 6376
   type: GasMixer
   components:
-  - rot: 3.141592653589793 rad
+  - rot: -1.5707963267948966 rad
     pos: 41.5,17.5
     parent: 853
     type: Transform
@@ -67184,7 +67224,7 @@ entities:
 - uid: 6377
   type: GasMixer
   components:
-  - rot: 3.141592653589793 rad
+  - rot: -1.5707963267948966 rad
     pos: 37.5,17.5
     parent: 853
     type: Transform
@@ -67198,7 +67238,7 @@ entities:
 - uid: 6378
   type: GasFilter
   components:
-  - rot: 3.141592653589793 rad
+  - rot: -1.5707963267948966 rad
     pos: 39.5,18.5
     parent: 853
     type: Transform
@@ -67209,7 +67249,7 @@ entities:
 - uid: 6379
   type: GasFilter
   components:
-  - rot: 3.141592653589793 rad
+  - rot: -1.5707963267948966 rad
     pos: 43.5,18.5
     parent: 853
     type: Transform
@@ -67764,7 +67804,7 @@ entities:
 - uid: 6439
   type: GasFilter
   components:
-  - rot: 3.141592653589793 rad
+  - rot: -1.5707963267948966 rad
     pos: 47.5,18.5
     parent: 853
     type: Transform
