@@ -61,7 +61,7 @@
     state: reinforced_window
   - type: Construction
     graph: windowDirectional
-    node: reinforcedWindowDirectional
+    node: windowReinforcedDirectional
   - type: Destructible
     thresholds:
     - trigger:

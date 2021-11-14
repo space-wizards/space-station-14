@@ -64,7 +64,7 @@
     state: plasma_reinforced_window
   - type: Construction
     graph: windowDirectional
-    node: reinforcedPlasmaWindowDirectional
+    node: plasmaReinforcedWindowDirectional
   - type: Destructible
     thresholds:
     - trigger:
