@@ -186,7 +186,7 @@ namespace Content.Server.Doors.Components
         ///     Minimum interval allowed between deny sounds in milliseconds.
         /// </summary>
         [DataField("denySoundMinimumInterval")]
-        public float DenySoundMinimumInterval = 250.0f;
+        public float DenySoundMinimumInterval = 450.0f;
 
         /// <summary>
         ///     Used to stop people from spamming the deny sound.
