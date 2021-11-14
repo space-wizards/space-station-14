@@ -1,9 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: Fix gibbing causing ghosts to return to their brain, type: Fix}
-  id: 88
-  time: '2021-03-15T02:28:44.0000000+00:00'
 - author: SweptWasTaken
   changes:
   - {message: Cargo SMG crate now contains Drozd SMGs., type: Tweak}
@@ -2830,3 +2825,8 @@ Entries:
   - {message: Handcuff box has too little of a storing size, type: Fix}
   id: 587
   time: '2021-11-14T16:29:49.0000000+00:00'
+- author: FoLoKe
+  changes:
+  - {message: Added ability to milk cow., type: Add}
+  id: 588
+  time: '2021-11-14T16:33:16.0000000+00:00'
