@@ -1,11 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'Fixes rotation bugs with emitters and containment fields, and some
-      other stuff', type: Fix}
-  - {message: Fixes default emitter rotation on Saltern, type: Fix}
-  id: 86
-  time: '2021-03-14T22:02:22.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Fixes rotatable verbs not showing in the context menu., type: Fix}
@@ -2831,3 +2824,9 @@ Entries:
   - {message: There is now a MIDI volume slider in the options menu., type: Add}
   id: 585
   time: '2021-11-14T09:44:36.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug where Potassium + Water explosions in the bloodstream would
+      crash the server, type: Fix}
+  id: 586
+  time: '2021-11-14T11:19:42.0000000+00:00'
