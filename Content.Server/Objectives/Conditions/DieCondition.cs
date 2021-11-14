@@ -1,5 +1,7 @@
+using Content.Server.Mind.Systems;
 using Content.Server.Objectives.Interfaces;
 using JetBrains.Annotations;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
@@ -23,7 +25,16 @@ namespace Content.Server.Objectives.Conditions
 
         public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Mobs/Ghosts/ghost_human.rsi"), "icon");
 
-        public float Progress => (_mind?.CharacterDeadIC ?? true) ? 1f : 0f;
+        public float Progress
+        {
+            get
+            {
+                if (_mind == null)
+                    return 1f;
+                var mindSys = EntitySystem.Get<MindSystem>();
+                return mindSys.IsCharacterDeadIC(_mind) ? 1f : 0f;
+            }
+        }
 
         public float Difficulty => 1f;
 

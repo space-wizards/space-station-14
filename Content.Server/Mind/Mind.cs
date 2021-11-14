@@ -2,15 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Server.GameTicking;
-using Content.Server.Ghost.Components;
 using Content.Server.Mind.Components;
 using Content.Server.Mind.Systems;
 using Content.Server.Objectives;
-using Content.Server.Players;
 using Content.Server.Roles;
 using Content.Shared.MobState.Components;
-using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -33,6 +29,32 @@ namespace Content.Server.Mind
     /// </remarks>
     public sealed class Mind
     {
+        // TODO: This session should be able to be changed, probably.
+        /// <summary>
+        ///     The session ID of the player owning this mind.
+        /// </summary>
+        [ViewVariables]
+        public NetUserId? UserId = null;
+
+        /// <summary>
+        ///     IC minds name.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public string? CharacterName = null;
+
+        /// <summary>
+        ///     The time of death for this Mind.
+        ///     Can be null - will be null if the Mind is not considered "dead".
+        /// </summary>
+        [ViewVariables]
+        public TimeSpan? TimeOfDeath = null;
+
+        /// <summary>
+        ///     Wth is this?
+        /// </summary>
+        [ViewVariables]
+        public IEntity? VisitingEntity = null;
+
         /// <summary>
         ///     A set of all the roles this mind has.
         ///     Don't try to modify this directly, use <see cref="RolesSystem"/> instead.
@@ -56,29 +78,10 @@ namespace Content.Server.Mind
             UserId = userId;
         }
 
-        // TODO: This session should be able to be changed, probably.
-        /// <summary>
-        ///     The session ID of the player owning this mind.
-        /// </summary>
-        [ViewVariables]
-        public NetUserId? UserId { get; private set; }
-
         [ViewVariables]
         public bool IsVisitingEntity => VisitingEntity != null;
 
-        [ViewVariables]
-        public IEntity? VisitingEntity = null;
-
         [ViewVariables] public IEntity? CurrentEntity => VisitingEntity ?? OwnedEntity;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        public string? CharacterName = null;
-
-        /// <summary>
-        ///     The time of death for this Mind.
-        ///     Can be null - will be null if the Mind is not considered "dead".
-        /// </summary>
-        [ViewVariables] public TimeSpan? TimeOfDeath { get; set; } = null;
 
         /// <summary>
         ///     The component currently owned by this mind.
@@ -110,48 +113,6 @@ namespace Content.Server.Mind
                 var playerMgr = IoCManager.Resolve<IPlayerManager>();
                 playerMgr.TryGetSessionById(UserId.Value, out var ret);
                 return ret;
-            }
-        }
-
-        /// <summary>
-        ///     True if this Mind is 'sufficiently dead' IC (objectives, endtext).
-        ///     Note that this is *IC logic*, it's not necessarily tied to any specific truth.
-        ///     "If administrators decide that zombies are dead, this returns true for zombies."
-        ///     (Maybe you were looking for the action blocker system?)
-        /// </summary>
-        [ViewVariables]
-        public bool CharacterDeadIC => CharacterDeadPhysically;
-
-        /// <summary>
-        ///     True if the OwnedEntity of this mind is physically dead.
-        ///     This specific definition, as opposed to CharacterDeadIC, is used to determine if ghosting should allow return.
-        /// </summary>
-        [ViewVariables]
-        public bool CharacterDeadPhysically
-        {
-            get
-            {
-                // This is written explicitly so that the logic can be understood.
-                // But it's also weird and potentially situational.
-                // Specific considerations when updating this:
-                //  + Does being turned into a borg (if/when implemented) count as dead?
-                //    *If not, add specific conditions to users of this property where applicable.*
-                //  + Is being transformed into a donut 'dead'?
-                //    TODO: Consider changing the way ghost roles work.
-                //    Mind is an *IC* mind, therefore ghost takeover is IC revival right now.
-                //  + Is it necessary to have a reference to a specific 'mind iteration' to cycle when certain events happen?
-                //    (If being a borg or AI counts as dead, then this is highly likely, as it's still the same Mind for practical purposes.)
-
-                // This can be null if they're deleted (spike / brain nom)
-                if (OwnedEntity == null)
-                    return true;
-                var targetMobState = OwnedEntity.GetComponentOrNull<MobStateComponent>();
-                // This can be null if it's a brain (this happens very often)
-                // Brains are the result of gibbing so should definitely count as dead
-                if (targetMobState == null)
-                    return true;
-                // They might actually be alive.
-                return targetMobState.IsDead();
             }
         }
 

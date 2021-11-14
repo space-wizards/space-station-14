@@ -57,7 +57,8 @@ namespace Content.Server.GameTicking.Presets
             // + If we're in a mob that is critical, and we're supposed to be able to return if possible,
             ///   we're succumbing - the mob is killed. Therefore, character is dead. Ghosting OK.
             //   (If the mob survives, that's a bug. Ghosting is kept regardless.)
-            var canReturn = canReturnGlobal && mind.CharacterDeadPhysically;
+            var mindSys = EntitySystem.Get<MindSystem>();
+            var canReturn = canReturnGlobal && mindSys.IsCharacterDeadPhysically(mind);
 
             if (playerEntity != null && canReturnGlobal && playerEntity.TryGetComponent(out MobStateComponent? mobState))
             {
@@ -91,7 +92,6 @@ namespace Content.Server.GameTicking.Presets
             }
 
             EntitySystem.Get<SharedGhostSystem>().SetCanReturnToBody(ghostComponent, canReturn);
-            var mindSys = EntitySystem.Get<MindSystem>();
 
 
             if (canReturn)

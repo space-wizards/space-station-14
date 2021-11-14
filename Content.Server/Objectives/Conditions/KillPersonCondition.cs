@@ -1,4 +1,6 @@
+using Content.Server.Mind.Systems;
 using Content.Server.Objectives.Interfaces;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 
@@ -15,7 +17,17 @@ namespace Content.Server.Objectives.Conditions
 
         public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Objects/Weapons/Guns/Pistols/mk58_wood.rsi"), "icon");
 
-        public float Progress => (Target?.CharacterDeadIC ?? true) ? 1f : 0f;
+        public float Progress
+        {
+            get
+            {
+                if (Target == null)
+                    return 1f;
+
+                var mindSys = EntitySystem.Get<MindSystem>();
+                return mindSys.IsCharacterDeadIC(Target) ? 1f : 0f;
+            }
+        }
 
         public float Difficulty => 2f;
 

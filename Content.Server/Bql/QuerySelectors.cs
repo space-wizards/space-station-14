@@ -4,6 +4,7 @@ using System.Linq;
 using Content.Server.Mind.Components;
 using Content.Server.Power.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
+using Content.Server.Mind.Systems;
 using Content.Shared.Tag;
 using Robust.Server.Bql;
 using Robust.Shared.GameObjects;
@@ -72,9 +73,10 @@ namespace Content.Server.Bql
 
             public override IEnumerable<EntityUid> DoSelection(IEnumerable<EntityUid> input, IReadOnlyList<object> arguments, bool isInverted, IEntityManager entityManager)
             {
+                var mindSys = EntitySystem.Get<MindSystem>();
                 return input.Where(e =>
                     (entityManager.TryGetComponent<MindComponent>(e, out var mind) &&
-                    !(mind.Mind?.CharacterDeadPhysically ?? false)) ^ isInverted);
+                    !(mind.Mind != null && mindSys.IsCharacterDeadPhysically(mind.Mind))) ^ isInverted);
             }
 
             public override IEnumerable<EntityUid> DoInitialSelection(IReadOnlyList<object> arguments, bool isInverted, IEntityManager entityManager)

@@ -103,6 +103,46 @@ namespace Content.Server.Mind.Systems
         }
 
         /// <summary>
+        ///     True if this Mind is 'sufficiently dead' IC (objectives, endtext).
+        ///     Note that this is *IC logic*, it's not necessarily tied to any specific truth.
+        ///     "If administrators decide that zombies are dead, this returns true for zombies."
+        ///     (Maybe you were looking for the action blocker system?)
+        /// </summary>
+        public bool IsCharacterDeadIC(Mind mind)
+        {
+            return IsCharacterDeadPhysically(mind);
+        }
+
+        /// <summary>
+        ///     True if the OwnedEntity of this mind is physically dead.
+        ///     This specific definition, as opposed to CharacterDeadIC, is used to determine if ghosting should allow return.
+        /// </summary>
+        public bool IsCharacterDeadPhysically(Mind mind)
+        {
+            // This is written explicitly so that the logic can be understood.
+            // But it's also weird and potentially situational.
+            // Specific considerations when updating this:
+            //  + Does being turned into a borg (if/when implemented) count as dead?
+            //    *If not, add specific conditions to users of this property where applicable.*
+            //  + Is being transformed into a donut 'dead'?
+            //    TODO: Consider changing the way ghost roles work.
+            //    Mind is an *IC* mind, therefore ghost takeover is IC revival right now.
+            //  + Is it necessary to have a reference to a specific 'mind iteration' to cycle when certain events happen?
+            //    (If being a borg or AI counts as dead, then this is highly likely, as it's still the same Mind for practical purposes.)
+
+            // This can be null if they're deleted (spike / brain nom)
+            if (mind.OwnedEntity == null)
+                return true;
+            var targetMobState = mind.OwnedEntity.GetComponentOrNull<MobStateComponent>();
+            // This can be null if it's a brain (this happens very often)
+            // Brains are the result of gibbing so should definitely count as dead
+            if (targetMobState == null)
+                return true;
+            // They might actually be alive.
+            return targetMobState.IsDead();
+        }
+
+        /// <summary>
         ///     Transfer this mind's control over to a new entity.
         /// </summary>
         /// <param name="mind">Mind that need to be transferred</param>
