@@ -1,13 +1,11 @@
 using System;
+using Content.Server.Shuttles.Components;
 using Content.Shared.Shuttles;
 using JetBrains.Annotations;
-using Robust.Server.Physics;
-using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Physics;
 
-namespace Content.Server.Shuttles
+namespace Content.Server.Shuttles.EntitySystems
 {
     [UsedImplicitly]
     internal sealed class ShuttleSystem : EntitySystem

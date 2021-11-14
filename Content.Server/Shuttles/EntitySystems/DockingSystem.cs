@@ -1,8 +1,7 @@
-using System;
 using Content.Server.Doors.Components;
 using Content.Server.Power.Components;
+using Content.Server.Shuttles.Components;
 using Content.Shared.Doors;
-using Content.Shared.Shuttles;
 using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -13,25 +12,10 @@ using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Dynamics;
-using Robust.Shared.Physics.Dynamics.Joints;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Shuttles
+namespace Content.Server.Shuttles.EntitySystems
 {
-    [RegisterComponent]
-    public sealed class DockingComponent : SharedDockingComponent
-    {
-        [ViewVariables]
-        public DockingComponent? DockedWith;
-
-        [ViewVariables]
-        public Joint? DockJoint;
-
-        [ViewVariables]
-        public override bool Docked => DockedWith != null;
-    }
-
     public sealed class DockingSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;

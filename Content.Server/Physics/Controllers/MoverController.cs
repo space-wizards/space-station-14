@@ -4,6 +4,7 @@ using Content.Server.Inventory.Components;
 using Content.Server.Items;
 using Content.Server.Movement.Components;
 using Content.Server.Shuttles;
+using Content.Server.Shuttles.Components;
 using Content.Shared.Audio;
 using Content.Shared.CCVar;
 using Content.Shared.Inventory;
@@ -95,14 +96,14 @@ namespace Content.Server.Physics.Controllers
                 return;
             }
 
-            // Depending whether you have "cruise" mode on (tank controls, higher speed) or "docking" mode on (strafing, lower speed)
-            // inputs will do different things.
-            // TODO: Do that
-            float speedCap;
-            var angularSpeed = 0.075f;
-
             // ShuttleSystem has already worked out the ratio so we'll just multiply it back by the mass.
-            var movement = (mover.VelocityDir.walking + mover.VelocityDir.sprinting);
+            var movement = mover.VelocityDir.walking + mover.VelocityDir.sprinting;
+
+            if (movement.Length.Equals(0f)) return;
+
+            var worldAngle = (float) movement.ToWorldAngle();
+            var worldMovement = new Vector2(MathF.Cos(worldAngle) * movement.Length, MathF.Sin(worldAngle) * movement.Length);
+            var speedCap = 0f;
 
             switch (shuttleComponent.Mode)
             {
@@ -111,6 +112,9 @@ namespace Content.Server.Physics.Controllers
                     {
                         movement *= 5f;
                     }
+
+                    // TODO: Need to get diagonals too
+                    var dockDirection = worldMovement.ToAngle().GetDir();
 
                     if (movement.Length != 0f)
                         physicsComponent.ApplyLinearImpulse(physicsComponent.Owner.Transform.WorldRotation.RotateVec(movement) * shuttleComponent.SpeedMultipler * physicsComponent.Mass);
@@ -125,14 +129,17 @@ namespace Content.Server.Physics.Controllers
                             movement.Y *= 5f;
                         }
 
-                        // Currently this is slow BUT we'd have a separate multiplier for docking and cruising or whatever.
-                        physicsComponent.ApplyLinearImpulse((physicsComponent.Owner.Transform.WorldRotation + new Angle(MathF.PI / 2)).ToVec() *
-                                                            shuttleComponent.SpeedMultipler *
-                                                            physicsComponent.Mass *
-                                                            movement.Y *
-                                                            2.5f);
+                        var direction = movement.Y < 0f ? Direction.South : Direction.North;
 
-                        physicsComponent.ApplyAngularImpulse(-movement.X * angularSpeed * physicsComponent.Mass);
+                        var angularSpeed = shuttleComponent.AngularThrust;
+                        var linearSpeed = shuttleComponent.LinearThrusters[(int) direction];
+
+                        // Currently this is slow BUT we'd have a separate multiplier for docking and cruising or whatever.
+                        physicsComponent.ApplyLinearImpulse(physicsComponent.Owner.Transform.WorldRotation.ToWorldVec() *
+                                                            linearSpeed *
+                                                            movement.Y);
+
+                        physicsComponent.ApplyAngularImpulse(-movement.X * angularSpeed);
                     }
 
                     // TODO WHEN THIS ACTUALLY WORKS
@@ -141,9 +148,6 @@ namespace Content.Server.Physics.Controllers
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-
-            // Look don't my ride ass on this stuff most of the PR was just getting the thing working, we can
-            // ideaguys the shit out of it later.
 
             var velocity = physicsComponent.LinearVelocity;
 
