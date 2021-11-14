@@ -116080,4 +116080,61 @@ entities:
     pos: 103.5,-15.5
     parent: 0
     type: Transform
+- uid: 11937
+  type: DrinkShaker
+  components:
+  - pos: 67.47043,-15.094364
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - solution: drink
+    type: DrainableSolution
+- uid: 11938
+  type: DrinkGlass
+  components:
+  - pos: 67.3298,-14.594364
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - solution: drink
+    type: DrainableSolution
+- uid: 11939
+  type: MonkeyCubeWrapped
+  components:
+  - pos: 39.26541,-5.055852
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 11940
+  type: DrinkGlass
+  components:
+  - pos: 67.6423,-14.594364
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - solution: drink
+    type: DrainableSolution
+- uid: 11941
+  type: CrateNPCCow
+  components:
+  - pos: 36.5,-9.5
+    parent: 0
+    type: Transform
+  - isPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+      labelSlot: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 11942
+  type: SpawnMobCorgi
+  components:
+  - pos: 19.5,-3.5
+    parent: 0
+    type: Transform
 ...
