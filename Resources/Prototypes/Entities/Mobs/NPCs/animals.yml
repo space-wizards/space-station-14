@@ -177,6 +177,18 @@
       normal: cow
       crit: dead
       dead: dead
+  - type: SolutionContainerManager
+    solutions:
+      udder:
+        maxVol: 250
+        reagents:
+        - ReagentId: Milk
+          Quantity: 30
+  - type: Udder
+    reagentId: Milk
+    targetSolution: udder
+    quantity: 25
+    updateRate: 30
 
 - type: entity
   name: crab
