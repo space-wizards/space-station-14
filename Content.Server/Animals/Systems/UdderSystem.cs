@@ -60,8 +60,11 @@ namespace Content.Server.Animals.Systems
             }
         }
 
-        private void AttemtMilk(EntityUid uid, EntityUid userUid, EntityUid containerUid, UdderComponent udder)
+        private void AttemptMilk(EntityUid uid, EntityUid userUid, EntityUid containerUid, UdderComponent? udder = null)
         {
+            if (!Resolve(uid, ref udder))
+                return;
+
             if (udder.BeingMilked)
             {
                 _popupSystem.PopupEntity(Loc.GetString("udder-system-already-milking"), uid, Filter.Entities(userUid));
@@ -126,7 +129,7 @@ namespace Content.Server.Animals.Systems
             Verb verb = new();
             verb.Act = () =>
             {
-                AttemtMilk(uid, args.User.Uid, args.Using.Uid, component);
+                AttemptMilk(uid, args.User.Uid, args.Using.Uid, component);
             };
             verb.Text = Loc.GetString("udder-system-verb-milk");
             verb.Priority = 2;
