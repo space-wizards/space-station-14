@@ -92,11 +92,13 @@ namespace Content.Server.Pointing.EntitySystems
         public bool TryPoint(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
             var mapCoords = coords.ToMap(EntityManager);
-            var player = (session as IPlayerSession)?.ContentData()?.Mind?.CurrentEntity;
-            if (player == null)
+            var playerUid = (session as IPlayerSession)?.ContentData()?.Mind?.CurrentEntity;
+            if (playerUid == null)
             {
                 return false;
             }
+
+            var player = EntityManager.GetEntity(playerUid.Value);
 
             if (_pointers.TryGetValue(session!, out var lastTime) &&
                 _gameTiming.CurTime < lastTime + PointDelay)
@@ -132,10 +134,13 @@ namespace Content.Server.Pointing.EntitySystems
             {
                 var ent = playerSession.ContentData()?.Mind?.CurrentEntity;
 
-                if (ent is null || (!ent.TryGetComponent<EyeComponent>(out var eyeComp) || (eyeComp.VisibilityMask & layer) == 0))
+                if (ent is null || (!EntityManager.TryGetComponent<EyeComponent>(ent.Value, out var eyeComp) || (eyeComp.VisibilityMask & layer) == 0))
                     return false;
 
-                return ent.Transform.MapPosition.InRange(player.Transform.MapPosition, PointingRange);
+                if (!EntityManager.TryGetComponent(ent.Value, out TransformComponent? transform))
+                    return false;
+
+                return transform.MapPosition.InRange(player.Transform.MapPosition, PointingRange);
             });
 
             string selfMessage;

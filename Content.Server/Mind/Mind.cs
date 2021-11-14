@@ -8,6 +8,7 @@ using Content.Server.Objectives;
 using Content.Server.Roles;
 using Content.Shared.MobState.Components;
 using Robust.Server.Player;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -49,6 +50,10 @@ namespace Content.Server.Mind
         [ViewVariables]
         public TimeSpan? TimeOfDeath = null;
 
+        /// <summary>
+        ///     The entity that mind is temporary visiting.
+        ///     For example, AI drone or aghost.
+        /// </summary>
         [ViewVariables]
         public IEntity? VisitingEntity = null;
 
@@ -58,6 +63,16 @@ namespace Content.Server.Mind
         /// </summary>
         [ViewVariables]
         public readonly HashSet<Role> Roles = new();
+
+        /// <summary>
+        ///     Check if mind has role of certain type.
+        /// </summary>
+        public bool HasRole<T>() where T : Role
+        {
+            var t = typeof(T);
+
+            return Roles.Any(role => role.GetType() == t);
+        }
 
         /// <summary>
         ///     A list of all the objectives this mind has.
@@ -78,7 +93,7 @@ namespace Content.Server.Mind
         [ViewVariables]
         public bool IsVisitingEntity => VisitingEntity != null;
 
-        [ViewVariables] public IEntity? CurrentEntity => VisitingEntity ?? OwnedEntity;
+        [ViewVariables] public EntityUid? CurrentEntity => VisitingEntity?.Uid ?? OwnedEntity?.Uid;
 
         /// <summary>
         ///     The component currently owned by this mind.
@@ -111,13 +126,6 @@ namespace Content.Server.Mind
                 playerMgr.TryGetSessionById(UserId.Value, out var ret);
                 return ret;
             }
-        }
-
-        public bool HasRole<T>() where T : Role
-        {
-            var t = typeof(T);
-
-            return Roles.Any(role => role.GetType() == t);
         }
 
         public bool TryGetSession([NotNullWhen(true)] out IPlayerSession? session)

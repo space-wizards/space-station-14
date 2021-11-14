@@ -88,7 +88,8 @@ namespace Content.IntegrationTests.Tests
 
                 mindSys.TransferTo(mind, playerEnt.Uid);
 
-                Assert.That(mind.CurrentEntity, Is.EqualTo(playerEnt));
+                var ent = entMgr.GetEntity(mind.CurrentEntity!.Value);
+                Assert.That(ent, Is.EqualTo(playerEnt));
             });
 
             server.RunTicks(1);
@@ -102,7 +103,9 @@ namespace Content.IntegrationTests.Tests
 
             server.Assert(() =>
             {
-                Assert.That(mind.CurrentEntity.IsValid(), Is.True);
+                var entMgr = IoCManager.Resolve<IServerEntityManager>();
+                var ent = entMgr.GetEntity(mind.CurrentEntity!.Value);
+                Assert.That(ent.IsValid(), Is.True);
             });
 
             await server.WaitIdleAsync();
@@ -137,7 +140,8 @@ namespace Content.IntegrationTests.Tests
 
                 mindSys.TransferTo(mind, playerEnt.Uid);
 
-                Assert.That(mind.CurrentEntity, Is.EqualTo(playerEnt));
+                var ent = entMgr.GetEntity(mind.CurrentEntity!.Value);
+                Assert.That(ent, Is.EqualTo(playerEnt));
             });
 
             server.RunTicks(1);
@@ -153,8 +157,10 @@ namespace Content.IntegrationTests.Tests
 
             server.Assert(() =>
             {
-                Assert.That(mind.CurrentEntity.IsValid(), Is.True);
-                Assert.That(mind.CurrentEntity, Is.Not.EqualTo(playerEnt));
+                var entMgr = IoCManager.Resolve<IServerEntityManager>();
+                var ent = entMgr.GetEntity(mind.CurrentEntity!.Value);
+                Assert.That(ent.IsValid(), Is.True);
+                Assert.That(ent, Is.Not.EqualTo(playerEnt));
             });
 
             await server.WaitIdleAsync();

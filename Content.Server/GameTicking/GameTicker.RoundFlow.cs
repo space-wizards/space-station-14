@@ -218,10 +218,18 @@ namespace Content.Server.GameTicking
                 {
                     _playersInLobby.TryGetValue(ply, out var status);
                     var antag = mind.Roles.Any(role => role.Antagonist);
+
+                    string? playerName = null;
+                    if (mind.CurrentEntity != null &&
+                        EntityManager.TryGetComponent(mind.CurrentEntity.Value, out MetaDataComponent? meta))
+                    {
+                        playerName = meta.EntityName;
+                    }
+
                     var playerEndRoundInfo = new RoundEndMessageEvent.RoundEndPlayerInfo()
                     {
                         PlayerOOCName = ply.Name,
-                        PlayerICName = mind.CurrentEntity?.Name,
+                        PlayerICName = playerName,
                         Role = antag
                             ? mind.Roles.First(role => role.Antagonist).Name
                             : mind.Roles.FirstOrDefault()?.Name ?? Loc.GetString("game-ticker-unknown-role"),
