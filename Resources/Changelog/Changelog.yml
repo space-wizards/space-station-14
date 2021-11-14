@@ -1,9 +1,4 @@
 Entries:
-- author: SweptWasTaken
-  changes:
-  - {message: Cargo SMG crate now contains Drozd SMGs., type: Tweak}
-  id: 89
-  time: '2021-03-15T03:38:06.0000000+00:00'
 - author: ShadowCommander
   changes:
   - {message: 'Added construction recipes for chair, stool, bar stool, office chair,
@@ -2830,3 +2825,9 @@ Entries:
   - {message: Added ability to milk cow., type: Add}
   id: 588
   time: '2021-11-14T16:33:16.0000000+00:00'
+- author: Tomeno
+  changes:
+  - {message: Airlocks no longer show orange lights all the time., type: Tweak}
+  - {message: Airlocks now play the access denied animation., type: Fix}
+  id: 589
+  time: '2021-11-14T17:51:02.0000000+00:00'
