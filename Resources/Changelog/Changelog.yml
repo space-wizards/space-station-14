@@ -171,7 +171,8 @@ Entries:
   id: 123
   time: '2021-03-28T06:00:37.0000000+00:00'
 - author: BulletGrade
-  changes: []
+  changes:
+  - {message: 'Made magazine names more specific', type: Tweak}
   id: 124
   time: '2021-03-28T06:06:20.0000000+00:00'
 - author: PJB3005
@@ -583,7 +584,8 @@ Entries:
   id: 194
   time: '2021-05-19T17:26:02.0000000+00:00'
 - author: scrato
-  changes: []
+  changes:
+  - {message: 'ID card computer will now stop working when there is no power', type: Fix}
   id: 195
   time: '2021-05-20T12:58:29.0000000+00:00'
 - author: Swept
@@ -644,7 +646,8 @@ Entries:
   id: 206
   time: '2021-05-24T14:39:58.0000000+00:00'
 - author: scrato
-  changes: []
+  changes:
+  - {message: "You now won't be able to get out of handcuffs if you're dead or incapacitated", type: Fix}
   id: 207
   time: '2021-05-24T14:55:48.0000000+00:00'
 - author: 20kdc
@@ -1838,10 +1841,6 @@ Entries:
   id: 420
   time: '2021-10-09T11:06:34.0000000+00:00'
 - author: 20kdc
-  changes: []
-  id: 421
-  time: '2021-10-09T13:48:53.0000000+00:00'
-- author: 20kdc
   changes:
   - {message: Pulling an abnormally close object shouldn't cause errors, type: Fix}
   id: 422
@@ -1926,7 +1925,8 @@ Entries:
   id: 436
   time: '2021-10-13T17:14:34.0000000+00:00'
 - author: PJB3005
-  changes: []
+  changes:
+  - {message: 'Examine details like welder fuel level now show up for items in your inventory.', type: Fix}
   id: 437
   time: '2021-10-13T21:04:16.0000000+00:00'
 - author: 20kdc
@@ -2426,7 +2426,8 @@ Entries:
   id: 524
   time: '2021-11-02T00:12:55.0000000+00:00'
 - author: 20kdc
-  changes: []
+  changes:
+  - {message: You are now alerted if an AHelp is not received by anyone., type: Add}
   id: 525
   time: '2021-11-02T00:42:05.0000000+00:00'
 - author: Ygg01
