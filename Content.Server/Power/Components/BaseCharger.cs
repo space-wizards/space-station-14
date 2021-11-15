@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
+using Content.Server.Light.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -144,7 +145,13 @@ namespace Content.Server.Power.Components
             {
                 return false;
             }
+            // turn off flashlights to prevent continuous drain and never fully charging
+            if (entity.TryGetComponent(out HandheldLightComponent? light))
+            {
+                light.TurnOff(false);
+            }
             _heldBattery = GetBatteryFrom(entity);
+
             UpdateStatus();
             return true;
         }
