@@ -109,6 +109,10 @@ namespace Content.Server.Power.Components
                 batteryBarrelComponent.UpdateAppearance();
             }
 
+            if (heldItem.TryGetComponent(out HandheldLightComponent? handheldLightComponent)) {
+                handheldLightComponent.Dirty();
+            }
+
             UpdateStatus();
         }
 
