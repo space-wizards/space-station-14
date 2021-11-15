@@ -2817,11 +2817,7 @@ Entries:
       HoP's office., type: Add}
   id: 591
   time: '2021-11-14T19:52:46.0000000+00:00'
-- author: xRiriq
-  changes: []
-  id: 592
-  time: '2021-11-15T03:48:58.0000000+00:00'
-- author: TimrodDX
+- author: TimrodDX and xRiriq
   changes:
   - {message: Medical and Science can now access the extra scanners in Genetics on
       Packed., type: Tweak}
