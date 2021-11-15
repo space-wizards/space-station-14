@@ -105,6 +105,7 @@
   color: "#c6c8cc"
   meltingPoint: 180.5
   boilingPoint: 1330.0
+  # TODO: cause confusion and some brain damage
 
 - type: reagent
   id: Mercury
@@ -114,6 +115,13 @@
   color: "#929296"
   meltingPoint: -38.83
   boilingPoint: 356.73
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 2
 
 - type: reagent
   id: Nitrogen
@@ -161,21 +169,12 @@
 - type: reagent
   id: Radium
   name: radium
+  parent: Uranium
   desc: A radioactive metal, silvery-white in its pure form. It glows due to its radioactivity and is highly toxic.
   physicalDesc: glowing
   color: "#00ff04"
   meltingPoint: 700.0
   boilingPoint: 1737.0
-  plantMetabolism:
-    - !type:PlantAdjustMutationLevel
-      amount: 0.6
-    - !type:PlantAdjustToxins
-      amount: 4
-    - !type:PlantAdjustHealth
-      amount: -1.5
-    - !type:PlantAdjustMutationMod
-      prob: 0.2
-      amount: 0.1
 
 - type: reagent
   id: Silicon
@@ -190,7 +189,7 @@
   id: Silver
   name: silver
   desc: A soft, white, lustrous transition metal, it has the highest electrical conductivity of any element and the highest thermal conductivity of any metal.
-  physicalDesc: metallic
+  physicalDesc: reasonably metallic
   color: "#d0d0d0"
   boilingPoint: 2212.0
   meltingPoint: 960.5
@@ -221,3 +220,20 @@
   color: "#8fa191"
   meltingPoint: 1133.0
   boilingPoint: 4131.0
+  plantMetabolism:
+  - !type:PlantAdjustMutationLevel
+    amount: 0.6
+  - !type:PlantAdjustToxins
+    amount: 4
+  - !type:PlantAdjustHealth
+    amount: -1.5
+  - !type:PlantAdjustMutationMod
+    prob: 0.2
+    amount: 0.1
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Radiation: 2

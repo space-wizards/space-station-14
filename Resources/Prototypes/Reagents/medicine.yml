@@ -206,6 +206,7 @@
   desc: Effective in treating eye trauma. It heals damage caused by physical or chemical trauma, though it is ineffective in treating genetic defects in the eyes.
   physicalDesc: pungent
   color: "#f7ef00"
+  # TODO eye damage
 
 - type: reagent
   id: Inacusiate
@@ -213,6 +214,7 @@
   desc: You only need 1u for Inacusiate to be effective. Cures deafness instantly. Useful after an explosion.
   physicalDesc: pungent
   color: "#c4c04b"
+  # TODO ear damage
 
 - type: reagent
   id: Inaprovaline
