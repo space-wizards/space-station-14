@@ -1,9 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Fixes many mispredictions with slips., type: Fix}
-  id: 94
-  time: '2021-03-15T18:01:15.0000000+00:00'
 - author: Macoron
   changes:
   - {message: Fix text messages for climbable objects (like tables or windows), type: Fix}
@@ -2832,3 +2827,8 @@ Entries:
       Packed., type: Tweak}
   id: 593
   time: '2021-11-15T08:12:44.0000000+00:00'
+- author: Tomeno
+  changes:
+  - {message: Made admin message windows stand out more., type: Add}
+  id: 594
+  time: '2021-11-15T11:42:30.0000000+00:00'
