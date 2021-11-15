@@ -91,10 +91,26 @@
       amount: -3
     - !type:PlantAdjustHealth
       amount: 3
+  metabolisms:
+    Medicine:
+      effects:
+        - !type:HealthChange
+          conditions:
+          - !type:Temperature
+            # this is a little arbitrary but they gotta be pretty cold
+            max: 150.0
+          damage:
+          # todo scale with temp like SS13
+            groups:
+              Airloss: -6
+              Brute: -4
+              Burn: -4
+              Toxin: -4
 
 - type: reagent
   id: Clonexadone
   name: clonexadone
+  parent: Cryoxadone
   desc: Heals standard damage in the same as Cryoxadone, with the same temperature requirement. Significantly more effective than the former at treating cellular damage, although both can be used simultaneously. Best used in cryo cells.
   physicalDesc: bubbly
   color: "#0666ff"
@@ -176,6 +192,13 @@
   desc: A weak treatment for radiation damage. Considered to be useful mainly for genetic modification, where it reduces radiation levels, and thus the chance of genetic mutations. Largely outclassed by Arithrazine.
   physicalDesc: cloudy
   color: "#4cb580"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Radiation: -3
 
 - type: reagent
   id: Imidazoline
@@ -197,6 +220,17 @@
   desc: Inaprovaline is a synaptic stimulant and cardiostimulant. Commonly used to stabilize patients- it stops oxygen loss when the patient is in critical health. It'll also slow down bleeding (internal or external) by half while in the body. Acts as a decent painkiller.
   physicalDesc: opaque
   color: "#731024"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:TotalDamage
+          # they gotta be in crit first
+          min: 100
+        damage:
+          types:
+            Asphyxiation: -5
 
 - type: reagent
   id: Kelotane
@@ -218,6 +252,23 @@
   desc: This keeps a patient's body temperature stable. High doses can allow short periods of unprotected EVA, but prevents use of the cryogenics tubes.
   physicalDesc: pungent
   color: "#ff7db5"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:AdjustTemperature
+        conditions:
+        - !type:Temperature
+          max: 293.15
+        amount: 20
+      - !type:AdjustTemperature
+        conditions:
+        - !type:Temperature
+          min: 293.15
+        amount: -20
+      - !type:PopupMessage
+        type: Local
+        messages: [ "leporazine-effect-temperature-adjusting" ]
+        probability: 0.2
 
 - type: reagent
   id: Methylin
@@ -239,6 +290,15 @@
   desc: Used in the treatment of cancer, is as effective as Anti-Toxin. Causes moderate radiation and hair loss.
   physicalDesc: acrid
   color: "#c8ff75"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            # close enough to what it says
+            Poison: -1
+            Radiation: 1
 
 - type: reagent
   id: Paroxetine
@@ -265,7 +325,7 @@
 - type: reagent
   id: Synaptizine
   name: synaptizine
-  desc: Toxic, but treats hallucinations, drowsiness & halves the duration of paralysis, stuns and knockdowns. It is metabolized very slowly. One unit is enough to treat hallucinations; two units is deadly.
+  desc: Toxic, but treats hallucinations, drowsiness & halves the duration of paralysis, stuns and knockdowns. One unit is enough to treat hallucinations; two units is deadly.
   physicalDesc: pungent
   color: "#d49a2f"
   metabolisms:
@@ -274,7 +334,15 @@
       - !type:HealthChange
         damage:
           types:
-            Poison: 2
+            Poison: 3
+      - !type:GenericStatusEffect
+        key: Stun
+        time: 1.0
+        type: Remove
+      - !type:GenericStatusEffect
+        key: KnockedDown
+        time: 1.0
+        type: Remove
 
 - type: reagent
   id: Tramadol
@@ -289,6 +357,16 @@
   desc: A wide-spectrum stimulant, originally derived from Cordrazine. Is capable of healing all four main damage types simultaneously, however it only heals at half the rate of conventional healing chemicals. Because of its low potency, it's best used as a supplement to other medicines.
   physicalDesc: opaque
   color: "#00e5ff"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Burn: -1
+            Toxin: -1
+            Airloss: -1
+            Brute: -1
 
 - type: reagent
   id: ChloralHydrate
@@ -304,6 +382,7 @@
   desc: Causes confusion and dizziness. This is essential to make Spaceacillin.
   physicalDesc: fizzy
   color: "#081a80"
+  # TODO confusion/dizzyness
 
 - type: reagent
   id: Lipozine
@@ -311,6 +390,12 @@
   desc: Causes weight loss upon consumption.
   physicalDesc: oily
   color: "#2690b5"
+  metabolisms:
+    Medicine:
+      effects:
+      # what the hell, this isn't satiating at all!!
+      - !type:SatiateHunger
+        factor: -1
 
 - type: reagent
   id: Sterilizine
