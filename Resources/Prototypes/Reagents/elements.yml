@@ -80,6 +80,15 @@
   meltingPoint: -259.2
 
 - type: reagent
+  id: Iodine
+  name: iodine
+  desc: Commonly added to table salt as a nutrient. On its own it tastes far less pleasing.
+  physicalDesc: Dark Brown
+  color: "#BC8A00"
+  boilingPoint: 184.3
+  meltingPoint: 113.7
+
+- type: reagent
   id: Iron
   name: iron
   desc: A silvery-grey metal which forms iron oxides (rust) with contact with air. Commonly alloyed with other elements to create alloys such as steel.

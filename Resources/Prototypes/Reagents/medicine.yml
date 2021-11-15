@@ -4,6 +4,7 @@
   desc: Lessens the damage to neurological tissue. More effective at treating brain damage than alkysine and also a fairly effective painkiller as well. Caution is needed in its creation to avoid mixing bleach and the chlorine needed to make alkysine.
   physicalDesc: strong-smelling
   color: "#9e232b"
+  # TODO brain damage
 
 - type: reagent
   id: Alkysine
@@ -11,6 +12,7 @@
   desc: Lessens the damage to neurological tissue, effective even after catastrophic injury. Used for treating brain damage and also a fairly effective painkiller.
   physicalDesc: oily
   color: "#ff8c00"
+  # TODO brain damage
 
 - type: reagent
   id: Dylovene
@@ -25,6 +27,7 @@
         damage:
           types:
             Poison: -1
+    # TODO overdose: vomit, dizzy effect (drunkenness?)
   plantMetabolism:
     - !type:PlantAdjustToxins
       amount: -10
@@ -107,6 +110,8 @@
   desc: Prevents hallucination slightly.
   physicalDesc: cloudy
   color: "#21693c"
+  # Why do so many chems 'reduce hallucination slightly' and why did we add so fucking many
+  # without even implementing hallucination?
 
 - type: reagent
   id: Dermaline
@@ -156,6 +161,7 @@
   desc: Neutralises the effects of alcohol in the blood stream. Though it is commonly needed, it is rarely requested.
   physicalDesc: opaque
   color: "#2d5708"
+  # TODO: GenericStatusEffect remove drunkenness
 
 - type: reagent
   id: Hyperzine
@@ -240,6 +246,7 @@
   desc: Prevents hallucination, but has a 10% chance of causing intense hallucinations.
   physicalDesc: acrid
   color: "#fffbad"
+  # TODO: Hallucinations.
 
 - type: reagent
   id: Ryetalyn
@@ -267,7 +274,7 @@
       - !type:HealthChange
         damage:
           types:
-            Poison: 0.5
+            Poison: 2
 
 - type: reagent
   id: Tramadol
@@ -284,32 +291,12 @@
   color: "#00e5ff"
 
 - type: reagent
-  id: Vaccine
-  name: vaccine
-  desc: Introduces antigens to the body, allowing the immune system to produce enough antibodies to combat present or future infections. Is blank by default, vaccine carrying antigen is produced at a centrifuge. Each unit raises the associated antibody concentration by 20% so at most 5 units are needed to cure the strongest diseases.
-  physicalDesc: translucent
-  color: "#ffc9f6"
-
-- type: reagent
-  id: Albuterol
-  name: albuterol
-  desc: A bronchodilator that relaxes muscles in the airways and increases air flow to the lungs. It'll remove mucus from your system as long as it's inside your body. Only useful to people with the Asthma disability.
-  physicalDesc: cloudy
-  color: "#00b89f"
-
-- type: reagent
   id: ChloralHydrate
   name: chloral hydrate
   desc: A powerful sedative which causes death in doses upwards of 16.2 units. Sends the patient to sleep almost instantly.
   physicalDesc: acrid
   color: "#18c9b1"
-
-- type: reagent
-  id: Creatine
-  name: creatine
-  desc: A muscle-building drug that grants the user enormous strength, before their muscles seize and tear their own body to shreds. In practical terms, 1-25 units just causes toxin damage, and 26 units turns you into a hulk with all its associated benefits with the side effect of taking a little toxin damage over time. You'll remain as a hulk until it's all metabolized, at which point you'll take 200 brute damage and gib. With the correct administration, it can be the most potent drug there is, but even at the best of times it is best considered a double-edged sword.
-  physicalDesc: cloudy
-  color: "#a1000b"
+  # TODO: sleeping and unconsciousness
 
 - type: reagent
   id: Cryptobiolin
@@ -319,44 +306,6 @@
   color: "#081a80"
 
 - type: reagent
-  id: HeartbreakerToxin
-  name: heartbreaker toxin
-  desc: A hallucinogenic compound that is illegal under space law. A synthetic drug derived from Mindbreaker toxin, it blocks some neurological signals to the respiratory system which causes choking.
-  physicalDesc: strong-smelling
-  color: "#5f959c"
-  metabolisms:
-    Poison:
-      effects:
-      - !type:HealthChange
-        damage:
-          types:
-            Asphyxiation: 4
-  plantMetabolism:
-    - !type:PlantAdjustToxins
-      amount: 10
-
-- type: reagent
-  id: Impedrezene
-  name: impedrezene
-  desc: A narcotic that impedes one's ability by slowing down the higher brain cell functions. Causes massive brain damage.
-  physicalDesc: acrid
-  color: "#215263"
-
-- type: reagent
-  id: Lexorin
-  name: lexorin
-  desc: Temporarily stops respiration and causes tissue damage. Large doses are fatal, and will cause people to pass out very quickly. Dexalin and Dexalin Plus will both remove it, however.
-  physicalDesc: pungent
-  color: "#6b0007"
-  metabolisms:
-    Poison:
-      effects:
-      - !type:HealthChange
-        damage:
-          groups:
-            Airloss: 7
-
-- type: reagent
   id: Lipozine
   name: lipozine
   desc: Causes weight loss upon consumption.
@@ -364,42 +313,11 @@
   color: "#2690b5"
 
 - type: reagent
-  id: MindbreakerToxin
-  name: mindbreaker toxin
-  desc: A potent hallucinogenic compound that is illegal under space law. Formerly known as LSD.
-  physicalDesc: opaque
-  color: "#77b58e"
-  plantMetabolism:
-    - !type:PlantAdjustToxins
-      amount: 10
-
-- type: reagent
-  id: Soporific
-  name: soporific (sleep-toxin)
-  desc: A less powerful sedative that takes a while to work, intended to help insomniacs and patients that are too aggressive to be treated normally. Takes roughly 50 seconds to make the patient fall asleep. Is safe in large quantities. Can be counteracted with Anti-Toxin.
-  physicalDesc: acrid
-  color: "#215263"
-
-- type: reagent
   id: Sterilizine
   name: sterilizine
   desc: Helps the patient when used during surgery, may also decontaminate objects and surfaces that bear pathogens. Is currently useless due to infections not being a thing.
   physicalDesc: strong-smelling
   color: "#7cad37"
-
-- type: reagent
-  id: SpaceDrugs
-  name: space drugs
-  desc: An illegal compound which induces a number of effects such as loss of balance and visual artefacts.
-  physicalDesc: syrupy
-  color: "#63806e"
-
-- type: reagent
-  id: THCOil
-  name: THC oil
-  desc: Pure THC oil, extracted from the leaves of the cannabis plant. Much stronger than in it's natural form and can be used to numb chronic pain in patients.
-  physicalDesc: skunky
-  color: "#DAA520"
 
 - type: reagent
   id: Omnizine
