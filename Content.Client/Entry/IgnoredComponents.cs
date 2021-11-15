@@ -99,6 +99,7 @@ namespace Content.Client.Entry
             "Lock",
             "PresetIdCard",
             "SolarControlConsole",
+            "Thruster",
             "FlashOnTrigger",
             "SoundOnTrigger",
             "TriggerOnCollide",

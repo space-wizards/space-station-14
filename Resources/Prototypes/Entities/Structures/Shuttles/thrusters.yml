@@ -25,6 +25,7 @@
     - type: ThrusterVisualizer
     #- type: WiresVisualizer
   - type: ApcPowerReceiver
+    powerLoad: 1500
   - type: ExtensionCableReceiver
   - type: Airtight
   - type: Damageable
