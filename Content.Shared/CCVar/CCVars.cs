@@ -432,6 +432,12 @@ namespace Content.Shared.CCVar
          */
 
         /// <summary>
+        ///     Allows disabling all votes for ultimate authority
+        /// </summary>
+        public static readonly CVarDef<bool> VoteEnabled =
+            CVarDef.Create("vote.enabled", true, CVar.SERVERONLY);
+
+        /// <summary>
         ///     The required ratio of the server that must agree for a restart round vote to go through.
         /// </summary>
         public static readonly CVarDef<float> VoteRestartRequiredRatio =

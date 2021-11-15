@@ -10,6 +10,7 @@ using Content.Server.Afk;
 using Content.Server.Chat.Managers;
 using Content.Server.Maps;
 using Content.Shared.Administration;
+using Content.Shared.CCVar;
 using Content.Shared.Voting;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
@@ -53,6 +54,9 @@ namespace Content.Server.Voting.Managers
 
             _playerManager.PlayerStatusChanged += PlayerManagerOnPlayerStatusChanged;
             _adminMgr.OnPermsChanged += AdminPermsChanged;
+            _cfg.OnValueChanged(CCVars.VoteEnabled, value => {
+                DirtyCanCallVoteAll();
+            });
         }
 
         private void AdminPermsChanged(AdminPermsChangedEventArgs obj)
@@ -284,6 +288,10 @@ namespace Content.Server.Voting.Managers
                 isAdmin = true;
                 return true;
             }
+
+            // If voting is disabled, block votes.
+            if (!_cfg.GetCVar(CCVars.VoteEnabled))
+                return false;
 
             // Cannot start vote if vote is already active (as non-admin).
             if (_votes.Count != 0)
