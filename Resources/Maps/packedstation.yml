@@ -33174,9 +33174,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 2940
-  type: AirlockMaintMedLocked
+  type: AirlockMaintRnDMedLocked
   components:
-  - pos: 56.5,4.5
+  - pos: 57.5,7.5
     parent: 0
     type: Transform
   - containers:
@@ -50724,7 +50724,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 5215
-  type: AirlockScienceGlassLocked
+  type: AirlockMedicalScienceGlassLocked
   components:
   - pos: 71.5,7.5
     parent: 0
@@ -52648,9 +52648,9 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 5422
-  type: AirlockMaintRnDLocked
+  type: AirlockMaintRnDMedLocked
   components:
-  - pos: 57.5,7.5
+  - pos: 56.5,4.5
     parent: 0
     type: Transform
   - containers:
@@ -75699,13 +75699,14 @@ entities:
 - uid: 7802
   type: WindowDirectional
   components:
-  - pos: 8.5,13.5
+  - rot: 3.141592653589793 rad
+    pos: 8.5,12.5
     parent: 0
     type: Transform
 - uid: 7803
   type: WindowDirectional
   components:
-  - pos: 8.5,12.5
+  - pos: 8.5,13.5
     parent: 0
     type: Transform
 - uid: 7804
