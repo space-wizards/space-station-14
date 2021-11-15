@@ -155,7 +155,6 @@ namespace Content.Server.Power.Components
                 light.TurnOff(false);
             }
             _heldBattery = GetBatteryFrom(entity);
-
             UpdateStatus();
             return true;
         }
