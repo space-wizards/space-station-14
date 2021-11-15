@@ -6,6 +6,7 @@ using Content.Shared.Alert;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Shuttles;
+using Content.Shared.Shuttles.Components;
 using Content.Shared.Tag;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;

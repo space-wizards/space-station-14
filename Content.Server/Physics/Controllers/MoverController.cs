@@ -3,18 +3,15 @@ using System.Collections.Generic;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
 using Content.Server.Movement.Components;
-using Content.Server.Shuttles;
 using Content.Server.Shuttles.Components;
-using Content.Shared.Audio;
 using Content.Shared.CCVar;
 using Content.Shared.Inventory;
 using Content.Shared.Maps;
 using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
-using Content.Shared.Sound;
 using Content.Shared.Shuttles;
+using Content.Shared.Shuttles.Components;
 using Content.Shared.Tag;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
@@ -22,12 +19,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Physics;
-using Robust.Shared.Physics.Collision.Shapes;
-using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Physics.Controllers
@@ -116,8 +108,8 @@ namespace Content.Server.Physics.Controllers
                     // TODO: Need to get diagonals too
                     var dockDirection = worldMovement.ToAngle().GetDir();
 
-                    if (movement.Length != 0f)
-                        physicsComponent.ApplyLinearImpulse(physicsComponent.Owner.Transform.WorldRotation.RotateVec(movement) * shuttleComponent.SpeedMultipler * physicsComponent.Mass);
+                    // if (movement.Length != 0f)
+                        // physicsComponent.ApplyLinearImpulse(physicsComponent.Owner.Transform.WorldRotation.RotateVec(movement) * shuttleComponent.SpeedMultipler * physicsComponent.Mass);
 
                     speedCap = _shuttleDockSpeedCap;
                     break;
@@ -129,13 +121,13 @@ namespace Content.Server.Physics.Controllers
                             movement.Y *= 5f;
                         }
 
-                        var direction = movement.Y < 0f ? Direction.South : Direction.North;
+                        var direction = movement.Y > 0f ? Direction.North : Direction.South;
 
                         var angularSpeed = shuttleComponent.AngularThrust;
-                        var linearSpeed = shuttleComponent.LinearThrusters[(int) direction];
+                        var linearSpeed = shuttleComponent.LinearThrusters[(int) direction / 2];
 
                         // Currently this is slow BUT we'd have a separate multiplier for docking and cruising or whatever.
-                        physicsComponent.ApplyLinearImpulse(physicsComponent.Owner.Transform.WorldRotation.ToWorldVec() *
+                        physicsComponent.ApplyLinearImpulse(physicsComponent.Owner.Transform.WorldRotation.Opposite().ToWorldVec() *
                                                             linearSpeed *
                                                             movement.Y);
 

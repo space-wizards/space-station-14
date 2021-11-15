@@ -1,6 +1,4 @@
-using System;
 using Content.Server.Shuttles.Components;
-using Content.Shared.Shuttles;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics;
@@ -27,55 +25,16 @@ namespace Content.Server.Shuttles.EntitySystems
             // Look this is jank but it's a placeholder until we design it.
             if (args.NewFixtures.Count == 0) return;
 
-            var body = args.NewFixtures[0].Body;
-
             foreach (var fixture in args.NewFixtures)
             {
                 fixture.Mass = fixture.Area * TileMassMultiplier;
                 fixture.Restitution = 0.1f;
             }
-
-            if (body.Owner.TryGetComponent(out ShuttleComponent? shuttleComponent))
-            {
-                RecalculateSpeedMultiplier(shuttleComponent, body);
-            }
-
         }
 
         private void HandleGridInit(GridInitializeEvent ev)
         {
             EntityManager.GetEntity(ev.EntityUid).EnsureComponent<ShuttleComponent>();
-        }
-
-        /// <summary>
-        /// Cache the thrust available to this shuttle.
-        /// </summary>
-        private void RecalculateSpeedMultiplier(SharedShuttleComponent shuttle, PhysicsComponent physics)
-        {
-            // TODO: Need per direction speed (Never Eat Soggy Weetbix).
-            // TODO: This will need hella tweaking.
-            var thrusters = physics.FixtureCount;
-
-            if (thrusters == 0)
-            {
-                shuttle.SpeedMultipler = 0f;
-            }
-
-            const float ThrustPerThruster = 0.25f;
-            const float MinimumThrustRequired = 0.005f;
-
-            // Just so someone can't slap a single thruster on a station and call it a day; need to hit a minimum amount.
-            var thrustRatio = Math.Max(0, thrusters * ThrustPerThruster / physics.Mass);
-
-            if (thrustRatio < MinimumThrustRequired)
-                shuttle.SpeedMultipler = 0f;
-
-            const float MaxThrust = 10f;
-            // This doesn't need to align with MinimumThrustRequired; if you set this higher it just means the first few additional
-            // thrusters won't do anything.
-            const float MinThrust = MinimumThrustRequired;
-
-            shuttle.SpeedMultipler = MathF.Max(MinThrust, MathF.Min(MaxThrust, thrustRatio));
         }
 
         private void HandleShuttleStartup(EntityUid uid, ShuttleComponent component, ComponentStartup args)
@@ -93,11 +52,6 @@ namespace Content.Server.Shuttles.EntitySystems
             if (component.Enabled)
             {
                 Enable(physicsComponent);
-            }
-
-            if (component.Owner.TryGetComponent(out ShuttleComponent? shuttleComponent))
-            {
-                RecalculateSpeedMultiplier(shuttleComponent, physicsComponent);
             }
         }
 

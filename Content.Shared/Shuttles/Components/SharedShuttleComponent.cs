@@ -1,7 +1,7 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.Shuttles
+namespace Content.Shared.Shuttles.Components
 {
     public abstract class SharedShuttleComponent : Component
     {

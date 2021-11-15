@@ -1,10 +1,12 @@
 using System;
 using Content.Server.Power.Components;
 using Content.Server.Shuttles.Components;
+using Content.Shared.Interaction;
+using Content.Shared.Shuttles.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 
 namespace Content.Server.Shuttles.EntitySystems
 {
@@ -12,13 +14,38 @@ namespace Content.Server.Shuttles.EntitySystems
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
 
+        // Essentially whenever thruster enables we update the shuttle's available impulses which are used for movement.
+        // This is done for each direction available.
+
         public override void Initialize()
         {
             base.Initialize();
+            SubscribeLocalEvent<ThrusterComponent, ActivateInWorldEvent>(OnActivateThruster);
             SubscribeLocalEvent<ThrusterComponent, ComponentInit>(OnThrusterInit);
             SubscribeLocalEvent<ThrusterComponent, ComponentShutdown>(OnThrusterShutdown);
             SubscribeLocalEvent<ThrusterComponent, PowerChangedEvent>(OnPowerChange);
             SubscribeLocalEvent<ThrusterComponent, AnchorStateChangedEvent>(OnAnchorChange);
+            SubscribeLocalEvent<ThrusterComponent, RotateEvent>(OnRotate);
+        }
+
+        private void OnActivateThruster(EntityUid uid, ThrusterComponent component, ActivateInWorldEvent args)
+        {
+            component.EnabledVV ^= true;
+        }
+
+        private void OnRotate(EntityUid uid, ThrusterComponent component, ref RotateEvent args)
+        {
+            if (!component.Enabled ||
+                component.Type != ThrusterType.Linear ||
+                !EntityManager.TryGetComponent(uid, out TransformComponent? xform) ||
+                !_mapManager.TryGetGrid(xform.GridID, out var grid) ||
+                !EntityManager.TryGetComponent(grid.GridEntityId, out ShuttleComponent? shuttleComponent)) return;
+
+            var oldDirection = (int) args.OldRotation.Opposite().GetCardinalDir() / 2;
+            var direction = (int) args.NewRotation.Opposite().GetCardinalDir() / 2;
+
+            shuttleComponent.LinearThrusters[oldDirection] -= component.Impulse;
+            shuttleComponent.LinearThrusters[direction] += component.Impulse;
         }
 
         private void OnAnchorChange(EntityUid uid, ThrusterComponent component, ref AnchorStateChangedEvent args)
@@ -35,9 +62,10 @@ namespace Content.Server.Shuttles.EntitySystems
 
         private void OnThrusterInit(EntityUid uid, ThrusterComponent component, ComponentInit args)
         {
-            if (!component.Enabled) return;
-
-            component.Enabled = false;
+            if (!component.EnabledVV)
+            {
+                return;
+            }
 
             if (CanEnable(uid, component))
             {
@@ -62,7 +90,7 @@ namespace Content.Server.Shuttles.EntitySystems
             }
         }
 
-        private void EnableThruster(EntityUid uid, ThrusterComponent component, TransformComponent? xform = null)
+        public void EnableThruster(EntityUid uid, ThrusterComponent component, TransformComponent? xform = null)
         {
             if (component.Enabled || !Resolve(uid, ref xform) ||
                 !_mapManager.TryGetGrid(xform.GridID, out var grid)) return;
@@ -71,13 +99,12 @@ namespace Content.Server.Shuttles.EntitySystems
 
             if (!EntityManager.TryGetComponent(grid.GridEntityId, out ShuttleComponent? shuttleComponent)) return;
 
-            // TODO: Need to listen to rotation events and update it
+            Logger.DebugS("thruster", $"Enabled thruster {uid}");
 
-            // TODO: Need to add these to a cached thing on the shuttle and also be directional
             switch (component.Type)
             {
                 case ThrusterType.Linear:
-                    var direction = ((int) xform.LocalRotation.GetCardinalDir() / 2);
+                    var direction = (int) xform.LocalRotation.Opposite().GetCardinalDir() / 2;
 
                     shuttleComponent.LinearThrusters[direction] += component.Impulse;
                     break;
@@ -88,10 +115,13 @@ namespace Content.Server.Shuttles.EntitySystems
                     throw new ArgumentOutOfRangeException();
             }
 
-            // TODO: Visualizer
+            if (EntityManager.TryGetComponent(uid, out SharedAppearanceComponent? appearanceComponent))
+            {
+                appearanceComponent.SetData(ThrusterVisualState.State, true);
+            }
         }
 
-        private void DisableThruster(EntityUid uid, ThrusterComponent component, TransformComponent? xform = null)
+        public void DisableThruster(EntityUid uid, ThrusterComponent component, TransformComponent? xform = null)
         {
             if (!component.Enabled ||
                 !Resolve(uid, ref xform) ||
@@ -101,10 +131,12 @@ namespace Content.Server.Shuttles.EntitySystems
 
             if (!EntityManager.TryGetComponent(grid.GridEntityId, out ShuttleComponent? shuttleComponent)) return;
 
+            Logger.DebugS("thruster", $"Disabled thruster {uid}");
+
             switch (component.Type)
             {
                 case ThrusterType.Linear:
-                    var direction = ((int) xform.LocalRotation.GetCardinalDir() / 2);
+                    var direction = ((int) xform.LocalRotation.Opposite().GetCardinalDir() / 2);
 
                     shuttleComponent.LinearThrusters[direction] -= component.Impulse;
                     break;
@@ -115,12 +147,15 @@ namespace Content.Server.Shuttles.EntitySystems
                     throw new ArgumentOutOfRangeException();
             }
 
-            // TODO: Visualizer
+            if (EntityManager.TryGetComponent(uid, out SharedAppearanceComponent? appearanceComponent))
+            {
+                appearanceComponent.SetData(ThrusterVisualState.State, false);
+            }
         }
 
-        private bool CanEnable(EntityUid uid, ThrusterComponent component)
+        public bool CanEnable(EntityUid uid, ThrusterComponent component)
         {
-            return component.Enabled &&
+            return component.EnabledVV &&
                    EntityManager.GetComponent<TransformComponent>(uid).Anchored &&
                    (!EntityManager.TryGetComponent(uid, out ApcPowerReceiverComponent? receiver) || receiver.Powered);
         }

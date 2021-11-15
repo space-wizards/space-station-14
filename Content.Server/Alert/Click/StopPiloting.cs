@@ -2,6 +2,7 @@
 using Content.Server.Shuttles.EntitySystems;
 using Content.Shared.Alert;
 using Content.Shared.Shuttles;
+using Content.Shared.Shuttles.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
