@@ -1,10 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'Fixes default window sizes for vendors, chemistry machines, etc.',
-    type: Fix}
-  id: 92
-  time: '2021-03-15T08:38:08.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: 'Remove collisions for wall lights, carpets, catwalks', type: Tweak}
@@ -2833,3 +2827,7 @@ Entries:
       HoP's office., type: Add}
   id: 591
   time: '2021-11-14T19:52:46.0000000+00:00'
+- author: xRiriq
+  changes: []
+  id: 592
+  time: '2021-11-15T03:48:58.0000000+00:00'
