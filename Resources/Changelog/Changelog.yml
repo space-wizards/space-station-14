@@ -2837,3 +2837,8 @@ Entries:
   - {message: Ghost roles can no longer be revived as the original player., type: Tweak}
   id: 595
   time: '2021-11-15T18:14:35.0000000+00:00'
+- author: cheesePizza2
+  changes:
+  - {message: Harm state now has an on/off icon, type: Tweak}
+  id: 596
+  time: '2021-11-15T19:26:59.0000000+00:00'
