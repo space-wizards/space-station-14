@@ -62,8 +62,9 @@
       effects:
       - !type:HealthChange
         damage:
+          types:
+            Radiation: -3
           groups:
-            Toxin: -1
             Brute: 0.5
 
 - type: reagent
@@ -198,7 +199,7 @@
       - !type:HealthChange
         damage:
           types:
-            Radiation: -3
+            Radiation: -1
 
 - type: reagent
   id: Imidazoline

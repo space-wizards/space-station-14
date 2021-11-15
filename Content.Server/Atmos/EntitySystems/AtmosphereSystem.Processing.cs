@@ -65,7 +65,6 @@ namespace Content.Server.Atmos.EntitySystems
 
                 var isAirBlocked = IsTileAirBlocked(mapGrid, indices);
 
-                tile.BlockedAirflow = GetBlockedDirections(mapGrid, indices);
                 UpdateAdjacent(mapGrid, atmosphere, tile);
 
                 if (IsTileSpace(mapGrid, indices) && !isAirBlocked)

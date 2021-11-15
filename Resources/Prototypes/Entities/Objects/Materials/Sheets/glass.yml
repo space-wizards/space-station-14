@@ -52,6 +52,7 @@
   - type: Sprite
     state: glass
   - type: Stack
+    stackType: Glass
     count: 1
 
 - type: entity
@@ -92,6 +93,7 @@
   - type: Sprite
     state: rglass
   - type: Stack
+    stackType: ReinforcedGlass
     count: 1
 
 - type: entity
@@ -129,6 +131,7 @@
   - type: Sprite
     state: pglass
   - type: Stack
+    stackType: PlasmaGlass
     count: 1
 
 - type: entity
@@ -166,6 +169,7 @@
   - type: Sprite
     state: rpglass
   - type: Stack
+    stackType: ReinforcedPlasmaGlass
     count: 1
 
 - type: entity
@@ -200,6 +204,7 @@
   - type: Sprite
     state: titaniumglass
   - type: Stack
+    stackType: TitaniumGlass
     count: 1
 
 - type: entity
@@ -234,4 +239,5 @@
   - type: Sprite
     state: plastitaniumglass
   - type: Stack
+    stackType: PlastitaniumGlass
     count: 1

@@ -1,0 +1,157 @@
+﻿# Just copypasta of some human basic body parts for interaction,
+# only differences for now is that limbs work in pairs,
+# they are unextractable and can't be spawned (no surgery on Animals!?).
+
+- type: entity
+  id: PartAnimal
+  parent: BaseItem
+  name: "animal body part"
+  abstract: true
+  components:
+  - type: Damageable
+    damageContainer: Biological
+  - type: BiologicalSurgeryData
+
+# For primates mainly
+- type: entity
+  id: HandsAnimal
+  name: "animal hands"
+  parent: PartAnimal
+  abstract: true
+  components:
+  - type: BodyPart
+    partType: Hand
+    size: 1
+    compatibility: Biological
+    symmetry: Left
+  - type: Grasp
+
+- type: entity
+  id: LegsAnimal
+  name: "animal legs"
+  parent: PartAnimal
+  abstract: true
+  components:
+  - type: BodyPart
+    partType: Leg
+    size: 1
+    compatibility: Biological
+
+- type: entity
+  id: FeetAnimal
+  name: "animal feet"
+  parent: PartAnimal
+  abstract: true
+  components:
+  - type: BodyPart
+    partType: Foot
+    size: 1
+    compatibility: Biological
+
+- type: entity
+  id: TorsoAnimal
+  name: "animal torso"
+  parent: PartAnimal
+  abstract: true
+  components:
+  - type: BodyPart
+    partType: Torso
+    size: 7
+    compatibility: Biological
+    mechanisms:
+    - OrganAnimalLungs
+    - OrganAnimalStomach
+    - OrganAnimalLiver
+    - OrganAnimalHeart
+    - OrganAnimalKidneys
+  - type: Damageable
+    damageContainer: Biological
+
+- type: entity
+  id: BaseAnimalOrgan
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Mechanism
+
+- type: entity
+  id: OrganAnimalLungs
+  parent: BaseAnimalOrgan
+  name: lungs
+  abstract: true
+  components:
+  - type: Mechanism
+    size: 1
+    compatibility: Biological
+    behaviors:
+    - !type:LungBehavior {}
+
+- type: entity
+  id: OrganAnimalStomach
+  parent: BaseAnimalOrgan
+  name: stomach
+  abstract: true
+  components:
+  - type: Mechanism
+    size: 1
+    compatibility: Biological
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 100
+  - type: Stomach
+    maxVolume: 100
+    digestionDelay: 20
+  - type: Metabolizer
+    maxReagents: 3
+    metabolizerTypes: [Human, Animal]
+    groups:
+    - id: Food
+    - id: Drink
+
+- type: entity
+  id: OrganAnimalLiver
+  parent: BaseAnimalOrgan
+  name: liver
+  abstract: true
+  components:
+  - type: Mechanism
+    size: 1
+    compatibility: Biological
+  - type: Metabolizer
+    maxReagents: 1
+    metabolizerTypes: [Human, Animal]
+    groups:
+    - id: Alcohol
+      rateModifier: 0.1
+
+- type: entity
+  id: OrganAnimalHeart
+  parent: BaseAnimalOrgan
+  name: heart
+  abstract: true
+  components:
+  - type: Mechanism
+    size: 1
+    compatibility: Biological
+  - type: Metabolizer
+    maxReagents: 2
+    metabolizerTypes: [Human, Animal]
+    groups:
+    - id: Medicine
+    - id: Poison
+    - id: Narcotic
+
+- type: entity
+  id: OrganAnimalKidneys
+  parent: BaseAnimalOrgan
+  name: kidneys
+  abstract: true
+  components:
+  - type: Mechanism
+    size: 1
+    compatibility: Biological
+  - type: Metabolizer
+    maxReagents: 5
+    metabolizerTypes: [Human, Animal]
+    removeEmpty: true

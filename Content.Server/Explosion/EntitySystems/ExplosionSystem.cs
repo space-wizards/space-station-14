@@ -306,9 +306,9 @@ namespace Content.Server.Explosion.EntitySystems
             }
             else
             {
-                while (EntityManager.TryGetComponent(entity, out ContainerManagerComponent? container))
+                while (EntityManager.TryGetEntity(entity, out var e) && e.TryGetContainer(out var container))
                 {
-                    entity = container.OwnerUid;
+                    entity = container.Owner.Uid;
                 }
 
                 if (!EntityManager.TryGetComponent(entity, out transform))

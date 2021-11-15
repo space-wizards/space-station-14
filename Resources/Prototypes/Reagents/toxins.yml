@@ -220,3 +220,24 @@
         type: Local
         messages: [ "histamine-effect-heavy-itchiness" ]
         probability: 0.2
+
+- type: reagent
+  id: Theobromine
+  name: theobromine
+  desc: Theobromine is a bitter alkaloid of the cacao plant found in chocolate, and some other foods.
+  physicalDesc: grainy
+  color: "#f5f5f5"
+  meltingPoint: 351
+  boilingPoint: 554 # I'm not a chemist, but it boils at 295, lower than melting point, idk how it works so I gave it higher value
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 1
+        - !type:OrganType
+          type: Animal # Applying damage to the mobs with lower metabolism capabilities
+        damage:
+          types:
+            Poison: 4

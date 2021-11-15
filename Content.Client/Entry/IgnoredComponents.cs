@@ -73,11 +73,13 @@ namespace Content.Client.Entry
             "Bucket",
             "CableVis",
             "Puddle",
+            "Stomach",
             "CanSpill",
             "SpeedLoader",
             "Hitscan",
             "StunOnCollide",
             "RandomPottedPlant",
+            "Brain",
             "CommunicationsConsole",
             "BarSign",
             "DroppedBodyPart",
@@ -120,6 +122,7 @@ namespace Content.Client.Entry
             "SurgeryTool",
             "EmitSoundOnThrow",
             "Flash",
+            "Docking",
             "Telecrystal",
             "TrashSpawner",
             "RCD",
@@ -303,8 +306,11 @@ namespace Content.Client.Entry
             "ApcNetSwitch",
             "HandLabeler",
             "Label",
+            "Nuke",
+            "NukeCodePaper",
             "GhostRadio",
             "Armor",
+            "Udder",
             "PneumaticCannon"
         };
     }

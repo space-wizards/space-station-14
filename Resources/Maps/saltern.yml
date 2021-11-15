@@ -6984,11 +6984,9 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 656
-  type: AirlockExternalLocked
+  type: AirlockShuttle
   components:
-  - name: Escape Shuttle Dock
-    type: MetaData
-  - rot: 4.371139006309477E-08 rad
+  - rot: -1.5707963267948966 rad
     pos: -41.5,8.5
     parent: 853
     type: Transform
@@ -7037,11 +7035,9 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 661
-  type: AirlockExternalLocked
+  type: AirlockShuttle
   components:
-  - name: Escape Shuttle Dock
-    type: MetaData
-  - rot: 4.371139006309477E-08 rad
+  - rot: -1.5707963267948966 rad
     pos: -41.5,4.5
     parent: 853
     type: Transform
@@ -67210,7 +67206,7 @@ entities:
 - uid: 6376
   type: GasMixer
   components:
-  - rot: 3.141592653589793 rad
+  - rot: -1.5707963267948966 rad
     pos: 41.5,17.5
     parent: 853
     type: Transform
@@ -67224,7 +67220,7 @@ entities:
 - uid: 6377
   type: GasMixer
   components:
-  - rot: 3.141592653589793 rad
+  - rot: -1.5707963267948966 rad
     pos: 37.5,17.5
     parent: 853
     type: Transform
@@ -67238,7 +67234,7 @@ entities:
 - uid: 6378
   type: GasFilter
   components:
-  - rot: 3.141592653589793 rad
+  - rot: -1.5707963267948966 rad
     pos: 39.5,18.5
     parent: 853
     type: Transform
@@ -67249,7 +67245,7 @@ entities:
 - uid: 6379
   type: GasFilter
   components:
-  - rot: 3.141592653589793 rad
+  - rot: -1.5707963267948966 rad
     pos: 43.5,18.5
     parent: 853
     type: Transform
@@ -67804,7 +67800,7 @@ entities:
 - uid: 6439
   type: GasFilter
   components:
-  - rot: 3.141592653589793 rad
+  - rot: -1.5707963267948966 rad
     pos: 47.5,18.5
     parent: 853
     type: Transform
