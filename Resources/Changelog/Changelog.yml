@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: 'Remove collisions for wall lights, carpets, catwalks', type: Tweak}
-  id: 93
-  time: '2021-03-15T09:45:43.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Fixes many mispredictions with slips., type: Fix}
@@ -2831,3 +2826,9 @@ Entries:
   changes: []
   id: 592
   time: '2021-11-15T03:48:58.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Medical and Science can now access the extra scanners in Genetics on
+      Packed., type: Tweak}
+  id: 593
+  time: '2021-11-15T08:12:44.0000000+00:00'
