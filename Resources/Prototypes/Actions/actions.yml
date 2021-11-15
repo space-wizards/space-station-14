@@ -1,6 +1,7 @@
-﻿- type: action
+- type: action
   actionType: CombatMode
-  icon: Interface/Actions/harm.png
+  icon: Interface/Actions/harmOff.png
+  iconOn: Interface/Actions/harm.png
   name: "[color=red]Combat Mode[/color]"
   description: "Enter combat mode."
   filters:
