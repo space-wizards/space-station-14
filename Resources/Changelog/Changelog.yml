@@ -172,7 +172,7 @@ Entries:
   time: '2021-03-28T06:00:37.0000000+00:00'
 - author: BulletGrade
   changes:
-  - {message: 'Made magazine names more specific', type: Tweak}
+  - {message: Made magazine names more specific, type: Tweak}
   id: 124
   time: '2021-03-28T06:06:20.0000000+00:00'
 - author: PJB3005
@@ -585,7 +585,7 @@ Entries:
   time: '2021-05-19T17:26:02.0000000+00:00'
 - author: scrato
   changes:
-  - {message: 'ID card computer will now stop working when there is no power', type: Fix}
+  - {message: ID card computer will now stop working when there is no power, type: Fix}
   id: 195
   time: '2021-05-20T12:58:29.0000000+00:00'
 - author: Swept
@@ -647,7 +647,8 @@ Entries:
   time: '2021-05-24T14:39:58.0000000+00:00'
 - author: scrato
   changes:
-  - {message: "You now won't be able to get out of handcuffs if you're dead or incapacitated", type: Fix}
+  - {message: You now won't be able to get out of handcuffs if you're dead or incapacitated,
+    type: Fix}
   id: 207
   time: '2021-05-24T14:55:48.0000000+00:00'
 - author: 20kdc
@@ -1926,7 +1927,8 @@ Entries:
   time: '2021-10-13T17:14:34.0000000+00:00'
 - author: PJB3005
   changes:
-  - {message: 'Examine details like welder fuel level now show up for items in your inventory.', type: Fix}
+  - {message: Examine details like welder fuel level now show up for items in your
+      inventory., type: Fix}
   id: 437
   time: '2021-10-13T21:04:16.0000000+00:00'
 - author: 20kdc
@@ -2829,3 +2831,9 @@ Entries:
   - {message: Made admin message windows stand out more., type: Add}
   id: 594
   time: '2021-11-15T11:42:30.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Much more accurate tracking of ghost roles., type: Fix}
+  - {message: Ghost roles can no longer be revived as the original player., type: Tweak}
+  id: 595
+  time: '2021-11-15T18:14:35.0000000+00:00'
