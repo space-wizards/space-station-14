@@ -7,7 +7,7 @@ namespace Content.Shared.Decals
 {
     [Serializable, NetSerializable]
     [DataDefinition]
-    public readonly struct Decal
+    public class Decal
     {
         [DataField("coordinates")] public readonly Vector2 Coordinates;
         [DataField("id")] public readonly string Id;
