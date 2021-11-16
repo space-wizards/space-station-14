@@ -112523,6 +112523,8 @@ entities:
   - pos: 71.5,43.5
     parent: 0
     type: Transform
+  - location: North-East Solars
+    type: WarpPoint
 - uid: 11478
   type: WarpPoint
   components:
@@ -116362,4 +116364,268 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+- uid: 11967
+  type: TraitorDMRedemptionMachineSpawner
+  components:
+  - pos: 0.5,-9.5
+    parent: 0
+    type: Transform
+- uid: 11968
+  type: TraitorDMRedemptionMachineSpawner
+  components:
+  - pos: 54.5,-17.5
+    parent: 0
+    type: Transform
+- uid: 11969
+  type: TraitorDMRedemptionMachineSpawner
+  components:
+  - pos: 86.5,-2.5
+    parent: 0
+    type: Transform
+- uid: 11970
+  type: TraitorDMRedemptionMachineSpawner
+  components:
+  - pos: 69.5,34.5
+    parent: 0
+    type: Transform
+- uid: 11971
+  type: TraitorDMRedemptionMachineSpawner
+  components:
+  - pos: 22.5,18.5
+    parent: 0
+    type: Transform
+- uid: 11972
+  type: TraitorDMRedemptionMachineSpawner
+  components:
+  - pos: 9.5,-22.5
+    parent: 0
+    type: Transform
+- uid: 11973
+  type: TraitorDMRedemptionMachineSpawner
+  components:
+  - pos: 70.5,-5.5
+    parent: 0
+    type: Transform
+- uid: 11974
+  type: TraitorDMRedemptionMachineSpawner
+  components:
+  - pos: 56.5,6.5
+    parent: 0
+    type: Transform
+- uid: 11975
+  type: TraitorDMRedemptionMachineSpawner
+  components:
+  - pos: 41.5,42.5
+    parent: 0
+    type: Transform
+- uid: 11976
+  type: RandomSpawner
+  components:
+  - pos: 57.5,-13.5
+    parent: 0
+    type: Transform
+- uid: 11977
+  type: RandomSpawner
+  components:
+  - pos: 62.5,-15.5
+    parent: 0
+    type: Transform
+- uid: 11978
+  type: RandomSpawner
+  components:
+  - pos: 59.5,-16.5
+    parent: 0
+    type: Transform
+- uid: 11979
+  type: RandomSpawner
+  components:
+  - pos: 31.5,-4.5
+    parent: 0
+    type: Transform
+- uid: 11980
+  type: RandomSpawner
+  components:
+  - pos: 27.5,2.5
+    parent: 0
+    type: Transform
+- uid: 11981
+  type: RandomSpawner
+  components:
+  - pos: -6.5,-0.5
+    parent: 0
+    type: Transform
+- uid: 11982
+  type: RandomSpawner
+  components:
+  - pos: -7.5,-9.5
+    parent: 0
+    type: Transform
+- uid: 11983
+  type: RandomSpawner
+  components:
+  - pos: -7.5,-5.5
+    parent: 0
+    type: Transform
+- uid: 11984
+  type: RandomSpawner
+  components:
+  - pos: 12.5,15.5
+    parent: 0
+    type: Transform
+- uid: 11985
+  type: RandomSpawner
+  components:
+  - pos: 8.5,32.5
+    parent: 0
+    type: Transform
+- uid: 11986
+  type: RandomSpawner
+  components:
+  - pos: 20.5,26.5
+    parent: 0
+    type: Transform
+- uid: 11987
+  type: RandomSpawner
+  components:
+  - pos: 27.5,6.5
+    parent: 0
+    type: Transform
+- uid: 11988
+  type: RandomSpawner
+  components:
+  - pos: 31.5,-14.5
+    parent: 0
+    type: Transform
+- uid: 11989
+  type: RandomSpawner
+  components:
+  - pos: 84.5,10.5
+    parent: 0
+    type: Transform
+- uid: 11990
+  type: RandomSpawner
+  components:
+  - pos: 83.5,7.5
+    parent: 0
+    type: Transform
+- uid: 11991
+  type: RandomSpawner
+  components:
+  - pos: 68.5,11.5
+    parent: 0
+    type: Transform
+- uid: 11992
+  type: RandomSpawner
+  components:
+  - pos: 57.5,5.5
+    parent: 0
+    type: Transform
+- uid: 11993
+  type: RandomSpawner
+  components:
+  - pos: 70.5,29.5
+    parent: 0
+    type: Transform
+- uid: 11994
+  type: RandomSpawner
+  components:
+  - pos: 70.5,28.5
+    parent: 0
+    type: Transform
+- uid: 11995
+  type: RandomSpawner
+  components:
+  - pos: 71.5,37.5
+    parent: 0
+    type: Transform
+- uid: 11996
+  type: RandomSpawner
+  components:
+  - pos: 38.5,35.5
+    parent: 0
+    type: Transform
+- uid: 11997
+  type: RandomSpawner
+  components:
+  - pos: 37.5,33.5
+    parent: 0
+    type: Transform
+- uid: 11998
+  type: RandomSpawner
+  components:
+  - pos: 40.5,30.5
+    parent: 0
+    type: Transform
+- uid: 11999
+  type: RandomSpawner
+  components:
+  - pos: 36.5,30.5
+    parent: 0
+    type: Transform
+- uid: 12000
+  type: RandomSpawner
+  components:
+  - pos: 4.5,11.5
+    parent: 0
+    type: Transform
+- uid: 12001
+  type: RandomSpawner
+  components:
+  - pos: -1.5,-11.5
+    parent: 0
+    type: Transform
+- uid: 12002
+  type: RandomSpawner
+  components:
+  - pos: 6.5,11.5
+    parent: 0
+    type: Transform
+- uid: 12003
+  type: RandomSpawner
+  components:
+  - pos: -1.5,-12.5
+    parent: 0
+    type: Transform
+- uid: 12004
+  type: RandomSpawner
+  components:
+  - pos: 18.5,36.5
+    parent: 0
+    type: Transform
+- uid: 12005
+  type: RandomSpawner
+  components:
+  - pos: 22.5,36.5
+    parent: 0
+    type: Transform
+- uid: 12006
+  type: RandomSpawner
+  components:
+  - pos: 21.5,37.5
+    parent: 0
+    type: Transform
+- uid: 12007
+  type: RandomSpawner
+  components:
+  - pos: 28.5,35.5
+    parent: 0
+    type: Transform
+- uid: 12008
+  type: RandomSpawner
+  components:
+  - pos: 27.5,12.5
+    parent: 0
+    type: Transform
+- uid: 12009
+  type: RandomSpawner
+  components:
+  - pos: 45.5,18.5
+    parent: 0
+    type: Transform
+- uid: 12010
+  type: RandomSpawner
+  components:
+  - pos: 34.5,41.5
+    parent: 0
+    type: Transform
 ...
