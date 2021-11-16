@@ -11,6 +11,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.EntitySystems
 {
@@ -63,7 +64,7 @@ namespace Content.Server.Shuttles.EntitySystems
                         // Work out if the thruster is facing this direction
                         var direction = EntityManager.GetComponent<TransformComponent>(ent).LocalRotation.ToWorldVec();
 
-                        if (new Vector2i((int) direction.X, (int) direction.Y) != -new Vector2i(x, y)) continue;
+                        if (new Vector2i((int) direction.X, (int) direction.Y) != new Vector2i(x, y)) continue;
 
                         DisableThruster(ent, thruster);
                     }
@@ -81,6 +82,8 @@ namespace Content.Server.Shuttles.EntitySystems
         /// </summary>
         private void OnRotate(EntityUid uid, ThrusterComponent component, ref RotateEvent args)
         {
+            // TODO: Disable visualizer for old direction
+
             if (!component.Enabled ||
                 component.Type != ThrusterType.Linear ||
                 !EntityManager.TryGetComponent(uid, out TransformComponent? xform) ||
@@ -90,8 +93,13 @@ namespace Content.Server.Shuttles.EntitySystems
             var oldDirection = (int) args.OldRotation.Opposite().GetCardinalDir() / 2;
             var direction = (int) args.NewRotation.Opposite().GetCardinalDir() / 2;
 
-            shuttleComponent.LinearThrusters[oldDirection] -= component.Impulse;
-            shuttleComponent.LinearThrusters[direction] += component.Impulse;
+            shuttleComponent.LinearThrusterImpulse[oldDirection] -= component.Impulse;
+            DebugTools.Assert(shuttleComponent.LinearThrusters[oldDirection].Contains(component));
+            shuttleComponent.LinearThrusters[oldDirection].Remove(component);
+
+            shuttleComponent.LinearThrusterImpulse[direction] += component.Impulse;
+            DebugTools.Assert(!shuttleComponent.LinearThrusters[direction].Contains(component));
+            shuttleComponent.LinearThrusters[direction].Add(component);
         }
 
         private void OnAnchorChange(EntityUid uid, ThrusterComponent component, ref AnchorStateChangedEvent args)
@@ -155,9 +163,11 @@ namespace Content.Server.Shuttles.EntitySystems
             switch (component.Type)
             {
                 case ThrusterType.Linear:
-                    var direction = (int) xform.LocalRotation.Opposite().GetCardinalDir() / 2;
+                    var direction = (int) xform.LocalRotation.GetCardinalDir() / 2;
 
-                    shuttleComponent.LinearThrusters[direction] += component.Impulse;
+                    shuttleComponent.LinearThrusterImpulse[direction] += component.Impulse;
+                    DebugTools.Assert(!shuttleComponent.LinearThrusters[direction].Contains(component));
+                    shuttleComponent.LinearThrusters[direction].Add(component);
                     break;
                 case ThrusterType.Angular:
                     shuttleComponent.AngularThrust += component.Impulse;
@@ -196,9 +206,11 @@ namespace Content.Server.Shuttles.EntitySystems
             switch (component.Type)
             {
                 case ThrusterType.Linear:
-                    var direction = ((int) xform.LocalRotation.Opposite().GetCardinalDir() / 2);
+                    var direction = ((int) xform.LocalRotation.GetCardinalDir() / 2);
 
-                    shuttleComponent.LinearThrusters[direction] -= component.Impulse;
+                    shuttleComponent.LinearThrusterImpulse[direction] -= component.Impulse;
+                    DebugTools.Assert(shuttleComponent.LinearThrusters[direction].Contains(component));
+                    shuttleComponent.LinearThrusters[direction].Remove(component);
                     break;
                 case ThrusterType.Angular:
                     shuttleComponent.AngularThrust -= component.Impulse;
@@ -227,7 +239,7 @@ namespace Content.Server.Shuttles.EntitySystems
                 return false;
             }
 
-            var (x, y) = xform.LocalPosition + xform.LocalRotation.ToWorldVec();
+            var (x, y) = xform.LocalPosition + xform.LocalRotation.Opposite().ToWorldVec();
             var tile = _mapManager.GetGrid(xform.GridID).GetTileRef(new Vector2i((int) Math.Floor(x), (int) Math.Floor(y)));
 
             return tile.Tile.IsSpace();

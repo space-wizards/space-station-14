@@ -16,10 +16,21 @@ namespace Content.Client.Shuttles
             switch (state)
             {
                 case true:
-                    spriteComponent.LayerSetVisible(ThrusterVisualLayers.Thrust, true);
+                    spriteComponent.LayerSetVisible(ThrusterVisualLayers.ThrustOn, true);
+
+                    if (component.TryGetData(ThrusterVisualState.Thrusting, out bool thrusting) && thrusting)
+                    {
+                        spriteComponent.LayerSetVisible(ThrusterVisualLayers.Thrusting, true);
+                    }
+                    else
+                    {
+                        spriteComponent.LayerSetVisible(ThrusterVisualLayers.Thrusting, false);
+                    }
+
                     break;
                 case false:
-                    spriteComponent.LayerSetVisible(ThrusterVisualLayers.Thrust, false);
+                    spriteComponent.LayerSetVisible(ThrusterVisualLayers.ThrustOn, false);
+                    spriteComponent.LayerSetVisible(ThrusterVisualLayers.Thrusting, false);
                     break;
             }
         }
@@ -27,7 +38,8 @@ namespace Content.Client.Shuttles
 
     public enum ThrusterVisualLayers : byte
     {
-        Base = 0,
-        Thrust = 1,
+        Base,
+        ThrustOn,
+        Thrusting
     }
 }

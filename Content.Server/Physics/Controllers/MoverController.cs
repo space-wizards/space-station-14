@@ -4,6 +4,7 @@ using Content.Server.Inventory.Components;
 using Content.Server.Items;
 using Content.Server.Movement.Components;
 using Content.Server.Shuttles.Components;
+using Content.Server.Shuttles.EntitySystems;
 using Content.Shared.CCVar;
 using Content.Shared.Inventory;
 using Content.Shared.Maps;
@@ -90,8 +91,14 @@ namespace Content.Server.Physics.Controllers
 
             // ShuttleSystem has already worked out the ratio so we'll just multiply it back by the mass.
             var movement = mover.VelocityDir.walking + mover.VelocityDir.sprinting;
+            var system = EntitySystem.Get<ShuttleSystem>();
 
-            if (movement.Length.Equals(0f)) return;
+            if (movement.Length.Equals(0f))
+            {
+                // TODO: This visualization doesn't work with multiple pilots so need to address that somehow.
+                system.DisableAllThrustDirections(shuttleComponent);
+                return;
+            }
 
             var worldAngle = (float) movement.ToWorldAngle();
             var worldMovement = new Vector2(MathF.Cos(worldAngle) * movement.Length, MathF.Sin(worldAngle) * movement.Length);
@@ -114,7 +121,12 @@ namespace Content.Server.Physics.Controllers
                     speedCap = _shuttleDockSpeedCap;
                     break;
                 case ShuttleMode.Cruise:
-                    if (movement.Length != 0.0f)
+                    if (movement.Y == 0f)
+                    {
+                        system.DisableThrustDirection(shuttleComponent, DirectionFlag.South);
+                        system.DisableThrustDirection(shuttleComponent, DirectionFlag.North);
+                    }
+                    else
                     {
                         if (physicsComponent.LinearVelocity.LengthSquared == 0f)
                         {
@@ -122,16 +134,47 @@ namespace Content.Server.Physics.Controllers
                         }
 
                         var direction = movement.Y > 0f ? Direction.North : Direction.South;
-
-                        var angularSpeed = shuttleComponent.AngularThrust;
-                        var linearSpeed = shuttleComponent.LinearThrusters[(int) direction / 2];
+                        var linearSpeed = shuttleComponent.LinearThrusterImpulse[(int) direction / 2];
 
                         // Currently this is slow BUT we'd have a separate multiplier for docking and cruising or whatever.
                         physicsComponent.ApplyLinearImpulse(physicsComponent.Owner.Transform.WorldRotation.Opposite().ToWorldVec() *
                                                             linearSpeed *
                                                             movement.Y);
 
+                        switch (direction)
+                        {
+                            case Direction.North:
+                                system.DisableThrustDirection(shuttleComponent, DirectionFlag.South);
+                                system.EnableThrustDirection(shuttleComponent, DirectionFlag.North);
+                                break;
+                            case Direction.South:
+                                system.DisableThrustDirection(shuttleComponent, DirectionFlag.North);
+                                system.EnableThrustDirection(shuttleComponent, DirectionFlag.South);
+                                break;
+                        }
+                    }
+
+                    var angularSpeed = shuttleComponent.AngularThrust;
+
+                    if (movement.X == 0f)
+                    {
+                        system.DisableThrustDirection(shuttleComponent, DirectionFlag.West);
+                        system.DisableThrustDirection(shuttleComponent, DirectionFlag.East);
+                    }
+                    else if (angularSpeed != 0f)
+                    {
                         physicsComponent.ApplyAngularImpulse(-movement.X * angularSpeed);
+
+                        if (movement.X < 0f)
+                        {
+                            system.EnableThrustDirection(shuttleComponent, DirectionFlag.West);
+                            system.DisableThrustDirection(shuttleComponent, DirectionFlag.East);
+                        }
+                        else
+                        {
+                            system.EnableThrustDirection(shuttleComponent, DirectionFlag.East);
+                            system.DisableThrustDirection(shuttleComponent, DirectionFlag.West);
+                        }
                     }
 
                     // TODO WHEN THIS ACTUALLY WORKS

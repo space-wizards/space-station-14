@@ -7,5 +7,6 @@ namespace Content.Shared.Shuttles.Components
     public enum ThrusterVisualState : byte
     {
         State,
+        Thrusting,
     }
 }

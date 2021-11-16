@@ -25,14 +25,19 @@
     - state: base
       map: ["enum.ThrusterVisualLayers.Base"]
     - state: thrust
-      map: ["enum.ThrusterVisualLayers.Thrust"]
+      map: ["enum.ThrusterVisualLayers.ThrustOn"]
       shader: unshaded
+    - state: thrust_burn
+      map: [ "enum.ThrusterVisualLayers.Thrusting" ]
+      shader: unshaded
+      offset: 0, 1
   - type: Appearance
     visuals:
     - type: ThrusterVisualizer
     #- type: WiresVisualizer
   - type: ApcPowerReceiver
     powerLoad: 1500
+    needsPower: false
   - type: ExtensionCableReceiver
   - type: Damageable
     damageContainer: Inorganic

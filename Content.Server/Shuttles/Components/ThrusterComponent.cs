@@ -27,7 +27,7 @@ namespace Content.Server.Shuttles.Components
 
                 var system = EntitySystem.Get<ThrusterSystem>();
 
-                if (Enabled)
+                if (!_enabledVv)
                 {
                     system.DisableThruster(OwnerUid, this);
                 }

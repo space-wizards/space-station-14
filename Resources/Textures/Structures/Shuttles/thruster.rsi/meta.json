@@ -4,8 +4,8 @@
     "x": 32,
     "y": 32
   },
+  "copyright": "Taken from https://github.com/Baystation12/Baystation12/tree/7274e5654c3cf82d4104dbf818ef00fdc0082aa8",
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/discordia-space/CEV-Eris/tree/23e73e051a838bc190a589d6d464a318c641b6a5",
   "states": [
     {
       "name": "base",
@@ -13,7 +13,71 @@
     },
     {
       "name": "thrust",
-      "directions": 4
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "thrust_burn",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
     }
   ]
 }
