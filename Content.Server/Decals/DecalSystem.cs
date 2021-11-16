@@ -70,7 +70,7 @@ namespace Content.Server.Decals
         {
             switch (e.NewStatus)
             {
-                case SessionStatus.Connected:
+                case SessionStatus.InGame:
                     _previousSentChunks[e.Session] = new();
                     break;
                 case SessionStatus.Disconnected:
