@@ -136,28 +136,31 @@ namespace Content.Server.Decals
 
         public bool SetDecalPosition(GridId gridId, uint uid, EntityCoordinates coordinates)
         {
+            return SetDecalPosition(gridId, uid, coordinates.GetGridId(EntityManager), coordinates.Position);
+        }
+
+        public bool SetDecalPosition(GridId gridId, uint uid, GridId newGridId, Vector2 position)
+        {
             if (!ChunkIndex.TryGetValue(gridId, out var values) || !values.TryGetValue(uid, out var indices))
             {
                 return false;
             }
 
-            var newGridId = coordinates.GetGridId(EntityManager);
             var chunkCollection = ChunkCollection(gridId);
             var decal = chunkCollection[indices][uid];
             if (newGridId == gridId)
             {
-                chunkCollection[indices][uid] =
-                    decal.WithCoordinates(coordinates.Position);
+                chunkCollection[indices][uid] = decal.WithCoordinates(position);
                 return true;
             }
 
             RemoveDecalInternal(gridId, uid);
 
             var newChunkCollection = ChunkCollection(newGridId);
-            var chunkIndices = GetChunkIndices(coordinates.Position);
+            var chunkIndices = GetChunkIndices(position);
             if(!newChunkCollection.ContainsKey(chunkIndices))
                 newChunkCollection[chunkIndices] = new();
-            newChunkCollection[chunkIndices][uid] = decal.WithCoordinates(coordinates.Position);
+            newChunkCollection[chunkIndices][uid] = decal.WithCoordinates(position);
             ChunkIndex[newGridId][uid] = chunkIndices;
             DirtyChunk(newGridId, chunkIndices);
             return true;
@@ -190,6 +193,34 @@ namespace Content.Server.Decals
             var chunkCollection = ChunkCollection(gridId);
             var decal = chunkCollection[indices][uid];
             chunkCollection[indices][uid] = decal.WithId(id);
+            DirtyChunk(gridId, indices);
+            return true;
+        }
+
+        public bool SetDecalRotation(GridId gridId, uint uid, Angle angle)
+        {
+            if (!ChunkIndex.TryGetValue(gridId, out var values) || !values.TryGetValue(uid, out var indices))
+            {
+                return false;
+            }
+
+            var chunkCollection = ChunkCollection(gridId);
+            var decal = chunkCollection[indices][uid];
+            chunkCollection[indices][uid] = decal.WithRotation(angle);
+            DirtyChunk(gridId, indices);
+            return true;
+        }
+
+        public bool SetDecalZIndex(GridId gridId, uint uid, int zIndex)
+        {
+            if (!ChunkIndex.TryGetValue(gridId, out var values) || !values.TryGetValue(uid, out var indices))
+            {
+                return false;
+            }
+
+            var chunkCollection = ChunkCollection(gridId);
+            var decal = chunkCollection[indices][uid];
+            chunkCollection[indices][uid] = decal.WithZIndex(zIndex);
             DirtyChunk(gridId, indices);
             return true;
         }

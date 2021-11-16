@@ -11,7 +11,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Decals
+namespace Content.Server.Decals.Commands
 {
     [AdminCommand(AdminFlags.Mapping)]
     public sealed class AddDecalCommand : IConsoleCommand

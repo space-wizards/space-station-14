@@ -27,5 +27,7 @@ namespace Content.Shared.Decals
         public Decal WithCoordinates(Vector2 coordinates) => new(coordinates, Id, Color, Angle, ZIndex);
         public Decal WithId(string id) => new(Coordinates, id, Color, Angle, ZIndex);
         public Decal WithColor(Color? color) => new(Coordinates, Id, color, Angle, ZIndex);
+        public Decal WithRotation(Angle angle) => new(Coordinates, Id, Color, angle, ZIndex);
+        public Decal WithZIndex(int zIndex) => new(Coordinates, Id, Color, Angle, zIndex);
     }
 }

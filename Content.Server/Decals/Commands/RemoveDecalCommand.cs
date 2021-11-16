@@ -5,7 +5,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
-namespace Content.Server.Decals
+namespace Content.Server.Decals.Commands
 {
     [AdminCommand(AdminFlags.Mapping)]
     public class RemoveDecalCommand : IConsoleCommand
