@@ -9,6 +9,6 @@ namespace Content.Server.PackageWrapper.Components
         public override string Name => "WrapType";
 
         [DataField("Wrap")]
-        public string Wrap = "string.Empty";
+        public string Wrap = string.Empty;
     }
 }
