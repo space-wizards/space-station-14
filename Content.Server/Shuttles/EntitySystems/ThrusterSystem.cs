@@ -2,11 +2,13 @@ using System;
 using Content.Server.Power.Components;
 using Content.Server.Shuttles.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Maps;
 using Content.Shared.Shuttles.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 
 namespace Content.Server.Shuttles.EntitySystems
 {
@@ -26,6 +28,44 @@ namespace Content.Server.Shuttles.EntitySystems
             SubscribeLocalEvent<ThrusterComponent, PowerChangedEvent>(OnPowerChange);
             SubscribeLocalEvent<ThrusterComponent, AnchorStateChangedEvent>(OnAnchorChange);
             SubscribeLocalEvent<ThrusterComponent, RotateEvent>(OnRotate);
+
+            _mapManager.TileChanged += OnTileChange;
+        }
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+            _mapManager.TileChanged -= OnTileChange;
+        }
+
+        private void OnTileChange(object? sender, TileChangedEventArgs e)
+        {
+            // If the old tile was space but the new one isn't then disable all adjacent thrusters
+            if (e.NewTile.IsSpace() || !e.OldTile.IsSpace()) return;
+
+            var tilePos = e.NewTile.GridIndices;
+
+            for (var x = -1; x <= 1; x++)
+            {
+                for (var y = -1; y <= 1; y++)
+                {
+                    if (x != 0 && y != 0) continue;
+
+                    var checkPos = tilePos + new Vector2i(x, y);
+
+                    foreach (var ent in _mapManager.GetGrid(e.NewTile.GridIndex).GetAnchoredEntities(checkPos))
+                    {
+                        if (!EntityManager.TryGetComponent(ent, out ThrusterComponent? thruster)) continue;
+
+                        // Work out if the thruster is facing this direction
+                        var direction = EntityManager.GetComponent<TransformComponent>(ent).LocalRotation.ToWorldVec();
+
+                        if (new Vector2i((int) direction.X, (int) direction.Y) != -new Vector2i(x, y)) continue;
+
+                        DisableThruster(ent, thruster);
+                    }
+                }
+            }
         }
 
         private void OnActivateThruster(EntityUid uid, ThrusterComponent component, ActivateInWorldEvent args)
@@ -33,6 +73,9 @@ namespace Content.Server.Shuttles.EntitySystems
             component.EnabledVV ^= true;
         }
 
+        /// <summary>
+        /// If the thruster rotates change the direction where the linear thrust is applied
+        /// </summary>
         private void OnRotate(EntityUid uid, ThrusterComponent component, ref RotateEvent args)
         {
             if (!component.Enabled ||
@@ -90,6 +133,9 @@ namespace Content.Server.Shuttles.EntitySystems
             }
         }
 
+        /// <summary>
+        /// Tries to enable the thruster and turn it on. If it's already enabled it does nothing.
+        /// </summary>
         public void EnableThruster(EntityUid uid, ThrusterComponent component, TransformComponent? xform = null)
         {
             if (component.Enabled || !Resolve(uid, ref xform) ||
@@ -121,6 +167,13 @@ namespace Content.Server.Shuttles.EntitySystems
             }
         }
 
+        /// <summary>
+        /// Tries to disable the thruster.
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="component"></param>
+        /// <param name="xform"></param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public void DisableThruster(EntityUid uid, ThrusterComponent component, TransformComponent? xform = null)
         {
             if (!component.Enabled ||
@@ -155,9 +208,20 @@ namespace Content.Server.Shuttles.EntitySystems
 
         public bool CanEnable(EntityUid uid, ThrusterComponent component)
         {
-            return component.EnabledVV &&
-                   EntityManager.GetComponent<TransformComponent>(uid).Anchored &&
-                   (!EntityManager.TryGetComponent(uid, out ApcPowerReceiverComponent? receiver) || receiver.Powered);
+            if (!component.EnabledVV) return false;
+
+            var xform = EntityManager.GetComponent<TransformComponent>(uid);
+
+            if (!xform.Anchored ||
+                (EntityManager.TryGetComponent(uid, out ApcPowerReceiverComponent? receiver) && !receiver.Powered))
+            {
+                return false;
+            }
+
+            var (x, y) = xform.LocalPosition + xform.LocalRotation.ToWorldVec();
+            var tile = _mapManager.GetGrid(xform.GridID).GetTileRef(new Vector2i((int) Math.Floor(x), (int) Math.Floor(y)));
+
+            return tile.Tile.IsSpace();
         }
     }
 }

@@ -4,6 +4,8 @@
   name: thruster
   description: It goes nyooooooom.
   components:
+  - type: Transform
+    anchored: true
   - type: Rotatable
     rotateWhileAnchored: true
   - type: Thruster
@@ -27,7 +29,6 @@
   - type: ApcPowerReceiver
     powerLoad: 1500
   - type: ExtensionCableReceiver
-  - type: Airtight
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
