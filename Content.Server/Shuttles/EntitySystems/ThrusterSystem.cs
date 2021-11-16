@@ -1,6 +1,8 @@
 using System;
+using Content.Server.Audio;
 using Content.Server.Power.Components;
 using Content.Server.Shuttles.Components;
+using Content.Shared.Audio;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Shuttles.Components;
@@ -105,6 +107,12 @@ namespace Content.Server.Shuttles.EntitySystems
 
         private void OnThrusterInit(EntityUid uid, ThrusterComponent component, ComponentInit args)
         {
+            if (EntityManager.TryGetComponent(uid, out AmbientSoundComponent? ambientSound))
+            {
+                ambientSound.Enabled = false;
+                ambientSound.Dirty();
+            }
+
             if (!component.EnabledVV)
             {
                 return;
@@ -165,6 +173,12 @@ namespace Content.Server.Shuttles.EntitySystems
             {
                 appearanceComponent.SetData(ThrusterVisualState.State, true);
             }
+
+            if (EntityManager.TryGetComponent(uid, out AmbientSoundComponent? ambientSound))
+            {
+                ambientSound.Enabled = true;
+                ambientSound.Dirty();
+            }
         }
 
         /// <summary>
@@ -203,6 +217,12 @@ namespace Content.Server.Shuttles.EntitySystems
             if (EntityManager.TryGetComponent(uid, out SharedAppearanceComponent? appearanceComponent))
             {
                 appearanceComponent.SetData(ThrusterVisualState.State, false);
+            }
+
+            if (EntityManager.TryGetComponent(uid, out AmbientSoundComponent? ambientSound))
+            {
+                ambientSound.Enabled = false;
+                ambientSound.Dirty();
             }
         }
 

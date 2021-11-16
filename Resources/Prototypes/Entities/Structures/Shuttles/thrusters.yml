@@ -4,6 +4,11 @@
   name: thruster
   description: It goes nyooooooom.
   components:
+  - type: AmbientSound
+    range: 4
+    volume: 0
+    sound:
+      path: /Audio/Effects/shuttle_thruster.ogg
   - type: Transform
     anchored: true
   - type: Rotatable
