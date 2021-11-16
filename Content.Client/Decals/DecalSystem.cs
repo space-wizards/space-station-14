@@ -27,6 +27,18 @@ namespace Content.Client.Decals
             SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoval);
         }
 
+        public void ToggleOverlay()
+        {
+            if (_overlayManager.HasOverlay<DecalOverlay>())
+            {
+                _overlayManager.RemoveOverlay(_overlay);
+            }
+            else
+            {
+                _overlayManager.AddOverlay(_overlay);
+            }
+        }
+
         private void OnGridRemoval(GridRemovalEvent ev)
         {
             DecalRenderIndex.Remove(ev.GridId);

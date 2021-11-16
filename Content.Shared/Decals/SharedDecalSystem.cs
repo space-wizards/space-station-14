@@ -29,8 +29,7 @@ namespace Content.Shared.Decals
             base.Initialize();
 
             SubscribeLocalEvent<GridInitializeEvent>(OnGridInitialize);
-            _viewSize = _configurationManager.GetCVar(CVars.NetMaxUpdateRange)*2f;
-            _configurationManager.OnValueChanged(CVars.NetMaxUpdateRange, OnPvsRangeChanged);
+            _configurationManager.OnValueChanged(CVars.NetMaxUpdateRange, OnPvsRangeChanged, true);
         }
 
         public override void Shutdown()
@@ -104,7 +103,8 @@ namespace Content.Shared.Decals
             foreach (var viewerUid in viewers)
             {
                 var (bounds, mapId) = CalcViewBounds(viewerUid);
-                foreach (var grid in MapManager.FindGridsIntersecting(mapId, bounds, approx: true))
+                MapManager.FindGridsIntersectingEnumerator(mapId, bounds, out var gridsEnumerator, true);
+                while(gridsEnumerator.MoveNext(out var grid))
                 {
                     if(!chunks.ContainsKey(grid.Index))
                         chunks[grid.Index] = new();
