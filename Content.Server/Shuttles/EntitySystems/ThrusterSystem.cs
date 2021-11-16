@@ -17,6 +17,7 @@ namespace Content.Server.Shuttles.EntitySystems
     public sealed class ThrusterSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly AmbientSoundSystem _ambient = default!;
 
         // Essentially whenever thruster enables we update the shuttle's available impulses which are used for movement.
         // This is done for each direction available.
@@ -107,11 +108,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
         private void OnThrusterInit(EntityUid uid, ThrusterComponent component, ComponentInit args)
         {
-            if (EntityManager.TryGetComponent(uid, out AmbientSoundComponent? ambientSound))
-            {
-                ambientSound.Enabled = false;
-                ambientSound.Dirty();
-            }
+            _ambient.SetAmbience(uid, false);
 
             if (!component.EnabledVV)
             {
@@ -174,11 +171,7 @@ namespace Content.Server.Shuttles.EntitySystems
                 appearanceComponent.SetData(ThrusterVisualState.State, true);
             }
 
-            if (EntityManager.TryGetComponent(uid, out AmbientSoundComponent? ambientSound))
-            {
-                ambientSound.Enabled = true;
-                ambientSound.Dirty();
-            }
+            _ambient.SetAmbience(uid, true);
         }
 
         /// <summary>
@@ -219,11 +212,7 @@ namespace Content.Server.Shuttles.EntitySystems
                 appearanceComponent.SetData(ThrusterVisualState.State, false);
             }
 
-            if (EntityManager.TryGetComponent(uid, out AmbientSoundComponent? ambientSound))
-            {
-                ambientSound.Enabled = false;
-                ambientSound.Dirty();
-            }
+            _ambient.SetAmbience(uid, false);
         }
 
         public bool CanEnable(EntityUid uid, ThrusterComponent component)
