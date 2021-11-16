@@ -11,6 +11,5 @@
         <tabs:RoundTab />
         <tabs:ServerTab />
         <tabs:PlayerTab Name="PlayerTabControl" />
-        <tabs:LogsTab />
     </TabContainer>
 </SS14Window>

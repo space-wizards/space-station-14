@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Net;
 using System.Text.Json;
+using Content.Shared.Administration.Logs;
 using Microsoft.EntityFrameworkCore;
 
 namespace Content.Server.Database
@@ -251,12 +252,12 @@ namespace Content.Server.Database
         [Key, ForeignKey("Round")] public int RoundId { get; set; }
         public Round Round { get; set; } = default!;
 
-        [Required] public string Type { get; set; } = default!;
+        [Required] public LogType Type { get; set; }
 
         [Required] public DateTime Date { get; set; }
 
         [Required] public string Message { get; set; } = default!;
 
-        [Required, Column(TypeName = "jsonb")] public string Json { get; set; } = default!;
+        [Required, Column(TypeName = "jsonb")] public JsonDocument Json { get; set; } = default!;
     }
 }

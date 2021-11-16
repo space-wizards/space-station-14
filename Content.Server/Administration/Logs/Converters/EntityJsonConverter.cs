@@ -1,16 +1,14 @@
-﻿using System;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Administration.Logs.Converters;
 
-public class EntityJsonConverter : JsonConverter<Entity>
+[AdminLogConverter]
+public class EntityJsonConverter : AdminLogConverter<Entity>
 {
-    public override Entity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-    {
-        throw new NotSupportedException();
-    }
+    [Dependency] private readonly IEntityManager _entities = default!;
 
     public override void Write(Utf8JsonWriter writer, Entity value, JsonSerializerOptions options)
     {
@@ -18,7 +16,11 @@ public class EntityJsonConverter : JsonConverter<Entity>
 
         writer.WriteNumber("id", (int) value.Uid);
         writer.WriteString("name", value.Name);
-        writer.WriteString("prototype", value.Prototype?.Name);
+
+        if (_entities.TryGetComponent(value.Uid, out ActorComponent? actor))
+        {
+            writer.WriteString("player", actor.PlayerSession.UserId.UserId);
+        }
 
         writer.WriteEndObject();
     }

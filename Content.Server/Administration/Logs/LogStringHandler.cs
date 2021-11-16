@@ -2,21 +2,15 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
-using Content.Server.Administration.Logs.Converters;
+using Robust.Server.GameObjects;
+using Robust.Server.Player;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.Administration.Logs;
 
 [InterpolatedStringHandler]
 public ref struct LogStringHandler
 {
-    private static readonly JsonSerializerOptions JsonOptions = new()
-    {
-        Converters =
-        {
-            new EntityJsonConverter()
-        }
-    };
-
     private DefaultInterpolatedStringHandler _handler;
     private readonly Dictionary<string, object?> _values;
 
@@ -103,9 +97,38 @@ public ref struct LogStringHandler
         _handler.AppendFormatted(value, alignment, format);
     }
 
-    public string ToJson()
+    public JsonDocument ToJson(JsonSerializerOptions options, IEntityManager entityManager)
     {
-        return JsonSerializer.Serialize(_values, JsonOptions);
+        var entities = new List<int>();
+        var players = new List<string>();
+
+        foreach (var obj in _values.Values)
+        {
+            EntityUid? entityId = obj switch
+            {
+                EntityUid id => id,
+                IEntity entity => entity.Uid,
+                IPlayerSession {AttachedEntityUid: { }} session => session.AttachedEntityUid.Value,
+                _ => null
+            };
+
+            if (entityId is not { } uid)
+            {
+                continue;
+            }
+
+            entities.Add((int) uid);
+
+            if (entityManager.TryGetComponent(uid, out ActorComponent? actor))
+            {
+                players.Add(actor.PlayerSession.UserId.UserId.ToString());
+            }
+        }
+
+        _values["__entities"] = entities;
+        _values["__players"] = players;
+
+        return JsonSerializer.SerializeToDocument(_values, options);
     }
 
     public string ToStringAndClear()

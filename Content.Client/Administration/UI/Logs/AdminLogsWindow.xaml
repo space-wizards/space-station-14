@@ -1,0 +1,39 @@
+﻿<SS14Window xmlns="https://spacestation14.io"
+            Title="{Loc admin-logs-title}"
+            MinWidth="1000"
+            MinHeight="400">
+    <BoxContainer Orientation="Horizontal">
+        <BoxContainer Orientation="Vertical" MinWidth="200">
+            <LineEdit Name="TypeSearch" Access="Public" StyleClasses="actionSearchBox"
+                      HorizontalExpand="true" PlaceHolder="{Loc admin-logs-search-types-placeholder}"/>
+            <BoxContainer Orientation="Horizontal">
+                <Button Name="SelectAllTypesButton" Text="{Loc admin-logs-select-all}"
+                        MinWidth="100"/>
+                <Button Name="SelectNoTypesButton" Text="{Loc admin-logs-select-none}"
+                        MinWidth="100"/>
+            </BoxContainer>
+            <ScrollContainer VerticalExpand="True">
+                <BoxContainer Name="TypesContainer" Access="Public" Orientation="Vertical"/>
+            </ScrollContainer>
+        </BoxContainer>
+        <BoxContainer Orientation="Vertical" MinWidth="200">
+            <LineEdit Name="PlayerSearch" Access="Public" StyleClasses="actionSearchBox"
+                      HorizontalExpand="true" PlaceHolder="{Loc admin-logs-search-players-placeholder}"/>
+            <Button Name="SelectNoPlayersButton" Text="{Loc admin-logs-select-none}"/>
+            <ScrollContainer VerticalExpand="True">
+                <BoxContainer Name="PlayersContainer" Access="Public" Orientation="Vertical"/>
+            </ScrollContainer>
+        </BoxContainer>
+        <BoxContainer HorizontalExpand="True" Orientation="Vertical" MinWidth="600">
+            <BoxContainer Orientation="Horizontal">
+                <LineEdit Name="LogSearch" Access="Public" StyleClasses="actionSearchBox"
+                          HorizontalExpand="true" PlaceHolder="{Loc admin-logs-search-logs-placeholder}"/>
+                <Button Name="RefreshButton" Access="Public" Text="{Loc admin-logs-refresh}"/>
+                <Button Name="NextButton" Access="Public" Text="{Loc admin-logs-next}"/>
+            </BoxContainer>
+            <ScrollContainer VerticalExpand="True">
+                <BoxContainer Name="LogsContainer" Orientation="Vertical" Access="Public"/>
+            </ScrollContainer>
+        </BoxContainer>
+    </BoxContainer>
+</SS14Window>

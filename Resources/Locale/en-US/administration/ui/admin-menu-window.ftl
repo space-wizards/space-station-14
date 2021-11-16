@@ -7,4 +7,3 @@ admin-menu-atmos-tab = Atmos
 admin-menu-round-tab = Round
 admin-menu-server-tab = Server
 admin-menu-players-tab = Players
-admin-menu-logs-tab = Logs

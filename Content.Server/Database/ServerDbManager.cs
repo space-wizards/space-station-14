@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
 using System.Net;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
+using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Preferences;
 using Microsoft.Data.Sqlite;
@@ -18,7 +20,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
-using Serilog.Core;
 using Logger = Robust.Shared.Log.Logger;
 using LogLevel = Robust.Shared.Log.LogLevel;
 using MSLogLevel = Microsoft.Extensions.Logging.LogLevel;
@@ -125,15 +126,17 @@ namespace Content.Server.Database
 
         #region Rounds
 
-        Task<int> AddNewRound();
+        Task<int> AddNewRound(params Guid[] playerIds);
+        Task<Round> GetRound(int id);
+        Task AddRoundPlayers(int id, params Guid[] playerIds);
 
         #endregion
 
         #region Admin Logs
 
-        Task AddAdminLog(int roundId, string type, string message, string data);
-        Task<IEnumerable<string>> GetAdminLogMessages(LogFilter? filter = null);
-        Task<IEnumerable<LogRecord>> GetAdminLogs<T>(LogFilter? filter = null);
+        Task<LogRecord> AddAdminLog(int roundId, LogType type, string message, JsonDocument json);
+        IAsyncEnumerable<string> GetAdminLogMessages(LogFilter? filter = null);
+        IAsyncEnumerable<LogRecord> GetAdminLogs(LogFilter? filter = null);
 
         #endregion
     }
@@ -313,9 +316,19 @@ namespace Content.Server.Database
             return _db.AddAdminRankAsync(rank, cancel);
         }
 
-        public Task<int> AddNewRound()
+        public Task<int> AddNewRound(params Guid[] playerIds)
         {
-            return _db.AddNewRound();
+            return _db.AddNewRound(playerIds);
+        }
+
+        public Task<Round> GetRound(int id)
+        {
+            return _db.GetRound(id);
+        }
+
+        public Task AddRoundPlayers(int id, params Guid[] playerIds)
+        {
+            return _db.AddRoundPlayers(id, playerIds);
         }
 
         public Task UpdateAdminRankAsync(AdminRank rank, CancellationToken cancel = default)
@@ -323,19 +336,19 @@ namespace Content.Server.Database
             return _db.UpdateAdminRankAsync(rank, cancel);
         }
 
-        public Task AddAdminLog(int roundId, string type, string message, string data)
+        public Task<LogRecord> AddAdminLog(int roundId, LogType type, string message, JsonDocument json)
         {
-            return _db.AddAdminLog(roundId, type, message, data);
+            return _db.AddAdminLog(roundId, type, message, json);
         }
 
-        public Task<IEnumerable<string>> GetAdminLogMessages(LogFilter? filter = null)
+        public IAsyncEnumerable<string> GetAdminLogMessages(LogFilter? filter = null)
         {
             return _db.GetAdminLogMessages(filter);
         }
 
-        public Task<IEnumerable<LogRecord>> GetAdminLogs<T>(LogFilter? filter = null)
+        public IAsyncEnumerable<LogRecord> GetAdminLogs(LogFilter? filter = null)
         {
-            return _db.GetAdminLogs<T>(filter);
+            return _db.GetAdminLogs(filter);
         }
 
         private DbContextOptions<ServerDbContext> CreatePostgresOptions()

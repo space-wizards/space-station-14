@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Net;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Server.Administration.Logs;
 using Content.Server.IP;
 using Content.Server.Preferences.Managers;
+using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Configuration;
@@ -246,7 +249,7 @@ namespace Content.Server.Database
             return (admins.Select(p => (p.a, p.LastSeenUserName)).ToArray(), adminRanks)!;
         }
 
-        public override async Task AddAdminLog(int roundId, string type, string message, string data)
+        public override async Task<LogRecord> AddAdminLog(int roundId, LogType type, string message, JsonDocument json)
         {
             await using var db = await GetDb();
 
@@ -262,13 +265,15 @@ namespace Content.Server.Database
                 RoundId = roundId,
                 Type = type,
                 Date = DateTime.UtcNow,
-                Json = data,
+                Json = json,
                 Message = message
             };
 
             db.DbContext.AdminLog.Add(log);
 
             await db.DbContext.SaveChangesAsync();
+
+            return new LogRecord(log.Id, log.RoundId, log.Type, log.Date, log.Message);
         }
 
         private async Task<DbGuardImpl> GetDbImpl()
