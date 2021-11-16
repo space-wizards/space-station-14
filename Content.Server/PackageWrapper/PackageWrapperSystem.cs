@@ -21,11 +21,11 @@ namespace Content.Server.PackageWrapper
 
         private void AfterInteractOn(EntityUid uid, PackageWrapperComponent component, AfterInteractEvent args)
         {
-            if (args.Target == null || !args.Target.TryGetComponent(out WrapperTypeComponent? type))
-                return;
 
-            component.Owner.PopupMessage(args.User, type.WrapType);
-
+            if (args.Target != null && args.Target.TryGetComponent<WrapperTypeComponent>(out var wrapType))
+            {
+                component.Owner.PopupMessage(args.User, wrapType.Wrap);
+            }
         }
     }
 }
