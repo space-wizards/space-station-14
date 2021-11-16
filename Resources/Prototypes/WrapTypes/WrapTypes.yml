@@ -1,0 +1,23 @@
+- type: WrapType
+  id: Tiny
+
+- type: WrapType
+  id: Small
+
+- type: WrapType
+  id: Medium
+
+- type: WrapType
+  id: Large
+
+- type: WrapType
+  id: Sphere
+
+- type: WrapType
+  id: Box
+
+- type: WrapType
+  id: Closet
+
+- type: WrapType
+  id: Crate

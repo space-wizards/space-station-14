@@ -1,0 +1,41 @@
+- type: DefaultWrap
+  - type: VisualWrap
+    WrapType: Tiny
+    icon:
+      sprite: Objects/Materials/delivery.rsi
+      state: deliverypackage1
+  - type: VisualWrap
+    WrapType: Small
+    icon:
+      sprite: Objects/Materials/delivery.rsi
+      state: deliverypackage2
+  - type: VisualWrap
+    WrapType: Medium
+    icon:
+      sprite: Objects/Materials/delivery.rsi
+      state: deliverypackage3
+  - type: VisualWrap
+    WrapType: Large
+    icon:
+      sprite: Objects/Materials/delivery.rsi
+      state: deliverypackage4
+  - type: VisualWrap
+    WrapType: Sphere
+    icon:
+      sprite: Objects/Materials/delivery.rsi
+      state: deliverypackage5
+  - type: VisualWrap
+    WrapType: Box
+    icon:
+      sprite: Objects/Materials/delivery.rsi
+      state: deliverybox
+  - type: VisualWrap
+    WrapType: Closet
+    icon:
+      sprite: Objects/Materials/delivery.rsi
+      state: deliverycloset
+  - type: VisualWrap
+    WrapType: Crate
+    icon:
+      sprite: Objects/Materials/delivery.rsi
+      state: deliverycrate
