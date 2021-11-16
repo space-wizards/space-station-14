@@ -20,10 +20,11 @@ Possible modes are:\n
 - id <id>\n
 - rotation <degrees>\n
 - zindex <zIndex>\n
+- clean <cleanable>
 ";
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        if (args.Length < 5)
+        if (args.Length < 4)
         {
             shell.WriteError("Expected at least 5 arguments.");
             return;
@@ -52,7 +53,7 @@ Possible modes are:\n
         switch (args[2].ToLower())
         {
             case "position":
-                if(args.Length != 6)
+                if(args.Length != 5)
                 {
                     shell.WriteError("Expected 6 arguments.");
                     return;
@@ -70,7 +71,7 @@ Possible modes are:\n
                 }
                 break;
             case "color":
-                if(args.Length != 5)
+                if(args.Length != 4)
                 {
                     shell.WriteError("Expected 5 arguments.");
                     return;
@@ -88,7 +89,7 @@ Possible modes are:\n
                 }
                 break;
             case "id":
-                if(args.Length != 5)
+                if(args.Length != 4)
                 {
                     shell.WriteError("Expected 5 arguments.");
                     return;
@@ -100,7 +101,7 @@ Possible modes are:\n
                 }
                 break;
             case "rotation":
-                if(args.Length != 5)
+                if(args.Length != 4)
                 {
                     shell.WriteError("Expected 5 arguments.");
                     return;
@@ -118,7 +119,7 @@ Possible modes are:\n
                 }
                 break;
             case "zindex":
-                if(args.Length != 5)
+                if(args.Length != 4)
                 {
                     shell.WriteError("Expected 5 arguments.");
                     return;
@@ -133,6 +134,24 @@ Possible modes are:\n
                 if (!decalSystem.SetDecalZIndex(gridId, uid, zIndex))
                 {
                     shell.WriteError("Failed changing decal zIndex.");
+                }
+                break;
+            case "clean":
+                if(args.Length != 4)
+                {
+                    shell.WriteError("Expected 5 arguments.");
+                    return;
+                }
+
+                if (!bool.TryParse(args[3], out var cleanable))
+                {
+                    shell.WriteError("Failed parsing cleanable.");
+                    return;
+                }
+
+                if (!decalSystem.SetDecalCleanable(gridId, uid, cleanable))
+                {
+                    shell.WriteError("Failed changing decal cleanable flag.");
                 }
                 break;
         }

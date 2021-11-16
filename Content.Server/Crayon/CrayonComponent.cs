@@ -124,7 +124,7 @@ namespace Content.Server.Crayon
                 return true;
             }
 
-            if(!EntitySystem.Get<DecalSystem>().TryAddDecal(SelectedState, eventArgs.ClickLocation.Offset(new Vector2(-0.5f,-0.5f)), out _, Color.FromName(_color)))
+            if(!EntitySystem.Get<DecalSystem>().TryAddDecal(SelectedState, eventArgs.ClickLocation.Offset(new Vector2(-0.5f,-0.5f)), out _, Color.FromName(_color), cleanable: true))
                 return false;
 
             if (_useSound != null)

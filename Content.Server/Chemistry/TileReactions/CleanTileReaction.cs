@@ -39,8 +39,7 @@ namespace Content.Server.Chemistry.TileReactions
 
             var decalSystem = EntitySystem.Get<DecalSystem>();
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            foreach (var uid in decalSystem.GetDecalsOnTile(tile.GridIndex, tile.GridIndices,
-                x => prototypeManager.TryIndex<DecalPrototype>(x.Id, out var decal) && decal.Tags.Contains("crayon")))
+            foreach (var uid in decalSystem.GetDecalsOnTile(tile.GridIndex, tile.GridIndices, x => x.Cleanable))
             {
                 decalSystem.RemoveDecal(tile.GridIndex, uid);
             }

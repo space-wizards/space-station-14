@@ -86,7 +86,7 @@ namespace Content.Server.Decals
             _dirtyChunks[id].Add(chunkIndices);
         }
 
-        public bool TryAddDecal(string id, EntityCoordinates coordinates, [NotNullWhen(true)] out uint? uid, Color? color = null, Angle? rotation = null, int zIndex = 0)
+        public bool TryAddDecal(string id, EntityCoordinates coordinates, [NotNullWhen(true)] out uint? uid, Color? color = null, Angle? rotation = null, int zIndex = 0, bool cleanable = false)
         {
             uid = 0;
             if (!PrototypeManager.HasIndex<DecalPrototype>(id))
@@ -97,7 +97,7 @@ namespace Content.Server.Decals
                 return false;
 
             rotation ??= Angle.Zero;
-            var decal = new Decal(coordinates.Position, id, color, rotation.Value, zIndex);
+            var decal = new Decal(coordinates.Position, id, color, rotation.Value, zIndex, cleanable);
             var chunkCollection = DecalGridChunkCollection(gridId);
             uid = chunkCollection.NextUid++;
             var chunkIndices = GetChunkIndices(decal.Coordinates);
@@ -221,6 +221,20 @@ namespace Content.Server.Decals
             var chunkCollection = ChunkCollection(gridId);
             var decal = chunkCollection[indices][uid];
             chunkCollection[indices][uid] = decal.WithZIndex(zIndex);
+            DirtyChunk(gridId, indices);
+            return true;
+        }
+
+        public bool SetDecalCleanable(GridId gridId, uint uid, bool cleanable)
+        {
+            if (!ChunkIndex.TryGetValue(gridId, out var values) || !values.TryGetValue(uid, out var indices))
+            {
+                return false;
+            }
+
+            var chunkCollection = ChunkCollection(gridId);
+            var decal = chunkCollection[indices][uid];
+            chunkCollection[indices][uid] = decal.WithCleanable(cleanable);
             DirtyChunk(gridId, indices);
             return true;
         }
