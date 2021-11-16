@@ -359,7 +359,7 @@ namespace Content.Server.Atmos.Monitor.Systems
         {
             if (!Resolve(uid, ref monitor)) return;
 
-            SoundSystem.Play(Filter.Pvs(uid), monitor.AlarmSound.GetSound(), uid, AudioParams.Default.WithVolume(-10));
+            SoundSystem.Play(Filter.Pvs(uid), monitor.AlarmSound.GetSound(), uid, AudioParams.Default.WithVolume(monitor.AlarmVolume));
         }
 
         /// <summary>

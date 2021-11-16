@@ -20,10 +20,11 @@ namespace Content.Server.Atmos.Monitor.Components
     // -> Threshold calculation
     // -> AtmosMonitorAlarmEvent
     // -> Everything linked to that monitor (targetted)
-    //
-    // This is mostly here to help filtering with
-    // targetted events. All the information needed
-    // is in the event itself.
+
+    /// <summary>
+    ///     A component to add to device network devices if you want them to be alarmed
+    ///     by an atmospheric monitor.
+    /// </summary>
     [RegisterComponent]
     public class AtmosAlarmableComponent : Component
     {
@@ -38,13 +39,11 @@ namespace Content.Server.Atmos.Monitor.Components
         [ViewVariables] public AtmosMonitorAlarmType HighestNetworkState = AtmosMonitorAlarmType.Normal;
         [ViewVariables] public bool IgnoreAlarms { get; set; } = false;
 
-        // list of prototypes that this alarmable can be
-        // alarmed by - must be a prototype with AtmosMonitor
-        // attached to it
-        //
-        // pending the refactor to device networks, this won't
-        // mean much - however, you can probably mimic
-        // one of these if you get the packet right
+        /// <summary>
+        ///     List of prototypes that this alarmable can be
+        ///     alarmed by - must be a prototype with AtmosMonitor
+        ///     attached to it
+        /// </summary>
         [DataField("alarmedBy")]
         public List<string> AlarmedByPrototypes { get; } = new();
     }
