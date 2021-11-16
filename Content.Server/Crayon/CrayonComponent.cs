@@ -60,11 +60,8 @@ namespace Content.Server.Crayon
             Charges = Capacity;
 
             // Get the first one from the catalog and set it as default
-            var decals = _prototypeManager.EnumeratePrototypes<DecalPrototype>().Where(x => x.Tags.Contains("crayon")).ToArray();
-            if (decals.Length != 0)
-            {
-                SelectedState = decals[0].ID;
-            }
+            var decal = _prototypeManager.EnumeratePrototypes<DecalPrototype>().FirstOrDefault(x => x.Tags.Contains("crayon"));
+            SelectedState = decal?.ID ?? string.Empty;
             Dirty();
         }
 
