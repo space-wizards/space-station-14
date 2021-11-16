@@ -9,12 +9,14 @@ namespace Content.Shared.Decals
     [DataDefinition]
     public class Decal
     {
-        [DataField("coordinates")] public readonly Vector2 Coordinates;
-        [DataField("id")] public readonly string Id;
+        [DataField("coordinates")] public readonly Vector2 Coordinates = Vector2.Zero;
+        [DataField("id")] public readonly string Id = string.Empty;
         [DataField("color")] public readonly Color? Color;
-        [DataField("angle")] public readonly Angle Angle;
+        [DataField("angle")] public readonly Angle Angle = Angle.Zero;
         [DataField("zIndex")] public readonly int ZIndex;
         [DataField("cleanable")] public bool Cleanable;
+
+        public Decal() {}
 
         public Decal(Vector2 coordinates, string id, Color? color, Angle angle, int zIndex, bool cleanable)
         {
