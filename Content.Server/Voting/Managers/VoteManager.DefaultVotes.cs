@@ -16,6 +16,13 @@ namespace Content.Server.Voting.Managers
 {
     public sealed partial class VoteManager
     {
+        public void SetupStandardVoteTypeEnableCVars()
+        {
+            _voteTypesToEnableCVars[StandardVoteType.Restart] = CCVars.VoteRestartEnabled;
+            _voteTypesToEnableCVars[StandardVoteType.Preset] = CCVars.VotePresetEnabled;
+            _voteTypesToEnableCVars[StandardVoteType.Map] = CCVars.VoteMapEnabled;
+        }
+
         public void CreateStandardVote(IPlayerSession? initiator, StandardVoteType voteType)
         {
             switch (voteType)

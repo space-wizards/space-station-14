@@ -46,6 +46,8 @@ namespace Content.Server.Voting.Managers
         private readonly Dictionary<StandardVoteType, TimeSpan> _standardVoteTimeout = new();
         private readonly Dictionary<NetUserId, TimeSpan> _voteTimeout = new();
         private readonly HashSet<IPlayerSession> _playerCanCallVoteDirty = new();
+        private readonly Dictionary<StandardVoteType, CVarDef<bool>> _voteTypesToEnableCVars = new();
+        private readonly StandardVoteType[] _standardVoteTypeValues = Enum.GetValues<StandardVoteType>();
 
         public void Initialize()
         {
@@ -54,9 +56,18 @@ namespace Content.Server.Voting.Managers
 
             _playerManager.PlayerStatusChanged += PlayerManagerOnPlayerStatusChanged;
             _adminMgr.OnPermsChanged += AdminPermsChanged;
+
             _cfg.OnValueChanged(CCVars.VoteEnabled, value => {
                 DirtyCanCallVoteAll();
             });
+
+            SetupStandardVoteTypeEnableCVars();
+            foreach (var kvp in _voteTypesToEnableCVars)
+            {
+                _cfg.OnValueChanged(kvp.Value, value => {
+                    DirtyCanCallVoteAll();
+                });
+            }
         }
 
         private void AdminPermsChanged(AdminPermsChangedEventArgs obj)
@@ -266,9 +277,21 @@ namespace Content.Server.Voting.Managers
             msg.CanCall = CanCallVote(player, null, out var isAdmin, out var timeSpan);
             msg.WhenCanCallVote = timeSpan;
 
-            msg.VotesUnavailable = isAdmin
-                ? Array.Empty<(StandardVoteType, TimeSpan)>()
-                : _standardVoteTimeout.Select(kv => (kv.Key, kv.Value)).ToArray();
+            if (isAdmin)
+            {
+                msg.VotesUnavailable = Array.Empty<(StandardVoteType, TimeSpan)>();
+            }
+            else
+            {
+                var votesUnavailable = new List<(StandardVoteType, TimeSpan)>();
+                foreach (var v in _standardVoteTypeValues)
+                {
+                    if (CanCallVote(player, v, out var _isAdmin, out var typeTimeSpan))
+                        continue;
+                    votesUnavailable.Add((v, typeTimeSpan));
+                }
+                msg.VotesUnavailable = votesUnavailable.ToArray();
+            }
 
             _netManager.ServerSendMessage(msg, player.ConnectedClient);
         }
@@ -292,6 +315,9 @@ namespace Content.Server.Voting.Managers
             // If voting is disabled, block votes.
             if (!_cfg.GetCVar(CCVars.VoteEnabled))
                 return false;
+            // Specific standard vote types can be disabled with cvars.
+            if ((voteType != null) && _voteTypesToEnableCVars.TryGetValue(voteType.Value, out var cvar) && !_cfg.GetCVar(cvar))
+                return false;
 
             // Cannot start vote if vote is already active (as non-admin).
             if (_votes.Count != 0)
@@ -299,7 +325,7 @@ namespace Content.Server.Voting.Managers
 
             // Standard vote on timeout, no calling.
             // Ghosts I understand you're dead but stop spamming the restart vote bloody hell.
-            if (voteType != null && _standardVoteTimeout.ContainsKey(voteType.Value))
+            if (voteType != null && _standardVoteTimeout.TryGetValue(voteType.Value, out timeSpan))
                 return false;
 
             return !_voteTimeout.TryGetValue(initiator.UserId, out timeSpan);
