@@ -1,9 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: Fix text messages for climbable objects (like tables or windows), type: Fix}
-  id: 95
-  time: '2021-03-15T18:02:56.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Fixes not being able to ghost when you are a brain or head., type: Fix}
@@ -2842,3 +2837,8 @@ Entries:
   - {message: Harm state now has an on/off icon, type: Tweak}
   id: 596
   time: '2021-11-15T19:26:59.0000000+00:00'
+- author: Clyybber
+  changes:
+  - {message: Disarm action now has an on/off icon, type: Tweak}
+  id: 597
+  time: '2021-11-16T05:03:34.0000000+00:00'
