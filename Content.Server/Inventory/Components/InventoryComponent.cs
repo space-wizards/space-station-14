@@ -231,9 +231,10 @@ namespace Content.Server.Inventory.Components
                 reason = controllerReason ?? reason;
             }
 
-            if (!pass && reason == null)
+            if (!pass)
             {
-                reason = Loc.GetString("inventory-component-can-equip-cannot");
+                reason = reason ?? Loc.GetString("inventory-component-can-equip-cannot");
+                return false;
             }
 
             var canEquip = pass && _slotContainers[slot].CanInsert(item.Owner);

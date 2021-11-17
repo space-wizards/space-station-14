@@ -27,13 +27,10 @@ namespace Content.Server.Ghost.Roles.Components
             if (mind.HasMind)
                 return false;
 
-            var sessionMind = session.ContentData()?.Mind;
+            var ghostRoleSystem = EntitySystem.Get<GhostRoleSystem>();
+            ghostRoleSystem.GhostRoleInternalCreateMindAndTransfer(session, OwnerUid, OwnerUid, this);
 
-            DebugTools.AssertNotNull(sessionMind);
-
-            sessionMind!.TransferTo(Owner);
-
-            EntitySystem.Get<GhostRoleSystem>().UnregisterGhostRole(this);
+            ghostRoleSystem.UnregisterGhostRole(this);
 
             return true;
         }

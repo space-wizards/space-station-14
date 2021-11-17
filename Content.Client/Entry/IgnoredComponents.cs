@@ -79,6 +79,7 @@ namespace Content.Client.Entry
             "Hitscan",
             "StunOnCollide",
             "RandomPottedPlant",
+            "Brain",
             "CommunicationsConsole",
             "BarSign",
             "DroppedBodyPart",
@@ -309,6 +310,7 @@ namespace Content.Client.Entry
             "NukeCodePaper",
             "GhostRadio",
             "Armor",
+            "Udder",
             "PneumaticCannon"
         };
     }

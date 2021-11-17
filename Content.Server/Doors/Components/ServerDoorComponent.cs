@@ -187,7 +187,7 @@ namespace Content.Server.Doors.Components
         ///     Minimum interval allowed between deny sounds in milliseconds.
         /// </summary>
         [DataField("denySoundMinimumInterval")]
-        public float DenySoundMinimumInterval = 250.0f;
+        public float DenySoundMinimumInterval = 450.0f;
 
         /// <summary>
         ///     Used to stop people from spamming the deny sound.
@@ -608,10 +608,6 @@ namespace Content.Server.Doors.Components
             if (State == DoorState.Open || IsWeldedShut)
                 return;
 
-            _stateChangeCancelTokenSource?.Cancel();
-            _stateChangeCancelTokenSource = new();
-            SetAppearance(DoorVisualState.Deny);
-
             if (DenySound != null)
             {
                 if (LastDenySoundTime == TimeSpan.Zero)
@@ -630,6 +626,9 @@ namespace Content.Server.Doors.Components
                     AudioParams.Default.WithVolume(-3));
             }
 
+            _stateChangeCancelTokenSource?.Cancel();
+            _stateChangeCancelTokenSource = new();
+            SetAppearance(DoorVisualState.Deny);
             Owner.SpawnTimer(DenyTime, () =>
             {
                 SetAppearance(DoorVisualState.Closed);

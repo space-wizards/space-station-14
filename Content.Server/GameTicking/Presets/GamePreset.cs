@@ -95,7 +95,7 @@ namespace Content.Server.GameTicking.Presets
             if (canReturn)
                 mind.Visit(ghost);
             else
-                mind.TransferTo(ghost);
+                mind.TransferTo(ghost.Uid);
             return true;
         }
 

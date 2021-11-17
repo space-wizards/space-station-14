@@ -18,6 +18,8 @@
   - type: PressureProtection
     highPressureMultiplier: 0.75
     lowPressureMultiplier: 100
+  - type: Clothing
+    size: 25
   - type: Armor
     modifiers:
       coefficients:

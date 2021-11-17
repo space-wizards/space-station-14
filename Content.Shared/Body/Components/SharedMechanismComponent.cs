@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Body.Behavior;
+using Content.Shared.Body.Events;
 using Content.Shared.Body.Part;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -168,11 +169,13 @@ namespace Content.Shared.Body.Components
             }
         }
 
-        // TODO BODY Turn these into event listeners so they dont need to be exposed
         public void AddedToBody(SharedBodyComponent body)
         {
             DebugTools.AssertNotNull(Body);
             DebugTools.AssertNotNull(body);
+
+            var ev = new AddedToBodyEvent(body);
+            Owner.EntityManager.EventBus.RaiseLocalEvent(OwnerUid, ev, false);
 
             foreach (var behavior in _behaviors.Values)
             {
@@ -186,6 +189,9 @@ namespace Content.Shared.Body.Components
             DebugTools.AssertNotNull(part);
 
             Owner.Transform.AttachParent(part.Owner);
+
+            var ev = new AddedToPartEvent(part);
+            Owner.EntityManager.EventBus.RaiseLocalEvent(OwnerUid, ev, false);
 
             foreach (var behavior in _behaviors.Values)
             {
@@ -202,6 +208,9 @@ namespace Content.Shared.Body.Components
 
             Owner.Transform.AttachParent(part.Owner);
 
+            var ev = new AddedToPartInBodyEvent(body, part);
+            Owner.EntityManager.EventBus.RaiseLocalEvent(OwnerUid, ev, false);
+
             foreach (var behavior in _behaviors.Values)
             {
                 behavior.AddedToPartInBody(body, part);
@@ -212,6 +221,9 @@ namespace Content.Shared.Body.Components
         {
             DebugTools.AssertNull(Body);
             DebugTools.AssertNotNull(old);
+
+            var ev = new RemovedFromBodyEvent(old);
+            Owner.EntityManager.EventBus.RaiseLocalEvent(OwnerUid, ev, false);
 
             foreach (var behavior in _behaviors.Values)
             {
@@ -225,6 +237,9 @@ namespace Content.Shared.Body.Components
             DebugTools.AssertNotNull(old);
 
             Owner.Transform.AttachToGridOrMap();
+
+            var ev = new RemovedFromPartEvent(old);
+            Owner.EntityManager.EventBus.RaiseLocalEvent(OwnerUid, ev, false);
 
             foreach (var behavior in _behaviors.Values)
             {
@@ -240,6 +255,9 @@ namespace Content.Shared.Body.Components
             DebugTools.AssertNotNull(oldPart);
 
             Owner.Transform.AttachToGridOrMap();
+
+            var ev = new RemovedFromPartInBodyEvent(oldBody, oldPart);
+            Owner.EntityManager.EventBus.RaiseLocalEvent(OwnerUid, ev, false);
 
             foreach (var behavior in _behaviors.Values)
             {
