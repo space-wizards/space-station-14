@@ -1,4 +1,5 @@
 ﻿<SS14Window xmlns="https://spacestation14.io"
+            xmlns:aui="clr-namespace:Content.Client.Administration.UI.CustomControls"
             Title="{Loc admin-logs-title}"
             MinWidth="1000"
             MinHeight="400">
@@ -16,6 +17,7 @@
                 <BoxContainer Name="TypesContainer" Access="Public" Orientation="Vertical"/>
             </ScrollContainer>
         </BoxContainer>
+        <aui:VSeparator/>
         <BoxContainer Orientation="Vertical" MinWidth="200">
             <LineEdit Name="PlayerSearch" Access="Public" StyleClasses="actionSearchBox"
                       HorizontalExpand="true" PlaceHolder="{Loc admin-logs-search-players-placeholder}"/>
@@ -24,14 +26,17 @@
                 <BoxContainer Name="PlayersContainer" Access="Public" Orientation="Vertical"/>
             </ScrollContainer>
         </BoxContainer>
-        <BoxContainer HorizontalExpand="True" Orientation="Vertical" MinWidth="600">
+        <aui:VSeparator/>
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True">
             <BoxContainer Orientation="Horizontal">
                 <LineEdit Name="LogSearch" Access="Public" StyleClasses="actionSearchBox"
                           HorizontalExpand="true" PlaceHolder="{Loc admin-logs-search-logs-placeholder}"/>
                 <Button Name="RefreshButton" Access="Public" Text="{Loc admin-logs-refresh}"/>
                 <Button Name="NextButton" Access="Public" Text="{Loc admin-logs-next}"/>
             </BoxContainer>
-            <OutputPanel Name="LogsContainer" Access="Public" VerticalExpand="True"/>
+            <ScrollContainer VerticalExpand="True" HorizontalExpand="True" HScrollEnabled="False">
+                <BoxContainer Name="LogsContainer" Access="Public" Orientation="Vertical" VerticalExpand="True"/>
+            </ScrollContainer>
         </BoxContainer>
     </BoxContainer>
 </SS14Window>

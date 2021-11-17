@@ -1,12 +1,12 @@
-﻿admin-logs-title = Admin Panel
+﻿admin-logs-title = Admin Logs Panel
 
 # Types
-admin-logs-search-types-placeholder = Search Types
+admin-logs-search-types-placeholder = Search Types (OR)
 admin-logs-select-all = All
 admin-logs-select-none = None
 
 # Players
-admin-logs-search-players-placeholder = Search Players
+admin-logs-search-players-placeholder = Search Players (OR)
 admin-logs-select-none = None
 
 # Logs
