@@ -345,7 +345,7 @@ namespace Content.Server.Body.Components
 
             if (Owner.TryGetComponent(out ServerAlertsComponent? alertsComponent))
             {
-                alertsComponent.ShowAlert(AlertType.LowOxygen);
+                SharedAlertsSystem.ShowAlert(alertsComponent, AlertType.LowOxygen);
             }
 
             EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner.Uid, Damage, true);
@@ -357,7 +357,7 @@ namespace Content.Server.Body.Components
 
             if (Owner.TryGetComponent(out ServerAlertsComponent? alertsComponent))
             {
-                alertsComponent.ClearAlert(AlertType.LowOxygen);
+                EntitySystem.Get<SharedAlertsSystem>().ClearAlert(alertsComponent, AlertType.LowOxygen);
             }
 
             EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner.Uid, DamageRecovery, true);

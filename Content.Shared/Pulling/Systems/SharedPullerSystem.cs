@@ -49,7 +49,7 @@ namespace Content.Shared.Pulling.Systems
                 return;
 
             if (component.Owner.TryGetComponent(out SharedAlertsComponent? alerts))
-                alerts.ShowAlert(AlertType.Pulling);
+                SharedAlertsSystem.ShowAlert(alerts, AlertType.Pulling);
 
             RefreshMovementSpeed(component);
         }
@@ -63,7 +63,7 @@ namespace Content.Shared.Pulling.Systems
                 return;
 
             if (component.Owner.TryGetComponent(out SharedAlertsComponent? alerts))
-                alerts.ClearAlert(AlertType.Pulling);
+                EntitySystem.Get<SharedAlertsSystem>().ClearAlert(alerts, AlertType.Pulling);
 
             RefreshMovementSpeed(component);
         }

@@ -5,6 +5,7 @@ using Content.Shared.Administration;
 using Content.Shared.Alert;
 using Robust.Server.Player;
 using Robust.Shared.Console;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Alert.Commands
@@ -47,7 +48,7 @@ namespace Content.Server.Alert.Commands
                 return;
             }
 
-            alertsComponent.ClearAlert(alert.AlertType);
+            EntitySystem.Get<SharedAlertsSystem>().ClearAlert(alertsComponent, alert.AlertType);
         }
     }
 }

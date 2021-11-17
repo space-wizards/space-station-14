@@ -153,7 +153,7 @@ namespace Content.Shared.StatusEffect
 
             if (proto.Alert != null && alerts != null)
             {
-                alerts.ShowAlert(proto.Alert.Value, cooldown: GetAlertCooldown(uid, proto.Alert.Value, status));
+                SharedAlertsSystem.ShowAlert(alerts, proto.Alert.Value, cooldown: GetAlertCooldown(uid, proto.Alert.Value, status));
             }
 
             status.Dirty();
@@ -229,7 +229,7 @@ namespace Content.Shared.StatusEffect
 
             if (proto.Alert != null && alerts != null)
             {
-                alerts.ClearAlert(proto.Alert.Value);
+                EntitySystem.Get<SharedAlertsSystem>().ClearAlert(alerts, proto.Alert.Value);
             }
 
             status.ActiveEffects.Remove(key);

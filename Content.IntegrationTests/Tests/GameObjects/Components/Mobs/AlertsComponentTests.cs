@@ -7,6 +7,7 @@ using Content.Server.Alert;
 using Content.Shared.Alert;
 using NUnit.Framework;
 using Robust.Client.UserInterface;
+using Robust.Shared.GameObjects;
 using IPlayerManager = Robust.Server.Player.IPlayerManager;
 
 namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
@@ -35,8 +36,8 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                 Assert.NotNull(alertsComponent);
 
                 // show 2 alerts
-                alertsComponent.ShowAlert(AlertType.Debug1);
-                alertsComponent.ShowAlert(AlertType.Debug2);
+                SharedAlertsSystem.ShowAlert(alertsComponent, AlertType.Debug1);
+                SharedAlertsSystem.ShowAlert(alertsComponent, AlertType.Debug2);
             });
 
             await server.WaitRunTicks(5);
@@ -75,7 +76,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                 var alertsComponent = playerEnt.GetComponent<ServerAlertsComponent>();
                 Assert.NotNull(alertsComponent);
 
-                alertsComponent.ClearAlert(AlertType.Debug1);
+                EntitySystem.Get<SharedAlertsSystem>().ClearAlert(alertsComponent, AlertType.Debug1);
             });
             await server.WaitRunTicks(5);
             await client.WaitRunTicks(5);

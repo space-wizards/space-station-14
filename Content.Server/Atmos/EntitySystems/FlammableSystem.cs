@@ -197,15 +197,16 @@ namespace Content.Server.Atmos.EntitySystems
                     flammable.FireStacks = MathF.Min(0, flammable.FireStacks + 1);
                 }
 
-                flammable.Owner.TryGetComponent(out ServerAlertsComponent? status);
-
-                if (!flammable.OnFire)
+                if(flammable.Owner.TryGetComponent(out ServerAlertsComponent? status))
                 {
-                    status?.ClearAlert(AlertType.Fire);
-                    continue;
-                }
+                    if (!flammable.OnFire)
+                    {
+                        Get<SharedAlertsSystem>().ClearAlert(status, AlertType.Fire);
+                        continue;
+                    }
 
-                status?.ShowAlert(AlertType.Fire);
+                    SharedAlertsSystem.ShowAlert(status, AlertType.Fire);
+                }
 
                 if (flammable.FireStacks > 0)
                 {

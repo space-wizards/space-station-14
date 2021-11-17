@@ -19,7 +19,7 @@ namespace Content.Server.MobState.States
 
             if (entityManager.TryGetComponent(uid, out ServerAlertsComponent? status))
             {
-                status.ShowAlert(AlertType.HumanDead);
+                SharedAlertsSystem.ShowAlert(status, AlertType.HumanDead);
             }
 
             if (entityManager.TryGetComponent(uid, out StatusEffectsComponent? stun))

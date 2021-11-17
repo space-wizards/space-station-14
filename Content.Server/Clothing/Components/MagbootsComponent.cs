@@ -66,7 +66,7 @@ namespace Content.Server.Clothing.Components
 
                 if (eventArgs.User.TryGetComponent(out ServerAlertsComponent? alerts))
                 {
-                    alerts.ClearAlert(AlertType.Magboots);
+                    EntitySystem.Get<SharedAlertsSystem>().ClearAlert(alerts, AlertType.Magboots);
                 }
             }
         }
@@ -93,11 +93,11 @@ namespace Content.Server.Clothing.Components
                 {
                     if (On)
                     {
-                        alerts.ShowAlert(AlertType.Magboots);
+                        SharedAlertsSystem.ShowAlert(alerts, AlertType.Magboots);
                     }
                     else
                     {
-                        alerts.ClearAlert(AlertType.Magboots);
+                        EntitySystem.Get<SharedAlertsSystem>().ClearAlert(alerts, AlertType.Magboots);
                     }
                 }
             }
