@@ -117,11 +117,11 @@ namespace Content.Server.Atmos.EntitySystems
 
                         if (pressure <= Atmospherics.HazardLowPressure)
                         {
-                            status.ShowAlert(AlertType.LowPressure, 2);
+                            SharedAlertsSystem.ShowAlert(status, AlertType.LowPressure, 2);
                             break;
                         }
 
-                        status.ShowAlert(AlertType.LowPressure, 1);
+                        SharedAlertsSystem.ShowAlert(status, AlertType.LowPressure, 1);
                         break;
 
                     // High pressure.
@@ -146,11 +146,11 @@ namespace Content.Server.Atmos.EntitySystems
 
                         if (pressure >= Atmospherics.HazardHighPressure)
                         {
-                            status.ShowAlert(AlertType.HighPressure, 2);
+                            SharedAlertsSystem.ShowAlert(status, AlertType.HighPressure, 2);
                             break;
                         }
 
-                        status.ShowAlert(AlertType.HighPressure, 1);
+                        SharedAlertsSystem.ShowAlert(status, AlertType.HighPressure, 1);
                         break;
 
                     // Normal pressure.
@@ -160,8 +160,8 @@ namespace Content.Server.Atmos.EntitySystems
                             barotrauma.TakingDamage = false;
                             _logSystem.Add(LogType.Barotrauma, $"{barotrauma.Owner} stopped taking pressure damage");
                         }
-                        status?.ClearAlertCategory(AlertCategory.Pressure);
-                        break;
+                        if (status == null) break;
+                        EntitySystem.Get<SharedAlertsSystem>().ClearAlertCategory(status, AlertCategory.Pressure);                        break;
                 }
             }
         }

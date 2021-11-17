@@ -53,7 +53,7 @@ namespace Content.Server.Alert.Commands
                 shell.WriteLine("invalid severity " + sevint);
                 return;
             }
-            alertsComponent.ShowAlert(alert.AlertType, sevint == -1 ? null : sevint);
+            SharedAlertsSystem.ShowAlert(alertsComponent, alert.AlertType, sevint == -1 ? (short?) null : sevint);
         }
     }
 }

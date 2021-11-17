@@ -162,11 +162,11 @@ namespace Content.Server.Cuffs.Components
             {
                 if (CanStillInteract)
                 {
-                    status.ClearAlert(AlertType.Handcuffed);
+                    EntitySystem.Get<SharedAlertsSystem>().ClearAlert(status, AlertType.Handcuffed);
                 }
                 else
                 {
-                    status.ShowAlert(AlertType.Handcuffed);
+                    SharedAlertsSystem.ShowAlert(status, AlertType.Handcuffed);
                 }
             }
         }

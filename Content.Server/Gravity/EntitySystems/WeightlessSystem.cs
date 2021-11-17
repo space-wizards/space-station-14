@@ -88,12 +88,12 @@ namespace Content.Server.Gravity.EntitySystems
 
         private void AddWeightless(ServerAlertsComponent status)
         {
-            status.ShowAlert(AlertType.Weightless);
+            SharedAlertsSystem.ShowAlert(status, AlertType.Weightless);
         }
 
         private void RemoveWeightless(ServerAlertsComponent status)
         {
-            status.ClearAlert(AlertType.Weightless);
+            EntitySystem.Get<SharedAlertsSystem>().ClearAlert(status, AlertType.Weightless);
         }
 
         private void EntParentChanged(ref EntParentChangedMessage ev)

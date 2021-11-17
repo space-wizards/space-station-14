@@ -101,11 +101,11 @@ namespace Content.Server.Buckle.Components
 
             if (Buckled)
             {
-                _serverAlerts.ShowAlert(BuckledTo?.BuckledAlertType ?? AlertType.Buckled);
+                SharedAlertsSystem.ShowAlert(_serverAlerts, BuckledTo?.BuckledAlertType ?? AlertType.Buckled);
             }
             else
             {
-                _serverAlerts.ClearAlertCategory(AlertCategory.Buckled);
+                EntitySystem.Get<SharedAlertsSystem>().ClearAlertCategory(_serverAlerts, AlertCategory.Buckled);
             }
         }
 

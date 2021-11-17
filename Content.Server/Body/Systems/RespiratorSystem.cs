@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Administration.Logs;
@@ -204,7 +204,7 @@ namespace Content.Server.Body.Systems
 
             if (EntityManager.TryGetComponent(uid, out ServerAlertsComponent? alertsComponent))
             {
-                alertsComponent.ShowAlert(AlertType.LowOxygen);
+                SharedAlertsSystem.ShowAlert(alertsComponent, AlertType.LowOxygen);
             }
 
             _damageableSys.TryChangeDamage(uid, respirator.Damage, true, false);
@@ -219,7 +219,7 @@ namespace Content.Server.Body.Systems
 
             if (EntityManager.TryGetComponent(uid, out ServerAlertsComponent? alertsComponent))
             {
-                alertsComponent.ClearAlert(AlertType.LowOxygen);
+                Get<SharedAlertsSystem>().ClearAlert(alertsComponent, AlertType.LowOxygen);
             }
 
             _damageableSys.TryChangeDamage(uid, respirator.DamageRecovery, true);

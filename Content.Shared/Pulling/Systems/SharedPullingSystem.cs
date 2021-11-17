@@ -105,7 +105,7 @@ namespace Content.Shared.Pulling
                 return;
 
             if (EntityManager.TryGetComponent(component.Owner, out SharedAlertsComponent? alerts))
-                alerts.ShowAlert(AlertType.Pulled);
+                SharedAlertsSystem.ShowAlert(alerts, AlertType.Pulled);
         }
 
         private  void PullableHandlePullStopped(EntityUid uid, SharedPullableComponent component, PullStoppedMessage args)
@@ -114,7 +114,7 @@ namespace Content.Shared.Pulling
                 return;
 
             if (EntityManager.TryGetComponent(component.Owner, out SharedAlertsComponent? alerts))
-                alerts.ClearAlert(AlertType.Pulled);
+                EntitySystem.Get<SharedAlertsSystem>().ClearAlert(alerts, AlertType.Pulled);
         }
 
         public override void Update(float frameTime)

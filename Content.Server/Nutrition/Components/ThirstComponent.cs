@@ -94,15 +94,16 @@ namespace Content.Server.Nutrition.Components
                 }
 
                 // Update UI
-                _entMan.TryGetComponent(Owner, out ServerAlertsComponent? alertsComponent);
-
-                if (ThirstThresholdAlertTypes.TryGetValue(_currentThirstThreshold, out var alertId))
+                if(_entMan.TryGetComponent(Owner, out ServerAlertsComponent? alertsComponent))
                 {
-                    alertsComponent?.ShowAlert(alertId);
-                }
-                else
-                {
-                    alertsComponent?.ClearAlertCategory(AlertCategory.Thirst);
+                    if (ThirstThresholdAlertTypes.TryGetValue(_currentThirstThreshold, out var alertId))
+                    {
+                        SharedAlertsSystem.ShowAlert(alertsComponent, alertId);
+                    }
+                    else
+                    {
+                        EntitySystem.Get<SharedAlertsSystem>().ClearAlertCategory(alertsComponent, AlertCategory.Thirst);
+                    }
                 }
 
                 switch (_currentThirstThreshold)

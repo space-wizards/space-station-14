@@ -1,4 +1,4 @@
-﻿using Content.Shared.Alert;
+using Content.Shared.Alert;
 using Content.Shared.Standing;
 using Robust.Shared.GameObjects;
 
@@ -17,7 +17,7 @@ namespace Content.Shared.MobState.State
 
             if (entityManager.TryGetComponent(uid, out SharedAlertsComponent? status))
             {
-                status.ShowAlert(AlertType.HumanCrit); // TODO: combine humancrit-0 and humancrit-1 into a gif and display it
+                SharedAlertsSystem.ShowAlert(status, AlertType.HumanCrit); // TODO: combine humancrit-0 and humancrit-1 into a gif and display it
             }
 
             EntitySystem.Get<StandingStateSystem>().Down(uid);

@@ -109,37 +109,37 @@ namespace Content.Server.Temperature.Systems
             {
                 // Cold strong.
                 case <= 260:
-                    status.ShowAlert(AlertType.Cold, 3);
+                    SharedAlertsSystem.ShowAlert(status, AlertType.Cold, 3);
                     break;
 
                 // Cold mild.
                 case <= 280 and > 260:
-                    status.ShowAlert(AlertType.Cold, 2);
+                    SharedAlertsSystem.ShowAlert(status, AlertType.Cold, 2);
                     break;
 
                 // Cold weak.
                 case <= 292 and > 280:
-                    status.ShowAlert(AlertType.Cold, 1);
+                    SharedAlertsSystem.ShowAlert(status, AlertType.Cold, 1);
                     break;
 
                 // Safe.
                 case <= 327 and > 292:
-                    status.ClearAlertCategory(AlertCategory.Temperature);
+                    EntitySystem.Get<SharedAlertsSystem>().ClearAlertCategory(status, AlertCategory.Temperature);
                     break;
 
                 // Heat weak.
                 case <= 335 and > 327:
-                    status.ShowAlert(AlertType.Hot, 1);
+                    SharedAlertsSystem.ShowAlert(status, AlertType.Hot, 1);
                     break;
 
                 // Heat mild.
                 case <= 360 and > 335:
-                    status.ShowAlert(AlertType.Hot, 2);
+                    SharedAlertsSystem.ShowAlert(status, AlertType.Hot, 2);
                     break;
 
                 // Heat strong.
                 case > 360:
-                    status.ShowAlert(AlertType.Hot, 3);
+                    SharedAlertsSystem.ShowAlert(status, AlertType.Hot, 3);
                     break;
             }
         }

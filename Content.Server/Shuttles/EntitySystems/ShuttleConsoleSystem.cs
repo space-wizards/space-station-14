@@ -143,7 +143,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
             if (EntityManager.TryGetComponent(entity, out ServerAlertsComponent? alertsComponent))
             {
-                alertsComponent.ShowAlert(AlertType.PilotingShuttle);
+                SharedAlertsSystem.ShowAlert(alertsComponent, AlertType.PilotingShuttle);
             }
 
             entity.PopupMessage(Loc.GetString("shuttle-pilot-start"));
@@ -165,7 +165,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
             if (EntityManager.TryGetComponent(pilotComponent.Owner, out ServerAlertsComponent? alertsComponent))
             {
-                alertsComponent.ClearAlert(AlertType.PilotingShuttle);
+                EntitySystem.Get<SharedAlertsSystem>().ClearAlert(alertsComponent, AlertType.PilotingShuttle);
             }
 
             pilotComponent.Owner.PopupMessage(Loc.GetString("shuttle-pilot-end"));

@@ -70,7 +70,7 @@ namespace Content.Shared.MobState.Components
         {
             if (_entMan.TryGetComponent(Owner, out SharedAlertsComponent? status))
             {
-                status.ClearAlert(AlertType.HumanHealth);
+                EntitySystem.Get<SharedAlertsSystem>().ClearAlert(status, AlertType.HumanHealth);
             }
 
             base.OnRemove();
