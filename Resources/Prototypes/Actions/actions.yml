@@ -1,6 +1,7 @@
-﻿- type: action
+- type: action
   actionType: CombatMode
-  icon: Interface/Actions/harm.png
+  icon: Interface/Actions/harmOff.png
+  iconOn: Interface/Actions/harm.png
   name: "[color=red]Combat Mode[/color]"
   description: "Enter combat mode."
   filters:
@@ -10,7 +11,8 @@
 
 - type: action
   actionType: Disarm
-  icon: Interface/Actions/disarm.png
+  icon: Interface/Actions/disarmOff.png
+  iconOn: Interface/Actions/disarm.png
   name: "[color=red]Disarm[/color]"
   description: "Attempt to [color=red]disarm[/color] someone."
   filters:

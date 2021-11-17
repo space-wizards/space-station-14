@@ -1,82 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: Fix nonexistent bulbs in built wall light, type: Fix}
-  id: 85
-  time: '2021-03-14T21:59:04.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Fixes rotation bugs with emitters and containment fields, and some
-      other stuff', type: Fix}
-  - {message: Fixes default emitter rotation on Saltern, type: Fix}
-  id: 86
-  time: '2021-03-14T22:02:22.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fixes rotatable verbs not showing in the context menu., type: Fix}
-  id: 87
-  time: '2021-03-14T22:23:42.555325+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Fix gibbing causing ghosts to return to their brain, type: Fix}
-  id: 88
-  time: '2021-03-15T02:28:44.0000000+00:00'
-- author: SweptWasTaken
-  changes:
-  - {message: Cargo SMG crate now contains Drozd SMGs., type: Tweak}
-  id: 89
-  time: '2021-03-15T03:38:06.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: 'Added construction recipes for chair, stool, bar stool, office chair,
-      office chair dark, comfy chair, and wooden chair.', type: Add}
-  id: 90
-  time: '2021-03-15T05:40:18.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: 'Fixed burned, broken, and empty wall mounted light tube sprite positions',
-    type: Fix}
-  id: 91
-  time: '2021-03-15T05:40:25.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Fixes default window sizes for vendors, chemistry machines, etc.',
-    type: Fix}
-  id: 92
-  time: '2021-03-15T08:38:08.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: 'Remove collisions for wall lights, carpets, catwalks', type: Tweak}
-  id: 93
-  time: '2021-03-15T09:45:43.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fixes many mispredictions with slips., type: Fix}
-  id: 94
-  time: '2021-03-15T18:01:15.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Fix text messages for climbable objects (like tables or windows), type: Fix}
-  id: 95
-  time: '2021-03-15T18:02:56.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fixes not being able to ghost when you are a brain or head., type: Fix}
-  id: 96
-  time: '2021-03-15T20:28:58.787181+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fixes soap and banana peels going through walls when thrown., type: Fix}
-  id: 97
-  time: '2021-03-15T20:30:41.728992+00:00'
-- author: SweptWasTaken
-  changes:
-  - {message: Added magboot to chief engineer/engineer lockers, type: Add}
-  - {message: Armory has gotten a much better stock of weaponry from Nanotransen,
-    type: Tweak}
-  - {message: Empty lockers on station are removed, type: Remove}
-  id: 98
-  time: '2021-03-16T05:46:31.0000000+00:00'
 - author: Swept
   changes:
   - {message: Resprites surgery tools, type: Add}
@@ -226,7 +148,8 @@ Entries:
   id: 123
   time: '2021-03-28T06:00:37.0000000+00:00'
 - author: BulletGrade
-  changes: []
+  changes:
+  - {message: Made magazine names more specific, type: Tweak}
   id: 124
   time: '2021-03-28T06:06:20.0000000+00:00'
 - author: PJB3005
@@ -638,7 +561,8 @@ Entries:
   id: 194
   time: '2021-05-19T17:26:02.0000000+00:00'
 - author: scrato
-  changes: []
+  changes:
+  - {message: ID card computer will now stop working when there is no power, type: Fix}
   id: 195
   time: '2021-05-20T12:58:29.0000000+00:00'
 - author: Swept
@@ -699,7 +623,9 @@ Entries:
   id: 206
   time: '2021-05-24T14:39:58.0000000+00:00'
 - author: scrato
-  changes: []
+  changes:
+  - {message: You now won't be able to get out of handcuffs if you're dead or incapacitated,
+    type: Fix}
   id: 207
   time: '2021-05-24T14:55:48.0000000+00:00'
 - author: 20kdc
@@ -1893,10 +1819,6 @@ Entries:
   id: 420
   time: '2021-10-09T11:06:34.0000000+00:00'
 - author: 20kdc
-  changes: []
-  id: 421
-  time: '2021-10-09T13:48:53.0000000+00:00'
-- author: 20kdc
   changes:
   - {message: Pulling an abnormally close object shouldn't cause errors, type: Fix}
   id: 422
@@ -1981,7 +1903,9 @@ Entries:
   id: 436
   time: '2021-10-13T17:14:34.0000000+00:00'
 - author: PJB3005
-  changes: []
+  changes:
+  - {message: Examine details like welder fuel level now show up for items in your
+      inventory., type: Fix}
   id: 437
   time: '2021-10-13T21:04:16.0000000+00:00'
 - author: 20kdc
@@ -2481,7 +2405,8 @@ Entries:
   id: 524
   time: '2021-11-02T00:12:55.0000000+00:00'
 - author: 20kdc
-  changes: []
+  changes:
+  - {message: You are now alerted if an AHelp is not received by anyone., type: Add}
   id: 525
   time: '2021-11-02T00:42:05.0000000+00:00'
 - author: Ygg01
@@ -2831,3 +2756,88 @@ Entries:
       it. They aren't motorized., type: Fix}
   id: 584
   time: '2021-11-13T21:43:37.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: There is now a MIDI volume slider in the options menu., type: Add}
+  id: 585
+  time: '2021-11-14T09:44:36.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug where Potassium + Water explosions in the bloodstream would
+      crash the server, type: Fix}
+  id: 586
+  time: '2021-11-14T11:19:42.0000000+00:00'
+- author: Daemon
+  changes:
+  - {message: Handcuff box has too little of a storing size, type: Fix}
+  id: 587
+  time: '2021-11-14T16:29:49.0000000+00:00'
+- author: FoLoKe
+  changes:
+  - {message: Added ability to milk cow., type: Add}
+  id: 588
+  time: '2021-11-14T16:33:16.0000000+00:00'
+- author: Tomeno
+  changes:
+  - {message: Airlocks no longer show orange lights all the time., type: Tweak}
+  - {message: Airlocks now play the access denied animation., type: Fix}
+  id: 589
+  time: '2021-11-14T17:51:02.0000000+00:00'
+- author: cheesePizza2
+  changes:
+  - {message: Directional windows can now be constructed., type: Add}
+  id: 590
+  time: '2021-11-14T19:51:36.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Wires on Packed Station are less spaghetti than before., type: Tweak}
+  - {message: The Russians have sent their top atmos tech to fix the air on the DJ
+      satellite., type: Tweak}
+  - {message: The Chef now has a cow. Also made it so Ian spawns correctly in the
+      HoP's office., type: Add}
+  id: 591
+  time: '2021-11-14T19:52:46.0000000+00:00'
+- author: TimrodDX and xRiriq
+  changes:
+  - {message: Medical and Science can now access the extra scanners in Genetics on
+      Packed., type: Tweak}
+  id: 593
+  time: '2021-11-15T08:12:44.0000000+00:00'
+- author: Tomeno
+  changes:
+  - {message: Made admin message windows stand out more., type: Add}
+  id: 594
+  time: '2021-11-15T11:42:30.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Much more accurate tracking of ghost roles., type: Fix}
+  - {message: Ghost roles can no longer be revived as the original player., type: Tweak}
+  id: 595
+  time: '2021-11-15T18:14:35.0000000+00:00'
+- author: cheesePizza2
+  changes:
+  - {message: Harm state now has an on/off icon, type: Tweak}
+  id: 596
+  time: '2021-11-15T19:26:59.0000000+00:00'
+- author: Clyybber
+  changes:
+  - {message: Disarm action now has an on/off icon, type: Tweak}
+  id: 597
+  time: '2021-11-16T05:03:34.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Pneumatic cannons obey the concept of audio location now., type: Fix}
+  id: 598
+  time: '2021-11-16T21:05:19.0000000+00:00'
+- author: xRiriq
+  changes:
+  - {message: hardsuits and hardsuit helmets now are bigger and no longer fit in pockets,
+    type: Tweak}
+  id: 599
+  time: '2021-11-17T00:05:41.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Atmos on Packed Station no longer pumps plasma by default., type: Tweak}
+  - {message: Surgery on Packed Station once again starts powered., type: Tweak}
+  id: 600
+  time: '2021-11-17T00:06:26.0000000+00:00'

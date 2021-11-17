@@ -311,6 +311,7 @@ namespace Content.Client.Entry
             "NukeCodePaper",
             "GhostRadio",
             "Armor",
+            "Udder",
             "PneumaticCannon"
         };
     }

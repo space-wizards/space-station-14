@@ -146,6 +146,78 @@
   canRotate: false
 
 - type: construction
+  name: directional window
+  id: WindowDirectional
+  graph: windowDirectional
+  startNode: start
+  targetNode: windowDirectional
+  category: Structures
+  description: Clear.
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile {}
+    - !type:NoWindowsInTile {}
+  icon:
+    sprite: Structures/Windows/directional.rsi
+    state: window
+  objectType: Structure
+  placementMode: SnapgridCenter
+
+- type: construction
+  name: directional reinforced window
+  id: WindowReinforcedDirectional
+  graph: windowDirectional
+  startNode: start
+  targetNode: windowReinforcedDirectional
+  category: Structures
+  description: Clear but tough.
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile {}
+    - !type:NoWindowsInTile {}
+  icon:
+    sprite: Structures/Windows/directional.rsi
+    state: reinforced_window
+  objectType: Structure
+  placementMode: SnapgridCenter
+
+- type: construction
+  name: directional plasma window
+  id: PlasmaWindowDirectional
+  graph: windowDirectional
+  startNode: start
+  targetNode: plasmaWindowDirectional
+  category: Structures
+  canBuildInImpassable: true
+  description: Clear and even tougher, with a purple tint.
+  conditions:
+    - !type:EmptyOrWindowValidInTile {}
+    - !type:NoWindowsInTile {}
+  icon:
+    sprite: Structures/Windows/directional.rsi
+    state: plasma_window
+  objectType: Structure
+  placementMode: SnapgridCenter
+
+- type: construction
+  name: directional reinforced plasma window
+  id: PlasmaReinforcedWindowDirectional
+  graph: windowDirectional
+  startNode: start
+  targetNode: plasmaReinforcedWindowDirectional
+  category: Structures
+  canBuildInImpassable: true
+  description: Fire resistant and even tougher, with a purple tint.
+  conditions:
+    - !type:EmptyOrWindowValidInTile {}
+    - !type:NoWindowsInTile {}
+  icon:
+    sprite: Structures/Windows/directional.rsi
+    state: plasma_reinforced_window
+  objectType: Structure
+  placementMode: SnapgridCenter
+
+- type: construction
   name: firelock
   id: Firelock
   graph: Firelock
