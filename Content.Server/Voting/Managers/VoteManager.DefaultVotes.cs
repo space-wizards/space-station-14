@@ -150,6 +150,7 @@ namespace Content.Server.Voting.Managers
             {
                 ["Maps/saltern.yml"] = "Saltern",
                 ["Maps/packedstation.yml"] = "PackedStation",
+                ["Maps/knightship.yml"] = "Knightship",
             };
 
             var alone = _playerManager.PlayerCount == 1 && initiator != null;
