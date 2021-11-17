@@ -126,7 +126,7 @@ public ref struct LogStringHandler
         }
 
         _values["__entities"] = entities;
-        _values["__players"] = players;
+        // _values["__players"] = players;
 
         return JsonSerializer.SerializeToDocument(_values, options);
     }

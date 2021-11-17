@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Net;
 using System.Text.Json;
 using System.Threading;
@@ -566,15 +565,15 @@ namespace Content.Server.Database
                 query = query.Where(log => log.Date > filter.After);
             }
 
-            if (filter.AnyPlayers != null)
-            {
-                query = query.Where(log => EF.Functions.JsonExistAny(log.Json, "a"));
-            }
+            // if (filter.AnyPlayers != null)
+            // {
+            //     query = query.Where(log => log.Players.Any(player => filter.AnyPlayers.Contains(player.UserId.ToString())));
+            // }
 
-            if (filter.AllPlayers != null)
-            {
-                query = query.Where(log => EF.Functions.JsonExistAll(log.Json, filter.AllPlayers));
-            }
+            // if (filter.AllPlayers != null)
+            // {
+            //     query = query.Where(log => filter.AllPlayers.Contains(log.Players.Select(player => player.UserId.ToString())));
+            // }
 
             if (distinct)
             {

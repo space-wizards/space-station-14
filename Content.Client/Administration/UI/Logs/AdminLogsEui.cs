@@ -32,8 +32,8 @@ public class AdminLogsEui : BaseEui
             types,
             null,
             null,
-            null,
             players,
+            null,
             null,
             DateOrder.Ascending);
 

@@ -259,5 +259,7 @@ namespace Content.Server.Database
         [Required] public string Message { get; set; } = default!;
 
         [Required, Column(TypeName = "jsonb")] public JsonDocument Json { get; set; } = default!;
+
+        public List<Player> Players { get; set; } = default!;
     }
 }
