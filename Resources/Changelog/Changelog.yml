@@ -1,17 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Fixes soap and banana peels going through walls when thrown., type: Fix}
-  id: 97
-  time: '2021-03-15T20:30:41.728992+00:00'
-- author: SweptWasTaken
-  changes:
-  - {message: Added magboot to chief engineer/engineer lockers, type: Add}
-  - {message: Armory has gotten a much better stock of weaponry from Nanotransen,
-    type: Tweak}
-  - {message: Empty lockers on station are removed, type: Remove}
-  id: 98
-  time: '2021-03-16T05:46:31.0000000+00:00'
 - author: Swept
   changes:
   - {message: Resprites surgery tools, type: Add}
@@ -2842,3 +2829,15 @@ Entries:
   - {message: Pneumatic cannons obey the concept of audio location now., type: Fix}
   id: 598
   time: '2021-11-16T21:05:19.0000000+00:00'
+- author: xRiriq
+  changes:
+  - {message: hardsuits and hardsuit helmets now are bigger and no longer fit in pockets,
+    type: Tweak}
+  id: 599
+  time: '2021-11-17T00:05:41.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Atmos on Packed Station no longer pumps plasma by default., type: Tweak}
+  - {message: Surgery on Packed Station once again starts powered., type: Tweak}
+  id: 600
+  time: '2021-11-17T00:06:26.0000000+00:00'
