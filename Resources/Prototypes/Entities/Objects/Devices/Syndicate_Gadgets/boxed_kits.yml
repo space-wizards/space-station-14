@@ -46,7 +46,7 @@
 
 - type: entity
   parent: SuspiciousBoxBase
-  id: BoxHolopara
+  id: BoxHoloparasite
   suffix: Holopara
   components:
   - type: StorageFill
