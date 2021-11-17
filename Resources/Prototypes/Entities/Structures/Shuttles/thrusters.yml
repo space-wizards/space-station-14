@@ -7,7 +7,7 @@
   components:
     - type: AmbientSound
       range: 4
-      volume: 0
+      volume: -5
       sound:
         path: /Audio/Effects/shuttle_thruster.ogg
     - type: Transform
@@ -66,7 +66,7 @@
   components:
   - type: Thruster
     thrusterType: Angular
-    impulse: 1
+    impulse: 2
   - type: Sprite
     # Listen I'm not the biggest fan of the sprite but it was the most appropriate thing I could find.
     sprite: Structures/Shuttles/gyroscope.rsi
