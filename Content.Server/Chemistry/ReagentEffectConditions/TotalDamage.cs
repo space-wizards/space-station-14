@@ -18,7 +18,7 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
             if (args.EntityManager.TryGetComponent(args.SolutionEntity, out DamageableComponent damage))
             {
                 var total = damage.TotalDamage;
-                if (total > min && total < max)
+                if (total > Min && total < Max)
                     return true;
             }
 
