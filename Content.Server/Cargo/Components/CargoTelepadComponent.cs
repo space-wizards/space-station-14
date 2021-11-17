@@ -25,8 +25,6 @@ namespace Content.Server.Cargo.Components
     public class CargoTelepadComponent : Component
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-
         public override string Name => "CargoTelepad";
 
         private const float TeleportDuration = 0.5f;
@@ -119,11 +117,14 @@ namespace Content.Server.Cargo.Components
             // spawn the order
             if (!_prototypeManager.TryIndex(data.ProductId, out CargoProductPrototype? prototype))
                 return;
+
             var product = Owner.EntityManager.SpawnEntity(prototype.Product, Owner.Transform.Coordinates);
+
+            product.Transform.Anchored = false;
 
             // spawn a piece of paper.
             var printed = Owner.EntityManager.SpawnEntity(PrinterOutput, Owner.Transform.Coordinates);
-            if (!_entityManager.TryGetComponent(printed.Uid, out PaperComponent paper))
+            if (!Owner.EntityManager.TryGetComponent(printed.Uid, out PaperComponent paper))
                 return;
 
             // fill in the order data
@@ -136,8 +137,8 @@ namespace Content.Server.Cargo.Components
                 ("approver", data.Approver)));
 
             // attempt to attach the label
-            if (_entityManager.TryGetComponent(product.Uid, out PaperLabelComponent label) &&
-                _entityManager.TryGetComponent(product.Uid, out SharedItemSlotsComponent slots))
+            if (Owner.EntityManager.TryGetComponent(product.Uid, out PaperLabelComponent label) &&
+                Owner.EntityManager.TryGetComponent(product.Uid, out SharedItemSlotsComponent slots))
             {
                 EntitySystem.Get<SharedItemSlotsSystem>().TryInsertContent(slots, printed, label.LabelSlot);
             }

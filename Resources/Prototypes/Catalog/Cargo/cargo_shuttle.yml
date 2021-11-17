@@ -1,12 +1,12 @@
 - type: cargoProduct
   name: "shuttle thruster"
   id: ShuttleThruster
-  description: "2 thrusters for use in moving a shuttle."
+  description: "A thruster that allows a shuttle to move."
   icon:
     sprite: Structures/Shuttles/thruster.rsi
     state: base
   product: Thruster
-  cost: 4000
+  cost: 1500
   category: Shuttle
   group: market
 
