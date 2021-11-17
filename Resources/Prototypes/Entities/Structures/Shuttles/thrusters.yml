@@ -23,7 +23,6 @@
       - type: ThrusterVisualizer
     - type: ApcPowerReceiver
       powerLoad: 1500
-      needsPower: false
     - type: ExtensionCableReceiver
     - type: Damageable
       damageContainer: Inorganic

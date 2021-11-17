@@ -48,7 +48,7 @@ namespace Content.Server.Shuttles.Components
 
         [ViewVariables]
         [DataField("impulse")]
-        public float Impulse = 3f;
+        public float Impulse = 5f;
 
         [ViewVariables]
         [DataField("thrusterType")]
