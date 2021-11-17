@@ -173,20 +173,22 @@ namespace Content.Server.Nutrition.EntitySystems
         }
 
         //TODO: DoAfter based on delay after food & drinks delay PR merged...
-        private void AddEatVerb(EntityUid uid, FoodComponent component, GetAlternativeVerbsEvent args)
+        private void AddEatVerb(EntityUid uid, FoodComponent component, GetAlternativeVerbsEvent ev)
         {
-            if (!args.CanInteract)
+            if (!ev.CanInteract ||
+                !EntityManager.TryGetComponent(ev.User.Uid, out SharedBodyComponent? body) ||
+                !_bodySystem.TryGetComponentsOnMechanisms<StomachComponent>(ev.User.Uid, out var stomachs, body))
                 return;
 
             Verb verb = new();
             verb.Act = () =>
             {
-                TryUseFood(uid, args.User.Uid, args.User.Uid, component);
+                TryUseFood(uid, ev.User.Uid, ev.User.Uid, component);
             };
             
             verb.Text = Loc.GetString("food-system-verb-eat");
             verb.Priority = -1;
-            args.Verbs.Add(verb);
+            ev.Verbs.Add(verb);
         }
     }
 }
