@@ -2000,8 +2000,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/wineglass.rsi
 
-# TODO: Move to containers
-
 # TODO: MOVE
 
 - type: entity
