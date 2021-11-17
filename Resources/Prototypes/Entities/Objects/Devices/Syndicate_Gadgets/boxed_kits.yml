@@ -18,7 +18,7 @@
     HeldPrefix: box
 
 # The box size values may change depending on what is stored in them
-# But if you want to balance a high-risk item by having its box be nigh un-conceallable then you might want to consider a bigger box  
+# But if you want to balance a high-risk item by having its box be nigh non-conceallable then you might want to consider a bigger box  
     
 - type: entity
   parent: BoxBase
@@ -41,8 +41,8 @@
     size: 9999
     HeldPrefix: box
     
-#kits that come in these boxes
-#They should be concealled with a same-y name and visual, change the info in uplink listing
+#Kits that come in these boxes
+#They should be concealed with a same-y name and visual, change the info in uplink listing, and add the appropriate suffix for admin menu
 
 - type: entity
   parent: SuspiciousBoxBase
