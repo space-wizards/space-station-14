@@ -1,9 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Camera;
 using Content.Server.CombatMode;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
@@ -20,6 +19,7 @@ using Robust.Shared.Map;
 using Content.Server.Throwing;
 using Content.Server.Tools;
 using Content.Server.Tools.Components;
+using Content.Shared.Camera;
 using Content.Shared.CombatMode;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
@@ -40,6 +40,7 @@ namespace Content.Server.PneumaticCannon
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly StunSystem _stun = default!;
         [Dependency] private readonly AtmosphereSystem _atmos = default!;
+        [Dependency] private readonly CameraRecoilSystem _cameraRecoil = default!;
 
         private HashSet<PneumaticCannonComponent> _currentlyFiring = new();
 
@@ -235,9 +236,10 @@ namespace Content.Server.PneumaticCannon
             storage.Remove(ent);
 
             SoundSystem.Play(Filter.Pvs(data.User), comp.FireSound.GetSound(), comp.OwnerUid, AudioParams.Default);
-            if (data.User.TryGetComponent<CameraRecoilComponent>(out var recoil))
+            if (data.User.HasComponent<CameraRecoilComponent>())
             {
-                recoil.Kick(Vector2.One * data.Strength);
+                var kick = Vector2.One * data.Strength;
+                _cameraRecoil.KickCamera(data.User.Uid, kick);
             }
 
             ent.TryThrow(data.Direction, data.Strength, data.User, GetPushbackRatioFromPower(comp.Power));

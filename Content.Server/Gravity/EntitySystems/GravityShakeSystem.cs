@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Content.Server.Camera;
+using System.Collections.Generic;
+using Content.Shared.Camera;
 using Content.Shared.Gravity;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
@@ -19,6 +19,8 @@ namespace Content.Server.Gravity.EntitySystems
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+
+        [Dependency] private readonly CameraRecoilSystem _cameraRecoil = default!;
 
         private Dictionary<GridId, uint> _gridsToShake = new();
 
@@ -81,12 +83,13 @@ namespace Content.Server.Gravity.EntitySystems
             {
                 if (player.AttachedEntity == null
                     || player.AttachedEntity.Transform.GridID != gridId
-                    || !player.AttachedEntity.TryGetComponent(out CameraRecoilComponent? recoil))
+                    || !player.AttachedEntity.HasComponent<CameraRecoilComponent>())
                 {
                     continue;
                 }
 
-                recoil.Kick(new Vector2(_random.NextFloat(), _random.NextFloat()) * GravityKick);
+                var kick = new Vector2(_random.NextFloat(), _random.NextFloat()) * GravityKick;
+                _cameraRecoil.KickCamera(player.AttachedEntity.Uid, kick);
             }
         }
     }

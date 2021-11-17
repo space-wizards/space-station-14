@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.Camera;
 using Content.Server.Explosion.Components;
 using Content.Shared.Acts;
+using Content.Shared.Camera;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
@@ -50,6 +50,7 @@ namespace Content.Server.Explosion.EntitySystems
         [Dependency] private readonly ActSystem _acts = default!;
         [Dependency] private readonly EffectSystem _effects = default!;
         [Dependency] private readonly TriggerSystem _triggers = default!;
+        [Dependency] private readonly CameraRecoilSystem _cameraRecoil = default!;
 
         private bool IgnoreExplosivePassable(IEntity e)
         {
@@ -78,7 +79,7 @@ namespace Content.Server.Explosion.EntitySystems
 
             foreach (var player in players)
             {
-                if (player.AttachedEntity == null || !player.AttachedEntity.TryGetComponent(out CameraRecoilComponent? recoil))
+                if (player.AttachedEntity == null || !player.AttachedEntity.HasComponent<CameraRecoilComponent>())
                 {
                     continue;
                 }
@@ -95,7 +96,7 @@ namespace Content.Server.Explosion.EntitySystems
                 if (effect > 0.01f)
                 {
                     var kick = -delta.Normalized * effect;
-                    recoil.Kick(kick);
+                    _cameraRecoil.KickCamera(player.AttachedEntity.Uid, kick);
                 }
             }
         }

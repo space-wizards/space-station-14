@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.Camera;
 using Content.Server.Projectiles.Components;
 using Content.Server.Weapon.Ranged.Ammunition.Components;
 using Content.Shared.Audio;
+using Content.Shared.Camera;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -212,9 +212,10 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             var direction = (targetPos - shooter.Transform.WorldPosition).ToAngle();
             var angle = GetRecoilAngle(direction);
             // This should really be client-side but for now we'll just leave it here
-            if (shooter.TryGetComponent(out CameraRecoilComponent? recoilComponent))
+            if (shooter.HasComponent<CameraRecoilComponent>())
             {
-                recoilComponent.Kick(-angle.ToVec() * 0.15f);
+                var kick = -angle.ToVec() * 0.15f;
+                EntitySystem.Get<CameraRecoilSystem>().KickCamera(shooter.Uid, kick);
             }
 
             // This section probably needs tweaking so there can be caseless hitscan etc.
