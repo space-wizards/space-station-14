@@ -375,13 +375,31 @@ namespace Content.Server.Shuttles.EntitySystems
 
             if ((direction & (DirectionFlag.East | DirectionFlag.West)) != 0x0)
             {
-                foreach (var comp in component.AngularThrusters)
+                switch (component.Mode)
                 {
-                    if (!EntityManager.TryGetComponent(comp.OwnerUid, out SharedAppearanceComponent? appearanceComponent))
-                        continue;
+                    case ShuttleMode.Cruise:
+                        foreach (var comp in component.AngularThrusters)
+                        {
+                            if (!EntityManager.TryGetComponent(comp.OwnerUid, out SharedAppearanceComponent? appearanceComponent))
+                                continue;
 
-                    comp.Firing = true;
-                    appearanceComponent.SetData(ThrusterVisualState.Thrusting, true);
+                            comp.Firing = true;
+                            appearanceComponent.SetData(ThrusterVisualState.Thrusting, true);
+                        }
+                        break;
+                    case ShuttleMode.Docking:
+                        var index = (int) Math.Log2((int) direction);
+
+                        foreach (var comp in component.LinearThrusters[index])
+                        {
+                            if (!EntityManager.TryGetComponent(comp.OwnerUid, out SharedAppearanceComponent? appearanceComponent))
+                                continue;
+
+                            comp.Firing = true;
+                            appearanceComponent.SetData(ThrusterVisualState.Thrusting, true);
+                        }
+
+                        break;
                 }
             }
             else
@@ -410,13 +428,31 @@ namespace Content.Server.Shuttles.EntitySystems
 
             if ((direction & (DirectionFlag.East | DirectionFlag.West)) != 0x0)
             {
-                foreach (var comp in component.AngularThrusters)
+                switch (component.Mode)
                 {
-                    if (!EntityManager.TryGetComponent(comp.OwnerUid, out SharedAppearanceComponent? appearanceComponent))
-                        continue;
+                    case ShuttleMode.Cruise:
+                        foreach (var comp in component.AngularThrusters)
+                        {
+                            if (!EntityManager.TryGetComponent(comp.OwnerUid, out SharedAppearanceComponent? appearanceComponent))
+                                continue;
 
-                    comp.Firing = false;
-                    appearanceComponent.SetData(ThrusterVisualState.Thrusting, false);
+                            comp.Firing = false;
+                            appearanceComponent.SetData(ThrusterVisualState.Thrusting, false);
+                        }
+                        break;
+                    case ShuttleMode.Docking:
+                        var index = (int) Math.Log2((int) direction);
+
+                        foreach (var comp in component.LinearThrusters[index])
+                        {
+                            if (!EntityManager.TryGetComponent(comp.OwnerUid, out SharedAppearanceComponent? appearanceComponent))
+                                continue;
+
+                            comp.Firing = false;
+                            appearanceComponent.SetData(ThrusterVisualState.Thrusting, false);
+                        }
+
+                        break;
                 }
             }
             else

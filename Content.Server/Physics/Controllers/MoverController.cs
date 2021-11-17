@@ -100,23 +100,52 @@ namespace Content.Server.Physics.Controllers
                 return;
             }
 
-            var worldAngle = (float) movement.ToWorldAngle();
-            var worldMovement = new Vector2(MathF.Cos(worldAngle) * movement.Length, MathF.Sin(worldAngle) * movement.Length);
             var speedCap = 0f;
 
             switch (shuttleComponent.Mode)
             {
                 case ShuttleMode.Docking:
-                    if (physicsComponent.LinearVelocity.LengthSquared == 0f)
+                    system.DisableAllThrustDirections(shuttleComponent);
+                    var dockDirection = movement.ToWorldAngle().GetDir();
+                    var dockFlag = dockDirection.AsFlag();
+
+                    // Won't just do cardinal directions.
+                    foreach (DirectionFlag dir in Enum.GetValues(typeof(DirectionFlag)))
                     {
-                        movement *= 5f;
+                        // Brain no worky but I just want cardinals
+                        switch (dir)
+                        {
+                            case DirectionFlag.South:
+                            case DirectionFlag.East:
+                            case DirectionFlag.North:
+                            case DirectionFlag.West:
+                                break;
+                            default:
+                                continue;
+                        }
+
+                        if ((dir & dockFlag) == 0x0) continue;
+
+                        system.EnableThrustDirection(shuttleComponent, dir);
+
+                        var index = (int) Math.Log2((int) dir);
+
+                        var dockSpeed = shuttleComponent.LinearThrusterImpulse[index];
+
+                        // TODO: Cvar for the speed drop
+                        dockSpeed /= 5f;
+
+                        if (physicsComponent.LinearVelocity.LengthSquared == 0f)
+                        {
+                            dockSpeed *= 5f;
+                        }
+
+                        var moveAngle = movement.ToWorldAngle();
+
+                        // Currently this is slow BUT we'd have a separate multiplier for docking and cruising or whatever.
+                        physicsComponent.ApplyLinearImpulse(moveAngle.RotateVec(physicsComponent.Owner.Transform.WorldRotation.ToWorldVec()) *
+                                                            dockSpeed);
                     }
-
-                    // TODO: Need to get diagonals too
-                    var dockDirection = worldMovement.ToAngle().GetDir();
-
-                    // if (movement.Length != 0f)
-                        // physicsComponent.ApplyLinearImpulse(physicsComponent.Owner.Transform.WorldRotation.RotateVec(movement) * shuttleComponent.SpeedMultipler * physicsComponent.Mass);
 
                     speedCap = _shuttleDockSpeedCap;
                     break;
@@ -128,13 +157,13 @@ namespace Content.Server.Physics.Controllers
                     }
                     else
                     {
-                        if (physicsComponent.LinearVelocity.LengthSquared == 0f)
-                        {
-                            movement.Y *= 5f;
-                        }
-
                         var direction = movement.Y > 0f ? Direction.North : Direction.South;
                         var linearSpeed = shuttleComponent.LinearThrusterImpulse[(int) direction / 2];
+
+                        if (physicsComponent.LinearVelocity.LengthSquared == 0f)
+                        {
+                            linearSpeed *= 5f;
+                        }
 
                         // Currently this is slow BUT we'd have a separate multiplier for docking and cruising or whatever.
                         physicsComponent.ApplyLinearImpulse(physicsComponent.Owner.Transform.WorldRotation.Opposite().ToWorldVec() *
@@ -185,11 +214,19 @@ namespace Content.Server.Physics.Controllers
             }
 
             var velocity = physicsComponent.LinearVelocity;
+            var angVelocity = physicsComponent.AngularVelocity;
 
             if (velocity.Length > speedCap)
             {
                 physicsComponent.LinearVelocity = velocity.Normalized * speedCap;
             }
+
+            /* TODO: Need to suss something out but this PR already BEEG
+            if (angVelocity > speedCap)
+            {
+                physicsComponent.AngularVelocity = speedCap;
+            }
+            */
         }
 
         protected override void HandleFootsteps(IMoverComponent mover, IMobMoverComponent mobMover)
