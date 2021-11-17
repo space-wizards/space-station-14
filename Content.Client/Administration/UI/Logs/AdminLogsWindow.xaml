@@ -31,9 +31,7 @@
                 <Button Name="RefreshButton" Access="Public" Text="{Loc admin-logs-refresh}"/>
                 <Button Name="NextButton" Access="Public" Text="{Loc admin-logs-next}"/>
             </BoxContainer>
-            <ScrollContainer VerticalExpand="True">
-                <BoxContainer Name="LogsContainer" Orientation="Vertical" Access="Public"/>
-            </ScrollContainer>
+            <OutputPanel Name="LogsContainer" Access="Public" VerticalExpand="True"/>
         </BoxContainer>
     </BoxContainer>
 </SS14Window>
