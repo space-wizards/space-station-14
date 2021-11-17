@@ -42,9 +42,9 @@ grids:
     tilesize: 1
   chunks:
   - ind: "-1,-1"
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAGAAAABgAAAAYAAAAGAAAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHgAAABgAAAAYAAAAGAAAABgAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4AAAAYAAAAGAAAABgAAAAYAAAAHgAAAA==
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAGAAAABgAAAAYAAAAGAAAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHgAAABgAAAAYAAAAGAAAABgAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4AAAAYAAAAGAAAABgAAAAYAAAAHgAAAA==
   - ind: "0,-1"
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAAB4AAAAbAAAAGwAAABsAAAAbAAAAGwAAABsAAAAbAAAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAeAAAAGwAAABsAAAAbAAAAGwAAABsAAAAbAAAAGwAAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAHgAAABsAAAAbAAAAGwAAAB4AAAAeAAAAHAAAAB4AAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHAAAABwAAAAcAAAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAYAAAAGAAAABgAAAAYAAAAHAAAABwAAAAcAAAAHAAAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAGAAAABgAAAAYAAAAGAAAAB4AAAAcAAAAHAAAABwAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAABgAAAAYAAAAGAAAABgAAAAcAAAAHAAAABwAAAAcAAAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAeAAAAHgAAABsAAAAeAAAAHgAAABwAAAAcAAAAHAAAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAHgAAABsAAAAbAAAAGwAAAB4AAAAbAAAAHgAAAB4AAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAAB4AAAAbAAAAGwAAAB4AAAAeAAAAGwAAABsAAAAbAAAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAeAAAAHgAAAB4AAAAeAAAAGwAAABsAAAAbAAAAGwAAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAHgAAABgAAAAYAAAAHgAAAB4AAAAbAAAAGwAAABsAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAABgAAAAYAAAAGAAAABgAAAAeAAAAGAAAABgAAAAYAAAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGwAAABsAAAAbAAAAGwAAABsAAAAbAAAAGwAAABsAAAAbAAAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABsAAAAbAAAAGwAAABsAAAAbAAAAGwAAABsAAAAbAAAAGwAAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbAAAAGwAAABsAAAAbAAAAGwAAABsAAAAeAAAAHAAAAB4AAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAABwAAAAcAAAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAYAAAAGAAAABgAAAAYAAAAHgAAABwAAAAcAAAAHAAAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAGAAAABgAAAAYAAAAGAAAAB4AAAAcAAAAHAAAABwAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAABgAAAAYAAAAGAAAABgAAAAcAAAAHAAAABwAAAAcAAAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAeAAAAHgAAABsAAAAeAAAAHgAAABwAAAAcAAAAHAAAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAHgAAABsAAAAbAAAAGwAAAB4AAAAbAAAAHgAAAB4AAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAAB4AAAAbAAAAGwAAAB4AAAAeAAAAGwAAABsAAAAbAAAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAeAAAAHgAAAB4AAAAeAAAAGwAAABsAAAAbAAAAGwAAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAHgAAABgAAAAYAAAAHgAAAB4AAAAbAAAAGwAAABsAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAABgAAAAYAAAAGAAAABgAAAAeAAAAGAAAABgAAAAYAAAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: "0,0"
     tiles: GAAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAGAAAABgAAAAYAAAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAGAAAABgAAAAYAAAAHgAAABgAAAAYAAAAHgAAAB4AAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAABgAAAAYAAAAGAAAAB4AAAAeAAAAHgAAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: "-1,0"
@@ -252,7 +252,7 @@ entities:
       -2,-12: 0
       -2,-13: 0
       0,-9: 0
-      0,-11: 0
+      0,-11: 1
       0,-12: 0
       0,-13: 0
       1,-9: 0
@@ -322,7 +322,7 @@ entities:
       3,3: 0
       3,4: 0
       3,5: 0
-      8,3: 1
+      8,3: 2
       -6,-14: 0
       -6,-13: 0
       -6,-12: 0
@@ -472,6 +472,17 @@ entities:
       - 21.824879
       - 82.10312
       - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 21.780092
+      - 82.10312
+      - 0.011053398
       - 0
       - 0
       - 0
@@ -1050,17 +1061,25 @@ entities:
     parent: 0
     type: Transform
 - uid: 93
-  type: WallSolid
+  type: Bucket
   components:
-  - pos: 6.5,-10.5
+  - pos: 2.6408663,-12.303808
     parent: 0
     type: Transform
+  - solution: bucket
+    type: Drink
+  - canCollide: False
+    type: Physics
 - uid: 94
-  type: WallSolid
+  type: CableApcExtension
   components:
-  - pos: 5.5,-10.5
+  - pos: 7.5,-10.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
 - uid: 95
   type: WallSolid
   components:
@@ -1086,21 +1105,33 @@ entities:
     parent: 0
     type: Transform
 - uid: 98
-  type: WallSolid
+  type: hydroponicsTray
   components:
-  - pos: 1.5,-10.5
+  - pos: 1.5,-12.5
     parent: 0
     type: Transform
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 99
-  type: WallSolid
+  type: AirlockEngineeringGlassLocked
   components:
-  - pos: 1.5,-11.5
+  - name: Engineering Storage
+    type: MetaData
+  - pos: -0.5,-2.5
     parent: 0
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 100
   type: WallSolid
   components:
-  - pos: 1.5,-12.5
+  - pos: -0.5,-12.5
     parent: 0
     type: Transform
 - uid: 101
@@ -1149,20 +1180,16 @@ entities:
     parent: 0
     type: Transform
 - uid: 108
-  type: AirlockMaintEngiLocked
+  type: WallSolid
   components:
-  - name: Gravity Generator And Anti-Matter Engine
-    type: MetaData
-  - pos: -0.5,-12.5
+  - pos: 0.5,-9.5
     parent: 0
     type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 109
   type: AirlockServiceGlassLocked
   components:
+  - name: Hydroponics/Kitchen/Bar
+    type: MetaData
   - pos: 3.5,-9.5
     parent: 0
     type: Transform
@@ -1240,11 +1267,15 @@ entities:
       labelSlot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 117
-  type: WallSolid
+  type: CableApcExtension
   components:
-  - pos: -0.5,-7.5
+  - pos: 2.5,-11.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
 - uid: 118
   type: WallSolid
   components:
@@ -1324,17 +1355,11 @@ entities:
     parent: 0
     type: Transform
 - uid: 131
-  type: AirlockEngineeringGlass
+  type: SpawnPointBotanist
   components:
-  - name: Engineering Storage
-    type: MetaData
-  - pos: -0.5,-2.5
+  - pos: 1.5,-11.5
     parent: 0
     type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 132
   type: CableHV
   components:
@@ -1472,25 +1497,26 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 149
-  type: CableMV
+  type: VendingMachineDinnerware
   components:
-  - pos: -0.5,-12.5
+  - name: Dinnerware
+    type: MetaData
+  - pos: 8.5,-11.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
+  - enabled: False
+    type: AmbientSound
 - uid: 150
-  type: CableMV
+  type: Poweredlight
   components:
-  - pos: 0.5,-12.5
+  - pos: 1.5,-10.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
 - uid: 151
   type: CableMV
   components:
@@ -1650,19 +1676,21 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 170
-  type: CableMV
+  type: ClosetChefFilled
   components:
-  - pos: 0.5,-11.5
+  - pos: 5.5,-10.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
+  - isPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 171
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 0.5,-10.5
+  - pos: 1.5,-11.5
     parent: 0
     type: Transform
   - visible: False
@@ -1670,15 +1698,16 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 172
-  type: CableMV
+  type: KitchenReagentGrinder
   components:
-  - pos: 0.5,-9.5
+  - pos: 5.5,-12.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
+  - containers:
+      ReagentGrinder-reagentContainerContainer: !type:ContainerSlot {}
+      ReagentGrinder-entityContainerContainer: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 173
   type: CableMV
   components:
@@ -2222,9 +2251,78 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 237
-  type: ClosetChefFilled
+  type: AirlockMaintEngiLocked
   components:
-  - pos: 8.5,-11.5
+  - name: Anti-Matter Engine and Gravity Generator
+    type: MetaData
+  - pos: -0.5,-7.5
+    parent: 0
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 238
+  type: WallSolid
+  components:
+  - pos: 5.5,-8.5
+    parent: 0
+    type: Transform
+- uid: 239
+  type: CableApcExtension
+  components:
+  - pos: 7.5,-9.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 240
+  type: WeldingFuelTankFull
+  components:
+  - pos: -1.5,-0.5
+    parent: 0
+    type: Transform
+- uid: 241
+  type: SalternApc
+  components:
+  - pos: 6.5,-9.5
+    parent: 0
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - loadingNetworkDemand: 25
+    supplyRampPosition: 0.010999783
+    type: PowerNetworkBattery
+- uid: 242
+  type: WallSolid
+  components:
+  - pos: 6.5,-9.5
+    parent: 0
+    type: Transform
+- uid: 243
+  type: WallSolid
+  components:
+  - pos: 6.5,-10.5
+    parent: 0
+    type: Transform
+- uid: 244
+  type: hydroponicsTray
+  components:
+  - pos: 0.5,-11.5
+    parent: 0
+    type: Transform
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 245
+  type: LockerBotanistFilled
+  components:
+  - pos: 1.5,-10.5
     parent: 0
     type: Transform
   - isPlaceable: False
@@ -2233,94 +2331,18 @@ entities:
       EntityStorageComponent: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 238
-  type: hydroponicsTray
-  components:
-  - pos: 2.5,-12.5
-    parent: 0
-    type: Transform
-  - containers:
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 239
-  type: Table
-  components:
-  - pos: 4.5,-11.5
-    parent: 0
-    type: Transform
-- uid: 240
-  type: hydroponicsTray
-  components:
-  - pos: 2.5,-11.5
-    parent: 0
-    type: Transform
-  - containers:
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 241
-  type: Table
-  components:
-  - pos: 6.5,-11.5
-    parent: 0
-    type: Transform
-- uid: 242
-  type: KitchenMicrowave
-  components:
-  - pos: 6.5,-11.5
-    parent: 0
-    type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 243
-  type: Table
-  components:
-  - pos: 5.5,-11.5
-    parent: 0
-    type: Transform
-- uid: 244
-  type: KitchenReagentGrinder
-  components:
-  - pos: 5.5,-11.5
-    parent: 0
-    type: Transform
-  - containers:
-      ReagentGrinder-reagentContainerContainer: !type:ContainerSlot {}
-      ReagentGrinder-entityContainerContainer: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 245
-  type: HydroponicsToolMiniHoe
-  components:
-  - pos: 4.901165,-11.371086
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 246
-  type: HydroponicsToolSpade
+  type: SpawnPointChef
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 4.66679,-11.480461
+  - pos: 3.5,-11.5
     parent: 0
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 247
-  type: HydroponicsToolHatchet
+  type: KitchenSpike
   components:
-  - pos: 4.276165,-11.558586
+  - pos: 8.5,-12.5
     parent: 0
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 248
   type: WallSolid
   components:
@@ -2344,6 +2366,8 @@ entities:
 - uid: 251
   type: AirlockServiceGlassLocked
   components:
+  - name: Bar
+    type: MetaData
   - pos: 7.5,-10.5
     parent: 0
     type: Transform
@@ -2376,14 +2400,15 @@ entities:
     parent: 0
     type: Transform
 - uid: 256
-  type: AirlockBarGlassLocked
+  type: Poweredlight
   components:
-  - pos: 5.5,-8.5
+  - pos: 1.5,-6.5
     parent: 0
     type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
   - containers:
-      board: !type:Container
-        ents: []
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 257
   type: soda_dispenser
@@ -2395,13 +2420,11 @@ entities:
       ReagentDispenser-reagentContainerContainer: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 258
-  type: VendingMachineBooze
+  type: TraitorDMRedemptionMachineSpawner
   components:
-  - pos: 6.5,-9.5
+  - pos: 7.5,-5.5
     parent: 0
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 259
   type: SpawnPointBartender
   components:
@@ -2728,17 +2751,14 @@ entities:
       BoltActionBarrel-chamber-container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 297
-  type: LockerAtmosphericsFilled
+  type: GasPipeBend
   components:
-  - pos: -1.5,-0.5
+  - rot: -1.5707963267948966 rad
+    pos: -1.5,-12.5
     parent: 0
     type: Transform
-  - isPlaceable: False
-    type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
+  - canCollide: False
+    type: Physics
 - uid: 298
   type: Table
   components:
@@ -3395,17 +3415,13 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 374
-  type: SalternApc
+  type: GasVentPump
   components:
-  - pos: 6.5,-10.5
+  - pos: -1.5,-6.5
     parent: 0
     type: Transform
-  - startingCharge: 12000
-    type: Battery
-  - loadingNetworkDemand: 55
-    currentReceiving: 55.01975
-    currentSupply: 55
-    type: PowerNetworkBattery
+  - canCollide: False
+    type: Physics
 - uid: 375
   type: CableApcExtension
   components:
@@ -3457,9 +3473,9 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 380
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 6.5,-10.5
+  - pos: -0.5,-7.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -3470,8 +3486,6 @@ entities:
   - pos: 6.5,-9.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 382
@@ -3540,14 +3554,13 @@ entities:
   - pos: 6.5,-9.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 389
-  type: CableMV
+  type: GasPipeTJunction
   components:
-  - pos: 6.5,-10.5
+  - rot: 1.5707963267948966 rad
+    pos: -1.5,-7.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -3559,11 +3572,14 @@ entities:
     parent: 0
     type: Transform
 - uid: 391
-  type: FirelockGlass
+  type: GasPipeStraight
   components:
-  - pos: 0.5,-9.5
+  - rot: -1.5707963267948966 rad
+    pos: -0.5,-7.5
     parent: 0
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 392
   type: SpawnPointCaptain
   components:
@@ -3577,9 +3593,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 394
-  type: SpawnPointBotanist
+  type: Table
   components:
-  - pos: 3.5,-12.5
+  - pos: 2.5,-12.5
     parent: 0
     type: Transform
 - uid: 395
@@ -3589,21 +3605,24 @@ entities:
     parent: 0
     type: Transform
 - uid: 396
-  type: SpawnPointChef
+  type: HydroponicsToolSpade
   components:
-  - pos: 5.5,-12.5
+  - pos: 2.2928503,-12.218507
     parent: 0
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 397
-  type: VendingMachineDinnerware
+  type: GasPipeBend
   components:
-  - name: Dinnerware
-    type: MetaData
-  - pos: 8.5,-12.5
+  - rot: 3.141592653589793 rad
+    pos: 0.5,-8.5
     parent: 0
     type: Transform
-  - enabled: False
-    type: AmbientSound
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
 - uid: 398
   type: SpawnPointChiefMedicalOfficer
   components:
@@ -3791,17 +3810,16 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 419
-  type: Poweredlight
+  type: GasPipeTJunction
   components:
-  - rot: 1.5707963267948966 rad
+  - rot: -1.5707963267948966 rad
     pos: 0.5,-7.5
     parent: 0
     type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
 - uid: 420
   type: Poweredlight
   components:
@@ -3815,17 +3833,13 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 421
-  type: Poweredlight
+  type: VendingMachineYouTool
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 0.5,-11.5
+  - pos: 8.5,-5.5
     parent: 0
     type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
+  - enabled: False
+    type: AmbientSound
 - uid: 422
   type: Poweredlight
   components:
@@ -3925,11 +3939,17 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 431
-  type: TraitorDMRedemptionMachineSpawner
+  type: hydroponicsTray
   components:
-  - pos: 8.5,-5.5
+  - pos: 0.5,-12.5
     parent: 0
     type: Transform
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 432
   type: SuspicionRevolverSpawner
   components:
@@ -3973,11 +3993,14 @@ entities:
     parent: 0
     type: Transform
 - uid: 439
-  type: SuspicionRevolverSpawner
+  type: HydroponicsToolMiniHoe
   components:
-  - pos: 7.5,-12.5
+  - rot: -1.5707963267948966 rad
+    pos: 2.3866003,-12.437257
     parent: 0
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 440
   type: AirCanister
   components:
@@ -4094,22 +4117,22 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 452
-  type: GasPipeTJunction
+  type: HydroponicsToolHatchet
   components:
-  - rot: 3.141592653589793 rad
-    pos: -1.5,-12.5
+  - rot: -1.5707963267948966 rad
+    pos: 2.7928503,-12.374757
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 453
-  type: GasVentPump
+  type: VendingMachineBooze
   components:
-  - pos: -1.5,-7.5
+  - pos: 6.5,-8.5
     parent: 0
     type: Transform
-  - canCollide: False
-    type: Physics
+  - enabled: False
+    type: AmbientSound
 - uid: 454
   type: GasVentPump
   components:
@@ -4120,27 +4143,17 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 455
-  type: GasPipeStraight
+  type: SuspicionRevolverSpawner
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -0.5,-12.5
+  - pos: 2.5,-12.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
 - uid: 456
-  type: GasPipeBend
+  type: WaterTankFull
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 0.5,-12.5
+  - pos: 3.4999998,-12.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
 - uid: 457
   type: GasPipeStraight
   components:
@@ -4170,35 +4183,23 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 460
-  type: GasPipeStraight
+  type: Table
   components:
-  - pos: 0.5,-11.5
+  - pos: 4.5,-12.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
 - uid: 461
-  type: GasPipeStraight
+  type: Table
   components:
-  - pos: 0.5,-10.5
+  - pos: 5.5,-12.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
 - uid: 462
-  type: GasPipeStraight
+  type: Table
   components:
-  - pos: 0.5,-9.5
+  - pos: 6.5,-12.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
 - uid: 463
   type: GasPipeTJunction
   components:
@@ -4455,26 +4456,15 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 487
-  type: GasPipeTJunction
+  type: KitchenMicrowave
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 0.5,-8.5
+  - pos: 6.5,-12.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 488
-  type: GasPipeStraight
-  components:
-  - pos: 0.5,-7.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
+  - containers:
+      microwave_entity_container: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 489
   type: GasVentPump
   components:
@@ -4587,4 +4577,10 @@ entities:
       machine_parts: !type:Container
         ents: []
     type: ContainerContainer
+- uid: 499
+  type: CrateNPCCow
+  components:
+  - pos: 0.5,-10.5
+    parent: 0
+    type: Transform
 ...
