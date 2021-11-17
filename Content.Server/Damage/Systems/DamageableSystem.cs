@@ -18,7 +18,7 @@ public class DamageableSystem : SharedDamageableSystem
         var old = damageable.TotalDamage;
         var change = amount - old;
 
-        _logs.Add(LogType.DamageChange, $"Entity {owner:Owner} received {change:DamageChange} damage. Old: {old:OldDamage} | New: {amount:NewDamage}");
+        _logs.Add(LogType.DamageChange, $"{owner:Owner} received {change:DamageChange} damage. Old: {old:OldDamage} | New: {amount:NewDamage}");
 
         base.SetTotalDamage(damageable, amount);
     }
