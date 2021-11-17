@@ -592,6 +592,11 @@ namespace Content.Server.Database
                 };
             }
 
+            if (filter.Limit != null)
+            {
+                query = query.Take(filter.Limit.Value);
+            }
+
             query = filter.DateOrder switch
             {
                 DateOrder.Ascending => query.OrderBy(log => log.Date),
