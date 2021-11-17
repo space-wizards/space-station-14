@@ -2,11 +2,11 @@
   name: holoparasite injector
   id: HoloparaInjector
   parent: BaseItem
-  description: A immesly complex artwork of handheld machinery, allowing the user to host a holoparasite guardian. Should come with an insturction manual.
+  description: A immensely complex artwork of handheld machinery, allowing the user to host a holoparasite guardian.
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/hypospray.rsi
-    state: bulky_hypo
+    state: combat_hypo
     netsync: false
   - type: GuardianCreator
     GuardianID: MobHoloparasite

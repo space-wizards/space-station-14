@@ -57,11 +57,11 @@
     range: 2
     arcwidth: 30
     arc: fist
-    cooldownTime: 0.2
-    arcCooldownTime: 0.2
+    cooldownTime: 0.5
+    arcCooldownTime: 0.5
     damage:
       types:
-        Blunt: 15
+        Blunt: 30
   - type: Actions
     innateActions:
       - CombatMode

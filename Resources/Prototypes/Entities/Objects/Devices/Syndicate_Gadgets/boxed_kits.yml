@@ -24,7 +24,7 @@
   parent: BoxBase
   id: BigSuspiciousBoxBase
   name: heavy suspicious box
-  description: A hefty box coloured in syndicate red-and-black style
+  description: A hefty box colored in syndicate red-and-black style
   components:
   - type: EmitSoundOnLand
     sound:
