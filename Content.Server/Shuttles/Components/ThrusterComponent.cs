@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Content.Server.Shuttles.EntitySystems;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
@@ -47,11 +48,17 @@ namespace Content.Server.Shuttles.Components
 
         [ViewVariables]
         [DataField("impulse")]
-        public float Impulse = 2.5f;
+        public float Impulse = 3f;
 
         [ViewVariables]
-        [DataField("type")]
+        [DataField("thrusterType")]
         public ThrusterType Type = ThrusterType.Linear;
+
+        // Used for burns
+
+        public List<EntityUid> Colliding = new();
+
+        public bool Firing = false;
     }
 
     public enum ThrusterType

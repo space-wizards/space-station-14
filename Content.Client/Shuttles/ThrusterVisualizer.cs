@@ -20,18 +20,39 @@ namespace Content.Client.Shuttles
 
                     if (component.TryGetData(ThrusterVisualState.Thrusting, out bool thrusting) && thrusting)
                     {
-                        spriteComponent.LayerSetVisible(ThrusterVisualLayers.Thrusting, true);
+                        if (spriteComponent.LayerMapTryGet(ThrusterVisualLayers.Thrusting, out _))
+                        {
+                            spriteComponent.LayerSetVisible(ThrusterVisualLayers.Thrusting, true);
+                        }
+
+                        if (spriteComponent.LayerMapTryGet(ThrusterVisualLayers.ThrustingUnshaded, out _))
+                        {
+                            spriteComponent.LayerSetVisible(ThrusterVisualLayers.ThrustingUnshaded, true);
+                        }
                     }
                     else
                     {
-                        spriteComponent.LayerSetVisible(ThrusterVisualLayers.Thrusting, false);
+                        DisableThrusting(component, spriteComponent);
                     }
 
                     break;
                 case false:
                     spriteComponent.LayerSetVisible(ThrusterVisualLayers.ThrustOn, false);
-                    spriteComponent.LayerSetVisible(ThrusterVisualLayers.Thrusting, false);
+                    DisableThrusting(component, spriteComponent);
                     break;
+            }
+        }
+
+        private void DisableThrusting(AppearanceComponent component, SpriteComponent spriteComponent)
+        {
+            if (spriteComponent.LayerMapTryGet(ThrusterVisualLayers.Thrusting, out _))
+            {
+                spriteComponent.LayerSetVisible(ThrusterVisualLayers.Thrusting, false);
+            }
+
+            if (spriteComponent.LayerMapTryGet(ThrusterVisualLayers.ThrustingUnshaded, out _))
+            {
+                spriteComponent.LayerSetVisible(ThrusterVisualLayers.ThrustingUnshaded, false);
             }
         }
     }
@@ -40,6 +61,7 @@ namespace Content.Client.Shuttles
     {
         Base,
         ThrustOn,
-        Thrusting
+        Thrusting,
+        ThrustingUnshaded,
     }
 }

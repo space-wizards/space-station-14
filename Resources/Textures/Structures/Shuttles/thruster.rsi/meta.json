@@ -46,7 +46,7 @@
       ]
     },
     {
-      "name": "thrust_burn",
+      "name": "thrust_burn_unshaded",
       "directions": 4,
       "delays": [
         [

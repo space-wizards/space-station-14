@@ -20,6 +20,11 @@ namespace Content.Server.Shuttles.Components
         /// </summary>
         public readonly List<ThrusterComponent>[] LinearThrusters = new List<ThrusterComponent>[4];
 
+        /// <summary>
+        /// The thrusters contributing to the angular impulse of the shuttle.
+        /// </summary>
+        public readonly List<ThrusterComponent> AngularThrusters = new List<ThrusterComponent>();
+
         [ViewVariables]
         public float AngularThrust = 0f;
 

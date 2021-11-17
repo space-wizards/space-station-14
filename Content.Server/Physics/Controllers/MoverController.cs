@@ -91,7 +91,7 @@ namespace Content.Server.Physics.Controllers
 
             // ShuttleSystem has already worked out the ratio so we'll just multiply it back by the mass.
             var movement = mover.VelocityDir.walking + mover.VelocityDir.sprinting;
-            var system = EntitySystem.Get<ShuttleSystem>();
+            var system = EntitySystem.Get<ThrusterSystem>();
 
             if (movement.Length.Equals(0f))
             {
@@ -161,7 +161,7 @@ namespace Content.Server.Physics.Controllers
                         system.DisableThrustDirection(shuttleComponent, DirectionFlag.West);
                         system.DisableThrustDirection(shuttleComponent, DirectionFlag.East);
                     }
-                    else if (angularSpeed != 0f)
+                    else if (movement.X != 0f)
                     {
                         physicsComponent.ApplyAngularImpulse(-movement.X * angularSpeed);
 

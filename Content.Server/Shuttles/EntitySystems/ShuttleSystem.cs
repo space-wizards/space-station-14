@@ -1,19 +1,15 @@
-using System;
 using System.Collections.Generic;
 using Content.Server.Shuttles.Components;
-using Content.Shared.Shuttles.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.EntitySystems
 {
     [UsedImplicitly]
     internal sealed class ShuttleSystem : EntitySystem
     {
-        private const float TileMassMultiplier = 1f;
+        private const float TileMassMultiplier = 4f;
 
         public override void Initialize()
         {
@@ -24,54 +20,6 @@ namespace Content.Server.Shuttles.EntitySystems
 
             SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
             SubscribeLocalEvent<GridFixtureChangeEvent>(OnGridFixtureChange);
-        }
-
-        /// <summary>
-        /// Considers a thrust direction as being active for visualization purposes.
-        /// </summary>
-        public void EnableThrustDirection(ShuttleComponent component, DirectionFlag direction)
-        {
-            if ((component.ThrustDirections & direction) != 0x0) return;
-
-            component.ThrustDirections |= direction;
-            var index = (int) Math.Log2((int) direction);
-
-            foreach (var comp in component.LinearThrusters[index])
-            {
-                if (!EntityManager.TryGetComponent(comp.OwnerUid, out SharedAppearanceComponent? appearanceComponent))
-                    continue;
-
-                appearanceComponent.SetData(ThrusterVisualState.Thrusting, true);
-            }
-        }
-
-        /// <summary>
-        /// Disables a thrust direction for visualization purposes.
-        /// </summary>
-        public void DisableThrustDirection(ShuttleComponent component, DirectionFlag direction)
-        {
-            if ((component.ThrustDirections & direction) == 0x0) return;
-
-            component.ThrustDirections &= ~direction;
-            var index = (int) Math.Log2((int) direction);
-
-            foreach (var comp in component.LinearThrusters[index])
-            {
-                if (!EntityManager.TryGetComponent(comp.OwnerUid, out SharedAppearanceComponent? appearanceComponent))
-                    continue;
-
-                appearanceComponent.SetData(ThrusterVisualState.Thrusting, false);
-            }
-        }
-
-        public void DisableAllThrustDirections(ShuttleComponent component)
-        {
-            foreach (DirectionFlag dir in Enum.GetValues(typeof(DirectionFlag)))
-            {
-                DisableThrustDirection(component, dir);
-            }
-
-            DebugTools.Assert(component.ThrustDirections == DirectionFlag.None);
         }
 
         private void OnShuttleAdd(EntityUid uid, ShuttleComponent component, ComponentAdd args)
