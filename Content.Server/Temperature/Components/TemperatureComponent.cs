@@ -61,6 +61,6 @@ namespace Content.Server.Temperature.Components
         /// </summary>
         [DataField("damageCap")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public FixedPoint2 DamageCap = FixedPoint2.New(15);
+        public FixedPoint2 DamageCap = FixedPoint2.New(8);
     }
 }
