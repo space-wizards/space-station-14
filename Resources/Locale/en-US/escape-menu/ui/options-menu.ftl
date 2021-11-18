@@ -11,6 +11,7 @@ ui-options-reset-all = Reset All
 ## Audio menu
 
 ui-options-master-volume = Master Volume:
+ui-options-midi-volume = MIDI (Instrument) Volume:
 ui-options-ambient-hum = Ambient Hum
 ui-options-lobby-music = Lobby Music
 ui-options-volume-label = Volume

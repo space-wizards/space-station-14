@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Content.Shared.Body.Metabolism;
+using Content.Shared.Body.Prototypes;
 using Content.Shared.Botany;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
@@ -106,7 +106,7 @@ namespace Content.Shared.Chemistry.Reagent
             return removed;
         }
 
-        public void ReactionPlant(EntityUid? plantHolder, Solution.ReagentQuantity amount)
+        public void ReactionPlant(EntityUid? plantHolder, Solution.ReagentQuantity amount, Solution solution)
         {
             if (plantHolder == null)
                 return;
@@ -114,7 +114,9 @@ namespace Content.Shared.Chemistry.Reagent
             var entMan = IoCManager.Resolve<IEntityManager>();
             foreach (var plantMetabolizable in _plantMetabolism)
             {
-                plantMetabolizable.Metabolize(plantHolder.Value, plantHolder.Value, amount, entMan);
+                plantMetabolizable.Metabolize(
+                    new ReagentEffectArgs(plantHolder.Value, null, solution, this, amount.Quantity, entMan, null)
+                    );
             }
         }
     }

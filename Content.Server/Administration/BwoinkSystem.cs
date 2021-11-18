@@ -10,8 +10,10 @@ using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
 using Robust.Shared.Network;
+using Robust.Shared.Localization;
 using Robust.Server.Player;
 using Robust.Shared.IoC;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Administration
 {
@@ -28,26 +30,43 @@ namespace Content.Server.Administration
 
             // TODO: Sanitize text?
             // Confirm that this person is actually allowed to send a message here.
-            if ((senderSession.UserId != message.ChannelId) && (_adminManager.GetAdminData(senderSession) == null))
+            var senderPersonalChannel = senderSession.UserId == message.ChannelId;
+            var senderAdmin = _adminManager.GetAdminData(senderSession) != null;
+            var authorized = senderPersonalChannel || senderAdmin;
+            if (!authorized)
             {
                 // Unauthorized bwoink (log?)
                 return;
             }
 
-            var msg = new BwoinkTextMessage(message.ChannelId, senderSession.UserId, $"{senderSession.Name}: {message.Text}");
+            var escapedText = FormattedMessage.EscapeText(message.Text);
+
+            var bwoinkText = senderAdmin
+                ? $"[color=red]{senderSession.Name}[/color]: {escapedText}"
+                : $"{senderSession.Name}: {escapedText}";
+            var msg = new BwoinkTextMessage(message.ChannelId, senderSession.UserId, bwoinkText);
 
             LogBwoink(msg);
 
-            var targets = _adminManager.ActiveAdmins.Select(p => p.ConnectedClient);
-
             // Admins
-            foreach (var channel in targets)
-                RaiseNetworkEvent(msg, channel);
+            var targets = _adminManager.ActiveAdmins.Select(p => p.ConnectedClient).ToList();
 
             // And involved player
             if (_playerManager.TryGetSessionById(message.ChannelId, out var session))
                 if (!targets.Contains(session.ConnectedClient))
-                    RaiseNetworkEvent(msg, session.ConnectedClient);
+                    targets.Add(session.ConnectedClient);
+
+            foreach (var channel in targets)
+                RaiseNetworkEvent(msg, channel);
+
+            if (targets.Count == 1)
+            {
+                var systemText = senderPersonalChannel ?
+                    Loc.GetString("bwoink-system-starmute-message-no-other-users-primary") :
+                    Loc.GetString("bwoink-system-starmute-message-no-other-users-secondary");
+                var starMuteMsg = new BwoinkTextMessage(message.ChannelId, SystemUserId, systemText);
+                RaiseNetworkEvent(starMuteMsg, senderSession.ConnectedClient);
+            }
         }
     }
 }

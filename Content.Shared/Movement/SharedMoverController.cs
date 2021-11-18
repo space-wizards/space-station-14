@@ -68,17 +68,18 @@ namespace Content.Shared.Movement
             var (walkDir, sprintDir) = mover.VelocityDir;
 
             var transform = mover.Owner.Transform;
+            var parentRotation = transform.Parent!.WorldRotation;
 
             // Regular movement.
             // Target velocity.
             var total = walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed;
 
-            var worldTotal = _relativeMovement ? transform.Parent!.WorldRotation.RotateVec(total) : total;
+            var worldTotal = _relativeMovement ? parentRotation.RotateVec(total) : total;
 
             if (transform.GridID == GridId.Invalid)
                 worldTotal = mover.LastGridAngle.RotateVec(worldTotal);
             else
-                mover.LastGridAngle = transform.Parent!.WorldRotation;
+                mover.LastGridAngle = parentRotation;
 
             if (worldTotal != Vector2.Zero)
                 transform.WorldRotation = worldTotal.GetDir().ToAngle();
@@ -118,6 +119,7 @@ namespace Content.Shared.Movement
                 {
                     if (transform.GridID != GridId.Invalid)
                         mover.LastGridAngle = transform.Parent!.WorldRotation;
+
                     transform.WorldRotation = physicsComponent.LinearVelocity.GetDir().ToAngle();
                     return;
                 }
@@ -128,7 +130,9 @@ namespace Content.Shared.Movement
             // This is relative to the map / grid we're on.
             var total = walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed;
 
-            var worldTotal = _relativeMovement ? transform.Parent!.WorldRotation.RotateVec(total) : total;
+            var parentRotation = transform.Parent!.WorldRotation;
+
+            var worldTotal = _relativeMovement ? parentRotation.RotateVec(total) : total;
 
             DebugTools.Assert(MathHelper.CloseToPercent(total.Length, worldTotal.Length));
 
@@ -138,7 +142,7 @@ namespace Content.Shared.Movement
             if (transform.GridID == GridId.Invalid)
                 worldTotal = mover.LastGridAngle.RotateVec(worldTotal);
             else
-                mover.LastGridAngle = transform.Parent!.WorldRotation;
+                mover.LastGridAngle = parentRotation;
 
             if (worldTotal != Vector2.Zero)
             {

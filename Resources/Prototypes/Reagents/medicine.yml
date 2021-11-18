@@ -42,8 +42,9 @@
       effects:
       - !type:HealthChange
         damage:
+          types:
+            Radiation: -3
           groups:
-            Toxin: -1
             Brute: 0.5
 
 - type: reagent
@@ -153,6 +154,13 @@
   desc: A weak treatment for radiation damage. Considered to be useful mainly for genetic modification, where it reduces radiation levels, and thus the chance of genetic mutations. Largely outclassed by Arithrazine.
   physicalDesc: cloudy
   color: "#4cb580"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Radiation: -1
 
 - type: reagent
   id: Imidazoline

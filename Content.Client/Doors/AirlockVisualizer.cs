@@ -30,6 +30,9 @@ namespace Content.Client.Doors
         [DataField("animatedPanel")]
         private bool _animatedPanel = true;
 
+        /// <summary>
+        /// Means the door is simply open / closed / opening / closing. No wires or access.
+        /// </summary>
         [DataField("simpleVisuals")]
         private bool _simpleVisuals = false;
 
@@ -158,7 +161,8 @@ namespace Content.Client.Doors
                     animPlayer.Play(CloseAnimation, AnimationKey);
                     break;
                 case DoorVisualState.Deny:
-                    animPlayer.Play(DenyAnimation, AnimationKey);
+                    if (!animPlayer.HasRunningAnimation(AnimationKey))
+                        animPlayer.Play(DenyAnimation, AnimationKey);
                     break;
                 case DoorVisualState.Welded:
                     weldedVisible = true;
@@ -178,7 +182,7 @@ namespace Content.Client.Doors
 
             if (!_simpleVisuals)
             {
-                sprite.LayerSetVisible(DoorVisualLayers.BaseUnlit, unlitVisible);
+                sprite.LayerSetVisible(DoorVisualLayers.BaseUnlit, unlitVisible && state != DoorVisualState.Closed);
                 sprite.LayerSetVisible(DoorVisualLayers.BaseWelded, weldedVisible);
                 sprite.LayerSetVisible(DoorVisualLayers.BaseBolted, unlitVisible && boltedVisible);
             }

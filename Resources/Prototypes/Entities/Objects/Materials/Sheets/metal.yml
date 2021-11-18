@@ -49,6 +49,7 @@
   - type: Sprite
     state: steel
   - type: Stack
+    stackType: Steel
     count: 1
 
 - type: entity
@@ -83,6 +84,7 @@
   - type: Sprite
     state: plasteel
   - type: Stack
+    stackType: Plasteel
     count: 1
 
 - type: entity
@@ -117,6 +119,7 @@
   - type: Sprite
     state: titanium
   - type: Stack
+    stackType: Titanium
     count: 1
 
 - type: entity
@@ -151,6 +154,7 @@
   - type: Sprite
     state: plastitanium
   - type: Stack
+    stackType: Plastitanium
     count: 1
 
 - type: entity
@@ -185,4 +189,5 @@
   - type: Sprite
     state: brass
   - type: Stack
+    stackType: Brass
     count: 1

@@ -4,6 +4,7 @@ using System.Globalization;
 using Content.Server.Access.Components;
 using Content.Server.Access.Systems;
 using Content.Server.CharacterAppearance.Components;
+using Content.Server.Ghost;
 using Content.Server.Ghost.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Inventory.Components;
@@ -70,17 +71,18 @@ namespace Content.Server.GameTicking
             DebugTools.AssertNotNull(data);
 
             data!.WipeMind();
-            data.Mind = new Mind.Mind(player.UserId)
+            var newMind = new Mind.Mind(data.UserId)
             {
                 CharacterName = character.Name
             };
+            newMind.ChangeOwningPlayer(data.UserId);
 
             // Pick best job best on prefs.
             jobId ??= PickBestAvailableJob(character);
 
             var jobPrototype = _prototypeManager.Index<JobPrototype>(jobId);
-            var job = new Job(data.Mind, jobPrototype);
-            data.Mind.AddRole(job);
+            var job = new Job(newMind, jobPrototype);
+            newMind.AddRole(job);
 
             if (lateJoin)
             {
@@ -92,7 +94,7 @@ namespace Content.Server.GameTicking
             }
 
             var mob = SpawnPlayerMob(job, character, lateJoin);
-            data.Mind.TransferTo(mob);
+            newMind.TransferTo(mob.Uid);
 
             if (player.UserId == new Guid("{e887eb93-f503-4b65-95b6-2f282c014192}"))
             {
@@ -150,13 +152,15 @@ namespace Content.Server.GameTicking
             DebugTools.AssertNotNull(data);
 
             data!.WipeMind();
-            data.Mind = new Mind.Mind(player.UserId);
+            var newMind = new Mind.Mind(data.UserId);
+            newMind.ChangeOwningPlayer(data.UserId);
+            newMind.AddRole(new ObserverRole(newMind));
 
             var mob = SpawnObserverMob();
             mob.Name = name;
             var ghost = mob.GetComponent<GhostComponent>();
             EntitySystem.Get<SharedGhostSystem>().SetCanReturnToBody(ghost, false);
-            data.Mind.TransferTo(mob);
+            newMind.TransferTo(mob.Uid);
 
             _playersInLobby[player] = LobbyPlayerStatus.Observer;
             RaiseNetworkEvent(GetStatusSingle(player, LobbyPlayerStatus.Observer));

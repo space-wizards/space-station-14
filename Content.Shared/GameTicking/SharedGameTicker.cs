@@ -128,6 +128,7 @@ namespace Content.Shared.GameTicking
             public string Role;
             public bool Antag;
             public bool Observer;
+            public bool Connected;
         }
 
         public string GamemodeTitle { get; }

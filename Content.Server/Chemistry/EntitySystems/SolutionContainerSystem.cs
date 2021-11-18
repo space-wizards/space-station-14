@@ -215,7 +215,7 @@ namespace Content.Server.Chemistry.EntitySystems
             [NotNullWhen(true)] out Solution? solution,
             SolutionContainerManagerComponent? solutionsMgr = null)
         {
-            if (!Resolve(uid, ref solutionsMgr))
+            if (!Resolve(uid, ref solutionsMgr, false))
             {
                 solution = null;
                 return false;

@@ -22,7 +22,6 @@ namespace Content.Server.Database
 
         public DbSet<PostgresServerBan> Ban { get; set; } = default!;
         public DbSet<PostgresServerUnban> Unban { get; set; } = default!;
-        public DbSet<PostgresPlayer> Player { get; set; } = default!;
         public DbSet<PostgresConnectionLog> ConnectionLog { get; set; } = default!;
 
 
@@ -70,16 +69,16 @@ namespace Content.Server.Database
                 .HasCheckConstraint("AddressNotIPv6MappedIPv4", "NOT inet '::ffff:0.0.0.0/96' >>= address")
                 .HasCheckConstraint("HaveEitherAddressOrUserIdOrHWId", "address IS NOT NULL OR user_id IS NOT NULL OR hwid IS NOT NULL");
 
-            modelBuilder.Entity<PostgresPlayer>()
+            modelBuilder.Entity<Player>()
                 .HasIndex(p => p.UserId)
                 .IsUnique();
 
             // ReSharper disable once StringLiteralTypo
-            modelBuilder.Entity<PostgresPlayer>()
+            modelBuilder.Entity<Player>()
                 .HasCheckConstraint("LastSeenAddressNotIPv6MappedIPv4",
                     "NOT inet '::ffff:0.0.0.0/96' >>= last_seen_address");
 
-            modelBuilder.Entity<PostgresPlayer>()
+            modelBuilder.Entity<Player>()
                 .HasIndex(p => p.LastSeenUserName);
 
             modelBuilder.Entity<PostgresConnectionLog>()
@@ -129,25 +128,6 @@ namespace Content.Server.Database
         public Guid? UnbanningAdmin { get; set; }
 
         public DateTime UnbanTime { get; set; }
-    }
-
-    [Table("player")]
-    public class PostgresPlayer
-    {
-        public int Id { get; set; }
-
-        // Permanent data
-        public Guid UserId { get; set; }
-
-        public DateTime FirstSeenTime { get; set; }
-
-        // Data that gets updated on each join.
-        public string LastSeenUserName { get; set; } = null!;
-
-        public DateTime LastSeenTime { get; set; }
-
-        public IPAddress LastSeenAddress { get; set; } = null!;
-        public byte[]? LastSeenHWId { get; set; }
     }
 
     [Table("connection_log")]

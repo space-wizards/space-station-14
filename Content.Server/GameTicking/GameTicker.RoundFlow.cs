@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Players;
+using Content.Server.Mind;
+using Content.Server.Ghost;
 using Content.Shared.CCVar;
 using Content.Shared.Coordinates;
 using Content.Shared.GameTicking;
@@ -210,29 +212,50 @@ namespace Content.Server.GameTicking
 
             //Generate a list of basic player info to display in the end round summary.
             var listOfPlayerInfo = new List<RoundEndMessageEvent.RoundEndPlayerInfo>();
-            foreach (var ply in _playerManager.GetAllPlayers().OrderBy(p => p.Name))
+            // Grab the great big book of all the Minds, we'll need them for this.
+            var allMinds = EntitySystem.Get<MindTrackerSystem>().AllMinds;
+            foreach (var mind in allMinds)
             {
-                var mind = ply.ContentData()?.Mind;
-
                 if (mind != null)
                 {
-                    _playersInLobby.TryGetValue(ply, out var status);
+                    // Some basics assuming things fail
+                    var userId = mind.OriginalOwnerUserId;
+                    var playerOOCName = userId.ToString();
+                    var connected = false;
+                    var observer = mind.AllRoles.Any(role => role is ObserverRole);
+                    // Continuing
+                    if (_playerManager.TryGetSessionById(userId, out var ply))
+                    {
+                        connected = true;
+                    }
+                    PlayerData? contentPlayerData = null;
+                    if (_playerManager.TryGetPlayerData(userId, out var playerData))
+                    {
+                        contentPlayerData = playerData.ContentData();
+                    }
+                    // Finish
                     var antag = mind.AllRoles.Any(role => role.Antagonist);
                     var playerEndRoundInfo = new RoundEndMessageEvent.RoundEndPlayerInfo()
                     {
-                        PlayerOOCName = ply.Name,
-                        PlayerICName = mind.CurrentEntity?.Name,
+                        // Note that contentPlayerData?.Name sticks around after the player is disconnected.
+                        // This is as opposed to ply?.Name which doesn't.
+                        PlayerOOCName = contentPlayerData?.Name ?? "(IMPOSSIBLE: REGISTERED MIND WITH NO OWNER)",
+                        // Character name takes precedence over current entity name
+                        PlayerICName = mind.CharacterName ?? mind.CurrentEntity?.Name,
                         Role = antag
                             ? mind.AllRoles.First(role => role.Antagonist).Name
                             : mind.AllRoles.FirstOrDefault()?.Name ?? Loc.GetString("game-ticker-unknown-role"),
                         Antag = antag,
-                        Observer = status == LobbyPlayerStatus.Observer,
+                        Observer = observer,
+                        Connected = connected
                     };
                     listOfPlayerInfo.Add(playerEndRoundInfo);
                 }
             }
+            // This ordering mechanism isn't great (no ordering of minds) but functions
+            var listOfPlayerInfoFinal = listOfPlayerInfo.OrderBy(pi => pi.PlayerOOCName).ToArray();
 
-            RaiseNetworkEvent(new RoundEndMessageEvent(gamemodeTitle, roundEndText, roundDuration, listOfPlayerInfo.Count, listOfPlayerInfo.ToArray()));
+            RaiseNetworkEvent(new RoundEndMessageEvent(gamemodeTitle, roundEndText, roundDuration, listOfPlayerInfoFinal.Length, listOfPlayerInfoFinal));
         }
 
         public void RestartRound()

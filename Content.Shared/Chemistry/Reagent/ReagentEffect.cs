@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -21,6 +22,23 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField("conditions")]
         public ReagentEffectCondition[]? Conditions;
 
-        public abstract void Metabolize(EntityUid solutionEntity, EntityUid organEntity, Solution.ReagentQuantity reagent, IEntityManager entityManager);
+        public abstract void Metabolize(ReagentEffectArgs args);
     }
+
+    public enum ReactionMethod
+    {
+        Touch,
+        Injection,
+        Ingestion,
+    }
+
+    public readonly record struct ReagentEffectArgs(
+        EntityUid SolutionEntity,
+        EntityUid? OrganEntity,
+        Solution? Source,
+        ReagentPrototype Reagent,
+        FixedPoint2 Metabolizing,
+        IEntityManager EntityManager,
+        ReactionMethod? Method
+    );
 }
