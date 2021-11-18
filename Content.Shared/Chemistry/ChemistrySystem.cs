@@ -50,24 +50,10 @@ namespace Content.Shared.Chemistry
 
                 foreach (var effect in entry.Effects)
                 {
-                    if (_robustRandom.Prob(effect.Probability))
-                        continue;
-
-                    bool failed = false;
-                    foreach (var cond in effect.Conditions ?? new ReagentEffectCondition[] { })
-                    {
-                        if (!cond.Condition(args))
-                            failed = true;
-                    }
-
-                    if (failed)
+                    if (!effect.ShouldApply(args, _robustRandom))
                         continue;
 
                     effect.Metabolize(args);
-
-                    // Make sure we still have enough reagent to go...
-                    if (source != null && !source.ContainsReagent(reagent.ID))
-                        break;
                 }
             }
         }

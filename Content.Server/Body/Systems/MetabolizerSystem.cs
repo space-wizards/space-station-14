@@ -155,21 +155,8 @@ namespace Content.Server.Body.Systems
                     // do all effects, if conditions apply
                     foreach (var effect in entry.Effects)
                     {
-                        if (effect.Probability < 1.0f && !_random.Prob(effect.Probability))
+                        if (!effect.ShouldApply(args, _random))
                             continue;
-
-                        bool failed = false;
-                        if (effect.Conditions != null)
-                        {
-                            foreach (var cond in effect.Conditions)
-                            {
-                                if (!cond.Condition(args))
-                                    failed = true;
-                            }
-
-                            if (failed)
-                                continue;
-                        }
 
                         effect.Metabolize(args);
                     }

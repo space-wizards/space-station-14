@@ -4,6 +4,8 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Chemistry.Reagent
@@ -29,6 +31,35 @@ namespace Content.Shared.Chemistry.Reagent
         public float Probability = 1.0f;
 
         public abstract void Metabolize(ReagentEffectArgs args);
+    }
+
+    public static class ReagentEffectExt
+    {
+        public static bool ShouldApply(this ReagentEffect effect, ReagentEffectArgs args,
+            IRobustRandom? random = null)
+        {
+            if (random == null)
+                random = IoCManager.Resolve<IRobustRandom>();
+
+
+            // Make sure we still have enough reagent to go...
+            if (args.Source != null && !args.Source.ContainsReagent(args.Reagent.ID))
+                return false;
+
+            if (effect.Probability < 1.0f && !random.Prob(effect.Probability))
+                return false;
+
+            if (effect.Conditions != null)
+            {
+                foreach (var cond in effect.Conditions)
+                {
+                    if (!cond.Condition(args))
+                        return false;
+                }
+            }
+
+            return true;
+        }
     }
 
     public enum ReactionMethod

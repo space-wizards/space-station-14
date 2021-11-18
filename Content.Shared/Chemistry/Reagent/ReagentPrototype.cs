@@ -113,20 +113,11 @@ namespace Content.Shared.Chemistry.Reagent
                 return;
 
             var entMan = IoCManager.Resolve<IEntityManager>();
+            var random = IoCManager.Resolve<IRobustRandom>();
             var args = new ReagentEffectArgs(plantHolder.Value, null, solution, this, amount.Quantity, entMan, null);
             foreach (var plantMetabolizable in _plantMetabolism)
             {
-                if (!IoCManager.Resolve<IRobustRandom>().Prob(plantMetabolizable.Probability))
-                    continue;
-                bool failed = false;
-
-                foreach (var cond in plantMetabolizable.Conditions ?? new ReagentEffectCondition[] {})
-                {
-                    if (!cond.Condition(args))
-                        failed = true;
-                }
-
-                if (failed)
+                if (!plantMetabolizable.ShouldApply(args, random))
                     continue;
 
                 plantMetabolizable.Metabolize(args);
