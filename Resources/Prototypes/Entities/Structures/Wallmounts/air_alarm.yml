@@ -54,7 +54,6 @@
         airAlarmBase: alarmp
     - type: WiresVisualizer
   - type: Sprite
-    drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/air_monitors.rsi
     layers:
     - state: alarm0

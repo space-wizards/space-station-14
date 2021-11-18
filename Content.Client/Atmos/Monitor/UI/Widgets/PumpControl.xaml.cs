@@ -19,7 +19,7 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
         public event Action<string, IAtmosDeviceData>? PumpDataChanged;
 
         private CheckBox _enabled => CEnableDevice;
-        private Label _addressLabel => CAddress;
+        private CollapsibleHeading _addressLabel => CAddress;
         private OptionButton _pumpDirection => CPumpDirection;
         private OptionButton _pressureCheck => CPressureCheck;
         private FloatSpinBox _externalBound => CExternalBound;
@@ -34,7 +34,7 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
             _data = data;
             _address = address;
 
-            _addressLabel.Text = Loc.GetString("air-alarm-ui-atmos-net-device-label", ("address", $"{address}"));
+            _addressLabel.Title = Loc.GetString("air-alarm-ui-atmos-net-device-label", ("address", $"{address}"));
 
             _enabled.Pressed = data.Enabled;
             _enabled.OnToggled += _ =>

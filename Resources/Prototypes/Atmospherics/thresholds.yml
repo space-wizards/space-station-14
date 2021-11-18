@@ -14,12 +14,12 @@
 
 - type: alarmThreshold
   id: stationOxygen
-  lowerBound: 0.10
+  lowerBound: 0.0010
   lowerWarnAround: 1.5
 
 - type: alarmThreshold
   id: stationCO2
-  upperBound: 0.25
+  upperBound: 0.0025
   upperWarnAround: 0.5
 
 - type: alarmThreshold
@@ -28,4 +28,4 @@
 
 - type: alarmThreshold
   id: danger # just any gas you don't want at all
-  upperBound: 0.01
+  upperBound: 0.0001

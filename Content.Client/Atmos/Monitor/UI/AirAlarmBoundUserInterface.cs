@@ -75,5 +75,12 @@ namespace Content.Client.Atmos.Monitor.UI
                     break;
             }
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            if (disposing) _window?.Dispose();
+        }
     }
 }

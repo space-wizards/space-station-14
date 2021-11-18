@@ -20,7 +20,7 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
 
         public event Action<AtmosMonitorThresholdType, AtmosAlarmThreshold, Gas?>? ThresholdDataChanged;
 
-        private Label _name => CName;
+        private CollapsibleHeading _name => CName;
         private CheckBox _ignore => CIgnore;
         private BoxContainer _dangerBounds => CDangerBounds;
         private BoxContainer _warningBounds => CWarningBounds;
@@ -40,7 +40,7 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
             _type = type;
             _gas = gas;
 
-            _name.Text = name;
+            _name.Title = name;
 
             // i miss rust macros
 
@@ -135,6 +135,7 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
                 _threshold.Ignore = args.Pressed;
                 ThresholdDataChanged!.Invoke(_type, _threshold, _gas);
             };
+            _ignore.Pressed = _threshold.Ignore;
         }
 
         public void UpdateThresholdData(AtmosAlarmThreshold threshold)
@@ -143,6 +144,7 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
             _lowerBoundControl.SetValue(threshold.LowerBound);
             _upperWarningBoundControl.SetValue(threshold.UpperWarningBound);
             _lowerWarningBoundControl.SetValue(threshold.LowerWarningBound);
+            _ignore.Pressed = threshold.Ignore;
         }
 
 
