@@ -1,9 +1,12 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Content.Server.Alert;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Temperature.Components;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
+using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
@@ -14,11 +17,46 @@ namespace Content.Server.Temperature.Systems
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
+        /// <summary>
+        ///     All the components that will have their damage updated at the end of the tick.
+        ///     This is done because both AtmosExposed and Flammable call ReceiveHeat in the same tick, meaning
+        ///     that we need some mechanism to ensure it doesn't double dip on damage for both calls.
+        /// </summary>
+        public HashSet<TemperatureComponent> ShouldUpdateDamage = new();
+
+        public float UpdateInterval = 1.0f;
+
+        private float _accumulatedFrametime = 0.0f;
+
         public override void Initialize()
         {
-            SubscribeLocalEvent<TemperatureComponent, OnTemperatureChangeEvent>(ChangeDamage);
+            SubscribeLocalEvent<TemperatureComponent, OnTemperatureChangeEvent>(EnqueueDamage);
             SubscribeLocalEvent<TemperatureComponent, AtmosExposedUpdateEvent>(OnAtmosExposedUpdate);
             SubscribeLocalEvent<ServerAlertsComponent, OnTemperatureChangeEvent>(ServerAlert);
+        }
+
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+
+            _accumulatedFrametime += frameTime;
+
+            if (_accumulatedFrametime < UpdateInterval)
+                return;
+            _accumulatedFrametime -= UpdateInterval;
+
+            if (!ShouldUpdateDamage.Any())
+                return;
+
+            foreach (var comp in ShouldUpdateDamage)
+            {
+                if (comp.Deleted || comp.Paused)
+                    continue;
+
+                ChangeDamage(comp.OwnerUid, comp);
+            }
+
+            ShouldUpdateDamage.Clear();
         }
 
         public void ForceChangeTemperature(EntityUid uid, float temp, TemperatureComponent? temperature = null)
@@ -105,22 +143,26 @@ namespace Content.Server.Temperature.Systems
             }
         }
 
-        private void ChangeDamage(EntityUid uid, TemperatureComponent temperature, OnTemperatureChangeEvent args)
+        private void EnqueueDamage(EntityUid uid, TemperatureComponent component, OnTemperatureChangeEvent args)
+        {
+            ShouldUpdateDamage.Add(component);
+        }
+
+        private void ChangeDamage(EntityUid uid, TemperatureComponent temperature)
         {
             if (!EntityManager.TryGetComponent<DamageableComponent>(uid, out var damage))
                 return;
 
-            if (args.CurrentTemperature >= temperature.HeatDamageThreshold)
+            if (temperature.CurrentTemperature >= temperature.HeatDamageThreshold)
             {
-                int tempDamage = (int) Math.Floor((args.CurrentTemperature - temperature.HeatDamageThreshold) * temperature.TempDamageCoefficient);
+                var tempDamage = FixedPoint2.Min(temperature.CurrentTemperature - temperature.HeatDamageThreshold * temperature.TempDamageCoefficient, temperature.DamageCap);
                 _damageableSystem.TryChangeDamage(uid, temperature.HeatDamage * tempDamage);
             }
-            else if (args.CurrentTemperature <= temperature.ColdDamageThreshold)
+            else if (temperature.CurrentTemperature <= temperature.ColdDamageThreshold)
             {
-                int tempDamage = (int) Math.Floor((temperature.ColdDamageThreshold - args.CurrentTemperature) * temperature.TempDamageCoefficient);
+                var tempDamage = FixedPoint2.Min(temperature.CurrentTemperature - temperature.ColdDamageThreshold * temperature.TempDamageCoefficient, temperature.DamageCap);
                 _damageableSystem.TryChangeDamage(uid, temperature.ColdDamage * tempDamage);
             }
-
         }
     }
 

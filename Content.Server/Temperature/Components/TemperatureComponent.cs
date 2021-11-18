@@ -1,5 +1,6 @@
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
+using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -52,5 +53,12 @@ namespace Content.Server.Temperature.Components
         [DataField("heatDamage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier HeatDamage = default!;
+
+        /// <summary>
+        ///     Temperature won't do more than this amount of damage per second.
+        /// </summary>
+        [DataField("damageCap")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public FixedPoint2 DamageCap = FixedPoint2.New(30);
     }
 }

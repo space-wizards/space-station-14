@@ -63,15 +63,12 @@
   - type: Flammable
     fireSpread: true
     canResistFire: true
-    damage:
-      types:
-        Heat : 1
   - type: Temperature
     heatDamageThreshold: 360
     coldDamageThreshold: 260
     currentTemperature: 310.15
     specificHeat: 42
-    tempDamageCoefficient: 0.1
+    tempDamageCoefficient: 0.05
     heatDamage:
       types:
         Heat : 1 #per second, scales with temperature & other constants
@@ -171,7 +168,7 @@
     coldDamageThreshold: 260
     currentTemperature: 310.15
     specificHeat: 42
-    tempDamageCoefficient: 0.1
+    tempDamageCoefficient: 0.05
     coldDamage:
       types:
         Cold : 1 #per second, scales with temperature & other constants
