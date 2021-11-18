@@ -9,6 +9,7 @@ using Content.Shared.MobState.EntitySystems;
 using Content.Shared.Popups;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 
@@ -16,6 +17,7 @@ namespace Content.Server.Guardian
 {
     public class GuardianSystem : EntitySystem
     {
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -37,13 +39,13 @@ namespace Content.Server.Guardian
                 if (args.State.IsCritical())
                 {
                     var guard = EntityManager.GetEntity(component.Hostedguardian);
-                    guard.PopupMessage(Loc.GetString("guardian-host-critical-warn"));
+                    _popupSystem.PopupCoordinates(Loc.GetString("guardian-host-critical-warn"), guard.Transform.Coordinates, Filter.Entities(guard.Uid));
                     SoundSystem.Play(Filter.Local(), "/Audio/Effects/guardian_warn.ogg", uid);
                 }
                 else if (args.State.IsDead())
                 {
                     var guard = EntityManager.GetEntity(component.Hostedguardian);
-                    SoundSystem.Play(Filter.Pvs(guard), "/Audio/Voice/Human/malescream_guardian.ogg", uid, AudioHelpers.WithVariation(0.25f));
+                    SoundSystem.Play(Filter.Pvs(guard), "/Audio/Voice/Human/malescream_guardian.ogg", uid, AudioHelpers.WithVariation(0.20f));
                     EntityManager.QueueDeleteEntity(guard);
                     EntityManager.QueueDeleteEntity(uid);
                 }
@@ -59,7 +61,7 @@ namespace Content.Server.Guardian
                     if (args.DamageDelta != null)
                     {
                         EntitySystem.Get<DamageableSystem>().SetDamage(hostdamage, (hostdamage.Damage + args.DamageDelta * component.DamagePercent));
-                        hostdamage.Owner.PopupMessage(Loc.GetString("guardian-entity-taking-damage"));
+                        _popupSystem.PopupCoordinates(Loc.GetString("guardian-entity-taking-damage"), hostdamage.Owner.Transform.Coordinates, Filter.Entities(hostdamage.OwnerUid));
                     }
                 }          
             }              
@@ -101,24 +103,24 @@ namespace Content.Server.Guardian
                             //Grant the user the recall action and notify them
                             action.Grant(ActionType.ManifestGuardian);
                             SoundSystem.Play(Filter.Entities(uid), "/Audio/Effects/guardian_inject.ogg", uid);
-                            args.User.PopupMessage(Loc.GetString("guardian-created"));
+                            _popupSystem.PopupCoordinates(Loc.GetString("guardian-created"), hostcomp.Owner.Transform.Coordinates, Filter.Entities(args.User.Uid));
                             //Exhaust the activator
                             component.Used = true;
                         }                   
                     }
                     else
                     {
-                        args.User.PopupMessage(Loc.GetString("guardian-activator-empty-invalid-creaton"));
+                        _popupSystem.PopupCoordinates(Loc.GetString("guardian-activator-empty-invalid-creaton"), args.User.Transform.Coordinates, Filter.Entities(args.User.Uid));
                     }
                 }
                 else
                 {
-                    args.User.PopupMessage(Loc.GetString("guardian-no-actions-invalid-creation"));
+                    _popupSystem.PopupCoordinates(Loc.GetString("guardian-no-actions-invalid-creation"), args.User.Transform.Coordinates, Filter.Entities(args.User.Uid));
                 }
             }
             else
             {
-                args.User.PopupMessage(Loc.GetString("guardian-already-present-invalid-creation"));
+                _popupSystem.PopupCoordinates(Loc.GetString("guardian-already-present-invalid-creation"), args.User.Transform.Coordinates, Filter.Entities(args.User.Uid));
             }
         }
 
@@ -170,7 +172,7 @@ namespace Content.Server.Guardian
             {
                 //Recalls guardian if it's outside
                 //Message first otherwise it's a dead giveaway
-                EntityManager.GetEntity(guardian).PopupMessageEveryone(Loc.GetString("guardian-entity-recall"));
+                _popupSystem.PopupCoordinates(Loc.GetString("guardian-entity-recall"), EntityManager.GetEntity(guardian).Transform.Coordinates, Filter.Pvs(EntityManager.GetEntity(guardian)));
                 EntityManager.GetEntity(host).GetComponent<GuardianHostComponent>().GuardianContainer.Insert(EntityManager.GetEntity(guardian));
             }
             //Update the guardian loose value

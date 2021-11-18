@@ -214,6 +214,8 @@
   id: UplinkDecoyDisk
   category: Misc
   itemId: NukeDiskFake
+  listingName: Decoy nuclear disk
+  description: A piece of plastic with a lenticular printing, made to look like a nuclear auth disk. Not very effective.
   price: 1
 
 - type: uplinkListing
