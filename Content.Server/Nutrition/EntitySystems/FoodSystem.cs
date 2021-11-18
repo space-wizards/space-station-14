@@ -123,7 +123,7 @@ namespace Content.Server.Nutrition.EntitySystems
                         if (!item.Owner.TryGetComponent(out UtensilComponent? utensil))
                             continue;
 
-                        if (utensil.Types.HasFlag(component.OptionalUtensil))
+                        if ((utensil.Types & component.OptionalUtensil) != 0)
                         {
                             _utensilSystem.TryBreak(utensil.OwnerUid, userUid);
                         }
