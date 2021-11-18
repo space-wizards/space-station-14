@@ -11,7 +11,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Solar.EntitySystems
 {
@@ -21,7 +20,6 @@ namespace Content.Server.Solar.EntitySystems
     [UsedImplicitly]
     internal sealed class PowerSolarSystem : EntitySystem
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         /// <summary>
