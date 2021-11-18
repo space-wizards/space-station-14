@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Content.Server.Shuttles.EntitySystems;
+using Content.Shared.Damage;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
@@ -56,13 +57,18 @@ namespace Content.Server.Shuttles.Components
         [DataField("thrusterType")]
         public ThrusterType Type = ThrusterType.Linear;
 
-        [DataField("burnShape")] public List<Vector2> BurnPoly = new List<Vector2>()
+        [DataField("burnShape")] public List<Vector2> BurnPoly = new()
         {
-            new(-0.4f, 0.5f),
-            new(-0.1f, 1.2f),
-            new(0.1f, 1.2f),
-            new(0.4f, 0.5f)
+            new Vector2(-0.4f, 0.5f),
+            new Vector2(-0.1f, 1.2f),
+            new Vector2(0.1f, 1.2f),
+            new Vector2(0.4f, 0.5f)
         };
+
+        /// <summary>
+        /// How much damage is done per second to anything colliding with our thrust.
+        /// </summary>
+        [ViewVariables] [DataField("damage")] public DamageSpecifier? Damage = new();
 
         // Used for burns
 

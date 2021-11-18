@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Audio;
@@ -43,12 +44,6 @@ namespace Content.Server.Shuttles.EntitySystems
 
         private float _accumulator;
 
-        private const float DamagePerSecond = 40f;
-
-        private const float DamagePerUpdate = 10;
-
-        private DamageSpecifier _damageSpecifier = default!;
-
         public override void Initialize()
         {
             base.Initialize();
@@ -63,11 +58,6 @@ namespace Content.Server.Shuttles.EntitySystems
             SubscribeLocalEvent<ThrusterComponent, EndCollideEvent>(OnEndCollide);
 
             _mapManager.TileChanged += OnTileChange;
-
-            var dam = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>("Heat");
-
-            _damageSpecifier =
-                new DamageSpecifier(dam, FixedPoint2.New(DamagePerUpdate));
         }
 
         public override void Shutdown()
@@ -322,19 +312,19 @@ namespace Content.Server.Shuttles.EntitySystems
 
             _accumulator += frameTime;
 
-            if (_accumulator < DamagePerUpdate / DamagePerSecond) return;
+            if (_accumulator < 1) return;
 
-            _accumulator -= DamagePerUpdate / DamagePerSecond;
+            _accumulator -= 1;
 
-            foreach (var comp in _activeThrusters)
+            foreach (var comp in _activeThrusters.ToArray())
             {
-                if (!comp.Firing || comp.Paused || comp.Deleted) continue;
+                if (!comp.Firing || comp.Damage == null || comp.Paused || comp.Deleted) continue;
 
                 DebugTools.Assert(comp.Colliding.Count > 0);
 
                 foreach (var uid in comp.Colliding.ToArray())
                 {
-                    _damageable.TryChangeDamage(uid, _damageSpecifier);
+                    _damageable.TryChangeDamage(uid, comp.Damage);
                 }
             }
         }
