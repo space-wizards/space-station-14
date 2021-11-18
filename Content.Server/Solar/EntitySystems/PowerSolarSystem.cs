@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Power.Components;
 using Content.Server.Solar.Components;
@@ -45,19 +46,6 @@ namespace Content.Server.Solar.EntitySystems
         public float SunOcclusionCheckDistance = 20;
 
         /// <summary>
-        /// This is the per-second value used to reduce solar panel coverage updates
-        /// (and the resulting occlusion raycasts)
-        /// to within sane boundaries.
-        /// Keep in mind, this is not exact, as the random interval is also applied.
-        /// </summary>
-        public TimeSpan SolarCoverageUpdateInterval = TimeSpan.FromSeconds(5);
-
-        /// <summary>
-        /// A random interval used to stagger solar coverage updates reliably.
-        /// </summary>
-        public TimeSpan SolarCoverageUpdateRandomInterval = TimeSpan.FromSeconds(5);
-
-        /// <summary>
         /// TODO: *Should be moved into the solar tracker when powernet allows for it.*
         /// The current target panel rotation.
         /// </summary>
@@ -74,6 +62,12 @@ namespace Content.Server.Solar.EntitySystems
         /// Last update of total panel power.
         /// </summary>
         public float TotalPanelPower = 0;
+
+        /// <summary>
+        /// Queue of panels to update each cycle.
+        /// </summary>
+        private readonly Queue<SolarPanelComponent> _updateQueue = new();
+
 
         public override void Initialize()
         {
@@ -110,21 +104,21 @@ namespace Content.Server.Solar.EntitySystems
             TargetPanelRotation += TargetPanelVelocity * frameTime;
             TargetPanelRotation = TargetPanelRotation.Reduced();
 
-            TotalPanelPower = 0;
-
-            foreach (var panel in EntityManager.EntityQuery<SolarPanelComponent>())
+            if (_updateQueue.Count > 0)
             {
-                if (panel.TimeOfNextCoverageUpdate < _gameTiming.CurTime)
-                {
-                    // Coverage update time!
-                    // There's supposed to be rotational logic here, but that implies putting it somewhere.
-                    panel.Owner.Transform.WorldRotation = TargetPanelRotation;
-                    // Setup the next coverage check.
-                    TimeSpan future = SolarCoverageUpdateInterval + (SolarCoverageUpdateRandomInterval * _robustRandom.NextDouble());
-                    panel.TimeOfNextCoverageUpdate = _gameTiming.CurTime + future;
+                var panel = _updateQueue.Dequeue();
+                if (panel.Running)
                     UpdatePanelCoverage(panel);
+            }
+            else
+            {
+                TotalPanelPower = 0;
+                foreach (var panel in EntityManager.EntityQuery<SolarPanelComponent>())
+                {
+                    TotalPanelPower += panel.MaxSupply * panel.Coverage;
+                    panel.Owner.Transform.WorldRotation = TargetPanelRotation;
+                    _updateQueue.Enqueue(panel);
                 }
-                TotalPanelPower += panel.Coverage * panel.MaxSupply;
             }
         }
 
