@@ -15,6 +15,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Player;
 using System.Linq;
 
@@ -37,7 +38,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             SubscribeLocalEvent<FoodComponent, UseInHandEvent>(OnUseFoodInHand);
             SubscribeLocalEvent<FoodComponent, AfterInteractEvent>(OnFeedFood);
-            SubscribeLocalEvent<FoodComponent, GetAlternativeVerbsEvent>(AddEatVerb);
+            SubscribeLocalEvent<FoodComponent, GetInteractionVerbsEvent>(AddEatVerb);
         }
 
         /// <summary>
@@ -172,9 +173,11 @@ namespace Content.Server.Nutrition.EntitySystems
             }
         }
 
+        //No hands
         //TODO: DoAfter based on delay after food & drinks delay PR merged...
-        private void AddEatVerb(EntityUid uid, FoodComponent component, GetAlternativeVerbsEvent ev)
+        private void AddEatVerb(EntityUid uid, FoodComponent component, GetInteractionVerbsEvent ev)
         {
+            Logger.DebugS("action", "triggered");
             if (!ev.CanInteract ||
                 !EntityManager.TryGetComponent(ev.User.Uid, out SharedBodyComponent? body) ||
                 !_bodySystem.TryGetComponentsOnMechanisms<StomachComponent>(ev.User.Uid, out var stomachs, body))
