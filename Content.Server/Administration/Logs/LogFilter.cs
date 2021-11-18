@@ -19,9 +19,9 @@ public sealed class LogFilter
 
     public DateTime? After { get; set; }
 
-    public string[]? AnyPlayers { get; set; }
+    public Guid[]? AnyPlayers { get; set; }
 
-    public string[]? AllPlayers { get; set; }
+    public Guid[]? AllPlayers { get; set; }
 
     public int? LastLogId { get; set; }
 

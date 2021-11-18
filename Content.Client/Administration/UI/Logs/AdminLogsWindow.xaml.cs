@@ -279,9 +279,9 @@ public partial class AdminLogsWindow : SS14Window
         return types;
     }
 
-    public string[] GetSelectedPlayerIds()
+    public Guid[] GetSelectedPlayerIds()
     {
-        var players = new List<string>();
+        var players = new List<Guid>();
 
         foreach (var control in PlayersContainer.Children)
         {
@@ -290,7 +290,7 @@ public partial class AdminLogsWindow : SS14Window
                 continue;
             }
 
-            players.Add(player.Id.ToString());
+            players.Add(player.Id);
         }
 
         return players.ToArray();

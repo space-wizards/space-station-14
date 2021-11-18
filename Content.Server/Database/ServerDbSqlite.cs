@@ -249,9 +249,15 @@ namespace Content.Server.Database
             return (admins.Select(p => (p.a, p.LastSeenUserName)).ToArray(), adminRanks)!;
         }
 
-        public override async Task<LogRecord> AddAdminLog(int roundId, LogType type, string message, JsonDocument json)
+        public override async Task<LogRecord> AddAdminLog(int roundId, LogType type, string message, JsonDocument json,
+            List<Guid> playerIds)
         {
             await using var db = await GetDb();
+
+            var playerIntIds = await db.DbContext.Player
+                .Where(player => playerIds.Contains(player.UserId))
+                .Select(player => player.Id)
+                .ToListAsync();
 
             var nextId = 1;
             if (await db.DbContext.AdminLog.AnyAsync())
@@ -269,6 +275,22 @@ namespace Content.Server.Database
                 Message = message
             };
 
+            var players = new List<AdminLogPlayer>();
+            foreach (var id in playerIntIds)
+            {
+                var player = new AdminLogPlayer
+                {
+                    PlayerId = id,
+                    Log = log,
+                    RoundId = roundId
+                };
+
+                players.Add(player);
+            }
+
+            log.Players = players;
+
+            db.DbContext.AdminLogPlayer.AddRange(players);
             db.DbContext.AdminLog.Add(log);
 
             await db.DbContext.SaveChangesAsync();

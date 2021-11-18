@@ -42,8 +42,8 @@ public static class AdminLogsEuiMsg
             List<LogType>? types,
             DateTime? before,
             DateTime? after,
-            string[]? anyPlayers,
-            string[]? allPlayers,
+            Guid[]? anyPlayers,
+            Guid[]? allPlayers,
             int? lastLogId,
             DateOrder dateOrder)
         {
@@ -51,8 +51,8 @@ public static class AdminLogsEuiMsg
             Types = types;
             Before = before;
             After = after;
-            AnyPlayers = anyPlayers;
-            AllPlayers = allPlayers;
+            AnyPlayers = anyPlayers is { Length: > 0 } ? anyPlayers : null;
+            AllPlayers = allPlayers is { Length: > 0 } ? allPlayers : null;
             LastLogId = lastLogId;
             DateOrder = dateOrder;
         }
@@ -61,8 +61,8 @@ public static class AdminLogsEuiMsg
         public List<LogType>? Types { get; set; }
         public DateTime? Before { get; set; }
         public DateTime? After { get; set; }
-        public string[]? AnyPlayers { get; set; }
-        public string[]? AllPlayers { get; set; }
+        public Guid[]? AnyPlayers { get; set; }
+        public Guid[]? AllPlayers { get; set; }
         public int? LastLogId { get; set; }
         public DateOrder DateOrder { get; set; }
     }

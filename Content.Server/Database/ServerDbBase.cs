@@ -508,9 +508,15 @@ namespace Content.Server.Database
 
         #region Admin Logs
 
-        public virtual async Task<LogRecord> AddAdminLog(int roundId, LogType type, string message, JsonDocument json)
+        public virtual async Task<LogRecord> AddAdminLog(int roundId, LogType type, string message, JsonDocument json,
+            List<Guid> playerIds)
         {
             await using var db = await GetDb();
+
+            var playerIntIds = await db.DbContext.Player
+                .Where(player => playerIds.Contains(player.UserId))
+                .Select(player => player.Id)
+                .ToListAsync();
 
             var log = new AdminLog
             {
@@ -521,6 +527,22 @@ namespace Content.Server.Database
                 Message = message
             };
 
+            var players = new List<AdminLogPlayer>();
+            foreach (var id in playerIntIds)
+            {
+                var player = new AdminLogPlayer
+                {
+                    PlayerId = id,
+                    Log = log,
+                    RoundId = roundId
+                };
+
+                players.Add(player);
+            }
+
+            log.Players = players;
+
+            db.DbContext.AdminLogPlayer.AddRange(players);
             db.DbContext.AdminLog.Add(log);
 
             await db.DbContext.SaveChangesAsync();
@@ -565,15 +587,20 @@ namespace Content.Server.Database
                 query = query.Where(log => log.Date > filter.After);
             }
 
-            // if (filter.AnyPlayers != null)
-            // {
-            //     query = query.Where(log => log.Players.Any(player => filter.AnyPlayers.Contains(player.UserId.ToString())));
-            // }
+            if (filter.AnyPlayers != null)
+            {
+                // pjb dont look
+                query = from log in query
+                    join player in db.AdminLogPlayer on log.Id equals player.LogId into grouping
+                    from player in grouping.DefaultIfEmpty()
+                    where filter.AnyPlayers.Contains(player.Player.UserId)
+                    select log;
+            }
 
-            // if (filter.AllPlayers != null)
-            // {
-            //     query = query.Where(log => filter.AllPlayers.Contains(log.Players.Select(player => player.UserId.ToString())));
-            // }
+            if (filter.AllPlayers != null)
+            {
+                // TODO ADMIN LOGGING
+            }
 
             if (distinct)
             {

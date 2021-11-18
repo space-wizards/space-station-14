@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -51,19 +52,19 @@ public class AdminLogSystem : EntitySystem
         _roundId = ev.RoundId;
     }
 
-    private async void Add(LogType type, string message, JsonDocument json)
+    private async void Add(LogType type, string message, JsonDocument json, List<Guid> players)
     {
         // TODO ADMIN LOGGING batch all these adds per tick
-        await _db.AddAdminLog(_roundId, type, message, json);
+        await _db.AddAdminLog(_roundId, type, message, json, players);
         json.Dispose();
     }
 
     public void Add(LogType type, ref LogStringHandler handler)
     {
-        var json = handler.ToJson(_jsonOptions, _entities);
+        var (json, players) = handler.ToJson(_jsonOptions, _entities);
         var message = handler.ToStringAndClear();
 
-        Add(type, message, json);
+        Add(type, message, json, players);
     }
 
     public IAsyncEnumerable<LogRecord> All(LogFilter? filter = null)

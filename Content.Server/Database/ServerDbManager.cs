@@ -134,7 +134,7 @@ namespace Content.Server.Database
 
         #region Admin Logs
 
-        Task<LogRecord> AddAdminLog(int roundId, LogType type, string message, JsonDocument json);
+        Task<LogRecord> AddAdminLog(int roundId, LogType type, string message, JsonDocument json, List<Guid> playerIds);
         IAsyncEnumerable<string> GetAdminLogMessages(LogFilter? filter = null);
         IAsyncEnumerable<LogRecord> GetAdminLogs(LogFilter? filter = null);
 
@@ -336,9 +336,10 @@ namespace Content.Server.Database
             return _db.UpdateAdminRankAsync(rank, cancel);
         }
 
-        public Task<LogRecord> AddAdminLog(int roundId, LogType type, string message, JsonDocument json)
+        public Task<LogRecord> AddAdminLog(int roundId, LogType type, string message, JsonDocument json,
+            List<Guid> playerIds)
         {
-            return _db.AddAdminLog(roundId, type, message, json);
+            return _db.AddAdminLog(roundId, type, message, json, playerIds);
         }
 
         public IAsyncEnumerable<string> GetAdminLogMessages(LogFilter? filter = null)

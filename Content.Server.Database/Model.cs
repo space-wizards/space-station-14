@@ -35,6 +35,7 @@ namespace Content.Server.Database
         public DbSet<AdminRank> AdminRank { get; set; } = null!;
         public DbSet<Round> Round { get; set; } = null!;
         public DbSet<AdminLog> AdminLog { get; set; } = null!;
+        public DbSet<AdminLogPlayer> AdminLogPlayer { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -90,6 +91,9 @@ namespace Content.Server.Database
             modelBuilder.Entity<AdminLog>()
                 .Property(log => log.Id)
                 .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<AdminLogPlayer>()
+                .HasKey(logPlayer => new {logPlayer.PlayerId, logPlayer.LogId, logPlayer.RoundId});
         }
     }
 
@@ -192,7 +196,7 @@ namespace Content.Server.Database
 
         // Data that changes with each round
         public List<Round> Rounds { get; set; } = null!;
-        public List<AdminLog> AdminLogs { get; set; } = null!;
+        public List<AdminLogPlayer> AdminLogs { get; set; } = null!;
     }
 
     public class Admin
@@ -260,6 +264,16 @@ namespace Content.Server.Database
 
         [Required, Column(TypeName = "jsonb")] public JsonDocument Json { get; set; } = default!;
 
-        public List<Player> Players { get; set; } = default!;
+        public List<AdminLogPlayer> Players { get; set; } = default!;
+    }
+
+    public class AdminLogPlayer
+    {
+        [Required, Key, ForeignKey("Player")] public int PlayerId { get; set; }
+        public Player Player { get; set; } = default!;
+
+        [Required, Key] public int LogId { get; set; }
+        [Required, Key] public int RoundId { get; set; }
+        [ForeignKey("LogId,RoundId")] public AdminLog Log { get; set; } = default!;
     }
 }

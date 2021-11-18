@@ -97,10 +97,10 @@ public ref struct LogStringHandler
         _handler.AppendFormatted(value, alignment, format);
     }
 
-    public JsonDocument ToJson(JsonSerializerOptions options, IEntityManager entityManager)
+    public (JsonDocument json, List<Guid> players) ToJson(JsonSerializerOptions options, IEntityManager entityManager)
     {
         var entities = new List<int>();
-        var players = new List<string>();
+        var players = new List<Guid>();
 
         foreach (var obj in _values.Values)
         {
@@ -121,14 +121,14 @@ public ref struct LogStringHandler
 
             if (entityManager.TryGetComponent(uid, out ActorComponent? actor))
             {
-                players.Add(actor.PlayerSession.UserId.UserId.ToString());
+                players.Add(actor.PlayerSession.UserId.UserId);
             }
         }
 
         _values["__entities"] = entities;
         // _values["__players"] = players;
 
-        return JsonSerializer.SerializeToDocument(_values, options);
+        return (JsonSerializer.SerializeToDocument(_values, options), players);
     }
 
     public string ToStringAndClear()
