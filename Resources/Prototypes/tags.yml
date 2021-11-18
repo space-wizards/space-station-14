@@ -94,6 +94,9 @@
   id: Egg
 
 - type: Tag
+  id: EmitterBolt
+
+- type: Tag
   id: ExplosivePassable
 
 - type: Tag
@@ -230,12 +233,6 @@
 
 - type: Tag
   id: Wooden # just like our atmos
-
-- type: Tag
-  id: EmitterBolt
-
-- type: Tag
-  id: HideContextMenu
 
 - type: Tag
   id: Wrench
