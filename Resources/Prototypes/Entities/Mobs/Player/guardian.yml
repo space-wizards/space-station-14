@@ -33,12 +33,11 @@
     bodyType: KinematicController
     fixtures:
     - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.40,-0.30,0.40,0.45"
+        !type:PhysShapeCircle
+        radius: 0.35
       mass: 10
       mask:
       - Impassable
-      - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
@@ -57,11 +56,11 @@
     range: 2
     arcwidth: 30
     arc: fist
-    cooldownTime: 0.5
-    arcCooldownTime: 0.5
+    cooldownTime: 0.7
+    arcCooldownTime: 0.7
     damage:
       types:
-        Blunt: 30
+        Blunt: 40
   - type: Actions
     innateActions:
       - CombatMode
