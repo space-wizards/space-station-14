@@ -141,8 +141,7 @@ namespace Content.Server.Physics.Controllers
                         }
 
                         var moveAngle = movement.ToWorldAngle();
-
-                        // Currently this is slow BUT we'd have a separate multiplier for docking and cruising or whatever.
+                        
                         physicsComponent.ApplyLinearImpulse(moveAngle.RotateVec(physicsComponent.Owner.Transform.WorldRotation.ToWorldVec()) *
                                                             dockSpeed);
                     }
