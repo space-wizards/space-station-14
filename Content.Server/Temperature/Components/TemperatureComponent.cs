@@ -19,22 +19,23 @@ namespace Content.Server.Temperature.Components
         /// <inheritdoc />
         public override string Name => "Temperature";
 
-        [DataField("heatDamageThreshold")]
-        private float _heatDamageThreshold = default;
-        [DataField("coldDamageThreshold")]
-        private float _coldDamageThreshold = default;
-        [DataField("tempDamageCoefficient")]
-        private float _tempDamageCoefficient = 1;
-        [DataField("currentTemperature")]
+        [ViewVariables(VVAccess.ReadWrite)]
         public float CurrentTemperature { get; set; } = Atmospherics.T20C;
-        [DataField("specificHeat")]
-        private float _specificHeat = Atmospherics.MinimumHeatCapacity;
 
-        [ViewVariables] public float HeatDamageThreshold => _heatDamageThreshold;
-        [ViewVariables] public float ColdDamageThreshold => _coldDamageThreshold;
-        [ViewVariables] public float TempDamageCoefficient => _tempDamageCoefficient;
-        [ViewVariables] public float SpecificHeat => _specificHeat;
-        [ViewVariables] public float HeatCapacity {
+        [DataField("heatDamageThreshold")]
+        [ViewVariables]
+        public float HeatDamageThreshold;
+
+        [DataField("coldDamageThreshold")]
+        [ViewVariables]
+        public float ColdDamageThreshold;
+
+        [DataField("specificHeat")]
+        [ViewVariables]
+        public float SpecificHeat;
+
+        [ViewVariables] public float HeatCapacity
+        {
             get
             {
                 if (Owner.TryGetComponent<IPhysBody>(out var physics))

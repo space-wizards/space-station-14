@@ -126,12 +126,12 @@ namespace Content.Server.Temperature.Systems
                     break;
 
                 // Heat mild.
-                case <= 345 and > 335:
+                case <= 360 and > 335:
                     status.ShowAlert(AlertType.Hot, 2);
                     break;
 
                 // Heat strong.
-                case > 345:
+                case > 360:
                     status.ShowAlert(AlertType.Hot, 3);
                     break;
             }
@@ -147,14 +147,25 @@ namespace Content.Server.Temperature.Systems
             if (!EntityManager.TryGetComponent<DamageableComponent>(uid, out var damage))
                 return;
 
+            // See this link for where the scaling func comes from:
+            // https://www.desmos.com/calculator/0vknqtdvq9
+            // Based on a logistic curve, which caps out at MaxDamage
+            var coldK = 0.01;
+            var heatK = 0.005;
+            var a = 1;
+            var y = temperature.DamageCap;
+            var c = y * 2;
+
             if (temperature.CurrentTemperature >= temperature.HeatDamageThreshold)
             {
-                var tempDamage = FixedPoint2.Min(temperature.CurrentTemperature - temperature.HeatDamageThreshold * temperature.TempDamageCoefficient, temperature.DamageCap);
+                var diff = Math.Abs(temperature.CurrentTemperature - temperature.HeatDamageThreshold);
+                var tempDamage = c / (1 + a * Math.Pow(Math.E, -heatK * diff)) - y;
                 _damageableSystem.TryChangeDamage(uid, temperature.HeatDamage * tempDamage);
             }
             else if (temperature.CurrentTemperature <= temperature.ColdDamageThreshold)
             {
-                var tempDamage = FixedPoint2.Min(temperature.CurrentTemperature - temperature.ColdDamageThreshold * temperature.TempDamageCoefficient, temperature.DamageCap);
+                var diff = Math.Abs(temperature.CurrentTemperature - temperature.ColdDamageThreshold);
+                var tempDamage = c / (1 + a * Math.Pow(Math.E, -coldK * diff)) - y;
                 _damageableSystem.TryChangeDamage(uid, temperature.ColdDamage * tempDamage);
             }
         }
