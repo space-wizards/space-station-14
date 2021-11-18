@@ -21,6 +21,7 @@ namespace Content.Server.Solar.EntitySystems
     internal sealed class PowerSolarSystem : EntitySystem
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
 
         /// <summary>
         /// Maximum panel angular velocity range - used to stop people rotating panels fast enough that the lag prevention becomes noticable
@@ -155,7 +156,7 @@ namespace Content.Server.Solar.EntitySystems
                 // Determine if the solar panel is occluded, and zero out coverage if so.
                 // FIXME: The "Opaque" collision group doesn't seem to work right now.
                 var ray = new CollisionRay(entity.Transform.WorldPosition, TowardsSun.ToWorldVec(), (int) CollisionGroup.Opaque);
-                var rayCastResults = Get<SharedPhysicsSystem>().IntersectRayWithPredicate(
+                var rayCastResults = _physicsSystem.IntersectRayWithPredicate(
                     entity.Transform.MapID,
                     ray,
                     SunOcclusionCheckDistance,
