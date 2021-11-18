@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
@@ -155,6 +157,24 @@ namespace Content.Shared.SubFloor
             UpdateEntity(uid, IsSubFloor(grid, grid.TileIndicesFor(transform.Coordinates)));
         }
 
+        // Toggles an enumerable set of entities to display.
+        public void ToggleSubfloorEntities(IEnumerable<EntityUid> entities, bool visible)
+        {
+            foreach (var entity in entities)
+            {
+                if (!EntityManager.HasComponent<SubFloorHideComponent>(entity))
+                    continue;
+
+                // Logger.DebugS("SubFloorHide", $"Working on entity {entity} now");
+                var transform = EntityManager.GetComponent<TransformComponent>(entity);
+                if (_mapManager.TryGetGrid(transform.GridID, out var grid))
+                {
+                    // Logger.DebugS("SubFloorHide", $"Attempting to update {entity}, state: {visible}");
+                    UpdateEntity(entity, visible);
+                }
+            }
+        }
+
         private void UpdateEntity(EntityUid uid, bool subFloor)
         {
             // We raise an event to allow other entity systems to handle this.
@@ -185,6 +205,11 @@ namespace Content.Shared.SubFloor
             // Whether to show this entity as visible, visually.
             var subFloorVisible = ShowAll || subFloor;
 
+            ShowSubfloorSprite(uid, subFloorVisible);
+        }
+
+        private void ShowSubfloorSprite(EntityUid uid, bool subFloorVisible)
+        {
             // Show sprite
             if (EntityManager.TryGetComponent(uid, out SharedSpriteComponent? spriteComponent))
             {
@@ -192,7 +217,8 @@ namespace Content.Shared.SubFloor
             }
 
             // Set an appearance data value so visualizers can use this as needed.
-            if (EntityManager.TryGetComponent(uid, out SharedAppearanceComponent? appearanceComponent))
+            if (EntityManager.TryGetComponent(uid, out SharedAppearanceComponent? appearanceComponent)
+                && spriteComponent?.Visible == subFloorVisible) // race condition???
             {
                 appearanceComponent.SetData(SubFloorVisuals.SubFloor, subFloorVisible);
             }
