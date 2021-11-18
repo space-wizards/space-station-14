@@ -26,7 +26,6 @@ namespace Content.Client.Items.Managers
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
-        [Dependency] private readonly IUserInterfaceManager _uiMgr = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private readonly HashSet<EntityUid> _highlightEntities = new();
