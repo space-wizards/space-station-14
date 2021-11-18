@@ -209,7 +209,7 @@ namespace Content.Server.Atmos.EntitySystems
 
                 if (flammable.FireStacks > 0)
                 {
-                    _temperatureSystem.ReceiveHeat(uid, 200 * flammable.FireStacks);
+                    _temperatureSystem.ChangeHeat(uid, 200 * flammable.FireStacks);
                     AdjustFireStacks(uid, -0.1f * (flammable.Resisting ? 10f : 1f), flammable);
                 }
                 else

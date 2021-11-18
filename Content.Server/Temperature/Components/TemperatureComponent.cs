@@ -56,9 +56,11 @@ namespace Content.Server.Temperature.Components
 
         /// <summary>
         ///     Temperature won't do more than this amount of damage per second.
+        ///
+        ///     Okay it genuinely reaches this basically immediately for a plasma fire.
         /// </summary>
         [DataField("damageCap")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public FixedPoint2 DamageCap = FixedPoint2.New(30);
+        public FixedPoint2 DamageCap = FixedPoint2.New(15);
     }
 }

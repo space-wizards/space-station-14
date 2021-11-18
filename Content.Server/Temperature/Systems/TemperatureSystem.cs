@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Alert;
+using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Temperature.Components;
 using Content.Shared.Alert;
@@ -19,7 +20,7 @@ namespace Content.Server.Temperature.Systems
 
         /// <summary>
         ///     All the components that will have their damage updated at the end of the tick.
-        ///     This is done because both AtmosExposed and Flammable call ReceiveHeat in the same tick, meaning
+        ///     This is done because both AtmosExposed and Flammable call ChangeHeat in the same tick, meaning
         ///     that we need some mechanism to ensure it doesn't double dip on damage for both calls.
         /// </summary>
         public HashSet<TemperatureComponent> ShouldUpdateDamage = new();
@@ -33,6 +34,7 @@ namespace Content.Server.Temperature.Systems
             SubscribeLocalEvent<TemperatureComponent, OnTemperatureChangeEvent>(EnqueueDamage);
             SubscribeLocalEvent<TemperatureComponent, AtmosExposedUpdateEvent>(OnAtmosExposedUpdate);
             SubscribeLocalEvent<ServerAlertsComponent, OnTemperatureChangeEvent>(ServerAlert);
+            SubscribeLocalEvent<TemperatureProtectionComponent, ModifyChangedTemperatureEvent>(OnTemperatureChangeAttempt);
         }
 
         public override void Update(float frameTime)
@@ -70,24 +72,16 @@ namespace Content.Server.Temperature.Systems
             }
         }
 
-        public void ReceiveHeat(EntityUid uid, float heatAmount, TemperatureComponent? temperature = null)
+        public void ChangeHeat(EntityUid uid, float heatAmount, TemperatureComponent? temperature = null)
         {
             if (Resolve(uid, ref temperature))
             {
+                var ev = new ModifyChangedTemperatureEvent(heatAmount);
+                RaiseLocalEvent(uid, ev, false);
+                heatAmount = ev.TemperatureDelta;
+
                 float lastTemp = temperature.CurrentTemperature;
                 temperature.CurrentTemperature += heatAmount / temperature.HeatCapacity;
-                float delta = temperature.CurrentTemperature - lastTemp;
-
-                RaiseLocalEvent(uid, new OnTemperatureChangeEvent(temperature.CurrentTemperature, lastTemp, delta));
-            }
-        }
-
-        public void RemoveHeat(EntityUid uid, float heatAmount, TemperatureComponent? temperature = null)
-        {
-            if (Resolve(uid, ref temperature))
-            {
-                float lastTemp = temperature.CurrentTemperature;
-                temperature.CurrentTemperature -= heatAmount / temperature.HeatCapacity;
                 float delta = temperature.CurrentTemperature - lastTemp;
 
                 RaiseLocalEvent(uid, new OnTemperatureChangeEvent(temperature.CurrentTemperature, lastTemp, delta));
@@ -99,7 +93,7 @@ namespace Content.Server.Temperature.Systems
             var temperatureDelta = args.GasMixture.Temperature - temperature.CurrentTemperature;
             var tileHeatCapacity = _atmosphereSystem.GetHeatCapacity(args.GasMixture);
             var heat = temperatureDelta * (tileHeatCapacity * temperature.HeatCapacity / (tileHeatCapacity + temperature.HeatCapacity));
-            ReceiveHeat(uid, heat, temperature);
+            ChangeHeat(uid, heat, temperature);
         }
 
         private void ServerAlert(EntityUid uid, ServerAlertsComponent status, OnTemperatureChangeEvent args)
@@ -164,6 +158,11 @@ namespace Content.Server.Temperature.Systems
                 _damageableSystem.TryChangeDamage(uid, temperature.ColdDamage * tempDamage);
             }
         }
+
+        private void OnTemperatureChangeAttempt(EntityUid uid, TemperatureProtectionComponent component, ModifyChangedTemperatureEvent args)
+        {
+            args.TemperatureDelta *= component.Coefficient;
+        }
     }
 
     public class OnTemperatureChangeEvent : EntityEventArgs
@@ -177,6 +176,16 @@ namespace Content.Server.Temperature.Systems
             CurrentTemperature = current;
             LastTemperature = last;
             TemperatureDelta = delta;
+        }
+    }
+
+    public class ModifyChangedTemperatureEvent : EntityEventArgs
+    {
+        public float TemperatureDelta;
+
+        public ModifyChangedTemperatureEvent(float temperature)
+        {
+            TemperatureDelta = temperature;
         }
     }
 }

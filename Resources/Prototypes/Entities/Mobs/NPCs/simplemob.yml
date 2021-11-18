@@ -68,7 +68,7 @@
     coldDamageThreshold: 260
     currentTemperature: 310.15
     specificHeat: 42
-    tempDamageCoefficient: 0.05
+    tempDamageCoefficient: 0.02
     heatDamage:
       types:
         Heat : 1 #per second, scales with temperature & other constants
@@ -168,7 +168,7 @@
     coldDamageThreshold: 260
     currentTemperature: 310.15
     specificHeat: 42
-    tempDamageCoefficient: 0.05
+    tempDamageCoefficient: 0.02
     coldDamage:
       types:
         Cold : 1 #per second, scales with temperature & other constants
