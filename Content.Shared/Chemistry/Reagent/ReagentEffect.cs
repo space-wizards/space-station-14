@@ -26,7 +26,7 @@ namespace Content.Shared.Chemistry.Reagent
         ///     What's the chance, from 0 to 1, that this effect will occur?
         /// </summary>
         [DataField("probability")]
-        public float Probability;
+        public float Probability = 1.0f;
 
         public abstract void Metabolize(ReagentEffectArgs args);
     }
