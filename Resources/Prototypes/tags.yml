@@ -94,9 +94,6 @@
   id: Egg
 
 - type: Tag
-  id: EmitterBolt
-
-- type: Tag
   id: ExplosivePassable
 
 - type: Tag
