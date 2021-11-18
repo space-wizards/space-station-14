@@ -1,12 +1,6 @@
 Entries:
 - author: Swept
   changes:
-  - {message: Resprites surgery tools, type: Add}
-  - {message: More advanced/unadvanced surgery tools, type: Add}
-  id: 99
-  time: '2021-03-16T07:48:55.0000000+00:00'
-- author: Swept
-  changes:
   - {message: Correct mags for SMGs in Armory and crate, type: Fix}
   - {message: Medical now has filled lockers, type: Fix}
   - {message: Shotguns and SMGs in armory crates 3 -> 2, type: Tweak}
@@ -2841,3 +2835,8 @@ Entries:
   - {message: Surgery on Packed Station once again starts powered., type: Tweak}
   id: 600
   time: '2021-11-17T00:06:26.0000000+00:00'
+- author: Mith-randalf
+  changes:
+  - {message: Added a little 'ding' when a vote happens., type: Add}
+  id: 601
+  time: '2021-11-18T09:45:36.0000000+00:00'
