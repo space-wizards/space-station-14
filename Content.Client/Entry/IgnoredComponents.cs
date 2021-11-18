@@ -72,6 +72,7 @@ namespace Content.Client.Entry
             "Mop",
             "Bucket",
             "CableVis",
+            "BatterySelfRecharger",
             "Puddle",
             "Stomach",
             "CanSpill",
