@@ -1,4 +1,4 @@
-type: entity
+- type: entity
   parent: BaseItem
   id: DrinkShaker
   name: shaker
@@ -8,16 +8,16 @@ type: entity
     solutions:
       drink:
         maxVol: 100
-  - type: SolutionTransfer
-    canChangeTransferAmount: true
+  - type: Drink
+    isOpen: true
   - type: FitsInDispenser
     solution: drink
   - type: DrawableSolution
     solution: drink
   - type: RefillableSolution
     solution: drink
-  - type: Drink
-    isOpen: true
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shaker.rsi
     state: icon
