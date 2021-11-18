@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using Content.Server.Shuttles.EntitySystems;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Maths;
+using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -18,17 +20,17 @@ namespace Content.Server.Shuttles.Components
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("enabled")]
-        public bool EnabledVV
+        public bool Enabled
         {
-            get => _enabledVv;
+            get => _enabled;
             set
             {
-                if (_enabledVv == value) return;
-                _enabledVv = value;
+                if (_enabled == value) return;
+                _enabled = value;
 
                 var system = EntitySystem.Get<ThrusterSystem>();
 
-                if (!_enabledVv)
+                if (!_enabled)
                 {
                     system.DisableThruster(OwnerUid, this);
                 }
@@ -39,12 +41,12 @@ namespace Content.Server.Shuttles.Components
             }
         }
 
-        private bool _enabledVv = true;
+        private bool _enabled = true;
 
         /// <summary>
         /// This determines whether the thruster is actually enabled for the purposes of thrust
         /// </summary>
-        public bool Enabled;
+        public bool IsOn;
 
         [ViewVariables]
         [DataField("impulse")]
@@ -53,6 +55,14 @@ namespace Content.Server.Shuttles.Components
         [ViewVariables]
         [DataField("thrusterType")]
         public ThrusterType Type = ThrusterType.Linear;
+
+        [DataField("burnShape")] public List<Vector2> BurnPoly = new List<Vector2>()
+        {
+            new(-0.4f, 0.5f),
+            new(-0.1f, 1.2f),
+            new(0.1f, 1.2f),
+            new(0.4f, 0.5f)
+        };
 
         // Used for burns
 
@@ -63,9 +73,8 @@ namespace Content.Server.Shuttles.Components
 
     public enum ThrusterType
     {
-        Invalid = 0,
-        Linear = 1 << 0,
+        Linear,
         // Angular meaning rotational.
-        Angular = 1 << 1,
+        Angular,
     }
 }

@@ -108,7 +108,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
         private void OnActivateThruster(EntityUid uid, ThrusterComponent component, ActivateInWorldEvent args)
         {
-            component.EnabledVV ^= true;
+            component.Enabled ^= true;
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace Content.Server.Shuttles.EntitySystems
         {
             // TODO: Disable visualizer for old direction
 
-            if (!component.Enabled ||
+            if (!component.IsOn ||
                 component.Type != ThrusterType.Linear ||
                 !EntityManager.TryGetComponent(uid, out TransformComponent? xform) ||
                 !_mapManager.TryGetGrid(xform.GridID, out var grid) ||
@@ -152,7 +152,7 @@ namespace Content.Server.Shuttles.EntitySystems
         {
             _ambient.SetAmbience(uid, false);
 
-            if (!component.EnabledVV)
+            if (!component.Enabled)
             {
                 return;
             }
@@ -185,11 +185,11 @@ namespace Content.Server.Shuttles.EntitySystems
         /// </summary>
         public void EnableThruster(EntityUid uid, ThrusterComponent component, TransformComponent? xform = null)
         {
-            if (component.Enabled ||
+            if (component.IsOn ||
                 !Resolve(uid, ref xform) ||
                 !_mapManager.TryGetGrid(xform.GridID, out var grid)) return;
 
-            component.Enabled = true;
+            component.IsOn = true;
 
             if (!EntityManager.TryGetComponent(grid.GridEntityId, out ShuttleComponent? shuttleComponent)) return;
 
@@ -205,17 +205,12 @@ namespace Content.Server.Shuttles.EntitySystems
                     shuttleComponent.LinearThrusters[direction].Add(component);
 
                     // Don't just add / remove the fixture whenever the thruster fires because perf
-                    if (EntityManager.TryGetComponent(uid, out PhysicsComponent? physicsComponent))
+                    if (EntityManager.TryGetComponent(uid, out PhysicsComponent? physicsComponent) &&
+                        component.BurnPoly.Count > 0)
                     {
                         var shape = new PolygonShape();
-                        Span<Vector2> verts = stackalloc Vector2[4];
 
-                        verts[0] = new Vector2(-0.4f, 0.5f);
-                        verts[1] = new Vector2(-0.1f, 1.2f);
-                        verts[2] = new Vector2(0.1f, 1.2f);
-                        verts[3] = new Vector2(0.4f, 0.5f);
-
-                        shape.SetVertices(verts);
+                        shape.SetVertices(component.BurnPoly);
 
                         var fixture = new Fixture(physicsComponent, shape)
                         {
@@ -254,11 +249,11 @@ namespace Content.Server.Shuttles.EntitySystems
         /// <exception cref="ArgumentOutOfRangeException"></exception>
         public void DisableThruster(EntityUid uid, ThrusterComponent component, TransformComponent? xform = null)
         {
-            if (!component.Enabled ||
+            if (!component.IsOn ||
                 !Resolve(uid, ref xform) ||
                 !_mapManager.TryGetGrid(xform.GridID, out var grid)) return;
 
-            component.Enabled = false;
+            component.IsOn = false;
 
             if (!EntityManager.TryGetComponent(grid.GridEntityId, out ShuttleComponent? shuttleComponent)) return;
 
@@ -300,7 +295,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
         public bool CanEnable(EntityUid uid, ThrusterComponent component)
         {
-            if (!component.EnabledVV) return false;
+            if (!component.Enabled) return false;
 
             var xform = EntityManager.GetComponent<TransformComponent>(uid);
 

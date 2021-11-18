@@ -141,7 +141,7 @@ namespace Content.Server.Physics.Controllers
                         }
 
                         var moveAngle = movement.ToWorldAngle();
-                        
+
                         physicsComponent.ApplyLinearImpulse(moveAngle.RotateVec(physicsComponent.Owner.Transform.WorldRotation.ToWorldVec()) *
                                                             dockSpeed);
                     }

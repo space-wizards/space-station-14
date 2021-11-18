@@ -1,7 +1,7 @@
 - type: cargoProduct
-  name: "shuttle thruster"
+  name: shuttle thruster
   id: ShuttleThruster
-  description: "A thruster that allows a shuttle to move."
+  description: A thruster that allows a shuttle to move.
   icon:
     sprite: Structures/Shuttles/thruster.rsi
     state: base
@@ -11,9 +11,9 @@
   group: market
 
 - type: cargoProduct
-  name: "shuttle gyroscope"
+  name: shuttle gyroscope
   id: ShuttleGyroscope
-  description: "1 gyroscope for use in rotating a shuttle."
+  description: 1 gyroscope for use in rotating a shuttle.
   icon:
     sprite: Structures/Shuttles/gyroscope.rsi
     state: base
