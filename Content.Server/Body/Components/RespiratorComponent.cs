@@ -241,14 +241,14 @@ namespace Content.Server.Body.Components
             var temperatureSystem = EntitySystem.Get<TemperatureSystem>();
             if (!Owner.TryGetComponent(out TemperatureComponent? temperatureComponent)) return;
             temperatureSystem.ChangeHeat(Owner.Uid, MetabolismHeat, temperatureComponent);
-            temperatureSystem.ChangeHeat(Owner.Uid, RadiatedHeat, temperatureComponent);
+            temperatureSystem.ChangeHeat(Owner.Uid, -RadiatedHeat, temperatureComponent);
 
             // implicit heat regulation
             var tempDiff = Math.Abs(temperatureComponent.CurrentTemperature - NormalBodyTemperature);
             var targetHeat = tempDiff * temperatureComponent.HeatCapacity;
             if (temperatureComponent.CurrentTemperature > NormalBodyTemperature)
             {
-                temperatureSystem.ChangeHeat(Owner.Uid, Math.Min(targetHeat, ImplicitHeatRegulation), temperatureComponent);
+                temperatureSystem.ChangeHeat(Owner.Uid, -Math.Min(targetHeat, ImplicitHeatRegulation), temperatureComponent);
             }
             else
             {
@@ -288,7 +288,7 @@ namespace Content.Server.Body.Components
                 // creadth: sweating does not help in airless environment
                 if (EntitySystem.Get<AtmosphereSystem>().GetTileMixture(Owner.Transform.Coordinates) is not {})
                 {
-                    temperatureSystem.ChangeHeat(OwnerUid, Math.Min(targetHeat, SweatHeatRegulation), temperatureComponent);
+                    temperatureSystem.ChangeHeat(OwnerUid, -Math.Min(targetHeat, SweatHeatRegulation), temperatureComponent);
                 }
             }
             else
