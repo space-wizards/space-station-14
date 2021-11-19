@@ -85,11 +85,7 @@ namespace Content.Server.Climbing.Components
             Body.ApplyLinearImpulse((to - from).Normalized * velocity * Body.Mass * 5);
             OwnerIsTransitioning = true;
 
-            Owner.SpawnTimer((int) (BufferTime * 1000), () =>
-            {
-                if (Deleted) return;
-                OwnerIsTransitioning = false;
-            });
+            EntitySystem.Get<ClimbSystem>().UnsetTransitionBoolAfterBufferTime(OwnerUid, this);
         }
 
         public void Update()
