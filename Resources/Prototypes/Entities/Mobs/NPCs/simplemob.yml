@@ -63,6 +63,9 @@
   - type: Flammable
     fireSpread: true
     canResistFire: true
+    damage:
+      types:
+        Heat: 1 #per second, scales with number of fire 'stacks'
   - type: Temperature
     heatDamageThreshold: 360
     coldDamageThreshold: 260
