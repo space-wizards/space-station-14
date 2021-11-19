@@ -46,7 +46,7 @@
       ]
     },
     {
-      "name": "deny",
+      "name": "deny_unlit",
       "delays": [
         [
           0.1,

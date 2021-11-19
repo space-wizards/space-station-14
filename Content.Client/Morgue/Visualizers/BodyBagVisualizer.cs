@@ -1,4 +1,4 @@
-﻿using Content.Shared.Morgue;
+using Content.Shared.Labels;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 
@@ -16,7 +16,7 @@ namespace Content.Client.Morgue.Visualizers
                 return;
             }
 
-            if (component.TryGetData(BodyBagVisuals.Label, out bool labelVal))
+            if (component.TryGetData(PaperLabelVisuals.HasLabel, out bool labelVal))
             {
                 sprite.LayerSetVisible(BodyBagVisualLayers.Label, labelVal);
             }

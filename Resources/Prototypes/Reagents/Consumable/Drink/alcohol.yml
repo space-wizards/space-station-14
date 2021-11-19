@@ -1,9 +1,12 @@
 
 # Base Alcohol
 
+# TODO MIRROR: drunkenness
+
 - type: reagent
   id: Absinthe
   name: absinthe
+  parent: BaseAlcohol
   desc: A anise-flavoured spirit derived from botanicals.
   physicalDesc: strong-smelling
   color: "#33EE00"
@@ -12,6 +15,7 @@
 - type: reagent
   id: Ale
   name: ale
+  parent: BaseAlcohol
   desc: A dark alchoholic beverage made by malted barley and yeast.
   physicalDesc: bubbly
   color: "#663100"
@@ -20,19 +24,16 @@
 - type: reagent
   id: Beer
   name: beer
+  parent: BaseAlcohol
   desc: An alcoholic beverage made from malted grains, hops, yeast, and water.
   physicalDesc: bubbly
   color: "#cfa85f"
   spritePath: beerglass.rsi
-  plantMetabolism:
-    - !type:AdjustNutrition
-      amount: 0.25
-    - !type:AdjustWater
-      amount: 0.7
 
 - type: reagent
   id: BlueCuracao
   name: blue curacao
+  parent: BaseAlcohol
   desc: Exotically blue, fruity drink, distilled from oranges.
   physicalDesc: strong-smelling
   color: "#0000CD"
@@ -41,6 +42,7 @@
 - type: reagent
   id: Cognac
   name: cognac
+  parent: BaseAlcohol
   desc: A sweet and strongly alcoholic drink, twice distilled and left to mature for several years. Classy as fornication.
   physicalDesc: strong-smelling
   color: "#AB3C05"
@@ -49,6 +51,7 @@
 - type: reagent
   id: DeadRum
   name: deadrum
+  parent: BaseAlcohol
   desc: Distilled alcoholic drink made from saltwater.
   physicalDesc: strong-smelling
   color: "#664300"
@@ -57,6 +60,7 @@
 - type: reagent
   id: Gin
   name: gin
+  parent: BaseAlcohol
   desc: A distilled alcoholic drink that derives its predominant flavour from juniper berries.
   physicalDesc: strong-smelling
   color: "#664300"
@@ -65,6 +69,7 @@
 - type: reagent
   id: Kahlua
   name: kahlua
+  parent: BaseAlcohol
   desc: A widely known, Mexican coffee-flavoured liqueur.
   physicalDesc: cloudy
   color: "#664300"
@@ -73,6 +78,7 @@
 - type: reagent
   id: MelonLiquor
   name: melon liquor
+  parent: BaseAlcohol
   desc: A relatively sweet and fruity 46 proof liquor.
   physicalDesc: strong-smelling
   color: "#138808"
@@ -81,6 +87,7 @@
 - type: reagent
   id: NTCahors
   name: NeoTheology Cahors Wine
+  parent: BaseAlcohol
   desc: Fortified dessert wine made from cabernet sauvignon, saperavi and other grapes.
   physicalDesc: strong-smelling
   color: "#7E4043"
@@ -89,14 +96,27 @@
 - type: reagent
   id: PoisonWine
   name: poison wine
+  parent: BaseAlcohol
   desc: Is this even wine? Toxic! Hallucinogenic! Probably consumed in boatloads by your superiors!
   physicalDesc: strong-smelling
   color: "#000000"
   spritePath: pwineglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1
 
 - type: reagent
   id: Rum
   name: rum
+  parent: BaseAlcohol
   desc: Distilled alcoholic drink made from sugarcane byproducts.
   physicalDesc: strong-smelling
   color: "#664300"
@@ -105,6 +125,7 @@
 - type: reagent
   id: Sake
   name: sake
+  parent: BaseAlcohol
   desc: Alcoholic beverage made by fermenting rice that has been polished.
   physicalDesc: strong-smelling
   color: "#DDDDDD"
@@ -112,6 +133,7 @@
 - type: reagent
   id: Tequila
   name: tequila
+  parent: BaseAlcohol
   desc: A strong and mildly flavoured, mexican produced spirit.
   physicalDesc: strong-smelling
   color: "#d7d1d155"
@@ -119,6 +141,7 @@
 - type: reagent
   id: Vermouth
   name: vermouth
+  parent: BaseAlcohol
   desc: Aromatized, fortified white wine flavored with various botanicals.
   physicalDesc: strong-smelling
   color: "#91FF91"
@@ -127,6 +150,7 @@
 - type: reagent
   id: Vodka
   name: vodka
+  parent: BaseAlcohol
   desc: Clear distilled alcoholic beverage that originates from Poland and Russia.
   physicalDesc: strong-smelling
   color: "#d1d1d155"
@@ -135,6 +159,7 @@
 - type: reagent
   id: Whiskey
   name: whiskey
+  parent: BaseAlcohol
   desc: A type of distilled alcoholic beverage made from fermented grain mash.
   physicalDesc: strong-smelling
   color: "#664300"
@@ -143,6 +168,7 @@
 - type: reagent
   id: Wine
   name: wine
+  parent: BaseAlcohol
   desc: An premium alchoholic beverage made from distilled grape juice.
   physicalDesc: translucent
   color: "#7E4043"
@@ -153,6 +179,7 @@
 - type: reagent
   id: AcidSpit
   name: acidspit
+  parent: BaseAlcohol
   desc: A drink for the daring, can be deadly if incorrectly prepared!
   physicalDesc: strong-smelling
   color: "#365000"
@@ -161,6 +188,7 @@
 - type: reagent
   id: AlliesCocktail #haha, cock. that's hot
   name: allies cocktail
+  parent: BaseAlcohol
   desc: A drink made from your allies, not as sweet as when made from your enemies.
   physicalDesc: strong-smelling
   color: "#00664d"
@@ -169,6 +197,7 @@
 - type: reagent
   id: Aloe
   name: aloe
+  parent: BaseAlcohol
   desc: So very, very, very good.
   physicalDesc: strong-smelling
   color: "#192c00"
@@ -177,6 +206,7 @@
 - type: reagent
   id: Amasec
   name: amasec
+  parent: BaseAlcohol
   desc: Official drink of the Gun Club!
   physicalDesc: strong-smelling
   color: "#124da7"
@@ -185,6 +215,7 @@
 - type: reagent
   id: Andalusia
   name: andalusia
+  parent: BaseAlcohol
   desc: A nice, strangely named drink.
   physicalDesc: strong-smelling
   color: "#665700"
@@ -193,6 +224,7 @@
 - type: reagent
   id: Antifreeze
   name: antifreeze
+  parent: BaseAlcohol
   desc: Ultimate refreshment.
   physicalDesc: translucent
   color: "#ff7d63"
@@ -201,6 +233,7 @@
 - type: reagent
   id: AtomicBomb
   name: atomic bomb
+  parent: BaseAlcohol
   desc: Nuclear proliferation never tasted so good.
   physicalDesc: cloudy
   color: "#666300"
@@ -209,6 +242,7 @@
 - type: reagent
   id: B52
   name: b-52
+  parent: BaseAlcohol
   desc: Coffee, irish cream, and cognac. You will get bombed.
   physicalDesc: bubbly
   color: "#664300"
@@ -217,6 +251,7 @@
 - type: reagent
   id: BahamaMama
   name: bahama mama
+  parent: BaseAlcohol
   desc: Tropical cocktail.
   physicalDesc: strong-smelling
   color: "#FF7F3B"
@@ -225,6 +260,7 @@
 - type: reagent
   id: BananaHonk
   name: banana mama
+  parent: BaseAlcohol
   desc: A drink from Clown Heaven.
   physicalDesc: strong-smelling
   color: "#ffff91"
@@ -233,6 +269,7 @@
 - type: reagent
   id: Barefoot
   name: barefoot
+  parent: BaseAlcohol
   desc: Barefoot and pregnant.
   physicalDesc: strong-smelling
   color: "#664300"
@@ -241,6 +278,7 @@
 - type: reagent
   id: BeepskySmash
   name: beepsky smash
+  parent: BaseAlcohol
   desc: Deny drinking this and prepare for THE LAW.
   physicalDesc: strong-smelling
   color: "#664300"
@@ -249,6 +287,7 @@
 - type: reagent
   id: Bilk
   name: bilk
+  parent: BaseAlcohol
   desc: This appears to be beer mixed with milk. Disgusting.
   physicalDesc: bilky...
   color: "#895C4C"
@@ -257,6 +296,7 @@
 - type: reagent
   id: BlackRussian
   name: black russian
+  parent: BaseAlcohol
   desc: For the lactose-intolerant. Still as classy as a White Russian.
   physicalDesc: strong-smelling
   color: "#360000"
@@ -265,6 +305,7 @@
 - type: reagent
   id: BloodyMary
   name: bloody mary
+  parent: BaseAlcohol
   desc: A strange yet pleasurable mixture made of vodka, tomato, and lime juice.
   physicalDesc: strong-smelling
   color: "#660000"
@@ -273,6 +314,7 @@
 - type: reagent
   id:  Booger
   name: booger
+  parent: BaseAlcohol
   desc: Ewww...
   physicalDesc: strong-smelling
   color: "#8CFF8C"
@@ -281,6 +323,7 @@
 - type: reagent
   id: BraveBull
   name: brave bull
+  parent: BaseAlcohol
   desc: It's just as effective as Dutch-Courage!
   physicalDesc: strong-smelling
   color: "#664300"
@@ -289,6 +332,7 @@
 - type: reagent
   id: CubaLibre
   name: cuba libre
+  parent: BaseAlcohol
   desc: Rum, mixed with cola. Viva la revolucion.
   physicalDesc: bubbly
   color: "#3E1B00"
@@ -297,6 +341,7 @@
 - type: reagent
   id: DemonsBlood
   name: demons blood
+  parent: BaseAlcohol
   desc: AHHHH!!!!
   physicalDesc: strong-smelling
   color: "#a70000"
@@ -305,6 +350,7 @@
 - type: reagent
   id: DevilsKiss
   name: devils kiss
+  parent: BaseAlcohol
   desc: Creepy time!
   physicalDesc: strong-smelling
   color: "#A68310"
@@ -313,6 +359,7 @@
 - type: reagent
   id: DoctorsDelight
   name: the doctor's delight
+  parent: BaseAlcohol
   desc: A gulp a day keeps the MediBot away. That's probably for the best.
   physicalDesc: strong-smelling
   color: "#FF8CFF"
@@ -321,6 +368,7 @@
 - type: reagent
   id: DriestMartini
   name: driest martini
+  parent: BaseAlcohol
   desc: Only for the experienced. You think you see sand floating in the glass.
   physicalDesc: strong-smelling
   color: "#2E6671"
@@ -329,6 +377,7 @@
 - type: reagent
   id: ErikaSuprise
   name: erika suprise
+  parent: BaseAlcohol
   desc: The surprise is, it's green!
   physicalDesc: strong-smelling
   color: "#2E6671"
@@ -337,6 +386,7 @@
 - type: reagent
   id: GargleBlaster
   name: Pan-Galactic Gargle Blaster
+  parent: BaseAlcohol
   desc: Whoah, this stuff looks volatile!
   physicalDesc: volatile
   color: "#9cc8b4"
@@ -345,6 +395,7 @@
 - type: reagent
   id: GinFizz
   name: gin fizz
+  parent: BaseAlcohol
   desc: Refreshingly lemony, deliciously dry.
   physicalDesc: strong-smelling
   color: "#664300"
@@ -353,6 +404,7 @@
 - type: reagent
   id: GinTonic
   name: gin and tonic
+  parent: BaseAlcohol
   desc: An all time classic, mild cocktail.
   physicalDesc: strong-smelling
   color: "#004166"
@@ -361,6 +413,7 @@
 - type: reagent
   id: Goldschlager
   name: Goldschlager
+  parent: BaseAlcohol
   desc: 100 proof cinnamon schnapps, made for alcoholic teen girls on spring break.
   physicalDesc: strong-smelling
   color: "#FFFF91"
@@ -369,6 +422,7 @@
 - type: reagent
   id: Grog
   name: grog
+  parent: BaseAlcohol
   desc: Watered-down rum, pirate approved!
   physicalDesc: strong-smelling
   color: "#664300"
@@ -377,6 +431,7 @@
 - type: reagent
   id: HippiesDelight
   name: hippies delight
+  parent: BaseAlcohol
   desc: You just don't get it maaaan.
   physicalDesc: strong-smelling
   color: "#6eaa0c"
@@ -385,6 +440,7 @@
 - type: reagent
   id: Hooch
   name: hooch
+  parent: BaseAlcohol
   desc: Either someone's failure at cocktail making or attempt in alchohol production. In any case, do you really want to drink that?
   physicalDesc: strong-smelling
   color: "#664e00"
@@ -393,6 +449,7 @@
 - type: reagent
   id: IcedBeer
   name: iced beer
+  parent: BaseAlcohol
   desc: A beer which is so cold the air around it freezes.
   physicalDesc: bubbly
   color: "#664300"
@@ -401,6 +458,7 @@
 - type: reagent
   id: IrishCarBomb
   name: irish car bomb
+  parent: BaseAlcohol
   desc: A troubling mixture of irish cream and ale.
   physicalDesc: bubbly
   color: "#2E6671"
@@ -409,6 +467,7 @@
 - type: reagent
   id: IrishCream
   name: irish cream
+  parent: BaseAlcohol
   desc: Whiskey-imbued cream. What else could you expect from the Irish.
   physicalDesc: creamy
   color: "#664300"
@@ -417,6 +476,7 @@
 - type: reagent
   id: IrishCoffee
   name: irish coffee
+  parent: BaseAlcohol
   desc: Coffee served with irish cream. Regular cream just isn't the same!
   physicalDesc: cloudy
   color: "#664300"
@@ -425,6 +485,7 @@
 - type: reagent
   id: KiraSpecial
   name: kira special
+  parent: BaseAlcohol
   desc: Long live the guy who everyone had mistaken for a girl. Baka!
   physicalDesc: strong-smelling
   color: "#CCCC99"
@@ -433,6 +494,7 @@
 - type: reagent
   id: Lean
   name: lean
+  parent: BaseAlcohol
   desc: Turn up for days.
   physicalDesc: bubbly
   color: "#9400D3"
@@ -440,6 +502,7 @@
 - type: reagent
   id: LeanShine
   name: leanshine
+  parent: BaseAlcohol
   desc: Lean mixed with moonshine. Turn up for months.
   physicalDesc: bubbly
   color: "#9d5fb8"
@@ -447,6 +510,7 @@
 - type: reagent
   id: LongIslandIcedTea
   name: long island iced tea
+  parent: BaseAlcohol
   desc: The liquor cabinet, brought together in a delicious mix. Intended for middle-aged alcoholic women only.
   physicalDesc: strong-smelling
   color: "#664300"
@@ -455,6 +519,7 @@
 - type: reagent
   id: Manhattan
   name: manhattan
+  parent: BaseAlcohol
   desc: The Detective's undercover drink of choice. He never could stomach gin...
   physicalDesc: strong-smelling
   color: "#664300"
@@ -463,6 +528,7 @@
 - type: reagent
   id: ManhattanProject
   name: manhattan project
+  parent: BaseAlcohol
   desc: A scientist's drink of choice, for pondering ways to blow up the ship.
   physicalDesc: strong-smelling
   color: "#664300"
@@ -471,6 +537,7 @@
 - type: reagent
   id: ManlyDorf
   name: manly dorf
+  parent: BaseAlcohol
   desc: Beer and Ale, brought together in a delicious mix. Intended for stout dwarves only.
   physicalDesc: bubbly
   color: "#664300"
@@ -479,6 +546,7 @@
 - type: reagent
   id: Margarita
   name: margarita
+  parent: BaseAlcohol
   desc: On the rocks with salt on the rim. Arriba~!
   physicalDesc: strong-smelling
   color: "#8CFF8C"
@@ -487,6 +555,7 @@
 - type: reagent
   id: Martini
   name: classic martini
+  parent: BaseAlcohol
   desc: Vermouth with Gin. Not quite how 007 enjoyed it, but still delicious.
   physicalDesc: strong-smelling
   color: "#664300"
@@ -495,6 +564,7 @@
 - type: reagent
   id: Mead
   name: mead
+  parent: BaseAlcohol
   desc: A Viking's drink, though a cheap one.
   physicalDesc: strong-smelling
   color: "#664300"
@@ -503,6 +573,7 @@
 - type: reagent
   id: Mojito
   name: mojito
+  parent: BaseAlcohol
   desc: If it's good enough for Spesscuba, it's good enough for you.
   physicalDesc: strong-smelling
   color: "#664300"
@@ -511,6 +582,7 @@
 - type: reagent
   id: Moonshine
   name: moonshine
+  parent: BaseAlcohol
   desc: Artisanal homemade liquor. What could go wrong?
   physicalDesc: strong-smelling
   color: "#d1d7d155"
@@ -518,14 +590,26 @@
 - type: reagent
   id: Neurotoxin
   name: neurotoxin
+  parent: BaseAlcohol
   desc: A strong neurotoxin that puts the subject into a death-like state.
   physicalDesc: strong-smelling
   color: "#2E2E61"
   spritePath: neurotoxinglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1
 
 - type: reagent
   id: Patron
   name: patron
+  parent: BaseAlcohol
   desc: Tequila with silver in it, a favorite of alcoholic women in the club scene.
   physicalDesc: metallic
   color: "#585840"
@@ -534,6 +618,7 @@
 - type: reagent
   id: RedMead
   name: red mead
+  parent: BaseAlcohol
   desc: The true Viking's drink! Even though it has a strange red color.
   physicalDesc: strong-smelling
   color: "#C73C00"
@@ -542,7 +627,8 @@
 - type: reagent
   id: Rewriter
   name: rewriter
-  desc: The secret of the sanctuary of the Libarian...
+  parent: BaseAlcohol
+  desc: The secret of the sanctuary of the Librarian...
   physicalDesc: strong-smelling
   color: "#485000"
   spritePath: rewriter.rsi
@@ -550,6 +636,7 @@
 - type: reagent
   id: Sbiten
   name: sbiten
+  parent: BaseAlcohol
   desc: A spicy Vodka! Might be a little hot for the little guys!
   physicalDesc: strong-smelling
   color: "#004166"
@@ -558,6 +645,7 @@
 - type: reagent
   id: ScrewdriverCocktail
   name: screwdriver
+  parent: BaseAlcohol
   desc: Vodka, mixed with plain ol' orange juice. The result is surprisingly delicious.
   physicalDesc: strong-smelling
   color: "#A68310"
@@ -566,6 +654,7 @@
 - type: reagent
   id: Silencer
   name: silencer
+  parent: BaseAlcohol
   desc: A drink from Mime Heaven.
   physicalDesc: strong-smelling
   color: "#004666"
@@ -574,6 +663,7 @@
 - type: reagent
   id: Singulo
   name: singulo
+  parent: BaseAlcohol
   desc: A blue-space beverage!
   physicalDesc: strong-smelling
   color: "#3b0c0c"
@@ -582,6 +672,7 @@
 - type: reagent
   id: SnowWhite
   name: snow white
+  parent: BaseAlcohol
   desc: A cold refreshment.
   physicalDesc: bubbly
   color: "#FFFFFF"
@@ -590,6 +681,7 @@
 - type: reagent
   id: SuiDream
   name: sui dream
+  parent: BaseAlcohol
   desc: 'Comprised of: White soda, blue curacao, melon liquor.'
   physicalDesc: strong-smelling
   color: "#00A86B"
@@ -598,6 +690,7 @@
 - type: reagent
   id: SyndicateBomb
   name: syndicate bomb
+  parent: BaseAlcohol
   desc: Somebody set us up the bomb!
   physicalDesc: opaque
   color: "#2E6660"
@@ -606,6 +699,7 @@
 - type: reagent
   id: TequilaSunrise
   name: tequila sunrise
+  parent: BaseAlcohol
   desc: Tequila and orange juice. Much like a Screwdriver, only Mexican.
   physicalDesc: strong-smelling
   color: "#FFE48C"
@@ -614,6 +708,7 @@
 - type: reagent
   id: ThreeMileIsland
   name: three mile island iced tea
+  parent: BaseAlcohol
   desc: "Made for a woman, strong enough for a man."
   physicalDesc: strong-smelling
   color: "#666340"
@@ -622,6 +717,7 @@
 - type: reagent
   id: ToxinsSpecial
   name: toxins special
+  parent: BaseAlcohol
   desc: This thing is ON FIRE! CALL THE DAMN SHUTTLE!
   physicalDesc: strong-smelling
   color: "#665c00"
@@ -630,6 +726,7 @@
 - type: reagent
   id: VodkaMartini
   name: vodka martini
+  parent: BaseAlcohol
   desc: Vodka with Gin. Not quite how 007 enjoyed it, but still delicious.
   physicalDesc: strong-smelling
   color: "#004666"
@@ -638,6 +735,7 @@
 - type: reagent
   id: VodkaTonic
   name: vodka tonic
+  parent: BaseAlcohol
   desc: For when a gin and tonic isn't russian enough.
   physicalDesc: strong-smelling
   color: "#0064C8"
@@ -646,6 +744,7 @@
 - type: reagent
   id: WhiskeyCola
   name: whiskey cola
+  parent: BaseAlcohol
   desc: Whiskey, mixed with cola. Surprisingly refreshing.
   physicalDesc: bubbly
   color: "#3E1B00"
@@ -654,6 +753,7 @@
 - type: reagent
   id: WhiskeySoda
   name: whiskey soda
+  parent: BaseAlcohol
   desc: For the more refined griffon.
   physicalDesc: strong-smelling
   color: "#533600"
@@ -662,6 +762,7 @@
 - type: reagent
   id: WhiteRussian
   name: white russian
+  parent: BaseAlcohol
   desc: That's just, like, your opinion, man...
   physicalDesc: strong-smelling
   color: "#A68340"

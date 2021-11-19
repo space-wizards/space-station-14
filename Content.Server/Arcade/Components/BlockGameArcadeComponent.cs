@@ -52,7 +52,7 @@ namespace Content.Server.Arcade.Components
             if(!Powered || !eventArgs.User.TryGetComponent(out ActorComponent? actor))
                 return;
 
-            if(!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
+            if(!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User.Uid))
                 return;
 
             UserInterface?.Toggle(actor.PlayerSession);
@@ -131,7 +131,7 @@ namespace Content.Server.Arcade.Components
                     if (obj.Session != _player) break;
 
                     // TODO: Should this check if the Owner can interact...?
-                    if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(Owner))
+                    if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(OwnerUid))
                     {
                         DeactivePlayer(obj.Session);
                         break;
@@ -700,6 +700,22 @@ namespace Content.Server.Arcade.Components
                 var result = new List<BlockGameBlock>();
                 result.AddRange(_field);
                 result.AddRange(_currentPiece.Blocks(_currentPiecePosition, _currentRotation));
+
+                var dropGhostPosition = _currentPiecePosition;
+                while (_currentPiece.Positions(dropGhostPosition.AddToY(1), _currentRotation)
+                       .All(DropCheck))
+                {
+                    dropGhostPosition = dropGhostPosition.AddToY(1);
+                }
+
+                if (dropGhostPosition != _currentPiecePosition)
+                {
+                    var blox = _currentPiece.Blocks(dropGhostPosition, _currentRotation);
+                    for (var i = 0; i < blox.Length; i++)
+                    {
+                        result.Add(new BlockGameBlock(blox[i].Position, BlockGameBlock.ToGhostBlockColor(blox[i].GameBlockColor)));
+                    }
+                }
                 return result;
             }
 

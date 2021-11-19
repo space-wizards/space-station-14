@@ -128,8 +128,7 @@ namespace Content.Server.Chemistry.EntitySystems
             // Process reactions
             if (needsReactionsProcessing && solutionHolder.CanReact)
             {
-                _chemistrySystem
-                    .FullyReactSolution(solutionHolder, EntityManager.GetEntity(uid), solutionHolder.MaxVolume);
+                _chemistrySystem.FullyReactSolution(solutionHolder, uid, solutionHolder.MaxVolume);
             }
 
             UpdateAppearance(uid, solutionHolder);
@@ -216,7 +215,7 @@ namespace Content.Server.Chemistry.EntitySystems
             [NotNullWhen(true)] out Solution? solution,
             SolutionContainerManagerComponent? solutionsMgr = null)
         {
-            if (!Resolve(uid, ref solutionsMgr))
+            if (!Resolve(uid, ref solutionsMgr, false))
             {
                 solution = null;
                 return false;
@@ -249,7 +248,7 @@ namespace Content.Server.Chemistry.EntitySystems
             return solutionsMgr.Solutions[name];
         }
 
-        public string[] RemoveEachReagent(Solution solution, FixedPoint2 quantity)
+        public string[] RemoveEachReagent(EntityUid uid, Solution solution, FixedPoint2 quantity)
         {
             var removedReagent = new string[solution.Contents.Count];
             if (quantity <= 0)
@@ -274,15 +273,21 @@ namespace Content.Server.Chemistry.EntitySystems
                 }
             }
 
+            UpdateChemicals(uid, solution);
             return removedReagent;
         }
 
-        public void TryRemoveAllReagents(Solution solution, List<Solution.ReagentQuantity> removeReagents)
+        public void TryRemoveAllReagents(EntityUid uid, Solution solution, List<Solution.ReagentQuantity> removeReagents)
         {
+            if (removeReagents.Count == 0)
+                return;
+
             foreach (var reagent in removeReagents)
             {
                 solution.RemoveReagent(reagent.ReagentId, reagent.Quantity);
             }
+
+            UpdateChemicals(uid, solution);
         }
 
         public FixedPoint2 GetReagentQuantity(EntityUid ownerUid, string reagentId)

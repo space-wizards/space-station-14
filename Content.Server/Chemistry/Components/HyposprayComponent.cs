@@ -106,7 +106,7 @@ namespace Content.Server.Chemistry.Components
                 return true;
             }
 
-            removedSolution.DoEntityReaction(target, ReactionMethod.Injection);
+            removedSolution.DoEntityReaction(target.Uid, ReactionMethod.Injection);
 
             EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(target.Uid, targetSolution, removedSolution);
 

@@ -1,7 +1,7 @@
 using System;
 using Content.Server.Interaction;
 using Content.Server.Items;
-using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
 using Content.Shared.Tag;
 using Content.Shared.Throwing;
 using Robust.Shared.GameObjects;
@@ -46,7 +46,7 @@ namespace Content.Server.Throwing
                 return;
             }
 
-            if (entity.HasComponent<IMobStateComponent>())
+            if (entity.HasComponent<MobStateComponent>())
             {
                 Logger.Warning("Throwing not supported for mobs!");
                 return;

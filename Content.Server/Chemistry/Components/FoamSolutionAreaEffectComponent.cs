@@ -1,8 +1,7 @@
-﻿using Content.Server.Body.Circulatory;
+﻿using Content.Server.Body.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Foam;
 using Content.Shared.Inventory;
@@ -51,7 +50,7 @@ namespace Content.Server.Chemistry.Components
                         slot == EquipmentSlotDefines.Slots.IDCARD)
                         continue;
 
-                    if (inventory.TryGetSlotItem(slot, out ItemComponent _))
+                    if (inventory.TryGetSlotItem(slot, out ItemComponent? _))
                         protection += 0.025f;
                 }
             }

@@ -37,7 +37,7 @@ namespace Content.Server.Storage.EntitySystems
 
         private void OnRelayMovement(EntityUid uid, EntityStorageComponent component, RelayMovementEntityEvent args)
         {
-            if (EntityManager.HasComponent<HandsComponent>(uid))
+            if (EntityManager.HasComponent<HandsComponent>(args.Entity.Uid))
             {
                 if (_gameTiming.CurTime <
                     component.LastInternalOpenAttempt + EntityStorageComponent.InternalOpenAttemptDelay)

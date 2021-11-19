@@ -42,13 +42,13 @@ namespace Content.Server.DoAfter
 
             if (eventArgs.BreakOnUserMove)
             {
-                UserGrid = entityManager.GetComponent<ITransformComponent>(eventArgs.User).Coordinates;
+                UserGrid = entityManager.GetComponent<TransformComponent>(eventArgs.User).Coordinates;
             }
 
             if (eventArgs.BreakOnTargetMove)
             {
                 // Target should never be null if the bool is set.
-                TargetGrid = entityManager.GetComponent<ITransformComponent>(eventArgs.Target!.Value).Coordinates;
+                TargetGrid = entityManager.GetComponent<TransformComponent>(eventArgs.Target!.Value).Coordinates;
             }
 
             // For this we need to stay on the same hand slot and need the same item in that hand slot
@@ -113,13 +113,13 @@ namespace Content.Server.DoAfter
             }
 
             // TODO :Handle inertia in space.
-            if (EventArgs.BreakOnUserMove && !entityManager.GetComponent<ITransformComponent>(EventArgs.User).Coordinates.InRange(
+            if (EventArgs.BreakOnUserMove && !entityManager.GetComponent<TransformComponent>(EventArgs.User).Coordinates.InRange(
                 entityManager, UserGrid, EventArgs.MovementThreshold))
             {
                 return true;
             }
 
-            if (EventArgs.BreakOnTargetMove && !entityManager.GetComponent<ITransformComponent>(EventArgs.Target!.Value).Coordinates.InRange(
+            if (EventArgs.BreakOnTargetMove && !entityManager.GetComponent<TransformComponent>(EventArgs.Target!.Value).Coordinates.InRange(
                 entityManager, TargetGrid, EventArgs.MovementThreshold))
             {
                 return true;

@@ -11,28 +11,28 @@ namespace Content.Shared.MobState.State
     {
         protected override DamageState DamageState => DamageState.Critical;
 
-        public override void EnterState(IEntity entity)
+        public override void EnterState(EntityUid uid, IEntityManager entityManager)
         {
-            base.EnterState(entity);
+            base.EnterState(uid, entityManager);
 
-            if (entity.TryGetComponent(out SharedAlertsComponent? status))
+            if (entityManager.TryGetComponent(uid, out SharedAlertsComponent? status))
             {
                 status.ShowAlert(AlertType.HumanCrit); // TODO: combine humancrit-0 and humancrit-1 into a gif and display it
             }
 
-            EntitySystem.Get<StandingStateSystem>().Down(entity.Uid);
+            EntitySystem.Get<StandingStateSystem>().Down(uid);
 
-            if (entity.TryGetComponent(out SharedAppearanceComponent? appearance))
+            if (entityManager.TryGetComponent(uid, out SharedAppearanceComponent? appearance))
             {
                 appearance.SetData(DamageStateVisuals.State, DamageState.Critical);
             }
         }
 
-        public override void ExitState(IEntity entity)
+        public override void ExitState(EntityUid uid, IEntityManager entityManager)
         {
-            base.ExitState(entity);
+            base.ExitState(uid, entityManager);
 
-            EntitySystem.Get<StandingStateSystem>().Stand(entity.Uid);
+            EntitySystem.Get<StandingStateSystem>().Stand(uid);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Content.Server.Body.Circulatory;
-using Content.Server.Body.Respiratory;
+﻿using Content.Server.Body.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
@@ -46,7 +45,7 @@ namespace Content.Server.Chemistry.Components
             foreach (var reagentQuantity in transferSolution.Contents.ToArray())
             {
                 if (reagentQuantity.Quantity == FixedPoint2.Zero) continue;
-                chemistry.ReactionEntity(entity, ReactionMethod.Ingestion, reagentQuantity.ReagentId, reagentQuantity.Quantity, transferSolution);
+                chemistry.ReactionEntity(entity.Uid, ReactionMethod.Ingestion, reagentQuantity.ReagentId, reagentQuantity.Quantity, transferSolution);
             }
 
             bloodstream.TryTransferSolution(transferSolution);

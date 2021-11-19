@@ -50,6 +50,9 @@
     anchored: true
   - type: Reactive
     reactions:
+    - reagents: [Water]
+      methods: [Touch, Ingestion, Injection]
+      effects:
       - !type:AddToSolutionReaction
         solution: soil
   - type: Appearance

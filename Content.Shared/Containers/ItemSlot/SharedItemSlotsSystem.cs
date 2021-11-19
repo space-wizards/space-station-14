@@ -30,7 +30,7 @@ namespace Content.Shared.Containers.ItemSlots
 
         private void OnComponentInit(EntityUid uid, SharedItemSlotsComponent itemSlots, ComponentInit args)
         {
-            // create container for each slot 
+            // create container for each slot
             foreach (var pair in itemSlots.Slots)
             {
                 var slotName = pair.Key;
@@ -67,7 +67,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (args.Hands == null ||
                 !args.CanAccess ||
                 !args.CanInteract ||
-                !_actionBlockerSystem.CanPickup(args.User))
+                !_actionBlockerSystem.CanPickup(args.User.Uid))
                 return;
 
             foreach (var (slotName, slot) in component.Slots)
@@ -89,7 +89,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (args.Using == null ||
                 !args.CanAccess ||
                 !args.CanInteract ||
-                !_actionBlockerSystem.CanDrop(args.User))
+                !_actionBlockerSystem.CanDrop(args.User.Uid))
                 return;
 
             foreach (var (slotName, slot) in component.Slots)
@@ -131,7 +131,7 @@ namespace Content.Shared.Containers.ItemSlots
             foreach (var (slotName, slot) in itemSlots.Slots)
             {
                 // check if item allowed in whitelist
-                if (slot.Whitelist != null && !slot.Whitelist.IsValid(item))
+                if (slot.Whitelist != null && !slot.Whitelist.IsValid(item.Uid))
                     continue;
 
                 // check if slot does not contain the item currently being inserted???
@@ -163,7 +163,7 @@ namespace Content.Shared.Containers.ItemSlots
         {
             // insert item
             slot.ContainerSlot.Insert(item);
-            RaiseLocalEvent(itemSlots.Owner.Uid, new ItemSlotChangedEvent(itemSlots, slotName, slot));
+            RaiseLocalEvent(itemSlots.OwnerUid, new ItemSlotChangedEvent(itemSlots, slotName, slot));
 
             // play sound
             if (slot.InsertSound != null)
@@ -179,7 +179,7 @@ namespace Content.Shared.Containers.ItemSlots
                 return false;
 
             // check if item allowed in whitelist
-            if (slot.Whitelist != null && !slot.Whitelist.IsValid(item))
+            if (slot.Whitelist != null && !slot.Whitelist.IsValid(item.Uid))
                 return false;
 
             return true;
@@ -248,7 +248,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (slot.EjectSound != null)
                 SoundSystem.Play(Filter.Pvs(itemSlots.Owner), slot.EjectSound.GetSound(), itemSlots.Owner);
 
-            RaiseLocalEvent(itemSlots.Owner.Uid, new ItemSlotChangedEvent(itemSlots, slotName, slot));
+            RaiseLocalEvent(itemSlots.OwnerUid, new ItemSlotChangedEvent(itemSlots, slotName, slot));
             return true;
         }
     }

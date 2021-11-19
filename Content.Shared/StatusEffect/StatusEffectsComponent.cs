@@ -5,6 +5,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.StatusEffect
 {
@@ -15,6 +16,7 @@ namespace Content.Shared.StatusEffect
     {
         public override string Name => "StatusEffects";
 
+        [ViewVariables]
         public Dictionary<string, StatusEffectState> ActiveEffects = new();
 
         /// <summary>
@@ -33,12 +35,14 @@ namespace Content.Shared.StatusEffect
         /// <summary>
         ///     The start and end times of the status effect.
         /// </summary>
+        [ViewVariables]
         public (TimeSpan, TimeSpan) Cooldown;
 
         /// <summary>
         ///     The name of the relevant component that
         ///     was added alongside the effect, if any.
         /// </summary>
+        [ViewVariables]
         public string? RelevantComponent;
 
         public StatusEffectState((TimeSpan, TimeSpan) cooldown, string? relevantComponent=null)

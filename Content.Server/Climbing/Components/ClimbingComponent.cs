@@ -79,7 +79,10 @@ namespace Content.Server.Climbing.Components
 
             if (velocity <= 0.0f) return;
 
-            Body.ApplyLinearImpulse((to - from).Normalized * velocity * 400);
+            // Since there are bodies with different masses:
+            // mass * 5 seems enough to move entity
+            // instead of launching cats like rockets against the walls with constant impulse value.  
+            Body.ApplyLinearImpulse((to - from).Normalized * velocity * Body.Mass * 5);
             OwnerIsTransitioning = true;
 
             Owner.SpawnTimer((int) (BufferTime * 1000), () =>

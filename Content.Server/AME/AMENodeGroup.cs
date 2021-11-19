@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.AME.Components;
-using Content.Server.Explosion;
+using Content.Server.Explosion.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.ViewVariables;
 
@@ -177,7 +177,7 @@ namespace Content.Server.AME
 
             intensity = Math.Min(intensity, 8);
 
-            epicenter.Owner.SpawnExplosion(intensity / 2, intensity, intensity * 2, intensity * 3);
+            EntitySystem.Get<ExplosionSystem>().SpawnExplosion(epicenter.Owner.Uid, intensity / 2, intensity, intensity * 2, intensity * 3);
         }
     }
 }

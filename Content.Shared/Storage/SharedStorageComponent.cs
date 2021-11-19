@@ -34,7 +34,7 @@ namespace Content.Shared.Storage
 
         bool IDraggable.Drop(DragDropEvent eventArgs)
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User.Uid))
             {
                 return false;
             }

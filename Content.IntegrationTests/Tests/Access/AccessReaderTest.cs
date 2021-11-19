@@ -15,7 +15,7 @@ namespace Content.Tests.Server.GameObjects.Components.Access
         [Test]
         public async Task TestTags()
         {
-            var server = StartServerDummyTicker();
+            var server = StartServer();
             await server.WaitAssertion(() =>
             {
                 var system = EntitySystem.Get<AccessReaderSystem>();

@@ -2,7 +2,7 @@ using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
 using Content.Shared.Examine;
 using Content.Shared.Ghost;
-using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -92,7 +92,7 @@ namespace Content.Server.Mind.Components
                         EntitySystem.Get<SharedGhostSystem>().SetCanReturnToBody(ghost, false);
                     }
 
-                    Mind!.TransferTo(visiting);
+                    Mind!.TransferTo(visiting.Uid);
                 }
                 else if (GhostOnShutdown)
                 {
@@ -116,7 +116,7 @@ namespace Content.Server.Mind.Components
                         if (Mind != null)
                         {
                             ghost.Name = Mind.CharacterName ?? string.Empty;
-                            Mind.TransferTo(ghost);
+                            Mind.TransferTo(ghost.Uid);
                         }
                     });
                 }
@@ -131,7 +131,7 @@ namespace Content.Server.Mind.Components
             }
 
             var dead =
-                Owner.TryGetComponent<IMobStateComponent>(out var state) &&
+                Owner.TryGetComponent<MobStateComponent>(out var state) &&
                 state.IsDead();
 
             if (!HasMind)

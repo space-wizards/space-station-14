@@ -39,7 +39,6 @@ namespace Content.Server.Electrocution
         [Dependency] private readonly IEntityLookup _entityLookup = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IConsoleHost _consoleHost = default!;
         [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
         [Dependency] private readonly SharedJitteringSystem _jitteringSystem = default!;
         [Dependency] private readonly SharedStunSystem _stunSystem = default!;
@@ -139,7 +138,7 @@ namespace Content.Server.Electrocution
         public bool TryDoElectrifiedAct(EntityUid uid, EntityUid targetUid,
             ElectrifiedComponent? electrified = null,
             NodeContainerComponent? nodeContainer = null,
-            ITransformComponent? transform = null)
+            TransformComponent? transform = null)
         {
             if (!Resolve(uid, ref electrified, ref transform, false))
                 return false;
@@ -253,7 +252,7 @@ namespace Content.Server.Electrocution
             float siemensCoefficient = 1f,
             StatusEffectsComponent? statusEffects = null,
             SharedAlertsComponent? alerts = null,
-            ITransformComponent? sourceTransform = null)
+            TransformComponent? sourceTransform = null)
         {
             if (!DoCommonElectrocutionAttempt(uid, sourceUid, ref siemensCoefficient))
                 return false;

@@ -7,7 +7,7 @@ using Robust.Shared.Localization;
 
 namespace Content.Server.Access
 {
-    public class IdCardConsoleSystem : EntitySystem 
+    public class IdCardConsoleSystem : EntitySystem
     {
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
 
@@ -24,10 +24,10 @@ namespace Content.Server.Access
                 !args.CanAccess ||
                 !args.CanInteract ||
                 !args.Using.HasComponent<IdCardComponent>() ||
-                !_actionBlockerSystem.CanDrop(args.User))
+                !_actionBlockerSystem.CanDrop(args.User.Uid))
                 return;
 
-            // Can we insert a privileged ID? 
+            // Can we insert a privileged ID?
             if (component.PrivilegedIDEmpty)
             {
                 Verb verb = new();
@@ -53,10 +53,10 @@ namespace Content.Server.Access
             if (args.Hands == null ||
                 !args.CanAccess ||
                 !args.CanInteract ||
-                !_actionBlockerSystem.CanPickup(args.User))
+                !_actionBlockerSystem.CanPickup(args.User.Uid))
                 return;
 
-            // Can we eject a privileged ID? 
+            // Can we eject a privileged ID?
             if (!component.PrivilegedIDEmpty)
             {
                 Verb verb = new();

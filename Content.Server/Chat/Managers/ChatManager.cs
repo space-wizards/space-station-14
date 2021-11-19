@@ -108,9 +108,9 @@ namespace Content.Server.Chat.Managers
             _netManager.ServerSendMessage(msg, player.ConnectedClient);
         }
 
-        public void EntitySay(IEntity source, string message)
+        public void EntitySay(IEntity source, string message, bool hideChat=false)
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanSpeak(source))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanSpeak(source.Uid))
             {
                 return;
             }
@@ -129,7 +129,7 @@ namespace Content.Server.Chat.Managers
             foreach (var handler in _chatTransformHandlers)
             {
                 //TODO: rather return a bool and use a out var?
-                message = handler(source, message);
+                message = handler(source.Uid, message);
             }
 
             message = message.Trim();
@@ -190,12 +190,13 @@ namespace Content.Server.Chat.Managers
             msg.Message = message;
             msg.MessageWrap = Loc.GetString("chat-manager-entity-say-wrap-message",("entityName", source.Name));
             msg.SenderEntity = source.Uid;
+            msg.HideChat = hideChat;
             _netManager.ServerSendToMany(msg, clients);
         }
 
         public void EntityMe(IEntity source, string action)
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanEmote(source))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanEmote(source.Uid))
             {
                 return;
             }

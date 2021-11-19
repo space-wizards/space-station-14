@@ -6,6 +6,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Voting;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Random;
 
@@ -22,6 +23,9 @@ namespace Content.Server.Voting.Managers
                     break;
                 case StandardVoteType.Preset:
                     CreatePresetVote(initiator);
+                    break;
+                case StandardVoteType.Map:
+                    CreateMapVote(initiator);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(voteType), voteType, null);
@@ -137,6 +141,55 @@ namespace Content.Server.Voting.Managers
                 }
 
                 EntitySystem.Get<GameTicker>().SetStartPreset(picked);
+            };
+        }
+
+        private void CreateMapVote(IPlayerSession? initiator)
+        {
+            var maps = new Dictionary<string, string>
+            {
+                ["Maps/saltern.yml"] = "Saltern",
+                ["Maps/packedstation.yml"] = "PackedStation",
+            };
+
+            var alone = _playerManager.PlayerCount == 1 && initiator != null;
+            var options = new VoteOptions
+            {
+                Title = Loc.GetString("ui-vote-map-title"),
+                Duration = alone
+                    ? TimeSpan.FromSeconds(10)
+                    : TimeSpan.FromSeconds(180)
+            };
+
+            if (alone)
+                options.InitiatorTimeout = TimeSpan.FromSeconds(10);
+
+            foreach (var (k, v) in maps)
+            {
+                options.Options.Add((v, k));
+            }
+
+            WirePresetVoteInitiator(options, initiator);
+
+            var vote = CreateVote(options);
+
+            vote.OnFinished += (_, args) =>
+            {
+                string picked;
+                if (args.Winner == null)
+                {
+                    picked = (string) _random.Pick(args.Winners);
+                    _chatManager.DispatchServerAnnouncement(
+                        Loc.GetString("ui-vote-map-tie", ("picked", maps[picked])));
+                }
+                else
+                {
+                    picked = (string) args.Winner;
+                    _chatManager.DispatchServerAnnouncement(
+                        Loc.GetString("ui-vote-map-win", ("winner", maps[picked])));
+                }
+
+                _cfg.SetCVar(CCVars.GameMap, picked);
             };
         }
 

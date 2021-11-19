@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Content.Server.Stack;
 using Content.Shared.Prototypes;
 using Content.Shared.Random.Helpers;
-using Content.Shared.Stacks;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -19,8 +18,10 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         [DataField("spawn")]
         public Dictionary<string, MinMax> Spawn { get; set; } = new();
 
-        public void Execute(IEntity owner, DestructibleSystem system)
+        public void Execute(EntityUid owner, DestructibleSystem system)
         {
+            var position = system.EntityManager.GetComponent<TransformComponent>(owner).MapPosition;
+
             foreach (var (entityId, minMax) in Spawn)
             {
                 var count = minMax.Min >= minMax.Max
@@ -31,7 +32,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
 
                 if (EntityPrototypeHelpers.HasComponent<StackComponent>(entityId))
                 {
-                    var spawned = owner.EntityManager.SpawnEntity(entityId, owner.Transform.MapPosition);
+                    var spawned = system.EntityManager.SpawnEntity(entityId, position);
                     var stack = spawned.GetComponent<StackComponent>();
                     EntitySystem.Get<StackSystem>().SetCount(spawned.Uid, count, stack);
                     spawned.RandomOffset(0.5f);
@@ -40,7 +41,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                 {
                     for (var i = 0; i < count; i++)
                     {
-                        var spawned = owner.EntityManager.SpawnEntity(entityId, owner.Transform.MapPosition);
+                        var spawned = system.EntityManager.SpawnEntity(entityId, position);
                         spawned.RandomOffset(0.5f);
                     }
                 }

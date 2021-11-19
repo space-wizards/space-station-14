@@ -13,6 +13,7 @@ using Robust.Shared.Map;
 
 namespace Content.Server.Fluids.Components
 {
+    // TODO: Kill these with fire
     public static class SpillExtensions
     {
         /// <summary>
@@ -29,6 +30,25 @@ namespace Content.Server.Fluids.Components
             bool sound = true)
         {
             return solution.SpillAt(entity.Transform.Coordinates, prototype, sound);
+        }
+
+        /// <summary>
+        ///     Spills the specified solution at the entity's location if possible.
+        /// </summary>
+        /// <param name="entity">
+        ///     The entity to use as a location to spill the solution at.
+        /// </param>
+        /// <param name="solution">Initial solution for the prototype.</param>
+        /// <param name="prototype">The prototype to use.</param>
+        /// <param name="sound">Play the spill sound.</param>
+        /// <param name="entityManager"></param>
+        /// <returns>The puddle if one was created, null otherwise.</returns>
+        public static PuddleComponent? SpillAt(this Solution solution, EntityUid entity, string prototype,
+            bool sound = true, IEntityManager? entityManager = null)
+        {
+            entityManager ??= IoCManager.Resolve<IEntityManager>();
+
+            return solution.SpillAt(entityManager.GetComponent<TransformComponent>(entity).Coordinates, prototype, sound);
         }
 
         /// <summary>

@@ -12,6 +12,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
 using Content.Shared.Inventory;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Server.Console;
@@ -57,46 +58,6 @@ namespace Content.Server.Inventory.Components
                 {
                     AddSlot(slotName);
                 }
-            }
-        }
-
-        public override float WalkSpeedModifier
-        {
-            get
-            {
-                var mod = 1f;
-                foreach (var slot in _slotContainers.Values)
-                {
-                    if (slot.ContainedEntity != null)
-                    {
-                        foreach (var modifier in slot.ContainedEntity.GetAllComponents<IMoveSpeedModifier>())
-                        {
-                            mod *= modifier.WalkSpeedModifier;
-                        }
-                    }
-                }
-
-                return mod;
-            }
-        }
-
-        public override float SprintSpeedModifier
-        {
-            get
-            {
-                var mod = 1f;
-                foreach (var slot in _slotContainers.Values)
-                {
-                    if (slot.ContainedEntity != null)
-                    {
-                        foreach (var modifier in slot.ContainedEntity.GetAllComponents<IMoveSpeedModifier>())
-                        {
-                            mod *= modifier.SprintSpeedModifier;
-                        }
-                    }
-                }
-
-                return mod;
             }
         }
 
@@ -246,7 +207,7 @@ namespace Content.Server.Inventory.Components
             var pass = false;
             reason = null;
 
-            if (mobCheck && !EntitySystem.Get<ActionBlockerSystem>().CanEquip(Owner))
+            if (mobCheck && !EntitySystem.Get<ActionBlockerSystem>().CanEquip(OwnerUid))
             {
                 reason = Loc.GetString("inventory-component-can-equip-cannot");
                 return false;
@@ -270,9 +231,10 @@ namespace Content.Server.Inventory.Components
                 reason = controllerReason ?? reason;
             }
 
-            if (!pass && reason == null)
+            if (!pass)
             {
-                reason = Loc.GetString("inventory-component-can-equip-cannot");
+                reason = reason ?? Loc.GetString("inventory-component-can-equip-cannot");
+                return false;
             }
 
             var canEquip = pass && _slotContainers[slot].CanInsert(item.Owner);
@@ -333,10 +295,7 @@ namespace Content.Server.Inventory.Components
 
         private void UpdateMovementSpeed()
         {
-            if (Owner.TryGetComponent(out MovementSpeedModifierComponent? mod))
-            {
-                mod.RefreshMovementSpeedModifiers();
-            }
+            EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(OwnerUid);
         }
 
         public void ForceUnequip(Slots slot)
@@ -372,7 +331,7 @@ namespace Content.Server.Inventory.Components
         /// </returns>
         public bool CanUnequip(Slots slot, bool mobCheck = true)
         {
-            if (mobCheck && !EntitySystem.Get<ActionBlockerSystem>().CanUnequip(Owner))
+            if (mobCheck && !EntitySystem.Get<ActionBlockerSystem>().CanUnequip(OwnerUid))
                 return false;
 
             var inventorySlot = _slotContainers[slot];

@@ -4,8 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Atmos;
 using Content.Server.Body.Behavior;
-using Content.Server.Body.Circulatory;
-using Content.Server.Body.Respiratory;
+using Content.Server.Body.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
 using NUnit.Framework;
@@ -52,7 +51,7 @@ namespace Content.IntegrationTests.Tests.Body
         public async Task AirConsistencyTest()
         {
             var options = new ServerContentIntegrationOption{ExtraPrototypes = Prototypes};
-            var server = StartServerDummyTicker(options);
+            var server = StartServer(options);
 
             server.Assert(() =>
             {
@@ -139,7 +138,7 @@ namespace Content.IntegrationTests.Tests.Body
         public async Task NoSuffocationTest()
         {
             var options = new ServerContentIntegrationOption{ExtraPrototypes = Prototypes};
-            var server = StartServerDummyTicker(options);
+            var server = StartServer(options);
 
             await server.WaitIdleAsync();
 

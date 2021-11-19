@@ -28,7 +28,7 @@ namespace Content.Shared.Chemistry.Components
         [ViewVariables]
         [DataField("reagents")]
         public List<ReagentQuantity> Contents = new(2);
-        
+
         /// <summary>
         ///     The calculated total volume of all reagents in the solution (ex. Total volume of liquid in beaker).
         /// </summary>
@@ -332,13 +332,13 @@ namespace Content.Shared.Chemistry.Components
             return newSolution;
         }
 
-        public void DoEntityReaction(IEntity entity, ReactionMethod method)
+        public void DoEntityReaction(EntityUid uid, ReactionMethod method)
         {
             var chemistry = EntitySystem.Get<ChemistrySystem>();
 
             foreach (var (reagentId, quantity) in Contents.ToArray())
             {
-                chemistry.ReactionEntity(entity, method, reagentId, quantity, this);
+                chemistry.ReactionEntity(uid, method, reagentId, quantity, this);
             }
         }
 

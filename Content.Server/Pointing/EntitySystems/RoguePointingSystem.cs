@@ -1,7 +1,7 @@
 ﻿using System.Linq;
-using Content.Server.Explosion;
+using Content.Server.Explosion.EntitySystems;
 using Content.Server.Pointing.Components;
-using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
 using Content.Shared.Pointing.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -22,6 +22,8 @@ namespace Content.Server.Pointing.EntitySystems
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
+        [Dependency] private readonly ExplosionSystem _explosions = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -37,14 +39,14 @@ namespace Content.Server.Pointing.EntitySystems
             }
         }
 
-        private IEntity? RandomNearbyPlayer(EntityUid uid, RoguePointingArrowComponent? component = null, ITransformComponent? transform = null)
+        private IEntity? RandomNearbyPlayer(EntityUid uid, RoguePointingArrowComponent? component = null, TransformComponent? transform = null)
         {
             if (!Resolve(uid, ref component, ref transform))
                 return null;
 
             var players = _playerManager
                 .GetPlayersInRange(transform.Coordinates, 15)
-                .Where(player => player.AttachedEntity != null && player.AttachedEntity.TryGetComponent(out IMobStateComponent? mobStateComponent) && !mobStateComponent.IsDead())
+                .Where(player => player.AttachedEntity != null && player.AttachedEntity.TryGetComponent(out MobStateComponent? mobStateComponent) && !mobStateComponent.IsDead())
                 .ToArray();
 
             if (players.Length == 0)
@@ -55,7 +57,7 @@ namespace Content.Server.Pointing.EntitySystems
             return _random.Pick(players).AttachedEntity;
         }
 
-        private void UpdateAppearance(EntityUid uid, RoguePointingArrowComponent? component = null, ITransformComponent? transform = null, AppearanceComponent? appearance = null)
+        private void UpdateAppearance(EntityUid uid, RoguePointingArrowComponent? component = null, TransformComponent? transform = null, AppearanceComponent? appearance = null)
         {
             if (!Resolve(uid, ref component, ref transform, ref appearance) || component.Chasing == null)
                 return;
@@ -65,7 +67,7 @@ namespace Content.Server.Pointing.EntitySystems
 
         public override void Update(float frameTime)
         {
-            foreach (var (component, transform) in EntityManager.EntityQuery<RoguePointingArrowComponent, ITransformComponent>())
+            foreach (var (component, transform) in EntityManager.EntityQuery<RoguePointingArrowComponent, TransformComponent>())
             {
                 var uid = component.Owner.Uid;
                 component.Chasing ??= RandomNearbyPlayer(uid, component, transform);
@@ -106,7 +108,7 @@ namespace Content.Server.Pointing.EntitySystems
                     return;
                 }
 
-                component.Owner.SpawnExplosion(0, 2, 1, 1);
+                _explosions.SpawnExplosion(uid, 0, 2, 1, 1);
                 SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), component.ExplosionSound.GetSound(), uid);
 
                 EntityManager.QueueDeleteEntity(uid);
