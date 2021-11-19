@@ -1,22 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix DoAfter flickering for a frame, type: Fix}
-  id: 101
-  time: '2021-03-16T08:16:55.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fixes soap and banana peels not slipping most of the time., type: Fix}
-  - {message: Banana peel hitbox has been nerfed. A sad day for clowns everywhere.,
-    type: Tweak}
-  id: 102
-  time: '2021-03-16T10:45:48.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Passing by someone who is on fire will now set you on fire as well.,
-    type: Add}
-  id: 103
-  time: '2021-03-16T11:56:42.242795+00:00'
 - author: Zumorica
   changes:
   - {message: You can now spray people with flammable chemicals and ignite them with
@@ -2841,3 +2823,18 @@ Entries:
     type: Add}
   id: 602
   time: '2021-11-19T06:08:30.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Vending machine adverts no longer get stored in your chat box., type: Tweak}
+  id: 603
+  time: '2021-11-19T06:36:26.0000000+00:00'
+- author: Clyybber
+  changes:
+  - {message: Changed Harm and Disarm icons., type: Tweak}
+  id: 604
+  time: '2021-11-19T06:36:32.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Shards now do slightly less damage when thrown., type: Fix}
+  id: 605
+  time: '2021-11-19T06:37:35.408797+00:00'
