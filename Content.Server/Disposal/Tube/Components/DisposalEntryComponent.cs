@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Disposal.Tube;
 using Content.Server.Disposal.Unit.Components;
+using Content.Server.Disposal.Unit.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -13,8 +15,6 @@ namespace Content.Server.Disposal.Tube.Components
     [ComponentReference(typeof(IDisposalTubeComponent))]
     public class DisposalEntryComponent : DisposalTubeComponent
     {
-        [Dependency] private readonly IRobustRandom _random = default!;
-
         private const string HolderPrototypeId = "DisposalHolder";
 
         public override string Name => "DisposalEntry";
@@ -32,19 +32,7 @@ namespace Content.Server.Disposal.Tube.Components
             EntitySystem.Get<AtmosphereSystem>().Merge(holderComponent.Air, from.Air);
             from.Air.Clear();
 
-            return TryInsert(holderComponent);
-        }
-
-        public bool TryInsert(DisposalHolderComponent holder)
-        {
-            if (!Contents.Insert(holder.Owner))
-            {
-                return false;
-            }
-
-            holder.EnterTube(this);
-
-            return true;
+            return EntitySystem.Get<DisposableSystem>().EnterTube(holderComponent.OwnerUid, OwnerUid, holderComponent, null, this);
         }
 
         protected override Direction[] ConnectableDirections()
@@ -57,12 +45,9 @@ namespace Content.Server.Disposal.Tube.Components
         /// </summary>
         public override Direction NextDirection(DisposalHolderComponent holder)
         {
-            if (holder.PreviousDirectionFrom != Direction.Invalid && holder.PreviousDirectionFrom == ConnectableDirections()[0])
+            if (holder.PreviousDirectionFrom != Direction.Invalid)
             {
-                var invalidDirections = new[] { ConnectableDirections()[0], Direction.Invalid };
-                var directions = Enum.GetValues(typeof(Direction))
-                    .Cast<Direction>().Except(invalidDirections).ToList();
-                return _random.Pick(directions);
+                return Direction.Invalid;
             }
 
             return ConnectableDirections()[0];
