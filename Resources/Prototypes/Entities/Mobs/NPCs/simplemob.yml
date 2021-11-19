@@ -144,11 +144,11 @@
       types:
         Blunt: 1 #per second, scales with pressure and other constants.
   - type: Respirator
-    metabolismHeat: 5000
-    radiatedHeat: 400
-    implicitHeatRegulation: 5000
-    sweatHeatRegulation: 5000
-    shiveringHeatRegulation: 5000
+    metabolismHeat: 800
+    radiatedHeat: 100
+    implicitHeatRegulation: 250
+    sweatHeatRegulation: 500
+    shiveringHeatRegulation: 500
     normalBodyTemperature: 310.15
     thermalRegulationTemperatureThreshold: 25
     needsGases:

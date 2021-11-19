@@ -72,13 +72,16 @@ namespace Content.Server.Temperature.Systems
             }
         }
 
-        public void ChangeHeat(EntityUid uid, float heatAmount, TemperatureComponent? temperature = null)
+        public void ChangeHeat(EntityUid uid, float heatAmount, bool ignoreHeatResistance=false, TemperatureComponent? temperature = null)
         {
             if (Resolve(uid, ref temperature))
             {
-                var ev = new ModifyChangedTemperatureEvent(heatAmount);
-                RaiseLocalEvent(uid, ev, false);
-                heatAmount = ev.TemperatureDelta;
+                if (!ignoreHeatResistance)
+                {
+                    var ev = new ModifyChangedTemperatureEvent(heatAmount);
+                    RaiseLocalEvent(uid, ev, false);
+                    heatAmount = ev.TemperatureDelta;
+                }
 
                 float lastTemp = temperature.CurrentTemperature;
                 temperature.CurrentTemperature += heatAmount / temperature.HeatCapacity;
@@ -93,7 +96,7 @@ namespace Content.Server.Temperature.Systems
             var temperatureDelta = args.GasMixture.Temperature - temperature.CurrentTemperature;
             var tileHeatCapacity = _atmosphereSystem.GetHeatCapacity(args.GasMixture);
             var heat = temperatureDelta * (tileHeatCapacity * temperature.HeatCapacity / (tileHeatCapacity + temperature.HeatCapacity));
-            ChangeHeat(uid, heat, temperature);
+            ChangeHeat(uid, heat * temperature.AtmosTemperatureTransferEfficiency, temperature: temperature );
         }
 
         private void ServerAlert(EntityUid uid, ServerAlertsComponent status, OnTemperatureChangeEvent args)
@@ -150,7 +153,6 @@ namespace Content.Server.Temperature.Systems
             // See this link for where the scaling func comes from:
             // https://www.desmos.com/calculator/0vknqtdvq9
             // Based on a logistic curve, which caps out at MaxDamage
-            var coldK = 0.01;
             var heatK = 0.005;
             var a = 1;
             var y = temperature.DamageCap;
@@ -165,7 +167,8 @@ namespace Content.Server.Temperature.Systems
             else if (temperature.CurrentTemperature <= temperature.ColdDamageThreshold)
             {
                 var diff = Math.Abs(temperature.CurrentTemperature - temperature.ColdDamageThreshold);
-                var tempDamage = c / (1 + a * Math.Pow(Math.E, -coldK * diff)) - y;
+                var tempDamage =
+                    Math.Sqrt(diff * (Math.Pow(temperature.DamageCap.Double(), 2) / temperature.ColdDamageThreshold));
                 _damageableSystem.TryChangeDamage(uid, temperature.ColdDamage * tempDamage);
             }
         }

@@ -23,16 +23,23 @@ namespace Content.Server.Temperature.Components
         public float CurrentTemperature { get; set; } = Atmospherics.T20C;
 
         [DataField("heatDamageThreshold")]
-        [ViewVariables]
-        public float HeatDamageThreshold;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float HeatDamageThreshold = 360f;
 
         [DataField("coldDamageThreshold")]
-        [ViewVariables]
-        public float ColdDamageThreshold;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float ColdDamageThreshold = 260f;
 
         [DataField("specificHeat")]
-        [ViewVariables]
-        public float SpecificHeat;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float SpecificHeat = 50f;
+
+        /// <summary>
+        ///     How well does the air surrounding you merge into your body temperature?
+        /// </summary>
+        [DataField("atmosTemperatureTransferEfficiency")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float AtmosTemperatureTransferEfficiency = 0.1f;
 
         [ViewVariables] public float HeatCapacity
         {
