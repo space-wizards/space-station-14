@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
@@ -12,6 +13,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Reflection;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Administration.Logs;
 
@@ -27,6 +29,8 @@ public class AdminLogSystem : EntitySystem
     private JsonSerializerOptions _jsonOptions = default!;
 
     private int _roundId;
+
+    private readonly ConcurrentQueue<AdminLog> _logsToAdd = new();
 
     public override void Initialize()
     {
@@ -47,6 +51,25 @@ public class AdminLogSystem : EntitySystem
         SubscribeLocalEvent<RoundStartingEvent>(RoundStarting);
     }
 
+    public override async void Update(float frameTime)
+    {
+        if (_logsToAdd.IsEmpty)
+        {
+            return;
+        }
+
+        var stopwatch = new Stopwatch();
+        stopwatch.Start();
+
+        var copy = new List<AdminLog>(_logsToAdd);
+        _logsToAdd.Clear();
+
+        // ship the logs to Azkaban
+        await Task.Run(() => _db.AddAdminLogs(copy));
+
+        Console.WriteLine($"Processed {copy.Count} logs in {stopwatch.Elapsed.TotalMilliseconds} ms");
+    }
+
     private void RoundStarting(RoundStartingEvent ev)
     {
         _roundId = ev.RoundId;
@@ -54,9 +77,28 @@ public class AdminLogSystem : EntitySystem
 
     private async void Add(LogType type, string message, JsonDocument json, List<Guid> players)
     {
-        // TODO ADMIN LOGGING batch all these adds per tick
-        await _db.AddAdminLog(_roundId, type, message, json, players);
-        json.Dispose();
+        var log = new AdminLog
+        {
+            RoundId = _roundId,
+            Type = type,
+            Date = DateTime.UtcNow,
+            Message = message,
+            Json = json,
+            Players = new List<AdminLogPlayer>(players.Count)
+        };
+
+        _logsToAdd.Enqueue(log);
+
+        foreach (var id in players)
+        {
+            var player = new AdminLogPlayer
+            {
+                PlayerId = id,
+                RoundId = _roundId
+            };
+
+            log.Players.Add(player);
+        }
     }
 
     public void Add(LogType type, ref LogStringHandler handler)

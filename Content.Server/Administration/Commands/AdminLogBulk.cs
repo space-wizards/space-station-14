@@ -1,4 +1,5 @@
-﻿using Content.Server.Administration.Logs;
+﻿using System.Threading.Tasks;
+using Content.Server.Administration.Logs;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Logs;
 using Robust.Shared.Console;
@@ -13,7 +14,7 @@ public class AdminLogBulk : IConsoleCommand
 {
     public string Command => "adminlogbulk";
     public string Description => "Adds debug logs to the database.";
-    public string Help => $"Usage: {Command} <amount>";
+    public string Help => $"Usage: {Command} <amount> <parallel>";
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -23,25 +24,41 @@ public class AdminLogBulk : IConsoleCommand
             return;
         }
 
+        int amount;
+        var parallel = false;
+
         switch (args)
         {
-            case {Length: 1} when int.TryParse(args[0], out var amount):
-                var logs = EntitySystem.Get<AdminLogSystem>();
-
-                var stopwatch = new Stopwatch();
-                stopwatch.Start();
-
-                for (var i = 0; i < amount; i++)
-                {
-                    logs.Add(LogType.Unknown, $"Debug log added by {entity:Player}");
-                }
-
-                shell.WriteLine($"Added {amount} logs in {stopwatch.Elapsed.TotalMilliseconds} ms");
+            case {Length: 1} when int.TryParse(args[0], out amount):
+            case {Length: 2} when int.TryParse(args[0], out amount) &&
+                                  bool.TryParse(args[1], out parallel):
                 break;
             default:
                 shell.WriteError(Help);
                 return;
         }
+
+        var logs = EntitySystem.Get<AdminLogSystem>();
+
+        var stopwatch = new Stopwatch();
+        stopwatch.Start();
+
+        if (parallel)
+        {
+            Parallel.For(0, amount, _ =>
+            {
+                logs.Add(LogType.Unknown, $"Debug log added by {entity:Player}");
+            });
+        }
+        else
+        {
+            for (var i = 0; i < amount; i++)
+            {
+                logs.Add(LogType.Unknown, $"Debug log added by {entity:Player}");
+            }
+        }
+
+        shell.WriteLine($"Added {amount} logs in {stopwatch.Elapsed.TotalMilliseconds} ms");
     }
 }
 #endif

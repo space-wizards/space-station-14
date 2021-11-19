@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
 using System.Net;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
-using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Preferences;
 using Microsoft.Data.Sqlite;
@@ -134,7 +132,7 @@ namespace Content.Server.Database
 
         #region Admin Logs
 
-        Task<LogRecord> AddAdminLog(int roundId, LogType type, string message, JsonDocument json, List<Guid> playerIds);
+        Task AddAdminLogs(List<AdminLog> logs);
         IAsyncEnumerable<string> GetAdminLogMessages(LogFilter? filter = null);
         IAsyncEnumerable<LogRecord> GetAdminLogs(LogFilter? filter = null);
 
@@ -336,10 +334,9 @@ namespace Content.Server.Database
             return _db.UpdateAdminRankAsync(rank, cancel);
         }
 
-        public Task<LogRecord> AddAdminLog(int roundId, LogType type, string message, JsonDocument json,
-            List<Guid> playerIds)
+        public Task AddAdminLogs(List<AdminLog> logs)
         {
-            return _db.AddAdminLog(roundId, type, message, json, playerIds);
+            return _db.AddAdminLogs(logs);
         }
 
         public IAsyncEnumerable<string> GetAdminLogMessages(LogFilter? filter = null)
