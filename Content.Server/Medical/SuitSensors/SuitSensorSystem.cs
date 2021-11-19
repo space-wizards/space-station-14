@@ -1,11 +1,13 @@
 ﻿using Content.Server.Popups;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Examine;
+using Content.Shared.Inventory;
 using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
+using Robust.Shared.Random;
 
 namespace Content.Server.Medical.SuitSensors
 {
@@ -13,12 +15,48 @@ namespace Content.Server.Medical.SuitSensors
     {
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         public override void Initialize()
         {
             base.Initialize();
+            SubscribeLocalEvent<SuitSensorComponent, MapInitEvent>(OnMapInit);
+            SubscribeLocalEvent<SuitSensorComponent, EquippedEvent>(OnEquiped);
+            SubscribeLocalEvent<SuitSensorComponent, UnequippedEvent>(OnUnequipped);
             SubscribeLocalEvent<SuitSensorComponent, ExaminedEvent>(OnExamine);
             SubscribeLocalEvent<SuitSensorComponent, GetInteractionVerbsEvent>(OnVerb);
+        }
+
+        private void OnMapInit(EntityUid uid, SuitSensorComponent component, MapInitEvent args)
+        {
+            if (!component.RandomMode)
+                return;
+
+            //make the sensor mode favor higher levels, except coords.
+            var modesDist = new[]
+            {
+                SuitSensorMode.SensorOff,
+                SuitSensorMode.SensorBinary, SuitSensorMode.SensorBinary,
+                SuitSensorMode.SensorVitals, SuitSensorMode.SensorVitals, SuitSensorMode.SensorVitals,
+                SuitSensorMode.SensorCords, SuitSensorMode.SensorCords
+            };
+            component.Mode = _random.Pick(modesDist);
+        }
+
+        private void OnEquiped(EntityUid uid, SuitSensorComponent component, EquippedEvent args)
+        {
+            if (args.Slot != component.ActivationSlot)
+                return;
+
+            component.User = args.User.Uid;
+        }
+
+        private void OnUnequipped(EntityUid uid, SuitSensorComponent component, UnequippedEvent args)
+        {
+            if (args.Slot != component.ActivationSlot)
+                return;
+
+            component.User = null;
         }
 
         private void OnExamine(EntityUid uid, SuitSensorComponent component, ExaminedEvent args)
@@ -105,13 +143,13 @@ namespace Content.Server.Medical.SuitSensors
             if (!Resolve(uid, ref component))
                 return;
 
+            component.Mode = mode;
+
             if (userUid != null)
             {
                 var msg = Loc.GetString("suit-sensor-mode-state", ("mode", GetModeName(mode)));
                 _popupSystem.PopupEntity(msg, uid, Filter.Entities(userUid.Value));
             }
-
-            component.Mode = mode;
         }
     }
 }
