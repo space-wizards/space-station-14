@@ -314,7 +314,7 @@ namespace Content.Client.Entry
             "Armor",
             "Guardian",
             "GuardianCreator",
-            "GuardianHost"
+            "GuardianHost",
             "Udder",
             "PneumaticCannon"
         };
