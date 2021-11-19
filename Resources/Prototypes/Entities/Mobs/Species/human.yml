@@ -173,15 +173,11 @@
   - type: Flammable
     fireSpread: true
     canResistFire: true
-    damage:
-      types:
-        Heat : 1 #per second, scales with number of fire 'stacks'
   - type: Temperature
     heatDamageThreshold: 360
     coldDamageThreshold: 260
     currentTemperature: 310.15
     specificHeat: 42
-    tempDamageCoefficient: 0.1
     coldDamage:
       types:
         Cold : 1 #per second, scales with temperature & other constants
@@ -195,11 +191,11 @@
   - type: Damageable
     damageContainer: Biological
   - type: Respirator
-    metabolismHeat: 5000
-    radiatedHeat: 400
-    implicitHeatRegulation: 5000
-    sweatHeatRegulation: 5000
-    shiveringHeatRegulation: 5000
+    metabolismHeat: 800
+    radiatedHeat: 100
+    implicitHeatRegulation: 500
+    sweatHeatRegulation: 2000
+    shiveringHeatRegulation: 2000
     normalBodyTemperature: 310.15
     thermalRegulationTemperatureThreshold: 25
     needsGases:

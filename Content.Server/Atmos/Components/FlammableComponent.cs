@@ -31,9 +31,5 @@ namespace Content.Server.Atmos.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("canResistFire")]
         public bool CanResistFire { get; private set; } = false;
-
-        [DataField("damage", required: true)]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public DamageSpecifier Damage = default!;
     }
 }
