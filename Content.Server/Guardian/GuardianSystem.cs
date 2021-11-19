@@ -49,22 +49,23 @@ namespace Content.Server.Guardian
                     EntityManager.QueueDeleteEntity(guard);
                     EntityManager.QueueDeleteEntity(uid);
                 }
-            } 
+            }
         }
 
         private void OnGuardianDamaged(EntityUid uid, GuardianComponent component, DamageChangedEvent args)
         {
             if (EntityManager.GetEntity(uid).TryGetComponent<DamageableComponent>(out DamageableComponent? guardiandamage))
             {
-                if (EntityManager.GetEntity(component.Host).TryGetComponent<DamageableComponent>(out DamageableComponent? hostdamage))
+                EntityManager.GetEntity(component.Host).TryGetComponent<DamageableComponent>(out DamageableComponent? hostdamage);
+                if (hostdamage != null)
                 {
                     if (args.DamageDelta != null)
                     {
                         EntitySystem.Get<DamageableSystem>().SetDamage(hostdamage, (hostdamage.Damage + args.DamageDelta * component.DamagePercent));
                         _popupSystem.PopupCoordinates(Loc.GetString("guardian-entity-taking-damage"), hostdamage.Owner.Transform.Coordinates, Filter.Entities(hostdamage.OwnerUid));
                     }
-                }          
-            }              
+                }
+            }
         }
 
         /// <summary>
@@ -129,15 +130,15 @@ namespace Content.Server.Guardian
         /// </summary>
         private void OnGuardianHostMove(EntityUid uid, GuardianHostComponent component, ref MoveEvent args)
         {
-            var guardcomp = EntityManager.GetEntity(component.Hostedguardian).GetComponent<GuardianComponent>();
-            if (guardcomp.guardianLoose == true)
+            if (EntityManager.GetEntity(component.Hostedguardian).TryGetComponent<GuardianComponent>(out GuardianComponent? guardcomp))
             {
-                var host = EntityManager.GetEntity(uid);
-                var guardian = EntityManager.GetEntity(guardcomp.OwnerUid);
-                //Compares the distance to allowed distance, otherwise forces a recall action from the host
-                if (!guardian.Transform.Coordinates.InRange(EntityManager, host.Transform.Coordinates, guardcomp.DistanceAllowed))
+                if (guardcomp.guardianLoose == true)
                 {
-                    OnGuardianManifestAction(guardian.Uid, uid);
+                    //Compares the distance to allowed distance, otherwise forces a recall action from the host
+                    if (!guardcomp.Owner.Transform.Coordinates.InRange(EntityManager, component.Owner.Transform.Coordinates, guardcomp.DistanceAllowed))
+                    {
+                        OnGuardianManifestAction(guardcomp.OwnerUid, uid);
+                    }
                 }
             }
         }
