@@ -1,9 +1,7 @@
-using System;
 using System.Linq;
 using Content.Server.Administration.Managers;
 using Content.Server.Players;
 using Content.Server.Roles;
-using Content.Server.Traitor;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Events;
 using Robust.Server.GameObjects;
@@ -114,7 +112,7 @@ namespace Content.Server.Administration
         {
             var ev = new FullPlayerListEvent();
             ev.PlayersInfo.Clear();
-            foreach (var session in _playerManager.GetAllPlayers())
+            foreach (var session in _playerManager.ServerSessions)
             {
                 ev.PlayersInfo.Add(GetPlayerInfo(session));
             }

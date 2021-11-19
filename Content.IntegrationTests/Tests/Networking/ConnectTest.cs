@@ -42,7 +42,7 @@ namespace Content.IntegrationTests.Tests.Networking
 
             var playerManager = server.ResolveDependency<IPlayerManager>();
             Assert.That(playerManager.PlayerCount, Is.EqualTo(1));
-            Assert.That(playerManager.GetAllPlayers().First().Status, Is.EqualTo(SessionStatus.InGame));
+            Assert.That(playerManager.Sessions.First().Status, Is.EqualTo(SessionStatus.InGame));
 
             var clEntityManager = client.ResolveDependency<IEntityManager>();
             var svEntityManager = server.ResolveDependency<IEntityManager>();

@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Server.GameTicking;
 using Content.Server.RoundEnd;
 using Content.Shared.CCVar;
@@ -83,7 +84,7 @@ namespace Content.Server.Voting.Managers
                 vote.CastVote(initiator, 0);
             }
 
-            foreach (var player in _playerManager.GetAllPlayers())
+            foreach (var player in _playerManager.ServerSessions)
             {
                 if (player != initiator && !_afkManager.IsAfk(player))
                 {

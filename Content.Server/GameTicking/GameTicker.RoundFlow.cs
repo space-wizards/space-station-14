@@ -307,7 +307,7 @@ namespace Content.Server.GameTicking
         private void ResettingCleanup()
         {
             // Move everybody currently in the server to lobby.
-            foreach (var player in _playerManager.GetAllPlayers())
+            foreach (var player in _playerManager.ServerSessions)
             {
                 PlayerJoinLobby(player);
             }
