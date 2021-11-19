@@ -1,15 +1,18 @@
-﻿using Content.Shared.ActionBlocker;
+﻿using Content.Server.Popups;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Examine;
 using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Player;
 
 namespace Content.Server.Medical.SuitSensors
 {
     public class SuitSensorSystem : EntitySystem
     {
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         public override void Initialize()
         {
@@ -53,14 +56,14 @@ namespace Content.Server.Medical.SuitSensors
 
             args.Verbs.UnionWith(new[]
             {
-                CreateVerb(uid, component, SuitSensorMode.SensorOff),
-                CreateVerb(uid, component, SuitSensorMode.SensorBinary),
-                CreateVerb(uid, component, SuitSensorMode.SensorVitals),
-                CreateVerb(uid, component, SuitSensorMode.SensorCords)
+                CreateVerb(uid, component, args.User.Uid, SuitSensorMode.SensorOff),
+                CreateVerb(uid, component, args.User.Uid, SuitSensorMode.SensorBinary),
+                CreateVerb(uid, component, args.User.Uid,SuitSensorMode.SensorVitals),
+                CreateVerb(uid, component, args.User.Uid, SuitSensorMode.SensorCords)
             });
         }
 
-        private Verb CreateVerb(EntityUid uid, SuitSensorComponent component, SuitSensorMode mode)
+        private Verb CreateVerb(EntityUid uid, SuitSensorComponent component, EntityUid userUid, SuitSensorMode mode)
         {
             return new Verb()
             {
@@ -68,7 +71,7 @@ namespace Content.Server.Medical.SuitSensors
                 Disabled = component.Mode == mode,
                 Priority = -(int) mode, // sort them in descending order
                 Category = VerbCategory.SetSensor,
-                Act = () => SetSensor(uid, mode, component)
+                Act = () => SetSensor(uid, mode, userUid, component)
             };
         }
 
@@ -96,10 +99,17 @@ namespace Content.Server.Medical.SuitSensors
             return Loc.GetString(name);
         }
 
-        public void SetSensor(EntityUid uid, SuitSensorMode mode, SuitSensorComponent? component = null)
+        public void SetSensor(EntityUid uid, SuitSensorMode mode, EntityUid? userUid = null,
+            SuitSensorComponent? component = null)
         {
             if (!Resolve(uid, ref component))
                 return;
+
+            if (userUid != null)
+            {
+                var msg = Loc.GetString("suit-sensor-mode-state", ("mode", GetModeName(mode)));
+                _popupSystem.PopupEntity(msg, uid, Filter.Entities(userUid.Value));
+            }
 
             component.Mode = mode;
         }

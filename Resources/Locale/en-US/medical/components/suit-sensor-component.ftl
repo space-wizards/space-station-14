@@ -5,6 +5,9 @@ suit-sensor-mode-binary = Binary
 suit-sensor-mode-vitals = Vitals
 suit-sensor-mode-cords = Coordinates
 
+# Popups
+suit-sensor-mode-state = Suit sensors: {$mode}
+
 ## Examine
 
 suit-sensor-examine-off = Its sensors appear to be [color=darkred]disabled[/color].
