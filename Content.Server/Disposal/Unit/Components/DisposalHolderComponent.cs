@@ -76,7 +76,9 @@ namespace Content.Server.Disposal.Unit.Components
         protected override void OnRemove()
         {
             base.OnRemove();
-            EntitySystem.Get<DisposableSystem>().ExitDisposals(OwnerUid);
+            // have to include the component and such because otherwise stuff gets thrown
+            // we already don't officially exist
+            EntitySystem.Get<DisposableSystem>().ExitDisposals(OwnerUid, this, Owner.Transform);
         }
 
         private bool CanInsert(IEntity entity)
