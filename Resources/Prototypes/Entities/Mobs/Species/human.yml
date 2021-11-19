@@ -193,9 +193,9 @@
   - type: Respirator
     metabolismHeat: 800
     radiatedHeat: 100
-    implicitHeatRegulation: 250
-    sweatHeatRegulation: 500
-    shiveringHeatRegulation: 500
+    implicitHeatRegulation: 500
+    sweatHeatRegulation: 2000
+    shiveringHeatRegulation: 2000
     normalBodyTemperature: 310.15
     thermalRegulationTemperatureThreshold: 25
     needsGases:
