@@ -1,10 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: You can now spray people with flammable chemicals and ignite them with
-      a welding tool or anything similar., type: Add}
-  id: 104
-  time: '2021-03-16T11:56:42.243615+00:00'
 - author: Swept
   changes:
   - {message: Fixed wrong tables in cargo, type: Fix}
@@ -2838,3 +2832,8 @@ Entries:
   - {message: Shards now do slightly less damage when thrown., type: Fix}
   id: 605
   time: '2021-11-19T06:37:35.408797+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'Added a new map, "Knightship", meant for very low populations.', type: Add}
+  id: 606
+  time: '2021-11-19T10:45:18.0000000+00:00'
