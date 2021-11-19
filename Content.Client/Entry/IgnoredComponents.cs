@@ -93,7 +93,6 @@ namespace Content.Client.Entry
             "TilePrying",
             "RandomSpriteColor",
             "ConditionalSpawner",
-            "TemperatureProtection",
             "DamageOnToolInteract",
             "ExaminableBattery",
             "PottedPlantHide",

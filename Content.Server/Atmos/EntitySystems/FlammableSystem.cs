@@ -2,6 +2,8 @@ using System;
 using Content.Server.Alert;
 using Content.Server.Atmos.Components;
 using Content.Server.Stunnable;
+using Content.Server.Stunnable.Components;
+using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
@@ -9,6 +11,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Stunnable;
 using Content.Shared.Temperature;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
@@ -22,6 +25,7 @@ namespace Content.Server.Atmos.EntitySystems
     internal sealed class FlammableSystem : EntitySystem
     {
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly StunSystem _stunSystem = default!;
         [Dependency] private readonly TemperatureSystem _temperatureSystem = default!;
@@ -205,7 +209,11 @@ namespace Content.Server.Atmos.EntitySystems
 
                 if (flammable.FireStacks > 0)
                 {
-                    _temperatureSystem.ChangeHeat(uid, 80000 * flammable.FireStacks);
+                    _temperatureSystem.ReceiveHeat(uid, 200 * flammable.FireStacks);
+                    // TODO ATMOS Fire resistance from armor
+                    var damageScale = Math.Min((int) (flammable.FireStacks * 2.5f), 10);
+                    _damageableSystem.TryChangeDamage(uid, flammable.Damage * damageScale);
+
                     AdjustFireStacks(uid, -0.1f * (flammable.Resisting ? 10f : 1f), flammable);
                 }
                 else

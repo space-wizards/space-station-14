@@ -31,8 +31,6 @@
   - type: PressureProtection
     highPressureMultiplier: 0.85
     lowPressureMultiplier: 25
-  - type: TemperatureProtection
-    coefficient: 0.001
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/fire.rsi
 
@@ -44,11 +42,6 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/rad.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Heat: 0.90
-        Radiation: 0.05
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/rad.rsi
 

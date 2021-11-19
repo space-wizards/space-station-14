@@ -1,5 +1,4 @@
 using Content.Shared.Damage;
-using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -20,6 +19,6 @@ namespace Content.Server.Atmos.Components
 
         [DataField("maxDamage")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public FixedPoint2 MaxDamage = 200;
+        public int MaxDamage = 200;
     }
 }

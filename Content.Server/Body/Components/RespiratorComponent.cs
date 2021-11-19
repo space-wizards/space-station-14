@@ -240,24 +240,24 @@ namespace Content.Server.Body.Components
         {
             var temperatureSystem = EntitySystem.Get<TemperatureSystem>();
             if (!Owner.TryGetComponent(out TemperatureComponent? temperatureComponent)) return;
+            temperatureSystem.ReceiveHeat(Owner.Uid, MetabolismHeat, temperatureComponent);
+            temperatureSystem.RemoveHeat(Owner.Uid, RadiatedHeat, temperatureComponent);
 
-            float totalMetabolismTempChange = MetabolismHeat - RadiatedHeat;
             // implicit heat regulation
             var tempDiff = Math.Abs(temperatureComponent.CurrentTemperature - NormalBodyTemperature);
             var targetHeat = tempDiff * temperatureComponent.HeatCapacity;
             if (temperatureComponent.CurrentTemperature > NormalBodyTemperature)
             {
-                totalMetabolismTempChange -= Math.Min(targetHeat, ImplicitHeatRegulation);
+                temperatureSystem.RemoveHeat(Owner.Uid, Math.Min(targetHeat, ImplicitHeatRegulation), temperatureComponent);
             }
             else
             {
-                totalMetabolismTempChange += Math.Min(targetHeat, ImplicitHeatRegulation);
+                temperatureSystem.ReceiveHeat(Owner.Uid, Math.Min(targetHeat, ImplicitHeatRegulation), temperatureComponent);
             }
+
             // recalc difference and target heat
             tempDiff = Math.Abs(temperatureComponent.CurrentTemperature - NormalBodyTemperature);
             targetHeat = tempDiff * temperatureComponent.HeatCapacity;
-
-            temperatureSystem.ChangeHeat(Owner.Uid, totalMetabolismTempChange, true, temperatureComponent);
 
             // if body temperature is not within comfortable, thermal regulation
             // processes starts
@@ -273,6 +273,7 @@ namespace Content.Server.Body.Components
                 return;
             }
 
+
             var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
 
             if (temperatureComponent.CurrentTemperature > NormalBodyTemperature)
@@ -287,7 +288,7 @@ namespace Content.Server.Body.Components
                 // creadth: sweating does not help in airless environment
                 if (EntitySystem.Get<AtmosphereSystem>().GetTileMixture(Owner.Transform.Coordinates) is not {})
                 {
-                    temperatureSystem.ChangeHeat(OwnerUid, -Math.Min(targetHeat, SweatHeatRegulation), true, temperatureComponent);
+                    temperatureSystem.RemoveHeat(OwnerUid, Math.Min(targetHeat, SweatHeatRegulation), temperatureComponent);
                 }
             }
             else
@@ -299,7 +300,7 @@ namespace Content.Server.Body.Components
                     _isShivering = true;
                 }
 
-                temperatureSystem.ChangeHeat(OwnerUid, Math.Min(targetHeat, ShiveringHeatRegulation), true, temperatureComponent);
+                temperatureSystem.ReceiveHeat(OwnerUid, Math.Min(targetHeat, ShiveringHeatRegulation), temperatureComponent);
             }
         }
 
