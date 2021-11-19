@@ -1,4 +1,5 @@
 ﻿using Content.Shared.ActionBlocker;
+using Content.Shared.Examine;
 using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -13,7 +14,35 @@ namespace Content.Server.Medical.SuitSensors
         public override void Initialize()
         {
             base.Initialize();
+            SubscribeLocalEvent<SuitSensorComponent, ExaminedEvent>(OnExamine);
             SubscribeLocalEvent<SuitSensorComponent, GetInteractionVerbsEvent>(OnVerb);
+        }
+
+        private void OnExamine(EntityUid uid, SuitSensorComponent component, ExaminedEvent args)
+        {
+            if (!args.IsInDetailsRange)
+                return;
+
+            string msg;
+            switch (component.Mode)
+            {
+                case SuitSensorMode.SensorOff:
+                    msg = "suit-sensor-examine-off";
+                    break;
+                case SuitSensorMode.SensorBinary:
+                    msg = "suit-sensor-examine-binary";
+                    break;
+                case SuitSensorMode.SensorVitals:
+                    msg = "suit-sensor-examine-vitals";
+                    break;
+                case SuitSensorMode.SensorCords:
+                    msg = "suit-sensor-examine-cords";
+                    break;
+                default:
+                    return;
+            }
+
+            args.PushMarkup(Loc.GetString(msg));
         }
 
         private void OnVerb(EntityUid uid, SuitSensorComponent component, GetInteractionVerbsEvent args)
