@@ -21,7 +21,7 @@ namespace Content.Server.Medical.SuitSensors
         {
             base.Initialize();
             SubscribeLocalEvent<SuitSensorComponent, MapInitEvent>(OnMapInit);
-            SubscribeLocalEvent<SuitSensorComponent, EquippedEvent>(OnEquiped);
+            SubscribeLocalEvent<SuitSensorComponent, EquippedEvent>(OnEquipped);
             SubscribeLocalEvent<SuitSensorComponent, UnequippedEvent>(OnUnequipped);
             SubscribeLocalEvent<SuitSensorComponent, ExaminedEvent>(OnExamine);
             SubscribeLocalEvent<SuitSensorComponent, GetInteractionVerbsEvent>(OnVerb);
@@ -43,7 +43,7 @@ namespace Content.Server.Medical.SuitSensors
             component.Mode = _random.Pick(modesDist);
         }
 
-        private void OnEquiped(EntityUid uid, SuitSensorComponent component, EquippedEvent args)
+        private void OnEquipped(EntityUid uid, SuitSensorComponent component, EquippedEvent args)
         {
             if (args.Slot != component.ActivationSlot)
                 return;

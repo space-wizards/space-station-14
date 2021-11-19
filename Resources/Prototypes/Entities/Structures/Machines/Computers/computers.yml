@@ -88,6 +88,24 @@
 
 - type: entity
   parent: ComputerBase
+  id: ComputerCrewMonitoring
+  name: crew monitoring console
+  description: Used to monitor active health sensors built into most of the crew's uniforms.
+  components:
+    - type: Appearance
+      visuals:
+        - type: ComputerVisualizer
+          key: med_key
+          screen: crew
+    - type: PointLight
+      radius: 1.5
+      energy: 1.6
+      color: "#006400"
+    - type: Computer
+      board: CrewMonitoringComputerCircuitboard
+
+- type: entity
+  parent: ComputerBase
   id: ComputerResearchAndDevelopment
   name: R&D computer
   description: A computer used to interface with R&D tools.

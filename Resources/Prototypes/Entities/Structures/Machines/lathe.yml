@@ -178,6 +178,7 @@
       - ChemDispenserMachineCircuitboard
       - HydroponicsTrayMachineCircuitboard
       - SolarControlComputerCircuitboard
+      - CrewMonitoringComputerCircuitboard
       - Bucket
       - MopItem
       - SprayBottle
