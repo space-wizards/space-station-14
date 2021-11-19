@@ -191,8 +191,8 @@
   - type: Damageable
     damageContainer: Biological
   - type: Respirator
-    metabolismHeat: 5000
-    radiatedHeat: 400
+    metabolismHeat: 800
+    radiatedHeat: 100
     implicitHeatRegulation: 250
     sweatHeatRegulation: 500
     shiveringHeatRegulation: 500
