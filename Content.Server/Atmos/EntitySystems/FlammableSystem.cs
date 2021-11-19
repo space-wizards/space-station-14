@@ -189,9 +189,8 @@ namespace Content.Server.Atmos.EntitySystems
         public override void Update(float frameTime)
         {
             // process all fire events
-            foreach (var flammable in _fireEvents.Keys)
+            foreach (var (flammable, deltaTemp) in _fireEvents)
             {
-                var deltaTemp = _fireEvents[flammable];
                 // 100 -> 1, 200 -> 2, 400 -> 3...
                 var fireStackMod = Math.Max(MathF.Log2(deltaTemp / 100) + 1, 0);
                 var fireStackDelta = fireStackMod - flammable.FireStacks;
