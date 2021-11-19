@@ -1,11 +1,4 @@
 Entries:
-- author: Swept
-  changes:
-  - {message: Correct mags for SMGs in Armory and crate, type: Fix}
-  - {message: Medical now has filled lockers, type: Fix}
-  - {message: Shotguns and SMGs in armory crates 3 -> 2, type: Tweak}
-  id: 100
-  time: '2021-03-16T08:14:11.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix DoAfter flickering for a frame, type: Fix}
@@ -2840,3 +2833,11 @@ Entries:
   - {message: Added a little 'ding' when a vote happens., type: Add}
   id: 601
   time: '2021-11-18T09:45:36.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Fires no longer instantly kill you if you walk near them. They''ll
+      now kill you in at most 10 seconds, usually slower for colder fires.', type: Tweak}
+  - {message: Hardsuits and firesuits now protect you against temperature increases.,
+    type: Add}
+  id: 602
+  time: '2021-11-19T06:08:30.0000000+00:00'
