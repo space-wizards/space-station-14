@@ -30,9 +30,6 @@ namespace Content.Server.Body.Components
 
         private float _accumulatedFrameTime;
 
-        private bool _isShivering;
-        private bool _isSweating;
-
         [ViewVariables] [DataField("needsGases")] public Dictionary<Gas, float> NeedsGases { get; set; } = new();
 
         [ViewVariables] [DataField("producesGases")] public Dictionary<Gas, float> ProducesGases { get; set; } = new();
@@ -253,52 +250,28 @@ namespace Content.Server.Body.Components
             {
                 totalMetabolismTempChange += Math.Min(targetHeat, ImplicitHeatRegulation);
             }
+
+            temperatureSystem.ChangeHeat(Owner.Uid, totalMetabolismTempChange, true, temperatureComponent);
+
             // recalc difference and target heat
             tempDiff = Math.Abs(temperatureComponent.CurrentTemperature - NormalBodyTemperature);
             targetHeat = tempDiff * temperatureComponent.HeatCapacity;
 
-            temperatureSystem.ChangeHeat(Owner.Uid, totalMetabolismTempChange, true, temperatureComponent);
-
             // if body temperature is not within comfortable, thermal regulation
             // processes starts
-            if (tempDiff < ThermalRegulationTemperatureThreshold)
-            {
-                if (_isShivering || _isSweating)
-                {
-                    Owner.PopupMessage(Loc.GetString("metabolism-component-is-comfortable"));
-                }
-
-                _isShivering = false;
-                _isSweating = false;
+            if (tempDiff > ThermalRegulationTemperatureThreshold)
                 return;
-            }
 
             var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
 
             if (temperatureComponent.CurrentTemperature > NormalBodyTemperature)
             {
                 if (!actionBlocker.CanSweat(OwnerUid)) return;
-                if (!_isSweating)
-                {
-                    Owner.PopupMessage(Loc.GetString("metabolism-component-is-sweating"));
-                    _isSweating = true;
-                }
-
-                // creadth: sweating does not help in airless environment
-                if (EntitySystem.Get<AtmosphereSystem>().GetTileMixture(Owner.Transform.Coordinates) is not {})
-                {
-                    temperatureSystem.ChangeHeat(OwnerUid, -Math.Min(targetHeat, SweatHeatRegulation), true, temperatureComponent);
-                }
+                temperatureSystem.ChangeHeat(OwnerUid, -Math.Min(targetHeat, SweatHeatRegulation), true, temperatureComponent);
             }
             else
             {
                 if (!actionBlocker.CanShiver(OwnerUid)) return;
-                if (!_isShivering)
-                {
-                    Owner.PopupMessage(Loc.GetString("metabolism-component-is-shivering"));
-                    _isShivering = true;
-                }
-
                 temperatureSystem.ChangeHeat(OwnerUid, Math.Min(targetHeat, ShiveringHeatRegulation), true, temperatureComponent);
             }
         }
