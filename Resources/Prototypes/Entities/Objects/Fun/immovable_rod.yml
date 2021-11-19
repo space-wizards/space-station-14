@@ -1,0 +1,22 @@
+﻿# Immovable rod
+
+- type: entity
+  id: ImmovableRod
+  name: immovable rod
+  description: What the fuck is that?
+  components:
+  - type: MovementIgnoreGravity
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/h_synthesizer.rsi
+    state: icon
+  - type: ImmovableRod
+  - type: Physics
+    bodyType: Dynamic
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.5
+      mass: 9999999
+      layer:
+      - Impassable
+      - Opaque
