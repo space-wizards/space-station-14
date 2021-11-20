@@ -13,7 +13,6 @@ namespace Content.Server.Chemistry.EntitySystems
     [UsedImplicitly]
     public class ReagentDispenserSystem : EntitySystem
     {
-        [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
 
         public override void Initialize()

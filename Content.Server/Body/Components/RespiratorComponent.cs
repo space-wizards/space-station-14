@@ -30,9 +30,6 @@ namespace Content.Server.Body.Components
 
         private float _accumulatedFrameTime;
 
-        private bool _isShivering;
-        private bool _isSweating;
-
         [ViewVariables] [DataField("needsGases")] public Dictionary<Gas, float> NeedsGases { get; set; } = new();
 
         [ViewVariables] [DataField("producesGases")] public Dictionary<Gas, float> ProducesGases { get; set; } = new();
@@ -240,20 +237,21 @@ namespace Content.Server.Body.Components
         {
             var temperatureSystem = EntitySystem.Get<TemperatureSystem>();
             if (!Owner.TryGetComponent(out TemperatureComponent? temperatureComponent)) return;
-            temperatureSystem.ReceiveHeat(Owner.Uid, MetabolismHeat, temperatureComponent);
-            temperatureSystem.RemoveHeat(Owner.Uid, RadiatedHeat, temperatureComponent);
 
+            float totalMetabolismTempChange = MetabolismHeat - RadiatedHeat;
             // implicit heat regulation
             var tempDiff = Math.Abs(temperatureComponent.CurrentTemperature - NormalBodyTemperature);
             var targetHeat = tempDiff * temperatureComponent.HeatCapacity;
             if (temperatureComponent.CurrentTemperature > NormalBodyTemperature)
             {
-                temperatureSystem.RemoveHeat(Owner.Uid, Math.Min(targetHeat, ImplicitHeatRegulation), temperatureComponent);
+                totalMetabolismTempChange -= Math.Min(targetHeat, ImplicitHeatRegulation);
             }
             else
             {
-                temperatureSystem.ReceiveHeat(Owner.Uid, Math.Min(targetHeat, ImplicitHeatRegulation), temperatureComponent);
+                totalMetabolismTempChange += Math.Min(targetHeat, ImplicitHeatRegulation);
             }
+
+            temperatureSystem.ChangeHeat(Owner.Uid, totalMetabolismTempChange, true, temperatureComponent);
 
             // recalc difference and target heat
             tempDiff = Math.Abs(temperatureComponent.CurrentTemperature - NormalBodyTemperature);
@@ -261,46 +259,20 @@ namespace Content.Server.Body.Components
 
             // if body temperature is not within comfortable, thermal regulation
             // processes starts
-            if (tempDiff < ThermalRegulationTemperatureThreshold)
-            {
-                if (_isShivering || _isSweating)
-                {
-                    Owner.PopupMessage(Loc.GetString("metabolism-component-is-comfortable"));
-                }
-
-                _isShivering = false;
-                _isSweating = false;
+            if (tempDiff > ThermalRegulationTemperatureThreshold)
                 return;
-            }
-
 
             var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
 
             if (temperatureComponent.CurrentTemperature > NormalBodyTemperature)
             {
                 if (!actionBlocker.CanSweat(OwnerUid)) return;
-                if (!_isSweating)
-                {
-                    Owner.PopupMessage(Loc.GetString("metabolism-component-is-sweating"));
-                    _isSweating = true;
-                }
-
-                // creadth: sweating does not help in airless environment
-                if (EntitySystem.Get<AtmosphereSystem>().GetTileMixture(Owner.Transform.Coordinates) is not {})
-                {
-                    temperatureSystem.RemoveHeat(OwnerUid, Math.Min(targetHeat, SweatHeatRegulation), temperatureComponent);
-                }
+                temperatureSystem.ChangeHeat(OwnerUid, -Math.Min(targetHeat, SweatHeatRegulation), true, temperatureComponent);
             }
             else
             {
                 if (!actionBlocker.CanShiver(OwnerUid)) return;
-                if (!_isShivering)
-                {
-                    Owner.PopupMessage(Loc.GetString("metabolism-component-is-shivering"));
-                    _isShivering = true;
-                }
-
-                temperatureSystem.ReceiveHeat(OwnerUid, Math.Min(targetHeat, ShiveringHeatRegulation), temperatureComponent);
+                temperatureSystem.ChangeHeat(OwnerUid, Math.Min(targetHeat, ShiveringHeatRegulation), true, temperatureComponent);
             }
         }
 

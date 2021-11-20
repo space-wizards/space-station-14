@@ -8,8 +8,6 @@ namespace Content.Server.Verbs
 {
     public sealed class VerbSystem : SharedVerbSystem
     {
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-
         public override void Initialize()
         {
             base.Initialize();

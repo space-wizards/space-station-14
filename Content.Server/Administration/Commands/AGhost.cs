@@ -58,7 +58,7 @@ namespace Content.Server.Administration.Commands
             else
             {
                 ghost.Name = player.Name;
-                mind.TransferTo(ghost);
+                mind.TransferTo(ghost.Uid);
             }
 
             var comp = ghost.GetComponent<GhostComponent>();

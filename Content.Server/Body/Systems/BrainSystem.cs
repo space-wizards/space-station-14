@@ -43,7 +43,7 @@ namespace Content.Server.Body.Systems
             if (!EntityManager.HasComponent<IMoverComponent>(newEntity))
                 EntityManager.AddComponent<SharedDummyInputMoverComponent>(newEntity);
 
-            oldMind.Mind?.TransferTo(EntityManager.GetEntity(newEntity));
+            oldMind.Mind?.TransferTo(newEntity);
         }
     }
 }

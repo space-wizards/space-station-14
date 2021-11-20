@@ -224,7 +224,7 @@ namespace Content.Server.GameTicking.Presets
         public override string GetRoundEndDescription()
         {
             var lines = new List<string>();
-            lines.Add("traitor-death-match-end-round-description-first-line");
+            lines.Add(Loc.GetString("traitor-death-match-end-round-description-first-line"));
             foreach (var uplink in _entityManager.EntityQuery<UplinkComponent>(true))
             {
                 var uplinkAcc = uplink.UplinkAccount;

@@ -65,13 +65,12 @@
     canResistFire: true
     damage:
       types:
-        Heat : 1
+        Heat: 1 #per second, scales with number of fire 'stacks'
   - type: Temperature
     heatDamageThreshold: 360
     coldDamageThreshold: 260
     currentTemperature: 310.15
     specificHeat: 42
-    tempDamageCoefficient: 0.1
     heatDamage:
       types:
         Heat : 1 #per second, scales with temperature & other constants
@@ -148,11 +147,11 @@
       types:
         Blunt: 1 #per second, scales with pressure and other constants.
   - type: Respirator
-    metabolismHeat: 5000
-    radiatedHeat: 400
-    implicitHeatRegulation: 5000
-    sweatHeatRegulation: 5000
-    shiveringHeatRegulation: 5000
+    metabolismHeat: 800
+    radiatedHeat: 100
+    implicitHeatRegulation: 250
+    sweatHeatRegulation: 500
+    shiveringHeatRegulation: 500
     normalBodyTemperature: 310.15
     thermalRegulationTemperatureThreshold: 25
     needsGases:
@@ -171,7 +170,6 @@
     coldDamageThreshold: 260
     currentTemperature: 310.15
     specificHeat: 42
-    tempDamageCoefficient: 0.1
     coldDamage:
       types:
         Cold : 1 #per second, scales with temperature & other constants

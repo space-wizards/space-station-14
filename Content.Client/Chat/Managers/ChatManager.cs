@@ -363,19 +363,22 @@ namespace Content.Client.Chat.Managers
         private void OnChatMessage(MsgChatMessage msg)
         {
             // Log all incoming chat to repopulate when filter is un-toggled
-            var storedMessage = new StoredChatMessage(msg);
-            _history.Add(storedMessage);
-            MessageAdded?.Invoke(storedMessage);
-
-            if (!storedMessage.Read)
+            if (!msg.HideChat)
             {
-                Logger.Debug($"Message filtered: {storedMessage.Channel}: {storedMessage.Message}");
-                if (!_unreadMessages.TryGetValue(msg.Channel, out var count))
-                    count = 0;
+                var storedMessage = new StoredChatMessage(msg);
+                _history.Add(storedMessage);
+                MessageAdded?.Invoke(storedMessage);
 
-                count += 1;
-                _unreadMessages[msg.Channel] = count;
-                UnreadMessageCountsUpdated?.Invoke();
+                if (!storedMessage.Read)
+                {
+                    Logger.Debug($"Message filtered: {storedMessage.Channel}: {storedMessage.Message}");
+                    if (!_unreadMessages.TryGetValue(msg.Channel, out var count))
+                        count = 0;
+
+                    count += 1;
+                    _unreadMessages[msg.Channel] = count;
+                    UnreadMessageCountsUpdated?.Invoke();
+                }
             }
 
             // Local messages that have an entity attached get a speech bubble.
