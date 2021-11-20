@@ -41,9 +41,13 @@ public class AdminLogSystem : EntitySystem
             Buckets = Histogram.LinearBuckets(0, 0.5, 20)
         });
 
-    private static readonly Counter QueueCapReached = Metrics.CreateCounter(
+    private static readonly Gauge QueueCapReached = Metrics.CreateGauge(
         "admin_logs_queue_cap_reached",
         "Number of times the log queue cap has been reached in a round.");
+
+    private static readonly Gauge LogsSent = Metrics.CreateGauge(
+        "admin_logs_sent",
+        "Amount of logs sent to the database in a round.");
 
     private ISawmill _log = default!;
 
@@ -72,6 +76,12 @@ public class AdminLogSystem : EntitySystem
         _log.Info($"Admin log converters found: {string.Join(" ", converterNames)}");
 
         _configuration.OnValueChanged(CVars.MetricsEnabled, value => _metricsEnabled = value, true);
+
+        if (_metricsEnabled)
+        {
+            QueueCapReached.Set(0);
+            LogsSent.Set(0);
+        }
 
         SubscribeLocalEvent<RoundStartingEvent>(RoundStarting);
     }
@@ -109,11 +119,6 @@ public class AdminLogSystem : EntitySystem
         _logsToAdd.Clear();
         _accumulatedFrameTime = 0;
 
-        if (copy.Count >= QueueMaxLogs)
-        {
-            QueueCapReached.Inc();
-        }
-
         // ship the logs to Azkaban
         var task = Task.Run(() =>
         {
@@ -122,6 +127,13 @@ public class AdminLogSystem : EntitySystem
 
         if (_metricsEnabled)
         {
+            if (copy.Count >= QueueMaxLogs)
+            {
+                QueueCapReached.Inc();
+            }
+
+            LogsSent.Inc(copy.Count);
+
             using (DatabaseUpdateTime.NewTimer())
             {
                 await task;
@@ -135,7 +147,12 @@ public class AdminLogSystem : EntitySystem
     private void RoundStarting(RoundStartingEvent ev)
     {
         _roundId = ev.RoundId;
-        QueueCapReached.IncTo(0);
+
+        if (_metricsEnabled)
+        {
+            QueueCapReached.Set(0);
+            LogsSent.Set(0);
+        }
     }
 
     private async void Add(LogType type, string message, JsonDocument json, List<Guid> players)
