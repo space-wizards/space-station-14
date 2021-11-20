@@ -30,7 +30,8 @@ public class AdminLogSystem : EntitySystem
     [Dependency] private readonly IDynamicTypeFactory _typeFactory = default!;
     [Dependency] private readonly IReflectionManager _reflection = default!;
 
-    private const float UpdateThresholdSeconds = 5;
+    private static readonly TimeSpan QueueSendThreshold = TimeSpan.FromSeconds(5);
+    private const int QueueMaxLogs = 5000;
 
     private static readonly Histogram DatabaseUpdateTime = Metrics.CreateHistogram(
         "admin_logs_database_time",
@@ -39,6 +40,10 @@ public class AdminLogSystem : EntitySystem
         {
             Buckets = Histogram.LinearBuckets(0, 0.5, 20)
         });
+
+    private static readonly Counter QueueCapReached = Metrics.CreateCounter(
+        "admin_logs_queue_cap_reached",
+        "Number of times the log queue cap has been reached in a round.");
 
     private ISawmill _log = default!;
 
@@ -71,22 +76,43 @@ public class AdminLogSystem : EntitySystem
         SubscribeLocalEvent<RoundStartingEvent>(RoundStarting);
     }
 
+    public override async void Shutdown()
+    {
+        base.Shutdown();
+
+        if (!_logsToAdd.IsEmpty)
+        {
+            await SendLogs();
+        }
+    }
+
     public override async void Update(float frameTime)
     {
-        if (_accumulatedFrameTime < UpdateThresholdSeconds)
+        var count = _logsToAdd.Count;
+        if (count == 0)
+        {
+            return;
+        }
+
+        if (count < QueueMaxLogs && _accumulatedFrameTime < QueueSendThreshold.TotalSeconds)
         {
             _accumulatedFrameTime += frameTime;
             return;
         }
 
-        if (_logsToAdd.IsEmpty)
-        {
-            return;
-        }
+        await SendLogs();
+    }
 
+    private async Task SendLogs()
+    {
         var copy = new List<AdminLog>(_logsToAdd);
         _logsToAdd.Clear();
         _accumulatedFrameTime = 0;
+
+        if (copy.Count >= QueueMaxLogs)
+        {
+            QueueCapReached.Inc();
+        }
 
         // ship the logs to Azkaban
         var task = Task.Run(() =>
@@ -109,6 +135,7 @@ public class AdminLogSystem : EntitySystem
     private void RoundStarting(RoundStartingEvent ev)
     {
         _roundId = ev.RoundId;
+        QueueCapReached.IncTo(0);
     }
 
     private async void Add(LogType type, string message, JsonDocument json, List<Guid> players)
