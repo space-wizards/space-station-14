@@ -20,9 +20,9 @@ namespace Content.Shared.Damage.Systems
             SubscribeLocalEvent<DamageableComponent, ComponentGetState>(DamageableGetState);
         }
 
-        protected virtual void SetTotalDamage(DamageableComponent damageable, FixedPoint2 amount)
+        protected virtual void SetTotalDamage(DamageableComponent damageable, FixedPoint2 @new)
         {
-            damageable.TotalDamage = amount;
+            damageable.TotalDamage = @new;
         }
 
         /// <summary>

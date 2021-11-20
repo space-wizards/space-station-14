@@ -12,14 +12,14 @@ public class DamageableSystem : SharedDamageableSystem
 {
     [Dependency] private readonly AdminLogSystem _logs = default!;
 
-    protected override void SetTotalDamage(DamageableComponent damageable, FixedPoint2 amount)
+    protected override void SetTotalDamage(DamageableComponent damageable, FixedPoint2 @new)
     {
         var owner = damageable.Owner;
         var old = damageable.TotalDamage;
-        var change = amount - old;
+        var change = @new - old;
 
-        _logs.Add(LogType.DamageChange, $"{owner:Owner} received {change:DamageChange} damage. Old: {old:OldDamage} | New: {amount:NewDamage}");
+        _logs.Add(LogType.DamageChange, $"{owner} received {change} damage. Old: {old} | New: {@new}");
 
-        base.SetTotalDamage(damageable, amount);
+        base.SetTotalDamage(damageable, @new);
     }
 }

@@ -32,8 +32,13 @@ public ref struct LogStringHandler
         _values = new Dictionary<string, object?>();
     }
 
-    private void AddFormat<T>(string? format, T value)
+    private void AddFormat<T>(string? format, T value, string? argument = null)
     {
+        if (format == null && argument != null)
+        {
+            format = argument[0] == '@' ? argument[1..] : argument;
+        }
+
         if (format != null)
         {
             _values.Add(format, value);
@@ -45,25 +50,27 @@ public ref struct LogStringHandler
         _handler.AppendLiteral(value);
     }
 
-    public void AppendFormatted<T>(T value)
+    public void AppendFormatted<T>(T value, [CallerArgumentExpression("value")] string? argument = null)
     {
+        AddFormat(null, value, argument);
         _handler.AppendFormatted(value);
     }
 
-    public void AppendFormatted<T>(T value, string? format)
+    public void AppendFormatted<T>(T value, string? format, [CallerArgumentExpression("value")] string? argument = null)
     {
-        AddFormat(format, value);
+        AddFormat(format, value, argument);
         _handler.AppendFormatted(value, format);
     }
 
-    public void AppendFormatted<T>(T value, int alignment)
+    public void AppendFormatted<T>(T value, int alignment, [CallerArgumentExpression("value")] string? argument = null)
     {
+        AddFormat(null, value, argument);
         _handler.AppendFormatted(value, alignment);
     }
 
-    public void AppendFormatted<T>(T value, int alignment, string? format)
+    public void AppendFormatted<T>(T value, int alignment, string? format, [CallerArgumentExpression("value")] string? argument = null)
     {
-        AddFormat(format, value);
+        AddFormat(format, value, argument);
         _handler.AppendFormatted(value, alignment, format);
     }
 
@@ -93,7 +100,7 @@ public ref struct LogStringHandler
 
     public void AppendFormatted(object? value, int alignment = 0, string? format = null)
     {
-        AddFormat(format, value);
+        AddFormat(null, value, format);
         _handler.AppendFormatted(value, alignment, format);
     }
 
@@ -126,7 +133,6 @@ public ref struct LogStringHandler
         }
 
         _values["__entities"] = entities;
-        // _values["__players"] = players;
 
         return (JsonSerializer.SerializeToDocument(_values, options), players);
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
+using Content.Server.Database;
 using Content.Server.GameTicking;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
@@ -18,7 +19,7 @@ namespace Content.IntegrationTests.Tests.Administration.Logs;
 public class AdminLogsTests : ContentIntegrationTest
 {
     [Test]
-    public async Task AddAndGetSingleLogTest()
+    public async Task AddAndGetSingleLog()
     {
         var server = StartServer(new ServerContentIntegrationOption
         {
@@ -48,18 +49,97 @@ public class AdminLogsTests : ContentIntegrationTest
 
         await WaitUntil(server, async () =>
         {
-            var messages = sAdminLogSystem.AllMessages(new LogFilter
+            var logs = sAdminLogSystem.AllJson(new LogFilter
             {
                 Round = sGameTicker.RoundId,
                 Search = guid.ToString()
             });
 
-            await foreach (var _ in messages)
+            await foreach (var json in logs)
             {
+                var root = json.RootElement;
+
+                Assert.That(root.TryGetProperty("Entity", out _), Is.True);
+
+                json.Dispose();
+
                 return true;
             }
 
             return false;
+        });
+    }
+
+    [Test]
+    public async Task AddAndGetUnformattedLog()
+    {
+        var server = StartServer(new ServerContentIntegrationOption
+        {
+            CVarOverrides =
+            {
+                [CCVars.AdminLogsQueueSendDelay.Name] = "0"
+            }
+        });
+        await server.WaitIdleAsync();
+
+        var sDatabase = server.ResolveDependency<IServerDbManager>();
+        var sEntities = server.ResolveDependency<IEntityManager>();
+        var sMaps = server.ResolveDependency<IMapManager>();
+        var sSystems = server.ResolveDependency<IEntitySystemManager>();
+
+        var sAdminLogSystem = sSystems.GetEntitySystem<AdminLogSystem>();
+        var sGameTicker = sSystems.GetEntitySystem<GameTicker>();
+
+        var guid = Guid.NewGuid();
+
+        await server.WaitPost(() =>
+        {
+            var coordinates = GetMainEntityCoordinates(sMaps);
+            var entity = sEntities.SpawnEntity(null, coordinates);
+
+            sAdminLogSystem.Add(LogType.Unknown, $"{entity} test log: {guid}");
+        });
+
+        LogRecord log = null;
+
+        await WaitUntil(server, async () =>
+        {
+            var logs = sAdminLogSystem.All(new LogFilter
+            {
+                Round = sGameTicker.RoundId,
+                Search = guid.ToString()
+            });
+
+            await foreach (var found in logs)
+            {
+                log = found;
+                return true;
+            }
+
+            return false;
+        });
+
+        await server.WaitPost(() =>
+        {
+            Task.Run(async () =>
+            {
+                var filter = new LogFilter
+                {
+                    Round = log.RoundId,
+                    Search = log.Message,
+                    Types = new List<LogType> {log.Type}
+                };
+
+                await foreach (var json in sDatabase.GetAdminLogsJson(filter))
+                {
+                    var root = json.RootElement;
+
+                    Assert.That(root.TryGetProperty("entity", out _), Is.True);
+                    Assert.That(root.TryGetProperty("guid", out _), Is.True);
+
+                    json.Dispose();
+                }
+            }).Wait();
         });
     }
 
@@ -107,7 +187,7 @@ public class AdminLogsTests : ContentIntegrationTest
 
         await WaitUntil(server, async () =>
         {
-            var messages = sAdminLogSystem.AllMessages(new LogFilter
+            var messages = sAdminLogSystem.All(new LogFilter
             {
                 Round = sGameTicker.RoundId
             });

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
 using System.Net;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
@@ -135,6 +136,7 @@ namespace Content.Server.Database
         Task AddAdminLogs(List<AdminLog> logs);
         IAsyncEnumerable<string> GetAdminLogMessages(LogFilter? filter = null);
         IAsyncEnumerable<LogRecord> GetAdminLogs(LogFilter? filter = null);
+        IAsyncEnumerable<JsonDocument> GetAdminLogsJson(LogFilter? filter = null);
 
         #endregion
     }
@@ -347,6 +349,11 @@ namespace Content.Server.Database
         public IAsyncEnumerable<LogRecord> GetAdminLogs(LogFilter? filter = null)
         {
             return _db.GetAdminLogs(filter);
+        }
+
+        public IAsyncEnumerable<JsonDocument> GetAdminLogsJson(LogFilter? filter = null)
+        {
+            return _db.GetAdminLogsJson(filter);
         }
 
         private DbContextOptions<ServerDbContext> CreatePostgresOptions()

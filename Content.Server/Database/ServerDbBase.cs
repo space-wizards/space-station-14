@@ -629,6 +629,17 @@ namespace Content.Server.Database
             }
         }
 
+        public async IAsyncEnumerable<JsonDocument> GetAdminLogsJson(LogFilter? filter = null)
+        {
+            await using var db = await GetDb();
+            var query = await GetAdminLogsQuery(db.DbContext, filter);
+
+            await foreach (var json in query.Select(log => log.Json).AsAsyncEnumerable())
+            {
+                yield return json;
+            }
+        }
+
         #endregion
 
         protected abstract Task<DbGuard> GetDb();

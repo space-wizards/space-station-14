@@ -271,7 +271,6 @@ namespace Content.Server.Database
 
             var round = new Round
             {
-                Id = await NextId(db.DbContext.Player, player => player.Id),
                 Players = players
             };
 

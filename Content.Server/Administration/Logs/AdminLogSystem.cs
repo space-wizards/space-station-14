@@ -207,6 +207,11 @@ public class AdminLogSystem : EntitySystem
         return _db.GetAdminLogMessages(filter);
     }
 
+    public IAsyncEnumerable<JsonDocument> AllJson(LogFilter? filter = null)
+    {
+        return _db.GetAdminLogsJson(filter);
+    }
+
     public Task<Round> Round(int roundId)
     {
         return _db.GetRound(roundId);
