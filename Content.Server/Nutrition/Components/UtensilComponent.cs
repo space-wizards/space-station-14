@@ -45,6 +45,8 @@ namespace Content.Server.Nutrition.Components
         public SoundSpecifier BreakSound = new SoundPathSpecifier("/Audio/Items/snap.ogg");
     }
 
+    // If you want to make a fancy output on "wrong" composite utensil use (like: you need fork and knife)
+    // There should be Dictionary I guess (Dictionary<UtensilType, string>)
     [Flags]
     public enum UtensilType : byte
     {

@@ -17,6 +17,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Player;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Content.Server.Nutrition.EntitySystems
@@ -91,6 +92,40 @@ namespace Content.Server.Nutrition.EntitySystems
                 !_bodySystem.TryGetComponentsOnMechanisms<StomachComponent>(targetUid, out var stomachs, body))
                 return false;
 
+            var usedUtensils = new List<UtensilComponent>();
+
+            //Not blocking eating itself if "required" filed is not set (allows usage of multiple types of utensils)
+            //TODO: maybe a chance to spill soup on eating without spoon?!
+            if (component.Utensil != UtensilType.None)
+            {
+                if (EntityManager.TryGetComponent(userUid, out HandsComponent? hands))
+                {
+                    var usedTypes = UtensilType.None;
+
+                    foreach (var item in hands.GetAllHeldItems())
+                    {
+                        // Is utensil?
+                        if (!item.Owner.TryGetComponent(out UtensilComponent? utensil))
+                            continue;
+
+                        if ((utensil.Types & component.Utensil) != 0 && // Acceptable type?
+                            (usedTypes & utensil.Types) != utensil.Types) // Type is not used already? (removes usage of identical utensils)
+                        {
+                            // Add to used list
+                            usedTypes |= utensil.Types;
+                            usedUtensils.Add(utensil);
+                        }
+                    }
+
+                    // If "required" field is set, try to block eating without proper utensils used
+                    if (component.UtensilRequired && (usedTypes & component.Utensil) != component.Utensil)
+                    {
+                        _popupSystem.PopupEntity(Loc.GetString("food-you-need-to-hold-utensil", ("utensil", component.Utensil ^ usedTypes)), userUid, Filter.Entities(userUid));
+                        return false;
+                    }
+                }
+            }
+
             if (userUid != targetUid && !userUid.InRangeUnobstructed(targetUid, popup: true))
                 return false;
 
@@ -112,24 +147,10 @@ namespace Content.Server.Nutrition.EntitySystems
             SoundSystem.Play(Filter.Pvs(targetUid), component.UseSound.GetSound(), targetUid, AudioParams.Default.WithVolume(-1f));
             _popupSystem.PopupEntity(Loc.GetString(component.EatMessage, ("food", component.Owner)), targetUid, Filter.Entities(targetUid));
 
-            //Not blocking eating itself
-            //but only CHECK FOR EATING NOT LIKE A DIRTY ANIMAL
-            //TODO: maybe a chance to spill soup on eating without spoon?!
-            if (component.OptionalUtensil != UtensilType.None)
+            // Try to break all used utensils
+            foreach (var utensil in usedUtensils)
             {
-                if (EntityManager.TryGetComponent(userUid, out HandsComponent? hands))
-                {
-                    foreach (var item in hands.GetAllHeldItems())
-                    {
-                        if (!item.Owner.TryGetComponent(out UtensilComponent? utensil))
-                            continue;
-
-                        if ((utensil.Types & component.OptionalUtensil) != 0)
-                        {
-                            _utensilSystem.TryBreak(utensil.OwnerUid, userUid);
-                        }
-                    }
-                }
+                _utensilSystem.TryBreak(utensil.OwnerUid, userUid);
             }
 
             if (component.UsesRemaining > 0)

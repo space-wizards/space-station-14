@@ -44,7 +44,8 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!EntityManager.TryGetComponent(targetUid, out FoodComponent food))
                 return false;
 
-            if (!component.Types.HasFlag(food.OptionalUtensil))
+            //Prevents food usage with a wrong utensil
+            if ((food.Utensil & component.Types) == 0)
             {
                 _popupSystem.PopupEntity(Loc.GetString("food-system-wrong-utensil", ("food", food.Owner), ("utensil", component.Owner)), userUid, Filter.Entities(userUid));
                 return false;

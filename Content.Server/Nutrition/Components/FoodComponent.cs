@@ -32,8 +32,18 @@ namespace Content.Server.Nutrition.Components
         [DataField("transferAmount")]
         public FixedPoint2? TransferAmount { get; set; } = FixedPoint2.New(5);
 
-        [DataField("optionalUtensil")]
-        public UtensilType OptionalUtensil = UtensilType.Fork; //There are more "solid" than "liquid" food
+        /// <summary>
+        /// Acceptable utensil to use
+        /// </summary>
+        [DataField("utensil")]
+        public UtensilType Utensil = UtensilType.Fork; //There are more "solid" than "liquid" food
+
+        /// <summary>
+        /// Is utensil required to eat this food
+        /// </summary>
+        [DataField("utensilRequired")]
+        public bool UtensilRequired = false;
+
 
         [DataField("eatMessage")]
         public string EatMessage = "food-nom";
