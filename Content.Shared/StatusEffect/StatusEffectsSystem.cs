@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
-using System.Resources;
 using Content.Shared.Alert;
-using Robust.Shared.Exceptions;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
@@ -118,13 +114,13 @@ namespace Content.Shared.StatusEffect
 
             if (TryAddStatusEffect(uid, key, time, status, alerts))
             {
-                // Fuck this shit I hate it
-                var newComponent = (Component) _componentFactory.GetComponent(component);
-                newComponent.Owner = EntityManager.GetEntity(uid);
-
                 // If they already have the comp, we just won't bother updating anything.
                 if (!EntityManager.HasComponent(uid, _componentFactory.GetRegistration(component).Type))
                 {
+                    // Fuck this shit I hate it
+                    var newComponent = (Component) _componentFactory.GetComponent(component);
+                    newComponent.Owner = EntityManager.GetEntity(uid);
+
                     EntityManager.AddComponent(uid, newComponent);
                     status.ActiveEffects[key].RelevantComponent = component;
                 }
@@ -167,12 +163,10 @@ namespace Content.Shared.StatusEffect
 
             (TimeSpan, TimeSpan) cooldown = (_gameTiming.CurTime, _gameTiming.CurTime + time);
 
-            // If they already have this status effect, just bulldoze its cooldown in favor of the new one
-            // and keep the relevant component the same.
+            // If they already have this status effect, add the time onto it's cooldown rather than anything else.
             if (HasStatusEffect(uid, key, status))
             {
-                cooldown.Item2 += status.ActiveEffects[key].Cooldown.Item2 - status.ActiveEffects[key].Cooldown.Item1;
-                status.ActiveEffects[key] = new StatusEffectState(cooldown, status.ActiveEffects[key].RelevantComponent);
+                status.ActiveEffects[key].Cooldown.Item2 += time;
             }
             else
             {
