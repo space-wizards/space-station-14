@@ -10,6 +10,7 @@ using Content.Client.Viewport;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
 using Content.Shared.Interaction.Helpers;
+using Content.Shared.MobState.Components;
 using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
@@ -99,24 +100,20 @@ namespace Content.Client.Verbs
             if (player == null)
                 return false;
 
+            // If FOV drawing is disabled, we will modify the visibility option to ignore visiblity checks.
             var visibility = _eyeManager.CurrentEye.DrawFov
                 ? Visibility
                 : Visibility | MenuVisibility.NoFov;
 
-
-            // Check if we have LOS to the clicked-location.
+            // Do we have to do FoV checks?
             if ((visibility & MenuVisibility.NoFov) == 0)
             {
                 var entitiesUnderMouse = gameScreenBase.GetEntitiesUnderPosition(targetPos);
                 Ignored? predicate = e => e == player || entitiesUnderMouse.Contains(e);
-                var range = ExamineSystemShared.ExamineRange;
-
-
+                if (!_examineSystem.CanExamine(player, targetPos, predicate))
+                    return false;
             }
-               !player.InRangeUnOccluded(targetPos, range: ))
-                return false;
-
-           
+                          
             // Get entities
             var entities = _entityLookup.GetEntitiesIntersecting(
                     targetPos.MapId,

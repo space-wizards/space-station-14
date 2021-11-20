@@ -29,27 +29,28 @@ namespace Content.Shared.Examine
     public abstract class ExamineSystemShared : EntitySystem
     {
         /// <summary>
-        ///     Examine range to use when the examiner is incapacitated (dead or in crit).
+        ///     Examine range to use when the examiner is in critical condition.
         /// </summary>
         /// <remarks>
         ///     Detailed examinations are disabled while incapactiated. Ideally this should just be set equal to the
-        ///     radius of the crit/dead overlay that blackens most of the screen. The actual radius of that is defined
+        ///     radius of the crit overlay that blackens most of the screen. The actual radius of that is defined
         ///     in a shader sooo... eh.
         /// </remarks>
-        public const float IncapacitatedExamineRange = 1.25f;
+        public const float CritExamineRange = 1.3f;
+
+        /// <summary>
+        ///     Examine range to use when the examiner is dead. See <see cref="CritExamineRange"/>.
+        /// </summary>
+        public const float DeadExamineRange = 0.75f;
 
         public const float ExamineRange = 16f;
-        public const float ExamineRangeSquared = ExamineRange * ExamineRange;
         protected const float ExamineDetailsRange = 3f;
 
         private bool IsInDetailsRange(IEntity examiner, IEntity entity)
         {
             // check if the mob is in ciritcal or dead
-            if (EntityManager.TryGetComponent(examiner.Uid, out MobStateComponent mobState))
-            {
-                if (mobState.IsIncapacitated())
-                    return false;
-            }
+            if (EntityManager.TryGetComponent(examiner.Uid, out MobStateComponent mobState) && mobState.IsIncapacitated())
+                return false;
 
             if (entity.TryGetContainerMan(out var man) && man.Owner == examiner)
                 return true;
@@ -61,11 +62,12 @@ namespace Content.Shared.Examine
         [Pure]
         public bool CanExamine(IEntity examiner, IEntity examined)
         {
-            Ignored predicate = entity => entity == examiner || entity == examined;
-            return CanExamine(examiner, examined.Transform.MapPosition, predicate);
+            return CanExamine(examiner, examined.Transform.MapPosition,
+                entity => entity == examiner || entity == examined);
         }
 
-        public bool CanExamine(IEntity examiner, MapCoordinates target, Ignored? predicate = null)
+        [Pure]
+        public virtual bool CanExamine(IEntity examiner, MapCoordinates target, Ignored? predicate = null)
         {
             if (!examiner.TryGetComponent(out ExaminerComponent? examinerComponent))
                 return false;
@@ -76,22 +78,27 @@ namespace Content.Shared.Examine
             if (examiner.Transform.MapID != target.MapId)
                 return false;
 
-            if (examiner.TryGetContainer(out var container))
-                predicate += entity => entity == container.Owner;
-
-            // check if the mob is incapacitated (i.e., if they have the crit or dead overlay blocking their view).
-            float range;
-            if (EntityManager.TryGetComponent(examiner.Uid, out MobStateComponent mobState) && mobState.IsIncapacitated())
-                range = IncapacitatedExamineRange;
-            else
-                range = ExamineRange;
-
             return InRangeUnOccluded(
                 examiner.Transform.MapPosition,
                 target,
-                range,
+                GetExaminerRange(examiner.Uid),
                 predicate: predicate,
                 ignoreInsideBlocker: true);
+        }
+
+        /// <summary>
+        ///     Check if a given examiner is incapacitated. If yes, return a reduced examine range. Otherwise, return the deault range.
+        /// </summary>
+        public float GetExaminerRange(EntityUid examiner, MobStateComponent? mobState = null)
+        {
+            if (Resolve(examiner, ref mobState, logMissing: false))
+            {
+                if (mobState.IsDead())
+                    return DeadExamineRange;
+                else if (mobState.IsCritical())
+                    return CritExamineRange;
+            }
+            return ExamineRange;
         }
 
         public static bool InRangeUnOccluded(MapCoordinates origin, MapCoordinates other, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
