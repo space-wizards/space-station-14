@@ -9,8 +9,6 @@ namespace Content.Shared.SubFloor;
 
 public abstract class SharedTrayScannerSystem : EntitySystem
 {
-    [Dependency] private SubFloorHideSystem _subfloorSystem = default!;
-
     public override void Initialize()
     {
         base.Initialize();

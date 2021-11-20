@@ -47,12 +47,10 @@ namespace Content.Client.SubFloor
                     {
                         case SubFloorVisuals.ToggleDepthOn:
                             sprite.DrawDepth = (int) (sprite.DrawDepth - _drawDepth);
-                            Logger.DebugS("SubFloorVisualizer", $"Set DrawDepth to {sprite.DrawDepth}");
                             hide.DepthToggle = SubFloorVisuals.ToggleDepthIgnore;
                             break;
                         case SubFloorVisuals.ToggleDepthOff:
                             sprite.DrawDepth = (int) (sprite.DrawDepth + _drawDepth);
-                            Logger.DebugS("SubFloorVisualizer", $"Set DrawDepth to {sprite.DrawDepth}");
                             hide.DepthToggle = SubFloorVisuals.ToggleDepthIgnore;
                             break;
                     }

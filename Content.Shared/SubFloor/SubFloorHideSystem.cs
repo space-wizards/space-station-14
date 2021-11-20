@@ -166,12 +166,10 @@ namespace Content.Shared.SubFloor
                 if (!EntityManager.HasComponent<SubFloorHideComponent>(entity))
                     continue;
 
-                // Logger.DebugS("SubFloorHide", $"Working on entity {entity} now");
                 var transform = EntityManager.GetComponent<TransformComponent>(entity);
                 if (_mapManager.TryGetGrid(transform.GridID, out var grid))
                 {
                     bool isSubFloor = IsSubFloor(grid, grid.TileIndicesFor(transform.Coordinates));
-                    // Logger.DebugS("SubFloorHide", $"Attempting to update {entity}, state: {visible}");
                     UpdateEntity(entity, visible, uid);
                 }
             }

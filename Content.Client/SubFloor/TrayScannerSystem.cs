@@ -25,7 +25,6 @@ public class TrayScannerSystem : SharedTrayScannerSystem
 
     private void OnTrayScannerToggle(EntityUid uid, TrayScannerComponent scanner, TrayScannerToggleEvent args)
     {
-        Logger.DebugS("TrayScannerSystem", "Toggling t-ray scanner now");
         UpdateTrayScanner(uid, scanner);
 
         if (scanner.Toggled) _activeScanners.Add(uid);
