@@ -1,11 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: 'Fixes ID Computer in Captain''s Headquarters containing a Glass Firelock
-      inside it, somehow... Oh, this directly fixes the bug where a breach in bar
-      would close all firelocks except one, by the way.', type: Fix}
-  id: 115
-  time: '2021-03-25T01:03:49.353117+00:00'
 - author: SweptWasTaken
   changes:
   - {message: You can anchor and rotate a lot more things, type: Add}
@@ -2846,3 +2839,8 @@ Entries:
   - {message: You can no longer play on Saltern with 50 people., type: Fix}
   id: 616
   time: '2021-11-20T18:32:07.0000000+00:00'
+- author: Mith-randalf
+  changes:
+  - {message: Fixed skintone on feet., type: Fix}
+  id: 617
+  time: '2021-11-20T23:17:16.0000000+00:00'
