@@ -6,7 +6,6 @@ using System.Net;
 using System.Text.Json;
 using Content.Shared.Administration.Logs;
 using Microsoft.EntityFrameworkCore;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Database
 {

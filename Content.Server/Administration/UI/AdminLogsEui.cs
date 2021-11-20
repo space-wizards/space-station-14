@@ -9,7 +9,9 @@ using Content.Server.EUI;
 using Content.Server.GameTicking;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Logs;
+using Content.Shared.CCVar;
 using Content.Shared.Eui;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using static Content.Shared.Administration.AdminLogsEuiMsg;
@@ -18,12 +20,12 @@ namespace Content.Server.Administration.UI;
 
 public sealed class AdminLogsEui : BaseEui
 {
-    private const int LogBatchSize = 1000;
-
     [Dependency] private readonly IAdminManager _adminManager = default!;
+    [Dependency] private readonly IConfigurationManager _configuration = default!;
 
     private readonly AdminLogSystem _logSystem;
 
+    private int _clientBatchSize;
     private bool _isLoading = true;
     private readonly Dictionary<Guid, string> _players = new();
     private CancellationTokenSource _logSendCancellation = new();
@@ -33,11 +35,13 @@ public sealed class AdminLogsEui : BaseEui
     {
         IoCManager.InjectDependencies(this);
 
+        _configuration.OnValueChanged(CCVars.AdminLogsClientBatchSize, ClientBatchSizeChanged, true);
+
         _logSystem = EntitySystem.Get<AdminLogSystem>();
         _filter = new LogFilter
         {
             CancellationToken = _logSendCancellation.Token,
-            Limit = LogBatchSize
+            Limit = _clientBatchSize
         };
     }
 
@@ -51,6 +55,11 @@ public sealed class AdminLogsEui : BaseEui
 
         var roundId = _filter.Round ?? EntitySystem.Get<GameTicker>().RoundId;
         LoadFromDb(roundId);
+    }
+
+    private void ClientBatchSizeChanged(int value)
+    {
+        _clientBatchSize = value;
     }
 
     private void OnPermsChanged(AdminPermsChangedEventArgs args)
@@ -104,7 +113,7 @@ public sealed class AdminLogsEui : BaseEui
                     AnyPlayers = request.AnyPlayers,
                     AllPlayers = request.AllPlayers,
                     LastLogId = 0,
-                    Limit = LogBatchSize
+                    Limit = _clientBatchSize
                 };
 
                 var roundId = _filter.Round ??= EntitySystem.Get<GameTicker>().RoundId;
@@ -125,7 +134,7 @@ public sealed class AdminLogsEui : BaseEui
 
     private async void SendLogs(IAsyncEnumerable<LogRecord> enumerable, bool replace)
     {
-        var logs = new List<SharedAdminLog>(LogBatchSize);
+        var logs = new List<SharedAdminLog>(_clientBatchSize);
 
         await Task.Run(async () =>
         {
@@ -150,6 +159,7 @@ public sealed class AdminLogsEui : BaseEui
     {
         base.Closed();
 
+        _configuration.UnsubValueChanged(CCVars.AdminLogsClientBatchSize, ClientBatchSizeChanged);
         _adminManager.OnPermsChanged -= OnPermsChanged;
 
         _logSendCancellation.Cancel();
