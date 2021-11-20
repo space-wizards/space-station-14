@@ -1,15 +1,16 @@
 ﻿using System;
+using System.Buffers;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs.Converters;
 using Content.Server.Database;
 using Content.Server.GameTicking.Events;
 using Content.Shared.Administration.Logs;
+using Content.Shared.CCVar;
 using Prometheus;
 using Robust.Shared;
 using Robust.Shared.Configuration;
@@ -17,7 +18,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Reflection;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Administration.Logs;
 
@@ -29,9 +29,6 @@ public class AdminLogSystem : EntitySystem
     [Dependency] private readonly IServerDbManager _db = default!;
     [Dependency] private readonly IDynamicTypeFactory _typeFactory = default!;
     [Dependency] private readonly IReflectionManager _reflection = default!;
-
-    private static readonly TimeSpan QueueSendThreshold = TimeSpan.FromSeconds(5);
-    private const int QueueMaxLogs = 5000;
 
     private static readonly Histogram DatabaseUpdateTime = Metrics.CreateHistogram(
         "admin_logs_database_time",
@@ -49,15 +46,21 @@ public class AdminLogSystem : EntitySystem
         "admin_logs_sent",
         "Amount of logs sent to the database in a round.");
 
+    // Init only
     private ISawmill _log = default!;
-
-    private bool _metricsEnabled;
-
-    private int _roundId;
     private JsonSerializerOptions _jsonOptions = default!;
-    private readonly ConcurrentQueue<AdminLog> _logsToAdd = new();
 
+    // CVars
+    private bool _metricsEnabled;
+    private TimeSpan _queueSendDelay;
+    private int _queueMax;
+
+    // Per round
+    private int _roundId;
+
+    // Per update
     private float _accumulatedFrameTime;
+    private readonly ConcurrentQueue<AdminLog> _logsToAdd = new();
 
     public override void Initialize()
     {
@@ -75,7 +78,12 @@ public class AdminLogSystem : EntitySystem
         var converterNames = _jsonOptions.Converters.Select(converter => converter.GetType().Name);
         _log.Info($"Admin log converters found: {string.Join(" ", converterNames)}");
 
-        _configuration.OnValueChanged(CVars.MetricsEnabled, value => _metricsEnabled = value, true);
+        _configuration.OnValueChanged(CVars.MetricsEnabled,
+            value => _metricsEnabled = value, true);
+        _configuration.OnValueChanged(CCVars.AdminLogsQueueSendDelay,
+            value => _queueSendDelay = TimeSpan.FromSeconds(value), true);
+        _configuration.OnValueChanged(CCVars.AdminLogsQueueMax,
+            value => _queueMax = value, true);
 
         if (_metricsEnabled)
         {
@@ -104,7 +112,7 @@ public class AdminLogSystem : EntitySystem
             return;
         }
 
-        if (count < QueueMaxLogs && _accumulatedFrameTime < QueueSendThreshold.TotalSeconds)
+        if (count < _queueMax && _accumulatedFrameTime < _queueSendDelay.TotalSeconds)
         {
             _accumulatedFrameTime += frameTime;
             return;
@@ -127,7 +135,7 @@ public class AdminLogSystem : EntitySystem
 
         if (_metricsEnabled)
         {
-            if (copy.Count >= QueueMaxLogs)
+            if (copy.Count >= _queueMax)
             {
                 QueueCapReached.Inc();
             }

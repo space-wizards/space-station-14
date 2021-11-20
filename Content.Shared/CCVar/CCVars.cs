@@ -293,6 +293,16 @@ namespace Content.Shared.CCVar
             CVarDef.Create("admin.announce_logout", true, CVar.SERVERONLY);
 
         /*
+         * Admin logs
+         */
+
+        public static readonly CVarDef<float> AdminLogsQueueSendDelay =
+            CVarDef.Create("adminlogs.queue_send_delay_seconds", 5f, CVar.SERVERONLY);
+
+        public static readonly CVarDef<int> AdminLogsQueueMax =
+            CVarDef.Create("adminlogs.queue_max", 5000, CVar.SERVERONLY);
+
+        /*
          * Atmos
          */
 
