@@ -4,11 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs.Converters;
 using Content.Server.Database;
 using Content.Server.GameTicking.Events;
 using Content.Shared.Administration.Logs;
+using Prometheus;
+using Robust.Shared;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -19,17 +23,27 @@ namespace Content.Server.Administration.Logs;
 
 public class AdminLogSystem : EntitySystem
 {
+    [Dependency] private readonly IConfigurationManager _configuration = default!;
     [Dependency] private readonly IEntityManager _entities = default!;
     [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly IServerDbManager _db = default!;
     [Dependency] private readonly IDynamicTypeFactory _typeFactory = default!;
     [Dependency] private readonly IReflectionManager _reflection = default!;
 
+    private static readonly Histogram DatabaseUpdateTime = Metrics.CreateHistogram(
+        "admin_logs_database_time",
+        "Time used to send logs to the database in ms",
+        new HistogramConfiguration
+        {
+            Buckets = Histogram.LinearBuckets(0, 0.5, 20)
+        });
+
     private ISawmill _log = default!;
-    private JsonSerializerOptions _jsonOptions = default!;
+
+    private bool _metricsEnabled;
 
     private int _roundId;
-
+    private JsonSerializerOptions _jsonOptions = default!;
     private readonly ConcurrentQueue<AdminLog> _logsToAdd = new();
 
     public override void Initialize()
@@ -48,6 +62,8 @@ public class AdminLogSystem : EntitySystem
         var converterNames = _jsonOptions.Converters.Select(converter => converter.GetType().Name);
         _log.Info($"Admin log converters found: {string.Join(" ", converterNames)}");
 
+        _configuration.OnValueChanged(CVars.MetricsEnabled, value => _metricsEnabled = value, true);
+
         SubscribeLocalEvent<RoundStartingEvent>(RoundStarting);
     }
 
@@ -58,16 +74,25 @@ public class AdminLogSystem : EntitySystem
             return;
         }
 
-        var stopwatch = new Stopwatch();
-        stopwatch.Start();
-
         var copy = new List<AdminLog>(_logsToAdd);
         _logsToAdd.Clear();
 
         // ship the logs to Azkaban
-        await Task.Run(() => _db.AddAdminLogs(copy));
+        var task = Task.Run(() =>
+        {
+            _db.AddAdminLogs(copy);
+        });
 
-        Console.WriteLine($"Processed {copy.Count} logs in {stopwatch.Elapsed.TotalMilliseconds} ms");
+        if (_metricsEnabled)
+        {
+            using (DatabaseUpdateTime.NewTimer())
+            {
+                await task;
+                return;
+            }
+        }
+
+        await task;
     }
 
     private void RoundStarting(RoundStartingEvent ev)
