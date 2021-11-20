@@ -58,7 +58,7 @@ namespace Content.Server.GameTicking
         {
             DefaultMap = _mapManager.CreateMap();
             var startTime = _gameTiming.RealTime;
-            var map = ChosenMap;
+            var map = _gameMapManager.GetSelectedMapChecked(true).MapPath;
             var grid = _mapLoader.LoadBlueprint(DefaultMap, map);
 
             if (grid == null)
