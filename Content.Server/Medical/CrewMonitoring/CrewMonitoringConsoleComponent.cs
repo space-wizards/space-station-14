@@ -1,6 +1,6 @@
 ﻿using Robust.Shared.GameObjects;
 
-namespace Content.Server.Medical.SuitSensors
+namespace Content.Server.Medical.CrewMonitoring
 {
     [RegisterComponent]
     public class CrewMonitoringConsoleComponent : Component

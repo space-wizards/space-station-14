@@ -1,7 +1,7 @@
 ﻿using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Medical.SuitSensors
+namespace Content.Shared.Medical.CrewMonitoring
 {
     [Serializable, NetSerializable]
     public enum CrewMonitoringUIKey

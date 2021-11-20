@@ -1,7 +1,7 @@
 ﻿using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 
-namespace Content.Client.Medical.SuitSensors
+namespace Content.Client.Medical.CrewMonitoring
 {
     public class CrewMonitoringBoundUserInterface : BoundUserInterface
     {

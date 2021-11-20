@@ -8,7 +8,7 @@ using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Server.Medical.SuitSensors
+namespace Content.Server.Medical.CrewMonitoring
 {
     public class CrewMonitoringConsoleSystem : EntitySystem
     {
