@@ -30,6 +30,8 @@ public class AdminLogSystem : EntitySystem
     [Dependency] private readonly IDynamicTypeFactory _typeFactory = default!;
     [Dependency] private readonly IReflectionManager _reflection = default!;
 
+    private const float UpdateThresholdSeconds = 5;
+
     private static readonly Histogram DatabaseUpdateTime = Metrics.CreateHistogram(
         "admin_logs_database_time",
         "Time used to send logs to the database in ms",
@@ -45,6 +47,8 @@ public class AdminLogSystem : EntitySystem
     private int _roundId;
     private JsonSerializerOptions _jsonOptions = default!;
     private readonly ConcurrentQueue<AdminLog> _logsToAdd = new();
+
+    private float _accumulatedFrameTime;
 
     public override void Initialize()
     {
@@ -69,6 +73,12 @@ public class AdminLogSystem : EntitySystem
 
     public override async void Update(float frameTime)
     {
+        if (_accumulatedFrameTime < UpdateThresholdSeconds)
+        {
+            _accumulatedFrameTime += frameTime;
+            return;
+        }
+
         if (_logsToAdd.IsEmpty)
         {
             return;
@@ -76,6 +86,7 @@ public class AdminLogSystem : EntitySystem
 
         var copy = new List<AdminLog>(_logsToAdd);
         _logsToAdd.Clear();
+        _accumulatedFrameTime = 0;
 
         // ship the logs to Azkaban
         var task = Task.Run(() =>
