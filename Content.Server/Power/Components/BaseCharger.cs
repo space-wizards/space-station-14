@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.Light.Components;
+using Content.Server.PowerCell.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -104,13 +105,11 @@ namespace Content.Server.Power.Components
                 handsComponent.PutInHandOrDrop(heldItem.GetComponent<ItemComponent>());
             }
 
+            Owner.EntityManager.EventBus.QueueEvent(EventSource.Local, new ChargerEjectEvent(heldItem));
+
             if (heldItem.TryGetComponent(out ServerBatteryBarrelComponent? batteryBarrelComponent))
             {
                 batteryBarrelComponent.UpdateAppearance();
-            }
-
-            if (heldItem.TryGetComponent(out HandheldLightComponent? handheldLightComponent)) {
-                handheldLightComponent.Dirty();
             }
 
             UpdateStatus();
@@ -149,11 +148,9 @@ namespace Content.Server.Power.Components
             {
                 return false;
             }
-            // turn off flashlights to prevent continuous drain and never fully charging
-            if (entity.TryGetComponent(out HandheldLightComponent? light))
-            {
-                light.TurnOff(false);
-            }
+
+            Owner.EntityManager.EventBus.QueueEvent(EventSource.Local, new ChargerInsertEvent(entity));
+
             _heldBattery = GetBatteryFrom(entity);
             UpdateStatus();
             return true;
@@ -235,5 +232,38 @@ namespace Content.Server.Power.Components
             }
             UpdateStatus();
         }
+    }
+
+    /// <summary>
+    ///     Fires after entity is inserted into a charger.
+    /// </summary>
+    public sealed class ChargerInsertEvent : EntityEventArgs
+    {
+        /// <summary>
+        ///     InsertedEntity is the actual entity that was put in the charger.
+        /// </summary>
+        public IEntity InsertedEntity { get; }
+
+        public ChargerInsertEvent(IEntity insertedEntity)
+        {
+            InsertedEntity = insertedEntity;
+        }
+    }
+
+    /// <summary>
+    ///     Fires after entity is removed from a charger.
+    /// </summary>
+    public sealed class ChargerEjectEvent : EntityEventArgs
+    {
+        /// <summary>
+        ///     EjectedEntity is the actual entity that was taken out of the charger.
+        /// </summary>
+        public IEntity EjectedEntity { get; }
+
+        public ChargerEjectEvent(IEntity ejectedEntity)
+        {
+            EjectedEntity = ejectedEntity;
+        }
+
     }
 }

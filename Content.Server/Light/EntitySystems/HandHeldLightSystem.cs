@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Light.Components;
+using Content.Server.Power.Components;
+using Content.Server.PowerCell.Components;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -21,6 +23,8 @@ namespace Content.Server.Light.EntitySystems
             SubscribeLocalEvent<ActivateHandheldLightMessage>(HandleActivate);
             SubscribeLocalEvent<DeactivateHandheldLightMessage>(HandleDeactivate);
             SubscribeLocalEvent<HandheldLightComponent, GetActivationVerbsEvent>(AddToggleLightVerb);
+            SubscribeLocalEvent<ChargerInsertEvent>(OnChargerInsert);
+            SubscribeLocalEvent<ChargerEjectEvent>(OnChargerEject);
         }
 
         public override void Shutdown()
@@ -61,6 +65,30 @@ namespace Content.Server.Light.EntitySystems
                 : () => component.TurnOn(args.User);
 
             args.Verbs.Add(verb);
+        }
+
+        /// <summary>
+        ///     When a HandheldLight is inserted into a charger, turn it off so it does not constantly drain power and never finish charging.
+        /// </summary>
+        private void OnChargerInsert(ChargerInsertEvent args)
+        {
+            if (args.InsertedEntity.TryGetComponent(out HandheldLightComponent? light))
+            {
+                light.TurnOff(makeNoise: false);
+            }
+            return;
+        }
+
+        /// <summary>
+        ///     When a HandheldLight is ejected from a charger, we need to send the final charge level and current state of the light.
+        /// </summary>
+        private void OnChargerEject(ChargerEjectEvent args)
+        {
+            if (args.EjectedEntity.TryGetComponent(out HandheldLightComponent? light))
+            {
+                light.Dirty();
+            }
+            return;
         }
     }
 }
