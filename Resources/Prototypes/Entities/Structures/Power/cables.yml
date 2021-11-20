@@ -74,6 +74,8 @@
         acts: [ "Destruction" ]
   - type: Appearance
     visuals:
+    - type: SubFloorShowLayerVisualizer
+      rank: 2
     - type: CableVisualizer
       base: hvcable_
 

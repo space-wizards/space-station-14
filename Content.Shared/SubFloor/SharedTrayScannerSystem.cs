@@ -1,11 +1,9 @@
-using System.Collections.Generic;
-using System.Linq;
-using Content.Shared.Interaction;
+using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Player;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.SubFloor;
 
@@ -57,4 +55,12 @@ public class TrayScannerToggleEvent : EntityEventArgs
     {
         Toggle = toggle;
     }
+}
+
+[Serializable, NetSerializable]
+public enum TrayScannerVisual : sbyte
+{
+    Visual,
+    On,
+    Off
 }

@@ -55,6 +55,8 @@
     netsync: false
   - type: Appearance
     visuals:
+    - type: SubFloorShowLayerVisualizer
+      rank: 1
     - type: PipeConnectorVisualizer
     - type: PipeColorVisualizer
   - type: NodeContainer

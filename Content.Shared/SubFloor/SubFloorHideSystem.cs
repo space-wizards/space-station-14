@@ -154,11 +154,12 @@ namespace Content.Shared.SubFloor
             }
 
             // Update normally.
-            UpdateEntity(uid, IsSubFloor(grid, grid.TileIndicesFor(transform.Coordinates)));
+            bool isSubFloor = IsSubFloor(grid, grid.TileIndicesFor(transform.Coordinates));
+            UpdateEntity(uid, isSubFloor);
         }
 
         // Toggles an enumerable set of entities to display.
-        public void ToggleSubfloorEntities(IEnumerable<EntityUid> entities, bool visible)
+        public void ToggleSubfloorEntities(IEnumerable<EntityUid> entities, bool visible, EntityUid? uid = null)
         {
             foreach (var entity in entities)
             {
@@ -169,13 +170,14 @@ namespace Content.Shared.SubFloor
                 var transform = EntityManager.GetComponent<TransformComponent>(entity);
                 if (_mapManager.TryGetGrid(transform.GridID, out var grid))
                 {
+                    bool isSubFloor = IsSubFloor(grid, grid.TileIndicesFor(transform.Coordinates));
                     // Logger.DebugS("SubFloorHide", $"Attempting to update {entity}, state: {visible}");
-                    UpdateEntity(entity, visible);
+                    UpdateEntity(entity, visible, uid);
                 }
             }
         }
 
-        private void UpdateEntity(EntityUid uid, bool subFloor)
+        private void UpdateEntity(EntityUid uid, bool subFloor, EntityUid? revealedUid = null)
         {
             // We raise an event to allow other entity systems to handle this.
             var subFloorHideEvent = new SubFloorHideEvent(subFloor);
@@ -185,22 +187,50 @@ namespace Content.Shared.SubFloor
             if (subFloorHideEvent.Handled)
                 return;
 
-            // We only need to query the subfloor component to check if it's enabled or not when we're not on subfloor.
-            // Getting components is expensive, after all.
-            if (!subFloor && EntityManager.TryGetComponent(uid, out SubFloorHideComponent? subFloorHideComponent))
+
+            if (EntityManager.TryGetComponent(uid, out SubFloorHideComponent? subFloorHideComponent))
             {
-                // If the component isn't enabled, then subfloor will always be true, and the entity will be shown.
-                if (!subFloorHideComponent.Enabled)
+                // We only need to query the subfloor component to check if it's enabled or not when we're not on subfloor.
+                // Getting components is expensive, after all.
+                if (!subFloor)
                 {
-                    subFloor = true;
+                    // If the component isn't enabled, then subfloor will always be true, and the entity will be shown.
+                    if (!subFloorHideComponent.Enabled)
+                    {
+                        subFloor = true;
+                    }
+                    // We only need to query the TransformComp if the SubfloorHide is enabled and requires anchoring.
+                    else if (subFloorHideComponent.RequireAnchored && EntityManager.TryGetComponent(uid, out TransformComponent? transformComponent))
+                    {
+                        // If we require the entity to be anchored but it's not, this will set subfloor to true, unhiding it.
+                        subFloor = !transformComponent.Anchored;
+                    }
                 }
-                // We only need to query the TransformComp if the SubfloorHide is enabled and requires anchoring.
-                else if (subFloorHideComponent.RequireAnchored && EntityManager.TryGetComponent(uid, out TransformComponent? transformComponent))
+
+                // If this was revealed by anything, we need to add it into the
+                // component's set of entities that reveal it
+                //
+                if (revealedUid != null)
                 {
-                    // If we require the entity to be anchored but it's not, this will set subfloor to true, unhiding it.
-                    subFloor = !transformComponent.Anchored;
+                    if (subFloor) subFloorHideComponent.RevealedBy.Add((EntityUid) revealedUid);
+                    else          subFloorHideComponent.RevealedBy.Remove((EntityUid) revealedUid);
+
+                    // if the visibility of this is not equal to if there are any entities
+                    // revealing it, we need to adjust the depth
+                    if (subFloorHideComponent.Visible != (subFloorHideComponent.RevealedBy.Count != 0))
+                        subFloorHideComponent.DepthToggle = subFloor == true
+                            ? SubFloorVisuals.ToggleDepthOn
+                            : SubFloorVisuals.ToggleDepthOff;
                 }
+                else
+                {
+                    subFloorHideComponent.RevealedWithoutEntity = subFloor;
+                }
+
+                subFloor = subFloorHideComponent.RevealedBy.Count != 0 || subFloorHideComponent.RevealedWithoutEntity;
+                subFloorHideComponent.Visible = subFloor;
             }
+
 
             // Whether to show this entity as visible, visually.
             var subFloorVisible = ShowAll || subFloor;
@@ -217,8 +247,7 @@ namespace Content.Shared.SubFloor
             }
 
             // Set an appearance data value so visualizers can use this as needed.
-            if (EntityManager.TryGetComponent(uid, out SharedAppearanceComponent? appearanceComponent)
-                && spriteComponent?.Visible == subFloorVisible) // race condition???
+            if (EntityManager.TryGetComponent(uid, out SharedAppearanceComponent? appearanceComponent))
             {
                 appearanceComponent.SetData(SubFloorVisuals.SubFloor, subFloorVisible);
             }
@@ -239,5 +268,9 @@ namespace Content.Shared.SubFloor
     public enum SubFloorVisuals : byte
     {
         SubFloor,
+        ToggleDepth,
+        ToggleDepthOn,
+        ToggleDepthOff,
+        ToggleDepthIgnore
     }
 }

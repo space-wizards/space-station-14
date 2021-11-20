@@ -13,5 +13,12 @@ public class TrayScannerSystem : SharedTrayScannerSystem
         SubscribeLocalEvent<TrayScannerComponent, UseInHandEvent>(OnTrayScannerUsed);
     }
 
-    private void OnTrayScannerUsed(EntityUid uid, TrayScannerComponent scanner, UseInHandEvent args) => ToggleTrayScanner(uid, !scanner.Toggled, scanner);
+    private void OnTrayScannerUsed(EntityUid uid, TrayScannerComponent scanner, UseInHandEvent args)
+    {
+        ToggleTrayScanner(uid, !scanner.Toggled, scanner);
+        if (EntityManager.TryGetComponent<SharedAppearanceComponent>(uid, out var appearance))
+        {
+            appearance.SetData(TrayScannerVisual.Visual, scanner.Toggled == true ? TrayScannerVisual.On : TrayScannerVisual.Off);
+        }
+    }
 }

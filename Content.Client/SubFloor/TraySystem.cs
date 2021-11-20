@@ -83,7 +83,7 @@ public class TrayScannerSystem : SharedTrayScannerSystem
         // the active scanner list
         if (!scanner.Toggled)
         {
-            _subfloorSystem.ToggleSubfloorEntities(scanner.RevealedSubfloors, false);
+            _subfloorSystem.ToggleSubfloorEntities(scanner.RevealedSubfloors, false, uid);
             scanner.LastLocation = Vector2.Zero;
             scanner.RevealedSubfloors.Clear();
             return false;
@@ -113,7 +113,6 @@ public class TrayScannerSystem : SharedTrayScannerSystem
             return true;
 
         // hide all the existing subfloor
-        _subfloorSystem.ToggleSubfloorEntities(scanner.RevealedSubfloors, false);
 
         // get all entities in range by uid
         var nearby = _entityLookup.GetEntitiesInRange(entity, scanner.Range)
@@ -121,16 +120,18 @@ public class TrayScannerSystem : SharedTrayScannerSystem
             .Where(FilterAnchored)
             .ToHashSet();
 
-        // get the intersection between both newly detected entities and cached entities
-        scanner.RevealedSubfloors.IntersectWith(nearby);
-        // remove all the elements that were intersected, leaving the new elements
-        nearby.ExceptWith(scanner.RevealedSubfloors);
-        // nearby.RemoveWhere(ent => scanner.RevealedSubfloors.Contains(ent));
-        // union with the nearby element list, giving us the new set of detected entities
+        // get all the old elements that are no longer detected
+        scanner.RevealedSubfloors.ExceptWith(nearby);
+
+        // hide all of them, since they're no longer needed
+        _subfloorSystem.ToggleSubfloorEntities(scanner.RevealedSubfloors, false, uid);
+        scanner.RevealedSubfloors.Clear();
+
+        // set the revealedsubfloor set to the new nearby set
         scanner.RevealedSubfloors.UnionWith(nearby);
 
         // show all the new subfloor
-        _subfloorSystem.ToggleSubfloorEntities(scanner.RevealedSubfloors, true);
+        _subfloorSystem.ToggleSubfloorEntities(scanner.RevealedSubfloors, true, uid);
 
         return true;
     }

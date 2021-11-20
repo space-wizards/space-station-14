@@ -24,7 +24,7 @@ public class TrayScannerComponent : Component
 
     // range of the scanner itself
     [DataField("range")]
-    public float Range { get; set; } = 1f;
+    public float Range { get; set; } = 0.5f;
 
     // exclude entities that are not the set
     // of entities in range & entities already revealed
