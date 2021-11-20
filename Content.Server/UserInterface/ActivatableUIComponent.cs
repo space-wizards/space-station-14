@@ -58,20 +58,6 @@ namespace Content.Server.UserInterface
                 Key = key;
         }
 
-        public void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
-        {
-            // Has to be here for delegate to bind correctly.
-            // This *CANNOT* be elevated to system level because otherwise:
-            // pick one:
-            // + as method: delegate doesn't get the context it needs
-            //              (and will break if multiple show up)
-            // + as lambda: it can't be properly removed
-            // This probably ought to be BUI's responsibility anyway
-            // A disconnect should count as closing the UI, rest follows automatically
-            if (Deleted || e.Session != CurrentSingleUser || e.NewStatus != SessionStatus.Disconnected) return;
-            _activatableUISystem.SetCurrentSingleUser(OwnerUid, null, this);
-        }
-
         protected override void Initialize()
         {
             base.Initialize();

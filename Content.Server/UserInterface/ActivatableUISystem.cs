@@ -105,13 +105,9 @@ namespace Content.Server.UserInterface
                 return;
             if (!aui.SingleUser)
                 return;
-            if (aui.CurrentSingleUser != null)
-                aui.CurrentSingleUser.PlayerStatusChanged -= aui.OnPlayerStatusChanged;
 
             aui.CurrentSingleUser = v;
 
-            if (v != null)
-                v.PlayerStatusChanged += aui.OnPlayerStatusChanged;
             RaiseLocalEvent(uid, new ActivatableUIPlayerChangedEvent(), false);
         }
 
