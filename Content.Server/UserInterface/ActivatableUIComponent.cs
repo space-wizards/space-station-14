@@ -22,8 +22,6 @@ namespace Content.Server.UserInterface
     {
         public override string Name => "ActivatableUI";
 
-        private ActivatableUISystem _activatableUISystem = default!;
-
         [ViewVariables]
         public Enum? Key { get; set; }
 
@@ -56,12 +54,6 @@ namespace Content.Server.UserInterface
             var reflectionManager = IoCManager.Resolve<IReflectionManager>();
             if (reflectionManager.TryParseEnumReference(_keyRaw, out var key))
                 Key = key;
-        }
-
-        protected override void Initialize()
-        {
-            base.Initialize();
-            _activatableUISystem = EntitySystem.Get<ActivatableUISystem>();
         }
     }
 }
