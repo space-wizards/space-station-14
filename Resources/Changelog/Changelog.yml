@@ -1,17 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: Added more table construction and destruction, type: Add}
-  - {message: Tweaked items that tables drop when destroyed to match their construction
-      steps, type: Tweak}
-  id: 113
-  time: '2021-03-24T22:34:07.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Added a few different gas canisters to atmospherics and engineering.,
-    type: Add}
-  id: 114
-  time: '2021-03-25T01:03:49.352135+00:00'
 - author: Zumorica
   changes:
   - {message: 'Fixes ID Computer in Captain''s Headquarters containing a Glass Firelock
@@ -2845,3 +2832,17 @@ Entries:
     type: Fix}
   id: 614
   time: '2021-11-20T05:26:57.0000000+00:00'
+- author: Efruit
+  changes:
+  - {message: The previous Chief Engineer of Packed Station was fired. The new C.E.
+      rewired the whole station to pad his resume., type: Tweak}
+  id: 615
+  time: '2021-11-20T18:31:33.0000000+00:00'
+- author: moonheart08
+  changes:
+  - {message: Maps now know what the minimum and maximum number of players for them
+      is., type: Add}
+  - {message: You can now vote for the Knight Ship map with 8 or fewer players., type: Add}
+  - {message: You can no longer play on Saltern with 50 people., type: Fix}
+  id: 616
+  time: '2021-11-20T18:32:07.0000000+00:00'
