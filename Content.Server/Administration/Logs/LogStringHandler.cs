@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
+using Content.Server.Database;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
@@ -109,9 +110,9 @@ public ref struct LogStringHandler
         _handler.AppendFormatted(value, alignment, format);
     }
 
-    public (JsonDocument json, List<Guid> players) ToJson(JsonSerializerOptions options, IEntityManager entityManager)
+    public (JsonDocument json, List<Guid> players, List<AdminLogEntity> entities) ToJson(JsonSerializerOptions options, IEntityManager entityManager)
     {
-        var entities = new List<int>();
+        var entities = new List<AdminLogEntity>();
         var players = new List<Guid>();
 
         foreach (var obj in _values.Values)
@@ -129,7 +130,15 @@ public ref struct LogStringHandler
                 continue;
             }
 
-            entities.Add((int) uid);
+            var entityName = entityManager.TryGetEntity(uid, out var resolvedEntity)
+                ? resolvedEntity.Name
+                : null;
+
+            entities.Add(new AdminLogEntity
+            {
+                Uid = (int) uid,
+                Name = entityName
+            });
 
             if (entityManager.TryGetComponent(uid, out ActorComponent? actor))
             {
@@ -137,9 +146,7 @@ public ref struct LogStringHandler
             }
         }
 
-        _values["__entities"] = entities;
-
-        return (JsonSerializer.SerializeToDocument(_values, options), players);
+        return (JsonSerializer.SerializeToDocument(_values, options), players, entities);
     }
 
     public string ToStringAndClear()

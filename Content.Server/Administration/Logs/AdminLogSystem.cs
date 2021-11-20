@@ -163,7 +163,7 @@ public class AdminLogSystem : EntitySystem
         }
     }
 
-    private async void Add(LogType type, string message, JsonDocument json, List<Guid> players)
+    private async void Add(LogType type, string message, JsonDocument json, List<Guid> players, List<AdminLogEntity> entities)
     {
         var log = new AdminLog
         {
@@ -172,7 +172,8 @@ public class AdminLogSystem : EntitySystem
             Date = DateTime.UtcNow,
             Message = message,
             Json = json,
-            Players = new List<AdminLogPlayer>(players.Count)
+            Players = new List<AdminLogPlayer>(players.Count),
+            Entities = entities
         };
 
         _logsToAdd.Enqueue(log);
@@ -191,10 +192,10 @@ public class AdminLogSystem : EntitySystem
 
     public void Add(LogType type, ref LogStringHandler handler)
     {
-        var (json, players) = handler.ToJson(_jsonOptions, _entities);
+        var (json, players, entities) = handler.ToJson(_jsonOptions, _entities);
         var message = handler.ToStringAndClear();
 
-        Add(type, message, json, players);
+        Add(type, message, json, players, entities);
     }
 
     public IAsyncEnumerable<LogRecord> All(LogFilter? filter = null)
