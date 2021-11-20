@@ -262,12 +262,12 @@
         conditions:
         - !type:Temperature
           max: 293.15
-        amount: 20
+        amount: 1000 # thermal energy, not temperature!
       - !type:AdjustTemperature
         conditions:
         - !type:Temperature
           min: 293.15
-        amount: -20
+        amount: -1000
       - !type:PopupMessage
         type: Local
         messages: [ "leporazine-effect-temperature-adjusting" ]

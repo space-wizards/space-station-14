@@ -15,14 +15,7 @@ namespace Content.Server.Chemistry.ReagentEffects
             if (args.EntityManager.TryGetComponent(args.SolutionEntity, out TemperatureComponent temp))
             {
                 var sys = args.EntityManager.EntitySysManager.GetEntitySystem<TemperatureSystem>();
-                if (Amount > 0)
-                {
-                    sys.ReceiveHeat(args.SolutionEntity, Amount, temp);
-                }
-                else if (Amount < 0)
-                {
-                    sys.RemoveHeat(args.SolutionEntity, Amount, temp);
-                }
+                sys.ChangeHeat(args.SolutionEntity, Amount, true, temp);
             }
         }
     }
