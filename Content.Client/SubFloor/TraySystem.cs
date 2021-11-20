@@ -34,33 +34,18 @@ public class TrayScannerSystem : SharedTrayScannerSystem
     private HashSet<EntityUid> _activeScanners = new();
     private HashSet<EntityUid> _invalidScanners = new();
 
-    // slight delay, there's a race condition otherwise
-    private const float _delay = 1f;
-    private float _timer = 0f;
-
-    // hmm. this isn't exactly the best,
-    // this could instead be client-side oriented
-    // with the server holding the current
-    // list of active t-ray scanners for authority,
-    // and clients using that list to have
-    // massive, networkless updates
     public override void Update(float frameTime)
     {
         if (!_activeScanners.Any()) return;
 
-        _timer += frameTime;
-
-        if (_timer > _delay)
+        foreach (var scanner in _activeScanners)
         {
-            foreach (var scanner in _activeScanners)
-            {
-                if (!UpdateTrayScanner(scanner))
-                    _invalidScanners.Add(scanner);
-            }
-
-            _activeScanners.ExceptWith(_invalidScanners);
-            _invalidScanners.Clear();
+            if (!UpdateTrayScanner(scanner))
+                _invalidScanners.Add(scanner);
         }
+
+        _activeScanners.ExceptWith(_invalidScanners);
+        _invalidScanners.Clear();
     }
 
     /// <summary>
