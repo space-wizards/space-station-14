@@ -32,7 +32,7 @@ namespace Content.Client.Verbs
         /// <summary>
         ///     When a user right clicks somewhere, how large is the box we use to get entities for the context menu?
         /// </summary>
-        public const float EntityMenuLookupSize = 0.2f;
+        public const float EntityMenuLookupSize = 0.25f;
 
         public EntityMenuPresenter EntityMenu = default!;
         public VerbMenuPresenter VerbMenu = default!;
