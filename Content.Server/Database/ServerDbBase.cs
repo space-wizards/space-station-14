@@ -443,7 +443,7 @@ namespace Content.Server.Database
             await db.DbContext.SaveChangesAsync(cancel);
         }
 
-        public async Task<int> AddNewRound(params Guid[] playerIds)
+        public virtual async Task<int> AddNewRound(params Guid[] playerIds)
         {
             await using var db = await GetDb();
 
@@ -536,7 +536,7 @@ namespace Content.Server.Database
 
             if (filter.Search != null)
             {
-                query = query.Where(log => log.Message.Contains(filter.Search, StringComparison.OrdinalIgnoreCase));
+                query = query.Where(log => log.Message.Contains(filter.Search));
             }
 
             if (filter.Types != null)

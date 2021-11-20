@@ -249,15 +249,44 @@ namespace Content.Server.Database
             return (admins.Select(p => (p.a, p.LastSeenUserName)).ToArray(), adminRanks)!;
         }
 
+        private async Task<int> NextId<TModel>(DbSet<TModel> set, Func<TModel, int> selector) where TModel : class
+        {
+            var id = 1;
+
+            if (await set.AnyAsync())
+            {
+                id = set.Max(selector);
+            }
+
+            return id;
+        }
+
+        public override async Task<int> AddNewRound(params Guid[] playerIds)
+        {
+            await using var db = await GetDb();
+
+            var players = await db.DbContext.Player
+                .Where(player => playerIds.Contains(player.UserId))
+                .ToListAsync();
+
+            var round = new Round
+            {
+                Id = await NextId(db.DbContext.Player, player => player.Id),
+                Players = players
+            };
+
+            db.DbContext.Round.Add(round);
+
+            await db.DbContext.SaveChangesAsync();
+
+            return round.Id;
+        }
+
         public override async Task AddAdminLogs(List<AdminLog> logs)
         {
             await using var db = await GetDb();
 
-            var nextId = 1;
-            if (await db.DbContext.AdminLog.AnyAsync())
-            {
-                nextId = db.DbContext.AdminLog.Max(log => log.Id) + 1;
-            }
+            var nextId = await NextId(db.DbContext.AdminLog, log => log.Id);
 
             foreach (var log in logs)
             {
