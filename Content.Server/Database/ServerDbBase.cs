@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Enums;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Database
 {
@@ -508,11 +509,25 @@ namespace Content.Server.Database
 
         #region Admin Logs
 
-        public virtual async Task AddAdminLogs(List<AdminLog> logs)
+        public virtual async Task AddAdminLogs(List<QueuedLog> logs)
         {
             await using var db = await GetDb();
 
-            db.DbContext.AddRange(logs);
+            var entities = new Dictionary<int, AdminLogEntity>();
+
+            foreach (var (log, entityData) in logs)
+            {
+                var logEntities = new List<AdminLogEntity>(entityData.Count);
+                foreach (var (id, name) in entityData)
+                {
+                    var entity = entities.GetOrNew(id);
+                    entity.Name = name;
+                    logEntities.Add(entity);
+                }
+
+                log.Entities = logEntities;
+                db.DbContext.AdminLog.Add(log);
+            }
 
             await db.DbContext.SaveChangesAsync();
         }

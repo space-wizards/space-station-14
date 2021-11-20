@@ -60,7 +60,7 @@ public class AdminLogSystem : EntitySystem
 
     // Per update
     private float _accumulatedFrameTime;
-    private readonly ConcurrentQueue<AdminLog> _logsToAdd = new();
+    private readonly ConcurrentQueue<QueuedLog> _logsToAdd = new();
 
     public override void Initialize()
     {
@@ -123,7 +123,7 @@ public class AdminLogSystem : EntitySystem
 
     private async Task SendLogs()
     {
-        var copy = new List<AdminLog>(_logsToAdd);
+        var copy = new List<QueuedLog>(_logsToAdd);
         _logsToAdd.Clear();
         _accumulatedFrameTime = 0;
 
@@ -163,7 +163,7 @@ public class AdminLogSystem : EntitySystem
         }
     }
 
-    private async void Add(LogType type, string message, JsonDocument json, List<Guid> players, List<AdminLogEntity> entities)
+    private async void Add(LogType type, string message, JsonDocument json, List<Guid> players, List<(int id, string? name)> entities)
     {
         var log = new AdminLog
         {
@@ -172,11 +172,11 @@ public class AdminLogSystem : EntitySystem
             Date = DateTime.UtcNow,
             Message = message,
             Json = json,
-            Players = new List<AdminLogPlayer>(players.Count),
-            Entities = entities
+            Players = new List<AdminLogPlayer>(players.Count)
         };
 
-        _logsToAdd.Enqueue(log);
+        var queued = new QueuedLog(log, entities);
+        _logsToAdd.Enqueue(queued);
 
         foreach (var id in players)
         {

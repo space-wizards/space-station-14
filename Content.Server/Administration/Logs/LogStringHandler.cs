@@ -110,9 +110,9 @@ public ref struct LogStringHandler
         _handler.AppendFormatted(value, alignment, format);
     }
 
-    public (JsonDocument json, List<Guid> players, List<AdminLogEntity> entities) ToJson(JsonSerializerOptions options, IEntityManager entityManager)
+    public (JsonDocument json, List<Guid> players, List<(int id, string? name)> entities) ToJson(JsonSerializerOptions options, IEntityManager entityManager)
     {
-        var entities = new List<AdminLogEntity>();
+        var entities = new List<(int id, string? name)>();
         var players = new List<Guid>();
 
         foreach (var obj in _values.Values)
@@ -134,11 +134,7 @@ public ref struct LogStringHandler
                 ? resolvedEntity.Name
                 : null;
 
-            entities.Add(new AdminLogEntity
-            {
-                Uid = (int) uid,
-                Name = entityName
-            });
+            entities.Add(((int) uid, entityName));
 
             if (entityManager.TryGetComponent(uid, out ActorComponent? actor))
             {

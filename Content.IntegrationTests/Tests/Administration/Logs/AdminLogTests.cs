@@ -59,7 +59,8 @@ public class AdminLogsTests : ContentIntegrationTest
             {
                 var root = json.RootElement;
 
-                Assert.That(root.TryGetProperty("Entity", out _), Is.True);
+                // camelCased automatically
+                Assert.That(root.TryGetProperty("entity", out _), Is.True);
 
                 json.Dispose();
 
@@ -200,7 +201,7 @@ public class AdminLogsTests : ContentIntegrationTest
             }
 
             return count >= amount;
-        });
+        }, 20000);
     }
 
     [Test]

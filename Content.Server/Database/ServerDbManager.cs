@@ -133,7 +133,7 @@ namespace Content.Server.Database
 
         #region Admin Logs
 
-        Task AddAdminLogs(List<AdminLog> logs);
+        Task AddAdminLogs(List<QueuedLog> logs);
         IAsyncEnumerable<string> GetAdminLogMessages(LogFilter? filter = null);
         IAsyncEnumerable<LogRecord> GetAdminLogs(LogFilter? filter = null);
         IAsyncEnumerable<JsonDocument> GetAdminLogsJson(LogFilter? filter = null);
@@ -336,7 +336,7 @@ namespace Content.Server.Database
             return _db.UpdateAdminRankAsync(rank, cancel);
         }
 
-        public Task AddAdminLogs(List<AdminLog> logs)
+        public Task AddAdminLogs(List<QueuedLog> logs)
         {
             return _db.AddAdminLogs(logs);
         }

@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Database
 {
@@ -282,15 +283,26 @@ namespace Content.Server.Database
             return round.Id;
         }
 
-        public override async Task AddAdminLogs(List<AdminLog> logs)
+        public override async Task AddAdminLogs(List<QueuedLog> logs)
         {
             await using var db = await GetDb();
 
             var nextId = await NextId(db.DbContext.AdminLog, log => log.Id);
+            var entities = new Dictionary<int, AdminLogEntity>();
 
-            foreach (var log in logs)
+            foreach (var (log, entityData) in logs)
             {
                 log.Id = nextId++;
+
+                var logEntities = new List<AdminLogEntity>(entityData.Count);
+                foreach (var (id, name) in entityData)
+                {
+                    var entity = entities.GetOrNew(id);
+                    entity.Name = name;
+                    logEntities.Add(entity);
+                }
+
+                log.Entities = logEntities;
                 db.DbContext.AdminLog.Add(log);
             }
 
