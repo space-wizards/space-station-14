@@ -7,6 +7,7 @@ using Content.Shared.CCVar;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -91,7 +92,10 @@ namespace Content.Server.Maps
                 SelectRandomMap();
                 if (loud)
                 {
-                    _chatManager.DispatchServerAnnouncement($"Failed to load map {oldMap} due to it no longer being eligible! Picking {GetSelectedMap().MapName} instead.");
+                    _chatManager.DispatchServerAnnouncement(
+                        Loc.GetString("gamemap-could-not-use-map-error",
+                        ("oldMap", oldMap), ("newMap", GetSelectedMap().MapName)
+                        ));
                 }
             }
 
