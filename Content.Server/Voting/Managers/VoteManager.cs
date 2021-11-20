@@ -8,6 +8,7 @@ using Content.Server.Administration;
 using Content.Server.Administration.Managers;
 using Content.Server.Afk;
 using Content.Server.Chat.Managers;
+using Content.Server.Maps;
 using Content.Shared.Administration;
 using Content.Shared.Voting;
 using Robust.Server.Player;
@@ -16,6 +17,7 @@ using Robust.Shared.Enums;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -33,6 +35,7 @@ namespace Content.Server.Voting.Managers
         [Dependency] private readonly IAdminManager _adminMgr = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IAfkManager _afkManager = default!;
+        [Dependency] private readonly IGameMapManager _gameMapManager = default!;
 
         private int _nextVoteId = 1;
 

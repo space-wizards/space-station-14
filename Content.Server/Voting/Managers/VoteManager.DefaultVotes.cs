@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Server.GameTicking;
+using Content.Server.Maps;
 using Content.Server.RoundEnd;
 using Content.Shared.CCVar;
 using Content.Shared.Voting;
@@ -146,11 +148,7 @@ namespace Content.Server.Voting.Managers
 
         private void CreateMapVote(IPlayerSession? initiator)
         {
-            var maps = new Dictionary<string, string>
-            {
-                ["Maps/saltern.yml"] = "Saltern",
-                ["Maps/packedstation.yml"] = "PackedStation",
-            };
+            var maps = _gameMapManager.CurrentlyEligibleMaps().ToDictionary(map => map, map => map.MapName);
 
             var alone = _playerManager.PlayerCount == 1 && initiator != null;
             var options = new VoteOptions
@@ -175,21 +173,21 @@ namespace Content.Server.Voting.Managers
 
             vote.OnFinished += (_, args) =>
             {
-                string picked;
+                GameMapPrototype picked;
                 if (args.Winner == null)
                 {
-                    picked = (string) _random.Pick(args.Winners);
+                    picked = (GameMapPrototype) _random.Pick(args.Winners);
                     _chatManager.DispatchServerAnnouncement(
                         Loc.GetString("ui-vote-map-tie", ("picked", maps[picked])));
                 }
                 else
                 {
-                    picked = (string) args.Winner;
+                    picked = (GameMapPrototype) args.Winner;
                     _chatManager.DispatchServerAnnouncement(
                         Loc.GetString("ui-vote-map-win", ("winner", maps[picked])));
                 }
 
-                _cfg.SetCVar(CCVars.GameMap, picked);
+                _gameMapManager.TrySelectMap(picked.ID);
             };
         }
 

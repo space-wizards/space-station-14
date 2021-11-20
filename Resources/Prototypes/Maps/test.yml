@@ -1,0 +1,7 @@
+- type: gameMap
+  id: empty
+  mapName: Empty
+  mapPath: Maps/Test/empty.yml
+  minPlayers: 0
+  maxPlayers: 0
+  votable: false
