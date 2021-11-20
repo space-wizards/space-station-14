@@ -23,8 +23,6 @@ namespace Content.Server.Disposal.Tube.Components
 {
     public abstract class DisposalTubeComponent : Component, IDisposalTubeComponent, IBreakAct
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
-
         public static readonly TimeSpan ClangDelay = TimeSpan.FromSeconds(0.5);
         public TimeSpan LastClang;
 
