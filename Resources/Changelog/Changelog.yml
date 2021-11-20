@@ -1,10 +1,4 @@
 Entries:
-- author: SweptWasTaken
-  changes:
-  - {message: You can anchor and rotate a lot more things, type: Add}
-  - {message: Some unused furniture sprites, type: Remove}
-  id: 116
-  time: '2021-03-26T01:51:26.0000000+00:00'
 - author: drongood12
   changes:
   - {message: 'Fixed a problem with foamed metal, now bullets do not go through it',
@@ -2844,3 +2838,12 @@ Entries:
   - {message: Fixed skintone on feet., type: Fix}
   id: 617
   time: '2021-11-20T23:17:16.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Pretty much every chemical in the game has received new metabolism
+      effects. Some examples: meth & ephedrine make you jitter, histamine makes you
+      itch and take poison damage, leporazines regulate your body temperature, acids
+      burn your insides, cryoxadone heals you when you''re cold, and a lot more.',
+    type: Add}
+  id: 618
+  time: '2021-11-20T23:47:53.0000000+00:00'
