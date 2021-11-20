@@ -95,11 +95,11 @@ namespace Content.Server.Database
             modelBuilder.Entity<AdminLogPlayer>()
                 .HasOne(player => player.Player)
                 .WithMany(player => player.AdminLogs)
-                .HasForeignKey(player => player.PlayerId)
+                .HasForeignKey(player => player.PlayerUserId)
                 .HasPrincipalKey(player => player.UserId);
 
             modelBuilder.Entity<AdminLogPlayer>()
-                .HasKey(logPlayer => new {PlayerUserId = logPlayer.PlayerId, logPlayer.LogId, logPlayer.RoundId});
+                .HasKey(logPlayer => new {PlayerUserId = logPlayer.PlayerUserId, logPlayer.LogId, logPlayer.RoundId});
         }
     }
 
@@ -275,7 +275,7 @@ namespace Content.Server.Database
 
     public class AdminLogPlayer
     {
-        [Required, Key, ForeignKey("Player")] public Guid PlayerId { get; set; }
+        [Required, Key, ForeignKey("Player")] public Guid PlayerUserId { get; set; }
         public Player Player { get; set; } = default!;
 
         [Required, Key] public int LogId { get; set; }

@@ -181,7 +181,7 @@ public class AdminLogSystem : EntitySystem
         {
             var player = new AdminLogPlayer
             {
-                PlayerId = id,
+                PlayerUserId = id,
                 RoundId = _roundId
             };
 

@@ -556,10 +556,18 @@ namespace Content.Server.Database
 
             if (filter.AnyPlayers != null)
             {
-                query = query.Where(log => filter.AnyPlayers
-                    .Any(id => log.Players
-                        .Select(player => player.Player.UserId)
-                        .Contains(id)));
+                var players = await db.AdminLogPlayer
+                    .Where(player => filter.AnyPlayers.Contains(player.PlayerUserId))
+                    .ToListAsync();
+
+                if (players.Count > 0)
+                {
+                    query = from log in query
+                        join player in db.AdminLogPlayer on log.Id equals player.LogId into grouping
+                        from player in grouping.DefaultIfEmpty()
+                        where filter.AnyPlayers.Contains(player.Player.UserId)
+                        select log;
+                }
             }
 
             if (filter.AllPlayers != null)
