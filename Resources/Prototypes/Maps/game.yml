@@ -11,7 +11,6 @@
   mapName: Packedstation
   mapPath: Maps/packedstation.yml
   minPlayers: 15
-  maxPlayers: 0
 
 - type: gameMap
   id: knightship

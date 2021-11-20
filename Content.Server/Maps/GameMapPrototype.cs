@@ -23,8 +23,8 @@ namespace Content.Server.Maps
         /// <summary>
         /// Maximum players for the given map.
         /// </summary>
-        [ViewVariables, DataField("maxPlayers", required: true)]
-        public uint MaxPlayers { get; }
+        [ViewVariables, DataField("maxPlayers")]
+        public uint MaxPlayers { get; } = uint.MaxValue;
 
         /// <summary>
         /// Name of the given map.

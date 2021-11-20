@@ -7,7 +7,6 @@ using Content.Shared.CCVar;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -28,11 +27,10 @@ namespace Content.Server.Maps
         {
             _configurationManager.OnValueChanged(CCVars.GameMap, value =>
             {
-                Logger.Debug("WH");
                 if (TryLookupMap(value, out var map))
                     _currentMap = map;
                 else
-                    throw new ArgumentException("Bad map.");
+                    throw new ArgumentException($"Unknown map prototype {value} was selected!");
             }, true);
             _configurationManager.OnValueChanged(CCVars.GameMapForced, value => _currentMapForced = value, true);
         }
