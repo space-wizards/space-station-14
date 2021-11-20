@@ -584,11 +584,6 @@ namespace Content.Server.Database
                 };
             }
 
-            if (filter.Limit != null)
-            {
-                query = query.Take(filter.Limit.Value);
-            }
-
             query = filter.DateOrder switch
             {
                 DateOrder.Ascending => query.OrderBy(log => log.Date),
@@ -596,6 +591,11 @@ namespace Content.Server.Database
                 _ => throw new ArgumentOutOfRangeException(nameof(filter),
                     $"Unknown {nameof(DateOrder)} value {filter.DateOrder}")
             };
+
+            if (filter.Limit != null)
+            {
+                query = query.Take(filter.Limit.Value);
+            }
 
             return query;
         }
