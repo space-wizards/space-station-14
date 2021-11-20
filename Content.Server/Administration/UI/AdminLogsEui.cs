@@ -41,6 +41,8 @@ public sealed class AdminLogsEui : BaseEui
         };
     }
 
+    public int CurrentRoundId => EntitySystem.Get<GameTicker>().RoundId;
+
     public override async void Opened()
     {
         base.Opened();
@@ -63,13 +65,13 @@ public sealed class AdminLogsEui : BaseEui
     {
         if (_isLoading)
         {
-            return new AdminLogsEuiState {IsLoading = true};
+            return new AdminLogsEuiState(CurrentRoundId, new Dictionary<Guid, string>())
+            {
+                IsLoading = true
+            };
         }
 
-        var state = new AdminLogsEuiState
-        {
-            Players = _players
-        };
+        var state = new AdminLogsEuiState(CurrentRoundId, _players);
 
         return state;
     }
@@ -95,6 +97,7 @@ public sealed class AdminLogsEui : BaseEui
                 _filter = new LogFilter
                 {
                     CancellationToken = _logSendCancellation.Token,
+                    Round = request.RoundId,
                     Types = request.Types,
                     Before = request.Before,
                     After = request.After,
@@ -104,16 +107,16 @@ public sealed class AdminLogsEui : BaseEui
                     Limit = LogBatchSize
                 };
 
-                var roundId = _filter.Round ?? EntitySystem.Get<GameTicker>().RoundId;
+                var roundId = _filter.Round ??= EntitySystem.Get<GameTicker>().RoundId;
                 LoadFromDb(roundId);
 
-                var logs = await Task.Run(() => _logSystem.CurrentRoundLogs(_filter));
+                var logs = await Task.Run(() => _logSystem.All(_filter));
                 SendLogs(logs, true);
                 break;
             }
             case NextLogsRequest:
             {
-                var results = await Task.Run(() => _logSystem.CurrentRoundLogs(_filter));
+                var results = await Task.Run(() => _logSystem.All(_filter));
                 SendLogs(results, false);
                 break;
             }

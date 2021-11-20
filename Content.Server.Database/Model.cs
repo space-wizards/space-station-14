@@ -99,7 +99,7 @@ namespace Content.Server.Database
                 .HasPrincipalKey(player => player.UserId);
 
             modelBuilder.Entity<AdminLogPlayer>()
-                .HasKey(logPlayer => new {PlayerUserId = logPlayer.PlayerUserId, logPlayer.LogId, logPlayer.RoundId});
+                .HasKey(logPlayer => new {logPlayer.PlayerUserId, logPlayer.LogId, logPlayer.RoundId});
         }
     }
 

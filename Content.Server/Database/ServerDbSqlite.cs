@@ -255,7 +255,7 @@ namespace Content.Server.Database
 
             if (await set.AnyAsync())
             {
-                id = set.Max(selector);
+                id = set.Max(selector) + 1;
             }
 
             return id;
@@ -271,6 +271,7 @@ namespace Content.Server.Database
 
             var round = new Round
             {
+                Id = await NextId(db.DbContext.Round, round => round.Id),
                 Players = players
             };
 

@@ -517,10 +517,7 @@ namespace Content.Server.Database
             await db.DbContext.SaveChangesAsync();
         }
 
-        private async Task<IQueryable<AdminLog>> GetAdminLogsQuery(
-            ServerDbContext db,
-            LogFilter? filter = null,
-            bool distinct = false)
+        private async Task<IQueryable<AdminLog>> GetAdminLogsQuery(ServerDbContext db, LogFilter? filter = null)
         {
             IQueryable<AdminLog> query = db.AdminLog;
 
@@ -563,8 +560,7 @@ namespace Content.Server.Database
                 if (players.Count > 0)
                 {
                     query = from log in query
-                        join player in db.AdminLogPlayer on log.Id equals player.LogId into grouping
-                        from player in grouping.DefaultIfEmpty()
+                        join player in db.AdminLogPlayer on log.Id equals player.LogId
                         where filter.AnyPlayers.Contains(player.Player.UserId)
                         select log;
                 }
@@ -575,10 +571,7 @@ namespace Content.Server.Database
                 // TODO ADMIN LOGGING
             }
 
-            if (distinct)
-            {
-                query = query.Distinct();
-            }
+            query = query.Distinct();
 
             if (filter.LastLogId != null)
             {

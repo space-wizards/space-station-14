@@ -9,9 +9,17 @@ namespace Content.Shared.Administration;
 [Serializable, NetSerializable]
 public class AdminLogsEuiState : EuiStateBase
 {
+    public AdminLogsEuiState(int roundId, Dictionary<Guid, string> players)
+    {
+        RoundId = roundId;
+        Players = players;
+    }
+
     public bool IsLoading { get; set; }
 
-    public Dictionary<Guid, string> Players { get; set; } = new();
+    public int RoundId { get; }
+
+    public Dictionary<Guid, string> Players { get; }
 }
 
 public static class AdminLogsEuiMsg
@@ -38,7 +46,7 @@ public static class AdminLogsEuiMsg
     public sealed class LogsRequest : EuiMessageBase
     {
         public LogsRequest(
-            string? search,
+            int? roundId,
             List<LogType>? types,
             DateTime? before,
             DateTime? after,
@@ -47,7 +55,7 @@ public static class AdminLogsEuiMsg
             int? lastLogId,
             DateOrder dateOrder)
         {
-            Search = search;
+            RoundId = roundId;
             Types = types;
             Before = before;
             After = after;
@@ -57,7 +65,7 @@ public static class AdminLogsEuiMsg
             DateOrder = dateOrder;
         }
 
-        public string? Search { get; set; }
+        public int? RoundId { get; set; }
         public List<LogType>? Types { get; set; }
         public DateTime? Before { get; set; }
         public DateTime? After { get; set; }

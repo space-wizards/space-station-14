@@ -11,6 +11,8 @@ namespace Content.Server.Administration.Logs;
 [InterpolatedStringHandler]
 public ref struct LogStringHandler
 {
+    private static readonly JsonNamingPolicy NamingPolicy = JsonNamingPolicy.CamelCase;
+
     private DefaultInterpolatedStringHandler _handler;
     private readonly Dictionary<string, object?> _values;
 
@@ -34,15 +36,18 @@ public ref struct LogStringHandler
 
     private void AddFormat<T>(string? format, T value, string? argument = null)
     {
-        if (format == null && argument != null)
+        if (format == null)
         {
+            if (argument == null)
+            {
+                return;
+            }
+
             format = argument[0] == '@' ? argument[1..] : argument;
         }
 
-        if (format != null)
-        {
-            _values.Add(format, value);
-        }
+        format = NamingPolicy.ConvertName(format);
+        _values.Add(format, value);
     }
 
     public void AppendLiteral(string value)

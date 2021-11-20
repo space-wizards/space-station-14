@@ -10,8 +10,6 @@ namespace Content.Client.Administration.UI.Logs;
 [UsedImplicitly]
 public class AdminLogsEui : BaseEui
 {
-    private AdminLogsWindow Window { get; }
-
     public AdminLogsEui()
     {
         Window = new AdminLogsWindow();
@@ -21,14 +19,18 @@ public class AdminLogsEui : BaseEui
         Window.NextButton.OnPressed += _ => NextLogs();
     }
 
+    private AdminLogsWindow Window { get; }
+
+    private bool FirstState { get; set; } = true;
+
     private void RequestLogs()
     {
-        var search = Window.LogSearch.Text;
+        var round = Window.GetSelectedRoundId();
         var types = Window.GetSelectedLogTypes();
         var players = Window.GetSelectedPlayerIds();
 
         var request = new LogsRequest(
-            search,
+            round,
             types,
             null,
             null,
@@ -46,6 +48,18 @@ public class AdminLogsEui : BaseEui
         SendMessage(request);
     }
 
+    private void TrySetFirstState(AdminLogsEuiState state)
+    {
+        if (!FirstState)
+        {
+            return;
+        }
+
+        FirstState = false;
+        Window.SetCurrentRound(state.RoundId);
+        Window.SetRoundSpinBox(state.RoundId);
+    }
+
     public override void Opened()
     {
         Window.OpenCentered();
@@ -55,11 +69,14 @@ public class AdminLogsEui : BaseEui
     {
         var s = (AdminLogsEuiState) state;
 
+        TrySetFirstState(s);
+
         if (s.IsLoading)
         {
             return;
         }
 
+        Window.SetCurrentRound(s.RoundId);
         Window.SetPlayers(s.Players);
     }
 
