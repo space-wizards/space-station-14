@@ -9,8 +9,6 @@ using Content.Client.Verbs.UI;
 using Content.Client.Viewport;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
-using Content.Shared.Interaction.Helpers;
-using Content.Shared.MobState.Components;
 using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
