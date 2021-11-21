@@ -319,7 +319,7 @@ namespace Content.Shared.MobState.Components
             }
             else
             {
-                var stateChangeEvent = new MobStateChangedEvent(this, null, state);
+                var stateChangeEvent = new MobStateChangedEvent(this, old, state);
                 Owner.EntityManager.EventBus.RaiseLocalEvent(OwnerUid, stateChangeEvent);
             }
             
