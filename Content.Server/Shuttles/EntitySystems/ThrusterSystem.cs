@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Audio;
@@ -14,7 +15,6 @@ using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Shuttles.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -28,10 +28,10 @@ namespace Content.Server.Shuttles.EntitySystems
 {
     public sealed class ThrusterSystem : EntitySystem
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly AmbientSoundSystem _ambient = default!;
-        [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
-        [Dependency] private readonly DamageableSystem _damageable = default!;
+        [Robust.Shared.IoC.Dependency] private readonly IMapManager _mapManager = default!;
+        [Robust.Shared.IoC.Dependency] private readonly AmbientSoundSystem _ambient = default!;
+        [Robust.Shared.IoC.Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
+        [Robust.Shared.IoC.Dependency] private readonly DamageableSystem _damageable = default!;
 
         // Essentially whenever thruster enables we update the shuttle's available impulses which are used for movement.
         // This is done for each direction available.
@@ -373,7 +373,7 @@ namespace Content.Server.Shuttles.EntitySystems
                         }
                         break;
                     case ShuttleMode.Docking:
-                        var index = (int) Math.Log2((int) direction);
+                        var index = GetFlagIndex(direction);
 
                         foreach (var comp in component.LinearThrusters[index])
                         {
@@ -389,7 +389,7 @@ namespace Content.Server.Shuttles.EntitySystems
             }
             else
             {
-                var index = (int) Math.Log2((int) direction);
+                var index = GetFlagIndex(direction);
 
                 foreach (var comp in component.LinearThrusters[index])
                 {
@@ -426,7 +426,7 @@ namespace Content.Server.Shuttles.EntitySystems
                         }
                         break;
                     case ShuttleMode.Docking:
-                        var index = (int) Math.Log2((int) direction);
+                        var index = GetFlagIndex(direction);
 
                         foreach (var comp in component.LinearThrusters[index])
                         {
@@ -442,7 +442,7 @@ namespace Content.Server.Shuttles.EntitySystems
             }
             else
             {
-                var index = (int) Math.Log2((int) direction);
+                var index = GetFlagIndex(direction);
 
                 foreach (var comp in component.LinearThrusters[index])
                 {
@@ -466,5 +466,11 @@ namespace Content.Server.Shuttles.EntitySystems
         }
 
         #endregion
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private int GetFlagIndex(DirectionFlag flag)
+        {
+            return (int) Math.Log2((int) flag);
+        }
     }
 }
