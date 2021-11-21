@@ -14,10 +14,6 @@ namespace Content.Shared.Chemistry.Reaction
     [Prototype("reaction")]
     public class ReactionPrototype : IPrototype
     {
-        [DataField("reactants")] private Dictionary<string, ReactantPrototype> _reactants = new();
-        [DataField("products")] private Dictionary<string, FixedPoint2> _products = new();
-        [DataField("effects", serverOnly: true)] private List<IReactionEffect> _effects = new();
-
         [ViewVariables]
         [DataField("id", required: true)]
         public string ID { get; } = default!;
@@ -28,15 +24,17 @@ namespace Content.Shared.Chemistry.Reaction
         /// <summary>
         /// Reactants required for the reaction to occur.
         /// </summary>
-        public IReadOnlyDictionary<string, ReactantPrototype> Reactants => _reactants;
+        [DataField("reactants")] public Dictionary<string, ReactantPrototype> Reactants = new();
+
         /// <summary>
         /// Reagents created when the reaction occurs.
         /// </summary>
-        public IReadOnlyDictionary<string, FixedPoint2> Products => _products;
+        [DataField("products")] public Dictionary<string, FixedPoint2> Products = new();
+
         /// <summary>
         /// Effects to be triggered when the reaction occurs.
         /// </summary>
-        public IReadOnlyList<IReactionEffect> Effects => _effects;
+        [DataField("effects", serverOnly: true)] public List<ReagentEffect> Effects = new();
 
         // TODO SERV3: Empty on the client, (de)serialize on the server with module manager is server module
         [DataField("sound", serverOnly: true)] public SoundSpecifier Sound { get; private set; } = new SoundPathSpecifier("/Audio/Effects/Chemistry/bubbles.ogg");
