@@ -1,9 +1,4 @@
 Entries:
-- author: BulletGrade
-  changes:
-  - {message: Made magazine names more specific, type: Tweak}
-  id: 124
-  time: '2021-03-28T06:06:20.0000000+00:00'
 - author: PJB3005
   changes:
   - {message: Reworked how hair styles are stored. You will have to select your hair
@@ -2843,3 +2838,9 @@ Entries:
   - {message: altered names of command clothing and hardsuits to be consistent, type: Fix}
   id: 625
   time: '2021-11-21T20:14:39.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: You can no longer inspecting your surroundings using the examine popup
+      or context menu while incapacitated, type: Fix}
+  id: 626
+  time: '2021-11-21T20:40:09.0000000+00:00'
