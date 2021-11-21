@@ -41,10 +41,6 @@ namespace Content.Shared.Chemistry.Reagent
             if (random == null)
                 random = IoCManager.Resolve<IRobustRandom>();
 
-            // Make sure we still have enough reagent to go...
-            if (args.Source != null && !args.Source.ContainsReagent(args.Reagent.ID))
-                return false;
-
             if (effect.Probability < 1.0f && !random.Prob(effect.Probability))
                 return false;
 
