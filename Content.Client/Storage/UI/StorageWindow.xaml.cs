@@ -94,12 +94,12 @@ namespace Content.Client.Storage.UI
                 if (size > 99)
                 {
                     EntitySize.Text = "99+";
-                    EntitySize.SetOnlyStyleClass(StyleNano.StyleClassStorageWeightSmall);
+                    EntitySize.SetOnlyStyleClass(StyleNano.StyleClassStorageWeightLabelSmall);
                 }
                 else
                 {
                     EntitySize.Text = (size > 99) ? "99+" : size.ToString();
-                    EntitySize.SetOnlyStyleClass(StyleNano.StyleClassStorageWeight);
+                    EntitySize.SetOnlyStyleClass(StyleNano.StyleClassStorageWeightLabel);
                 }
             }
         }

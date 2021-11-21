@@ -61,8 +61,9 @@ namespace Content.Client.Stylesheets
         public const string StyleClassChatChannelSelectorButton = "chatSelectorOptionButton";
         public const string StyleClassChatFilterOptionButton = "chatFilterOptionButton";
         public const string StyleClassStorageButton = "storageButton";
-        public const string StyleClassStorageWeight = "storageWeight";
-        public const string StyleClassStorageWeightSmall = "storageWeightSmall";
+        public const string StyleClassStorageWeightLabel = "storageWeight";
+        public const string StyleClassStorageWeightLabelSmall = "storageWeightSmall";
+        public const string StyleClassStorageWeightIcon = "storageWeightIcon";
 
         public const string StyleClassSliderRed = "Red";
         public const string StyleClassSliderGreen = "Green";
@@ -92,6 +93,8 @@ namespace Content.Client.Stylesheets
         public static readonly Color ButtonColorCautionHovered = Color.FromHex("#cf2f2f");
         public static readonly Color ButtonColorCautionPressed = Color.FromHex("#3e6c45");
         public static readonly Color ButtonColorCautionDisabled = Color.FromHex("#602a2a");
+
+        public static readonly Color StorageWeightIconColor = Color.FromHex("#707070");
 
         // Context menu button colors
         public static readonly Color ButtonColorContext = Color.FromHex("#1119");
@@ -637,12 +640,18 @@ namespace Content.Client.Stylesheets
                     .Pseudo(ContainerButton.StylePseudoClassDisabled)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorDisabled),
 
-                // font sizes for the weight indicator on the storage buttons
-                Element<Label>().Class(StyleClassStorageWeight)
+                // These are for the weight indicator on the storage buttons
+                Element<Label>().Class(StyleClassStorageWeightLabel)
                     .Prop(Label.StylePropertyFont, notoSansBold10),
 
-                Element<Label>().Class(StyleClassStorageWeightSmall)
+                Element<Label>().Class(StyleClassStorageWeightLabelSmall)
                     .Prop(Label.StylePropertyFont, notoSansBold8),
+
+                Element<TextureRect>().Class(StyleClassStorageWeightIcon)
+                    .Prop(Control.StylePropertyModulateSelf, StorageWeightIconColor),
+
+
+                
 
         // action slot hotbar buttons
         new StyleRule(new SelectorElement(typeof(ActionSlot), null, null, new[] {ContainerButton.StylePseudoClassNormal}), new[]
