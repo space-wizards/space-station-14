@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameTicking;
 using Content.Server.Maps;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 
 namespace Content.Server.Station
 {
@@ -88,19 +90,33 @@ namespace Content.Server.Station
 
         public StationId InitialSetupStationGrid(EntityUid mapGrid, GameMapPrototype mapPrototype)
         {
+            if (!EntityManager.TryGetComponent<IMapGridComponent>(mapGrid, out var grid))
+                throw new ArgumentException("Tried to initialize a station on a non-grid entity!");
+
             var jobListDict = mapPrototype.AvailableJobs.ToDictionary(x => x.Key, x => x.Value[1]);
             var id = AllocateStationInfo();
+
             _stationInfo[id] = new StationInfoData(mapPrototype.MapName, mapPrototype, jobListDict);
             var station = EntityManager.AddComponent<StationComponent>(mapGrid);
             station.Station = id;
+
             _gameTicker.UpdateJobsAvailable(); // new station means new jobs, tell any lobby-goers.
+
+            Logger.InfoS("stations",
+                $"Setting up new {mapPrototype.ID} called {mapPrototype.MapName} on grid {mapGrid}:{grid.GridIndex}");
+
             return id;
         }
 
         public void AddGridToStation(EntityUid mapGrid, StationId station)
         {
+            if (!EntityManager.TryGetComponent<IMapGridComponent>(mapGrid, out var grid))
+                throw new ArgumentException("Tried to assign a station to a non-grid entity!");
+
             var stationComponent = EntityManager.AddComponent<StationComponent>(mapGrid);
             stationComponent.Station = station;
+
+            Logger.InfoS("stations", $"Adding grid {mapGrid}:{grid.GridIndex} to station {station} named {_stationInfo[station].Name}");
         }
 
         /// <summary>
