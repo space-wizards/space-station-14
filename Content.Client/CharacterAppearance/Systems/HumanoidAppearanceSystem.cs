@@ -37,6 +37,8 @@ namespace Content.Client.CharacterAppearance.Systems
             HumanoidVisualLayers.LHand,
             HumanoidVisualLayers.RLeg,
             HumanoidVisualLayers.LLeg,
+            HumanoidVisualLayers.RFoot,
+            HumanoidVisualLayers.LFoot
         };
 
         private void UpdateLooks(EntityUid uid, HumanoidAppearanceComponent component, ChangedHumanoidAppearanceEvent args)

@@ -4,11 +4,11 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Examine;
 using Content.Shared.Labels;
 using JetBrains.Annotations;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
-using System;
 
 namespace Content.Server.Labels
 {
@@ -18,24 +18,33 @@ namespace Content.Server.Labels
     [UsedImplicitly]
     public class LabelSystem : EntitySystem
     {
-        [Dependency] private readonly SharedItemSlotsSystem _itemSlotsSystem = default!;
+        [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<LabelComponent, ExaminedEvent>(OnExamine);
-            SubscribeLocalEvent<PaperLabelComponent, ComponentInit>(InitializePaperLabel);
-            SubscribeLocalEvent<PaperLabelComponent, ItemSlotChangedEvent>(OnItemSlotChanged);
+            SubscribeLocalEvent<PaperLabelComponent, ComponentInit>(OnComponentInit);
+            SubscribeLocalEvent<PaperLabelComponent, ComponentRemove>(OnComponentRemove);
+            SubscribeLocalEvent<PaperLabelComponent, EntInsertedIntoContainerMessage>(OnContainerModified);
+            SubscribeLocalEvent<PaperLabelComponent, EntRemovedFromContainerMessage>(OnContainerModified);
             SubscribeLocalEvent<PaperLabelComponent, ExaminedEvent>(OnExamined);
         }
 
-        private void InitializePaperLabel(EntityUid uid, PaperLabelComponent component, ComponentInit args)
+        private void OnComponentInit(EntityUid uid, PaperLabelComponent component, ComponentInit args)
         {
+            _itemSlotsSystem.AddItemSlot(uid, component.Name, component.LabelSlot);
+
             if (!EntityManager.TryGetComponent(uid, out SharedAppearanceComponent appearance))
                 return;
 
             appearance.SetData(PaperLabelVisuals.HasLabel, false);
+        }
+
+        private void OnComponentRemove(EntityUid uid, PaperLabelComponent component, ComponentRemove args)
+        {
+            _itemSlotsSystem.RemoveItemSlot(uid, component.LabelSlot);
         }
 
         private void OnExamine(EntityUid uid, LabelComponent? label, ExaminedEvent args)
@@ -53,12 +62,7 @@ namespace Content.Server.Labels
 
         private void OnExamined(EntityUid uid, PaperLabelComponent comp, ExaminedEvent args)
         {
-            if (!EntityManager.TryGetComponent(uid, out SharedItemSlotsComponent slots))
-                return;
-
-            var label = _itemSlotsSystem.PeekItemInSlot(slots, comp.LabelSlot);
-
-            if (label == null)
+            if (comp.LabelSlot.Item == null)
                 return;
 
             if (!args.IsInDetailsRange)
@@ -67,8 +71,8 @@ namespace Content.Server.Labels
                 return;
             }
 
-            if (!EntityManager.TryGetComponent(label.Uid, out PaperComponent paper))
-                // should never happen
+            if (!EntityManager.TryGetComponent(comp.LabelSlot.Item.Uid, out PaperComponent paper))
+                // Assuming yaml has the correct entity whitelist, this should not happen.
                 return;
 
             if (string.IsNullOrWhiteSpace(paper.Content))
@@ -83,15 +87,15 @@ namespace Content.Server.Labels
         }
 
 
-        private void OnItemSlotChanged(EntityUid uid, PaperLabelComponent component, ItemSlotChangedEvent args)
+        private void OnContainerModified(EntityUid uid, PaperLabelComponent label, ContainerModifiedMessage args)
         {
-            if (args.SlotName != component.LabelSlot)
+            if (args.Container.ID != label.LabelSlot.ID)
                 return;
 
             if (!EntityManager.TryGetComponent(uid, out SharedAppearanceComponent appearance))
                 return;
 
-            appearance.SetData(PaperLabelVisuals.HasLabel, args.ContainedItem != null);
+            appearance.SetData(PaperLabelVisuals.HasLabel, label.LabelSlot.HasItem);
         }
     }
 }

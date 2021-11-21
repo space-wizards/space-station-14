@@ -14,8 +14,6 @@ namespace Content.Client.Administration
 {
     public partial class AdminSystem : EntitySystem
     {
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-
         public event Action<List<PlayerInfo>>? PlayerListChanged;
 
         private Dictionary<NetUserId, PlayerInfo>? _playerList;

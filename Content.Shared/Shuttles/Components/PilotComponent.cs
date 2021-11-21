@@ -7,7 +7,7 @@ using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.Shuttles
+namespace Content.Shared.Shuttles.Components
 {
     /// <summary>
     /// Stores what shuttle this entity is currently piloting.

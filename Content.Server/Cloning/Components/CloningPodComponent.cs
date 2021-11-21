@@ -1,5 +1,6 @@
 using System;
 using Content.Server.EUI;
+using Content.Server.Climbing;
 using Content.Server.Mind.Components;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
@@ -175,6 +176,7 @@ namespace Content.Server.Cloning.Components
             CapturedMind = null;
             CloningProgress = 0f;
             UpdateStatus(CloningPodStatus.Idle);
+            EntitySystem.Get<ClimbSystem>().ForciblySetClimbing(entity.Uid);
         }
 
         public void UpdateStatus(CloningPodStatus status)

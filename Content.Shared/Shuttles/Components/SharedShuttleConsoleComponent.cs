@@ -1,7 +1,7 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Shuttles
+namespace Content.Shared.Shuttles.Components
 {
     /// <summary>
     /// Interact with to start piloting a shuttle.

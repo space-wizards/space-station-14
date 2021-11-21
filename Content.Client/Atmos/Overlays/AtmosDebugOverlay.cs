@@ -16,7 +16,6 @@ namespace Content.Client.Atmos.Overlays
 
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
-        [Dependency] private readonly IClyde _clyde = default!;
 
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
 

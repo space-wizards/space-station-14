@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using Content.Shared.Shuttles;
+using Content.Shared.Shuttles.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Shuttles
+namespace Content.Server.Shuttles.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedShuttleConsoleComponent))]

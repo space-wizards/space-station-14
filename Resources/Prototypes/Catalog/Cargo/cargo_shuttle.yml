@@ -1,0 +1,23 @@
+- type: cargoProduct
+  name: shuttle thruster
+  id: ShuttleThruster
+  description: A thruster that allows a shuttle to move.
+  icon:
+    sprite: Structures/Shuttles/thruster.rsi
+    state: base
+  product: Thruster
+  cost: 1500
+  category: Shuttle
+  group: market
+
+- type: cargoProduct
+  name: shuttle gyroscope
+  id: ShuttleGyroscope
+  description: 1 gyroscope for use in rotating a shuttle.
+  icon:
+    sprite: Structures/Shuttles/gyroscope.rsi
+    state: base
+  product: Gyroscope
+  cost: 4000
+  category: Shuttle
+  group: market
