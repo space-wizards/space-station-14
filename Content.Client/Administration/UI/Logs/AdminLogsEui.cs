@@ -37,7 +37,7 @@ public class AdminLogsEui : BaseEui
             players,
             null,
             null,
-            DateOrder.Ascending);
+            DateOrder.Descending);
 
         SendMessage(request);
     }

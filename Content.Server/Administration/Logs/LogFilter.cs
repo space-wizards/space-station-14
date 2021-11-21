@@ -27,5 +27,5 @@ public sealed class LogFilter
 
     public int? Limit { get; set; }
 
-    public DateOrder DateOrder { get; set; } = DateOrder.Ascending;
+    public DateOrder DateOrder { get; set; } = DateOrder.Descending;
 }
