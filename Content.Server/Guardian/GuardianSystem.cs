@@ -93,7 +93,7 @@ namespace Content.Server.Guardian
                 {
                     if (component.Used == false)
                     {
-                        var hostcomp = args.User.AddComponent<GuardianHostComponent>();
+                        var hostcomp = args.User.EnsureComponent<GuardianHostComponent>();
                         var guardian = EntityManager.SpawnEntity(component.GuardianType, hostcomp.Owner.Transform.Coordinates);
                         hostcomp.GuardianContainer.Insert(guardian);
                         hostcomp.Hostedguardian = guardian.Uid;
