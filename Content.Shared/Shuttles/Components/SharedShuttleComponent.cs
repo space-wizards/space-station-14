@@ -1,7 +1,7 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.Shuttles
+namespace Content.Shared.Shuttles.Components
 {
     public abstract class SharedShuttleComponent : Component
     {
@@ -9,12 +9,6 @@ namespace Content.Shared.Shuttles
 
         [ViewVariables]
         public virtual bool Enabled { get; set; } = true;
-
-        /// <summary>
-        /// How much our linear impulse is multiplied by.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float SpeedMultipler { get; set; } = 200.0f;
 
         [ViewVariables]
         public ShuttleMode Mode { get; set; } = ShuttleMode.Cruise;
