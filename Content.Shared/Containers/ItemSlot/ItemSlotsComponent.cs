@@ -125,11 +125,28 @@ namespace Content.Shared.Containers.ItemSlots
         public bool EjectOnDeconstruct = true;
 
         /// <summary>
+        ///     If this slot belongs to some breakable or destructible entity, should the item inside the slot be
+        ///     ejected when it is broken or destroyed?
+        /// </summary>
+        [DataField("ejectOnBreak")]
+        public bool EjectOnBreak = false;
+
+        /// <summary>
         ///     If this is not an empty string, this will generate a popup when someone attempts to insert a bad item
         ///     into this slot. This string will be passed through localization.
         /// </summary>
         [DataField("whitelistFailPopup")]
         public string WhitelistFailPopup = string.Empty;
+
+        /// <summary>
+        ///     If the user interacts with an entity with an anlready-filled item slot, should they attempt to swap out the item?
+        /// </summary>
+        /// <remarks>
+        ///     Usefull for things like chem diespensers, but undesirable for things like the ID card console, where you
+        ///     want to insert more than one item that matches the same whitelist.
+        /// </remarks>
+        [DataField("swap")]
+        public bool Swap = true;
 
         public string ID => ContainerSlot.ID;
 

@@ -1,4 +1,5 @@
 using Content.Shared.ActionBlocker;
+using Content.Shared.Acts;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -36,6 +37,9 @@ namespace Content.Shared.Containers.ItemSlots
 
             SubscribeLocalEvent<ItemSlotsComponent, GetAlternativeVerbsEvent>(AddEjectVerbs);
             SubscribeLocalEvent<ItemSlotsComponent, GetInteractionVerbsEvent>(AddInteractionVerbsVerbs);
+
+            SubscribeLocalEvent<ItemSlotsComponent, BreakageEventArgs>(OnBreak);
+            SubscribeLocalEvent<ItemSlotsComponent, DestructionEventArgs>(OnBreak);
 
             SubscribeLocalEvent<ItemSlotsComponent, ComponentGetState>(GetItemSlotsState);
             SubscribeLocalEvent<ItemSlotsComponent, ComponentHandleState>(HandleItemSlotsState);
@@ -139,7 +143,7 @@ namespace Content.Shared.Containers.ItemSlots
 
             foreach (var slot in itemSlots.Slots.Values)
             {
-                if (!CanInsert(uid, args.UsedUid, slot, swap: true, popup: args.UserUid))
+                if (!CanInsert(uid, args.UsedUid, slot, swap: slot.Swap, popup: args.UserUid))
                     continue;
 
                 // Drop the held item onto the floor. Return if the user cannot drop.
@@ -221,6 +225,29 @@ namespace Content.Shared.Containers.ItemSlots
         public bool TryInsert(EntityUid uid, ItemSlot slot, IEntity item)
         {
             if (!CanInsert(uid, item.Uid, slot))
+                return false;
+
+            Insert(uid, slot, item);
+            return true;
+        }
+
+        /// <summary>
+        ///     Tries to insert item into a specific slot from an entity's hand.
+        /// </summary>
+        /// <returns>False if failed to insert item</returns>
+        public bool TryInsertFromHand(EntityUid uid, ItemSlot slot, EntityUid user, SharedHandsComponent? hands = null)
+        {
+            if (!Resolve(user, ref hands, false))
+                return false;
+
+            if (!hands.TryGetActiveHeldEntity(out var item))
+                return false;
+
+            if (!CanInsert(uid, item.Uid, slot))
+                return false;
+
+            // hands.Drop(item) checks CanDrop action blocker
+            if (!_actionBlockerSystem.CanInteract(user) && hands.Drop(item))
                 return false;
 
             Insert(uid, slot, item);
@@ -404,6 +431,18 @@ namespace Content.Shared.Containers.ItemSlots
             }
         }
         #endregion
+
+        /// <summary>
+        ///     Eject itoms from (some) slots when the entity is destroyed.
+        /// </summary>
+        private void OnBreak(EntityUid uid, ItemSlotsComponent component, EntityEventArgs args)
+        {
+            foreach (var slot in component.Slots.Values)
+            {
+                if (slot.EjectOnBreak && slot.HasItem)
+                    TryEject(uid, slot, out var _);
+            }
+        }
 
         /// <summary>
         ///     Get the contents of some item slot.
