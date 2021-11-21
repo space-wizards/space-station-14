@@ -1,20 +1,4 @@
 Entries:
-- author: ike709
-  changes:
-  - {message: Completely redid the HUD inventory., type: Tweak}
-  - {message: 'Added an on-HUD inventory, using the same hotkey.', type: Add}
-  - {message: Nuked the inventory popup., type: Remove}
-  - {message: Replaced the inventory slot icons and the disarm icon., type: Tweak}
-  - {message: 'Combat mode is now an action, rather than its own button.', type: Tweak}
-  - {message: 'The default actions (in order) are now: Combat Mode, Disarm, Scream.',
-    type: Tweak}
-  id: 119
-  time: '2021-03-26T15:23:12.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Bullets now collide with people again, type: Fix}
-  id: 120
-  time: '2021-03-27T03:23:20.0000000+00:00'
 - author: Swept
   changes:
   - {message: Storage window now open in center of screen, type: Tweak}
@@ -2847,3 +2831,15 @@ Entries:
   - {message: Shuttles now require thrust., type: Add}
   id: 620
   time: '2021-11-21T06:09:49.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Reaction effects (potas/water, smoke, foam) have been refactored slightly,
+      so report any bugs you find with them.', type: Tweak}
+  id: 621
+  time: '2021-11-21T07:35:02.0000000+00:00'
+- author: FoLoKe
+  changes:
+  - {message: Added "eat" action for food., type: Add}
+  - {message: Fixed soup eating with a knife or fork., type: Fix}
+  id: 622
+  time: '2021-11-21T07:35:10.0000000+00:00'
