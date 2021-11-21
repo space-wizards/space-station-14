@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.GameTicking.Managers;
+using Content.Client.HUD.UI;
 using Content.Shared.Roles;
 using Robust.Client.Console;
-using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
@@ -12,7 +12,6 @@ using Robust.Client.Utility;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -25,11 +24,11 @@ namespace Content.Client.LateJoin
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
 
-        public event Action<(uint, string)>? SelectedId;
+        public event Action<(uint, string)> SelectedId;
 
         private readonly Dictionary<uint, Dictionary<string, JobButton>> _jobButtons = new();
         private readonly Dictionary<uint, Dictionary<string, BoxContainer>> _jobCategories = new();
-        private readonly Dictionary<uint, BoxContainer> _stationCategories = new();
+        private readonly List<ScrollContainer> _jobLists = new();
 
         private readonly Control _base;
 
@@ -45,6 +44,7 @@ namespace Content.Client.LateJoin
             {
                 Orientation = LayoutOrientation.Vertical,
                 VerticalExpand = true,
+                Margin = new Thickness(0),
             };
 
             Contents.AddChild(_base);
@@ -54,7 +54,6 @@ namespace Content.Client.LateJoin
             SelectedId += x =>
             {
                 var (station, jobId) = x;
-                Logger.InfoS("latejoin", $"Late joining as ID {jobId} in station {station}");
                 _consoleHost.ExecuteCommand($"joingame {CommandParsing.Escape(jobId)} {station}");
                 Close();
             };
@@ -65,31 +64,79 @@ namespace Content.Client.LateJoin
         private void RebuildUI()
         {
             _base.RemoveAllChildren();
+            _jobLists.Clear();
+            _jobButtons.Clear();
+            _jobCategories.Clear();
+
             var gameTicker = EntitySystem.Get<ClientGameTicker>();
-            Logger.Debug("uh");
             foreach (var (id, name) in gameTicker.StationNames)
             {
-                Logger.Debug($"Starting on station {name}");
                 var jobList = new BoxContainer
                 {
                     Orientation = LayoutOrientation.Vertical
                 };
 
-                _base.AddChild(new Label()
+                var collapseButton = new ContainerButton()
                 {
-                    Text = $"NTSS {name}"
+                    HorizontalAlignment = HAlignment.Right,
+                    ToggleMode = true,
+                    Children =
+                    {
+                        new TextureRect
+                        {
+                            StyleClasses = { OptionButton.StyleClassOptionTriangle },
+                            Margin = new Thickness(8, 0),
+                            HorizontalAlignment = HAlignment.Center,
+                            VerticalAlignment = VAlignment.Center,
+                        }
+                    }
+                };
+
+                _base.AddChild(new StripeBack()
+                {
+                    Children = {
+                        new PanelContainer()
+                        {
+                            Children =
+                            {
+                                new Label()
+                                {
+                                    StyleClasses = { "LabelBig" },
+                                    Text = $"NTSS {name}",
+                                    Align = Label.AlignMode.Center,
+                                },
+                                collapseButton
+                            }
+                        }
+                    }
                 });
-                _base.AddChild(new ScrollContainer()
+                var jobListScroll = new ScrollContainer()
                 {
                     VerticalExpand = true,
-                    Children = { jobList }
-                });
+                    Children = {jobList},
+                    Visible = false,
+                };
+
+                if (_jobLists.Count == 0)
+                    jobListScroll.Visible = true;
+
+                _jobLists.Add(jobListScroll);
+
+                _base.AddChild(jobListScroll);
+
+                collapseButton.OnToggled += _ =>
+                {
+                    foreach (var section in _jobLists)
+                    {
+                        section.Visible = false;
+                    }
+                    jobListScroll.Visible = true;
+                };
 
                 var firstCategory = true;
 
                 foreach (var job in gameTicker.JobsAvailable[id].OrderBy(x => x.Key))
                 {
-                    Logger.Debug($"Adding job {job.Key}");
                     var prototype = _prototypeManager.Index<JobPrototype>(job.Key);
                     foreach (var department in prototype.Departments)
                     {
@@ -121,11 +168,11 @@ namespace Content.Client.LateJoin
 
                             category.AddChild(new PanelContainer
                             {
-                                PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#464966")},
                                 Children =
                                 {
                                     new Label
                                     {
+                                        StyleClasses = { "LabelBig" },
                                         Text = Loc.GetString("late-join-gui-department-jobs-label", ("departmentName", department))
                                     }
                                 }
@@ -135,7 +182,7 @@ namespace Content.Client.LateJoin
                             jobList.AddChild(category);
                         }
 
-                        var jobButton = new JobButton(prototype.ID);
+                        var jobButton = new JobButton(prototype.ID, job.Value);
 
                         var jobSelector = new BoxContainer
                         {
@@ -159,7 +206,9 @@ namespace Content.Client.LateJoin
 
                         var jobLabel = new Label
                         {
-                            Text = prototype.Name
+                            Text = job.Value >= 0 ?
+                                Loc.GetString("late-join-gui-job-slot-capped", ("jobName", prototype.Name), ("amount", job.Value)) :
+                                Loc.GetString("late-join-gui-job-slot-uncapped", ("jobName", prototype.Name))
                         };
 
                         jobSelector.AddChild(jobLabel);
@@ -203,10 +252,12 @@ namespace Content.Client.LateJoin
     class JobButton : ContainerButton
     {
         public string JobId { get; }
+        public int Amount { get; }
 
-        public JobButton(string jobId)
+        public JobButton(string jobId, int amount)
         {
             JobId = jobId;
+            Amount = amount;
             AddStyleClass(StyleClassButton);
         }
     }
