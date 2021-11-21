@@ -1,11 +1,4 @@
 Entries:
-- author: Swept
-  changes:
-  - {message: 'More things break, anchor, move and collide properly', type: Add}
-  - {message: 'gas canisters shouldn''t yeet you anymore, and girders should be fixed',
-    type: Tweak}
-  id: 123
-  time: '2021-03-28T06:00:37.0000000+00:00'
 - author: BulletGrade
   changes:
   - {message: Made magazine names more specific, type: Tweak}
@@ -2845,3 +2838,8 @@ Entries:
       dock to., type: Fix}
   id: 624
   time: '2021-11-21T13:26:19.0000000+00:00'
+- author: xRiriq
+  changes:
+  - {message: altered names of command clothing and hardsuits to be consistent, type: Fix}
+  id: 625
+  time: '2021-11-21T20:14:39.0000000+00:00'
