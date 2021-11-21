@@ -54,9 +54,9 @@
       state_open: crate_open
       state_closed: crate_door
   - type: PaperLabel
-  - type: ItemSlots
-    slots:
-      labelSlot:
-        whitelist:
-          components:
-          - Paper
+    labelSlot:
+      insertVerbText: Attach Label
+      ejectVerbText: Remove Label
+      whitelist:
+        components:
+        - Paper

@@ -8,6 +8,8 @@ using Robust.Client.UserInterface;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
+using Robust.Shared.Player;
+using Robust.Shared.Audio;
 
 
 namespace Content.Client.Voting
@@ -115,6 +117,7 @@ namespace Content.Client.Voting
                 }
 
                 @new = true;
+                SoundSystem.Play(Filter.Local(), "/Audio/Effects/voteding.ogg");
 
                 // New vote from the server.
                 var vote = new ActiveVote(voteId)

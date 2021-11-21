@@ -1,3 +1,4 @@
+using Content.Shared.Containers.ItemSlots;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -12,6 +13,6 @@ namespace Content.Server.Labels.Components
         public override string Name => "PaperLabel";
 
         [DataField("labelSlot")]
-        public string LabelSlot = "labelSlot";
+        public ItemSlot LabelSlot = new();
     }
 }

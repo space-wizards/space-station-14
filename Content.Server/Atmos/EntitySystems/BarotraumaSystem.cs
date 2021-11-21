@@ -123,7 +123,7 @@ namespace Content.Server.Atmos.EntitySystems
                         if(pressure < Atmospherics.WarningHighPressure)
                             goto default;
 
-                        var damageScale = (int) MathF.Min((pressure / Atmospherics.HazardHighPressure) * Atmospherics.PressureDamageCoefficient, Atmospherics.MaxHighPressureDamage);
+                        var damageScale = MathF.Min((pressure / Atmospherics.HazardHighPressure) * Atmospherics.PressureDamageCoefficient, Atmospherics.MaxHighPressureDamage);
 
                         // Deal damage and ignore resistances. Resistance to pressure damage should be done via pressure protection gear.
                         _damageableSystem.TryChangeDamage(uid, barotrauma.Damage * damageScale, true);

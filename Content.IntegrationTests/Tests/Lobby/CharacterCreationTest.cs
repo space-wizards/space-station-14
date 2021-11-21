@@ -7,6 +7,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Preferences;
 using NUnit.Framework;
 using Robust.Client.State;
+using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Network;
@@ -26,7 +27,8 @@ namespace Content.IntegrationTests.Tests.Lobby
                 CVarOverrides =
                 {
                     [CCVars.GameDummyTicker.Name] = "false",
-                    [CCVars.GameLobbyEnabled.Name] = "true"
+                    [CCVars.GameLobbyEnabled.Name] = "true",
+                    [CVars.NetPVS.Name] = "false"
                 }
             };
 

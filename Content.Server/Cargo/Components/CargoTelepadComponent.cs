@@ -20,6 +20,7 @@ namespace Content.Server.Cargo.Components
 {
 
     //This entire class is a PLACEHOLDER for the cargo shuttle.
+    //welp only need auto-docking now.
 
     [RegisterComponent]
     public class CargoTelepadComponent : Component
@@ -137,10 +138,9 @@ namespace Content.Server.Cargo.Components
                 ("approver", data.Approver)));
 
             // attempt to attach the label
-            if (Owner.EntityManager.TryGetComponent(product.Uid, out PaperLabelComponent label) &&
-                Owner.EntityManager.TryGetComponent(product.Uid, out SharedItemSlotsComponent slots))
+            if (_entityManager.TryGetComponent(product.Uid, out PaperLabelComponent label))
             {
-                EntitySystem.Get<SharedItemSlotsSystem>().TryInsertContent(slots, printed, label.LabelSlot);
+                EntitySystem.Get<ItemSlotsSystem>().TryInsert(OwnerUid, label.LabelSlot, printed);
             }
         }
 

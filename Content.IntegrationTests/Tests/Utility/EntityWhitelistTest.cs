@@ -98,7 +98,7 @@ namespace Content.IntegrationTests.Tests.Utility
 
                 // Test from serialized
                 var dummy = entityManager.SpawnEntity("WhitelistDummy", mapCoordinates);
-                var whitelistSer = dummy.GetComponent<SharedItemSlotsComponent>().Slots.Values.First().Whitelist;
+                var whitelistSer = dummy.GetComponent<ItemSlotsComponent>().Slots.Values.First().Whitelist;
                 Assert.That(whitelistSer, Is.Not.Null);
 
                 Assert.That(whitelistSer.Components, Is.Not.Null);

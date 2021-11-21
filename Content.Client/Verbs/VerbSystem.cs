@@ -32,7 +32,7 @@ namespace Content.Client.Verbs
         /// <summary>
         ///     When a user right clicks somewhere, how large is the box we use to get entities for the context menu?
         /// </summary>
-        public const float EntityMenuLookupSize = 1f;
+        public const float EntityMenuLookupSize = 0.25f;
 
         public EntityMenuPresenter EntityMenu = default!;
         public VerbMenuPresenter VerbMenu = default!;
@@ -100,9 +100,7 @@ namespace Content.Client.Verbs
                 return false;
 
             // Get entities
-            var entities = _entityLookup.GetEntitiesIntersecting(
-                    targetPos.MapId,
-                    Box2.CenteredAround(targetPos.Position, (EntityMenuLookupSize, EntityMenuLookupSize)))
+            var entities = _entityLookup.GetEntitiesInRange(targetPos.MapId, targetPos.Position, EntityMenuLookupSize)
                 .ToList();
 
             if (entities.Count == 0)
