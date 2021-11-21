@@ -111,7 +111,10 @@ namespace Content.Server.Roles
         /// <returns>assignment success</returns>
         public bool TryAssignJobToStation(StationId stationId, string jobName)
         {
-            return _stationInfo[stationId].TryAssignJob(jobName);
+            if (stationId != StationId.Invalid)
+                return _stationInfo[stationId].TryAssignJob(jobName);
+            else
+                return false;
         }
 
         /// <summary>

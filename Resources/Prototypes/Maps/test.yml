@@ -5,3 +5,5 @@
   minPlayers: 0
   maxPlayers: 0
   votable: false
+  availableJobs:
+    Assistant: [ -1, -1 ]

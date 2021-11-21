@@ -60,8 +60,9 @@ namespace Content.Server.GameTicking
                 var stations = _stationSystem.StationInfo.Keys.ToList();
                 _robustRandom.Shuffle(stations);
                 if (stations.Count == 0)
-                    throw new ApplicationException("No stations were loaded when attempting to spawn a player!");
-                station = stations[0];
+                    station = StationId.Invalid;
+                else
+                    station = stations[0];
             }
 
             // Can't spawn players with a dummy ticker!
