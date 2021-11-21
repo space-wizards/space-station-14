@@ -14,7 +14,6 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Body.Systems
 {
-    // TODO mirror in the future working on mechanisms move updating here to BodySystem so it can be ordered?
     [UsedImplicitly]
     public class MetabolizerSystem : EntitySystem
     {
@@ -156,20 +155,10 @@ namespace Content.Server.Body.Systems
                     // do all effects, if conditions apply
                     foreach (var effect in entry.Effects)
                     {
-                        bool failed = false;
-                        if (effect.Conditions != null)
-                        {
-                            foreach (var cond in effect.Conditions)
-                            {
-                                if (!cond.Condition(args))
-                                    failed = true;
-                            }
+                        if (!effect.ShouldApply(args, _random))
+                            continue;
 
-                            if (failed)
-                                continue;
-                        }
-
-                        effect.Metabolize(args);
+                        effect.Effect(args);
                     }
                 }
 

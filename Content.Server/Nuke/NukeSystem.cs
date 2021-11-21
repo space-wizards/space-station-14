@@ -19,6 +19,7 @@ using Content.Server.Coordinates.Helpers;
 using Content.Shared.Audio;
 using Content.Shared.Sound;
 using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 
 namespace Content.Server.Nuke
 {
@@ -26,7 +27,7 @@ namespace Content.Server.Nuke
     {
         [Dependency] private readonly NukeCodeSystem _codes = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
-        [Dependency] private readonly SharedItemSlotsSystem _itemSlots = default!;
+        [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
         [Dependency] private readonly PopupSystem _popups = default!;
         [Dependency] private readonly IEntityLookup _lookup = default!;
         [Dependency] private readonly IChatManager _chat = default!;
@@ -39,7 +40,8 @@ namespace Content.Server.Nuke
             SubscribeLocalEvent<NukeComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<NukeComponent, ComponentRemove>(OnRemove);
             SubscribeLocalEvent<NukeComponent, ActivateInWorldEvent>(OnActivate);
-            SubscribeLocalEvent<NukeComponent, ItemSlotChangedEvent>(OnItemSlotChanged);
+            SubscribeLocalEvent<NukeComponent, EntInsertedIntoContainerMessage>(OnItemSlotChanged);
+            SubscribeLocalEvent<NukeComponent, EntRemovedFromContainerMessage>(OnItemSlotChanged);
 
             // anchoring logic
             SubscribeLocalEvent<NukeComponent, AnchorAttemptEvent>(OnAnchorAttempt);
@@ -59,6 +61,7 @@ namespace Content.Server.Nuke
         private void OnInit(EntityUid uid, NukeComponent component, ComponentInit args)
         {
             component.RemainingTime = component.Timer;
+            _itemSlots.AddItemSlot(uid, component.Name, component.DiskSlot);
         }
 
         public override void Update(float frameTime)
@@ -93,14 +96,14 @@ namespace Content.Server.Nuke
         private void OnRemove(EntityUid uid, NukeComponent component, ComponentRemove args)
         {
             _tickingBombs.Remove(uid);
+            _itemSlots.RemoveItemSlot(uid, component.DiskSlot);
         }
 
-        private void OnItemSlotChanged(EntityUid uid, NukeComponent component, ItemSlotChangedEvent args)
+        private void OnItemSlotChanged(EntityUid uid, NukeComponent component, ContainerModifiedMessage args)
         {
-            if (args.SlotName != component.DiskSlotName)
+            if (args.Container.ID != component.DiskSlot.ID)
                 return;
 
-            component.DiskInserted = args.ContainedItem != null;
             UpdateStatus(uid, component);
             UpdateUserInterface(uid, component);
         }
@@ -137,7 +140,7 @@ namespace Content.Server.Nuke
         private void CheckAnchorAttempt(EntityUid uid, NukeComponent component, BaseAnchoredAttemptEvent args)
         {
             // cancel any anchor attempt without nuke disk
-            if (!component.DiskInserted)
+            if (!component.DiskSlot.HasItem)
             {
                 var msg = Loc.GetString("nuke-component-cant-anchor");
                 _popups.PopupEntity(msg, uid, Filter.Entities(args.User));
@@ -160,15 +163,15 @@ namespace Content.Server.Nuke
         #region UI Events
         private void OnEjectButtonPressed(EntityUid uid, NukeComponent component, NukeEjectMessage args)
         {
-            if (!component.DiskInserted)
+            if (!component.DiskSlot.HasItem)
                 return;
 
-            _itemSlots.TryEjectContent(uid, component.DiskSlotName, args.Session.AttachedEntity);
+            _itemSlots.TryEjectToHands(uid, component.DiskSlot, args.Session.AttachedEntityUid);
         }
 
         private async void OnAnchorButtonPressed(EntityUid uid, NukeComponent component, NukeAnchorMessage args)
         {
-            if (!component.DiskInserted)
+            if (!component.DiskSlot.HasItem)
                 return;
 
             if (!EntityManager.TryGetComponent(uid, out TransformComponent? transform))
@@ -218,7 +221,7 @@ namespace Content.Server.Nuke
 
         private void OnArmButtonPressed(EntityUid uid, NukeComponent component, NukeArmedMessage args)
         {
-            if (!component.DiskInserted)
+            if (!component.DiskSlot.HasItem)
                 return;
 
             if (component.Status == NukeStatus.AWAIT_ARM)
@@ -240,12 +243,12 @@ namespace Content.Server.Nuke
             switch (component.Status)
             {
                 case NukeStatus.AWAIT_DISK:
-                    if (component.DiskInserted)
+                    if (component.DiskSlot.HasItem)
                         component.Status = NukeStatus.AWAIT_CODE;
                     break;
                 case NukeStatus.AWAIT_CODE:
                     {
-                        if (!component.DiskInserted)
+                        if (!component.DiskSlot.HasItem)
                         {
                             component.Status = NukeStatus.AWAIT_DISK;
                             component.EnteredCode = "";
@@ -299,7 +302,7 @@ namespace Content.Server.Nuke
             if (EntityManager.TryGetComponent(uid, out TransformComponent transform))
                 anchored = transform.Anchored;
 
-            var allowArm = component.DiskInserted &&
+            var allowArm = component.DiskSlot.HasItem &&
                            (component.Status == NukeStatus.AWAIT_ARM ||
                             component.Status == NukeStatus.ARMED);
 
@@ -307,7 +310,7 @@ namespace Content.Server.Nuke
             {
                 Status = component.Status,
                 RemainingTime = (int) component.RemainingTime,
-                DiskInserted = component.DiskInserted,
+                DiskInserted = component.DiskSlot.HasItem,
                 IsAnchored = anchored,
                 AllowArm = allowArm,
                 EnteredCodeLength = component.EnteredCode.Length,

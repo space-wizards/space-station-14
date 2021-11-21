@@ -13167,9 +13167,11 @@ entities:
 - uid: 84
   type: CableMV
   components:
-  - pos: 20.5,-8.5
+  - pos: 20.5,-12.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 85
@@ -13287,13 +13289,11 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 101
-  type: CableMV
+  type: CableHV
   components:
-  - pos: 14.5,35.5
+  - pos: 13.5,-21.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 102
@@ -13940,26 +13940,16 @@ entities:
   - pos: 3.5,-5.5
     parent: 0
     type: Transform
-  - solutions:
-      tank:
-        maxVol: 1500
-    type: SolutionContainerManager
 - uid: 191
   type: Bucket
   components:
   - pos: 4.506517,-6.45683
     parent: 0
     type: Transform
-  - solutions:
-      drink:
-        reagents: []
-    type: SolutionContainerManager
+  - solution: bucket
+    type: Drink
   - canCollide: False
     type: Physics
-  - solution: drink
-    type: RefillableSolution
-  - solution: drink
-    type: DrainableSolution
 - uid: 192
   type: MopBucket
   components:
@@ -13986,16 +13976,10 @@ entities:
   - pos: 4.506517,-5.45683
     parent: 0
     type: Transform
-  - solutions:
-      drink:
-        reagents: []
-    type: SolutionContainerManager
+  - solution: bucket
+    type: Drink
   - canCollide: False
     type: Physics
-  - solution: drink
-    type: RefillableSolution
-  - solution: drink
-    type: DrainableSolution
 - uid: 196
   type: AirlockMaint
   components:
@@ -14182,20 +14166,12 @@ entities:
   - pos: 0.5,-16.5
     parent: 0
     type: Transform
-  - solutions:
-      tank:
-        maxVol: 1500
-    type: SolutionContainerManager
 - uid: 223
   type: WaterTankFull
   components:
   - pos: 1.5,-16.5
     parent: 0
     type: Transform
-  - solutions:
-      tank:
-        maxVol: 1500
-    type: SolutionContainerManager
 - uid: 224
   type: AirCanister
   components:
@@ -14413,14 +14389,11 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 254
-  type: CableApcExtension
+  type: CableHV
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 3.5,-4.5
+  - pos: 84.5,4.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 255
@@ -15008,7 +14981,7 @@ entities:
 - uid: 343
   type: CableMV
   components:
-  - pos: 20.5,-9.5
+  - pos: 11.5,4.5
     parent: 0
     type: Transform
   - visible: False
@@ -15016,11 +14989,13 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 344
-  type: SalternApc
+  type: CableMV
   components:
-  - pos: 13.5,7.5
+  - pos: 22.5,11.5
     parent: 0
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 345
   type: AirlockExternalLocked
   components:
@@ -15404,7 +15379,7 @@ entities:
 - uid: 398
   type: SalternApc
   components:
-  - pos: 7.5,11.5
+  - pos: 16.5,-6.5
     parent: 0
     type: Transform
 - uid: 399
@@ -15823,10 +15798,6 @@ entities:
   - pos: 5.5,17.5
     parent: 0
     type: Transform
-  - solutions:
-      tank:
-        maxVol: 1500
-    type: SolutionContainerManager
 - uid: 458
   type: WallSolid
   components:
@@ -16489,7 +16460,7 @@ entities:
 - uid: 555
   type: CableMV
   components:
-  - pos: 20.5,-7.5
+  - pos: 18.5,-11.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -16825,25 +16796,19 @@ entities:
     parent: 0
     type: Transform
 - uid: 602
-  type: SalternApc
+  type: CableMV
   components:
-  - pos: 17.5,-6.5
+  - pos: 51.5,-14.5
     parent: 0
     type: Transform
-  - startingCharge: 201.53745
-    type: Battery
-  - loadingNetworkDemand: 5
-    currentSupply: 5
-    supplyRampPosition: 5
-    type: PowerNetworkBattery
+  - canCollide: False
+    type: Physics
 - uid: 603
   type: CableMV
   components:
-  - pos: 20.5,-12.5
+  - pos: 28.5,7.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 604
@@ -17066,10 +17031,6 @@ entities:
   - pos: 23.5,-2.5
     parent: 0
     type: Transform
-  - solutions:
-      tank:
-        maxVol: 1500
-    type: SolutionContainerManager
 - uid: 629
   type: Rack
   components:
@@ -18318,10 +18279,6 @@ entities:
   - pos: 14.5,-28.5
     parent: 0
     type: Transform
-  - solutions:
-      tank:
-        maxVol: 1500
-    type: SolutionContainerManager
 - uid: 823
   type: SalternGenerator
   components:
@@ -19980,20 +19937,12 @@ entities:
   - pos: 25.5,-38.5
     parent: 0
     type: Transform
-  - solutions:
-      tank:
-        maxVol: 1500
-    type: SolutionContainerManager
 - uid: 1054
   type: WeldingFuelTankFull
   components:
   - pos: 17.5,-38.5
     parent: 0
     type: Transform
-  - solutions:
-      tank:
-        maxVol: 1500
-    type: SolutionContainerManager
 - uid: 1055
   type: WallReinforced
   components:
@@ -20064,11 +20013,13 @@ entities:
     parent: 0
     type: Transform
 - uid: 1066
-  type: SalternApc
+  type: CableApcExtension
   components:
-  - pos: 27.5,-40.5
+  - pos: 23.5,6.5
     parent: 0
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 1067
   type: FirelockElectronics
   components:
@@ -21037,29 +20988,21 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1204
-  type: SalternApc
+  type: CableHV
   components:
-  - pos: 24.5,5.5
+  - pos: 82.5,-16.5
     parent: 0
     type: Transform
-  - startingCharge: 1625.5826
-    type: Battery
-  - loadingNetworkDemand: 5
-    currentSupply: 1.25
-    supplyRampPosition: 1.25
-    type: PowerNetworkBattery
+  - canCollide: False
+    type: Physics
 - uid: 1205
-  type: SalternApc
+  type: CableMV
   components:
-  - pos: 24.5,6.5
+  - pos: 40.5,-3.5
     parent: 0
     type: Transform
-  - startingCharge: 1625.5826
-    type: Battery
-  - loadingNetworkDemand: 5
-    currentSupply: 1.25
-    supplyRampPosition: 1.25
-    type: PowerNetworkBattery
+  - canCollide: False
+    type: Physics
 - uid: 1206
   type: WallSolid
   components:
@@ -22234,7 +22177,7 @@ entities:
 - uid: 1393
   type: CableHV
   components:
-  - pos: 4.5,-35.5
+  - pos: 4.5,-36.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -22242,9 +22185,11 @@ entities:
 - uid: 1394
   type: SalternApc
   components:
-  - pos: 4.5,-37.5
+  - pos: 5.5,-35.5
     parent: 0
     type: Transform
+  - startingCharge: 12000
+    type: Battery
 - uid: 1395
   type: Stool
   components:
@@ -23511,15 +23456,13 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1591
-  type: CableHV
+  type: SalternApc
   components:
-  - pos: 19.5,-34.5
+  - pos: 29.5,-37.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
+  - startingCharge: 12000
+    type: Battery
 - uid: 1592
   type: AirlockServiceGlassLocked
   components:
@@ -23802,10 +23745,6 @@ entities:
   - pos: 38.102627,-9.408541
     parent: 0
     type: Transform
-  - solutions:
-      drink:
-        reagents: []
-    type: SolutionContainerManager
   - canCollide: False
     type: Physics
 - uid: 1631
@@ -24688,9 +24627,11 @@ entities:
 - uid: 1740
   type: CableApcExtension
   components:
-  - pos: 42.5,-21.5
+  - pos: 69.5,32.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 1741
@@ -25378,7 +25319,7 @@ entities:
 - uid: 1830
   type: CableMV
   components:
-  - pos: 20.5,-38.5
+  - pos: 39.5,-3.5
     parent: 0
     type: Transform
   - visible: False
@@ -25386,19 +25327,17 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1831
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 20.5,-39.5
+  - pos: 11.5,2.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 1832
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 18.5,-39.5
+  - pos: 11.5,3.5
     parent: 0
     type: Transform
   - visible: False
@@ -25406,13 +25345,11 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1833
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 17.5,-39.5
+  - pos: 52.5,-17.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 1834
@@ -25424,33 +25361,31 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1835
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 41.5,-22.5
+  - pos: 54.5,-17.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 1836
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 41.5,-23.5
+  - pos: 40.5,-1.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 1837
-  type: CableMV
+  type: SalternApc
   components:
-  - pos: 40.5,-23.5
+  - pos: 41.5,21.5
     parent: 0
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 1838
   type: CableMV
   components:
-  - pos: 39.5,-23.5
+  - pos: 28.5,9.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -25516,17 +25451,15 @@ entities:
 - uid: 1848
   type: CableMV
   components:
-  - pos: 23.5,-39.5
+  - pos: 40.5,-2.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 1849
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 24.5,-39.5
+  - pos: 40.5,-0.5
     parent: 0
     type: Transform
   - visible: False
@@ -26183,9 +26116,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 1955
-  type: CableMV
+  type: CableHV
   components:
-  - pos: 38.5,-23.5
+  - pos: 10.5,-25.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -26239,13 +26172,11 @@ entities:
     parent: 0
     type: Transform
 - uid: 1964
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 19.5,-39.5
+  - pos: 33.5,7.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 1965
@@ -26404,21 +26335,17 @@ entities:
     parent: 0
     type: Transform
 - uid: 1989
-  type: CableApcExtension
+  type: Grille
   components:
-  - pos: 58.5,-19.5
+  - pos: 88.5,-6.5
     parent: 0
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 1990
-  type: CableApcExtension
+  type: Girder
   components:
-  - pos: 60.5,-19.5
+  - pos: 89.5,-1.5
     parent: 0
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 1991
   type: CableApcExtension
   components:
@@ -29293,9 +29220,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 2401
-  type: SalternApc
+  type: Girder
   components:
-  - pos: 28.5,29.5
+  - pos: 84.5,6.5
     parent: 0
     type: Transform
 - uid: 2402
@@ -29462,17 +29389,11 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 2423
-  type: SalternApc
+  type: GrilleBroken
   components:
-  - pos: 21.5,2.5
+  - pos: 89.5,-6.5
     parent: 0
     type: Transform
-  - startingCharge: 1625.5826
-    type: Battery
-  - loadingNetworkDemand: 5
-    currentSupply: 1.25
-    supplyRampPosition: 1.25
-    type: PowerNetworkBattery
 - uid: 2424
   type: AirlockSecurityGlassLocked
   components:
@@ -29691,13 +29612,11 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 2449
-  type: CableApcExtension
+  type: ReinforcedWindow
   components:
-  - pos: 40.5,20.5
+  - pos: 88.5,-6.5
     parent: 0
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 2450
   type: WindoorSecurityLocked
   components:
@@ -29813,9 +29732,9 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 2463
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 12.5,-23.5
+  - pos: 89.5,-6.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -30051,25 +29970,23 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 2495
-  type: SalternApc
+  type: Girder
   components:
-  - pos: 40.5,21.5
+  - pos: 85.5,1.5
     parent: 0
     type: Transform
 - uid: 2496
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 21.5,1.5
+  - pos: 22.5,-13.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 2497
   type: CableMV
   components:
-  - pos: 21.5,2.5
+  - pos: 31.5,-21.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -30139,11 +30056,9 @@ entities:
 - uid: 2505
   type: CableMV
   components:
-  - pos: 15.5,-24.5
+  - pos: 0.5,-8.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 2506
@@ -30604,16 +30519,13 @@ entities:
     parent: 0
     type: Transform
 - uid: 2568
-  type: SalternApc
+  type: CableApcExtension
   components:
-  - pos: 34.5,10.5
+  - pos: 0.5,-8.5
     parent: 0
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - loadingNetworkDemand: 5
-    supplyRampPosition: 2.4463015
-    type: PowerNetworkBattery
+  - canCollide: False
+    type: Physics
 - uid: 2569
   type: WallSolid
   components:
@@ -31743,7 +31655,7 @@ entities:
 - uid: 2740
   type: CableHV
   components:
-  - pos: 15.5,-23.5
+  - pos: 14.5,-24.5
     parent: 0
     type: Transform
   - visible: False
@@ -32269,7 +32181,7 @@ entities:
   type: Poweredlight
   components:
   - rot: -1.5707963267948966 rad
-    pos: 24.961098,42.657097
+    pos: 24.5,42.5
     parent: 0
     type: Transform
   - powerLoad: 0
@@ -33132,9 +33044,9 @@ entities:
   - canCollide: False
     type: Physics
   - solution: drink
-    type: DrainableSolution
-  - solution: drink
     type: RefillableSolution
+  - solution: drink
+    type: DrainableSolution
 - uid: 2934
   type: DrinkTequilaBottleFull
   components:
@@ -36155,7 +36067,7 @@ entities:
 - uid: 3429
   type: SalternApc
   components:
-  - pos: 2.5,-13.5
+  - pos: 0.5,-8.5
     parent: 0
     type: Transform
 - uid: 3430
@@ -37024,11 +36936,13 @@ entities:
     parent: 0
     type: Transform
 - uid: 3565
-  type: Grille
+  type: CableMV
   components:
-  - pos: 89.5,-6.5
+  - pos: 31.5,-20.5
     parent: 0
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 3566
   type: Grille
   components:
@@ -37072,11 +36986,15 @@ entities:
     parent: 0
     type: Transform
 - uid: 3573
-  type: WallSolid
+  type: AirlockEngineering
   components:
   - pos: 88.5,-2.5
     parent: 0
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 3574
   type: WallSolid
   components:
@@ -37090,11 +37008,13 @@ entities:
     parent: 0
     type: Transform
 - uid: 3576
-  type: WallSolid
+  type: CableMV
   components:
-  - pos: 89.5,-1.5
+  - pos: 0.5,-4.5
     parent: 0
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 3577
   type: WallReinforced
   components:
@@ -37324,11 +37244,15 @@ entities:
     parent: 0
     type: Transform
 - uid: 3615
-  type: WallSolid
+  type: CableMV
   components:
-  - pos: 84.5,6.5
+  - pos: -0.5,-4.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
 - uid: 3616
   type: Grille
   components:
@@ -37342,11 +37266,15 @@ entities:
     parent: 0
     type: Transform
 - uid: 3618
-  type: ReinforcedWindow
+  type: CableMV
   components:
-  - pos: 88.5,-6.5
+  - pos: -1.5,-4.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
 - uid: 3619
   type: WallReinforced
   components:
@@ -37888,11 +37816,15 @@ entities:
     parent: 0
     type: Transform
 - uid: 3709
-  type: Grille
+  type: CableMV
   components:
-  - pos: 88.5,-6.5
+  - pos: -2.5,-4.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
 - uid: 3710
   type: Grille
   components:
@@ -37996,11 +37928,15 @@ entities:
     parent: 0
     type: Transform
 - uid: 3727
-  type: ReinforcedWindow
+  type: CableMV
   components:
-  - pos: 89.5,-6.5
+  - pos: -3.5,-4.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
 - uid: 3728
   type: ReinforcedWindow
   components:
@@ -38206,11 +38142,15 @@ entities:
     parent: 0
     type: Transform
 - uid: 3759
-  type: WallSolid
+  type: CableMV
   components:
-  - pos: 85.5,1.5
+  - pos: -3.5,-3.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
 - uid: 3760
   type: WallReinforced
   components:
@@ -40006,9 +39946,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 4043
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 2.5,-13.5
+  - pos: -4.5,-3.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -40054,11 +39994,13 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4049
-  type: SalternApc
+  type: CableMV
   components:
-  - pos: 22.5,-13.5
+  - pos: 15.5,-11.5
     parent: 0
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 4050
   type: CableApcExtension
   components:
@@ -40094,9 +40036,11 @@ entities:
 - uid: 4054
   type: CableApcExtension
   components:
-  - pos: 4.5,-9.5
+  - pos: 16.5,-5.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 4055
@@ -40200,9 +40144,9 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4067
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 1.5,-3.5
+  - pos: 11.5,-15.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -40258,7 +40202,7 @@ entities:
 - uid: 4074
   type: CableMV
   components:
-  - pos: 1.5,-12.5
+  - pos: 14.5,-12.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -40266,19 +40210,19 @@ entities:
 - uid: 4075
   type: CableMV
   components:
-  - pos: 1.5,-13.5
+  - pos: 21.5,-12.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 4076
-  type: CableMV
+  type: SalternApc
   components:
-  - pos: 2.5,-13.5
+  - pos: 22.5,-13.5
     parent: 0
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 4077
   type: Poweredlight
   components:
@@ -40407,35 +40351,33 @@ entities:
 - uid: 4090
   type: CableMV
   components:
-  - pos: 1.5,-2.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4091
-  type: CableMV
-  components:
-  - pos: 1.5,-1.5
+  - pos: 19.5,-11.5
     parent: 0
     type: Transform
   - visible: False
     type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 4091
+  type: CableApcExtension
+  components:
+  - pos: 18.5,-11.5
+    parent: 0
+    type: Transform
   - canCollide: False
     type: Physics
 - uid: 4092
   type: CableMV
   components:
-  - pos: 0.5,-1.5
+  - pos: 42.5,28.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 4093
-  type: CableMV
+  type: CableHV
   components:
-  - pos: -0.5,-1.5
+  - pos: 81.5,-16.5
     parent: 0
     type: Transform
   - visible: False
@@ -40443,9 +40385,9 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4094
-  type: CableMV
+  type: CableHV
   components:
-  - pos: -1.5,-1.5
+  - pos: 79.5,-16.5
     parent: 0
     type: Transform
   - visible: False
@@ -40455,7 +40397,7 @@ entities:
 - uid: 4095
   type: CableMV
   components:
-  - pos: -2.5,-1.5
+  - pos: 9.5,3.5
     parent: 0
     type: Transform
   - visible: False
@@ -40465,7 +40407,7 @@ entities:
 - uid: 4096
   type: CableMV
   components:
-  - pos: -3.5,-1.5
+  - pos: 19.5,-28.5
     parent: 0
     type: Transform
   - visible: False
@@ -40473,9 +40415,9 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4097
-  type: CableMV
+  type: CableHV
   components:
-  - pos: -4.5,-1.5
+  - pos: 80.5,-16.5
     parent: 0
     type: Transform
   - visible: False
@@ -40539,27 +40481,25 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4104
-  type: CableApcExtension
+  type: CableHV
   components:
-  - pos: 3.5,-4.5
+  - pos: 83.5,4.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 4105
-  type: CableApcExtension
+  type: CableHV
   components:
-  - pos: 17.585522,-6.600224
+  - pos: 70.5,-16.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 4106
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 17.5,-5.5
+  - pos: 27.5,36.5
     parent: 0
     type: Transform
   - visible: False
@@ -40669,13 +40609,15 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4119
-  type: CableMV
+  type: SalternSubstation
   components:
-  - pos: 15.5,-11.5
+  - pos: 10.5,-25.5
     parent: 0
     type: Transform
-  - canCollide: False
-    type: Physics
+  - startingCharge: 3980020
+    type: Battery
+  - supplyRampPosition: 2.3437593
+    type: PowerNetworkBattery
 - uid: 4120
   type: CableMV
   components:
@@ -40717,73 +40659,65 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4125
-  type: CableMV
+  type: CableHV
   components:
-  - pos: 17.5,-6.5
+  - pos: 11.5,-26.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 4126
-  type: CableMV
+  type: CableHV
   components:
-  - pos: 18.5,-7.5
+  - pos: 13.5,-26.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 4127
-  type: CableMV
+  type: CableHV
   components:
-  - pos: 19.5,-7.5
+  - pos: 75.5,-16.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 4128
-  type: CableMV
+  type: CableHV
   components:
-  - pos: 21.5,-9.5
+  - pos: 71.5,-16.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 4129
-  type: CableMV
+  type: CableHV
   components:
-  - pos: 21.5,-11.5
+  - pos: 72.5,-16.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 4130
-  type: CableMV
+  type: SalternApc
   components:
-  - pos: 21.5,-12.5
+  - pos: 11.5,-15.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
 - uid: 4131
   type: CableMV
   components:
-  - pos: 21.5,-10.5
+  - pos: 14.5,-11.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 4132
   type: CableMV
   components:
-  - pos: 22.5,-12.5
+  - pos: 11.5,3.5
     parent: 0
     type: Transform
   - visible: False
@@ -40797,9 +40731,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 4134
-  type: CableMV
+  type: CableHV
   components:
-  - pos: 19.5,-12.5
+  - pos: 87.5,-4.5
     parent: 0
     type: Transform
   - visible: False
@@ -40847,17 +40781,17 @@ entities:
     parent: 0
     type: Transform
 - uid: 4141
-  type: CableHV
+  type: CableMV
   components:
-  - pos: 6.5,-8.5
+  - pos: 22.5,6.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 4142
-  type: CableHV
+  type: CableMV
   components:
-  - pos: 5.5,-8.5
+  - pos: 22.5,7.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -40871,9 +40805,9 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4144
-  type: CableHV
+  type: CableMV
   components:
-  - pos: 4.5,-8.5
+  - pos: 22.5,8.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -40893,7 +40827,7 @@ entities:
 - uid: 4146
   type: CableMV
   components:
-  - pos: 8.5,9.5
+  - pos: 27.5,7.5
     parent: 0
     type: Transform
   - visible: False
@@ -40929,15 +40863,16 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4150
-  type: CableMV
+  type: GasPipeStraight
   components:
-  - pos: 13.5,-24.5
+  - rot: -1.5707963267948966 rad
+    pos: 23.5,7.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
+  - color: '#FF0000FF'
+    type: AtmosPipeColor
 - uid: 4151
   type: CableHV
   components:
@@ -41235,7 +41170,7 @@ entities:
 - uid: 4185
   type: CableHV
   components:
-  - pos: 10.5,-22.5
+  - pos: 11.5,-21.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -41423,19 +41358,17 @@ entities:
 - uid: 4208
   type: CableHV
   components:
-  - pos: 2.5,-9.5
+  - pos: 2.5,-8.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 4209
-  type: CableHV
+  type: SalternApc
   components:
-  - pos: 3.5,-9.5
+  - pos: 28.5,7.5
     parent: 0
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 4210
   type: CableHV
   components:
@@ -43893,9 +43826,9 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 4447
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 4.5,-37.5
+  - pos: 22.5,4.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -43903,7 +43836,7 @@ entities:
 - uid: 4448
   type: CableApcExtension
   components:
-  - pos: 4.5,-36.5
+  - pos: 5.5,-35.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -43933,37 +43866,35 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4452
-  type: CableHV
+  type: CableMV
   components:
-  - pos: 2.5,-36.5
+  - pos: 5.5,-35.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 4453
-  type: SalternSubstation
-  components:
-  - pos: 2.5,-34.5
-    parent: 0
-    type: Transform
-  - startingCharge: 3979664
-    type: Battery
-  - loadingNetworkDemand: 4.9804883
-    currentSupply: 4.9804883
-    supplyRampPosition: 4.9804883
-    type: PowerNetworkBattery
-- uid: 4454
   type: CableHV
   components:
-  - pos: 2.5,-34.5
+  - pos: 4.5,-35.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
+- uid: 4454
+  type: SalternSubstation
+  components:
+  - pos: 4.5,-36.5
+    parent: 0
+    type: Transform
+  - startingCharge: 3990010
+    type: Battery
+  - supplyRampPosition: 2.3437593
+    type: PowerNetworkBattery
 - uid: 4455
   type: CableMV
   components:
-  - pos: 2.5,-34.5
+  - pos: 4.5,-33.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -43971,7 +43902,7 @@ entities:
 - uid: 4456
   type: CableMV
   components:
-  - pos: 2.5,-35.5
+  - pos: 4.5,-32.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -43979,7 +43910,7 @@ entities:
 - uid: 4457
   type: CableMV
   components:
-  - pos: 3.5,-35.5
+  - pos: 4.5,-34.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -44003,9 +43934,11 @@ entities:
 - uid: 4460
   type: CableMV
   components:
-  - pos: 4.5,-37.5
+  - pos: 26.5,7.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 4461
@@ -44043,7 +43976,7 @@ entities:
 - uid: 4465
   type: CableMV
   components:
-  - pos: 5.5,-25.5
+  - pos: 22.5,9.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -44051,17 +43984,15 @@ entities:
 - uid: 4466
   type: CableMV
   components:
-  - pos: 5.5,-24.5
+  - pos: 29.5,10.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 4467
   type: CableMV
   components:
-  - pos: 6.5,-24.5
+  - pos: 29.5,9.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -44069,7 +44000,7 @@ entities:
 - uid: 4468
   type: CableMV
   components:
-  - pos: 7.5,-24.5
+  - pos: 29.5,8.5
     parent: 0
     type: Transform
   - visible: False
@@ -44079,31 +44010,37 @@ entities:
 - uid: 4469
   type: CableMV
   components:
-  - pos: 8.5,-24.5
+  - pos: 30.5,8.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 4470
   type: CableMV
   components:
-  - pos: 8.5,-23.5
+  - pos: 31.5,8.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 4471
   type: CableMV
   components:
-  - pos: 9.5,-23.5
+  - pos: 31.5,7.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 4472
   type: CableMV
   components:
-  - pos: 45.5,28.5
+  - pos: 32.5,7.5
     parent: 0
     type: Transform
   - visible: False
@@ -44113,17 +44050,15 @@ entities:
 - uid: 4473
   type: CableMV
   components:
-  - pos: 15.5,-23.5
+  - pos: 33.5,7.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 4474
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 17.5,-24.5
+  - pos: 27.5,7.5
     parent: 0
     type: Transform
   - visible: False
@@ -44131,13 +44066,11 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4475
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 19.5,-24.5
+  - pos: 23.5,5.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 4476
@@ -44161,7 +44094,7 @@ entities:
 - uid: 4479
   type: CableMV
   components:
-  - pos: 2.5,-33.5
+  - pos: 4.5,-31.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -44169,7 +44102,7 @@ entities:
 - uid: 4480
   type: CableMV
   components:
-  - pos: 2.5,-32.5
+  - pos: 4.5,-30.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -44177,7 +44110,7 @@ entities:
 - uid: 4481
   type: CableMV
   components:
-  - pos: 2.5,-31.5
+  - pos: 4.5,-29.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -44185,7 +44118,7 @@ entities:
 - uid: 4482
   type: CableMV
   components:
-  - pos: 2.5,-30.5
+  - pos: 4.5,-28.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -44193,7 +44126,7 @@ entities:
 - uid: 4483
   type: CableMV
   components:
-  - pos: 3.5,-30.5
+  - pos: 26.5,9.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -44201,15 +44134,17 @@ entities:
 - uid: 4484
   type: CableMV
   components:
-  - pos: 3.5,-29.5
+  - pos: 26.5,8.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 4485
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 3.5,-28.5
+  - pos: 28.5,7.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -44947,17 +44882,17 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4569
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 14.5,-11.5
+  - pos: 23.5,7.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 4570
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 14.5,-12.5
+  - pos: 23.5,3.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -45210,9 +45145,9 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4597
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 13.5,7.5
+  - pos: 23.5,4.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -45306,25 +45241,25 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4609
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 23.5,3.5
+  - pos: 32.5,7.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 4610
-  type: CableMV
+  type: SalternApc
   components:
-  - pos: 23.5,4.5
+  - pos: 33.5,7.5
     parent: 0
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 4611
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 23.5,5.5
+  - pos: 23.5,8.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -45332,9 +45267,11 @@ entities:
 - uid: 4612
   type: CableMV
   components:
-  - pos: 24.5,5.5
+  - pos: 25.5,35.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 4613
@@ -45356,41 +45293,51 @@ entities:
 - uid: 4615
   type: CableMV
   components:
-  - pos: 23.5,6.5
+  - pos: 27.5,33.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 4616
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 24.5,6.5
+  - pos: 27.5,14.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 4617
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 23.5,7.5
+  - pos: 28.5,14.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 4618
   type: CableMV
   components:
-  - pos: 23.5,8.5
+  - pos: 47.5,15.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 4619
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 23.5,9.5
+  - pos: 14.5,22.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 4620
@@ -45442,65 +45389,71 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4626
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 29.5,10.5
+  - pos: 13.5,22.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 4627
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 29.5,11.5
+  - pos: 68.5,32.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 4628
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 30.5,11.5
+  - pos: 14.5,21.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 4629
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 31.5,11.5
+  - pos: 22.5,12.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 4630
   type: CableMV
   components:
-  - pos: 32.5,11.5
+  - pos: 69.5,43.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 4631
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 33.5,11.5
+  - pos: 68.5,36.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 4632
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 34.5,11.5
+  - pos: 68.5,41.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 4633
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 34.5,10.5
+  - pos: 67.5,41.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -45531,13 +45484,11 @@ entities:
   - color: '#FF0000FF'
     type: AtmosPipeColor
 - uid: 4636
-  type: CableApcExtension
+  type: SalternSubstation
   components:
-  - pos: 24.5,5.5
+  - pos: 90.5,-2.5
     parent: 0
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 4637
   type: CableApcExtension
   components:
@@ -45583,23 +45534,25 @@ entities:
 - uid: 4641
   type: CableApcExtension
   components:
-  - pos: 23.5,6.5
+  - pos: 69.5,39.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 4642
   type: CableApcExtension
   components:
-  - pos: 23.5,7.5
+  - pos: 68.5,39.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 4643
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 23.5,8.5
+  - pos: 71.5,-15.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -45733,27 +45686,31 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4660
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 22.5,6.5
+  - pos: 71.5,-14.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 4661
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 22.5,5.5
+  - pos: 41.5,28.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 4662
-  type: CableApcExtension
+  type: CableHV
   components:
-  - pos: 22.5,4.5
+  - pos: 77.5,-16.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 4663
@@ -45829,11 +45786,13 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4672
-  type: CableApcExtension
+  type: CableHV
   components:
-  - pos: 24.5,6.5
+  - pos: 76.5,-16.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 4673
@@ -45971,17 +45930,17 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4687
-  type: CableApcExtension
+  type: CableHV
   components:
-  - pos: 34.5,10.5
+  - pos: 74.5,-16.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 4688
-  type: CableApcExtension
+  type: CableHV
   components:
-  - pos: 34.5,9.5
+  - pos: 73.5,-16.5
     parent: 0
     type: Transform
   - visible: False
@@ -46049,13 +46008,11 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4695
-  type: CableApcExtension
+  type: SheetSteel1
   components:
-  - pos: 36.5,7.5
+  - pos: 90.36041,-10.650079
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 4696
@@ -46081,15 +46038,17 @@ entities:
 - uid: 4698
   type: CableApcExtension
   components:
-  - pos: 33.5,6.5
+  - pos: 27.5,33.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 4699
   type: CableApcExtension
   components:
-  - pos: 32.5,6.5
+  - pos: 26.5,2.5
     parent: 0
     type: Transform
   - visible: False
@@ -46368,17 +46327,15 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4726
-  type: CableApcExtension
+  type: SalternApc
   components:
-  - pos: 28.5,29.5
+  - pos: 40.5,-1.5
     parent: 0
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 4727
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 27.5,29.5
+  - pos: 38.5,-3.5
     parent: 0
     type: Transform
   - visible: False
@@ -46508,17 +46465,15 @@ entities:
 - uid: 4740
   type: CableApcExtension
   components:
-  - pos: 26.5,17.5
+  - pos: 43.5,12.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 4741
   type: CableApcExtension
   components:
-  - pos: 26.5,15.5
+  - pos: 26.5,-19.5
     parent: 0
     type: Transform
   - visible: False
@@ -46538,7 +46493,7 @@ entities:
 - uid: 4743
   type: CableApcExtension
   components:
-  - pos: 26.5,16.5
+  - pos: 26.5,-17.5
     parent: 0
     type: Transform
   - visible: False
@@ -46782,9 +46737,9 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 4768
-  type: CableMV
+  type: CableHV
   components:
-  - pos: 44.5,28.5
+  - pos: 17.5,-21.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -47565,9 +47520,9 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4856
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 14.5,-7.5
+  - pos: 39.5,-18.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -47575,7 +47530,7 @@ entities:
 - uid: 4857
   type: CableMV
   components:
-  - pos: 14.5,-8.5
+  - pos: 66.5,45.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -47621,15 +47576,15 @@ entities:
 - uid: 4862
   type: CableMV
   components:
-  - pos: 14.5,-9.5
+  - pos: 10.5,-25.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 4863
-  type: CableMV
+  type: CableHV
   components:
-  - pos: 14.5,-10.5
+  - pos: 10.5,-26.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -47923,9 +47878,9 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4893
-  type: CableApcExtension
+  type: CableHV
   components:
-  - pos: 13.5,23.5
+  - pos: 12.5,-26.5
     parent: 0
     type: Transform
   - visible: False
@@ -47933,9 +47888,9 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4894
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 14.5,23.5
+  - pos: 22.5,-27.5
     parent: 0
     type: Transform
   - visible: False
@@ -47943,9 +47898,9 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4895
-  type: CableApcExtension
+  type: CableHV
   components:
-  - pos: 15.5,23.5
+  - pos: 14.5,-25.5
     parent: 0
     type: Transform
   - visible: False
@@ -47953,9 +47908,9 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4896
-  type: CableApcExtension
+  type: CableHV
   components:
-  - pos: 15.5,22.5
+  - pos: 14.5,-26.5
     parent: 0
     type: Transform
   - visible: False
@@ -48531,13 +48486,11 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4960
-  type: CableApcExtension
+  type: CableHV
   components:
-  - pos: 26.5,43.5
+  - pos: 84.5,3.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 4961
@@ -50209,9 +50162,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 5155
-  type: CableApcExtension
+  type: CableHV
   components:
-  - pos: 73.5,-7.5
+  - pos: 86.5,-14.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -54530,7 +54483,7 @@ entities:
 - uid: 5663
   type: CableHV
   components:
-  - pos: 71.5,46.5
+  - pos: 67.5,42.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -54538,7 +54491,7 @@ entities:
 - uid: 5664
   type: CableHV
   components:
-  - pos: 70.5,46.5
+  - pos: 68.5,42.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -54684,15 +54637,17 @@ entities:
 - uid: 5681
   type: CableMV
   components:
-  - pos: 70.5,43.5
+  - pos: 18.5,-28.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 5682
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 70.5,42.5
+  - pos: 16.5,-6.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -54722,25 +54677,27 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 5686
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 69.5,41.5
+  - pos: 8.5,-8.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 5687
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 70.5,41.5
+  - pos: 7.5,-8.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 5688
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 70.5,40.5
+  - pos: 22.5,-26.5
     parent: 0
     type: Transform
   - visible: False
@@ -54748,27 +54705,25 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 5689
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 70.5,39.5
+  - pos: 5.5,-8.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 5690
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 70.5,38.5
+  - pos: 4.5,-8.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 5691
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 68.5,40.5
+  - pos: 6.5,-8.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -54878,17 +54833,19 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 5703
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 68.5,33.5
+  - pos: 22.5,-25.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 5704
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 69.5,33.5
+  - pos: 22.5,-24.5
     parent: 0
     type: Transform
   - visible: False
@@ -54944,25 +54901,23 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 5711
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 67.5,27.5
+  - pos: 29.5,-37.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 5712
-  type: CableApcExtension
+  type: SalternApc
   components:
-  - pos: 67.5,26.5
+  - pos: 69.5,9.5
     parent: 0
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 5713
   type: CableApcExtension
   components:
-  - pos: 67.5,25.5
+  - pos: 87.5,1.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -54970,7 +54925,7 @@ entities:
 - uid: 5714
   type: CableApcExtension
   components:
-  - pos: 67.5,24.5
+  - pos: 88.5,1.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -54978,7 +54933,7 @@ entities:
 - uid: 5715
   type: CableApcExtension
   components:
-  - pos: 67.5,23.5
+  - pos: 88.5,0.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -56431,9 +56386,9 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 5878
-  type: CableMV
+  type: CableHV
   components:
-  - pos: 34.5,-15.5
+  - pos: 87.5,-3.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -56805,7 +56760,7 @@ entities:
 - uid: 5921
   type: CableHV
   components:
-  - pos: 47.5,-17.5
+  - pos: 52.5,-17.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -56813,7 +56768,7 @@ entities:
 - uid: 5922
   type: CableHV
   components:
-  - pos: 47.5,-16.5
+  - pos: 52.5,-16.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -56821,7 +56776,7 @@ entities:
 - uid: 5923
   type: CableHV
   components:
-  - pos: 47.5,-15.5
+  - pos: 52.5,-15.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -56829,7 +56784,7 @@ entities:
 - uid: 5924
   type: CableHV
   components:
-  - pos: 47.5,-14.5
+  - pos: 52.5,-14.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -56837,47 +56792,47 @@ entities:
 - uid: 5925
   type: CableHV
   components:
-  - pos: 47.5,-13.5
+  - pos: 52.5,-13.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 5926
-  type: CableHV
+  type: CableApcExtension
   components:
-  - pos: 47.5,-12.5
+  - pos: 88.5,-0.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 5927
-  type: CableHV
+  type: CableApcExtension
   components:
-  - pos: 48.5,-12.5
+  - pos: 89.5,-0.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 5928
-  type: CableHV
+  type: CableApcExtension
   components:
-  - pos: 49.5,-12.5
+  - pos: 89.5,-1.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 5929
-  type: CableHV
+  type: CableMV
   components:
-  - pos: 50.5,-12.5
+  - pos: 41.5,-20.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 5930
-  type: CableHV
+  type: CableMV
   components:
-  - pos: 51.5,-12.5
+  - pos: 41.5,-19.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -57141,19 +57096,17 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 5962
-  type: CableMV
+  type: CableHV
   components:
-  - pos: 27.5,37.5
+  - pos: 84.5,-16.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 5963
   type: CableMV
   components:
-  - pos: 26.5,37.5
+  - pos: 66.5,-5.5
     parent: 0
     type: Transform
   - visible: False
@@ -57163,7 +57116,7 @@ entities:
 - uid: 5964
   type: CableMV
   components:
-  - pos: 25.5,37.5
+  - pos: 66.5,-4.5
     parent: 0
     type: Transform
   - visible: False
@@ -57533,9 +57486,9 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6002
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 26.5,2.5
+  - pos: 66.5,-3.5
     parent: 0
     type: Transform
   - visible: False
@@ -57703,13 +57656,11 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6019
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 41.5,0.5
+  - pos: 71.5,-8.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6020
@@ -57793,13 +57744,11 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6028
-  type: CableApcExtension
+  type: SalternApc
   components:
-  - pos: 21.5,2.5
+  - pos: 78.5,-14.5
     parent: 0
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 6029
   type: Poweredlight
   components:
@@ -58157,11 +58106,13 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6064
-  type: SalternApc
+  type: CableMV
   components:
-  - pos: 46.5,20.5
+  - pos: 78.5,-15.5
     parent: 0
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 6065
   type: Poweredlight
   components:
@@ -58205,29 +58156,23 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6069
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 27.5,-18.5
+  - pos: 77.5,-15.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6070
-  type: CableApcExtension
+  type: SalternApc
   components:
-  - pos: 27.5,-17.5
+  - pos: 28.5,33.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
 - uid: 6071
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 27.5,-16.5
+  - pos: 20.5,35.5
     parent: 0
     type: Transform
   - visible: False
@@ -58387,11 +58332,9 @@ entities:
 - uid: 6087
   type: CableApcExtension
   components:
-  - pos: 27.5,-20.5
+  - pos: 28.5,33.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6088
@@ -58656,27 +58599,23 @@ entities:
 - uid: 6114
   type: CableMV
   components:
-  - pos: 5.5,-27.5
+  - pos: 76.5,-15.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6115
   type: CableMV
   components:
-  - pos: 5.5,-26.5
+  - pos: 75.5,-15.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6116
   type: CableMV
   components:
-  - pos: 10.5,-23.5
+  - pos: 74.5,-15.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -58684,25 +58623,21 @@ entities:
 - uid: 6117
   type: CableMV
   components:
-  - pos: 11.5,-23.5
+  - pos: 28.5,33.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 6118
-  type: CableMV
+  type: SalternApc
   components:
-  - pos: 14.5,-23.5
+  - pos: 28.5,9.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
 - uid: 6119
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 16.5,-24.5
+  - pos: 21.5,45.5
     parent: 0
     type: Transform
   - visible: False
@@ -58710,19 +58645,17 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6120
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 18.5,-24.5
+  - pos: 69.5,9.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6121
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 20.5,-24.5
+  - pos: 43.5,13.5
     parent: 0
     type: Transform
   - visible: False
@@ -58730,19 +58663,15 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6122
-  type: CableMV
+  type: SalternApc
   components:
-  - pos: 21.5,-24.5
+  - pos: 43.5,12.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
 - uid: 6123
   type: CableMV
   components:
-  - pos: 21.5,-23.5
+  - pos: 47.5,18.5
     parent: 0
     type: Transform
   - visible: False
@@ -58762,15 +58691,17 @@ entities:
 - uid: 6125
   type: CableMV
   components:
-  - pos: 13.5,-11.5
+  - pos: 47.5,17.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6126
   type: CableMV
   components:
-  - pos: 13.5,-25.5
+  - pos: 47.5,16.5
     parent: 0
     type: Transform
   - visible: False
@@ -58790,45 +58721,41 @@ entities:
 - uid: 6128
   type: CableMV
   components:
-  - pos: 9.5,-11.5
+  - pos: 11.5,2.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6129
   type: CableMV
   components:
-  - pos: 14.5,-6.5
+  - pos: 58.5,23.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6130
   type: CableMV
   components:
-  - pos: 8.5,-11.5
+  - pos: 31.5,-23.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6131
   type: CableMV
   components:
-  - pos: 7.5,-11.5
+  - pos: 31.5,-22.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6132
   type: CableMV
   components:
-  - pos: 6.5,-11.5
+  - pos: 63.5,23.5
     parent: 0
     type: Transform
   - visible: False
@@ -58846,7 +58773,7 @@ entities:
 - uid: 6134
   type: CableMV
   components:
-  - pos: 14.5,-5.5
+  - pos: 41.5,23.5
     parent: 0
     type: Transform
   - visible: False
@@ -58854,19 +58781,17 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6135
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 20.5,-25.5
+  - pos: 28.5,9.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6136
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 14.5,-4.5
+  - pos: 41.5,18.5
     parent: 0
     type: Transform
   - visible: False
@@ -58876,11 +58801,9 @@ entities:
 - uid: 6137
   type: CableMV
   components:
-  - pos: 14.5,-3.5
+  - pos: 41.5,21.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6138
@@ -59054,7 +58977,7 @@ entities:
 - uid: 6166
   type: CableMV
   components:
-  - pos: 13.5,-3.5
+  - pos: 41.5,22.5
     parent: 0
     type: Transform
   - visible: False
@@ -59064,17 +58987,15 @@ entities:
 - uid: 6167
   type: CableMV
   components:
-  - pos: 12.5,-3.5
+  - pos: 43.5,12.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6168
   type: CableMV
   components:
-  - pos: 12.5,-2.5
+  - pos: 43.5,13.5
     parent: 0
     type: Transform
   - visible: False
@@ -59124,7 +59045,7 @@ entities:
 - uid: 6173
   type: CableMV
   components:
-  - pos: 20.5,-26.5
+  - pos: 43.5,14.5
     parent: 0
     type: Transform
   - visible: False
@@ -59134,7 +59055,7 @@ entities:
 - uid: 6174
   type: CableMV
   components:
-  - pos: 20.5,-27.5
+  - pos: 44.5,14.5
     parent: 0
     type: Transform
   - visible: False
@@ -59184,17 +59105,21 @@ entities:
 - uid: 6179
   type: CableMV
   components:
-  - pos: 14.5,-41.5
+  - pos: 45.5,14.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6180
   type: CableMV
   components:
-  - pos: 15.5,-41.5
+  - pos: 46.5,14.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6181
@@ -59214,15 +59139,11 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6183
-  type: CableMV
+  type: SalternApc
   components:
-  - pos: 20.5,-36.5
+  - pos: 22.5,11.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
 - uid: 6184
   type: CableMV
   components:
@@ -59314,7 +59235,7 @@ entities:
 - uid: 6193
   type: CableMV
   components:
-  - pos: 26.5,-40.5
+  - pos: 47.5,14.5
     parent: 0
     type: Transform
   - visible: False
@@ -59322,17 +59243,17 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6194
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 27.5,-40.5
+  - pos: 83.5,1.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 6195
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 47.5,-13.5
+  - pos: 83.5,3.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -59340,95 +59261,95 @@ entities:
 - uid: 6196
   type: CableMV
   components:
-  - pos: 47.5,-14.5
+  - pos: 70.5,8.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6197
-  type: CableMV
+  type: SalternApc
   components:
-  - pos: 47.5,-15.5
+  - pos: 66.5,45.5
     parent: 0
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 6198
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 47.5,-16.5
+  - pos: 66.5,45.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 6199
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 47.5,-17.5
+  - pos: 69.5,36.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 6200
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 47.5,-18.5
+  - pos: 83.5,4.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 6201
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 46.5,-18.5
+  - pos: 83.5,5.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 6202
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 45.5,-18.5
+  - pos: 83.5,2.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 6203
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 44.5,-18.5
+  - pos: 84.5,5.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 6204
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 43.5,-18.5
+  - pos: 84.5,6.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 6205
-  type: CableMV
+  type: CableApcStack1
   components:
-  - pos: 42.5,-18.5
+  - pos: 84.31913,7.409586
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 6206
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 41.5,-18.5
+  - pos: 84.5,8.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 6207
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 40.5,-18.5
+  - pos: 85.5,9.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -59514,9 +59435,9 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6218
-  type: CableMV
+  type: CableHV
   components:
-  - pos: 30.5,-19.5
+  - pos: 86.5,-2.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -59798,19 +59719,21 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6255
-  type: CableMV
+  type: CableHV
   components:
-  - pos: 69.5,-14.5
+  - pos: 84.5,-0.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 6256
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 68.5,-14.5
+  - pos: 85.5,8.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6257
@@ -59832,17 +59755,19 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6259
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 69.5,-11.5
+  - pos: 85.5,10.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6260
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 69.5,-10.5
+  - pos: 84.5,10.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -59856,21 +59781,19 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6262
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 69.5,-8.5
+  - pos: 85.5,11.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 6263
-  type: CableMV
+  type: Girder
   components:
-  - pos: 69.5,-7.5
+  - pos: 88.5,-3.5
     parent: 0
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 6264
   type: CableMV
   components:
@@ -59894,55 +59817,49 @@ entities:
 - uid: 6266
   type: CableMV
   components:
-  - pos: 67.5,-6.5
+  - pos: 50.5,-14.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6267
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 67.5,-5.5
+  - pos: 51.5,-13.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6268
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 67.5,-4.5
+  - pos: 51.5,-14.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6269
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 67.5,-3.5
+  - pos: 50.5,-14.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6270
   type: CableMV
   components:
-  - pos: 67.5,-2.5
+  - pos: 21.5,36.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6271
   type: CableMV
   components:
-  - pos: 67.5,-1.5
+  - pos: 20.5,36.5
     parent: 0
     type: Transform
   - visible: False
@@ -59970,15 +59887,17 @@ entities:
 - uid: 6274
   type: CableMV
   components:
-  - pos: 70.5,-15.5
+  - pos: 19.5,36.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6275
   type: CableMV
   components:
-  - pos: 71.5,-15.5
+  - pos: 73.5,-15.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -59986,7 +59905,7 @@ entities:
 - uid: 6276
   type: CableMV
   components:
-  - pos: 71.5,-16.5
+  - pos: 72.5,-15.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -59994,15 +59913,17 @@ entities:
 - uid: 6277
   type: CableMV
   components:
-  - pos: 72.5,-16.5
+  - pos: 15.5,36.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6278
   type: CableMV
   components:
-  - pos: 73.5,-16.5
+  - pos: 17.5,36.5
     parent: 0
     type: Transform
   - visible: False
@@ -60012,23 +59933,25 @@ entities:
 - uid: 6279
   type: CableMV
   components:
-  - pos: 74.5,-16.5
+  - pos: 16.5,36.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6280
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 75.5,-16.5
+  - pos: 86.5,-10.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 6281
-  type: CableMV
+  type: CableHV
   components:
-  - pos: 75.5,-16.5
+  - pos: 14.5,-21.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -60098,33 +60021,27 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6289
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 47.5,18.5
+  - pos: 89.5,-10.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6290
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 48.5,14.5
+  - pos: 88.5,-10.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6291
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 47.5,15.5
+  - pos: 89.5,-9.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6292
@@ -60448,51 +60365,43 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6325
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 16.5,35.5
+  - pos: 89.5,-8.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 6326
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 17.5,35.5
+  - pos: 89.5,-7.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6327
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 18.5,35.5
+  - pos: 84.5,1.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6328
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 19.5,35.5
+  - pos: 85.5,1.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6329
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 20.5,35.5
+  - pos: 86.5,1.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6330
@@ -60504,49 +60413,39 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6331
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 21.5,35.5
+  - pos: 89.5,-5.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6332
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 22.5,35.5
+  - pos: 22.5,11.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6333
-  type: CableMV
+  type: CableHVStack
   components:
-  - pos: 23.5,35.5
+  - pos: 90.56876,-9.725386
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6334
-  type: CableMV
+  type: Girder
   components:
-  - pos: 24.5,35.5
+  - pos: 89.5,-3.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
 - uid: 6335
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 25.5,35.5
+  - pos: 81.5,2.5
     parent: 0
     type: Transform
   - visible: False
@@ -60574,67 +60473,57 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6338
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 25.5,32.5
+  - pos: 72.5,-18.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6339
   type: CableMV
   components:
-  - pos: 25.5,31.5
+  - pos: 71.5,-9.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6340
   type: CableMV
   components:
-  - pos: 25.5,30.5
+  - pos: 71.5,-10.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6341
-  type: CableMV
+  type: CableMVStack
   components:
-  - pos: 26.5,30.5
+  - pos: 90.66321,-10.120396
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6342
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 27.5,30.5
+  - pos: 78.5,-15.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6343
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 28.5,30.5
+  - pos: 78.5,-14.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 6344
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 28.5,29.5
+  - pos: 53.5,-17.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -60780,19 +60669,17 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6359
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 20.5,46.5
+  - pos: 67.5,42.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6360
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 20.5,45.5
+  - pos: 66.5,42.5
     parent: 0
     type: Transform
   - visible: False
@@ -60810,9 +60697,9 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6362
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 26.5,44.5
+  - pos: 24.5,36.5
     parent: 0
     type: Transform
   - visible: False
@@ -60878,15 +60765,15 @@ entities:
 - uid: 6369
   type: CableApcExtension
   components:
-  - pos: 46.5,20.5
+  - pos: 47.5,-15.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 6370
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 46.5,19.5
+  - pos: 26.5,36.5
     parent: 0
     type: Transform
   - visible: False
@@ -60984,9 +60871,9 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6380
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 40.5,14.5
+  - pos: 23.5,36.5
     parent: 0
     type: Transform
   - visible: False
@@ -61004,9 +60891,9 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6382
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 39.5,14.5
+  - pos: 25.5,36.5
     parent: 0
     type: Transform
   - visible: False
@@ -61014,15 +60901,11 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6383
-  type: CableApcExtension
+  type: SalternApc
   components:
-  - pos: 38.5,14.5
+  - pos: 50.5,-14.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
 - uid: 6384
   type: CableApcExtension
   components:
@@ -61274,9 +61157,9 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6409
-  type: CableMV
+  type: CableHV
   components:
-  - pos: 51.5,22.5
+  - pos: 16.5,-21.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -61558,7 +61441,7 @@ entities:
 - uid: 6438
   type: CableMV
   components:
-  - pos: 36.5,-23.5
+  - pos: 52.5,-13.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -61682,9 +61565,9 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6451
-  type: CableMV
+  type: CableHV
   components:
-  - pos: 56.5,11.5
+  - pos: 15.5,-21.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -61698,11 +61581,9 @@ entities:
 - uid: 6453
   type: CableMV
   components:
-  - pos: 59.5,22.5
+  - pos: 52.5,-14.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6454
@@ -61728,7 +61609,7 @@ entities:
 - uid: 6456
   type: CableMV
   components:
-  - pos: 62.5,22.5
+  - pos: 22.5,36.5
     parent: 0
     type: Transform
   - visible: False
@@ -61736,23 +61617,19 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6457
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 63.5,22.5
+  - pos: 47.5,-14.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6458
-  type: CableMV
+  type: CableApcExtension
   components:
-  - pos: 64.5,22.5
+  - pos: 47.5,-13.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6459
@@ -62068,11 +61945,13 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6492
-  type: CableApcExtension
+  type: CableHV
   components:
-  - pos: 40.5,21.5
+  - pos: 87.5,-11.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6493
@@ -62136,7 +62015,7 @@ entities:
 - uid: 6499
   type: CableApcExtension
   components:
-  - pos: 40.5,21.5
+  - pos: 51.5,-17.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -62152,9 +62031,9 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6501
-  type: CableApcExtension
+  type: CableHV
   components:
-  - pos: 42.5,19.5
+  - pos: 87.5,-10.5
     parent: 0
     type: Transform
   - visible: False
@@ -62208,9 +62087,9 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6507
-  type: CableApcExtension
+  type: CableHV
   components:
-  - pos: 37.5,26.5
+  - pos: 86.5,-12.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -62218,11 +62097,9 @@ entities:
 - uid: 6508
   type: CableApcExtension
   components:
-  - pos: 38.5,26.5
+  - pos: 51.5,-16.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6509
@@ -62508,11 +62385,9 @@ entities:
 - uid: 6537
   type: CableMV
   components:
-  - pos: 40.5,22.5
+  - pos: 39.5,-18.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6538
@@ -62610,13 +62485,13 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 6547
-  type: CableMV
+  type: SalternApc
   components:
-  - pos: 40.5,21.5
+  - pos: 39.5,-18.5
     parent: 0
     type: Transform
-  - canCollide: False
-    type: Physics
+  - startingCharge: 12000
+    type: Battery
 - uid: 6548
   type: CableApcExtension
   components:
@@ -62628,13 +62503,11 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6549
-  type: CableApcExtension
+  type: InflatableWall
   components:
-  - pos: 40.5,19.5
+  - pos: 87.5,-7.5
     parent: 0
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 6550
   type: CableApcExtension
   components:
@@ -62855,9 +62728,9 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6575
-  type: CableApcExtension
+  type: CableHV
   components:
-  - pos: 53.5,20.5
+  - pos: 87.5,-9.5
     parent: 0
     type: Transform
   - visible: False
@@ -63747,121 +63620,121 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 6665
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 67.5,22.5
+  - pos: 8.5,3.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6666
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 67.5,21.5
+  - pos: 10.5,3.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6667
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 67.5,20.5
+  - pos: 7.5,3.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 6668
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 67.5,19.5
+  - pos: 26.5,33.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6669
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 67.5,18.5
+  - pos: 77.5,-4.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6670
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 68.5,18.5
+  - pos: 66.5,-2.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 6671
-  type: CableApcExtension
+  type: CableHV
   components:
-  - pos: 69.5,18.5
+  - pos: 86.5,-16.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6672
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 70.5,18.5
+  - pos: 47.5,19.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6673
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 71.5,18.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 6674
-  type: CableApcExtension
-  components:
-  - pos: 72.5,18.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 6675
-  type: CableApcExtension
-  components:
-  - pos: 73.5,18.5
+  - pos: 40.5,-1.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 6676
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 73.5,17.5
+  - pos: 22.5,-12.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6677
   type: CableApcExtension
   components:
-  - pos: 73.5,15.5
+  - pos: 89.5,-2.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 6678
-  type: CableApcExtension
+  type: CableHV
   components:
-  - pos: 73.5,15.5
+  - pos: 87.5,-6.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6679
   type: CableApcExtension
   components:
-  - pos: 73.5,14.5
+  - pos: 89.5,-3.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -63869,15 +63742,15 @@ entities:
 - uid: 6680
   type: CableApcExtension
   components:
-  - pos: 73.5,16.5
+  - pos: 89.5,-4.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 6681
-  type: CableApcExtension
+  type: APCElectronics
   components:
-  - pos: 73.5,13.5
+  - pos: 90.55121,-10.254825
     parent: 0
     type: Transform
   - canCollide: False
@@ -63885,7 +63758,7 @@ entities:
 - uid: 6682
   type: CableApcExtension
   components:
-  - pos: 73.5,12.5
+  - pos: 1.5,-35.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -63893,11 +63766,9 @@ entities:
 - uid: 6683
   type: CableApcExtension
   components:
-  - pos: 73.5,11.5
+  - pos: 86.5,-11.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6684
@@ -64009,11 +63880,13 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6697
-  type: CableApcExtension
+  type: CableHV
   components:
-  - pos: 63.5,6.5
+  - pos: 87.5,-8.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6698
@@ -64195,247 +64068,261 @@ entities:
 - uid: 6719
   type: CableApcExtension
   components:
-  - pos: 69.5,44.5
+  - pos: 29.5,-37.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 6720
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 69.5,43.5
+  - pos: 66.5,44.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6721
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 69.5,42.5
+  - pos: 66.5,43.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6722
-  type: CableApcExtension
+  type: SalternApc
   components:
-  - pos: 74.5,12.5
+  - pos: 11.5,2.5
     parent: 0
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 6723
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 75.5,12.5
+  - pos: 22.5,10.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 6724
-  type: CableApcExtension
+  type: CableHV
   components:
-  - pos: 76.5,12.5
+  - pos: 83.5,-16.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 6725
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 77.5,12.5
+  - pos: 69.5,9.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 6726
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 78.5,12.5
+  - pos: 70.5,9.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 6727
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 79.5,12.5
+  - pos: 16.5,-6.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 6728
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 80.5,12.5
+  - pos: 11.5,-15.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 6729
-  type: CableApcExtension
+  type: CableHV
   components:
-  - pos: 81.5,11.5
+  - pos: 78.5,-16.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 6730
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 81.5,12.5
+  - pos: 17.5,-6.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 6731
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 81.5,10.5
+  - pos: 6.5,-9.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 6732
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 81.5,9.5
+  - pos: 29.5,-36.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6733
   type: CableApcExtension
   components:
-  - pos: 81.5,8.5
+  - pos: 51.5,-15.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 6734
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 81.5,7.5
+  - pos: 70.5,-9.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 6735
-  type: CableApcExtension
+  type: CableHV
   components:
-  - pos: 81.5,6.5
+  - pos: 85.5,-16.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6736
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 81.5,5.5
+  - pos: 50.5,21.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6737
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 81.5,4.5
+  - pos: 49.5,21.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6738
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 82.5,4.5
+  - pos: 48.5,21.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 6739
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 83.5,4.5
+  - pos: 31.5,-24.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 6740
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 84.5,4.5
+  - pos: 78.5,-14.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 6741
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 84.5,3.5
+  - pos: 32.5,-15.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6742
-  type: CableApcExtension
+  type: CableMV
   components:
-  - pos: 84.5,2.5
+  - pos: 33.5,-15.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6743
-  type: CableApcExtension
+  type: SalternApc
   components:
-  - pos: 84.5,1.5
+  - pos: 7.5,3.5
     parent: 0
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 6744
   type: CableApcExtension
   components:
-  - pos: 84.5,0.5
+  - pos: 6.5,3.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6745
   type: CableApcExtension
   components:
-  - pos: 84.5,-0.5
+  - pos: 7.5,3.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 6746
-  type: CableApcExtension
+  type: SheetSteel1
   components:
-  - pos: 84.5,-1.5
+  - pos: 90.60682,-10.582865
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 6747
-  type: CableApcExtension
+  type: SheetSteel1
   components:
-  - pos: 84.5,-2.5
+  - pos: 90.45002,-10.358817
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 6748
-  type: CableApcExtension
+  type: CableHV
   components:
-  - pos: 85.5,-2.5
+  - pos: 70.5,46.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 6749
-  type: CableApcExtension
+  type: CableHV
   components:
-  - pos: 86.5,-2.5
+  - pos: 71.5,46.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -64443,23 +64330,27 @@ entities:
 - uid: 6750
   type: CableApcExtension
   components:
-  - pos: 87.5,-2.5
+  - pos: 35.5,5.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6751
   type: CableApcExtension
   components:
-  - pos: 87.5,-3.5
+  - pos: 36.5,5.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6752
   type: CableApcExtension
   components:
-  - pos: 87.5,-4.5
+  - pos: 37.5,8.5
     parent: 0
     type: Transform
   - visible: False
@@ -64469,7 +64360,7 @@ entities:
 - uid: 6753
   type: CableApcExtension
   components:
-  - pos: 87.5,-5.5
+  - pos: 37.5,5.5
     parent: 0
     type: Transform
   - visible: False
@@ -64479,7 +64370,7 @@ entities:
 - uid: 6754
   type: CableApcExtension
   components:
-  - pos: 87.5,-6.5
+  - pos: 37.5,6.5
     parent: 0
     type: Transform
   - visible: False
@@ -64487,35 +64378,23 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6755
-  type: CableApcExtension
+  type: InflatableWall
   components:
-  - pos: 87.5,-7.5
+  - pos: 86.5,-7.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
 - uid: 6756
-  type: CableApcExtension
+  type: InflatableWall
   components:
-  - pos: 87.5,-8.5
+  - pos: 82.5,5.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
 - uid: 6757
-  type: CableApcExtension
+  type: InflatableWall
   components:
-  - pos: 87.5,-9.5
+  - pos: 82.5,4.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
 - uid: 6758
   type: CableApcExtension
   components:
@@ -64529,7 +64408,7 @@ entities:
 - uid: 6759
   type: CableApcExtension
   components:
-  - pos: 87.5,-11.5
+  - pos: 73.5,11.5
     parent: 0
     type: Transform
   - visible: False
@@ -64539,11 +64418,9 @@ entities:
 - uid: 6760
   type: CableApcExtension
   components:
-  - pos: 87.5,-12.5
+  - pos: 73.5,12.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 6761
@@ -64557,7 +64434,7 @@ entities:
 - uid: 6762
   type: CableApcExtension
   components:
-  - pos: 86.5,-13.5
+  - pos: 73.5,13.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -64565,7 +64442,7 @@ entities:
 - uid: 6763
   type: CableApcExtension
   components:
-  - pos: 86.5,-14.5
+  - pos: 73.5,14.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -64573,7 +64450,7 @@ entities:
 - uid: 6764
   type: CableApcExtension
   components:
-  - pos: 86.5,-15.5
+  - pos: 73.5,15.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -64725,7 +64602,7 @@ entities:
 - uid: 6781
   type: CableApcExtension
   components:
-  - pos: 71.5,-15.5
+  - pos: 73.5,17.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -64733,7 +64610,7 @@ entities:
 - uid: 6782
   type: CableApcExtension
   components:
-  - pos: 71.5,-14.5
+  - pos: 73.5,16.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -64741,15 +64618,7 @@ entities:
 - uid: 6783
   type: CableApcExtension
   components:
-  - pos: 71.5,-13.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 6784
-  type: CableApcExtension
-  components:
-  - pos: 71.5,-12.5
+  - pos: 73.5,18.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -64858,86 +64727,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 6798
-  type: CableApcExtension
-  components:
-  - pos: 69.5,-19.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 6799
-  type: CableApcExtension
-  components:
-  - pos: 68.5,-19.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 6800
-  type: CableApcExtension
-  components:
-  - pos: 66.5,-19.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 6801
-  type: CableApcExtension
-  components:
-  - pos: 65.5,-19.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 6802
-  type: CableApcExtension
-  components:
-  - pos: 67.5,-19.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 6803
-  type: CableApcExtension
-  components:
-  - pos: 64.5,-19.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 6804
-  type: CableApcExtension
-  components:
-  - pos: 63.5,-19.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 6805
-  type: CableApcExtension
-  components:
-  - pos: 61.5,-19.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 6806
-  type: CableApcExtension
-  components:
-  - pos: 62.5,-19.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 6807
-  type: CableApcExtension
-  components:
-  - pos: 59.5,-19.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 6808
   type: WallReinforced
   components:
@@ -64974,94 +64763,6 @@ entities:
   type: CableApcExtension
   components:
   - pos: 55.5,-18.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 6814
-  type: CableApcExtension
-  components:
-  - pos: 54.5,-18.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 6815
-  type: CableApcExtension
-  components:
-  - pos: 53.5,-18.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 6816
-  type: CableApcExtension
-  components:
-  - pos: 52.5,-18.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 6817
-  type: CableApcExtension
-  components:
-  - pos: 50.5,-18.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 6818
-  type: CableApcExtension
-  components:
-  - pos: 51.5,-18.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 6819
-  type: CableApcExtension
-  components:
-  - pos: 52.5,-17.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 6820
-  type: CableApcExtension
-  components:
-  - pos: 52.5,-16.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 6821
-  type: CableApcExtension
-  components:
-  - pos: 52.5,-15.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 6822
-  type: CableApcExtension
-  components:
-  - pos: 52.5,-14.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 6823
-  type: CableApcExtension
-  components:
-  - pos: 52.5,-13.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 6824
-  type: CableApcExtension
-  components:
-  - pos: 52.5,-12.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -65316,38 +65017,6 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
-- uid: 6852
-  type: CableApcExtension
-  components:
-  - pos: 49.5,-18.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 6853
-  type: CableApcExtension
-  components:
-  - pos: 48.5,-18.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 6854
-  type: CableApcExtension
-  components:
-  - pos: 47.5,-18.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 6855
-  type: CableApcExtension
-  components:
-  - pos: 46.5,-18.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 6856
   type: CableApcExtension
   components:
@@ -65392,14 +65061,6 @@ entities:
   type: CableApcExtension
   components:
   - pos: 40.5,-18.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 6862
-  type: CableApcExtension
-  components:
-  - pos: 40.5,-19.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -65480,22 +65141,6 @@ entities:
   type: CableApcExtension
   components:
   - pos: 30.5,-19.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 6873
-  type: CableApcExtension
-  components:
-  - pos: 29.5,-19.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 6874
-  type: CableApcExtension
-  components:
-  - pos: 29.5,-20.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -65599,22 +65244,6 @@ entities:
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
-- uid: 6885
-  type: CableApcExtension
-  components:
-  - pos: 69.5,-15.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 6886
-  type: CableApcExtension
-  components:
-  - pos: 70.5,-15.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 6887
   type: CableApcExtension
   components:
@@ -66120,9 +65749,9 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6938
-  type: CableApcExtension
+  type: CableHV
   components:
-  - pos: 68.5,2.5
+  - pos: 87.5,-7.5
     parent: 0
     type: Transform
   - visible: False
@@ -66503,16 +66132,6 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
-- uid: 6977
-  type: CableMV
-  components:
-  - pos: 13.5,-23.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
 - uid: 6978
   type: CableMV
   components:
@@ -66726,9 +66345,9 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 7003
-  type: CableApcExtension
+  type: CableHV
   components:
-  - pos: 46.5,37.5
+  - pos: 86.5,-13.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -67195,9 +66814,9 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 7056
-  type: CableMV
+  type: CableHV
   components:
-  - pos: 10.5,9.5
+  - pos: 87.5,-5.5
     parent: 0
     type: Transform
   - visible: False
@@ -67220,36 +66839,6 @@ entities:
   - pos: 10.5,11.5
     parent: 0
     type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7059
-  type: CableMV
-  components:
-  - pos: 7.5,9.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 7060
-  type: CableMV
-  components:
-  - pos: 9.5,9.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 7061
-  type: CableMV
-  components:
-  - pos: 6.5,9.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 7062
@@ -70572,16 +70161,6 @@ entities:
       DisposalUnit: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 7300
-  type: CableApcExtension
-  components:
-  - pos: 27.5,34.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
 - uid: 7301
   type: DisposalTrunk
   components:
@@ -71758,13 +71337,11 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 7406
-  type: CableApcExtension
+  type: CableHV
   components:
-  - pos: 21.5,-35.5
+  - pos: 13.5,-42.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 7407
@@ -72135,7 +71712,7 @@ entities:
 - uid: 7445
   type: CableHV
   components:
-  - pos: 69.5,46.5
+  - pos: 69.5,42.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -72143,7 +71720,7 @@ entities:
 - uid: 7446
   type: CableHV
   components:
-  - pos: 68.5,46.5
+  - pos: 69.5,43.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -72151,7 +71728,7 @@ entities:
 - uid: 7447
   type: CableHV
   components:
-  - pos: 67.5,46.5
+  - pos: 69.5,44.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -73029,7 +72606,7 @@ entities:
 - uid: 7549
   type: CableHV
   components:
-  - pos: 66.5,26.5
+  - pos: 84.5,1.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -73046,486 +72623,6 @@ entities:
   type: CableHV
   components:
   - pos: 66.5,27.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7552
-  type: CableMV
-  components:
-  - pos: 76.5,-16.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 7553
-  type: CableMV
-  components:
-  - pos: 77.5,-16.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 7554
-  type: CableMV
-  components:
-  - pos: 78.5,-16.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7555
-  type: CableMV
-  components:
-  - pos: 79.5,-16.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 7556
-  type: CableMV
-  components:
-  - pos: 80.5,-16.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 7557
-  type: CableMV
-  components:
-  - pos: 81.5,-16.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 7558
-  type: CableMV
-  components:
-  - pos: 82.5,-16.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7559
-  type: CableMV
-  components:
-  - pos: 83.5,-16.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7560
-  type: CableMV
-  components:
-  - pos: 84.5,-16.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7561
-  type: CableMV
-  components:
-  - pos: 85.5,-16.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 7562
-  type: CableMV
-  components:
-  - pos: 86.5,-16.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 7563
-  type: CableMV
-  components:
-  - pos: 86.5,-15.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7564
-  type: CableMV
-  components:
-  - pos: 86.5,-14.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7565
-  type: CableMV
-  components:
-  - pos: 86.5,-13.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7566
-  type: CableMV
-  components:
-  - pos: 86.5,-12.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7567
-  type: CableMV
-  components:
-  - pos: 87.5,-12.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 7568
-  type: CableMV
-  components:
-  - pos: 87.5,-11.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 7569
-  type: CableMV
-  components:
-  - pos: 87.5,-10.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 7570
-  type: CableMV
-  components:
-  - pos: 87.5,-9.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 7571
-  type: CableMV
-  components:
-  - pos: 87.5,-8.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 7572
-  type: CableMV
-  components:
-  - pos: 87.5,-7.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 7573
-  type: CableMV
-  components:
-  - pos: 87.5,-6.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 7574
-  type: CableMV
-  components:
-  - pos: 87.5,-5.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 7575
-  type: CableMV
-  components:
-  - pos: 87.5,-4.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 7576
-  type: CableMV
-  components:
-  - pos: 87.5,-3.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7577
-  type: CableMV
-  components:
-  - pos: 87.5,-2.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7578
-  type: CableMV
-  components:
-  - pos: 86.5,-2.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7579
-  type: CableMV
-  components:
-  - pos: 85.5,-2.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7580
-  type: CableMV
-  components:
-  - pos: 84.5,-2.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7581
-  type: CableMV
-  components:
-  - pos: 84.5,-1.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7582
-  type: CableMV
-  components:
-  - pos: 84.5,-0.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7583
-  type: CableMV
-  components:
-  - pos: 84.5,0.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7584
-  type: CableMV
-  components:
-  - pos: 84.5,1.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7585
-  type: CableMV
-  components:
-  - pos: 84.5,2.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7586
-  type: CableMV
-  components:
-  - pos: 84.5,3.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7587
-  type: CableMV
-  components:
-  - pos: 84.5,4.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7588
-  type: CableMV
-  components:
-  - pos: 83.5,4.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7589
-  type: CableMV
-  components:
-  - pos: 82.5,4.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7590
-  type: CableMV
-  components:
-  - pos: 81.5,4.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7591
-  type: CableMV
-  components:
-  - pos: 81.5,5.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7592
-  type: CableMV
-  components:
-  - pos: 81.5,6.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7593
-  type: CableMV
-  components:
-  - pos: 81.5,7.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7594
-  type: CableMV
-  components:
-  - pos: 81.5,8.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7595
-  type: CableMV
-  components:
-  - pos: 81.5,9.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7596
-  type: CableMV
-  components:
-  - pos: 81.5,10.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7597
-  type: CableMV
-  components:
-  - pos: 81.5,11.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7598
-  type: CableMV
-  components:
-  - pos: 81.5,12.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7599
-  type: CableMV
-  components:
-  - pos: 80.5,12.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7600
-  type: CableMV
-  components:
-  - pos: 79.5,12.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7601
-  type: CableMV
-  components:
-  - pos: 78.5,12.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7602
-  type: CableMV
-  components:
-  - pos: 77.5,12.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7603
-  type: CableMV
-  components:
-  - pos: 76.5,12.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7604
-  type: CableMV
-  components:
-  - pos: 75.5,12.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7605
-  type: CableMV
-  components:
-  - pos: 74.5,12.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7606
-  type: CableMV
-  components:
-  - pos: 74.5,11.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7607
-  type: CableMV
-  components:
-  - pos: 74.5,10.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -73575,13 +72672,11 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 7612
-  type: CableMV
+  type: CableHV
   components:
-  - pos: 39.5,-8.5
+  - pos: 85.5,-2.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 7613
@@ -73627,16 +72722,6 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
-- uid: 7617
-  type: CableMV
-  components:
-  - pos: 76.5,-3.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
 - uid: 7618
   type: CableMV
   components:
@@ -73657,14 +72742,6 @@ entities:
   type: CableMV
   components:
   - pos: 71.5,-6.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7621
-  type: CableMV
-  components:
-  - pos: 70.5,-7.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -73809,26 +72886,6 @@ entities:
   - pos: 50.5,-10.5
     parent: 0
     type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7637
-  type: CableMV
-  components:
-  - pos: 47.5,16.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 7638
-  type: CableMV
-  components:
-  - pos: 47.5,17.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 7639
@@ -74810,14 +73867,6 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
-- uid: 7714
-  type: CableMV
-  components:
-  - pos: 52.5,22.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 7715
   type: CableMV
   components:
@@ -75115,14 +74164,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 7746
-  type: CableMV
-  components:
-  - pos: 44.5,28.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 7747
   type: CableMV
   components:
@@ -75175,14 +74216,6 @@ entities:
   type: CableApcExtension
   components:
   - pos: 41.5,-32.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7754
-  type: CableMV
-  components:
-  - pos: 46.5,20.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -78869,14 +77902,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 8165
-  type: CableApcExtension
-  components:
-  - pos: 42.5,-26.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 8166
   type: CableApcExtension
   components:
@@ -78893,16 +77918,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 8168
-  type: CableMV
-  components:
-  - pos: 17.5,-41.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
 - uid: 8169
   type: CableApcExtension
   components:
@@ -78915,16 +77930,6 @@ entities:
   type: CableMV
   components:
   - pos: 50.5,-6.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 8171
-  type: CableMV
-  components:
-  - pos: 16.5,-41.5
     parent: 0
     type: Transform
   - visible: False
@@ -79669,14 +78674,6 @@ entities:
   - pos: 77.5,8.5
     parent: 0
     type: Transform
-- uid: 8260
-  type: CableApcExtension
-  components:
-  - pos: 68.5,46.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 8261
   type: WindoorScienceLocked
   components:
@@ -79684,14 +78681,6 @@ entities:
     pos: 77.5,8.5
     parent: 0
     type: Transform
-- uid: 8262
-  type: CableApcExtension
-  components:
-  - pos: 67.5,46.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 8263
   type: CableApcExtension
   components:
@@ -79869,13 +78858,11 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 8284
-  type: CableApcExtension
+  type: CableHV
   components:
-  - pos: 49.5,46.5
+  - pos: 84.5,2.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 8285
@@ -80295,14 +79282,6 @@ entities:
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
-- uid: 8327
-  type: CableMV
-  components:
-  - pos: 22.5,-13.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 8328
   type: CableApcExtension
   components:
@@ -81166,62 +80145,12 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 8415
-  type: CableMV
-  components:
-  - pos: 32.5,-25.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 8416
-  type: CableMV
-  components:
-  - pos: 33.5,-25.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 8417
-  type: CableMV
-  components:
-  - pos: 33.5,-24.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 8418
-  type: CableMV
-  components:
-  - pos: 34.5,-23.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 8419
-  type: CableMV
-  components:
-  - pos: 33.5,-23.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 8420
-  type: CableMV
-  components:
-  - pos: 35.5,-23.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 8421
-  type: CableMV
+  type: CableHV
   components:
-  - pos: 66.5,-8.5
+  - pos: 84.5,-1.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 8422
@@ -81283,16 +80212,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 8428
-  type: CableApcExtension
-  components:
-  - pos: 28.5,-40.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
 - uid: 8429
   type: CableApcExtension
   components:
@@ -81314,13 +80233,11 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 8431
-  type: CableApcExtension
+  type: CableHV
   components:
-  - pos: 31.5,-40.5
+  - pos: 14.5,-42.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 8432
@@ -81644,13 +80561,11 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 8464
-  type: CableApcExtension
+  type: CableHV
   components:
-  - pos: 43.5,-46.5
+  - pos: 15.5,-42.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 8465
@@ -84431,9 +83346,10 @@ entities:
     parent: 0
     type: Transform
 - uid: 8755
-  type: CableHV
+  type: CableTerminal
   components:
-  - pos: 3.5,-35.5
+  - rot: 1.5707963267948966 rad
+    pos: 2.5,-34.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -84748,14 +83664,6 @@ entities:
     type: Transform
   - visible: False
     type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 8805
-  type: CableApcExtension
-  components:
-  - pos: 39.5,-17.5
-    parent: 0
-    type: Transform
   - canCollide: False
     type: Physics
 - uid: 8806
@@ -85244,14 +84152,6 @@ entities:
   - pos: 107.5,-14.5
     parent: 0
     type: Transform
-- uid: 8879
-  type: CableApcExtension
-  components:
-  - pos: 39.5,-17.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 8880
   type: Airlock
   components:
@@ -85613,16 +84513,6 @@ entities:
   - pos: 109.5,-16.5
     parent: 0
     type: Transform
-- uid: 8926
-  type: CableMV
-  components:
-  - pos: 21.5,-38.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
 - uid: 8927
   type: Grille
   components:
@@ -86506,7 +85396,7 @@ entities:
 - uid: 9053
   type: CableHV
   components:
-  - pos: 116.5,-17.5
+  - pos: 12.5,-21.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -86648,13 +85538,11 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 9069
-  type: CableApcExtension
+  type: CableHV
   components:
-  - pos: 107.5,-17.5
+  - pos: 84.5,0.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 9070
@@ -87651,16 +86539,6 @@ entities:
     type: Physics
   - color: '#FF0000FF'
     type: AtmosPipeColor
-- uid: 9174
-  type: CableMV
-  components:
-  - pos: 22.5,-39.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
 - uid: 9175
   type: GasPipeStraight
   components:
@@ -87671,24 +86549,6 @@ entities:
     type: Physics
   - color: '#FF0000FF'
     type: AtmosPipeColor
-- uid: 9176
-  type: CableMV
-  components:
-  - pos: 22.5,-38.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 9177
-  type: CableMV
-  components:
-  - pos: 37.5,-23.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 9178
   type: GasPipeStraight
   components:
@@ -87931,16 +86791,13 @@ entities:
   - color: '#FF0000FF'
     type: AtmosPipeColor
 - uid: 9200
-  type: GasPipeStraight
+  type: CableHV
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 46.5,-18.5
+  - pos: 84.5,-2.5
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
-  - color: '#FF0000FF'
-    type: AtmosPipeColor
 - uid: 9201
   type: GasPipeStraight
   components:
@@ -93742,17 +92599,6 @@ entities:
   components:
   - rot: -1.5707963267948966 rad
     pos: 24.5,7.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - color: '#FF0000FF'
-    type: AtmosPipeColor
-- uid: 9688
-  type: GasPipeStraight
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: 23.5,7.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -107894,17 +106740,6 @@ entities:
   - pos: 3.5,-34.5
     parent: 0
     type: Transform
-- uid: 10895
-  type: CableTerminal
-  components:
-  - rot: 3.141592653589793 rad
-    pos: 19.5,-35.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
 - uid: 10896
   type: CableTerminal
   components:
@@ -107917,11 +106752,13 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 10897
-  type: SalternSmes
+  type: CableHV
   components:
-  - pos: 19.5,-34.5
+  - pos: 86.5,-15.5
     parent: 0
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 10898
   type: CableTerminal
   components:
@@ -108337,11 +107174,9 @@ entities:
 - uid: 10948
   type: CableHV
   components:
-  - pos: 19.5,-35.5
+  - pos: 16.5,-22.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 10949
@@ -108449,32 +107284,12 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 10960
-  type: CableMV
-  components:
-  - pos: 17.5,-40.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
 - uid: 10961
   type: CableMV
   components:
   - pos: 50.5,-9.5
     parent: 0
     type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 10962
-  type: CableMV
-  components:
-  - pos: 12.5,-1.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 10963
@@ -109142,38 +107957,6 @@ entities:
       board: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 11057
-  type: CableApcExtension
-  components:
-  - pos: 68.5,23.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 11058
-  type: CableApcExtension
-  components:
-  - pos: 69.5,23.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 11059
-  type: CableApcExtension
-  components:
-  - pos: 70.5,23.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 11060
-  type: CableApcExtension
-  components:
-  - pos: 71.5,23.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 11061
   type: GasPort
   components:
@@ -109254,16 +108037,6 @@ entities:
   type: GasPipeStraight
   components:
   - pos: 63.5,23.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 11069
-  type: CableMV
-  components:
-  - pos: 11.5,-1.5
     parent: 0
     type: Transform
   - visible: False
@@ -110340,11 +109113,13 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 11191
-  type: CableApcExtension
+  type: CableHV
   components:
-  - pos: 37.5,27.5
+  - pos: 87.5,-12.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 11192
@@ -110424,16 +109199,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 11201
-  type: CableApcExtension
-  components:
-  - pos: 32.5,41.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
 - uid: 11202
   type: AirlockVaultLocked
   components:
@@ -110475,16 +109240,6 @@ entities:
   type: CableApcExtension
   components:
   - pos: 37.5,18.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 11207
-  type: CableApcExtension
-  components:
-  - pos: 40.5,22.5
     parent: 0
     type: Transform
   - visible: False
@@ -110545,16 +109300,6 @@ entities:
   type: CableApcExtension
   components:
   - pos: 40.5,27.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 11214
-  type: CableMV
-  components:
-  - pos: 10.5,-1.5
     parent: 0
     type: Transform
   - visible: False
@@ -111369,42 +110114,6 @@ entities:
   type: FirelockGlass
   components:
   - pos: 74.5,14.5
-    parent: 0
-    type: Transform
-- uid: 11327
-  type: FirelockGlass
-  components:
-  - pos: 83.5,2.5
-    parent: 0
-    type: Transform
-- uid: 11328
-  type: FirelockGlass
-  components:
-  - pos: 84.5,2.5
-    parent: 0
-    type: Transform
-- uid: 11329
-  type: FirelockGlass
-  components:
-  - pos: 82.5,4.5
-    parent: 0
-    type: Transform
-- uid: 11330
-  type: FirelockGlass
-  components:
-  - pos: 82.5,5.5
-    parent: 0
-    type: Transform
-- uid: 11331
-  type: FirelockGlass
-  components:
-  - pos: 86.5,-6.5
-    parent: 0
-    type: Transform
-- uid: 11332
-  type: FirelockGlass
-  components:
-  - pos: 87.5,-6.5
     parent: 0
     type: Transform
 - uid: 11333
@@ -112250,9 +110959,11 @@ entities:
 - uid: 11449
   type: CableHV
   components:
-  - pos: 56.5,40.5
+  - pos: 57.5,38.5
     parent: 0
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 11450
@@ -112346,10 +111057,9 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 11459
-  type: CableTerminal
+  type: CableHV
   components:
-  - rot: 3.141592653589793 rad
-    pos: 3.5,-35.5
+  - pos: 2.5,-34.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -112523,6 +111233,8 @@ entities:
   - pos: 71.5,43.5
     parent: 0
     type: Transform
+  - location: North-East Solars
+    type: WarpPoint
 - uid: 11478
   type: WarpPoint
   components:
@@ -112790,7 +111502,7 @@ entities:
 - uid: 11517
   type: CableHV
   components:
-  - pos: 56.5,39.5
+  - pos: 57.5,40.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -113022,13 +111734,11 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 11539
-  type: CableApcExtension
+  type: CableHV
   components:
-  - pos: 56.5,30.5
+  - pos: 13.5,-41.5
     parent: 0
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 11540
@@ -113238,14 +111948,6 @@ entities:
     type: Physics
   - color: '#0000FFFF'
     type: AtmosPipeColor
-- uid: 11559
-  type: CableMV
-  components:
-  - pos: 9.5,-2.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 11560
   type: PoweredSmallLight
   components:
@@ -113272,16 +111974,6 @@ entities:
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
-- uid: 11562
-  type: CableHV
-  components:
-  - pos: 57.5,38.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
 - uid: 11563
   type: CableTerminal
   components:
@@ -114349,26 +113041,6 @@ entities:
   - pos: 39.5,52.5
     parent: 0
     type: Transform
-- uid: 11738
-  type: CableMV
-  components:
-  - pos: 9.5,-1.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 11739
-  type: CableMV
-  components:
-  - pos: 9.5,-3.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
 - uid: 11740
   type: CableMV
   components:
@@ -114422,24 +113094,6 @@ entities:
     pos: 3.5,-32.5
     parent: 0
     type: Transform
-- uid: 11747
-  type: CableMV
-  components:
-  - pos: 9.5,-10.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 11748
-  type: CableMV
-  components:
-  - pos: 9.5,-9.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
 - uid: 11749
   type: CableMV
   components:
@@ -114474,26 +113128,6 @@ entities:
   type: CableMV
   components:
   - pos: 9.5,-5.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 11753
-  type: CableMV
-  components:
-  - pos: 25.5,-39.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 11754
-  type: CableMV
-  components:
-  - pos: 26.5,-39.5
     parent: 0
     type: Transform
   - visible: False
@@ -114668,14 +113302,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 11772
-  type: CableApcExtension
-  components:
-  - pos: 45.5,-18.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 11773
   type: CableMV
   components:
@@ -114690,488 +113316,6 @@ entities:
   type: CableMV
   components:
   - pos: 14.5,23.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 11775
-  type: CableMV
-  components:
-  - pos: 70.5,-11.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 11776
-  type: CableMV
-  components:
-  - pos: 47.5,19.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 11777
-  type: CableMV
-  components:
-  - pos: 46.5,19.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 11778
-  type: CableMV
-  components:
-  - pos: 47.5,14.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 11779
-  type: CableMV
-  components:
-  - pos: 49.5,14.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 11780
-  type: CableMV
-  components:
-  - pos: 50.5,14.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 11781
-  type: CableMV
-  components:
-  - pos: 51.5,14.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 11782
-  type: CableMV
-  components:
-  - pos: 52.5,14.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 11783
-  type: CableMV
-  components:
-  - pos: 53.5,14.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 11784
-  type: CableMV
-  components:
-  - pos: 54.5,14.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 11785
-  type: CableMV
-  components:
-  - pos: 55.5,14.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 11786
-  type: CableMV
-  components:
-  - pos: 56.5,14.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 11787
-  type: CableMV
-  components:
-  - pos: 57.5,14.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 11788
-  type: CableMV
-  components:
-  - pos: 45.5,29.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 11789
-  type: CableMV
-  components:
-  - pos: 46.5,29.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 11790
-  type: CableMV
-  components:
-  - pos: 46.5,30.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 11791
-  type: CableMV
-  components:
-  - pos: 46.5,31.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 11792
-  type: CableMV
-  components:
-  - pos: 46.5,32.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 11793
-  type: CableMV
-  components:
-  - pos: 46.5,33.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 11794
-  type: CableMV
-  components:
-  - pos: 46.5,34.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 11795
-  type: CableMV
-  components:
-  - pos: 46.5,35.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 11796
-  type: CableMV
-  components:
-  - pos: 46.5,36.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 11797
-  type: CableMV
-  components:
-  - pos: 46.5,37.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 11798
-  type: CableMV
-  components:
-  - pos: 46.5,38.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 11799
-  type: CableMV
-  components:
-  - pos: 46.5,39.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 11800
-  type: CableMV
-  components:
-  - pos: 45.5,39.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 11801
-  type: CableMV
-  components:
-  - pos: 44.5,39.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 11802
-  type: CableMV
-  components:
-  - pos: 44.5,40.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 11803
-  type: CableMV
-  components:
-  - pos: 44.5,41.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 11804
-  type: CableMV
-  components:
-  - pos: 43.5,41.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 11805
-  type: CableMV
-  components:
-  - pos: 42.5,41.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 11806
-  type: CableMV
-  components:
-  - pos: 41.5,41.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 11807
-  type: CableMV
-  components:
-  - pos: 40.5,41.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 11808
-  type: CableMV
-  components:
-  - pos: 39.5,41.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 11809
-  type: CableMV
-  components:
-  - pos: 39.5,40.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 11810
-  type: CableMV
-  components:
-  - pos: 39.5,39.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 11811
-  type: CableMV
-  components:
-  - pos: 39.5,38.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 11812
-  type: CableMV
-  components:
-  - pos: 38.5,38.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 11813
-  type: CableMV
-  components:
-  - pos: 37.5,38.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 11814
-  type: CableMV
-  components:
-  - pos: 36.5,38.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 11815
-  type: CableMV
-  components:
-  - pos: 35.5,38.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 11816
-  type: CableMV
-  components:
-  - pos: 35.5,37.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 11817
-  type: CableMV
-  components:
-  - pos: 34.5,34.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 11818
-  type: CableMV
-  components:
-  - pos: 34.5,37.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 11819
-  type: CableMV
-  components:
-  - pos: 34.5,36.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 11820
-  type: CableMV
-  components:
-  - pos: 34.5,35.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 11821
-  type: CableMV
-  components:
-  - pos: 34.5,33.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 11822
-  type: CableMV
-  components:
-  - pos: 34.5,32.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 11823
-  type: CableMV
-  components:
-  - pos: 33.5,32.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 11824
-  type: CableMV
-  components:
-  - pos: 33.5,31.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 11825
-  type: CableMV
-  components:
-  - pos: 33.5,30.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 11826
-  type: CableMV
-  components:
-  - pos: 33.5,29.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 11827
-  type: CableMV
-  components:
-  - pos: 33.5,28.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 11828
-  type: CableMV
-  components:
-  - pos: 34.5,28.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 11829
-  type: CableMV
-  components:
-  - pos: 35.5,28.5
     parent: 0
     type: Transform
   - visible: False
@@ -115238,66 +113382,6 @@ entities:
   type: CableMV
   components:
   - pos: 14.5,21.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 11839
-  type: CableMV
-  components:
-  - pos: 24.5,37.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 11840
-  type: CableMV
-  components:
-  - pos: 23.5,37.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 11841
-  type: CableMV
-  components:
-  - pos: 22.5,37.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 11842
-  type: CableMV
-  components:
-  - pos: 21.5,37.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 11843
-  type: CableMV
-  components:
-  - pos: 20.5,37.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 11844
-  type: CableMV
-  components:
-  - pos: 19.5,37.5
     parent: 0
     type: Transform
   - visible: False
@@ -115402,38 +113486,10 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
-- uid: 11855
-  type: CableMV
-  components:
-  - pos: 33.5,-16.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 11856
-  type: CableMV
-  components:
-  - pos: 34.5,-16.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
 - uid: 11857
   type: CableMV
   components:
   - pos: 34.5,-15.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 11858
-  type: CableMV
-  components:
-  - pos: 35.5,-16.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -115447,9 +113503,9 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 11860
-  type: CableMV
+  type: CableHV
   components:
-  - pos: 29.5,-19.5
+  - pos: 87.5,-2.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -115839,34 +113895,6 @@ entities:
     type: Transform
   - visible: False
     type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 11910
-  type: CableMV
-  components:
-  - pos: 6.5,10.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 11911
-  type: CableMV
-  components:
-  - pos: 6.5,11.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 11912
-  type: CableMV
-  components:
-  - pos: 7.5,11.5
-    parent: 0
-    type: Transform
   - canCollide: False
     type: Physics
 - uid: 11913
@@ -116358,6 +114386,558 @@ entities:
   type: Paper
   components:
   - pos: 21.5367,22.4243
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 11967
+  type: TraitorDMRedemptionMachineSpawner
+  components:
+  - pos: 0.5,-9.5
+    parent: 0
+    type: Transform
+- uid: 11968
+  type: TraitorDMRedemptionMachineSpawner
+  components:
+  - pos: 54.5,-17.5
+    parent: 0
+    type: Transform
+- uid: 11969
+  type: TraitorDMRedemptionMachineSpawner
+  components:
+  - pos: 86.5,-2.5
+    parent: 0
+    type: Transform
+- uid: 11970
+  type: TraitorDMRedemptionMachineSpawner
+  components:
+  - pos: 69.5,34.5
+    parent: 0
+    type: Transform
+- uid: 11971
+  type: TraitorDMRedemptionMachineSpawner
+  components:
+  - pos: 22.5,18.5
+    parent: 0
+    type: Transform
+- uid: 11972
+  type: TraitorDMRedemptionMachineSpawner
+  components:
+  - pos: 9.5,-22.5
+    parent: 0
+    type: Transform
+- uid: 11973
+  type: TraitorDMRedemptionMachineSpawner
+  components:
+  - pos: 70.5,-5.5
+    parent: 0
+    type: Transform
+- uid: 11974
+  type: TraitorDMRedemptionMachineSpawner
+  components:
+  - pos: 56.5,6.5
+    parent: 0
+    type: Transform
+- uid: 11975
+  type: TraitorDMRedemptionMachineSpawner
+  components:
+  - pos: 41.5,42.5
+    parent: 0
+    type: Transform
+- uid: 11976
+  type: RandomSpawner
+  components:
+  - pos: 57.5,-13.5
+    parent: 0
+    type: Transform
+- uid: 11977
+  type: RandomSpawner
+  components:
+  - pos: 62.5,-15.5
+    parent: 0
+    type: Transform
+- uid: 11978
+  type: RandomSpawner
+  components:
+  - pos: 59.5,-16.5
+    parent: 0
+    type: Transform
+- uid: 11979
+  type: RandomSpawner
+  components:
+  - pos: 31.5,-4.5
+    parent: 0
+    type: Transform
+- uid: 11980
+  type: RandomSpawner
+  components:
+  - pos: 27.5,2.5
+    parent: 0
+    type: Transform
+- uid: 11981
+  type: RandomSpawner
+  components:
+  - pos: -6.5,-0.5
+    parent: 0
+    type: Transform
+- uid: 11982
+  type: RandomSpawner
+  components:
+  - pos: -7.5,-9.5
+    parent: 0
+    type: Transform
+- uid: 11983
+  type: RandomSpawner
+  components:
+  - pos: -7.5,-5.5
+    parent: 0
+    type: Transform
+- uid: 11984
+  type: RandomSpawner
+  components:
+  - pos: 12.5,15.5
+    parent: 0
+    type: Transform
+- uid: 11985
+  type: RandomSpawner
+  components:
+  - pos: 8.5,32.5
+    parent: 0
+    type: Transform
+- uid: 11986
+  type: RandomSpawner
+  components:
+  - pos: 20.5,26.5
+    parent: 0
+    type: Transform
+- uid: 11987
+  type: RandomSpawner
+  components:
+  - pos: 27.5,6.5
+    parent: 0
+    type: Transform
+- uid: 11988
+  type: RandomSpawner
+  components:
+  - pos: 31.5,-14.5
+    parent: 0
+    type: Transform
+- uid: 11989
+  type: RandomSpawner
+  components:
+  - pos: 84.5,10.5
+    parent: 0
+    type: Transform
+- uid: 11990
+  type: RandomSpawner
+  components:
+  - pos: 83.5,7.5
+    parent: 0
+    type: Transform
+- uid: 11991
+  type: RandomSpawner
+  components:
+  - pos: 68.5,11.5
+    parent: 0
+    type: Transform
+- uid: 11992
+  type: RandomSpawner
+  components:
+  - pos: 57.5,5.5
+    parent: 0
+    type: Transform
+- uid: 11993
+  type: RandomSpawner
+  components:
+  - pos: 70.5,29.5
+    parent: 0
+    type: Transform
+- uid: 11994
+  type: RandomSpawner
+  components:
+  - pos: 70.5,28.5
+    parent: 0
+    type: Transform
+- uid: 11995
+  type: RandomSpawner
+  components:
+  - pos: 71.5,37.5
+    parent: 0
+    type: Transform
+- uid: 11996
+  type: RandomSpawner
+  components:
+  - pos: 38.5,35.5
+    parent: 0
+    type: Transform
+- uid: 11997
+  type: RandomSpawner
+  components:
+  - pos: 37.5,33.5
+    parent: 0
+    type: Transform
+- uid: 11998
+  type: RandomSpawner
+  components:
+  - pos: 40.5,30.5
+    parent: 0
+    type: Transform
+- uid: 11999
+  type: RandomSpawner
+  components:
+  - pos: 36.5,30.5
+    parent: 0
+    type: Transform
+- uid: 12000
+  type: RandomSpawner
+  components:
+  - pos: 4.5,11.5
+    parent: 0
+    type: Transform
+- uid: 12001
+  type: RandomSpawner
+  components:
+  - pos: -1.5,-11.5
+    parent: 0
+    type: Transform
+- uid: 12002
+  type: RandomSpawner
+  components:
+  - pos: 6.5,11.5
+    parent: 0
+    type: Transform
+- uid: 12003
+  type: RandomSpawner
+  components:
+  - pos: -1.5,-12.5
+    parent: 0
+    type: Transform
+- uid: 12004
+  type: RandomSpawner
+  components:
+  - pos: 18.5,36.5
+    parent: 0
+    type: Transform
+- uid: 12005
+  type: RandomSpawner
+  components:
+  - pos: 22.5,36.5
+    parent: 0
+    type: Transform
+- uid: 12006
+  type: RandomSpawner
+  components:
+  - pos: 21.5,37.5
+    parent: 0
+    type: Transform
+- uid: 12007
+  type: RandomSpawner
+  components:
+  - pos: 28.5,35.5
+    parent: 0
+    type: Transform
+- uid: 12008
+  type: RandomSpawner
+  components:
+  - pos: 27.5,12.5
+    parent: 0
+    type: Transform
+- uid: 12009
+  type: RandomSpawner
+  components:
+  - pos: 45.5,18.5
+    parent: 0
+    type: Transform
+- uid: 12010
+  type: RandomSpawner
+  components:
+  - pos: 34.5,41.5
+    parent: 0
+    type: Transform
+- uid: 12011
+  type: CableHV
+  components:
+  - pos: 82.5,4.5
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 12012
+  type: CableHV
+  components:
+  - pos: 81.5,4.5
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 12013
+  type: CableHV
+  components:
+  - pos: 81.5,5.5
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 12014
+  type: CableHV
+  components:
+  - pos: 81.5,6.5
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 12015
+  type: CableHV
+  components:
+  - pos: 81.5,7.5
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 12016
+  type: CableHV
+  components:
+  - pos: 81.5,8.5
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 12017
+  type: CableHV
+  components:
+  - pos: 81.5,9.5
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 12018
+  type: CableHV
+  components:
+  - pos: 81.5,10.5
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 12019
+  type: CableHV
+  components:
+  - pos: 81.5,11.5
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 12020
+  type: CableHV
+  components:
+  - pos: 81.5,12.5
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 12021
+  type: CableHV
+  components:
+  - pos: 80.5,12.5
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 12022
+  type: CableHV
+  components:
+  - pos: 74.5,12.5
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 12023
+  type: CableHV
+  components:
+  - pos: 75.5,12.5
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 12024
+  type: CableHV
+  components:
+  - pos: 76.5,12.5
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 12025
+  type: CableHV
+  components:
+  - pos: 77.5,12.5
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 12026
+  type: CableHV
+  components:
+  - pos: 78.5,12.5
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 12027
+  type: CableHV
+  components:
+  - pos: 79.5,12.5
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 12028
+  type: CableHV
+  components:
+  - pos: 73.5,12.5
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 12029
+  type: CableHV
+  components:
+  - pos: 73.5,18.5
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 12030
+  type: CableHV
+  components:
+  - pos: 73.5,17.5
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 12031
+  type: CableHV
+  components:
+  - pos: 73.5,16.5
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 12032
+  type: CableHV
+  components:
+  - pos: 73.5,15.5
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 12033
+  type: CableHV
+  components:
+  - pos: 73.5,14.5
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 12034
+  type: CableHV
+  components:
+  - pos: 73.5,13.5
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 12035
+  type: CableHV
+  components:
+  - pos: 67.5,24.5
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 12036
+  type: CableHV
+  components:
+  - pos: 67.5,18.5
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 12037
+  type: CableHV
+  components:
+  - pos: 68.5,18.5
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 12038
+  type: CableHV
+  components:
+  - pos: 69.5,18.5
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 12039
+  type: CableHV
+  components:
+  - pos: 70.5,18.5
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 12040
+  type: CableHV
+  components:
+  - pos: 71.5,18.5
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 12041
+  type: CableHV
+  components:
+  - pos: 72.5,18.5
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 12042
+  type: CableHV
+  components:
+  - pos: 67.5,23.5
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 12043
+  type: CableHV
+  components:
+  - pos: 67.5,22.5
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 12044
+  type: CableHV
+  components:
+  - pos: 67.5,21.5
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 12045
+  type: CableHV
+  components:
+  - pos: 67.5,20.5
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 12046
+  type: CableHV
+  components:
+  - pos: 67.5,19.5
     parent: 0
     type: Transform
   - canCollide: False

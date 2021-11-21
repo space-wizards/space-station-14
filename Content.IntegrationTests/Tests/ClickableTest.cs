@@ -4,6 +4,7 @@ using Content.Client.Clickable;
 using Content.Server.GameTicking;
 using NUnit.Framework;
 using Robust.Server.GameObjects;
+using Robust.Shared;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -27,7 +28,13 @@ namespace Content.IntegrationTests.Tests
         [OneTimeSetUp]
         public async Task Setup()
         {
-            (_client, _server) = await StartConnectedServerClientPair();
+            (_client, _server) = await StartConnectedServerClientPair(serverOptions: new ServerContentIntegrationOption()
+            {
+                CVarOverrides =
+                {
+                    [CVars.NetPVS.Name] = "false"
+                }
+            });
         }
 
         [Parallelizable(ParallelScope.None)]

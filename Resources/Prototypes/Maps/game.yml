@@ -1,0 +1,20 @@
+- type: gameMap
+  id: saltern
+  mapName: Saltern
+  mapPath: Maps/saltern.yml
+  minPlayers: 0
+  maxPlayers: 20
+  fallback: true
+
+- type: gameMap
+  id: packedstation
+  mapName: Packedstation
+  mapPath: Maps/packedstation.yml
+  minPlayers: 15
+
+- type: gameMap
+  id: knightship
+  mapName: Knight Ship
+  mapPath: Maps/knightship.yml
+  minPlayers: 0
+  maxPlayers: 8

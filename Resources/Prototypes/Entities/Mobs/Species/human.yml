@@ -341,6 +341,14 @@
         color: "#e8b59b"
         sprite: Mobs/Species/Human/parts.rsi
         state: l_leg
+      - map: [ "enum.HumanoidVisualLayers.LFoot" ]
+        color: "#e8b59b"
+        sprite: Mobs/Species/Human/parts.rsi
+        state: l_foot
+      - map: [ "enum.HumanoidVisualLayers.RFoot" ]
+        color: "#e8b59b"
+        sprite: Mobs/Species/Human/parts.rsi
+        state: r_foot
       - shader: StencilClear
       - shader: StencilMask
         map: ["enum.HumanoidVisualLayers.StencilMask"]

@@ -1,0 +1,47 @@
+﻿- type: reagent
+  id: Thermite
+  name: thermite
+  desc: A mixture that becomes extremely hot when ignited, and which can burn straight through walls when applied and ignited. It'll slowly inflict burn damage to anybody dumb enough to ingest it, but can't be ignited inside inside said dumb person.
+  physicalDesc: grainy
+  color: "#757245"
+  boilingPoint: 2977.0 # Aluminum oxide
+  meltingPoint: 2030.0
+  tileReactions:
+  - !type:FlammableTileReaction
+    temperatureMultiplier: 2
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Heat: 2
+
+- type: reagent
+  id: FoamingAgent
+  name: foaming agent
+  desc: Makes foam such as that's required in metal foam grenades.
+  physicalDesc: foamy
+  color: "#215263"
+  boilingPoint: 418.0 # I went with ammonium lauryl sulfate as the basis for this
+  meltingPoint: 7.4 # I made this up
+
+- type: reagent
+  id: WeldingFuel
+  name: welding fuel
+  desc: Used by welders to weld.
+  physicalDesc: oily
+  color: "#a76b1c"
+  boilingPoint: -84.7 # Acetylene. Close enough.
+  meltingPoint: -80.7
+  tileReactions:
+  - !type:FlammableTileReaction {}
+
+- type: reagent
+  id: Fluorosurfactant
+  name: fluorosurfactant
+  desc: A perfluoronated sulfonic acid that forms a foam when mixed with water.
+  physicalDesc: opaque
+  color: "#9e6b38"
+  boilingPoint: 190.0 # Perfluorooctanoic Acid.
+  meltingPoint: 45.0
