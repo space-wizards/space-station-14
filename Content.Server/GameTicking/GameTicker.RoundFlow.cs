@@ -154,7 +154,7 @@ namespace Content.Server.GameTicking
                         assignedJobs.Add(player, (FallbackOverflowJob, StationSystem.StationId.Invalid));
 
                     // Pick a random overflow job from that station
-                    var overflows = _stationSystem.StationInfo[stations[0]].MapPrototype.OverflowJob.Clone();
+                    var overflows = _stationSystem.StationInfo[stations[0]].MapPrototype.OverflowJobs.Clone();
                     _robustRandom.Shuffle(overflows);
                     assignedJobs.Add(player, (overflows[0], stations[0]));
                 }

@@ -5,5 +5,7 @@
   minPlayers: 0
   maxPlayers: 0
   votable: false
+  overflowJobs:
+    - Assistant
   availableJobs:
     Assistant: [ -1, -1 ]

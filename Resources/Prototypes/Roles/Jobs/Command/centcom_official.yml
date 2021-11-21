@@ -1,6 +1,6 @@
 - type: job
   id: CentralCommandOffical
-  name: "Central Command Official"
+  name: "centcom official"
   startingGear: CentcomGear
   departments:
     - Command

@@ -55,8 +55,8 @@ public class GameMapPrototype : IPrototype
     /// Jobs used at round start should the station run out of job slots.
     /// Doesn't necessarily mean the station has infinite slots for the given jobs midround!
     /// </summary>
-    [ViewVariables, DataField("overflowJob", required: true)]
-    public List<string> OverflowJob { get; } = default!;
+    [ViewVariables, DataField("overflowJobs", required: true)]
+    public List<string> OverflowJobs { get; } = default!;
 
     /// <summary>
     /// Index of all jobs available on the station, of form

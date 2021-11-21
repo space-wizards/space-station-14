@@ -137,7 +137,7 @@ namespace Content.Server.GameTicking
                 return picked;
             }
 
-            var overflows = _stationSystem.StationInfo[station].MapPrototype.OverflowJob.Clone();
+            var overflows = _stationSystem.StationInfo[station].MapPrototype.OverflowJobs.Clone();
             _robustRandom.Shuffle(overflows);
             return overflows[0];
         }

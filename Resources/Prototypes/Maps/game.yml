@@ -5,6 +5,8 @@
   minPlayers: 0
   maxPlayers: 20
   fallback: true
+  overflowJobs:
+    - Assistant
   availableJobs:
     CargoTechnician: [ 1, 2 ]
     Assistant: [ -1, -1 ]
@@ -30,6 +32,8 @@
   mapName: Packedstation
   mapPath: Maps/packedstation.yml
   minPlayers: 15
+  overflowJobs:
+    - Assistant
   availableJobs:
     CargoTechnician: [ 2, 3 ]
     Assistant: [ -1, -1 ]
@@ -57,8 +61,9 @@
   mapPath: Maps/knightship.yml
   minPlayers: 0
   maxPlayers: 8
+  overflowJobs:
+    - Assistant
   availableJobs:
-    Assistant: [ -1, -1 ]
     Bartender: [ 1, 1 ]
     Captain: [ 1, 1 ]
     ChiefEngineer: [ 1, 1 ]
