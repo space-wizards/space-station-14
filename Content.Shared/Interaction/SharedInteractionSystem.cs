@@ -15,6 +15,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
+using Robust.Shared.Containers;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Random;
@@ -445,6 +446,9 @@ namespace Content.Shared.Interaction
             }
 
             if (!_actionBlockerSystem.CanInteract(user.Uid) || !_actionBlockerSystem.CanUse(user.Uid))
+                return;
+
+            if (user.IsInContainer())
                 return;
 
             // all activates should only fire when in range / unobstructed
