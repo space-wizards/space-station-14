@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Light.Components;
 using Content.Server.Power.Components;
-using Content.Server.PowerCell.Components;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;

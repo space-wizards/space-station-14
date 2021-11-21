@@ -2,8 +2,6 @@ using System;
 using System.Threading.Tasks;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
-using Content.Server.Light.Components;
-using Content.Server.PowerCell.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
