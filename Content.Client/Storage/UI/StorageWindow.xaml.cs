@@ -25,8 +25,8 @@ namespace Content.Client.Storage.UI
         [Dependency] private readonly IResourceCache _resCache = default!;
 
 
-        public Font _weightFont;
-        public Font _weightFontSmall;
+        private Font _weightFont;
+        private Font _weightFontSmall;
 
         private readonly StyleBoxFlat _hoveredBox = new() { BackgroundColor = Color.Black.WithAlpha(0.35f) };
         private readonly StyleBoxFlat _unHoveredBox = new() { BackgroundColor = Color.Black.WithAlpha(0.0f) };
