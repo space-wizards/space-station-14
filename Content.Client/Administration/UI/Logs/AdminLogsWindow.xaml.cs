@@ -43,10 +43,17 @@ public partial class AdminLogsWindow : SS14Window
 
         ResetRoundButton.OnPressed += ResetRoundPressed;
 
+        SetImpacts(Enum.GetValues<LogImpact>().OrderBy(impact => impact).ToArray());
         SetTypes(Enum.GetValues<LogType>());
     }
 
     private int CurrentRound { get; set; }
+
+    private HashSet<LogType> SelectedTypes { get; } = new();
+
+    private HashSet<Guid> SelectedPlayers { get; } = new();
+
+    private HashSet<LogImpact> SelectedImpacts { get; } = new();
 
     public void SetCurrentRound(int round)
     {
@@ -190,20 +197,92 @@ public partial class AdminLogsWindow : SS14Window
 
     private bool ShouldShowLog(AdminLogLabel label)
     {
-        return label.Log.Message.Contains(LogSearch.Text, StringComparison.OrdinalIgnoreCase);
+        return SelectedTypes.Contains(label.Log.Type) &&
+               SelectedPlayers.Overlaps(label.Log.Players) &&
+               SelectedImpacts.Contains(label.Log.Impact) &&
+               label.Log.Message.Contains(LogSearch.Text, StringComparison.OrdinalIgnoreCase);
     }
 
     private void TypeButtonPressed(ButtonEventArgs args)
     {
+        var button = (AdminLogTypeButton) args.Button;
+        if (button.Pressed)
+        {
+            SelectedTypes.Add(button.Type);
+        }
+        else
+        {
+            SelectedTypes.Remove(button.Type);
+        }
+
         UpdateLogs();
     }
 
     private void PlayerButtonPressed(ButtonEventArgs args)
     {
+        var button = (AdminLogPlayerButton) args.Button;
+        if (button.Pressed)
+        {
+            SelectedPlayers.Add(button.Id);
+        }
+        else
+        {
+            SelectedPlayers.Remove(button.Id);
+        }
+
         UpdateLogs();
     }
 
-    public void SetTypes(LogType[] types)
+    private void ImpactButtonPressed(ButtonEventArgs args)
+    {
+        var button = (AdminLogImpactButton) args.Button;
+        if (button.Pressed)
+        {
+            SelectedImpacts.Add(button.Impact);
+        }
+        else
+        {
+            SelectedImpacts.Remove(button.Impact);
+        }
+
+        UpdateLogs();
+    }
+
+    private void SetImpacts(LogImpact[] impacts)
+    {
+        LogImpactContainer.RemoveAllChildren();
+
+        foreach (var impact in impacts)
+        {
+            var button = new AdminLogImpactButton(impact)
+            {
+                Text = impact.ToString()
+            };
+
+            SelectedImpacts.Add(impact);
+            button.OnPressed += ImpactButtonPressed;
+
+            LogImpactContainer.AddChild(button);
+        }
+
+        switch (impacts.Length)
+        {
+            case 0:
+                return;
+            case 1:
+                LogImpactContainer.GetChild(0).StyleClasses.Add("OpenRight");
+                return;
+        }
+
+        for (var i = 0; i < impacts.Length - 1; i++)
+        {
+            LogImpactContainer.GetChild(i).StyleClasses.Add("ButtonSquare");
+        }
+
+        LogImpactContainer.GetChild(LogImpactContainer.ChildCount - 1).StyleClasses.Add("OpenLeft");
+    }
+
+    private void SetTypes(LogType[] types)
     {
         var newTypes = types.ToHashSet();
         var buttons = new SortedSet<AdminLogTypeButton>(_adminLogTypeButtonComparer);
@@ -223,11 +302,10 @@ public partial class AdminLogsWindow : SS14Window
         {
             var button = new AdminLogTypeButton(type)
             {
-                Text = type.ToString(),
-                ToggleMode = true,
-                Pressed = true
+                Text = type.ToString()
             };
 
+            SelectedTypes.Add(type);
             button.OnPressed += TypeButtonPressed;
 
             buttons.Add(button);
@@ -262,10 +340,10 @@ public partial class AdminLogsWindow : SS14Window
         {
             var button = new AdminLogPlayerButton(id)
             {
-                Text = name,
-                ToggleMode = true
+                Text = name
             };
 
+            SelectedPlayers.Add(id);
             button.OnPressed += PlayerButtonPressed;
 
             buttons.Add(button);
@@ -286,11 +364,12 @@ public partial class AdminLogsWindow : SS14Window
         for (var i = 0; i < logs.Length; i++)
         {
             ref var log = ref logs[i];
-            var label = new AdminLogLabel(ref log);
+            var separator = new HSeparator();
+            var label = new AdminLogLabel(ref log, separator);
             label.Visible = ShouldShowLog(label);
 
             LogsContainer.AddChild(label);
-            LogsContainer.AddChild(new HSeparator());
+            LogsContainer.AddChild(separator);
         }
     }
 

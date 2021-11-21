@@ -3,14 +3,14 @@ using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Administration.UI.CustomControls;
 
-public class AdminLogTypeButton : Button
+public class AdminLogImpactButton : Button
 {
-    public AdminLogTypeButton(LogType type)
+    public AdminLogImpactButton(LogImpact impact)
     {
-        Type = type;
+        Impact = impact;
         ToggleMode = true;
         Pressed = true;
     }
 
-    public LogType Type { get; }
+    public LogImpact Impact { get; }
 }

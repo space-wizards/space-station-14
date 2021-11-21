@@ -556,6 +556,11 @@ namespace Content.Server.Database
                 query = query.Where(log => filter.Types.Contains(log.Type));
             }
 
+            if (filter.Impacts != null)
+            {
+                query = query.Where(log => filter.Impacts.Contains(log.Impact));
+            }
+
             if (filter.Before != null)
             {
                 query = query.Where(log => log.Date < filter.Before);
@@ -633,7 +638,13 @@ namespace Content.Server.Database
 
             await foreach (var log in query.AsAsyncEnumerable())
             {
-                yield return new LogRecord(log.Id, log.RoundId, log.Type, log.Date, log.Message);
+                var players = new Guid[log.Players.Count];
+                for (var i = 0; i < log.Players.Count; i++)
+                {
+                    players[i] = log.Players[i].PlayerUserId;
+                }
+
+                yield return new LogRecord(log.Id, log.RoundId, log.Type, log.Impact, log.Date, log.Message, players);
             }
         }
 

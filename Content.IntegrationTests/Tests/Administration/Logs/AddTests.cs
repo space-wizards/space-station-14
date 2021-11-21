@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.Database;
-using Content.Server.GameTicking;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using NUnit.Framework;
@@ -124,7 +123,7 @@ public class AddTests : ContentIntegrationTest
                 {
                     Round = log.RoundId,
                     Search = log.Message,
-                    Types = new List<LogType> {log.Type}
+                    Types = new List<LogType> {log.Type},
                 };
 
                 await foreach (var json in sDatabase.GetAdminLogsJson(filter))

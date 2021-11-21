@@ -30,6 +30,8 @@ public class AdminLogSystem : EntitySystem
     [Dependency] private readonly IDynamicTypeFactory _typeFactory = default!;
     [Dependency] private readonly IReflectionManager _reflection = default!;
 
+    public const string SawmillId = "admin.logs";
+
     private static readonly Histogram DatabaseUpdateTime = Metrics.CreateHistogram(
         "admin_logs_database_time",
         "Time used to send logs to the database in ms",
@@ -47,7 +49,7 @@ public class AdminLogSystem : EntitySystem
         "Amount of logs sent to the database in a round.");
 
     // Init only
-    private ISawmill _log = default!;
+    private ISawmill _sawmill = default!;
     private JsonSerializerOptions _jsonOptions = default!;
 
     // CVars
@@ -66,7 +68,7 @@ public class AdminLogSystem : EntitySystem
     {
         base.Initialize();
 
-        _log = _logManager.GetSawmill("admin.logs");
+        _sawmill = _logManager.GetSawmill(SawmillId);
         _jsonOptions = new JsonSerializerOptions();
 
         foreach (var converter in _reflection.FindTypesWithAttribute<AdminLogConverterAttribute>())
@@ -76,7 +78,7 @@ public class AdminLogSystem : EntitySystem
         }
 
         var converterNames = _jsonOptions.Converters.Select(converter => converter.GetType().Name);
-        _log.Info($"Admin log converters found: {string.Join(" ", converterNames)}");
+        _sawmill.Info($"Admin log converters found: {string.Join(" ", converterNames)}");
 
         _configuration.OnValueChanged(CVars.MetricsEnabled,
             value => _metricsEnabled = value, true);
@@ -163,12 +165,13 @@ public class AdminLogSystem : EntitySystem
         }
     }
 
-    private async void Add(LogType type, string message, JsonDocument json, List<Guid> players, List<(int id, string? name)> entities)
+    private async void Add(LogType type, LogImpact impact, string message, JsonDocument json, List<Guid> players, List<(int id, string? name)> entities)
     {
         var log = new AdminLog
         {
             RoundId = _roundId,
             Type = type,
+            Impact = impact,
             Date = DateTime.UtcNow,
             Message = message,
             Json = json,
@@ -190,12 +193,17 @@ public class AdminLogSystem : EntitySystem
         }
     }
 
-    public void Add(LogType type, ref LogStringHandler handler)
+    public void Add(LogType type, LogImpact impact, ref LogStringHandler handler)
     {
         var (json, players, entities) = handler.ToJson(_jsonOptions, _entities);
         var message = handler.ToStringAndClear();
 
-        Add(type, message, json, players, entities);
+        Add(type, impact, message, json, players, entities);
+    }
+
+    public void Add(LogType type, ref LogStringHandler handler)
+    {
+        Add(type, LogImpact.Medium, ref handler);
     }
 
     public IAsyncEnumerable<LogRecord> All(LogFilter? filter = null)

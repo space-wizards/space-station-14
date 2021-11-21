@@ -99,6 +99,10 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("date");
 
+                    b.Property<short>("Impact")
+                        .HasColumnType("smallint")
+                        .HasColumnName("impact");
+
                     b.Property<JsonDocument>("Json")
                         .IsRequired()
                         .HasColumnType("jsonb")

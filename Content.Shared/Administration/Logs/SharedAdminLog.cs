@@ -6,5 +6,8 @@ namespace Content.Shared.Administration.Logs;
 [Serializable, NetSerializable]
 public readonly record struct SharedAdminLog(
     int Id,
+    LogType Type,
+    LogImpact Impact,
     DateTime Date,
-    string Message);
+    string Message,
+    Guid[] Players);

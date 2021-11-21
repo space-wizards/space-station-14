@@ -15,6 +15,8 @@ public sealed class LogFilter
 
     public List<LogType>? Types { get; set; }
 
+    public List<LogImpact>? Impacts { get; set; }
+
     public DateTime? Before { get; set; }
 
     public DateTime? After { get; set; }

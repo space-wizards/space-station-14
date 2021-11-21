@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.EUI;
 using Content.Server.GameTicking;
@@ -14,15 +13,18 @@ using Content.Shared.Eui;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using static Content.Shared.Administration.AdminLogsEuiMsg;
 
-namespace Content.Server.Administration.UI;
+namespace Content.Server.Administration.Logs;
 
 public sealed class AdminLogsEui : BaseEui
 {
     [Dependency] private readonly IAdminManager _adminManager = default!;
+    [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly IConfigurationManager _configuration = default!;
 
+    private readonly ISawmill _sawmill;
     private readonly AdminLogSystem _logSystem;
 
     private int _clientBatchSize;
@@ -34,6 +36,8 @@ public sealed class AdminLogsEui : BaseEui
     public AdminLogsEui()
     {
         IoCManager.InjectDependencies(this);
+
+        _sawmill = _logManager.GetSawmill(AdminLogSystem.SawmillId);
 
         _configuration.OnValueChanged(CCVars.AdminLogsClientBatchSize, ClientBatchSizeChanged, true);
 
@@ -101,6 +105,8 @@ public sealed class AdminLogsEui : BaseEui
             }
             case LogsRequest request:
             {
+                _sawmill.Info($"Admin log request from admin with id {Player.UserId.UserId} and name {Player.Name}");
+
                 _logSendCancellation.Cancel();
                 _logSendCancellation = new CancellationTokenSource();
                 _filter = new LogFilter
@@ -108,6 +114,7 @@ public sealed class AdminLogsEui : BaseEui
                     CancellationToken = _logSendCancellation.Token,
                     Round = request.RoundId,
                     Types = request.Types,
+                    Impacts = request.Impacts,
                     Before = request.Before,
                     After = request.After,
                     AnyPlayers = request.AnyPlayers,
@@ -119,35 +126,44 @@ public sealed class AdminLogsEui : BaseEui
                 var roundId = _filter.Round ??= EntitySystem.Get<GameTicker>().RoundId;
                 LoadFromDb(roundId);
 
-                var logs = await Task.Run(() => _logSystem.All(_filter));
-                SendLogs(logs, true);
+                SendLogs(true);
                 break;
             }
             case NextLogsRequest:
             {
-                var results = await Task.Run(() => _logSystem.All(_filter));
-                SendLogs(results, false);
+                _sawmill.Info($"Admin log next batch request from admin with id {Player.UserId.UserId} and name {Player.Name}");
+
+                SendLogs(false);
                 break;
             }
         }
     }
 
-    private async void SendLogs(IAsyncEnumerable<LogRecord> enumerable, bool replace)
+    private async void SendLogs(bool replace)
     {
         var logs = new List<SharedAdminLog>(_clientBatchSize);
 
         await Task.Run(async () =>
         {
-            await foreach (var record in enumerable.WithCancellation(_logSendCancellation.Token))
+            var results = await Task.Run(() => _logSystem.All(_filter));
+
+            await foreach (var record in results.WithCancellation(_logSendCancellation.Token))
             {
-                var log = new SharedAdminLog(record.Id, record.Date, record.Message);
+                var log = new SharedAdminLog(record.Id, record.Type, record.Impact, record.Date, record.Message, record.Players);
                 logs.Add(log);
             }
-        });
+        }, _filter.CancellationToken);
 
         if (logs.Count > 0)
         {
-            _filter.LastLogId = logs[^1].Id;
+            var largestId = _filter.DateOrder switch
+            {
+                DateOrder.Ascending => ^1,
+                DateOrder.Descending => 0,
+                _ => throw new ArgumentOutOfRangeException(nameof(_filter.DateOrder), _filter.DateOrder, null)
+            };
+
+            _filter.LastLogId = logs[largestId].Id;
         }
 
         var message = new NewLogs(logs.ToArray(), replace);

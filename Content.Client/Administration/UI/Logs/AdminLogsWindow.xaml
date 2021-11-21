@@ -8,8 +8,9 @@
             <BoxContainer Orientation="Horizontal" MinWidth="400">
                 <Label Text="{Loc admin-logs-round}"/>
                 <SpinBox Name="RoundSpinBox" Value="0" MinWidth="150"/>
-                <Control HorizontalExpand="True"></Control>
-                <Button Name="ResetRoundButton" Text="{Loc admin-logs-reset}" HorizontalAlignment="Right"/>
+                <Control HorizontalExpand="True"/>
+                <Button Name="ResetRoundButton" Text="{Loc admin-logs-reset}" HorizontalAlignment="Right"
+                        StyleClasses="OpenRight"/>
             </BoxContainer>
             <BoxContainer Orientation="Horizontal" VerticalExpand="True">
                 <BoxContainer Orientation="Vertical" MinWidth="200">
@@ -17,9 +18,9 @@
                               HorizontalExpand="true" PlaceHolder="{Loc admin-logs-search-types-placeholder}"/>
                     <BoxContainer Orientation="Horizontal">
                         <Button Name="SelectAllTypesButton" Text="{Loc admin-logs-select-all}"
-                                MinWidth="100"/>
+                                MinWidth="100" StyleClasses="ButtonSquare"/>
                         <Button Name="SelectNoTypesButton" Text="{Loc admin-logs-select-none}"
-                                MinWidth="100"/>
+                                MinWidth="100" StyleClasses="ButtonSquare"/>
                     </BoxContainer>
                     <ScrollContainer VerticalExpand="True">
                         <BoxContainer Name="TypesContainer" Access="Public" Orientation="Vertical"/>
@@ -29,7 +30,8 @@
                 <BoxContainer Orientation="Vertical" MinWidth="200">
                     <LineEdit Name="PlayerSearch" Access="Public" StyleClasses="actionSearchBox"
                               HorizontalExpand="true" PlaceHolder="{Loc admin-logs-search-players-placeholder}"/>
-                    <Button Name="SelectNoPlayersButton" Text="{Loc admin-logs-select-none}"/>
+                    <Button Name="SelectNoPlayersButton" Text="{Loc admin-logs-select-none}"
+                            StyleClasses="ButtonSquare"/>
                     <ScrollContainer VerticalExpand="True">
                         <BoxContainer Name="PlayersContainer" Access="Public" Orientation="Vertical"/>
                     </ScrollContainer>
@@ -38,10 +40,11 @@
             </BoxContainer>
         </BoxContainer>
         <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+            <BoxContainer Name="LogImpactContainer" Orientation="Horizontal"/>
             <BoxContainer Orientation="Horizontal">
                 <LineEdit Name="LogSearch" Access="Public" StyleClasses="actionSearchBox"
                           HorizontalExpand="true" PlaceHolder="{Loc admin-logs-search-logs-placeholder}"/>
-                <Button Name="RefreshButton" Access="Public" Text="{Loc admin-logs-refresh}" StyleClasses="OpenRight"/>
+                <Button Name="RefreshButton" Access="Public" Text="{Loc admin-logs-refresh}" StyleClasses="ButtonSquare"/>
                 <Button Name="NextButton" Access="Public" Text="{Loc admin-logs-next}" StyleClasses="OpenLeft"/>
             </BoxContainer>
             <ScrollContainer VerticalExpand="True" HorizontalExpand="True" HScrollEnabled="False">

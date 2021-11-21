@@ -264,6 +264,8 @@ namespace Content.Server.Database
 
         [Required] public LogType Type { get; set; }
 
+        [Required] public LogImpact Impact { get; set; }
+
         [Required] public DateTime Date { get; set; }
 
         [Required] public string Message { get; set; } = default!;
