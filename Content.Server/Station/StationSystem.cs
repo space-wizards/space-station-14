@@ -88,9 +88,9 @@ namespace Content.Server.Station
             public static StationId Invalid => new(0);
         }
 
-        public StationId InitialSetupStationGrid(EntityUid mapGrid, GameMapPrototype mapPrototype)
+        public StationId InitialSetupStationGrid(EntityUid mapGrid, GameMapPrototype mapPrototype, IMapGridComponent? gridComponent = null)
         {
-            if (!EntityManager.TryGetComponent<IMapGridComponent>(mapGrid, out var grid))
+            if (!Resolve(mapGrid, ref gridComponent))
                 throw new ArgumentException("Tried to initialize a station on a non-grid entity!");
 
             var jobListDict = mapPrototype.AvailableJobs.ToDictionary(x => x.Key, x => x.Value[1]);
@@ -103,20 +103,19 @@ namespace Content.Server.Station
             _gameTicker.UpdateJobsAvailable(); // new station means new jobs, tell any lobby-goers.
 
             Logger.InfoS("stations",
-                $"Setting up new {mapPrototype.ID} called {mapPrototype.MapName} on grid {mapGrid}:{grid.GridIndex}");
+                $"Setting up new {mapPrototype.ID} called {mapPrototype.MapName} on grid {mapGrid}:{gridComponent.GridIndex}");
 
             return id;
         }
 
-        public void AddGridToStation(EntityUid mapGrid, StationId station)
+        public void AddGridToStation(EntityUid mapGrid, StationId station, IMapGridComponent? gridComponent = null)
         {
-            if (!EntityManager.TryGetComponent<IMapGridComponent>(mapGrid, out var grid))
-                throw new ArgumentException("Tried to assign a station to a non-grid entity!");
-
+            if (!Resolve(mapGrid, ref gridComponent))
+                throw new ArgumentException("Tried to initialize a station on a non-grid entity!");
             var stationComponent = EntityManager.AddComponent<StationComponent>(mapGrid);
             stationComponent.Station = station;
 
-            Logger.InfoS("stations", $"Adding grid {mapGrid}:{grid.GridIndex} to station {station} named {_stationInfo[station].Name}");
+            Logger.InfoS("stations", $"Adding grid {mapGrid}:{gridComponent.GridIndex} to station {station} named {_stationInfo[station].Name}");
         }
 
         /// <summary>
