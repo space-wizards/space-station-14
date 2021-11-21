@@ -1,16 +1,12 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Server.Roles;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Server.Player;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -172,7 +168,6 @@ namespace Content.Server.GameTicking
                 jobs.Add(id.Id, list);
                 stationNames.Add(id.Id, station.Name);
             }
-            Logger.Debug($"Sent {jobs.Count} stations worth of jobs, and {stationNames.Count} stations.");
             return new TickerJobsAvailableEvent(stationNames, jobs);
         }
 

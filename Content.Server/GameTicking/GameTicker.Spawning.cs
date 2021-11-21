@@ -4,7 +4,6 @@ using System.Globalization;
 using System.Linq;
 using Content.Server.Access.Components;
 using Content.Server.Access.Systems;
-using Content.Server.CharacterAppearance.Components;
 using Content.Server.Ghost;
 using Content.Server.Ghost.Components;
 using Content.Server.Hands.Components;
@@ -64,6 +63,7 @@ namespace Content.Server.GameTicking
                     throw new ApplicationException("No stations were loaded when attempting to spawn a player!");
                 station = stations[0];
             }
+
             // Can't spawn players with a dummy ticker!
             if (DummyTicker)
                 return;
@@ -275,8 +275,9 @@ namespace Content.Server.GameTicking
             foreach (var (point, transform) in EntityManager.EntityQuery<SpawnPointComponent, TransformComponent>())
             {
                 var matchingStation =
-                    EntityManager.TryGetComponent<StationComponent>(transform.OwnerUid, out var stationComponent) &&
-                    stationComponent.Station == station;
+                    EntityManager.TryGetComponent<StationComponent>(transform.ParentUid, out var stationComponent) &&
+                    stationComponent.Station.Id == station.Id;
+                DebugTools.Assert(EntityManager.TryGetComponent<IMapGridComponent>(transform.ParentUid, out _));
 
                 if (point.SpawnType == SpawnPointType.Job && point.Job?.ID == jobId && matchingStation)
                     _possiblePositions.Add(transform.Coordinates);
@@ -297,8 +298,9 @@ namespace Content.Server.GameTicking
             foreach (var (point, transform) in EntityManager.EntityQuery<SpawnPointComponent, TransformComponent>())
             {
                 var matchingStation =
-                    EntityManager.TryGetComponent<StationComponent>(transform.OwnerUid, out var stationComponent) &&
-                    stationComponent.Station == station;
+                    EntityManager.TryGetComponent<StationComponent>(transform.ParentUid, out var stationComponent) &&
+                    stationComponent.Station.Id == station.Id;
+                DebugTools.Assert(EntityManager.TryGetComponent<IMapGridComponent>(transform.ParentUid, out _));
 
                 if (point.SpawnType == SpawnPointType.LateJoin && matchingStation)
                     _possiblePositions.Add(transform.Coordinates);

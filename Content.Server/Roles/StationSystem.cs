@@ -1,12 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameTicking;
 using Content.Server.Maps;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Log;
-using Robust.Shared.Map;
 
 namespace Content.Server.Roles
 {
@@ -15,9 +12,12 @@ namespace Content.Server.Roles
     /// </summary>
     public class StationSystem : EntitySystem
     {
-        [Dependency] private GameTicker _gameTicker = default!;
         private uint _idCounter = 1;
+
         private Dictionary<StationId, StationInfoData> _stationInfo = new();
+        /// <summary>
+        /// List of stations for the current round.
+        /// </summary>
         public IReadOnlyDictionary<StationId, StationInfoData> StationInfo => _stationInfo;
 
         public override void Initialize()
@@ -29,7 +29,7 @@ namespace Content.Server.Roles
         /// <summary>
         /// Cleans up station info.
         /// </summary>
-        public void OnRoundEnd(GameRunLevelChangedEvent eventArgs)
+        private void OnRoundEnd(GameRunLevelChangedEvent eventArgs)
         {
             if (eventArgs.New == GameRunLevel.PostRound)
                 _stationInfo = new();
@@ -92,6 +92,8 @@ namespace Content.Server.Roles
             Logger.Debug($"setting up station with {jobListDict.Keys.Count} jobs");
             var id = AllocateStationInfo();
             _stationInfo[id] = new StationInfoData(mapPrototype.MapName, mapPrototype, jobListDict);
+            var station = EntityManager.AddComponent<StationComponent>(mapGrid);
+            station.Station = id;
             return id;
         }
 
