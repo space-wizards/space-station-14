@@ -32,6 +32,7 @@ namespace Content.Server.GameTicking
             // Current strategy is to fill each station one by one.
             foreach (var (id, station) in _stationSystem.StationInfo)
             {
+                // Get the ROUND-START job list.
                 var availablePositions = station.MapPrototype.AvailableJobs.ToDictionary(x => x.Key, x => x.Value[0]);
                 for (var i = JobPriority.High; i > JobPriority.Never; i--)
                 {
@@ -136,15 +137,15 @@ namespace Content.Server.GameTicking
                 return picked;
             }
 
-            return OverflowJob;
+            return _stationSystem.StationInfo[station].;
         }
 
         [Conditional("DEBUG")]
         private void InitializeJobController()
         {
             // Verify that the overflow role exists and has the correct name.
-            var role = _prototypeManager.Index<JobPrototype>(OverflowJob);
-            DebugTools.Assert(role.Name == Loc.GetString(OverflowJobName),
+            var role = _prototypeManager.Index<JobPrototype>(FallbackOverflowJob);
+            DebugTools.Assert(role.Name == Loc.GetString(FallbackOverflowJobName),
                 "Overflow role does not have the correct name!");
         }
 

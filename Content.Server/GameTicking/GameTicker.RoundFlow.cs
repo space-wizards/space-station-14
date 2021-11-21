@@ -146,7 +146,17 @@ namespace Content.Server.GameTicking
                 var profile = profiles[player.UserId];
                 if (profile.PreferenceUnavailable == PreferenceUnavailableMode.SpawnAsOverflow)
                 {
-                    assignedJobs.Add(player, (OverflowJob, StationSystem.StationId.Invalid));
+                    // Pick a random station
+                    var stations = _stationSystem.StationInfo.Keys.ToList();
+                    _robustRandom.Shuffle(stations);
+
+                    if (stations.Count == 0)
+                        assignedJobs.Add(player, (FallbackOverflowJob, StationSystem.StationId.Invalid));
+
+                    // Pick a random overflow job from that station
+                    var overflows = _stationSystem.StationInfo[stations[0]].MapPrototype.OverflowJob.Clone();
+                    _robustRandom.Shuffle(overflows);
+                    assignedJobs.Add(player, (overflows[0], stations[0]));
                 }
             }
 
