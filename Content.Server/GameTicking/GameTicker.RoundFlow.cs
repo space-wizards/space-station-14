@@ -108,7 +108,7 @@ namespace Content.Server.GameTicking
             var playerIds = _playersInLobby.Keys.Select(player => player.UserId.UserId).ToArray();
             RoundId = await _db.AddNewRound(playerIds);
 
-            var startingEvent = new RoundStartingEvent(RoundId);
+            var startingEvent = new RoundStartingEvent();
             RaiseLocalEvent(startingEvent);
 
             SendServerMessage(Loc.GetString("game-ticker-start-round"));
@@ -204,9 +204,6 @@ namespace Content.Server.GameTicking
             ReqWindowAttentionAll();
             UpdateLateJoinStatus();
             UpdateJobsAvailable();
-
-            var startedEvent = new RoundStartedEvent(RoundId);
-            RaiseLocalEvent(startedEvent);
         }
 
         public void EndRound(string text = "")

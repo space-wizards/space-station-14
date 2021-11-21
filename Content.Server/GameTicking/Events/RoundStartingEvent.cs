@@ -7,10 +7,4 @@ namespace Content.Server.GameTicking.Events;
 /// </summary>
 public class RoundStartingEvent : EntityEventArgs
 {
-    public RoundStartingEvent(int roundId)
-    {
-        RoundId = roundId;
-    }
-
-    public int RoundId { get; set; }
 }

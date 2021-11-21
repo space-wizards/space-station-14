@@ -7,6 +7,7 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs.Converters;
 using Content.Server.Database;
+using Content.Server.GameTicking;
 using Content.Server.GameTicking.Events;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
@@ -30,6 +31,8 @@ public class AdminLogSystem : SharedAdminLogSystem
     [Dependency] private readonly IServerDbManager _db = default!;
     [Dependency] private readonly IDynamicTypeFactory _typeFactory = default!;
     [Dependency] private readonly IReflectionManager _reflection = default!;
+
+    [Dependency] private readonly GameTicker _gameTicker = default!;
 
     public const string SawmillId = "admin.logs";
 
@@ -60,12 +63,11 @@ public class AdminLogSystem : SharedAdminLogSystem
     private TimeSpan _queueSendDelay;
     private int _queueMax;
 
-    // Per round
-    private int _roundId;
-
     // Per update
     private float _accumulatedFrameTime;
     private readonly ConcurrentQueue<QueuedLog> _logsToAdd = new();
+
+    private int CurrentRoundId => _gameTicker.RoundId;
 
     public override void Initialize()
     {
@@ -162,8 +164,6 @@ public class AdminLogSystem : SharedAdminLogSystem
 
     private void RoundStarting(RoundStartingEvent ev)
     {
-        _roundId = ev.RoundId;
-
         if (_metricsEnabled)
         {
             QueueCapReached.Set(0);
@@ -217,7 +217,7 @@ public class AdminLogSystem : SharedAdminLogSystem
     {
         var log = new AdminLog
         {
-            RoundId = _roundId,
+            RoundId = CurrentRoundId,
             Type = type,
             Impact = impact,
             Date = DateTime.UtcNow,
@@ -234,7 +234,7 @@ public class AdminLogSystem : SharedAdminLogSystem
             var player = new AdminLogPlayer
             {
                 PlayerUserId = id,
-                RoundId = _roundId
+                RoundId = CurrentRoundId
             };
 
             log.Players.Add(player);
@@ -277,26 +277,26 @@ public class AdminLogSystem : SharedAdminLogSystem
     public IAsyncEnumerable<LogRecord> CurrentRoundLogs(LogFilter? filter = null)
     {
         filter ??= new LogFilter();
-        filter.Round = _roundId;
+        filter.Round = CurrentRoundId;
         return All(filter);
     }
 
     public IAsyncEnumerable<string> CurrentRoundMessages(LogFilter? filter = null)
     {
         filter ??= new LogFilter();
-        filter.Round = _roundId;
+        filter.Round = CurrentRoundId;
         return AllMessages(filter);
     }
 
     public IAsyncEnumerable<JsonDocument> CurrentRoundJson(LogFilter? filter = null)
     {
         filter ??= new LogFilter();
-        filter.Round = _roundId;
+        filter.Round = CurrentRoundId;
         return AllJson(filter);
     }
 
     public Task<Round> CurrentRound()
     {
-        return Round(_roundId);
+        return Round(CurrentRoundId);
     }
 }
