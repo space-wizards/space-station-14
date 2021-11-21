@@ -61,8 +61,7 @@
   mapPath: Maps/knightship.yml
   minPlayers: 0
   maxPlayers: 8
-  overflowJobs:
-    - Assistant
+  overflowJobs: []
   availableJobs:
     Bartender: [ 1, 1 ]
     Captain: [ 1, 1 ]

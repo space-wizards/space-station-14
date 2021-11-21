@@ -151,12 +151,24 @@ namespace Content.Server.GameTicking
                     _robustRandom.Shuffle(stations);
 
                     if (stations.Count == 0)
+                    {
                         assignedJobs.Add(player, (FallbackOverflowJob, StationSystem.StationId.Invalid));
+                        continue;
+                    }
 
-                    // Pick a random overflow job from that station
-                    var overflows = _stationSystem.StationInfo[stations[0]].MapPrototype.OverflowJobs.Clone();
-                    _robustRandom.Shuffle(overflows);
-                    assignedJobs.Add(player, (overflows[0], stations[0]));
+                    foreach (var station in stations)
+                    {
+                        // Pick a random overflow job from that station
+                        var overflows = _stationSystem.StationInfo[station].MapPrototype.OverflowJobs.Clone();
+                        _robustRandom.Shuffle(overflows);
+
+                        // Stations with no overflow slots should simply get skipped over.
+                        if (overflows.Count == 0)
+                            continue;
+
+                        // If the overflow exists, put them in as it.
+                        assignedJobs.Add(player, (overflows[0], stations[0]));
+                    }
                 }
             }
 
