@@ -3,22 +3,25 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.ContextMenu.UI;
+using Content.Client.Examine;
 using Content.Client.Popups;
 using Content.Client.Verbs.UI;
+using Content.Client.Viewport;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
+using Robust.Client.State;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using static Content.Shared.Interaction.SharedInteractionSystem;
 
 namespace Content.Client.Verbs
 {
@@ -26,6 +29,8 @@ namespace Content.Client.Verbs
     public sealed class VerbSystem : SharedVerbSystem
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly ExamineSystem _examineSystem = default!;
+        [Dependency] private readonly IStateManager _stateManager = default!;
         [Dependency] private readonly IEntityLookup _entityLookup = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
@@ -85,20 +90,28 @@ namespace Content.Client.Verbs
         public bool TryGetEntityMenuEntities(MapCoordinates targetPos, [NotNullWhen(true)] out List<IEntity>? result)
         {
             result = null;
-            var player = _playerManager.LocalPlayer?.ControlledEntity;
 
+            if (_stateManager.CurrentState is not GameScreenBase gameScreenBase)
+                return false;
+
+            var player = _playerManager.LocalPlayer?.ControlledEntity;
             if (player == null)
                 return false;
 
+            // If FOV drawing is disabled, we will modify the visibility option to ignore visiblity checks.
             var visibility = _eyeManager.CurrentEye.DrawFov
                 ? Visibility
                 : Visibility | MenuVisibility.NoFov;
 
-            // Check if we have LOS to the clicked-location.
-            if ((visibility & MenuVisibility.NoFov) == 0 &&
-                !player.InRangeUnOccluded(targetPos, range: ExamineSystemShared.ExamineRange))
-                return false;
-
+            // Do we have to do FoV checks?
+            if ((visibility & MenuVisibility.NoFov) == 0)
+            {
+                var entitiesUnderMouse = gameScreenBase.GetEntitiesUnderPosition(targetPos);
+                Ignored? predicate = e => e == player || entitiesUnderMouse.Contains(e);
+                if (!_examineSystem.CanExamine(player, targetPos, predicate))
+                    return false;
+            }
+                          
             // Get entities
             var entities = _entityLookup.GetEntitiesInRange(targetPos.MapId, targetPos.Position, EntityMenuLookupSize)
                 .ToList();
