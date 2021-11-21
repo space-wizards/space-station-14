@@ -193,9 +193,9 @@ namespace Content.IntegrationTests
                 return false;
             }
 
-            if (options.Pool == false)
+            if (options.Pool.HasValue)
             {
-                return false;
+                return options.Pool.Value;
             }
 
             if (server)
