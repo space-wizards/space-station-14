@@ -9,6 +9,7 @@ using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.State;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -21,7 +22,8 @@ namespace Content.Client.GameTicking.Managers
         [Dependency] private readonly IStateManager _stateManager = default!;
 
         [ViewVariables] private bool _initialized;
-        private readonly List<string> _jobsAvailable = new();
+        private readonly Dictionary<uint, Dictionary<string, int>>  _jobsAvailable = new();
+        private readonly Dictionary<uint, string> _stationNames = new();
 
         [ViewVariables] public bool AreWeReady { get; private set; }
         [ViewVariables] public bool IsGameStarted { get; private set; }
@@ -31,13 +33,14 @@ namespace Content.Client.GameTicking.Managers
         [ViewVariables] public TimeSpan StartTime { get; private set; }
         [ViewVariables] public bool Paused { get; private set; }
         [ViewVariables] public Dictionary<NetUserId, LobbyPlayerStatus> Status { get; private set; } = new();
-        [ViewVariables] public IReadOnlyList<string> JobsAvailable => _jobsAvailable;
+        [ViewVariables] public IReadOnlyDictionary<uint, Dictionary<string, int>> JobsAvailable => _jobsAvailable;
+        [ViewVariables] public IReadOnlyDictionary<uint, string> StationNames => _stationNames;
 
         public event Action? InfoBlobUpdated;
         public event Action? LobbyStatusUpdated;
         public event Action? LobbyReadyUpdated;
         public event Action? LobbyLateJoinStatusUpdated;
-        public event Action<IReadOnlyList<string>>? LobbyJobsAvailableUpdated;
+        public event Action<IReadOnlyDictionary<uint, Dictionary<string, int>>>? LobbyJobsAvailableUpdated;
 
         public override void Initialize()
         {
@@ -69,8 +72,18 @@ namespace Content.Client.GameTicking.Managers
 
         private void UpdateJobsAvailable(TickerJobsAvailableEvent message)
         {
+            Logger.Debug("got jobs..");
             _jobsAvailable.Clear();
-            _jobsAvailable.AddRange(message.JobsAvailable);
+            _stationNames.Clear();
+            foreach (var (key, value) in message.JobsAvailableByStation)
+            {
+                _jobsAvailable.Add(key, value);
+            }
+
+            foreach (var (key, value) in message.StationNames)
+            {
+                _stationNames.Add(key, value);
+            }
             LobbyJobsAvailableUpdated?.Invoke(JobsAvailable);
         }
 

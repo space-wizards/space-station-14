@@ -1,6 +1,7 @@
 using Content.Server.Chat.Managers;
 using Content.Server.Maps;
 using Content.Server.Preferences.Managers;
+using Content.Server.Roles;
 using Content.Shared.Chat;
 using Content.Shared.GameTicking;
 using Content.Shared.GameWindow;
@@ -87,5 +88,6 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly IWatchdogApi _watchdogApi = default!;
         [Dependency] private readonly IReflectionManager _reflectionManager = default!;
         [Dependency] private readonly IGameMapManager _gameMapManager = default!;
+        [Dependency] private readonly StationSystem _stationSystem = default!;
     }
 }

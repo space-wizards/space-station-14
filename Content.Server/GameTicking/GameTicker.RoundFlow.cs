@@ -4,6 +4,7 @@ using System.Linq;
 using Content.Server.Players;
 using Content.Server.Mind;
 using Content.Server.Ghost;
+using Content.Server.Roles;
 using Content.Shared.CCVar;
 using Content.Shared.Coordinates;
 using Content.Shared.GameTicking;
@@ -58,13 +59,16 @@ namespace Content.Server.GameTicking
         {
             DefaultMap = _mapManager.CreateMap();
             var startTime = _gameTiming.RealTime;
-            var map = _gameMapManager.GetSelectedMapChecked(true).MapPath;
-            var grid = _mapLoader.LoadBlueprint(DefaultMap, map);
+            var map = _gameMapManager.GetSelectedMapChecked(true);
+            var grid = _mapLoader.LoadBlueprint(DefaultMap, map.MapPath);
+
 
             if (grid == null)
             {
-                throw new InvalidOperationException($"No grid found for map {map}");
+                throw new InvalidOperationException($"No grid found for map {map.MapName}");
             }
+
+            _stationSystem.InitialSetupStationGrid(grid.GridEntityId, map);
 
             var stationXform = EntityManager.GetComponent<TransformComponent>(grid.GridEntityId);
 
@@ -141,14 +145,14 @@ namespace Content.Server.GameTicking
                 var profile = profiles[player.UserId];
                 if (profile.PreferenceUnavailable == PreferenceUnavailableMode.SpawnAsOverflow)
                 {
-                    assignedJobs.Add(player, OverflowJob);
+                    assignedJobs.Add(player, (OverflowJob, StationSystem.StationId.Invalid));
                 }
             }
 
             // Spawn everybody in!
             foreach (var (player, job) in assignedJobs)
             {
-                SpawnPlayer(player, profiles[player.UserId], job, false);
+                SpawnPlayer(player, profiles[player.UserId], job.Item2, job.Item1, false);
             }
 
             // Time to start the preset.

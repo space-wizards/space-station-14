@@ -1,4 +1,5 @@
 using Content.Server.Players;
+using Content.Server.Roles;
 using Content.Shared.GameTicking;
 using Content.Shared.GameWindow;
 using Content.Shared.Preferences;
@@ -104,7 +105,7 @@ namespace Content.Server.GameTicking
             async void SpawnWaitPrefs()
             {
                 await _prefsManager.WaitPreferencesLoaded(session);
-                SpawnPlayer(session);
+                SpawnPlayer(session, StationSystem.StationId.Invalid);
             }
         }
 

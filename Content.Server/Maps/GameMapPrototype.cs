@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -49,5 +50,8 @@ namespace Content.Server.Maps
         /// </summary>
         [ViewVariables, DataField("votable")]
         public bool Votable { get; } = true;
+
+        [ViewVariables, DataField("availableJobs", required: true)]
+        public Dictionary<string, List<int>> AvailableJobs { get; } = default!;
     }
 }

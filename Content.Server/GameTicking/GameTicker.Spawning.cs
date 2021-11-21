@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using Content.Server.Access.Components;
 using Content.Server.Access.Systems;
 using Content.Server.CharacterAppearance.Components;
@@ -28,6 +29,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
+using static Content.Server.Roles.StationSystem;
 
 namespace Content.Server.GameTicking
 {
@@ -44,16 +46,24 @@ namespace Content.Server.GameTicking
         // Mainly to avoid allocations.
         private readonly List<EntityCoordinates> _possiblePositions = new();
 
-        private void SpawnPlayer(IPlayerSession player, string? jobId = null, bool lateJoin = true)
+        private void SpawnPlayer(IPlayerSession player, StationId station, string? jobId = null, bool lateJoin = true)
         {
             var character = GetPlayerProfile(player);
 
-            SpawnPlayer(player, character, jobId, lateJoin);
+            SpawnPlayer(player, character, station, jobId, lateJoin);
             UpdateJobsAvailable();
         }
 
-        private void SpawnPlayer(IPlayerSession player, HumanoidCharacterProfile character, string? jobId = null, bool lateJoin = true)
+        private void SpawnPlayer(IPlayerSession player, HumanoidCharacterProfile character, StationId station, string? jobId = null, bool lateJoin = true)
         {
+            if (station == StationId.Invalid)
+            {
+                var stations = _stationSystem.StationInfo.Keys.ToList();
+                _robustRandom.Shuffle(stations);
+                if (stations.Count == 0)
+                    throw new ApplicationException("No stations were loaded when attempting to spawn a player!");
+                station = stations[0];
+            }
             // Can't spawn players with a dummy ticker!
             if (DummyTicker)
                 return;
@@ -78,7 +88,7 @@ namespace Content.Server.GameTicking
             newMind.ChangeOwningPlayer(data.UserId);
 
             // Pick best job best on prefs.
-            jobId ??= PickBestAvailableJob(character);
+            jobId ??= PickBestAvailableJob(character, station);
 
             var jobPrototype = _prototypeManager.Index<JobPrototype>(jobId);
             var job = new Job(newMind, jobPrototype);
@@ -93,7 +103,7 @@ namespace Content.Server.GameTicking
                     ), Loc.GetString("latejoin-arrival-sender"));
             }
 
-            var mob = SpawnPlayerMob(job, character, lateJoin);
+            var mob = SpawnPlayerMob(job, character, station, lateJoin);
             newMind.TransferTo(mob.Uid);
 
             if (player.UserId == new Guid("{e887eb93-f503-4b65-95b6-2f282c014192}"))
@@ -110,6 +120,8 @@ namespace Content.Server.GameTicking
                 jobSpecial.AfterEquip(mob);
             }
 
+            _stationSystem.TryAssignJobToStation(station, jobId);
+
             Preset?.OnSpawnPlayerCompleted(player, mob, lateJoin);
         }
 
@@ -120,10 +132,10 @@ namespace Content.Server.GameTicking
             if (LobbyEnabled)
                 PlayerJoinLobby(player);
             else
-                SpawnPlayer(player);
+                SpawnPlayer(player, StationId.Invalid);
         }
 
-        public void MakeJoinGame(IPlayerSession player, string? jobId = null)
+        public void MakeJoinGame(IPlayerSession player, StationId station, string? jobId = null)
         {
             if (!_playersInLobby.ContainsKey(player)) return;
 
@@ -132,7 +144,7 @@ namespace Content.Server.GameTicking
                 return;
             }
 
-            SpawnPlayer(player, jobId);
+            SpawnPlayer(player, station, jobId);
         }
 
         public void MakeObserve(IPlayerSession player)
@@ -167,9 +179,9 @@ namespace Content.Server.GameTicking
         }
 
         #region Mob Spawning Helpers
-        private IEntity SpawnPlayerMob(Job job, HumanoidCharacterProfile? profile, bool lateJoin = true)
+        private IEntity SpawnPlayerMob(Job job, HumanoidCharacterProfile? profile, StationId station, bool lateJoin = true)
         {
-            var coordinates = lateJoin ? GetLateJoinSpawnPoint() : GetJobSpawnPoint(job.Prototype.ID);
+            var coordinates = lateJoin ? GetLateJoinSpawnPoint(station) : GetJobSpawnPoint(job.Prototype.ID, station);
             var entity = EntityManager.SpawnEntity(PlayerPrototypeName, coordinates);
 
             if (job.StartingGear != null)
@@ -254,7 +266,7 @@ namespace Content.Server.GameTicking
         }
 
         #region Spawn Points
-        public EntityCoordinates GetJobSpawnPoint(string jobId)
+        public EntityCoordinates GetJobSpawnPoint(string jobId, StationId station)
         {
             var location = _spawnPoint;
 
@@ -262,7 +274,11 @@ namespace Content.Server.GameTicking
 
             foreach (var (point, transform) in EntityManager.EntityQuery<SpawnPointComponent, TransformComponent>())
             {
-                if (point.SpawnType == SpawnPointType.Job && point.Job?.ID == jobId)
+                var matchingStation =
+                    EntityManager.TryGetComponent<StationComponent>(transform.OwnerUid, out var stationComponent) &&
+                    stationComponent.Station == station;
+
+                if (point.SpawnType == SpawnPointType.Job && point.Job?.ID == jobId && matchingStation)
                     _possiblePositions.Add(transform.Coordinates);
             }
 
@@ -272,7 +288,7 @@ namespace Content.Server.GameTicking
             return location;
         }
 
-        public EntityCoordinates GetLateJoinSpawnPoint()
+        public EntityCoordinates GetLateJoinSpawnPoint(StationId station)
         {
             var location = _spawnPoint;
 
@@ -280,7 +296,12 @@ namespace Content.Server.GameTicking
 
             foreach (var (point, transform) in EntityManager.EntityQuery<SpawnPointComponent, TransformComponent>())
             {
-                if (point.SpawnType == SpawnPointType.LateJoin) _possiblePositions.Add(transform.Coordinates);
+                var matchingStation =
+                    EntityManager.TryGetComponent<StationComponent>(transform.OwnerUid, out var stationComponent) &&
+                    stationComponent.Station == station;
+
+                if (point.SpawnType == SpawnPointType.LateJoin && matchingStation)
+                    _possiblePositions.Add(transform.Coordinates);
             }
 
             if (_possiblePositions.Count != 0)

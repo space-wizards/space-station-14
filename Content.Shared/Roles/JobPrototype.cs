@@ -40,20 +40,6 @@ namespace Content.Shared.Roles
         [DataField("head")]
         public bool IsHead { get; private set; }
 
-        /// <summary>
-        ///     The total amount of people that can start with this job round-start.
-        /// </summary>
-        public int SpawnPositions => _spawnPositions ?? TotalPositions;
-
-        [DataField("spawnPositions")]
-        private int? _spawnPositions;
-
-        /// <summary>
-        ///     The total amount of positions available.
-        /// </summary>
-        [DataField("positions")]
-        public int TotalPositions { get; private set; }
-
         [DataField("startingGear")]
         public string? StartingGear { get; private set; }
 

@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.Roles;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Server.Player;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
+using static Content.Server.Roles.StationSystem;
 
 namespace Content.Server.GameTicking
 {
@@ -25,131 +29,79 @@ namespace Content.Server.GameTicking
         [ViewVariables]
         private readonly Dictionary<string, int> _spawnedPositions = new();
 
-        private Dictionary<IPlayerSession, string> AssignJobs(List<IPlayerSession> available,
+        private Dictionary<IPlayerSession, (string, StationId)> AssignJobs(List<IPlayerSession> available,
             Dictionary<NetUserId, HumanoidCharacterProfile> profiles)
         {
-            // Calculate positions available round-start for each job.
-            var availablePositions = GetBasePositions(true);
-
-            // Output dictionary of assigned jobs.
-            var assigned = new Dictionary<IPlayerSession, string>();
-
-            // Go over each priority level top to bottom.
-            for (var i = JobPriority.High; i > JobPriority.Never; i--)
+            var assigned = new Dictionary<IPlayerSession, (string, StationId)>();
+            // Current strategy is to fill each station one by one.
+            foreach (var (id, station) in _stationSystem.StationInfo)
             {
-                void ProcessJobs(bool heads)
+                var availablePositions = station.MapPrototype.AvailableJobs.ToDictionary(x => x.Key, x => x.Value[0]);
+                for (var i = JobPriority.High; i > JobPriority.Never; i--)
                 {
-                    // Get all candidates for this priority & heads combo.
-                    // That is all people with at LEAST one job at this priority & heads level,
-                    // and the jobs they have selected here.
-                    var candidates = available
-                        .Select(player =>
-                        {
-                            var profile = profiles[player.UserId];
-
-                            var availableJobs = profile.JobPriorities
-                                .Where(j =>
-                                {
-                                    var (jobId, priority) = j;
-                                    if (!_prototypeManager.TryIndex(jobId, out JobPrototype? job))
-                                    {
-                                        // Job doesn't exist, probably old data?
-                                        return false;
-                                    }
-                                    if (job.IsHead != heads)
-                                    {
-                                        return false;
-                                    }
-
-                                    return priority == i;
-                                })
-                                .Select(j => j.Key)
-                                .ToList();
-
-                            return (player, availableJobs);
-                        })
-                        .Where(p => p.availableJobs.Count != 0)
-                        .ToList();
-
-                    _robustRandom.Shuffle(candidates);
-
-                    foreach (var (candidate, jobs) in candidates)
+                    void ProcessJobs(bool heads)
                     {
-                        while (jobs.Count != 0)
-                        {
-                            var picked = _robustRandom.Pick(jobs);
-
-                            var openPositions = availablePositions.GetValueOrDefault(picked, 0);
-                            if (openPositions == 0)
+                        var candidates = available.Select(player =>
                             {
-                                jobs.Remove(picked);
-                                continue;
+                                var profile = profiles[player.UserId];
+
+                                var availableJobs = profile.JobPriorities
+                                    .Where(j =>
+                                    {
+                                        var (jobId, priority) = j;
+                                        if (!_prototypeManager.TryIndex(jobId, out JobPrototype? job))
+                                        {
+                                            // Job doesn't exist, probably old data?
+                                            return false;
+                                        }
+
+                                        if (job.IsHead != heads)
+                                        {
+                                            return false;
+                                        }
+
+                                        return priority == i;
+                                    })
+                                    .Select(j => j.Key)
+                                    .ToList();
+
+                                return (player, availableJobs);
+                            })
+                            .Where(p => p.availableJobs.Count != 0)
+                            .ToList();
+
+                        foreach (var (candidate, jobs) in candidates)
+                        {
+                            while (jobs.Count != 0)
+                            {
+                                var picked = _robustRandom.Pick(jobs);
+
+                                var openPositions = availablePositions.GetValueOrDefault(picked, 0);
+                                if (openPositions == 0)
+                                {
+                                    jobs.Remove(picked);
+                                    continue;
+                                }
+
+                                availablePositions[picked] -= 1;
+                                assigned.Add(candidate, (picked, id));
+                                break;
                             }
-
-                            availablePositions[picked] -= 1;
-                            assigned.Add(candidate, picked);
-                            break;
                         }
+
+                        available.RemoveAll(a => assigned.ContainsKey(a));
                     }
-
-                    available.RemoveAll(a => assigned.ContainsKey(a));
+                    ProcessJobs(true);
+                    ProcessJobs(false);
                 }
-
-                // Process heads FIRST.
-                // This means that if you have head and non-head roles on the same priority level,
-                // you will always get picked as head.
-                // Unless of course somebody beats you to those head roles.
-                ProcessJobs(true);
-                ProcessJobs(false);
             }
 
             return assigned;
         }
 
-        /// <summary>
-        ///     Gets the available positions for all jobs, *not* accounting for the current crew manifest.
-        /// </summary>
-        private Dictionary<string, int> GetBasePositions(bool roundStart)
+        private string PickBestAvailableJob(HumanoidCharacterProfile profile, StationId station)
         {
-            var availablePositions = _prototypeManager
-                .EnumeratePrototypes<JobPrototype>()
-                // -1 is treated as infinite slots.
-                .ToDictionary(job => job.ID, job =>
-                {
-                    if (job.SpawnPositions < 0)
-                    {
-                        return int.MaxValue;
-                    }
-
-                    if (roundStart)
-                    {
-                        return job.SpawnPositions;
-                    }
-
-                    return job.TotalPositions;
-                });
-
-            return availablePositions;
-        }
-
-        /// <summary>
-        ///     Gets the remaining available job positions in the current round.
-        /// </summary>
-        public Dictionary<string, int> GetAvailablePositions()
-        {
-            var basePositions = GetBasePositions(false);
-
-            foreach (var (jobId, count) in _spawnedPositions)
-            {
-                basePositions[jobId] = Math.Max(0, basePositions[jobId] - count);
-            }
-
-            return basePositions;
-        }
-
-        private string PickBestAvailableJob(HumanoidCharacterProfile profile)
-        {
-            var available = GetAvailablePositions();
+            var available = _stationSystem.StationInfo[station].JobList;
 
             bool TryPick(JobPriority priority, [NotNullWhen(true)] out string? jobId)
             {
@@ -211,14 +163,19 @@ namespace Content.Server.GameTicking
         {
             // If late join is disallowed, return no available jobs.
             if (DisallowLateJoin)
-                return new TickerJobsAvailableEvent(Array.Empty<string>());
+                return new TickerJobsAvailableEvent(new Dictionary<uint, string>(), new Dictionary<uint, Dictionary<string, int>>());
 
-            var jobs = GetAvailablePositions()
-                .Where(e => e.Value > 0)
-                .Select(e => e.Key)
-                .ToArray();
+            var jobs = new Dictionary<uint, Dictionary<string, int>>();
+            var stationNames = new Dictionary<uint, string>();
 
-            return new TickerJobsAvailableEvent(jobs);
+            foreach (var (id, station) in _stationSystem.StationInfo)
+            {
+                var list = station.JobList.ToDictionary(x => x.Key, x => x.Value);
+                jobs.Add(id.Id, list);
+                stationNames.Add(id.Id, station.Name);
+            }
+            Logger.Debug($"Sent {jobs.Count} stations worth of jobs, and {stationNames.Count} stations.");
+            return new TickerJobsAvailableEvent(stationNames, jobs);
         }
 
         private void UpdateJobsAvailable()

@@ -5,12 +5,50 @@
   minPlayers: 0
   maxPlayers: 20
   fallback: true
+  availableJobs:
+    CargoTechnician: [ 1, 2 ]
+    Assistant: [ -1, -1 ]
+    Bartender: [ 1, 1 ]
+    Botanist: [ 2, 2 ]
+    Chef: [ 1, 1 ]
+    Clown: [ 1, 1 ]
+    Janitor: [ 1, 1 ]
+    Mime: [ 1, 1 ]
+    Captain: [ 1, 1 ]
+    HeadOfPersonnel: [ 1, 1 ]
+    ChiefEngineer: [ 1, 1 ]
+    StationEngineer: [ 2, 3 ]
+    ChiefMedicalOfficer: [ 1, 1 ]
+    MedicalDoctor: [ 2, 3 ]
+    ResearchDirector: [ 1, 1 ]
+    Scientist: [ 2, 3 ]
+    HeadOfSecurity: [ 1, 1 ]
+    SecurityOfficer: [ 2, 3 ]
 
 - type: gameMap
   id: packedstation
   mapName: Packedstation
   mapPath: Maps/packedstation.yml
   minPlayers: 15
+  availableJobs:
+    CargoTechnician: [ 1, 2 ]
+    Assistant: [ -1, -1 ]
+    Bartender: [ 1, 1 ]
+    Botanist: [ 2, 2 ]
+    Chef: [ 1, 1 ]
+    Clown: [ 1, 1 ]
+    Janitor: [ 1, 1 ]
+    Mime: [ 1, 1 ]
+    Captain: [ 1, 1 ]
+    HeadOfPersonnel: [ 1, 1 ]
+    ChiefEngineer: [ 1, 1 ]
+    StationEngineer: [ 2, 3 ]
+    ChiefMedicalOfficer: [ 1, 1 ]
+    MedicalDoctor: [ 2, 3 ]
+    ResearchDirector: [ 1, 1 ]
+    Scientist: [ 2, 3 ]
+    HeadOfSecurity: [ 1, 1 ]
+    SecurityOfficer: [ 2, 3 ]
 
 - type: gameMap
   id: knightship
@@ -18,3 +56,13 @@
   mapPath: Maps/knightship.yml
   minPlayers: 0
   maxPlayers: 8
+  availableJobs:
+    Assistant: [ -1, -1 ]
+    Bartender: [ 1, 1 ]
+    Captain: [ 1, 1 ]
+    ChiefEngineer: [ 1, 1 ]
+    StationEngineer: [ 1, 1 ]
+    ChiefMedicalOfficer: [ 1, 1 ]
+    MedicalDoctor: [ 1, 1 ]
+    Scientist: [ 1, 1 ]
+    Botanist: [ 1, 1 ]

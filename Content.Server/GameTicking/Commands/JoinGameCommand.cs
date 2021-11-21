@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Content.Server.Administration;
+using Content.Server.Roles;
 using Content.Shared.Roles;
 using Robust.Server.Player;
 using Robust.Shared.Console;
@@ -32,6 +33,7 @@ namespace Content.Server.GameTicking.Commands
             }
 
             var ticker = EntitySystem.Get<GameTicker>();
+            var stationSystem = EntitySystem.Get<StationSystem>();
             if (ticker.RunLevel == GameRunLevel.PreRoundLobby)
             {
                 shell.WriteLine("Round has not started.");
@@ -40,19 +42,19 @@ namespace Content.Server.GameTicking.Commands
             else if(ticker.RunLevel == GameRunLevel.InRound)
             {
                 string ID = args[0];
-                var positions = ticker.GetAvailablePositions();
+                var stationId = new StationSystem.StationId(uint.Parse(args[1]));
 
-                if(positions.GetValueOrDefault(ID, 0) == 0) //n < 0 is treated as infinite
+                if(!stationSystem.IsJobAvailableOnStation(stationId, ID))
                 {
                     var jobPrototype = _prototypeManager.Index<JobPrototype>(ID);
                     shell.WriteLine($"{jobPrototype.Name} has no available slots.");
                     return;
                 }
-                ticker.MakeJoinGame(player, args[0]);
+                ticker.MakeJoinGame(player, stationId, ID);
                 return;
             }
 
-            ticker.MakeJoinGame(player);
+            ticker.MakeJoinGame(player, StationSystem.StationId.Invalid);
         }
     }
 }

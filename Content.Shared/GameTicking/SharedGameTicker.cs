@@ -109,11 +109,13 @@ namespace Content.Shared.GameTicking
         /// <summary>
         /// The Status of the Player in the lobby (ready, observer, ...)
         /// </summary>
-        public string[] JobsAvailable { get; }
+        public Dictionary<uint, Dictionary<string, int>> JobsAvailableByStation { get; }
+        public Dictionary<uint, string> StationNames { get; }
 
-        public TickerJobsAvailableEvent(string[] jobsAvailable)
+        public TickerJobsAvailableEvent(Dictionary<uint, string> stationNames, Dictionary<uint, Dictionary<string, int>> jobsAvailableByStation)
         {
-            JobsAvailable = jobsAvailable;
+            StationNames = stationNames;
+            JobsAvailableByStation = jobsAvailableByStation;
         }
     }
 
