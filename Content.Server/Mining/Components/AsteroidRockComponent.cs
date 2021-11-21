@@ -39,7 +39,7 @@ namespace Content.Server.Mining.Components
             if (!item.TryGetComponent(out MeleeWeaponComponent? meleeWeaponComponent))
                 return false;
 
-            EntitySystem.Get<SharedDamageableSystem>().TryChangeDamage(Owner.Uid, meleeWeaponComponent.Damage);
+            EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner.Uid, meleeWeaponComponent.Damage);
 
             if (!item.TryGetComponent(out PickaxeComponent? pickaxeComponent))
                 return true;

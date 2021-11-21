@@ -15,7 +15,7 @@ namespace Content.Server.Atmos.EntitySystems
     public class BarotraumaSystem : EntitySystem
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Dependency] private readonly SharedDamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
 
         private const float UpdateTimer = 1f;
 

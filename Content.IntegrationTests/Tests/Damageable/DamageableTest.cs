@@ -13,7 +13,7 @@ namespace Content.IntegrationTests.Tests.Damageable
 {
     [TestFixture]
     [TestOf(typeof(DamageableComponent))]
-    [TestOf(typeof(SharedDamageableSystem))]
+    [TestOf(typeof(DamageableSystem))]
     public class DamageableTest : ContentIntegrationTest
     {
         private const string Prototypes = @"
@@ -97,7 +97,7 @@ namespace Content.IntegrationTests.Tests.Damageable
 
             IEntity sDamageableEntity = null;
             DamageableComponent sDamageableComponent = null;
-            SharedDamageableSystem sDamageableSystem = null;
+            DamageableSystem sDamageableSystem = null;
 
             DamageGroupPrototype group1 = default!;
             DamageGroupPrototype group2 = default!;
@@ -120,7 +120,7 @@ namespace Content.IntegrationTests.Tests.Damageable
 
                 sDamageableEntity = sEntityManager.SpawnEntity("TestDamageableEntityId", coordinates);
                 sDamageableComponent = sDamageableEntity.GetComponent<DamageableComponent>();
-                sDamageableSystem = sEntitySystemManager.GetEntitySystem<SharedDamageableSystem>();
+                sDamageableSystem = sEntitySystemManager.GetEntitySystem<DamageableSystem>();
 
                 group1 = sPrototypeManager.Index<DamageGroupPrototype>("TestGroup1");
                 group2 = sPrototypeManager.Index<DamageGroupPrototype>("TestGroup2");

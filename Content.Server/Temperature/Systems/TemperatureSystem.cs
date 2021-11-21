@@ -16,7 +16,7 @@ namespace Content.Server.Temperature.Systems
 {
     public class TemperatureSystem : EntitySystem
     {
-        [Dependency] private readonly SharedDamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
         /// <summary>

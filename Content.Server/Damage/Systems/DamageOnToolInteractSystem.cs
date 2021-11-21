@@ -10,7 +10,7 @@ namespace Content.Server.Damage.Systems
 {
     public class DamageOnToolInteractSystem : EntitySystem
     {
-        [Dependency] private readonly SharedDamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
 
         public override void Initialize()
         {

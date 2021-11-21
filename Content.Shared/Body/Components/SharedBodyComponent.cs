@@ -196,7 +196,7 @@ namespace Content.Shared.Body.Components
             {
                 // TODO BODY SYSTEM KILL : Find a more elegant way of killing em than just dumping bloodloss damage.
                 var damage = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Bloodloss"), 300);
-                EntitySystem.Get<SharedDamageableSystem>().TryChangeDamage(part.OwnerUid, damage);
+                EntitySystem.Get<DamageableSystem>().TryChangeDamage(part.OwnerUid, damage);
             }
 
             OnBodyChanged();

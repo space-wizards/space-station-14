@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
@@ -9,9 +10,11 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Damage.Systems
 {
-    public abstract class SharedDamageableSystem : EntitySystem
+    public class DamageableSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
+        [Dependency] private readonly SharedAdminLogSystem _logs = default!;
 
         public override void Initialize()
         {
@@ -22,6 +25,12 @@ namespace Content.Shared.Damage.Systems
 
         protected virtual void SetTotalDamage(DamageableComponent damageable, FixedPoint2 @new)
         {
+            var owner = damageable.Owner;
+            var old = damageable.TotalDamage;
+            var change = @new - old;
+
+            _logs.Add(LogType.DamageChange, $"{owner} received {change} damage. Old: {old} | New: {@new}");
+
             damageable.TotalDamage = @new;
         }
 

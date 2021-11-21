@@ -14,7 +14,7 @@ namespace Content.Server.Repairable
     public class RepairableSystem : EntitySystem
     {
         [Dependency] private readonly ToolSystem _toolSystem = default!;
-        [Dependency] private readonly SharedDamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
 
         public override void Initialize()
         {

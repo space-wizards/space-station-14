@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Buffers;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +11,8 @@ using Content.Server.GameTicking.Events;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Prometheus;
+using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
@@ -21,10 +22,10 @@ using Robust.Shared.Reflection;
 
 namespace Content.Server.Administration.Logs;
 
-public class AdminLogSystem : EntitySystem
+public class AdminLogSystem : SharedAdminLogSystem
 {
     [Dependency] private readonly IConfigurationManager _configuration = default!;
-    [Dependency] private readonly IEntityManager _entities = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly IServerDbManager _db = default!;
     [Dependency] private readonly IDynamicTypeFactory _typeFactory = default!;
@@ -48,6 +49,8 @@ public class AdminLogSystem : EntitySystem
         "admin_logs_sent",
         "Amount of logs sent to the database in a round.");
 
+    private static readonly JsonNamingPolicy NamingPolicy = JsonNamingPolicy.CamelCase;
+
     // Init only
     private ISawmill _sawmill = default!;
     private JsonSerializerOptions _jsonOptions = default!;
@@ -69,7 +72,10 @@ public class AdminLogSystem : EntitySystem
         base.Initialize();
 
         _sawmill = _logManager.GetSawmill(SawmillId);
-        _jsonOptions = new JsonSerializerOptions();
+        _jsonOptions = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = NamingPolicy
+        };
 
         foreach (var converter in _reflection.FindTypesWithAttribute<AdminLogConverterAttribute>())
         {
@@ -165,6 +171,48 @@ public class AdminLogSystem : EntitySystem
         }
     }
 
+    public (JsonDocument json, List<Guid> players, List<(int id, string? name)> entities) ToJson(
+        Dictionary<string, object?> properties)
+    {
+        var entities = new List<(int id, string? name)>();
+        var players = new List<Guid>();
+        var parsed = new Dictionary<string, object?>();
+
+        foreach (var key in properties.Keys)
+        {
+            var value = properties[key];
+            var parsedKey = NamingPolicy.ConvertName(key);
+            parsed.Add(parsedKey, value);
+
+            EntityUid? entityId = properties[key] switch
+            {
+                EntityUid id => id,
+                IEntity entity => entity.Uid,
+                IPlayerSession {AttachedEntityUid: { }} session => session.AttachedEntityUid.Value,
+                IComponent component => component.OwnerUid,
+                _ => null
+            };
+
+            if (entityId is not { } uid)
+            {
+                continue;
+            }
+
+            var entityName = _entityManager.TryGetEntity(uid, out var resolvedEntity)
+                ? resolvedEntity.Name
+                : null;
+
+            entities.Add(((int) uid, entityName));
+
+            if (_entityManager.TryGetComponent(uid, out ActorComponent? actor))
+            {
+                players.Add(actor.PlayerSession.UserId.UserId);
+            }
+        }
+
+        return (JsonSerializer.SerializeToDocument(parsed, _jsonOptions), players, entities);
+    }
+
     private async void Add(LogType type, LogImpact impact, string message, JsonDocument json, List<Guid> players, List<(int id, string? name)> entities)
     {
         var log = new AdminLog
@@ -193,15 +241,15 @@ public class AdminLogSystem : EntitySystem
         }
     }
 
-    public void Add(LogType type, LogImpact impact, ref LogStringHandler handler)
+    public override void Add(LogType type, LogImpact impact, ref LogStringHandler handler)
     {
-        var (json, players, entities) = handler.ToJson(_jsonOptions, _entities);
+        var (json, players, entities) = ToJson(handler.Values);
         var message = handler.ToStringAndClear();
 
         Add(type, impact, message, json, players, entities);
     }
 
-    public void Add(LogType type, ref LogStringHandler handler)
+    public override void Add(LogType type, ref LogStringHandler handler)
     {
         Add(type, LogImpact.Medium, ref handler);
     }

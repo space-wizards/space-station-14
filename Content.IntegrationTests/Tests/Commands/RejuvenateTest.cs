@@ -60,7 +60,7 @@ namespace Content.IntegrationTests.Tests.Commands
                 // Kill the entity
                 DamageSpecifier damage = new(prototypeManager.Index<DamageGroupPrototype>("Toxin"),
                     FixedPoint2.New(10000000));
-                EntitySystem.Get<SharedDamageableSystem>().TryChangeDamage(human.Uid, damage, true);
+                EntitySystem.Get<DamageableSystem>().TryChangeDamage(human.Uid, damage, true);
 
                 // Check that it is dead
                 Assert.That(mobState.IsAlive, Is.False);

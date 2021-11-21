@@ -105,7 +105,7 @@ namespace Content.Server.Damage.Commands
                 func = (entity, ignoreResistances) =>
                 {
                     var damage = new DamageSpecifier(damageGroup, amount);
-                    EntitySystem.Get<SharedDamageableSystem>().TryChangeDamage(entity.Uid, damage, ignoreResistances);
+                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(entity.Uid, damage, ignoreResistances);
 
                     shell.WriteLine($"Damaged entity {entity.Name} with id {entity.Uid} for {amount} {damageGroup} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
                 };
@@ -118,7 +118,7 @@ namespace Content.Server.Damage.Commands
                 func = (entity, ignoreResistances) =>
                 {
                     var damage = new DamageSpecifier(damageType, amount);
-                    EntitySystem.Get<SharedDamageableSystem>().TryChangeDamage(entity.Uid, damage, ignoreResistances);
+                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(entity.Uid, damage, ignoreResistances);
 
                     shell.WriteLine($"Damaged entity {entity.Name} with id {entity.Uid} for {amount} {damageType} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
 

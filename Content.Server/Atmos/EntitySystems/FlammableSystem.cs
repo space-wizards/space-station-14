@@ -27,7 +27,7 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly StunSystem _stunSystem = default!;
         [Dependency] private readonly TemperatureSystem _temperatureSystem = default!;
-        [Dependency] private readonly SharedDamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
 
         private const float MinimumFireStacks = -10f;
         private const float MaximumFireStacks = 20f;

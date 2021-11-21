@@ -32,7 +32,7 @@ namespace Content.Server.Light.EntitySystems
     public class PoweredLightSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly SharedDamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSystem = default!;
         [Dependency] private readonly LightBulbSystem _bulbSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;

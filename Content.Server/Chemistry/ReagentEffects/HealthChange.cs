@@ -21,7 +21,7 @@ namespace Content.Server.Chemistry.ReagentEffects
 
         public override void Effect(ReagentEffectArgs args)
         {
-            EntitySystem.Get<SharedDamageableSystem>().TryChangeDamage(args.SolutionEntity, Damage * args.Quantity, true);
+            EntitySystem.Get<DamageableSystem>().TryChangeDamage(args.SolutionEntity, Damage * args.Quantity, true);
         }
     }
 }

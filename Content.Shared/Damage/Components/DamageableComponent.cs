@@ -25,7 +25,7 @@ namespace Content.Shared.Damage
     /// </remarks>
     [RegisterComponent]
     [NetworkedComponent()]
-    [Friend(typeof(SharedDamageableSystem))]
+    [Friend(typeof(DamageableSystem))]
     public class DamageableComponent : Component, IRadiationAct, IExAct
     {
         public override string Name => "Damageable";
@@ -93,7 +93,7 @@ namespace Content.Shared.Damage
                 damage.DamageDict.Add(typeID, damageValue);
             }
 
-            EntitySystem.Get<SharedDamageableSystem>().TryChangeDamage(OwnerUid, damage);
+            EntitySystem.Get<DamageableSystem>().TryChangeDamage(OwnerUid, damage);
         }
 
         // TODO EXPLOSION Remove this.
@@ -114,7 +114,7 @@ namespace Content.Shared.Damage
                 damage.DamageDict.Add(typeID, damageValue);
             }
 
-            EntitySystem.Get<SharedDamageableSystem>().TryChangeDamage(OwnerUid, damage);
+            EntitySystem.Get<DamageableSystem>().TryChangeDamage(OwnerUid, damage);
         }
     }
 

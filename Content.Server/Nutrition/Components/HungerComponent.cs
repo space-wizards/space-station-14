@@ -192,7 +192,7 @@ namespace Content.Server.Nutrition.Components
                 _accumulatedFrameTime += frametime;
                 if (_accumulatedFrameTime >= 1)
                 {
-                    EntitySystem.Get<SharedDamageableSystem>().TryChangeDamage(Owner.Uid, Damage * (int) _accumulatedFrameTime, true);
+                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner.Uid, Damage * (int) _accumulatedFrameTime, true);
                     _accumulatedFrameTime -= (int) _accumulatedFrameTime;
                 }
             }

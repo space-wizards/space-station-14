@@ -9,7 +9,7 @@ namespace Content.Server.Damage.Systems
 {
     public class DamageOtherOnHitSystem : EntitySystem
     {
-        [Dependency] private readonly SharedDamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         
         public override void Initialize()
         {
