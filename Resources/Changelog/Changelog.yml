@@ -1,9 +1,4 @@
 Entries:
-- author: drongood12
-  changes:
-  - {message: add linearDamping and angularDamping for projectiles, type: Add}
-  id: 118
-  time: '2021-03-26T01:54:07.0000000+00:00'
 - author: ike709
   changes:
   - {message: Completely redid the HUD inventory., type: Tweak}
@@ -2847,3 +2842,8 @@ Entries:
       while inside one., type: Fix}
   id: 619
   time: '2021-11-21T05:06:44.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Shuttles now require thrust., type: Add}
+  id: 620
+  time: '2021-11-21T06:09:49.0000000+00:00'
