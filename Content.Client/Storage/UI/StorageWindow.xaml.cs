@@ -60,6 +60,10 @@ namespace Content.Client.Storage.UI
                 var size = item?.Size ?? 0;
                 var font = (size < 100) ? _weightFont : _weightFontSmall;
 
+                if (storageCapacityMax == 0)
+                    // infinite capacity. dont bother displaying weights
+                    size = 0;
+
                 var button = new EntityContainerButton(meta?.EntityName ?? string.Empty, sprite, size, font);
                 button.OnPressed += args => _onInteract(args, uid);
                 ButtonBox.AddChild(button);
@@ -97,7 +101,6 @@ namespace Content.Client.Storage.UI
                 EntitySize.FontOverride = font;
                 EntitySize.Text =  (size > 99) ? "99+" : size.ToString();
             }
-
         }
     }
 }
