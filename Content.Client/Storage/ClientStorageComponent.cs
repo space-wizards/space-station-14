@@ -2,29 +2,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.Animations;
-using Content.Client.Hands;
 using Content.Client.Items.Managers;
-using Content.Client.Items.Components;
-using Content.Client.UserInterface.Controls;
+using Content.Client.Storage.UI;
 using Content.Shared.DragDrop;
 using Content.Shared.Stacks;
 using Content.Shared.Storage;
 using Content.Shared.Storage.Components;
 using Robust.Client.GameObjects;
-using Robust.Client.Graphics;
-using Robust.Client.Player;
-using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
-using static Robust.Client.UserInterface.Control;
-using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Storage
 {
@@ -54,10 +44,10 @@ namespace Content.Client.Storage
         protected override void OnAdd()
         {
             base.OnAdd();
-
-            _window = new StorageWindow(this) {Title = Owner.Name};
-            _window.EntityList.GenerateItem += GenerateButton;
-            _window.EntityList.ItemPressed += Interact;
+            _window = new StorageWindow(OnTake, OnInsert) {Title = Owner.Name};
+#pragma warning disable 618
+            _window.OnClose += () => SendNetworkMessage(new CloseStorageUIMessage());
+#pragma warning restore 618
         }
 
         protected override void OnRemove()
@@ -113,7 +103,7 @@ namespace Content.Client.Storage
             _storedEntities = storageState.StoredEntities.Select(id => Owner.EntityManager.GetEntity(id)).ToList();
             StorageSizeUsed = storageState.StorageSizeUsed;
             StorageCapacityMax = storageState.StorageSizeMax;
-            _window?.BuildEntityList(storageState.StoredEntities.ToList());
+            _window?.BuildEntityList(storageState.StoredEntities.ToList(), StorageSizeUsed, StorageCapacityMax);
         }
 
         /// <summary>
@@ -178,7 +168,7 @@ namespace Content.Client.Storage
         /// Function for clicking one of the stored entity buttons in the UI, tells server to remove that entity
         /// </summary>
         /// <param name="entityUid"></param>
-        private void Interact(BaseButton.ButtonEventArgs buttonEventArgs, EntityUid entityUid)
+        private void OnTake(BaseButton.ButtonEventArgs buttonEventArgs, EntityUid entityUid)
         {
             if (buttonEventArgs.Event.Function == EngineKeyFunctions.UIClick)
             {
@@ -193,6 +183,17 @@ namespace Content.Client.Storage
             }
         }
 
+        /// <summary>
+        /// Function for clicking one of the stored entity buttons in the UI, tells server to remove that entity
+        /// </summary>
+        /// <param name="entityUid"></param>
+        private void OnInsert(BaseButton.ButtonEventArgs buttonEventArgs)
+        {
+#pragma warning disable 618
+            SendNetworkMessage(new InsertEntityMessage());
+#pragma warning restore 618
+        }
+
         public override bool Remove(IEntity entity)
         {
             if (_storedEntities.Remove(entity))
@@ -202,150 +203,6 @@ namespace Content.Client.Storage
             }
 
             return false;
-        }
-
-        /// <summary>
-        /// Button created for each entity that represents that item in the storage UI, with a texture, and name and size label
-        /// </summary>
-        private void GenerateButton(EntityUid entityUid, EntityContainerButton button)
-        {
-            if (!Owner.EntityManager.TryGetEntity(entityUid, out var entity))
-                return;
-
-            entity.TryGetComponent(out ISpriteComponent? sprite);
-            entity.TryGetComponent(out ItemComponent? item);
-
-            button.AddChild(new BoxContainer
-            {
-                Orientation = LayoutOrientation.Horizontal,
-                SeparationOverride = 2,
-                Children =
-                {
-                    new SpriteView
-                    {
-                        HorizontalAlignment = HAlignment.Left,
-                        VerticalAlignment = VAlignment.Center,
-                        MinSize = new Vector2(32.0f, 32.0f),
-                        OverrideDirection = Direction.South,
-                        Sprite = sprite
-                    },
-                    new Label
-                    {
-                        HorizontalExpand = true,
-                        ClipText = true,
-                        Text = entity.Name
-                    },
-                    new Label
-                    {
-                        Align = Label.AlignMode.Right,
-                        Text = item?.Size.ToString() ?? Loc.GetString("no-item-size")
-                    }
-                }
-            });
-
-            button.EnableAllKeybinds = true;
-        }
-
-        /// <summary>
-        /// GUI class for client storage component
-        /// </summary>
-        private class StorageWindow : SS14Window
-        {
-            private Control _vBox;
-            private readonly Label _information;
-            public readonly EntityListDisplay EntityList;
-            public ClientStorageComponent StorageEntity;
-
-            private readonly StyleBoxFlat _hoveredBox = new() { BackgroundColor = Color.Black.WithAlpha(0.35f) };
-            private readonly StyleBoxFlat _unHoveredBox = new() { BackgroundColor = Color.Black.WithAlpha(0.0f) };
-
-            public StorageWindow(ClientStorageComponent storageEntity)
-            {
-                StorageEntity = storageEntity;
-                SetSize = (200, 320);
-                Title = Loc.GetString("comp-storage-window-title");
-                RectClipContent = true;
-
-                var containerButton = new ContainerButton
-                {
-                    Name = "StorageContainerButton",
-                    MouseFilter = MouseFilterMode.Pass,
-                };
-                Contents.AddChild(containerButton);
-
-                var innerContainerButton = new PanelContainer
-                {
-                    PanelOverride = _unHoveredBox,
-                };
-
-                containerButton.AddChild(innerContainerButton);
-                containerButton.OnPressed += args =>
-                {
-                    var controlledEntity = IoCManager.Resolve<IPlayerManager>().LocalPlayer?.ControlledEntity;
-
-                    if (controlledEntity?.TryGetComponent(out HandsComponent? hands) ?? false)
-                    {
-#pragma warning disable 618
-                        StorageEntity.SendNetworkMessage(new InsertEntityMessage());
-#pragma warning restore 618
-                    }
-                };
-
-                _vBox = new BoxContainer()
-                {
-                    Orientation = LayoutOrientation.Vertical,
-                    MouseFilter = MouseFilterMode.Ignore,
-                };
-                containerButton.AddChild(_vBox);
-                _information = new Label
-                {
-                    Text = Loc.GetString("comp-storage-window-volume", ("itemCount", 0), ("usedVolume", 0), ("maxVolume", 0)),
-                    VerticalAlignment = VAlignment.Center
-                };
-                _vBox.AddChild(_information);
-
-                EntityList = new EntityListDisplay
-                {
-                    Name = "EntityListContainer",
-                };
-                _vBox.AddChild(EntityList);
-                EntityList.OnMouseEntered += args =>
-                {
-                    innerContainerButton.PanelOverride = _hoveredBox;
-                };
-
-                EntityList.OnMouseExited += args =>
-                {
-                    innerContainerButton.PanelOverride = _unHoveredBox;
-                };
-            }
-
-            public override void Close()
-            {
-#pragma warning disable 618
-                StorageEntity.SendNetworkMessage(new CloseStorageUIMessage());
-#pragma warning restore 618
-                base.Close();
-            }
-
-            /// <summary>
-            /// Loops through stored entities creating buttons for each, updates information labels
-            /// </summary>
-            public void BuildEntityList(List<EntityUid> entityUids)
-            {
-                EntityList.PopulateList(entityUids);
-
-                //Sets information about entire storage container current capacity
-                if (StorageEntity.StorageCapacityMax != 0)
-                {
-                    _information.Text = Loc.GetString("comp-storage-window-volume", ("itemCount", entityUids.Count),
-                        ("usedVolume", StorageEntity.StorageSizeUsed), ("maxVolume", StorageEntity.StorageCapacityMax));
-                }
-                else
-                {
-                    _information.Text = Loc.GetString("comp-storage-window-volume-unlimited", ("itemCount", entityUids.Count));
-                }
-            }
         }
     }
 }

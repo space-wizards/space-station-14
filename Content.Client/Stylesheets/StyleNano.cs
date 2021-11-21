@@ -6,7 +6,6 @@ using Content.Client.HUD;
 using Content.Client.HUD.UI;
 using Content.Client.Resources;
 using Content.Client.Targeting;
-using Content.Client.UserInterface.Controls;
 using Content.Client.Verbs.UI;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
@@ -615,22 +614,22 @@ namespace Content.Client.Stylesheets
                     .Prop(Label.StylePropertyFont, notoSans12),
 
                 // Thin buttons (No padding nor vertical margin)
-                Element<EntityContainerButton>().Class(StyleClassStorageButton)
+                Element<ContainerButton>().Class(StyleClassStorageButton)
                     .Prop(ContainerButton.StylePropertyStyleBox, buttonStorage),
 
-                Element<EntityContainerButton>().Class(StyleClassStorageButton)
+                Element<ContainerButton>().Class(StyleClassStorageButton)
                     .Pseudo(ContainerButton.StylePseudoClassNormal)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorDefault),
 
-                Element<EntityContainerButton>().Class(StyleClassStorageButton)
+                Element<ContainerButton>().Class(StyleClassStorageButton)
                     .Pseudo(ContainerButton.StylePseudoClassHover)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorHovered),
 
-                Element<EntityContainerButton>().Class(StyleClassStorageButton)
+                Element<ContainerButton>().Class(StyleClassStorageButton)
                     .Pseudo(ContainerButton.StylePseudoClassPressed)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorPressed),
 
-                Element<EntityContainerButton>().Class(StyleClassStorageButton)
+                Element<ContainerButton>().Class(StyleClassStorageButton)
                     .Pseudo(ContainerButton.StylePseudoClassDisabled)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorDisabled),
 
