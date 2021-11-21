@@ -138,7 +138,7 @@ namespace Content.Server.Cargo.Components
                 ("approver", data.Approver)));
 
             // attempt to attach the label
-            if (_entityManager.TryGetComponent(product.Uid, out PaperLabelComponent label))
+            if (Owner.EntityManager.TryGetComponent(product.Uid, out PaperLabelComponent label))
             {
                 EntitySystem.Get<ItemSlotsSystem>().TryInsert(OwnerUid, label.LabelSlot, printed);
             }
