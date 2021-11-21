@@ -88,6 +88,14 @@ namespace Content.Server.Station
             public static StationId Invalid => new(0);
         }
 
+        /// <summary>
+        /// Creates a new station and attaches it to the given grid.
+        /// </summary>
+        /// <param name="mapGrid">grid to attach to</param>
+        /// <param name="mapPrototype">game map prototype of the station</param>
+        /// <param name="gridComponent">optional grid component of the grid.</param>
+        /// <returns>The ID of the resulting station</returns>
+        /// <exception cref="ArgumentException">Thrown when the given entity is not a grid.</exception>
         public StationId InitialSetupStationGrid(EntityUid mapGrid, GameMapPrototype mapPrototype, IMapGridComponent? gridComponent = null)
         {
             if (!Resolve(mapGrid, ref gridComponent))
@@ -108,6 +116,13 @@ namespace Content.Server.Station
             return id;
         }
 
+        /// <summary>
+        /// Adds the given grid to the given station.
+        /// </summary>
+        /// <param name="mapGrid">grid to attach</param>
+        /// <param name="station">station to attach the grid to</param>
+        /// <param name="gridComponent">optional grid component of the grid.</param>
+        /// <exception cref="ArgumentException">Thrown when the given entity is not a grid.</exception>
         public void AddGridToStation(EntityUid mapGrid, StationId station, IMapGridComponent? gridComponent = null)
         {
             if (!Resolve(mapGrid, ref gridComponent))
@@ -136,8 +151,8 @@ namespace Content.Server.Station
         /// Checks if the given job is available.
         /// </summary>
         /// <param name="stationId">station to check</param>
-        /// <param name="jobName"></param>
-        /// <returns></returns>
+        /// <param name="jobName">name of the job</param>
+        /// <returns>job availability</returns>
         public bool IsJobAvailableOnStation(StationId stationId, string jobName)
         {
             if (_stationInfo[stationId].JobList.TryGetValue(jobName, out var amount))
