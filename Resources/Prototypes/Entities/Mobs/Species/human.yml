@@ -254,8 +254,6 @@
       - "enum.HumanoidVisualLayers.LLeg"
       - "enum.HumanoidVisualLayers.RArm"
       - "enum.HumanoidVisualLayers.RLeg"
-      - "enum.HumanoidVisualLayers.RFoot"
-      - "enum.HumanoidVisualLayers.LFoot"
       damageOverlayGroups:
         Brute:
           sprite: Mobs/Effects/brute_damage.rsi
