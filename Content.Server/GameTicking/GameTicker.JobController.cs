@@ -171,7 +171,7 @@ namespace Content.Server.GameTicking
             return new TickerJobsAvailableEvent(stationNames, jobs);
         }
 
-        private void UpdateJobsAvailable()
+        public void UpdateJobsAvailable()
         {
             RaiseNetworkEvent(GetJobsAvailable(), Filter.Empty().AddPlayers(_playersInLobby.Keys));
         }

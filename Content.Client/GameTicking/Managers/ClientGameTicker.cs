@@ -72,7 +72,6 @@ namespace Content.Client.GameTicking.Managers
 
         private void UpdateJobsAvailable(TickerJobsAvailableEvent message)
         {
-            Logger.Debug("got jobs..");
             _jobsAvailable.Clear();
             _stationNames.Clear();
             foreach (var (key, value) in message.JobsAvailableByStation)

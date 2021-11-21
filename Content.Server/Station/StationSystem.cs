@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Server.GameTicking;
 using Content.Server.Maps;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Station
 {
@@ -11,6 +12,7 @@ namespace Content.Server.Station
     /// </summary>
     public class StationSystem : EntitySystem
     {
+        [Dependency] private GameTicker _gameTicker = default!;
         private uint _idCounter = 1;
 
         private Dictionary<StationId, StationInfoData> _stationInfo = new();
@@ -86,12 +88,12 @@ namespace Content.Server.Station
 
         public StationId InitialSetupStationGrid(EntityUid mapGrid, GameMapPrototype mapPrototype)
         {
-
             var jobListDict = mapPrototype.AvailableJobs.ToDictionary(x => x.Key, x => x.Value[1]);
             var id = AllocateStationInfo();
             _stationInfo[id] = new StationInfoData(mapPrototype.MapName, mapPrototype, jobListDict);
             var station = EntityManager.AddComponent<StationComponent>(mapGrid);
             station.Station = id;
+            _gameTicker.UpdateJobsAvailable(); // new station means new jobs, tell any lobby-goers.
             return id;
         }
 
