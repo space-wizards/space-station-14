@@ -17,13 +17,12 @@ namespace Content.Client.Chat
 {
 	public class TypingIndicatorSystem : SharedTypingIndicatorSystem
 	{
-		[Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
 		[Dependency] private readonly IEyeManager _eyeManager = default!;
 		[Dependency] private readonly IConfigurationManager _cfg = default!;
-
-		private readonly Dictionary<EntityUid, TypingIndicatorGui> _guis = new();
-
-		private IEntity? _attachedEntity;
+        
+        private readonly Dictionary<EntityUid, TypingIndicatorGui> _guis = new();
+        private IEntity? _attachedEntity;
 
         /// <summary>
         /// The system needs to be enabled by default client side for handling remote players
@@ -36,10 +35,9 @@ namespace Content.Client.Chat
         /// to send messages informing the server they are typing.
         /// </summary>
         private bool _canTransmit = false;
-
+		
         public override void Initialize()
-
-		{
+        {
 			base.Initialize();
             _canTransmit = true;
 			SubscribeNetworkEvent<RemoteClientTypingMessage>(HandleRemoteTyping);
@@ -55,7 +53,6 @@ namespace Content.Client.Chat
             {
                 _canTransmit = true;
             });
-
         }
 
 		private void HandleRemoteTyping(RemoteClientTypingMessage ev)
@@ -69,7 +66,6 @@ namespace Content.Client.Chat
             {
                 comp.IsVisible = false;
             });
-
         }
 
 		private void HandlePlayerAttached(PlayerAttachSysMessage message)
