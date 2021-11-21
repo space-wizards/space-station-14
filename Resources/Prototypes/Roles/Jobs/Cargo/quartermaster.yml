@@ -1,8 +1,6 @@
 #- type: job
 #  id: Quartermaster
 #  name: "quartermaster"
-#  positions: 1
-#  spawnPositions: 1
 #  startingGear: QuartermasterGear
 #  departments:
 #  - Cargo

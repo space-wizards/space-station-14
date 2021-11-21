@@ -1,7 +1,6 @@
 #- type: job
 #  id: Chaplain
 #  name: "chaplain"
-#  positions: 1
 #  startingGear: ChaplainGear
 #  departments:
 #  - Civilian

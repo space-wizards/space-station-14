@@ -150,8 +150,6 @@ namespace Content.Server.GameTicking
             var role = _prototypeManager.Index<JobPrototype>(OverflowJob);
             DebugTools.Assert(role.Name == Loc.GetString(OverflowJobName),
                 "Overflow role does not have the correct name!");
-
-            DebugTools.Assert(role.SpawnPositions < 0, "Overflow role must have infinite spawn positions!");
         }
 
         private void AddSpawnedPosition(string jobId)
