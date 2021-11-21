@@ -184,6 +184,9 @@ namespace Content.Server.Interaction
             if (!EntityManager.TryGetEntity(uid, out var used))
                 return false;
 
+            if (user.IsInContainer())
+                return false;
+
             InteractionActivate(user, used);
             return true;
         }
