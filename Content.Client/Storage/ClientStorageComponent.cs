@@ -44,7 +44,7 @@ namespace Content.Client.Storage
         protected override void OnAdd()
         {
             base.OnAdd();
-            _window = new StorageWindow(OnTake, OnInsert) {Title = Owner.Name};
+            _window = new StorageWindow(OnInteract, OnInsert) {Title = Owner.Name};
 #pragma warning disable 618
             _window.OnClose += () => SendNetworkMessage(new CloseStorageUIMessage());
 #pragma warning restore 618
@@ -168,7 +168,7 @@ namespace Content.Client.Storage
         /// Function for clicking one of the stored entity buttons in the UI, tells server to remove that entity
         /// </summary>
         /// <param name="entityUid"></param>
-        private void OnTake(BaseButton.ButtonEventArgs buttonEventArgs, EntityUid entityUid)
+        private void OnInteract(BaseButton.ButtonEventArgs buttonEventArgs, EntityUid entityUid)
         {
             if (buttonEventArgs.Event.Function == EngineKeyFunctions.UIClick)
             {

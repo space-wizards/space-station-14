@@ -32,11 +32,11 @@ namespace Content.Client.Storage.UI
 
         private Action<BaseButton.ButtonEventArgs, EntityUid> _onInteract;
 
-        public StorageWindow(Action<BaseButton.ButtonEventArgs, EntityUid> onTake, Action<BaseButton.ButtonEventArgs> onInsert)
+        public StorageWindow(Action<BaseButton.ButtonEventArgs, EntityUid> onInteract, Action<BaseButton.ButtonEventArgs> onInsert)
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
-            _onInteract = onTake;
+            _onInteract = onInteract;
             StorageContainerButton.OnPressed += onInsert;
             InnerContainerButton.PanelOverride = _unHoveredBox;
             Scroll.OnMouseEntered += args => InnerContainerButton.PanelOverride = _hoveredBox;
@@ -61,7 +61,7 @@ namespace Content.Client.Storage.UI
                 var font = (size < 100) ? _weightFont : _weightFontSmall;
 
                 if (storageCapacityMax == 0)
-                    // infinite capacity. dont bother displaying weights
+                    // infinite capacity. Don't bother displaying weights
                     size = 0;
 
                 var button = new EntityContainerButton(meta?.EntityName ?? string.Empty, sprite, size, font);
