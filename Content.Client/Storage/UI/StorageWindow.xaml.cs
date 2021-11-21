@@ -24,7 +24,6 @@ namespace Content.Client.Storage.UI
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IResourceCache _resCache = default!;
 
-
         private Font _weightFont;
         private Font _weightFontSmall;
 

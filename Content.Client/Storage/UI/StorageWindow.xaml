@@ -1,7 +1,7 @@
 <SS14Window
     xmlns="https://spacestation14.io"
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-    SetSize ="200 320"
+    SetSize ="240 320"
     Title="{Loc 'comp-storage-window-title'}"
     RectClipContent="True">
     <ContainerButton Name="StorageContainerButton" MouseFilter="Pass">
