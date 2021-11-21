@@ -115,7 +115,7 @@ namespace Content.Shared.Containers.ItemSlots
         public ContainerSlot ContainerSlot = default!;
 
         /// <summary>
-        ///     If this slot belongs to some deconstructible component, should the item inside the slot be ejected upon
+        ///     If this slot belongs to some de-constructible component, should the item inside the slot be ejected upon
         ///     deconstruction?
         /// </summary>
         /// <remarks>
@@ -139,10 +139,10 @@ namespace Content.Shared.Containers.ItemSlots
         public string WhitelistFailPopup = string.Empty;
 
         /// <summary>
-        ///     If the user interacts with an entity with an anlready-filled item slot, should they attempt to swap out the item?
+        ///     If the user interacts with an entity with an already-filled item slot, should they attempt to swap out the item?
         /// </summary>
         /// <remarks>
-        ///     Usefull for things like chem diespensers, but undesirable for things like the ID card console, where you
+        ///     Useful for things like chem dispensers, but undesirable for things like the ID card console, where you
         ///     want to insert more than one item that matches the same whitelist.
         /// </remarks>
         [DataField("swap")]

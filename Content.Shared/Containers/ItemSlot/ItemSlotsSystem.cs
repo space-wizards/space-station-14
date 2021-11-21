@@ -433,7 +433,7 @@ namespace Content.Shared.Containers.ItemSlots
         #endregion
 
         /// <summary>
-        ///     Eject itoms from (some) slots when the entity is destroyed.
+        ///     Eject items from (some) slots when the entity is destroyed.
         /// </summary>
         private void OnBreak(EntityUid uid, ItemSlotsComponent component, EntityEventArgs args)
         {
