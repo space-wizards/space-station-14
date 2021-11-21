@@ -7,7 +7,7 @@ namespace Content.Client.Access
     public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
     {
         // one day, maybe bound user interfaces can be shared too.
-        // then this doesnt have to be like this.
+        // then this doesn't have to be like this.
         // I hate this.
     }
 }
