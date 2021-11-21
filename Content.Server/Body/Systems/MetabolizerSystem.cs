@@ -158,7 +158,7 @@ namespace Content.Server.Body.Systems
                         if (!effect.ShouldApply(args, _random))
                             continue;
 
-                        effect.Metabolize(args);
+                        effect.Effect(args);
                     }
                 }
 

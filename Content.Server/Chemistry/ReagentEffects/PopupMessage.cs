@@ -16,7 +16,7 @@ namespace Content.Server.Chemistry.ReagentEffects
         [DataField("type")]
         public PopupType Type = PopupType.Local;
 
-        public override void Metabolize(ReagentEffectArgs args)
+        public override void Effect(ReagentEffectArgs args)
         {
             var popupSys = args.EntityManager.EntitySysManager.GetEntitySystem<SharedPopupSystem>();
             var random = IoCManager.Resolve<IRobustRandom>();

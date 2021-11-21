@@ -53,7 +53,7 @@ namespace Content.Shared.Chemistry
                     if (!effect.ShouldApply(args, _robustRandom))
                         continue;
 
-                    effect.Metabolize(args);
+                    effect.Effect(args);
                 }
             }
         }
