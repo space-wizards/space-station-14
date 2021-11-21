@@ -1,6 +1,13 @@
 ﻿<SS14Window xmlns="https://spacestation14.io"
+            Title="{Loc 'crew-monitoring-user-interface-title'}"
             MinSize="250 100"
             SetSize="250 100">
-    <BoxContainer Orientation="Vertical">
-    </BoxContainer>
+    <ScrollContainer HScrollEnabled="False"
+                     HorizontalExpand="True"
+                     VerticalExpand="True">
+        <GridContainer Name="SensorsTable"
+                       Columns="3">
+            <!-- Table rows are filled by code -->
+        </GridContainer>
+    </ScrollContainer>
 </SS14Window>

@@ -1,10 +1,16 @@
-﻿using Content.Shared.Inventory;
+﻿using System;
+using Content.Shared.Inventory;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Medical.SuitSensors
 {
+    /// <summary>
+    ///     Tracking device, embedded in almost all uniforms and jumpsuits.
+    ///     If enabled, will report to crew monitoring console owners position and status.
+    /// </summary>
     [RegisterComponent]
     [Friend(typeof(SuitSensorSystem))]
     public class SuitSensorComponent : Component
@@ -35,11 +41,27 @@ namespace Content.Server.Medical.SuitSensors
         public EntityUid? User = null;
     }
 
+    [Serializable, NetSerializable]
     public enum SuitSensorMode : byte
     {
+        /// <summary>
+        /// Sensor doesn't send any information about owner
+        /// </summary>
         SensorOff = 0,
+
+        /// <summary>
+        /// Sensor sends only binary status (alive/dead)
+        /// </summary>
         SensorBinary = 1,
+
+        /// <summary>
+        /// Sensor sends health vitals status
+        /// </summary>
         SensorVitals = 2,
+
+        /// <summary>
+        /// Sensor sends vitals status and GPS position
+        /// </summary>
         SensorCords = 3
     }
 }
