@@ -23,7 +23,6 @@ namespace Content.Shared.Containers.ItemSlots
     {
         public override string Name => "ItemSlots";
 
-        [ViewVariables]
         [DataField("slots")]
         public Dictionary<string, ItemSlot> Slots = new();
     }
@@ -115,10 +114,30 @@ namespace Content.Shared.Containers.ItemSlots
         [ViewVariables]
         public ContainerSlot ContainerSlot = default!;
 
+        /// <summary>
+        ///     If this slot belongs to some deconstructible component, should the item inside the slot be ejected upon
+        ///     deconstruction?
+        /// </summary>
+        /// <remarks>
+        ///     The actual deconstruction logic is handled by the server-side EmptyOnMachineDeconstructSystem.
+        /// </remarks>
+        [DataField("ejectOnDeconstruct")]
+        public bool EjectOnDeconstruct = true;
+
+        /// <summary>
+        ///     If this is not an empty string, this will generate a popup when someone attempts to insert a bad item
+        ///     into this slot. This string will be passed through localization.
+        /// </summary>
+        [DataField("whitelistFailPopup")]
+        public string WhitelistFailPopup = string.Empty;
+
         public string ID => ContainerSlot.ID;
 
         // Convenience properties
         public bool HasItem => ContainerSlot.ContainedEntity != null;
         public IEntity? Item => ContainerSlot.ContainedEntity;
+
+        // and to make it easier for  whenever IEntity is removed
+        public EntityUid? ItemUid => ContainerSlot.ContainedEntity?.Uid;
     }
 }

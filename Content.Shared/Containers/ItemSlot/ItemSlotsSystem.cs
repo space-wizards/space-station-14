@@ -1,6 +1,7 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -21,6 +22,7 @@ namespace Content.Shared.Containers.ItemSlots
     public class ItemSlotsSystem : EntitySystem
     {
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
         public override void Initialize()
         {
@@ -137,7 +139,7 @@ namespace Content.Shared.Containers.ItemSlots
 
             foreach (var slot in itemSlots.Slots.Values)
             {
-                if (!CanInsert(args.UsedUid, slot, swap: true))
+                if (!CanInsert(uid, args.UsedUid, slot, swap: true, popup: args.UserUid))
                     continue;
 
                 // Drop the held item onto the floor. Return if the user cannot drop.
@@ -172,7 +174,11 @@ namespace Content.Shared.Containers.ItemSlots
         ///     Check whether a given item can be inserted into a slot. Unless otherwise specified, this will return
         ///     false if the slot is already filled.
         /// </summary>
-        public bool CanInsert(EntityUid uid, ItemSlot slot, bool swap = false)
+        /// <remarks>
+        ///     If a popup entity is given, and if the item slot is set to generate a popup message when it fails to
+        ///     pass the whitelist, then this will generate a popup.
+        /// </remarks>
+        public bool CanInsert(EntityUid uid, EntityUid usedUid, ItemSlot slot, bool swap = false, EntityUid? popup = null)
         {
             if (slot.Locked)
                 return false;
@@ -180,8 +186,12 @@ namespace Content.Shared.Containers.ItemSlots
             if (!swap && slot.HasItem)
                 return false;
 
-            if (slot.Whitelist != null && !slot.Whitelist.IsValid(uid))
+            if (slot.Whitelist != null && !slot.Whitelist.IsValid(usedUid))
+            {
+                if (popup.HasValue && !string.IsNullOrWhiteSpace(slot.WhitelistFailPopup))
+                    _popupSystem.PopupEntity(Loc.GetString(slot.WhitelistFailPopup), uid, Filter.Entities(popup.Value));
                 return false;
+            }
 
             // We should also check ContainerSlot.CanInsert, but that prevents swapping interactions. Given that
             // ContainerSlot.CanInsert gets called when the item is actually inserted anyways, we can just get away with
@@ -210,7 +220,7 @@ namespace Content.Shared.Containers.ItemSlots
         /// <returns>False if failed to insert item</returns>
         public bool TryInsert(EntityUid uid, ItemSlot slot, IEntity item)
         {
-            if (!CanInsert(item.Uid, slot))
+            if (!CanInsert(uid, item.Uid, slot))
                 return false;
 
             Insert(uid, slot, item);
@@ -362,7 +372,7 @@ namespace Content.Shared.Containers.ItemSlots
 
             foreach (var slot in itemSlots.Slots.Values)
             {
-                if (!CanInsert(args.Using.Uid, slot))
+                if (!CanInsert(uid, args.Using.Uid, slot))
                     continue;
 
                 var verbSubject = slot.Name != string.Empty
