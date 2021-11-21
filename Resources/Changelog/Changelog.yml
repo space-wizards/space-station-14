@@ -1,11 +1,6 @@
 Entries:
 - author: Swept
   changes:
-  - {message: Character UI open in center instead of top left, type: Tweak}
-  id: 122
-  time: '2021-03-28T02:40:23.0000000+00:00'
-- author: Swept
-  changes:
   - {message: 'More things break, anchor, move and collide properly', type: Add}
   - {message: 'gas canisters shouldn''t yeet you anymore, and girders should be fixed',
     type: Tweak}
@@ -2844,3 +2839,9 @@ Entries:
     type: Fix}
   id: 623
   time: '2021-11-21T12:17:31.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: It is clearer which side of a docking airlock that something should
+      dock to., type: Fix}
+  id: 624
+  time: '2021-11-21T13:26:19.0000000+00:00'
