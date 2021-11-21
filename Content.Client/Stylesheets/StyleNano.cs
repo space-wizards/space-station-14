@@ -61,6 +61,8 @@ namespace Content.Client.Stylesheets
         public const string StyleClassChatChannelSelectorButton = "chatSelectorOptionButton";
         public const string StyleClassChatFilterOptionButton = "chatFilterOptionButton";
         public const string StyleClassStorageButton = "storageButton";
+        public const string StyleClassStorageWeight = "storageWeight";
+        public const string StyleClassStorageWeightSmall = "storageWeightSmall";
 
         public const string StyleClassSliderRed = "Red";
         public const string StyleClassSliderGreen = "Green";
@@ -118,6 +120,8 @@ namespace Content.Client.Stylesheets
             var notoSansDisplayBold16 = resCache.notoStack(variation: "Bold", display: true, size: 16);
             var notoSans15 = resCache.notoStack(variation: "Regular", size: 15);
             var notoSans16 = resCache.notoStack(variation: "Regular", size: 16);
+            var notoSansBold8 = resCache.notoStack(variation: "Bold", size: 8);
+            var notoSansBold10 = resCache.notoStack(variation: "Bold", size: 10);
             var notoSansBold16 = resCache.notoStack(variation: "Bold", size: 16);
             var notoSansBold18 = resCache.notoStack(variation: "Bold", size: 18);
             var notoSansBold20 = resCache.notoStack(variation: "Bold", size: 20);
@@ -633,8 +637,15 @@ namespace Content.Client.Stylesheets
                     .Pseudo(ContainerButton.StylePseudoClassDisabled)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorDisabled),
 
-                // action slot hotbar buttons
-                new StyleRule(new SelectorElement(typeof(ActionSlot), null, null, new[] {ContainerButton.StylePseudoClassNormal}), new[]
+                // font sizes for the weight indicator on the storage buttons
+                Element<Label>().Class(StyleClassStorageWeight)
+                    .Prop(Label.StylePropertyFont, notoSansBold10),
+
+                Element<Label>().Class(StyleClassStorageWeightSmall)
+                    .Prop(Label.StylePropertyFont, notoSansBold8),
+
+        // action slot hotbar buttons
+        new StyleRule(new SelectorElement(typeof(ActionSlot), null, null, new[] {ContainerButton.StylePseudoClassNormal}), new[]
                 {
                     new StyleProperty(PanelContainer.StylePropertyPanel, buttonRect),
                 }),

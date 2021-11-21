@@ -24,9 +24,6 @@ namespace Content.Client.Storage.UI
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IResourceCache _resCache = default!;
 
-        private Font _weightFont;
-        private Font _weightFontSmall;
-
         private readonly StyleBoxFlat _hoveredBox = new() { BackgroundColor = Color.Black.WithAlpha(0.35f) };
         private readonly StyleBoxFlat _unHoveredBox = new() { BackgroundColor = Color.Black.WithAlpha(0.0f) };
 
@@ -41,8 +38,6 @@ namespace Content.Client.Storage.UI
             InnerContainerButton.PanelOverride = _unHoveredBox;
             Scroll.OnMouseEntered += args => InnerContainerButton.PanelOverride = _hoveredBox;
             Scroll.OnMouseExited += args => InnerContainerButton.PanelOverride = _unHoveredBox;
-            _weightFont = _resCache.notoStack("Bold", 10);
-            _weightFontSmall = _resCache.notoStack("Bold", 8);
         }
 
         /// summary>
@@ -58,13 +53,11 @@ namespace Content.Client.Storage.UI
                 _entityManager.TryGetComponent(uid, out MetaDataComponent? meta);
 
                 var size = item?.Size ?? 0;
-                var font = (size < 100) ? _weightFont : _weightFontSmall;
-
                 if (storageCapacityMax == 0)
                     // infinite capacity. Don't bother displaying weights
                     size = 0;
 
-                var button = new EntityContainerButton(meta?.EntityName ?? string.Empty, sprite, size, font);
+                var button = new EntityContainerButton(meta?.EntityName ?? string.Empty, sprite, size);
                 button.OnPressed += args => _onInteract(args, uid);
                 ButtonBox.AddChild(button);
             }
@@ -87,7 +80,7 @@ namespace Content.Client.Storage.UI
     {
         private static SpriteSpecifier _weightIcon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/weight.svg.192dpi.png"));
 
-        public EntityContainerButton(string entityName, ISpriteComponent? sprite, int size, Font font)
+        public EntityContainerButton(string entityName, ISpriteComponent? sprite, int size)
         {
             RobustXamlLoader.Load(this);
 
@@ -98,8 +91,16 @@ namespace Content.Client.Storage.UI
             {
                 Icon.Visible = true;
                 Icon.Texture = _weightIcon.Frame0();
-                EntitySize.FontOverride = font;
-                EntitySize.Text =  (size > 99) ? "99+" : size.ToString();
+                if (size > 99)
+                {
+                    EntitySize.Text = "99+";
+                    EntitySize.SetOnlyStyleClass(StyleNano.StyleClassStorageWeightSmall);
+                }
+                else
+                {
+                    EntitySize.Text = (size > 99) ? "99+" : size.ToString();
+                    EntitySize.SetOnlyStyleClass(StyleNano.StyleClassStorageWeight);
+                }
             }
         }
     }
