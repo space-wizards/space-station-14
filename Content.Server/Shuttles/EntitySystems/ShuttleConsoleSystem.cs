@@ -1,20 +1,19 @@
-using System.Linq;
 using Content.Server.Alert;
 using Content.Server.Power.Components;
+using Content.Server.Shuttles.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Shuttles;
+using Content.Shared.Shuttles.Components;
 using Content.Shared.Tag;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
-using Robust.Shared.Physics;
 using Robust.Shared.Utility;
 
-namespace Content.Server.Shuttles
+namespace Content.Server.Shuttles.EntitySystems
 {
     internal sealed class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     {

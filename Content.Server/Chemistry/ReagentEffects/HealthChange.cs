@@ -1,4 +1,3 @@
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -20,9 +19,9 @@ namespace Content.Server.Chemistry.ReagentEffects
         [DataField("damage", required: true)]
         public DamageSpecifier Damage = default!;
 
-        public override void Metabolize(ReagentEffectArgs args)
+        public override void Effect(ReagentEffectArgs args)
         {
-            EntitySystem.Get<SharedDamageableSystem>().TryChangeDamage(args.SolutionEntity, Damage * args.Metabolizing, true);
+            EntitySystem.Get<SharedDamageableSystem>().TryChangeDamage(args.SolutionEntity, Damage * args.Quantity, true);
         }
     }
 }

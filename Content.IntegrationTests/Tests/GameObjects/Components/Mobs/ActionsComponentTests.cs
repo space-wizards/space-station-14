@@ -13,6 +13,7 @@ using Content.Shared.Cooldown;
 using NUnit.Framework;
 using Robust.Client.UserInterface;
 using Robust.Server.Player;
+using Robust.Shared;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
@@ -218,7 +219,14 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
         [Test]
         public async Task GrantsAndRevokesItemActions()
         {
-            var serverOptions = new ServerIntegrationOptions { ExtraPrototypes = Prototypes };
+            var serverOptions = new ServerIntegrationOptions
+            {
+                ExtraPrototypes = Prototypes,
+                CVarOverrides =
+                {
+                    {CVars.NetPVS.Name, "false"}
+                }
+            };
             var clientOptions = new ClientIntegrationOptions { ExtraPrototypes = Prototypes };
             var (client, server) = await StartConnectedServerClientPair(serverOptions: serverOptions, clientOptions: clientOptions);
 

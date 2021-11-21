@@ -33,7 +33,10 @@ namespace Content.IntegrationTests
             (CCVars.HolidaysEnabled.Name, "false", false),
 
             // Avoid loading a large map by default for integration tests if none has been specified.
-            (CCVars.GameMap.Name, "Maps/Test/empty.yml", true)
+            (CCVars.GameMap.Name, "empty", true),
+
+            // Makes sure IGameMapManager actually listens.
+            (CCVars.GameMapForced.Name, "true", true)
         };
 
         private static void SetServerTestCvars(IntegrationOptions options)
@@ -190,9 +193,9 @@ namespace Content.IntegrationTests
                 return false;
             }
 
-            if (options.Pool == false)
+            if (options.Pool.HasValue)
             {
-                return false;
+                return options.Pool.Value;
             }
 
             if (server)

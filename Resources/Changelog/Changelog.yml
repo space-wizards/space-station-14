@@ -1,57 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: Added more table construction and destruction, type: Add}
-  - {message: Tweaked items that tables drop when destroyed to match their construction
-      steps, type: Tweak}
-  id: 113
-  time: '2021-03-24T22:34:07.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Added a few different gas canisters to atmospherics and engineering.,
-    type: Add}
-  id: 114
-  time: '2021-03-25T01:03:49.352135+00:00'
-- author: Zumorica
-  changes:
-  - {message: 'Fixes ID Computer in Captain''s Headquarters containing a Glass Firelock
-      inside it, somehow... Oh, this directly fixes the bug where a breach in bar
-      would close all firelocks except one, by the way.', type: Fix}
-  id: 115
-  time: '2021-03-25T01:03:49.353117+00:00'
-- author: SweptWasTaken
-  changes:
-  - {message: You can anchor and rotate a lot more things, type: Add}
-  - {message: Some unused furniture sprites, type: Remove}
-  id: 116
-  time: '2021-03-26T01:51:26.0000000+00:00'
-- author: drongood12
-  changes:
-  - {message: 'Fixed a problem with foamed metal, now bullets do not go through it',
-    type: Fix}
-  id: 117
-  time: '2021-03-26T01:52:27.0000000+00:00'
-- author: drongood12
-  changes:
-  - {message: add linearDamping and angularDamping for projectiles, type: Add}
-  id: 118
-  time: '2021-03-26T01:54:07.0000000+00:00'
-- author: ike709
-  changes:
-  - {message: Completely redid the HUD inventory., type: Tweak}
-  - {message: 'Added an on-HUD inventory, using the same hotkey.', type: Add}
-  - {message: Nuked the inventory popup., type: Remove}
-  - {message: Replaced the inventory slot icons and the disarm icon., type: Tweak}
-  - {message: 'Combat mode is now an action, rather than its own button.', type: Tweak}
-  - {message: 'The default actions (in order) are now: Combat Mode, Disarm, Scream.',
-    type: Tweak}
-  id: 119
-  time: '2021-03-26T15:23:12.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Bullets now collide with people again, type: Fix}
-  id: 120
-  time: '2021-03-27T03:23:20.0000000+00:00'
 - author: Swept
   changes:
   - {message: Storage window now open in center of screen, type: Tweak}
@@ -2845,3 +2792,54 @@ Entries:
     type: Fix}
   id: 614
   time: '2021-11-20T05:26:57.0000000+00:00'
+- author: Efruit
+  changes:
+  - {message: The previous Chief Engineer of Packed Station was fired. The new C.E.
+      rewired the whole station to pad his resume., type: Tweak}
+  id: 615
+  time: '2021-11-20T18:31:33.0000000+00:00'
+- author: moonheart08
+  changes:
+  - {message: Maps now know what the minimum and maximum number of players for them
+      is., type: Add}
+  - {message: You can now vote for the Knight Ship map with 8 or fewer players., type: Add}
+  - {message: You can no longer play on Saltern with 50 people., type: Fix}
+  id: 616
+  time: '2021-11-20T18:32:07.0000000+00:00'
+- author: Mith-randalf
+  changes:
+  - {message: Fixed skintone on feet., type: Fix}
+  id: 617
+  time: '2021-11-20T23:17:16.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Pretty much every chemical in the game has received new metabolism
+      effects. Some examples: meth & ephedrine make you jitter, histamine makes you
+      itch and take poison damage, leporazines regulate your body temperature, acids
+      burn your insides, cryoxadone heals you when you''re cold, and a lot more.',
+    type: Add}
+  id: 618
+  time: '2021-11-20T23:47:53.0000000+00:00'
+- author: AJCM-git
+  changes:
+  - {message: You can no longer use the E key to interact with things outside lockers/crates
+      while inside one., type: Fix}
+  id: 619
+  time: '2021-11-21T05:06:44.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Shuttles now require thrust., type: Add}
+  id: 620
+  time: '2021-11-21T06:09:49.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Reaction effects (potas/water, smoke, foam) have been refactored slightly,
+      so report any bugs you find with them.', type: Tweak}
+  id: 621
+  time: '2021-11-21T07:35:02.0000000+00:00'
+- author: FoLoKe
+  changes:
+  - {message: Added "eat" action for food., type: Add}
+  - {message: Fixed soup eating with a knife or fork., type: Fix}
+  id: 622
+  time: '2021-11-21T07:35:10.0000000+00:00'

@@ -75,7 +75,9 @@ namespace Content.Shared.CCVar
             GameMaxCharacterSlots = CVarDef.Create("game.maxcharacterslots", 10, CVar.ARCHIVE | CVar.SERVERONLY);
 
         public static readonly CVarDef<string>
-            GameMap = CVarDef.Create("game.map", "Maps/saltern.yml", CVar.SERVERONLY);
+            GameMap = CVarDef.Create("game.map", "saltern", CVar.SERVERONLY);
+        public static readonly CVarDef<bool>
+            GameMapForced = CVarDef.Create("game.mapforced", false, CVar.SERVERONLY);
 
         /// <summary>
         ///     Whether a random position offset will be applied to the station on roundstart.

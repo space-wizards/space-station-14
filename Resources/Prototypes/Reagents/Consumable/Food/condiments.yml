@@ -53,3 +53,33 @@
   desc: A salty soy-based flavoring.
 #  physicalDesc:
   color: saddlebrown
+
+- type: reagent
+  id: TableSalt
+  name: table salt
+  desc: Commonly known as salt, Sodium Chloride is often used to season food or kill borers instantly.
+  physicalDesc: grainy
+  color: "#a1000b"
+  boilingPoint: 1465.0
+  meltingPoint: 800.7
+  plantMetabolism:
+  - !type:PlantAdjustWater
+    amount: -3
+  - !type:PlantAdjustNutrition
+    amount: -0.3
+  - !type:PlantAdjustToxins
+    amount: 8
+  - !type:PlantAdjustWeeds
+    amount: -2
+  - !type:PlantAdjustPests
+    amount: -1
+  - !type:PlantAdjustHealth
+    amount: -2
+  metabolisms:
+    Food:
+      effects:
+      # eating salt on its own kinda sucks, kids
+      - !type:SatiateHunger
+        factor: 0.5
+      - !type:SatiateThirst
+        factor: -0.5

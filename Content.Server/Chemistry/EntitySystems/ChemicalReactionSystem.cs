@@ -10,9 +10,9 @@ namespace Content.Server.Chemistry.EntitySystems
 {
     public class ChemicalReactionSystem : SharedChemicalReactionSystem
     {
-        protected override void OnReaction(Solution solution, ReactionPrototype reaction, EntityUid ownerUid, FixedPoint2 unitReactions)
+        protected override void OnReaction(Solution solution, ReactionPrototype reaction, ReagentPrototype randomReagent, EntityUid ownerUid, FixedPoint2 unitReactions)
         {
-            base.OnReaction(solution, reaction, ownerUid, unitReactions);
+            base.OnReaction(solution, reaction,  randomReagent, ownerUid, unitReactions);
 
             SoundSystem.Play(Filter.Pvs(ownerUid, entityManager:EntityManager), reaction.Sound.GetSound(), ownerUid);
         }
