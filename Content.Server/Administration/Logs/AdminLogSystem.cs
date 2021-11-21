@@ -232,6 +232,13 @@ public class AdminLogSystem : EntitySystem
         return AllMessages(filter);
     }
 
+    public IAsyncEnumerable<JsonDocument> CurrentRoundJson(LogFilter? filter = null)
+    {
+        filter ??= new LogFilter();
+        filter.Round = _roundId;
+        return AllJson(filter);
+    }
+
     public Task<Round> CurrentRound()
     {
         return Round(_roundId);
