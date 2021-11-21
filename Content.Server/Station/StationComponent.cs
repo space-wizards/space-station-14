@@ -1,10 +1,8 @@
-using System.Collections.Generic;
-using Content.Server.Maps;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
-using static Content.Server.Roles.StationSystem;
+using static Content.Server.Station.StationSystem;
 
-namespace Content.Server.Roles
+namespace Content.Server.Station
 {
     [RegisterComponent, Friend(typeof(StationSystem))]
     public class StationComponent : Component

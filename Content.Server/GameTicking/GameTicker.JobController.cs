@@ -12,7 +12,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using static Content.Server.Roles.StationSystem;
+using static Content.Server.Station.StationSystem;
 
 namespace Content.Server.GameTicking
 {

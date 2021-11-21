@@ -14,6 +14,7 @@ using Content.Server.Players;
 using Content.Server.Roles;
 using Content.Server.Spawners.Components;
 using Content.Server.Speech.Components;
+using Content.Server.Station;
 using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
@@ -28,7 +29,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using static Content.Server.Roles.StationSystem;
+using static Content.Server.Station.StationSystem;
 
 namespace Content.Server.GameTicking
 {

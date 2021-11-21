@@ -3,9 +3,8 @@ using System.Linq;
 using Content.Server.GameTicking;
 using Content.Server.Maps;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Log;
 
-namespace Content.Server.Roles
+namespace Content.Server.Station
 {
     /// <summary>
     /// System that manages the jobs available on a station, and maybe other things later.
@@ -89,7 +88,6 @@ namespace Content.Server.Roles
         {
 
             var jobListDict = mapPrototype.AvailableJobs.ToDictionary(x => x.Key, x => x.Value[1]);
-            Logger.Debug($"setting up station with {jobListDict.Keys.Count} jobs");
             var id = AllocateStationInfo();
             _stationInfo[id] = new StationInfoData(mapPrototype.MapName, mapPrototype, jobListDict);
             var station = EntityManager.AddComponent<StationComponent>(mapGrid);
