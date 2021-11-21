@@ -168,18 +168,21 @@ namespace Content.Client.Storage
         /// Function for clicking one of the stored entity buttons in the UI, tells server to remove that entity
         /// </summary>
         /// <param name="entityUid"></param>
-        private void OnInteract(BaseButton.ButtonEventArgs buttonEventArgs, EntityUid entityUid)
+        private void OnInteract(BaseButton.ButtonEventArgs args)
         {
-            if (buttonEventArgs.Event.Function == EngineKeyFunctions.UIClick)
+            if (args.Button is not DynamicScollElement<EntityUid> button)
+                return;
+
+            if (args.Event.Function == EngineKeyFunctions.UIClick)
             {
 #pragma warning disable 618
-                SendNetworkMessage(new RemoveEntityMessage(entityUid));
+                SendNetworkMessage(new RemoveEntityMessage(button.Data));
 #pragma warning restore 618
-                buttonEventArgs.Event.Handle();
+                args.Event.Handle();
             }
-            else if (Owner.EntityManager.TryGetEntity(entityUid, out var entity))
+            else if (Owner.EntityManager.TryGetEntity(button.Data, out var entity))
             {
-                _itemSlotManager.OnButtonPressed(buttonEventArgs.Event, entity);
+                _itemSlotManager.OnButtonPressed(args.Event, entity);
             }
         }
 

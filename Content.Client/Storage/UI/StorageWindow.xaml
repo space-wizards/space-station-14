@@ -1,16 +1,12 @@
 <SS14Window
     xmlns="https://spacestation14.io"
-    xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     SetSize ="240 320"
     Title="{Loc 'comp-storage-window-title'}"
     RectClipContent="True">
     <ContainerButton Name="StorageContainerButton" MouseFilter="Pass">
         <PanelContainer Name="InnerContainerButton"/>
-        <BoxContainer Orientation="Vertical" MouseFilter="Ignore">
+        <BoxContainer Name="InnerContainerBox" Orientation="Vertical" MouseFilter="Ignore">
             <Label Name="Information" VerticalAlignment="Center"/>
-            <ScrollContainer Name="Scroll" ReturnMeasure="True" HorizontalExpand="True" VerticalExpand="True">
-                <BoxContainer Name="ButtonBox" Orientation="Vertical"/>
-            </ScrollContainer>
         </BoxContainer>
     </ContainerButton>
 </SS14Window>
