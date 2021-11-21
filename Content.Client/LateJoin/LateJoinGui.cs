@@ -12,6 +12,7 @@ using Robust.Client.Utility;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -54,6 +55,7 @@ namespace Content.Client.LateJoin
             SelectedId += x =>
             {
                 var (station, jobId) = x;
+                Logger.InfoS("latejoin", $"Late joining as ID: {jobId}");
                 _consoleHost.ExecuteCommand($"joingame {CommandParsing.Escape(jobId)} {station}");
                 Close();
             };
