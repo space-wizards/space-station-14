@@ -1,0 +1,8 @@
+﻿- type: reactiveGroup
+  id: Pyrotechnic
+
+- type: reactiveGroup
+  id: Extinguish
+
+- type: reactiveGroup
+  id: Hydrating
