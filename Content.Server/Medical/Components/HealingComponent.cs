@@ -2,7 +2,6 @@ using System.Threading.Tasks;
 using Content.Server.Stack;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Stacks;

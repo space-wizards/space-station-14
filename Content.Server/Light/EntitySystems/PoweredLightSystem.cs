@@ -22,7 +22,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Maths;
 using Content.Shared.Audio;
-using Content.Shared.Damage.Systems;
 
 namespace Content.Server.Light.EntitySystems
 {

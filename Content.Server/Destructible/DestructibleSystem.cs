@@ -3,7 +3,6 @@ using Content.Server.Destructible.Thresholds;
 using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Acts;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Systems;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;

@@ -1,7 +1,6 @@
 using System.Threading.Tasks;
 using Content.Server.Weapon.Melee.Components;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Mining;
 using Robust.Server.GameObjects;

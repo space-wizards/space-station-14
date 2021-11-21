@@ -8,7 +8,6 @@ using Content.Server.Temperature.Components;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
-using Content.Shared.Damage.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 

@@ -14,7 +14,6 @@ using Content.Server.Stunnable;
 using Content.Server.Tools;
 using Content.Server.Tools.Components;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Systems;
 using Content.Shared.Doors;
 using Content.Shared.Interaction;
 using Content.Shared.Sound;

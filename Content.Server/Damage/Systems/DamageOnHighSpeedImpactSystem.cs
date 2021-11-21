@@ -4,7 +4,6 @@ using Content.Server.Stunnable;
 using Content.Server.Stunnable.Components;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Systems;
 using Content.Shared.Stunnable;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;

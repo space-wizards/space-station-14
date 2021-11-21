@@ -4,7 +4,6 @@ using Content.Server.Nutrition.Components;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Systems;
 using Content.Shared.Jittering;
 using Content.Shared.MobState.Components;
 using Content.Shared.Nutrition.Components;

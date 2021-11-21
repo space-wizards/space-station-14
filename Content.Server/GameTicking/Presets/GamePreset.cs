@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Content.Server.Ghost.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
-using Content.Shared.Damage.Systems;
 using Content.Shared.Ghost;
 using Content.Shared.MobState.Components;
 using Content.Shared.Preferences;

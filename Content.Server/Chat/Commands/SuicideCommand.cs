@@ -9,7 +9,6 @@ using Content.Server.Players;
 using Content.Server.Popups;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
-using Content.Shared.Damage.Systems;
 using Content.Shared.Popups;
 using Robust.Server.Player;
 using Robust.Shared.Console;

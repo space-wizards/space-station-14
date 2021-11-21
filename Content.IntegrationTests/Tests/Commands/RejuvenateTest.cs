@@ -2,7 +2,6 @@
 using Content.Server.Administration.Commands;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
-using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.MobState.Components;
 using NUnit.Framework;

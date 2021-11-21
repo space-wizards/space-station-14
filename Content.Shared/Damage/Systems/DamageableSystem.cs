@@ -8,7 +8,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Damage.Systems
+namespace Content.Shared.Damage
 {
     public class DamageableSystem : EntitySystem
     {

@@ -6,7 +6,7 @@ using Content.Server.Audio;
 using Content.Server.Damage.Systems;
 using Content.Server.Power.Components;
 using Content.Server.Shuttles.Components;
-using Content.Shared.Damage.Systems;
+using Content.Shared.Damage;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Physics;

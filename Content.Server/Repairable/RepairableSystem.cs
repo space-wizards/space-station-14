@@ -1,7 +1,6 @@
 using Content.Server.Tools;
 using Content.Server.Tools.Components;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Tools.Components;

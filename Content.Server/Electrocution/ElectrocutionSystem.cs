@@ -11,7 +11,6 @@ using Content.Server.Window;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
-using Content.Shared.Damage.Systems;
 using Content.Shared.Electrocution;
 using Content.Shared.Interaction;
 using Content.Shared.Jittering;

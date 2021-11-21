@@ -5,7 +5,7 @@ using Content.Shared.Movement.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Shared.Damage.Systems
+namespace Content.Shared.Damage
 {
     public class SlowOnDamageSystem : EntitySystem
     {

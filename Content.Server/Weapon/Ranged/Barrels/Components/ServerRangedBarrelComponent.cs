@@ -7,7 +7,6 @@ using Content.Server.Projectiles.Components;
 using Content.Server.Weapon.Ranged.Ammunition.Components;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Sound;

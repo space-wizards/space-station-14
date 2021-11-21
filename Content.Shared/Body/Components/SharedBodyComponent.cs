@@ -9,7 +9,6 @@ using Content.Shared.Body.Prototypes;
 using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
-using Content.Shared.Damage.Systems;
 using Content.Shared.Movement.Components;
 using Content.Shared.Standing;
 using Robust.Shared.GameObjects;

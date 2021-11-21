@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Content.Server.Alert;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Systems;
 using Content.Shared.MobState.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.EntitySystems;

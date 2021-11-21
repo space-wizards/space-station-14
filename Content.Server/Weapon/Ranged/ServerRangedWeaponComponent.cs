@@ -8,7 +8,6 @@ using Content.Server.Stunnable.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Systems;
 using Content.Shared.Hands;
 using Content.Shared.Popups;
 using Content.Shared.Sound;

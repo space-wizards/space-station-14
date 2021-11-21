@@ -5,7 +5,6 @@ using Content.Server.Temperature.Systems;
 using Content.Shared.Inventory;
 using Content.Shared.Slippery;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Systems;
 using Content.Shared.Electrocution;
 using Content.Shared.Movement.EntitySystems;
 using Robust.Shared.Containers;

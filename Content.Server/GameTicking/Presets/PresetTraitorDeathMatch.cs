@@ -18,7 +18,6 @@ using Content.Server.TraitorDeathMatch.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
-using Content.Shared.Damage.Systems;
 using Content.Shared.Inventory;
 using Content.Shared.MobState.Components;
 using Content.Shared.Traitor.Uplink;

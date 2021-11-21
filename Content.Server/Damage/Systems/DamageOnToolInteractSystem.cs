@@ -1,7 +1,6 @@
 using Content.Server.Damage.Components;
 using Content.Server.Tools.Components;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Systems;
 using Content.Shared.Interaction;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;

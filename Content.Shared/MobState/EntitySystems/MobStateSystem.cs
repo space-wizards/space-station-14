@@ -1,5 +1,4 @@
 using Content.Shared.Damage;
-using Content.Shared.Damage.Systems;
 using Content.Shared.DragDrop;
 using Content.Shared.Emoting;
 using Content.Shared.Interaction.Events;

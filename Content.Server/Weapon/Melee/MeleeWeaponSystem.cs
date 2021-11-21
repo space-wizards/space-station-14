@@ -7,7 +7,6 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Cooldown;
 using Content.Server.Weapon.Melee.Components;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Systems;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Physics;

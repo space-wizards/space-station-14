@@ -2,7 +2,6 @@ using Content.Server.Camera;
 using Content.Server.Projectiles.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;

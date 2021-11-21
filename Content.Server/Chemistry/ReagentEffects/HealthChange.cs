@@ -2,7 +2,6 @@ using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Systems;
 using JetBrains.Annotations;
 
 namespace Content.Server.Chemistry.ReagentEffects
