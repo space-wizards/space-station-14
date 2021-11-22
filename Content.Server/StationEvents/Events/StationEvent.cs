@@ -108,7 +108,7 @@ namespace Content.Server.StationEvents.Events
             Occurrences += 1;
 
             EntitySystem.Get<AdminLogSystem>()
-                .Add(LogType.EventStarted, $"Event startup: {Name}");
+                .Add(LogType.EventStarted, LogImpact.High, $"Event startup: {Name}");
         }
 
         /// <summary>

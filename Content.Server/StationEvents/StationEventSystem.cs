@@ -95,7 +95,7 @@ namespace Content.Server.StationEvents
         /// <returns></returns>
         public string RunEvent(string name)
         {
-            _adminLog.Add(LogType.EventRan, $"Event run: {name}");
+            _adminLog.Add(LogType.EventRan, LogImpact.High, $"Event run: {name}");
 
             // Could use a dictionary but it's such a minor thing, eh.
             // Wasn't sure on whether to localize this given it's a command
