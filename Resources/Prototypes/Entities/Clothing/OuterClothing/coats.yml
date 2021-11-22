@@ -40,7 +40,7 @@
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterCoatHoSTrench
-  name: head of security trenchcoat
+  name: head of security's trenchcoat
   description: This trenchcoat was specifically designed for asserting superior authority.
   components:
   - type: Sprite
@@ -112,7 +112,7 @@
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterCoatLabCmo
-  name: lab coat (CMO)
+  name: chief medical officer's lab coat
   description: Bluer than the standard model.
   components:
   - type: Sprite

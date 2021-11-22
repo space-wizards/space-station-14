@@ -1,65 +1,4 @@
 Entries:
-- author: drongood12
-  changes:
-  - {message: 'Fixed a problem with foamed metal, now bullets do not go through it',
-    type: Fix}
-  id: 117
-  time: '2021-03-26T01:52:27.0000000+00:00'
-- author: drongood12
-  changes:
-  - {message: add linearDamping and angularDamping for projectiles, type: Add}
-  id: 118
-  time: '2021-03-26T01:54:07.0000000+00:00'
-- author: ike709
-  changes:
-  - {message: Completely redid the HUD inventory., type: Tweak}
-  - {message: 'Added an on-HUD inventory, using the same hotkey.', type: Add}
-  - {message: Nuked the inventory popup., type: Remove}
-  - {message: Replaced the inventory slot icons and the disarm icon., type: Tweak}
-  - {message: 'Combat mode is now an action, rather than its own button.', type: Tweak}
-  - {message: 'The default actions (in order) are now: Combat Mode, Disarm, Scream.',
-    type: Tweak}
-  id: 119
-  time: '2021-03-26T15:23:12.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Bullets now collide with people again, type: Fix}
-  id: 120
-  time: '2021-03-27T03:23:20.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Storage window now open in center of screen, type: Tweak}
-  id: 121
-  time: '2021-03-27T08:01:12.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Character UI open in center instead of top left, type: Tweak}
-  id: 122
-  time: '2021-03-28T02:40:23.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: 'More things break, anchor, move and collide properly', type: Add}
-  - {message: 'gas canisters shouldn''t yeet you anymore, and girders should be fixed',
-    type: Tweak}
-  id: 123
-  time: '2021-03-28T06:00:37.0000000+00:00'
-- author: BulletGrade
-  changes:
-  - {message: Made magazine names more specific, type: Tweak}
-  id: 124
-  time: '2021-03-28T06:06:20.0000000+00:00'
-- author: PJB3005
-  changes:
-  - {message: Reworked how hair styles are stored. You will have to select your hair
-      styles again or live as a baldie., type: Tweak}
-  - {message: SKREEEEEEEEEEEEEEEE, type: Add}
-  id: 125
-  time: '2021-03-28T06:26:32.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Remaps gas cans on saltern and removes signs on top of windows, type: Tweak}
-  id: 126
-  time: '2021-03-28T08:36:40.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Fixes bug where plasma fires wouldn't spread properly under certain
@@ -2847,3 +2786,63 @@ Entries:
     type: Add}
   id: 618
   time: '2021-11-20T23:47:53.0000000+00:00'
+- author: AJCM-git
+  changes:
+  - {message: You can no longer use the E key to interact with things outside lockers/crates
+      while inside one., type: Fix}
+  id: 619
+  time: '2021-11-21T05:06:44.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Shuttles now require thrust., type: Add}
+  id: 620
+  time: '2021-11-21T06:09:49.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Reaction effects (potas/water, smoke, foam) have been refactored slightly,
+      so report any bugs you find with them.', type: Tweak}
+  id: 621
+  time: '2021-11-21T07:35:02.0000000+00:00'
+- author: FoLoKe
+  changes:
+  - {message: Added "eat" action for food., type: Add}
+  - {message: Fixed soup eating with a knife or fork., type: Fix}
+  id: 622
+  time: '2021-11-21T07:35:10.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Opening a docked airlock no longer depressurizes the room/shuttle.,
+    type: Fix}
+  id: 623
+  time: '2021-11-21T12:17:31.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: It is clearer which side of a docking airlock that something should
+      dock to., type: Fix}
+  id: 624
+  time: '2021-11-21T13:26:19.0000000+00:00'
+- author: xRiriq
+  changes:
+  - {message: altered names of command clothing and hardsuits to be consistent, type: Fix}
+  id: 625
+  time: '2021-11-21T20:14:39.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: You can no longer inspecting your surroundings using the examine popup
+      or context menu while incapacitated, type: Fix}
+  id: 626
+  time: '2021-11-21T20:40:09.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Livestock crates can no longer be welded shut. You can't weld wood.,
+    type: Tweak}
+  id: 627
+  time: '2021-11-22T02:33:45.0000000+00:00'
+- author: moony
+  changes:
+  - {message: 'Security, Captain, Head of Personnel, Chief Engineer, Chief Medial
+      Officer, and the Research Director are no longer capable of being antagonists
+      due to expanded NT screening programs. You can now trust your leadership!',
+    type: Add}
+  id: 628
+  time: '2021-11-22T02:33:51.0000000+00:00'

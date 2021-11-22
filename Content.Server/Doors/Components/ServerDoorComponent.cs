@@ -55,6 +55,9 @@ namespace Content.Server.Doors.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier CrushDamage = default!;
 
+        [DataField("changeAirtight")]
+        public bool ChangeAirtight = true;
+
         public override DoorState State
         {
             get => base.State;
@@ -366,7 +369,7 @@ namespace Content.Server.Doors.Components
                 occluder.Enabled = false;
             }
 
-            if (Owner.TryGetComponent(out AirtightComponent? airtight))
+            if (ChangeAirtight && Owner.TryGetComponent(out AirtightComponent? airtight))
             {
                 EntitySystem.Get<AirtightSystem>().SetAirblocked(airtight, false);
             }
@@ -394,7 +397,7 @@ namespace Content.Server.Doors.Components
         {
             base.OnPartialOpen();
 
-            if (Owner.TryGetComponent(out AirtightComponent? airtight))
+            if (ChangeAirtight && Owner.TryGetComponent(out AirtightComponent? airtight))
             {
                 EntitySystem.Get<AirtightSystem>().SetAirblocked(airtight, false);
             }
@@ -537,7 +540,7 @@ namespace Content.Server.Doors.Components
             base.OnPartialClose();
 
             // if safety is off, crushes people inside of the door, temporarily turning off collisions with them while doing so.
-            var becomeairtight = SafetyCheck() || !TryCrush();
+            var becomeairtight = ChangeAirtight && (SafetyCheck() || !TryCrush());
 
             if (becomeairtight && Owner.TryGetComponent(out AirtightComponent? airtight))
             {

@@ -119,7 +119,7 @@ namespace Content.Shared.Chemistry.Reagent
                 if (!plantMetabolizable.ShouldApply(args, random))
                     continue;
 
-                plantMetabolizable.Metabolize(args);
+                plantMetabolizable.Effect(args);
             }
         }
     }

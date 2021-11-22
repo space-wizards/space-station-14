@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 using System.Linq;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
+using Content.Shared.MobState.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -27,12 +28,30 @@ namespace Content.Shared.Examine
 
     public abstract class ExamineSystemShared : EntitySystem
     {
+        /// <summary>
+        ///     Examine range to use when the examiner is in critical condition.
+        /// </summary>
+        /// <remarks>
+        ///     Detailed examinations are disabled while incapactiated. Ideally this should just be set equal to the
+        ///     radius of the crit overlay that blackens most of the screen. The actual radius of that is defined
+        ///     in a shader sooo... eh.
+        /// </remarks>
+        public const float CritExamineRange = 1.3f;
+
+        /// <summary>
+        ///     Examine range to use when the examiner is dead. See <see cref="CritExamineRange"/>.
+        /// </summary>
+        public const float DeadExamineRange = 0.75f;
+
         public const float ExamineRange = 16f;
-        public const float ExamineRangeSquared = ExamineRange * ExamineRange;
         protected const float ExamineDetailsRange = 3f;
 
-        private static bool IsInDetailsRange(IEntity examiner, IEntity entity)
+        private bool IsInDetailsRange(IEntity examiner, IEntity entity)
         {
+            // check if the mob is in ciritcal or dead
+            if (EntityManager.TryGetComponent(examiner.Uid, out MobStateComponent mobState) && mobState.IsIncapacitated())
+                return false;
+
             if (entity.TryGetContainerMan(out var man) && man.Owner == examiner)
                 return true;
 
@@ -41,36 +60,45 @@ namespace Content.Shared.Examine
         }
 
         [Pure]
-        protected static bool CanExamine(IEntity examiner, IEntity examined)
+        public bool CanExamine(IEntity examiner, IEntity examined)
+        {
+            return CanExamine(examiner, examined.Transform.MapPosition,
+                entity => entity == examiner || entity == examined);
+        }
+
+        [Pure]
+        public virtual bool CanExamine(IEntity examiner, MapCoordinates target, Ignored? predicate = null)
         {
             if (!examiner.TryGetComponent(out ExaminerComponent? examinerComponent))
-            {
                 return false;
-            }
 
             if (!examinerComponent.DoRangeCheck)
-            {
                 return true;
-            }
 
-            if (examiner.Transform.MapID != examined.Transform.MapID)
-            {
+            if (examiner.Transform.MapID != target.MapId)
                 return false;
-            }
-
-            Ignored predicate = entity => entity == examiner || entity == examined;
-
-            if (examiner.TryGetContainer(out var container))
-            {
-                predicate += entity => entity == container.Owner;
-            }
 
             return InRangeUnOccluded(
                 examiner.Transform.MapPosition,
-                examined.Transform.MapPosition,
-                ExamineRange,
+                target,
+                GetExaminerRange(examiner.Uid),
                 predicate: predicate,
                 ignoreInsideBlocker: true);
+        }
+
+        /// <summary>
+        ///     Check if a given examiner is incapacitated. If yes, return a reduced examine range. Otherwise, return the deault range.
+        /// </summary>
+        public float GetExaminerRange(EntityUid examiner, MobStateComponent? mobState = null)
+        {
+            if (Resolve(examiner, ref mobState, logMissing: false))
+            {
+                if (mobState.IsDead())
+                    return DeadExamineRange;
+                else if (mobState.IsCritical())
+                    return CritExamineRange;
+            }
+            return ExamineRange;
         }
 
         public static bool InRangeUnOccluded(MapCoordinates origin, MapCoordinates other, float range, Ignored? predicate, bool ignoreInsideBlocker = true)

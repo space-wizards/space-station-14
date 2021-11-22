@@ -5,6 +5,7 @@ using Content.Server.Coordinates.Helpers;
 using Content.Shared.Audio;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
@@ -23,7 +24,7 @@ namespace Content.Server.Chemistry.ReactionEffects
     /// </summary>
     [UsedImplicitly]
     [ImplicitDataDefinitionForInheritors]
-    public abstract class AreaReactionEffect : IReactionEffect, ISerializationHooks
+    public abstract class AreaReactionEffect : ReagentEffect, ISerializationHooks
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
 
@@ -89,11 +90,14 @@ namespace Content.Server.Chemistry.ReactionEffects
             IoCManager.InjectDependencies(this);
         }
 
-        public void React(Solution solution, EntityUid solutionEntity, double intensity, IEntityManager entityManager)
+        public override void Effect(ReagentEffectArgs args)
         {
-            var splitSolution = EntitySystem.Get<SolutionContainerSystem>().SplitSolution(solutionEntity, solution, solution.MaxVolume);
+            if (args.Source == null)
+                return;
+
+            var splitSolution = EntitySystem.Get<SolutionContainerSystem>().SplitSolution(args.SolutionEntity, args.Source, args.Source.MaxVolume);
             // We take the square root so it becomes harder to reach higher amount values
-            var amount = (int) Math.Round(_rangeConstant + _rangeMultiplier*Math.Sqrt(intensity));
+            var amount = (int) Math.Round(_rangeConstant + _rangeMultiplier*Math.Sqrt(args.Quantity.Float()));
             amount = Math.Min(amount, _maxRange);
 
             if (_diluteReagents)
@@ -117,13 +121,13 @@ namespace Content.Server.Chemistry.ReactionEffects
                 splitSolution.RemoveSolution(splitSolution.TotalVolume * solutionFraction);
             }
 
-            var transform = entityManager.GetComponent<TransformComponent>(solutionEntity);
+            var transform = args.EntityManager.GetComponent<TransformComponent>(args.SolutionEntity);
 
             if (!_mapManager.TryFindGridAt(transform.MapPosition, out var grid)) return;
 
             var coords = grid.MapToGrid(transform.MapPosition);
 
-            var ent = entityManager.SpawnEntity(_prototypeId, coords.SnapToGrid());
+            var ent = args.EntityManager.SpawnEntity(_prototypeId, coords.SnapToGrid());
 
             var areaEffectComponent = GetAreaEffectComponent(ent);
 
@@ -137,7 +141,7 @@ namespace Content.Server.Chemistry.ReactionEffects
             areaEffectComponent.TryAddSolution(splitSolution);
             areaEffectComponent.Start(amount, _duration, _spreadDelay, _removeDelay);
 
-            SoundSystem.Play(Filter.Pvs(solutionEntity), _sound.GetSound(), solutionEntity, AudioHelpers.WithVariation(0.125f));
+            SoundSystem.Play(Filter.Pvs(args.SolutionEntity), _sound.GetSound(), args.SolutionEntity, AudioHelpers.WithVariation(0.125f));
         }
 
         protected abstract SolutionAreaEffectComponent? GetAreaEffectComponent(IEntity entity);
