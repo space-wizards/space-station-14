@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
@@ -12,7 +11,7 @@ using Robust.Shared.Random;
 namespace Content.Shared.Chemistry
 {
     [UsedImplicitly]
-    public partial class ChemistrySystem : EntitySystem
+    public class ReactiveSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
@@ -37,30 +36,52 @@ namespace Content.Shared.Chemistry
             if (!EntityManager.TryGetComponent(uid, out ReactiveComponent? reactive))
                 return;
 
-            if (reagent.ReactiveEffects == null)
-                return;
-
             // If we have a source solution, use the reagent quantity we have left. Otherwise, use the reaction volume specified.
             var args = new ReagentEffectArgs(uid, null, source, reagent,
                 source?.GetReagentQuantity(reagent.ID) ?? reactVolume, EntityManager, method);
 
-            foreach (var (key, val) in reagent.ReactiveEffects)
+            // First, check if the reagent wants to apply any effects.
+            if (reagent.ReactiveEffects != null)
             {
-                if (!val.Methods.Contains(method))
-                    continue;
-
-                if (!reactive.ReactiveGroups.ContainsKey(key))
-                    continue;
-
-                if (!reactive.ReactiveGroups[key].Contains(method))
-                    continue;
-
-                foreach (var effect in val.Effects)
+                foreach (var (key, val) in reagent.ReactiveEffects)
                 {
-                    if (!effect.ShouldApply(args, _robustRandom))
+                    if (!val.Methods.Contains(method))
                         continue;
 
-                    effect.Effect(args);
+                    if (!reactive.ReactiveGroups.ContainsKey(key))
+                        continue;
+
+                    if (!reactive.ReactiveGroups[key].Contains(method))
+                        continue;
+
+                    foreach (var effect in val.Effects)
+                    {
+                        if (!effect.ShouldApply(args, _robustRandom))
+                            continue;
+
+                        effect.Effect(args);
+                    }
+                }
+            }
+
+            // Then, check if the prototype has any effects it can apply as well.
+            if (reactive.Reactions != null)
+            {
+                foreach (var entry in reactive.Reactions)
+                {
+                    if (!entry.Methods.Contains(method))
+                        continue;
+
+                    if (entry.Reagents != null && !entry.Reagents.Contains(reagent.ID))
+                        continue;
+
+                    foreach (var effect in entry.Effects)
+                    {
+                        if (!effect.ShouldApply(args, _robustRandom))
+                            continue;
+
+                        effect.Effect(args);
+                    }
                 }
             }
         }

@@ -37,7 +37,7 @@ namespace Content.Server.Chemistry.Components
                 internals.AreInternalsWorking())
                 return;
 
-            var chemistry = EntitySystem.Get<ChemistrySystem>();
+            var chemistry = EntitySystem.Get<ReactiveSystem>();
             var cloneSolution = solution.Clone();
             var transferAmount = FixedPoint2.Min(cloneSolution.TotalVolume * solutionFraction, bloodstream.EmptyVolume);
             var transferSolution = cloneSolution.SplitSolution(transferAmount);
