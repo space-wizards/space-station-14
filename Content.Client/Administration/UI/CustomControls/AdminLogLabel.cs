@@ -11,7 +11,7 @@ public class AdminLogLabel : RichTextLabel
         Log = log;
         Separator = separator;
 
-        SetMessage(log.Message);
+        SetMessage($"{log.Date:HH:mm:ss}: {log.Message}");
         OnVisibilityChanged += VisibilityChanged;
     }
 
