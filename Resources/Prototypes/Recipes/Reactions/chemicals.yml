@@ -19,6 +19,30 @@
     Diethylamine: 2
 
 - type: reaction
+  id: Phenol
+  reactants:
+    Water:
+      amount: 1
+    Chlorine:
+      amount: 1
+    Oil:
+      amount: 1
+  products:
+    Phenol: 3
+
+- type: reaction
+  id: Acetone
+  reactants:
+    Oil:
+      amount: 1
+    WeldingFuel:
+      amount: 1
+    Oxygen:
+      amount: 1
+  products:
+    Acetone: 2
+
+- type: reaction
   id: FoamingAgent
   reactants:
     Lithium:
@@ -199,16 +223,6 @@
       amount: 1
   products:
     UnstableMutagen: 3
-
-- type: reaction
-  id: Water
-  reactants:
-    Hydrogen:
-      amount: 1
-    Oxygen:
-      amount: 1
-  products:
-    Water: 2
 
 - type: reaction
   id: Oil

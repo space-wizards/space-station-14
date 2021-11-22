@@ -394,7 +394,6 @@ namespace Content.Shared.StatusEffect
 
             }
 
-
             return true;
         }
 
