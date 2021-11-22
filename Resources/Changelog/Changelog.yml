@@ -1,9 +1,4 @@
 Entries:
-- author: SweptWasTaken
-  changes:
-  - {message: Uplink now has correct mags for clarissa, type: Fix}
-  id: 132
-  time: '2021-03-31T10:11:12.0000000+00:00'
 - author: Swept
   changes:
   - {message: NEW RULE - NO USING ALT ACCOUNTS ON THE SAME SERVER, type: Add}
@@ -2847,3 +2842,9 @@ Entries:
   - {message: It is no longer possible to start pulling people while in cuffs., type: Fix}
   id: 633
   time: '2021-11-22T19:31:12.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Admins no longer have to turn events back on every time the server restarts,
+    type: Add}
+  id: 634
+  time: '2021-11-22T22:33:30.0000000+00:00'
