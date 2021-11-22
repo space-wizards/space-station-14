@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.Database;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using NUnit.Framework;
+using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
@@ -192,6 +194,51 @@ public class AddTests : ContentIntegrationTest
             }
 
             return count >= amount;
+        });
+    }
+
+    [Test]
+    public async Task AddPlayerSessionLog()
+    {
+        var (client, server) = await StartConnectedServerClientPair(serverOptions: new ServerContentIntegrationOption
+        {
+            CVarOverrides =
+            {
+                [CCVars.AdminLogsQueueSendDelay.Name] = "0"
+            },
+            Pool = true
+        });
+
+        await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
+
+        var sPlayers = server.ResolveDependency<IPlayerManager>();
+        var sSystems = server.ResolveDependency<IEntitySystemManager>();
+
+        var sAdminLogSystem = sSystems.GetEntitySystem<AdminLogSystem>();
+        Guid playerGuid = default;
+
+        await server.WaitPost(() =>
+        {;
+            var player = sPlayers.ServerSessions.First();
+            playerGuid = player.UserId;
+
+            Assert.DoesNotThrow(() =>
+            {
+                sAdminLogSystem.Add(LogType.Unknown, $"{player:Player} test log.");
+            });
+        });
+
+        await WaitUntil(server, async () =>
+        {
+            var logs = sAdminLogSystem.CurrentRoundLogs();
+
+            await foreach (var log in logs)
+            {
+                Assert.That(log.Players, Does.Contain(playerGuid));
+                return true;
+            }
+
+            return false;
         });
     }
 }
