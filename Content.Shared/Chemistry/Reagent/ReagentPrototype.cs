@@ -132,7 +132,7 @@ namespace Content.Shared.Chemistry.Reagent
         ///     Amount of reagent to metabolize, per metabolism cycle.
         /// </summary>
         [DataField("metabolismRate")]
-        public FixedPoint2 MetabolismRate = FixedPoint2.New(1.0f);
+        public FixedPoint2 MetabolismRate = FixedPoint2.New(0.5f);
 
         /// <summary>
         ///     A list of effects to apply when these reagents are metabolized.

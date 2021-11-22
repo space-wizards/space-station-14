@@ -21,7 +21,7 @@ namespace Content.Server.Chemistry.ReagentEffects
         public override void Effect(ReagentEffectArgs args)
         {
             if (args.EntityManager.TryGetComponent(args.SolutionEntity, out ThirstComponent? thirst))
-                thirst.UpdateThirst(HydrationFactor * (float) args.Quantity);
+                thirst.UpdateThirst(HydrationFactor);
         }
     }
 }
