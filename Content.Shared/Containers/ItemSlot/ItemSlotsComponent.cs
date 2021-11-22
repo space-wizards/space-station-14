@@ -24,8 +24,8 @@ namespace Content.Shared.Containers.ItemSlots
         public override string Name => "ItemSlots";
 
         /// <summary>
-        ///     The dictionary that stores all of the item slots whose interactions will be managed by the <see cref="ItemSlotsSystem"/>.
-        ///     If a slot is not in this dictionary.
+        ///     The dictionary that stores all of the item slots whose interactions will be managed by the <see
+        ///     cref="ItemSlotsSystem"/>.
         /// </summary>
         [DataField("slots", readOnly:true)]
         public readonly Dictionary<string, ItemSlot> Slots = new();
