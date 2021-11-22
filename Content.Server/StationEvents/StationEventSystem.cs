@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Content.Server.Administration.Logs;
 using Content.Server.GameTicking;
 using Content.Server.StationEvents.Events;
 using Content.Shared;
+using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.StationEvents;
@@ -32,6 +34,8 @@ namespace Content.Server.StationEvents
         [Dependency] private readonly IConGroupController _conGroupController = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+
+        [Dependency] private readonly AdminLogSystem _adminLog = default!;
 
         public StationEvent? CurrentEvent { get; private set; }
         public IReadOnlyCollection<StationEvent> StationEvents => _stationEvents;
@@ -91,6 +95,8 @@ namespace Content.Server.StationEvents
         /// <returns></returns>
         public string RunEvent(string name)
         {
+            _adminLog.Add(LogType.EventRan, LogImpact.High, $"Event run: {name}");
+
             // Could use a dictionary but it's such a minor thing, eh.
             // Wasn't sure on whether to localize this given it's a command
             var upperName = name.ToUpperInvariant();

@@ -1,5 +1,8 @@
+using Content.Server.Administration.Logs;
 using Content.Server.Chat.Managers;
+using Content.Shared.Administration.Logs;
 using Robust.Shared.Audio;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Player;
 
@@ -103,6 +106,9 @@ namespace Content.Server.StationEvents.Events
         {
             Started = true;
             Occurrences += 1;
+
+            EntitySystem.Get<AdminLogSystem>()
+                .Add(LogType.EventStarted, LogImpact.High, $"Event startup: {Name}");
         }
 
         /// <summary>
@@ -111,6 +117,9 @@ namespace Content.Server.StationEvents.Events
         /// </summary>
         public virtual void Announce()
         {
+            EntitySystem.Get<AdminLogSystem>()
+                .Add(LogType.EventAnnounced, $"Event announce: {Name}");
+
             if (StartAnnouncement != null)
             {
                 var chatManager = IoCManager.Resolve<IChatManager>();
@@ -131,6 +140,9 @@ namespace Content.Server.StationEvents.Events
         /// </summary>
         public virtual void Shutdown()
         {
+            EntitySystem.Get<AdminLogSystem>()
+                .Add(LogType.EventAnnounced, $"Event shutdown: {Name}");
+
             if (EndAnnouncement != null)
             {
                 var chatManager = IoCManager.Resolve<IChatManager>();
