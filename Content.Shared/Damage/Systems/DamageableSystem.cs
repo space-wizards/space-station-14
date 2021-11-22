@@ -1,8 +1,7 @@
-using System.Collections.Generic;
 using System.Linq;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
-using Content.Shared.Movement.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
@@ -15,11 +14,24 @@ namespace Content.Shared.Damage
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
+        [Dependency] private readonly SharedAdminLogSystem _logs = default!;
+
         public override void Initialize()
         {
             SubscribeLocalEvent<DamageableComponent, ComponentInit>(DamageableInit);
             SubscribeLocalEvent<DamageableComponent, ComponentHandleState>(DamageableHandleState);
             SubscribeLocalEvent<DamageableComponent, ComponentGetState>(DamageableGetState);
+        }
+
+        protected virtual void SetTotalDamage(DamageableComponent damageable, FixedPoint2 @new)
+        {
+            var owner = damageable.Owner;
+            var old = damageable.TotalDamage;
+            var change = @new - old;
+
+            _logs.Add(LogType.DamageChange, $"{owner} received {change} damage. Old: {old} | New: {@new}");
+
+            damageable.TotalDamage = @new;
         }
 
         /// <summary>
@@ -83,7 +95,7 @@ namespace Content.Shared.Damage
         public void DamageChanged(DamageableComponent component, DamageSpecifier? damageDelta = null)
         {
             component.DamagePerGroup = component.Damage.GetDamagePerGroup();
-            component.TotalDamage = component.Damage.Total;
+            SetTotalDamage(component, component.Damage.Total);
             component.Dirty();
 
             if (EntityManager.TryGetComponent<SharedAppearanceComponent>(component.OwnerUid, out var appearance) && damageDelta != null)
