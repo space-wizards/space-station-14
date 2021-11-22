@@ -1,4 +1,5 @@
-﻿using Content.Client.Eui;
+﻿using System.Linq;
+using Content.Client.Eui;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Eui;
@@ -25,17 +26,13 @@ public class AdminLogsEui : BaseEui
 
     private void RequestLogs()
     {
-        var round = Window.GetSelectedRoundId();
-        var types = Window.GetSelectedLogTypes();
-        var players = Window.GetSelectedPlayerIds();
-
         var request = new LogsRequest(
-            round,
-            types,
+            Window.SelectedRoundId,
+            Window.SelectedTypes.ToList(),
             null,
             null,
             null,
-            players,
+            Window.SelectedPlayers.ToArray(),
             null,
             null,
             DateOrder.Descending);

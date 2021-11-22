@@ -33,8 +33,8 @@ public partial class AdminLogsWindow : SS14Window
         LogSearch.OnTextChanged += LogSearchChanged;
 
         SelectAllTypesButton.OnPressed += SelectAllTypes;
-
         SelectNoTypesButton.OnPressed += SelectNoTypes;
+
         SelectNoPlayersButton.OnPressed += SelectNoPlayers;
 
         RoundSpinBox.IsValid = i => i > 0 && i <= CurrentRound;
@@ -49,11 +49,13 @@ public partial class AdminLogsWindow : SS14Window
 
     private int CurrentRound { get; set; }
 
-    private HashSet<LogType> SelectedTypes { get; } = new();
+    public int SelectedRoundId => RoundSpinBox.Value;
 
-    private HashSet<Guid> SelectedPlayers { get; } = new();
+    public HashSet<LogType> SelectedTypes { get; } = new();
 
-    private HashSet<LogImpact> SelectedImpacts { get; } = new();
+    public HashSet<Guid> SelectedPlayers { get; } = new();
+
+    public HashSet<LogImpact> SelectedImpacts { get; } = new();
 
     public void SetCurrentRound(int round)
     {
@@ -100,6 +102,8 @@ public partial class AdminLogsWindow : SS14Window
 
     private void SelectAllTypes(ButtonEventArgs obj)
     {
+        SelectedTypes.Clear();
+
         foreach (var control in TypesContainer.Children)
         {
             if (control is not AdminLogTypeButton type)
@@ -108,6 +112,7 @@ public partial class AdminLogsWindow : SS14Window
             }
 
             type.Pressed = true;
+            SelectedTypes.Add(type.Type);
         }
 
         UpdateLogs();
@@ -115,6 +120,8 @@ public partial class AdminLogsWindow : SS14Window
 
     private void SelectNoTypes(ButtonEventArgs obj)
     {
+        SelectedTypes.Clear();
+
         foreach (var control in TypesContainer.Children)
         {
             if (control is not AdminLogTypeButton type)
@@ -131,6 +138,8 @@ public partial class AdminLogsWindow : SS14Window
 
     private void SelectNoPlayers(ButtonEventArgs obj)
     {
+        SelectedPlayers.Clear();
+
         foreach (var control in PlayersContainer.Children)
         {
             if (control is not AdminLogPlayerButton player)
@@ -377,45 +386,6 @@ public partial class AdminLogsWindow : SS14Window
     {
         LogsContainer.RemoveAllChildren();
         AddLogs(logs);
-    }
-
-    public int GetSelectedRoundId()
-    {
-        return RoundSpinBox.Value;
-    }
-
-    public List<LogType> GetSelectedLogTypes()
-    {
-        var types = new List<LogType>();
-
-        foreach (var control in TypesContainer.Children)
-        {
-            if (control is not AdminLogTypeButton {Text: { }, Pressed: true} type)
-            {
-                continue;
-            }
-
-            types.Add(Enum.Parse<LogType>(type.Text));
-        }
-
-        return types;
-    }
-
-    public Guid[] GetSelectedPlayerIds()
-    {
-        var players = new List<Guid>();
-
-        foreach (var control in PlayersContainer.Children)
-        {
-            if (control is not AdminLogPlayerButton {Pressed: true} player)
-            {
-                continue;
-            }
-
-            players.Add(player.Id);
-        }
-
-        return players.ToArray();
     }
 
     protected override void Dispose(bool disposing)
