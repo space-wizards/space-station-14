@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
@@ -18,6 +19,7 @@ namespace Content.Shared.Chemistry.Reaction
 
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] protected readonly SharedAdminLogSystem _logSystem = default!;
 
         public override void Initialize()
         {

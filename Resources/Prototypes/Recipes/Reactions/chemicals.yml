@@ -56,6 +56,7 @@
 
 - type: reaction
   id: PotassiumExplosion
+  impact: High
   reactants:
     Water:
       amount: 1
@@ -73,6 +74,7 @@
 
 - type: reaction
   id: Smoke
+  impact: High
   reactants:
     Phosphorus:
       amount: 1
@@ -95,6 +97,7 @@
 
 - type: reaction
   id: Foam
+  impact: High
   reactants:
     Fluorosurfactant:
       amount: 1
@@ -118,6 +121,7 @@
 
 - type: reaction
   id: IronMetalFoam
+  impact: High
   reactants:
     Iron:
       amount: 3
@@ -143,6 +147,7 @@
 
 - type: reaction
   id: AluminiumMetalFoam
+  impact: High
   reactants:
     Aluminium:
       amount: 3
@@ -178,6 +183,7 @@
 
 - type: reaction
   id: Thermite
+  impact: Medium
   reactants:
     Iron:
       amount: 1
@@ -224,6 +230,7 @@
 
 - type: reaction
   id: Fluorosurfactant
+  impact: Medium
   reactants:
     Carbon:
       amount: 2
@@ -236,6 +243,7 @@
 
 - type: reaction
   id: Meth
+  impact: Medium
   reactants:
     Ephedrine:
       amount: 1
@@ -250,6 +258,7 @@
 
 - type: reaction
   id: Ephedrine
+  impact: Medium
   reactants:
     Oil:
       amount: 1
