@@ -1,9 +1,4 @@
 Entries:
-- author: Swept
-  changes:
-  - {message: NEW RULE - NO USING ALT ACCOUNTS ON THE SAME SERVER, type: Add}
-  id: 133
-  time: '2021-03-31T12:10:16.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Client no longer has access to some vision debug commands, type: Tweak}
@@ -2848,3 +2843,8 @@ Entries:
     type: Add}
   id: 634
   time: '2021-11-22T22:33:30.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Announcements from Central Command are now properly serenaded., type: Fix}
+  id: 635
+  time: '2021-11-22T22:34:48.0000000+00:00'
