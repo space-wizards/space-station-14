@@ -8,4 +8,8 @@ public enum LogType
     Damaged = 2,
     Healed = 3,
     Slip = 4,
+    EventAnnounced = 5,
+    EventStarted = 6,
+    EventRan = 6,
+    EventStopped = 7,
 }
