@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.Administration.Logs;
 using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
 using JetBrains.Annotations;
@@ -16,10 +17,11 @@ namespace Content.Shared.Slippery
     [UsedImplicitly]
     public abstract class SharedSlipperySystem : EntitySystem
     {
+        [Dependency] private readonly SharedAdminLogSystem _adminLog = default!;
         [Dependency] private readonly SharedStunSystem _stunSystem = default!;
         [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
 
-        private List<SlipperyComponent> _slipped = new();
+        private readonly List<SlipperyComponent> _slipped = new();
 
         public override void Initialize()
         {
@@ -97,6 +99,8 @@ namespace Content.Shared.Slippery
             component.Dirty();
 
             PlaySound(component);
+
+            _adminLog.Add(LogType.Slip, $"{component.Owner} slipped on collision with {otherBody.Owner}");
 
             return true;
         }

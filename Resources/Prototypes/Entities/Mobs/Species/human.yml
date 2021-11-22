@@ -11,15 +11,10 @@
     - CanPilot
     - FootstepSound
   - type: Reactive
+    groups:
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
     reactions:
-    - reagents: [Water]
-      methods: [Touch]
-      effects:
-      - !type:ExtinguishReaction
-    - reagents: [WeldingFuel, Thermite, Plasma, Ethanol]
-      methods: [Touch]
-      effects:
-      - !type:FlammableReaction
     - reagents: [Water, SpaceCleaner]
       methods: [Touch]
       effects:
@@ -341,6 +336,14 @@
         color: "#e8b59b"
         sprite: Mobs/Species/Human/parts.rsi
         state: l_leg
+      - map: [ "enum.HumanoidVisualLayers.LFoot" ]
+        color: "#e8b59b"
+        sprite: Mobs/Species/Human/parts.rsi
+        state: l_foot
+      - map: [ "enum.HumanoidVisualLayers.RFoot" ]
+        color: "#e8b59b"
+        sprite: Mobs/Species/Human/parts.rsi
+        state: r_foot
       - shader: StencilClear
       - shader: StencilMask
         map: ["enum.HumanoidVisualLayers.StencilMask"]

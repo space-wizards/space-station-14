@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from CEV-Eris at commit https://github.com/discordia-space/CEV-Eris/commit/14517938186858388656a6aee14bf47af9e9649f",
+  "copyright": "Taken from CEV-Eris at commit https://github.com/discordia-space/CEV-Eris/commit/14517938186858388656a6aee14bf47af9e9649f - then modified by 20kdc for docking improvements",
   "size": {
     "x": 32,
     "y": 32
@@ -12,6 +12,12 @@
     },
     {
       "name": "open"
+    },
+    {
+      "name": "lights_green"
+    },
+    {
+      "name": "lights_red"
     },
     {
       "name": "closing",

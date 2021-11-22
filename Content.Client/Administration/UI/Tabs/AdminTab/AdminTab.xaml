@@ -14,6 +14,7 @@
             <cc:CommandButton Command="permissions" Text="{Loc Permissions Panel}" />
             <cc:CommandButton Command="announceui" Text="{Loc Announce}"/>
             <cc:UICommandButton Command="callshuttle" Text="{Loc (Re)call Shuttle}" WindowType="{x:Type at:AdminShuttleWindow}"/>
+            <cc:CommandButton Command="adminlogs" Text="{Loc Admin Logs}"/>
         </GridContainer>
     </BoxContainer>
 </Control>

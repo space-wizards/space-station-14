@@ -90,11 +90,11 @@ namespace Content.Server.Communications
             switch (obj.Message)
             {
                 case CommunicationsConsoleCallEmergencyShuttleMessage _:
-                    RoundEndSystem.RequestRoundEnd();
+                    RoundEndSystem.RequestRoundEnd(obj.Session.AttachedEntity);
                     break;
 
                 case CommunicationsConsoleRecallEmergencyShuttleMessage _:
-                    RoundEndSystem.CancelRoundEndCountdown();
+                    RoundEndSystem.CancelRoundEndCountdown(obj.Session.AttachedEntity);
                     break;
                 case CommunicationsConsoleAnnounceMessage msg:
                     if (!CanAnnounce())
@@ -104,7 +104,7 @@ namespace Content.Server.Communications
                     _announceCooldownEndedTokenSource.Cancel();
                     _announceCooldownEndedTokenSource = new CancellationTokenSource();
                     LastAnnounceTime = _gameTiming.CurTime;
-                    Timer.Spawn(AnnounceCooldown, () => UpdateBoundInterface(), _announceCooldownEndedTokenSource.Token);
+                    Timer.Spawn(AnnounceCooldown, UpdateBoundInterface, _announceCooldownEndedTokenSource.Token);
                     UpdateBoundInterface();
 
                     var message = msg.Message.Length <= 256 ? msg.Message.Trim() : $"{msg.Message.Trim().Substring(0, 256)}...";

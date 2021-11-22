@@ -6,6 +6,7 @@
   - Security
   icon: "SecurityOfficer"
   supervisors: "the head of security"
+  canBeAntag: false
   access:
   - Security
   - Maintenance

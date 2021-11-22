@@ -67,6 +67,8 @@
   #    type: WiresBoundUserInterface
   - type: Airtight
     fixVacuum: true
+    airBlockedDirection:
+      - South
   - type: Occluder
   - type: Damageable
     damageContainer: Inorganic

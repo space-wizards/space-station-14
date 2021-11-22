@@ -14,10 +14,13 @@ namespace Content.Server.Roles
 
         public string? StartingGear => Prototype.StartingGear;
 
+        public bool CanBeAntag;
+
         public Job(Mind.Mind mind, JobPrototype jobPrototype) : base(mind)
         {
             Prototype = jobPrototype;
             Name = jobPrototype.Name;
+            CanBeAntag = jobPrototype.CanBeAntag;
         }
 
         public override void Greet()

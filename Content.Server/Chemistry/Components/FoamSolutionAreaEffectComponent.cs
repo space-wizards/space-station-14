@@ -16,7 +16,7 @@ namespace Content.Server.Chemistry.Components
     public class FoamSolutionAreaEffectComponent : SolutionAreaEffectComponent
     {
         public override string Name => "FoamSolutionAreaEffect";
-        public new const string SolutionName = "foam";
+        public new const string SolutionName = "solutionArea";
 
         [DataField("foamedMetalPrototype")] private string? _foamedMetalPrototype;
 

@@ -9,6 +9,7 @@
   icon: "ResearchDirector"
   requireAdminNotify: true
   supervisors: "the captain"
+  canBeAntag: false
   access:
   - Research
   - Command
