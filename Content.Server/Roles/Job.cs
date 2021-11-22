@@ -14,7 +14,7 @@ namespace Content.Server.Roles
 
         public string? StartingGear => Prototype.StartingGear;
 
-        public bool CanBeAntag = true;
+        public bool CanBeAntag;
 
         public Job(Mind.Mind mind, JobPrototype jobPrototype) : base(mind)
         {
