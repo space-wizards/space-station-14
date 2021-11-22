@@ -60,14 +60,12 @@
 - type: reagent
   id: Ethanol
   name: ethanol
+  parent: BaseAlcohol
   desc: A simple alcohol, makes you drunk if consumed, flammable.
   physicalDesc: strong-smelling
   color: "#b05b3c"
   boilingPoint: 78.2
   meltingPoint: -114.1
-  tileReactions:
-  - !type:FlammableTileReaction
-    temperatureMultiplier: 1.35
   metabolisms:
     Poison:
       effects:
