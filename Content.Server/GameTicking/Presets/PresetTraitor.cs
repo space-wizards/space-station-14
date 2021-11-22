@@ -8,6 +8,7 @@ using Content.Server.Items;
 using Content.Server.Objectives.Interfaces;
 using Content.Server.PDA;
 using Content.Server.Players;
+using Content.Server.Roles;
 using Content.Server.Traitor;
 using Content.Server.Traitor.Uplink;
 using Content.Server.Traitor.Uplink.Account;
@@ -72,7 +73,10 @@ namespace Content.Server.GameTicking.Presets
                 return false;
             }
 
-            var list = new List<IPlayerSession>(readyPlayers);
+            var list = new List<IPlayerSession>(readyPlayers).Where(x =>
+                x.Data.ContentData()?.Mind?.AllRoles.All(role => role is not Job {CanBeAntag: false}) ?? false
+            ).ToList();
+
             var prefList = new List<IPlayerSession>();
 
             foreach (var player in list)

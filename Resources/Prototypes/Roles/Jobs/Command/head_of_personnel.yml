@@ -9,6 +9,7 @@
   icon: "HeadOfPersonnel"
   requireAdminNotify: true
   supervisors: "the captain"
+  canBeAntag: false
   access:
   - Command
   - HeadOfPersonnel
