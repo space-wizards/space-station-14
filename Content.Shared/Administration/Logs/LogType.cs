@@ -7,4 +7,5 @@ public enum LogType
     // DamageChange = 1
     Damaged = 2,
     Healed = 3,
+    Slip = 4,
 }
