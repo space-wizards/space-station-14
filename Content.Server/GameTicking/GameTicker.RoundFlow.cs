@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
 using Content.Server.Database;
 using Content.Server.GameTicking.Events;
@@ -20,7 +19,6 @@ using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -199,7 +197,7 @@ namespace Content.Server.GameTicking
             }
             Preset.OnGameStarted();
 
-            _roundStartTimeSpan = IoCManager.Resolve<IGameTiming>().RealTime;
+            _roundStartTimeSpan = _gameTiming.RealTime;
             SendStatusToAll();
             ReqWindowAttentionAll();
             UpdateLateJoinStatus();
@@ -222,12 +220,12 @@ namespace Content.Server.GameTicking
             var roundEndText = text + $"\n{Preset?.GetRoundEndDescription() ?? string.Empty}";
 
             //Get the timespan of the round.
-            var roundDuration = IoCManager.Resolve<IGameTiming>().RealTime.Subtract(_roundStartTimeSpan);
+            var roundDuration = RoundDuration();
 
             //Generate a list of basic player info to display in the end round summary.
             var listOfPlayerInfo = new List<RoundEndMessageEvent.RoundEndPlayerInfo>();
             // Grab the great big book of all the Minds, we'll need them for this.
-            var allMinds = EntitySystem.Get<MindTrackerSystem>().AllMinds;
+            var allMinds = Get<MindTrackerSystem>().AllMinds;
             foreach (var mind in allMinds)
             {
                 if (mind != null)
@@ -321,7 +319,7 @@ namespace Content.Server.GameTicking
         private void ResettingCleanup()
         {
             // Move everybody currently in the server to lobby.
-            foreach (var player in _playerManager.GetAllPlayers())
+            foreach (var player in _playerManager.ServerSessions)
             {
                 PlayerJoinLobby(player);
             }
@@ -395,6 +393,11 @@ namespace Content.Server.GameTicking
             }
 
             StartRound();
+        }
+
+        public TimeSpan RoundDuration()
+        {
+            return _gameTiming.RealTime.Subtract(_roundStartTimeSpan);
         }
     }
 
