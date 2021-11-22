@@ -332,10 +332,13 @@ namespace Content.Shared.StatusEffect
         /// <param name="time">The amount of time to add.</param>
         /// <param name="status">The status effect component, should you already have it.</param>
         public bool TryAddTime(EntityUid uid, string key, TimeSpan time,
-            StatusEffectsComponent? status = null)
+            StatusEffectsComponent? status=null,
+            SharedAlertsComponent? alert=null)
         {
             if (!Resolve(uid, ref status, false))
                 return false;
+
+            Resolve(uid, ref alert, false);
 
             if (!HasStatusEffect(uid, key, status))
                 return false;
@@ -343,6 +346,14 @@ namespace Content.Shared.StatusEffect
             var timer = status.ActiveEffects[key].Cooldown;
             timer.Item2 += time;
             status.ActiveEffects[key].Cooldown = timer;
+
+            if (_prototypeManager.TryIndex<StatusEffectPrototype>(key, out var proto)
+                && alert != null
+                && proto.Alert != null)
+            {
+                alert.ShowAlert(proto.Alert.Value, cooldown: GetAlertCooldown(uid, proto.Alert.Value, status));
+
+            }
 
             return true;
         }
@@ -355,10 +366,13 @@ namespace Content.Shared.StatusEffect
         /// <param name="time">The amount of time to add.</param>
         /// <param name="status">The status effect component, should you already have it.</param>
         public bool TryRemoveTime(EntityUid uid, string key, TimeSpan time,
-            StatusEffectsComponent? status = null)
+            StatusEffectsComponent? status=null,
+            SharedAlertsComponent? alert=null)
         {
             if (!Resolve(uid, ref status, false))
                 return false;
+
+            Resolve(uid, ref alert, false);
 
             if (!HasStatusEffect(uid, key, status))
                 return false;
@@ -371,6 +385,15 @@ namespace Content.Shared.StatusEffect
 
             timer.Item2 -= time;
             status.ActiveEffects[key].Cooldown = timer;
+
+            if (_prototypeManager.TryIndex<StatusEffectPrototype>(key, out var proto)
+                && alert != null
+                && proto.Alert != null)
+            {
+                alert.ShowAlert(proto.Alert.Value, cooldown: GetAlertCooldown(uid, proto.Alert.Value, status));
+
+            }
+
 
             return true;
         }

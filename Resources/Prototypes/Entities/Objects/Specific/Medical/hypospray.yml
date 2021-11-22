@@ -27,9 +27,12 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
-    state: medipen
+    layers:
+    - state: medipen
+      map: ["enum.SolutionContainerLayers.Fill"]
   - type: Item
     sprite: Objects/Specific/Medical/medipen.rsi
+    size: 5
   - type: SolutionContainerManager
     solutions:
       pen:
@@ -38,6 +41,7 @@
     solution: pen
   - type: Hypospray
     solutionName: pen
+    transferAmount: 15
   - type: Appearance
     visuals:
     - type: SolutionContainerVisualizer
@@ -47,8 +51,8 @@
 
 - type: entity
   name: epinephrine medipen
-  parent: ChemicalPen
-  id: EpinephrinePen
+  parent: ChemicalMedipen
+  id: EpinephrineMedipen
   description: A rapid and safe way to stabilize patients in critical condition for personnel without advanced medical knowledge. Beware, as it's easy to overdose on epinephrine.
   components:
   - type: SolutionContainerManager

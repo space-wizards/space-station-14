@@ -112,9 +112,9 @@
         damage:
           types:
             Poison: 3
-      - !type:RemoveReagent
+      - !type:AdjustReagent
         reagent: Inaprovaline
-        amount: 2
+        amount: -2.0
 
 - type: reagent
   id: UnstableMutagen
