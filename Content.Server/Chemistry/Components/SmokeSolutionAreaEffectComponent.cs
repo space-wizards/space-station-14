@@ -14,7 +14,7 @@ namespace Content.Server.Chemistry.Components
     public class SmokeSolutionAreaEffectComponent : SolutionAreaEffectComponent
     {
         public override string Name => "SmokeSolutionAreaEffect";
-        public new const string SolutionName = "smoke";
+        public new const string SolutionName = "solutionArea";
 
         protected override void UpdateVisuals()
         {
