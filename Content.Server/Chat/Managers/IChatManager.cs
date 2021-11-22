@@ -17,7 +17,8 @@ namespace Content.Server.Chat.Managers
         /// </summary>
         /// <param name="message"></param>
         /// <param name="sender"></param>
-        void DispatchStationAnnouncement(string message, string sender = "CentComm");
+        /// <param name="playDefaultSound">If the default 'PA' sound should be played.</param>
+        void DispatchStationAnnouncement(string message, string sender = "CentComm", bool playDefaultSound = true);
 
         void DispatchServerMessage(IPlayerSession player, string message);
 
