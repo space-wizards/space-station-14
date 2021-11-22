@@ -1335,6 +1335,10 @@ entities:
     type: Transform
   - containers:
       ChemMaster-reagentContainerContainer: !type:ContainerSlot {}
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
     type: ContainerContainer
   - solutions:
       buffer:
@@ -5595,8 +5599,13 @@ entities:
   - pos: -10.5,12.5
     parent: 853
     type: Transform
+  - cabinetSlot:
+      locked: True
+    type: ItemCabinet
   - containers:
       cabinetSlot: !type:ContainerSlot {}
+      ItemCabinet: !type:ContainerSlot
+        ent: 3170
     type: ContainerContainer
 - uid: 517
   type: Catwalk
@@ -6131,6 +6140,10 @@ entities:
     type: Transform
   - containers:
       ReagentDispenser-reagentContainerContainer: !type:ContainerSlot {}
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
     type: ContainerContainer
 - uid: 580
   type: SuspicionHitscanSpawner
@@ -6304,18 +6317,11 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 596
-  type: AirlockMedicalGlassLocked
+  type: SpawnPointChemist
   components:
-  - name: Chemistry
-    type: MetaData
-  - rot: 4.371139006309477E-08 rad
-    pos: 17.5,-3.5
+  - pos: 17.5,0.5
     parent: 853
     type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 597
   type: AirlockMedicalGlassLocked
   components:
@@ -8198,6 +8204,7 @@ entities:
   - containers:
       EntityStorageComponent: !type:Container
         ents: []
+      PaperLabel: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 797
   type: Table
@@ -13585,7 +13592,7 @@ entities:
       - 0
       - 0
     type: GridAtmosphere
-  - angularDamping: 0.1
+  - angularDamping: 0.3
     fixedRotation: False
     fixtures:
     - shape: !type:PolygonShape
@@ -13599,7 +13606,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 256
+      mass: 1024
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -13612,7 +13619,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 256
+      mass: 1024
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -13625,7 +13632,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 256
+      mass: 1024
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -13638,7 +13645,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 256
+      mass: 1024
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -13651,7 +13658,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 240
+      mass: 960
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -13664,7 +13671,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 2
+      mass: 8
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -13677,7 +13684,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 28
+      mass: 112
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -13690,7 +13697,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 44
+      mass: 176
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -13703,7 +13710,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 256
+      mass: 1024
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -13716,7 +13723,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 91
+      mass: 364
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -13729,7 +13736,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 144
+      mass: 576
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -13742,7 +13749,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 160
+      mass: 640
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -13755,7 +13762,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 10
+      mass: 40
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -13768,7 +13775,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 24
+      mass: 96
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -13781,7 +13788,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 3
+      mass: 12
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -13794,7 +13801,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 2
+      mass: 8
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -13807,7 +13814,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 10
+      mass: 40
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -13820,7 +13827,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 9
+      mass: 36
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -13833,7 +13840,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 60
+      mass: 240
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -13846,7 +13853,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 1
+      mass: 4
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -13859,7 +13866,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 1
+      mass: 4
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -13872,7 +13879,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 24
+      mass: 96
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -13885,7 +13892,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 78
+      mass: 312
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -13898,7 +13905,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 1
+      mass: 4
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -13911,7 +13918,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 10
+      mass: 40
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -13924,7 +13931,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 13
+      mass: 52
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -13937,7 +13944,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 192
+      mass: 768
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -13950,7 +13957,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 33
+      mass: 132
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -13963,7 +13970,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 10
+      mass: 40
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -13976,7 +13983,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 30
+      mass: 120
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -13989,7 +13996,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 208
+      mass: 832
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14002,7 +14009,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 7
+      mass: 28
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14015,7 +14022,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 18
+      mass: 72
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14028,7 +14035,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 30
+      mass: 120
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14041,7 +14048,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 9
+      mass: 36
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14054,7 +14061,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 30
+      mass: 120
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14067,7 +14074,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 18
+      mass: 72
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14080,7 +14087,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 8
+      mass: 32
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14093,7 +14100,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 12
+      mass: 48
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14106,7 +14113,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 28
+      mass: 112
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14119,7 +14126,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 24
+      mass: 96
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14132,7 +14139,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 14
+      mass: 56
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14145,7 +14152,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 1
+      mass: 4
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14158,7 +14165,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 1
+      mass: 4
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14171,7 +14178,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 1
+      mass: 4
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14184,7 +14191,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 4
+      mass: 16
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14197,7 +14204,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 6
+      mass: 24
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14210,7 +14217,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 3
+      mass: 12
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14223,7 +14230,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 2
+      mass: 8
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14236,7 +14243,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 2
+      mass: 8
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14249,7 +14256,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 8
+      mass: 32
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14262,7 +14269,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 3
+      mass: 12
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14275,7 +14282,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 3
+      mass: 12
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14288,7 +14295,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 3
+      mass: 12
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14301,7 +14308,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 8
+      mass: 32
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14314,7 +14321,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 3
+      mass: 12
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14327,7 +14334,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 3
+      mass: 12
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14340,7 +14347,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 3
+      mass: 12
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14353,7 +14360,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 8
+      mass: 32
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14366,7 +14373,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 2
+      mass: 8
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14379,7 +14386,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 2
+      mass: 8
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14392,7 +14399,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 2
+      mass: 8
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14405,7 +14412,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 8
+      mass: 32
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14418,7 +14425,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 1
+      mass: 4
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14431,7 +14438,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 1
+      mass: 4
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14444,7 +14451,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 9
+      mass: 36
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14457,7 +14464,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 2
+      mass: 8
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14470,7 +14477,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 2
+      mass: 8
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14483,7 +14490,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 2
+      mass: 8
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14496,7 +14503,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 3
+      mass: 12
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14509,7 +14516,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 11
+      mass: 44
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14522,7 +14529,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 3
+      mass: 12
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14535,7 +14542,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 3
+      mass: 12
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14548,7 +14555,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 3
+      mass: 12
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14561,7 +14568,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 3
+      mass: 12
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14574,7 +14581,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 11
+      mass: 44
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14587,7 +14594,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 3
+      mass: 12
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14600,7 +14607,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 3
+      mass: 12
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14613,7 +14620,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 3
+      mass: 12
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14626,7 +14633,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 3
+      mass: 12
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14639,7 +14646,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 11
+      mass: 44
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14652,7 +14659,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 2
+      mass: 8
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14665,7 +14672,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 2
+      mass: 8
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14678,7 +14685,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 2
+      mass: 8
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14691,7 +14698,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 2
+      mass: 8
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14704,7 +14711,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 11
+      mass: 44
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14717,7 +14724,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 1
+      mass: 4
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14730,7 +14737,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 1
+      mass: 4
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14743,7 +14750,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 1
+      mass: 4
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14756,7 +14763,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 11
+      mass: 44
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14769,7 +14776,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 1
+      mass: 4
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14782,7 +14789,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 1
+      mass: 4
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14795,7 +14802,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 1
+      mass: 4
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14808,7 +14815,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 8
+      mass: 32
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14821,7 +14828,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 1
+      mass: 4
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14834,7 +14841,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 1
+      mass: 4
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14847,7 +14854,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 45
+      mass: 180
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14860,7 +14867,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 112
+      mass: 448
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14873,7 +14880,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 14
+      mass: 56
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14886,7 +14893,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 16
+      mass: 64
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14899,7 +14906,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 10
+      mass: 40
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14912,7 +14919,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 11
+      mass: 44
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14925,7 +14932,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 22
+      mass: 88
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14938,7 +14945,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 6
+      mass: 24
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14951,7 +14958,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 48
+      mass: 192
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14964,7 +14971,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 208
+      mass: 832
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14977,7 +14984,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 45
+      mass: 180
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -14990,7 +14997,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 8
+      mass: 32
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15003,7 +15010,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 16
+      mass: 64
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15016,7 +15023,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 24
+      mass: 96
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15029,7 +15036,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 8
+      mass: 32
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15042,7 +15049,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 3
+      mass: 12
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15055,7 +15062,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 3
+      mass: 12
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15068,7 +15075,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 3
+      mass: 12
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15081,7 +15088,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 2
+      mass: 8
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15094,7 +15101,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 256
+      mass: 1024
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15107,7 +15114,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 3
+      mass: 12
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15120,7 +15127,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 9
+      mass: 36
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15133,7 +15140,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 6
+      mass: 24
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15146,7 +15153,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 18
+      mass: 72
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15159,7 +15166,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 18
+      mass: 72
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15172,7 +15179,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 6
+      mass: 24
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15185,7 +15192,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 6
+      mass: 24
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15198,7 +15205,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 2
+      mass: 8
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15211,7 +15218,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 1
+      mass: 4
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15224,7 +15231,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 6
+      mass: 24
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15237,7 +15244,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 6
+      mass: 24
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15250,7 +15257,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 2
+      mass: 8
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15263,7 +15270,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 3
+      mass: 12
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15276,7 +15283,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 8
+      mass: 32
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15289,7 +15296,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 16
+      mass: 64
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15302,7 +15309,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 1
+      mass: 4
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15315,7 +15322,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 130
+      mass: 520
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15328,7 +15335,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 16
+      mass: 64
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15341,7 +15348,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 2
+      mass: 8
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15354,7 +15361,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 2
+      mass: 8
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15367,7 +15374,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 2
+      mass: 8
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15380,7 +15387,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 3
+      mass: 12
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15393,7 +15400,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 3
+      mass: 12
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15406,7 +15413,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 11
+      mass: 44
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15419,7 +15426,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 2
+      mass: 8
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15432,7 +15439,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 6
+      mass: 24
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15445,7 +15452,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 6
+      mass: 24
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15458,7 +15465,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 2
+      mass: 8
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15471,7 +15478,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 5
+      mass: 20
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15484,7 +15491,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 11
+      mass: 44
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15497,7 +15504,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 6
+      mass: 24
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15510,7 +15517,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 3
+      mass: 12
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15523,7 +15530,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 3
+      mass: 12
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15536,7 +15543,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 5
+      mass: 20
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15549,7 +15556,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 22
+      mass: 88
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15562,7 +15569,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 3
+      mass: 12
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15575,7 +15582,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 4
+      mass: 16
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15588,7 +15595,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 2
+      mass: 8
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15601,7 +15608,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 3
+      mass: 12
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15614,7 +15621,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 2
+      mass: 8
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15627,7 +15634,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 2
+      mass: 8
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15640,7 +15647,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 1
+      mass: 4
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15653,7 +15660,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 3
+      mass: 12
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15666,7 +15673,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 4
+      mass: 16
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15679,7 +15686,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 160
+      mass: 640
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15692,7 +15699,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 4
+      mass: 16
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15705,7 +15712,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 3
+      mass: 12
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15718,7 +15725,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 35
+      mass: 140
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15731,7 +15738,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 3
+      mass: 12
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15744,7 +15751,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 5
+      mass: 20
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15757,7 +15764,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 3
+      mass: 12
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15770,7 +15777,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 12
+      mass: 48
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15783,7 +15790,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 48
+      mass: 192
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15796,7 +15803,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 30
+      mass: 120
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -15809,7 +15816,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 72
+      mass: 288
       restitution: 0.1
     bodyType: Dynamic
     type: Physics
@@ -16101,6 +16108,10 @@ entities:
     type: Transform
   - enabled: False
     type: AmbientSound
+  - powerLoad: 500
+    type: ApcPowerReceiver
+  - radius: 2.5
+    type: PointLight
 - uid: 890
   type: Table
   components:
@@ -18112,6 +18123,7 @@ entities:
   - containers:
       EntityStorageComponent: !type:Container
         ents: []
+      PaperLabel: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1147
   type: Table
@@ -21383,6 +21395,7 @@ entities:
   - containers:
       EntityStorageComponent: !type:Container
         ents: []
+      PaperLabel: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1546
   type: CableHV
@@ -25713,14 +25726,18 @@ entities:
   - containers:
       EntityStorageComponent: !type:Container
         ents: []
+      PaperLabel: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 2147
-  type: SpawnPointMedicalDoctor
+  type: AirlockChemistryLocked
   components:
-  - rot: 3.141592653589793 rad
-    pos: 16.5,-0.5
+  - pos: 17.5,-3.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 2148
   type: Table
   components:
@@ -28169,6 +28186,7 @@ entities:
   - containers:
       EntityStorageComponent: !type:Container
         ents: []
+      PaperLabel: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 2486
   type: Emitter
@@ -28414,6 +28432,7 @@ entities:
   - containers:
       EntityStorageComponent: !type:Container
         ents: []
+      PaperLabel: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 2517
   type: SalternApc
@@ -35302,6 +35321,13 @@ entities:
     type: Physics
   - color: '#7F007FFF'
     type: AtmosPipeColor
+- uid: 3170
+  type: FireExtinguisher
+  components:
+  - parent: 516
+    type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 3171
   type: CableApcExtension
   components:
@@ -35595,6 +35621,13 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
+- uid: 3199
+  type: FireExtinguisher
+  components:
+  - parent: 4921
+    type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 3200
   type: CableApcExtension
   components:
@@ -35817,6 +35850,13 @@ entities:
   - rot: 4.371139006309477E-08 rad
     pos: 12.5,13.5
     parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 3221
+  type: FireExtinguisher
+  components:
+  - parent: 4922
     type: Transform
   - canCollide: False
     type: Physics
@@ -36052,6 +36092,13 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
+- uid: 3244
+  type: FireExtinguisher
+  components:
+  - parent: 4923
+    type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 3245
   type: CableApcExtension
   components:
@@ -36061,6 +36108,13 @@ entities:
     type: Transform
   - visible: False
     type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 3246
+  type: FireExtinguisher
+  components:
+  - parent: 4924
+    type: Transform
   - canCollide: False
     type: Physics
 - uid: 3247
@@ -36138,6 +36192,13 @@ entities:
     type: Transform
   - visible: False
     type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 3254
+  type: FireExtinguisher
+  components:
+  - parent: 4925
+    type: Transform
   - canCollide: False
     type: Physics
 - uid: 3255
@@ -36698,6 +36759,13 @@ entities:
     type: Transform
   - visible: False
     type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 3308
+  type: FireExtinguisher
+  components:
+  - parent: 4926
+    type: Transform
   - canCollide: False
     type: Physics
 - uid: 3309
@@ -37472,6 +37540,13 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
+- uid: 3394
+  type: FireExtinguisher
+  components:
+  - parent: 4927
+    type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 3395
   type: CableApcExtension
   components:
@@ -37515,6 +37590,13 @@ entities:
   - rot: 4.371139006309477E-08 rad
     pos: -10.5,-26.5
     parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 3400
+  type: FireExtinguisher
+  components:
+  - parent: 4928
     type: Transform
   - canCollide: False
     type: Physics
@@ -37907,6 +37989,13 @@ entities:
   - rot: 4.371139006309477E-08 rad
     pos: -18.5,-12.5
     parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 3443
+  type: FireExtinguisher
+  components:
+  - parent: 4929
     type: Transform
   - canCollide: False
     type: Physics
@@ -38307,6 +38396,13 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+- uid: 3487
+  type: FireExtinguisher
+  components:
+  - parent: 4930
+    type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 3488
   type: CableHV
   components:
@@ -38439,6 +38535,13 @@ entities:
   - rot: 4.371139006309477E-08 rad
     pos: -19.5,13.5
     parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 3503
+  type: FireExtinguisher
+  components:
+  - parent: 4931
     type: Transform
   - canCollide: False
     type: Physics
@@ -38723,6 +38826,13 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+- uid: 3535
+  type: FireExtinguisher
+  components:
+  - parent: 4932
+    type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 3536
   type: CableHV
   components:
@@ -38747,6 +38857,13 @@ entities:
   - rot: 4.371139006309477E-08 rad
     pos: -4.5,22.5
     parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 3539
+  type: FireExtinguisher
+  components:
+  - parent: 4934
     type: Transform
   - canCollide: False
     type: Physics
@@ -38993,6 +39110,13 @@ entities:
   - rot: 4.371139006309477E-08 rad
     pos: 11.5,24.5
     parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 3564
+  type: FireExtinguisher
+  components:
+  - parent: 4935
     type: Transform
   - canCollide: False
     type: Physics
@@ -39802,6 +39926,13 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+- uid: 3645
+  type: FireExtinguisher
+  components:
+  - parent: 4936
+    type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 3646
   type: CableMV
   components:
@@ -39851,6 +39982,13 @@ entities:
     type: Transform
   - visible: False
     type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 3651
+  type: FireExtinguisher
+  components:
+  - parent: 4937
+    type: Transform
   - canCollide: False
     type: Physics
 - uid: 3652
@@ -39981,6 +40119,13 @@ entities:
     type: Transform
   - visible: False
     type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 3664
+  type: FireExtinguisher
+  components:
+  - parent: 4938
+    type: Transform
   - canCollide: False
     type: Physics
 - uid: 3665
@@ -40411,6 +40556,13 @@ entities:
   - rot: 4.371139006309477E-08 rad
     pos: 43.5,10.5
     parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 3706
+  type: FireExtinguisher
+  components:
+  - parent: 4939
     type: Transform
   - canCollide: False
     type: Physics
@@ -42894,6 +43046,7 @@ entities:
   - containers:
       EntityStorageComponent: !type:Container
         ents: []
+      PaperLabel: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 3940
   type: ShellShotgunSlug
@@ -43234,6 +43387,13 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+- uid: 3976
+  type: FireExtinguisher
+  components:
+  - parent: 4940
+    type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 3977
   type: CableApcExtension
   components:
@@ -43385,6 +43545,7 @@ entities:
   - containers:
       EntityStorageComponent: !type:Container
         ents: []
+      PaperLabel: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 3993
   type: FirelockGlass
@@ -45584,6 +45745,7 @@ entities:
       EntityStorageComponent: !type:Container
         ents: []
       body_bag_label: !type:ContainerSlot {}
+      PaperLabel: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4257
   type: BodyBag_Container
@@ -45595,6 +45757,7 @@ entities:
       EntityStorageComponent: !type:Container
         ents: []
       body_bag_label: !type:ContainerSlot {}
+      PaperLabel: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4258
   type: Poweredlight
@@ -49449,10 +49612,6 @@ entities:
     type: Transform
   - solution: bucket
     type: Drink
-  - solution: bucket
-    type: RefillableSolution
-  - solution: bucket
-    type: DrainableSolution
 - uid: 4719
   type: SpawnPointLatejoin
   components:
@@ -49837,6 +49996,7 @@ entities:
   - containers:
       EntityStorageComponent: !type:Container
         ents: []
+      PaperLabel: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4763
   type: SignMorgue
@@ -49855,6 +50015,7 @@ entities:
   - containers:
       EntityStorageComponent: !type:Container
         ents: []
+      PaperLabel: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4765
   type: DisposalPipe
@@ -50593,8 +50754,12 @@ entities:
   - pos: 14.336893,-3.6277943
     parent: 853
     type: Transform
+  - cabinetSlot:
+      locked: True
+    type: ItemCabinet
   - containers:
       cabinetSlot: !type:ContainerSlot {}
+      ItemCabinet: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4834
   type: AMEJar
@@ -51071,6 +51236,7 @@ entities:
   - containers:
       EntityStorageComponent: !type:Container
         ents: []
+      PaperLabel: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4895
   type: CrateMaterialPlastic
@@ -51083,6 +51249,7 @@ entities:
   - containers:
       EntityStorageComponent: !type:Container
         ents: []
+      PaperLabel: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4896
   type: CrateMaterialGlass
@@ -51095,6 +51262,7 @@ entities:
   - containers:
       EntityStorageComponent: !type:Container
         ents: []
+      PaperLabel: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4897
   type: ParticleAcceleratorEndCapUnfinished
@@ -51259,8 +51427,13 @@ entities:
   - pos: -26.5,-1.5
     parent: 853
     type: Transform
+  - cabinetSlot:
+      locked: True
+    type: ItemCabinet
   - containers:
       cabinetSlot: !type:ContainerSlot {}
+      ItemCabinet: !type:ContainerSlot
+        ent: 3199
     type: ContainerContainer
 - uid: 4922
   type: ExtinguisherCabinetFilled
@@ -51268,8 +51441,13 @@ entities:
   - pos: -26.5,-4.5
     parent: 853
     type: Transform
+  - cabinetSlot:
+      locked: True
+    type: ItemCabinet
   - containers:
       cabinetSlot: !type:ContainerSlot {}
+      ItemCabinet: !type:ContainerSlot
+        ent: 3221
     type: ContainerContainer
 - uid: 4923
   type: ExtinguisherCabinetFilled
@@ -51277,8 +51455,13 @@ entities:
   - pos: -15.5,-0.5
     parent: 853
     type: Transform
+  - cabinetSlot:
+      locked: True
+    type: ItemCabinet
   - containers:
       cabinetSlot: !type:ContainerSlot {}
+      ItemCabinet: !type:ContainerSlot
+        ent: 3244
     type: ContainerContainer
 - uid: 4924
   type: ExtinguisherCabinetFilled
@@ -51286,8 +51469,13 @@ entities:
   - pos: -18.5,8.5
     parent: 853
     type: Transform
+  - cabinetSlot:
+      locked: True
+    type: ItemCabinet
   - containers:
       cabinetSlot: !type:ContainerSlot {}
+      ItemCabinet: !type:ContainerSlot
+        ent: 3246
     type: ContainerContainer
 - uid: 4925
   type: ExtinguisherCabinetFilled
@@ -51295,8 +51483,13 @@ entities:
   - pos: -30.5,10.5
     parent: 853
     type: Transform
+  - cabinetSlot:
+      locked: True
+    type: ItemCabinet
   - containers:
       cabinetSlot: !type:ContainerSlot {}
+      ItemCabinet: !type:ContainerSlot
+        ent: 3254
     type: ContainerContainer
 - uid: 4926
   type: ExtinguisherCabinetFilled
@@ -51304,8 +51497,13 @@ entities:
   - pos: -34.5,-2.5
     parent: 853
     type: Transform
+  - cabinetSlot:
+      locked: True
+    type: ItemCabinet
   - containers:
       cabinetSlot: !type:ContainerSlot {}
+      ItemCabinet: !type:ContainerSlot
+        ent: 3308
     type: ContainerContainer
 - uid: 4927
   type: ExtinguisherCabinetFilled
@@ -51313,8 +51511,13 @@ entities:
   - pos: -16.5,-8.5
     parent: 853
     type: Transform
+  - cabinetSlot:
+      locked: True
+    type: ItemCabinet
   - containers:
       cabinetSlot: !type:ContainerSlot {}
+      ItemCabinet: !type:ContainerSlot
+        ent: 3394
     type: ContainerContainer
 - uid: 4928
   type: ExtinguisherCabinetFilled
@@ -51322,8 +51525,13 @@ entities:
   - pos: -6.5,-16.5
     parent: 853
     type: Transform
+  - cabinetSlot:
+      locked: True
+    type: ItemCabinet
   - containers:
       cabinetSlot: !type:ContainerSlot {}
+      ItemCabinet: !type:ContainerSlot
+        ent: 3400
     type: ContainerContainer
 - uid: 4929
   type: ExtinguisherCabinetFilled
@@ -51331,8 +51539,13 @@ entities:
   - pos: -6.5,-18.5
     parent: 853
     type: Transform
+  - cabinetSlot:
+      locked: True
+    type: ItemCabinet
   - containers:
       cabinetSlot: !type:ContainerSlot {}
+      ItemCabinet: !type:ContainerSlot
+        ent: 3443
     type: ContainerContainer
 - uid: 4930
   type: ExtinguisherCabinetFilled
@@ -51340,8 +51553,13 @@ entities:
   - pos: 8.5,-17.5
     parent: 853
     type: Transform
+  - cabinetSlot:
+      locked: True
+    type: ItemCabinet
   - containers:
       cabinetSlot: !type:ContainerSlot {}
+      ItemCabinet: !type:ContainerSlot
+        ent: 3487
     type: ContainerContainer
 - uid: 4931
   type: ExtinguisherCabinetFilled
@@ -51349,8 +51567,13 @@ entities:
   - pos: 16.5,-16.5
     parent: 853
     type: Transform
+  - cabinetSlot:
+      locked: True
+    type: ItemCabinet
   - containers:
       cabinetSlot: !type:ContainerSlot {}
+      ItemCabinet: !type:ContainerSlot
+        ent: 3503
     type: ContainerContainer
 - uid: 4932
   type: ExtinguisherCabinetFilled
@@ -51358,8 +51581,13 @@ entities:
   - pos: 24.5,-16.5
     parent: 853
     type: Transform
+  - cabinetSlot:
+      locked: True
+    type: ItemCabinet
   - containers:
       cabinetSlot: !type:ContainerSlot {}
+      ItemCabinet: !type:ContainerSlot
+        ent: 3535
     type: ContainerContainer
 - uid: 4933
   type: Grille
@@ -51373,8 +51601,13 @@ entities:
   - pos: 32.5,-5.5
     parent: 853
     type: Transform
+  - cabinetSlot:
+      locked: True
+    type: ItemCabinet
   - containers:
       cabinetSlot: !type:ContainerSlot {}
+      ItemCabinet: !type:ContainerSlot
+        ent: 3539
     type: ContainerContainer
 - uid: 4935
   type: ExtinguisherCabinetFilled
@@ -51382,8 +51615,13 @@ entities:
   - pos: 41.5,-1.5
     parent: 853
     type: Transform
+  - cabinetSlot:
+      locked: True
+    type: ItemCabinet
   - containers:
       cabinetSlot: !type:ContainerSlot {}
+      ItemCabinet: !type:ContainerSlot
+        ent: 3564
     type: ContainerContainer
 - uid: 4936
   type: ExtinguisherCabinetFilled
@@ -51391,8 +51629,13 @@ entities:
   - pos: 46.5,-11.5
     parent: 853
     type: Transform
+  - cabinetSlot:
+      locked: True
+    type: ItemCabinet
   - containers:
       cabinetSlot: !type:ContainerSlot {}
+      ItemCabinet: !type:ContainerSlot
+        ent: 3645
     type: ContainerContainer
 - uid: 4937
   type: ExtinguisherCabinetFilled
@@ -51400,8 +51643,13 @@ entities:
   - pos: 52.5,-11.5
     parent: 853
     type: Transform
+  - cabinetSlot:
+      locked: True
+    type: ItemCabinet
   - containers:
       cabinetSlot: !type:ContainerSlot {}
+      ItemCabinet: !type:ContainerSlot
+        ent: 3651
     type: ContainerContainer
 - uid: 4938
   type: ExtinguisherCabinetFilled
@@ -51409,8 +51657,13 @@ entities:
   - pos: 45.5,6.5
     parent: 853
     type: Transform
+  - cabinetSlot:
+      locked: True
+    type: ItemCabinet
   - containers:
       cabinetSlot: !type:ContainerSlot {}
+      ItemCabinet: !type:ContainerSlot
+        ent: 3664
     type: ContainerContainer
 - uid: 4939
   type: ExtinguisherCabinetFilled
@@ -51418,8 +51671,13 @@ entities:
   - pos: 17.5,9.5
     parent: 853
     type: Transform
+  - cabinetSlot:
+      locked: True
+    type: ItemCabinet
   - containers:
       cabinetSlot: !type:ContainerSlot {}
+      ItemCabinet: !type:ContainerSlot
+        ent: 3706
     type: ContainerContainer
 - uid: 4940
   type: ExtinguisherCabinetFilled
@@ -51427,8 +51685,13 @@ entities:
   - pos: 9.5,12.5
     parent: 853
     type: Transform
+  - cabinetSlot:
+      locked: True
+    type: ItemCabinet
   - containers:
       cabinetSlot: !type:ContainerSlot {}
+      ItemCabinet: !type:ContainerSlot
+        ent: 3976
     type: ContainerContainer
 - uid: 4941
   type: Poweredlight
@@ -51448,8 +51711,13 @@ entities:
   - pos: -6.5,18.5
     parent: 853
     type: Transform
+  - cabinetSlot:
+      locked: True
+    type: ItemCabinet
   - containers:
       cabinetSlot: !type:ContainerSlot {}
+      ItemCabinet: !type:ContainerSlot
+        ent: 4997
     type: ContainerContainer
 - uid: 4943
   type: ExtinguisherCabinetFilled
@@ -51457,8 +51725,13 @@ entities:
   - pos: 0.5,16.5
     parent: 853
     type: Transform
+  - cabinetSlot:
+      locked: True
+    type: ItemCabinet
   - containers:
       cabinetSlot: !type:ContainerSlot {}
+      ItemCabinet: !type:ContainerSlot
+        ent: 5032
     type: ContainerContainer
 - uid: 4944
   type: ExtinguisherCabinetFilled
@@ -51466,8 +51739,13 @@ entities:
   - pos: 11.5,18.5
     parent: 853
     type: Transform
+  - cabinetSlot:
+      locked: True
+    type: ItemCabinet
   - containers:
       cabinetSlot: !type:ContainerSlot {}
+      ItemCabinet: !type:ContainerSlot
+        ent: 7104
     type: ContainerContainer
 - uid: 4945
   type: ExtinguisherCabinetFilled
@@ -51475,8 +51753,13 @@ entities:
   - pos: 5.5,24.5
     parent: 853
     type: Transform
+  - cabinetSlot:
+      locked: True
+    type: ItemCabinet
   - containers:
       cabinetSlot: !type:ContainerSlot {}
+      ItemCabinet: !type:ContainerSlot
+        ent: 7105
     type: ContainerContainer
 - uid: 4946
   type: ExtinguisherCabinetFilled
@@ -51484,8 +51767,13 @@ entities:
   - pos: 1.5,26.5
     parent: 853
     type: Transform
+  - cabinetSlot:
+      locked: True
+    type: ItemCabinet
   - containers:
       cabinetSlot: !type:ContainerSlot {}
+      ItemCabinet: !type:ContainerSlot
+        ent: 7106
     type: ContainerContainer
 - uid: 4947
   type: ExtinguisherCabinetFilled
@@ -51493,8 +51781,13 @@ entities:
   - pos: -3.5,-25.5
     parent: 853
     type: Transform
+  - cabinetSlot:
+      locked: True
+    type: ItemCabinet
   - containers:
       cabinetSlot: !type:ContainerSlot {}
+      ItemCabinet: !type:ContainerSlot
+        ent: 7107
     type: ContainerContainer
 - uid: 4948
   type: ExtinguisherCabinetFilled
@@ -51502,8 +51795,13 @@ entities:
   - pos: -13.5,-23.5
     parent: 853
     type: Transform
+  - cabinetSlot:
+      locked: True
+    type: ItemCabinet
   - containers:
       cabinetSlot: !type:ContainerSlot {}
+      ItemCabinet: !type:ContainerSlot
+        ent: 7108
     type: ContainerContainer
 - uid: 4949
   type: ExtinguisherCabinetFilled
@@ -51511,8 +51809,13 @@ entities:
   - pos: 11.5,-28.5
     parent: 853
     type: Transform
+  - cabinetSlot:
+      locked: True
+    type: ItemCabinet
   - containers:
       cabinetSlot: !type:ContainerSlot {}
+      ItemCabinet: !type:ContainerSlot
+        ent: 7109
     type: ContainerContainer
 - uid: 4950
   type: ExtinguisherCabinetFilled
@@ -51520,8 +51823,13 @@ entities:
   - pos: 20.5,-20.5
     parent: 853
     type: Transform
+  - cabinetSlot:
+      locked: True
+    type: ItemCabinet
   - containers:
       cabinetSlot: !type:ContainerSlot {}
+      ItemCabinet: !type:ContainerSlot
+        ent: 7110
     type: ContainerContainer
 - uid: 4951
   type: ExtinguisherCabinetFilled
@@ -51529,8 +51837,13 @@ entities:
   - pos: 29.5,11.5
     parent: 853
     type: Transform
+  - cabinetSlot:
+      locked: True
+    type: ItemCabinet
   - containers:
       cabinetSlot: !type:ContainerSlot {}
+      ItemCabinet: !type:ContainerSlot
+        ent: 7111
     type: ContainerContainer
 - uid: 4952
   type: ExtinguisherCabinetFilled
@@ -51538,8 +51851,13 @@ entities:
   - pos: 44.5,11.5
     parent: 853
     type: Transform
+  - cabinetSlot:
+      locked: True
+    type: ItemCabinet
   - containers:
       cabinetSlot: !type:ContainerSlot {}
+      ItemCabinet: !type:ContainerSlot
+        ent: 7112
     type: ContainerContainer
 - uid: 4953
   type: Poweredlight
@@ -51902,6 +52220,13 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
+- uid: 4997
+  type: FireExtinguisher
+  components:
+  - parent: 4942
+    type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 4998
   type: CableApcExtension
   components:
@@ -51949,6 +52274,7 @@ entities:
   - containers:
       EntityStorageComponent: !type:Container
         ents: []
+      PaperLabel: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 5003
   type: WallReinforced
@@ -52063,6 +52389,7 @@ entities:
   - containers:
       EntityStorageComponent: !type:Container
         ents: []
+      PaperLabel: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 5020
   type: WallReinforced
@@ -52163,6 +52490,13 @@ entities:
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
+- uid: 5032
+  type: FireExtinguisher
+  components:
+  - parent: 4943
+    type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 5033
   type: CigaretteFilter
   components:
@@ -54334,6 +54668,7 @@ entities:
   - containers:
       EntityStorageComponent: !type:Container
         ents: []
+      PaperLabel: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 5323
   type: AirlockExternalLocked
@@ -54429,8 +54764,13 @@ entities:
   - pos: 17.5,-29.5
     parent: 853
     type: Transform
+  - cabinetSlot:
+      locked: True
+    type: ItemCabinet
   - containers:
       cabinetSlot: !type:ContainerSlot {}
+      ItemCabinet: !type:ContainerSlot
+        ent: 7113
     type: ContainerContainer
 - uid: 5336
   type: ExtinguisherCabinetFilled
@@ -54438,8 +54778,13 @@ entities:
   - pos: -24.5,23.5
     parent: 853
     type: Transform
+  - cabinetSlot:
+      locked: True
+    type: ItemCabinet
   - containers:
       cabinetSlot: !type:ContainerSlot {}
+      ItemCabinet: !type:ContainerSlot
+        ent: 7114
     type: ContainerContainer
 - uid: 5337
   type: Catwalk
@@ -72525,6 +72870,89 @@ entities:
   type: Catwalk
   components:
   - pos: 55.5,-15.5
+    parent: 853
+    type: Transform
+- uid: 7104
+  type: FireExtinguisher
+  components:
+  - parent: 4944
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 7105
+  type: FireExtinguisher
+  components:
+  - parent: 4945
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 7106
+  type: FireExtinguisher
+  components:
+  - parent: 4946
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 7107
+  type: FireExtinguisher
+  components:
+  - parent: 4947
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 7108
+  type: FireExtinguisher
+  components:
+  - parent: 4948
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 7109
+  type: FireExtinguisher
+  components:
+  - parent: 4949
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 7110
+  type: FireExtinguisher
+  components:
+  - parent: 4950
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 7111
+  type: FireExtinguisher
+  components:
+  - parent: 4951
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 7112
+  type: FireExtinguisher
+  components:
+  - parent: 4952
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 7113
+  type: FireExtinguisher
+  components:
+  - parent: 5335
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 7114
+  type: FireExtinguisher
+  components:
+  - parent: 5336
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 7115
+  type: SpawnPointChemist
+  components:
+  - pos: 14.5,-0.5
     parent: 853
     type: Transform
 ...
