@@ -1,9 +1,4 @@
 Entries:
-- author: Swept
-  changes:
-  - {message: Removes InteractionOutlines for puddles, type: Tweak}
-  id: 129
-  time: '2021-03-30T03:54:36.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Add inertia back in to physics., type: Add}
@@ -2847,3 +2842,9 @@ Entries:
     type: Tweak}
   id: 630
   time: '2021-11-22T08:45:21.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'People sprayed/coming into contact with any alcoholic drink can now
+      be lit on fire, rather than just ethanol.', type: Tweak}
+  id: 631
+  time: '2021-11-22T09:17:35.0000000+00:00'
