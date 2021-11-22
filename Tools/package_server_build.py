@@ -33,6 +33,7 @@ p = os.path.join
 PLATFORMS = [
     PlatformReg("win-x64", "Windows"),
     PlatformReg("linux-x64", "Linux"),
+    PlatformReg("linux-arm", "Linux"),
     PlatformReg("linux-arm64", "Linux"),
     PlatformReg("osx-x64", "MacOS"),
 ]
