@@ -14,4 +14,7 @@ public enum LogType
     EventStopped = 7,
     ShuttleCalled = 8,
     ShuttleRecalled = 9,
+    Respawn = 13,
+    RoundStartJoin = 14,
+    LateJoin = 15,
 }

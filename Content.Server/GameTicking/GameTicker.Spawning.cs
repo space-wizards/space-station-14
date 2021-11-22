@@ -15,6 +15,7 @@ using Content.Server.Roles;
 using Content.Server.Spawners.Components;
 using Content.Server.Speech.Components;
 using Content.Server.Station;
+using Content.Shared.Administration.Logs;
 using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
@@ -124,12 +125,18 @@ namespace Content.Server.GameTicking
 
             _stationSystem.TryAssignJobToStation(station, jobId);
 
+            if (lateJoin)
+                _adminLogSystem.Add(LogType.LateJoin, LogImpact.Medium, $"Player {player.Name:playerName} late joined as {character.Name:characterName} on station {_stationSystem.StationInfo[station].Name:stationName} with {mob} as a {job.Name:jobName}.");
+            else
+                _adminLogSystem.Add(LogType.RoundStartJoin, LogImpact.Medium, $"Player {player.Name:playerName} joined as {character.Name:characterName} on station {_stationSystem.StationInfo[station].Name:stationName} with {mob} as a {job.Name:jobName}.");
+
             Preset?.OnSpawnPlayerCompleted(player, mob, lateJoin);
         }
 
         public void Respawn(IPlayerSession player)
         {
             player.ContentData()?.WipeMind();
+            _adminLogSystem.Add(LogType.Respawn, LogImpact.Medium, $"Player {player.Name:playerName} was respawned.");
 
             if (LobbyEnabled)
                 PlayerJoinLobby(player);

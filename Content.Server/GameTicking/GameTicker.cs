@@ -1,3 +1,4 @@
+using Content.Server.Administration.Logs;
 using Content.Server.Chat.Managers;
 using Content.Server.Maps;
 using Content.Server.Preferences.Managers;
@@ -90,5 +91,6 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly IReflectionManager _reflectionManager = default!;
         [Dependency] private readonly IGameMapManager _gameMapManager = default!;
         [Dependency] private readonly StationSystem _stationSystem = default!;
+        [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
     }
 }
