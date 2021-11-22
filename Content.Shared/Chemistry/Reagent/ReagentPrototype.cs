@@ -143,7 +143,7 @@ namespace Content.Shared.Chemistry.Reagent
     [DataDefinition]
     public class ReactiveReagentEffectEntry
     {
-        [DataField("methods")]
+        [DataField("methods", required: true)]
         public HashSet<ReactionMethod> Methods = default!;
 
         [DataField("effects", required: true)]

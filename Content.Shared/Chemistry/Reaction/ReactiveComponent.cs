@@ -15,10 +15,10 @@ public class ReactiveComponent : Component
     /// <summary>
     ///     A dictionary of reactive groups -> methods that work on them.
     /// </summary>
-    [DataField("groups", required: true, readOnly: true, serverOnly: true,
+    [DataField("groups", readOnly: true, serverOnly: true,
         customTypeSerializer:
         typeof(PrototypeIdDictionarySerializer<HashSet<ReactionMethod>, ReactiveGroupPrototype>))]
-    public Dictionary<string, HashSet<ReactionMethod>> ReactiveGroups { get; } = default!;
+    public Dictionary<string, HashSet<ReactionMethod>>? ReactiveGroups;
 
     /// <summary>
     ///     Special reactions that this prototype can specify, outside of any that reagents already apply.

@@ -5,11 +5,10 @@
   suffix: AI
   components:
   - type: Reactive
+    groups:
+      Flammable: [Touch]
+      Extinguish: [Touch]
     reactions:
-    - reagents: [Water]
-      methods: [Touch]
-      effects:
-      - !type:ExtinguishReaction
     - reagents: [WeldingFuel, Thermite, Plasma, Ethanol]
       methods: [Touch]
       effects:

@@ -41,7 +41,7 @@ namespace Content.Shared.Chemistry
                 source?.GetReagentQuantity(reagent.ID) ?? reactVolume, EntityManager, method);
 
             // First, check if the reagent wants to apply any effects.
-            if (reagent.ReactiveEffects != null)
+            if (reagent.ReactiveEffects != null && reactive.ReactiveGroups != null)
             {
                 foreach (var (key, val) in reagent.ReactiveEffects)
                 {
