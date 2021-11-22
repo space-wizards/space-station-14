@@ -10,7 +10,7 @@ public enum LogType
     Slip = 4,
     EventAnnounced = 5,
     EventStarted = 6,
-    EventRan = 6,
+    EventRan = 16,
     EventStopped = 7,
     ShuttleCalled = 8,
     ShuttleRecalled = 9,
