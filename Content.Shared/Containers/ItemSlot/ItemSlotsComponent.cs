@@ -40,7 +40,10 @@ namespace Content.Shared.Containers.ItemSlots
         // you need it, or just get a reference to the slot on init and store it. This is how generic entity containers
         // are usually used.
         //
-        // In order to avoid #1 leading to duplicate slots when saving a map, the Slots dictionary is a read-only datafield.
+        // In order to avoid #1 leading to duplicate slots when saving a map, the Slots dictionary is a read-only
+        // datafield. This means that if your system/component dynamically changes the item slot (e.g., updating
+        // whitelist or whatever), you should use #1. Alternatively: split the Slots dictionary here into two: one
+        // datafield, one that is actually used by the ItemSlotsSystem for keeping track of slots.
     }
 
     [Serializable, NetSerializable]
