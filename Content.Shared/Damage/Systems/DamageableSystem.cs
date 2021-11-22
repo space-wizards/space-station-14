@@ -27,9 +27,30 @@ namespace Content.Shared.Damage
         {
             var owner = damageable.Owner;
             var old = damageable.TotalDamage;
-            var change = @new - old;
 
-            _logs.Add(LogType.DamageChange, $"{owner} received {change} damage. Old: {old} | New: {@new}");
+            if (@new == old)
+            {
+                return;
+            }
+
+            LogType logType;
+            string type;
+            FixedPoint2 change;
+
+            if (@new > old)
+            {
+                logType = LogType.Damaged;
+                type = "received";
+                change = @new - old;
+            }
+            else
+            {
+                logType = LogType.Healed;
+                type = "healed";
+                change = old - @new;
+            }
+
+            _logs.Add(logType, $"{owner} {type} {change} damage. Old: {old} | New: {@new}");
 
             damageable.TotalDamage = @new;
         }

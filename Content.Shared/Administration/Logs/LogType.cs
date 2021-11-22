@@ -4,5 +4,7 @@
 public enum LogType
 {
     Unknown = 0, // do not use
-    DamageChange = 1
+    // DamageChange = 1
+    Damaged = 2,
+    Healed = 3,
 }
