@@ -46,7 +46,6 @@ namespace Content.Server.Voting.Managers
         private readonly Dictionary<StandardVoteType, TimeSpan> _standardVoteTimeout = new();
         private readonly Dictionary<NetUserId, TimeSpan> _voteTimeout = new();
         private readonly HashSet<IPlayerSession> _playerCanCallVoteDirty = new();
-        private readonly Dictionary<StandardVoteType, CVarDef<bool>> _voteTypesToEnableCVars = new();
         private readonly StandardVoteType[] _standardVoteTypeValues = Enum.GetValues<StandardVoteType>();
 
         public void Initialize()
@@ -61,7 +60,6 @@ namespace Content.Server.Voting.Managers
                 DirtyCanCallVoteAll();
             });
 
-            SetupStandardVoteTypeEnableCVars();
             foreach (var kvp in _voteTypesToEnableCVars)
             {
                 _cfg.OnValueChanged(kvp.Value, value => {
