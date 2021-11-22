@@ -33,6 +33,9 @@ namespace Content.Shared.Roles
         [DataField("requireAdminNotify")]
         public bool RequireAdminNotify { get; } = false;
 
+        [DataField("canBeAntag")]
+        public bool CanBeAntag { get; } = false;
+
         /// <summary>
         ///     Whether this job is a head.
         ///     The job system will try to pick heads before other jobs on the same priority level.
