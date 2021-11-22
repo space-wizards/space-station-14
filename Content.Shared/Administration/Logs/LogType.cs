@@ -15,4 +15,5 @@ public enum LogType
     ShuttleCalled = 8,
     ShuttleRecalled = 9,
     ChemicalReaction = 17,
+    ReagentEffect = 18,
 }

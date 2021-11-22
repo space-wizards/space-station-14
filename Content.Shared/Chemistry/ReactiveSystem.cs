@@ -1,3 +1,4 @@
+using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
@@ -15,6 +16,7 @@ namespace Content.Shared.Chemistry
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly SharedAdminLogSystem _logSystem = default!;
 
         public void ReactionEntity(EntityUid uid, ReactionMethod method, Solution solution)
         {
@@ -59,6 +61,9 @@ namespace Content.Shared.Chemistry
                         if (!effect.ShouldApply(args, _robustRandom))
                             continue;
 
+                        var entity = EntityManager.GetEntity(args.SolutionEntity);
+                        _logSystem.Add(LogType.ReagentEffect, LogImpact.Medium,
+                            $"Reactive effect {effect.GetType().Name} of reagent {reagent.ID:reagent} with method {method} applied on entity {entity}");
                         effect.Effect(args);
                     }
                 }
@@ -80,6 +85,9 @@ namespace Content.Shared.Chemistry
                         if (!effect.ShouldApply(args, _robustRandom))
                             continue;
 
+                        var entity = EntityManager.GetEntity(args.SolutionEntity);
+                        _logSystem.Add(LogType.ReagentEffect, LogImpact.Low,
+                            $"Reactive effect {effect.GetType().Name} of {entity} using reagent {reagent.ID} with method {method} applied");
                         effect.Effect(args);
                     }
                 }
