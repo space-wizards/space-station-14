@@ -8,11 +8,6 @@
     groups:
       Flammable: [Touch]
       Extinguish: [Touch]
-    reactions:
-    - reagents: [WeldingFuel, Thermite, Plasma, Ethanol]
-      methods: [Touch]
-      effects:
-      - !type:FlammableReaction
   - type: UtilityAI
     behaviorSets:
     # - Clothing
