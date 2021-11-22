@@ -13,7 +13,6 @@ using Content.Server.Stunnable;
 using Content.Server.Stunnable.Components;
 using Content.Shared.Interaction;
 using Content.Shared.PneumaticCannon;
-using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;

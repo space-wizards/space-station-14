@@ -2,6 +2,7 @@ using System;
 using Content.Shared.Chemistry;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
 

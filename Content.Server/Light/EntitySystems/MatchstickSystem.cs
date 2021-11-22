@@ -6,7 +6,6 @@ using Content.Shared.Audio;
 using Content.Shared.Interaction;
 using Content.Shared.Smoking;
 using Content.Shared.Temperature;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;

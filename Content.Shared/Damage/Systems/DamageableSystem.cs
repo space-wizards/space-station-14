@@ -86,7 +86,7 @@ namespace Content.Shared.Damage
             component.TotalDamage = component.Damage.Total;
             component.Dirty();
 
-            if (EntityManager.TryGetComponent<SharedAppearanceComponent>(component.OwnerUid, out var appearance) && damageDelta != null)
+            if (EntityManager.TryGetComponent<AppearanceComponent>(component.OwnerUid, out var appearance) && damageDelta != null)
                 appearance.SetData(DamageVisualizerKeys.DamageUpdateGroups, damageDelta.GetDamagePerGroup().Keys.ToList());
             RaiseLocalEvent(component.OwnerUid, new DamageChangedEvent(component, damageDelta), false);
         }

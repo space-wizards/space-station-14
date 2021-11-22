@@ -69,7 +69,7 @@ namespace Content.Shared.Singularity
                 pulse.RadsPerSecond = 10 * value;
             }
 
-            if (singularity.Owner.TryGetComponent(out SharedAppearanceComponent? appearance))
+            if (singularity.Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(SingularityVisuals.Level, value);
             }

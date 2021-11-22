@@ -24,7 +24,7 @@ namespace Content.Shared.Standing
 
         public bool Down(EntityUid uid, bool playSound = true, bool dropHeldItems = true,
             StandingStateComponent? standingState = null,
-            SharedAppearanceComponent? appearance = null,
+            AppearanceComponent? appearance = null,
             SharedHandsComponent? hands = null)
         {
             // TODO: This should actually log missing comps...
@@ -70,7 +70,7 @@ namespace Content.Shared.Standing
 
         public bool Stand(EntityUid uid,
             StandingStateComponent? standingState = null,
-            SharedAppearanceComponent? appearance = null)
+            AppearanceComponent? appearance = null)
         {
             // TODO: This should actually log missing comps...
             if (!Resolve(uid, ref standingState, false))
