@@ -1,10 +1,4 @@
 Entries:
-- author: SweptWasTaken
-  changes:
-  - {message: Hopefully fixed all physics for canister and plants, type: Fix}
-  - {message: Replaced tool storage doors with unlocked glass ones, type: Tweak}
-  id: 128
-  time: '2021-03-29T21:50:33.0000000+00:00'
 - author: Swept
   changes:
   - {message: Removes InteractionOutlines for puddles, type: Tweak}
@@ -2846,3 +2840,10 @@ Entries:
       reagents.', type: Tweak}
   id: 629
   time: '2021-11-22T08:40:14.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Chemicals metabolizing in the body now last twice as long, meaning
+      most medicines and poisons will have a greater effect over a longer timespan.',
+    type: Tweak}
+  id: 630
+  time: '2021-11-22T08:45:21.0000000+00:00'
