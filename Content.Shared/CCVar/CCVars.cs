@@ -295,20 +295,6 @@ namespace Content.Shared.CCVar
             CVarDef.Create("admin.announce_logout", true, CVar.SERVERONLY);
 
         /*
-         * Admin logs
-         */
-
-        public static readonly CVarDef<float> AdminLogsQueueSendDelay =
-            CVarDef.Create("adminlogs.queue_send_delay_seconds", 5f, CVar.SERVERONLY);
-
-        public static readonly CVarDef<int> AdminLogsQueueMax =
-            CVarDef.Create("adminlogs.queue_max", 5000, CVar.SERVERONLY);
-
-        // How many logs to send to the client at once
-        public static readonly CVarDef<int> AdminLogsClientBatchSize =
-            CVarDef.Create("adminlogs.client_batch_size", 1000, CVar.SERVERONLY);
-
-        /*
          * Atmos
          */
 

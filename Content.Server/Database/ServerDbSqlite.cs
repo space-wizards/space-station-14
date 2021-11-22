@@ -3,19 +3,15 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Net;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Content.Server.Administration.Logs;
 using Content.Server.IP;
 using Content.Server.Preferences.Managers;
-using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Database
 {
@@ -248,65 +244,6 @@ namespace Content.Server.Database
             var adminRanks = await db.DbContext.AdminRank.Include(a => a.Flags).ToArrayAsync(cancel);
 
             return (admins.Select(p => (p.a, p.LastSeenUserName)).ToArray(), adminRanks)!;
-        }
-
-        private async Task<int> NextId<TModel>(DbSet<TModel> set, Func<TModel, int> selector) where TModel : class
-        {
-            var id = 1;
-
-            if (await set.AnyAsync())
-            {
-                id = set.Max(selector) + 1;
-            }
-
-            return id;
-        }
-
-        public override async Task<int> AddNewRound(params Guid[] playerIds)
-        {
-            await using var db = await GetDb();
-
-            var players = await db.DbContext.Player
-                .Where(player => playerIds.Contains(player.UserId))
-                .ToListAsync();
-
-            var round = new Round
-            {
-                Id = await NextId(db.DbContext.Round, round => round.Id),
-                Players = players
-            };
-
-            db.DbContext.Round.Add(round);
-
-            await db.DbContext.SaveChangesAsync();
-
-            return round.Id;
-        }
-
-        public override async Task AddAdminLogs(List<QueuedLog> logs)
-        {
-            await using var db = await GetDb();
-
-            var nextId = await NextId(db.DbContext.AdminLog, log => log.Id);
-            var entities = new Dictionary<int, AdminLogEntity>();
-
-            foreach (var (log, entityData) in logs)
-            {
-                log.Id = nextId++;
-
-                var logEntities = new List<AdminLogEntity>(entityData.Count);
-                foreach (var (id, name) in entityData)
-                {
-                    var entity = entities.GetOrNew(id);
-                    entity.Name = name;
-                    logEntities.Add(entity);
-                }
-
-                log.Entities = logEntities;
-                db.DbContext.AdminLog.Add(log);
-            }
-
-            await db.DbContext.SaveChangesAsync();
         }
 
         private async Task<DbGuardImpl> GetDbImpl()

@@ -1,4 +1,3 @@
-using System;
 using Content.Server.Players;
 using Content.Shared.GameTicking;
 using Content.Shared.GameWindow;
@@ -36,8 +35,6 @@ namespace Content.Server.GameTicking
 
                 case SessionStatus.Connected:
                 {
-                    AddPlayerToDb(args.Session.UserId.UserId);
-
                     // Always make sure the client has player data. Mind gets assigned on spawn.
                     if (session.Data.ContentDataUncast == null)
                         session.Data.ContentDataUncast = new PlayerData(session.UserId, args.Session.Name);
@@ -108,14 +105,6 @@ namespace Content.Server.GameTicking
             {
                 await _prefsManager.WaitPreferencesLoaded(session);
                 SpawnPlayer(session);
-            }
-
-            async void AddPlayerToDb(Guid id)
-            {
-                if (RoundId != 0 && _runLevel != GameRunLevel.PreRoundLobby)
-                {
-                    await _db.AddRoundPlayers(RoundId, id);
-                }
             }
         }
 

@@ -1,9 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
-using Content.Server.Database;
-using Content.Server.GameTicking.Events;
 using Content.Server.Players;
 using Content.Server.Mind;
 using Content.Server.Ghost;
@@ -36,8 +33,6 @@ namespace Content.Server.GameTicking
             "ss14_round_length",
             "Round length in seconds.");
 
-        [Dependency] private readonly IServerDbManager _db = default!;
-
         [ViewVariables]
         private TimeSpan _roundStartTimeSpan;
 
@@ -58,9 +53,6 @@ namespace Content.Server.GameTicking
                 RaiseLocalEvent(new GameRunLevelChangedEvent(old, value));
             }
         }
-
-        [ViewVariables]
-        public int RoundId { get; private set; }
 
         private void PreRoundSetup()
         {
@@ -96,7 +88,7 @@ namespace Content.Server.GameTicking
             Logger.InfoS("ticker", $"Loaded map in {timeSpan.TotalMilliseconds:N2}ms.");
         }
 
-        public async void StartRound(bool force = false)
+        public void StartRound(bool force = false)
         {
             // If this game ticker is a dummy, do nothing!
             if (DummyTicker)
@@ -104,12 +96,6 @@ namespace Content.Server.GameTicking
 
             DebugTools.Assert(RunLevel == GameRunLevel.PreRoundLobby);
             Logger.InfoS("ticker", "Starting round!");
-
-            var playerIds = _playersInLobby.Keys.Select(player => player.UserId.UserId).ToArray();
-            RoundId = await _db.AddNewRound(playerIds);
-
-            var startingEvent = new RoundStartingEvent();
-            RaiseLocalEvent(startingEvent);
 
             SendServerMessage(Loc.GetString("game-ticker-start-round"));
 

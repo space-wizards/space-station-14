@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
 using System.Net;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Content.Server.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Preferences;
 using Microsoft.Data.Sqlite;
@@ -19,9 +17,9 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
-using Logger = Robust.Shared.Log.Logger;
 using LogLevel = Robust.Shared.Log.LogLevel;
 using MSLogLevel = Microsoft.Extensions.Logging.LogLevel;
+
 
 namespace Content.Server.Database
 {
@@ -29,7 +27,7 @@ namespace Content.Server.Database
     {
         void Init();
 
-        #region Preferences
+        // Preferences
         Task<PlayerPreferences> InitPrefsAsync(NetUserId userId, ICharacterProfile defaultProfile);
         Task SaveSelectedCharacterIndexAsync(NetUserId userId, int index);
 
@@ -40,15 +38,12 @@ namespace Content.Server.Database
         // Single method for two operations for transaction.
         Task DeleteSlotAndSetSelectedIndex(NetUserId userId, int deleteSlot, int newSlot);
         Task<PlayerPreferences?> GetPlayerPreferencesAsync(NetUserId userId);
-        #endregion
 
-        #region User Ids
         // Username assignment (for guest accounts, so they persist GUID)
         Task AssignUserIdAsync(string name, NetUserId userId);
         Task<NetUserId?> GetAssignedUserIdAsync(string name);
-        #endregion
 
-        #region Bans
+        // Ban stuff
         /// <summary>
         ///     Looks up a ban by id.
         ///     This will return a pardoned ban as well.
@@ -87,9 +82,8 @@ namespace Content.Server.Database
 
         Task AddServerBanAsync(ServerBanDef serverBan);
         Task AddServerUnbanAsync(ServerUnbanDef serverBan);
-        #endregion
 
-        #region Player Records
+        // Player records
         Task UpdatePlayerRecordAsync(
             NetUserId userId,
             string userName,
@@ -97,17 +91,15 @@ namespace Content.Server.Database
             ImmutableArray<byte> hwId);
         Task<PlayerRecord?> GetPlayerRecordByUserName(string userName, CancellationToken cancel = default);
         Task<PlayerRecord?> GetPlayerRecordByUserId(NetUserId userId, CancellationToken cancel = default);
-        #endregion
 
-        #region Connection Logs
+        // Connection log
         Task AddConnectionLogAsync(
             NetUserId userId,
             string userName,
             IPAddress address,
             ImmutableArray<byte> hwId);
-        #endregion
 
-        #region Admin Ranks
+        // Admins
         Task<Admin?> GetAdminDataForAsync(NetUserId userId, CancellationToken cancel = default);
         Task<AdminRank?> GetAdminRankAsync(int id, CancellationToken cancel = default);
 
@@ -121,24 +113,6 @@ namespace Content.Server.Database
         Task RemoveAdminRankAsync(int rankId, CancellationToken cancel = default);
         Task AddAdminRankAsync(AdminRank rank, CancellationToken cancel = default);
         Task UpdateAdminRankAsync(AdminRank rank, CancellationToken cancel = default);
-        #endregion
-
-        #region Rounds
-
-        Task<int> AddNewRound(params Guid[] playerIds);
-        Task<Round> GetRound(int id);
-        Task AddRoundPlayers(int id, params Guid[] playerIds);
-
-        #endregion
-
-        #region Admin Logs
-
-        Task AddAdminLogs(List<QueuedLog> logs);
-        IAsyncEnumerable<string> GetAdminLogMessages(LogFilter? filter = null);
-        IAsyncEnumerable<LogRecord> GetAdminLogs(LogFilter? filter = null);
-        IAsyncEnumerable<JsonDocument> GetAdminLogsJson(LogFilter? filter = null);
-
-        #endregion
     }
 
     public sealed class ServerDbManager : IServerDbManager
@@ -316,44 +290,9 @@ namespace Content.Server.Database
             return _db.AddAdminRankAsync(rank, cancel);
         }
 
-        public Task<int> AddNewRound(params Guid[] playerIds)
-        {
-            return _db.AddNewRound(playerIds);
-        }
-
-        public Task<Round> GetRound(int id)
-        {
-            return _db.GetRound(id);
-        }
-
-        public Task AddRoundPlayers(int id, params Guid[] playerIds)
-        {
-            return _db.AddRoundPlayers(id, playerIds);
-        }
-
         public Task UpdateAdminRankAsync(AdminRank rank, CancellationToken cancel = default)
         {
             return _db.UpdateAdminRankAsync(rank, cancel);
-        }
-
-        public Task AddAdminLogs(List<QueuedLog> logs)
-        {
-            return _db.AddAdminLogs(logs);
-        }
-
-        public IAsyncEnumerable<string> GetAdminLogMessages(LogFilter? filter = null)
-        {
-            return _db.GetAdminLogMessages(filter);
-        }
-
-        public IAsyncEnumerable<LogRecord> GetAdminLogs(LogFilter? filter = null)
-        {
-            return _db.GetAdminLogs(filter);
-        }
-
-        public IAsyncEnumerable<JsonDocument> GetAdminLogsJson(LogFilter? filter = null)
-        {
-            return _db.GetAdminLogsJson(filter);
         }
 
         private DbContextOptions<ServerDbContext> CreatePostgresOptions()

@@ -1,10 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
-using System.IO;
 using System.Net;
-using System.Text;
-using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -60,14 +57,6 @@ namespace Content.Server.Database
                 .Property(e => e.Address)
                 .HasColumnType("TEXT")
                 .HasConversion(ipMaskConverter);
-
-            var jsonConverter = new ValueConverter<JsonDocument, string>(
-                v => JsonDocumentToString(v),
-                v => StringToJsonDocument(v));
-
-            modelBuilder.Entity<AdminLog>()
-                .Property(log => log.Json)
-                .HasConversion(jsonConverter);
         }
 
         public SqliteServerDbContext(DbContextOptions<ServerDbContext> options) : base(options)
@@ -91,22 +80,6 @@ namespace Content.Server.Database
                 IPAddress.Parse(inet.AsSpan(0, idx)),
                 int.Parse(inet.AsSpan(idx + 1), provider: CultureInfo.InvariantCulture)
             );
-        }
-
-        private static string JsonDocumentToString(JsonDocument document)
-        {
-            using var stream = new MemoryStream();
-            using var writer = new Utf8JsonWriter(stream, new JsonWriterOptions {Indented = false});
-
-            document.WriteTo(writer);
-            writer.Flush();
-
-            return Encoding.UTF8.GetString(stream.ToArray());
-        }
-
-        private static JsonDocument StringToJsonDocument(string str)
-        {
-            return JsonDocument.Parse(str);
         }
     }
 
