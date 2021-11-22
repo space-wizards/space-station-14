@@ -75,7 +75,7 @@ namespace Content.Server.GameTicking.Presets
 
             var list = new List<IPlayerSession>(readyPlayers).Where(x =>
                 x.Data.ContentData()?.Mind?.AllRoles.All(role => role is not Job {CanBeAntag: false}) ?? false
-            );
+            ).ToList();
 
             var prefList = new List<IPlayerSession>();
 
