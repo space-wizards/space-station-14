@@ -6,6 +6,11 @@
       effects:
       - !type:SatiateThirst
         factor: 3
+  reactiveEffects:
+    Extinguish:
+      methods: [ Touch ]
+      effects:
+      - !type:ExtinguishReaction
   plantMetabolism:
   - !type:PlantAdjustWater
     amount: 1
@@ -38,6 +43,11 @@
       effects:
       - !type:SatiateThirst
         factor: 2
+  reactiveEffects:
+    Flammable:
+      methods: [ Touch ]
+      effects:
+      - !type:FlammableReaction
   tileReactions:
   - !type:FlammableTileReaction
     temperatureMultiplier: 1.35

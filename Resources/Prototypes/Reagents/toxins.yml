@@ -115,6 +115,11 @@
       - !type:RemoveReagent
         reagent: Inaprovaline
         amount: 2
+  reactiveEffects:
+    Flammable:
+      methods: [ Touch ]
+      effects:
+      - !type:FlammableReaction
 
 - type: reagent
   id: UnstableMutagen
