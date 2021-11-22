@@ -198,7 +198,7 @@ public partial class AdminLogsWindow : SS14Window
     private bool ShouldShowLog(AdminLogLabel label)
     {
         return SelectedTypes.Contains(label.Log.Type) &&
-               SelectedPlayers.Overlaps(label.Log.Players) &&
+               (SelectedPlayers.Count + label.Log.Players.Length == 0 || SelectedPlayers.Overlaps(label.Log.Players)) &&
                SelectedImpacts.Contains(label.Log.Impact) &&
                label.Log.Message.Contains(LogSearch.Text, StringComparison.OrdinalIgnoreCase);
     }
