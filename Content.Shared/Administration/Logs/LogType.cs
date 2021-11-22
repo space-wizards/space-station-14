@@ -12,4 +12,6 @@ public enum LogType
     EventStarted = 6,
     EventRan = 6,
     EventStopped = 7,
+    ShuttleCalled = 8,
+    ShuttleRecalled = 9,
 }

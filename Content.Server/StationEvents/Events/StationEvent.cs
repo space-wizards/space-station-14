@@ -141,7 +141,7 @@ namespace Content.Server.StationEvents.Events
         public virtual void Shutdown()
         {
             EntitySystem.Get<AdminLogSystem>()
-                .Add(LogType.EventAnnounced, $"Event shutdown: {Name}");
+                .Add(LogType.EventStopped, $"Event shutdown: {Name}");
 
             if (EndAnnouncement != null)
             {
