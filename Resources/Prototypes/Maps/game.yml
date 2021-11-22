@@ -69,5 +69,5 @@
     StationEngineer: [ 1, 1 ]
     ChiefMedicalOfficer: [ 1, 1 ]
     MedicalDoctor: [ 1, 1 ]
-    Scientist: [ 1, 1 ]
+    ResearchDirector: [ 1, 1 ]
     Botanist: [ 1, 1 ]
