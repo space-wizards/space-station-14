@@ -123,7 +123,7 @@ namespace Content.Server.StationEvents.Events
             if (StartAnnouncement != null)
             {
                 var chatManager = IoCManager.Resolve<IChatManager>();
-                chatManager.DispatchStationAnnouncement(StartAnnouncement);
+                chatManager.DispatchStationAnnouncement(StartAnnouncement, playDefaultSound: false);
             }
 
             if (StartAudio != null)
@@ -146,7 +146,7 @@ namespace Content.Server.StationEvents.Events
             if (EndAnnouncement != null)
             {
                 var chatManager = IoCManager.Resolve<IChatManager>();
-                chatManager.DispatchStationAnnouncement(EndAnnouncement);
+                chatManager.DispatchStationAnnouncement(EndAnnouncement, playDefaultSound: false);
             }
 
             if (EndAudio != null)
