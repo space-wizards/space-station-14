@@ -1,10 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Fixes bug where plasma fires wouldn't spread properly under certain
-      conditions., type: Fix}
-  id: 127
-  time: '2021-03-28T12:29:17.658735+00:00'
 - author: SweptWasTaken
   changes:
   - {message: Hopefully fixed all physics for canister and plants, type: Fix}
@@ -2846,3 +2840,9 @@ Entries:
     type: Add}
   id: 628
   time: '2021-11-22T02:33:51.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Foam and smoke now properly carry reagents, and are colored by their
+      reagents.', type: Tweak}
+  id: 629
+  time: '2021-11-22T08:40:14.0000000+00:00'
