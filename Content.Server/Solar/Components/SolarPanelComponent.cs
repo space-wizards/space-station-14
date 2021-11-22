@@ -2,6 +2,7 @@ using System;
 using Content.Server.Power.Components;
 using Content.Server.Solar.EntitySystems;
 using Robust.Server.GameObjects;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
@@ -15,6 +16,7 @@ namespace Content.Server.Solar.Components
     ///     It generates power from the sun based on coverage.
     /// </summary>
     [RegisterComponent]
+    [Friend(typeof(PowerSolarSystem))]
     public class SolarPanelComponent : Component
     {
         public override string Name => "SolarPanel";
@@ -23,18 +25,8 @@ namespace Content.Server.Solar.Components
         /// Maximum supply output by this panel (coverage = 1)
         /// </summary>
         [DataField("maxSupply")]
-        private int _maxSupply = 1500;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        public int MaxSupply
-        {
-            get => _maxSupply;
-            set {
-                _maxSupply = value;
-                // This should almost never be called, shush.
-                EntitySystem.Get<PowerSolarSystem>().UpdateSupply(OwnerUid, this);
-            }
-        }
+        [ViewVariables]
+        public int MaxSupply = 1500;
 
         /// <summary>
         /// Current coverage of this panel (from 0 to 1).
