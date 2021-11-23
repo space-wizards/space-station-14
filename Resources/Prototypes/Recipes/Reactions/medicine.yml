@@ -67,6 +67,24 @@
     Cryoxadone: 3
 
 - type: reaction
+  id: Epinephrine
+  reactants:
+    Phenol:
+      amount: 1
+    Acetone:
+      amount: 1
+    Diethylamine:
+      amount: 1
+    Oxygen:
+      amount: 1
+    Chlorine:
+      amount: 1
+    Hydrogen:
+      amount: 1
+  products:
+    Epinephrine: 6
+
+- type: reaction
   id: Clonexadone
   reactants:
     Cryoxadone:
