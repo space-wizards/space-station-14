@@ -63,7 +63,7 @@ namespace Content.Shared.Chemistry
 
                         var entity = EntityManager.GetEntity(args.SolutionEntity);
                         _logSystem.Add(LogType.ReagentEffect, LogImpact.Medium,
-                            $"Reactive effect {effect.GetType().Name} of reagent {reagent.ID:reagent} with method {method} applied on entity {entity}");
+                            $"Reactive effect {effect.GetType().Name} of reagent {reagent.ID:reagent} with method {method} applied on entity {entity} at {entity.Transform.Coordinates}");
                         effect.Effect(args);
                     }
                 }
@@ -87,7 +87,7 @@ namespace Content.Shared.Chemistry
 
                         var entity = EntityManager.GetEntity(args.SolutionEntity);
                         _logSystem.Add(LogType.ReagentEffect, LogImpact.Low,
-                            $"Reactive effect {effect.GetType().Name} of {entity} using reagent {reagent.ID} with method {method} applied");
+                            $"Reactive effect {effect.GetType().Name} of {entity} using reagent {reagent.ID} with method {method} at {entity.Transform.Coordinates}");
                         effect.Effect(args);
                     }
                 }

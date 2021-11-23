@@ -122,7 +122,7 @@ namespace Content.Shared.Chemistry.Reagent
 
                 var entity = entMan.GetEntity(args.SolutionEntity);
                 EntitySystem.Get<SharedAdminLogSystem>().Add(LogType.ReagentEffect, LogImpact.Low,
-                    $"Plant metabolism effect {plantMetabolizable.GetType().Name:effect} of reagent {ID} applied on entity {entity}");
+                    $"Plant metabolism effect {plantMetabolizable.GetType().Name:effect} of reagent {ID} applied on entity {entity} at {entity.Transform.Coordinates}");
                 plantMetabolizable.Effect(args);
             }
         }
