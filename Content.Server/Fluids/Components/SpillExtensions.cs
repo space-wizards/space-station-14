@@ -125,7 +125,7 @@ namespace Content.Server.Fluids.Components
         }
 
         public static PuddleComponent? SpillAt(this TileRef tileRef, Solution solution, string prototype,
-            bool overflow = true, bool sound = true)
+            bool overflow = true, bool sound = true, bool noTileReact = false)
         {
             if (solution.TotalVolume <= 0) return null;
 
@@ -139,11 +139,14 @@ namespace Content.Server.Fluids.Components
             var gridId = tileRef.GridIndex;
             if (!mapManager.TryGetGrid(gridId, out var mapGrid)) return null; // Let's not spill to invalid grids.
 
-            // First, do all tile reactions
-            foreach (var reagent in solution.Contents.ToArray())
+            if (!noTileReact)
             {
-                var proto = prototypeManager.Index<ReagentPrototype>(reagent.ReagentId);
-                proto.ReactionTile(tileRef, reagent.Quantity);
+                // First, do all tile reactions
+                foreach (var reagent in solution.Contents.ToArray())
+                {
+                    var proto = prototypeManager.Index<ReagentPrototype>(reagent.ReagentId);
+                    proto.ReactionTile(tileRef, reagent.Quantity);
+                }
             }
 
             // Tile reactions used up everything.
