@@ -20,4 +20,7 @@
   id: Stutter
 
 - type: statusEffect
+  id: AllCaps
+
+- type: statusEffect
   id: Electrocution

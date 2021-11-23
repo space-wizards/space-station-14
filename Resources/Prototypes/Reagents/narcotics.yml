@@ -1,0 +1,119 @@
+﻿- type: reagent
+  id: Desoxyephedrine
+  name: desoxyephedrine
+  desc: Desoxyephedrine is a potent stimulant with dangerous side-effects if too much is consumed.
+  physicalDesc: translucent
+  color: "#FAFAFA"
+  boilingPoint: 212.0  # Dexosyephedrine vape when?
+  meltingPoint: 170.0
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1.5
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
+        damage:
+          types:
+            Poison: 2 # this is added to the base damage of the meth.
+            Asphyxiation: 2
+    Narcotic:
+      effects:
+      - !type:MovespeedModifier
+        walkSpeedModifier: 1.3
+        sprintSpeedModifier: 1.3
+      - !type:GenericStatusEffect
+        key: Stutter
+        component: StutteringAccent
+      - !type:Jitter
+      - !type:GenericStatusEffect
+        key: Stun
+        time: 1
+        type: Remove
+      - !type:GenericStatusEffect
+        key: KnockedDown
+        time: 1
+        type: Remove
+
+- type: reagent
+  id: Ephedrine
+  name: ephedrine
+  desc: Increases stun resistance and movement speed, giving you hand cramps. Overdose deals toxin damage and inhibits breathing.
+  physicalDesc: Bone white
+  color: "#D2FFFA"
+  boilingPoint: 255.0
+  meltingPoint: 36.0
+  metabolisms:
+    Narcotic:
+      effects:
+      - !type:MovespeedModifier
+        walkSpeedModifier: 1.2
+        sprintSpeedModifier: 1.2
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 20
+        damage:
+          types:
+            Poison: 2 # this is added to the base damage of the meth.
+            Asphyxiation: 2
+      - !type:Jitter
+      - !type:GenericStatusEffect
+        key: Stun
+        time: 0.25
+        type: Remove
+      - !type:GenericStatusEffect
+        key: KnockedDown
+        time: 0.25
+        type: Remove
+      - !type:PopupMessage
+        messages: ["ephedrine-effect-tight-pain", "ephedrine-effect-heart-pounds"]
+        type: Local
+        probability: 0.05
+
+- type: reagent
+  id: THC
+  name: THC
+  desc: The main psychoactive compound in cannabis.
+  color: "#808080"
+  physicalDesc: crystalline
+  plantMetabolism:
+  - !type:PlantAdjustNutrition
+    amount: -5
+  - !type:PlantAdjustHealth
+    amount: -1
+
+- type: reagent
+  id: THCOil
+  name: THC oil
+  desc: Pure THC oil, extracted from the leaves of the cannabis plant. Much stronger than in it's natural form and can be used to numb chronic pain in patients.
+  physicalDesc: skunky
+  color: "#DAA520"
+
+- type: reagent
+  id: Nicotine
+  name: Nicotine
+  desc: Dangerous and highly addictive.
+  color: "#C0C0C0"
+  physicalDesc: strong smelling
+  plantMetabolism:
+  - !type:PlantAdjustHealth
+    amount: -5
+
+- type: reagent
+  id: Impedrezene
+  name: impedrezene
+  desc: A narcotic that impedes one's ability by slowing down the higher brain cell functions. Causes massive brain damage.
+  physicalDesc: acrid
+  color: "#215263"
+
+- type: reagent
+  id: SpaceDrugs
+  name: space drugs
+  desc: An illegal compound which induces a number of effects such as loss of balance and visual artefacts.
+  physicalDesc: syrupy
+  color: "#63806e"

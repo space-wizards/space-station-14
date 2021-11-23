@@ -24,7 +24,7 @@ namespace Content.IntegrationTests.Tests.Commands
             {
                 CVarOverrides =
                 {
-                    [CCVars.GameMap.Name] = "Maps/saltern.yml"
+                    [CCVars.GameMap.Name] = "saltern"
                 }
             });
 

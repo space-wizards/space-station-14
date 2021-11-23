@@ -16,6 +16,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -91,13 +92,17 @@ namespace Content.Server.Chat.Managers
             Logger.InfoS("SERVER", message);
         }
 
-        public void DispatchStationAnnouncement(string message, string sender = "CentComm")
+        public void DispatchStationAnnouncement(string message, string sender = "CentComm", bool playDefaultSound = true)
         {
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.Radio;
             msg.Message = message;
             msg.MessageWrap = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender));
             _netManager.ServerSendToAll(msg);
+            if (playDefaultSound)
+            {
+                SoundSystem.Play(Filter.Broadcast(), "/Audio/Announcements/announce.ogg", AudioParams.Default.WithVolume(-2f));
+            }
         }
 
         public void DispatchServerMessage(IPlayerSession player, string message)
@@ -109,7 +114,7 @@ namespace Content.Server.Chat.Managers
             _netManager.ServerSendMessage(msg, player.ConnectedClient);
         }
 
-        public void EntitySay(IEntity source, string message)
+        public void EntitySay(IEntity source, string message, bool hideChat=false)
         {
             if (!EntitySystem.Get<ActionBlockerSystem>().CanSpeak(source.Uid))
             {
@@ -191,6 +196,7 @@ namespace Content.Server.Chat.Managers
             msg.Message = message;
             msg.MessageWrap = Loc.GetString("chat-manager-entity-say-wrap-message",("entityName", source.Name));
             msg.SenderEntity = source.Uid;
+            msg.HideChat = hideChat;
             _netManager.ServerSendToMany(msg, clients);
         }
 

@@ -28,11 +28,12 @@ namespace Content.Server.Nuke
         public int Timer = 180;
 
         /// <summary>
-        ///     Slot name for to store nuclear disk inside bomb.
-        ///     See <see cref="SharedItemSlotsComponent"/> for mor info.
+        ///     The <see cref="ItemSlot"/> that stores the nuclear disk. The entity whitelist, sounds, and some other
+        ///     behaviours are specified by this <see cref="ItemSlot"/> definition. Make sure the whitelist, is correct
+        ///     otherwise a blank bit of paper will work as a "disk".
         /// </summary>
-        [DataField("slot")]
-        public string DiskSlotName = "DiskSlot";
+        [DataField("diskSlot")]
+        public ItemSlot DiskSlot = new();
 
         /// <summary>
         ///     Annihilation radius in which  all human players will be gibed
@@ -70,13 +71,6 @@ namespace Content.Server.Nuke
         /// </summary>
         [ViewVariables]
         public float RemainingTime;
-
-        /// <summary>
-        ///     Does bomb contains valid entity inside <see cref="DiskSlotName"/>?
-        ///     If it is, user can anchor bomb or enter nuclear code to arm it.
-        /// </summary>
-        [ViewVariables]
-        public bool DiskInserted = false;
 
         /// <summary>
         ///     Curent nuclear code buffer. Entered manually by players.

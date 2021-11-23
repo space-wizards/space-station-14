@@ -2,6 +2,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Robust.Server.Player;
+using Robust.Shared;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -16,7 +17,14 @@ namespace Content.IntegrationTests.Tests.Networking
         public async Task TestConnect()
         {
             var client = StartClient();
-            var server = StartServer(new ServerContentIntegrationOption {Pool = false});
+            var server = StartServer(new ServerContentIntegrationOption
+            {
+                Pool = false,
+                CVarOverrides =
+                {
+                    {CVars.NetPVS.Name, "false"}
+                }
+            });
 
             await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
 

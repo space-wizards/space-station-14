@@ -202,3 +202,30 @@
   desc: It tastes strange but at least the quinine keeps the Space Malaria at bay.
   physicalDesc: fizzy
   color: "#0064C8"
+
+- type: reagent
+  id: Water
+  name: water
+  parent: BaseDrink
+  desc: A colorless liquid that humans need in order to survive.
+  physicalDesc: translucent
+  color: "#c0e0ff20"
+  boilingPoint: 100.0
+  meltingPoint: 0.0
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 4
+
+- type: reagent
+  id: Ice
+  name: ice
+  desc: Frozen water.
+  physicalDesc: frosty
+  color: "#bed8e6"
+  meltingPoint: 0.0
+  boilingPoint: 100.0
+  plantMetabolism:
+  - !type:PlantAdjustWater
+    amount: 1

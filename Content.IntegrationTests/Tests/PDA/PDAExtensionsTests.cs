@@ -29,13 +29,12 @@ namespace Content.IntegrationTests.Tests.PDA
   id: {PdaDummy}
   name: {PdaDummy}
   components:
-  - type: ItemSlots
-    slots:
-      pdaIdSlot:
-        whitelist:
-          components:
-            - IdCard
   - type: PDA
+    idSlot:
+      name: ID Card
+      whitelist:
+        components:
+        - IdCard
   - type: Item";
 
         [Test]
@@ -77,9 +76,9 @@ namespace Content.IntegrationTests.Tests.PDA
                 var pdaComponent = dummyPda.GetComponent<PDAComponent>();
                 var pdaIdCard = sEntityManager.SpawnEntity(IdCardDummy, player.Transform.MapPosition);
 
-                var itemSlots = dummyPda.GetComponent<SharedItemSlotsComponent>();
-                sEntityManager.EntitySysManager.GetEntitySystem<SharedItemSlotsSystem>()
-                    .TryInsertContent(itemSlots, pdaIdCard, pdaComponent.IdSlot);
+                var itemSlots = dummyPda.GetComponent<ItemSlotsComponent>();
+                sEntityManager.EntitySysManager.GetEntitySystem<ItemSlotsSystem>()
+                    .TryInsert(dummyPda.Uid, pdaComponent.IdSlot, pdaIdCard);
                 var pdaContainedId = pdaComponent.ContainedID;
 
                 // The PDA in the hand should be found first

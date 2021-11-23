@@ -45,7 +45,7 @@ namespace Content.Shared.CCVar
          */
 
         public static readonly CVarDef<bool>
-            EventsEnabled = CVarDef.Create("events.enabled", false, CVar.ARCHIVE | CVar.SERVERONLY);
+            EventsEnabled = CVarDef.Create("events.enabled", true, CVar.ARCHIVE | CVar.SERVERONLY);
 
         public static readonly CVarDef<bool>
             GameDummyTicker = CVarDef.Create("game.dummyticker", false, CVar.ARCHIVE | CVar.SERVERONLY);
@@ -75,7 +75,9 @@ namespace Content.Shared.CCVar
             GameMaxCharacterSlots = CVarDef.Create("game.maxcharacterslots", 10, CVar.ARCHIVE | CVar.SERVERONLY);
 
         public static readonly CVarDef<string>
-            GameMap = CVarDef.Create("game.map", "Maps/saltern.yml", CVar.SERVERONLY);
+            GameMap = CVarDef.Create("game.map", "saltern", CVar.SERVERONLY);
+        public static readonly CVarDef<bool>
+            GameMapForced = CVarDef.Create("game.mapforced", false, CVar.SERVERONLY);
 
         /// <summary>
         ///     Whether a random position offset will be applied to the station on roundstart.
@@ -291,6 +293,20 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<bool> AdminAnnounceLogout =
             CVarDef.Create("admin.announce_logout", true, CVar.SERVERONLY);
+
+        /*
+         * Admin logs
+         */
+
+        public static readonly CVarDef<float> AdminLogsQueueSendDelay =
+            CVarDef.Create("adminlogs.queue_send_delay_seconds", 5f, CVar.SERVERONLY);
+
+        public static readonly CVarDef<int> AdminLogsQueueMax =
+            CVarDef.Create("adminlogs.queue_max", 5000, CVar.SERVERONLY);
+
+        // How many logs to send to the client at once
+        public static readonly CVarDef<int> AdminLogsClientBatchSize =
+            CVarDef.Create("adminlogs.client_batch_size", 1000, CVar.SERVERONLY);
 
         /*
          * Atmos
