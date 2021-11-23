@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Client no longer has access to some vision debug commands, type: Tweak}
-  id: 134
-  time: '2021-03-31T13:24:19.0000000+00:00'
 - author: NIXC
   changes:
   - {message: Ownerless ID's now show in PDA (Captain's Spare), type: Add}
@@ -2848,3 +2843,9 @@ Entries:
   - {message: Announcements from Central Command are now properly serenaded., type: Fix}
   id: 635
   time: '2021-11-22T22:34:48.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: You are no longer interrupted by damage during prying a firelock or
+      airlock., type: Tweak}
+  id: 636
+  time: '2021-11-23T00:34:57.0000000+00:00'
