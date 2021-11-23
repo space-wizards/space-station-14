@@ -56,14 +56,18 @@ namespace Content.Shared.Verbs
         /// </remarks>
         public void ExecuteVerb(Verb verb)
         {
+            // first, lets log the verb. Just in case it ends up crashing the server or something.
+            var verbText = $"{verb.Category?.Text} {verb.Text}".Trim();
+            var logText = verb.Forced
+                ? $"was forced to execute the '{verbText}' verb targeting " // let's not frame people, eh?
+                : $"executed '{verbText}' verb targeting ";
+
             if (verb.Using.HasValue)
-                // note that not all verbs REQUIRE the user to use an item. This might lead to nonsense entries E.g. "examine using wooden planks".
-                // but at least it will record what the user is holding as they perform some action.
                 _logSystem.Add(LogType.Verb, verb.Impact,
-                       $"{verb.User} executed '{verb.Category} {verb.Text}' verb on {verb.Target} using {verb.Using}");
+                       $"{verb.User} {logText} {verb.Target} while holding {verb.Using}");
             else
                 _logSystem.Add(LogType.Verb, verb.Impact,
-                       $"{verb.User} executed '{verb.Category} {verb.Text}' verb on {verb.Target}");
+                       $"{verb.User} {logText} {verb.Target}");
 
             verb.Act?.Invoke();
 
