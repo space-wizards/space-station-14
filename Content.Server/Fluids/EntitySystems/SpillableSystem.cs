@@ -14,14 +14,16 @@ namespace Content.Server.Fluids.EntitySystems;
 public class SpillableSystem : EntitySystem
 {
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+
     public override void Initialize() {
         base.Initialize();
         SubscribeLocalEvent<SpillableComponent, LandEvent>(SpillOnLand);
     }
+
     void SpillOnLand(EntityUid uid, SpillableComponent component, LandEvent args) {
-        if (args.User != null && Get<SolutionContainerSystem>().TryGetSolution(uid, component.SolutionName, out var solutionComponent))
+        if (args.User != null && _solutionContainerSystem.TryGetSolution(uid, component.SolutionName, out var solutionComponent))
         {
-            Get<SolutionContainerSystem>()
+            _solutionContainerSystem
                 .Drain(uid, solutionComponent, solutionComponent.DrainAvailable)
                 .SpillAt(EntityManager.GetComponent<TransformComponent>(uid).Coordinates, "PuddleSmear");
         }
