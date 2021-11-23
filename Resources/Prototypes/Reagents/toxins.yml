@@ -54,6 +54,18 @@
   boilingPoint: 165
   meltingPoint: -87
   # TODO MIRROR acid! hurt people on contact
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch, Ingestion ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: false
+        damage:
+          groups:
+            Caustic: 2
+      - !type:DoAction
+        action: HumanScream
   metabolisms:
     Poison:
       effects:

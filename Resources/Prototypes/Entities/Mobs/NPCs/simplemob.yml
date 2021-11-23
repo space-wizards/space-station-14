@@ -8,6 +8,7 @@
     groups:
       Flammable: [Touch]
       Extinguish: [Touch]
+      Acidic: [Touch, Ingestion]
   - type: UtilityAI
     behaviorSets:
     # - Clothing
