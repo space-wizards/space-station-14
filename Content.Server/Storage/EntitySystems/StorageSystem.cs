@@ -67,7 +67,7 @@ namespace Content.Server.Storage.EntitySystems
             if (!component.CanOpen(args.User, silent: true))
                 return;
 
-            Verb verb = new(args);
+            Verb verb = new();
             if (component.Open)
             {
                 verb.Text = Loc.GetString("verb-common-close");
@@ -98,7 +98,7 @@ namespace Content.Server.Storage.EntitySystems
             // Does this player currently have the storage UI open?
             var uiOpen = component.SubscribedSessions.Contains(session);
 
-            Verb verb = new(args);
+            Verb verb = new();
             verb.Act = () => component.OpenStorageUI(args.User);
             if (uiOpen)
             {

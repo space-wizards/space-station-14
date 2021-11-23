@@ -204,7 +204,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 !_bodySystem.TryGetComponentsOnMechanisms<StomachComponent>(ev.User.Uid, out var stomachs, body))
                 return;
 
-            Verb verb = new(ev);
+            Verb verb = new();
             verb.Act = () =>
             {
                 TryUseFood(uid, ev.User.Uid, ev.User.Uid, component);

@@ -45,7 +45,7 @@ namespace Content.Server.Tabletop
             if (!args.User.TryGetComponent<ActorComponent>(out var actor))
                 return;
 
-            Verb verb = new(args);
+            Verb verb = new();
             verb.Text = Loc.GetString("tabletop-verb-play-game");
             verb.IconTexture = "/Textures/Interface/VerbIcons/die.svg.192dpi.png";
             verb.Act = () => OpenSessionFor(actor.PlayerSession, uid);

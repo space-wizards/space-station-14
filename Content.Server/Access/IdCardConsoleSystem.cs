@@ -30,7 +30,7 @@ namespace Content.Server.Access
             // Can we insert a privileged ID?
             if (component.PrivilegedIDEmpty)
             {
-                Verb verb = new(args);
+                Verb verb = new();
                 verb.Act = () => component.InsertIdFromHand(args.User, component.PrivilegedIdContainer, args.Hands!);
                 verb.Category = VerbCategory.Insert;
                 verb.Text = Loc.GetString("id-card-console-privileged-id");
@@ -40,7 +40,7 @@ namespace Content.Server.Access
             // Can we insert a target ID?
             if (component.TargetIDEmpty)
             {
-                Verb verb = new(args);
+                Verb verb = new();
                 verb.Act = () => component.InsertIdFromHand(args.User, component.TargetIdContainer, args.Hands!);
                 verb.Category = VerbCategory.Insert;
                 verb.Text = Loc.GetString("id-card-console-target-id");
@@ -59,7 +59,7 @@ namespace Content.Server.Access
             // Can we eject a privileged ID?
             if (!component.PrivilegedIDEmpty)
             {
-                Verb verb = new(args);
+                Verb verb = new();
                 verb.Act = () => component.PutIdInHand(component.PrivilegedIdContainer, args.Hands);
                 verb.Category = VerbCategory.Eject;
                 verb.Text = Loc.GetString("id-card-console-privileged-id");
@@ -69,7 +69,7 @@ namespace Content.Server.Access
             // Can we eject a target ID?
             if (!component.TargetIDEmpty)
             {
-                Verb verb = new(args);
+                Verb verb = new();
                 verb.Act = () => component.PutIdInHand(component.TargetIdContainer, args.Hands);
                 verb.Category = VerbCategory.Eject;
                 verb.Text = Loc.GetString("id-card-console-target-id");

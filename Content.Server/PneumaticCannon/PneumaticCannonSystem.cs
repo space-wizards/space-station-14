@@ -295,7 +295,7 @@ namespace Content.Server.PneumaticCannon
             if (!args.CanInteract)
                 return;
 
-            Verb ejectTank = new(args);
+            Verb ejectTank = new();
             ejectTank.Act = () => TryRemoveGasTank(component, args.User);
             ejectTank.Text = Loc.GetString("pneumatic-cannon-component-verb-gas-tank-name");
             args.Verbs.Add(ejectTank);
@@ -306,7 +306,7 @@ namespace Content.Server.PneumaticCannon
             if (!args.CanInteract)
                 return;
 
-            Verb ejectItems = new(args);
+            Verb ejectItems = new();
             ejectItems.Act = () => TryEjectAllItems(component, args.User);
             ejectItems.Text = Loc.GetString("pneumatic-cannon-component-verb-eject-items-name");
             args.Verbs.Add(ejectItems);

@@ -3,7 +3,6 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Doors.Components;
 using Content.Server.Power.Components;
 using Content.Server.Shuttles.Components;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Doors;
 using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
@@ -66,7 +65,7 @@ namespace Content.Server.Shuttles.EntitySystems
                 if (component.Enabled)
                     otherDock = GetDockable(body, xform);
 
-                verb = new Verb(args)
+                verb = new Verb
                 {
                     Disabled = otherDock == null,
                     Text = Loc.GetString("docking-component-dock"),
@@ -79,7 +78,7 @@ namespace Content.Server.Shuttles.EntitySystems
             }
             else if (component.Docked)
             {
-                verb = new Verb(args)
+                verb = new Verb
                 {
                     Disabled = !component.Docked,
                     Text = Loc.GetString("docking-component-undock"),
@@ -96,7 +95,6 @@ namespace Content.Server.Shuttles.EntitySystems
                 return;
             }
 
-            verb.Impact = LogImpact.High;
             args.Verbs.Add(verb);
         }
 

@@ -310,7 +310,7 @@ namespace Content.Shared.Containers.ItemSlots
                     ? Loc.GetString(slot.Name)
                     : slot.Item!.Name ?? string.Empty;
 
-                Verb verb = new(args);
+                Verb verb = new();
                 verb.Act = () => TryEjectToHands(uid, slot, args.User.Uid);
 
                 if (slot.EjectVerbText == null)
@@ -345,7 +345,7 @@ namespace Content.Shared.Containers.ItemSlots
                         ? Loc.GetString(slot.Name)
                         : slot.Item!.Name ?? string.Empty;
 
-                    Verb takeVerb = new(args);
+                    Verb takeVerb = new();
                     takeVerb.Act = () => TryEjectToHands(uid, slot, args.User.Uid);
                     takeVerb.IconTexture = "/Textures/Interface/VerbIcons/pickup.svg.192dpi.png";
 
@@ -371,7 +371,7 @@ namespace Content.Shared.Containers.ItemSlots
                     ? Loc.GetString(slot.Name)
                     : args.Using.Name ?? string.Empty;
 
-                Verb insertVerb = new(args);
+                Verb insertVerb = new();
                 insertVerb.Act = () => Insert(uid, slot, args.Using);
 
                 if (slot.InsertVerbText != null)

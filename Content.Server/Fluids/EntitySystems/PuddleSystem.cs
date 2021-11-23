@@ -100,7 +100,7 @@ namespace Content.Server.Fluids.EntitySystems
             if (solution.DrainAvailable == FixedPoint2.Zero)
                 return;
 
-            Verb verb = new(args);
+            Verb verb = new();
             verb.Text = Loc.GetString("spill-target-verb-get-data-text");
             // TODO VERB ICONS spill icon? pouring out a glass/beaker?
             verb.Act = () => _solutionContainerSystem.SplitSolution(args.Target.Uid,

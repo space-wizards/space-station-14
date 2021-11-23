@@ -76,7 +76,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return;
 
             // Verbs to flush the unit
-            Verb flushVerb = new(args);
+            Verb flushVerb = new();
             flushVerb.Act = () => Engage(component);
             flushVerb.Text = Loc.GetString("disposal-flush-verb-get-data-text");
             flushVerb.IconTexture = "/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png";
@@ -84,7 +84,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             args.Verbs.Add(flushVerb);
 
             // Verb to eject the contents
-            Verb ejectVerb = new(args);
+            Verb ejectVerb = new();
             ejectVerb.Act = () => TryEjectContents(component);
             ejectVerb.Category = VerbCategory.Eject;
             ejectVerb.Text = Loc.GetString("disposal-eject-verb-contents");
@@ -102,7 +102,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return;
 
             // Add verb to climb inside of the unit,
-            Verb verb = new(args)
+            Verb verb = new()
             {
                 Act = () => TryInsert(component.Owner.Uid, args.User.Uid, args.User.Uid),
                 Text = Loc.GetString("disposal-self-insert-verb-get-data-text")

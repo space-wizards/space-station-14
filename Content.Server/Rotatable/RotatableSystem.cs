@@ -24,7 +24,7 @@ namespace Content.Server.Rotatable
             if (!args.CanAccess || !args.CanInteract || component.MirrorEntity == null)
                 return;
 
-            Verb verb = new(args);
+            Verb verb = new();
             verb.Act = () => TryFlip(component, args.User);
             verb.Text = Loc.GetString("flippable-verb-get-data-text");
             // TODO VERB ICONS Add Uno reverse card style icon?
@@ -42,7 +42,7 @@ namespace Content.Server.Rotatable
                 physics.BodyType == BodyType.Static)
                 return;
 
-            Verb resetRotation = new(args);
+            Verb resetRotation = new();
             resetRotation.Act = () => component.Owner.Transform.LocalRotation = Angle.Zero;
             resetRotation.Category = VerbCategory.Rotate;
             resetRotation.IconTexture = "/Textures/Interface/VerbIcons/refresh.svg.192dpi.png";
@@ -52,7 +52,7 @@ namespace Content.Server.Rotatable
             args.Verbs.Add(resetRotation);
 
             // rotate clockwise
-            Verb rotateCW = new(args);
+            Verb rotateCW = new();
             rotateCW.Act = () => component.Owner.Transform.LocalRotation += Angle.FromDegrees(-90);
             rotateCW.Category = VerbCategory.Rotate;
             rotateCW.IconTexture =  "/Textures/Interface/VerbIcons/rotate_cw.svg.192dpi.png";
@@ -61,7 +61,7 @@ namespace Content.Server.Rotatable
             args.Verbs.Add(rotateCW);
 
             // rotate counter-clockwise
-            Verb rotateCCW = new(args);
+            Verb rotateCCW = new();
             rotateCCW.Act = () => component.Owner.Transform.LocalRotation += Angle.FromDegrees(90);
             rotateCCW.Category = VerbCategory.Rotate;
             rotateCCW.IconTexture = "/Textures/Interface/VerbIcons/rotate_ccw.svg.192dpi.png";

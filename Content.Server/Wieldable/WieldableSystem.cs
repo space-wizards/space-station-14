@@ -43,7 +43,7 @@ namespace Content.Server.Wieldable
             // TODO VERB TOOLTIPS Make CanWield or some other function return string, set as verb tooltip and disable
             // verb. Or just don't add it to the list if the action is not executable.
 
-            Verb verb = new(args);
+            Verb verb = new();
             // TODO VERBS ICON + localization
             verb.Text = component.Wielded ? "Unwield" : "Wield";
             verb.Act = component.Wielded

@@ -134,7 +134,7 @@ namespace Content.Server.Stack
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            Verb halve = new(args);
+            Verb halve = new();
             halve.Text = Loc.GetString("comp-stack-split-halve");
             halve.Category = VerbCategory.Split;
             halve.Act = () => UserSplit(uid, args.User.Uid, stack.Count / 2, stack);
@@ -147,7 +147,7 @@ namespace Content.Server.Stack
                 if (amount >= stack.Count)
                     continue;
 
-                Verb verb = new(args);
+                Verb verb = new();
                 verb.Text = amount.ToString();
                 verb.Category = VerbCategory.Split;
                 verb.Act = () => UserSplit(uid, args.User.Uid, amount, stack);

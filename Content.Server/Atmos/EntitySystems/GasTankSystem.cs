@@ -27,7 +27,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!args.CanAccess ||  !args.User.TryGetComponent<ActorComponent>(out var actor))
                 return;
 
-            Verb verb = new(args);
+            Verb verb = new();
             verb.Act = () => component.OpenInterface(actor.PlayerSession);
             verb.Text = Loc.GetString("control-verb-open-control-panel-text");
             // TODO VERBS add "open UI" icon?

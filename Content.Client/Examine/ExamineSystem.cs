@@ -96,7 +96,7 @@ namespace Content.Client.Examine
             if (!CanExamine(args.User, args.Target))
                 return;
 
-            Verb verb = new(args);
+            Verb verb = new();
             verb.Act = () => DoExamine(args.Target) ;
             verb.Text = Loc.GetString("examine-verb-name");
             verb.IconTexture = "/Textures/Interface/VerbIcons/examine.svg.192dpi.png";

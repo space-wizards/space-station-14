@@ -85,14 +85,14 @@ namespace Content.Shared.Pulling
             //TODO VERB ICONS add pulling icon
             if (component.Puller == args.User)
             {
-                Verb verb = new(args);
+                Verb verb = new();
                 verb.Text = Loc.GetString("pulling-verb-get-data-text-stop-pulling");
                 verb.Act = () => TryStopPull(component, args.User);
                 args.Verbs.Add(verb);
             }
             else if (CanPull(args.User, args.Target))
             {
-                Verb verb = new(args);
+                Verb verb = new();
                 verb.Text = Loc.GetString("pulling-verb-get-data-text");
                 verb.Act = () => TryStartPull(args.User, args.Target);
                 args.Verbs.Add(verb);

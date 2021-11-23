@@ -25,7 +25,7 @@ namespace Content.Server.Morgue
             if (!args.CanAccess || !args.CanInteract || component.Cooking || component.Open)
                 return;
 
-            Verb verb = new(args);
+            Verb verb = new();
             verb.Text = Loc.GetString("cremate-verb-get-data-text");
             // TODO VERB ICON add flame/burn symbol?
             verb.Act = () => component.TryCremate();

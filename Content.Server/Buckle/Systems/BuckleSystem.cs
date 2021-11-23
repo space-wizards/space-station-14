@@ -41,7 +41,7 @@ namespace Content.Server.Buckle.Systems
             if (!args.CanAccess || !args.CanInteract || !component.Buckled)
                 return;
             
-            Verb verb = new(args);
+            Verb verb = new();
             verb.Act = () => component.TryUnbuckle(args.User);
             verb.Text = Loc.GetString("verb-categories-unbuckle");
             verb.IconTexture = "/Textures/Interface/VerbIcons/unbuckle.svg.192dpi.png";

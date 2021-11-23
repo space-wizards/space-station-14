@@ -22,7 +22,7 @@ namespace Content.Server.Strip
             if (!args.User.TryGetComponent(out ActorComponent? actor))
                 return;
 
-            Verb verb = new(args);
+            Verb verb = new();
             verb.Text = Loc.GetString("strip-verb-get-data-text");
             verb.IconTexture = "/Textures/Interface/VerbIcons/outfit.svg.192dpi.png";
             verb.Act = () => component.OpenUserInterface(actor.PlayerSession);
