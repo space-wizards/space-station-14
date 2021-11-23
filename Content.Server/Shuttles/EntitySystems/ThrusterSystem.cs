@@ -7,11 +7,13 @@ using Content.Server.Damage.Systems;
 using Content.Server.Power.Components;
 using Content.Server.Shuttles.Components;
 using Content.Shared.Damage;
+using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Shuttles.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -53,7 +55,37 @@ namespace Content.Server.Shuttles.EntitySystems
             SubscribeLocalEvent<ThrusterComponent, StartCollideEvent>(OnStartCollide);
             SubscribeLocalEvent<ThrusterComponent, EndCollideEvent>(OnEndCollide);
 
+            SubscribeLocalEvent<ThrusterComponent, ExaminedEvent>(OnThrusterExamine);
+
             _mapManager.TileChanged += OnTileChange;
+        }
+
+        private void OnThrusterExamine(EntityUid uid, ThrusterComponent component, ExaminedEvent args)
+        {
+            // Powered is already handled by other power components
+            var enabled = Loc.GetString("thruster-comp-enabled",
+                ("enabledColor", component.Enabled ? "green": "red"),
+                ("enabled", component.Enabled ? "on": "off"));
+
+            args.PushMarkup(enabled);
+
+            var xform = EntityManager.GetComponent<TransformComponent>(uid);
+
+            if (xform.Anchored)
+            {
+                var nozzleDir = Loc.GetString("thruster-comp-nozzle-direction",
+                    ("direction", xform.LocalRotation.Opposite().ToWorldVec().GetDir().ToString().ToLowerInvariant()));
+
+                args.PushMarkup(nozzleDir);
+
+                var exposed = NozzleExposed(xform);
+
+                var nozzleText = Loc.GetString("thruster-comp-nozzle-exposed",
+                    ("exposedColor", exposed ? "green" : "red"),
+                    ("exposed", exposed ? "is": "is not"));
+
+                args.PushMarkup(nozzleText);
+            }
         }
 
         public override void Shutdown()
@@ -294,6 +326,11 @@ namespace Content.Server.Shuttles.EntitySystems
             if (component.Type == ThrusterType.Angular)
                 return true;
 
+            return NozzleExposed(xform);
+        }
+
+        private bool NozzleExposed(TransformComponent xform)
+        {
             var (x, y) = xform.LocalPosition + xform.LocalRotation.Opposite().ToWorldVec();
             var tile = _mapManager.GetGrid(xform.GridID).GetTileRef(new Vector2i((int) Math.Floor(x), (int) Math.Floor(y)));
 
