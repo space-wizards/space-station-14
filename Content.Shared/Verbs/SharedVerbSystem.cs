@@ -17,37 +17,32 @@ namespace Content.Shared.Verbs
         {
             Dictionary<VerbType, SortedSet<Verb>> verbs = new();
 
-            // each verb has it's own event & associated system subscriptions.
-            // but we also don't want to have to call Action blocker again for each event type
-            // so reuse the same event.
-            var args = new GetVerbsEvent(user, target, force);
-
             if ((verbTypes & VerbType.Interaction) == VerbType.Interaction)
-            {   
-                RaiseLocalEvent(target.Uid, (GetInteractionVerbsEvent) args);
-                verbs.Add(VerbType.Interaction, args.Verbs);
-                args.Verbs.Clear();
+            {
+                GetInteractionVerbsEvent getVerbEvent = new(user, target, force);
+                RaiseLocalEvent(target.Uid, getVerbEvent);
+                verbs.Add(VerbType.Interaction, getVerbEvent.Verbs);
             }
 
             if ((verbTypes & VerbType.Activation) == VerbType.Activation)
             {
-                RaiseLocalEvent(target.Uid, (GetActivationVerbsEvent) args);
-                verbs.Add(VerbType.Activation, args.Verbs);
-                args.Verbs.Clear();
+                GetActivationVerbsEvent getVerbEvent = new(user, target, force);
+                RaiseLocalEvent(target.Uid, getVerbEvent);
+                verbs.Add(VerbType.Activation, getVerbEvent.Verbs);
             }
 
             if ((verbTypes & VerbType.Alternative) == VerbType.Alternative)
             {
-                RaiseLocalEvent(target.Uid, (GetAlternativeVerbsEvent) args);
-                verbs.Add(VerbType.Alternative, args.Verbs);
-                args.Verbs.Clear();
+                GetAlternativeVerbsEvent getVerbEvent = new(user, target, force);
+                RaiseLocalEvent(target.Uid, getVerbEvent);
+                verbs.Add(VerbType.Alternative, getVerbEvent.Verbs);
             }
 
             if ((verbTypes & VerbType.Other) == VerbType.Other)
             {
-                RaiseLocalEvent(target.Uid, (GetOtherVerbsEvent) args);
-                verbs.Add(VerbType.Other, args.Verbs);
-                args.Verbs.Clear();
+                GetOtherVerbsEvent getVerbEvent = new(user, target, force);
+                RaiseLocalEvent(target.Uid, getVerbEvent);
+                verbs.Add(VerbType.Other, getVerbEvent.Verbs);
             }
 
             return verbs;
