@@ -2,6 +2,7 @@
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Maps;
+using Content.Shared.Whitelist;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -22,10 +23,16 @@ public class CreateEntityReaction : ITileReaction
     public FixedPoint2 Usage = FixedPoint2.New(1);
 
     /// <summary>
-    ///     How many of the same entity can fit on one tile?
+    ///     How many of the whitelisted entity can fit on one tile?
     /// </summary>
     [DataField("maxOnTile")]
     public int MaxOnTile = 1;
+
+    /// <summary>
+    ///     The whitelist to use when determining what counts as "max entities on a tile".0
+    /// </summary>
+    [DataField("maxOnTileWhitelist")]
+    public EntityWhitelist? Whitelist;
 
     public FixedPoint2 TileReact(TileRef tile, ReagentPrototype reagent, FixedPoint2 reactVolume)
     {
@@ -34,14 +41,17 @@ public class CreateEntityReaction : ITileReaction
             // TODO probably pass this in args like reagenteffects do.
             var entMan = IoCManager.Resolve<IEntityManager>();
 
-            int acc = 0;
-            foreach (var ent in tile.GetEntitiesInTile())
+            if (Whitelist != null)
             {
-                if (ent.Prototype != null && ent.Prototype.ID == Entity)
-                    acc += 1;
+                int acc = 0;
+                foreach (var ent in tile.GetEntitiesInTile())
+                {
+                    if (Whitelist.IsValid(ent.Uid))
+                        acc += 1;
 
-                if (acc >= MaxOnTile)
-                    return FixedPoint2.Zero;
+                    if (acc >= MaxOnTile)
+                        return FixedPoint2.Zero;
+                }
             }
 
             entMan.SpawnEntity(Entity, tile.GridPosition().Offset(new Vector2(0.5f, 0.5f)));
