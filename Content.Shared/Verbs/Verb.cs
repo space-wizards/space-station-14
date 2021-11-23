@@ -127,7 +127,7 @@ namespace Content.Shared.Verbs
         public bool CloseMenu = true;
 
         /// <summary>
-        ///     How important is this verb?
+        ///     How important is this verb, for the purposes of admin logging?
         /// </summary>
         /// <remarks>
         ///     If this is just opening a UI or ejecting an id card, this should probably be low.
