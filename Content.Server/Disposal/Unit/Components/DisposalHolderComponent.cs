@@ -73,14 +73,6 @@ namespace Content.Server.Disposal.Unit.Components
             Container = ContainerHelpers.EnsureContainer<Container>(Owner, nameof(DisposalHolderComponent));
         }
 
-        protected override void OnRemove()
-        {
-            base.OnRemove();
-            // have to include the component and such because otherwise stuff gets thrown
-            // we already don't officially exist
-            EntitySystem.Get<DisposableSystem>().ExitDisposals(OwnerUid, this, Owner.Transform);
-        }
-
         private bool CanInsert(IEntity entity)
         {
             if (!Container.CanInsert(entity))

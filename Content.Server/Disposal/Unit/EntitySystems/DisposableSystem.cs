@@ -23,9 +23,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
         public void ExitDisposals(EntityUid uid, DisposalHolderComponent? holder = null, TransformComponent? holderTransform = null)
         {
-            if (!Resolve(uid, ref holder))
-                return;
-            if (!Resolve(uid, ref holderTransform))
+            if (!Resolve(uid, ref holder, ref holderTransform))
                 return;
 
             // Check for a disposal unit to throw them into and then eject them from it.
@@ -83,11 +81,9 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         // Note: This function will cause an ExitDisposals on any failure that does not make an ExitDisposals impossible.
         public bool EnterTube(EntityUid holderUid, EntityUid toUid, DisposalHolderComponent? holder = null, TransformComponent? holderTransform = null, IDisposalTubeComponent? to = null, TransformComponent? toTransform = null)
         {
-            if (!Resolve(holderUid, ref holder))
+            if (!Resolve(holderUid, ref holder, ref holderTransform))
                 return false;
-            if (!Resolve(holderUid, ref holderTransform))
-                return false;
-            if (!(Resolve(toUid, ref to) && Resolve(toUid, ref toTransform)))
+            if (!Resolve(toUid, ref to, ref toTransform))
             {
                 ExitDisposals(holderUid, holder, holderTransform);
                 return false;
