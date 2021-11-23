@@ -1,9 +1,4 @@
 Entries:
-- author: Acruid
-  changes:
-  - {message: Fixed the client crashing after restarting the round, type: Fix}
-  id: 136
-  time: '2021-03-31T20:06:31.469316+00:00'
 - author: ShadowCommander
   changes:
   - {message: Ghosts are now deleted correctly, type: Fix}
@@ -2853,3 +2848,9 @@ Entries:
       to the last changelog entry, type: Add}
   id: 637
   time: '2021-11-23T01:01:51.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Removed meth., type: Remove}
+  - {message: Added desoxyephedrine., type: Add}
+  id: 638
+  time: '2021-11-23T04:39:59.0000000+00:00'
