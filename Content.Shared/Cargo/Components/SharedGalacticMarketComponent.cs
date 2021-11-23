@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -33,7 +34,13 @@ namespace Content.Shared.Cargo.Components
 
             foreach (var id in _productIds)
             {
-                _products.Add(prototypeManager.Index<CargoProductPrototype>(id));
+                if (!prototypeManager.TryIndex(id, out CargoProductPrototype? product))
+                {
+                    Logger.ErrorS("cargo", $"Unable to find {nameof(CargoProductPrototype)} for {id}");
+                    continue;
+                }
+
+                _products.Add(product);
             }
         }
 
