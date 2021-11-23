@@ -30,7 +30,7 @@
   - type: Extractable
     juiceSolution:
       reagents:
-      - ReagentId: BuzzochloricBees
+      - ReagentId: GroundBee
         Quantity: 10
 
 - type: entity
