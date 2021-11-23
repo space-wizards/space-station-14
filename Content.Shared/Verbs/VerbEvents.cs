@@ -7,6 +7,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.IoC;
 using Content.Shared.Interaction;
+using System.Collections.Immutable;
 
 namespace Content.Shared.Verbs
 {
@@ -170,6 +171,10 @@ namespace Content.Shared.Verbs
         ///     has hands.
         /// </remarks>
         public IEntity? Using;
+
+        public EntityUid UserUid => User.Uid;
+        public EntityUid TargetUid => Target.Uid;
+        public EntityUid? UsingUid => Using?.Uid;
 
         public GetVerbsEvent(IEntity user, IEntity target, bool force=false)
         {

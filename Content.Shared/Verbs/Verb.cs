@@ -1,3 +1,4 @@
+using Content.Shared.Administration.Logs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -124,6 +125,26 @@ namespace Content.Shared.Verbs
         ///     a window.
         /// </remarks>
         public bool CloseMenu = true;
+
+        /// <summary>
+        ///     How important is this verb?
+        /// </summary>
+        /// <remarks>
+        ///     If this is just opening a UI or ejecting an id card, this should probably be low.
+        /// </remarks>
+        public LogImpact Impact = LogImpact.Low;
+
+        // for admin logging
+        public EntityUid User;
+        public EntityUid Target;
+        public EntityUid? Using;
+
+        public Verb (GetVerbsEvent args)
+        {
+            User = args.UserUid;
+            Target = args.TargetUid;
+            Using = args.UsingUid;
+        }
 
         /// <summary>
         ///     Compares two verbs based on their <see cref="Priority"/>, <see cref="Category"/>, <see cref="Text"/>,

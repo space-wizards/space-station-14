@@ -1,44 +1,53 @@
 using System.Collections.Generic;
+using Content.Shared.Administration.Logs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Shared.Verbs
 {
-    public class SharedVerbSystem : EntitySystem
+    public abstract class SharedVerbSystem : EntitySystem
     {
+        [Dependency] private readonly SharedAdminLogSystem _logSystem = default!; 
+
         /// <summary>
         ///     Raises a number of events in order to get all verbs of the given type(s) defined in local systems. This
         ///     does not request verbs from the server.
         /// </summary>
-        public virtual Dictionary<VerbType, SortedSet<Verb>> GetLocalVerbs(IEntity target, IEntity user, VerbType verbTypes, bool force=false)
+        public virtual Dictionary<VerbType, SortedSet<Verb>> GetLocalVerbs(IEntity target, IEntity user, VerbType verbTypes, bool force = false)
         {
             Dictionary<VerbType, SortedSet<Verb>> verbs = new();
 
+            // each verb has it's own event & associated system subscriptions.
+            // but we also don't want to have to call Action blocker again for each event type
+            // so reuse the same event.
+            var args = new GetVerbsEvent(user, target, force);
+
             if ((verbTypes & VerbType.Interaction) == VerbType.Interaction)
-            {
-                GetInteractionVerbsEvent getVerbEvent = new(user, target,  force);
-                RaiseLocalEvent(target.Uid, getVerbEvent);
-                verbs.Add(VerbType.Interaction, getVerbEvent.Verbs);
+            {   
+                RaiseLocalEvent(target.Uid, (GetInteractionVerbsEvent) args);
+                verbs.Add(VerbType.Interaction, args.Verbs);
+                args.Verbs.Clear();
             }
 
             if ((verbTypes & VerbType.Activation) == VerbType.Activation)
             {
-                GetActivationVerbsEvent getVerbEvent = new(user, target, force);
-                RaiseLocalEvent(target.Uid, getVerbEvent);
-                verbs.Add(VerbType.Activation, getVerbEvent.Verbs);
+                RaiseLocalEvent(target.Uid, (GetActivationVerbsEvent) args);
+                verbs.Add(VerbType.Activation, args.Verbs);
+                args.Verbs.Clear();
             }
 
             if ((verbTypes & VerbType.Alternative) == VerbType.Alternative)
             {
-                GetAlternativeVerbsEvent getVerbEvent = new(user, target, force);
-                RaiseLocalEvent(target.Uid, getVerbEvent);
-                verbs.Add(VerbType.Alternative, getVerbEvent.Verbs);
+                RaiseLocalEvent(target.Uid, (GetAlternativeVerbsEvent) args);
+                verbs.Add(VerbType.Alternative, args.Verbs);
+                args.Verbs.Clear();
             }
 
             if ((verbTypes & VerbType.Other) == VerbType.Other)
             {
-                GetOtherVerbsEvent getVerbEvent = new(user, target, force);
-                RaiseLocalEvent(target.Uid, getVerbEvent);
-                verbs.Add(VerbType.Other, getVerbEvent.Verbs);
+                RaiseLocalEvent(target.Uid, (GetOtherVerbsEvent) args);
+                verbs.Add(VerbType.Other, args.Verbs);
+                args.Verbs.Clear();
             }
 
             return verbs;
@@ -52,6 +61,14 @@ namespace Content.Shared.Verbs
         /// </remarks>
         public void ExecuteVerb(Verb verb)
         {
+            if (verb.Using.HasValue)
+                // note that not all verbs REQUIRE the user to use an item. This might lead to nonsense entries E.g. "examine using wooden planks".
+                // but at least it will record what the user is holding as they perform some action.
+                _logSystem.Add(LogType.Verb, verb.Impact,
+                       $"{verb.User} executed '{verb.Category} {verb.Text}' verb on {verb.Target} using {verb.Using}");
+            else
+                _logSystem.Add(LogType.Verb, verb.Impact,
+                       $"{verb.User} executed '{verb.Category} {verb.Text}' verb on {verb.Target}");
 
             verb.Act?.Invoke();
 
