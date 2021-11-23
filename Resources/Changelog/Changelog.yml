@@ -1,16 +1,6 @@
 Entries:
 - author: Swept
   changes:
-  - {message: Debug weapons, type: Add}
-  id: 144
-  time: '2021-04-02T08:54:08.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Adds Animal / critter mob crates to cargo, type: Add}
-  id: 145
-  time: '2021-04-02T10:41:00.0000000+00:00'
-- author: Swept
-  changes:
   - {message: You can eat organs, type: Add}
   id: 146
   time: '2021-04-02T13:44:02.0000000+00:00'
@@ -2853,3 +2843,14 @@ Entries:
   - {message: Smoke spam no longer crashes the server., type: Fix}
   id: 645
   time: '2021-11-23T19:35:50.472421+00:00'
+- author: Clyybber
+  changes:
+  - {message: Reworked how dropping items by slipping works., type: Tweak}
+  id: 646
+  time: '2021-11-23T23:38:39.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Disposals should no longer be capable of sending employees through walls
+      when they're not supposed to be., type: Fix}
+  id: 647
+  time: '2021-11-23T23:38:46.0000000+00:00'
