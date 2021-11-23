@@ -33,12 +33,7 @@ namespace Content.Shared.Cargo.Components
 
             foreach (var id in _productIds)
             {
-                if (!prototypeManager.TryIndex(id, out CargoProductPrototype? product))
-                {
-                    continue;
-                }
-
-                _products.Add(product);
+                _products.Add(prototypeManager.Index<CargoProductPrototype>(id));
             }
         }
 
