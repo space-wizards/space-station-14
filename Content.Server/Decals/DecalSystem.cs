@@ -146,6 +146,7 @@ namespace Content.Server.Decals
                 return false;
             }
 
+            DirtyChunk(gridId, indices);
             var chunkCollection = ChunkCollection(gridId);
             var decal = chunkCollection[indices][uid];
             if (newGridId == gridId)
