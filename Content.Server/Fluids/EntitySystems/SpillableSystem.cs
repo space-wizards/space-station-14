@@ -15,7 +15,8 @@ public class SpillableSystem : EntitySystem
 {
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
 
-    public override void Initialize() {
+    public override void Initialize() 
+    {
         base.Initialize();
         SubscribeLocalEvent<SpillableComponent, LandEvent>(SpillOnLand);
     }
