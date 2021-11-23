@@ -6,6 +6,7 @@ using Content.Shared.Input;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -28,6 +29,7 @@ namespace Content.Client.Examine
     {
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IEyeManager _eyeManager = default!;
 
         public const string StyleClassEntityTooltip = "entity-tooltip";
 
@@ -52,23 +54,23 @@ namespace Content.Client.Examine
             if (_examineTooltipOpen == null || !_examineTooltipOpen.Visible) return;
             if (_examinedEntity == null || _playerEntity == null) return;
 
-            Ignored predicate = entity => entity == _playerEntity || entity == _examinedEntity;
-
-            if (_playerEntity.TryGetContainer(out var container))
-            {
-                predicate += entity => entity == container.Owner;
-            }
-
-            if (!InRangeUnOccluded(_playerEntity, _examinedEntity, ExamineRange, predicate))
-            {
+            if (!CanExamine(_playerEntity, _examinedEntity))
                 CloseTooltip();
-            }
         }
 
         public override void Shutdown()
         {
             CommandBinds.Unregister<ExamineSystem>();
             base.Shutdown();
+        }
+
+        public override bool CanExamine(IEntity examiner, MapCoordinates target, Ignored? predicate = null)
+        {
+            var b = _eyeManager.GetWorldViewbounds();
+            if (!b.Contains(target.Position))
+                return false;
+
+            return base.CanExamine(examiner, target, predicate);
         }
 
         private bool HandleExamine(ICommonSession? session, EntityCoordinates coords, EntityUid uid)

@@ -10,6 +10,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using System.Collections.Generic;
@@ -80,7 +81,8 @@ namespace Content.Shared.Containers.ItemSlots
         {
             var itemSlots = EntityManager.EnsureComponent<ItemSlotsComponent>(uid);
             slot.ContainerSlot = ContainerHelpers.EnsureContainer<ContainerSlot>(itemSlots.Owner, id);
-            DebugTools.Assert(!itemSlots.Slots.ContainsKey(id));
+            if (itemSlots.Slots.ContainsKey(id))
+                Logger.Error($"Duplicate item slot key. Entity: {itemSlots.Owner.Name} ({uid}), key: {id}");
             itemSlots.Slots[id] = slot;
         }
 

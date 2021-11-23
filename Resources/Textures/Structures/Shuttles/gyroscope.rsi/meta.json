@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "copyright": "Taken from https://github.com/discordia-space/CEV-Eris/tree/23e73e051a838bc190a589d6d464a318c641b6a5",
+  "license": "CC-BY-SA-3.0",
+  "states": [
+    {
+      "name": "base"
+    },
+    {
+      "name": "thrust"
+    },
+    {
+      "name": "thrust_burn",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "thrust_burn_unshaded",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    }
+  ]
+}

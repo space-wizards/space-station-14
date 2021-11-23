@@ -383,9 +383,9 @@ namespace Content.Server.PneumaticCannon
         {
             return power switch
             {
-                PneumaticCannonPower.High => 15f,
-                PneumaticCannonPower.Medium => 10f,
-                PneumaticCannonPower.Low or _ => 5f,
+                PneumaticCannonPower.High => 9f,
+                PneumaticCannonPower.Medium => 6f,
+                PneumaticCannonPower.Low or _ => 3f,
             };
         }
 

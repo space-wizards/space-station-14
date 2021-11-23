@@ -1,6 +1,7 @@
 using Content.Server.Act;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
+using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Server.Popups;
 using Content.Shared.Body.Components;
@@ -47,9 +48,7 @@ namespace Content.Server.Recycling.Components
 
         SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)
         {
-            var mind = victim.PlayerSession()?.ContentData()?.Mind;
-
-            if (mind != null)
+            if (victim.TryGetComponent(out ActorComponent? actor) && actor.PlayerSession.ContentData()?.Mind is {} mind)
             {
                 EntitySystem.Get<GameTicker>().OnGhostAttempt(mind, false);
                 mind.OwnedEntity?.PopupMessage(Loc.GetString("recycler-component-suicide-message"));

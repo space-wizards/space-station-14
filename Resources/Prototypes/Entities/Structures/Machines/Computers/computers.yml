@@ -287,6 +287,8 @@
       - EngineSingularityGenerator
       - EngineSingularityContainment
       - EngineParticleAccelerator
+      - ShuttleThruster
+      - ShuttleGyroscope
       - AtmosphericsAir
       - AtmosphericsOxygen
       - AtmosphericsNitrogen
