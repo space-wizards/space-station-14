@@ -76,7 +76,7 @@ namespace Content.Shared.Hands.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public float ThrowRange { get; set; } = 8f;
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             var hands = new HandState[Hands.Count];
 

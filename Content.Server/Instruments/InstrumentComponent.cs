@@ -173,7 +173,7 @@ namespace Content.Server.Instruments
             _instrumentSystem = EntitySystem.Get<InstrumentSystem>();
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new InstrumentState(Playing, InstrumentProgram, InstrumentBank, AllowPercussion, AllowProgramChange, RespectMidiLimits, _lastSequencerTick);
         }

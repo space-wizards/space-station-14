@@ -98,7 +98,7 @@ namespace Content.Server.Radiation
             Dirty();
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new RadiationPulseState(_radsPerSecond, _range, Draw, Decay, _endTime);
         }
