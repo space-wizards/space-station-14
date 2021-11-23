@@ -158,6 +158,7 @@
   parent: BaseHandheldInstrument
   id: SaxophoneInstrument
   name: saxophone
+  description: An instrument. You could probably grind this into raw jazz.
   components:
   - type: Instrument
     program: 67
@@ -168,7 +169,7 @@
     size: 24
     sprite: Objects/Fun/Instruments/saxophone.rsi
   - type: Extractable
-    juiceSolution:
+    grindableSolution:
       reagents:
         - ReagentId: Saxoite
           Quantity: 10
