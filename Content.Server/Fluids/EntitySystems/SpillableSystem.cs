@@ -23,7 +23,7 @@ public class SpillableSystem : EntitySystem
         {
             Get<SolutionContainerSystem>()
                 .Drain(uid, solutionComponent, solutionComponent.DrainAvailable)
-                .SpillAt(EntityManager.GetEntity(uid).Transform.Coordinates, "PuddleSmear");
+                .SpillAt(EntityManager.GetComponent<TransformComponent>(uid).Coordinates, "PuddleSmear");
         }
     }
 
