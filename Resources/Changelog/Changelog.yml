@@ -1,9 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: Ghosts are now deleted correctly, type: Fix}
-  id: 137
-  time: '2021-03-31T21:17:22.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Pulling collision disabled again, type: Tweak}
@@ -2854,3 +2849,8 @@ Entries:
   - {message: Added desoxyephedrine., type: Add}
   id: 638
   time: '2021-11-23T04:39:59.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Thrusters now have examine text, type: Add}
+  id: 639
+  time: '2021-11-23T06:44:08.0000000+00:00'
