@@ -119,9 +119,9 @@ public partial class AdminLogSystem : SharedAdminLogSystem
         _accumulatedFrameTime = 0;
 
         // ship the logs to Azkaban
-        var task = Task.Run(() =>
+        var task = Task.Run(async () =>
         {
-            _db.AddAdminLogs(copy);
+            await _db.AddAdminLogs(copy);
         });
 
         if (_metricsEnabled)
