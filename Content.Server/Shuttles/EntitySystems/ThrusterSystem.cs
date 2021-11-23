@@ -250,7 +250,7 @@ namespace Content.Server.Shuttles.EntitySystems
                     throw new ArgumentOutOfRangeException();
             }
 
-            if (EntityManager.TryGetComponent(uid, out SharedAppearanceComponent? appearanceComponent))
+            if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearanceComponent))
             {
                 appearanceComponent.SetData(ThrusterVisualState.State, true);
             }
@@ -295,7 +295,7 @@ namespace Content.Server.Shuttles.EntitySystems
                     throw new ArgumentOutOfRangeException();
             }
 
-            if (EntityManager.TryGetComponent(uid, out SharedAppearanceComponent? appearanceComponent))
+            if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearanceComponent))
             {
                 appearanceComponent.SetData(ThrusterVisualState.State, false);
             }
@@ -398,7 +398,7 @@ namespace Content.Server.Shuttles.EntitySystems
                     case ShuttleMode.Cruise:
                         foreach (var comp in component.AngularThrusters)
                         {
-                            if (!EntityManager.TryGetComponent(comp.OwnerUid, out SharedAppearanceComponent? appearanceComponent))
+                            if (!EntityManager.TryGetComponent(comp.OwnerUid, out AppearanceComponent? appearanceComponent))
                                 continue;
 
                             comp.Firing = true;
@@ -410,7 +410,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
                         foreach (var comp in component.LinearThrusters[index])
                         {
-                            if (!EntityManager.TryGetComponent(comp.OwnerUid, out SharedAppearanceComponent? appearanceComponent))
+                            if (!EntityManager.TryGetComponent(comp.OwnerUid, out AppearanceComponent? appearanceComponent))
                                 continue;
 
                             comp.Firing = true;
@@ -426,7 +426,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
                 foreach (var comp in component.LinearThrusters[index])
                 {
-                    if (!EntityManager.TryGetComponent(comp.OwnerUid, out SharedAppearanceComponent? appearanceComponent))
+                    if (!EntityManager.TryGetComponent(comp.OwnerUid, out AppearanceComponent? appearanceComponent))
                         continue;
 
                     comp.Firing = true;
@@ -451,7 +451,7 @@ namespace Content.Server.Shuttles.EntitySystems
                     case ShuttleMode.Cruise:
                         foreach (var comp in component.AngularThrusters)
                         {
-                            if (!EntityManager.TryGetComponent(comp.OwnerUid, out SharedAppearanceComponent? appearanceComponent))
+                            if (!EntityManager.TryGetComponent(comp.OwnerUid, out AppearanceComponent? appearanceComponent))
                                 continue;
 
                             comp.Firing = false;
@@ -463,7 +463,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
                         foreach (var comp in component.LinearThrusters[index])
                         {
-                            if (!EntityManager.TryGetComponent(comp.OwnerUid, out SharedAppearanceComponent? appearanceComponent))
+                            if (!EntityManager.TryGetComponent(comp.OwnerUid, out AppearanceComponent? appearanceComponent))
                                 continue;
 
                             comp.Firing = false;
@@ -479,7 +479,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
                 foreach (var comp in component.LinearThrusters[index])
                 {
-                    if (!EntityManager.TryGetComponent(comp.OwnerUid, out SharedAppearanceComponent? appearanceComponent))
+                    if (!EntityManager.TryGetComponent(comp.OwnerUid, out AppearanceComponent? appearanceComponent))
                         continue;
 
                     comp.Firing = false;

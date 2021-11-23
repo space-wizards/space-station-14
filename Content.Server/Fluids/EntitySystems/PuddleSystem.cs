@@ -59,7 +59,7 @@ namespace Content.Server.Fluids.EntitySystems
         private void UpdateVisuals(EntityUid uid, PuddleComponent puddleComponent)
         {
             if (puddleComponent.Owner.Deleted || EmptyHolder(uid, puddleComponent) ||
-                !EntityManager.TryGetComponent<SharedAppearanceComponent>(uid, out var appearanceComponent))
+                !EntityManager.TryGetComponent<AppearanceComponent>(uid, out var appearanceComponent))
             {
                 return;
             }

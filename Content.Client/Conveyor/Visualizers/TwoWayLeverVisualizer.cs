@@ -1,4 +1,4 @@
-﻿using Content.Shared.MachineLinking;
+using Content.Shared.MachineLinking;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
@@ -42,7 +42,7 @@ namespace Content.Client.Conveyor.Visualizers
         {
             base.InitializeEntity(entity);
 
-            var appearance = entity.EnsureComponent<AppearanceComponent>();
+            var appearance = entity.EnsureComponent<ClientAppearanceComponent>();
             ChangeState(appearance);
         }
 
