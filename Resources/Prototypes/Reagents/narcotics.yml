@@ -1,7 +1,7 @@
 ﻿- type: reagent
-  id: Meth
-  name: meth
-  desc: Methamphetamine, more commonly know as meth, is a potent stimulant, with dangerous side-effects if too much is consumed.
+  id: Desoxyephedrine
+  name: desoxyephedrine
+  desc: Desoxyephedrine is a potent stimulant with dangerous side-effects if too much is consumed.
   physicalDesc: translucent
   color: "#FAFAFA"
   boilingPoint: 212.0 #Meth vape when?

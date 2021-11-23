@@ -235,7 +235,7 @@
     Fluorosurfactant: 5
 
 - type: reaction
-  id: Meth
+  id: Desoxyephedrine
   reactants:
     Ephedrine:
       amount: 1
