@@ -121,7 +121,7 @@ namespace Content.Server.PAI
 
             if (EntityManager.TryGetComponent<MindComponent>(uid, out var mind) && mind.HasMind)
             {
-                Verb verb = new();
+                Verb verb = new(args);
                 verb.Text = Loc.GetString("pai-system-wipe-device-verb-text");
                 verb.Act = () => {
                     if (pai.Deleted)
@@ -140,7 +140,7 @@ namespace Content.Server.PAI
             }
             else if (EntityManager.HasComponent<GhostTakeoverAvailableComponent>(uid))
             {
-                Verb verb = new();
+                Verb verb = new(args);
                 verb.Text = Loc.GetString("pai-system-stop-searching-verb-text");
                 verb.Act = () => {
                     if (pai.Deleted)

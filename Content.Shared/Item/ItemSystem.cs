@@ -22,7 +22,7 @@ namespace Content.Shared.Item
                 !component.CanPickup(args.User, popup: false))
                 return;
 
-            Verb verb = new();
+            Verb verb = new(args);
             verb.Act = () => args.Hands.TryPutInActiveHandOrAny(args.Target);
             verb.IconTexture = "/Textures/Interface/VerbIcons/pickup.svg.192dpi.png";
 

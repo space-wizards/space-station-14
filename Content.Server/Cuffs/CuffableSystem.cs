@@ -42,7 +42,7 @@ namespace Content.Server.Cuffs
             if (args.User != args.Target && !args.CanInteract)
                 return;
 
-            Verb verb = new();
+            Verb verb = new(args);
             verb.Act = () => component.TryUncuff(args.User);
             verb.Text = Loc.GetString("uncuff-verb-get-data-text");
             //TODO VERB ICON add uncuffing symbol? may re-use the alert symbol showing that you are currently cuffed?

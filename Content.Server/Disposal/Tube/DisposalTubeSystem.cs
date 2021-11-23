@@ -38,7 +38,7 @@ namespace Content.Server.Disposal.Tube
                 return;
             var player = actor.PlayerSession;
 
-            Verb verb = new();
+            Verb verb = new(args);
             verb.Text = Loc.GetString("configure-verb-get-data-text");
             verb.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png";
             verb.Act = () => component.OpenUserInterface(actor);
@@ -54,7 +54,7 @@ namespace Content.Server.Disposal.Tube
                 return;
             var player = actor.PlayerSession;
 
-            Verb verb = new();
+            Verb verb = new(args);
             verb.Text = Loc.GetString("configure-verb-get-data-text");
             verb.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png";
             verb.Act = () => component.OpenUserInterface(actor);

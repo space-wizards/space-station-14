@@ -28,7 +28,7 @@ namespace Content.Client.Verbs
             // View variables verbs
             if (_clientConGroupController.CanViewVar())
             {
-                Verb verb = new();
+                Verb verb = new(args);
                 verb.Category = VerbCategory.Debug;
                 verb.Text = "View Variables";
                 verb.IconTexture = "/Textures/Interface/VerbIcons/vv.svg.192dpi.png";

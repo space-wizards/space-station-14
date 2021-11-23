@@ -36,7 +36,7 @@ namespace Content.Server.Weapon.Ranged.Barrels
             if (component.Capacity <= 1 || component.ShotsLeft == 0)
                 return;
 
-            Verb verb = new();
+            Verb verb = new(args);
             verb.Text = Loc.GetString("spin-revolver-verb-get-data-text");
             verb.IconTexture = "/Textures/Interface/VerbIcons/refresh.svg.192dpi.png";
             verb.Act = () =>
@@ -54,7 +54,7 @@ namespace Content.Server.Weapon.Ranged.Barrels
                 !args.CanInteract)
                 return;
 
-            Verb verb = new();
+            Verb verb = new(args);
             verb.Text = component.BoltOpen
                 ? Loc.GetString("close-bolt-verb-get-data-text")
                 : Loc.GetString("open-bolt-verb-get-data-text");
@@ -74,7 +74,7 @@ namespace Content.Server.Weapon.Ranged.Barrels
                 !_actionBlockerSystem.CanPickup(args.User.Uid))
                 return;
 
-            Verb verb = new();
+            Verb verb = new(args);
             verb.Text = component.PowerCell.Owner.Name;
             verb.Category = VerbCategory.Eject;
             verb.Act = () => component.TryEjectCell(args.User);
@@ -91,7 +91,7 @@ namespace Content.Server.Weapon.Ranged.Barrels
                 !_actionBlockerSystem.CanDrop(args.User.Uid))
                 return;
 
-            Verb verb = new();
+            Verb verb = new(args);
             verb.Text = args.Using.Name;
             verb.Category = VerbCategory.Insert;
             verb.Act = () => component.TryInsertPowerCell(args.Using);
@@ -110,7 +110,7 @@ namespace Content.Server.Weapon.Ranged.Barrels
             if (component.MagNeedsOpenBolt && !component.BoltOpen)
                 return;
 
-            Verb verb = new();
+            Verb verb = new(args);
             verb.Text = component.MagazineContainer.ContainedEntity!.Name;
             verb.Category = VerbCategory.Eject;
             verb.Act = () => component.RemoveMagazine(args.User);
@@ -125,7 +125,7 @@ namespace Content.Server.Weapon.Ranged.Barrels
                 return;
 
             // Toggle bolt verb
-            Verb toggleBolt = new();
+            Verb toggleBolt = new(args);
             toggleBolt.Text = component.BoltOpen
                 ? Loc.GetString("close-bolt-verb-get-data-text")
                 : Loc.GetString("open-bolt-verb-get-data-text");
@@ -139,7 +139,7 @@ namespace Content.Server.Weapon.Ranged.Barrels
                 return;
 
             // Insert mag verb
-            Verb insert = new();
+            Verb insert = new(args);
             insert.Text = args.Using.Name;
             insert.Category = VerbCategory.Insert;
             insert.Act = () => component.InsertMagazine(args.User, args.Using);

@@ -34,7 +34,7 @@ namespace Content.Server.PowerCell
                 !_actionBlockerSystem.CanPickup(args.User.Uid))
                 return;
 
-            Verb verb = new();
+            Verb verb = new(args);
             verb.Text = component.Cell!.Name;
             verb.Category = VerbCategory.Eject;
             verb.Act = () => component.EjectCell(args.User);
@@ -51,7 +51,7 @@ namespace Content.Server.PowerCell
                 !_actionBlockerSystem.CanDrop(args.User.Uid))
                 return;
 
-            Verb verb = new();
+            Verb verb = new(args);
             verb.Text = args.Using.Name;
             verb.Category = VerbCategory.Insert;
             verb.Act = () => component.InsertCell(args.Using);

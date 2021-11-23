@@ -22,7 +22,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition
             if (component.AmmoLeft == 0)
                 return;
 
-            Verb verb = new();
+            Verb verb = new(args);
             verb.Text = Loc.GetString("dump-vert-get-data-text");
             verb.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
             verb.Act = () => component.EjectContents(10);

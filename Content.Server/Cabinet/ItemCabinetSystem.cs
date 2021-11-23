@@ -69,7 +69,7 @@ namespace Content.Server.Cabinet
                 return;
 
             // Toggle open verb
-            Verb toggleVerb = new();
+            Verb toggleVerb = new(args);
             toggleVerb.Act = () => ToggleItemCabinet(uid, cabinet);
             if (cabinet.Opened)
             {

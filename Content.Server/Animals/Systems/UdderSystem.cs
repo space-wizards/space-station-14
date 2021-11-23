@@ -126,7 +126,7 @@ namespace Content.Server.Animals.Systems
                  !args.Using.HasComponent<RefillableSolutionComponent>())
                 return;
 
-            Verb verb = new();
+            Verb verb = new(args);
             verb.Act = () =>
             {
                 AttemptMilk(uid, args.User.Uid, args.Using.Uid, component);

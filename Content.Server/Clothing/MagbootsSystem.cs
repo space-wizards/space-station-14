@@ -28,7 +28,7 @@ namespace Content.Server.Clothing
             if (args.User == null || !args.CanAccess || !args.CanInteract)
                 return;
 
-            Verb verb = new();
+            Verb verb = new(args);
             verb.Text = Loc.GetString("toggle-magboots-verb-get-data-text");
             verb.Act = () => component.On = !component.On;
             // TODO VERB ICON add toggle icon? maybe a computer on/off symbol?

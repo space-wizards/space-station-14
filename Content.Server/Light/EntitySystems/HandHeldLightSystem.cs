@@ -53,7 +53,7 @@ namespace Content.Server.Light.EntitySystems
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            Verb verb = new();
+            Verb verb = new(args);
             verb.Text = Loc.GetString("verb-common-toggle-light");
             verb.IconTexture = "/Textures/Interface/VerbIcons/light.svg.192dpi.png";
             verb.Act = component.Activated

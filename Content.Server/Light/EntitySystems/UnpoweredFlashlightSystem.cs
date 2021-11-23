@@ -25,7 +25,7 @@ namespace Content.Server.Light.EntitySystems
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            Verb verb = new();
+            Verb verb = new(args);
             verb.Text = Loc.GetString("toggle-flashlight-verb-get-data-text");
             verb.IconTexture = "/Textures/Interface/VerbIcons/light.svg.192dpi.png";
             verb.Act = () => ToggleLight(component);
