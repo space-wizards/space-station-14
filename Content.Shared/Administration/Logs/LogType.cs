@@ -15,6 +15,7 @@ public enum LogType
     Verb = 19,
     ShuttleCalled = 8,
     ShuttleRecalled = 9,
+    ExplosiveDepressurization = 10,
     ChemicalReaction = 17,
     ReagentEffect = 18,
 }
