@@ -23,7 +23,7 @@ namespace Content.Server.Chemistry.ReagentEffects.StatusEffects
         [DataField("time")]
         public float Time = 2.0f;
 
-        public override void Metabolize(ReagentEffectArgs args)
+        public override void Effect(ReagentEffectArgs args)
         {
             args.EntityManager.EntitySysManager.GetEntitySystem<SharedJitteringSystem>()
                 .DoJitter(args.SolutionEntity, TimeSpan.FromSeconds(Time), Amplitude, Frequency);

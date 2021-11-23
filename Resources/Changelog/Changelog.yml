@@ -1,126 +1,4 @@
 Entries:
-- author: ike709
-  changes:
-  - {message: Completely redid the HUD inventory., type: Tweak}
-  - {message: 'Added an on-HUD inventory, using the same hotkey.', type: Add}
-  - {message: Nuked the inventory popup., type: Remove}
-  - {message: Replaced the inventory slot icons and the disarm icon., type: Tweak}
-  - {message: 'Combat mode is now an action, rather than its own button.', type: Tweak}
-  - {message: 'The default actions (in order) are now: Combat Mode, Disarm, Scream.',
-    type: Tweak}
-  id: 119
-  time: '2021-03-26T15:23:12.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Bullets now collide with people again, type: Fix}
-  id: 120
-  time: '2021-03-27T03:23:20.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Storage window now open in center of screen, type: Tweak}
-  id: 121
-  time: '2021-03-27T08:01:12.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Character UI open in center instead of top left, type: Tweak}
-  id: 122
-  time: '2021-03-28T02:40:23.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: 'More things break, anchor, move and collide properly', type: Add}
-  - {message: 'gas canisters shouldn''t yeet you anymore, and girders should be fixed',
-    type: Tweak}
-  id: 123
-  time: '2021-03-28T06:00:37.0000000+00:00'
-- author: BulletGrade
-  changes:
-  - {message: Made magazine names more specific, type: Tweak}
-  id: 124
-  time: '2021-03-28T06:06:20.0000000+00:00'
-- author: PJB3005
-  changes:
-  - {message: Reworked how hair styles are stored. You will have to select your hair
-      styles again or live as a baldie., type: Tweak}
-  - {message: SKREEEEEEEEEEEEEEEE, type: Add}
-  id: 125
-  time: '2021-03-28T06:26:32.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Remaps gas cans on saltern and removes signs on top of windows, type: Tweak}
-  id: 126
-  time: '2021-03-28T08:36:40.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fixes bug where plasma fires wouldn't spread properly under certain
-      conditions., type: Fix}
-  id: 127
-  time: '2021-03-28T12:29:17.658735+00:00'
-- author: SweptWasTaken
-  changes:
-  - {message: Hopefully fixed all physics for canister and plants, type: Fix}
-  - {message: Replaced tool storage doors with unlocked glass ones, type: Tweak}
-  id: 128
-  time: '2021-03-29T21:50:33.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Removes InteractionOutlines for puddles, type: Tweak}
-  id: 129
-  time: '2021-03-30T03:54:36.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Add inertia back in to physics., type: Add}
-  - {message: Items can freely rotate., type: Add}
-  id: 130
-  time: '2021-03-30T10:43:03.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix item actions rotating on your bar, type: Fix}
-  id: 131
-  time: '2021-03-31T10:10:56.0000000+00:00'
-- author: SweptWasTaken
-  changes:
-  - {message: Uplink now has correct mags for clarissa, type: Fix}
-  id: 132
-  time: '2021-03-31T10:11:12.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: NEW RULE - NO USING ALT ACCOUNTS ON THE SAME SERVER, type: Add}
-  id: 133
-  time: '2021-03-31T12:10:16.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Client no longer has access to some vision debug commands, type: Tweak}
-  id: 134
-  time: '2021-03-31T13:24:19.0000000+00:00'
-- author: NIXC
-  changes:
-  - {message: Ownerless ID's now show in PDA (Captain's Spare), type: Add}
-  id: 135
-  time: '2021-03-31T13:29:57.0000000+00:00'
-- author: Acruid
-  changes:
-  - {message: Fixed the client crashing after restarting the round, type: Fix}
-  id: 136
-  time: '2021-03-31T20:06:31.469316+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Ghosts are now deleted correctly, type: Fix}
-  id: 137
-  time: '2021-03-31T21:17:22.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Pulling collision disabled again, type: Tweak}
-  id: 138
-  time: '2021-04-01T03:32:13.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: The technology recipes actually unlock recipes for the protolathe!,
-    type: Add}
-  - {message: Some things can no longer be built in the autolathe, type: Tweak}
-  - {message: Nerfs point gen to 100 (REMEMBER TO PRESS SYNC TO GET YOUR POINTS ON
-      CONSOLE), type: Tweak}
-  id: 139
-  time: '2021-04-01T07:04:18.0000000+00:00'
 - author: ShadowCommander
   changes:
   - {message: Added inflatable walls. Engineers can use them as temporary barriers
@@ -2847,3 +2725,131 @@ Entries:
   - {message: Shuttles now require thrust., type: Add}
   id: 620
   time: '2021-11-21T06:09:49.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Reaction effects (potas/water, smoke, foam) have been refactored slightly,
+      so report any bugs you find with them.', type: Tweak}
+  id: 621
+  time: '2021-11-21T07:35:02.0000000+00:00'
+- author: FoLoKe
+  changes:
+  - {message: Added "eat" action for food., type: Add}
+  - {message: Fixed soup eating with a knife or fork., type: Fix}
+  id: 622
+  time: '2021-11-21T07:35:10.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Opening a docked airlock no longer depressurizes the room/shuttle.,
+    type: Fix}
+  id: 623
+  time: '2021-11-21T12:17:31.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: It is clearer which side of a docking airlock that something should
+      dock to., type: Fix}
+  id: 624
+  time: '2021-11-21T13:26:19.0000000+00:00'
+- author: xRiriq
+  changes:
+  - {message: altered names of command clothing and hardsuits to be consistent, type: Fix}
+  id: 625
+  time: '2021-11-21T20:14:39.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: You can no longer inspecting your surroundings using the examine popup
+      or context menu while incapacitated, type: Fix}
+  id: 626
+  time: '2021-11-21T20:40:09.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Livestock crates can no longer be welded shut. You can't weld wood.,
+    type: Tweak}
+  id: 627
+  time: '2021-11-22T02:33:45.0000000+00:00'
+- author: moony
+  changes:
+  - {message: 'Security, Captain, Head of Personnel, Chief Engineer, Chief Medial
+      Officer, and the Research Director are no longer capable of being antagonists
+      due to expanded NT screening programs. You can now trust your leadership!',
+    type: Add}
+  id: 628
+  time: '2021-11-22T02:33:51.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Foam and smoke now properly carry reagents, and are colored by their
+      reagents.', type: Tweak}
+  id: 629
+  time: '2021-11-22T08:40:14.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Chemicals metabolizing in the body now last twice as long, meaning
+      most medicines and poisons will have a greater effect over a longer timespan.',
+    type: Tweak}
+  id: 630
+  time: '2021-11-22T08:45:21.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'People sprayed/coming into contact with any alcoholic drink can now
+      be lit on fire, rather than just ethanol.', type: Tweak}
+  id: 631
+  time: '2021-11-22T09:17:35.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Admin logs., type: Add}
+  id: 632
+  time: '2021-11-22T17:49:26.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: It is no longer possible to start pulling people while in cuffs., type: Fix}
+  id: 633
+  time: '2021-11-22T19:31:12.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Admins no longer have to turn events back on every time the server restarts,
+    type: Add}
+  id: 634
+  time: '2021-11-22T22:33:30.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Announcements from Central Command are now properly serenaded., type: Fix}
+  id: 635
+  time: '2021-11-22T22:34:48.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: You are no longer interrupted by damage during prying a firelock or
+      airlock., type: Tweak}
+  id: 636
+  time: '2021-11-23T00:34:57.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Added carpetium, a chemical that creates carpets whenever it touches
+      a tile either through spills, sprays, or foam. It''s created using Space Drugs
+      and Fiber.', type: Add}
+  - {message: You can now grind up jumpsuits and shoes into Fiber. TOTALLY unrelated
+      to the last changelog entry, type: Add}
+  id: 637
+  time: '2021-11-23T01:01:51.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Removed meth., type: Remove}
+  - {message: Added desoxyephedrine., type: Add}
+  id: 638
+  time: '2021-11-23T04:39:59.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Thrusters now have examine text, type: Add}
+  id: 639
+  time: '2021-11-23T06:44:08.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Admins are now fully knowledgeable of every potassium/water bomb you
+      make., type: Add}
+  id: 640
+  time: '2021-11-23T06:51:43.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Added epinephrine, an emergency medical chemical that reduces stun
+      times slightly and heals people that are in critical health. Everyone starts
+      with a medipen containing it in their survival box--beware of overdoses.', type: Add}
+  id: 641
+  time: '2021-11-23T06:51:52.0000000+00:00'

@@ -1,3 +1,5 @@
+using Content.Server.Atmos.Components;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Doors.Components;
 using Content.Server.Power.Components;
 using Content.Server.Shuttles.Components;
@@ -21,6 +23,7 @@ namespace Content.Server.Shuttles.EntitySystems
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly SharedBroadphaseSystem _broadphaseSystem = default!;
         [Dependency] private readonly SharedJointSystem _jointSystem = default!;
+        [Dependency] private readonly AirtightSystem _airtightSystem = default!;
 
         private const string DockingFixture = "docking";
         private const string DockingJoint = "docking";
@@ -346,11 +349,13 @@ namespace Content.Server.Shuttles.EntitySystems
 
             if (EntityManager.TryGetComponent(dockA.OwnerUid, out ServerDoorComponent? doorA))
             {
+                doorA.ChangeAirtight = false;
                 doorA.Open();
             }
 
             if (EntityManager.TryGetComponent(dockB.OwnerUid, out ServerDoorComponent? doorB))
             {
+                doorB.ChangeAirtight = false;
                 doorB.Open();
             }
 
@@ -425,11 +430,13 @@ namespace Content.Server.Shuttles.EntitySystems
 
             if (EntityManager.TryGetComponent(dock.OwnerUid, out ServerDoorComponent? doorA))
             {
+                doorA.ChangeAirtight = true;
                 doorA.Close();
             }
 
             if (EntityManager.TryGetComponent(dock.DockedWith.OwnerUid, out ServerDoorComponent? doorB))
             {
+                doorB.ChangeAirtight = true;
                 doorB.Close();
             }
 

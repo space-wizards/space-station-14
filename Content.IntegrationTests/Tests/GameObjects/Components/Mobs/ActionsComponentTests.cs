@@ -70,8 +70,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
 
             await server.WaitAssertion(() =>
             {
-                var player = serverPlayerManager.GetAllPlayers().Single();
-                var playerEnt = player.AttachedEntity;
+                var playerEnt = serverPlayerManager.Sessions.Single().AttachedEntity;
                 var actionsComponent = playerEnt!.GetComponent<ServerActionsComponent>();
 
                 // player should begin with their innate actions granted
@@ -153,8 +152,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             // now revoke the action and check that the client sees it as revoked
             await server.WaitAssertion(() =>
             {
-                var player = serverPlayerManager.GetAllPlayers().Single();
-                var playerEnt = player.AttachedEntity;
+                var playerEnt = serverPlayerManager.Sessions.Single().AttachedEntity;
                 var actionsComponent = playerEnt!.GetComponent<ServerActionsComponent>();
                 actionsComponent.Revoke(ActionType.DebugInstant);
             });
@@ -246,7 +244,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
 
             await server.WaitAssertion(() =>
             {
-                serverPlayerEnt = serverPlayerManager.GetAllPlayers().Single().AttachedEntity;
+                serverPlayerEnt = serverPlayerManager.Sessions.Single().AttachedEntity;
                 serverActionsComponent = serverPlayerEnt!.GetComponent<ServerActionsComponent>();
 
                 // spawn and give them an item that has actions

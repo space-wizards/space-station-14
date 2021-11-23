@@ -14,12 +14,12 @@ namespace Content.Server.Chemistry.ReagentEffects
     [UsedImplicitly]
     public class FlammableReaction : ReagentEffect
     {
-        public override void Metabolize(ReagentEffectArgs args)
+        public override void Effect(ReagentEffectArgs args)
         {
             if (!args.EntityManager.TryGetComponent(args.SolutionEntity, out FlammableComponent? flammable)) return;
 
-            EntitySystem.Get<FlammableSystem>().AdjustFireStacks(args.SolutionEntity, args.Metabolizing.Float() / 5f, flammable);
-            args.Source?.RemoveReagent(args.Reagent.ID, args.Metabolizing);
+            EntitySystem.Get<FlammableSystem>().AdjustFireStacks(args.SolutionEntity, args.Quantity.Float() / 5f, flammable);
+            args.Source?.RemoveReagent(args.Reagent.ID, args.Quantity);
         }
     }
 }

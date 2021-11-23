@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Content.Server.Chat.Managers;
 using Content.Shared.CCVar;
@@ -58,7 +60,7 @@ namespace Content.Server.GameTicking.Rules
                 return;
 
             IPlayerSession? winner = null;
-            foreach (var playerSession in _playerManager.GetAllPlayers())
+            foreach (var playerSession in _playerManager.ServerSessions)
             {
                 var playerEntity = playerSession.AttachedEntity;
                 if (playerEntity == null

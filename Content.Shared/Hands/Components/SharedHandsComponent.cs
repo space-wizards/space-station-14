@@ -100,7 +100,7 @@ namespace Content.Shared.Hands.Components
 
         public void UpdateHandVisualizer()
         {
-            if (!Owner.TryGetComponent(out SharedAppearanceComponent? appearance))
+            if (!Owner.TryGetComponent(out AppearanceComponent? appearance))
                 return;
 
             var hands = new List<HandVisualState>();

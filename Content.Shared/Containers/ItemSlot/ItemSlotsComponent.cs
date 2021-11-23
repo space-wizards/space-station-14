@@ -23,9 +23,27 @@ namespace Content.Shared.Containers.ItemSlots
     {
         public override string Name => "ItemSlots";
 
-        [ViewVariables]
-        [DataField("slots")]
-        public Dictionary<string, ItemSlot> Slots = new();
+        /// <summary>
+        ///     The dictionary that stores all of the item slots whose interactions will be managed by the <see
+        ///     cref="ItemSlotsSystem"/>.
+        /// </summary>
+        [DataField("slots", readOnly:true)]
+        public readonly Dictionary<string, ItemSlot> Slots = new();
+
+        // There are two ways to use item slots:
+        //
+        // #1 - Give your component an ItemSlot datafield, and add/remove the item slot through the ItemSlotsSystem on
+        // component init/remove.
+        //
+        // #2 - Give your component a key string datafield, and make sure that every entity with that component also has
+        // an ItemSlots component with a matching key. Then use ItemSlots system to get the slot with this key whenever
+        // you need it, or just get a reference to the slot on init and store it. This is how generic entity containers
+        // are usually used.
+        //
+        // In order to avoid #1 leading to duplicate slots when saving a map, the Slots dictionary is a read-only
+        // datafield. This means that if your system/component dynamically changes the item slot (e.g., updating
+        // whitelist or whatever), you should use #1. Alternatively: split the Slots dictionary here into two: one
+        // datafield, one that is actually used by the ItemSlotsSystem for keeping track of slots.
     }
 
     [Serializable, NetSerializable]

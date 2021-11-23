@@ -20,7 +20,7 @@ namespace Content.Shared.Storage.EntitySystems
         private void CounterEntityInserted(EntityUid uid, ItemCounterComponent itemCounter,
             EntInsertedIntoContainerMessage args)
         {
-            if (!itemCounter.Owner.TryGetComponent(out SharedAppearanceComponent? appearanceComponent)) return;
+            if (!itemCounter.Owner.TryGetComponent(out AppearanceComponent? appearanceComponent)) return;
             
             var count = GetCount(args, itemCounter);
             if (count == null)
@@ -35,7 +35,7 @@ namespace Content.Shared.Storage.EntitySystems
         private void CounterEntityRemoved(EntityUid uid, ItemCounterComponent itemCounter,
             EntRemovedFromContainerMessage args)
         {
-            if (!itemCounter.Owner.TryGetComponent(out SharedAppearanceComponent? appearanceComponent)) return;
+            if (!itemCounter.Owner.TryGetComponent(out AppearanceComponent? appearanceComponent)) return;
             
             var count = GetCount(args, itemCounter);
             if (count == null)

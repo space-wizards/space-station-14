@@ -36,7 +36,7 @@ namespace Content.Server.Labels
         {
             _itemSlotsSystem.AddItemSlot(uid, component.Name, component.LabelSlot);
 
-            if (!EntityManager.TryGetComponent(uid, out SharedAppearanceComponent appearance))
+            if (!EntityManager.TryGetComponent(uid, out AppearanceComponent appearance))
                 return;
 
             appearance.SetData(PaperLabelVisuals.HasLabel, false);
@@ -92,7 +92,7 @@ namespace Content.Server.Labels
             if (args.Container.ID != label.LabelSlot.ID)
                 return;
 
-            if (!EntityManager.TryGetComponent(uid, out SharedAppearanceComponent appearance))
+            if (!EntityManager.TryGetComponent(uid, out AppearanceComponent appearance))
                 return;
 
             appearance.SetData(PaperLabelVisuals.HasLabel, label.LabelSlot.HasItem);

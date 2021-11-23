@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
@@ -6,6 +7,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Shared.Chemistry.Reaction
 {
@@ -16,6 +18,8 @@ namespace Content.Shared.Chemistry.Reaction
         private const int MaxReactionIterations = 20;
 
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] protected readonly SharedAdminLogSystem _logSystem = default!;
 
         public override void Initialize()
         {
@@ -58,6 +62,9 @@ namespace Content.Shared.Chemistry.Reaction
         /// </summary>
         private Solution PerformReaction(Solution solution, EntityUid ownerUid, ReactionPrototype reaction, FixedPoint2 unitReactions)
         {
+            // We do this so that ReagentEffect can have something to work with, even if it's
+            // a little meaningless.
+            var randomReagent = _prototypeManager.Index<ReagentPrototype>(_random.Pick(reaction.Reactants).Key);
             //Remove reactants
             foreach (var reactant in reaction.Reactants)
             {
@@ -76,16 +83,26 @@ namespace Content.Shared.Chemistry.Reaction
             }
 
             // Trigger reaction effects
-            OnReaction(solution, reaction, ownerUid, unitReactions);
+            OnReaction(solution, reaction, randomReagent, ownerUid, unitReactions);
 
             return products;
         }
 
-        protected virtual void OnReaction(Solution solution, ReactionPrototype reaction, EntityUid ownerUid, FixedPoint2 unitReactions)
+        protected virtual void OnReaction(Solution solution, ReactionPrototype reaction, ReagentPrototype randomReagent, EntityUid ownerUid, FixedPoint2 unitReactions)
         {
+            var args = new ReagentEffectArgs(ownerUid, null, solution,
+                randomReagent,
+                unitReactions, EntityManager, null);
+
             foreach (var effect in reaction.Effects)
             {
-                effect.React(solution, ownerUid, unitReactions.Double(), EntityManager);
+                if (!effect.ShouldApply(args))
+                    continue;
+
+                var entity = EntityManager.GetEntity(args.SolutionEntity);
+                _logSystem.Add(LogType.ReagentEffect, LogImpact.Low,
+                    $"Reaction effect {effect.GetType().Name} of reaction ${reaction.ID:reaction} applied on entity {entity} at {entity.Transform.Coordinates}");
+                effect.Effect(args);
             }
         }
 

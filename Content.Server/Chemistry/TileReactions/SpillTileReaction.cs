@@ -24,7 +24,7 @@ namespace Content.Server.Chemistry.TileReactions
             if (reactVolume < 5) return FixedPoint2.Zero;
 
             // TODO Make this not puddle smear.
-            var puddle = tile.SpillAt(new Solution(reagent.ID, reactVolume), "PuddleSmear", _overflow, false);
+            var puddle = tile.SpillAt(new Solution(reagent.ID, reactVolume), "PuddleSmear", _overflow, false, true);
 
             if (puddle != null)
             {

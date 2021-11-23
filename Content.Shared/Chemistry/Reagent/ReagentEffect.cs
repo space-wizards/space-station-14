@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
@@ -30,7 +31,7 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField("probability")]
         public float Probability = 1.0f;
 
-        public abstract void Metabolize(ReagentEffectArgs args);
+        public abstract void Effect(ReagentEffectArgs args);
     }
 
     public static class ReagentEffectExt
@@ -40,11 +41,6 @@ namespace Content.Shared.Chemistry.Reagent
         {
             if (random == null)
                 random = IoCManager.Resolve<IRobustRandom>();
-
-
-            // Make sure we still have enough reagent to go...
-            if (args.Source != null && !args.Source.ContainsReagent(args.Reagent.ID))
-                return false;
 
             if (effect.Probability < 1.0f && !random.Prob(effect.Probability))
                 return false;
@@ -74,7 +70,7 @@ namespace Content.Shared.Chemistry.Reagent
         EntityUid? OrganEntity,
         Solution? Source,
         ReagentPrototype Reagent,
-        FixedPoint2 Metabolizing,
+        FixedPoint2 Quantity,
         IEntityManager EntityManager,
         ReactionMethod? Method
     );

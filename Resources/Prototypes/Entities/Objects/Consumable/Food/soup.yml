@@ -5,6 +5,7 @@
   components:
   - type: Food
     trash: FoodBowlBig
+    utensil: Spoon
   - type: SolutionContainerManager
     solutions:
       food:

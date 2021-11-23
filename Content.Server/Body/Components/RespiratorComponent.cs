@@ -320,7 +320,7 @@ namespace Content.Server.Body.Components
                 alertsComponent.ShowAlert(AlertType.LowOxygen);
             }
 
-            EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner.Uid, Damage, true);
+            EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner.Uid, Damage, true, false);
         }
 
         private void StopSuffocation()
