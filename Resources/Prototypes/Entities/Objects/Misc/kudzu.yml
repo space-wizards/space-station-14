@@ -1,0 +1,43 @@
+- type: entity
+  id: Kudzu
+  name: Kudzu
+  description: A rapidly growing, dangerous plant. WHY ARE YOU STOPPING TO LOOK AT IT?!
+  placement:
+    mode: SnapgridCenter
+    snap:
+      - Wall
+  components:
+    - type: Sprite
+      sprite: Structures/Walls/asteroid_rock.rsi
+      state: 0
+    - type: Clickable
+    - type: Transform
+      anchored: true
+    - type: Physics
+      fixtures:
+      - hard: false
+        mass: 7
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer:
+          - MobImpassable
+    - type: Damageable
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 5
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - type: Temperature
+      coldDamage:
+        types:
+          Cold: 5 #per second, scales with temperature & other constants
+      heatDamage:
+        types:
+          Heat: 5 #per second, scales with temperature & other constants
+    - type: AtmosExposed
+    - type: Spreader
+      growthResult: Kudzu

@@ -1,4 +1,5 @@
 using Content.Server.Atmos.Components;
+using Content.Server.Growth;
 using Content.Shared.Atmos;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -13,6 +14,7 @@ namespace Content.Server.Atmos.EntitySystems
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+        [Dependency] private readonly SpreaderSystem _spreaderSystem = default!;
 
         public override void Initialize()
         {
@@ -41,6 +43,7 @@ namespace Content.Server.Atmos.EntitySystems
         private void OnAirtightShutdown(EntityUid uid, AirtightComponent airtight, ComponentShutdown args)
         {
             SetAirblocked(airtight, false);
+            _spreaderSystem.UpdateNearbySpreaders(uid, airtight);
 
             InvalidatePosition(airtight.LastPosition.Item1, airtight.LastPosition.Item2, airtight.FixVacuum);
         }
@@ -69,12 +72,14 @@ namespace Content.Server.Atmos.EntitySystems
 
             airtight.CurrentAirBlockedDirection = (int) Rotate((AtmosDirection)airtight.InitialAirBlockedDirection, ev.NewRotation);
             UpdatePosition(airtight);
+            _spreaderSystem.UpdateNearbySpreaders(uid, airtight);
         }
 
         public void SetAirblocked(AirtightComponent airtight, bool airblocked)
         {
             airtight.AirBlocked = airblocked;
             UpdatePosition(airtight);
+            _spreaderSystem.UpdateNearbySpreaders(airtight.OwnerUid, airtight);
         }
 
         public void UpdatePosition(AirtightComponent airtight)

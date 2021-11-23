@@ -45,7 +45,7 @@ namespace Content.Server.Temperature.Components
         {
             get
             {
-                if (Owner.TryGetComponent<IPhysBody>(out var physics))
+                if (Owner.TryGetComponent<IPhysBody>(out var physics) && physics.Mass != 0)
                 {
                     return SpecificHeat * physics.Mass;
                 }
