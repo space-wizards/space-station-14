@@ -1,4 +1,0 @@
-﻿author: mirrorcult
-changes:
-- type: Fix # One of the following: Add, Remove, Tweak, Fix
-  message: Smoke spam no longer crashes the server.
