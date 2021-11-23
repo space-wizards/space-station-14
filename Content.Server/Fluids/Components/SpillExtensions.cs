@@ -129,12 +129,12 @@ namespace Content.Server.Fluids.Components
         {
             if (solution.TotalVolume <= 0) return null;
 
+            // If space return early, let that spill go out into the void
+            if (tileRef.Tile.IsEmpty) return null;
+
             var mapManager = IoCManager.Resolve<IMapManager>();
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             var serverEntityManager = IoCManager.Resolve<IServerEntityManager>();
-
-            // If space return early, let that spill go out into the void
-            if (tileRef.Tile.IsEmpty) return null;
 
             var gridId = tileRef.GridIndex;
             if (!mapManager.TryGetGrid(gridId, out var mapGrid)) return null; // Let's not spill to invalid grids.
@@ -155,7 +155,7 @@ namespace Content.Server.Fluids.Components
 
             // Get normalized co-ordinate for spill location and spill it in the centre
             // TODO: Does SnapGrid or something else already do this?
-            var spillGridCoords = mapGrid.GridTileToLocal(tileRef.GridIndices);
+            var spillGridCoords = mapGrid.GridTileToWorld(tileRef.GridIndices);
 
             PuddleComponent? puddle = null;
             var spilt = false;
