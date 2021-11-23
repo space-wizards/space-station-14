@@ -177,7 +177,6 @@ namespace Content.Server.Fluids.Components
                 }
             }
 
-            PuddleComponent? puddle = null;
             var puddleSystem = EntitySystem.Get<PuddleSystem>();
 
             if (combine)
@@ -190,8 +189,7 @@ namespace Content.Server.Fluids.Components
 
                     if (!puddleSystem.TryAddSolution(puddleComponent.Owner.Uid, solution, sound)) continue;
 
-                    puddle = puddleComponent;
-                    return puddle;
+                    return puddleComponent;
                 }
             }
 
