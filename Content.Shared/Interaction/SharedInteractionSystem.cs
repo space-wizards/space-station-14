@@ -530,7 +530,7 @@ namespace Content.Shared.Interaction
                 if (verb.Disabled)
                     continue;
 
-                _verbSystem.ExecuteVerb(verb);
+                _verbSystem.ExecuteVerb(verb, user.Uid, target.Uid);
                 break;
             }
         }

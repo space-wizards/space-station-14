@@ -134,20 +134,6 @@ namespace Content.Shared.Verbs
         /// </remarks>
         public LogImpact Impact = LogImpact.Low;
 
-        // for admin logging
-        public EntityUid User;
-        public EntityUid Target;
-        public EntityUid? Using;
-        public bool Forced;
-
-        public Verb (GetVerbsEvent args)
-        {
-            User = args.UserUid;
-            Target = args.TargetUid;
-            Using = args.UsingUid;
-            Forced = args.Forced;
-        }
-
         /// <summary>
         ///     Compares two verbs based on their <see cref="Priority"/>, <see cref="Category"/>, <see cref="Text"/>,
         ///     and <see cref="IconTexture"/>.

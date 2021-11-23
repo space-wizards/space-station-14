@@ -206,7 +206,11 @@ namespace Content.Client.Verbs
                 return;
             }
 
-            ExecuteVerb(verb);
+            var user = _playerManager.LocalPlayer?.ControlledEntityUid;
+            if (user == null)
+                return;
+
+            ExecuteVerb(verb, user.Value, target);
 
             if (!verb.ClientExclusive)
             {

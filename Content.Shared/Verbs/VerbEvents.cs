@@ -172,16 +172,10 @@ namespace Content.Shared.Verbs
         /// </remarks>
         public IEntity? Using;
 
-        public EntityUid UserUid => User.Uid;
-        public EntityUid TargetUid => Target.Uid;
-        public EntityUid? UsingUid => Using?.Uid;
-        public bool Forced;
-
         public GetVerbsEvent(IEntity user, IEntity target, bool force=false)
         {
             User = user;
             Target = target;
-            Forced = force;
 
             CanAccess = force || (Target == User) || user.IsInSameOrParentContainer(target) &&
                 EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(user, target);

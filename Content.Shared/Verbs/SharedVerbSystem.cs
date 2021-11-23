@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Hands.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
@@ -7,7 +8,7 @@ namespace Content.Shared.Verbs
 {
     public abstract class SharedVerbSystem : EntitySystem
     {
-        [Dependency] private readonly SharedAdminLogSystem _logSystem = default!; 
+        [Dependency] private readonly SharedAdminLogSystem _logSystem = default!;
 
         /// <summary>
         ///     Raises a number of events in order to get all verbs of the given type(s) defined in local systems. This
@@ -54,21 +55,12 @@ namespace Content.Shared.Verbs
         /// <remarks>
         ///     This will try to call the action delegates and raise the local events for the given verb.
         /// </remarks>
-        public void ExecuteVerb(Verb verb)
+        public void ExecuteVerb(Verb verb, EntityUid user, EntityUid target, bool forced = false)
         {
             // first, lets log the verb. Just in case it ends up crashing the server or something.
-            var verbText = $"{verb.Category?.Text} {verb.Text}".Trim();
-            var logText = verb.Forced
-                ? $"was forced to execute the '{verbText}' verb targeting " // let's not frame people, eh?
-                : $"executed '{verbText}' verb targeting ";
+            LogVerb(verb, user, target, forced);
 
-            if (verb.Using.HasValue)
-                _logSystem.Add(LogType.Verb, verb.Impact,
-                       $"{verb.User} {logText} {verb.Target} while holding {verb.Using}");
-            else
-                _logSystem.Add(LogType.Verb, verb.Impact,
-                       $"{verb.User} {logText} {verb.Target}");
-
+            // then invoke any relevant actions
             verb.Act?.Invoke();
 
             // Maybe raise a local event
@@ -79,6 +71,33 @@ namespace Content.Shared.Verbs
                 else
                     RaiseLocalEvent(verb.ExecutionEventArgs);
             }
+        }
+
+        public void LogVerb(Verb verb, EntityUid user, EntityUid target, bool forced)
+        {
+            // first get the held item. again.
+            EntityUid? used = null;
+            if (EntityManager.TryGetComponent(user, out SharedHandsComponent? hands))
+            {
+                hands.TryGetActiveHeldEntity(out var useEntityd);
+                used = useEntityd?.Uid;
+                if (used != null && EntityManager.TryGetComponent(used.Value, out HandVirtualItemComponent? pull))
+                    used = pull.BlockingEntity;
+            }
+
+            // then prepare the basic log message body
+            var verbText = $"{verb.Category?.Text} {verb.Text}".Trim();
+            var logText = forced
+                ? $"was forced to execute the '{verbText}' verb targeting " // let's not frame people, eh?
+                : $"executed '{verbText}' verb targeting ";
+
+            // then log with entity information
+            if (used != null)
+                _logSystem.Add(LogType.Verb, verb.Impact,
+                       $"{user} {logText} {target} while holding {used}");
+            else
+                _logSystem.Add(LogType.Verb, verb.Impact,
+                       $"{user} {logText} {target}");
         }
     }
 }
