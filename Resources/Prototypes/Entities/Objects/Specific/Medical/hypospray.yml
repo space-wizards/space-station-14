@@ -27,6 +27,7 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
+    netsync: false
     layers:
     - state: medipen
       map: ["enum.SolutionContainerLayers.Fill"]
