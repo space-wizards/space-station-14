@@ -1,10 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: Added inflatable walls. Engineers can use them as temporary barriers
-      when fixing atmos breaches., type: Add}
-  id: 140
-  time: '2021-04-01T07:04:56.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix cursed locker collision, type: Fix}
@@ -2853,3 +2847,8 @@ Entries:
       with a medipen containing it in their survival box--beware of overdoses.', type: Add}
   id: 641
   time: '2021-11-23T06:51:52.0000000+00:00'
+- author: Mith-randalf
+  changes:
+  - {message: Added the warden's favourite jacket., type: Add}
+  id: 642
+  time: '2021-11-23T11:12:20.0000000+00:00'
