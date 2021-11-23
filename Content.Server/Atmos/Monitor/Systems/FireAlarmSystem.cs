@@ -24,7 +24,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                 return;
 
             if (args.User.TryGetComponent(out ActorComponent? actor)
-                && EntityManager.TryGetComponent(uid, out AtmosMonitorComponent monitor)
+                && EntityManager.TryGetComponent(uid, out AtmosMonitorComponent? monitor)
                 && EntityManager.TryGetComponent(uid, out ApcPowerReceiverComponent? power)
                 && power.Powered)
             {
