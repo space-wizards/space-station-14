@@ -116,8 +116,6 @@ namespace Content.Server.Communications
                         author = $"{id.FullName} ({CultureInfo.CurrentCulture.TextInfo.ToTitleCase(id.JobTitle ?? string.Empty)})".Trim();
                     }
 
-                    SoundSystem.Play(Filter.Broadcast(), "/Audio/Announcements/announce.ogg", AudioParams.Default.WithVolume(-2f));
-
                     message += $"\nSent by {author}";
                     _chatManager.DispatchStationAnnouncement(message, "Communications Console");
                     break;

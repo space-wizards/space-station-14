@@ -103,7 +103,8 @@ namespace Content.Server.GameTicking
                     "latejoin-arrival-announcement",
                     ("character", character.Name),
                     ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(job.Name))
-                    ), Loc.GetString("latejoin-arrival-sender"));
+                    ), Loc.GetString("latejoin-arrival-sender"),
+                    playDefaultSound: false);
             }
 
             var mob = SpawnPlayerMob(job, character, station, lateJoin);

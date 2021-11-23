@@ -116,7 +116,7 @@ namespace Content.Shared.Pulling
         // The main "start pulling" function.
         public bool TryStartPull(SharedPullerComponent puller, SharedPullableComponent pullable)
         {
-            if (puller.Pulling == pullable)
+            if (puller.Pulling == pullable.Owner)
                 return true;
 
             // Pulling a new object : Perform sanity checks.

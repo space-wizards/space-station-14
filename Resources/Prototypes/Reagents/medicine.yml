@@ -43,9 +43,9 @@
   metabolisms:
     Medicine:
       effects:
-      - !type:RemoveReagent
+      - !type:AdjustReagent
         reagent: Histamine
-        amount: 3.0
+        amount: -3.0
       - !type:GenericStatusEffect
         key: Jitter
         time: 1.0
@@ -179,6 +179,66 @@
   physicalDesc: opaque
   color: "#2d5708"
   # TODO: GenericStatusEffect remove drunkenness
+
+# this ones a doozy
+- type: reagent
+  id: Epinephrine
+  name: epinephrine
+  desc: Effective at bringing people back from a critical state. Reduces some stun times. Easy to overdose on.
+  physicalDesc: odorless
+  color: "#d2fffa"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:TotalDamage
+          # they gotta be in crit first
+          min: 100
+        - !type:ReagentThreshold
+          min: 0
+          max: 20
+        damage:
+          types:
+            Asphyxiation: -3
+            Poison: -0.5
+          groups:
+            Brute: -0.5
+            Burn: -0.5
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 20
+        damage:
+          types:
+            Asphyxiation: 1
+            Poison: 1
+      - !type:AdjustReagent
+        reagent: Lexorin
+        amount: -2
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Lexorin
+          min: 1
+        reagent: Epinephrine
+        amount: -1
+      - !type:AdjustReagent
+        probability: 0.1
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Lexorin
+          min: 1
+        reagent: Histamine
+        amount: 4
+      - !type:GenericStatusEffect
+        key: Stun
+        time: 0.25
+        type: Remove
+      - !type:GenericStatusEffect
+        key: KnockedDown
+        time: 0.25
+        type: Remove
 
 - type: reagent
   id: Hyperzine

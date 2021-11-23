@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Access.Components;
 using Content.Server.Hands.Components;
@@ -59,7 +59,7 @@ namespace Content.IntegrationTests.Tests.PDA
 
             await server.WaitAssertion(() =>
             {
-                var player = sPlayerManager.GetAllPlayers().Single().AttachedEntity;
+                var player = sPlayerManager.Sessions.Single().AttachedEntity;
 
                 Assert.NotNull(player);
 

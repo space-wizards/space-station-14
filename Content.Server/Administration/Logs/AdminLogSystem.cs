@@ -1,19 +1,14 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using Content.Server.Administration.Logs.Converters;
 using Content.Server.Database;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Events;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Prometheus;
-using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
@@ -23,7 +18,7 @@ using Robust.Shared.Reflection;
 
 namespace Content.Server.Administration.Logs;
 
-public class AdminLogSystem : SharedAdminLogSystem
+public partial class AdminLogSystem : SharedAdminLogSystem
 {
     [Dependency] private readonly IConfigurationManager _configuration = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -52,11 +47,8 @@ public class AdminLogSystem : SharedAdminLogSystem
         "admin_logs_sent",
         "Amount of logs sent to the database in a round.");
 
-    private static readonly JsonNamingPolicy NamingPolicy = JsonNamingPolicy.CamelCase;
-
     // Init only
     private ISawmill _sawmill = default!;
-    private JsonSerializerOptions _jsonOptions = default!;
 
     // CVars
     private bool _metricsEnabled;
@@ -74,19 +66,8 @@ public class AdminLogSystem : SharedAdminLogSystem
         base.Initialize();
 
         _sawmill = _logManager.GetSawmill(SawmillId);
-        _jsonOptions = new JsonSerializerOptions
-        {
-            PropertyNamingPolicy = NamingPolicy
-        };
 
-        foreach (var converter in _reflection.FindTypesWithAttribute<AdminLogConverterAttribute>())
-        {
-            var instance = _typeFactory.CreateInstance<JsonConverter>(converter);
-            _jsonOptions.Converters.Add(instance);
-        }
-
-        var converterNames = _jsonOptions.Converters.Select(converter => converter.GetType().Name);
-        _sawmill.Info($"Admin log converters found: {string.Join(" ", converterNames)}");
+        InitializeJson();
 
         _configuration.OnValueChanged(CVars.MetricsEnabled,
             value => _metricsEnabled = value, true);
@@ -169,48 +150,6 @@ public class AdminLogSystem : SharedAdminLogSystem
             QueueCapReached.Set(0);
             LogsSent.Set(0);
         }
-    }
-
-    public (JsonDocument json, List<Guid> players, List<(int id, string? name)> entities) ToJson(
-        Dictionary<string, object?> properties)
-    {
-        var entities = new List<(int id, string? name)>();
-        var players = new List<Guid>();
-        var parsed = new Dictionary<string, object?>();
-
-        foreach (var key in properties.Keys)
-        {
-            var value = properties[key];
-            var parsedKey = NamingPolicy.ConvertName(key);
-            parsed.Add(parsedKey, value);
-
-            EntityUid? entityId = properties[key] switch
-            {
-                EntityUid id => id,
-                IEntity entity => entity.Uid,
-                IPlayerSession {AttachedEntityUid: { }} session => session.AttachedEntityUid.Value,
-                IComponent component => component.OwnerUid,
-                _ => null
-            };
-
-            if (entityId is not { } uid)
-            {
-                continue;
-            }
-
-            var entityName = _entityManager.TryGetEntity(uid, out var resolvedEntity)
-                ? resolvedEntity.Name
-                : null;
-
-            entities.Add(((int) uid, entityName));
-
-            if (_entityManager.TryGetComponent(uid, out ActorComponent? actor))
-            {
-                players.Add(actor.PlayerSession.UserId.UserId);
-            }
-        }
-
-        return (JsonSerializer.SerializeToDocument(parsed, _jsonOptions), players, entities);
     }
 
     private async void Add(LogType type, LogImpact impact, string message, JsonDocument json, List<Guid> players, List<(int id, string? name)> entities)
