@@ -1,0 +1,9 @@
+﻿- type: reaction
+  id: Carpetium
+  reactants:
+    SpaceDrugs:
+      amount: 1
+    Fiber:
+      amount: 2
+  products:
+    Carpetium: 3

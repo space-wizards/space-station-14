@@ -113,7 +113,7 @@ namespace Content.Shared.Damage
         ///     This updates cached damage information, flags the component as dirty, and raises a damage changed event.
         ///     The damage changed event is used by other systems, such as damage thresholds.
         /// </remarks>
-        public void DamageChanged(DamageableComponent component, DamageSpecifier? damageDelta = null)
+        public void DamageChanged(DamageableComponent component, DamageSpecifier? damageDelta = null, bool interruptsDoAfters = true)
         {
             component.DamagePerGroup = component.Damage.GetDamagePerGroup();
             SetTotalDamage(component, component.Damage.Total);
@@ -121,7 +121,7 @@ namespace Content.Shared.Damage
 
             if (EntityManager.TryGetComponent<SharedAppearanceComponent>(component.OwnerUid, out var appearance) && damageDelta != null)
                 appearance.SetData(DamageVisualizerKeys.DamageUpdateGroups, damageDelta.GetDamagePerGroup().Keys.ToList());
-            RaiseLocalEvent(component.OwnerUid, new DamageChangedEvent(component, damageDelta), false);
+            RaiseLocalEvent(component.OwnerUid, new DamageChangedEvent(component, damageDelta, interruptsDoAfters), false);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Content.Shared.Damage
         ///     Returns a <see cref="DamageSpecifier"/> with information about the actual damage changes. This will be
         ///     null if the user had no applicable components that can take damage.
         /// </returns>
-        public DamageSpecifier? TryChangeDamage(EntityUid uid, DamageSpecifier damage, bool ignoreResistances = false)
+        public DamageSpecifier? TryChangeDamage(EntityUid uid, DamageSpecifier damage, bool ignoreResistances = false, bool interruptsDoAfters = true)
         {
             if (!EntityManager.TryGetComponent<DamageableComponent>(uid, out var damageable))
             {
@@ -185,7 +185,7 @@ namespace Content.Shared.Damage
 
             if (!delta.Empty)
             {
-                DamageChanged(damageable, delta);
+                DamageChanged(damageable, delta, interruptsDoAfters);
             }
 
             return delta;
@@ -282,7 +282,14 @@ namespace Content.Shared.Damage
         /// </summary>
         public readonly bool DamageIncreased = false;
 
-        public DamageChangedEvent(DamageableComponent damageable, DamageSpecifier? damageDelta)
+        /// <summary>
+        ///     Does this event interrupt DoAfters?
+        ///     Note: As provided in the constructor, this *does not* account for DamageIncreased.
+        ///     As written into the event, this *does* account for DamageIncreased.
+        /// </summary>
+        public readonly bool InterruptsDoAfters = false;
+
+        public DamageChangedEvent(DamageableComponent damageable, DamageSpecifier? damageDelta, bool interruptsDoAfters)
         {
             Damageable = damageable;
             DamageDelta = damageDelta;
@@ -298,6 +305,7 @@ namespace Content.Shared.Damage
                     break;
                 }
             }
+            InterruptsDoAfters = interruptsDoAfters && DamageIncreased;
         }
     }
 }

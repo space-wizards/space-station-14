@@ -1,24 +1,4 @@
 Entries:
-- author: Swept
-  changes:
-  - {message: NEW RULE - NO USING ALT ACCOUNTS ON THE SAME SERVER, type: Add}
-  id: 133
-  time: '2021-03-31T12:10:16.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Client no longer has access to some vision debug commands, type: Tweak}
-  id: 134
-  time: '2021-03-31T13:24:19.0000000+00:00'
-- author: NIXC
-  changes:
-  - {message: Ownerless ID's now show in PDA (Captain's Spare), type: Add}
-  id: 135
-  time: '2021-03-31T13:29:57.0000000+00:00'
-- author: Acruid
-  changes:
-  - {message: Fixed the client crashing after restarting the round, type: Fix}
-  id: 136
-  time: '2021-03-31T20:06:31.469316+00:00'
 - author: ShadowCommander
   changes:
   - {message: Ghosts are now deleted correctly, type: Fix}
@@ -2848,3 +2828,29 @@ Entries:
     type: Add}
   id: 634
   time: '2021-11-22T22:33:30.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Announcements from Central Command are now properly serenaded., type: Fix}
+  id: 635
+  time: '2021-11-22T22:34:48.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: You are no longer interrupted by damage during prying a firelock or
+      airlock., type: Tweak}
+  id: 636
+  time: '2021-11-23T00:34:57.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Added carpetium, a chemical that creates carpets whenever it touches
+      a tile either through spills, sprays, or foam. It''s created using Space Drugs
+      and Fiber.', type: Add}
+  - {message: You can now grind up jumpsuits and shoes into Fiber. TOTALLY unrelated
+      to the last changelog entry, type: Add}
+  id: 637
+  time: '2021-11-23T01:01:51.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Removed meth., type: Remove}
+  - {message: Added desoxyephedrine., type: Add}
+  id: 638
+  time: '2021-11-23T04:39:59.0000000+00:00'
