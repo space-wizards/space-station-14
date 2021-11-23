@@ -21,8 +21,6 @@ namespace Content.Client.Chemistry.Visualizers
         {
             base.OnChangeData(component);
 
-            if (_maxFillLevels <= 0 || _fillBaseName == null) return;
-
             if (!component.TryGetData(SolutionContainerVisuals.VisualState,
                 out SolutionContainerVisualState state)) return;
 
@@ -34,6 +32,8 @@ namespace Content.Client.Chemistry.Visualizers
 
             if (closestFillSprite > 0)
             {
+                if (_fillBaseName == null) return;
+
                 sprite.LayerSetVisible(fillLayer, true);
 
                 var stateName = _fillBaseName + closestFillSprite;

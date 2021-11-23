@@ -16,15 +16,18 @@ namespace Content.Server.Chemistry.ReagentEffects
         [DataField("solution")]
         private string _solution = "reagents";
 
-        public override void Metabolize(ReagentEffectArgs args)
+        public override void Effect(ReagentEffectArgs args)
         {
+            if (args.Reagent == null)
+                return;
+
             // TODO see if this is correct
             if (!EntitySystem.Get<SolutionContainerSystem>()
                     .TryGetSolution(args.SolutionEntity, _solution, out var solutionContainer))
                 return;
 
             if (EntitySystem.Get<SolutionContainerSystem>()
-                .TryAddReagent(args.SolutionEntity, solutionContainer, args.Reagent.ID, args.Metabolizing, out var accepted))
+                .TryAddReagent(args.SolutionEntity, solutionContainer, args.Reagent.ID, args.Quantity, out var accepted))
                 args.Source?.RemoveReagent(args.Reagent.ID, accepted);
         }
     }

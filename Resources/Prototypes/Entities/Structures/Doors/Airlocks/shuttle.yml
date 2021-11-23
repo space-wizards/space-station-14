@@ -2,6 +2,7 @@
   id: AirlockShuttle
   parent: BaseStructure
   name: airlock
+  suffix: Docking
   description: Necessary for connecting two space craft together.
   components:
   - type: Docking
@@ -66,6 +67,8 @@
   #    type: WiresBoundUserInterface
   - type: Airtight
     fixVacuum: true
+    airBlockedDirection:
+      - South
   - type: Occluder
   - type: Damageable
     damageContainer: Inorganic

@@ -1,11 +1,14 @@
-﻿using Content.Server.Nutrition.Components;
+using Content.Server.Nutrition.Components;
 using Content.Shared.Throwing;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
     public class ForcefeedOnCollideSystem : EntitySystem
     {
+        [Dependency] private readonly FoodSystem _foodSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -22,7 +25,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 return;
 
             // the 'target' isnt really the 'user' per se.. but..
-            food.TryUseFood(args.Target, args.Target);
+            _foodSystem.TryUseFood(food.OwnerUid, args.Target.Uid, args.Target.Uid);
         }
 
         private void OnLand(EntityUid uid, ForcefeedOnCollideComponent component, LandEvent args)

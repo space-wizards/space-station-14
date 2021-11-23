@@ -238,6 +238,7 @@
   - type: Food
     transferAmount: null
     eatMessage: food-swallow
+    useSound: /Audio/Items/pill.ogg
   - type: SolutionContainerManager
     solutions:
       food:

@@ -334,7 +334,7 @@ namespace Content.Shared.Chemistry.Components
 
         public void DoEntityReaction(EntityUid uid, ReactionMethod method)
         {
-            var chemistry = EntitySystem.Get<ChemistrySystem>();
+            var chemistry = EntitySystem.Get<ReactiveSystem>();
 
             foreach (var (reagentId, quantity) in Contents.ToArray())
             {

@@ -323,4 +323,13 @@
     layers:
     - state: plate-tart
     - state: cocolava
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 26
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 15
+        - ReagentId: Theobromine
+          Quantity: 2
 # Tastes like tart, dark chocolate.

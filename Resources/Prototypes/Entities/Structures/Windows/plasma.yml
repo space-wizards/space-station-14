@@ -59,6 +59,9 @@
   - type: Icon
     sprite: Structures/Windows/directional.rsi
     state: plasma_window
+  - type: Construction
+    graph: windowDirectional
+    node: plasmaWindowDirectional
   - type: Destructible
     thresholds:
     - trigger:

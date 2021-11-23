@@ -13,6 +13,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Localization;
 using Robust.Server.Player;
 using Robust.Shared.IoC;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Administration
 {
@@ -38,7 +39,12 @@ namespace Content.Server.Administration
                 return;
             }
 
-            var msg = new BwoinkTextMessage(message.ChannelId, senderSession.UserId, $"{senderSession.Name}: {message.Text}");
+            var escapedText = FormattedMessage.EscapeText(message.Text);
+
+            var bwoinkText = senderAdmin
+                ? $"[color=red]{senderSession.Name}[/color]: {escapedText}"
+                : $"{senderSession.Name}: {escapedText}";
+            var msg = new BwoinkTextMessage(message.ChannelId, senderSession.UserId, bwoinkText);
 
             LogBwoink(msg);
 

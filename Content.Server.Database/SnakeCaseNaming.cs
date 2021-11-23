@@ -37,7 +37,7 @@ namespace Content.Server.Database
 
             public override bool ShouldUseSameServiceProvider(DbContextOptionsExtensionInfo other)
             {
-                return false;
+                return other is ExtensionInfo;
             }
 
             public override void PopulateDebugInfo(IDictionary<string, string> debugInfo)
