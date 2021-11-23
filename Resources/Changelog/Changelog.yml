@@ -1,9 +1,4 @@
 Entries:
-- author: NIXC
-  changes:
-  - {message: Ownerless ID's now show in PDA (Captain's Spare), type: Add}
-  id: 135
-  time: '2021-03-31T13:29:57.0000000+00:00'
 - author: Acruid
   changes:
   - {message: Fixed the client crashing after restarting the round, type: Fix}
@@ -2849,3 +2844,12 @@ Entries:
       airlock., type: Tweak}
   id: 636
   time: '2021-11-23T00:34:57.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Added carpetium, a chemical that creates carpets whenever it touches
+      a tile either through spills, sprays, or foam. It''s created using Space Drugs
+      and Fiber.', type: Add}
+  - {message: You can now grind up jumpsuits and shoes into Fiber. TOTALLY unrelated
+      to the last changelog entry, type: Add}
+  id: 637
+  time: '2021-11-23T01:01:51.0000000+00:00'
