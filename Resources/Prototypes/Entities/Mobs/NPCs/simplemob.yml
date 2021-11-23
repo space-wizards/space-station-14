@@ -115,6 +115,7 @@
     meat: FoodMeat
   - type: StandingState
   - type: Alerts
+  - type: SlowsOnContact
 
 - type: entity
   save: false
@@ -170,3 +171,4 @@
     heatDamage:
       types:
         Heat : 1 #per second, scales with temperature & other constants
+  - type: SlowsOnContact

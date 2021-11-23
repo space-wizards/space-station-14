@@ -1,5 +1,5 @@
 using Content.Server.Atmos.Components;
-using Content.Server.Growth;
+using Content.Server.Kudzu;
 using Content.Shared.Atmos;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;

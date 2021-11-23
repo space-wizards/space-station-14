@@ -8,8 +8,11 @@
       - Wall
   components:
     - type: Sprite
-      sprite: Structures/Walls/asteroid_rock.rsi
-      state: 0
+      sprite: Objects/Misc/kudzu.rsi
+      state: kudzu_11
+    - type: Appearance
+      visuals:
+        - type: KudzuVisualizer
     - type: Clickable
     - type: Transform
       anchored: true
@@ -27,17 +30,27 @@
       thresholds:
       - trigger:
           !type:DamageTrigger
-          damage: 5
+          damage: 10
         behaviors:
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
     - type: Temperature
       coldDamage:
         types:
-          Cold: 5 #per second, scales with temperature & other constants
+          Cold: 5
       heatDamage:
         types:
-          Heat: 5 #per second, scales with temperature & other constants
+          Heat: 5
+    - type: Flammable
+      fireSpread: true #If you walk into incredibly dense, flaming vines, you can expect to burn.
+      damage:
+        types:
+          Heat: 1
     - type: AtmosExposed
     - type: Spreader
       growthResult: Kudzu
+      enabled: false
+    - type: GrowingKudzu
+    - type: SlowsContacts
+      walkSpeedModifier: 0.2
+      sprintSpeedModifier: 0.2

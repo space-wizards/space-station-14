@@ -1,15 +1,16 @@
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Growth;
+namespace Content.Server.Kudzu;
 
 /// <summary>
 /// Component for rapidly spreading objects, like Kudzu.
 /// ONLY USE THIS FOR ANCHORED OBJECTS. An error will be logged if not anchored/static.
 /// Currently does not support growing in space.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, Friend(typeof(SpreaderSystem))]
 public class SpreaderComponent : Component
 {
     public override string Name => "Spreader";
@@ -25,4 +26,7 @@ public class SpreaderComponent : Component
     /// </summary>
     [ViewVariables, DataField("growthResult", required: true)]
     public string GrowthResult = default!;
+
+    [ViewVariables, DataField("enabled")]
+    public bool Enabled = true;
 }

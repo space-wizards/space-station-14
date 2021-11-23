@@ -1,19 +1,15 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
-using Content.Shared.StatusEffect;
-using Content.Shared.Stunnable;
+using Content.Shared.Movement.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Random;
 
-namespace Content.Server.Growth;
+namespace Content.Server.Kudzu;
 
 // Future work includes making the growths per interval thing not global, but instead per "group"
 public class SpreaderSystem : EntitySystem
@@ -24,45 +20,19 @@ public class SpreaderSystem : EntitySystem
     private const int GrowthsPerInterval = 1;
 
     private float _accumulatedFrameTime = 0.0f;
-    private float _slowAccumulatedFrameTime = 0.0f;
 
     private readonly HashSet<EntityUid> _edgeGrowths = new ();
-    private readonly Dictionary<EntityUid, HashSet<EntityUid>> _statusCapableInContact = new();
 
     public override void Initialize()
     {
         SubscribeLocalEvent<SpreaderComponent, ComponentAdd>(SpreaderAddHandler);
-        SubscribeLocalEvent<SpreaderComponent, StartCollideEvent>(OnEntityEnter);
-        SubscribeLocalEvent<SpreaderComponent, EndCollideEvent>(OnEntityExit);
-    }
-
-    private void OnEntityExit(EntityUid uid, SpreaderComponent component, EndCollideEvent args)
-    {
-        var otherUid = args.OtherFixture.Body.OwnerUid;
-        if (!EntityManager.HasComponent<StatusEffectsComponent>(otherUid))
-            return;
-        Logger.Debug($"exit");
-        if (!_statusCapableInContact.ContainsKey(otherUid))
-            _statusCapableInContact.Add(otherUid, new HashSet<EntityUid>());
-        _statusCapableInContact[otherUid].Remove(uid);
-    }
-
-    private void OnEntityEnter(EntityUid uid, SpreaderComponent component, StartCollideEvent args)
-    {
-        var otherUid = args.OtherFixture.Body.OwnerUid;
-        if (!EntityManager.HasComponent<StatusEffectsComponent>(otherUid))
-            return;
-        Logger.Debug($"enter");
-        if (!_statusCapableInContact.ContainsKey(otherUid))
-            _statusCapableInContact.Add(otherUid, new HashSet<EntityUid>());
-        _statusCapableInContact[otherUid].Add(uid);
     }
 
     private void SpreaderAddHandler(EntityUid uid, SpreaderComponent component, ComponentAdd args)
     {
-        _edgeGrowths.Add(uid); // ez
+        if (component.Enabled)
+            _edgeGrowths.Add(uid); // ez
     }
-
 
     public void UpdateNearbySpreaders(EntityUid blocker, AirtightComponent comp)
     {
@@ -78,7 +48,7 @@ public class SpreaderSystem : EntitySystem
 
             foreach (var ent in grid.GetInDir(transform.Coordinates, direction.ToDirection()))
             {
-                if (EntityManager.TryGetComponent<SpreaderComponent>(ent, out _))
+                if (EntityManager.TryGetComponent<SpreaderComponent>(ent, out var s) && s.Enabled)
                     _edgeGrowths.Add(ent);
             }
         }
@@ -86,32 +56,12 @@ public class SpreaderSystem : EntitySystem
 
     public override void Update(float frameTime)
     {
-        base.Update(frameTime);
-
-
-
         _accumulatedFrameTime += frameTime;
-        _slowAccumulatedFrameTime += frameTime;
-
-        if (_slowAccumulatedFrameTime >= 0.25)
-        {
-            UpdateSlows();
-            _slowAccumulatedFrameTime -= 0.25f;
-        }
 
         if (!(_accumulatedFrameTime >= 1.0f))
             return;
 
         _accumulatedFrameTime -= 1.0f;
-
-        // Kudzu growing on to you.
-        foreach (var ent in _statusCapableInContact.Keys)
-        {
-            if (_statusCapableInContact[ent].Count != 0)
-                _sharedStunSystem.TrySlowdown(ent, TimeSpan.FromSeconds(2), 0.95f, 0.95f);
-            else
-                _statusCapableInContact.Remove(ent);
-        }
 
         var growthList = _edgeGrowths.ToList();
         _robustRandom.Shuffle(growthList);
@@ -124,17 +74,6 @@ public class SpreaderSystem : EntitySystem
             successes += 1;
             if (successes >= GrowthsPerInterval)
                 break;
-        }
-    }
-
-    private void UpdateSlows()
-    {
-        foreach (var ent in _statusCapableInContact.Keys)
-        {
-            if (_statusCapableInContact[ent].Count != 0)
-                _sharedStunSystem.TrySlowdown(ent, TimeSpan.FromSeconds(2), 0.85f, 0.85f);
-            else
-                _statusCapableInContact.Remove(ent);
         }
     }
 
@@ -162,6 +101,14 @@ public class SpreaderSystem : EntitySystem
         return didGrow;
     }
 
+    public void EnableSpreader(EntityUid ent, SpreaderComponent? component = null)
+    {
+        if (!Resolve(ent, ref component))
+            return;
+        component.Enabled = true;
+        _edgeGrowths.Add(ent);
+    }
+
     private bool IsTileBlockedFrom(EntityUid ent, DirectionFlag dir)
     {
         if (EntityManager.TryGetComponent<SpreaderComponent>(ent, out _))
@@ -175,7 +122,7 @@ public class SpreaderSystem : EntitySystem
         return airtight.AirBlocked && airtight.AirBlockedDirection.IsFlagSet(oppositeDir);
     }
 
-    [Dependency] private IRobustRandom _robustRandom = default!;
-    [Dependency] private IMapManager _mapManager = default!;
-    [Dependency] private SharedStunSystem _sharedStunSystem = default!;
+    [Dependency] private readonly IRobustRandom _robustRandom = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly MovementSpeedModifierSystem _speedModifierSystem = default!;
 }
