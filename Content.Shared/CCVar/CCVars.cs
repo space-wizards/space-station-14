@@ -453,6 +453,13 @@ namespace Content.Shared.CCVar
         /*
          * Shuttles
          */
+
+        /// <summary>
+        /// Can shuttles crush things
+        /// </summary>
+        public static readonly CVarDef<bool> ShuttleCrush =
+            CVarDef.Create("shuttle.crush", true, CVar.SERVERONLY);
+
         // Once cruising actually gets implemented I'd likely drop this speed to 3 maybe.
         public static readonly CVarDef<float> ShuttleDockSpeedCap =
             CVarDef.Create("shuttle.dock_speed_cap", 5f, CVar.SERVERONLY);

@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Content.Shared.Body.Components;
+using Content.Shared.CCVar;
 using Content.Shared.Damage;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -10,38 +12,53 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Dynamics.Contacts;
 
-namespace Content.Server.Shuttles
-{
+namespace Content.Server.Shuttles;
+
     /// <summary>
     /// Indicates this entity can be crushed between shuttles.
     /// </summary>
     [RegisterComponent]
+    [ComponentProtoName("ShuttleCrushable")]
     public sealed class ShuttleCrushableComponent : Component
     {
-        public override string Name => "ShuttleCrushable";
+
     }
 
     public sealed class ShuttleCrushSystem : EntitySystem
     {
         /*
-         * Crush a mob under these scenarios:
+         * Crush a component under these scenarios:
          * 1. it is parented to the map
          * 2. It is between static bodies on at least 2 different grids (including invalid)
-         * 3. the contact normal is sufficient
+         * 3. At least 1 static body heading towards the component.
          */
 
-        [Dependency] private readonly IPhysicsManager _physManager = default!;
+        private bool _enabled;
 
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<ShuttleCrushableComponent, StartCollideEvent>(OnCollide);
+
+            var configManager = IoCManager.Resolve<IConfigurationManager>();
+            configManager.OnValueChanged(CCVars.ShuttleCrush, SetCrush, true);
+        }
+
+        private void SetCrush(bool value) => _enabled = value;
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+
+            var configManager = IoCManager.Resolve<IConfigurationManager>();
+            configManager.UnsubValueChanged(CCVars.ShuttleCrush, SetCrush);
         }
 
         private void OnCollide(EntityUid uid, ShuttleCrushableComponent component, StartCollideEvent args)
         {
-            if (!EntityManager.TryGetComponent(uid, out PhysicsComponent? physicsComponent) ||
+            if (!_enabled ||
+                !EntityManager.TryGetComponent(uid, out PhysicsComponent? physicsComponent) ||
                 physicsComponent.ContactCount < 2) return;
 
             var ourGrid = EntityManager.GetComponent<TransformComponent>(uid).GridID;
@@ -67,9 +84,7 @@ namespace Content.Server.Shuttles
 
                 if (bodyB == physicsComponent)
                 {
-                    var body = bodyA;
-                    bodyA = bodyB;
-                    bodyB = body;
+                    (bodyA, bodyB) = (bodyB, bodyA);
                 }
                 else if (bodyA != physicsComponent)
                 {
@@ -116,12 +131,29 @@ namespace Content.Server.Shuttles
                 return;
             }
 
+            var xform = EntityManager.GetComponent<TransformComponent>(uid);
+            var worldPos = xform.WorldPosition;
+
+            var crush = false;
+
             // Go through every body with its map velocity and make absolutely sure it's heading towards the player
             // to be gibbed.
             foreach (var body in squishBodies)
             {
+                var bodyWorldPos = EntityManager.GetComponent<TransformComponent>(body.OwnerUid).WorldPosition;
+
+                var relativePos = worldPos - bodyWorldPos;
+
                 var mapVel = body.MapLinearVelocity;
+
+                if (Vector2.Dot(relativePos, mapVel) > 0f)
+                {
+                    crush = true;
+                    break;
+                }
             }
+
+            if (!crush) return;
 
             if (EntityManager.TryGetComponent(uid, out SharedBodyComponent? bodyComponent))
             {
@@ -134,4 +166,3 @@ namespace Content.Server.Shuttles
             }
         }
     }
-}
