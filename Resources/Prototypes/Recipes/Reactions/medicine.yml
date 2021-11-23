@@ -370,6 +370,7 @@
 
 - type: reaction
   id: Lexorin
+  impact: High
   reactants:
     Ammonia:
       amount: 1
