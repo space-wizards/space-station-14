@@ -432,6 +432,30 @@ namespace Content.Shared.CCVar
          */
 
         /// <summary>
+        ///     Allows enabling/disabling player-started votes for ultimate authority
+        /// </summary>
+        public static readonly CVarDef<bool> VoteEnabled =
+            CVarDef.Create("vote.enabled", true, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     See vote.enabled, but specific to restart votes
+        /// </summary>
+        public static readonly CVarDef<bool> VoteRestartEnabled =
+            CVarDef.Create("vote.restart_enabled", true, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     See vote.enabled, but specific to preset votes
+        /// </summary>
+        public static readonly CVarDef<bool> VotePresetEnabled =
+            CVarDef.Create("vote.preset_enabled", true, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     See vote.enabled, but specific to map votes
+        /// </summary>
+        public static readonly CVarDef<bool> VoteMapEnabled =
+            CVarDef.Create("vote.map_enabled", true, CVar.SERVERONLY);
+
+        /// <summary>
         ///     The required ratio of the server that must agree for a restart round vote to go through.
         /// </summary>
         public static readonly CVarDef<float> VoteRestartRequiredRatio =
