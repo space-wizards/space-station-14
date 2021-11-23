@@ -17,7 +17,7 @@ namespace Content.Server.Nutrition.EntitySystems
 {
     public partial class SmokingSystem : EntitySystem
     {
-        [Dependency] private readonly ChemistrySystem _chemistrySystem = default!;
+        [Dependency] private readonly ReactiveSystem _reactiveSystem = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
 
         private const float UpdateTimer = 3f;
@@ -98,7 +98,7 @@ namespace Content.Server.Nutrition.EntitySystems
                     !containerManager.Owner.TryGetComponent(out BloodstreamComponent? bloodstream))
                     continue;
 
-                _chemistrySystem.ReactionEntity(containerManager.Owner.Uid, ReactionMethod.Ingestion, inhaledSolution);
+                _reactiveSystem.ReactionEntity(containerManager.Owner.Uid, ReactionMethod.Ingestion, inhaledSolution);
                 bloodstream.TryTransferSolution(inhaledSolution);
             }
 

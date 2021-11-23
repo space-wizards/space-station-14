@@ -1,0 +1,25 @@
+﻿- type: reagent
+  id: Carpetium
+  name: carpetium
+  desc: A mystical chemical, usually outsourced from the Clown Planet, that covers everything it touches in carpet.
+  physicalDesc: fibrous
+  color: "#800000"
+  tileReactions:
+  - !type:CreateEntityReaction
+    entity: Carpet
+    maxOnTileWhitelist:
+      tags: [ Carpet ]
+  metabolisms:
+    Poison:
+      effects:
+      - !type:PopupMessage
+        type: Local
+        messages: [ "carpetium-effect-blood-fibrous", "carpetium-effect-jumpsuit-insides" ]
+        probability: 0.1
+
+- type: reagent
+  id: Fiber
+  name: fiber
+  desc: A raw material, usually extracted from wool or other fabric products.
+  physicalDesc: fibrous
+  color: "#808080"

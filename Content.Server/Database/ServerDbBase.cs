@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Net;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Server.Administration.Logs;
+using Content.Shared.Administration.Logs;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.Preferences;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Enums;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Database
 {
@@ -440,6 +444,54 @@ namespace Content.Server.Database
             await db.DbContext.SaveChangesAsync(cancel);
         }
 
+        public virtual async Task<int> AddNewRound(params Guid[] playerIds)
+        {
+            await using var db = await GetDb();
+
+            var players = await db.DbContext.Player
+                .Where(player => playerIds.Contains(player.UserId))
+                .ToListAsync();
+
+            var round = new Round
+            {
+                Players = players
+            };
+
+            db.DbContext.Round.Add(round);
+
+            await db.DbContext.SaveChangesAsync();
+
+            return round.Id;
+        }
+
+        public async Task<Round> GetRound(int id)
+        {
+            await using var db = await GetDb();
+
+            var round = await db.DbContext.Round
+                .Include(round => round.Players)
+                .SingleAsync(round => round.Id == id);
+
+            return round;
+        }
+
+        public async Task AddRoundPlayers(int id, Guid[] playerIds)
+        {
+            await using var db = await GetDb();
+
+            var round = await db.DbContext.Round
+                .Include(round => round.Players)
+                .SingleAsync(round => round.Id == id);
+
+            var players = await db.DbContext.Player
+                .Where(player => playerIds.Contains(player.UserId))
+                .ToListAsync();
+
+            round.Players.AddRange(players);
+
+            await db.DbContext.SaveChangesAsync();
+        }
+
         public async Task UpdateAdminRankAsync(AdminRank rank, CancellationToken cancel)
         {
             await using var db = await GetDb();
@@ -453,6 +505,160 @@ namespace Content.Server.Database
 
             await db.DbContext.SaveChangesAsync(cancel);
         }
+        #endregion
+
+        #region Admin Logs
+
+        public virtual async Task AddAdminLogs(List<QueuedLog> logs)
+        {
+            await using var db = await GetDb();
+
+            var entities = new Dictionary<int, AdminLogEntity>();
+
+            foreach (var (log, entityData) in logs)
+            {
+                var logEntities = new List<AdminLogEntity>(entityData.Count);
+                foreach (var (id, name) in entityData)
+                {
+                    var entity = entities.GetOrNew(id);
+                    entity.Name = name;
+                    logEntities.Add(entity);
+                }
+
+                log.Entities = logEntities;
+                db.DbContext.AdminLog.Add(log);
+            }
+
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        private async Task<IQueryable<AdminLog>> GetAdminLogsQuery(ServerDbContext db, LogFilter? filter = null)
+        {
+            IQueryable<AdminLog> query = db.AdminLog;
+
+            if (filter == null)
+            {
+                return query.OrderBy(log => log.Date);
+            }
+
+            if (filter.Round != null)
+            {
+                query = query.Where(log => log.RoundId == filter.Round);
+            }
+
+            if (filter.Search != null)
+            {
+                query = query.Where(log => log.Message.Contains(filter.Search));
+            }
+
+            if (filter.Types != null)
+            {
+                query = query.Where(log => filter.Types.Contains(log.Type));
+            }
+
+            if (filter.Impacts != null)
+            {
+                query = query.Where(log => filter.Impacts.Contains(log.Impact));
+            }
+
+            if (filter.Before != null)
+            {
+                query = query.Where(log => log.Date < filter.Before);
+            }
+
+            if (filter.After != null)
+            {
+                query = query.Where(log => log.Date > filter.After);
+            }
+
+            if (filter.AnyPlayers != null)
+            {
+                var players = await db.AdminLogPlayer
+                    .Where(player => filter.AnyPlayers.Contains(player.PlayerUserId))
+                    .ToListAsync();
+
+                if (players.Count > 0)
+                {
+                    query = from log in query
+                        join player in db.AdminLogPlayer on log.Id equals player.LogId
+                        where filter.AnyPlayers.Contains(player.Player.UserId)
+                        select log;
+                }
+            }
+
+            if (filter.AllPlayers != null)
+            {
+                // TODO ADMIN LOGGING
+            }
+
+            query = query.Distinct();
+
+            if (filter.LastLogId != null)
+            {
+                query = filter.DateOrder switch
+                {
+                    DateOrder.Ascending => query.Where(log => log.Id < filter.LastLogId),
+                    DateOrder.Descending => query.Where(log => log.Id > filter.LastLogId),
+                    _ => throw new ArgumentOutOfRangeException(nameof(filter),
+                        $"Unknown {nameof(DateOrder)} value {filter.DateOrder}")
+                };
+            }
+
+            query = filter.DateOrder switch
+            {
+                DateOrder.Ascending => query.OrderBy(log => log.Date),
+                DateOrder.Descending => query.OrderByDescending(log => log.Date),
+                _ => throw new ArgumentOutOfRangeException(nameof(filter),
+                    $"Unknown {nameof(DateOrder)} value {filter.DateOrder}")
+            };
+
+            if (filter.Limit != null)
+            {
+                query = query.Take(filter.Limit.Value);
+            }
+
+            return query;
+        }
+
+        public async IAsyncEnumerable<string> GetAdminLogMessages(LogFilter? filter = null)
+        {
+            await using var db = await GetDb();
+            var query = await GetAdminLogsQuery(db.DbContext, filter);
+
+            await foreach (var log in query.Select(log => log.Message).AsAsyncEnumerable())
+            {
+                yield return log;
+            }
+        }
+
+        public async IAsyncEnumerable<LogRecord> GetAdminLogs(LogFilter? filter = null)
+        {
+            await using var db = await GetDb();
+            var query = await GetAdminLogsQuery(db.DbContext, filter);
+
+            await foreach (var log in query.AsAsyncEnumerable())
+            {
+                var players = new Guid[log.Players.Count];
+                for (var i = 0; i < log.Players.Count; i++)
+                {
+                    players[i] = log.Players[i].PlayerUserId;
+                }
+
+                yield return new LogRecord(log.Id, log.RoundId, log.Type, log.Impact, log.Date, log.Message, players);
+            }
+        }
+
+        public async IAsyncEnumerable<JsonDocument> GetAdminLogsJson(LogFilter? filter = null)
+        {
+            await using var db = await GetDb();
+            var query = await GetAdminLogsQuery(db.DbContext, filter);
+
+            await foreach (var json in query.Select(log => log.Json).AsAsyncEnumerable())
+            {
+                yield return json;
+            }
+        }
+
         #endregion
 
         protected abstract Task<DbGuard> GetDb();
