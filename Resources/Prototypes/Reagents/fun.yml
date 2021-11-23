@@ -1,0 +1,16 @@
+﻿- type: reagent
+  id: Carpetium
+  name: carpetium
+  desc: A mystical chemical, usually outsourced from the Clown Planet, that spawns carpets wherever it interacts with a tile.
+  physicalDesc: fibrous
+  color: "#800000"
+  tileReactions:
+  - !type:CreateEntityReaction
+    entity: Carpet
+
+- type: reagent
+  id: Fiber
+  name: fiber
+  desc: A raw material, usually extracted from wool or other fabric products.
+  physicalDesc: fibrous
+  color: "#808080"
