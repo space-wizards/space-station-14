@@ -44,7 +44,7 @@
       zeroVisible: true
 
 - type: entity
-  name: Makeshift Laser Gun
+  name: makeshift laser gun
   parent: BaseItem
   id: MakeshiftLaser
   description: Better pray it won't burn your hands off.
@@ -89,7 +89,7 @@
       zeroVisible: false
 
 - type: entity
-  name: Svalinn Laser Pistol
+  name: svalinn laser pistol
   parent: BaseItem
   id: LaserPistolSvalinn
   description: A cheap and widely used laser pistol.
@@ -134,7 +134,7 @@
       zeroVisible: false
 
 - type: entity
-  name: COG Laser Carbine
+  name: cog laser carbine
   parent: BaseItem
   id: LaserRifleCog
   description: Favoured by Nanotrasen Security for being cheap and easy to use.
