@@ -27,6 +27,11 @@
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: plushie_h
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: BuzzochloricBees
+        Quantity: 10
 
 - type: entity
   parent: BasePlushie

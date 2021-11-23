@@ -2,6 +2,7 @@
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Maps;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Whitelist;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -34,6 +35,9 @@ public class CreateEntityReaction : ITileReaction
     [DataField("maxOnTileWhitelist")]
     public EntityWhitelist? Whitelist;
 
+    [DataField("randomOffsetMax")]
+    public float RandomOffsetMax = 0.0f;
+
     public FixedPoint2 TileReact(TileRef tile, ReagentPrototype reagent, FixedPoint2 reactVolume)
     {
         if (reactVolume >= Usage)
@@ -54,7 +58,8 @@ public class CreateEntityReaction : ITileReaction
                 }
             }
 
-            entMan.SpawnEntity(Entity, tile.GridPosition().Offset(new Vector2(0.5f, 0.5f)));
+            var newEnt = entMan.SpawnEntity(Entity, tile.GridPosition().Offset(new Vector2(0.5f, 0.5f)));
+            newEnt.RandomOffset(RandomOffsetMax);
             return Usage;
         }
 

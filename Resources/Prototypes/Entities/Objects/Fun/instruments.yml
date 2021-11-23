@@ -167,6 +167,11 @@
   - type: Item
     size: 24
     sprite: Objects/Fun/Instruments/saxophone.rsi
+  - type: Extractable
+    juiceSolution:
+      reagents:
+        - ReagentId: Saxoite
+          Quantity: 10
 
 - type: entity
   parent: BaseHandheldInstrument
