@@ -4,7 +4,7 @@
   desc: Desoxyephedrine is a potent stimulant with dangerous side-effects if too much is consumed.
   physicalDesc: translucent
   color: "#FAFAFA"
-  boilingPoint: 212.0 #Meth vape when?
+  boilingPoint: 212.0  # Dexosyephedrine vape when?
   meltingPoint: 170.0
   metabolisms:
     Poison:
