@@ -27,6 +27,7 @@ public sealed class CargoTests : ContentIntegrationTest
 
                 foreach (var product in market.Products)
                 {
+                    // This top assert is probably caught by the TryIndex but juusssttt in case it ever gets reverted.
                     Assert.That(protoManager.HasIndex<CargoProductPrototype>(product.ID), $"Unable to find cargo product for {product.ID} on prototype {ent}");
                     Assert.That(protoManager.HasIndex<EntityPrototype>(product.Product), $"Unable to find cargo entity for {product.Product} on prototype {ent}");
                 }
