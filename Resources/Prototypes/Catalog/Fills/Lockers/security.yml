@@ -25,6 +25,8 @@
         prob: 1
       - id: ClothingShoesBootsJack
         prob: 1
+      - id: ClothingOuterCoatWarden
+        prob: 1
 
 - type: entity
   id: LockerSecurityFilled
