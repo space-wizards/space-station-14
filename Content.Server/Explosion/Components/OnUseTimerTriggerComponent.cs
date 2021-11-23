@@ -2,7 +2,6 @@
 using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Trigger;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 

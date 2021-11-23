@@ -1,54 +1,4 @@
 Entries:
-- author: SweptWasTaken
-  changes:
-  - {message: Uplink now has correct mags for clarissa, type: Fix}
-  id: 132
-  time: '2021-03-31T10:11:12.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: NEW RULE - NO USING ALT ACCOUNTS ON THE SAME SERVER, type: Add}
-  id: 133
-  time: '2021-03-31T12:10:16.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Client no longer has access to some vision debug commands, type: Tweak}
-  id: 134
-  time: '2021-03-31T13:24:19.0000000+00:00'
-- author: NIXC
-  changes:
-  - {message: Ownerless ID's now show in PDA (Captain's Spare), type: Add}
-  id: 135
-  time: '2021-03-31T13:29:57.0000000+00:00'
-- author: Acruid
-  changes:
-  - {message: Fixed the client crashing after restarting the round, type: Fix}
-  id: 136
-  time: '2021-03-31T20:06:31.469316+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Ghosts are now deleted correctly, type: Fix}
-  id: 137
-  time: '2021-03-31T21:17:22.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Pulling collision disabled again, type: Tweak}
-  id: 138
-  time: '2021-04-01T03:32:13.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: The technology recipes actually unlock recipes for the protolathe!,
-    type: Add}
-  - {message: Some things can no longer be built in the autolathe, type: Tweak}
-  - {message: Nerfs point gen to 100 (REMEMBER TO PRESS SYNC TO GET YOUR POINTS ON
-      CONSOLE), type: Tweak}
-  id: 139
-  time: '2021-04-01T07:04:18.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Added inflatable walls. Engineers can use them as temporary barriers
-      when fixing atmos breaches., type: Add}
-  id: 140
-  time: '2021-04-01T07:04:56.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix cursed locker collision, type: Fix}
@@ -2847,3 +2797,58 @@ Entries:
   - {message: It is no longer possible to start pulling people while in cuffs., type: Fix}
   id: 633
   time: '2021-11-22T19:31:12.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Admins no longer have to turn events back on every time the server restarts,
+    type: Add}
+  id: 634
+  time: '2021-11-22T22:33:30.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Announcements from Central Command are now properly serenaded., type: Fix}
+  id: 635
+  time: '2021-11-22T22:34:48.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: You are no longer interrupted by damage during prying a firelock or
+      airlock., type: Tweak}
+  id: 636
+  time: '2021-11-23T00:34:57.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Added carpetium, a chemical that creates carpets whenever it touches
+      a tile either through spills, sprays, or foam. It''s created using Space Drugs
+      and Fiber.', type: Add}
+  - {message: You can now grind up jumpsuits and shoes into Fiber. TOTALLY unrelated
+      to the last changelog entry, type: Add}
+  id: 637
+  time: '2021-11-23T01:01:51.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Removed meth., type: Remove}
+  - {message: Added desoxyephedrine., type: Add}
+  id: 638
+  time: '2021-11-23T04:39:59.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Thrusters now have examine text, type: Add}
+  id: 639
+  time: '2021-11-23T06:44:08.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Admins are now fully knowledgeable of every potassium/water bomb you
+      make., type: Add}
+  id: 640
+  time: '2021-11-23T06:51:43.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Added epinephrine, an emergency medical chemical that reduces stun
+      times slightly and heals people that are in critical health. Everyone starts
+      with a medipen containing it in their survival box--beware of overdoses.', type: Add}
+  id: 641
+  time: '2021-11-23T06:51:52.0000000+00:00'
+- author: Mith-randalf
+  changes:
+  - {message: Added the warden's favourite jacket., type: Add}
+  id: 642
+  time: '2021-11-23T11:12:20.0000000+00:00'

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -204,7 +204,7 @@ namespace Content.Server.Voting.Managers
 
         private void SendUpdates(VoteReg v)
         {
-            foreach (var player in _playerManager.GetAllPlayers())
+            foreach (var player in _playerManager.ServerSessions)
             {
                 SendSingleUpdate(v, player);
             }
@@ -253,7 +253,7 @@ namespace Content.Server.Voting.Managers
 
         private void DirtyCanCallVoteAll()
         {
-            _playerCanCallVoteDirty.UnionWith(_playerManager.GetAllPlayers());
+            _playerCanCallVoteDirty.UnionWith(_playerManager.ServerSessions);
         }
 
         private void SendUpdateCanCallVote(IPlayerSession player)

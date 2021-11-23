@@ -22,15 +22,15 @@ namespace Content.Server.Chemistry.Components
     [RegisterComponent]
     public sealed class HyposprayComponent : SharedHyposprayComponent
     {
-        [DataField("ClumsyFailChance")]
+        [DataField("clumsyFailChance")]
         [ViewVariables(VVAccess.ReadWrite)]
         public float ClumsyFailChance { get; set; } = 0.5f;
 
-        [DataField("TransferAmount")]
+        [DataField("transferAmount")]
         [ViewVariables(VVAccess.ReadWrite)]
         public FixedPoint2 TransferAmount { get; set; } = FixedPoint2.New(5);
 
-        [DataField("InjectSound")]
+        [DataField("injectSound")]
         private SoundSpecifier _injectSound = new SoundPathSpecifier("/Audio/Items/hypospray.ogg");
 
         protected override void Initialize()

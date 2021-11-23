@@ -28,6 +28,9 @@
   id: Carrot
 
 - type: Tag
+  id: Carpet
+
+- type: Tag
   id: CanPilot
 
 - type: Tag
@@ -125,7 +128,7 @@
 
 - type: Tag
   id: Handcuffs
-  
+
 - type: Tag
   id: HideContextMenu
 

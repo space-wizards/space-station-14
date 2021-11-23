@@ -99,7 +99,7 @@ namespace Content.Server.Chemistry.EntitySystems
         }
 
         private void UpdateAppearance(EntityUid uid, Solution solution,
-            SharedAppearanceComponent? appearanceComponent = null)
+            AppearanceComponent? appearanceComponent = null)
         {
             if (!EntityManager.EntityExists(uid)
                 || !Resolve(uid, ref appearanceComponent, false))

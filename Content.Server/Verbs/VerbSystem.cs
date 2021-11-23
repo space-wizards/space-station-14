@@ -45,7 +45,7 @@ namespace Content.Server.Verbs
 
             // Find the requested verb.
             if (verbs.TryGetValue(args.RequestedVerb, out var verb))
-                ExecuteVerb(verb);
+                ExecuteVerb(verb, userEntity.Uid, args.Target);
             else
                 // 404 Verb not found. Note that this could happen due to something as simple as opening the verb menu, walking away, then trying
                 // to run the pickup-item verb. So maybe this shouldn't even be logged?
