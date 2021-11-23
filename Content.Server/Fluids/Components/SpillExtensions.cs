@@ -10,6 +10,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Fluids.Components
 {
@@ -129,7 +130,7 @@ namespace Content.Server.Fluids.Components
             if (solution.TotalVolume <= 0) return null;
 
             var mapManager = IoCManager.Resolve<IMapManager>();
-            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             var serverEntityManager = IoCManager.Resolve<IServerEntityManager>();
 
             // If space return early, let that spill go out into the void
@@ -137,6 +138,17 @@ namespace Content.Server.Fluids.Components
 
             var gridId = tileRef.GridIndex;
             if (!mapManager.TryGetGrid(gridId, out var mapGrid)) return null; // Let's not spill to invalid grids.
+
+            // First, do all tile reactions
+            foreach (var reagent in solution.Contents.ToArray())
+            {
+                var proto = prototypeManager.Index<ReagentPrototype>(reagent.ReagentId);
+                proto.ReactionTile(tileRef, reagent.Quantity);
+            }
+
+            // Tile reactions used up everything.
+            if (solution.CurrentVolume == FixedPoint2.Zero)
+                return null;
 
             // Get normalized co-ordinate for spill location and spill it in the centre
             // TODO: Does SnapGrid or something else already do this?
