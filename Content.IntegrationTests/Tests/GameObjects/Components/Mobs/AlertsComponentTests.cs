@@ -2,12 +2,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Client.Alerts;
 using Content.Client.Alerts.UI;
-using Content.Client.UserInterface;
 using Content.Server.Alert;
 using Content.Shared.Alert;
 using NUnit.Framework;
 using Robust.Client.UserInterface;
-using IPlayerManager = Robust.Server.Player.IPlayerManager;
+using Robust.Server.Player;
 
 namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
 {
@@ -28,8 +27,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
 
             await server.WaitAssertion(() =>
             {
-                var player = serverPlayerManager.GetAllPlayers().Single();
-                var playerEnt = player.AttachedEntity;
+                var playerEnt = serverPlayerManager.Sessions.Single().AttachedEntity;
                 Assert.NotNull(playerEnt);
                 var alertsComponent = playerEnt.GetComponent<ServerAlertsComponent>();
                 Assert.NotNull(alertsComponent);
@@ -69,8 +67,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
 
             await server.WaitAssertion(() =>
             {
-                var player = serverPlayerManager.GetAllPlayers().Single();
-                var playerEnt = player.AttachedEntity;
+                var playerEnt = serverPlayerManager.Sessions.Single().AttachedEntity;
                 Assert.NotNull(playerEnt);
                 var alertsComponent = playerEnt.GetComponent<ServerAlertsComponent>();
                 Assert.NotNull(alertsComponent);
