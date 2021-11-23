@@ -74,7 +74,7 @@ namespace Content.Server.Shuttles.EntitySystems
             if (xform.Anchored)
             {
                 var nozzleDir = Loc.GetString("thruster-comp-nozzle-direction",
-                    ("direction", xform.LocalRotation.Opposite().ToWorldVec().GetDir().ToString()));
+                    ("direction", xform.LocalRotation.Opposite().ToWorldVec().GetDir().ToString().ToLowerInvariant()));
 
                 args.PushMarkup(nozzleDir);
 
