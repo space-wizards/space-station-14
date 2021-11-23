@@ -29,67 +29,77 @@ namespace Content.Server.GameTicking
             Dictionary<NetUserId, HumanoidCharacterProfile> profiles)
         {
             var assigned = new Dictionary<IPlayerSession, (string, StationId)>();
+
+            List<(IPlayerSession, List<string>)> GetPlayersJobCandidates(bool heads, JobPriority i)
+            {
+                return available.Select(player =>
+                    {
+                        var profile = profiles[player.UserId];
+
+                        var availableJobs = profile.JobPriorities
+                            .Where(j =>
+                            {
+                                var (jobId, priority) = j;
+                                if (!_prototypeManager.TryIndex(jobId, out JobPrototype? job))
+                                {
+                                    // Job doesn't exist, probably old data?
+                                    return false;
+                                }
+
+                                if (job.IsHead != heads)
+                                {
+                                    return false;
+                                }
+
+                                return priority == i;
+                            })
+                            .Select(j => j.Key)
+                            .ToList();
+
+                        return (player, availableJobs);
+                    })
+                    .Where(p => p.availableJobs.Count != 0)
+                    .ToList();
+            }
+
+            void ProcessJobs(bool heads, Dictionary<string, int> availablePositions, StationId id, JobPriority i)
+            {
+                var candidates = GetPlayersJobCandidates(heads, i);
+
+                foreach (var (candidate, jobs) in candidates)
+                {
+                    while (jobs.Count != 0)
+                    {
+                        var picked = _robustRandom.Pick(jobs);
+
+                        var openPositions = availablePositions.GetValueOrDefault(picked, 0);
+                        if (openPositions == 0)
+                        {
+                            jobs.Remove(picked);
+                            continue;
+                        }
+
+                        availablePositions[picked] -= 1;
+                        assigned.Add(candidate, (picked, id));
+                        break;
+                    }
+                }
+
+                available.RemoveAll(a => assigned.ContainsKey(a));
+            }
+
             // Current strategy is to fill each station one by one.
             foreach (var (id, station) in _stationSystem.StationInfo)
             {
                 // Get the ROUND-START job list.
                 var availablePositions = station.MapPrototype.AvailableJobs.ToDictionary(x => x.Key, x => x.Value[0]);
+
                 for (var i = JobPriority.High; i > JobPriority.Never; i--)
                 {
-                    void ProcessJobs(bool heads)
-                    {
-                        var candidates = available.Select(player =>
-                            {
-                                var profile = profiles[player.UserId];
-
-                                var availableJobs = profile.JobPriorities
-                                    .Where(j =>
-                                    {
-                                        var (jobId, priority) = j;
-                                        if (!_prototypeManager.TryIndex(jobId, out JobPrototype? job))
-                                        {
-                                            // Job doesn't exist, probably old data?
-                                            return false;
-                                        }
-
-                                        if (job.IsHead != heads)
-                                        {
-                                            return false;
-                                        }
-
-                                        return priority == i;
-                                    })
-                                    .Select(j => j.Key)
-                                    .ToList();
-
-                                return (player, availableJobs);
-                            })
-                            .Where(p => p.availableJobs.Count != 0)
-                            .ToList();
-
-                        foreach (var (candidate, jobs) in candidates)
-                        {
-                            while (jobs.Count != 0)
-                            {
-                                var picked = _robustRandom.Pick(jobs);
-
-                                var openPositions = availablePositions.GetValueOrDefault(picked, 0);
-                                if (openPositions == 0)
-                                {
-                                    jobs.Remove(picked);
-                                    continue;
-                                }
-
-                                availablePositions[picked] -= 1;
-                                assigned.Add(candidate, (picked, id));
-                                break;
-                            }
-                        }
-
-                        available.RemoveAll(a => assigned.ContainsKey(a));
-                    }
-                    ProcessJobs(true);
-                    ProcessJobs(false);
+                    // Process jobs possible for heads...
+                    ProcessJobs(true, availablePositions, id, i);
+                    // and then jobs that are not heads.
+                    ProcessJobs(false, availablePositions, id, i);
                 }
             }
 
