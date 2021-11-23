@@ -5,6 +5,7 @@ using System.Linq;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Construction.Components;
 using Content.Server.Fluids.Components;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Directions;
@@ -104,6 +105,7 @@ namespace Content.Server.Fluids.EntitySystems
             // TODO VERB ICONS spill icon? pouring out a glass/beaker?
             verb.Act = () => _solutionContainerSystem.SplitSolution(args.Target.Uid,
                 solution, solution.DrainAvailable).SpillAt(args.Target.Transform.Coordinates, "PuddleSmear");
+            verb.Impact = LogImpact.Medium; // dangerous reagent reaction are logged separately.
             args.Verbs.Add(verb);
         }
 

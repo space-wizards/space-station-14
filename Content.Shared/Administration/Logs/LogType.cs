@@ -12,6 +12,7 @@ public enum LogType
     EventStarted = 6,
     EventRan = 16,
     EventStopped = 7,
+    Verb = 19,
     ShuttleCalled = 8,
     ShuttleRecalled = 9,
     ChemicalReaction = 17,
