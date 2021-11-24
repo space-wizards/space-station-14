@@ -200,9 +200,9 @@ namespace Content.Server.Nutrition.EntitySystems
         private void AddEatVerb(EntityUid uid, FoodComponent component, GetInteractionVerbsEvent ev)
         {
             if (!ev.CanInteract ||
+                !ev.CanAccess ||
                 !EntityManager.TryGetComponent(ev.User.Uid, out SharedBodyComponent? body) ||
-                !_bodySystem.TryGetComponentsOnMechanisms<StomachComponent>(ev.User.Uid, out var stomachs, body) ||
-                !ev.CanAccess)
+                !_bodySystem.TryGetComponentsOnMechanisms<StomachComponent>(ev.User.Uid, out var stomachs, body))
                 return;
 
             Verb verb = new();
