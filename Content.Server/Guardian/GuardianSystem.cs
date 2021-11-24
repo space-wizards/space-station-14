@@ -73,7 +73,7 @@ namespace Content.Server.Guardian
         /// </summary>
         private void OnActivatorExamined(EntityUid uid, GuardianCreatorComponent component, ExaminedEvent args)
         {
-           if (component.Used == true)
+           if (component.Used)
            {
                string usedstring = Loc.GetString("guardian-activator-empty-invalid-creaton");
                args.Message.AddMarkup("\n" + $"[color=#ba1919]{usedstring}[/color]");
