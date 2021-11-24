@@ -1,34 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix cursed locker collision, type: Fix}
-  id: 141
-  time: '2021-04-01T07:46:23.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Changed the HUD sprites, type: Tweak}
-  id: 142
-  time: '2021-04-01T21:24:39.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Fixed placement of inflatable walls., type: Fix}
-  id: 143
-  time: '2021-04-01T21:34:36.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Debug weapons, type: Add}
-  id: 144
-  time: '2021-04-02T08:54:08.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Adds Animal / critter mob crates to cargo, type: Add}
-  id: 145
-  time: '2021-04-02T10:41:00.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: You can eat organs, type: Add}
-  id: 146
-  time: '2021-04-02T13:44:02.0000000+00:00'
 - author: SweptWasTaken
   changes:
   - {message: Saltern's space-facing walls are all reinforced and computers should
@@ -2852,3 +2822,36 @@ Entries:
   - {message: Added the warden's favourite jacket., type: Add}
   id: 642
   time: '2021-11-23T11:12:20.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Mopping now picks up slightly more reagents, and cleaning vomit should
+      be easier.', type: Tweak}
+  id: 643
+  time: '2021-11-23T17:14:46.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Pried tiles now have a random rotation applied, type: Tweak}
+  id: 644
+  time: '2021-11-23T17:15:49.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Smoke spam no longer crashes the server., type: Fix}
+  id: 645
+  time: '2021-11-23T19:35:50.472421+00:00'
+- author: Clyybber
+  changes:
+  - {message: Reworked how dropping items by slipping works., type: Tweak}
+  id: 646
+  time: '2021-11-23T23:38:39.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Disposals should no longer be capable of sending employees through walls
+      when they're not supposed to be., type: Fix}
+  id: 647
+  time: '2021-11-23T23:38:46.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: You can now directly swap beakers in chemistry machines. No more swap-hands
+      > eject > swap-hands> insert., type: Tweak}
+  id: 648
+  time: '2021-11-24T07:03:08.0000000+00:00'

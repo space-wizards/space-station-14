@@ -114,7 +114,7 @@
       duration: 10
       spreadDelay: 0.5
       removeDelay: 0.5
-      diluteReagents: false
+      diluteReagents: true
       prototypeId: Smoke
       sound:
         path: /Audio/Effects/smoke.ogg
