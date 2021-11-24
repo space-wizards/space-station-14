@@ -54,7 +54,7 @@ namespace Content.Shared.CCVar
             GameLobbyEnabled = CVarDef.Create("game.lobbyenabled", false, CVar.ARCHIVE);
 
         public static readonly CVarDef<int>
-            GameLobbyDuration = CVarDef.Create("game.lobbyduration", 150, CVar.ARCHIVE);
+            GameLobbyDuration = CVarDef.Create("game.lobbyduration", 60, CVar.ARCHIVE);
 
         public static readonly CVarDef<bool>
             GameDisallowLateJoins = CVarDef.Create("game.disallowlatejoins", false, CVar.ARCHIVE | CVar.SERVERONLY);
