@@ -12,7 +12,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Player;
-using Robust.Shared.Utility;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
@@ -30,7 +29,7 @@ namespace Content.Shared.Containers.ItemSlots
         {
             base.Initialize();
 
-            SubscribeLocalEvent<ItemSlotsComponent, ComponentStartup>(OnStartup);
+            SubscribeLocalEvent<ItemSlotsComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<ItemSlotsComponent, ComponentInit>(Oninitialize);
 
             SubscribeLocalEvent<ItemSlotsComponent, InteractUsingEvent>(OnInteractUsing);
@@ -50,7 +49,7 @@ namespace Content.Shared.Containers.ItemSlots
         /// <summary>
         ///     Spawn in starting items for any item slots that should have one.
         /// </summary>
-        private void OnStartup(EntityUid uid, ItemSlotsComponent itemSlots, ComponentStartup args)
+        private void OnMapInit(EntityUid uid, ItemSlotsComponent itemSlots, MapInitEvent args)
         {
             foreach (var slot in itemSlots.Slots.Values)
             {

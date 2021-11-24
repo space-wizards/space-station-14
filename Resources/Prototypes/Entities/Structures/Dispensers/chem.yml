@@ -9,11 +9,6 @@
     state: industrial-working
   - type: ReagentDispenser
     pack: ChemDispenserStandardInventory
-    beakerSlot:
-      whitelistFailPopup: reagent-dispenser-component-cannot-put-entity-message
-      whitelist:
-        components:
-        - FitsInDispenser
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: Construction
