@@ -173,6 +173,7 @@ public partial class AdminLogSystem : SharedAdminLogSystem
 
     private async Task SaveLogs()
     {
+        // TODO ADMIN LOGS array pool
         var copy = new List<QueuedLog>(_logQueue.Count + _preRoundLogQueue.Count);
 
         copy.AddRange(_logQueue);
@@ -192,6 +193,7 @@ public partial class AdminLogSystem : SharedAdminLogSystem
 
             copy.AddRange(_preRoundLogQueue);
         }
+
         _preRoundLogQueue.Clear();
         PreRoundQueue.Set(0);
 
