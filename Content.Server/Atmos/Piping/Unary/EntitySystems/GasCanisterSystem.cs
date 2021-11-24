@@ -155,7 +155,12 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (!CheckInteract(args.Session))
                 return;
 
-            _adminLogSystem.Add(LogType.CanisterValve, LogImpact.High, $"{args.Session.AttachedEntity:player} set the valve on {uid} to {args.Valve:valveState}");
+            var impact = LogImpact.High;
+            if (EntityManager.TryGetComponent(uid, out ContainerManagerComponent containerManager)
+                && containerManager.TryGetContainer(canister.ContainerName, out var container))
+                impact = container.ContainedEntities.Count != 0 ? LogImpact.Medium : LogImpact.High;
+
+            _adminLogSystem.Add(LogType.CanisterValve, impact, $"{args.Session.AttachedEntity:player} set the valve on {uid} to {args.Valve:valveState}");
 
             canister.ReleaseValve = args.Valve;
             DirtyUI(uid, canister);
