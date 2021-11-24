@@ -41,8 +41,7 @@ namespace Content.Server.Alert.Commands
             }
 
             var alertType = args[0];
-            var alertMgr = IoCManager.Resolve<AlertManager>();
-            if (!alertMgr.TryGet(Enum.Parse<AlertType>(alertType), out var alert))
+            if (!SharedAlertsSystem.TryGet(Enum.Parse<AlertType>(alertType), out var alert))
             {
                 shell.WriteLine("unrecognized alertType " + alertType);
                 return;

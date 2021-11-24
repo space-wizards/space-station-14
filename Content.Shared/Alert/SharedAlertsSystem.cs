@@ -1,21 +1,33 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Alert;
 
 public class SharedAlertsSystem : EntitySystem
 {
-    [Dependency] protected readonly AlertManager AlertManager = default!;
+    [Dependency]
+    private readonly IPrototypeManager _prototypeManager = default!;
+
+    private readonly Dictionary<AlertType, AlertPrototype> _typeToAlert = new();
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        LoadAlertPrototypes();
+    }
 
     /// <returns>true iff an alert of the indicated id is currently showing</returns>
     public bool IsShowingAlert(SharedAlertsComponent sharedAlertsComponent, AlertType alertType)
     {
-        if (AlertManager.TryGet(alertType, out var alert))
+        if (TryGet(alertType, out var alert))
         {
-            return IsShowingAlert(sharedAlertsComponent, alert.AlertKey);
+            return SharedAlertsSystem.IsShowingAlert(sharedAlertsComponent, alert.AlertKey);
         }
         Logger.DebugS("alert", "unknown alert type {0}", alertType);
         return false;
@@ -55,7 +67,7 @@ public class SharedAlertsSystem : EntitySystem
     public static void ShowAlert(SharedAlertsComponent sharedAlertsComponent, AlertType alertType, short? severity = null, (TimeSpan, TimeSpan)? cooldown = null)
     {
         var sys = EntitySystem.Get<SharedAlertsSystem>();
-        if (sys.AlertManager.TryGet(alertType, out var alert))
+        if (TryGet(alertType, out var alert))
         {
             // Check whether the alert category we want to show is already being displayed, with the same type,
             // severity, and cooldown.
@@ -107,7 +119,7 @@ public class SharedAlertsSystem : EntitySystem
     /// </summary>
     public void ClearAlert(SharedAlertsComponent sharedAlertsComponent, AlertType alertType)
     {
-        if (AlertManager.TryGet(alertType, out var alert))
+        if (TryGet(alertType, out var alert))
         {
             if (!sharedAlertsComponent.Alerts.Remove(alert.AlertKey))
             {
@@ -136,4 +148,28 @@ public class SharedAlertsSystem : EntitySystem
     /// </summary>
     /// <param name="sharedAlertsComponent"></param>
     protected virtual void AfterClearAlert(SharedAlertsComponent sharedAlertsComponent) { }
+
+    public static void LoadAlertPrototypes()
+    {
+        Get<SharedAlertsSystem>()._typeToAlert.Clear();
+
+        foreach (var alert in Get<SharedAlertsSystem>()._prototypeManager.EnumeratePrototypes<AlertPrototype>())
+        {
+            if (!Get<SharedAlertsSystem>()._typeToAlert.TryAdd(alert.AlertType, alert))
+            {
+                Logger.ErrorS("alert",
+                    "Found alert with duplicate alertType {0} - all alerts must have" +
+                    " a unique alerttype, this one will be skipped", alert.AlertType);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Tries to get the alert of the indicated type
+    /// </summary>
+    /// <returns>true if found</returns>
+    public static bool TryGet(AlertType alertType, [NotNullWhen(true)] out AlertPrototype? alert)
+    {
+        return Get<SharedAlertsSystem>()._typeToAlert.TryGetValue(alertType, out alert);
+    }
 }

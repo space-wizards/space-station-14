@@ -90,7 +90,7 @@ internal class ClientAlertsSystem : SharedAlertsSystem
             }
 
             var alertType = alertKey.AlertType.Value;
-            if (!AlertManager.TryGet(alertType, out var newAlert))
+            if (!TryGet(alertType, out var newAlert))
             {
                 Logger.ErrorS("alert", "Unrecognized alertType {0}", alertType);
                 continue;

@@ -46,15 +46,11 @@ namespace Content.Tests.Server.GameObjects.Components.Mobs
             var entSys = IoCManager.Resolve<IEntitySystemManager>();
             entSys.LoadExtraSystemType<ServerAlertsSystem>();
 
-            var alertManager = IoCManager.Resolve<AlertManager>();
-            alertManager.Initialize();
-
-
             var alertsComponent = new ServerAlertsComponent();
             alertsComponent = IoCManager.InjectDependencies(alertsComponent);
 
-            Assert.That(alertManager.TryGet(AlertType.LowPressure, out var lowpressure));
-            Assert.That(alertManager.TryGet(AlertType.HighPressure, out var highpressure));
+            Assert.That(SharedAlertsSystem.TryGet(AlertType.LowPressure, out var lowpressure));
+            Assert.That(SharedAlertsSystem.TryGet(AlertType.HighPressure, out var highpressure));
 
             SharedAlertsSystem.ShowAlert(alertsComponent, AlertType.LowPressure);
             var alertState = alertsComponent.GetComponentState() as AlertsComponentState;

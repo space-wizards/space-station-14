@@ -38,7 +38,7 @@ internal class ServerAlertsSystem : SharedAlertsSystem
             return;
         }
 
-        if (!AlertManager.TryGet(msg.Type, out var alert))
+        if (!TryGet(msg.Type, out var alert))
         {
             Logger.WarningS("alert", "unrecognized encoded alert {0}", msg.Type);
             return;
