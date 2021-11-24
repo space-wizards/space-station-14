@@ -1,11 +1,4 @@
 Entries:
-- author: SweptWasTaken
-  changes:
-  - {message: Saltern's space-facing walls are all reinforced and computers should
-      not be physics fucky anymore, type: Tweak}
-  - {message: Removed plasma canister from Saltern for now, type: Remove}
-  id: 147
-  time: '2021-04-02T19:37:33.0000000+00:00'
 - author: Swept
   changes:
   - {message: Pie cannon inhands fixed and can only hold 5 pies instead of 15, type: Fix}
@@ -2855,3 +2848,8 @@ Entries:
       > eject > swap-hands> insert., type: Tweak}
   id: 648
   time: '2021-11-24T07:03:08.0000000+00:00'
+- author: moonheart08
+  changes:
+  - {message: The lobby timer is now (much) longer., type: Tweak}
+  id: 649
+  time: '2021-11-24T09:52:07.0000000+00:00'
