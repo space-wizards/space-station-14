@@ -78,7 +78,7 @@ def wipe_bin():
     if os.path.exists("bin"):
         shutil.rmtree("bin")
 
-
+# Be advised this is called from package_server_build during a Hybrid-ACZ build.
 def build(skip_build: bool) -> None:
     # Run a full build.
     print(Fore.GREEN + "Building project..." + Style.RESET_ALL)

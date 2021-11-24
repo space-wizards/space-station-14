@@ -16,9 +16,8 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Access.Components
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(SharedIdCardConsoleComponent))]
-    public sealed class IdCardConsoleComponent : SharedIdCardConsoleComponent, IActivate
+    public sealed class IdCardConsoleComponent : SharedIdCardConsoleComponent
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -147,17 +146,6 @@ namespace Content.Server.Access.Components
                     targetIdEntity.Name);
             }
             UserInterface?.SetState(newState);
-        }
-
-        void IActivate.Activate(ActivateEventArgs eventArgs)
-        {
-            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
-            {
-                return;
-            }
-            if (!Powered) return;
-
-            UserInterface?.Open(actor.PlayerSession);
         }
     }
 }

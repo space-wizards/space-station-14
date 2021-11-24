@@ -1,59 +1,4 @@
 Entries:
-- author: Acruid
-  changes:
-  - {message: Fixed the client crashing after restarting the round, type: Fix}
-  id: 136
-  time: '2021-03-31T20:06:31.469316+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Ghosts are now deleted correctly, type: Fix}
-  id: 137
-  time: '2021-03-31T21:17:22.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Pulling collision disabled again, type: Tweak}
-  id: 138
-  time: '2021-04-01T03:32:13.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: The technology recipes actually unlock recipes for the protolathe!,
-    type: Add}
-  - {message: Some things can no longer be built in the autolathe, type: Tweak}
-  - {message: Nerfs point gen to 100 (REMEMBER TO PRESS SYNC TO GET YOUR POINTS ON
-      CONSOLE), type: Tweak}
-  id: 139
-  time: '2021-04-01T07:04:18.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Added inflatable walls. Engineers can use them as temporary barriers
-      when fixing atmos breaches., type: Add}
-  id: 140
-  time: '2021-04-01T07:04:56.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix cursed locker collision, type: Fix}
-  id: 141
-  time: '2021-04-01T07:46:23.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Changed the HUD sprites, type: Tweak}
-  id: 142
-  time: '2021-04-01T21:24:39.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Fixed placement of inflatable walls., type: Fix}
-  id: 143
-  time: '2021-04-01T21:34:36.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Debug weapons, type: Add}
-  id: 144
-  time: '2021-04-02T08:54:08.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Adds Animal / critter mob crates to cargo, type: Add}
-  id: 145
-  time: '2021-04-02T10:41:00.0000000+00:00'
 - author: Swept
   changes:
   - {message: You can eat organs, type: Add}
@@ -2853,3 +2798,59 @@ Entries:
       to the last changelog entry, type: Add}
   id: 637
   time: '2021-11-23T01:01:51.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Removed meth., type: Remove}
+  - {message: Added desoxyephedrine., type: Add}
+  id: 638
+  time: '2021-11-23T04:39:59.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Thrusters now have examine text, type: Add}
+  id: 639
+  time: '2021-11-23T06:44:08.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Admins are now fully knowledgeable of every potassium/water bomb you
+      make., type: Add}
+  id: 640
+  time: '2021-11-23T06:51:43.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Added epinephrine, an emergency medical chemical that reduces stun
+      times slightly and heals people that are in critical health. Everyone starts
+      with a medipen containing it in their survival box--beware of overdoses.', type: Add}
+  id: 641
+  time: '2021-11-23T06:51:52.0000000+00:00'
+- author: Mith-randalf
+  changes:
+  - {message: Added the warden's favourite jacket., type: Add}
+  id: 642
+  time: '2021-11-23T11:12:20.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Mopping now picks up slightly more reagents, and cleaning vomit should
+      be easier.', type: Tweak}
+  id: 643
+  time: '2021-11-23T17:14:46.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Pried tiles now have a random rotation applied, type: Tweak}
+  id: 644
+  time: '2021-11-23T17:15:49.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Smoke spam no longer crashes the server., type: Fix}
+  id: 645
+  time: '2021-11-23T19:35:50.472421+00:00'
+- author: Clyybber
+  changes:
+  - {message: Reworked how dropping items by slipping works., type: Tweak}
+  id: 646
+  time: '2021-11-23T23:38:39.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Disposals should no longer be capable of sending employees through walls
+      when they're not supposed to be., type: Fix}
+  id: 647
+  time: '2021-11-23T23:38:46.0000000+00:00'

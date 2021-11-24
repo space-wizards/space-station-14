@@ -90,7 +90,7 @@ namespace Content.IntegrationTests.Tests.Networking
             {
                 // Spawn dummy component entity.
                 var map = sMapManager.CreateMap();
-                var player = sPlayerManager.GetAllPlayers().Single();
+                var player = sPlayerManager.ServerSessions.Single();
                 serverEnt = sEntityManager.SpawnEntity(null, new MapCoordinates((0, 0), map));
                 serverComponent = serverEnt.AddComponent<PredictionTestComponent>();
 

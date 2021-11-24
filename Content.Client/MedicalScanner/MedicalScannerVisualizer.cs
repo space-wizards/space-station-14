@@ -1,6 +1,7 @@
 using System;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
 using static Content.Shared.MedicalScanner.SharedMedicalScannerComponent;
 using static Content.Shared.MedicalScanner.SharedMedicalScannerComponent.MedicalScannerStatus;
 

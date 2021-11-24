@@ -144,6 +144,9 @@
       whitelist:
         components:
         - IdCard
+  - type: ActivatableUI
+    key: enum.IdCardConsoleUiKey.Key
+  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.IdCardConsoleUiKey.Key
@@ -195,6 +198,9 @@
       key: generic_key
       screen: comm
   - type: CommunicationsConsole
+  - type: ActivatableUI
+    key: enum.CommunicationsConsoleUiKey.Key
+  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.CommunicationsConsoleUiKey.Key
@@ -218,6 +224,9 @@
       key: generic_key
       screen: solar_screen
   - type: SolarControlConsole
+  - type: ActivatableUI
+    key: enum.SolarControlConsoleUiKey.Key
+  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.SolarControlConsoleUiKey.Key
@@ -296,6 +305,9 @@
 #      - AtmosphericsWaterVapor
 #      - AtmosphericsPlasma
 #      - AtmosphericsTritium
+  - type: ActivatableUI
+    key: enum.CargoConsoleUiKey.Key
+  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.CargoConsoleUiKey.Key

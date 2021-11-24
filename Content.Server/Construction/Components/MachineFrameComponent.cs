@@ -4,7 +4,6 @@ using Content.Server.Stack;
 using Content.Shared.Construction;
 using Content.Shared.Interaction;
 using Content.Shared.Tag;
-using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;

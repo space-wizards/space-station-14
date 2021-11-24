@@ -1,10 +1,11 @@
 using System.Collections.Generic;
-using Content.Shared.DrawDepth;
 using Content.Shared.MobState;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
+using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Client.MobState
 {

@@ -1,4 +1,5 @@
 using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
 using static Content.Shared.Wires.SharedWiresComponent;
 
 namespace Content.Client.Wires.Visualizers
