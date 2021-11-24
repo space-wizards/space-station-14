@@ -699,6 +699,7 @@ namespace Content.Shared.Interaction
             {
                 comp.Dropped(new DroppedEventArgs(user, intentional));
             }
+            _adminLogSystem.Add(LogType.Drop, LogImpact.Low, $"{user} dropped {item}");
         }
         #endregion
 
