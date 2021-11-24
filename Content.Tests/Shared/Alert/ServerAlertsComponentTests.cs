@@ -7,7 +7,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
 
-namespace Content.Tests.Server.GameObjects.Components.Mobs
+namespace Content.Tests.Shared.Alert
 {
     [TestFixture]
     [TestOf(typeof(ServerAlertsComponent))]
