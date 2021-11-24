@@ -202,7 +202,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!ev.CanInteract ||
                 !EntityManager.TryGetComponent(ev.User.Uid, out SharedBodyComponent? body) ||
                 !_bodySystem.TryGetComponentsOnMechanisms<StomachComponent>(ev.User.Uid, out var stomachs, body) ||
-                !ev.User.Uid.InRangeUnobstructed(uid, popup: false))
+                !ev.CanAccess)
                 return;
 
             Verb verb = new();
