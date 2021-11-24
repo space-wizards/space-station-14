@@ -1,11 +1,6 @@
 Entries:
 - author: Swept
   changes:
-  - {message: Pie cannon inhands fixed and can only hold 5 pies instead of 15, type: Fix}
-  id: 148
-  time: '2021-04-04T11:13:20.0000000+00:00'
-- author: Swept
-  changes:
   - {message: Increased material cost of all lathe recipes, type: Tweak}
   id: 149
   time: '2021-04-05T00:00:45.0000000+00:00'
@@ -2853,3 +2848,8 @@ Entries:
   - {message: The lobby timer is now (much) longer., type: Tweak}
   id: 649
   time: '2021-11-24T09:52:07.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Solar control console works again, type: Fix}
+  id: 650
+  time: '2021-11-24T20:51:43.0000000+00:00'
