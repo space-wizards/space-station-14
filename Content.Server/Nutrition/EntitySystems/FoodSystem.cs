@@ -201,7 +201,8 @@ namespace Content.Server.Nutrition.EntitySystems
             Logger.DebugS("action", "triggered");
             if (!ev.CanInteract ||
                 !EntityManager.TryGetComponent(ev.User.Uid, out SharedBodyComponent? body) ||
-                !_bodySystem.TryGetComponentsOnMechanisms<StomachComponent>(ev.User.Uid, out var stomachs, body))
+                !_bodySystem.TryGetComponentsOnMechanisms<StomachComponent>(ev.User.Uid, out var stomachs, body) ||
+                !ev.User.Uid.InRangeUnobstructed(uid, popup: false))
                 return;
 
             Verb verb = new();
