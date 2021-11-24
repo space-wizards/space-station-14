@@ -9,6 +9,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -58,8 +59,13 @@ public class CreateEntityReaction : ITileReaction
                 }
             }
 
-            var newEnt = entMan.SpawnEntity(Entity, tile.GridPosition().Offset(new Vector2(0.5f, 0.5f)));
-            newEnt.RandomOffset(RandomOffsetMax);
+            var random = IoCManager.Resolve<IRobustRandom>();
+            var xoffs = random.NextFloat(-RandomOffsetMax, RandomOffsetMax);
+            var yoffs = random.NextFloat(-RandomOffsetMax, RandomOffsetMax);
+
+            var pos = tile.GridPosition().Offset(new Vector2(0.5f + xoffs, 0.5f + yoffs));
+            entMan.SpawnEntity(Entity, pos);
+
             return Usage;
         }
 

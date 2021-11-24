@@ -4,6 +4,9 @@
   id: Baguette
 
 - type: Tag
+  id: Bee
+
+- type: Tag
   id: Brutepack
 
 - type: Tag
@@ -236,6 +239,3 @@
 
 - type: Tag
   id: Write
-
-- type: Tag
-  id: Bee
