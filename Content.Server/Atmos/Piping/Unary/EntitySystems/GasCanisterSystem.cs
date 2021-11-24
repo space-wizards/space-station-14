@@ -284,7 +284,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
             _adminLogSystem.Add(LogType.CanisterTankInserted, LogImpact.Medium, $"Player {args.User:player} inserted tank {container.ContainedEntities[0]} into {uid}");
 
-
             args.Handled = true;
         }
 
