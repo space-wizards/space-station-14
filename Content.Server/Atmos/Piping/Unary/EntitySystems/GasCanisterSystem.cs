@@ -1,4 +1,5 @@
 using System;
+using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
@@ -10,12 +11,14 @@ using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -30,6 +33,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+        [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
 
         public override void Initialize()
         {
@@ -138,6 +142,8 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
             var pressure = Math.Clamp(args.Pressure, canister.MinReleasePressure, canister.MaxReleasePressure);
 
+            _adminLogSystem.Add(LogType.CanisterPressure, LogImpact.Medium, $"{(args.Session as IPlayerSession):player} set the release pressure on {uid} to {args.Pressure:valveState}");
+
             canister.ReleasePressure = pressure;
             DirtyUI(uid, canister);
         }
@@ -146,6 +152,8 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         {
             if (!CheckInteract(args.Session))
                 return;
+
+            _adminLogSystem.Add(LogType.CanisterValve, LogImpact.High, $"{(args.Session as IPlayerSession):player} set the valve on {uid} to {args.Valve:valveState}");
 
             canister.ReleaseValve = args.Valve;
             DirtyUI(uid, canister);
