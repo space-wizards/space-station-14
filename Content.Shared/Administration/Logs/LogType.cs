@@ -18,4 +18,6 @@ public enum LogType
     ExplosiveDepressurization = 10,
     ChemicalReaction = 17,
     ReagentEffect = 18,
+    CanisterValve = 19,
+    CanisterPressure = 20,
 }
