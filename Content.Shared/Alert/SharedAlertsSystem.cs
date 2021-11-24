@@ -23,31 +23,20 @@ public class SharedAlertsSystem : EntitySystem
     }
 
     /// <returns>true iff an alert of the indicated id is currently showing</returns>
-    public bool IsShowingAlert(SharedAlertsComponent sharedAlertsComponent, AlertType alertType)
+    public static bool IsShowingAlert(SharedAlertsComponent sharedAlertsComponent, AlertType alertType)
     {
         if (TryGet(alertType, out var alert))
         {
-            return SharedAlertsSystem.IsShowingAlert(sharedAlertsComponent, alert.AlertKey);
+            return sharedAlertsComponent.Alerts.ContainsKey(alert.AlertKey);
         }
         Logger.DebugS("alert", "unknown alert type {0}", alertType);
         return false;
     }
 
-    /// <returns>true iff an alert of the indicated key is currently showing</returns>
-    protected static bool IsShowingAlert(SharedAlertsComponent sharedAlertsComponent, AlertKey alertKey)
-    {
-        return sharedAlertsComponent.Alerts.ContainsKey(alertKey);
-    }
-
-    protected static IEnumerable<KeyValuePair<AlertKey, AlertState>> EnumerateAlertStates(SharedAlertsComponent sharedAlertsComponent)
-    {
-        return sharedAlertsComponent.Alerts;
-    }
-
     /// <returns>true iff an alert of the indicated alert category is currently showing</returns>
     public static bool IsShowingAlertCategory(SharedAlertsComponent sharedAlertsComponent, AlertCategory alertCategory)
     {
-        return SharedAlertsSystem.IsShowingAlert(sharedAlertsComponent, AlertKey.ForCategory(alertCategory));
+        return sharedAlertsComponent.Alerts.ContainsKey(AlertKey.ForCategory(alertCategory));
     }
 
     public static bool TryGetAlertState(SharedAlertsComponent sharedAlertsComponent, AlertKey key, out AlertState alertState)

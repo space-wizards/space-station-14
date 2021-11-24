@@ -30,7 +30,7 @@ internal class ServerAlertsSystem : SharedAlertsSystem
         
         if (player is null || !EntityManager.TryGetComponent<ServerAlertsComponent>(player, out var alertComp)) return;
 
-        if (!EntitySystem.Get<SharedAlertsSystem>().IsShowingAlert(alertComp, msg.Type))
+        if (!IsShowingAlert(alertComp, msg.Type))
         {
             Logger.DebugS("alert", "user {0} attempted to" +
                                    " click alert {1} which is not currently showing for them",

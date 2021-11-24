@@ -61,7 +61,7 @@ namespace Content.IntegrationTests.Tests.Gravity
             await server.WaitAssertion(() =>
             {
                 // No gravity without a gravity generator
-                Assert.True(EntitySystem.Get<SharedAlertsSystem>().IsShowingAlert(alerts, AlertType.Weightless));
+                Assert.True(SharedAlertsSystem.IsShowingAlert(alerts, AlertType.Weightless));
 
                 entityManager.SpawnEntity("GravityGeneratorDummy", entityManager.GetComponent<TransformComponent>(human).Coordinates);
             });
@@ -71,7 +71,7 @@ namespace Content.IntegrationTests.Tests.Gravity
 
             await server.WaitAssertion(() =>
             {
-                Assert.False(EntitySystem.Get<SharedAlertsSystem>().IsShowingAlert(alerts, AlertType.Weightless));
+                Assert.False(SharedAlertsSystem.IsShowingAlert(alerts, AlertType.Weightless));
 
                 // TODO: Re-add gravity generator breaking when Vera is done with construction stuff.
                 /*

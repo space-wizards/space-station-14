@@ -1,4 +1,3 @@
-using Content.Client.Administration.Managers;
 using Content.Client.Alerts.UI;
 using Content.Client.Chat;
 using Content.Client.Chat.Managers;
