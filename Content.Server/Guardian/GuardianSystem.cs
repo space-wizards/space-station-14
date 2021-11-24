@@ -91,7 +91,7 @@ namespace Content.Server.Guardian
             {
                 if (args.User.TryGetComponent<SharedActionsComponent>(out SharedActionsComponent? action))
                 {
-                    if (component.Used == false)
+                    if (!component.Used)
                     {
                         var hostcomp = args.User.EnsureComponent<GuardianHostComponent>();
                         var guardian = EntityManager.SpawnEntity(component.GuardianType, hostcomp.Owner.Transform.Coordinates);
