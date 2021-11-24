@@ -5,7 +5,7 @@
     "y": 32
   },
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/tgstation/tgstation/commit/b143783881fb7418213026857cb8c569636e259e#diff-8dd94e19fdb2ff341b57e31bce101298",
+  "copyright": "Taken from https://github.com/tgstation/tgstation/commit/b143783881fb7418213026857cb8c569636e259e#diff-8dd94e19fdb2ff341b57e31bce101298, created new sprites based on original",
   "states": [
     {
       "name": "icon",
@@ -19,7 +19,43 @@
       "name": "dead",
       "delays": [
         [
-          1
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "crit",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
         ]
       ]
     },
