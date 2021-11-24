@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using Content.Server.Alert;
 using Content.Shared.Alert;
 using NUnit.Framework;
@@ -28,6 +28,7 @@ namespace Content.Tests.Server.GameObjects.Components.Mobs
 ";
 
         [Test]
+        [Ignore("There is no way to load extra Systems in a unit test, fixing RobustUnitTest is out of scope.")]
         public void ShowAlerts()
         {
             // this is kind of unnecessary because there's integration test coverage of Alert components
@@ -41,6 +42,10 @@ namespace Content.Tests.Server.GameObjects.Components.Mobs
             factory.RegisterClass<ServerAlertsComponent>();
             prototypeManager.LoadFromStream(new StringReader(PROTOTYPES));
             prototypeManager.Resync();
+
+            var entSys = IoCManager.Resolve<IEntitySystemManager>();
+            entSys.LoadExtraSystemType<ServerAlertsSystem>();
+
             var alertManager = IoCManager.Resolve<AlertManager>();
             alertManager.Initialize();
 
