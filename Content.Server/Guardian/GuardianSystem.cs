@@ -130,16 +130,19 @@ namespace Content.Server.Guardian
         /// </summary>
         private void OnGuardianHostMove(EntityUid uid, GuardianHostComponent component, ref MoveEvent args)
         {
-            if (EntityManager.GetEntity(component.Hostedguardian).TryGetComponent<GuardianComponent>(out GuardianComponent? guardcomp))
+            if (EntityManager.TryGetEntity(component.Hostedguardian, out IEntity? guard))
             {
-                if (guardcomp.guardianLoose == true)
+                if  (guard.TryGetComponent<GuardianComponent>(out GuardianComponent? guardcomp))
                 {
-                    //Compares the distance to allowed distance, otherwise forces a recall action from the host
-                    if (!guardcomp.Owner.Transform.Coordinates.InRange(EntityManager, component.Owner.Transform.Coordinates, guardcomp.DistanceAllowed))
+                    if (guardcomp.guardianLoose == true)
                     {
-                        OnGuardianManifestAction(guardcomp.OwnerUid, uid);
+                        //Compares the distance to allowed distance, otherwise forces a recall action from the host
+                        if (!guardcomp.Owner.Transform.Coordinates.InRange(EntityManager, component.Owner.Transform.Coordinates, guardcomp.DistanceAllowed))
+                        {
+                            OnGuardianManifestAction(guardcomp.OwnerUid, uid);
+                        }
                     }
-                }
+                }        
             }
         }
 
