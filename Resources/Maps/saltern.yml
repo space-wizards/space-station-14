@@ -5599,13 +5599,8 @@ entities:
   - pos: -10.5,12.5
     parent: 853
     type: Transform
-  - cabinetSlot:
-      locked: True
-    type: ItemCabinet
   - containers:
-      cabinetSlot: !type:ContainerSlot {}
-      ItemCabinet: !type:ContainerSlot
-        ent: 3170
+      ItemCabinet: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 517
   type: Catwalk
@@ -35321,13 +35316,6 @@ entities:
     type: Physics
   - color: '#7F007FFF'
     type: AtmosPipeColor
-- uid: 3170
-  type: FireExtinguisher
-  components:
-  - parent: 516
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 3171
   type: CableApcExtension
   components:
@@ -35621,13 +35609,6 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
-- uid: 3199
-  type: FireExtinguisher
-  components:
-  - parent: 4921
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 3200
   type: CableApcExtension
   components:
@@ -35850,13 +35831,6 @@ entities:
   - rot: 4.371139006309477E-08 rad
     pos: 12.5,13.5
     parent: 853
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 3221
-  type: FireExtinguisher
-  components:
-  - parent: 4922
     type: Transform
   - canCollide: False
     type: Physics
@@ -36092,13 +36066,6 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
-- uid: 3244
-  type: FireExtinguisher
-  components:
-  - parent: 4923
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 3245
   type: CableApcExtension
   components:
@@ -36108,13 +36075,6 @@ entities:
     type: Transform
   - visible: False
     type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 3246
-  type: FireExtinguisher
-  components:
-  - parent: 4924
-    type: Transform
   - canCollide: False
     type: Physics
 - uid: 3247
@@ -36192,13 +36152,6 @@ entities:
     type: Transform
   - visible: False
     type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 3254
-  type: FireExtinguisher
-  components:
-  - parent: 4925
-    type: Transform
   - canCollide: False
     type: Physics
 - uid: 3255
@@ -36759,13 +36712,6 @@ entities:
     type: Transform
   - visible: False
     type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 3308
-  type: FireExtinguisher
-  components:
-  - parent: 4926
-    type: Transform
   - canCollide: False
     type: Physics
 - uid: 3309
@@ -37540,13 +37486,6 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
-- uid: 3394
-  type: FireExtinguisher
-  components:
-  - parent: 4927
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 3395
   type: CableApcExtension
   components:
@@ -37590,13 +37529,6 @@ entities:
   - rot: 4.371139006309477E-08 rad
     pos: -10.5,-26.5
     parent: 853
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 3400
-  type: FireExtinguisher
-  components:
-  - parent: 4928
     type: Transform
   - canCollide: False
     type: Physics
@@ -37989,13 +37921,6 @@ entities:
   - rot: 4.371139006309477E-08 rad
     pos: -18.5,-12.5
     parent: 853
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 3443
-  type: FireExtinguisher
-  components:
-  - parent: 4929
     type: Transform
   - canCollide: False
     type: Physics
@@ -38396,13 +38321,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 3487
-  type: FireExtinguisher
-  components:
-  - parent: 4930
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 3488
   type: CableHV
   components:
@@ -38535,13 +38453,6 @@ entities:
   - rot: 4.371139006309477E-08 rad
     pos: -19.5,13.5
     parent: 853
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 3503
-  type: FireExtinguisher
-  components:
-  - parent: 4931
     type: Transform
   - canCollide: False
     type: Physics
@@ -38826,13 +38737,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 3535
-  type: FireExtinguisher
-  components:
-  - parent: 4932
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 3536
   type: CableHV
   components:
@@ -38860,13 +38764,7 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 3539
-  type: FireExtinguisher
-  components:
-  - parent: 4934
-    type: Transform
-  - canCollide: False
-    type: Physics
+
 - uid: 3540
   type: CableHV
   components:
@@ -39110,13 +39008,6 @@ entities:
   - rot: 4.371139006309477E-08 rad
     pos: 11.5,24.5
     parent: 853
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 3564
-  type: FireExtinguisher
-  components:
-  - parent: 4935
     type: Transform
   - canCollide: False
     type: Physics
@@ -39926,13 +39817,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 3645
-  type: FireExtinguisher
-  components:
-  - parent: 4936
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 3646
   type: CableMV
   components:
@@ -39982,13 +39866,6 @@ entities:
     type: Transform
   - visible: False
     type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 3651
-  type: FireExtinguisher
-  components:
-  - parent: 4937
-    type: Transform
   - canCollide: False
     type: Physics
 - uid: 3652
@@ -40119,13 +39996,6 @@ entities:
     type: Transform
   - visible: False
     type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 3664
-  type: FireExtinguisher
-  components:
-  - parent: 4938
-    type: Transform
   - canCollide: False
     type: Physics
 - uid: 3665
@@ -40556,13 +40426,6 @@ entities:
   - rot: 4.371139006309477E-08 rad
     pos: 43.5,10.5
     parent: 853
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 3706
-  type: FireExtinguisher
-  components:
-  - parent: 4939
     type: Transform
   - canCollide: False
     type: Physics
@@ -43384,13 +43247,6 @@ entities:
   - rot: 4.371139006309477E-08 rad
     pos: -26.5,7.5
     parent: 853
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 3976
-  type: FireExtinguisher
-  components:
-  - parent: 4940
     type: Transform
   - canCollide: False
     type: Physics
@@ -50749,16 +50605,12 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 4833
-  type: ExtinguisherCabinet
+  type: ExtinguisherCabinetFilled
   components:
   - pos: 14.336893,-3.6277943
     parent: 853
     type: Transform
-  - cabinetSlot:
-      locked: True
-    type: ItemCabinet
   - containers:
-      cabinetSlot: !type:ContainerSlot {}
       ItemCabinet: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4834
@@ -51427,13 +51279,8 @@ entities:
   - pos: -26.5,-1.5
     parent: 853
     type: Transform
-  - cabinetSlot:
-      locked: True
-    type: ItemCabinet
   - containers:
-      cabinetSlot: !type:ContainerSlot {}
-      ItemCabinet: !type:ContainerSlot
-        ent: 3199
+      ItemCabinet: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4922
   type: ExtinguisherCabinetFilled
@@ -51441,13 +51288,8 @@ entities:
   - pos: -26.5,-4.5
     parent: 853
     type: Transform
-  - cabinetSlot:
-      locked: True
-    type: ItemCabinet
   - containers:
-      cabinetSlot: !type:ContainerSlot {}
-      ItemCabinet: !type:ContainerSlot
-        ent: 3221
+      ItemCabinet: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4923
   type: ExtinguisherCabinetFilled
@@ -51455,13 +51297,8 @@ entities:
   - pos: -15.5,-0.5
     parent: 853
     type: Transform
-  - cabinetSlot:
-      locked: True
-    type: ItemCabinet
   - containers:
-      cabinetSlot: !type:ContainerSlot {}
-      ItemCabinet: !type:ContainerSlot
-        ent: 3244
+      ItemCabinet: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4924
   type: ExtinguisherCabinetFilled
@@ -51469,13 +51306,8 @@ entities:
   - pos: -18.5,8.5
     parent: 853
     type: Transform
-  - cabinetSlot:
-      locked: True
-    type: ItemCabinet
   - containers:
-      cabinetSlot: !type:ContainerSlot {}
-      ItemCabinet: !type:ContainerSlot
-        ent: 3246
+      ItemCabinet: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4925
   type: ExtinguisherCabinetFilled
@@ -51483,13 +51315,8 @@ entities:
   - pos: -30.5,10.5
     parent: 853
     type: Transform
-  - cabinetSlot:
-      locked: True
-    type: ItemCabinet
   - containers:
-      cabinetSlot: !type:ContainerSlot {}
-      ItemCabinet: !type:ContainerSlot
-        ent: 3254
+      ItemCabinet: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4926
   type: ExtinguisherCabinetFilled
@@ -51497,13 +51324,8 @@ entities:
   - pos: -34.5,-2.5
     parent: 853
     type: Transform
-  - cabinetSlot:
-      locked: True
-    type: ItemCabinet
   - containers:
-      cabinetSlot: !type:ContainerSlot {}
-      ItemCabinet: !type:ContainerSlot
-        ent: 3308
+      ItemCabinet: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4927
   type: ExtinguisherCabinetFilled
@@ -51511,13 +51333,8 @@ entities:
   - pos: -16.5,-8.5
     parent: 853
     type: Transform
-  - cabinetSlot:
-      locked: True
-    type: ItemCabinet
   - containers:
-      cabinetSlot: !type:ContainerSlot {}
-      ItemCabinet: !type:ContainerSlot
-        ent: 3394
+      ItemCabinet: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4928
   type: ExtinguisherCabinetFilled
@@ -51525,13 +51342,8 @@ entities:
   - pos: -6.5,-16.5
     parent: 853
     type: Transform
-  - cabinetSlot:
-      locked: True
-    type: ItemCabinet
   - containers:
-      cabinetSlot: !type:ContainerSlot {}
-      ItemCabinet: !type:ContainerSlot
-        ent: 3400
+      ItemCabinet: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4929
   type: ExtinguisherCabinetFilled
@@ -51539,13 +51351,8 @@ entities:
   - pos: -6.5,-18.5
     parent: 853
     type: Transform
-  - cabinetSlot:
-      locked: True
-    type: ItemCabinet
   - containers:
-      cabinetSlot: !type:ContainerSlot {}
-      ItemCabinet: !type:ContainerSlot
-        ent: 3443
+      ItemCabinet: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4930
   type: ExtinguisherCabinetFilled
@@ -51553,13 +51360,8 @@ entities:
   - pos: 8.5,-17.5
     parent: 853
     type: Transform
-  - cabinetSlot:
-      locked: True
-    type: ItemCabinet
   - containers:
-      cabinetSlot: !type:ContainerSlot {}
-      ItemCabinet: !type:ContainerSlot
-        ent: 3487
+      ItemCabinet: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4931
   type: ExtinguisherCabinetFilled
@@ -51567,13 +51369,8 @@ entities:
   - pos: 16.5,-16.5
     parent: 853
     type: Transform
-  - cabinetSlot:
-      locked: True
-    type: ItemCabinet
   - containers:
-      cabinetSlot: !type:ContainerSlot {}
-      ItemCabinet: !type:ContainerSlot
-        ent: 3503
+      ItemCabinet: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4932
   type: ExtinguisherCabinetFilled
@@ -51581,13 +51378,8 @@ entities:
   - pos: 24.5,-16.5
     parent: 853
     type: Transform
-  - cabinetSlot:
-      locked: True
-    type: ItemCabinet
   - containers:
-      cabinetSlot: !type:ContainerSlot {}
-      ItemCabinet: !type:ContainerSlot
-        ent: 3535
+      ItemCabinet: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4933
   type: Grille
@@ -51601,13 +51393,8 @@ entities:
   - pos: 32.5,-5.5
     parent: 853
     type: Transform
-  - cabinetSlot:
-      locked: True
-    type: ItemCabinet
   - containers:
-      cabinetSlot: !type:ContainerSlot {}
-      ItemCabinet: !type:ContainerSlot
-        ent: 3539
+      ItemCabinet: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4935
   type: ExtinguisherCabinetFilled
@@ -51615,13 +51402,8 @@ entities:
   - pos: 41.5,-1.5
     parent: 853
     type: Transform
-  - cabinetSlot:
-      locked: True
-    type: ItemCabinet
   - containers:
-      cabinetSlot: !type:ContainerSlot {}
-      ItemCabinet: !type:ContainerSlot
-        ent: 3564
+      ItemCabinet: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4936
   type: ExtinguisherCabinetFilled
@@ -51629,13 +51411,8 @@ entities:
   - pos: 46.5,-11.5
     parent: 853
     type: Transform
-  - cabinetSlot:
-      locked: True
-    type: ItemCabinet
   - containers:
-      cabinetSlot: !type:ContainerSlot {}
-      ItemCabinet: !type:ContainerSlot
-        ent: 3645
+      ItemCabinet: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4937
   type: ExtinguisherCabinetFilled
@@ -51643,13 +51420,8 @@ entities:
   - pos: 52.5,-11.5
     parent: 853
     type: Transform
-  - cabinetSlot:
-      locked: True
-    type: ItemCabinet
   - containers:
-      cabinetSlot: !type:ContainerSlot {}
-      ItemCabinet: !type:ContainerSlot
-        ent: 3651
+      ItemCabinet: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4938
   type: ExtinguisherCabinetFilled
@@ -51657,13 +51429,8 @@ entities:
   - pos: 45.5,6.5
     parent: 853
     type: Transform
-  - cabinetSlot:
-      locked: True
-    type: ItemCabinet
   - containers:
-      cabinetSlot: !type:ContainerSlot {}
-      ItemCabinet: !type:ContainerSlot
-        ent: 3664
+      ItemCabinet: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4939
   type: ExtinguisherCabinetFilled
@@ -51671,13 +51438,8 @@ entities:
   - pos: 17.5,9.5
     parent: 853
     type: Transform
-  - cabinetSlot:
-      locked: True
-    type: ItemCabinet
   - containers:
-      cabinetSlot: !type:ContainerSlot {}
-      ItemCabinet: !type:ContainerSlot
-        ent: 3706
+      ItemCabinet: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4940
   type: ExtinguisherCabinetFilled
@@ -51685,13 +51447,8 @@ entities:
   - pos: 9.5,12.5
     parent: 853
     type: Transform
-  - cabinetSlot:
-      locked: True
-    type: ItemCabinet
   - containers:
-      cabinetSlot: !type:ContainerSlot {}
-      ItemCabinet: !type:ContainerSlot
-        ent: 3976
+      ItemCabinet: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4941
   type: Poweredlight
@@ -51711,13 +51468,8 @@ entities:
   - pos: -6.5,18.5
     parent: 853
     type: Transform
-  - cabinetSlot:
-      locked: True
-    type: ItemCabinet
   - containers:
-      cabinetSlot: !type:ContainerSlot {}
-      ItemCabinet: !type:ContainerSlot
-        ent: 4997
+      ItemCabinet: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4943
   type: ExtinguisherCabinetFilled
@@ -51725,13 +51477,8 @@ entities:
   - pos: 0.5,16.5
     parent: 853
     type: Transform
-  - cabinetSlot:
-      locked: True
-    type: ItemCabinet
   - containers:
-      cabinetSlot: !type:ContainerSlot {}
-      ItemCabinet: !type:ContainerSlot
-        ent: 5032
+      ItemCabinet: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4944
   type: ExtinguisherCabinetFilled
@@ -51739,13 +51486,8 @@ entities:
   - pos: 11.5,18.5
     parent: 853
     type: Transform
-  - cabinetSlot:
-      locked: True
-    type: ItemCabinet
   - containers:
-      cabinetSlot: !type:ContainerSlot {}
-      ItemCabinet: !type:ContainerSlot
-        ent: 7104
+      ItemCabinet: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4945
   type: ExtinguisherCabinetFilled
@@ -51753,13 +51495,8 @@ entities:
   - pos: 5.5,24.5
     parent: 853
     type: Transform
-  - cabinetSlot:
-      locked: True
-    type: ItemCabinet
   - containers:
-      cabinetSlot: !type:ContainerSlot {}
-      ItemCabinet: !type:ContainerSlot
-        ent: 7105
+      ItemCabinet: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4946
   type: ExtinguisherCabinetFilled
@@ -51767,13 +51504,8 @@ entities:
   - pos: 1.5,26.5
     parent: 853
     type: Transform
-  - cabinetSlot:
-      locked: True
-    type: ItemCabinet
   - containers:
-      cabinetSlot: !type:ContainerSlot {}
-      ItemCabinet: !type:ContainerSlot
-        ent: 7106
+      ItemCabinet: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4947
   type: ExtinguisherCabinetFilled
@@ -51781,13 +51513,8 @@ entities:
   - pos: -3.5,-25.5
     parent: 853
     type: Transform
-  - cabinetSlot:
-      locked: True
-    type: ItemCabinet
   - containers:
-      cabinetSlot: !type:ContainerSlot {}
-      ItemCabinet: !type:ContainerSlot
-        ent: 7107
+      ItemCabinet: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4948
   type: ExtinguisherCabinetFilled
@@ -51795,13 +51522,8 @@ entities:
   - pos: -13.5,-23.5
     parent: 853
     type: Transform
-  - cabinetSlot:
-      locked: True
-    type: ItemCabinet
   - containers:
-      cabinetSlot: !type:ContainerSlot {}
-      ItemCabinet: !type:ContainerSlot
-        ent: 7108
+      ItemCabinet: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4949
   type: ExtinguisherCabinetFilled
@@ -51809,13 +51531,8 @@ entities:
   - pos: 11.5,-28.5
     parent: 853
     type: Transform
-  - cabinetSlot:
-      locked: True
-    type: ItemCabinet
   - containers:
-      cabinetSlot: !type:ContainerSlot {}
-      ItemCabinet: !type:ContainerSlot
-        ent: 7109
+      ItemCabinet: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4950
   type: ExtinguisherCabinetFilled
@@ -51823,13 +51540,8 @@ entities:
   - pos: 20.5,-20.5
     parent: 853
     type: Transform
-  - cabinetSlot:
-      locked: True
-    type: ItemCabinet
   - containers:
-      cabinetSlot: !type:ContainerSlot {}
-      ItemCabinet: !type:ContainerSlot
-        ent: 7110
+      ItemCabinet: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4951
   type: ExtinguisherCabinetFilled
@@ -51837,13 +51549,8 @@ entities:
   - pos: 29.5,11.5
     parent: 853
     type: Transform
-  - cabinetSlot:
-      locked: True
-    type: ItemCabinet
   - containers:
-      cabinetSlot: !type:ContainerSlot {}
-      ItemCabinet: !type:ContainerSlot
-        ent: 7111
+      ItemCabinet: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4952
   type: ExtinguisherCabinetFilled
@@ -51851,13 +51558,8 @@ entities:
   - pos: 44.5,11.5
     parent: 853
     type: Transform
-  - cabinetSlot:
-      locked: True
-    type: ItemCabinet
   - containers:
-      cabinetSlot: !type:ContainerSlot {}
-      ItemCabinet: !type:ContainerSlot
-        ent: 7112
+      ItemCabinet: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4953
   type: Poweredlight
@@ -52220,13 +51922,6 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
-- uid: 4997
-  type: FireExtinguisher
-  components:
-  - parent: 4942
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 4998
   type: CableApcExtension
   components:
@@ -52490,13 +52185,6 @@ entities:
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
-- uid: 5032
-  type: FireExtinguisher
-  components:
-  - parent: 4943
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 5033
   type: CigaretteFilter
   components:
@@ -54764,13 +54452,8 @@ entities:
   - pos: 17.5,-29.5
     parent: 853
     type: Transform
-  - cabinetSlot:
-      locked: True
-    type: ItemCabinet
   - containers:
-      cabinetSlot: !type:ContainerSlot {}
-      ItemCabinet: !type:ContainerSlot
-        ent: 7113
+      ItemCabinet: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 5336
   type: ExtinguisherCabinetFilled
@@ -54778,13 +54461,8 @@ entities:
   - pos: -24.5,23.5
     parent: 853
     type: Transform
-  - cabinetSlot:
-      locked: True
-    type: ItemCabinet
   - containers:
-      cabinetSlot: !type:ContainerSlot {}
-      ItemCabinet: !type:ContainerSlot
-        ent: 7114
+      ItemCabinet: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 5337
   type: Catwalk
@@ -72872,83 +72550,6 @@ entities:
   - pos: 55.5,-15.5
     parent: 853
     type: Transform
-- uid: 7104
-  type: FireExtinguisher
-  components:
-  - parent: 4944
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7105
-  type: FireExtinguisher
-  components:
-  - parent: 4945
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7106
-  type: FireExtinguisher
-  components:
-  - parent: 4946
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7107
-  type: FireExtinguisher
-  components:
-  - parent: 4947
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7108
-  type: FireExtinguisher
-  components:
-  - parent: 4948
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7109
-  type: FireExtinguisher
-  components:
-  - parent: 4949
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7110
-  type: FireExtinguisher
-  components:
-  - parent: 4950
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7111
-  type: FireExtinguisher
-  components:
-  - parent: 4951
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7112
-  type: FireExtinguisher
-  components:
-  - parent: 4952
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7113
-  type: FireExtinguisher
-  components:
-  - parent: 5335
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 7114
-  type: FireExtinguisher
-  components:
-  - parent: 5336
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 7115
   type: SpawnPointChemist
   components:
