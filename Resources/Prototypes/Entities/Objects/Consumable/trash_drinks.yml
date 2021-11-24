@@ -30,7 +30,7 @@
   - type: DamageOtherOnHit
     damage:
       types:
-        Blunt: 10
+        Blunt: 4
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
