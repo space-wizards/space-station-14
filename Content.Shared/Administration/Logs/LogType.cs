@@ -20,4 +20,7 @@ public enum LogType
     ReagentEffect = 18,
     CanisterValve = 20,
     CanisterPressure = 21,
+    CanisterPurged = 22,
+    CanisterTankEjected = 23,
+    CanisterTankInserted = 24,
 }
