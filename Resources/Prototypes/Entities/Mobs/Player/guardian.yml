@@ -7,7 +7,7 @@
   - type: GhostTakeoverAvailable
     makeSentient: true
     name: Holoparasite
-    description: Listen to your owner. Don't tank damage. Punch people hard.
+    description: Listen to your owner. Don't take damage. Punch people hard.
   - type: Input
     context: "human"
   - type: PlayerMobMover
