@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Robust.Shared.Containers;
@@ -668,6 +669,7 @@ namespace Content.Shared.Hands.Components
 
             HandlePickupAnimation(entity);
             PutEntityIntoHand(hand, entity);
+            EntitySystem.Get<SharedAdminLogSystem>().Add(LogType.Pickup, LogImpact.Low, $"{Owner} picked up {entity}");
             return true;
         }
 

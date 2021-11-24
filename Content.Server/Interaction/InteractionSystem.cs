@@ -2,11 +2,13 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Server.Administration.Logs;
 using Content.Server.CombatMode;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.Pulling;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Administration.Logs;
 using Content.Shared.DragDrop;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
@@ -39,6 +41,7 @@ namespace Content.Server.Interaction
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly PullingSystem _pullSystem = default!;
         [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
+        [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
 
         public override void Initialize()
         {
@@ -376,6 +379,7 @@ namespace Content.Server.Interaction
             // all interactions should only happen when in range / unobstructed, so no range check is needed
             var message = new InteractHandEvent(user, target);
             RaiseLocalEvent(target.Uid, message);
+            _adminLogSystem.Add(LogType.InteractHand, LogImpact.Low, $"{user} interacted with {target}");
             if (message.Handled)
                 return;
 
@@ -469,7 +473,10 @@ namespace Content.Server.Interaction
                         RaiseLocalEvent(item.Uid, ev, false);
 
                         if (ev.Handled)
+                        {
+                            _adminLogSystem.Add(LogType.AttackArmedWide, LogImpact.Medium, $"{user} wide attacked with {item} at {coordinates}");
                             return;
+                        }
                     }
                     else
                     {
@@ -477,7 +484,20 @@ namespace Content.Server.Interaction
                         RaiseLocalEvent(item.Uid, ev, false);
 
                         if (ev.Handled)
+                        {
+                            if (targetEnt != null)
+                            {
+                                _adminLogSystem.Add(LogType.AttackArmedClick, LogImpact.Medium,
+                                    $"{user} attacked {targetEnt} with {item} at {coordinates}");
+                            }
+                            else
+                            {
+                                _adminLogSystem.Add(LogType.AttackArmedClick, LogImpact.Medium,
+                                    $"{user} attacked with {item} at {coordinates}");
+                            }
+
                             return;
+                        }
                     }
                 }
                 else if (!wideAttack &&
@@ -493,9 +513,30 @@ namespace Content.Server.Interaction
             // TODO: Make this saner?
             // Attempt to do unarmed combat. We don't check for handled just because at this point it doesn't matter.
             if (wideAttack)
-                RaiseLocalEvent(user.Uid, new WideAttackEvent(user, user, coordinates), false);
+            {
+                var ev = new WideAttackEvent(user, user, coordinates);
+                RaiseLocalEvent(user.Uid, ev, false);
+                if (ev.Handled)
+                    _adminLogSystem.Add(LogType.AttackUnarmedWide, $"{user} wide attacked at {coordinates}");
+            }
             else
-                RaiseLocalEvent(user.Uid, new ClickAttackEvent(user, user, coordinates, targetUid), false);
+            {
+                var ev = new ClickAttackEvent(user, user, coordinates, targetUid);
+                RaiseLocalEvent(user.Uid, ev, false);
+                if (ev.Handled)
+                {
+                    if (targetEnt != null)
+                    {
+                        _adminLogSystem.Add(LogType.AttackUnarmedClick, LogImpact.Medium,
+                            $"{user} attacked {targetEnt} at {coordinates}");
+                    }
+                    else
+                    {
+                        _adminLogSystem.Add(LogType.AttackUnarmedClick, LogImpact.Medium,
+                            $"{user} attacked at {coordinates}");
+                    }
+                }
+            }
         }
     }
 }

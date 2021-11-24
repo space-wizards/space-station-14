@@ -277,7 +277,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (!hands.Drop(args.Used, container))
                 return;
 
-            _adminLogSystem.Add(LogType.CanisterTankEjected, LogImpact.Medium, $"Player {args.User:player} inserted tank {container.ContainedEntities[0]} into {uid}");
+            _adminLogSystem.Add(LogType.CanisterTankInserted, LogImpact.Medium, $"Player {args.User:player} inserted tank {container.ContainedEntities[0]} into {uid}");
 
 
             args.Handled = true;
