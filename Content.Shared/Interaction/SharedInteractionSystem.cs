@@ -577,6 +577,7 @@ namespace Content.Shared.Interaction
             {
                 comp.Thrown(args);
             }
+            _adminLogSystem.Add(LogType.Throw, LogImpact.Low,$"{user} threw {thrown}");
         }
         #endregion
 
