@@ -1,23 +1,17 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using Content.Server.Access.Components;
-using Content.Server.Access.Systems;
-using Content.Server.Inventory.Components;
 using Content.Server.Medical.SuitSensors;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Damage;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Inventory;
 using Content.Shared.Medical.CrewMonitoring;
 using Content.Shared.Medical.SuitSensor;
-using Content.Shared.MobState.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Localization;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Medical.CrewMonitoring
 {
@@ -25,11 +19,32 @@ namespace Content.Server.Medical.CrewMonitoring
     {
         [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
         [Dependency] private readonly SuitSensorSystem _sensors = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+
+        private double _cooldownTime = 10;
+        private TimeSpan _cooldownEnd;
 
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<CrewMonitoringConsoleComponent, ActivateInWorldEvent>(OnActivate);
+        }
+
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+
+            var curTime = _gameTiming.CurTime;
+            if (_cooldownEnd < curTime)
+                return;
+
+            var consoles = EntityManager.EntityQuery<CrewMonitoringConsoleComponent>();
+            foreach (var console in consoles)
+            {
+                UpdateUserInterface(console.OwnerUid, console);
+            }
+
+            _cooldownEnd = curTime + TimeSpan.FromSeconds(_cooldownTime);
         }
 
         private void OnActivate(EntityUid uid, CrewMonitoringConsoleComponent component, ActivateInWorldEvent args)

@@ -81,6 +81,7 @@ namespace Content.Client.Medical.CrewMonitoring
             {
                SensorsTable.RemoveChild(child);
             }
+            _rowsContent.Clear();
         }
     }
 }
