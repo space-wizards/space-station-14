@@ -185,7 +185,7 @@ namespace Content.Server.Medical.SuitSensors
             // get mob total damage
             if (!EntityManager.TryGetComponent(sensor.User.Value, out DamageableComponent? damageable))
                 return null;
-            var totalDamage = damageable.TotalDamage;
+            var totalDamage = damageable.TotalDamage.Int();
 
             // finally, form suit sensor status
             var status = new SuitSensorStatus(userName, userJob);

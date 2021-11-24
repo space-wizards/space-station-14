@@ -41,7 +41,6 @@ namespace Content.Server.Medical.SuitSensors
         public EntityUid? User = null;
     }
 
-    [Serializable, NetSerializable]
     public enum SuitSensorMode : byte
     {
         /// <summary>

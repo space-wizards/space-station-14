@@ -1,5 +1,7 @@
-﻿using JetBrains.Annotations;
+﻿using Content.Shared.Medical.CrewMonitoring;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Client.Medical.CrewMonitoring
 {
@@ -16,6 +18,18 @@ namespace Content.Client.Medical.CrewMonitoring
             _menu = new CrewMonitoringWindow();
             _menu.OpenCentered();
             _menu.OnClose += Close;
+        }
+
+        protected override void UpdateState(BoundUserInterfaceState state)
+        {
+            base.UpdateState(state);
+
+            switch (state)
+            {
+                case CrewMonitoringState st:
+                    _menu?.ShowSensors(st.Sensors);
+                    break;
+            }
         }
 
         protected override void Dispose(bool disposing)

@@ -17,7 +17,7 @@ namespace Content.Shared.Medical.SuitSensor
         public string Name;
         public string Job;
         public bool IsAlive;
-        public FixedPoint2? TotalDamage;
+        public int? TotalDamage;
         public MapCoordinates? Coordinates;
     }
 }

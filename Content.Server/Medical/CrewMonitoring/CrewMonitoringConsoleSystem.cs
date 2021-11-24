@@ -69,9 +69,14 @@ namespace Content.Server.Medical.CrewMonitoring
             var ui = component.Owner.GetUIOrNull(CrewMonitoringUIKey.Key);
             if (ui == null)
                 return;
+
+            // update all sensors info
+            var allSensors = GetAllActiveSensors(uid, component);
+            var uiState = new CrewMonitoringState(allSensors);
+            ui.SetState(uiState);
         }
 
-        private IEnumerable<SuitSensorStatus> GetAllActiveSensors(EntityUid uid, CrewMonitoringConsoleComponent? component = null,
+        private List<SuitSensorStatus> GetAllActiveSensors(EntityUid uid, CrewMonitoringConsoleComponent? component = null,
             TransformComponent? transform = null)
         {
             var ret = new List<SuitSensorStatus>();
