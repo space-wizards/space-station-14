@@ -30,6 +30,11 @@ namespace Content.Server.Chemistry.Components
         public SolutionAreaEffectInceptionComponent? Inception { get; set; }
 
         /// <summary>
+        ///     Have we reacted with our tile yet?
+        /// </summary>
+        public bool ReactedTile = false;
+
+        /// <summary>
         /// Adds an <see cref="SolutionAreaEffectInceptionComponent"/> to owner so the effect starts spreading and reacting.
         /// </summary>
         /// <param name="amount">The range of the effect</param>
@@ -132,13 +137,18 @@ namespace Content.Server.Chemistry.Components
 
             var solutionFraction = 1 / Math.Floor(averageExposures);
 
-            foreach (var reagentQuantity in solution.Contents)
+            foreach (var reagentQuantity in solution.Contents.ToArray())
             {
                 if (reagentQuantity.Quantity == FixedPoint2.Zero) continue;
                 var reagent = PrototypeManager.Index<ReagentPrototype>(reagentQuantity.ReagentId);
 
                 // React with the tile the effect is on
-                reagent.ReactionTile(tile, reagentQuantity.Quantity * solutionFraction);
+                // We don't multiply by solutionFraction here since the tile is only ever reacted once
+                if (!ReactedTile)
+                {
+                    reagent.ReactionTile(tile, reagentQuantity.Quantity);
+                    ReactedTile = true;
+                }
 
                 // Touch every entity on the tile
                 foreach (var entity in tile.GetEntitiesInTileFast().ToArray())

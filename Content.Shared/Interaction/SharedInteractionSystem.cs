@@ -530,7 +530,7 @@ namespace Content.Shared.Interaction
                 if (verb.Disabled)
                     continue;
 
-                _verbSystem.ExecuteVerb(verb);
+                _verbSystem.ExecuteVerb(verb, user.Uid, target.Uid);
                 break;
             }
         }
@@ -658,11 +658,11 @@ namespace Content.Shared.Interaction
         /// Activates the Dropped behavior of an object
         /// Verifies that the user is capable of doing the drop interaction first
         /// </summary>
-        public bool TryDroppedInteraction(IEntity user, IEntity item, bool intentional)
+        public bool TryDroppedInteraction(IEntity user, IEntity item)
         {
             if (user == null || item == null || !_actionBlockerSystem.CanDrop(user.Uid)) return false;
 
-            DroppedInteraction(user, item, intentional);
+            DroppedInteraction(user, item);
             return true;
         }
 
@@ -670,21 +670,21 @@ namespace Content.Shared.Interaction
         ///     Calls Dropped on all components that implement the IDropped interface
         ///     on an entity that has been dropped.
         /// </summary>
-        public void DroppedInteraction(IEntity user, IEntity item, bool intentional)
+        public void DroppedInteraction(IEntity user, IEntity item)
         {
-            var dropMsg = new DroppedEvent(user.Uid, item.Uid, intentional);
+            var dropMsg = new DroppedEvent(user.Uid, item.Uid);
             RaiseLocalEvent(item.Uid, dropMsg);
             if (dropMsg.Handled)
                 return;
 
-            item.Transform.LocalRotation = intentional ? Angle.Zero : (_random.Next(0, 100) / 100f) * MathHelper.TwoPi;
+            item.Transform.LocalRotation = Angle.Zero;
 
             var comps = item.GetAllComponents<IDropped>().ToList();
 
             // Call Land on all components that implement the interface
             foreach (var comp in comps)
             {
-                comp.Dropped(new DroppedEventArgs(user, intentional));
+                comp.Dropped(new DroppedEventArgs(user));
             }
         }
         #endregion

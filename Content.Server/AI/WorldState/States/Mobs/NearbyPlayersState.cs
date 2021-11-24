@@ -1,10 +1,13 @@
 using System.Collections.Generic;
+using System.Linq;
 using Content.Server.AI.Components;
 using Content.Shared.Damage;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
+using Robust.Shared.Player;
 
 namespace Content.Server.AI.WorldState.States.Mobs
 {
@@ -22,8 +25,9 @@ namespace Content.Server.AI.WorldState.States.Mobs
                 return result;
             }
 
-            var playerManager = IoCManager.Resolve<IPlayerManager>();
-            var nearbyPlayers = playerManager.GetPlayersInRange(Owner.Transform.Coordinates, (int) controller.VisionRadius);
+            var nearbyPlayers = Filter.Empty()
+                .AddInRange(Owner.Transform.MapPosition, controller.VisionRadius)
+                .Recipients;
 
             foreach (var player in nearbyPlayers)
             {

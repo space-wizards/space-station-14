@@ -16,12 +16,14 @@ using Content.Shared.Inventory;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using static Content.Server.Chat.Managers.IChatManager;
 
@@ -90,13 +92,17 @@ namespace Content.Server.Chat.Managers
             Logger.InfoS("SERVER", message);
         }
 
-        public void DispatchStationAnnouncement(string message, string sender = "CentComm")
+        public void DispatchStationAnnouncement(string message, string sender = "CentComm", bool playDefaultSound = true)
         {
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.Radio;
             msg.Message = message;
             msg.MessageWrap = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender));
             _netManager.ServerSendToAll(msg);
+            if (playDefaultSound)
+            {
+                SoundSystem.Play(Filter.Broadcast(), "/Audio/Announcements/announce.ogg", AudioParams.Default.WithVolume(-2f));
+            }
         }
 
         public void DispatchServerMessage(IPlayerSession player, string message)
@@ -141,7 +147,7 @@ namespace Content.Server.Chat.Managers
 
             var clients = new List<INetChannel>();
 
-            foreach (var player in _playerManager.GetAllPlayers())
+            foreach (var player in _playerManager.Sessions)
             {
                 if (player.AttachedEntity == null) continue;
                 var transform = player.AttachedEntity.Transform;
@@ -216,15 +222,18 @@ namespace Content.Server.Chat.Managers
 
             action = FormattedMessage.EscapeText(action);
 
-            var pos = source.Transform.Coordinates;
-            var clients = _playerManager.GetPlayersInRange(pos, VoiceRange).Select(p => p.ConnectedClient);
+            var clients = Filter.Empty()
+                .AddInRange(source.Transform.MapPosition, VoiceRange)
+                .Recipients
+                .Select(p => p.ConnectedClient)
+                .ToList();
 
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.Emotes;
             msg.Message = action;
             msg.MessageWrap = Loc.GetString("chat-manager-entity-me-wrap-message", ("entityName",source.Name));
             msg.SenderEntity = source.Uid;
-            _netManager.ServerSendToMany(msg, clients.ToList());
+            _netManager.ServerSendToMany(msg, clients);
         }
 
         public void SendOOC(IPlayerSession player, string message)
@@ -318,10 +327,11 @@ namespace Content.Server.Chat.Managers
 
         private IEnumerable<INetChannel> GetDeadChatClients()
         {
-            return _playerManager
-                .GetPlayersBy(x => x.AttachedEntity != null && x.AttachedEntity.HasComponent<GhostComponent>())
-                .Select(p => p.ConnectedClient)
-                .Union(_adminManager.ActiveAdmins.Select(p => p.ConnectedClient));
+            return Filter.Empty()
+                .AddWhereAttachedEntity(uid => _entManager.HasComponent<GhostComponent>(uid))
+                .Recipients
+                .Union(_adminManager.ActiveAdmins)
+                .Select(p => p.ConnectedClient);
         }
 
         public void SendAdminChat(IPlayerSession player, string message)

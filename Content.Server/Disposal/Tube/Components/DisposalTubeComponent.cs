@@ -2,13 +2,13 @@ using System;
 using System.Linq;
 using Content.Server.Construction.Components;
 using Content.Server.Disposal.Unit.Components;
+using Content.Server.Disposal.Unit.EntitySystems;
 using Content.Shared.Acts;
 using Content.Shared.Disposal.Components;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Verbs;
 using Robust.Server.Console;
-using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -48,34 +48,6 @@ namespace Content.Server.Disposal.Tube.Components
         protected abstract Direction[] ConnectableDirections();
 
         public abstract Direction NextDirection(DisposalHolderComponent holder);
-
-        public virtual Vector2 ExitVector(DisposalHolderComponent holder)
-        {
-            return NextDirection(holder).ToVec();
-        }
-
-        public bool Remove(DisposalHolderComponent holder)
-        {
-            var removed = Contents.Remove(holder.Owner);
-            holder.ExitDisposals();
-            return removed;
-        }
-
-        public bool TransferTo(DisposalHolderComponent holder, IDisposalTubeComponent to)
-        {
-            var position = holder.Owner.Transform.LocalPosition;
-            if (!to.Contents.Insert(holder.Owner))
-            {
-                return false;
-            }
-
-            holder.Owner.Transform.LocalPosition = position;
-
-            Contents.Remove(holder.Owner);
-            holder.EnterTube(to);
-
-            return true;
-        }
 
         // TODO: Make disposal pipes extend the grid
         private void Connect()
@@ -124,7 +96,7 @@ namespace Content.Server.Disposal.Tube.Components
                     continue;
                 }
 
-                holder.ExitDisposals();
+                EntitySystem.Get<DisposableSystem>().ExitDisposals(holder.OwnerUid);
             }
         }
 

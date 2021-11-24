@@ -39,7 +39,7 @@ namespace Content.Server.Roles
 
                 if(Prototype.JoinNotifyCrew && Mind.CharacterName != null)
                     chat.DispatchStationAnnouncement(Loc.GetString("job-greet-join-notify-crew", ("jobName", Name), ("characterName", Mind.CharacterName)),
-                        Loc.GetString("job-greet-join-notify-crew-announcer"));
+                        Loc.GetString("job-greet-join-notify-crew-announcer"), false);
             }
         }
     }

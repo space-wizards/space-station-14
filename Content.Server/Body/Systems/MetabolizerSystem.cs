@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Body.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
@@ -20,6 +21,7 @@ namespace Content.Server.Body.Systems
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly SharedAdminLogSystem _logSystem = default!;
 
         public override void Initialize()
         {
@@ -158,6 +160,9 @@ namespace Content.Server.Body.Systems
                         if (!effect.ShouldApply(args, _random))
                             continue;
 
+                        var entity = EntityManager.GetEntity(args.SolutionEntity);
+                        _logSystem.Add(LogType.ReagentEffect, LogImpact.Low,
+                            $"Metabolism effect {effect.GetType().Name} of reagent {args.Reagent.Name:reagent} applied on entity {entity} at {entity.Transform.Coordinates}");
                         effect.Effect(args);
                     }
                 }

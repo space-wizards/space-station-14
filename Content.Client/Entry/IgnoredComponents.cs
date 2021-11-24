@@ -216,6 +216,8 @@ namespace Content.Client.Entry
             "Log",
             "Hoe",
             "Seed",
+            "ActivatableUI",
+            "ActivatableUIRequiresPower",
             "BotanySharp",
             "PlantSampleTaker",
             "Internals",
