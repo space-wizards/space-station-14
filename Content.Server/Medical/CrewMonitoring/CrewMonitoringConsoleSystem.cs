@@ -11,6 +11,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Inventory;
 using Content.Shared.Medical.CrewMonitoring;
+using Content.Shared.Medical.SuitSensor;
 using Content.Shared.MobState.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -23,7 +24,7 @@ namespace Content.Server.Medical.CrewMonitoring
     public class CrewMonitoringConsoleSystem : EntitySystem
     {
         [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
-        [Dependency] private readonly IdCardSystem _idCardSystem = default!;
+        [Dependency] private readonly SuitSensorSystem _sensors = default!;
 
         public override void Initialize()
         {
@@ -70,10 +71,10 @@ namespace Content.Server.Medical.CrewMonitoring
                 return;
         }
 
-        private IEnumerable<CrewMonitoringStatus> GetAllActiveSensors(EntityUid uid, CrewMonitoringConsoleComponent? component = null,
+        private IEnumerable<SuitSensorStatus> GetAllActiveSensors(EntityUid uid, CrewMonitoringConsoleComponent? component = null,
             TransformComponent? transform = null)
         {
-            var ret = new List<CrewMonitoringStatus>();
+            var ret = new List<SuitSensorStatus>();
             if (!Resolve(uid, ref component, ref transform))
                 return ret;
 
@@ -83,60 +84,12 @@ namespace Content.Server.Medical.CrewMonitoring
                 if (transform.MapID != sensorTransform.MapID)
                     continue;
 
-                var state = GetSensorState(sensor, transform);
+                var state = _sensors.GetSensorState(sensor.OwnerUid, sensor, sensorTransform);
                 if (state != null)
                     ret.Add(state);
             }
 
             return ret;
-        }
-
-        private CrewMonitoringStatus? GetSensorState(SuitSensorComponent sensor, TransformComponent transform)
-        {
-            // check if sensor is enabled and worn by user
-            if (sensor.Mode == SuitSensorMode.SensorOff || sensor.User == null)
-                return null;
-
-            // try to get mobs id from ID slot
-            var userName = Loc.GetString("crew-monitoring-component-unknown-name");
-            var userJob = Loc.GetString("crew-monitoring-component-unknown-job");
-            if (_idCardSystem.TryGeIdCardSlot(sensor.User.Value, out var card))
-            {
-                if (card.FullName != null)
-                    userName = card.FullName;
-                if (card.JobTitle != null)
-                    userJob = card.JobTitle;
-            }
-
-            // get health mob state
-            if (!EntityManager.TryGetComponent(sensor.User.Value, out MobStateComponent? mobState))
-                return null;
-            var isAlive = mobState.IsAlive();
-
-            // get mob total damage
-            if (!EntityManager.TryGetComponent(sensor.User.Value, out DamageableComponent? damageable))
-                return null;
-            var totalDamage = damageable.TotalDamage;
-
-            // finally, form suit sensor status
-            var status = new CrewMonitoringStatus(userName, userJob);
-            switch (sensor.Mode)
-            {
-                case SuitSensorMode.SensorBinary:
-                    status.IsAlive = isAlive;
-                    break;
-                case SuitSensorMode.SensorVitals:
-                    status.IsAlive = isAlive;
-                    status.TotalDamage = totalDamage;
-                    break;
-                case SuitSensorMode.SensorCords:
-                    status.IsAlive = isAlive;
-                    status.TotalDamage = totalDamage;
-                    status.Coordinates = transform.MapPosition;
-                    break;
-            }
-
-            return status;
         }
     }
 }

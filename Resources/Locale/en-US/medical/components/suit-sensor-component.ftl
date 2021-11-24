@@ -5,8 +5,13 @@ suit-sensor-mode-binary = Binary
 suit-sensor-mode-vitals = Vitals
 suit-sensor-mode-cords = Coordinates
 
-# Popups
+## Popups
 suit-sensor-mode-state = Suit sensors: {$mode}
+
+## Components
+
+suit-sensor-component-unknown-name = Unknown
+suit-sensor-component-unknown-job = No job
 
 ## Examine
 

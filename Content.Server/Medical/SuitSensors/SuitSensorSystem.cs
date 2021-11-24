@@ -1,7 +1,11 @@
-﻿using Content.Server.Popups;
+﻿using Content.Server.Access.Systems;
+using Content.Server.Popups;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.Inventory;
+using Content.Shared.Medical.SuitSensor;
+using Content.Shared.MobState.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -16,6 +20,7 @@ namespace Content.Server.Medical.SuitSensors
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly IdCardSystem _idCardSystem = default!;
 
         public override void Initialize()
         {
@@ -150,6 +155,57 @@ namespace Content.Server.Medical.SuitSensors
                 var msg = Loc.GetString("suit-sensor-mode-state", ("mode", GetModeName(mode)));
                 _popupSystem.PopupEntity(msg, uid, Filter.Entities(userUid.Value));
             }
+        }
+
+        public SuitSensorStatus? GetSensorState(EntityUid uid, SuitSensorComponent? sensor = null, TransformComponent? transform = null)
+        {
+            if (!Resolve(uid, ref sensor, ref transform))
+                return null;
+
+            // check if sensor is enabled and worn by user
+            if (sensor.Mode == SuitSensorMode.SensorOff || sensor.User == null)
+                return null;
+
+            // try to get mobs id from ID slot
+            var userName = Loc.GetString("suit-sensor-component-unknown-name");
+            var userJob = Loc.GetString("suit-sensor-component-unknown-job");
+            if (_idCardSystem.TryGeIdCardSlot(sensor.User.Value, out var card))
+            {
+                if (card.FullName != null)
+                    userName = card.FullName;
+                if (card.JobTitle != null)
+                    userJob = card.JobTitle;
+            }
+
+            // get health mob state
+            if (!EntityManager.TryGetComponent(sensor.User.Value, out MobStateComponent? mobState))
+                return null;
+            var isAlive = mobState.IsAlive();
+
+            // get mob total damage
+            if (!EntityManager.TryGetComponent(sensor.User.Value, out DamageableComponent? damageable))
+                return null;
+            var totalDamage = damageable.TotalDamage;
+
+            // finally, form suit sensor status
+            var status = new SuitSensorStatus(userName, userJob);
+            switch (sensor.Mode)
+            {
+                case SuitSensorMode.SensorBinary:
+                    status.IsAlive = isAlive;
+                    break;
+                case SuitSensorMode.SensorVitals:
+                    status.IsAlive = isAlive;
+                    status.TotalDamage = totalDamage;
+                    break;
+                case SuitSensorMode.SensorCords:
+                    status.IsAlive = isAlive;
+                    status.TotalDamage = totalDamage;
+                    status.Coordinates = transform.MapPosition;
+                    break;
+            }
+
+            return status;
         }
     }
 }
