@@ -243,6 +243,14 @@
 
 - type: entity
   parent: AirlockMaint
+  id: AirlockMaintChemLocked
+  suffix: Chemistry, Locked
+  components:
+  - type: AccessReader
+    access: [["Chemistry"]]
+
+- type: entity
+  parent: AirlockMaint
   id: AirlockMaintRnDLocked
   suffix: RnD, Locked
   components:
