@@ -7,9 +7,7 @@ using System.Threading.Tasks;
 using Content.Server.Chat.Managers;
 using Content.Server.Database;
 using Content.Server.Players;
-using Content.Shared;
 using Content.Shared.Administration;
-using Content.Shared.Administration.Menu;
 using Content.Shared.CCVar;
 using Robust.Server.Console;
 using Robust.Server.Player;
@@ -17,7 +15,6 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Network;
@@ -46,6 +43,8 @@ namespace Content.Server.Administration.Managers
         public IEnumerable<IPlayerSession> ActiveAdmins => _admins
             .Where(p => p.Value.Data.Active)
             .Select(p => p.Key);
+
+        public IEnumerable<IPlayerSession> AllAdmins => _admins.Select(p => p.Key);
 
         // If a command isn't in this list it's server-console only.
         // if a command is in but the flags value is null it's available to everybody.
@@ -172,8 +171,6 @@ namespace Content.Server.Administration.Managers
         public void Initialize()
         {
             _netMgr.RegisterNetMessage<MsgUpdateAdminStatus>();
-            _netMgr.RegisterNetMessage<AdminMenuPlayerListRequest>(HandlePlayerListRequest);
-            _netMgr.RegisterNetMessage<AdminMenuPlayerListMessage>();
 
             // Cache permissions for loaded console commands with the requisite attributes.
             foreach (var (cmdName, cmd) in _consoleHost.RegisteredCommands)
@@ -232,32 +229,6 @@ namespace Content.Server.Administration.Managers
                     }
                 }
             }
-        }
-
-        private void HandlePlayerListRequest(AdminMenuPlayerListRequest message)
-        {
-            var senderSession = _playerManager.GetSessionByChannel(message.MsgChannel);
-
-            if (!_admins.ContainsKey(senderSession))
-            {
-                return;
-            }
-
-            var netMsg = _netMgr.CreateNetMessage<AdminMenuPlayerListMessage>();
-
-            netMsg.PlayersInfo.Clear();
-
-            foreach (var session in _playerManager.GetAllPlayers())
-            {
-                var name = session.Name;
-                var username = session.AttachedEntity?.Name ?? string.Empty;
-                var antag = session.ContentData()?.Mind?.AllRoles.Any(r => r.Antagonist) ?? false;
-                var uid = session.AttachedEntity?.Uid ?? EntityUid.Invalid;
-
-                netMsg.PlayersInfo.Add(new AdminMenuPlayerListMessage.PlayerInfo(name, username, antag, uid));
-            }
-
-            _netMgr.ServerSendMessage(netMsg, senderSession.ConnectedClient);
         }
 
         public void PromoteHost(IPlayerSession player)

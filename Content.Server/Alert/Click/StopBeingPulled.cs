@@ -17,7 +17,7 @@ namespace Content.Server.Alert.Click
     {
         public void AlertClicked(ClickAlertEventArgs args)
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(args.Player))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(args.Player.Uid))
                 return;
 
             if (args.Player.TryGetComponent<SharedPullableComponent>(out var playerPullable))

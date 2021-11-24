@@ -34,10 +34,6 @@ namespace Content.Server.Power.Components
         /// </summary>
         [ViewVariables] public bool IsFullyCharged => MathHelper.CloseToPercent(CurrentCharge, MaxCharge);
 
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("autoRecharge")] public bool AutoRecharge { get; set; }
-
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("autoRechargeRate")] public float AutoRechargeRate { get; set; }
-
         /// <summary>
         ///     If sufficient charge is avaiable on the battery, use it. Otherwise, don't.
         /// </summary>
@@ -88,13 +84,6 @@ namespace Content.Server.Power.Components
         {
             _currentCharge = MathHelper.Clamp(newChargeAmount, 0, MaxCharge);
             OnChargeChanged();
-        }
-
-        public void OnUpdate(float frameTime)
-        {
-            if (!AutoRecharge) return;
-            if (IsFullyCharged) return;
-            CurrentCharge += AutoRechargeRate * frameTime;
         }
     }
 }

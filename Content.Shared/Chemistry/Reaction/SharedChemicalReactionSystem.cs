@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
@@ -6,6 +7,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Shared.Chemistry.Reaction
 {
@@ -16,6 +18,8 @@ namespace Content.Shared.Chemistry.Reaction
         private const int MaxReactionIterations = 20;
 
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] protected readonly SharedAdminLogSystem _logSystem = default!;
 
         public override void Initialize()
         {
@@ -56,8 +60,11 @@ namespace Content.Shared.Chemistry.Reaction
         ///     Perform a reaction on a solution. This assumes all reaction criteria are met.
         ///     Removes the reactants from the solution, then returns a solution with all products.
         /// </summary>
-        private Solution PerformReaction(Solution solution, IEntity owner, ReactionPrototype reaction, FixedPoint2 unitReactions)
+        private Solution PerformReaction(Solution solution, EntityUid ownerUid, ReactionPrototype reaction, FixedPoint2 unitReactions)
         {
+            // We do this so that ReagentEffect can have something to work with, even if it's
+            // a little meaningless.
+            var randomReagent = _prototypeManager.Index<ReagentPrototype>(_random.Pick(reaction.Reactants).Key);
             //Remove reactants
             foreach (var reactant in reaction.Reactants)
             {
@@ -76,16 +83,26 @@ namespace Content.Shared.Chemistry.Reaction
             }
 
             // Trigger reaction effects
-            OnReaction(solution, reaction, owner, unitReactions);
+            OnReaction(solution, reaction, randomReagent, ownerUid, unitReactions);
 
             return products;
         }
 
-        protected virtual void OnReaction(Solution solution, ReactionPrototype reaction, IEntity owner, FixedPoint2 unitReactions)
+        protected virtual void OnReaction(Solution solution, ReactionPrototype reaction, ReagentPrototype randomReagent, EntityUid ownerUid, FixedPoint2 unitReactions)
         {
+            var args = new ReagentEffectArgs(ownerUid, null, solution,
+                randomReagent,
+                unitReactions, EntityManager, null);
+
             foreach (var effect in reaction.Effects)
             {
-                effect.React(solution, owner, unitReactions.Double());
+                if (!effect.ShouldApply(args))
+                    continue;
+
+                var entity = EntityManager.GetEntity(args.SolutionEntity);
+                _logSystem.Add(LogType.ReagentEffect, LogImpact.Low,
+                    $"Reaction effect {effect.GetType().Name} of reaction ${reaction.ID:reaction} applied on entity {entity} at {entity.Transform.Coordinates}");
+                effect.Effect(args);
             }
         }
 
@@ -94,7 +111,7 @@ namespace Content.Shared.Chemistry.Reaction
         ///     Removes the reactants from the solution, then returns a solution with all products.
         ///     WARNING: Does not trigger reactions between solution and new products.
         /// </summary>
-        private Solution ProcessReactions(Solution solution, IEntity owner)
+        private Solution ProcessReactions(Solution solution, EntityUid ownerUid)
         {
             //TODO: make a hashmap at startup and then look up reagents in the contents for a reaction
             var overallProducts = new Solution();
@@ -102,7 +119,7 @@ namespace Content.Shared.Chemistry.Reaction
             {
                 if (CanReact(solution, reaction, out var unitReactions))
                 {
-                    var reactionProducts = PerformReaction(solution, owner, reaction, unitReactions);
+                    var reactionProducts = PerformReaction(solution, ownerUid, reaction, unitReactions);
                     overallProducts.AddSolution(reactionProducts);
                     break;
                 }
@@ -113,29 +130,29 @@ namespace Content.Shared.Chemistry.Reaction
         /// <summary>
         ///     Continually react a solution until no more reactions occur.
         /// </summary>
-        public void FullyReactSolution(Solution solution, IEntity owner)
+        public void FullyReactSolution(Solution solution, EntityUid ownerUid)
         {
             for (var i = 0; i < MaxReactionIterations; i++)
             {
-                var products = ProcessReactions(solution, owner);
+                var products = ProcessReactions(solution, ownerUid);
 
                 if (products.TotalVolume <= 0)
                     return;
 
                 solution.AddSolution(products);
             }
-            Logger.Error($"{nameof(Solution)} on {owner} (Uid: {owner.Uid}) could not finish reacting in under {MaxReactionIterations} loops.");
+            Logger.Error($"{nameof(Solution)} {ownerUid} could not finish reacting in under {MaxReactionIterations} loops.");
         }
 
         /// <summary>
         ///     Continually react a solution until no more reactions occur, with a volume constraint.
         ///     If a reaction's products would exceed the max volume, some product is deleted.
         /// </summary>
-        public void FullyReactSolution(Solution solution, IEntity owner, FixedPoint2 maxVolume)
+        public void FullyReactSolution(Solution solution, EntityUid ownerUid, FixedPoint2 maxVolume)
         {
             for (var i = 0; i < MaxReactionIterations; i++)
             {
-                var products = ProcessReactions(solution, owner);
+                var products = ProcessReactions(solution, ownerUid);
 
                 if (products.TotalVolume <= 0)
                     return;
@@ -150,7 +167,7 @@ namespace Content.Shared.Chemistry.Reaction
 
                 solution.AddSolution(products);
             }
-            Logger.Error($"{nameof(Solution)} on {owner} (Uid: {owner.Uid}) could not finish reacting in under {MaxReactionIterations} loops.");
+            Logger.Error($"{nameof(Solution)} {ownerUid} could not finish reacting in under {MaxReactionIterations} loops.");
         }
     }
 }

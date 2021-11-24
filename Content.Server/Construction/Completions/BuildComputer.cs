@@ -48,7 +48,7 @@ namespace Content.Server.Construction.Completions
 
             container.Remove(board);
 
-            var transform = entityManager.GetComponent<ITransformComponent>(uid);
+            var transform = entityManager.GetComponent<TransformComponent>(uid);
             var computer = entityManager.SpawnEntity(boardComponent.Prototype, transform.Coordinates);
             computer.Transform.LocalRotation = transform.LocalRotation;
 

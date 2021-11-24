@@ -1,8 +1,12 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
+using System.IO;
 using System.Net;
+using System.Text;
+using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
@@ -12,7 +16,6 @@ namespace Content.Server.Database
     {
         public DbSet<SqliteServerBan> Ban { get; set; } = default!;
         public DbSet<SqliteServerUnban> Unban { get; set; } = default!;
-        public DbSet<SqlitePlayer> Player { get; set; } = default!;
         public DbSet<SqliteConnectionLog> ConnectionLog { get; set; } = default!;
 
         public SqliteServerDbContext()
@@ -25,16 +28,29 @@ namespace Content.Server.Database
                 options.UseSqlite("dummy connection string");
 
             ((IDbContextOptionsBuilderInfrastructure) options).AddOrUpdateExtension(new SnakeCaseExtension());
+
+            options.ConfigureWarnings(x =>
+            {
+                x.Ignore(CoreEventId.ManyServiceProvidersCreatedWarning);
+            });
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<SqlitePlayer>()
+            modelBuilder.Entity<Player>()
                 .HasIndex(p => p.LastSeenUserName);
 
-            var converter = new ValueConverter<(IPAddress address, int mask), string>(
+            var ipConverter = new ValueConverter<IPAddress, string>(
+                v => v.ToString(),
+                v => IPAddress.Parse(v));
+
+            modelBuilder.Entity<Player>()
+                .Property(p => p.LastSeenAddress)
+                .HasConversion(ipConverter);
+
+            var ipMaskConverter = new ValueConverter<(IPAddress address, int mask), string>(
                 v => InetToString(v.address, v.mask),
                 v => StringToInet(v)
             );
@@ -43,7 +59,15 @@ namespace Content.Server.Database
                 .Entity<SqliteServerBan>()
                 .Property(e => e.Address)
                 .HasColumnType("TEXT")
-                .HasConversion(converter);
+                .HasConversion(ipMaskConverter);
+
+            var jsonConverter = new ValueConverter<JsonDocument, string>(
+                v => JsonDocumentToString(v),
+                v => StringToJsonDocument(v));
+
+            modelBuilder.Entity<AdminLog>()
+                .Property(log => log.Json)
+                .HasConversion(jsonConverter);
         }
 
         public SqliteServerDbContext(DbContextOptions<ServerDbContext> options) : base(options)
@@ -67,6 +91,22 @@ namespace Content.Server.Database
                 IPAddress.Parse(inet.AsSpan(0, idx)),
                 int.Parse(inet.AsSpan(idx + 1), provider: CultureInfo.InvariantCulture)
             );
+        }
+
+        private static string JsonDocumentToString(JsonDocument document)
+        {
+            using var stream = new MemoryStream();
+            using var writer = new Utf8JsonWriter(stream, new JsonWriterOptions {Indented = false});
+
+            document.WriteTo(writer);
+            writer.Flush();
+
+            return Encoding.UTF8.GetString(stream.ToArray());
+        }
+
+        private static JsonDocument StringToJsonDocument(string str)
+        {
+            return JsonDocument.Parse(str);
         }
     }
 
@@ -97,22 +137,6 @@ namespace Content.Server.Database
 
         public Guid? UnbanningAdmin { get; set; }
         public DateTime UnbanTime { get; set; }
-    }
-
-    [Table("player")]
-    public class SqlitePlayer
-    {
-        public int Id { get; set; }
-
-        // Permanent data
-        public Guid UserId { get; set; }
-        public DateTime FirstSeenTime { get; set; }
-
-        // Data that gets updated on each join.
-        public string LastSeenUserName { get; set; } = null!;
-        public DateTime LastSeenTime { get; set; }
-        public string LastSeenAddress { get; set; } = null!;
-        public byte[]? LastSeenHWId { get; set; }
     }
 
     [Table("connection_log")]

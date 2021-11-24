@@ -20,7 +20,7 @@ namespace Content.Client.ContextMenu.UI
         {
             if (GroupingContextMenuType == 0)
             {
-                var newEntities = entities.GroupBy(e => e, new PrototypeContextMenuComparer()).ToList();
+                var newEntities = entities.GroupBy(e => e.Name + (e.Prototype?.ID ?? string.Empty)).ToList();
                 return newEntities.Select(grp => grp.ToList()).ToList();
             }
             else
@@ -78,43 +78,6 @@ namespace Content.Client.ContextMenu.UI
             public int GetHashCode(IEntity e)
             {
                 return GetHashCodeList[_depth](e);
-            }
-        }
-
-        private sealed class PrototypeContextMenuComparer : IEqualityComparer<IEntity>
-        {
-            public bool Equals(IEntity? x, IEntity? y)
-            {
-                if (x == null)
-                {
-                    return y == null;
-                }
-                if (y != null)
-                {
-                    if (x.Prototype?.ID == y.Prototype?.ID)
-                    {
-                        var xStates = x.GetComponent<ISpriteComponent>().AllLayers.Where(e => e.Visible).Select(s => s.RsiState.Name);
-                        var yStates = y.GetComponent<ISpriteComponent>().AllLayers.Where(e => e.Visible).Select(s => s.RsiState.Name);
-
-                        return xStates.OrderBy(t => t).SequenceEqual(yStates.OrderBy(t => t));
-                    }
-                }
-                return false;
-            }
-
-            public int GetHashCode(IEntity e)
-            {
-                var hash = EqualityComparer<string>.Default.GetHashCode(e.Prototype?.ID!);
-
-                if (e.TryGetComponent<ISpriteComponent>(out var sprite))
-                {
-                    foreach (var element in sprite.AllLayers.Where(obj => obj.Visible).Select(s => s.RsiState.Name))
-                    {
-                        hash ^= EqualityComparer<string>.Default.GetHashCode(element!);
-                    }
-                }
-
-                return hash;
             }
         }
     }

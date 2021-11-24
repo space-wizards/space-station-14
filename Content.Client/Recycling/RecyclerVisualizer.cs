@@ -1,4 +1,4 @@
-﻿using Content.Shared.Conveyor;
+using Content.Shared.Conveyor;
 using Content.Shared.Recycling;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;

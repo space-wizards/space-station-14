@@ -166,18 +166,6 @@ namespace Content.Server.Hands.Systems
             hands.ActivateHeldEntity(msg.HandName);
         }
 
-        protected override void DropAllItemsInHands(IEntity entity, bool doMobChecks = true)
-        {
-            base.DropAllItemsInHands(entity, doMobChecks);
-
-            if (!entity.TryGetComponent(out IHandsComponent? hands)) return;
-
-            foreach (var heldItem in hands.GetAllHeldItems())
-            {
-                hands.Drop(heldItem.Owner, doMobChecks, intentional:false);
-            }
-        }
-
         //TODO: Actually shows all items/clothing/etc.
         private void HandleExamined(EntityUid uid, HandsComponent component, ExaminedEvent args)
         {
@@ -245,7 +233,7 @@ namespace Content.Server.Hands.Systems
                 if (splitStack == null)
                     return false;
 
-                throwEnt = splitStack;
+                throwEnt = EntityManager.GetEntity(splitStack.Value);
             }
             else if (!hands.Drop(throwEnt))
                 return false;

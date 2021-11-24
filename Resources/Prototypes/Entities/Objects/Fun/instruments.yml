@@ -5,7 +5,10 @@
   description: That's an instrument.
   components:
   - type: Instrument
-    handheld: true
+  - type: ActivatableUI
+    inHandsOnly: true
+    singleUser: true
+    key: enum.InstrumentUiKey.Key
   - type: UserInterface
     interfaces:
     - key: enum.InstrumentUiKey.Key

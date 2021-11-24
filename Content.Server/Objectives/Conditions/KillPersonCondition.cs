@@ -9,7 +9,7 @@ namespace Content.Server.Objectives.Conditions
         protected Mind.Mind? Target;
         public abstract IObjectiveCondition GetAssigned(Mind.Mind mind);
 
-        public string Title => Loc.GetString("objective-condition-kill-person-title", ("targetName", Target?.OwnedEntity?.Name ?? string.Empty));
+        public string Title => Loc.GetString("objective-condition-kill-person-title", ("targetName", Target?.CharacterName ?? Target?.OwnedEntity?.Name ?? string.Empty));
 
         public string Description => Loc.GetString("objective-condition-kill-person-description");
 

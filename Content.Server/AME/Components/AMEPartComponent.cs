@@ -5,7 +5,6 @@ using Content.Server.Tools;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
-using Content.Shared.Tools.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -36,7 +35,7 @@ namespace Content.Server.AME.Components
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs args)
         {
-            if (!args.User.TryGetComponent<IHandsComponent>(out var hands))
+            if (!args.User.HasComponent<HandsComponent>())
             {
                 Owner.PopupMessage(args.User, Loc.GetString("ame-part-component-interact-using-no-hands"));
                 return false;
@@ -56,7 +55,6 @@ namespace Content.Server.AME.Components
             }
 
             var ent = _serverEntityManager.SpawnEntity("AMEShielding", mapGrid.GridTileToLocal(snapPos));
-            ent.Transform.LocalRotation = Owner.Transform.LocalRotation;
 
             SoundSystem.Play(Filter.Pvs(Owner), _unwrapSound.GetSound(), Owner);
 

@@ -13,7 +13,6 @@ using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Tools;
-using Content.Shared.Tools.Components;
 using Content.Shared.Wires;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -417,7 +416,7 @@ namespace Content.Server.WireHacking
                         return;
                     }
 
-                    if (!player.TryGetComponent(out IHandsComponent? handsComponent))
+                    if (!player.TryGetComponent(out HandsComponent? handsComponent))
                     {
                         Owner.PopupMessage(player, Loc.GetString("wires-component-ui-on-receive-message-no-hands"));
                         return;
@@ -523,7 +522,7 @@ namespace Content.Server.WireHacking
 
             // screws the panel open if the tool can do so
             else if (await toolSystem.UseTool(tool.Owner.Uid, eventArgs.User.Uid, Owner.Uid,
-                0f, 0.5f, _screwingQuality, toolComponent:tool))
+                0f, WireHackingSystem.ScrewTime, _screwingQuality, toolComponent:tool))
             {
                 IsPanelOpen = !IsPanelOpen;
                 if (IsPanelOpen)

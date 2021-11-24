@@ -13,15 +13,22 @@ namespace Content.Server.Physics.Controllers
 {
     internal sealed class ConveyorController : VirtualController
     {
+        private ConveyorSystem _conveyor = default!;
+
         public override List<Type> UpdatesAfter => new() {typeof(MoverController)};
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            _conveyor = EntitySystem.Get<ConveyorSystem>();
+        }
 
         public override void UpdateBeforeSolve(bool prediction, float frameTime)
         {
             base.UpdateBeforeSolve(prediction, frameTime);
-            var system = EntitySystem.Get<ConveyorSystem>();
             foreach (var comp in EntityManager.EntityQuery<ConveyorComponent>())
             {
-                Convey(system, comp, frameTime);
+                Convey(_conveyor, comp, frameTime);
             }
         }
 

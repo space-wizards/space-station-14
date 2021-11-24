@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Content.Server.Chat.Managers;
 using Content.Server.Doors;
@@ -6,9 +8,8 @@ using Content.Server.Players;
 using Content.Server.Suspicion;
 using Content.Server.Suspicion.EntitySystems;
 using Content.Server.Suspicion.Roles;
-using Content.Shared;
 using Content.Shared.CCVar;
-using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
 using Content.Shared.Sound;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
@@ -26,7 +27,7 @@ namespace Content.Server.GameTicking.Rules
     /// <summary>
     ///     Simple GameRule that will do a TTT-like gamemode with traitors.
     /// </summary>
-    public sealed class RuleSuspicion : GameRule, IEntityEventSubscriber
+    public sealed class RuleSuspicion : GameRule
     {
         private static readonly TimeSpan DeadCheckDelay = TimeSpan.FromSeconds(1);
 
@@ -87,10 +88,10 @@ namespace Content.Server.GameTicking.Rules
             var traitorsAlive = 0;
             var innocentsAlive = 0;
 
-            foreach (var playerSession in _playerManager.GetAllPlayers())
+            foreach (var playerSession in _playerManager.ServerSessions)
             {
                 if (playerSession.AttachedEntity == null
-                    || !playerSession.AttachedEntity.TryGetComponent(out IMobStateComponent? mobState)
+                    || !playerSession.AttachedEntity.TryGetComponent(out MobStateComponent? mobState)
                     || !playerSession.AttachedEntity.HasComponent<SuspicionRoleComponent>())
                 {
                     continue;

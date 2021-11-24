@@ -2,21 +2,19 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.Buckle.Components;
+using Content.Server.Administration.Logs;
 using Content.Server.CombatMode;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.Pulling;
-using Content.Server.Verbs;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Administration.Logs;
 using Content.Shared.DragDrop;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
 using Content.Shared.Pulling.Components;
-using Content.Shared.Rotatable;
-using Content.Shared.Timing;
 using Content.Shared.Weapons.Melee;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -29,9 +27,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Players;
-using Robust.Shared.Random;
 
 namespace Content.Server.Interaction
 {
@@ -45,6 +41,7 @@ namespace Content.Server.Interaction
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly PullingSystem _pullSystem = default!;
         [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
+        [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
 
         public override void Initialize()
         {
@@ -139,6 +136,9 @@ namespace Content.Server.Interaction
                 return;
             }
 
+            if (!_actionBlockerSystem.CanInteract(userEntity.Uid))
+                return;
+
             if (!EntityManager.TryGetEntity(msg.Dropped, out var dropped))
                 return;
             if (!EntityManager.TryGetEntity(msg.Target, out var target))
@@ -185,6 +185,9 @@ namespace Content.Server.Interaction
             }
 
             if (!EntityManager.TryGetEntity(uid, out var used))
+                return false;
+
+            if (user.IsInContainer())
                 return false;
 
             InteractionActivate(user, used);
@@ -296,7 +299,7 @@ namespace Content.Server.Interaction
             if (!ValidateInteractAndFace(user, coordinates))
                 return;
 
-            if (!_actionBlockerSystem.CanInteract(user))
+            if (!_actionBlockerSystem.CanInteract(user.Uid))
                 return;
 
             // Get entity clicked upon from UID if valid UID, if not assume no entity clicked upon and null
@@ -311,7 +314,7 @@ namespace Content.Server.Interaction
             }
 
             // Verify user has a hand, and find what object they are currently holding in their active hand
-            if (!user.TryGetComponent<IHandsComponent>(out var hands))
+            if (!user.TryGetComponent<HandsComponent>(out var hands))
                 return;
 
             var item = hands.GetActiveHand?.Owner;
@@ -370,12 +373,13 @@ namespace Content.Server.Interaction
         /// </summary>
         public void InteractHand(IEntity user, IEntity target)
         {
-            if (!_actionBlockerSystem.CanInteract(user))
+            if (!_actionBlockerSystem.CanInteract(user.Uid))
                 return;
 
             // all interactions should only happen when in range / unobstructed, so no range check is needed
             var message = new InteractHandEvent(user, target);
             RaiseLocalEvent(target.Uid, message);
+            _adminLogSystem.Add(LogType.InteractHand, LogImpact.Low, $"{user} interacted with {target}");
             if (message.Handled)
                 return;
 
@@ -406,7 +410,7 @@ namespace Content.Server.Interaction
 
             if (target != null)
             {
-                var rangedMsg = new RangedInteractEvent(user, used, target, clickLocation);
+                var rangedMsg = new RangedInteractEvent(user.Uid, used.Uid, target.Uid, clickLocation);
                 RaiseLocalEvent(target.Uid, rangedMsg);
                 if (rangedMsg.Handled)
                     return true;
@@ -433,7 +437,7 @@ namespace Content.Server.Interaction
             if (!ValidateInteractAndFace(user, coordinates))
                 return;
 
-            if (!_actionBlockerSystem.CanAttack(user))
+            if (!_actionBlockerSystem.CanAttack(user.Uid))
                 return;
 
             IEntity? targetEnt = null;
@@ -457,7 +461,7 @@ namespace Content.Server.Interaction
             }
 
             // Verify user has a hand, and find what object they are currently holding in their active hand
-            if (user.TryGetComponent<IHandsComponent>(out var hands))
+            if (user.TryGetComponent<HandsComponent>(out var hands))
             {
                 var item = hands.GetActiveHand?.Owner;
 
@@ -469,7 +473,10 @@ namespace Content.Server.Interaction
                         RaiseLocalEvent(item.Uid, ev, false);
 
                         if (ev.Handled)
+                        {
+                            _adminLogSystem.Add(LogType.AttackArmedWide, LogImpact.Medium, $"{user} wide attacked with {item} at {coordinates}");
                             return;
+                        }
                     }
                     else
                     {
@@ -477,7 +484,20 @@ namespace Content.Server.Interaction
                         RaiseLocalEvent(item.Uid, ev, false);
 
                         if (ev.Handled)
+                        {
+                            if (targetEnt != null)
+                            {
+                                _adminLogSystem.Add(LogType.AttackArmedClick, LogImpact.Medium,
+                                    $"{user} attacked {targetEnt} with {item} at {coordinates}");
+                            }
+                            else
+                            {
+                                _adminLogSystem.Add(LogType.AttackArmedClick, LogImpact.Medium,
+                                    $"{user} attacked with {item} at {coordinates}");
+                            }
+
                             return;
+                        }
                     }
                 }
                 else if (!wideAttack &&
@@ -493,9 +513,30 @@ namespace Content.Server.Interaction
             // TODO: Make this saner?
             // Attempt to do unarmed combat. We don't check for handled just because at this point it doesn't matter.
             if (wideAttack)
-                RaiseLocalEvent(user.Uid, new WideAttackEvent(user, user, coordinates), false);
+            {
+                var ev = new WideAttackEvent(user, user, coordinates);
+                RaiseLocalEvent(user.Uid, ev, false);
+                if (ev.Handled)
+                    _adminLogSystem.Add(LogType.AttackUnarmedWide, $"{user} wide attacked at {coordinates}");
+            }
             else
-                RaiseLocalEvent(user.Uid, new ClickAttackEvent(user, user, coordinates, targetUid), false);
+            {
+                var ev = new ClickAttackEvent(user, user, coordinates, targetUid);
+                RaiseLocalEvent(user.Uid, ev, false);
+                if (ev.Handled)
+                {
+                    if (targetEnt != null)
+                    {
+                        _adminLogSystem.Add(LogType.AttackUnarmedClick, LogImpact.Medium,
+                            $"{user} attacked {targetEnt} at {coordinates}");
+                    }
+                    else
+                    {
+                        _adminLogSystem.Add(LogType.AttackUnarmedClick, LogImpact.Medium,
+                            $"{user} attacked at {coordinates}");
+                    }
+                }
+            }
         }
     }
 }

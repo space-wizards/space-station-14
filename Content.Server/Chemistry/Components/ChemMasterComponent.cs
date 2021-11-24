@@ -9,7 +9,7 @@ using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -34,15 +34,9 @@ namespace Content.Server.Chemistry.Components
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    [ComponentReference(typeof(IInteractUsing))]
-    public class ChemMasterComponent : SharedChemMasterComponent, IActivate, IInteractUsing
+    [ComponentReference(typeof(SharedChemMasterComponent))]
+    public class ChemMasterComponent : SharedChemMasterComponent, IActivate
     {
-        [ViewVariables]
-        public ContainerSlot BeakerContainer = default!;
-
-        [ViewVariables]
-        public bool HasBeaker => BeakerContainer.ContainedEntity != null;
-
         [ViewVariables]
         private bool _bufferModeTransfer = true;
 
@@ -74,13 +68,7 @@ namespace Content.Server.Chemistry.Components
                 UserInterface.OnReceiveMessage += OnUiReceiveMessage;
             }
 
-            // Name relied upon by construction graph machine.yml to ensure beaker doesn't get deleted
-            BeakerContainer =
-                ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-reagentContainerContainer");
-
             _bufferSolution = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner.Uid, SolutionName);
-
-            UpdateUserInterface();
         }
 
         [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
@@ -127,7 +115,7 @@ namespace Content.Server.Chemistry.Components
             switch (msg.action)
             {
                 case UiAction.Eject:
-                    TryEject(obj.Session.AttachedEntity);
+                    EntitySystem.Get<ItemSlotsSystem>().TryEjectToHands(OwnerUid, BeakerSlot, obj.Session.AttachedEntityUid);
                     break;
                 case UiAction.ChemButton:
                     TransferReagent(msg.id, msg.amount, msg.isBuffer);
@@ -166,7 +154,7 @@ namespace Content.Server.Chemistry.Components
             var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
 
             //Check if player can interact in their current state
-            if (!actionBlocker.CanInteract(playerEntity) || !actionBlocker.CanUse(playerEntity))
+            if (!actionBlocker.CanInteract(playerEntity.Uid) || !actionBlocker.CanUse(playerEntity.Uid))
                 return false;
             //Check if device is powered
             if (needsPower && !Powered)
@@ -181,7 +169,7 @@ namespace Content.Server.Chemistry.Components
         /// <returns>Returns a <see cref="SharedChemMasterComponent.ChemMasterBoundUserInterfaceState"/></returns>
         private ChemMasterBoundUserInterfaceState GetUserInterfaceState()
         {
-            var beaker = BeakerContainer.ContainedEntity;
+            var beaker = BeakerSlot.Item;
             if (beaker is null || !beaker.TryGetComponent(out FitsInDispenserComponent? fits) ||
                 !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(beaker.Uid, fits.Solution, out var beakerSolution))
             {
@@ -202,34 +190,10 @@ namespace Content.Server.Chemistry.Components
             UserInterface?.SetState(state);
         }
 
-        /// <summary>
-        /// If this component contains an entity with a <see cref="Solution"/>, eject it.
-        /// Tries to eject into user's hands first, then ejects onto chem master if both hands are full.
-        /// </summary>
-        public void TryEject(IEntity user)
-        {
-            if (!HasBeaker)
-                return;
-
-            var beaker = BeakerContainer.ContainedEntity;
-
-            if (beaker is null)
-                return;
-
-            BeakerContainer.Remove(beaker);
-            UpdateUserInterface();
-
-            if (!user.TryGetComponent<HandsComponent>(out var hands) ||
-                !beaker.TryGetComponent<ItemComponent>(out var item))
-                return;
-            if (hands.CanPutInHand(item))
-                hands.PutInHand(item);
-        }
-
         private void TransferReagent(string id, FixedPoint2 amount, bool isBuffer)
         {
-            if (!HasBeaker && _bufferModeTransfer) return;
-            var beaker = BeakerContainer.ContainedEntity;
+            if (!BeakerSlot.HasItem && _bufferModeTransfer) return;
+            var beaker = BeakerSlot.Item;
 
             if (beaker is null || !beaker.TryGetComponent(out FitsInDispenserComponent? fits) ||
                 !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(beaker.Uid, fits.Solution, out var beakerSolution))
@@ -378,7 +342,7 @@ namespace Content.Server.Chemistry.Components
                 return;
             }
 
-            if (!args.User.TryGetComponent(out IHandsComponent? hands))
+            if (!args.User.TryGetComponent(out HandsComponent? hands))
             {
                 Owner.PopupMessage(args.User, Loc.GetString("chem-master-component-activate-no-hands"));
                 return;
@@ -389,61 +353,6 @@ namespace Content.Server.Chemistry.Components
             {
                 UserInterface?.Open(actor.PlayerSession);
             }
-        }
-
-        /// <summary>
-        /// Called when you click the owner entity with something in your active hand. If the entity in your hand
-        /// contains a <see cref="Solution"/>, if you have hands, and if the chem master doesn't already
-        /// hold a container, it will be added to the chem master.
-        /// </summary>
-        /// <param name="args">Data relevant to the event such as the actor which triggered it.</param>
-        /// <returns></returns>
-        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs args)
-        {
-            if (!args.User.TryGetComponent(out IHandsComponent? hands))
-            {
-                Owner.PopupMessage(args.User, Loc.GetString("chem-master-component-interact-using-no-hands"));
-                return true;
-            }
-
-            if (hands.GetActiveHand == null)
-            {
-                Owner.PopupMessage(args.User, Loc.GetString("chem-master-component-interact-using-nothing-in-hands"));
-                return false;
-            }
-
-            var activeHandEntity = hands.GetActiveHand.Owner;
-            if (activeHandEntity.HasComponent<SolutionContainerManagerComponent>())
-            {
-                if (HasBeaker)
-                {
-                    Owner.PopupMessage(args.User, Loc.GetString("chem-master-component-has-beaker-already-message"));
-                }
-                else if (!activeHandEntity.HasComponent<FitsInDispenserComponent>())
-                {
-                    //If it can't fit in the chem master, don't put it in. For example, buckets and mop buckets can't fit.
-                    Owner.PopupMessage(args.User,
-                        Loc.GetString("chem-master-component-container-too-large-message",
-                            ("container", activeHandEntity)));
-                }
-                else
-                {
-                    BeakerContainer.Insert(activeHandEntity);
-                    UpdateUserInterface();
-                }
-            }
-            else
-            {
-                Owner.PopupMessage(args.User,
-                    Loc.GetString("chem-master-component-cannot-put-entity-message", ("entity", activeHandEntity)));
-                // TBD: This is very definitely hax so that Construction & Wires get a chance to handle things.
-                // When this is ECS'd, drop this in favour of proper prioritization.
-                // Since this is a catch-all handler, that means do this last!
-                // Also note ReagentDispenserComponent did something similar before I got here.
-                return false;
-            }
-
-            return true;
         }
 
         private void ClickSound()

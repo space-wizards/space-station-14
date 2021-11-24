@@ -20,13 +20,11 @@
     state: cube
   - type: Reactive
     reactions:
+    - reagents: [Water]
+      methods: [Touch, Ingestion, Injection]
+      effects:
       - !type:AddToSolutionReaction
         solution: cube
-        touch: true
-        ingestion: true
-        injection: true
-        reagents:
-          - Water
   - type: Rehydratable
     target: MobMonkey
   - type: CollisionWake
@@ -62,13 +60,11 @@
     solution: plushie
   - type: Reactive
     reactions:
-    - !type:AddToSolutionReaction
-      solution: plushie
-      touch: true
-      ingestion: true
-      injection: true
-      reagents:
-      - Water
+    - reagents: [Water]
+      methods: [Touch, Ingestion, Injection]
+      effects:
+      - !type:AddToSolutionReaction
+        solution: plushie
   - type: Rehydratable
     target: MobCarp
   - type: CollisionWake

@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.UserInterface;
 using Content.Shared.Body.Components;
-using Content.Shared.Body.Mechanism;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Surgery;
 using Content.Shared.Interaction;

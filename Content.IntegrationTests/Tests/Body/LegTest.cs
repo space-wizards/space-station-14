@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Content.Server.Body;
+using Content.Server.Body.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Rotation;
@@ -34,7 +35,7 @@ namespace Content.IntegrationTests.Tests.Body
         public async Task RemoveLegsFallTest()
         {
             var options = new ServerContentIntegrationOption{ExtraPrototypes = Prototypes};
-            var server = StartServerDummyTicker(options);
+            var server = StartServer(options);
 
             AppearanceComponent appearance = null;
 

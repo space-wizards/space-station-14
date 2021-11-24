@@ -17,15 +17,12 @@ namespace Content.Shared.Interaction
 
     public class DroppedEventArgs : EventArgs
     {
-        public DroppedEventArgs(IEntity user, bool intentional)
+        public DroppedEventArgs(IEntity user)
         {
             User = user;
-            Intentional = intentional;
         }
 
         public IEntity User { get; }
-
-        public bool Intentional { get; }
     }
 
     /// <summary>
@@ -37,23 +34,17 @@ namespace Content.Shared.Interaction
         /// <summary>
         ///     Entity that dropped the item.
         /// </summary>
-        public IEntity User { get; }
+        public EntityUid UserUid { get; }
 
         /// <summary>
         ///     Item that was dropped.
         /// </summary>
-        public IEntity Dropped { get; }
+        public EntityUid DroppedUid { get; }
 
-        /// <summary>
-        ///     If the item was dropped intentionally.
-        /// </summary>
-        public bool Intentional { get; }
-
-        public DroppedEvent(IEntity user, IEntity dropped, bool intentional)
+        public DroppedEvent(EntityUid user, EntityUid dropped)
         {
-            User = user;
-            Dropped = dropped;
-            Intentional = intentional;
+            UserUid = user;
+            DroppedUid = dropped;
         }
     }
 }

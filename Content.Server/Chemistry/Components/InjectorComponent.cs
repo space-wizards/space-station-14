@@ -1,9 +1,9 @@
 using System;
 using System.Threading.Tasks;
-using Content.Server.Body.Circulatory;
+using Content.Server.Body.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
-using Content.Shared.Body.Networks;
+using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
@@ -201,11 +201,11 @@ namespace Content.Server.Chemistry.Components
 
             // TODO: Account for partial transfer.
             var bloodsStreamEntity = Owner.EntityManager.GetEntity(user.Uid);
-            removedSolution.DoEntityReaction(bloodsStreamEntity, ReactionMethod.Injection);
+            removedSolution.DoEntityReaction(bloodsStreamEntity.Uid, ReactionMethod.Injection);
 
             EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(user.Uid, bloodstream, removedSolution);
 
-            removedSolution.DoEntityReaction(targetBloodstream.Owner, ReactionMethod.Injection);
+            removedSolution.DoEntityReaction(targetBloodstream.Owner.Uid, ReactionMethod.Injection);
 
             Owner.PopupMessage(user,
                 Loc.GetString("injector-component-inject-success-message",
@@ -236,7 +236,7 @@ namespace Content.Server.Chemistry.Components
             // Move units from attackSolution to targetSolution
             var removedSolution = EntitySystem.Get<SolutionContainerSystem>().SplitSolution(Owner.Uid, solution, realTransferAmount);
 
-            removedSolution.DoEntityReaction(targetEntity, ReactionMethod.Injection);
+            removedSolution.DoEntityReaction(targetEntity.Uid, ReactionMethod.Injection);
 
             if (!asRefill)
             {

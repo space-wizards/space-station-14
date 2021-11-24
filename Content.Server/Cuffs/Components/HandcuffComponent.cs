@@ -147,7 +147,7 @@ namespace Content.Server.Cuffs.Components
         {
             if (_cuffing) return true;
 
-            if (eventArgs.Target == null || !EntitySystem.Get<ActionBlockerSystem>().CanUse(eventArgs.User) || !eventArgs.Target.TryGetComponent<CuffableComponent>(out var cuffed))
+            if (eventArgs.Target == null || !EntitySystem.Get<ActionBlockerSystem>().CanUse(eventArgs.User.Uid) || !eventArgs.Target.TryGetComponent<CuffableComponent>(out var cuffed))
             {
                 return false;
             }
@@ -170,7 +170,7 @@ namespace Content.Server.Cuffs.Components
                 return true;
             }
 
-            if (cuffed.CuffedHandCount == hands.Count)
+            if (cuffed.CuffedHandCount >= hands.Count)
             {
                 eventArgs.User.PopupMessage(Loc.GetString("handcuff-component-target-has-no-free-hands-error",("targetName", eventArgs.Target)));
                 return true;

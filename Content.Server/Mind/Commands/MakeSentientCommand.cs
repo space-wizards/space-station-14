@@ -28,40 +28,35 @@ namespace Content.Server.Mind.Commands
                 return;
             }
 
-            if (!int.TryParse(args[0], out var id))
+            if (!EntityUid.TryParse(args[0], out var entId))
             {
                 shell.WriteLine("Invalid argument.");
                 return;
             }
 
-            var entId = new EntityUid(id);
-
             var entityManager = IoCManager.Resolve<IEntityManager>();
 
-            if (!entityManager.TryGetEntity(entId, out var entity) || entity.Deleted)
+            if (!entityManager.EntityExists(entId))
             {
                 shell.WriteLine("Invalid entity specified!");
                 return;
             }
 
-            MakeSentient(entity);
+            MakeSentient(entId, entityManager);
         }
 
-        public static void MakeSentient(IEntity entity)
+        public static void MakeSentient(EntityUid uid, IEntityManager entityManager)
         {
-            if(entity.HasComponent<AiControllerComponent>())
-                entity.RemoveComponent<AiControllerComponent>();
+            if(entityManager.HasComponent<AiControllerComponent>(uid))
+                entityManager.RemoveComponent<AiControllerComponent>(uid);
 
-            // Delay spawning these components to avoid race conditions with the deferred removal of AiController.
-            Timer.Spawn(100, () =>
-            {
-                entity.EnsureComponent<MindComponent>();
-                entity.EnsureComponent<SharedPlayerInputMoverComponent>();
-                entity.EnsureComponent<SharedPlayerMobMoverComponent>();
-                entity.EnsureComponent<SharedSpeechComponent>();
-                entity.EnsureComponent<SharedEmotingComponent>();
-                entity.EnsureComponent<ExaminerComponent>();
-            });
+
+            entityManager.EnsureComponent<MindComponent>(uid);
+            entityManager.EnsureComponent<SharedPlayerInputMoverComponent>(uid);
+            entityManager.EnsureComponent<SharedPlayerMobMoverComponent>(uid);
+            entityManager.EnsureComponent<SharedSpeechComponent>(uid);
+            entityManager.EnsureComponent<SharedEmotingComponent>(uid);
+            entityManager.EnsureComponent<ExaminerComponent>(uid);
         }
     }
 }

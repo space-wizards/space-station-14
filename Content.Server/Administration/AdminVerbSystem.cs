@@ -1,25 +1,29 @@
+using System.Collections.Generic;
 using System.Threading;
 using Content.Server.Administration.Commands;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.UI;
 using Content.Server.Chemistry.Components.SolutionManager;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Configurable;
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.EUI;
-using Content.Server.Explosion;
+using Content.Server.Explosion.EntitySystems;
 using Content.Server.Ghost.Roles;
 using Content.Server.Inventory.Components;
 using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
-using Content.Server.Verbs;
 using Content.Shared.Administration;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
+using Content.Shared.GameTicking;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -37,11 +41,16 @@ namespace Content.Server.Administration
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly EuiManager _euiManager = default!;
+        [Dependency] private readonly ExplosionSystem _explosions = default!;
         [Dependency] private readonly GhostRoleSystem _ghostRoleSystem = default!;
+
+        private readonly Dictionary<IPlayerSession, EditSolutionsEui> _openSolutionUis = new();
 
         public override void Initialize()
         {
             SubscribeLocalEvent<GetOtherVerbsEvent>(AddDebugVerbs);
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
+            SubscribeLocalEvent<SolutionContainerManagerComponent, SolutionChangedEvent>(OnSolutionChanged);
         }
 
         private void AddDebugVerbs(GetOtherVerbsEvent args)
@@ -59,6 +68,7 @@ namespace Content.Server.Administration
                 verb.Category = VerbCategory.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png";
                 verb.Act = () => args.Target.Delete();
+                verb.Impact = LogImpact.Medium;
                 args.Verbs.Add(verb);
             }
 
@@ -70,6 +80,7 @@ namespace Content.Server.Administration
                 verb.Category = VerbCategory.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/rejuvenate.svg.192dpi.png";
                 verb.Act = () => RejuvenateCommand.PerformRejuvenate(args.Target);
+                verb.Impact = LogImpact.Medium;
                 args.Verbs.Add(verb);
             }
 
@@ -85,8 +96,9 @@ namespace Content.Server.Administration
                 // TODO VERB ICON control mob icon
                 verb.Act = () =>
                 {
-                    player.ContentData()?.Mind?.TransferTo(args.Target, ghostCheckOverride: true);
+                    player.ContentData()?.Mind?.TransferTo(args.Target.Uid, ghostCheckOverride: true);
                 };
+                verb.Impact = LogImpact.High;
                 args.Verbs.Add(verb);
             }
 
@@ -99,10 +111,12 @@ namespace Content.Server.Administration
                 verb.Text = Loc.GetString("make-sentient-verb-get-data-text");
                 verb.Category = VerbCategory.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/sentient.svg.192dpi.png";
-                verb.Act = () => MakeSentientCommand.MakeSentient(args.Target);
+                verb.Act = () => MakeSentientCommand.MakeSentient(args.Target.Uid, EntityManager);
+                verb.Impact = LogImpact.Medium;
                 args.Verbs.Add(verb);
             }
 
+            // Atillery
             if (_adminManager.HasAdminFlag(player, AdminFlags.Fun))
             {
                 Verb verb = new();
@@ -111,12 +125,13 @@ namespace Content.Server.Administration
                 verb.Act = () =>
                 {
                     var coords = args.Target.Transform.Coordinates;
-                    Timer.Spawn(_gameTiming.TickPeriod, () => ExplosionHelper.SpawnExplosion(coords, 0, 1, 2, 1), CancellationToken.None);
+                    Timer.Spawn(_gameTiming.TickPeriod, () => _explosions.SpawnExplosion(coords, 0, 1, 2, 1), CancellationToken.None);
                     if (args.Target.TryGetComponent(out SharedBodyComponent? body))
                     {
                         body.Gib();
                     }
                 };
+                verb.Impact = LogImpact.Extreme; // if you're just outright killing a person, I guess that deserves to be extreme?
                 args.Verbs.Add(verb);
             }
 
@@ -129,6 +144,7 @@ namespace Content.Server.Administration
                 verb.Category = VerbCategory.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/outfit.svg.192dpi.png";
                 verb.Act = () => _euiManager.OpenEui(new SetOutfitEui(args.Target), player);
+                verb.Impact = LogImpact.Medium;
                 args.Verbs.Add(verb);
             }
 
@@ -171,6 +187,7 @@ namespace Content.Server.Administration
                 // TODO VERB ICON add ghost icon
                 // Where is the national park service icon for haunted forests?
                 verb.Act = () => _ghostRoleSystem.OpenMakeGhostRoleEui(player, args.Target.Uid);
+                verb.Impact = LogImpact.Medium;
                 args.Verbs.Add(verb);
             }
 
@@ -186,24 +203,52 @@ namespace Content.Server.Administration
                 args.Verbs.Add(verb);
             }
 
-            // Add reagent verb
-            if (_adminManager.HasAdminFlag(player, AdminFlags.Fun) &&
+            // Add verb to open Solution Editor
+            if (_groupController.CanCommand(player, "addreagent") &&
                 args.Target.HasComponent<SolutionContainerManagerComponent>())
             {
                 Verb verb = new();
-                verb.Text = Loc.GetString("admin-add-reagent-verb-get-data-text");
+                verb.Text = Loc.GetString("edit-solutions-verb-get-data-text");
                 verb.Category = VerbCategory.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/spill.svg.192dpi.png";
-                verb.Act = () => _euiManager.OpenEui(new AdminAddReagentEui(args.Target), player);
-
-                // TODO CHEMISTRY
-                // Add reagent ui broke after solution refactor. Needs fixing
-                verb.Disabled = true;
-                verb.Message = "Currently non functional after solution refactor.";
-                verb.Priority = -2;
-
+                verb.Act = () => OpenEditSolutionsEui(player, args.Target.Uid);
+                verb.Impact = LogImpact.Medium; // maybe high depending on WHAT reagents they add...
                 args.Verbs.Add(verb);
             }
         }
+
+        #region SolutionsEui
+        private void OnSolutionChanged(EntityUid uid, SolutionContainerManagerComponent component, SolutionChangedEvent args)
+        {
+            foreach (var eui in _openSolutionUis.Values)
+            {
+                if (eui.Target == uid)
+                    eui.StateDirty();
+            }
+        }
+
+        public void OpenEditSolutionsEui(IPlayerSession session, EntityUid uid)
+        {
+            if (session.AttachedEntity == null)
+                return;
+
+            if (_openSolutionUis.ContainsKey(session))
+                _openSolutionUis[session].Close();
+
+            var eui = _openSolutionUis[session] = new EditSolutionsEui(uid);
+            _euiManager.OpenEui(eui, session);
+            eui.StateDirty();
+        }
+
+        public void OnEditSolutionsEuiClosed(IPlayerSession session)
+        {
+            _openSolutionUis.Remove(session, out var eui);
+        }
+
+        private void Reset(RoundRestartCleanupEvent ev)
+        {
+            _openSolutionUis.Clear();
+        }
+        #endregion
     }
 }

@@ -1,11 +1,9 @@
-﻿using Content.Server.Body.Circulatory;
-using Content.Server.Body.Respiratory;
+﻿using Content.Server.Body.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Smoking;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.Chemistry.Components
@@ -15,7 +13,7 @@ namespace Content.Server.Chemistry.Components
     public class SmokeSolutionAreaEffectComponent : SolutionAreaEffectComponent
     {
         public override string Name => "SmokeSolutionAreaEffect";
-        public new const string SolutionName = "smoke";
+        public new const string SolutionName = "solutionArea";
 
         protected override void UpdateVisuals()
         {
@@ -38,7 +36,7 @@ namespace Content.Server.Chemistry.Components
                 internals.AreInternalsWorking())
                 return;
 
-            var chemistry = EntitySystem.Get<ChemistrySystem>();
+            var chemistry = EntitySystem.Get<ReactiveSystem>();
             var cloneSolution = solution.Clone();
             var transferAmount = FixedPoint2.Min(cloneSolution.TotalVolume * solutionFraction, bloodstream.EmptyVolume);
             var transferSolution = cloneSolution.SplitSolution(transferAmount);
@@ -46,7 +44,7 @@ namespace Content.Server.Chemistry.Components
             foreach (var reagentQuantity in transferSolution.Contents.ToArray())
             {
                 if (reagentQuantity.Quantity == FixedPoint2.Zero) continue;
-                chemistry.ReactionEntity(entity, ReactionMethod.Ingestion, reagentQuantity.ReagentId, reagentQuantity.Quantity, transferSolution);
+                chemistry.ReactionEntity(entity.Uid, ReactionMethod.Ingestion, reagentQuantity.ReagentId, reagentQuantity.Quantity, transferSolution);
             }
 
             bloodstream.TryTransferSolution(transferSolution);
