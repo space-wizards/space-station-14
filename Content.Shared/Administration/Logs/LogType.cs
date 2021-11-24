@@ -37,4 +37,5 @@ public enum LogType
     Pickup = 36,
     Drop = 37,
     BulletHit = 38,
+    CrayonDraw = 39,
 }
