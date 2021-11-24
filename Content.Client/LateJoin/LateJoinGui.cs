@@ -4,6 +4,7 @@ using System.Linq;
 using Content.Client.GameTicking.Managers;
 using Content.Client.HUD.UI;
 using Content.Shared.Roles;
+using Content.Shared.Station;
 using Robust.Client.Console;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -25,10 +26,10 @@ namespace Content.Client.LateJoin
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
 
-        public event Action<(uint, string)> SelectedId;
+        public event Action<(StationId, string)> SelectedId;
 
-        private readonly Dictionary<uint, Dictionary<string, JobButton>> _jobButtons = new();
-        private readonly Dictionary<uint, Dictionary<string, BoxContainer>> _jobCategories = new();
+        private readonly Dictionary<StationId, Dictionary<string, JobButton>> _jobButtons = new();
+        private readonly Dictionary<StationId, Dictionary<string, BoxContainer>> _jobCategories = new();
         private readonly List<ScrollContainer> _jobLists = new();
 
         private readonly Control _base;
@@ -233,7 +234,7 @@ namespace Content.Client.LateJoin
             }
         }
 
-        private void JobsAvailableUpdated(IReadOnlyDictionary<uint, Dictionary<string, int>> _)
+        private void JobsAvailableUpdated(IReadOnlyDictionary<StationId, Dictionary<string, int>> _)
         {
             RebuildUI();
         }

@@ -5,6 +5,7 @@ using Content.Client.RoundEnd;
 using Content.Client.Viewport;
 using Content.Shared.GameTicking;
 using Content.Shared.GameWindow;
+using Content.Shared.Station;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.State;
@@ -22,8 +23,8 @@ namespace Content.Client.GameTicking.Managers
         [Dependency] private readonly IStateManager _stateManager = default!;
 
         [ViewVariables] private bool _initialized;
-        private readonly Dictionary<uint, Dictionary<string, int>>  _jobsAvailable = new();
-        private readonly Dictionary<uint, string> _stationNames = new();
+        private readonly Dictionary<StationId, Dictionary<string, int>>  _jobsAvailable = new();
+        private readonly Dictionary<StationId, string> _stationNames = new();
 
         [ViewVariables] public bool AreWeReady { get; private set; }
         [ViewVariables] public bool IsGameStarted { get; private set; }
@@ -33,14 +34,14 @@ namespace Content.Client.GameTicking.Managers
         [ViewVariables] public TimeSpan StartTime { get; private set; }
         [ViewVariables] public bool Paused { get; private set; }
         [ViewVariables] public Dictionary<NetUserId, LobbyPlayerStatus> Status { get; private set; } = new();
-        [ViewVariables] public IReadOnlyDictionary<uint, Dictionary<string, int>> JobsAvailable => _jobsAvailable;
-        [ViewVariables] public IReadOnlyDictionary<uint, string> StationNames => _stationNames;
+        [ViewVariables] public IReadOnlyDictionary<StationId, Dictionary<string, int>> JobsAvailable => _jobsAvailable;
+        [ViewVariables] public IReadOnlyDictionary<StationId, string> StationNames => _stationNames;
 
         public event Action? InfoBlobUpdated;
         public event Action? LobbyStatusUpdated;
         public event Action? LobbyReadyUpdated;
         public event Action? LobbyLateJoinStatusUpdated;
-        public event Action<IReadOnlyDictionary<uint, Dictionary<string, int>>>? LobbyJobsAvailableUpdated;
+        public event Action<IReadOnlyDictionary<StationId, Dictionary<string, int>>>? LobbyJobsAvailableUpdated;
 
         public override void Initialize()
         {

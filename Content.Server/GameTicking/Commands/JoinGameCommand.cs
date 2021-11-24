@@ -3,6 +3,7 @@ using Content.Server.Administration;
 using Content.Server.Roles;
 using Content.Server.Station;
 using Content.Shared.Roles;
+using Content.Shared.Station;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
@@ -43,7 +44,7 @@ namespace Content.Server.GameTicking.Commands
             else if(ticker.RunLevel == GameRunLevel.InRound)
             {
                 string ID = args[0];
-                var stationId = new StationSystem.StationId(uint.Parse(args[1]));
+                var stationId = new StationId(uint.Parse(args[1]));
 
                 if(!stationSystem.IsJobAvailableOnStation(stationId, ID))
                 {
@@ -55,7 +56,7 @@ namespace Content.Server.GameTicking.Commands
                 return;
             }
 
-            ticker.MakeJoinGame(player, StationSystem.StationId.Invalid);
+            ticker.MakeJoinGame(player, StationId.Invalid);
         }
     }
 }

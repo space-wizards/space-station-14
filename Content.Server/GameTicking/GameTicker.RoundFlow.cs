@@ -12,6 +12,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Coordinates;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
+using Content.Shared.Station;
 using Prometheus;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
@@ -164,7 +165,7 @@ namespace Content.Server.GameTicking
 
                     if (stations.Count == 0)
                     {
-                        assignedJobs.Add(player, (FallbackOverflowJob, StationSystem.StationId.Invalid));
+                        assignedJobs.Add(player, (FallbackOverflowJob, StationId.Invalid));
                         continue;
                     }
 
@@ -185,9 +186,9 @@ namespace Content.Server.GameTicking
             }
 
             // Spawn everybody in!
-            foreach (var (player, job) in assignedJobs)
+            foreach (var (player, (job, station)) in assignedJobs)
             {
-                SpawnPlayer(player, profiles[player.UserId], job.Item2, job.Item1, false);
+                SpawnPlayer(player, profiles[player.UserId], station, job, false);
             }
 
             // Time to start the preset.

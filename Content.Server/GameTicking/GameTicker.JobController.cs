@@ -5,6 +5,7 @@ using System.Linq;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using Content.Shared.Station;
 using Robust.Server.Player;
 using Robust.Shared.Localization;
 using Robust.Shared.Network;
@@ -12,7 +13,6 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using static Content.Server.Station.StationSystem;
 
 namespace Content.Server.GameTicking
 {
@@ -147,9 +147,8 @@ namespace Content.Server.GameTicking
                 return picked;
             }
 
-            var overflows = _stationSystem.StationInfo[station].MapPrototype.OverflowJobs.Clone();
-            _robustRandom.Shuffle(overflows);
-            return overflows[0];
+            var overflows = _stationSystem.StationInfo[station].MapPrototype.OverflowJobs.Clone().ToList();
+            return _robustRandom.Pick(overflows);
         }
 
         [Conditional("DEBUG")]
@@ -170,16 +169,16 @@ namespace Content.Server.GameTicking
         {
             // If late join is disallowed, return no available jobs.
             if (DisallowLateJoin)
-                return new TickerJobsAvailableEvent(new Dictionary<uint, string>(), new Dictionary<uint, Dictionary<string, int>>());
+                return new TickerJobsAvailableEvent(new Dictionary<StationId, string>(), new Dictionary<StationId, Dictionary<string, int>>());
 
-            var jobs = new Dictionary<uint, Dictionary<string, int>>();
-            var stationNames = new Dictionary<uint, string>();
+            var jobs = new Dictionary<StationId, Dictionary<string, int>>();
+            var stationNames = new Dictionary<StationId, string>();
 
             foreach (var (id, station) in _stationSystem.StationInfo)
             {
                 var list = station.JobList.ToDictionary(x => x.Key, x => x.Value);
-                jobs.Add(id.Id, list);
-                stationNames.Add(id.Id, station.Name);
+                jobs.Add(id, list);
+                stationNames.Add(id, station.Name);
             }
             return new TickerJobsAvailableEvent(stationNames, jobs);
         }

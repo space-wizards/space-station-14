@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using Content.Shared.Station;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
@@ -109,10 +110,10 @@ namespace Content.Shared.GameTicking
         /// <summary>
         /// The Status of the Player in the lobby (ready, observer, ...)
         /// </summary>
-        public Dictionary<uint, Dictionary<string, int>> JobsAvailableByStation { get; }
-        public Dictionary<uint, string> StationNames { get; }
+        public Dictionary<StationId, Dictionary<string, int>> JobsAvailableByStation { get; }
+        public Dictionary<StationId, string> StationNames { get; }
 
-        public TickerJobsAvailableEvent(Dictionary<uint, string> stationNames, Dictionary<uint, Dictionary<string, int>> jobsAvailableByStation)
+        public TickerJobsAvailableEvent(Dictionary<StationId, string> stationNames, Dictionary<StationId, Dictionary<string, int>> jobsAvailableByStation)
         {
             StationNames = stationNames;
             JobsAvailableByStation = jobsAvailableByStation;
