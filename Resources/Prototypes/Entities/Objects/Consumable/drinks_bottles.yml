@@ -25,7 +25,7 @@
   - type: DamageOtherOnHit
     damage:
       types:
-        Blunt: 10
+        Blunt: 4
   - type: Spillable
     solution: drink
   - type: Damageable
