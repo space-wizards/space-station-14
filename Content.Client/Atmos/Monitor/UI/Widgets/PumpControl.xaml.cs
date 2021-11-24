@@ -51,8 +51,7 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
             };
             _internalBound.IsValid += value =>
             {
-                if (value < 0
-                    || value == float.NaN) return false;
+                if (value < 0) return false;
 
                 return true;
             };
@@ -65,13 +64,10 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
             };
             _externalBound.IsValid += value =>
             {
-                if (value < 0
-                    || value == float.NaN) return false;
+                if (value < 0) return false;
 
                 return true;
             };
-
-
 
             foreach (var value in Enum.GetValues<VentPumpDirection>())
                 _pumpDirection.AddItem(Loc.GetString($"{value}"), (int) value);

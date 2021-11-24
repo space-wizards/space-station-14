@@ -12,16 +12,21 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.Atmos.Monitor
 {
-    // IAirAlarmMode
-    //
-    // This is an interface that air alarm modes use
-    // in order to execute the defined modes.
+    /// <summary>
+    ///     This is an interface that air alarm modes use
+    ///     in order to execute the defined modes.
+    /// </summary>
     public interface IAirAlarmMode
     {
         // This is executed the moment the mode
         // is set. This is to ensure that 'dumb'
         // modes such as Filter/Panic are immediately
         // set.
+        /// <summary>
+        ///     Executed the mode is set on an air alarm.
+        ///     This is to ensure that modes like Filter/Panic
+        ///     are immediately set.
+        /// </summary>
         public void Execute(EntityUid uid);
     }
 
@@ -30,17 +35,26 @@ namespace Content.Server.Atmos.Monitor
     // This is an interface that AirAlarmSystem uses
     // in order to 'update' air alarm modes so that
     // modes like Replace can be implemented.
+    /// <summary>
+    ///     An interface that AirAlarmSystem uses
+    ///     in order to update air alarm modes that
+    ///     need updating (e.g., Replace)
+    /// </summary>
     public interface IAirAlarmModeUpdate
     {
-        // This is checked by AirAlarmSystem when
-        // a mode is updated. This should be set
-        // to a DeviceNetwork address, or some
-        // unique identifier that ID's the
-        // owner of the mode's executor.
+        /// <summary>
+        ///     This is checked by AirAlarmSystem when
+        ///     a mode is updated. This should be set
+        ///     to a DeviceNetwork address, or some
+        ///     unique identifier that ID's the
+        ///     owner of the mode's executor.
+        /// </summary>
         public string NetOwner { get; set; }
-        // This is executed every time the air alarm
-        // update loop is fully executed. This should
-        // be where all the logic goes.
+        /// <summary>
+        ///     This is executed every time the air alarm
+        ///     update loop is fully executed. This should
+        ///     be where all the logic goes.
+        /// </summary>
         public void Update(EntityUid uid);
     }
 
@@ -176,7 +190,6 @@ namespace Content.Server.Atmos.Monitor
     {
         private Dictionary<string, IAtmosDeviceData> _devices = new();
         private float _lastPressure = Atmospherics.OneAtmosphere;
-        private bool _isFilling = false;
         private AtmosMonitorComponent? _monitor;
         private AtmosAlarmableComponent? _alarmable;
 

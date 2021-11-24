@@ -374,7 +374,6 @@ namespace Content.Server.Atmos.Monitor.Systems
 
         private void OnPacketRecv(EntityUid uid, AirAlarmComponent controller, PacketSentEvent args)
         {
-            Logger.DebugS("AirAlarmSystem", $"Received packet from {args.SenderAddress}");
             if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? cmd))
                 return;
 
@@ -471,8 +470,6 @@ namespace Content.Server.Atmos.Monitor.Systems
                     gases.Add(gas, monitor.TileGas.GetMoles(gas));
 
                 var airData = new AirAlarmAirData(monitor.TileGas.Pressure, monitor.TileGas.Temperature, monitor.TileGas.TotalMoles, monitor.LastAlarmState, gases);
-
-                Logger.DebugS("AirAlarmSystem", "Attempting to update data now.");
 
                 _uiSystem.TrySendUiMessage(uid, SharedAirAlarmInterfaceKey.Key, new AirAlarmUpdateAirDataMessage(airData));
             }

@@ -30,8 +30,6 @@ namespace Content.Server.Atmos.Monitor.Components
     {
         public override string Name => "AtmosAlarmable";
 
-        [ComponentDependency] private readonly ApcPowerReceiverComponent? _powerRecvComponent = default!;
-
         [ViewVariables]
         public List<EntityUid> LinkedMonitors { get; set; } = new();
 
