@@ -635,6 +635,7 @@ namespace Content.Server.Database
         {
             await using var db = await GetDb();
             var query = await GetAdminLogsQuery(db.DbContext, filter);
+            query = query.Include(log => log.Players);
 
             await foreach (var log in query.AsAsyncEnumerable())
             {
