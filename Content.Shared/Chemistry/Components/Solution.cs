@@ -236,8 +236,12 @@ namespace Content.Shared.Chemistry.Components
             var newTotalVolume = FixedPoint2.New(0);
             var remainingVolume = TotalVolume;
 
-            for (var i = 0; i < Contents.Count; i++)
+            for (var i = Contents.Count - 1; i >= 0; i--)
             {
+                if (remainingVolume == FixedPoint2.Zero)
+                    // shouldn't happen, but it can if someone, somehow has a reagent with 0-quantity in a solution.
+                    break;
+
                 var reagent = Contents[i];
                 var ratio = (remainingVolume - quantity).Double() / remainingVolume.Double();
                 remainingVolume -= reagent.Quantity;
@@ -245,8 +249,14 @@ namespace Content.Shared.Chemistry.Components
                 var newQuantity = reagent.Quantity * ratio;
                 var splitQuantity = reagent.Quantity - newQuantity;
 
-                Contents[i] = new ReagentQuantity(reagent.ReagentId, newQuantity);
-                newSolution.Contents.Add(new ReagentQuantity(reagent.ReagentId, splitQuantity));
+                if (newQuantity > 0)
+                    Contents[i] = new ReagentQuantity(reagent.ReagentId, newQuantity);
+                else
+                    Contents.RemoveAt(i);
+
+                if (splitQuantity > 0)
+                    newSolution.Contents.Add(new ReagentQuantity(reagent.ReagentId, splitQuantity));
+
                 newTotalVolume += splitQuantity;
                 quantity -= splitQuantity;
             }
