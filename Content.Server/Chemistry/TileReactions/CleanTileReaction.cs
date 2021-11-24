@@ -26,7 +26,7 @@ namespace Content.Server.Chemistry.TileReactions
             {
                 if (entity.TryGetComponent(out CleanableComponent? cleanable))
                 {
-                    var next = amount + cleanable.CleanAmount * CleanAmountMultiplier;
+                    var next = (amount + cleanable.CleanAmount) * CleanAmountMultiplier;
                     // Nothing left?
                     if (reactVolume < next)
                         break;
