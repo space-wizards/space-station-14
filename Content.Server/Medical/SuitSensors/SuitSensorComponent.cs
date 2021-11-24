@@ -37,6 +37,11 @@ namespace Content.Server.Medical.SuitSensors
         ///     Current user that wears suit sensor. Null if nobody wearing it.
         /// </summary>
         public EntityUid? User = null;
+
+        /// <summary>
+        ///     Unique sensor id used for Device Network communication.
+        /// </summary>
+        public uint DeviceId;
     }
 
     public enum SuitSensorMode : byte

@@ -1,6 +1,17 @@
 - type: entity
   abstract: true
   parent: Clothing
+  id: ClothingWithSuitSensor
+  components:
+  - type: SuitSensor
+  - type: DeviceNetworkComponent
+    deviceNetId: Wireless
+  - type: WirelessNetworkConnection
+    range: 500
+
+- type: entity
+  abstract: true
+  parent: ClothingWithSuitSensor
   id: ClothingUniformBase
   components:
   - type: Sprite
@@ -9,11 +20,10 @@
     Slots: [innerclothing]
     EquipSound:
       path: /Audio/Items/jumpsuit_equip.ogg
-  - type: SuitSensor
 
 - type: entity
   abstract: true
-  parent: Clothing
+  parent: ClothingWithSuitSensor
   id: ClothingUniformSkirtBase
   components:
   - type: Sprite
@@ -23,4 +33,3 @@
     femaleMask: UniformTop
     EquipSound:
       path: /Audio/Items/jumpsuit_equip.ogg
-  - type: SuitSensor

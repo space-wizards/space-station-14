@@ -108,6 +108,10 @@
         - key: enum.CrewMonitoringUIKey.Key
           type: CrewMonitoringBoundUserInterface
     - type: CrewMonitoringConsole
+    - type: DeviceNetworkComponent
+      deviceNetId: Wireless
+    - type: WirelessNetworkConnection
+      range: 500
 
 - type: entity
   parent: ComputerBase

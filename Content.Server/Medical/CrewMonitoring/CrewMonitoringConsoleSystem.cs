@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Linq;
+using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Medical.SuitSensors;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Medical.CrewMonitoring;
-using Content.Shared.Medical.SuitSensor;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
@@ -27,7 +27,18 @@ namespace Content.Server.Medical.CrewMonitoring
         public override void Initialize()
         {
             base.Initialize();
+            SubscribeLocalEvent<CrewMonitoringConsoleComponent, PacketSentEvent>(OnPacketReceived);
             SubscribeLocalEvent<CrewMonitoringConsoleComponent, ActivateInWorldEvent>(OnActivate);
+        }
+
+        private void OnPacketReceived(EntityUid uid, CrewMonitoringConsoleComponent component, PacketSentEvent args)
+        {
+            var suitSensor = _sensors.PackageToSuitSensor(args.Data);
+            if (suitSensor == null)
+                return;
+
+            suitSensor.Timestamp = _gameTiming.CurTime;
+            component.ConnectedSensors[suitSensor.SensorId] = suitSensor;
         }
 
         public override void Update(float frameTime)
@@ -86,30 +97,9 @@ namespace Content.Server.Medical.CrewMonitoring
                 return;
 
             // update all sensors info
-            var allSensors = GetAllActiveSensors(uid, component);
+            var allSensors = component.ConnectedSensors.Values.ToList();
             var uiState = new CrewMonitoringState(allSensors);
             ui.SetState(uiState);
-        }
-
-        private List<SuitSensorStatus> GetAllActiveSensors(EntityUid uid, CrewMonitoringConsoleComponent? component = null,
-            TransformComponent? transform = null)
-        {
-            var ret = new List<SuitSensorStatus>();
-            if (!Resolve(uid, ref component, ref transform))
-                return ret;
-
-            var suitSensors = EntityManager.EntityQuery<SuitSensorComponent, TransformComponent>();
-            foreach (var (sensor, sensorTransform) in suitSensors)
-            {
-                if (transform.MapID != sensorTransform.MapID)
-                    continue;
-
-                var state = _sensors.GetSensorState(sensor.OwnerUid, sensor, sensorTransform);
-                if (state != null)
-                    ret.Add(state);
-            }
-
-            return ret;
         }
     }
 }

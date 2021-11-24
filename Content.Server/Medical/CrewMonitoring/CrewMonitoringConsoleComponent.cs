@@ -1,6 +1,7 @@
-﻿using Robust.Shared.Analyzers;
+﻿using System.Collections.Generic;
+using Content.Shared.Medical.SuitSensor;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Medical.CrewMonitoring
 {
@@ -10,5 +11,6 @@ namespace Content.Server.Medical.CrewMonitoring
     {
         public override string Name => "CrewMonitoringConsole";
 
+        public Dictionary<uint, SuitSensorStatus> ConnectedSensors = new();
     }
 }
