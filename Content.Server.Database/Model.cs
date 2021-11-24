@@ -92,6 +92,18 @@ namespace Content.Server.Database
                 .Property(log => log.Id)
                 .ValueGeneratedOnAdd();
 
+            modelBuilder.Entity<AdminLog>()
+                .Property(log => log.Type)
+                .HasConversion(
+                    type => type.ToString(),
+                    str => Enum.Parse<LogType>(str, true));
+
+            modelBuilder.Entity<AdminLog>()
+                .Property(log => log.Impact)
+                .HasConversion(
+                    type => type.ToString(),
+                    str => Enum.Parse<LogImpact>(str, true));
+
             modelBuilder.Entity<AdminLogPlayer>()
                 .HasOne(player => player.Player)
                 .WithMany(player => player.AdminLogs)

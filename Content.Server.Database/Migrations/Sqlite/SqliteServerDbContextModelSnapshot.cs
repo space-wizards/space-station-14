@@ -88,8 +88,9 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("date");
 
-                    b.Property<sbyte>("Impact")
-                        .HasColumnType("INTEGER")
+                    b.Property<string>("Impact")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
                         .HasColumnName("impact");
 
                     b.Property<string>("Json")
@@ -102,8 +103,9 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("message");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("INTEGER")
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
                         .HasColumnName("type");
 
                     b.HasKey("Id", "RoundId")
