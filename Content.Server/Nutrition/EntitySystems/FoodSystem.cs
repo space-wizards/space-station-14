@@ -126,7 +126,8 @@ namespace Content.Server.Nutrition.EntitySystems
                 }
             }
 
-            if (userUid != targetUid && !userUid.InRangeUnobstructed(targetUid, popup: true))
+            if (!userUid.InRangeUnobstructed(uid, popup: true) ||
+                userUid != targetUid && !userUid.InRangeUnobstructed(targetUid, popup: true))
                 return false;
 
             var transferAmount = component.TransferAmount != null ? FixedPoint2.Min((FixedPoint2) component.TransferAmount, solution.CurrentVolume) : solution.CurrentVolume;
