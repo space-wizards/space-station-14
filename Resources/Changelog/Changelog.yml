@@ -1,9 +1,4 @@
 Entries:
-- author: Swept
-  changes:
-  - {message: Increased material cost of all lathe recipes, type: Tweak}
-  id: 149
-  time: '2021-04-05T00:00:45.0000000+00:00'
 - author: DrSmugleaf
   changes:
   - {message: Fixed not being able to move pulled entities, type: Fix}
@@ -2853,3 +2848,8 @@ Entries:
   - {message: Solar control console works again, type: Fix}
   id: 650
   time: '2021-11-24T20:51:43.0000000+00:00'
+- author: moony
+  changes:
+  - {message: The game admins are now omnipotent., type: Add}
+  id: 651
+  time: '2021-11-24T22:52:31.0000000+00:00'
