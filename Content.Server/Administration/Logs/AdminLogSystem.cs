@@ -39,9 +39,21 @@ public partial class AdminLogSystem : SharedAdminLogSystem
             Buckets = Histogram.LinearBuckets(0, 0.5, 20)
         });
 
+    private static readonly Gauge Queue = Metrics.CreateGauge(
+        "admin_logs_queue",
+        "How many logs are in the queue.");
+
+    private static readonly Gauge PreRoundQueue = Metrics.CreateGauge(
+        "admin_logs_pre_round_queue",
+        "How many logs are in the pre-round queue.");
+
     private static readonly Gauge QueueCapReached = Metrics.CreateGauge(
         "admin_logs_queue_cap_reached",
         "Number of times the log queue cap has been reached in a round.");
+
+    private static readonly Gauge PreRoundQueueCapReached = Metrics.CreateGauge(
+        "admin_logs_queue_cap_reached",
+        "Number of times the pre-round log queue cap has been reached in a round.");
 
     private static readonly Gauge LogsSent = Metrics.CreateGauge(
         "admin_logs_sent",
@@ -54,10 +66,12 @@ public partial class AdminLogSystem : SharedAdminLogSystem
     private bool _metricsEnabled;
     private TimeSpan _queueSendDelay;
     private int _queueMax;
+    private int _preRoundQueueMax;
 
     // Per update
     private float _accumulatedFrameTime;
-    private readonly ConcurrentQueue<QueuedLog> _logsToAdd = new();
+    private readonly ConcurrentQueue<QueuedLog> _logQueue = new();
+    private readonly ConcurrentQueue<QueuedLog> _preRoundLogQueue = new();
 
     private int CurrentRoundId => _gameTicker.RoundId;
 
@@ -75,9 +89,12 @@ public partial class AdminLogSystem : SharedAdminLogSystem
             value => _queueSendDelay = TimeSpan.FromSeconds(value), true);
         _configuration.OnValueChanged(CCVars.AdminLogsQueueMax,
             value => _queueMax = value, true);
+        _configuration.OnValueChanged(CCVars.AdminLogsPreRoundQueueMax,
+            value => _preRoundQueueMax = value, true);
 
         if (_metricsEnabled)
         {
+            PreRoundQueueCapReached.Set(0);
             QueueCapReached.Set(0);
             LogsSent.Set(0);
         }
@@ -89,33 +106,95 @@ public partial class AdminLogSystem : SharedAdminLogSystem
     {
         base.Shutdown();
 
-        if (!_logsToAdd.IsEmpty)
+        if (!_logQueue.IsEmpty)
         {
-            await SendLogs();
+            await SaveLogs();
         }
     }
 
     public override async void Update(float frameTime)
     {
-        var count = _logsToAdd.Count;
-        if (count == 0)
+        if (_gameTicker.RunLevel == GameRunLevel.PreRoundLobby)
+        {
+            await PreRoundUpdate();
+            return;
+        }
+
+        var count = _logQueue.Count;
+        Queue.Set(count);
+
+        var preRoundCount = _preRoundLogQueue.Count;
+        PreRoundQueue.Set(preRoundCount);
+
+        if (count + preRoundCount == 0)
         {
             return;
         }
 
-        if (count < _queueMax && _accumulatedFrameTime < _queueSendDelay.TotalSeconds)
+        if (_accumulatedFrameTime >= _queueSendDelay.TotalSeconds)
         {
-            _accumulatedFrameTime += frameTime;
+            await SaveLogs();
             return;
         }
 
-        await SendLogs();
+        if (count >= _queueMax)
+        {
+            if (_metricsEnabled)
+            {
+                QueueCapReached.Inc();
+            }
+
+            _sawmill.Warning($"Maximum cap of {_queueMax} reached for admin logs.");
+            await SaveLogs();
+            return;
+        }
+
+        _accumulatedFrameTime += frameTime;
     }
 
-    private async Task SendLogs()
+    private async Task PreRoundUpdate()
     {
-        var copy = new List<QueuedLog>(_logsToAdd);
-        _logsToAdd.Clear();
+        var preRoundCount = _preRoundLogQueue.Count;
+        PreRoundQueue.Set(preRoundCount);
+
+        if (preRoundCount < _preRoundQueueMax)
+        {
+            return;
+        }
+
+        if (_metricsEnabled)
+        {
+            PreRoundQueueCapReached.Inc();
+        }
+
+        _sawmill.Warning($"Maximum cap of {_preRoundQueueMax} reached for pre-round admin logs.");
+        await SaveLogs();
+    }
+
+    private async Task SaveLogs()
+    {
+        var copy = new List<QueuedLog>(_logQueue.Count + _preRoundLogQueue.Count);
+
+        copy.AddRange(_logQueue);
+        _logQueue.Clear();
+        Queue.Set(0);
+
+        if (_gameTicker.RunLevel == GameRunLevel.PreRoundLobby)
+        {
+            _sawmill.Error($"Dropping {_preRoundLogQueue.Count} pre-round logs. Current cap: {_preRoundQueueMax}");
+        }
+        else
+        {
+            foreach (var queued in _preRoundLogQueue)
+            {
+                queued.Log.RoundId = _gameTicker.RoundId;
+            }
+
+            copy.AddRange(_preRoundLogQueue);
+        }
+        _preRoundLogQueue.Clear();
+        PreRoundQueue.Set(0);
+
         _accumulatedFrameTime = 0;
 
         // ship the logs to Azkaban
@@ -124,13 +203,10 @@ public partial class AdminLogSystem : SharedAdminLogSystem
             await _db.AddAdminLogs(copy);
         });
 
+        _sawmill.Debug($"Saving {copy.Count} admin logs.");
+
         if (_metricsEnabled)
         {
-            if (copy.Count >= _queueMax)
-            {
-                QueueCapReached.Inc();
-            }
-
             LogsSent.Inc(copy.Count);
 
             using (DatabaseUpdateTime.NewTimer())
@@ -147,6 +223,7 @@ public partial class AdminLogSystem : SharedAdminLogSystem
     {
         if (_metricsEnabled)
         {
+            PreRoundQueueCapReached.Set(0);
             QueueCapReached.Set(0);
             LogsSent.Set(0);
         }
@@ -166,7 +243,6 @@ public partial class AdminLogSystem : SharedAdminLogSystem
         };
 
         var queued = new QueuedLog(log, entities);
-        _logsToAdd.Enqueue(queued);
 
         foreach (var id in players)
         {
@@ -177,6 +253,15 @@ public partial class AdminLogSystem : SharedAdminLogSystem
             };
 
             log.Players.Add(player);
+        }
+
+        if (_gameTicker.RunLevel == GameRunLevel.PreRoundLobby)
+        {
+            _preRoundLogQueue.Enqueue(queued);
+        }
+        else
+        {
+            _logQueue.Enqueue(queued);
         }
     }
 
