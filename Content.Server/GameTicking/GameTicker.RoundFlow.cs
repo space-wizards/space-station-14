@@ -93,7 +93,6 @@ namespace Content.Server.GameTicking
                 stationXform.LocalRotation = _robustRandom.NextFloat(MathF.Tau);
             }
 
-            DefaultGridId = grid.Index;
             _spawnPoint = grid.ToCoordinates();
 
             var timeSpan = _gameTiming.RealTime - startTime;

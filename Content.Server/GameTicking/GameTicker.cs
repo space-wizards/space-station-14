@@ -30,7 +30,6 @@ namespace Content.Server.GameTicking
         [ViewVariables] private bool _postInitialized;
 
         [ViewVariables] public MapId DefaultMap { get; private set; }
-        [ViewVariables] public GridId DefaultGridId { get; private set; }
 
         public override void Initialize()
         {
