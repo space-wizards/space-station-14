@@ -1,9 +1,4 @@
 Entries:
-- author: bryce0110
-  changes:
-  - {message: Welded Lockers and Crates will now look welded., type: Fix}
-  id: 153
-  time: '2021-04-08T12:39:50.0000000+00:00'
 - author: TaralGit
   changes:
   - {message: 'baseball bat, machete, captain''s sabre and katana.', type: Add}
@@ -2856,3 +2851,8 @@ Entries:
   - {message: nerfed bottle throwing damage, type: Tweak}
   id: 654
   time: '2021-11-25T05:16:17.0000000+00:00'
+- author: iczero
+  changes:
+  - {message: Survival boxes are no longer magic, type: Add}
+  id: 655
+  time: '2021-11-25T05:47:52.0000000+00:00'
