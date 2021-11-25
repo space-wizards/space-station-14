@@ -49,7 +49,7 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
             {
                 // a lot of threshold logic is baked into the properties,
                 // so setting this just returns if a change occurred or not
-                _threshold.UpperBound = value;
+                _threshold.TrySetPrimaryBound(AtmosMonitorThresholdBound.Upper, value);
                 return _threshold.UpperBound;
             };
             _upperBoundControl.OnBoundEnabled += () =>
@@ -70,7 +70,7 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
             _lowerBoundControl = new ThresholdBoundControl("lower-bound", _threshold.LowerBound, modifier);
             _lowerBoundControl.OnBoundChanged += value =>
             {
-                _threshold.LowerBound = value;
+                _threshold.TrySetPrimaryBound(AtmosMonitorThresholdBound.Lower, value);
                 return _threshold.LowerBound;
             };
             _lowerBoundControl.OnBoundEnabled += () =>
@@ -91,7 +91,7 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
             _upperWarningBoundControl = new ThresholdBoundControl("upper-warning-bound", _threshold.UpperWarningBound, modifier);
             _upperWarningBoundControl.OnBoundChanged += value =>
             {
-                _threshold.UpperWarningBound = value;
+                _threshold.TrySetWarningBound(AtmosMonitorThresholdBound.Upper, value);
                 return _threshold.UpperWarningBound;
             };
             _upperWarningBoundControl.OnBoundEnabled += () =>
@@ -112,7 +112,7 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
             _lowerWarningBoundControl = new ThresholdBoundControl("lower-warning-bound", _threshold.LowerWarningBound, modifier);
             _lowerWarningBoundControl.OnBoundChanged += value =>
             {
-                _threshold.LowerWarningBound = value;
+                _threshold.TrySetWarningBound(AtmosMonitorThresholdBound.Lower, value);
                 return _threshold.LowerWarningBound;
             };
             _lowerWarningBoundControl.OnBoundEnabled += () =>

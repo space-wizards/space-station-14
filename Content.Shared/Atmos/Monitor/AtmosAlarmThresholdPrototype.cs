@@ -1,5 +1,6 @@
 using System;
 using Content.Shared.Atmos.Monitor;
+using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -11,7 +12,7 @@ namespace Content.Shared.Atmos.Monitor
     // except for the range boundaries
     [Prototype("alarmThreshold")]
     [Serializable, NetSerializable]
-    public class AtmosAlarmThreshold : IPrototype
+    public class AtmosAlarmThreshold : IPrototype, ISerializationHooks
     {
         [DataField("id", required: true)]
         public string ID { get; } = default!;
@@ -22,164 +23,53 @@ namespace Content.Shared.Atmos.Monitor
         // zero bounds are not allowed - just
         // set the bound to null if you want
         // to disable it
-        private float? _upperBound;
         [ViewVariables]
         [DataField("upperBound")]
-        public float? UpperBound
-        {
-            get => _upperBound;
-            set
-            {
-                if (value == null)
-                {
-                    _upperBound = null;
-                    return;
-                }
+        public float? UpperBound { get; private set; }
 
-                if (value <= 0f
-                    || value == float.PositiveInfinity
-                    || value == float.NaN)
-                    return;
-
-                if (LowerBound != null
-                    && value < LowerBound)
-                    return;
-
-                _upperBound = value;
-            }
-        }
-
-        private float? _lowerBound;
         [ViewVariables]
         [DataField("lowerBound")]
-        public float? LowerBound
-        {
-            get => _lowerBound;
-            set
-            {
-                if (value == null)
-                {
-                    _lowerBound = null;
-                    return;
-                }
-
-                if (value <= 0f
-                    || value == float.NaN
-                    || value == float.NegativeInfinity)
-                    return;
-
-                if (UpperBound != null
-                    && value > UpperBound)
-                    return;
-
-                _lowerBound = value;
-            }
-        }
+        public float? LowerBound { get; private set; }
 
         // upper warning percentage
         // must always cause UpperWarningBound
         // to be smaller
-        private float? _upperWarningPercentage;
         [ViewVariables]
         [DataField("upperWarnAround")]
-        public float? UpperWarningPercentage
-        {
-            get => _upperWarningPercentage;
-            set
-            {
-                if (value == null)
-                {
-                    _upperWarningPercentage = null;
-                    return;
-                }
-
-                var testValue = value * UpperBound;
-                if (value > 1f
-                    || testValue < LowerWarningBound
-                    || testValue < LowerBound)
-                    return;
-
-                _upperWarningPercentage = value;
-            }
-
-        }
+        public float? UpperWarningPercentage { get; private set; }
 
         // lower warning percentage
         // must always cause LowerWarningBound
         // to be larger
-        private float? _lowerWarningPercentage;
         [ViewVariables]
         [DataField("lowerWarnAround")]
-        public float? LowerWarningPercentage
-        {
-            get => _lowerWarningPercentage;
-            set
-            {
-                if (value == null)
-                {
-                    _lowerWarningPercentage = null;
-                    return;
-                }
-
-                var testValue = value * LowerBound;
-                if (value < 1f
-                    || testValue > UpperWarningBound
-                    || testValue > UpperBound)
-                    return;
-
-                _lowerWarningPercentage = value;
-            }
-        }
+        public float? LowerWarningPercentage { get; private set; }
 
         [ViewVariables]
-        public float? UpperWarningBound {
-            get
-            {
-                if (UpperBound == null || UpperWarningPercentage == null) return null;
-
-                return UpperBound * UpperWarningPercentage;
-            }
-            set
-            {
-                if (value == null)
-                {
-                    UpperWarningPercentage = null;
-                    return;
-                }
-
-                if (UpperBound != null)
-                {
-                    float? percentage = value / UpperBound;
-                    if (percentage != null)
-                        UpperWarningPercentage = percentage;
-                }
-            }
+        public float? UpperWarningBound
+        {
+            get => CalculateWarningBound(AtmosMonitorThresholdBound.Upper);
         }
 
         [ViewVariables]
         public float? LowerWarningBound
         {
-            get
-            {
-                if (LowerBound == null || LowerWarningPercentage == null) return null;
+            get => CalculateWarningBound(AtmosMonitorThresholdBound.Lower);
+        }
 
-                return LowerBound * LowerWarningPercentage;
-            }
-            set
-            {
-                if (value == null)
-                {
-                    LowerWarningPercentage = null;
-                    return;
-                }
+        void ISerializationHooks.AfterDeserialization()
+        {
+            if (UpperBound <= LowerBound)
+                UpperBound = null;
 
-                if (LowerBound != null)
-                {
-                    float? percentage = value / LowerBound;
-                    if (percentage != null)
-                        LowerWarningPercentage = percentage;
-                }
-            }
+            if (LowerBound >= UpperBound)
+                LowerBound = null;
+
+            if (UpperWarningPercentage != null)
+                TrySetWarningBound(AtmosMonitorThresholdBound.Upper, UpperBound * UpperWarningPercentage);
+
+            if (LowerWarningPercentage != null)
+                TrySetWarningBound(AtmosMonitorThresholdBound.Lower, LowerBound * LowerWarningPercentage);
         }
 
         // utility function to check a threshold against some calculated value
@@ -193,7 +83,7 @@ namespace Content.Shared.Atmos.Monitor
                 state = AtmosMonitorAlarmType.Danger;
                 return true;
             }
-            else if (value >= UpperWarningBound || value <= LowerWarningBound)
+            if (value >= UpperWarningBound || value <= LowerWarningBound)
             {
                 state = AtmosMonitorAlarmType.Warning;
                 return true;
@@ -201,6 +91,158 @@ namespace Content.Shared.Atmos.Monitor
 
             return false;
         }
+
+        // set the primary bound, takes a hard value
+        public bool TrySetPrimaryBound(AtmosMonitorThresholdBound bound, float? input)
+        {
+            if (input == null)
+            {
+                switch (bound)
+                {
+                    case AtmosMonitorThresholdBound.Upper:
+                        UpperBound = null;
+                        break;
+                    case AtmosMonitorThresholdBound.Lower:
+                        LowerBound = null;
+                        break;
+                }
+
+                return true;
+            }
+
+            float value = (float) input;
+
+            if (value <= 0f || float.IsNaN(value))
+                return false;
+
+            (float target, int compare)? targetValue = null;
+            switch (bound)
+            {
+                case AtmosMonitorThresholdBound.Upper:
+                    if (float.IsPositiveInfinity(value))
+                        return false;
+
+                    if (LowerBound != null)
+                        targetValue = ((float) LowerBound, -1);
+                    break;
+                case AtmosMonitorThresholdBound.Lower:
+                    if (float.IsNegativeInfinity(value))
+                        return false;
+
+                    if (UpperBound != null)
+                        targetValue = ((float) UpperBound, 1);
+                    break;
+            }
+
+            bool isValid = true;
+            if (targetValue != null)
+            {
+                var result = targetValue.Value.target.CompareTo(value);
+                isValid = targetValue.Value.compare == result;
+            }
+
+            if (isValid)
+            {
+                switch (bound)
+                {
+                    case AtmosMonitorThresholdBound.Upper:
+                        UpperBound = value;
+                        return true;
+                    case AtmosMonitorThresholdBound.Lower:
+                        LowerBound = value;
+                        return true;
+                }
+            }
+
+            return false;
+        }
+
+        // set the warning bound, takes a hard value
+        //
+        // this will always set the percentage and
+        // the raw value at the same time
+        public bool TrySetWarningBound(AtmosMonitorThresholdBound bound, float? input)
+        {
+            if (input == null)
+            {
+                switch (bound)
+                {
+                    case AtmosMonitorThresholdBound.Upper:
+                        UpperWarningPercentage = null;
+                        break;
+                    case AtmosMonitorThresholdBound.Lower:
+                        LowerWarningPercentage = null;
+                        break;
+                }
+
+                return true;
+            }
+
+            switch (bound)
+            {
+                case AtmosMonitorThresholdBound.Upper:
+                    if (UpperBound == null)
+                        return false;
+
+                    float upperWarning = (float) (input / UpperBound);
+                    float upperTestValue = (upperWarning * (float) UpperBound);
+
+                    if (upperWarning > 1f
+                        || upperTestValue < LowerWarningBound
+                        || upperTestValue < LowerBound)
+                        return false;
+
+                    UpperWarningPercentage = upperWarning;
+
+                    return true;
+                case AtmosMonitorThresholdBound.Lower:
+                    if (LowerBound == null)
+                        return false;
+
+                    float lowerWarning = (float) (input / LowerBound);
+                    float testValue = (lowerWarning * (float) LowerBound);
+
+                    if (lowerWarning < 1f
+                        || testValue > UpperWarningBound
+                        || testValue > UpperBound)
+                        return false;
+
+                    LowerWarningPercentage = lowerWarning;
+
+                    return true;
+            }
+
+            return false;
+        }
+
+        public float? CalculateWarningBound(AtmosMonitorThresholdBound bound)
+        {
+            float? value = null;
+
+            switch (bound)
+            {
+                case AtmosMonitorThresholdBound.Upper:
+                    if (UpperBound == null || UpperWarningPercentage == null)
+                        break;
+
+                    value = UpperBound * UpperWarningPercentage;
+                    break;
+                case AtmosMonitorThresholdBound.Lower:
+                    if (LowerBound == null || LowerWarningPercentage == null)
+                        break;
+
+                    value = LowerBound * LowerWarningPercentage;
+                    break;
+            }
+
+            return value;
+        }
+    }
+
+    public enum AtmosMonitorThresholdBound
+    {
+        Upper,
+        Lower
     }
 
     // not really used in the prototype but in code,
