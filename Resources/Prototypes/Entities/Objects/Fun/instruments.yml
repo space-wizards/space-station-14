@@ -172,10 +172,14 @@
     size: 24
     sprite: Objects/Fun/Instruments/saxophone.rsi
   - type: Extractable
-    grindableSolution:
-      reagents:
-        - ReagentId: Saxoite
-          Quantity: 10
+    grindableSolutionName: sax
+  - type: SolutionContainerManager
+    solutions:
+      sax:
+        reagents:
+          - ReagentId: Saxoite
+            Quantity: 10
+
 
 - type: entity
   parent: BaseHandheldInstrument
