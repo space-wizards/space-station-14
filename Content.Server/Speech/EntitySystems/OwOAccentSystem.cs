@@ -19,28 +19,26 @@ namespace Content.Server.Speech.EntitySystems
             { "you", "wu" },
         };
 
-        private string RandomFace => _random.Pick(Faces);
-
         public override void Initialize()
         {
             SubscribeLocalEvent<OwOAccentComponent, AccentGetEvent>(OnAccent);
         }
 
-        public string Accentuate(string message)
+        public static string Accentuate(string message, IRobustRandom random)
         {
             foreach (var (word, repl) in SpecialWords)
             {
                 message = message.Replace(word, repl);
             }
 
-            return message.Replace("!", RandomFace)
+            return message.Replace("!", random.Pick(Faces))
                 .Replace("r", "w").Replace("R", "W")
                 .Replace("l", "w").Replace("L", "W");
         }
 
         private void OnAccent(EntityUid uid, OwOAccentComponent component, AccentGetEvent args)
         {
-            args.Message = Accentuate(args.Message);
+            args.Message = Accentuate(args.Message, _random);
         }
     }
 }
