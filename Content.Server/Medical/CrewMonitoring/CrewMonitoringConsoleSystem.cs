@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Medical.SuitSensors;
 using Content.Server.UserInterface;
@@ -14,6 +15,9 @@ namespace Content.Server.Medical.CrewMonitoring
         [Dependency] private readonly SuitSensorSystem _sensors = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
+        private float _updateDif = 0f;
+        private float _updateRate = 3f;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -24,6 +28,12 @@ namespace Content.Server.Medical.CrewMonitoring
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
+
+            // check update rate
+            _updateDif += frameTime;
+            if (_updateDif < _updateRate)
+                return;
+            _updateDif = 0f;
 
             var consoles = EntityManager.EntityQuery<CrewMonitoringConsoleComponent>();
             foreach (var console in consoles)
