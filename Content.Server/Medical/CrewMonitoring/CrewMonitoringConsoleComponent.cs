@@ -11,6 +11,6 @@ namespace Content.Server.Medical.CrewMonitoring
     {
         public override string Name => "CrewMonitoringConsole";
 
-        public Dictionary<uint, SuitSensorStatus> ConnectedSensors = new();
+        public Dictionary<string, SuitSensorStatus> ConnectedSensors = new();
     }
 }

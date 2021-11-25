@@ -38,7 +38,7 @@ namespace Content.Server.Medical.CrewMonitoring
                 return;
 
             suitSensor.Timestamp = _gameTiming.CurTime;
-            component.ConnectedSensors[suitSensor.SensorId] = suitSensor;
+            component.ConnectedSensors[args.SenderAddress] = suitSensor;
         }
 
         public override void Update(float frameTime)

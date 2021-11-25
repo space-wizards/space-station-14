@@ -9,14 +9,12 @@ namespace Content.Shared.Medical.SuitSensor
     [Serializable, NetSerializable]
     public class SuitSensorStatus
     {
-        public SuitSensorStatus(uint sensorId, string name, string job)
+        public SuitSensorStatus(string name, string job)
         {
-            SensorId = sensorId;
             Name = name;
             Job = job;
         }
 
-        public uint SensorId;
         public TimeSpan Timestamp;
         public string Name;
         public string Job;
@@ -27,8 +25,6 @@ namespace Content.Shared.Medical.SuitSensor
 
     public static class SuitSensorConstants
     {
-        public const string NET_SENSOR_ID = "id";
-        public const string NET_TIMESTAMP = "time";
         public const string NET_NAME = "name";
         public const string NET_JOB = "job";
         public const string NET_IS_ALIVE = "alive";
