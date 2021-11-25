@@ -1,9 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed not being able to move pulled entities, type: Fix}
-  id: 150
-  time: '2021-04-05T12:08:46.0000000+00:00'
 - author: MehimoNemo
   changes:
   - {message: 'Lathes can now print Firelock electronics, APC electronics, and Door
@@ -2853,3 +2848,8 @@ Entries:
   - {message: The game admins are now omnipotent., type: Add}
   id: 651
   time: '2021-11-24T22:52:31.0000000+00:00'
+- author: Mith-randalf
+  changes:
+  - {message: Fixed broken tonic water can visual., type: Fix}
+  id: 652
+  time: '2021-11-25T01:35:01.0000000+00:00'
