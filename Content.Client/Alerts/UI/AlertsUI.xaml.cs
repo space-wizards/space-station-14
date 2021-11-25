@@ -16,9 +16,11 @@ namespace Content.Client.Alerts.UI;
 
 public class AlertsFramePresenter : IDisposable
 {
+    [Dependency] private readonly IEntitySystemManager _systemManager = default!;
     [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
 
     private IAlertsFrameView _alertsFrame;
+    private ClientAlertsSystem? _alertsSystem;
 
     public AlertsFramePresenter()
     {
@@ -28,9 +30,21 @@ public class AlertsFramePresenter : IDisposable
         _alertsFrame = new AlertsUI();
         _userInterfaceManager.StateRoot.AddChild((AlertsUI) _alertsFrame);
 
-        //TODO: wire up view
+        // This is required so that if we load after the system is initialized, we can bind to it immediately
+        if (_systemManager.TryGetEntitySystem<ClientAlertsSystem>(out var alertsSystem))
+            SystemBindingChanged(alertsSystem);
 
-        //TODO: wire up system
+        _systemManager.SystemLoaded += OnSystemLoaded;
+        _systemManager.SystemUnloaded += OnSystemUnloaded;
+
+        _alertsFrame.AlertPressed += OnAlertPressed;
+
+        // initially populate the frame if system is available
+        var alerts = alertsSystem?.ActiveAlerts;
+        if (alerts != null)
+        {
+            SystemOnSyncAlerts(alertsSystem, alerts);
+        }
     }
 
     /// <inheritdoc />
@@ -39,23 +53,82 @@ public class AlertsFramePresenter : IDisposable
         _userInterfaceManager.StateRoot.RemoveChild((AlertsUI) _alertsFrame);
         _alertsFrame.Dispose();
         _alertsFrame = null!;
+
+        SystemBindingChanged(null);
+        _systemManager.SystemLoaded -= OnSystemLoaded;
+        _systemManager.SystemUnloaded -= OnSystemUnloaded;
     }
 
-    private void SyncControls(AlertOrderPrototype? alertOrderPrototype, Dictionary<AlertKey, AlertState> alertStates)
+    private void OnAlertPressed(object? sender, AlertType e)
     {
-        _alertsFrame.SyncControls(alertOrderPrototype, alertStates);
+        var alertsSystem = EntitySystem.Get<ClientAlertsSystem>();
+        alertsSystem.AlertClicked(e);
     }
 
-    protected void ClearControls()
+    private void SystemOnClearAlerts(object? sender, EventArgs e)
     {
         _alertsFrame.ClearAllControls();
     }
 
-    private static void HandleAlertPressed(AlertType alertPrototypeAlertType)
+    private void SystemOnSyncAlerts(object? sender, IReadOnlyDictionary<AlertKey, AlertState> e)
     {
-        var alertsSystem = EntitySystem.Get<ClientAlertsSystem>();
-        alertsSystem.AlertClicked(alertPrototypeAlertType);
+        if (sender is ClientAlertsSystem system)
+            _alertsFrame.SyncControls(system.AlertOrder, e);
     }
+
+    #region System Binding
+
+    private void OnSystemLoaded(object? sender, SystemChangedArgs args)
+    {
+        if (args.System is ClientAlertsSystem system) SystemBindingChanged(system);
+    }
+
+    private void OnSystemUnloaded(object? sender, SystemChangedArgs args)
+    {
+        if (args.System is ClientAlertsSystem) SystemBindingChanged(null);
+    }
+
+    private void SystemBindingChanged(ClientAlertsSystem? newSystem)
+    {
+        if (newSystem is null)
+        {
+            if (_alertsSystem is null)
+                return;
+
+            UnbindFromSystem();
+        }
+        else
+        {
+            if (_alertsSystem is null)
+            {
+                BindToSystem(newSystem);
+                return;
+            }
+
+            UnbindFromSystem();
+            BindToSystem(newSystem);
+        }
+    }
+
+    private void BindToSystem(ClientAlertsSystem system)
+    {
+        _alertsSystem = system;
+        system.SyncAlerts += SystemOnSyncAlerts;
+        system.ClearAlerts += SystemOnClearAlerts;
+    }
+
+    private void UnbindFromSystem()
+    {
+        var system = _alertsSystem;
+
+        if (system is null)
+            throw new InvalidOperationException();
+
+        system.SyncAlerts -= SystemOnSyncAlerts;
+        system.ClearAlerts -= SystemOnClearAlerts;
+    }
+
+    #endregion
 }
 
 /// <summary>
@@ -65,7 +138,7 @@ public interface IAlertsFrameView : IDisposable
 {
     event EventHandler<AlertType>? AlertPressed;
 
-    void SyncControls(AlertOrderPrototype? alertOrderPrototype, Dictionary<AlertKey, AlertState> alertStates);
+    void SyncControls(AlertOrderPrototype? alertOrderPrototype, IReadOnlyDictionary<AlertKey, AlertState> alertStates);
     void ClearAllControls();
 }
 
@@ -79,6 +152,8 @@ public sealed partial class AlertsUI : Control, IAlertsFrameView
     public const float ChatSeparation = 38f;
 
     private readonly Dictionary<AlertKey, AlertControl> _alertControls = new();
+
+    //TODO: WTF is that
     [Dependency] private readonly IChatManager _chatManager = default!;
 
     public AlertsUI()
@@ -96,7 +171,7 @@ public sealed partial class AlertsUI : Control, IAlertsFrameView
         LayoutContainer.SetMarginRight(this, -10);
     }
 
-    public void SyncControls(AlertOrderPrototype? alertOrderPrototype, Dictionary<AlertKey, AlertState> alertStates)
+    public void SyncControls(AlertOrderPrototype? alertOrderPrototype, IReadOnlyDictionary<AlertKey, AlertState> alertStates)
     {
         // remove any controls with keys no longer present
         if (SyncRemoveControls(alertStates)) return;
@@ -113,9 +188,9 @@ public sealed partial class AlertsUI : Control, IAlertsFrameView
         foreach (var alertControl in _alertControls.Values)
         {
             alertControl.OnPressed -= AlertControlPressed;
+            alertControl.Dispose();
         }
 
-        //TODO: Properly dispose
         _alertControls.Clear();
     }
 
@@ -159,7 +234,7 @@ public sealed partial class AlertsUI : Control, IAlertsFrameView
             LayoutContainer.SetMarginTop(this, 250);
     }
 
-    private bool SyncRemoveControls(Dictionary<AlertKey, AlertState> alertStates)
+    private bool SyncRemoveControls(IReadOnlyDictionary<AlertKey, AlertState> alertStates)
     {
         var toRemove = new List<AlertKey>();
         foreach (var existingKey in _alertControls.Keys)
@@ -177,7 +252,7 @@ public sealed partial class AlertsUI : Control, IAlertsFrameView
         return false;
     }
 
-    private void SyncUpdateControls(AlertOrderPrototype? alertOrderPrototype, Dictionary<AlertKey, AlertState> alertStates)
+    private void SyncUpdateControls(AlertOrderPrototype? alertOrderPrototype, IReadOnlyDictionary<AlertKey, AlertState> alertStates)
     {
         foreach (var (alertKey, alertState) in alertStates)
         {

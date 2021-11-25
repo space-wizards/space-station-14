@@ -15,11 +15,11 @@ public class SharedAlertsSystem : EntitySystem
 
     private readonly Dictionary<AlertType, AlertPrototype> _typeToAlert = new();
 
-    public override void Initialize()
+    public IReadOnlyDictionary<AlertKey, AlertState>? GetActiveAlerts(EntityUid euid)
     {
-        base.Initialize();
-
-        LoadAlertPrototypes();
+        return EntityManager.TryGetComponent(euid, out SharedAlertsComponent comp)
+            ? comp.Alerts
+            : null;
     }
 
     /// <returns>true iff an alert of the indicated id is currently showing</returns>
@@ -138,13 +138,18 @@ public class SharedAlertsSystem : EntitySystem
     /// <param name="sharedAlertsComponent"></param>
     protected virtual void AfterClearAlert(SharedAlertsComponent sharedAlertsComponent) { }
 
-    public static void LoadAlertPrototypes()
+    public override void Initialize()
     {
-        Get<SharedAlertsSystem>()._typeToAlert.Clear();
+        base.Initialize();
 
-        foreach (var alert in Get<SharedAlertsSystem>()._prototypeManager.EnumeratePrototypes<AlertPrototype>())
+        LoadAlertPrototypes();
+    }
+
+    public void LoadAlertPrototypes()
+    {
+        foreach (var alert in _prototypeManager.EnumeratePrototypes<AlertPrototype>())
         {
-            if (!Get<SharedAlertsSystem>()._typeToAlert.TryAdd(alert.AlertType, alert))
+            if (!_typeToAlert.TryAdd(alert.AlertType, alert))
             {
                 Logger.ErrorS("alert",
                     "Found alert with duplicate alertType {0} - all alerts must have" +

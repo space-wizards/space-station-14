@@ -37,6 +37,17 @@ internal class ClientAlertsSystem : SharedAlertsSystem
             Logger.ErrorS("alert", "no alertOrder prototype found, alerts will be in random order");
     }
 
+    public IReadOnlyDictionary<AlertKey, AlertState>? ActiveAlerts
+    {
+        get
+        {
+            var ent = _playerManager.LocalPlayer?.ControlledEntityUid;
+            return ent is not null
+                ? GetActiveAlerts(ent.Value)
+                : null;
+        }
+    }
+
     protected override void AfterShowAlert(SharedAlertsComponent sharedAlertsComponent)
     {
         if (!CurControlled(sharedAlertsComponent.Owner, _playerManager))
