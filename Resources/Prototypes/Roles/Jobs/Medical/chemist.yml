@@ -1,8 +1,6 @@
 - type: job
   id: Chemist
   name: "chemist"
-  positions: 2
-  spawnPositions: 2
   startingGear: ChemistGear
   departments:
   - Medical
