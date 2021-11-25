@@ -7,6 +7,7 @@ using Content.Server.RoundEnd;
 using Content.Shared.CCVar;
 using Content.Shared.Voting;
 using Robust.Server.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -16,6 +17,13 @@ namespace Content.Server.Voting.Managers
 {
     public sealed partial class VoteManager
     {
+        private static readonly Dictionary<StandardVoteType, CVarDef<bool>> _voteTypesToEnableCVars = new()
+        {
+            {StandardVoteType.Restart, CCVars.VoteRestartEnabled},
+            {StandardVoteType.Preset, CCVars.VotePresetEnabled},
+            {StandardVoteType.Map, CCVars.VoteMapEnabled},
+        };
+
         public void CreateStandardVote(IPlayerSession? initiator, StandardVoteType voteType)
         {
             switch (voteType)

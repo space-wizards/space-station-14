@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Robust.Shared.Containers;
@@ -146,7 +147,7 @@ namespace Content.Shared.Hands.Components
 
         private void RemoveHand(Hand hand)
         {
-            DropHeldEntityToFloor(hand, intentionalDrop: false);
+            DropHeldEntityToFloor(hand);
             hand.Container?.Shutdown();
             Hands.Remove(hand);
 
@@ -306,34 +307,34 @@ namespace Content.Shared.Hands.Components
         /// <summary>
         ///     Tries to drop the contents of the active hand to the target location.
         /// </summary>
-        public bool TryDropActiveHand(EntityCoordinates targetDropLocation, bool doMobChecks = true, bool intentional = true)
+        public bool TryDropActiveHand(EntityCoordinates targetDropLocation, bool doMobChecks = true)
         {
             if (!TryGetActiveHand(out var hand))
                 return false;
 
-            return TryDropHeldEntity(hand, targetDropLocation, doMobChecks, intentional);
+            return TryDropHeldEntity(hand, targetDropLocation, doMobChecks);
         }
 
         /// <summary>
         ///     Tries to drop the contents of a hand to the target location.
         /// </summary>
-        public bool TryDropHand(string handName, EntityCoordinates targetDropLocation, bool checkActionBlocker = true, bool intentional = true)
+        public bool TryDropHand(string handName, EntityCoordinates targetDropLocation, bool checkActionBlocker = true)
         {
             if (!TryGetHand(handName, out var hand))
                 return false;
 
-            return TryDropHeldEntity(hand, targetDropLocation, checkActionBlocker, intentional);
+            return TryDropHeldEntity(hand, targetDropLocation, checkActionBlocker);
         }
 
         /// <summary>
         ///     Tries to drop a held entity to the target location.
         /// </summary>
-        public bool TryDropEntity(IEntity entity, EntityCoordinates coords, bool doMobChecks = true, bool intentional = true)
+        public bool TryDropEntity(IEntity entity, EntityCoordinates coords, bool doMobChecks = true)
         {
             if (!TryGetHandHoldingEntity(entity, out var hand))
                 return false;
 
-            return TryDropHeldEntity(hand, coords, doMobChecks, intentional);
+            return TryDropHeldEntity(hand, coords, doMobChecks);
         }
 
         /// <summary>
@@ -369,23 +370,23 @@ namespace Content.Shared.Hands.Components
         /// <summary>
         ///     Tries to drop the contents of a hand directly under the player.
         /// </summary>
-        public bool Drop(string handName, bool checkActionBlocker = true, bool intentionalDrop = true)
+        public bool Drop(string handName, bool checkActionBlocker = true)
         {
             if (!TryGetHand(handName, out var hand))
                 return false;
 
-            return TryDropHeldEntity(hand, Owner.Transform.Coordinates, checkActionBlocker, intentionalDrop);
+            return TryDropHeldEntity(hand, Owner.Transform.Coordinates, checkActionBlocker);
         }
 
         /// <summary>
         ///     Tries to drop a held entity directly under the player.
         /// </summary>
-        public bool Drop(IEntity entity, bool checkActionBlocker = true, bool intentionalDrop = true)
+        public bool Drop(IEntity entity, bool checkActionBlocker = true)
         {
             if (!TryGetHandHoldingEntity(entity, out var hand))
                 return false;
 
-            return TryDropHeldEntity(hand, Owner.Transform.Coordinates, checkActionBlocker, intentionalDrop);
+            return TryDropHeldEntity(hand, Owner.Transform.Coordinates, checkActionBlocker);
         }
 
         /// <summary>
@@ -467,7 +468,7 @@ namespace Content.Shared.Hands.Components
         /// <summary>
         ///     Drops a hands contents to the target location.
         /// </summary>
-        public void DropHeldEntity(Hand hand, EntityCoordinates targetDropLocation, bool intentionalDrop = true)
+        public void DropHeldEntity(Hand hand, EntityCoordinates targetDropLocation)
         {
             var heldEntity = hand.HeldEntity;
 
@@ -476,7 +477,7 @@ namespace Content.Shared.Hands.Components
 
             RemoveHeldEntityFromHand(hand);
 
-            EntitySystem.Get<SharedInteractionSystem>().DroppedInteraction(Owner, heldEntity, intentionalDrop);
+            EntitySystem.Get<SharedInteractionSystem>().DroppedInteraction(Owner, heldEntity);
 
             heldEntity.Transform.WorldPosition = GetFinalDropCoordinates(targetDropLocation);
 
@@ -510,7 +511,7 @@ namespace Content.Shared.Hands.Components
         /// <summary>
         ///     Tries to drop a hands contents to the target location.
         /// </summary>
-        private bool TryDropHeldEntity(Hand hand, EntityCoordinates location, bool checkActionBlocker, bool intentionalDrop = true)
+        private bool TryDropHeldEntity(Hand hand, EntityCoordinates location, bool checkActionBlocker)
         {
             if (!CanRemoveHeldEntityFromHand(hand))
                 return false;
@@ -518,16 +519,16 @@ namespace Content.Shared.Hands.Components
             if (checkActionBlocker && !PlayerCanDrop())
                 return false;
 
-            DropHeldEntity(hand, location, intentionalDrop);
+            DropHeldEntity(hand, location);
             return true;
         }
 
         /// <summary>
         ///     Drops the contents of a hand directly under the player.
         /// </summary>
-        private void DropHeldEntityToFloor(Hand hand, bool intentionalDrop = true)
+        private void DropHeldEntityToFloor(Hand hand)
         {
-            DropHeldEntity(hand, Owner.Transform.Coordinates, intentionalDrop);
+            DropHeldEntity(hand, Owner.Transform.Coordinates);
         }
 
         private bool CanPutHeldEntityIntoContainer(Hand hand, IContainer targetContainer, bool checkActionBlocker)
@@ -668,6 +669,7 @@ namespace Content.Shared.Hands.Components
 
             HandlePickupAnimation(entity);
             PutEntityIntoHand(hand, entity);
+            EntitySystem.Get<SharedAdminLogSystem>().Add(LogType.Pickup, LogImpact.Low, $"{Owner} picked up {entity}");
             return true;
         }
 

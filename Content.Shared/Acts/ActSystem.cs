@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -17,15 +17,9 @@ namespace Content.Shared.Acts
         void OnDestroy(DestructionEventArgs eventArgs);
     }
 
-    public class DestructionEventArgs : EntityEventArgs
-    {
-        public EntityUid Owner { get; init; } = default!;
-    }
+    public class DestructionEventArgs : EntityEventArgs { }
 
-    public class BreakageEventArgs : EventArgs
-    {
-        public EntityUid Owner { get; init; } = default!;
-    }
+    public class BreakageEventArgs : EntityEventArgs { }
 
     public interface IBreakAct
     {
@@ -55,11 +49,9 @@ namespace Content.Shared.Acts
     {
         public void HandleDestruction(EntityUid owner)
         {
-            var eventArgs = new DestructionEventArgs
-            {
-                Owner = owner
-            };
+            var eventArgs = new DestructionEventArgs();
 
+            RaiseLocalEvent(owner, eventArgs, false);
             var destroyActs = EntityManager.GetComponents<IDestroyAct>(owner).ToList();
 
             foreach (var destroyAct in destroyActs)
@@ -88,10 +80,8 @@ namespace Content.Shared.Acts
 
         public void HandleBreakage(EntityUid owner)
         {
-            var eventArgs = new BreakageEventArgs
-            {
-                Owner = owner,
-            };
+            var eventArgs = new BreakageEventArgs();
+            RaiseLocalEvent(owner, eventArgs, false);
             var breakActs = EntityManager.GetComponents<IBreakAct>(owner).ToList();
             foreach (var breakAct in breakActs)
             {
