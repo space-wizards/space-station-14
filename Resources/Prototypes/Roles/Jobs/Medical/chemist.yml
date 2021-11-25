@@ -1,0 +1,29 @@
+- type: job
+  id: Chemist
+  name: "chemist"
+  positions: 2
+  spawnPositions: 2
+  startingGear: ChemistGear
+  departments:
+  - Medical
+  icon: "Chemist"
+  supervisors: "the chief medical officer"
+  access:
+  - Medical
+  - Chemistry
+
+- type: startingGear
+  id: ChemistGear
+  equipment:
+    innerclothing: ClothingUniformJumpsuitChemistry
+    backpack: ClothingBackpackChemistryFilled
+    shoes: ClothingShoesColorWhite
+    outerclothing: ClothingOuterCoatLabChem
+    idcard: ChemistryPDA
+    ears: ClothingHeadsetMedical
+    belt: ClothingBeltMedical
+    pocket1: HandLabeler
+    # the purple glasses?
+  innerclothingskirt: ClothingUniformJumpskirtChemistry
+  satchel: ClothingBackpackSatchelChemistryFilled
+  duffelbag: ClothingBackpackDuffelChemistryFilled

@@ -1,37 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed not being able to move pulled entities, type: Fix}
-  id: 150
-  time: '2021-04-05T12:08:46.0000000+00:00'
-- author: MehimoNemo
-  changes:
-  - {message: 'Lathes can now print Firelock electronics, APC electronics, and Door
-      electronics ;)', type: Add}
-  id: 151
-  time: '2021-04-06T19:06:25.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Add light replacer to janitorial closet., type: Add}
-  id: 152
-  time: '2021-04-08T12:28:06.0000000+00:00'
-- author: bryce0110
-  changes:
-  - {message: Welded Lockers and Crates will now look welded., type: Fix}
-  id: 153
-  time: '2021-04-08T12:39:50.0000000+00:00'
-- author: TaralGit
-  changes:
-  - {message: 'baseball bat, machete, captain''s sabre and katana.', type: Add}
-  - {message: 'smaller combat knife icon, inhands for fireaxe, Olivaw pistol and WT-550
-      smg.', type: Fix}
-  id: 154
-  time: '2021-04-10T16:34:45.0000000+00:00'
-- author: ike709
-  changes:
-  - {message: You can now set your HUD's theme in the settings., type: Add}
-  id: 155
-  time: '2021-04-11T22:43:54.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Make GasOverlayData great again, type: Tweak}
@@ -2853,3 +2820,38 @@ Entries:
   - {message: The game admins are now omnipotent., type: Add}
   id: 651
   time: '2021-11-24T22:52:31.0000000+00:00'
+- author: Mith-randalf
+  changes:
+  - {message: Fixed broken tonic water can visual., type: Fix}
+  id: 652
+  time: '2021-11-25T01:35:01.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Fixed bug with disposals that turned Packedstation disposals into an
+      inescapable hell, type: Fix}
+  id: 653
+  time: '2021-11-25T02:10:15.0000000+00:00'
+- author: Leander
+  changes:
+  - {message: added broken bottles for bar fights, type: Add}
+  - {message: tweaked bottles so that they spawn actual broken bottles instead of
+      glass when thrown, type: Tweak}
+  - {message: nerfed bottle throwing damage, type: Tweak}
+  id: 654
+  time: '2021-11-25T05:16:17.0000000+00:00'
+- author: iczero
+  changes:
+  - {message: Survival boxes are no longer magic, type: Add}
+  id: 655
+  time: '2021-11-25T05:47:52.0000000+00:00'
+- author: moony
+  changes:
+  - {message: 'You can now grind up the bee plush, you monster.', type: Add}
+  id: 656
+  time: '2021-11-25T06:06:13.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: The chemist has arrived on station! Pharmacology will be left to the
+      professionals now., type: Add}
+  id: 657
+  time: '2021-11-25T06:07:07.0000000+00:00'
