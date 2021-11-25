@@ -1,10 +1,4 @@
 Entries:
-- author: MehimoNemo
-  changes:
-  - {message: 'Lathes can now print Firelock electronics, APC electronics, and Door
-      electronics ;)', type: Add}
-  id: 151
-  time: '2021-04-06T19:06:25.0000000+00:00'
 - author: Macoron
   changes:
   - {message: Add light replacer to janitorial closet., type: Add}
@@ -2853,3 +2847,9 @@ Entries:
   - {message: Fixed broken tonic water can visual., type: Fix}
   id: 652
   time: '2021-11-25T01:35:01.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Fixed bug with disposals that turned Packedstation disposals into an
+      inescapable hell, type: Fix}
+  id: 653
+  time: '2021-11-25T02:10:15.0000000+00:00'
