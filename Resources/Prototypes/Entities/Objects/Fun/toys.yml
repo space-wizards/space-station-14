@@ -28,10 +28,13 @@
     sprite: Objects/Fun/toys.rsi
     state: plushie_h
   - type: Extractable
-    grindableSolution:
-      reagents:
-      - ReagentId: GroundBee
-        Quantity: 10
+    grindableSolutionName: bee
+  - type: SolutionContainerManager
+    solutions:
+      bee:
+        reagents:
+          - ReagentId: GroundBee
+            Quantity: 10
 
 - type: entity
   parent: BasePlushie
