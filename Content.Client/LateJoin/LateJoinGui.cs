@@ -57,7 +57,7 @@ namespace Content.Client.LateJoin
             {
                 var (station, jobId) = x;
                 Logger.InfoS("latejoin", $"Late joining as ID: {jobId}");
-                _consoleHost.ExecuteCommand($"joingame {CommandParsing.Escape(jobId)} {station}");
+                _consoleHost.ExecuteCommand($"joingame {CommandParsing.Escape(jobId)} {station.Id}");
                 Close();
             };
 
