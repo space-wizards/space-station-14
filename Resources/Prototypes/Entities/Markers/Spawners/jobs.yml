@@ -232,6 +232,18 @@
       - state: green
       - state: doctor
 
+- type: entity
+  id: SpawnPointChemist
+  parent: SpawnPointJobBase
+  name: chemist
+  components:
+  - type: SpawnPoint
+    job_id: Chemist
+  - type: Sprite
+    layers:
+      - state: green
+      - state: chemist
+
 # Science
 
 - type: entity
