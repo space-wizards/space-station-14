@@ -1,5 +1,6 @@
 ﻿using System;
 using Content.Shared.Inventory;
+using Content.Shared.Medical.SuitSensor;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -21,6 +22,12 @@ namespace Content.Server.Medical.SuitSensors
         /// </summary>
         [DataField("randomMode")]
         public bool RandomMode = true;
+
+        /// <summary>
+        ///     If true user can't change suit sensor mode
+        /// </summary>
+        [DataField("controlsLocked")]
+        public bool ControlsLocked = false;
 
         /// <summary>
         ///     Current sensor mode. Can be switched by user verbs.
@@ -49,28 +56,5 @@ namespace Content.Server.Medical.SuitSensors
         ///     Last time when sensor updated owners status
         /// </summary>
         public TimeSpan LastUpdate = TimeSpan.Zero;
-    }
-
-    public enum SuitSensorMode : byte
-    {
-        /// <summary>
-        /// Sensor doesn't send any information about owner
-        /// </summary>
-        SensorOff = 0,
-
-        /// <summary>
-        /// Sensor sends only binary status (alive/dead)
-        /// </summary>
-        SensorBinary = 1,
-
-        /// <summary>
-        /// Sensor sends health vitals status
-        /// </summary>
-        SensorVitals = 2,
-
-        /// <summary>
-        /// Sensor sends vitals status and GPS position
-        /// </summary>
-        SensorCords = 3
     }
 }

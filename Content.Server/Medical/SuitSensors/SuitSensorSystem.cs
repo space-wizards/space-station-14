@@ -125,6 +125,10 @@ namespace Content.Server.Medical.SuitSensors
 
         private void OnVerb(EntityUid uid, SuitSensorComponent component, GetInteractionVerbsEvent args)
         {
+            // check if user can change sensor
+            if (component.ControlsLocked)
+                return;
+
             // standard interaction checks
             if (!args.CanAccess || !args.CanInteract || !_actionBlockerSystem.CanDrop(args.User.Uid))
                 return;

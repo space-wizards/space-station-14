@@ -23,6 +23,30 @@ namespace Content.Shared.Medical.SuitSensor
         public MapCoordinates? Coordinates;
     }
 
+    [Serializable, NetSerializable]
+    public enum SuitSensorMode : byte
+    {
+        /// <summary>
+        /// Sensor doesn't send any information about owner
+        /// </summary>
+        SensorOff = 0,
+
+        /// <summary>
+        /// Sensor sends only binary status (alive/dead)
+        /// </summary>
+        SensorBinary = 1,
+
+        /// <summary>
+        /// Sensor sends health vitals status
+        /// </summary>
+        SensorVitals = 2,
+
+        /// <summary>
+        /// Sensor sends vitals status and GPS position
+        /// </summary>
+        SensorCords = 3
+    }
+
     public static class SuitSensorConstants
     {
         public const string NET_NAME = "name";
