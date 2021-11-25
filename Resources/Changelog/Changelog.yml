@@ -1,9 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: Add light replacer to janitorial closet., type: Add}
-  id: 152
-  time: '2021-04-08T12:28:06.0000000+00:00'
 - author: bryce0110
   changes:
   - {message: Welded Lockers and Crates will now look welded., type: Fix}
@@ -2853,3 +2848,11 @@ Entries:
       inescapable hell, type: Fix}
   id: 653
   time: '2021-11-25T02:10:15.0000000+00:00'
+- author: Leander
+  changes:
+  - {message: added broken bottles for bar fights, type: Add}
+  - {message: tweaked bottles so that they spawn actual broken bottles instead of
+      glass when thrown, type: Tweak}
+  - {message: nerfed bottle throwing damage, type: Tweak}
+  id: 654
+  time: '2021-11-25T05:16:17.0000000+00:00'
