@@ -335,3 +335,95 @@
   footstep_sounds:
     collection: footstep_floor
   friction: 0.30
+
+- type: tile
+# parent: FloorBase
+  name: floor_chapel
+  display_name: chapel floor
+  texture: "chapel"
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds:
+    collection: footstep_floor
+  friction: 0.30
+ # item_drop: FloorChapel
+
+- type: tile
+  name: floor_kitchen
+  display_name: kitchen floor
+  texture: "kitchen"
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds:
+    collection: footstep_floor
+  friction: 0.30
+#  item_drop: FloorTileItemDirty
+
+- type: tile
+  name: floor_grass
+  display_name: grass floor
+  texture: "grass"
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds:
+    collection: footstep_floor
+  friction: 0.30
+#  item_drop: FloorTileItemDirty
+
+- type: tile
+  name: floor_laundry
+  display_name: laundry floor
+  texture: "laundry"
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds:
+    collection: footstep_floor
+  friction: 0.30
+#  item_drop: FloorChapel
+
+- type: tile
+  name: floor_clown
+  display_name: clown floor
+  texture: "clown"
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds:
+    collection: footstep_floor
+  friction: 0.30
+#  item_drop: FloorChapel
+#
+- type: tile
+  name: floor_mime
+  display_name: mime floor
+  texture: "mime"
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds:
+    collection: footstep_floor
+  friction: 0.30
+#  item_drop: FloorChapel
+#
+- type: tile
+  name: floor_bar
+  display_name: bar floor
+  texture: "bar"
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds:
+    collection: footstep_floor
+  friction: 0.30
+#  item_drop: FloorChapel
