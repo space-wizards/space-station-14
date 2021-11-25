@@ -42,6 +42,29 @@ namespace Content.Client.Chemistry.UI
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
 
+            //Pill type selection buttons
+            var pillTypeGroup = new ButtonGroup();
+            PillTypeButton1.Group = pillTypeGroup;
+            PillTypeButton2.Group = pillTypeGroup;
+            PillTypeButton3.Group = pillTypeGroup;
+            PillTypeButton4.Group = pillTypeGroup;
+            PillTypeButton5.Group = pillTypeGroup;
+            PillTypeButton6.Group = pillTypeGroup;
+            PillTypeButton7.Group = pillTypeGroup;
+            PillTypeButton8.Group = pillTypeGroup;
+            PillTypeButton9.Group = pillTypeGroup;
+            PillTypeButton10.Group = pillTypeGroup;
+            PillTypeButton11.Group = pillTypeGroup;
+            PillTypeButton12.Group = pillTypeGroup;
+            PillTypeButton13.Group = pillTypeGroup;
+            PillTypeButton14.Group = pillTypeGroup;
+            PillTypeButton15.Group = pillTypeGroup;
+            PillTypeButton16.Group = pillTypeGroup;
+            PillTypeButton17.Group = pillTypeGroup;
+            PillTypeButton18.Group = pillTypeGroup;
+            PillTypeButton19.Group = pillTypeGroup;
+            PillTypeButton20.Group = pillTypeGroup;
+
             PillAmount.IsValid = IsSpinValid;
             BottleAmount.IsValid = IsSpinValid;
             PillAmount.InitDefaultButtons();
@@ -69,6 +92,19 @@ namespace Content.Client.Chemistry.UI
             {
                 ButtonHelpers.SetButtonDisabledRecursive(Contents, !castState.HasPower);
                 EjectButton.Disabled = !castState.HasBeaker;
+            }
+
+            switch (castState.SelectedPillType.Int())
+            {
+                case 1:
+                    PillTypeButton1.Pressed = true;
+                    break;
+                case 2:
+                    PillTypeButton2.Pressed = true;
+                    break;
+                case 3:
+                    PillTypeButton3.Pressed = true;
+                    break;
             }
         }
 

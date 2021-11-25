@@ -23,6 +23,7 @@ chem-master-window-transfer-button = Transfer
 chem-master-window-discard-button = Discard
 chem-master-window-packaging-text = Packaging
 chem-master-window-pills-label = Pills:
+chem-master-window-pill-type-label = Pill type:
 chem-master-window-max-pills-volume-text = max 50u/each
 chem-master-window-max-bottles-volume-text = max 30u/each
 chem-master-window-create-pill-button = Create

@@ -40,9 +40,10 @@ namespace Content.Shared.Chemistry.Components
             public readonly bool BufferModeTransfer;
 
             public readonly FixedPoint2 BufferCurrentVolume;
+            public readonly FixedPoint2 SelectedPillType;
 
             public ChemMasterBoundUserInterfaceState(bool hasPower, bool hasBeaker, FixedPoint2 beakerCurrentVolume, FixedPoint2 beakerMaxVolume, string containerName,
-                string dispenserName, IReadOnlyList<Solution.ReagentQuantity> containerReagents, IReadOnlyList<Solution.ReagentQuantity> bufferReagents, bool bufferModeTransfer, FixedPoint2 bufferCurrentVolume)
+                string dispenserName, IReadOnlyList<Solution.ReagentQuantity> containerReagents, IReadOnlyList<Solution.ReagentQuantity> bufferReagents, bool bufferModeTransfer, FixedPoint2 bufferCurrentVolume, FixedPoint2 selectedPillType)
             {
                 HasPower = hasPower;
                 HasBeaker = hasBeaker;
@@ -54,6 +55,7 @@ namespace Content.Shared.Chemistry.Components
                 BufferReagents = bufferReagents;
                 BufferModeTransfer = bufferModeTransfer;
                 BufferCurrentVolume = bufferCurrentVolume;
+                SelectedPillType = selectedPillType;
             }
         }
 
@@ -67,10 +69,11 @@ namespace Content.Shared.Chemistry.Components
             public readonly FixedPoint2 amount;
             public readonly string id = "";
             public readonly bool isBuffer;
+            public readonly FixedPoint2 pillType;
             public readonly int pillAmount;
             public readonly int bottleAmount;
 
-            public UiActionMessage(UiAction _action, FixedPoint2? _amount, string? _id, bool? _isBuffer, int? _pillAmount, int? _bottleAmount)
+            public UiActionMessage(UiAction _action, FixedPoint2? _amount, string? _id, bool? _isBuffer, FixedPoint2? _pillType, int? _pillAmount, int? _bottleAmount)
             {
                 action = _action;
                 if (action == UiAction.ChemButton)
@@ -90,6 +93,7 @@ namespace Content.Shared.Chemistry.Components
                 else
                 {
                     pillAmount = _pillAmount.GetValueOrDefault();
+                    pillType = _pillType.GetValueOrDefault();
                     bottleAmount = _bottleAmount.GetValueOrDefault();
                 }
             }
@@ -111,8 +115,27 @@ namespace Content.Shared.Chemistry.Components
             Discard,
             ChemButton,
             CreatePills,
-            CreateBottles
+            CreateBottles,
+            SetPillType1,
+            SetPillType2,
+            SetPillType3,
+            SetPillType4,
+            SetPillType5,
+            SetPillType6,
+            SetPillType7,
+            SetPillType8,
+            SetPillType9,
+            SetPillType10,
+            SetPillType11,
+            SetPillType12,
+            SetPillType13,
+            SetPillType14,
+            SetPillType15,
+            SetPillType16,
+            SetPillType17,
+            SetPillType18,
+            SetPillType19,
+            SetPillType20
         }
-
     }
 }

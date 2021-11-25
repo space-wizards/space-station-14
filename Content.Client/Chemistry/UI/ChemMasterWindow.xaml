@@ -1,4 +1,4 @@
-﻿<SS14Window xmlns="https://spacestation14.io"
+<SS14Window xmlns="https://spacestation14.io"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
             MinSize="400 525"
@@ -72,6 +72,36 @@
                     <!-- Packaging Info -->
                     <BoxContainer Orientation="Vertical"
                                   HorizontalExpand="True">
+                        <BoxContainer Orientation="Horizontal">
+                            <!-- Pills Type Buttons -->
+                            <Label Text="{Loc 'chem-master-window-pill-type-label'}"/>
+                            <Control HorizontalExpand="True"
+                                     MinSize="50 0"></Control>
+                            <Button Name="PillTypeButton1" Access="Public" Text="1" StyleClasses="OpenRight"/>
+                            <Button Name="PillTypeButton2" Access="Public" Text="2" StyleClasses="OpenBoth"/>
+                            <Button Name="PillTypeButton3" Access="Public" Text="3" StyleClasses="OpenBoth"/>
+                            <Button Name="PillTypeButton4" Access="Public" Text="4" StyleClasses="OpenBoth"/>
+                            <Button Name="PillTypeButton5" Access="Public" Text="5" StyleClasses="OpenBoth"/>
+                            <Button Name="PillTypeButton6" Access="Public" Text="6" StyleClasses="OpenBoth"/>
+                            <Button Name="PillTypeButton7" Access="Public" Text="7" StyleClasses="OpenBoth"/>
+                            <Button Name="PillTypeButton8" Access="Public" Text="8" StyleClasses="OpenBoth"/>
+                            <Button Name="PillTypeButton9" Access="Public" Text="9" StyleClasses="OpenBoth"/>
+                            <Button Name="PillTypeButton10" Access="Public" Text="10" StyleClasses="OpenLeft"/>
+                        </BoxContainer>
+                        <BoxContainer Orientation="Horizontal">
+                            <Control HorizontalExpand="True"
+                                     MinSize="50 0"></Control>
+                            <Button Name="PillTypeButton11" Access="Public" Text="11" StyleClasses="OpenRight"/>
+                            <Button Name="PillTypeButton12" Access="Public" Text="12" StyleClasses="OpenBoth"/>
+                            <Button Name="PillTypeButton13" Access="Public" Text="13" StyleClasses="OpenBoth"/>
+                            <Button Name="PillTypeButton14" Access="Public" Text="14" StyleClasses="OpenBoth"/>
+                            <Button Name="PillTypeButton15" Access="Public" Text="15" StyleClasses="OpenBoth"/>
+                            <Button Name="PillTypeButton16" Access="Public" Text="16" StyleClasses="OpenBoth"/>
+                            <Button Name="PillTypeButton17" Access="Public" Text="17" StyleClasses="OpenBoth"/>
+                            <Button Name="PillTypeButton18" Access="Public" Text="18" StyleClasses="OpenBoth"/>
+                            <Button Name="PillTypeButton19" Access="Public" Text="19" StyleClasses="OpenBoth"/>
+                            <Button Name="PillTypeButton20" Access="Public" Text="20" StyleClasses="OpenLeft"/>
+                        </BoxContainer>
                         <BoxContainer Orientation="Horizontal">
                             <Label Text="{Loc 'chem-master-window-pills-label'}" />
                             <Control HorizontalExpand="True"

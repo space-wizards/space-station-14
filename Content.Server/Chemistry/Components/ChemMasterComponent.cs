@@ -5,6 +5,7 @@ using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
+using Content.Server.Sprite;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
@@ -41,6 +42,8 @@ namespace Content.Server.Chemistry.Components
 
         [ViewVariables]
         public bool HasBeaker => BeakerContainer.ContainedEntity != null;
+        [ViewVariables]
+        private FixedPoint2 _pillType = FixedPoint2.New(1);
 
         [ViewVariables]
         private bool _bufferModeTransfer = true;
@@ -139,6 +142,66 @@ namespace Content.Server.Chemistry.Components
                     _bufferModeTransfer = false;
                     UpdateUserInterface();
                     break;
+                case UiAction.SetPillType1:
+                    _pillType = FixedPoint2.New(1);
+                    break;
+                case UiAction.SetPillType2:
+                    _pillType = FixedPoint2.New(2);
+                    break;
+                case UiAction.SetPillType3:
+                    _pillType = FixedPoint2.New(3);
+                    break;
+                case UiAction.SetPillType4:
+                    _pillType = FixedPoint2.New(4);
+                    break;
+                case UiAction.SetPillType5:
+                    _pillType = FixedPoint2.New(5);
+                    break;
+                case UiAction.SetPillType6:
+                    _pillType = FixedPoint2.New(6);
+                    break;
+                case UiAction.SetPillType7:
+                    _pillType = FixedPoint2.New(7);
+                    break;
+                case UiAction.SetPillType8:
+                    _pillType = FixedPoint2.New(8);
+                    break;
+                case UiAction.SetPillType9:
+                    _pillType = FixedPoint2.New(9);
+                    break;
+                case UiAction.SetPillType10:
+                    _pillType = FixedPoint2.New(10);
+                    break;
+                case UiAction.SetPillType11:
+                    _pillType = FixedPoint2.New(11);
+                    break;
+                case UiAction.SetPillType12:
+                    _pillType = FixedPoint2.New(12);
+                    break;
+                case UiAction.SetPillType13:
+                    _pillType = FixedPoint2.New(13);
+                    break;
+                case UiAction.SetPillType14:
+                    _pillType = FixedPoint2.New(14);
+                    break;
+                case UiAction.SetPillType15:
+                    _pillType = FixedPoint2.New(15);
+                    break;
+                case UiAction.SetPillType16:
+                    _pillType = FixedPoint2.New(16);
+                    break;
+                case UiAction.SetPillType17:
+                    _pillType = FixedPoint2.New(17);
+                    break;
+                case UiAction.SetPillType18:
+                    _pillType = FixedPoint2.New(18);
+                    break;
+                case UiAction.SetPillType19:
+                    _pillType = FixedPoint2.New(19);
+                    break;
+                case UiAction.SetPillType20:
+                    _pillType = FixedPoint2.New(20);
+                    break;
                 case UiAction.CreatePills:
                 case UiAction.CreateBottles:
                     TryCreatePackage(obj.Session.AttachedEntity, msg.action, msg.pillAmount, msg.bottleAmount);
@@ -186,13 +249,13 @@ namespace Content.Server.Chemistry.Components
             {
                 return new ChemMasterBoundUserInterfaceState(Powered, false, FixedPoint2.New(0), FixedPoint2.New(0),
                     "", Owner.Name, new List<Solution.ReagentQuantity>(), BufferSolution.Contents, _bufferModeTransfer,
-                    BufferSolution.TotalVolume);
+                    BufferSolution.TotalVolume, _pillType);
             }
 
             return new ChemMasterBoundUserInterfaceState(Powered, true, beakerSolution.CurrentVolume,
                 beakerSolution.MaxVolume,
                 beaker.Name, Owner.Name, beakerSolution.Contents, BufferSolution.Contents, _bufferModeTransfer,
-                BufferSolution.TotalVolume);
+                BufferSolution.TotalVolume, _pillType);
         }
 
         public void UpdateUserInterface()
@@ -344,6 +407,14 @@ namespace Content.Server.Chemistry.Components
 
                     var pillSolution = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(pill.Uid, "food");
                     EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(pill.Uid, pillSolution, bufferSolution);
+
+                    
+                    //Change pill Sprite component state
+                    if (!pill.TryGetComponent(out SpriteComponent? sprite))
+                    {
+                        return;
+                    }
+                    sprite?.LayerSetState(0, "pill" + _pillType);
 
                     //Try to give them the bottle
                     if (user.TryGetComponent<HandsComponent>(out var hands) &&
