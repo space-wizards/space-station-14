@@ -11,6 +11,9 @@ ui-vote-create-button = Call Vote
 # Timeout text if a standard vote type is currently on timeout.
 ui-vote-type-timeout = This vote was called too recently ({$remaining})
 
+# Unavailable text if a vote type has been disabled manually.
+ui-vote-type-not-available = This vote type has been disabled
+
 # Hue hue hue
 ui-vote-fluff = Powered by Robust™ Anti-Tamper Technology
 

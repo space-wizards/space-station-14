@@ -103,12 +103,6 @@ namespace Content.Server.GameTicking
             DebugTools.Assert(RunLevel == GameRunLevel.PreRoundLobby);
             Logger.InfoS("ticker", "Starting round!");
 
-            var playerIds = _playersInLobby.Keys.Select(player => player.UserId.UserId).ToArray();
-            RoundId = await _db.AddNewRound(playerIds);
-
-            var startingEvent = new RoundStartingEvent();
-            RaiseLocalEvent(startingEvent);
-
             SendServerMessage(Loc.GetString("game-ticker-start-round"));
 
             List<IPlayerSession> readyPlayers;
@@ -125,6 +119,12 @@ namespace Content.Server.GameTicking
             RunLevel = GameRunLevel.InRound;
 
             RoundLengthMetric.Set(0);
+
+            var playerIds = _playersInLobby.Keys.Select(player => player.UserId.UserId).ToArray();
+            RoundId = await _db.AddNewRound(playerIds);
+
+            var startingEvent = new RoundStartingEvent();
+            RaiseLocalEvent(startingEvent);
 
             // Get the profiles for each player for easier lookup.
             var profiles = _prefsManager.GetSelectedProfilesForPlayers(

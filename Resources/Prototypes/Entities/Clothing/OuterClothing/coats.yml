@@ -134,3 +134,23 @@
     sprite: Clothing/OuterClothing/Coats/pirate.rsi
   - type: Storage
     capacity: 10
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterCoatWarden
+  name: warden's armored jacket
+  description: A sturdy, utilitarian jacket designed to protect a warden from any brig-bound threats.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/warden.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/warden.rsi
+  - type: Storage
+    capacity: 10
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.4
+        Heat: 0.8

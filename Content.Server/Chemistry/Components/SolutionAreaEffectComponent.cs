@@ -137,7 +137,7 @@ namespace Content.Server.Chemistry.Components
 
             var solutionFraction = 1 / Math.Floor(averageExposures);
 
-            foreach (var reagentQuantity in solution.Contents)
+            foreach (var reagentQuantity in solution.Contents.ToArray())
             {
                 if (reagentQuantity.Quantity == FixedPoint2.Zero) continue;
                 var reagent = PrototypeManager.Index<ReagentPrototype>(reagentQuantity.ReagentId);
