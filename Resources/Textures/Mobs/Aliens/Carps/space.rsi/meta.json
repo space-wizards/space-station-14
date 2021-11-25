@@ -5,31 +5,16 @@
     "y": 32
   },
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/tgstation/tgstation/blob/master/icons/mob/animal.dmi, created new sprites based on original",
+  "copyright": "Taken from https://github.com/tgstation/tgstation/blob/master/icons/mob/animal.dmi, edited 'dead' to create 'crit' and 'dead' states",
   "states": [
     {
-      "name": "icon",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "icon"
     },
     {
-      "name": "dead",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "dead"
     },
     {
-      "name": "crit",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "crit"
     },
     {
       "name": "alive",
