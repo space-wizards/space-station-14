@@ -117,3 +117,15 @@
       - state: heart
   - type: Item
     HeldPrefix: hug
+
+- type: entity
+  parent: FoodBoxDonut
+  id: FoodBoxDonutFilled
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: FoodDonutPlain
+        amount: 5
+      - id: FoodDonutPink
+        amount: 1

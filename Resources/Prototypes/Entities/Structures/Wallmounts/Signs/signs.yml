@@ -179,7 +179,6 @@
   - type: Sprite
     state: armory
 
-
 - type: entity
   parent: BaseSign
   id: SignToolStorage
@@ -196,7 +195,6 @@
       - VaultImpassable
   - type: Sprite
     state: ass
-
 
 - type: entity
   parent: BaseSign
@@ -215,7 +213,6 @@
   - type: Sprite
     state: anomaly
 
-
 - type: entity
   parent: BaseSign
   id: SignAtmos
@@ -232,7 +229,6 @@
       - VaultImpassable
   - type: Sprite
     state: atmos
-
 
 - type: entity
   parent: BaseSign
@@ -251,7 +247,6 @@
   - type: Sprite
     state: bar
 
-
 - type: entity
   parent: BaseSign
   id: SignLibrary
@@ -268,7 +263,6 @@
       - VaultImpassable
   - type: Sprite
     state: biblio
-
 
 - type: entity
   parent: BaseSign
@@ -287,7 +281,6 @@
   - type: Sprite
     state: chapel
 
-
 - type: entity
   parent: BaseSign
   id: SignHead
@@ -305,7 +298,6 @@
   - type: Sprite
     state: commander
 
-
 - type: entity
   parent: BaseSign
   id: SignConference
@@ -322,7 +314,6 @@
       - VaultImpassable
   - type: Sprite
     state: conference_room
-
 
 - type: entity
   parent: BaseSign

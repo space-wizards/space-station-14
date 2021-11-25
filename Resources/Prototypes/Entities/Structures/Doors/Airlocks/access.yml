@@ -9,6 +9,22 @@
 
 - type: entity
   parent: Airlock
+  id: AirlockServiceBarLocked
+  suffix: Bar, Locked
+  components:
+  - type: AccessReader
+    access: [["Bar"]]
+
+- type: entity
+  parent: Airlock
+  id: AirlockServiceCaptainLocked
+  suffix: Captain, Locked
+  components:
+  - type: AccessReader
+    access: [["Captain"]]
+
+- type: entity
+  parent: Airlock
   id: AirlockTheatreLocked
   suffix: Theatre, Locked
   components:
@@ -78,6 +94,22 @@
   components:
   - type: AccessReader
     access: [["Command"]]
+
+- type: entity
+  parent: AirlockCommand
+  id: AirlockHoPLocked
+  suffix: HoP, Locked
+  components:
+  - type: AccessReader
+    access: [["HeadOfPersonnel"]]
+
+- type: entity
+  parent: AirlockCommand
+  id: AirlockCaptainLocked
+  suffix: Captain, Locked
+  components:
+  - type: AccessReader
+    access: [["Captain"]]
 
 - type: entity
   parent: AirlockSecurity
@@ -203,6 +235,14 @@
 
 - type: entity
   parent: AirlockMaint
+  id: AirlockMaintCaptainLocked
+  suffix: Captain, Locked
+  components:
+  - type: AccessReader
+    access: [["Captain"]]
+
+- type: entity
+  parent: AirlockMaint
   id: AirlockMaintCommonLocked
   suffix: Common, Locked
   components:
@@ -224,6 +264,14 @@
   components:
   - type: AccessReader
     access: [["Bar"]]
+
+- type: entity
+  parent: AirlockMaint
+  id: AirlockMaintTheatreLocked
+  suffix: Theatre, Locked
+  components:
+  - type: AccessReader
+    access: [["Theatre"]]
 
 - type: entity
   parent: AirlockMaint
