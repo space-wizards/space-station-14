@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Camera;
@@ -10,7 +10,6 @@ using Content.Shared.Physics;
 using Content.Shared.Sound;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -43,7 +42,6 @@ namespace Content.Server.Explosion.EntitySystems
         [Dependency] private readonly IEntityLookup _entityLookup = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IMapManager _maps = default!;
-        [Dependency] private readonly IPlayerManager _players = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly ITileDefinitionManager _tiles = default!;
 
@@ -74,7 +72,9 @@ namespace Content.Server.Explosion.EntitySystems
 
         private void CameraShakeInRange(EntityCoordinates epicenter, float maxRange)
         {
-            var players = _players.GetPlayersInRange(epicenter, (int) Math.Ceiling(maxRange));
+            var players = Filter.Empty()
+                .AddInRange(epicenter.ToMap(EntityManager), MathF.Ceiling(maxRange))
+                .Recipients;
 
             foreach (var player in players)
             {
@@ -306,9 +306,9 @@ namespace Content.Server.Explosion.EntitySystems
             }
             else
             {
-                while (EntityManager.TryGetComponent(entity, out ContainerManagerComponent? container))
+                while (EntityManager.TryGetEntity(entity, out var e) && e.TryGetContainer(out var container))
                 {
-                    entity = container.OwnerUid;
+                    entity = container.Owner.Uid;
                 }
 
                 if (!EntityManager.TryGetComponent(entity, out transform))

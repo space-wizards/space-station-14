@@ -1,5 +1,6 @@
 using Content.Shared;
 using Content.Shared.CCVar;
+using Content.Server.UserInterface;
 using JetBrains.Annotations;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
@@ -20,6 +21,8 @@ namespace Content.Server.Instruments
             _cfg.OnValueChanged(CCVars.MaxMidiEventsPerBatch, OnMaxMidiEventsPerBatchChanged, true);
             _cfg.OnValueChanged(CCVars.MaxMidiBatchesDropped, OnMaxMidiBatchesDroppedChanged, true);
             _cfg.OnValueChanged(CCVars.MaxMidiLaggedBatches, OnMaxMidiLaggedBatchesChanged, true);
+
+            SubscribeLocalEvent<InstrumentComponent, ActivatableUIPlayerChangedEvent>(InstrumentNeedsClean);
         }
 
         public int MaxMidiEventsPerSecond { get; private set; }
@@ -45,6 +48,11 @@ namespace Content.Server.Instruments
         private void OnMaxMidiEventsPerSecondChanged(int obj)
         {
             MaxMidiEventsPerSecond = obj;
+        }
+
+        private void InstrumentNeedsClean(EntityUid uid, InstrumentComponent component, ActivatableUIPlayerChangedEvent ev)
+        {
+            component.Clean();
         }
 
         public override void Update(float frameTime)

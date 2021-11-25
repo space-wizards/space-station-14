@@ -17,7 +17,7 @@ namespace Content.Shared.Doors
         public override string Name => "Door";
 
         [ComponentDependency]
-        protected readonly SharedAppearanceComponent? AppearanceComponent = null;
+        protected readonly AppearanceComponent? AppearanceComponent = null;
 
         [ComponentDependency]
         protected readonly IPhysBody? PhysicsComponent = null;

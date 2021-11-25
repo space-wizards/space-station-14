@@ -37,12 +37,14 @@ namespace Content.Server.Mind
         private readonly List<Objective> _objectives = new();
 
         /// <summary>
-        ///     Creates the new mind attached to a specific player session.
+        ///     Creates the new mind.
+        ///     Note: the Mind is NOT initially attached!
+        ///     The provided UserId is solely for tracking of intended owner.
         /// </summary>
-        /// <param name="userId">The session ID of the owning player.</param>
+        /// <param name="userId">The session ID of the original owner (may get credited).</param>
         public Mind(NetUserId userId)
         {
-            UserId = userId;
+            OriginalOwnerUserId = userId;
         }
 
         // TODO: This session should be able to be changed, probably.
@@ -51,6 +53,13 @@ namespace Content.Server.Mind
         /// </summary>
         [ViewVariables]
         public NetUserId? UserId { get; private set; }
+
+        /// <summary>
+        ///     The session ID of the original owner, if any.
+        ///     May end up used for round-end information (as the owner may have abandoned Mind since)
+        /// </summary>
+        [ViewVariables]
+        public NetUserId OriginalOwnerUserId { get; }
 
         [ViewVariables]
         public bool IsVisitingEntity => VisitingEntity != null;
@@ -234,12 +243,10 @@ namespace Content.Server.Mind
             return true;
         }
 
-
-
         /// <summary>
         ///     Transfer this mind's control over to a new entity.
         /// </summary>
-        /// <param name="entity">
+        /// <param name="entityUid">
         ///     The entity to control.
         ///     Can be null, in which case it will simply detach the mind from any entity.
         /// </param>
@@ -249,28 +256,31 @@ namespace Content.Server.Mind
         /// <exception cref="ArgumentException">
         ///     Thrown if <paramref name="entity"/> is already owned by another mind.
         /// </exception>
-        public void TransferTo(IEntity? entity, bool ghostCheckOverride = false)
+        public void TransferTo(EntityUid? entityUid, bool ghostCheckOverride = false)
         {
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            IEntity? entity = (entityUid != null) ? entMan.GetEntity(entityUid.Value) : null;
+
             MindComponent? component = null;
             var alreadyAttached = false;
 
-            if (entity != null)
+            if (entityUid != null)
             {
-                if (!entity.TryGetComponent(out component))
+                if (!entMan.TryGetComponent<MindComponent>(entityUid.Value, out component))
                 {
-                    component = entity.AddComponent<MindComponent>();
+                    component = entMan.AddComponent<MindComponent>(entityUid.Value);
                 }
-                else if (component.HasMind)
+                else if (component!.HasMind)
                 {
                     EntitySystem.Get<GameTicker>().OnGhostAttempt(component.Mind!, false);
                 }
 
-                if (entity.TryGetComponent(out ActorComponent? actor))
+                if (entMan.TryGetComponent<ActorComponent>(entityUid.Value, out var actor))
                 {
                     // Happens when transferring to your currently visited entity.
                     if (actor.PlayerSession != Session)
                     {
-                        throw new ArgumentException("Visit target already has a session.", nameof(entity));
+                        throw new ArgumentException("Visit target already has a session.", nameof(entityUid));
                     }
 
                     alreadyAttached = true;
@@ -296,11 +306,6 @@ namespace Content.Server.Mind
                 Session.AttachToEntity(entity);
                 Logger.Info($"Session {Session.Name} transferred to entity {entity}.");
             }
-        }
-
-        public void RemoveOwningPlayer()
-        {
-            UserId = null;
         }
 
         public void ChangeOwningPlayer(NetUserId? newOwner)
@@ -329,7 +334,7 @@ namespace Content.Server.Mind
             {
                 var data = playerMgr.GetPlayerData(UserId.Value).ContentData();
                 DebugTools.AssertNotNull(data);
-                data!.Mind = null;
+                data!.UpdateMindFromMindChangeOwningPlayer(null);
             }
 
             UserId = newOwner;
@@ -342,7 +347,7 @@ namespace Content.Server.Mind
             // Can I mention how much I love the word yank?
             DebugTools.AssertNotNull(newOwnerData);
             newOwnerData!.Mind?.ChangeOwningPlayer(null);
-            newOwnerData.Mind = this;
+            newOwnerData.UpdateMindFromMindChangeOwningPlayer(this);
         }
 
         public void Visit(IEntity entity)

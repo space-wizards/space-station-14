@@ -39,3 +39,10 @@
   toolName: tool-quality-pulsing-tool-name
   spawn: Multitool
   icon: Objects/Tools/multitool.rsi/icon.png
+
+- type: tool
+  id: Slicing
+  name: tool-quality-slicing-name
+  toolName: tool-quality-slicing-tool-name
+  spawn: KitchenKnife
+  icon: Objects/Weapons/Melee/kitchen_knife.rsi/icon.png

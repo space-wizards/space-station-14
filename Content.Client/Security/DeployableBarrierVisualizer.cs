@@ -1,6 +1,7 @@
 using Content.Shared.Security;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Client.Security
 {

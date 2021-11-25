@@ -1,6 +1,7 @@
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Client.Weapons.Ranged.Barrels.Visualizers
 {

@@ -2,11 +2,13 @@ using System.Threading.Tasks;
 using Content.Server.Stack;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Stacks;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Medical.Components
@@ -20,6 +22,14 @@ namespace Content.Server.Medical.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier Damage = default!;
 
+        /// <remarks>
+        ///     The supported damage types are specified using a <see cref="DamageContainerPrototype"/>s. For a
+        ///     HealingComponent this filters what damage container type this component should work on. If null,
+        ///     all damage container types are supported.
+        /// </remarks>
+        [DataField("damageContainer", customTypeSerializer: typeof(PrototypeIdSerializer<DamageContainerPrototype>))]
+        public string? DamageContainerID;
+
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (eventArgs.Target == null)
@@ -27,7 +37,11 @@ namespace Content.Server.Medical.Components
                 return false;
             }
 
-            if (!eventArgs.Target.HasComponent<DamageableComponent>())
+            if (!eventArgs.Target.TryGetComponent<DamageableComponent>(out DamageableComponent? targetDamage))
+            {
+                return true;
+            }
+            else if (DamageContainerID is not null && !DamageContainerID.Equals(targetDamage.DamageContainerID))
             {
                 return true;
             }

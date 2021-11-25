@@ -19,6 +19,30 @@
     Diethylamine: 2
 
 - type: reaction
+  id: Phenol
+  reactants:
+    Water:
+      amount: 1
+    Chlorine:
+      amount: 1
+    Oil:
+      amount: 1
+  products:
+    Phenol: 3
+
+- type: reaction
+  id: Acetone
+  reactants:
+    Oil:
+      amount: 1
+    WeldingFuel:
+      amount: 1
+    Oxygen:
+      amount: 1
+  products:
+    Acetone: 2
+
+- type: reaction
   id: FoamingAgent
   reactants:
     Lithium:
@@ -56,6 +80,7 @@
 
 - type: reaction
   id: PotassiumExplosion
+  impact: High
   reactants:
     Water:
       amount: 1
@@ -73,6 +98,7 @@
 
 - type: reaction
   id: Smoke
+  impact: High
   reactants:
     Phosphorus:
       amount: 1
@@ -88,13 +114,14 @@
       duration: 10
       spreadDelay: 0.5
       removeDelay: 0.5
-      diluteReagents: false
+      diluteReagents: true
       prototypeId: Smoke
       sound:
         path: /Audio/Effects/smoke.ogg
 
 - type: reaction
   id: Foam
+  impact: High
   reactants:
     Fluorosurfactant:
       amount: 1
@@ -118,6 +145,7 @@
 
 - type: reaction
   id: IronMetalFoam
+  impact: High
   reactants:
     Iron:
       amount: 3
@@ -143,6 +171,7 @@
 
 - type: reaction
   id: AluminiumMetalFoam
+  impact: High
   reactants:
     Aluminium:
       amount: 3
@@ -178,6 +207,7 @@
 
 - type: reaction
   id: Thermite
+  impact: Medium
   reactants:
     Iron:
       amount: 1
@@ -201,16 +231,6 @@
     UnstableMutagen: 3
 
 - type: reaction
-  id: Water
-  reactants:
-    Hydrogen:
-      amount: 1
-    Oxygen:
-      amount: 1
-  products:
-    Water: 2
-
-- type: reaction
   id: Oil
   reactants:
     WeldingFuel:
@@ -224,6 +244,7 @@
 
 - type: reaction
   id: Fluorosurfactant
+  impact: Medium
   reactants:
     Carbon:
       amount: 2
@@ -235,7 +256,8 @@
     Fluorosurfactant: 5
 
 - type: reaction
-  id: Meth
+  id: Desoxyephedrine
+  impact: Medium
   reactants:
     Ephedrine:
       amount: 1
@@ -246,10 +268,11 @@
     Phosphorus:
      amount: 1
   products:
-    Meth: 4 #I kinda remember having to heat this up, and if you heated it up too much, it went boom, I can't remember the specific values tho.
+    Desoxyephedrine: 4 #I kinda remember having to heat this up, and if you heated it up too much, it went boom, I can't remember the specific values tho.
 
 - type: reaction
   id: Ephedrine
+  impact: Medium
   reactants:
     Oil:
       amount: 1

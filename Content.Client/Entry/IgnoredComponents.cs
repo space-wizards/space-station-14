@@ -72,6 +72,7 @@ namespace Content.Client.Entry
             "Mop",
             "Bucket",
             "CableVis",
+            "BatterySelfRecharger",
             "Puddle",
             "Stomach",
             "CanSpill",
@@ -92,6 +93,7 @@ namespace Content.Client.Entry
             "TilePrying",
             "RandomSpriteColor",
             "ConditionalSpawner",
+            "TemperatureProtection",
             "DamageOnToolInteract",
             "ExaminableBattery",
             "PottedPlantHide",
@@ -99,6 +101,7 @@ namespace Content.Client.Entry
             "Lock",
             "PresetIdCard",
             "SolarControlConsole",
+            "Thruster",
             "FlashOnTrigger",
             "SoundOnTrigger",
             "TriggerOnCollide",
@@ -213,6 +216,8 @@ namespace Content.Client.Entry
             "Log",
             "Hoe",
             "Seed",
+            "ActivatableUI",
+            "ActivatableUIRequiresPower",
             "BotanySharp",
             "PlantSampleTaker",
             "Internals",
@@ -310,8 +315,7 @@ namespace Content.Client.Entry
             "NukeCodePaper",
             "GhostRadio",
             "Armor",
-            "Supermatter",
-            "SupermatterFood",
+            "Udder",
             "PneumaticCannon"
         };
     }

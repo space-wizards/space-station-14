@@ -5,7 +5,6 @@ using Content.Shared.Verbs;
 using Content.Server.Popups;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Mind.Components;
-using Robust.Server.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.GameObjects;

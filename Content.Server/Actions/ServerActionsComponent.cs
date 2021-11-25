@@ -7,6 +7,8 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
 using Robust.Server.GameStates;
+using Robust.Shared;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -21,7 +23,26 @@ namespace Content.Server.Actions
     [ComponentReference(typeof(SharedActionsComponent))]
     public sealed class ServerActionsComponent : SharedActionsComponent
     {
-        [Dependency] private readonly IServerGameStateManager _stateManager = default!;
+        [Dependency] private readonly IConfigurationManager _configManager = default!;
+
+        private float MaxUpdateRange;
+
+        protected override void Initialize()
+        {
+            base.Initialize();
+            _configManager.OnValueChanged(CVars.NetMaxUpdateRange, OnRangeChanged, true);
+        }
+
+        protected override void Shutdown()
+        {
+            base.Shutdown();
+            _configManager.UnsubValueChanged(CVars.NetMaxUpdateRange, OnRangeChanged);
+        }
+
+        private void OnRangeChanged(float obj)
+        {
+            MaxUpdateRange = obj;
+        }
 
         [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null)
@@ -178,7 +199,7 @@ namespace Content.Server.Actions
             // ensure it's within their clickable range
             var targetWorldPos = target.ToMapPos(EntityManager);
             var rangeBox = new Box2(player.Transform.WorldPosition, player.Transform.WorldPosition)
-                .Enlarged(_stateManager.PvsRange);
+                .Enlarged(MaxUpdateRange);
             if (!rangeBox.Contains(targetWorldPos))
             {
                 Logger.DebugS("action", "user {0} attempted to" +

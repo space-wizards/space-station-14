@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Body.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
@@ -14,13 +15,13 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Body.Systems
 {
-    // TODO mirror in the future working on mechanisms move updating here to BodySystem so it can be ordered?
     [UsedImplicitly]
     public class MetabolizerSystem : EntitySystem
     {
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly SharedAdminLogSystem _logSystem = default!;
 
         public override void Initialize()
         {
@@ -156,20 +157,13 @@ namespace Content.Server.Body.Systems
                     // do all effects, if conditions apply
                     foreach (var effect in entry.Effects)
                     {
-                        bool failed = false;
-                        if (effect.Conditions != null)
-                        {
-                            foreach (var cond in effect.Conditions)
-                            {
-                                if (!cond.Condition(args))
-                                    failed = true;
-                            }
+                        if (!effect.ShouldApply(args, _random))
+                            continue;
 
-                            if (failed)
-                                continue;
-                        }
-
-                        effect.Metabolize(args);
+                        var entity = EntityManager.GetEntity(args.SolutionEntity);
+                        _logSystem.Add(LogType.ReagentEffect, LogImpact.Low,
+                            $"Metabolism effect {effect.GetType().Name} of reagent {args.Reagent.Name:reagent} applied on entity {entity} at {entity.Transform.Coordinates}");
+                        effect.Effect(args);
                     }
                 }
 

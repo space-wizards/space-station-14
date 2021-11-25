@@ -109,3 +109,17 @@
     - type: SolutionContainerVisualizer
       maxFillLevels: 6
       fillBaseName: bottle-4-
+
+- type: entity
+  id: EpinephrineChemistryBottle
+  name: epinephrine bottle
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink: # This solution name and target volume is hard-coded in ChemMasterComponent
+        maxVol: 30
+        reagents:
+        - ReagentId: Epinephrine
+          Quantity: 30
+

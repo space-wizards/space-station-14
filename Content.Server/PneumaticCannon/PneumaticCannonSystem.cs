@@ -13,7 +13,6 @@ using Content.Server.Stunnable;
 using Content.Server.Stunnable.Components;
 using Content.Shared.Interaction;
 using Content.Shared.PneumaticCannon;
-using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -168,7 +167,7 @@ namespace Content.Server.PneumaticCannon
             {
                 args.User.PopupMessage(Loc.GetString("pneumatic-cannon-component-fire-no-gas",
                     ("cannon", component.Owner)));
-                SoundSystem.Play(Filter.Pvs(args.Used.Uid), "/Audio/Items/hiss.ogg");
+                SoundSystem.Play(Filter.Pvs(args.Used.Uid), "/Audio/Items/hiss.ogg", args.Used.Uid, AudioParams.Default);
                 return;
             }
             AddToQueue(component, args.User, args.ClickLocation);
@@ -181,7 +180,7 @@ namespace Content.Server.PneumaticCannon
             if (storage.StoredEntities == null) return;
             if (storage.StoredEntities.Count == 0)
             {
-                SoundSystem.Play(Filter.Pvs(comp.Owner.Uid), "/Audio/Weapons/click.ogg");
+                SoundSystem.Play(Filter.Pvs(comp.OwnerUid), "/Audio/Weapons/click.ogg", comp.OwnerUid, AudioParams.Default);
                 return;
             }
 
@@ -218,7 +217,7 @@ namespace Content.Server.PneumaticCannon
             {
                 data.User.PopupMessage(Loc.GetString("pneumatic-cannon-component-fire-no-gas",
                     ("cannon", comp.Owner)));
-                SoundSystem.Play(Filter.Pvs(comp.Owner.Uid), "/Audio/Items/hiss.ogg");
+                SoundSystem.Play(Filter.Pvs(comp.OwnerUid), "/Audio/Items/hiss.ogg", comp.OwnerUid, AudioParams.Default);
                 return;
             }
 
@@ -234,7 +233,7 @@ namespace Content.Server.PneumaticCannon
             IEntity ent = _random.Pick(storage.StoredEntities);
             storage.Remove(ent);
 
-            SoundSystem.Play(Filter.Pvs(data.User), comp.FireSound.GetSound());
+            SoundSystem.Play(Filter.Pvs(data.User), comp.FireSound.GetSound(), comp.OwnerUid, AudioParams.Default);
             if (data.User.TryGetComponent<CameraRecoilComponent>(out var recoil))
             {
                 recoil.Kick(Vector2.One * data.Strength);
@@ -383,9 +382,9 @@ namespace Content.Server.PneumaticCannon
         {
             return power switch
             {
-                PneumaticCannonPower.High => 15f,
-                PneumaticCannonPower.Medium => 10f,
-                PneumaticCannonPower.Low or _ => 5f,
+                PneumaticCannonPower.High => 9f,
+                PneumaticCannonPower.Medium => 6f,
+                PneumaticCannonPower.Low or _ => 3f,
             };
         }
 

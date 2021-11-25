@@ -34,12 +34,12 @@
     openSound:
       path: /Audio/Misc/zip.ogg
   - type: PaperLabel
-  - type: ItemSlots
-    slots:
-      labelSlot:
-        whitelist:
-          components:
-          - Paper
+    labelSlot:
+      insertVerbText: Attach Label
+      ejectVerbText: Remove Label
+      whitelist:
+        components:
+        - Paper
   - type: Appearance
     visuals:
     - type: StorageVisualizer

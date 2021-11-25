@@ -19,8 +19,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Cargo.Components
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IActivate))]
-    public class CargoConsoleComponent : SharedCargoConsoleComponent, IActivate
+    public class CargoConsoleComponent : SharedCargoConsoleComponent
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
 
@@ -201,18 +200,6 @@ namespace Content.Server.Cargo.Components
                     break;
                 }
             }
-        }
-
-        void IActivate.Activate(ActivateEventArgs eventArgs)
-        {
-            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
-            {
-                return;
-            }
-            if (!Powered)
-                return;
-
-            UserInterface?.Open(actor.PlayerSession);
         }
 
         private void UpdateUIState()

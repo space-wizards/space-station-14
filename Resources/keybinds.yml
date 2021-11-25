@@ -54,6 +54,7 @@ binds:
 - function: CycleChatChannelForward
   type: State
   key: Tab
+  priority: 1 # Before tab complete
 - function: CycleChatChannelBackward
   type: State
   key: Tab
