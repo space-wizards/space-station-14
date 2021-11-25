@@ -7,6 +7,7 @@ using Content.Server.CombatMode;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.Pulling;
+using Content.Server.Storage.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.DragDrop;
@@ -97,6 +98,24 @@ namespace Content.Server.Interaction
 
             return true;
         }
+
+        public override bool CanAccessViaStorage(EntityUid user, EntityUid target)
+        {
+            if (!EntityManager.TryGetEntity(target, out var entity))
+                return false;
+
+            if (!entity.TryGetContainer(out var container))
+                return false;
+
+            if (!EntityManager.TryGetComponent(container.Owner.Uid, out ServerStorageComponent storage))
+                return false;
+
+            if (!EntityManager.TryGetComponent(user, out ActorComponent actor))
+                return false;
+
+            // we don't check if the user can access the storage entity itself. This should be handed by the UI system.
+            return storage.SubscribedSessions.Contains(actor.PlayerSession);
+        }
         #endregion
 
         /// <summary>
@@ -185,9 +204,6 @@ namespace Content.Server.Interaction
             }
 
             if (!EntityManager.TryGetEntity(uid, out var used))
-                return false;
-
-            if (user.IsInContainer())
                 return false;
 
             InteractionActivate(user, used);
@@ -285,15 +301,13 @@ namespace Content.Server.Interaction
         /// <param name="altInteract">Whether to use default or alternative interactions (usually as a result of
         /// alt+clicking). If combat mode is enabled, the alternative action is to perform the default non-combat
         /// interaction. Having an item in the active hand also disables alternative interactions.</param>
-        public async void UserInteraction(IEntity user, EntityCoordinates coordinates, EntityUid clickedUid, bool altInteract = false )
+        public async void UserInteraction(IEntity user, EntityCoordinates coordinates, EntityUid clickedUid, bool altInteract = false)
         {
             // TODO COMBAT Consider using alt-interact for advanced combat? maybe alt-interact disarms?
             if (!altInteract && user.TryGetComponent(out CombatModeComponent? combatMode) && combatMode.IsInCombatMode)
             {
-
                 DoAttack(user, coordinates, false, clickedUid);
                 return;
-
             }
 
             if (!ValidateInteractAndFace(user, coordinates))
@@ -306,7 +320,8 @@ namespace Content.Server.Interaction
             EntityManager.TryGetEntity(clickedUid, out var target);
 
             // Check if interacted entity is in the same container, the direct child, or direct parent of the user.
-            if (target != null && !user.IsInSameOrParentContainer(target))
+            // This is bypassed IF the interaction happened through an item slot (e.g., backpack UI)
+            if (target != null && !user.IsInSameOrParentContainer(target) && !CanAccessViaStorage(user.Uid, target.Uid))
             {
                 Logger.WarningS("system.interaction",
                     $"User entity named {user.Name} clicked on object {target.Name} that isn't the parent, child, or in the same container");
@@ -448,7 +463,7 @@ namespace Content.Server.Interaction
                 EntityManager.TryGetEntity(targetUid, out targetEnt);
 
                 // Check if interacted entity is in the same container, the direct child, or direct parent of the user.
-                if (targetEnt != null && !user.IsInSameOrParentContainer(targetEnt))
+                if (targetEnt != null && !user.IsInSameOrParentContainer(targetEnt) && !CanAccessViaStorage(user.Uid, targetEnt.Uid))
                 {
                     Logger.WarningS("system.interaction",
                         $"User entity named {user.Name} clicked on object {targetEnt.Name} that isn't the parent, child, or in the same container");
