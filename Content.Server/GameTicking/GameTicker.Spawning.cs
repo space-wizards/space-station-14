@@ -42,6 +42,9 @@ namespace Content.Server.GameTicking
 
         [Dependency] private readonly IdCardSystem _cardSystem = default!;
 
+        /// <summary>
+        /// Can't yet be removed because every test ever seems to depend on it. I'll make removing this a different PR.
+        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         private EntityCoordinates _spawnPoint;
 
@@ -287,7 +290,7 @@ namespace Content.Server.GameTicking
             {
                 var matchingStation =
                     EntityManager.TryGetComponent<StationComponent>(transform.ParentUid, out var stationComponent) &&
-                    stationComponent.Station.Id == station.Id;
+                    stationComponent.Station == station;
                 DebugTools.Assert(EntityManager.TryGetComponent<IMapGridComponent>(transform.ParentUid, out _));
 
                 if (point.SpawnType == SpawnPointType.Job && point.Job?.ID == jobId && matchingStation)
@@ -296,6 +299,8 @@ namespace Content.Server.GameTicking
 
             if (_possiblePositions.Count != 0)
                 location = _robustRandom.Pick(_possiblePositions);
+            else
+                location = GetLateJoinSpawnPoint(station); // We need a sane fallback here, so latejoin it is.
 
             return location;
         }
@@ -310,7 +315,7 @@ namespace Content.Server.GameTicking
             {
                 var matchingStation =
                     EntityManager.TryGetComponent<StationComponent>(transform.ParentUid, out var stationComponent) &&
-                    stationComponent.Station.Id == station.Id;
+                    stationComponent.Station == station;
                 DebugTools.Assert(EntityManager.TryGetComponent<IMapGridComponent>(transform.ParentUid, out _));
 
                 if (point.SpawnType == SpawnPointType.LateJoin && matchingStation)
