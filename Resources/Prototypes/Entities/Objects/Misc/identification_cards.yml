@@ -94,6 +94,18 @@
 
 - type: entity
   parent: IDCardStandard
+  id: ChemistIDCard
+  name: chemist ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idchemist
+  - type: PresetIdCard
+    job: Chemist
+
+- type: entity
+  parent: IDCardStandard
   id: CargoIDCard
   name: cargo ID card
   components:

@@ -323,6 +323,21 @@
 
 - type: entity
   parent: BasePDA
+  id: ChemistryPDA
+  name: chemistry PDA
+  description: It has a few discolored blotches here and there.
+  components:
+  - type: PDA
+    idCard: ChemistIDCard
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-chemistry
+  - type: Icon
+    state: pda-chemistry
+
+- type: entity
+  parent: BasePDA
   id: RnDPDA
   name: research director PDA
   description: It appears surprisingly ordinary.

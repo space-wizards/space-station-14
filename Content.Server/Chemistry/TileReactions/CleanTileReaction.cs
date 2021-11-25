@@ -13,6 +13,10 @@ namespace Content.Server.Chemistry.TileReactions
     [DataDefinition]
     public class CleanTileReaction : ITileReaction
     {
+
+        [DataField("cleanAmountMultiplier")]
+        public float CleanAmountMultiplier { get; private set; } = 1.0f;
+
         FixedPoint2 ITileReaction.TileReact(TileRef tile, ReagentPrototype reagent, FixedPoint2 reactVolume)
         {
             var entities = tile.GetEntitiesInTileFast().ToArray();
@@ -21,7 +25,7 @@ namespace Content.Server.Chemistry.TileReactions
             {
                 if (entity.TryGetComponent(out CleanableComponent? cleanable))
                 {
-                    var next = amount + cleanable.CleanAmount;
+                    var next = (amount + cleanable.CleanAmount) * CleanAmountMultiplier;
                     // Nothing left?
                     if (reactVolume < next)
                         break;
