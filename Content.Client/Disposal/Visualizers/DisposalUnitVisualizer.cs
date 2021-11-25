@@ -148,7 +148,7 @@ namespace Content.Client.Disposal.Visualizers
             base.InitializeEntity(entity);
 
             entity.EnsureComponent<AnimationPlayerComponent>();
-            var appearance = entity.EnsureComponent<AppearanceComponent>();
+            var appearance = entity.EnsureComponent<ClientAppearanceComponent>();
 
             ChangeState(appearance);
         }

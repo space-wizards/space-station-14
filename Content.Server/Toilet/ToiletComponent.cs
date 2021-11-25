@@ -16,7 +16,6 @@ using Content.Shared.Sound;
 using Content.Shared.Toilet;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;

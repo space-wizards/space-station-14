@@ -1,0 +1,5 @@
+﻿- type: reactiveGroup
+  id: Flammable
+
+- type: reactiveGroup
+  id: Extinguish

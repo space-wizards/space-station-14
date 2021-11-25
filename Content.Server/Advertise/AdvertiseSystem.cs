@@ -61,7 +61,7 @@ namespace Content.Server.Advertise
                 return;
 
             if (_prototypeManager.TryIndex(advertise.PackPrototypeId, out AdvertisementsPackPrototype? advertisements))
-                _chatManager.EntitySay(advertise.Owner, Loc.GetString(_random.Pick(advertisements.Advertisements)));
+                _chatManager.EntitySay(advertise.Owner, Loc.GetString(_random.Pick(advertisements.Advertisements)), hideChat: true);
 
             if(refresh)
                 RefreshTimer(uid, true, advertise);

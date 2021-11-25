@@ -46,6 +46,7 @@ namespace Content.Client.ContextMenu.UI
         [Dependency] private readonly IEyeManager _eyeManager = default!;
 
         private readonly VerbSystem _verbSystem;
+        private readonly ExamineSystem _examineSystem;
 
         /// <summary>
         ///     This maps the currently displayed entities to the actual GUI elements.
@@ -60,6 +61,7 @@ namespace Content.Client.ContextMenu.UI
             IoCManager.InjectDependencies(this);
 
             _verbSystem = verbSystem;
+            _examineSystem = EntitySystem.Get<ExamineSystem>();
 
             _cfg.OnValueChanged(CCVars.EntityMenuGroupingType, OnGroupingChanged, true);
 
@@ -157,10 +159,9 @@ namespace Content.Client.ContextMenu.UI
 
             var coords = args.Coordinates.ToMap(_entityManager);
 
-            if (!_verbSystem.TryGetEntityMenuEntities(coords, out var entities))
-                return false;
+            if (_verbSystem.TryGetEntityMenuEntities(coords, out var entities))
+                OpenRootMenu(entities);
 
-            OpenRootMenu(entities);
             return true;
         }
 
@@ -183,7 +184,7 @@ namespace Content.Client.ContextMenu.UI
 
             foreach (var entity in Elements.Keys.ToList())
             {
-                if (entity.Deleted || !ignoreFov && !player.InRangeUnOccluded(entity))
+                if (entity.Deleted || !ignoreFov && !_examineSystem.CanExamine(player, entity))
                     RemoveEntity(entity);
             }
         }

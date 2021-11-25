@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 
 namespace Content.Client.Pointing

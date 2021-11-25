@@ -19,6 +19,3 @@ ent-air-tank = air tank
 
 ent-plasma-tank = plasma tank
     .desc = Contains dangerous plasma. Do not inhale. Warning: extremely flammable.
-
-ent-gas-tank-suffix-empty = Empty
-ent-gas-tank-suffix-filled = Filled

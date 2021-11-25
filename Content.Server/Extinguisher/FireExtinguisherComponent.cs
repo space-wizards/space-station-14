@@ -10,7 +10,6 @@ using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Extinguisher;
 using Content.Shared.FixedPoint;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;

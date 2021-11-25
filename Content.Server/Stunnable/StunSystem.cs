@@ -1,6 +1,8 @@
 using System;
 using Content.Server.Act;
+using Content.Server.Administration.Logs;
 using Content.Server.Popups;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
 using Content.Shared.Popups;
 using Content.Shared.StatusEffect;
@@ -17,6 +19,7 @@ namespace Content.Server.Stunnable
     public sealed class StunSystem : SharedStunSystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
 
         public override void Initialize()
         {
@@ -48,6 +51,8 @@ namespace Content.Server.Stunnable
                     source.PopupMessageCursor(Loc.GetString("stunned-component-disarm-success", ("target", target.Name)));
                 }
             }
+
+            _adminLogSystem.Add(LogType.DisarmedKnockdown, LogImpact.Medium, $"{args.Source:performer} knocked down {args.Target:target}");
 
             args.Handled = true;
         }

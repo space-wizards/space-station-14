@@ -7,6 +7,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.IoC;
 using Content.Shared.Interaction;
+using System.Collections.Immutable;
 
 namespace Content.Shared.Verbs
 {

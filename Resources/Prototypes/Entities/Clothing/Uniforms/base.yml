@@ -20,6 +20,11 @@
     Slots: [innerclothing]
     EquipSound:
       path: /Audio/Items/jumpsuit_equip.ogg
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 10
 
 - type: entity
   abstract: true
@@ -33,3 +38,8 @@
     femaleMask: UniformTop
     EquipSound:
       path: /Audio/Items/jumpsuit_equip.ogg
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 5
