@@ -22,6 +22,7 @@ using Robust.Shared.Prototypes;
 using Content.Server.Atmos.EntitySystems;
 using Robust.Shared.Player;
 using Content.Shared.Atmos;
+using Robust.Shared.Localization;
 
 namespace Content.Server.Supermatter.EntitySystems
 {
@@ -32,7 +33,6 @@ namespace Content.Server.Supermatter.EntitySystems
         [Dependency] private readonly IEntityLookup _lookup = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly RadiationSystem _radiationSystem = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
@@ -46,10 +46,9 @@ namespace Content.Server.Supermatter.EntitySystems
         {
             base.Update(frameTime);
 
-            //SubscribeLocalEvent<HandleCollide>();
             foreach (var supermatter in EntityManager.EntityQuery<SupermatterComponent>())
             {
-                HandleBehavour(supermatter.OwnerUid, _entityManager.GetComponent<TransformComponent>(supermatter.OwnerUid).Coordinates, frameTime, supermatter);
+                HandleBehavior(supermatter.OwnerUid, _entityManager.GetComponent<TransformComponent>(supermatter.OwnerUid).Coordinates, frameTime, supermatter);
             }
         }
 
@@ -197,6 +196,10 @@ namespace Content.Server.Supermatter.EntitySystems
         private float _damageUpdateAccumulator;
         //update environment damage every second
         private const float _damageUpdateTimer = 1f;
+
+        /// </summary>
+        /// Handles environmental damage and dispatching damage warning
+        /// </summary>
         public void HandleDamage(EntityUid Uid, float frameTime, SupermatterComponent? component = null, DamageableComponent? damageable = null)
         {
             if(!Resolve(Uid, ref component, ref damageable))
@@ -207,7 +210,7 @@ namespace Content.Server.Supermatter.EntitySystems
             _damageUpdateAccumulator += frameTime;
             float damage = 0;
             component.DamageArchived = _entityManager.GetComponent<DamageableComponent>(Uid).TotalDamage.Float();
-            var integrity = GetIntegrity(Uid, component);
+            var integrity = GetIntegrity(Uid);
 
             if(component.DamageArchived >= SupermatterComponent.ExplosionPoint)
             {
@@ -222,12 +225,12 @@ namespace Content.Server.Supermatter.EntitySystems
                 {
                     if(component.DamageArchived >= SupermatterComponent.EmergencyPoint && component.DamageArchived <= SupermatterComponent.ExplosionPoint)
                     {
-                        _chatManager.DispatchStationAnnouncement($"WARNING! Crystal hyperstructure integrity reaching critical levels! Integrity:{100 - integrity}%", "Supermatter");
+                        _chatManager.DispatchStationAnnouncement(Loc.GetString("supermatter-warning-message", ("integrity", integrity)), "Supermatter");
                         component.YellAccumulator = 0;
                     }
                     if(component.DamageArchived >= SupermatterComponent.WarningPoint && component.DamageArchived <= SupermatterComponent.EmergencyPoint)
                     {
-                        _chatManager.EntitySay(component.Owner, $"Danger! Crystal hyperstructure integrity faltering! Integrity:{100 - integrity}%");
+                        _chatManager.EntitySay(component.Owner, Loc.GetString("supermatter-danger-message", ("integrity", integrity)));
                         component.YellAccumulator = 0;
                     }
 
@@ -271,15 +274,16 @@ namespace Content.Server.Supermatter.EntitySystems
                     {
                         if(adjacent.TotalMoles == 0)
                         {
-                            if(integrity < 10)
+                            if(integrity < 90)
                                 damage = Math.Clamp((component.Power * 0.0005f) * SupermatterComponent.DamageIncreaseMultiplier, 0f, SupermatterComponent.MaxSpaceExposureDamage);
-                            else if(integrity < 25)
-                                damage = Math.Clamp((component.Power * 0.0009f) * SupermatterComponent.DamageIncreaseMultiplier, 0f, SupermatterComponent.MaxSpaceExposureDamage);
-                            else if(integrity < 45)
-                                damage = Math.Clamp((component.Power * 0.005f) * SupermatterComponent.DamageIncreaseMultiplier, 0f, SupermatterComponent.MaxSpaceExposureDamage);
                             else if(integrity < 75)
+                                damage = Math.Clamp((component.Power * 0.0009f) * SupermatterComponent.DamageIncreaseMultiplier, 0f, SupermatterComponent.MaxSpaceExposureDamage);
+                            else if(integrity < 55)
+                                damage = Math.Clamp((component.Power * 0.005f) * SupermatterComponent.DamageIncreaseMultiplier, 0f, SupermatterComponent.MaxSpaceExposureDamage);
+                            else if(integrity < 25)
                                 damage = Math.Clamp((component.Power * 0.002f) * SupermatterComponent.DamageIncreaseMultiplier, 0f, SupermatterComponent.MaxSpaceExposureDamage);
-                            break;
+                            else
+                                break;
                         }
                     }
                 }
@@ -291,23 +295,25 @@ namespace Content.Server.Supermatter.EntitySystems
             }
         }
 
-        public float GetIntegrity(EntityUid Uid, SupermatterComponent? component = null)
+        /// </summary>
+        /// Gets the current integrity
+        /// </summary>
+        public int GetIntegrity(EntityUid Uid)
         {
-            if(!Resolve(Uid, ref component))
-            {
-                return 0f;
-            }
-            var damage = component.Owner.GetComponent<DamageableComponent>().TotalDamage;
-            var integrity = 100 * ((double) damage / SupermatterComponent.ExplosionPoint);
+            var damage = _entityManager.GetComponent<DamageableComponent>(Uid).TotalDamage;
+            var integrity = 100 - (100 * ((double) damage / SupermatterComponent.ExplosionPoint));
             integrity = Math.Round(integrity);
-            integrity = integrity < 0 ? 0 : integrity;
-            return(float) integrity;
+            return(int) integrity;
         }
 
         private float _delamTimerAccumulator;
         private const int _delamTimerTimer = 30;
         private float _speakAccumulator = 5f;
         private bool AlarmPlaying = false;
+
+        /// </summary>
+        /// Runs the logic and timers for Delamination
+        /// </summary>
         public void Delamination(EntityUid Uid, float frameTime, SupermatterComponent? component = null)
         {
             if(!Resolve(Uid, ref component))
@@ -318,7 +324,17 @@ namespace Content.Server.Supermatter.EntitySystems
             //TODO: make tesla spawn at SupermatterComponent.PowerPenaltyThreshold
             if(!component.FinalCountdown)
             {
-                _chatManager.DispatchStationAnnouncement("The Supermatter has Reached Critical Integrity Falure. Emergency Causality Destabilization Field has been Activated.", "Supermatter");
+                if(_atmosphereSystem.GetTileMixture(_entityManager.GetComponent<TransformComponent>(Uid).Coordinates) is { } mixture)
+                {
+                    if(mixture.TotalMoles >= SupermatterComponent.MolePenaltyThreshold)
+                    {
+                        _chatManager.DispatchStationAnnouncement(Loc.GetString("supermatter-delamination-overmass"), "Supermatter");
+                    }
+                    else
+                    {
+                        _chatManager.DispatchStationAnnouncement(Loc.GetString("supermatter-delamination-default"), "Supermatter");
+                    }
+                }
             }
             component.FinalCountdown = true;
 
@@ -328,19 +344,19 @@ namespace Content.Server.Supermatter.EntitySystems
 
             if(component.DamageArchived < SupermatterComponent.ExplosionPoint)
             {
-                _chatManager.DispatchStationAnnouncement($"{SupermatterComponent.SafeAlert} Failsafe has been Disengaged.");
+                _chatManager.DispatchStationAnnouncement(Loc.GetString("supermatter-safe-allert"));
                 component.FinalCountdown = false;
                 return;
             }
             else if(RoundSeconds >= 5 && _speakAccumulator >= 5)
             {
                 _speakAccumulator -= 5;
-                _chatManager.DispatchStationAnnouncement($"{RoundSeconds} Seconds Remain Before Delamination.", "Supermatter");
+                _chatManager.DispatchStationAnnouncement(Loc.GetString("supermatter-seconds-before-delam", ("Seconds", RoundSeconds)), "Supermatter");
             }
             else if(RoundSeconds <  5 && _speakAccumulator >= 1)
             {
                 _speakAccumulator -= 1;
-                _chatManager.DispatchStationAnnouncement($"{RoundSeconds} Seconds Remain Before Delamination.", "Supermatter");
+                _chatManager.DispatchStationAnnouncement(Loc.GetString("supermatter-seconds-before-delam", ("Seconds", RoundSeconds)), "Supermatter");
             }
             if(_delamTimerAccumulator >= _delamTimerTimer)
             {
@@ -364,28 +380,31 @@ namespace Content.Server.Supermatter.EntitySystems
             }
         }
 
-        public bool CanDestroy(EntityUid Uid)
-        {
-            _entityManager.TryGetComponent<TagComponent>(Uid, out var _tag);
 
-            return
-            //_tag.HasTag("EmitterBolt") ||
-            _entityManager.HasComponent<SharedBodyComponent>(Uid) ||
-            _entityManager.HasComponent<SharedItemComponent>(Uid);
-        }
-
+        /// </summary>
+        /// Determines if an entity can be dusted
+        /// </summary>
         public bool CannotDestroy(EntityUid Uid)
         {
-            _entityManager.TryGetComponent<TagComponent>(Uid, out var _tag);
-            _entityManager.TryGetComponent<PhysicsComponent>(Uid, out var _physics);
+            bool Tag = false;
+            bool Static = false;
 
-            return
-            _tag.HasTag("SMimmune") ||
-            (_physics.BodyType.ToString() == "Static") ||
-            _entityManager.GetEntity(Uid).IsInContainer() ||
-            _entityManager.HasComponent<GhostComponent>(Uid);
+            if(_entityManager.HasComponent<TagComponent>(Uid))
+            {
+                Tag = _entityManager.GetComponent<TagComponent>(Uid).HasTag("SMimmune");
+            }
 
+            if(_entityManager.HasComponent<PhysicsComponent>(Uid))
+            {
+                Static = _entityManager.GetComponent<PhysicsComponent>(Uid).BodyType.ToString() == "Static";
+            }
+
+            return Tag || Static;
         }
+
+        /// <summary>
+        /// Handle getting entities in range and calling behavour
+        /// </summary>
         public void HandleDestroy(EntityUid TargetUid, EntityUid SMUid, SupermatterComponent? component = null)
         {
             if(!Resolve(SMUid, ref component))
@@ -393,7 +412,7 @@ namespace Content.Server.Supermatter.EntitySystems
                 return;
             }
 
-            if(!CanDestroy(TargetUid) || CannotDestroy(TargetUid)) return;
+            if(!component.Whitelist.IsValid(TargetUid) || CannotDestroy(TargetUid) || _entityManager.GetEntity(TargetUid).IsInContainer()) return;
 
             _entityManager.SpawnEntity("Ash", _entityManager.GetComponent<TransformComponent>(TargetUid).Coordinates);
             _entityManager.QueueDeleteEntity(TargetUid);
@@ -413,9 +432,9 @@ namespace Content.Server.Supermatter.EntitySystems
         }
 
         /// <summary>
-        /// Handle getting entities in range and calling behavour
+        /// Handle getting entities in range and calling behavior
         /// </summary>
-        public void HandleBehavour(EntityUid Uid, EntityCoordinates WorldPos, float FrameTime, SupermatterComponent? component = null)
+        public void HandleBehavior(EntityUid Uid, EntityCoordinates WorldPos, float FrameTime, SupermatterComponent? component = null)
         {
             if(!Resolve(Uid, ref component))
             {

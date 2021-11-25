@@ -269,6 +269,282 @@ namespace Content.Shared.Atmos
         public const float MaxTransferRate = 200;
 
         #endregion
+
+        #region Supermatter
+
+        /// <summary>
+        ///     Standard Effect on PowerMixRatio
+        /// </summary>
+        public const float OxygenPowerMixRatio = 1f;
+
+        /// <summary>
+        ///     Standard Effect on PowerMixRatio
+        /// </summary>
+        public const float WaterPowerMixRatio = 1f;
+
+        /// <summary>
+        ///     Standard Effect on PowerMixRatio
+        /// </summary>
+        public const float PlasmaPowerMixRatio = 1f;
+
+        /// <summary>
+        ///     Standard Effect on PowerMixRatio
+        /// </summary>
+        public const float  CO2PowerMixRatio = 1f;
+
+        /// <summary>
+        ///     Reduces PowerMixRatio
+        /// </summary>
+        public const float  NitrogenPowerMixRatio = -1f;
+
+        /// <summary>
+        ///     Reduces PowerMixRatio
+        /// </summary>
+        public const float  PluxoiumPowerMixRatio = -1f;
+
+        /// <summary>
+        ///     Standard Effect on PowerMixRatio
+        /// </summary>
+        public const float  TritiumPowerMixRatio = 1f;
+
+        /// <summary>
+        ///     Standard Effect on PowerMixRatio
+        /// </summary>
+        public const float  BZPowerMixRatio = 1f;
+
+        /// <summary>
+        ///     Standard Effect on PowerMixRatio
+        /// </summary>
+        public const float  FreonPowerMixRatio = -1f;
+
+        /// <summary>
+        ///     Standard Effect on PowerMixRatio
+        /// </summary>
+        public const float  HydrogenPowerMixRatio = 1f;
+
+        /// <summary>
+        ///     Standard Effect on PowerMixRatio
+        /// </summary>
+        public const float  HealiumPowerMixRatio = 1f;
+
+        /// <summary>
+        ///     Standard Effect on PowerMixRatio
+        /// </summary>
+        public const float  ProtoNitratePowerMixRatio = 1f;
+
+        /// <summary>
+        ///     Standard Effect on PowerMixRatio
+        /// </summary>
+        public const float  ZaukerPowerMixRatio = 1f;
+
+        /// <summary>
+        ///     Half as effective as other gasses
+        /// </summary>
+        public const float  MiasmaPowerMixRatio = 0.5f;
+
+
+
+        /// <summary>
+        ///     Higher == Bigger heat and waste penalty from having the crystal surrounded by this gas. Negative numbers reduce penalty.
+        /// </summary>
+        public const float PlasmaHeatPenalty = 15f;
+
+        /// <summary>
+        ///
+        /// </summary>
+        public const float OxygenHeatPenalty = 1f;
+
+        /// <summary>
+        ///
+        /// </summary>
+        public const float PluoxiumHeatPenalty = -0.5f;
+
+        /// <summary>
+        ///
+        /// </summary>
+        public const float TritiumHeatPenalty = 10f;
+
+        /// <summary>
+        ///
+        /// </summary>
+        public const float CO2HeatPenalty = 0.1f;
+
+        /// <summary>
+        ///
+        /// </summary>
+        public const float NitrogenHeatPenalty = -1.5f;
+
+        /// <summary>
+        ///
+        /// </summary>
+        public const float BZHeatPenalty = 5f;
+
+        /// <summary>
+        ///     This'll get made slowly over time, I want my spice rock spicy god damnit
+        /// </summary>
+        public const float WaterHeatPenalty = 12f;
+
+        /// <summary>
+        ///     Very good heat absorbtion and less plasma and o2 generation
+        /// </summary>
+        public const float FreonHeatPenalty = -10f;
+
+        /// <summary>
+        ///     Same heat penalty as tritium (dangerous)
+        /// </summary>
+        public const float HydrogenHeatPenalty = 10f;
+
+        /// <summary>
+        ///
+        /// </summary>
+        public const float HealiumHeatPenalty = 4f;
+
+        public const float ProtonitrateHeatPenalty = -3f;
+
+        /// <summary>
+        ///
+        /// </summary>
+        public const float ZaukerHeatPenalty = 8f;
+
+
+
+        //All of these get divided by 10-bzcomp * 5 before having 1 added and being multiplied with power to determine rads
+        //Keep the negative values here above -10 and we won't get negative rads
+        //Higher == Bigger bonus to power generation.
+
+        /// <summary>
+        ///
+        /// </summary>
+        public const float OxygenTransmitModifier = 1.5f;
+
+        /// <summary>
+        ///
+        /// </summary>
+        public const float NitrogenTransmitModifier = 0f;
+
+        /// <summary>
+        ///
+        /// </summary>
+        public const float CO2TransmitModifier = 0f;
+
+        /// <summary>
+        ///
+        /// </summary>
+        public const float PlasmaTransmitModifier = 4f;
+
+        /// <summary>
+        ///
+        /// </summary>
+        public const float WaterTransmitModifier = 2f;
+
+        /// <summary>
+        ///
+        /// </summary>
+        public const float BZTransmitModifier = -2f;
+
+        /// <summary>
+        ///     The SpiceGas makes the Spicerock spicy
+        /// </summary>
+        public const float TritiumTransmitModifier = 30f;
+
+        /// <summary>
+        /// Should halve the power output
+        /// </summary>
+        public const float PluoxiumTransmitModifier = -5f;
+
+        /// <summary>
+        ///     increase the radiation emission, but less than the trit
+        /// </summary>
+        public const float HydrogenTransmitModifier = 25f;
+
+        /// <summary>
+        ///
+        /// </summary>
+        public const float HealiumTransmitModifier = 2.4f;
+
+        /// <summary>
+        ///
+        /// </summary>
+        public const float ProtonitrateTransmitModifier = 15f;
+
+        /// <summary>
+        ///
+        /// </summary>
+        public const float ZaukerTransmitModifier = 20f;
+
+
+
+        /// <summary>
+        ///     Improves the effect of transmit modifiers
+        /// </summary>
+        public const float BZRadioactivityModifier = 5f;
+
+
+
+        /// <summary>
+        ///     Higher == Gas makes the crystal more resistant against heat damage.
+        /// </summary>
+        public const float N2OHeatResistance = 6f;
+
+        /// <summary>
+        ///     just a bit of heat resistance to spice it up
+        /// </summary>
+        public const float HydrogenHeatResistance = 2f;
+
+        /// <summary>
+        ///
+        /// </summary>
+        public const float ProtoNitrateHeatResistance = 5f;
+
+
+
+        /// <summary>
+        ///     The minimum portion of the miasma in the air that will be consumed. Higher values mean more miasma will be consumed be default.
+        /// </summary>
+        public const float MiasmaConsumptionRatioMin = 0f;
+
+        /// <summary>
+        ///     The maximum portion of the miasma in the air that will be consumed. Lower values mean the miasma consumption rate caps earlier.
+        /// </summary>
+        public const float MiasmaConsumptionRatioMax = 1f;
+
+        /// <summary>
+        ///     The minimum pressure for a pure miasma atmosphere to begin being consumed. Higher values mean it takes more miasma pressure to make miasma start being consumed. Should be >= 0
+        /// </summary>
+        public const float MiasmaConsumptionPP = (Atmospherics.OneAtmosphere*0.01f);
+
+        /// <summary>
+        ///     How the amount of miasma consumed per tick scales with partial pressure. Higher values decrease the rate miasma consumption scales with partial pressure. Should be >0
+        /// </summary>
+        public const float MiasmaPressureScaling = (Atmospherics.OneAtmosphere*0.5f);
+
+        /// <summary>
+        ///     How much the amount of miasma consumed per tick scales with gasmix power ratio. Higher values means gasmix has a greater effect on the miasma consumed.
+        /// </summary>
+        public const float MiasmaGasMixScaling = (0.3f);
+
+        /// <summary>
+        ///     The amount of matter power generated for every mole of miasma consumed. Higher values mean miasma generates more power.
+        /// </summary>
+        public const float MiasmaPowerGain = 10f;
+
+
+        /// <summary>
+        ///     Higher == less heat released during reaction
+        /// </summary>
+        public const float  ThermalReleaseModifier = 5f;
+
+        /// <summary>
+        ///     Higher == less plasma released by reaction
+        /// </summary>
+        public const float  PlasmaReleaseModifier = 750f;
+
+        /// <summary>
+        ///     Higher == less oxygen released at high temperature/power
+        /// </summary>
+        public const float  OxygenReleaseModifier = 325f;
+
+        #endregion
     }
 
     /// <summary>

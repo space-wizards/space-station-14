@@ -4,6 +4,8 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 using Robust.Shared.Analyzers;
 using Content.Server.Supermatter.EntitySystems;
+using Content.Shared.Whitelist;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 
 namespace Content.Server.Supermatter.Components
@@ -16,24 +18,38 @@ namespace Content.Server.Supermatter.Components
         //TODO: clean all this up more
         //i've yet to see another component need so many variables and im not even using most of them
         //the gas constants like HeatPenalty are supermatter specific and shouldnt be used elsewhere
+
+        [DataField("whitelist")]
+        public EntityWhitelist Whitelist = new();
+
         [ViewVariables(VVAccess.ReadWrite)]
         public float Power {get; set;} = 0;
+
         [ViewVariables(VVAccess.ReadWrite)]
         public Atmos.GasMixture? Mix {get; set;}
+
         [ViewVariables(VVAccess.ReadOnly)]
         public float GasmixPowerRatio {get; set;} = 0;
+
         public float DynamicHeatModifier {get; set;} = 0;
+
         public float PowerTransmissionBonus {get; set;} = 0;
+
         public float PowerlossDynamicScaling {get; set;} = 0;
+
         public float DynamicHeatResistance {get; set;} = 0;
+
         public float PowerlossInhibitor {get; set;} = 0;
+
         //The damage we had before this cycle. Used to limit the damage we can take each cycle, and for safealert
         public float DamageArchived {get; set;} = 0;
+
         //Heat damage scales around this. Too hot setups with this amount of moles do regular damage, anything above and below is scaled
         public float  MoleHeatPenalty {get; set;} = 0f;
 
         //we yell if over 50 damage every YellTimer Seconds
         public const float YellTimer = 60f;
+
         //set to YellTimer at first so it doesnt yell a minute after being hit
         public float YellAccumulator {get; set;} = YellTimer;
 
@@ -45,20 +61,28 @@ namespace Content.Server.Supermatter.Components
 
         //Our "Shit is no longer fucked" message. We send it when damage is less then damagearchived
         public const string SafeAlert = "Crystalline hyperstructure returning to safe operating parameters.";
+
         //The point at which we should start sending messeges about the damage to the engi channels.
         public const float WarningPoint = 50;
+
         ///The alert we send when we've reached warningpoint
         private const string warningalert = "Danger! Crystal hyperstructure integrity faltering!";
+
         //The point at which we start sending messages to the common channel
         public const float EmergencyPoint = 700;
+
         //The alert we send when we've reached emergencypoint
         private const string emergencyalert = "CRYSTAL DELAMINATION IMMINENT.";
+
         //The point at which we delam
         public const int ExplosionPoint = 900;
+
         //delam alarm sound
         public SoundSpecifier DelamAlarm = new SoundPathSpecifier("/Audio/Machines/alarm.ogg");
+
         //When we pass this amount of damage we start shooting bolts
         private const int damagepenaltypoint = 550;
+
         public bool FinalCountdown {get; set;} = false;
 
         //---------------------------------------------------------------------------------------\\

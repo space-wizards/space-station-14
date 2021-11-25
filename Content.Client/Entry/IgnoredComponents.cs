@@ -316,7 +316,9 @@ namespace Content.Client.Entry
             "GhostRadio",
             "Armor",
             "Udder",
-            "PneumaticCannon"
+            "PneumaticCannon",
+            "Supermatter",
+            "SupermatterFood"
         };
     }
 }

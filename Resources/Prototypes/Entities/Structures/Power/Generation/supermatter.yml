@@ -4,11 +4,12 @@
   description: A strangely translucent and iridescent crystal.
   components:
     - type: Supermatter
-    - type: Destructible
-      thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 100
+      whitelist:
+        tags:
+          - EmitterBolt
+        components:
+          - Body
+          - Item
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: Glass
@@ -17,8 +18,8 @@
       fixtures:
       - shape:
           !type:PhysShapeAabb
-            bounds: "-0.25,-0.5,0.25,0.5"
-        mass: 100
+            bounds: "-0.25,-0.25,0.25,0.25"
+        mass: 250
         layer:
           - Impassable
           - MobImpassable

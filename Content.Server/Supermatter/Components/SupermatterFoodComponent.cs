@@ -11,7 +11,9 @@ namespace Content.Server.Supermatter.Components
     public class SupermatterFoodComponent : Component
     {
         public override string Name => "SupermatterFood";
+
         [ViewVariables(VVAccess.ReadWrite)]
+
         [DataField("energy")]
         public int Energy { get; set; } = 1;
     }
