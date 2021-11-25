@@ -250,8 +250,7 @@ public partial class AdminLogSystem : SharedAdminLogSystem
         {
             var player = new AdminLogPlayer
             {
-                PlayerUserId = id,
-                RoundId = CurrentRoundId
+                PlayerUserId = id
             };
 
             log.Players.Add(player);
