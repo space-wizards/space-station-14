@@ -110,6 +110,9 @@ namespace Content.Server.Interaction
             if (!EntityManager.TryGetComponent(container.Owner.Uid, out ServerStorageComponent storage))
                 return false;
 
+            if (storage.Storage?.ID != container.ID)
+                return false;
+
             if (!EntityManager.TryGetComponent(user, out ActorComponent actor))
                 return false;
 

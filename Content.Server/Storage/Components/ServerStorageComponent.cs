@@ -44,7 +44,8 @@ namespace Content.Server.Storage.Components
     {
         private const string LoggerName = "Storage";
 
-        private Container? _storage;
+        public Container? Storage;
+        
         private readonly Dictionary<IEntity, int> _sizeCache = new();
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
@@ -75,7 +76,7 @@ namespace Content.Server.Storage.Components
         public SoundSpecifier StorageSoundCollection { get; set; } = new SoundCollectionSpecifier("storageRustle");
 
         [ViewVariables]
-        public override IReadOnlyList<IEntity>? StoredEntities => _storage?.ContainedEntities;
+        public override IReadOnlyList<IEntity>? StoredEntities => Storage?.ContainedEntities;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool OccludesLight
@@ -84,7 +85,7 @@ namespace Content.Server.Storage.Components
             set
             {
                 _occludesLight = value;
-                if (_storage != null) _storage.OccludesLight = value;
+                if (Storage != null) Storage.OccludesLight = value;
             }
         }
 
@@ -104,12 +105,12 @@ namespace Content.Server.Storage.Components
         {
             _storageUsed = 0;
 
-            if (_storage == null)
+            if (Storage == null)
             {
                 return;
             }
 
-            foreach (var entity in _storage.ContainedEntities)
+            foreach (var entity in Storage.ContainedEntities)
             {
                 var item = entity.GetComponent<SharedItemComponent>();
                 _storageUsed += item.Size;
@@ -157,18 +158,18 @@ namespace Content.Server.Storage.Components
         /// <returns>true if the entity was inserted, false otherwise</returns>
         public bool Insert(IEntity entity)
         {
-            return CanInsert(entity) && _storage?.Insert(entity) == true;
+            return CanInsert(entity) && Storage?.Insert(entity) == true;
         }
 
         public override bool Remove(IEntity entity)
         {
             EnsureInitialCalculated();
-            return _storage?.Remove(entity) == true;
+            return Storage?.Remove(entity) == true;
         }
 
         public void HandleEntityMaybeInserted(EntInsertedIntoContainerMessage message)
         {
-            if (message.Container != _storage)
+            if (message.Container != Storage)
             {
                 return;
             }
@@ -190,7 +191,7 @@ namespace Content.Server.Storage.Components
 
         public void HandleEntityMaybeRemoved(EntRemovedFromContainerMessage message)
         {
-            if (message.Container != _storage)
+            if (message.Container != Storage)
             {
                 return;
             }
@@ -308,9 +309,9 @@ namespace Content.Server.Storage.Components
                 return;
             }
 
-            if (_storage == null)
+            if (Storage == null)
             {
-                Logger.WarningS(LoggerName, $"{nameof(UpdateClientInventory)} called with null {nameof(_storage)}");
+                Logger.WarningS(LoggerName, $"{nameof(UpdateClientInventory)} called with null {nameof(Storage)}");
 
                 return;
             }
@@ -419,8 +420,8 @@ namespace Content.Server.Storage.Components
             base.Initialize();
 
             // ReSharper disable once StringLiteralTypo
-            _storage = Owner.EnsureContainer<Container>("storagebase");
-            _storage.OccludesLight = _occludesLight;
+            Storage = Owner.EnsureContainer<Container>("storagebase");
+            Storage.OccludesLight = _occludesLight;
         }
 
         [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
@@ -455,7 +456,7 @@ namespace Content.Server.Storage.Components
                         break;
                     }
 
-                    if (!Owner.EntityManager.TryGetEntity(remove.EntityUid, out var entity) || _storage?.Contains(entity) == false)
+                    if (!Owner.EntityManager.TryGetEntity(remove.EntityUid, out var entity) || Storage?.Contains(entity) == false)
                     {
                         break;
                     }
