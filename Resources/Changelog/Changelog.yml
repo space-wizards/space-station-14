@@ -1,9 +1,4 @@
 Entries:
-- author: BulletGrade
-  changes:
-  - {message: Mask of joy now available in AutoDrobe., type: Add}
-  id: 157
-  time: '2021-04-13T00:32:02.0000000+00:00'
 - author: ike709
   changes:
   - {message: Added a library to the Saltern., type: Add}
@@ -2855,3 +2850,15 @@ Entries:
   - {message: Lobby timer now actually shows minutes., type: Fix}
   id: 658
   time: '2021-11-25T19:30:36.0000000+00:00'
+- author: Taral
+  changes:
+  - {message: new laser guns, type: Add}
+  - {message: Z8 carbine bundle, type: Add}
+  - {message: firecost for most battery guns, type: Add}
+  - {message: Inspector has been replaced with the Predator in the uplink and bundle,
+    type: Tweak}
+  - {message: replaced old c20r cev eris sprite with a newer one from the same source,
+    type: Tweak}
+  - {message: Inspector had it's ammo capacity reduced from 7 to 6, type: Tweak}
+  id: 659
+  time: '2021-11-25T22:37:21.0000000+00:00'
