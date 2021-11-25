@@ -29,6 +29,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Storage.Components
@@ -45,6 +46,7 @@ namespace Content.Server.Storage.Components
 
         private Container? _storage;
         private readonly Dictionary<IEntity, int> _sizeCache = new();
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         [DataField("occludesLight")]
         private bool _occludesLight = true;
@@ -362,6 +364,35 @@ namespace Content.Server.Storage.Components
 #pragma warning restore 618
 
                 UpdateDoorState();
+            }
+
+            CloseNestedInterfaces(session);
+        }
+
+        /// <summary>
+        ///     If the user has nested-UIs open (e.g., PDA UI open when pda is in a backpack), close them.
+        /// </summary>
+        /// <param name="session"></param>
+        public void CloseNestedInterfaces(IPlayerSession session)
+        {
+            if (StoredEntities == null)
+                return;
+
+            foreach (var entity in StoredEntities)
+            {
+                if (_entityManager.TryGetComponent(entity.Uid, out ServerStorageComponent storageComponent))
+                {
+                    DebugTools.Assert(storageComponent != this, $"Storage component contains itself!? Entity: {OwnerUid}");
+                    storageComponent.UnsubscribeSession(session);
+                }
+
+                if (_entityManager.TryGetComponent(entity.Uid, out ServerUserInterfaceComponent uiComponent))
+                {
+                    foreach (var ui in uiComponent.Interfaces)
+                    {
+                        ui.Close(session);
+                    }
+                }
             }
         }
 
