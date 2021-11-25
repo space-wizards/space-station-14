@@ -105,6 +105,57 @@ namespace Content.Client.Chemistry.UI
                 case 3:
                     PillTypeButton3.Pressed = true;
                     break;
+                case 4:
+                    PillTypeButton4.Pressed = true;
+                    break;
+                case 5:
+                    PillTypeButton5.Pressed = true;
+                    break;
+                case 6:
+                    PillTypeButton6.Pressed = true;
+                    break;
+                case 7:
+                    PillTypeButton7.Pressed = true;
+                    break;
+                case 8:
+                    PillTypeButton8.Pressed = true;
+                    break;
+                case 9:
+                    PillTypeButton9.Pressed = true;
+                    break;
+                case 10:
+                    PillTypeButton10.Pressed = true;
+                    break;
+                case 11:
+                    PillTypeButton11.Pressed = true;
+                    break;
+                case 12:
+                    PillTypeButton12.Pressed = true;
+                    break;
+                case 13:
+                    PillTypeButton13.Pressed = true;
+                    break;
+                case 14:
+                    PillTypeButton14.Pressed = true;
+                    break;
+                case 15:
+                    PillTypeButton15.Pressed = true;
+                    break;
+                case 16:
+                    PillTypeButton16.Pressed = true;
+                    break;
+                case 17:
+                    PillTypeButton17.Pressed = true;
+                    break;
+                case 18:
+                    PillTypeButton18.Pressed = true;
+                    break;
+                case 19:
+                    PillTypeButton19.Pressed = true;
+                    break;
+                case 20:
+                    PillTypeButton20.Pressed = true;
+                    break;
             }
         }
 
