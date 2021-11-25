@@ -45,7 +45,7 @@ namespace Content.Server.Medical.SuitSensors
         ///     How often does sensor update its owners status (in seconds).
         /// </summary>
         [DataField("updateRate")]
-        public float UpdateRate = 5f;
+        public float UpdateRate = 2f;
 
         /// <summary>
         ///     Current user that wears suit sensor. Null if nobody wearing it.

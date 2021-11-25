@@ -21,14 +21,29 @@ namespace Content.Server.Medical.CrewMonitoring
         [Dependency] private readonly SuitSensorSystem _sensors = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-        private double _cooldownTime = 10;
-        private TimeSpan _cooldownEnd;
-
         public override void Initialize()
         {
             base.Initialize();
+            SubscribeLocalEvent<CrewMonitoringConsoleComponent, ComponentRemove>(OnRemove);
             SubscribeLocalEvent<CrewMonitoringConsoleComponent, PacketSentEvent>(OnPacketReceived);
             SubscribeLocalEvent<CrewMonitoringConsoleComponent, ActivateInWorldEvent>(OnActivate);
+        }
+
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+
+            var consoles = EntityManager.EntityQuery<CrewMonitoringConsoleComponent>();
+            foreach (var console in consoles)
+            {
+                UpdateTimeouts(console.OwnerUid, console);
+                UpdateUserInterface(console.OwnerUid, console);
+            }
+        }
+
+        private void OnRemove(EntityUid uid, CrewMonitoringConsoleComponent component, ComponentRemove args)
+        {
+            component.ConnectedSensors.Clear();
         }
 
         private void OnPacketReceived(EntityUid uid, CrewMonitoringConsoleComponent component, PacketSentEvent args)
@@ -39,23 +54,6 @@ namespace Content.Server.Medical.CrewMonitoring
 
             suitSensor.Timestamp = _gameTiming.CurTime;
             component.ConnectedSensors[args.SenderAddress] = suitSensor;
-        }
-
-        public override void Update(float frameTime)
-        {
-            base.Update(frameTime);
-
-            var curTime = _gameTiming.CurTime;
-            if (_cooldownEnd < curTime)
-                return;
-
-            var consoles = EntityManager.EntityQuery<CrewMonitoringConsoleComponent>();
-            foreach (var console in consoles)
-            {
-                UpdateUserInterface(console.OwnerUid, console);
-            }
-
-            _cooldownEnd = curTime + TimeSpan.FromSeconds(_cooldownTime);
         }
 
         private void OnActivate(EntityUid uid, CrewMonitoringConsoleComponent component, ActivateInWorldEvent args)
@@ -100,6 +98,20 @@ namespace Content.Server.Medical.CrewMonitoring
             var allSensors = component.ConnectedSensors.Values.ToList();
             var uiState = new CrewMonitoringState(allSensors);
             ui.SetState(uiState);
+        }
+
+        private void UpdateTimeouts(EntityUid uid, CrewMonitoringConsoleComponent? component = null)
+        {
+            if (!Resolve(uid, ref component))
+                return;
+
+            foreach (var (address, sensor) in component.ConnectedSensors)
+            {
+                // if too many time passed - sensor just dropped connection
+                var dif = _gameTiming.CurTime - sensor.Timestamp;
+                if (dif.Seconds > component.SensorTimeout)
+                    component.ConnectedSensors.Remove(address);
+            }
         }
     }
 }
