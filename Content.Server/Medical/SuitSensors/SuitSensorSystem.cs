@@ -30,22 +30,6 @@ namespace Content.Server.Medical.SuitSensors
         [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-        public override void Update(float frameTime)
-        {
-            base.Update(frameTime);
-
-            var sensors = EntityManager.EntityQuery<SuitSensorComponent, DeviceNetworkComponent>();
-            foreach (var (sensor, device) in sensors)
-            {
-                var status = GetSensorState(sensor.OwnerUid, sensor);
-                if (status == null)
-                    continue;
-
-                var payload = SuitSensorToPackage(status);
-                _deviceNetworkSystem.QueuePacket(sensor.OwnerUid, DeviceNetworkConstants.NullAddress, device.Frequency, payload, true);
-            }
-        }
-
         public override void Initialize()
         {
             base.Initialize();
@@ -54,6 +38,29 @@ namespace Content.Server.Medical.SuitSensors
             SubscribeLocalEvent<SuitSensorComponent, UnequippedEvent>(OnUnequipped);
             SubscribeLocalEvent<SuitSensorComponent, ExaminedEvent>(OnExamine);
             SubscribeLocalEvent<SuitSensorComponent, GetInteractionVerbsEvent>(OnVerb);
+        }
+
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+
+            var sensors = EntityManager.EntityQuery<SuitSensorComponent, DeviceNetworkComponent>();
+            foreach (var (sensor, device) in sensors)
+            {
+                // check if sensor is ready to update
+                if (_gameTiming.CurTime - sensor.LastUpdate < TimeSpan.FromSeconds(sensor.UpdateRate))
+                    continue;
+                sensor.LastUpdate = _gameTiming.CurTime;
+
+                // get sensor status
+                var status = GetSensorState(sensor.OwnerUid, sensor);
+                if (status == null)
+                    continue;
+
+                // broadcast it to device network
+                var payload = SuitSensorToPackage(status);
+                _deviceNetworkSystem.QueuePacket(sensor.OwnerUid, DeviceNetworkConstants.NullAddress, device.Frequency, payload, true);
+            }
         }
 
         private void OnMapInit(EntityUid uid, SuitSensorComponent component, MapInitEvent args)
