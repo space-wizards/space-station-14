@@ -56,6 +56,10 @@ namespace Content.Server.Disposal.Unit.Components
         [ViewVariables]
         public Direction CurrentDirection { get; set; } = Direction.Invalid;
 
+        /// <summary>Mistake prevention</summary>
+        [ViewVariables]
+        public bool IsExitingDisposals { get; set; } = false;
+
         /// <summary>
         ///     A list of tags attached to the content, used for sorting
         /// </summary>
