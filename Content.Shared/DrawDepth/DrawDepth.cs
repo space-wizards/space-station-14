@@ -21,8 +21,7 @@ namespace Content.Shared.DrawDepth
         #endregion
 
         /// <summary>
-        ///     Things that are beneath regular floors, such as wires or pipes. vents/scrubbers also use this to ensure
-        ///     that they appear below carpets.
+        ///     Things that are beneath regular floors.
         /// </summary>
         BelowFloor = DrawDepthTag.Default - 5,
 
