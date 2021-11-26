@@ -19,7 +19,10 @@ namespace Content.Server.Explosion.Components
 
             if (sourceLocation.Equals(targetLocation)) return;
 
-            var direction = (targetLocation.ToMapPos(Owner.EntityManager) - sourceLocation.ToMapPos(Owner.EntityManager)).Normalized;
+            var offset = (targetLocation.ToMapPos(Owner.EntityManager) - sourceLocation.ToMapPos(Owner.EntityManager));
+            
+            //Don't normalize if the direction is center (0,0)
+            var direction = offset == Vector2.Zero ? offset : offset.Normalized;
 
             var throwForce = eventArgs.Severity switch
             {
