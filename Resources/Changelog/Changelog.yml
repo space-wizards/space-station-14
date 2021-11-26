@@ -1,10 +1,4 @@
 Entries:
-- author: Hardly
-  changes:
-  - {message: Bar backroom in Saltern, type: Add}
-  - {message: BarDrobe, type: Add}
-  id: 160
-  time: '2021-04-15T18:24:55.0000000+00:00'
 - author: Swept
   changes:
   - {message: Destroyed state for canisters, type: Add}
@@ -2863,3 +2857,8 @@ Entries:
   - {message: fixed crash when admin log has the same object more then once., type: Fix}
   id: 661
   time: '2021-11-26T07:39:36.0000000+00:00'
+- author: Hoolny
+  changes:
+  - {message: Readded cows into cargo, type: Tweak}
+  id: 662
+  time: '2021-11-26T09:11:42.0000000+00:00'
