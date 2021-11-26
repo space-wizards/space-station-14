@@ -9,5 +9,5 @@
     state: combat_hypo
     netsync: false
   - type: GuardianCreator
-    GuardianID: MobHoloparasite
+    guardianID: MobHoloparasite
     

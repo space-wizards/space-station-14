@@ -20,7 +20,7 @@ namespace Content.Server.Guardian
         /// <summary>
         /// Percentage of damage reflected from the guardian to the host, use f
         /// </summary>
-        [ViewVariables] [DataField("damageShare")] public float DamagePercent { get; set; }
+        [ViewVariables] [DataField("damageShare")] public float DamageShare { get; set; }
 
         /// <summary>
         /// Maximum distance the guardian can travel before it's forced to recall, use YAML to set
@@ -30,7 +30,7 @@ namespace Content.Server.Guardian
         /// <summary>
         /// If the guardian is currently manifested
         /// </summary>
-        public bool guardianLoose = false;
+        public bool GuardianLoose = false;
 
     }
 }

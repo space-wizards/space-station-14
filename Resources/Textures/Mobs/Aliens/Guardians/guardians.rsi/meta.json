@@ -26,7 +26,7 @@
       ]
     },
     {
-      "name": "magicbase",
+      "name": "magic_base",
       "directions": 4,
       "delays": [
         [
@@ -80,7 +80,7 @@
       ]
     },
     {
-      "name": "minerbase",
+      "name": "miner_base",
       "directions": 4,
       "delays": [
         [
@@ -124,7 +124,7 @@
       ]
     },
     {
-      "name": "techbase",
+      "name": "tech_base",
       "directions": 4,
       "delays": [
         [

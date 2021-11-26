@@ -26,6 +26,6 @@ namespace Content.Server.Guardian
         /// <summary>
         /// The prototype of the guardian entity which will be created
         /// </summary>
-        [ViewVariables] [DataField("GuardianID")] public string GuardianType { get; set; } = default!;
+        [ViewVariables] [DataField("guardianID")] public string GuardianType { get; set; } = default!;
     }
 }

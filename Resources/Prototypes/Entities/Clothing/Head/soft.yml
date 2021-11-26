@@ -244,7 +244,7 @@
   parent: ClothingHeadBase
   id: ClothingHeadHatBizarreSoft
   name: troublemaker's soft
-  description: A truly.. bizarre acessory.
+  description: A truly.. bizarre accessory.
   components:
   - type: Sprite
     sprite: Clothing/Head/Soft/bizarresoft.rsi
@@ -255,7 +255,7 @@
   parent: ClothingHeadBase
   id: ClothingHeadHatBizarreSoftFlipped
   name: troublemaker's soft flipped
-  description: A truly.. bizarre acessory, flipped.
+  description: A truly.. bizarre accessory, flipped.
   components:
   - type: Sprite
     sprite: Clothing/Head/Soft/bizarresoft_flipped.rsi
