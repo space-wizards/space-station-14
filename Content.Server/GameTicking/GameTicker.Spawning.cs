@@ -86,7 +86,7 @@ namespace Content.Server.GameTicking
             // If no job available, just bail out.
             if (jobId is null)
             {
-                _chatManager.DispatchServerMessage(player, "game-ticker-player-no-jobs-available-when-joining");
+                _chatManager.DispatchServerMessage(player, Loc.GetString("game-ticker-player-no-jobs-available-when-joining"));
                 return;
             }
 
