@@ -1,12 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.Maps;
+using Content.Shared.Roles;
 using Content.Shared.Station;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Station;
 
@@ -16,6 +19,7 @@ namespace Content.Server.Station;
 public class StationSystem : EntitySystem
 {
     [Dependency] private GameTicker _gameTicker = default!;
+    [Dependency] private IChatManager _chatManager = default!;
     private uint _idCounter = 1;
 
     private Dictionary<StationId, StationInfoData> _stationInfo = new();
@@ -41,7 +45,7 @@ public class StationSystem : EntitySystem
 
     public class StationInfoData
     {
-        public readonly string Name;
+        public string Name;
 
         /// <summary>
         /// Job list associated with the game map.
@@ -81,6 +85,13 @@ public class StationSystem : EntitySystem
             {
                 return false;
             }
+        }
+
+        public bool AdjustJobAmount(string jobName, int amount)
+        {
+            DebugTools.Assert(amount >= -1);
+            _jobList[jobName] = amount;
+            return true;
         }
     }
 
@@ -132,14 +143,15 @@ public class StationSystem : EntitySystem
 
     /// <summary>
     /// Attempts to assign a job on the given station.
+    /// Does NOT inform the gameticker that the job roster has changed.
     /// </summary>
     /// <param name="stationId">station to assign to</param>
-    /// <param name="jobName">name of the job</param>
+    /// <param name="job">name of the job</param>
     /// <returns>assignment success</returns>
-    public bool TryAssignJobToStation(StationId stationId, string jobName)
+    public bool TryAssignJobToStation(StationId stationId, JobPrototype job)
     {
         if (stationId != StationId.Invalid)
-            return _stationInfo[stationId].TryAssignJob(jobName);
+            return _stationInfo[stationId].TryAssignJob(job.ID);
         else
             return false;
     }
@@ -148,11 +160,11 @@ public class StationSystem : EntitySystem
     /// Checks if the given job is available.
     /// </summary>
     /// <param name="stationId">station to check</param>
-    /// <param name="jobName">name of the job</param>
+    /// <param name="job">name of the job</param>
     /// <returns>job availability</returns>
-    public bool IsJobAvailableOnStation(StationId stationId, string jobName)
+    public bool IsJobAvailableOnStation(StationId stationId, JobPrototype job)
     {
-        if (_stationInfo[stationId].JobList.TryGetValue(jobName, out var amount))
+        if (_stationInfo[stationId].JobList.TryGetValue(job.ID, out var amount))
             return amount != 0;
 
         return false;
@@ -161,5 +173,25 @@ public class StationSystem : EntitySystem
     private StationId AllocateStationInfo()
     {
         return new StationId(_idCounter++);
+    }
+
+    public bool AdjustJobsAvailableOnStation(StationId stationId, JobPrototype job, int amount)
+    {
+        var ret = _stationInfo[stationId].AdjustJobAmount(job.ID, amount);
+        _gameTicker.UpdateJobsAvailable();
+        return ret;
+    }
+
+    public void RenameStation(StationId stationId, string name, bool loud = true)
+    {
+        var oldName = _stationInfo[stationId].Name;
+        _stationInfo[stationId].Name = name;
+        if (loud)
+        {
+            _chatManager.DispatchStationAnnouncement($"The station {oldName} has been renamed to {name}.");
+        }
+
+        // Make sure lobby gets the memo.
+        _gameTicker.UpdateJobsAvailable();
     }
 }

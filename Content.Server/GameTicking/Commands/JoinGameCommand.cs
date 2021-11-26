@@ -65,9 +65,9 @@ namespace Content.Server.GameTicking.Commands
                 }
 
                 var stationId = new StationId(sid);
-                if(!stationSystem.IsJobAvailableOnStation(stationId, id))
+                var jobPrototype = _prototypeManager.Index<JobPrototype>(id);
+                if(!stationSystem.IsJobAvailableOnStation(stationId, jobPrototype))
                 {
-                    var jobPrototype = _prototypeManager.Index<JobPrototype>(id);
                     shell.WriteLine($"{jobPrototype.Name} has no available slots.");
                     return;
                 }
