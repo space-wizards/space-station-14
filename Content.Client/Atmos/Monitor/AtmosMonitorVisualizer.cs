@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Content.Shared.Atmos.Monitor;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
 

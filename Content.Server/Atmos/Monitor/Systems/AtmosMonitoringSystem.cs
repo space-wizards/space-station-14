@@ -191,7 +191,7 @@ namespace Content.Server.Atmos.Monitor.Systems
 
             if (component.DisplayMaxAlarmInNet)
             {
-                if (EntityManager.TryGetComponent(component.Owner.Uid, out SharedAppearanceComponent? appearanceComponent))
+                if (EntityManager.TryGetComponent(component.Owner.Uid, out AppearanceComponent? appearanceComponent))
                     appearanceComponent.SetData("alarmType", component.HighestAlarmInNetwork);
 
                 if (component.HighestAlarmInNetwork == AtmosMonitorAlarmType.Danger) PlayAlertSound(uid, component);
@@ -226,7 +226,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                 }
             }
 
-            if (EntityManager.TryGetComponent(component.Owner.Uid, out SharedAppearanceComponent? appearanceComponent))
+            if (EntityManager.TryGetComponent(component.Owner.Uid, out AppearanceComponent? appearanceComponent))
             {
                 appearanceComponent.SetData("powered", args.Powered);
                 appearanceComponent.SetData("alarmType", component.LastAlarmState);
@@ -342,7 +342,7 @@ namespace Content.Server.Atmos.Monitor.Systems
         {
             if (!Resolve(uid, ref monitor)) return;
             monitor.LastAlarmState = state;
-            if (EntityManager.TryGetComponent(monitor.Owner.Uid, out SharedAppearanceComponent? appearanceComponent))
+            if (EntityManager.TryGetComponent(monitor.Owner.Uid, out AppearanceComponent? appearanceComponent))
                 appearanceComponent.SetData("alarmType", monitor.LastAlarmState);
 
             BroadcastAlertPacket(monitor, alarms);
