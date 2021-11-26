@@ -46,7 +46,7 @@ namespace Content.Server.Administration.Commands
                         return;
                     }
 
-                    if (args.Length == 4 && int.TryParse(args[2], out var x) && int.TryParse(args[3], out var y))
+                    if (args.Length >= 4 && int.TryParse(args[2], out var x) && int.TryParse(args[3], out var y))
                     {
                         var transform = entityManager.GetComponent<TransformComponent>(gameMapEnt.GridEntityId);
                         transform.WorldPosition = new Vector2(x, y);
