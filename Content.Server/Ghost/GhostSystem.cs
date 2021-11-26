@@ -218,7 +218,7 @@ namespace Content.Server.Ghost
         {
             var players = new Dictionary<EntityUid, string>();
 
-            foreach (var player in _playerManager.GetAllPlayers())
+            foreach (var player in _playerManager.Sessions)
             {
                 if (player.AttachedEntity != null)
                 {

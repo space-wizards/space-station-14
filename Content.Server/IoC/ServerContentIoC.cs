@@ -11,6 +11,7 @@ using Content.Server.DeviceNetwork;
 using Content.Server.EUI;
 using Content.Server.Holiday;
 using Content.Server.Holiday.Interfaces;
+using Content.Server.Maps;
 using Content.Server.Module;
 using Content.Server.MoMMI;
 using Content.Server.NodeContainer.NodeGroups;
@@ -52,6 +53,7 @@ namespace Content.Server.IoC
             IoCManager.Register<INpcBehaviorManager, NpcBehaviorManager>();
             IoCManager.Register<IPlayerLocator, PlayerLocator>();
             IoCManager.Register<IAfkManager, AfkManager>();
+            IoCManager.Register<IGameMapManager, GameMapManager>();
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Buckle.Components;
 using Content.Server.Hands.Components;
@@ -98,7 +98,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.NotNull(buckle.BuckledTo);
                 Assert.True(buckle.Buckled);
 
-                var player = IoCManager.Resolve<IPlayerManager>().GetAllPlayers().Single();
+                var player = IoCManager.Resolve<IPlayerManager>().Sessions.Single();
                 Assert.True(((BuckleComponentState) buckle.GetComponentState(player)).Buckled);
                 Assert.False(actionBlocker.CanMove(human.Uid));
                 Assert.False(actionBlocker.CanChangeDirection(human.Uid));

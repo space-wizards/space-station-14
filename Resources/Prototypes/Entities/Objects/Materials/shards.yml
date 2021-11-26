@@ -14,15 +14,15 @@
     - shard3
   - type: ItemCooldown
   - type: MeleeWeapon
-    damage: 
+    damage:
       types:
         Slash: 5
   - type: Item
     sprite: Objects/Materials/Shards/shard.rsi
   - type: DamageOtherOnHit
-    damage: 
+    damage:
       types:
-        Slash: 5
+        Slash: 2
 
 - type: entity
   parent: ShardBase
@@ -52,10 +52,6 @@
     refineResult:
     - SheetGlass1
     - SheetSteel1
-  - type: DamageOtherOnHit
-    damage: 
-      types:
-        Slash: 10
 
 - type: entity
   parent: ShardBase
@@ -71,7 +67,3 @@
     refineResult:
     - SheetGlass1
     - SheetPlasma1
-  - type: DamageOtherOnHit
-    damage: 
-      types:
-        Slash: 15

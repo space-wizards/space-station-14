@@ -15,7 +15,7 @@
 
   - type: Item
   - type: Storage
-    capacity: 6
+    capacity: 20
 
 - type: entity
   name: flashbang box

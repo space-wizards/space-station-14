@@ -17,7 +17,7 @@ namespace Content.Server.Chemistry.TileReactions
         {
             if (reactVolume < 5 || !tile.TryGetPuddle(null, out _)) return FixedPoint2.Zero;
 
-            return tile.SpillAt(new Solution(reagent.ID, reactVolume), "PuddleSmear", true, false) != null ? reactVolume : FixedPoint2.Zero;
+            return tile.SpillAt(new Solution(reagent.ID, reactVolume), "PuddleSmear", true, false, true) != null ? reactVolume : FixedPoint2.Zero;
         }
     }
 }

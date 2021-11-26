@@ -1,5 +1,5 @@
 ﻿using System;
-using Content.Shared.Body.Scanner;
+using Content.Shared.Body.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;

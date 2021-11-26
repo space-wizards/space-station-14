@@ -143,7 +143,7 @@ namespace Content.Server.GameTicking.Presets
         {
             // Collate people to avoid...
             var existingPlayerPoints = new List<EntityCoordinates>();
-            foreach (var player in _playerManager.GetAllPlayers())
+            foreach (var player in _playerManager.ServerSessions)
             {
                 var avoidMeMind = player.Data.ContentData()?.Mind;
                 if ((avoidMeMind == null) || (avoidMeMind == ignoreMe))
@@ -224,7 +224,7 @@ namespace Content.Server.GameTicking.Presets
         public override string GetRoundEndDescription()
         {
             var lines = new List<string>();
-            lines.Add("traitor-death-match-end-round-description-first-line");
+            lines.Add(Loc.GetString("traitor-death-match-end-round-description-first-line"));
             foreach (var uplink in _entityManager.EntityQuery<UplinkComponent>(true))
             {
                 var uplinkAcc = uplink.UplinkAccount;

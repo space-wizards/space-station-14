@@ -245,7 +245,7 @@ namespace Content.Shared.SubFloor
             }
 
             // Set an appearance data value so visualizers can use this as needed.
-            if (EntityManager.TryGetComponent(uid, out SharedAppearanceComponent? appearanceComponent))
+            if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearanceComponent))
             {
                 appearanceComponent.SetData(SubFloorVisuals.SubFloor, subFloorVisible);
             }

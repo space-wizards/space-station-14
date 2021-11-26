@@ -42,7 +42,7 @@ namespace Content.Server.GameTicking.Commands
                 case 1:
                     if (player.AttachedEntity == null)
                     {
-                        shell.WriteLine("The map name argument cannot be omitted if you have no entity.");
+                        shell.WriteError("The map name argument cannot be omitted if you have no entity.");
                         return;
                     }
 
@@ -52,7 +52,7 @@ namespace Content.Server.GameTicking.Commands
                 case 2:
                     if (!int.TryParse(args[0], out var id))
                     {
-                        shell.WriteLine($"{args[0]} is not a valid integer.");
+                        shell.WriteError($"{args[0]} is not a valid integer.");
                         return;
                     }
 
@@ -66,8 +66,12 @@ namespace Content.Server.GameTicking.Commands
 
             shell.ExecuteCommand($"addmap {mapId} false");
             shell.ExecuteCommand($"loadbp {mapId} \"{CommandParsing.Escape(mapName)}\" true");
-            shell.ExecuteCommand("aghost");
+
+            if (player.AttachedEntity?.Prototype?.ID != "AdminObserver")
+                shell.ExecuteCommand("aghost");
+
             shell.ExecuteCommand($"tp 0 0 {mapId}");
+            shell.RemoteExecuteCommand("showmarkers");
 
             var newGrid = mapManager.GetAllGrids().OrderByDescending(g => (int) g.Index).First();
             var pauseManager = IoCManager.Resolve<IPauseManager>();

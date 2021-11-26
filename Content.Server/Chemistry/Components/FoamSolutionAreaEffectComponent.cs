@@ -1,11 +1,10 @@
-﻿using Content.Server.Body.Circulatory;
+﻿using Content.Server.Body.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
 using Content.Shared.FixedPoint;
 using Content.Shared.Foam;
 using Content.Shared.Inventory;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -16,7 +15,7 @@ namespace Content.Server.Chemistry.Components
     public class FoamSolutionAreaEffectComponent : SolutionAreaEffectComponent
     {
         public override string Name => "FoamSolutionAreaEffect";
-        public new const string SolutionName = "foam";
+        public new const string SolutionName = "solutionArea";
 
         [DataField("foamedMetalPrototype")] private string? _foamedMetalPrototype;
 

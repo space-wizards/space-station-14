@@ -1,4 +1,5 @@
 using System;
+using Content.Server.Climbing;
 using Content.Server.Cloning;
 using Content.Server.Mind.Components;
 using Content.Server.Power.Components;
@@ -34,7 +35,6 @@ namespace Content.Server.Medical.Components
         public TimeSpan LastInternalOpenAttempt;
 
         private ContainerSlot _bodyContainer = default!;
-        private readonly Vector2 _ejectOffset = new(0f, 0f);
 
         [ViewVariables]
         private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
@@ -177,9 +177,9 @@ namespace Content.Server.Medical.Components
             var containedEntity = _bodyContainer.ContainedEntity;
             if (containedEntity == null) return;
             _bodyContainer.Remove(containedEntity);
-            containedEntity.Transform.WorldPosition += _ejectOffset;
             UpdateUserInterface();
             UpdateAppearance();
+            EntitySystem.Get<ClimbSystem>().ForciblySetClimbing(containedEntity.Uid);
         }
 
         public void Update(float frameTime)

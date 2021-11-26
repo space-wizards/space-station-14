@@ -3,6 +3,7 @@ using Content.Shared.Singularity.Components;
 using Content.Shared.Storage;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Client.Singularity.Visualizers
 {

@@ -2,7 +2,7 @@
 
 ui-escape-title = Esc Menu
 ui-escape-options = Options
-ui-escape-ahelp = AHelp
+ui-escape-ahelp = Admin Help
 ui-escape-disconnect = Disconnect
 ui-escape-quit = Quit
 

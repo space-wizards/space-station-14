@@ -23,7 +23,7 @@ namespace Content.Server.DoAfter
 
         public void HandleDamage(EntityUid _, DoAfterComponent component, DamageChangedEvent args)
         {
-            if (component.DoAfters.Count == 0 || !args.DamageIncreased)
+            if (component.DoAfters.Count == 0 || !args.InterruptsDoAfters)
             {
                 return;
             }

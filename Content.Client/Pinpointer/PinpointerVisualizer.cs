@@ -1,6 +1,7 @@
 using Content.Shared.Pinpointer;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 
 namespace Content.Client.Pinpointer

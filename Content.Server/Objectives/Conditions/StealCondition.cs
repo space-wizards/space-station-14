@@ -1,6 +1,5 @@
 using System;
 using Content.Server.Containers;
-using Content.Server.GameObjects;
 using Content.Server.Objectives.Interfaces;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;

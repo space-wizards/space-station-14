@@ -71,9 +71,9 @@ namespace Content.Server.Administration.Commands
                 {
                     CharacterName = target.Name
                 };
-                playerCData.Mind = mind;
+                mind.ChangeOwningPlayer(session.UserId);
             }
-            mind.TransferTo(target);
+            mind.TransferTo(target.Uid);
         }
     }
 }

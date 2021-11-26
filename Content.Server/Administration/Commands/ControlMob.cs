@@ -60,7 +60,7 @@ namespace Content.Server.Administration.Commands
 
             DebugTools.AssertNotNull(mind);
 
-            mind!.TransferTo(target);
+            mind!.TransferTo(target.Uid);
         }
     }
 }

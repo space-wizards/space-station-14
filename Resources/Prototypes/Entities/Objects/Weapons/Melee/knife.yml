@@ -14,11 +14,16 @@
     damage:
       types:
         Slash: 12
-    hitSound: 
+    hitSound:
       path: /Audio/Weapons/bladeslice.ogg
   - type: Sprite
     netsync: false
   - type: Item
+  - type: Tool
+    qualities:
+      - Slicing
+    useSound:
+      path: /Audio/Items/Culinary/chop.ogg
 
 - type: entity
   name: kitchen knife

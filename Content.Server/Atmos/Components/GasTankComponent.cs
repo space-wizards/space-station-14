@@ -1,6 +1,6 @@
 using System;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Body.Respiratory;
+using Content.Server.Body.Components;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;

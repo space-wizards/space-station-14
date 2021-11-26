@@ -29,7 +29,6 @@ namespace Content.Client.Construction.UI
     {
         [Dependency] private readonly IEntitySystemManager _systemManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IPlacementManager _placementManager = default!;
 
         private readonly IGameHud _gameHud;

@@ -19,8 +19,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Cargo.Components
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IActivate))]
-    public class CargoConsoleComponent : SharedCargoConsoleComponent, IActivate
+    public class CargoConsoleComponent : SharedCargoConsoleComponent
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
 
@@ -135,6 +134,10 @@ namespace Content.Server.Cargo.Components
                         break;
                     }
 
+                    var uid = msg.Session.AttachedEntityUid;
+                    if (uid == null)
+                        break;
+
                     PrototypeManager.TryIndex(order.ProductId, out CargoProductPrototype? product);
                     if (product == null!)
                         break;
@@ -143,13 +146,14 @@ namespace Content.Server.Cargo.Components
                         (capacity.CurrentCapacity == capacity.MaxCapacity
                         || capacity.CurrentCapacity + order.Amount > capacity.MaxCapacity
                         || !_cargoConsoleSystem.CheckBalance(_bankAccount.Id, (-product.PointCost) * order.Amount)
-                        || !_cargoConsoleSystem.ApproveOrder(orders.Database.Id, msg.OrderNumber)
+                        || !_cargoConsoleSystem.ApproveOrder(Owner.Uid, uid.Value, orders.Database.Id, msg.OrderNumber)
                         || !_cargoConsoleSystem.ChangeBalance(_bankAccount.Id, (-product.PointCost) * order.Amount))
                         )
                     {
                         SoundSystem.Play(Filter.Local(), _errorSound.GetSound(), Owner, AudioParams.Default);
                         break;
                     }
+
                     UpdateUIState();
                     break;
                 }
@@ -189,30 +193,13 @@ namespace Content.Server.Cargo.Components
                             orders.Database.ClearOrderCapacity();
                             foreach (var order in approvedOrders)
                             {
-                                if (!PrototypeManager.TryIndex(order.ProductId, out CargoProductPrototype? product))
-                                    continue;
-                                for (var i = 0; i < order.Amount; i++)
-                                {
-                                    telepadComponent.QueueTeleport(product);
-                                }
+                                telepadComponent.QueueTeleport(order);
                             }
                         }
                     }
                     break;
                 }
             }
-        }
-
-        void IActivate.Activate(ActivateEventArgs eventArgs)
-        {
-            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
-            {
-                return;
-            }
-            if (!Powered)
-                return;
-
-            UserInterface?.Open(actor.PlayerSession);
         }
 
         private void UpdateUIState()
