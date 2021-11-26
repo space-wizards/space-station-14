@@ -16,7 +16,7 @@ public class TrayScannerSystem : SharedTrayScannerSystem
     private void OnTrayScannerUsed(EntityUid uid, TrayScannerComponent scanner, UseInHandEvent args)
     {
         ToggleTrayScanner(uid, !scanner.Toggled, scanner);
-        if (EntityManager.TryGetComponent<SharedAppearanceComponent>(uid, out var appearance))
+        if (EntityManager.TryGetComponent<AppearanceComponent>(uid, out var appearance))
         {
             appearance.SetData(TrayScannerVisual.Visual, scanner.Toggled == true ? TrayScannerVisual.On : TrayScannerVisual.Off);
         }

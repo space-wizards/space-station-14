@@ -1,8 +1,8 @@
 using Content.Shared.SubFloor;
 using JetBrains.Annotations;
+using Robust.Client.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.GameObjects;
 
 namespace Content.Client.SubFloor
 {
