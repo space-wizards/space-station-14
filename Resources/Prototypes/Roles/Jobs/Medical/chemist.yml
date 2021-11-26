@@ -11,7 +11,8 @@
   access:
   - Medical
   - Chemistry
-
+  - Maintenance
+  
 - type: startingGear
   id: ChemistGear
   equipment:
