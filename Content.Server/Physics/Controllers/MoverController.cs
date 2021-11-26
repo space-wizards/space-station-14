@@ -36,6 +36,7 @@ namespace Content.Server.Physics.Controllers
         private float _shuttleDockSpeedCap;
 
         private HashSet<EntityUid> _excludedMobs = new();
+        private Dictionary<ShuttleComponent, List<(PilotComponent, IMoverComponent)>> _shuttlePilots = new();
 
         public override void Initialize()
         {
@@ -56,12 +57,76 @@ namespace Content.Server.Physics.Controllers
                 HandleMobMovement(mover, physics, mobMover);
             }
 
-            foreach (var (pilot, mover) in EntityManager.EntityQuery<PilotComponent, SharedPlayerInputMoverComponent>())
+            var newPilots = new Dictionary<ShuttleComponent, List<(PilotComponent, IMoverComponent)>>();
+
+            // We just mark off their movement and the shuttle itself does its own movement
+            foreach (var (pilot, mover, xform) in EntityManager.EntityQuery<PilotComponent, SharedPlayerInputMoverComponent, TransformComponent>())
             {
                 if (pilot.Console == null) continue;
                 _excludedMobs.Add(mover.Owner.Uid);
-                HandleShuttleMovement(mover);
+
+                var gridId = xform.GridID;
+
+                if (!_mapManager.TryGetGrid(gridId, out var grid) ||
+                    !EntityManager.TryGetComponent(grid.GridEntityId, out ShuttleComponent? shuttleComponent)) continue;
+
+                if (!newPilots.TryGetValue(shuttleComponent, out var pilots))
+                {
+                    pilots = new List<(PilotComponent, IMoverComponent)>();
+                    newPilots[shuttleComponent] = pilots;
+                }
+
+                pilots.Add((pilot, mover));
             }
+
+            var thrusterSystem = EntitySystem.Get<ThrusterSystem>();
+
+            // Reset inputs for non-piloted shuttles.
+            foreach (var (shuttle, _) in _shuttlePilots)
+            {
+                if (newPilots.ContainsKey(shuttle)) continue;
+
+                thrusterSystem.DisableAllThrustDirections(shuttle);
+            }
+
+            // Collate all of the linear / angular velocites for a shuttle
+            // then do the movement input once for it.
+            foreach (var (shuttle, pilots) in _shuttlePilots)
+            {
+                if (shuttle.Paused) continue;
+
+                // Collate movement linear and angular inputs together
+                var linearInput = Vector2.Zero;
+                var angularInput = 0f;
+
+                switch (shuttle.Mode)
+                {
+                    case ShuttleMode.Cruise:
+                        foreach (var (pilot, mover) in pilots)
+                        {
+                            var sprint = mover.VelocityDir.sprinting;
+                            linearInput +=
+                        }
+                        break;
+                    case ShuttleMode.Docking:
+                        // No angular input possible
+                        foreach (var (pilot, mover) in pilots)
+                        {
+                            linearInput += mover.VelocityDir.sprinting;
+                        }
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+
+                var count = pilots.Count;
+                linearInput /= count;
+                angularInput /= count;
+
+                // Handle shuttle movement
+            }
+
+            _shuttlePilots = newPilots;
 
             foreach (var (mover, physics) in EntityManager.EntityQuery<IMoverComponent, PhysicsComponent>(true))
             {
@@ -72,11 +137,12 @@ namespace Content.Server.Physics.Controllers
         }
 
         /*
-         * Some thoughts:
-         * Unreal actually doesn't predict vehicle movement at all, it's purely server-side which I thought was interesting
-         * The reason for this is that vehicles change direction very slowly compared to players so you don't really have the requirement for quick movement anyway
-         * As such could probably just look at applying a force / impulse to the shuttle server-side only so it controls like the titanic.
+         * How shuttles work:
+         * 1. Get shuttles with pilots
+         * 2. Collate all of their movement inputs into linear and angular
+         * 3. Apply movement all at once
          */
+
         private void HandleShuttleMovement(SharedPlayerInputMoverComponent mover)
         {
             var gridId = mover.Owner.Transform.GridID;
@@ -92,11 +158,16 @@ namespace Content.Server.Physics.Controllers
             // ShuttleSystem has already worked out the ratio so we'll just multiply it back by the mass.
             var movement = mover.VelocityDir.walking + mover.VelocityDir.sprinting;
             var system = EntitySystem.Get<ThrusterSystem>();
+            var shuttleSystem = EntitySystem.Get<ShuttleSystem>();
 
+            // TODO: When adding multi-pilot support need to essentially listen to when no more pilots and do this stuff.
+            // RN if someone is holding a button and forced off it never applies.
             if (movement.Length.Equals(0f))
             {
                 // TODO: This visualization doesn't work with multiple pilots so need to address that somehow.
                 system.DisableAllThrustDirections(shuttleComponent);
+                physicsComponent.LinearDamping = shuttleSystem.ShuttleIdleLinearDamping;
+                physicsComponent.AngularDamping = shuttleSystem.ShuttleIdleAngularDamping;
                 return;
             }
 
@@ -153,15 +224,18 @@ namespace Content.Server.Physics.Controllers
                     {
                         system.DisableThrustDirection(shuttleComponent, DirectionFlag.South);
                         system.DisableThrustDirection(shuttleComponent, DirectionFlag.North);
+                        physicsComponent.LinearDamping = shuttleSystem.ShuttleIdleLinearDamping;
                     }
                     else
                     {
+                        physicsComponent.LinearDamping = shuttleSystem.ShuttleMovingLinearDamping;
+
                         var direction = movement.Y > 0f ? Direction.North : Direction.South;
                         var linearSpeed = shuttleComponent.LinearThrusterImpulse[(int) direction / 2];
 
                         if (physicsComponent.LinearVelocity.LengthSquared == 0f)
                         {
-                            linearSpeed *= 5f;
+                            linearSpeed *= 10f;
                         }
 
                         // Currently this is slow BUT we'd have a separate multiplier for docking and cruising or whatever.
@@ -188,10 +262,22 @@ namespace Content.Server.Physics.Controllers
                     {
                         system.DisableThrustDirection(shuttleComponent, DirectionFlag.West);
                         system.DisableThrustDirection(shuttleComponent, DirectionFlag.East);
+                        physicsComponent.AngularDamping = shuttleSystem.ShuttleIdleAngularDamping;
                     }
                     else if (movement.X != 0f)
                     {
-                        physicsComponent.ApplyAngularImpulse(-movement.X * angularSpeed);
+                        physicsComponent.AngularDamping = shuttleSystem.ShuttleMovingAngularDamping;
+
+                        if (physicsComponent.AngularVelocity.Equals(0f))
+                        {
+                            angularSpeed *= 10f;
+                        }
+
+                        // Scale rotation by mass just to make rotating larger things a bit more bearable.
+                        physicsComponent.ApplyAngularImpulse(
+                            -movement.X *
+                            angularSpeed *
+                            physicsComponent.Mass / 100f);
 
                         if (movement.X < 0f)
                         {

@@ -11,6 +11,12 @@ namespace Content.Server.Shuttles.EntitySystems
     {
         private const float TileMassMultiplier = 4f;
 
+        public float ShuttleIdleLinearDamping = 0.2f;
+        public float ShuttleIdleAngularDamping = 0.3f;
+
+        public float ShuttleMovingLinearDamping = 0.05f;
+        public float ShuttleMovingAngularDamping = 0.05f;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -88,8 +94,8 @@ namespace Content.Server.Shuttles.EntitySystems
             component.BodyStatus = BodyStatus.InAir;
             //component.FixedRotation = false; TODO WHEN ROTATING SHUTTLES FIXED.
             component.FixedRotation = false;
-            component.LinearDamping = 0.2f;
-            component.AngularDamping = 0.3f;
+            component.LinearDamping = ShuttleIdleLinearDamping;
+            component.AngularDamping = ShuttleIdleAngularDamping;
         }
 
         private void Disable(PhysicsComponent component)
