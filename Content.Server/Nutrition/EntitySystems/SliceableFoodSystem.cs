@@ -34,7 +34,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (args.Handled)
                 return;
 
-            if (TrySliceFood(uid, args.UserUid, args.UsedUid))
+            if (TrySliceFood(uid, args.UserUid, args.UsedUid, component))
                 args.Handled = true;
         }
 
