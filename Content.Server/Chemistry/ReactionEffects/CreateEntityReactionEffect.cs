@@ -12,7 +12,7 @@ public class CreateEntityReactionEffect : ReagentEffect
     /// <summary>
     ///     What entity to create.
     /// </summary>
-    [DataField("entity", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField("entity", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string Entity = default!;
 
     /// <summary>
@@ -23,8 +23,7 @@ public class CreateEntityReactionEffect : ReagentEffect
 
     public override void Effect(ReagentEffectArgs args)
     {
-        args.EntityManager.TryGetComponent(args.SolutionEntity, out TransformComponent transform);
-
+        var transform = args.EntityManager.GetComponent<TransformComponent>(args.SolutionEntity);
         var quantity = Number * args.Quantity.Int();
 
         for (var i = 0; i < quantity; i++)
