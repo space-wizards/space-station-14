@@ -1,25 +1,27 @@
 using Content.Server.Gravity.EntitySystems;
 using Content.Shared.Alert;
+using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Log;
 
 namespace Content.Server.Alert;
 
+[UsedImplicitly]
 internal class ServerAlertsSystem : SharedAlertsSystem
 {
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ServerAlertsComponent, ComponentStartup>(HandleComponentStartup);
-        SubscribeLocalEvent<ServerAlertsComponent, ComponentRemove>(HandleComponentRemove);
+        SubscribeLocalEvent<AlertsComponent, ComponentStartup>(HandleComponentStartup);
+        SubscribeLocalEvent<AlertsComponent, ComponentRemove>(HandleComponentRemove);
 
-        SubscribeLocalEvent<ServerAlertsComponent, ComponentGetState>(ClientAlertsGetState);
+        SubscribeLocalEvent<AlertsComponent, ComponentGetState>(ClientAlertsGetState);
         SubscribeNetworkEvent<ClickAlertEvent>(HandleClickAlert);
     }
 
-    private void ClientAlertsGetState(EntityUid uid, ServerAlertsComponent component, ref ComponentGetState args)
+    private static void ClientAlertsGetState(EntityUid uid, AlertsComponent component, ref ComponentGetState args)
     {
         args.State = new AlertsComponentState(component.Alerts);
     }
@@ -27,10 +29,9 @@ internal class ServerAlertsSystem : SharedAlertsSystem
     private void HandleClickAlert(ClickAlertEvent msg, EntitySessionEventArgs args)
     {
         var player = args.SenderSession.AttachedEntity;
-        
-        if (player is null || !EntityManager.TryGetComponent<ServerAlertsComponent>(player, out var alertComp)) return;
+        if (player is null || !EntityManager.TryGetComponent<AlertsComponent>(player, out var alertComp)) return;
 
-        if (!IsShowingAlert(alertComp, msg.Type))
+        if (!IsShowingAlert(player.Value, msg.Type))
         {
             Logger.DebugS("alert", "user {0} attempted to" +
                                    " click alert {1} which is not currently showing for them",
@@ -47,7 +48,7 @@ internal class ServerAlertsSystem : SharedAlertsSystem
         alert.OnClick?.AlertClicked(new ClickAlertEventArgs(player.Value, alert));
     }
 
-    private static void HandleComponentStartup(EntityUid uid, ServerAlertsComponent component, ComponentStartup args)
+    private static void HandleComponentStartup(EntityUid uid, AlertsComponent component, ComponentStartup args)
     {
         if (TryGet<WeightlessSystem>(out var weightlessSystem))
             weightlessSystem.AddAlert(component);
@@ -55,7 +56,7 @@ internal class ServerAlertsSystem : SharedAlertsSystem
             Logger.WarningS("alert", "weightlesssystem not found");
     }
 
-    private static void HandleComponentRemove(EntityUid uid, ServerAlertsComponent component, ComponentRemove args)
+    private static void HandleComponentRemove(EntityUid uid, AlertsComponent component, ComponentRemove args)
     {
         if (TryGet<WeightlessSystem>(out var weightlessSystem))
             weightlessSystem.RemoveAlert(component);

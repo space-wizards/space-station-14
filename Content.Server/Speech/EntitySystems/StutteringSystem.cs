@@ -28,7 +28,7 @@ namespace Content.Server.Speech.EntitySystems
             SubscribeLocalEvent<StutteringAccentComponent, AccentGetEvent>(OnAccent);
         }
 
-        public override void DoStutter(EntityUid uid, TimeSpan time, bool refresh, StatusEffectsComponent? status = null, SharedAlertsComponent? alerts = null)
+        public override void DoStutter(EntityUid uid, TimeSpan time, bool refresh, StatusEffectsComponent? status = null, AlertsComponent? alerts = null)
         {
             if (!Resolve(uid, ref status, false))
                 return;

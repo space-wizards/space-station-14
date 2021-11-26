@@ -9,9 +9,10 @@ namespace Content.Shared.Alert;
 ///     Handles the icons on the right side of the screen.
 ///     Should only be used for player-controlled entities.
 /// </summary>
+[RegisterComponent]
 [NetworkedComponent]
 [ComponentProtoName("Alerts")]
-public abstract class SharedAlertsComponent : Component
+public class AlertsComponent : Component
 {
     [ViewVariables] public Dictionary<AlertKey, AlertState> Alerts = new();
 }

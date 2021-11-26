@@ -8,7 +8,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Alert;
 
-public class SharedAlertsSystem : EntitySystem
+public abstract class SharedAlertsSystem : EntitySystem
 {
     [Dependency]
     private readonly IPrototypeManager _prototypeManager = default!;
@@ -17,50 +17,61 @@ public class SharedAlertsSystem : EntitySystem
 
     public IReadOnlyDictionary<AlertKey, AlertState>? GetActiveAlerts(EntityUid euid)
     {
-        return EntityManager.TryGetComponent(euid, out SharedAlertsComponent comp)
+        return EntityManager.TryGetComponent(euid, out AlertsComponent comp)
             ? comp.Alerts
             : null;
     }
 
-    /// <returns>true iff an alert of the indicated id is currently showing</returns>
-    public static bool IsShowingAlert(SharedAlertsComponent sharedAlertsComponent, AlertType alertType)
+    public bool IsShowingAlert(EntityUid euid, AlertType alertType)
     {
+        if (!EntityManager.TryGetComponent(euid, out AlertsComponent alertsComponent))
+            return false;
+
         if (TryGet(alertType, out var alert))
         {
-            return sharedAlertsComponent.Alerts.ContainsKey(alert.AlertKey);
+            return alertsComponent.Alerts.ContainsKey(alert.AlertKey);
         }
+
         Logger.DebugS("alert", "unknown alert type {0}", alertType);
         return false;
     }
 
     /// <returns>true iff an alert of the indicated alert category is currently showing</returns>
-    public static bool IsShowingAlertCategory(SharedAlertsComponent sharedAlertsComponent, AlertCategory alertCategory)
+    public bool IsShowingAlertCategory(EntityUid euid, AlertCategory alertCategory)
     {
-        return sharedAlertsComponent.Alerts.ContainsKey(AlertKey.ForCategory(alertCategory));
+        return EntityManager.TryGetComponent(euid, out AlertsComponent alertsComponent)
+               && alertsComponent.Alerts.ContainsKey(AlertKey.ForCategory(alertCategory));
     }
 
-    public static bool TryGetAlertState(SharedAlertsComponent sharedAlertsComponent, AlertKey key, out AlertState alertState)
+    public bool TryGetAlertState(EntityUid euid, AlertKey key, out AlertState alertState)
     {
-        return sharedAlertsComponent.Alerts.TryGetValue(key, out alertState);
+        if (EntityManager.TryGetComponent(euid, out AlertsComponent alertsComponent))
+            return alertsComponent.Alerts.TryGetValue(key, out alertState);
+
+        alertState = default;
+        return false;
+
     }
 
     /// <summary>
     /// Shows the alert. If the alert or another alert of the same category is already showing,
     /// it will be updated / replaced with the specified values.
     /// </summary>
-    /// <param name="sharedAlertsComponent"></param>
+    /// <param name="euid"></param>
     /// <param name="alertType">type of the alert to set</param>
     /// <param name="severity">severity, if supported by the alert</param>
     /// <param name="cooldown">cooldown start and end, if null there will be no cooldown (and it will
-    /// be erased if there is currently a cooldown for the alert)</param>
-    public static void ShowAlert(SharedAlertsComponent sharedAlertsComponent, AlertType alertType, short? severity = null, (TimeSpan, TimeSpan)? cooldown = null)
+    ///     be erased if there is currently a cooldown for the alert)</param>
+    public void ShowAlert(EntityUid euid, AlertType alertType, short? severity = null, (TimeSpan, TimeSpan)? cooldown = null)
     {
-        var sys = EntitySystem.Get<SharedAlertsSystem>();
+        if (!EntityManager.TryGetComponent(euid, out AlertsComponent alertsComponent))
+            return;
+
         if (TryGet(alertType, out var alert))
         {
             // Check whether the alert category we want to show is already being displayed, with the same type,
             // severity, and cooldown.
-            if (sharedAlertsComponent.Alerts.TryGetValue(alert.AlertKey, out var alertStateCallback) &&
+            if (alertsComponent.Alerts.TryGetValue(alert.AlertKey, out var alertStateCallback) &&
                 alertStateCallback.Type == alertType &&
                 alertStateCallback.Severity == severity &&
                 alertStateCallback.Cooldown == cooldown)
@@ -69,15 +80,14 @@ public class SharedAlertsSystem : EntitySystem
             }
 
             // In the case we're changing the alert type but not the category, we need to remove it first.
-            sharedAlertsComponent.Alerts.Remove(alert.AlertKey);
+            alertsComponent.Alerts.Remove(alert.AlertKey);
 
-            sharedAlertsComponent.Alerts[alert.AlertKey] = new AlertState
-                {Cooldown = cooldown, Severity = severity, Type=alertType};
+            alertsComponent.Alerts[alert.AlertKey] = new AlertState
+                { Cooldown = cooldown, Severity = severity, Type = alertType };
 
-            sys.AfterShowAlert(sharedAlertsComponent);
+            AfterShowAlert(alertsComponent);
 
-            sharedAlertsComponent.Dirty();
-
+            alertsComponent.Dirty();
         }
         else
         {
@@ -90,53 +100,58 @@ public class SharedAlertsSystem : EntitySystem
     /// <summary>
     /// Clear the alert with the given category, if one is currently showing.
     /// </summary>
-    public void ClearAlertCategory(SharedAlertsComponent sharedAlertsComponent, AlertCategory category)
+    public void ClearAlertCategory(EntityUid euid, AlertCategory category)
     {
+        if(!EntityManager.TryGetComponent(euid, out AlertsComponent alertsComponent))
+            return;
+
         var key = AlertKey.ForCategory(category);
-        if (!sharedAlertsComponent.Alerts.Remove(key))
+        if (!alertsComponent.Alerts.Remove(key))
         {
             return;
         }
 
-        AfterClearAlert(sharedAlertsComponent);
+        AfterClearAlert(alertsComponent);
 
-        sharedAlertsComponent.Dirty();
+        alertsComponent.Dirty();
     }
 
     /// <summary>
     /// Clear the alert of the given type if it is currently showing.
     /// </summary>
-    public void ClearAlert(SharedAlertsComponent sharedAlertsComponent, AlertType alertType)
+    public void ClearAlert(EntityUid euid, AlertType alertType)
     {
+        if (!EntityManager.TryGetComponent(euid, out AlertsComponent alertsComponent))
+            return;
+
         if (TryGet(alertType, out var alert))
         {
-            if (!sharedAlertsComponent.Alerts.Remove(alert.AlertKey))
+            if (!alertsComponent.Alerts.Remove(alert.AlertKey))
             {
                 return;
             }
 
-            AfterClearAlert(sharedAlertsComponent);
+            AfterClearAlert(alertsComponent);
 
-            sharedAlertsComponent.Dirty();
+            alertsComponent.Dirty();
         }
         else
         {
             Logger.ErrorS("alert", "unable to clear alert, unknown alertType {0}", alertType);
         }
-
     }
 
     /// <summary>
     /// Invoked after showing an alert prior to dirtying the component
     /// </summary>
-    /// <param name="sharedAlertsComponent"></param>
-    protected virtual void AfterShowAlert(SharedAlertsComponent sharedAlertsComponent) { }
+    /// <param name="alertsComponent"></param>
+    protected virtual void AfterShowAlert(AlertsComponent alertsComponent) { }
 
     /// <summary>
     /// Invoked after clearing an alert prior to dirtying the component
     /// </summary>
-    /// <param name="sharedAlertsComponent"></param>
-    protected virtual void AfterClearAlert(SharedAlertsComponent sharedAlertsComponent) { }
+    /// <param name="alertsComponent"></param>
+    protected virtual void AfterClearAlert(AlertsComponent alertsComponent) { }
 
     public override void Initialize()
     {
@@ -162,8 +177,8 @@ public class SharedAlertsSystem : EntitySystem
     /// Tries to get the alert of the indicated type
     /// </summary>
     /// <returns>true if found</returns>
-    public static bool TryGet(AlertType alertType, [NotNullWhen(true)] out AlertPrototype? alert)
+    public bool TryGet(AlertType alertType, [NotNullWhen(true)] out AlertPrototype? alert)
     {
-        return Get<SharedAlertsSystem>()._typeToAlert.TryGetValue(alertType, out alert);
+        return _typeToAlert.TryGetValue(alertType, out alert);
     }
 }

@@ -202,9 +202,9 @@ namespace Content.Server.Body.Systems
 
             respirator.Suffocating = true;
 
-            if (EntityManager.TryGetComponent(uid, out ServerAlertsComponent? alertsComponent))
+            if (EntityManager.TryGetComponent(uid, out AlertsComponent? alertsComponent))
             {
-                SharedAlertsSystem.ShowAlert(alertsComponent, AlertType.LowOxygen);
+                Get<SharedAlertsSystem>().ShowAlert(alertsComponent.Owner, AlertType.LowOxygen);
             }
 
             _damageableSys.TryChangeDamage(uid, respirator.Damage, true, false);
@@ -217,9 +217,9 @@ namespace Content.Server.Body.Systems
 
             respirator.Suffocating = false;
 
-            if (EntityManager.TryGetComponent(uid, out ServerAlertsComponent? alertsComponent))
+            if (EntityManager.TryGetComponent(uid, out AlertsComponent? alertsComponent))
             {
-                Get<SharedAlertsSystem>().ClearAlert(alertsComponent, AlertType.LowOxygen);
+                Get<SharedAlertsSystem>().ClearAlert(alertsComponent.Owner, AlertType.LowOxygen);
             }
 
             _damageableSys.TryChangeDamage(uid, respirator.DamageRecovery, true);

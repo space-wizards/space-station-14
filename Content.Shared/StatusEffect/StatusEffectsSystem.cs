@@ -83,7 +83,7 @@ namespace Content.Shared.StatusEffect
         /// <typeparam name="T">The component type to add and remove from the entity.</typeparam>
         public bool TryAddStatusEffect<T>(EntityUid uid, string key, TimeSpan time, bool refresh,
             StatusEffectsComponent? status=null,
-            SharedAlertsComponent? alerts=null)
+            AlertsComponent? alerts=null)
             where T: Component, new()
         {
             if (!Resolve(uid, ref status, false))
@@ -107,7 +107,7 @@ namespace Content.Shared.StatusEffect
 
         public bool TryAddStatusEffect(EntityUid uid, string key, TimeSpan time, bool refresh, string component,
             StatusEffectsComponent? status = null,
-            SharedAlertsComponent? alerts = null)
+            AlertsComponent? alerts = null)
         {
             if (!Resolve(uid, ref status, false))
                 return false;
@@ -151,7 +151,7 @@ namespace Content.Shared.StatusEffect
         /// </remarks>
         public bool TryAddStatusEffect(EntityUid uid, string key, TimeSpan time, bool refresh,
             StatusEffectsComponent? status=null,
-            SharedAlertsComponent? alerts=null)
+            AlertsComponent? alerts=null)
         {
             if (!Resolve(uid, ref status, false))
                 return false;
@@ -191,7 +191,8 @@ namespace Content.Shared.StatusEffect
 
             if (proto.Alert != null && alerts != null)
             {
-                SharedAlertsSystem.ShowAlert(alerts, proto.Alert.Value, cooldown: GetAlertCooldown(uid, proto.Alert.Value, status));
+                (TimeSpan, TimeSpan)? cooldown1 = GetAlertCooldown(uid, proto.Alert.Value, status);
+                EntitySystem.Get<SharedAlertsSystem>().ShowAlert(alerts.Owner, proto.Alert.Value, null, cooldown1);
             }
 
             status.Dirty();
@@ -239,7 +240,7 @@ namespace Content.Shared.StatusEffect
         /// </remarks>
         public bool TryRemoveStatusEffect(EntityUid uid, string key,
             StatusEffectsComponent? status=null,
-            SharedAlertsComponent? alerts=null)
+            AlertsComponent? alerts=null)
         {
             if (!Resolve(uid, ref status, false))
                 return false;
@@ -267,7 +268,8 @@ namespace Content.Shared.StatusEffect
 
             if (proto.Alert != null && alerts != null)
             {
-                EntitySystem.Get<SharedAlertsSystem>().ClearAlert(alerts, proto.Alert.Value);
+                var euid = alerts.Owner;
+                EntitySystem.Get<SharedAlertsSystem>().ClearAlert(euid, proto.Alert.Value);
             }
 
             status.ActiveEffects.Remove(key);
@@ -286,7 +288,7 @@ namespace Content.Shared.StatusEffect
         /// <returns>False if any status effects failed to be removed, true if they all did.</returns>
         public bool TryRemoveAllStatusEffects(EntityUid uid,
             StatusEffectsComponent? status = null,
-            SharedAlertsComponent? alerts = null)
+            AlertsComponent? alerts = null)
         {
             if (!Resolve(uid, ref status, false))
                 return false;
@@ -349,7 +351,7 @@ namespace Content.Shared.StatusEffect
         /// <param name="status">The status effect component, should you already have it.</param>
         public bool TryAddTime(EntityUid uid, string key, TimeSpan time,
             StatusEffectsComponent? status=null,
-            SharedAlertsComponent? alert=null)
+            AlertsComponent? alert=null)
         {
             if (!Resolve(uid, ref status, false))
                 return false;
@@ -367,7 +369,8 @@ namespace Content.Shared.StatusEffect
                 && alert != null
                 && proto.Alert != null)
             {
-                SharedAlertsSystem.ShowAlert(alert, proto.Alert.Value, cooldown: GetAlertCooldown(uid, proto.Alert.Value, status));
+                (TimeSpan, TimeSpan)? cooldown = GetAlertCooldown(uid, proto.Alert.Value, status);
+                EntitySystem.Get<SharedAlertsSystem>().ShowAlert(alert.Owner, proto.Alert.Value, null, cooldown);
             }
 
             return true;
@@ -382,7 +385,7 @@ namespace Content.Shared.StatusEffect
         /// <param name="status">The status effect component, should you already have it.</param>
         public bool TryRemoveTime(EntityUid uid, string key, TimeSpan time,
             StatusEffectsComponent? status=null,
-            SharedAlertsComponent? alert=null)
+            AlertsComponent? alert=null)
         {
             if (!Resolve(uid, ref status, false))
                 return false;
@@ -405,7 +408,8 @@ namespace Content.Shared.StatusEffect
                 && alert != null
                 && proto.Alert != null)
             {
-                SharedAlertsSystem.ShowAlert(alert, proto.Alert.Value, cooldown: GetAlertCooldown(uid, proto.Alert.Value, status));
+                (TimeSpan, TimeSpan)? cooldown = GetAlertCooldown(uid, proto.Alert.Value, status);
+                EntitySystem.Get<SharedAlertsSystem>().ShowAlert(alert.Owner, proto.Alert.Value, null, cooldown);
             }
 
             return true;

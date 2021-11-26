@@ -61,7 +61,7 @@ namespace Content.Shared.Jittering
         /// <param name="alerts">The alerts component.</param>
         public void DoJitter(EntityUid uid, TimeSpan time, bool refresh, float amplitude = 10f, float frequency = 4f, bool forceValueChange = false,
             StatusEffectsComponent? status = null,
-            SharedAlertsComponent? alerts = null)
+            AlertsComponent? alerts = null)
         {
             if (!Resolve(uid, ref status, false))
                 return;

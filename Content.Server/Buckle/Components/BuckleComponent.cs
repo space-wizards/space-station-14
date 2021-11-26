@@ -1,6 +1,5 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
-using Content.Server.Alert;
 using Content.Server.Hands.Components;
 using Content.Server.Pulling;
 using Content.Shared.ActionBlocker;
@@ -36,7 +35,7 @@ namespace Content.Server.Buckle.Components
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         [ComponentDependency] public readonly AppearanceComponent? Appearance = null;
-        [ComponentDependency] private readonly ServerAlertsComponent? _serverAlerts = null;
+        [ComponentDependency] private readonly AlertsComponent? _serverAlerts = null;
         [ComponentDependency] private readonly MobStateComponent? _mobState = null;
 
         [DataField("size")]
@@ -101,11 +100,12 @@ namespace Content.Server.Buckle.Components
 
             if (Buckled)
             {
-                SharedAlertsSystem.ShowAlert(_serverAlerts, BuckledTo?.BuckledAlertType ?? AlertType.Buckled);
+                AlertType alertType = BuckledTo?.BuckledAlertType ?? AlertType.Buckled;
+                EntitySystem.Get<SharedAlertsSystem>().ShowAlert(_serverAlerts.Owner, alertType, null, null);
             }
             else
             {
-                EntitySystem.Get<SharedAlertsSystem>().ClearAlertCategory(_serverAlerts, AlertCategory.Buckled);
+                EntitySystem.Get<SharedAlertsSystem>().ClearAlertCategory(_serverAlerts.Owner, AlertCategory.Buckled);
             }
         }
 

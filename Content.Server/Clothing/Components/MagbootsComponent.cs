@@ -1,4 +1,4 @@
-using Content.Server.Alert;
+using System;
 using Content.Server.Atmos.Components;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
@@ -64,10 +64,7 @@ namespace Content.Server.Clothing.Components
                     movedByPressure.Enabled = true;
                 }
 
-                if (_entMan.TryGetComponent(eventArgs.User, out ServerAlertsComponent? alerts))
-                {
-                    EntitySystem.Get<SharedAlertsSystem>().ClearAlert(alerts, AlertType.Magboots);
-                }
+                EntitySystem.Get<SharedAlertsSystem>().ClearAlert(eventArgs.User, AlertType.Magboots);
             }
         }
 
@@ -89,16 +86,13 @@ namespace Content.Server.Clothing.Components
                     movedByPressure.Enabled = false;
                 }
 
-                if (_entMan.TryGetComponent(container.Owner, out ServerAlertsComponent? alerts))
+                if (On)
                 {
-                    if (On)
-                    {
-                        SharedAlertsSystem.ShowAlert(alerts, AlertType.Magboots);
-                    }
-                    else
-                    {
-                        EntitySystem.Get<SharedAlertsSystem>().ClearAlert(alerts, AlertType.Magboots);
-                    }
+                    EntitySystem.Get<SharedAlertsSystem>().ShowAlert(container.Owner, AlertType.Magboots, null, null);
+                }
+                else
+                {
+                    EntitySystem.Get<SharedAlertsSystem>().ClearAlert(container.Owner, AlertType.Magboots);
                 }
             }
         }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Alert;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects;
@@ -12,6 +13,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Alerts;
 
+[UsedImplicitly]
 internal class ClientAlertsSystem : SharedAlertsSystem
 {
     public AlertOrderPrototype? AlertOrder { get; set; }
@@ -26,11 +28,11 @@ internal class ClientAlertsSystem : SharedAlertsSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ClientAlertsComponent, PlayerAttachedEvent>((_, component, _) => PlayerAttached(component));
-        SubscribeLocalEvent<ClientAlertsComponent, PlayerDetachedEvent>((_, _, _) => PlayerDetached());
+        SubscribeLocalEvent<AlertsComponent, PlayerAttachedEvent>((_, component, _) => PlayerAttached(component));
+        SubscribeLocalEvent<AlertsComponent, PlayerDetachedEvent>((_, _, _) => PlayerDetached());
 
-        SubscribeLocalEvent<ClientAlertsComponent, ComponentHandleState>(ClientAlertsHandleState);
-        SubscribeLocalEvent<ClientAlertsComponent, ComponentShutdown>((_, _, _) => PlayerDetached());
+        SubscribeLocalEvent<AlertsComponent, ComponentHandleState>(ClientAlertsHandleState);
+        SubscribeLocalEvent<AlertsComponent, ComponentShutdown>((_, _, _) => PlayerDetached());
 
         AlertOrder = _prototypeManager.EnumeratePrototypes<AlertOrderPrototype>().FirstOrDefault();
         if (AlertOrder == null)
@@ -41,30 +43,30 @@ internal class ClientAlertsSystem : SharedAlertsSystem
     {
         get
         {
-            var ent = _playerManager.LocalPlayer?.ControlledEntityUid;
+            var ent = _playerManager.LocalPlayer?.ControlledEntity;
             return ent is not null
                 ? GetActiveAlerts(ent.Value)
                 : null;
         }
     }
 
-    protected override void AfterShowAlert(SharedAlertsComponent sharedAlertsComponent)
+    protected override void AfterShowAlert(AlertsComponent alertsComponent)
     {
-        if (!CurControlled(sharedAlertsComponent.Owner, _playerManager))
+        if (!CurControlled(alertsComponent.Owner, _playerManager))
             return;
 
-        SyncAlerts?.Invoke(this, sharedAlertsComponent.Alerts);
+        SyncAlerts?.Invoke(this, alertsComponent.Alerts);
     }
 
-    protected override void AfterClearAlert(SharedAlertsComponent sharedAlertsComponent)
+    protected override void AfterClearAlert(AlertsComponent alertsComponent)
     {
-        if (!CurControlled(sharedAlertsComponent.Owner, _playerManager))
+        if (!CurControlled(alertsComponent.Owner, _playerManager))
             return;
 
-        SyncAlerts?.Invoke(this, sharedAlertsComponent.Alerts);
+        SyncAlerts?.Invoke(this, alertsComponent.Alerts);
     }
 
-    private void ClientAlertsHandleState(EntityUid uid, ClientAlertsComponent component, ref ComponentHandleState args)
+    private void ClientAlertsHandleState(EntityUid uid, AlertsComponent component, ref ComponentHandleState args)
     {
         var componentAlerts = (args.Current as AlertsComponentState)?.Alerts;
         if (componentAlerts == null) return;
@@ -76,7 +78,7 @@ internal class ClientAlertsSystem : SharedAlertsSystem
         SyncAlerts?.Invoke(this, componentAlerts);
     }
 
-    private void PlayerAttached(ClientAlertsComponent clientAlertsComponent)
+    private void PlayerAttached(AlertsComponent clientAlertsComponent)
     {
         if (!CurControlled(clientAlertsComponent.Owner, _playerManager)) return;
         SyncAlerts?.Invoke(this, clientAlertsComponent.Alerts);

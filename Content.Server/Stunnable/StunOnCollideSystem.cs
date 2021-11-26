@@ -1,6 +1,6 @@
 using System;
-using Content.Server.Alert;
 using Content.Server.Stunnable.Components;
+using Content.Shared.Alert;
 using Content.Shared.Standing;
 using Content.Shared.StatusEffect;
 using JetBrains.Annotations;
@@ -27,7 +27,7 @@ namespace Content.Server.Stunnable
 
             if (EntityManager.TryGetComponent<StatusEffectsComponent>(otherUid, out var status))
             {
-                ServerAlertsComponent? alerts = null;
+                AlertsComponent? alerts = null;
                 StandingStateComponent? standingState = null;
                 AppearanceComponent? appearance = null;
 

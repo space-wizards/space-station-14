@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Content.Server.Administration.Logs;
-using Content.Server.Alert;
 using Content.Server.Atmos.Components;
 using Content.Server.Stunnable;
 using Content.Server.Temperature.Systems;
@@ -28,6 +27,7 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly StunSystem _stunSystem = default!;
         [Dependency] private readonly TemperatureSystem _temperatureSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly SharedAlertsSystem _alertsSystem = default!;
         [Dependency] private readonly AdminLogSystem _logSystem = default!;
 
         private const float MinimumFireStacks = -10f;
@@ -168,7 +168,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         public void Resist(EntityUid uid,
             FlammableComponent? flammable = null,
-            ServerAlertsComponent? alerts = null)
+            AlertsComponent? alerts = null)
         {
             if (!Resolve(uid, ref flammable, ref alerts))
                 return;
@@ -224,16 +224,13 @@ namespace Content.Server.Atmos.EntitySystems
                     flammable.FireStacks = MathF.Min(0, flammable.FireStacks + 1);
                 }
 
-                if(EntityManager.TryGetComponent(flammable.Owner, out ServerAlertsComponent? status))
+                if (!flammable.OnFire)
                 {
-                    if (!flammable.OnFire)
-                    {
-                        Get<SharedAlertsSystem>().ClearAlert(status, AlertType.Fire);
-                        continue;
-                    }
-
-                    SharedAlertsSystem.ShowAlert(status, AlertType.Fire);
+                    _alertsSystem.ClearAlert(uid, AlertType.Fire);
+                    continue;
                 }
+
+                _alertsSystem.ShowAlert(uid, AlertType.Fire, null, null);
 
                 if (flammable.FireStacks > 0)
                 {

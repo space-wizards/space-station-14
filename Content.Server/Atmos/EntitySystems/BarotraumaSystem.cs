@@ -1,6 +1,5 @@
 using System;
 using Content.Server.Administration.Logs;
-using Content.Server.Alert;
 using Content.Server.Atmos.Components;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
@@ -16,6 +15,7 @@ namespace Content.Server.Atmos.EntitySystems
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly SharedAlertsSystem _alertsSystem = default!;
         [Dependency] private readonly AdminLogSystem _logSystem = default!;
 
         private const float UpdateTimer = 1f;
@@ -86,7 +86,7 @@ namespace Content.Server.Atmos.EntitySystems
 
                 var uid = barotrauma.Owner;
 
-                var status = EntityManager.GetComponentOrNull<ServerAlertsComponent>(barotrauma.Owner);
+                var status = EntityManager.GetComponentOrNull<AlertsComponent>(barotrauma.Owner);
 
                 var pressure = 1f;
 
@@ -117,11 +117,11 @@ namespace Content.Server.Atmos.EntitySystems
 
                         if (pressure <= Atmospherics.HazardLowPressure)
                         {
-                            SharedAlertsSystem.ShowAlert(status, AlertType.LowPressure, 2);
+                            _alertsSystem.ShowAlert(status.Owner, AlertType.LowPressure, 2, null);
                             break;
                         }
 
-                        SharedAlertsSystem.ShowAlert(status, AlertType.LowPressure, 1);
+                        _alertsSystem.ShowAlert(status.Owner, AlertType.LowPressure, 1, null);
                         break;
 
                     // High pressure.
@@ -146,11 +146,11 @@ namespace Content.Server.Atmos.EntitySystems
 
                         if (pressure >= Atmospherics.HazardHighPressure)
                         {
-                            SharedAlertsSystem.ShowAlert(status, AlertType.HighPressure, 2);
+                            _alertsSystem.ShowAlert(status.Owner, AlertType.HighPressure, 2, null);
                             break;
                         }
 
-                        SharedAlertsSystem.ShowAlert(status, AlertType.HighPressure, 1);
+                        _alertsSystem.ShowAlert(status.Owner, AlertType.HighPressure, 1, null);
                         break;
 
                     // Normal pressure.
@@ -161,7 +161,8 @@ namespace Content.Server.Atmos.EntitySystems
                             _logSystem.Add(LogType.Barotrauma, $"{barotrauma.Owner} stopped taking pressure damage");
                         }
                         if (status == null) break;
-                        EntitySystem.Get<SharedAlertsSystem>().ClearAlertCategory(status, AlertCategory.Pressure);                        break;
+                        _alertsSystem.ClearAlertCategory(status.Owner, AlertCategory.Pressure);
+                        break;
                 }
             }
         }

@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Content.Server.Alert;
+using System;
+using System.Collections.Generic;
 using Content.Shared.Alert;
 using Content.Shared.GameTicking;
 using Content.Shared.Gravity;
@@ -15,8 +15,9 @@ namespace Content.Server.Gravity.EntitySystems
     public class WeightlessSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly SharedAlertsSystem _alertsSystem = default!;
 
-        private readonly Dictionary<GridId, List<ServerAlertsComponent>> _alerts = new();
+        private readonly Dictionary<GridId, List<AlertsComponent>> _alerts = new();
 
         public override void Initialize()
         {
@@ -32,7 +33,7 @@ namespace Content.Server.Gravity.EntitySystems
             _alerts.Clear();
         }
 
-        public void AddAlert(ServerAlertsComponent status)
+        public void AddAlert(AlertsComponent status)
         {
             var gridId = EntityManager.GetComponent<TransformComponent>(status.Owner).GridID;
             var alerts = _alerts.GetOrNew(gridId);
@@ -52,7 +53,7 @@ namespace Content.Server.Gravity.EntitySystems
             }
         }
 
-        public void RemoveAlert(ServerAlertsComponent status)
+        public void RemoveAlert(AlertsComponent status)
         {
             var grid = EntityManager.GetComponent<TransformComponent>(status.Owner).GridID;
             if (!_alerts.TryGetValue(grid, out var statuses))
@@ -86,19 +87,20 @@ namespace Content.Server.Gravity.EntitySystems
             }
         }
 
-        private void AddWeightless(ServerAlertsComponent status)
+        private void AddWeightless(AlertsComponent status)
         {
-            SharedAlertsSystem.ShowAlert(status, AlertType.Weightless);
+            _alertsSystem.ShowAlert(status.Owner, AlertType.Weightless, null, null);
         }
 
-        private void RemoveWeightless(ServerAlertsComponent status)
+        private void RemoveWeightless(AlertsComponent status)
         {
-            EntitySystem.Get<SharedAlertsSystem>().ClearAlert(status, AlertType.Weightless);
+            var euid = status.Owner;
+            _alertsSystem.ClearAlert(euid, AlertType.Weightless);
         }
 
         private void EntParentChanged(ref EntParentChangedMessage ev)
         {
-            if (!EntityManager.TryGetComponent(ev.Entity, out ServerAlertsComponent? status))
+            if (!EntityManager.TryGetComponent(ev.Entity, out AlertsComponent? status))
             {
                 return;
             }

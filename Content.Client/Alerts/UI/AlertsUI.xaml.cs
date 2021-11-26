@@ -18,6 +18,7 @@ public class AlertsFramePresenter : IDisposable
 {
     [Dependency] private readonly IEntitySystemManager _systemManager = default!;
     [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+    [Dependency] private readonly IChatManager _chatManager = default!;
 
     private IAlertsFrameView _alertsFrame;
     private ClientAlertsSystem? _alertsSystem;
@@ -27,7 +28,7 @@ public class AlertsFramePresenter : IDisposable
         // This is a lot easier than a factory
         IoCManager.InjectDependencies(this);
 
-        _alertsFrame = new AlertsUI();
+        _alertsFrame = new AlertsUI(_chatManager);
         _userInterfaceManager.StateRoot.AddChild((AlertsUI) _alertsFrame);
 
         // This is required so that if we load after the system is initialized, we can bind to it immediately
@@ -61,8 +62,7 @@ public class AlertsFramePresenter : IDisposable
 
     private void OnAlertPressed(object? sender, AlertType e)
     {
-        var alertsSystem = EntitySystem.Get<ClientAlertsSystem>();
-        alertsSystem.AlertClicked(e);
+        _alertsSystem?.AlertClicked(e);
     }
 
     private void SystemOnClearAlerts(object? sender, EventArgs e)
@@ -73,9 +73,11 @@ public class AlertsFramePresenter : IDisposable
     private void SystemOnSyncAlerts(object? sender, IReadOnlyDictionary<AlertKey, AlertState> e)
     {
         if (sender is ClientAlertsSystem system)
-            _alertsFrame.SyncControls(system.AlertOrder, e);
+            _alertsFrame.SyncControls(system, system.AlertOrder, e);
     }
 
+    //TODO: This system binding boilerplate seems to be duplicated between every presenter
+    // prob want to pull it out into a generic object with callbacks for Onbind/OnUnbind
     #region System Binding
 
     private void OnSystemLoaded(object? sender, SystemChangedArgs args)
@@ -138,7 +140,8 @@ public interface IAlertsFrameView : IDisposable
 {
     event EventHandler<AlertType>? AlertPressed;
 
-    void SyncControls(AlertOrderPrototype? alertOrderPrototype, IReadOnlyDictionary<AlertKey, AlertState> alertStates);
+    void SyncControls(SharedAlertsSystem alertsSystem, AlertOrderPrototype? alertOrderPrototype,
+        IReadOnlyDictionary<AlertKey, AlertState> alertStates);
     void ClearAllControls();
 }
 
@@ -148,17 +151,12 @@ public interface IAlertsFrameView : IDisposable
 [GenerateTypedNameReferences]
 public sealed partial class AlertsUI : Control, IAlertsFrameView
 {
-    //TODO: WTF is this
-    public const float ChatSeparation = 38f;
-
+    // also known as Control.Children?
     private readonly Dictionary<AlertKey, AlertControl> _alertControls = new();
 
-    //TODO: WTF is that
-    [Dependency] private readonly IChatManager _chatManager = default!;
-
-    public AlertsUI()
+    public AlertsUI(IChatManager chatManager)
     {
-        IoCManager.InjectDependencies(this);
+        _chatManager = chatManager;
         RobustXamlLoader.Load(this);
 
         LayoutContainer.SetGrowHorizontal(this, LayoutContainer.GrowDirection.Begin);
@@ -171,7 +169,8 @@ public sealed partial class AlertsUI : Control, IAlertsFrameView
         LayoutContainer.SetMarginRight(this, -10);
     }
 
-    public void SyncControls(AlertOrderPrototype? alertOrderPrototype, IReadOnlyDictionary<AlertKey, AlertState> alertStates)
+    public void SyncControls(SharedAlertsSystem alertsSystem, AlertOrderPrototype? alertOrderPrototype,
+        IReadOnlyDictionary<AlertKey, AlertState> alertStates)
     {
         // remove any controls with keys no longer present
         if (SyncRemoveControls(alertStates)) return;
@@ -180,7 +179,7 @@ public sealed partial class AlertsUI : Control, IAlertsFrameView
         // may need to updated,
         // also there may be some new alerts we need to show.
         // further, we need to ensure they are ordered w.r.t their configured order
-        SyncUpdateControls(alertOrderPrototype, alertStates);
+        SyncUpdateControls(alertsSystem, alertOrderPrototype, alertStates);
     }
 
     public void ClearAllControls()
@@ -196,6 +195,14 @@ public sealed partial class AlertsUI : Control, IAlertsFrameView
 
     public event EventHandler<AlertType>? AlertPressed;
 
+    //TODO: This control caring about it's layout relative to other controls in the tree is terrible
+    // the presenters or gamescreen should be dealing with this
+    // probably want to tackle this after chatbox gets MVP'd
+    #region Spaghetti
+
+    public const float ChatSeparation = 38f;
+    private readonly IChatManager _chatManager;
+
     protected override void EnteredTree()
     {
         base.EnteredTree();
@@ -208,6 +215,17 @@ public sealed partial class AlertsUI : Control, IAlertsFrameView
         base.ExitedTree();
         _chatManager.OnChatBoxResized -= OnChatResized;
     }
+
+    private void OnChatResized(ChatResizedEventArgs chatResizedEventArgs)
+    {
+        // resize us to fit just below the chat box
+        if (_chatManager.CurrentChatBox != null)
+            LayoutContainer.SetMarginTop(this, chatResizedEventArgs.NewBottom + ChatSeparation);
+        else
+            LayoutContainer.SetMarginTop(this, 250);
+    }
+
+    #endregion
 
     // This makes no sense but I'm leaving it in place in case I break anything by removing it.
     protected override void Resized()
@@ -223,15 +241,6 @@ public sealed partial class AlertsUI : Control, IAlertsFrameView
     {
         AlertContainer.MaxGridHeight = Height;
         base.UIScaleChanged();
-    }
-
-    private void OnChatResized(ChatResizedEventArgs chatResizedEventArgs)
-    {
-        // resize us to fit just below the chatbox
-        if (_chatManager.CurrentChatBox != null)
-            LayoutContainer.SetMarginTop(this, chatResizedEventArgs.NewBottom + ChatSeparation);
-        else
-            LayoutContainer.SetMarginTop(this, 250);
     }
 
     private bool SyncRemoveControls(IReadOnlyDictionary<AlertKey, AlertState> alertStates)
@@ -252,7 +261,8 @@ public sealed partial class AlertsUI : Control, IAlertsFrameView
         return false;
     }
 
-    private void SyncUpdateControls(AlertOrderPrototype? alertOrderPrototype, IReadOnlyDictionary<AlertKey, AlertState> alertStates)
+    private void SyncUpdateControls(SharedAlertsSystem alertsSystem, AlertOrderPrototype? alertOrderPrototype,
+        IReadOnlyDictionary<AlertKey, AlertState> alertStates)
     {
         foreach (var (alertKey, alertState) in alertStates)
         {
@@ -264,7 +274,7 @@ public sealed partial class AlertsUI : Control, IAlertsFrameView
             }
 
             var alertType = alertKey.AlertType.Value;
-            if (!SharedAlertsSystem.TryGet(alertType, out var newAlert))
+            if (!alertsSystem.TryGet(alertType, out var newAlert))
             {
                 Logger.ErrorS("alert", "Unrecognized alertType {0}", alertType);
                 continue;
@@ -284,6 +294,8 @@ public sealed partial class AlertsUI : Control, IAlertsFrameView
                 // this is a new alert + alert key or just a different alert with the same
                 // key, create the control and add it in the appropriate order
                 var newAlertControl = CreateAlertControl(newAlert, alertState);
+
+                //TODO: Can the presenter sort the states before giving it to us?
                 if (alertOrderPrototype != null)
                 {
                     var added = false;

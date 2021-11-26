@@ -120,7 +120,7 @@ namespace Content.Shared.Stunnable
         /// </summary>
         public bool TryStun(EntityUid uid, TimeSpan time, bool refresh,
             StatusEffectsComponent? status = null,
-            SharedAlertsComponent? alerts = null)
+            AlertsComponent? alerts = null)
         {
             if (time <= TimeSpan.Zero)
                 return false;
@@ -138,7 +138,7 @@ namespace Content.Shared.Stunnable
         /// </summary>
         public bool TryKnockdown(EntityUid uid, TimeSpan time, bool refresh,
             StatusEffectsComponent? status = null,
-            SharedAlertsComponent? alerts = null)
+            AlertsComponent? alerts = null)
         {
             if (time <= TimeSpan.Zero)
                 return false;
@@ -156,7 +156,7 @@ namespace Content.Shared.Stunnable
         /// </summary>
         public bool TryParalyze(EntityUid uid, TimeSpan time, bool refresh,
             StatusEffectsComponent? status = null,
-            SharedAlertsComponent? alerts = null)
+            AlertsComponent? alerts = null)
         {
             if (!Resolve(uid, ref status))
                 return false;
@@ -173,7 +173,7 @@ namespace Content.Shared.Stunnable
         public bool TrySlowdown(EntityUid uid, TimeSpan time, bool refresh,
             float walkSpeedMultiplier = 1f, float runSpeedMultiplier = 1f,
             StatusEffectsComponent? status = null,
-            SharedAlertsComponent? alerts = null)
+            AlertsComponent? alerts = null)
         {
             if (!Resolve(uid, ref status))
                 return false;

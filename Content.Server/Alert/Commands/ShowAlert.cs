@@ -34,7 +34,7 @@ namespace Content.Server.Alert.Commands
                 if (!CommandUtils.TryGetAttachedEntityByUsernameOrId(shell, target, player, out attachedEntity)) return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(attachedEntity, out ServerAlertsComponent? alertsComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(attachedEntity, out AlertsComponent? alertsComponent))
             {
                 shell.WriteLine("user has no alerts component");
                 return;
@@ -42,7 +42,8 @@ namespace Content.Server.Alert.Commands
 
             var alertType = args[0];
             var severity = args[1];
-            if (!SharedAlertsSystem.TryGet(Enum.Parse<AlertType>(alertType), out var alert))
+            var alertsSystem = EntitySystem.Get<SharedAlertsSystem>();
+            if (!alertsSystem.TryGet(Enum.Parse<AlertType>(alertType), out var alert))
             {
                 shell.WriteLine("unrecognized alertType " + alertType);
                 return;
@@ -52,7 +53,9 @@ namespace Content.Server.Alert.Commands
                 shell.WriteLine("invalid severity " + sevint);
                 return;
             }
-            SharedAlertsSystem.ShowAlert(alertsComponent, alert.AlertType, sevint == -1 ? (short?) null : sevint);
+
+            short? severity1 = sevint == -1 ? null : sevint;
+            alertsSystem.ShowAlert(attachedEntity, alert.AlertType, severity1, null);
         }
     }
 }

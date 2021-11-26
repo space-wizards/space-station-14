@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Content.Server.Administration.Logs;
-using Content.Server.Alert;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
@@ -95,16 +94,13 @@ namespace Content.Server.Nutrition.Components
                 }
 
                 // Update UI
-                if(_entMan.TryGetComponent(Owner, out ServerAlertsComponent? alertsComponent))
+                if (HungerThresholdAlertTypes.TryGetValue(_currentHungerThreshold, out var alertId))
                 {
-                    if (HungerThresholdAlertTypes.TryGetValue(_currentHungerThreshold, out var alertId))
-                    {
-                        SharedAlertsSystem.ShowAlert(alertsComponent, alertId);
-                    }
-                    else
-                    {
-                        EntitySystem.Get<SharedAlertsSystem>().ClearAlertCategory(alertsComponent, AlertCategory.Hunger);
-                    }
+                    EntitySystem.Get<SharedAlertsSystem>().ShowAlert(Owner, alertId);
+                }
+                else
+                {
+                    EntitySystem.Get<SharedAlertsSystem>().ClearAlertCategory(Owner, AlertCategory.Hunger);
                 }
 
                 switch (_currentHungerThreshold)

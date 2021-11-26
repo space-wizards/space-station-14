@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Administration.Logs;
-using Content.Server.Alert;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Temperature.Components;
@@ -20,6 +19,7 @@ namespace Content.Server.Temperature.Systems
     {
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+        [Dependency] private readonly SharedAlertsSystem _alertsSystem = default!;
         [Dependency] private readonly AdminLogSystem _logSystem = default!;
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace Content.Server.Temperature.Systems
         {
             SubscribeLocalEvent<TemperatureComponent, OnTemperatureChangeEvent>(EnqueueDamage);
             SubscribeLocalEvent<TemperatureComponent, AtmosExposedUpdateEvent>(OnAtmosExposedUpdate);
-            SubscribeLocalEvent<ServerAlertsComponent, OnTemperatureChangeEvent>(ServerAlert);
+            SubscribeLocalEvent<AlertsComponent, OnTemperatureChangeEvent>(ServerAlert);
             SubscribeLocalEvent<TemperatureProtectionComponent, ModifyChangedTemperatureEvent>(OnTemperatureChangeAttempt);
         }
 
@@ -103,43 +103,43 @@ namespace Content.Server.Temperature.Systems
             ChangeHeat(uid, heat * temperature.AtmosTemperatureTransferEfficiency, temperature: temperature );
         }
 
-        private void ServerAlert(EntityUid uid, ServerAlertsComponent status, OnTemperatureChangeEvent args)
+        private void ServerAlert(EntityUid uid, AlertsComponent status, OnTemperatureChangeEvent args)
         {
             switch (args.CurrentTemperature)
             {
                 // Cold strong.
                 case <= 260:
-                    SharedAlertsSystem.ShowAlert(status, AlertType.Cold, 3);
+                    _alertsSystem.ShowAlert(status.Owner, AlertType.Cold, 3, null);
                     break;
 
                 // Cold mild.
                 case <= 280 and > 260:
-                    SharedAlertsSystem.ShowAlert(status, AlertType.Cold, 2);
+                    _alertsSystem.ShowAlert(status.Owner, AlertType.Cold, 2, null);
                     break;
 
                 // Cold weak.
                 case <= 292 and > 280:
-                    SharedAlertsSystem.ShowAlert(status, AlertType.Cold, 1);
+                    _alertsSystem.ShowAlert(status.Owner, AlertType.Cold, 1, null);
                     break;
 
                 // Safe.
                 case <= 327 and > 292:
-                    EntitySystem.Get<SharedAlertsSystem>().ClearAlertCategory(status, AlertCategory.Temperature);
+                    _alertsSystem.ClearAlertCategory(status.Owner, AlertCategory.Temperature);
                     break;
 
                 // Heat weak.
                 case <= 335 and > 327:
-                    SharedAlertsSystem.ShowAlert(status, AlertType.Hot, 1);
+                    _alertsSystem.ShowAlert(status.Owner, AlertType.Hot, 1, null);
                     break;
 
                 // Heat mild.
                 case <= 360 and > 335:
-                    SharedAlertsSystem.ShowAlert(status, AlertType.Hot, 2);
+                    _alertsSystem.ShowAlert(status.Owner, AlertType.Hot, 2, null);
                     break;
 
                 // Heat strong.
                 case > 360:
-                    SharedAlertsSystem.ShowAlert(status, AlertType.Hot, 3);
+                    _alertsSystem.ShowAlert(status.Owner, AlertType.Hot, 3, null);
                     break;
             }
         }

@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using Content.Server.Alert;
 using Content.Shared.Alert;
@@ -10,7 +11,7 @@ using Robust.Shared.Serialization.Manager;
 namespace Content.Tests.Shared.Alert
 {
     [TestFixture]
-    [TestOf(typeof(ServerAlertsComponent))]
+    [TestOf(typeof(AlertsComponent))]
     public class ServerAlertsComponentTests : ContentUnitTest
     {
         const string PROTOTYPES = @"
@@ -39,31 +40,31 @@ namespace Content.Tests.Shared.Alert
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             prototypeManager.Initialize();
             var factory = IoCManager.Resolve<IComponentFactory>();
-            factory.RegisterClass<ServerAlertsComponent>();
+            factory.RegisterClass<AlertsComponent>();
             prototypeManager.LoadFromStream(new StringReader(PROTOTYPES));
             prototypeManager.Resync();
 
             var entSys = IoCManager.Resolve<IEntitySystemManager>();
             entSys.LoadExtraSystemType<ServerAlertsSystem>();
 
-            var alertsComponent = new ServerAlertsComponent();
+            var alertsComponent = new AlertsComponent();
             alertsComponent = IoCManager.InjectDependencies(alertsComponent);
 
-            Assert.That(SharedAlertsSystem.TryGet(AlertType.LowPressure, out var lowpressure));
-            Assert.That(SharedAlertsSystem.TryGet(AlertType.HighPressure, out var highpressure));
+            Assert.That(EntitySystem.Get<SharedAlertsSystem>().TryGet(AlertType.LowPressure, out var lowpressure));
+            Assert.That(EntitySystem.Get<SharedAlertsSystem>().TryGet(AlertType.HighPressure, out var highpressure));
 
-            SharedAlertsSystem.ShowAlert(alertsComponent, AlertType.LowPressure);
+            EntitySystem.Get<SharedAlertsSystem>().ShowAlert(alertsComponent.Owner, AlertType.LowPressure, null, null);
             var alertState = alertsComponent.GetComponentState() as AlertsComponentState;
             Assert.NotNull(alertState);
             Assert.That(alertState.Alerts.Count, Is.EqualTo(1));
             Assert.That(alertState.Alerts.ContainsKey(lowpressure.AlertKey));
 
-            SharedAlertsSystem.ShowAlert(alertsComponent, AlertType.HighPressure);
+            EntitySystem.Get<SharedAlertsSystem>().ShowAlert(alertsComponent.Owner, AlertType.HighPressure, null, null);
             alertState = alertsComponent.GetComponentState() as AlertsComponentState;
             Assert.That(alertState.Alerts.Count, Is.EqualTo(1));
             Assert.That(alertState.Alerts.ContainsKey(highpressure.AlertKey));
 
-            EntitySystem.Get<SharedAlertsSystem>().ClearAlertCategory(alertsComponent, AlertCategory.Pressure);
+            EntitySystem.Get<SharedAlertsSystem>().ClearAlertCategory(alertsComponent.Owner, AlertCategory.Pressure);
             alertState = alertsComponent.GetComponentState() as AlertsComponentState;
             Assert.That(alertState.Alerts.Count, Is.EqualTo(0));
         }

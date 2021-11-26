@@ -246,7 +246,7 @@ namespace Content.Server.Electrocution
         public bool TryDoElectrocution(
             EntityUid uid, EntityUid? sourceUid, int shockDamage, TimeSpan time, bool refresh, float siemensCoefficient = 1f,
             StatusEffectsComponent? statusEffects = null,
-            SharedAlertsComponent? alerts = null)
+            AlertsComponent? alerts = null)
         {
             if (!DoCommonElectrocutionAttempt(uid, sourceUid, ref siemensCoefficient)
                 || !DoCommonElectrocution(uid, sourceUid, shockDamage, time, refresh, siemensCoefficient, statusEffects, alerts))
@@ -266,7 +266,7 @@ namespace Content.Server.Electrocution
             bool refresh,
             float siemensCoefficient = 1f,
             StatusEffectsComponent? statusEffects = null,
-            SharedAlertsComponent? alerts = null,
+            AlertsComponent? alerts = null,
             TransformComponent? sourceTransform = null)
         {
             if (!DoCommonElectrocutionAttempt(uid, sourceUid, ref siemensCoefficient))
@@ -319,7 +319,7 @@ namespace Content.Server.Electrocution
         private bool DoCommonElectrocution(EntityUid uid, EntityUid? sourceUid,
             int? shockDamage, TimeSpan time, bool refresh, float siemensCoefficient = 1f,
             StatusEffectsComponent? statusEffects = null,
-            SharedAlertsComponent? alerts = null)
+            AlertsComponent? alerts = null)
         {
             if (siemensCoefficient <= 0)
                 return false;

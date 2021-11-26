@@ -68,9 +68,10 @@ namespace Content.Shared.MobState.Components
 
         protected override void OnRemove()
         {
-            if (_entMan.TryGetComponent(Owner, out SharedAlertsComponent? status))
+            if (_entMan.TryGetComponent(Owner, out AlertsComponent? status))
             {
-                EntitySystem.Get<SharedAlertsSystem>().ClearAlert(status, AlertType.HumanHealth);
+                var euid = status.Owner;
+                EntitySystem.Get<SharedAlertsSystem>().ClearAlert(euid, AlertType.HumanHealth);
             }
 
             base.OnRemove();
