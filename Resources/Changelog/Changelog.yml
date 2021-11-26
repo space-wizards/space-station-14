@@ -1,9 +1,4 @@
 Entries:
-- author: ike709
-  changes:
-  - {message: Added a library to the Saltern., type: Add}
-  id: 158
-  time: '2021-04-13T00:32:20.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Add named fixtures so banana peel doesn't spin out of control, type: Add}
@@ -2862,3 +2857,9 @@ Entries:
   - {message: Inspector had it's ammo capacity reduced from 7 to 6, type: Tweak}
   id: 659
   time: '2021-11-25T22:37:21.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Chemist's maintenance access updated to comply with current NT access
+      policy., type: Tweak}
+  id: 660
+  time: '2021-11-26T03:37:05.0000000+00:00'
