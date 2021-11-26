@@ -622,13 +622,9 @@ entities:
     pos: 39.5,-1.5
     parent: 853
     type: Transform
-  - bodyType: Dynamic
-    type: Physics
   - containers:
       PowerCellCharger-powerCellContainer: !type:ContainerSlot {}
     type: ContainerContainer
-  - fixtures: []
-    type: Fixtures
 - uid: 70
   type: FirelockGlass
   components:
@@ -7872,8 +7868,6 @@ entities:
   - containers:
       WeaponCapacitorCharger-powerCellContainer: !type:ContainerSlot {}
     type: ContainerContainer
-  - fixtures: []
-    type: Fixtures
 - uid: 769
   type: PottedPlantRD
   components:
@@ -45344,8 +45338,6 @@ entities:
   - containers:
       WeaponCapacitorCharger-powerCellContainer: !type:ContainerSlot {}
     type: ContainerContainer
-  - fixtures: []
-    type: Fixtures
 - uid: 4224
   type: Table
   components:
@@ -45465,8 +45457,6 @@ entities:
   - containers:
       WeaponCapacitorCharger-powerCellContainer: !type:ContainerSlot {}
     type: ContainerContainer
-  - fixtures: []
-    type: Fixtures
 - uid: 4240
   type: FlashlightLantern
   components:
