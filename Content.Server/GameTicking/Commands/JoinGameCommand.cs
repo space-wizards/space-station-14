@@ -43,6 +43,13 @@ namespace Content.Server.GameTicking.Commands
 
             var ticker = EntitySystem.Get<GameTicker>();
             var stationSystem = EntitySystem.Get<StationSystem>();
+
+            if (!ticker.PlayersInLobby.ContainsKey(player))
+            {
+                shell.WriteError($"{player.Name} not in the lobby.   This incident will be reported.");
+                return;
+            }
+
             if (ticker.RunLevel == GameRunLevel.PreRoundLobby)
             {
                 shell.WriteLine("Round has not started.");
