@@ -105,7 +105,7 @@ namespace Content.Client.LateJoin
                                 new Label()
                                 {
                                     StyleClasses = { "LabelBig" },
-                                    Text = $"NTSS {name}",
+                                    Text = name,
                                     Align = Label.AlignMode.Center,
                                 },
                                 collapseButton

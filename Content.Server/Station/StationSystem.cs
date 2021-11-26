@@ -20,6 +20,7 @@ public class StationSystem : EntitySystem
 {
     [Dependency] private GameTicker _gameTicker = default!;
     [Dependency] private IChatManager _chatManager = default!;
+    [Dependency] private IGameMapManager _gameMapManager = default!;
     private uint _idCounter = 1;
 
     private Dictionary<StationId, StationInfoData> _stationInfo = new();
@@ -112,14 +113,14 @@ public class StationSystem : EntitySystem
         var jobListDict = mapPrototype.AvailableJobs.ToDictionary(x => x.Key, x => x.Value[1]);
         var id = AllocateStationInfo();
 
-        _stationInfo[id] = new StationInfoData(stationName ?? mapPrototype.MapName, mapPrototype, jobListDict);
+        _stationInfo[id] = new StationInfoData(stationName ?? _gameMapManager.GenerateMapName(mapPrototype), mapPrototype, jobListDict);
         var station = EntityManager.AddComponent<StationComponent>(mapGrid);
         station.Station = id;
 
         _gameTicker.UpdateJobsAvailable(); // new station means new jobs, tell any lobby-goers.
 
         Logger.InfoS("stations",
-            $"Setting up new {mapPrototype.ID} called {mapPrototype.MapName} on grid {mapGrid}:{gridComponent.GridIndex}");
+            $"Setting up new {mapPrototype.ID} called {_stationInfo[id].Name} on grid {mapGrid}:{gridComponent.GridIndex}");
 
         return id;
     }
