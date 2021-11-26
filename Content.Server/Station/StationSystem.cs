@@ -35,7 +35,7 @@ public class StationSystem : EntitySystem
     /// </summary>
     private void OnRoundEnd(GameRunLevelChangedEvent eventArgs)
     {
-        if (eventArgs.New == GameRunLevel.PostRound)
+        if (eventArgs.New == GameRunLevel.PreRoundLobby)
             _stationInfo = new();
     }
 
