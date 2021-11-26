@@ -17,22 +17,6 @@ namespace Content.Server.Fluids.Components
     // TODO: Kill these with fire
     public static class SpillExtensions
     {
-        /// <summary>
-        ///     Spills the specified solution at the entity's location if possible.
-        /// </summary>
-        /// <param name="entity">
-        ///     The entity to use as a location to spill the solution at.
-        /// </param>
-        /// <param name="solution">Initial solution for the prototype.</param>
-        /// <param name="prototype">The prototype to use.</param>
-        /// <param name="sound">Play the spill sound.</param>
-        /// <returns>The puddle if one was created, null otherwise.</returns>
-        /// <param name="combine">Whether to attempt to merge with existing puddles</param>
-        public static PuddleComponent? SpillAt(this Solution solution, IEntity entity, string prototype,
-            bool sound = true, bool combine = true)
-        {
-            return solution.SpillAt(entity.Transform.Coordinates, prototype, sound, combine: combine);
-        }
 
         /// <summary>
         ///     Spills the specified solution at the entity's location if possible.
@@ -69,7 +53,7 @@ namespace Content.Server.Fluids.Components
         public static bool TrySpillAt(this Solution solution, IEntity entity, string prototype,
             [NotNullWhen(true)] out PuddleComponent? puddle, bool sound = true, bool combine = true)
         {
-            puddle = solution.SpillAt(entity, prototype, sound, combine: combine);
+            puddle = solution.SpillAt(entity.Uid, prototype, sound, combine: combine);
             return puddle != null;
         }
 
@@ -79,6 +63,7 @@ namespace Content.Server.Fluids.Components
         /// <param name="solution">Initial solution for the prototype.</param>
         /// <param name="coordinates">The coordinates to spill the solution at.</param>
         /// <param name="prototype">The prototype to use.</param>
+        /// <param name="overflow">If the puddle overflow will be calculated. Defaults to true.</param>
         /// <param name="sound">Whether or not to play the spill sound.</param>
         /// <param name="combine">Whether to attempt to merge with existing puddles</param>
         /// <returns>The puddle if one was created, null otherwise.</returns>

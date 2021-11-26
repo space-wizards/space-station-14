@@ -27,7 +27,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             if (creamPie.Owner.TryGetComponent<FoodComponent>(out var foodComp) && _solutionsSystem.TryGetSolution(creamPie.Owner.Uid, foodComp.SolutionName, out var solution))
             {
-                solution.SpillAt(creamPie.Owner, "PuddleSmear", false);
+                solution.SpillAt(creamPie.Owner.Uid, "PuddleSmear", false);
             }
         }
 

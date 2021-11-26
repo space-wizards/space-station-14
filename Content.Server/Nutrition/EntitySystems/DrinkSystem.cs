@@ -148,7 +148,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 var entity = EntityManager.GetEntity(uid);
 
                 var solution = _solutionContainerSystem.Drain(uid, interactions, interactions.DrainAvailable);
-                solution.SpillAt(entity, "PuddleSmear");
+                solution.SpillAt(entity.Uid, "PuddleSmear");
 
                 SoundSystem.Play(Filter.Pvs(entity), component.BurstSound.GetSound(), entity, AudioParams.Default.WithVolume(-4));
             }
