@@ -1,12 +1,6 @@
 Entries:
 - author: SweptWasTaken
   changes:
-  - {message: Bucket now works and there's one in botany and janitor hut, type: Fix}
-  - {message: Janitorial items now have proper inhands, type: Add}
-  id: 162
-  time: '2021-04-15T21:21:10.0000000+00:00'
-- author: SweptWasTaken
-  changes:
   - {message: 'Names for tanks, solar stuff and more are fixed.', type: Fix}
   id: 163
   time: '2021-04-16T05:28:09.0000000+00:00'
@@ -2862,3 +2856,8 @@ Entries:
   - {message: Solar assemblies are now de-rotated when deconstructing., type: Fix}
   id: 663
   time: '2021-11-26T09:17:21.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Station names are now randomly generated., type: Add}
+  id: 664
+  time: '2021-11-26T13:54:32.0000000+00:00'
