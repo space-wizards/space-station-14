@@ -89,10 +89,11 @@ public class StationSystem : EntitySystem
     /// </summary>
     /// <param name="mapGrid">grid to attach to</param>
     /// <param name="mapPrototype">game map prototype of the station</param>
+    /// <param name="stationName">name of the station to assign, if not the default</param>
     /// <param name="gridComponent">optional grid component of the grid.</param>
     /// <returns>The ID of the resulting station</returns>
     /// <exception cref="ArgumentException">Thrown when the given entity is not a grid.</exception>
-    public StationId InitialSetupStationGrid(EntityUid mapGrid, GameMapPrototype mapPrototype, IMapGridComponent? gridComponent = null)
+    public StationId InitialSetupStationGrid(EntityUid mapGrid, GameMapPrototype mapPrototype, string? stationName = null, IMapGridComponent? gridComponent = null)
     {
         if (!Resolve(mapGrid, ref gridComponent))
             throw new ArgumentException("Tried to initialize a station on a non-grid entity!");
@@ -100,7 +101,7 @@ public class StationSystem : EntitySystem
         var jobListDict = mapPrototype.AvailableJobs.ToDictionary(x => x.Key, x => x.Value[1]);
         var id = AllocateStationInfo();
 
-        _stationInfo[id] = new StationInfoData(mapPrototype.MapName, mapPrototype, jobListDict);
+        _stationInfo[id] = new StationInfoData(stationName ?? mapPrototype.MapName, mapPrototype, jobListDict);
         var station = EntityManager.AddComponent<StationComponent>(mapGrid);
         station.Station = id;
 

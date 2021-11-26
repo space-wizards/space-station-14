@@ -20,7 +20,7 @@ namespace Content.Server.Administration.Commands
 
         public string Description => "Loads the given game map at the given coordinates.";
 
-        public string Help => "loadgamemap <gamemap> <mapid> [<x> <y>]";
+        public string Help => "loadgamemap <gamemap> <mapid> [<x> <y> [<name>]] ";
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -29,7 +29,7 @@ namespace Content.Server.Administration.Commands
             var entityManager = IoCManager.Resolve<IEntityManager>();
             var stationSystem = entityManager.EntitySysManager.GetEntitySystem<StationSystem>();
 
-            if (args.Length is not (2 or 4))
+            if (args.Length is not (2 or 4 or 5))
             {
                 shell.WriteError(Loc.GetString("shell-wrong-arguments-number"));
                 return;
@@ -46,13 +46,15 @@ namespace Content.Server.Administration.Commands
                         return;
                     }
 
-                    if (args.Length is 4 && int.TryParse(args[2], out var x) && int.TryParse(args[3], out var y))
+                    if (args.Length == 4 && int.TryParse(args[2], out var x) && int.TryParse(args[3], out var y))
                     {
                         var transform = entityManager.GetComponent<TransformComponent>(gameMapEnt.GridEntityId);
                         transform.WorldPosition = new Vector2(x, y);
                     }
 
-                    stationSystem.InitialSetupStationGrid(gameMapEnt.GridEntityId, gameMap);
+                    var stationName = args.Length == 5 ? args[4] : null;
+
+                    stationSystem.InitialSetupStationGrid(gameMapEnt.GridEntityId, gameMap, stationName);
                 }
             }
             else
