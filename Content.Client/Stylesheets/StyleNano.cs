@@ -650,11 +650,8 @@ namespace Content.Client.Stylesheets
                 Element<TextureRect>().Class(StyleClassStorageWeightIcon)
                     .Prop(Control.StylePropertyModulateSelf, StorageWeightIconColor),
 
-
-                
-
-        // action slot hotbar buttons
-        new StyleRule(new SelectorElement(typeof(ActionSlot), null, null, new[] {ContainerButton.StylePseudoClassNormal}), new[]
+                // action slot hotbar buttons
+                new StyleRule(new SelectorElement(typeof(ActionSlot), null, null, new[] {ContainerButton.StylePseudoClassNormal}), new[]
                 {
                     new StyleProperty(PanelContainer.StylePropertyPanel, buttonRect),
                 }),
