@@ -54,12 +54,23 @@ namespace Content.Client.Chemistry.UI
             PillTypeButtons = new Button[20];
             for (int i = 0; i < PillTypeButtons.Length; i++)
             {
+                //For every button decide which stylebase to have
+                //Every row has 10 buttons
+                String styleBase = StyleBase.ButtonOpenBoth;
+                int modulo = i % 10;
+                if (i > 0 && modulo == 0)
+                    styleBase = StyleBase.ButtonOpenRight;
+                else if (i > 0 && modulo == 9)
+                    styleBase = StyleBase.ButtonOpenLeft;
+                else if (i == 0)
+                    styleBase = StyleBase.ButtonOpenRight;
+
                 //Generate buttons
                 PillTypeButtons[i] = new Button
                 {
                     Access = AccessLevel.Public,
-                    StyleClasses = { StyleBase.ClassAngleRect },
-                    MaxSize = (52, 32),
+                    StyleClasses = { styleBase },
+                    MaxSize = (42, 28),
                     Group = pillTypeGroup
                 };
 
@@ -69,7 +80,7 @@ namespace Content.Client.Chemistry.UI
                 TextureRect pillTypeTexture = new TextureRect
                 {
                     Texture = specifier.Frame0(),
-                    TextureScale = (2f, 2f),
+                    TextureScale = (1.75f, 1.75f),
                     Stretch = TextureRect.StretchMode.KeepCentered,
                 };
 
