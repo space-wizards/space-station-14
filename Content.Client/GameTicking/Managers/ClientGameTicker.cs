@@ -23,8 +23,8 @@ namespace Content.Client.GameTicking.Managers
         [Dependency] private readonly IStateManager _stateManager = default!;
 
         [ViewVariables] private bool _initialized;
-        private readonly Dictionary<StationId, Dictionary<string, int>>  _jobsAvailable = new();
-        private readonly Dictionary<StationId, string> _stationNames = new();
+        private Dictionary<StationId, Dictionary<string, int>>  _jobsAvailable = new();
+        private Dictionary<StationId, string> _stationNames = new();
 
         [ViewVariables] public bool AreWeReady { get; private set; }
         [ViewVariables] public bool IsGameStarted { get; private set; }
@@ -73,17 +73,8 @@ namespace Content.Client.GameTicking.Managers
 
         private void UpdateJobsAvailable(TickerJobsAvailableEvent message)
         {
-            _jobsAvailable.Clear();
-            _stationNames.Clear();
-            foreach (var (key, value) in message.JobsAvailableByStation)
-            {
-                _jobsAvailable.Add(key, value);
-            }
-
-            foreach (var (key, value) in message.StationNames)
-            {
-                _stationNames.Add(key, value);
-            }
+            _jobsAvailable = message.JobsAvailableByStation;
+            _stationNames = message.StationNames;
             LobbyJobsAvailableUpdated?.Invoke(JobsAvailable);
         }
 
