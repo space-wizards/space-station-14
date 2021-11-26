@@ -2,12 +2,12 @@
 - type: entity
   name: Holoparasite
   id: MobHoloparasite
-  description: A memorizing whirl of hard-light patterns weaves a marvelous, yet oddly familiar visage. It stands tall, tuning into it's owner's life to sustain itself.
+  description: A mesmerising whirl of hard-light patterns weaves a marvelous, yet oddly familiar visage. It stands tall, tuning into its owner's life to sustain itself.
   components:
   - type: GhostTakeoverAvailable
     makeSentient: true
     name: Holoparasite
-    description: Listen to your owner. Don't tank damage. Punch people hard.
+    description: Listen to your owner. Don't take damage. Punch people hard.
   - type: Input
     context: "human"
   - type: PlayerMobMover
