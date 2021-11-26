@@ -8,3 +8,8 @@
     - shoes
   - type: Sprite
     state: icon
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 5

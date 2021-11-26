@@ -17,6 +17,11 @@
     solution: powerCell
   - type: DrawableSolution
     solution: powerCell
+  - type: Extractable
+    juiceSolution:
+      reagents:
+        - ReagentId: Licoxide
+          Quantity: 5
 
 - type: entity
   id: PowerCellSmallBase

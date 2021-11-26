@@ -1,7 +1,11 @@
+using System;
 using Content.Server.Players;
+using Content.Server.Roles;
+using Content.Server.Station;
 using Content.Shared.GameTicking;
 using Content.Shared.GameWindow;
 using Content.Shared.Preferences;
+using Content.Shared.Station;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
@@ -35,6 +39,8 @@ namespace Content.Server.GameTicking
 
                 case SessionStatus.Connected:
                 {
+                    AddPlayerToDb(args.Session.UserId.UserId);
+
                     // Always make sure the client has player data. Mind gets assigned on spawn.
                     if (session.Data.ContentDataUncast == null)
                         session.Data.ContentDataUncast = new PlayerData(session.UserId, args.Session.Name);
@@ -104,7 +110,15 @@ namespace Content.Server.GameTicking
             async void SpawnWaitPrefs()
             {
                 await _prefsManager.WaitPreferencesLoaded(session);
-                SpawnPlayer(session);
+                SpawnPlayer(session, StationId.Invalid);
+            }
+
+            async void AddPlayerToDb(Guid id)
+            {
+                if (RoundId != 0 && _runLevel != GameRunLevel.PreRoundLobby)
+                {
+                    await _db.AddRoundPlayers(RoundId, id);
+                }
             }
         }
 

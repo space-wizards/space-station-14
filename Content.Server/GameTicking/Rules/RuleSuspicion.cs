@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Content.Server.Chat.Managers;
 using Content.Server.Doors;
@@ -25,7 +27,7 @@ namespace Content.Server.GameTicking.Rules
     /// <summary>
     ///     Simple GameRule that will do a TTT-like gamemode with traitors.
     /// </summary>
-    public sealed class RuleSuspicion : GameRule, IEntityEventSubscriber
+    public sealed class RuleSuspicion : GameRule
     {
         private static readonly TimeSpan DeadCheckDelay = TimeSpan.FromSeconds(1);
 
@@ -86,7 +88,7 @@ namespace Content.Server.GameTicking.Rules
             var traitorsAlive = 0;
             var innocentsAlive = 0;
 
-            foreach (var playerSession in _playerManager.GetAllPlayers())
+            foreach (var playerSession in _playerManager.ServerSessions)
             {
                 if (playerSession.AttachedEntity == null
                     || !playerSession.AttachedEntity.TryGetComponent(out MobStateComponent? mobState)

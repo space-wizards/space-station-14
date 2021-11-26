@@ -23,9 +23,27 @@ namespace Content.Shared.Containers.ItemSlots
     {
         public override string Name => "ItemSlots";
 
-        [ViewVariables]
-        [DataField("slots")]
-        public Dictionary<string, ItemSlot> Slots = new();
+        /// <summary>
+        ///     The dictionary that stores all of the item slots whose interactions will be managed by the <see
+        ///     cref="ItemSlotsSystem"/>.
+        /// </summary>
+        [DataField("slots", readOnly:true)]
+        public readonly Dictionary<string, ItemSlot> Slots = new();
+
+        // There are two ways to use item slots:
+        //
+        // #1 - Give your component an ItemSlot datafield, and add/remove the item slot through the ItemSlotsSystem on
+        // component init/remove.
+        //
+        // #2 - Give your component a key string datafield, and make sure that every entity with that component also has
+        // an ItemSlots component with a matching key. Then use ItemSlots system to get the slot with this key whenever
+        // you need it, or just get a reference to the slot on init and store it. This is how generic entity containers
+        // are usually used.
+        //
+        // In order to avoid #1 leading to duplicate slots when saving a map, the Slots dictionary is a read-only
+        // datafield. This means that if your system/component dynamically changes the item slot (e.g., updating
+        // whitelist or whatever), you should use #1. Alternatively: split the Slots dictionary here into two: one
+        // datafield, one that is actually used by the ItemSlotsSystem for keeping track of slots.
     }
 
     [Serializable, NetSerializable]
@@ -83,7 +101,7 @@ namespace Content.Shared.Containers.ItemSlots
         ///     This doesn't have to mean the slot is somehow physically locked. In the case of the item cabinet, the
         ///     cabinet may simply be closed at the moment and needs to be opened first.
         /// </remarks>
-        [DataField("locked")]
+        [DataField("locked", readOnly: true)]
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Locked = false;
 
@@ -115,10 +133,47 @@ namespace Content.Shared.Containers.ItemSlots
         [ViewVariables]
         public ContainerSlot ContainerSlot = default!;
 
+        /// <summary>
+        ///     If this slot belongs to some de-constructible component, should the item inside the slot be ejected upon
+        ///     deconstruction?
+        /// </summary>
+        /// <remarks>
+        ///     The actual deconstruction logic is handled by the server-side EmptyOnMachineDeconstructSystem.
+        /// </remarks>
+        [DataField("ejectOnDeconstruct")]
+        public bool EjectOnDeconstruct = true;
+
+        /// <summary>
+        ///     If this slot belongs to some breakable or destructible entity, should the item inside the slot be
+        ///     ejected when it is broken or destroyed?
+        /// </summary>
+        [DataField("ejectOnBreak")]
+        public bool EjectOnBreak = false;
+
+        /// <summary>
+        ///     If this is not an empty string, this will generate a popup when someone attempts to insert a bad item
+        ///     into this slot. This string will be passed through localization.
+        /// </summary>
+        [DataField("whitelistFailPopup")]
+        public string WhitelistFailPopup = string.Empty;
+
+        /// <summary>
+        ///     If the user interacts with an entity with an already-filled item slot, should they attempt to swap out the item?
+        /// </summary>
+        /// <remarks>
+        ///     Useful for things like chem dispensers, but undesirable for things like the ID card console, where you
+        ///     want to insert more than one item that matches the same whitelist.
+        /// </remarks>
+        [DataField("swap")]
+        public bool Swap = true;
+
         public string ID => ContainerSlot.ID;
 
         // Convenience properties
         public bool HasItem => ContainerSlot.ContainedEntity != null;
         public IEntity? Item => ContainerSlot.ContainedEntity;
+
+        // and to make it easier for  whenever IEntity is removed
+        public EntityUid? ItemUid => ContainerSlot.ContainedEntity?.Uid;
     }
 }

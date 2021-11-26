@@ -33,7 +33,6 @@ namespace Content.Server.Throwing
         internal static void TryThrow(this IEntity entity, Vector2 direction, float strength = 1.0f, IEntity? user = null, float pushbackRatio = 1.0f)
         {
             if (entity.Deleted ||
-                direction == Vector2.Zero ||
                 strength <= 0f ||
                 !entity.TryGetComponent(out PhysicsComponent? physicsComponent))
             {
@@ -61,7 +60,7 @@ namespace Content.Server.Throwing
                 {
                     physicsComponent.ApplyAngularImpulse(ThrowAngularImpulse);
                 }
-                else
+                else if(direction != Vector2.Zero)
                 {
                     entity.Transform.LocalRotation = direction.ToWorldAngle() - Math.PI;
                 }
@@ -79,6 +78,7 @@ namespace Content.Server.Throwing
             if (time < FlyTime)
             {
                 physicsComponent.BodyStatus = BodyStatus.OnGround;
+                EntitySystem.Get<ThrownItemSystem>().LandComponent(comp);
             }
             else
             {

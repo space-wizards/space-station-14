@@ -24,9 +24,9 @@ namespace Content.Server.Ghost.Roles
     public class GhostRoleSystem : EntitySystem
     {
         [Dependency] private readonly EuiManager _euiManager = default!;
-        [Dependency] private IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
 
-        private uint _nextRoleIdentifier = 0;
+        private uint _nextRoleIdentifier;
         private bool _needsUpdateGhostRoleCount = true;
         private readonly Dictionary<uint, GhostRoleComponent> _ghostRoles = new();
         private readonly Dictionary<IPlayerSession, GhostRolesEui> _openUis = new();
@@ -96,7 +96,7 @@ namespace Content.Server.Ghost.Roles
         {
             if (_openMakeGhostRoleUis.Remove(session, out var eui))
             {
-                eui?.Close();
+                eui.Close();
             }
         }
 
@@ -119,8 +119,10 @@ namespace Content.Server.Ghost.Roles
             {
                 _needsUpdateGhostRoleCount = false;
                 var response = new GhostUpdateGhostRoleCountEvent(_ghostRoles.Count);
-                foreach (var player in _playerManager.GetAllPlayers())
+                foreach (var player in _playerManager.Sessions)
+                {
                     RaiseNetworkEvent(response, player.ConnectedClient);
+                }
             }
         }
 

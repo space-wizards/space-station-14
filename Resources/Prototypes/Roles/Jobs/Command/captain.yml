@@ -2,7 +2,6 @@
   id: Captain
   name: "captain"
   head: true
-  positions: 1
   startingGear: CaptainGear
   departments:
   - Command
@@ -10,6 +9,7 @@
   requireAdminNotify: true
   joinNotifyCrew: true
   supervisors: "Nanotrasen officials"
+  canBeAntag: false
   access:
   # All of em.
   # Could probably do with some kind of wildcard or whatever to automate this.
@@ -31,6 +31,7 @@
   - Janitor
   - Theatre
   - Bar
+  - Chemistry
 
 - type: startingGear
   id: CaptainGear

@@ -1,11 +1,10 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Pointing.Components;
 using Content.Shared.MobState.Components;
 using Content.Shared.Pointing.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -19,7 +18,6 @@ namespace Content.Server.Pointing.EntitySystems
     [UsedImplicitly]
     internal sealed class RoguePointingSystem : EntitySystem
     {
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
         [Dependency] private readonly ExplosionSystem _explosions = default!;
@@ -44,17 +42,15 @@ namespace Content.Server.Pointing.EntitySystems
             if (!Resolve(uid, ref component, ref transform))
                 return null;
 
-            var players = _playerManager
-                .GetPlayersInRange(transform.Coordinates, 15)
-                .Where(player => player.AttachedEntity != null && player.AttachedEntity.TryGetComponent(out MobStateComponent? mobStateComponent) && !mobStateComponent.IsDead())
+            var players = Filter.Empty()
+                .AddPlayersByPvs(transform.MapPosition)
+                .RemoveWhereAttachedEntity(euid => !EntityManager.TryGetComponent(euid, out MobStateComponent? mobStateComponent) || mobStateComponent.IsDead())
+                .Recipients
                 .ToArray();
 
-            if (players.Length == 0)
-            {
-                return null;
-            }
-
-            return _random.Pick(players).AttachedEntity;
+            return players.Length != 0
+                ? _random.Pick(players).AttachedEntity
+                : null;
         }
 
         private void UpdateAppearance(EntityUid uid, RoguePointingArrowComponent? component = null, TransformComponent? transform = null, AppearanceComponent? appearance = null)

@@ -186,7 +186,8 @@ namespace Content.Client.Voting
             _standardVoteTimeouts.Clear();
             foreach (var (type, time) in message.VotesUnavailable)
             {
-                _standardVoteTimeouts.Add(type, _gameTiming.RealServerToLocal(time));
+                var fixedTime = (time == TimeSpan.Zero) ? time : _gameTiming.RealServerToLocal(time);
+                _standardVoteTimeouts.Add(type, fixedTime);
             }
 
             CanCallStandardVotesChanged?.Invoke();

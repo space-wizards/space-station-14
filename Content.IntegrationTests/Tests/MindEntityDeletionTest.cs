@@ -1,7 +1,6 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Mind;
-using Content.Server.Players;
 using Content.Shared.Coordinates;
 using NUnit.Framework;
 using Robust.Server.GameObjects;
@@ -26,7 +25,7 @@ namespace Content.IntegrationTests.Tests
             Mind mind = null;
             server.Assert(() =>
             {
-                var player = IoCManager.Resolve<IPlayerManager>().GetAllPlayers().Single();
+                var player = IoCManager.Resolve<IPlayerManager>().ServerSessions.Single();
 
                 var mapMan = IoCManager.Resolve<IMapManager>();
                 var entMgr = IoCManager.Resolve<IServerEntityManager>();
@@ -71,7 +70,7 @@ namespace Content.IntegrationTests.Tests
             Mind mind = null;
             server.Assert(() =>
             {
-                var player = IoCManager.Resolve<IPlayerManager>().GetAllPlayers().Single();
+                var player = IoCManager.Resolve<IPlayerManager>().ServerSessions.Single();
 
                 var mapMan = IoCManager.Resolve<IMapManager>();
                 var entMgr = IoCManager.Resolve<IServerEntityManager>();
@@ -116,7 +115,7 @@ namespace Content.IntegrationTests.Tests
             MapId map = default;
             server.Assert(() =>
             {
-                var player = IoCManager.Resolve<IPlayerManager>().GetAllPlayers().Single();
+                var player = IoCManager.Resolve<IPlayerManager>().ServerSessions.Single();
 
                 var mapMan = IoCManager.Resolve<IMapManager>();
 

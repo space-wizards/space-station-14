@@ -1,9 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Chemistry.Dispenser
 {
@@ -16,6 +18,9 @@ namespace Content.Shared.Chemistry.Dispenser
     public class SharedReagentDispenserComponent : Component
     {
         public override string Name => "ReagentDispenser";
+
+        [DataField("beakerSlot")]
+        public ItemSlot BeakerSlot = new();
 
         /// <summary>
         /// A list of reagents which this may dispense. Defined in yaml prototype, see <see cref="ReagentDispenserInventoryPrototype"/>.
