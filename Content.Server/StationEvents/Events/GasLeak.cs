@@ -1,7 +1,8 @@
-using Content.Server.Atmos.Components;
+using System.Linq;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.GameTicking;
+using Content.Server.Station;
 using Content.Shared.Atmos;
+using Content.Shared.Station;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -15,6 +16,9 @@ namespace Content.Server.StationEvents.Events
 {
     internal sealed class GasLeak : StationEvent
     {
+        [Dependency] private IRobustRandom _robustRandom = default!;
+        [Dependency] private IEntityManager _entityManager = default!;
+
         public override string Name => "GasLeak";
 
         public override string? StartAnnouncement =>
@@ -56,6 +60,8 @@ namespace Content.Server.StationEvents.Events
 
         // Event variables
 
+        private StationId _targetStation;
+
         private IEntity? _targetGrid;
 
         private Vector2i _targetTile;
@@ -84,17 +90,16 @@ namespace Content.Server.StationEvents.Events
         public override void Startup()
         {
             base.Startup();
-            var robustRandom = IoCManager.Resolve<IRobustRandom>();
 
             // Essentially we'll pick out a target amount of gas to leak, then a rate to leak it at, then work out the duration from there.
-            if (TryFindRandomTile(out _targetTile, robustRandom))
+            if (TryFindRandomTile(out _targetTile))
             {
                 _foundTile = true;
 
-                _leakGas = robustRandom.Pick(LeakableGases);
+                _leakGas = _robustRandom.Pick(LeakableGases);
                 // Was 50-50 on using normal distribution.
-                var totalGas = (float) robustRandom.Next(MinimumGas, MaximumGas);
-                _molesPerSecond = robustRandom.Next(MinimumMolesPerSecond, MaximumMolesPerSecond);
+                var totalGas = (float) _robustRandom.Next(MinimumGas, MaximumGas);
+                _molesPerSecond = _robustRandom.Next(MinimumMolesPerSecond, MaximumMolesPerSecond);
                  EndAfter = totalGas / _molesPerSecond + StartAfter;
                  Logger.InfoS("stationevents", $"Leaking {totalGas} of {_leakGas} over {EndAfter - StartAfter} seconds at {_targetTile}");
             }
@@ -147,8 +152,7 @@ namespace Content.Server.StationEvents.Events
         private void Spark()
         {
             var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
-            var robustRandom = IoCManager.Resolve<IRobustRandom>();
-            if (robustRandom.NextFloat() <= SparkChance)
+            if (_robustRandom.NextFloat() <= SparkChance)
             {
                 if (!_foundTile ||
                     _targetGrid == null ||
@@ -165,27 +169,31 @@ namespace Content.Server.StationEvents.Events
             }
         }
 
-        private bool TryFindRandomTile(out Vector2i tile, IRobustRandom? robustRandom = null)
+        private bool TryFindRandomTile(out Vector2i tile)
         {
             tile = default;
-            var defaultGridId = EntitySystem.Get<GameTicker>().DefaultGridId;
 
-            if (!IoCManager.Resolve<IMapManager>().TryGetGrid(defaultGridId, out var grid) ||
-                !IoCManager.Resolve<IEntityManager>().TryGetEntity(grid.GridEntityId, out _targetGrid)) return false;
+            _targetStation = _robustRandom.Pick(_entityManager.EntityQuery<StationComponent>().ToArray()).Station;
+            var possibleTargets = _entityManager.EntityQuery<StationComponent>()
+                .Where(x => x.Station == _targetStation).ToArray();
+            _targetGrid = _robustRandom.Pick(possibleTargets).Owner;
+
+            if (!_entityManager.TryGetComponent<IMapGridComponent>(_targetGrid!.Uid, out var gridComp))
+                return false;
+            var grid = gridComp.Grid;
 
             var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
-            robustRandom ??= IoCManager.Resolve<IRobustRandom>();
             var found = false;
             var gridBounds = grid.WorldBounds;
             var gridPos = grid.WorldPosition;
 
             for (var i = 0; i < 10; i++)
             {
-                var randomX = robustRandom.Next((int) gridBounds.Left, (int) gridBounds.Right);
-                var randomY = robustRandom.Next((int) gridBounds.Bottom, (int) gridBounds.Top);
+                var randomX = _robustRandom.Next((int) gridBounds.Left, (int) gridBounds.Right);
+                var randomY = _robustRandom.Next((int) gridBounds.Bottom, (int) gridBounds.Top);
 
                 tile = new Vector2i(randomX - (int) gridPos.X, randomY - (int) gridPos.Y);
-                if (atmosphereSystem.IsTileSpace(defaultGridId, tile) || atmosphereSystem.IsTileAirBlocked(defaultGridId, tile)) continue;
+                if (atmosphereSystem.IsTileSpace(grid, tile) || atmosphereSystem.IsTileAirBlocked(grid, tile)) continue;
                 found = true;
                 _targetCoords = grid.GridTileToLocal(tile);
                 break;

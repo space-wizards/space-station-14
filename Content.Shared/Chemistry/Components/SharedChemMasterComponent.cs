@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Cloning;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Chemistry.Components
 {
@@ -15,6 +15,9 @@ namespace Content.Shared.Chemistry.Components
     /// </summary>
     public class SharedChemMasterComponent : Component
     {
+        [DataField("beakerSlot")]
+        public ItemSlot BeakerSlot = new();
+
         public override string Name => "ChemMaster";
         public const string SolutionName = "buffer";
 

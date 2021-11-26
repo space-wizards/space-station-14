@@ -236,7 +236,6 @@ namespace Content.Client.Entry
             "MorgueEntityStorage",
             "MorgueTray",
             "CrematoriumEntityStorage",
-            "RandomArcade",
             "RandomSpriteState",
             "DebugEquip",
             "InnateActions",

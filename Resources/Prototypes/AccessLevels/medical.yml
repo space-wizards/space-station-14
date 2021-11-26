@@ -4,3 +4,6 @@
 
 - type: accessLevel
   id: Medical
+  
+- type: accessLevel
+  id: Chemistry

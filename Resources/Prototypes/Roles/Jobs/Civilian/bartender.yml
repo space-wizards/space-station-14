@@ -1,7 +1,6 @@
 - type: job
   id: Bartender
   name: "bartender"
-  positions: 1
   startingGear: BartenderGear
   departments:
   - Civilian
