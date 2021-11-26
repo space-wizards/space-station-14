@@ -8,6 +8,7 @@ using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameTicking.Commands
@@ -27,8 +28,14 @@ namespace Content.Server.GameTicking.Commands
         }
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
+            if (args.Length != 2)
+            {
+                shell.WriteError(Loc.GetString("shell-wrong-arguments-number"));
+                return;
+            }
+
             var player = shell.Player as IPlayerSession;
-            var output = string.Join(".", args);
+
             if (player == null)
             {
                 return;
@@ -41,18 +48,23 @@ namespace Content.Server.GameTicking.Commands
                 shell.WriteLine("Round has not started.");
                 return;
             }
-            else if(ticker.RunLevel == GameRunLevel.InRound)
+            else if (ticker.RunLevel == GameRunLevel.InRound)
             {
-                string ID = args[0];
-                var stationId = new StationId(uint.Parse(args[1]));
+                string id = args[0];
 
-                if(!stationSystem.IsJobAvailableOnStation(stationId, ID))
+                if (!uint.TryParse(args[1], out var sid))
                 {
-                    var jobPrototype = _prototypeManager.Index<JobPrototype>(ID);
+                    shell.WriteError(Loc.GetString("shell-argument-must-be-number"));
+                }
+
+                var stationId = new StationId(sid);
+                if(!stationSystem.IsJobAvailableOnStation(stationId, id))
+                {
+                    var jobPrototype = _prototypeManager.Index<JobPrototype>(id);
                     shell.WriteLine($"{jobPrototype.Name} has no available slots.");
                     return;
                 }
-                ticker.MakeJoinGame(player, stationId, ID);
+                ticker.MakeJoinGame(player, stationId, id);
                 return;
             }
 
