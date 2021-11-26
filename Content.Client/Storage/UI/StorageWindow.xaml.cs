@@ -13,6 +13,7 @@ using Robust.Shared.Maths;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Utility;
 using Robust.Client.Utility;
+using Robust.Client.ResourceManagement;
 using Content.Client.Stylesheets;
 
 namespace Content.Client.Storage.UI
@@ -21,33 +22,22 @@ namespace Content.Client.Storage.UI
     public sealed partial class StorageWindow : SS14Window
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IResourceCache _resCache = default!;
 
-        public const float ButtonHeight = 34;
-        
         private readonly StyleBoxFlat _hoveredBox = new() { BackgroundColor = Color.Black.WithAlpha(0.35f) };
         private readonly StyleBoxFlat _unHoveredBox = new() { BackgroundColor = Color.Black.WithAlpha(0.0f) };
 
-        private DynamicScrollContainer<EntityUid> _scroll = new()
-        {
-            ReturnMeasure = true, HorizontalExpand = true, VerticalExpand = true
-        };
+        private Action<BaseButton.ButtonEventArgs, EntityUid> _onInteract;
 
-        private Action<BaseButton.ButtonEventArgs> _onInteract;
-
-        public StorageWindow(Action<BaseButton.ButtonEventArgs> onInteract, Action<BaseButton.ButtonEventArgs> onInsert)
+        public StorageWindow(Action<BaseButton.ButtonEventArgs, EntityUid> onInteract, Action<BaseButton.ButtonEventArgs> onInsert)
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
-
-            InnerContainerButton.PanelOverride = _unHoveredBox;
-            InnerContainerBox.AddChild(_scroll);
-
-            StorageContainerButton.OnPressed += onInsert;
-            _scroll.OnMouseEntered += args => InnerContainerButton.PanelOverride = _hoveredBox;
-            _scroll.OnMouseExited += args => InnerContainerButton.PanelOverride = _unHoveredBox;
-            _scroll.GenerateElementContents = GenerateButton;
-
             _onInteract = onInteract;
+            StorageContainerButton.OnPressed += onInsert;
+            InnerContainerButton.PanelOverride = _unHoveredBox;
+            Scroll.OnMouseEntered += args => InnerContainerButton.PanelOverride = _hoveredBox;
+            Scroll.OnMouseExited += args => InnerContainerButton.PanelOverride = _unHoveredBox;
         }
 
         /// summary>
@@ -55,16 +45,22 @@ namespace Content.Client.Storage.UI
         /// </summary>
         public void BuildEntityList(List<EntityUid> entityUids, int storageSizeUsed, int storageCapacityMax)
         {
-            List<DynamicScollElement<EntityUid>> elements = new();
+            ButtonBox.DisposeAllChildren();
             foreach (var uid in entityUids)
             {
-                DynamicScollElement<EntityUid> element = new(uid) { SetHeight = ButtonHeight };
-                element.OnPressed += _onInteract;
-                element.SetOnlyStyleClass(StyleNano.StyleClassStorageButton);
-                element.EnableAllKeybinds = true;
-                elements.Add(element);
+                _entityManager.TryGetComponent(uid, out ISpriteComponent? sprite);
+                _entityManager.TryGetComponent(uid, out ItemComponent? item);
+                _entityManager.TryGetComponent(uid, out MetaDataComponent? meta);
+
+                var size = item?.Size ?? 0;
+                if (storageCapacityMax == 0)
+                    // infinite capacity. Don't bother displaying weights
+                    size = 0;
+
+                var button = new EntityContainerButton(meta?.EntityName ?? string.Empty, sprite, size);
+                button.OnPressed += args => _onInteract(args, uid);
+                ButtonBox.AddChild(button);
             }
-            _scroll.PopulateElements(elements);
 
             //Sets information about entire storage container current capacity
             if (storageCapacityMax != 0)
@@ -73,15 +69,6 @@ namespace Content.Client.Storage.UI
             else
                 Information.Text = Loc.GetString("comp-storage-window-volume-unlimited", ("itemCount", entityUids.Count));
         }
-
-        private void GenerateButton(DynamicScollElement<EntityUid> element)
-        {
-            _entityManager.TryGetComponent(element.Data, out ISpriteComponent? sprite);
-            _entityManager.TryGetComponent(element.Data, out ItemComponent? item);
-            _entityManager.TryGetComponent(element.Data, out MetaDataComponent? meta);
-            
-            element.AddChild(new StorageButtonContents(meta?.EntityName ?? string.Empty, sprite, item?.Size ?? 0));
-        }
     }
     
 
@@ -89,11 +76,11 @@ namespace Content.Client.Storage.UI
     /// Button created for each entity that represents that item in the storage UI, with a texture, and name and size label
     /// </summary>
     [GenerateTypedNameReferences]
-    public sealed partial class StorageButtonContents : BoxContainer
+    public sealed partial class EntityContainerButton : ContainerButton
     {
         private static SpriteSpecifier _weightIcon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/weight.svg.192dpi.png"));
-        
-        public StorageButtonContents(string entityName, ISpriteComponent? sprite, int size)
+
+        public EntityContainerButton(string entityName, ISpriteComponent? sprite, int size)
         {
             RobustXamlLoader.Load(this);
 

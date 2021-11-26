@@ -1,0 +1,14 @@
+<ContainerButton
+    xmlns="https://spacestation14.io"
+    xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    StyleClasses="storageButton"
+    EnableAllKeybinds="True"
+    Margin="2">
+    <BoxContainer Name="TMP"  Orientation="Horizontal" SeparationOverride="2">
+        <SpriteView Name="EntityView" HorizontalAlignment="Left" VerticalAlignment="Center" MinSize="32 32" OverrideDirection="South"/>
+        <Label Name="EntityName" HorizontalExpand="True" ClipText="True"/>
+        <TextureRect Name="Icon" HorizontalAlignment="Right" Visible="False" Stretch="KeepAspectCentered" SetSize="30 30" StyleClasses="storageWeightIcon">
+            <Label Name="EntitySize" Align="Center" Margin="0 4 0 0"/>
+        </TextureRect>
+    </BoxContainer>
+</ContainerButton>

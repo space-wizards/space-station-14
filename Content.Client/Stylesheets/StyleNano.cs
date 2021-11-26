@@ -196,7 +196,7 @@ namespace Content.Client.Stylesheets
 
             var buttonStorage = new StyleBoxTexture(BaseButton);
             buttonStorage.SetPatchMargin(StyleBox.Margin.All, 10);
-            buttonStorage.SetPadding(StyleBox.Margin.Vertical, 2);
+            buttonStorage.SetPadding(StyleBox.Margin.All, 0);
             buttonStorage.SetContentMarginOverride(StyleBox.Margin.Vertical, 0);
             buttonStorage.SetContentMarginOverride(StyleBox.Margin.Horizontal, 4);
 
