@@ -68,30 +68,17 @@ namespace Content.IntegrationTests.Tests.Atmos
                 threshold.TrySetPrimaryBound(AtmosMonitorThresholdBound.Upper, 0.5f);
                 Assert.That(threshold.UpperBound, Is.EqualTo(5f));
 
-                /* can no longer directly set these
-                // test if setting upper warning percentage
-                // over 1f invalidates it
-                threshold.UpperWarningPercentage = 1.1f;
+                threshold.TrySetWarningBound(AtmosMonitorThresholdBound.Upper, threshold.UpperBound + 1);
                 Assert.That(threshold.UpperWarningPercentage, Is.EqualTo(0.5f));
 
-                // same as above, for lower warning
-                threshold.LowerWarningPercentage = 0.9f;
+                threshold.TrySetWarningBound(AtmosMonitorThresholdBound.Lower, threshold.LowerBound - 1);
                 Assert.That(threshold.LowerWarningPercentage, Is.EqualTo(1.5f));
-                */
 
-                /* can no longer directly set these
-                // arbitrarily small percentages with
-                // a lower warning bound defined
-                // should immediately return
-                // if the percentage makes it lower than
-                // the warning bound
-                threshold.UpperWarningPercentage = 0.00001f;
+                threshold.TrySetWarningBound(AtmosMonitorThresholdBound.Upper, threshold.LowerBound - 1);
                 Assert.That(threshold.UpperWarningPercentage, Is.EqualTo(0.5f));
 
-                // same as above, but with a large percent
-                threshold.LowerWarningPercentage = 100f;
+                threshold.TrySetWarningBound(AtmosMonitorThresholdBound.Lower, threshold.UpperBound + 1);
                 Assert.That(threshold.LowerWarningPercentage, Is.EqualTo(1.5f));
-                */
 
                 threshold.TrySetWarningBound(AtmosMonitorThresholdBound.Upper, null);
                 threshold.TrySetWarningBound(AtmosMonitorThresholdBound.Lower, null);
