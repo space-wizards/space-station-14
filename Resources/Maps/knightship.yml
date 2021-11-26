@@ -5619,4 +5619,10 @@ entities:
   - pos: 0.5,1.5
     parent: 0
     type: Transform
+- uid: 558
+  type: FirelockGlass
+  components:
+  - pos: 0.5,-9.5
+    parent: 0
+    type: Transform
 ...
