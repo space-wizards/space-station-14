@@ -64,6 +64,7 @@ public partial class AdminLogSystem : SharedAdminLogSystem
 
     // CVars
     private bool _metricsEnabled;
+    private bool _enabled;
     private TimeSpan _queueSendDelay;
     private int _queueMax;
     private int _preRoundQueueMax;
@@ -85,6 +86,8 @@ public partial class AdminLogSystem : SharedAdminLogSystem
 
         _configuration.OnValueChanged(CVars.MetricsEnabled,
             value => _metricsEnabled = value, true);
+        _configuration.OnValueChanged(CCVars.AdminLogsEnabled,
+            value => _enabled = value, true);
         _configuration.OnValueChanged(CCVars.AdminLogsQueueSendDelay,
             value => _queueSendDelay = TimeSpan.FromSeconds(value), true);
         _configuration.OnValueChanged(CCVars.AdminLogsQueueMax,
@@ -250,8 +253,7 @@ public partial class AdminLogSystem : SharedAdminLogSystem
         {
             var player = new AdminLogPlayer
             {
-                PlayerUserId = id,
-                RoundId = CurrentRoundId
+                PlayerUserId = id
             };
 
             log.Players.Add(player);
@@ -269,6 +271,12 @@ public partial class AdminLogSystem : SharedAdminLogSystem
 
     public override void Add(LogType type, LogImpact impact, ref LogStringHandler handler)
     {
+        if (!_enabled)
+        {
+            handler.ToStringAndClear();
+            return;
+        }
+
         var (json, players, entities) = ToJson(handler.Values);
         var message = handler.ToStringAndClear();
 

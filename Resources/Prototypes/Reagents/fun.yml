@@ -33,7 +33,7 @@
   tileReactions:
   - !type:CreateEntityReaction
     entity: MobBee
-    usage: 5
+    usage: 2
     maxOnTile: 2
     randomOffsetMax: 0.3
     maxOnTileWhitelist:
