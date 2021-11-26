@@ -1,10 +1,4 @@
 Entries:
-- author: Swept
-  changes:
-  - {message: Destroyed state for canisters, type: Add}
-  - {message: Buffed canister HP from 100 to 300, type: Tweak}
-  id: 161
-  time: '2021-04-15T21:14:47.0000000+00:00'
 - author: SweptWasTaken
   changes:
   - {message: Bucket now works and there's one in botany and janitor hut, type: Fix}
@@ -2862,3 +2856,9 @@ Entries:
   - {message: Readded cows into cargo, type: Tweak}
   id: 662
   time: '2021-11-26T09:11:42.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Broken solar panels now spit out shards when deconstructed., type: Tweak}
+  - {message: Solar assemblies are now de-rotated when deconstructing., type: Fix}
+  id: 663
+  time: '2021-11-26T09:17:21.0000000+00:00'
