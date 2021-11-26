@@ -116,26 +116,7 @@ namespace Content.Shared.Chemistry.Components
             ChemButton,
             CreatePills,
             CreateBottles,
-            SetPillType1,
-            SetPillType2,
-            SetPillType3,
-            SetPillType4,
-            SetPillType5,
-            SetPillType6,
-            SetPillType7,
-            SetPillType8,
-            SetPillType9,
-            SetPillType10,
-            SetPillType11,
-            SetPillType12,
-            SetPillType13,
-            SetPillType14,
-            SetPillType15,
-            SetPillType16,
-            SetPillType17,
-            SetPillType18,
-            SetPillType19,
-            SetPillType20
+            SetPillType
         }
     }
 }

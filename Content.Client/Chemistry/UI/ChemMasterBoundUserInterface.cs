@@ -44,26 +44,11 @@ namespace Content.Client.Chemistry.UI
             _window.CreatePillButton.OnPressed += _ => PrepareData(UiAction.CreatePills, null, null, _window.PillAmount.Value, null);
             _window.CreateBottleButton.OnPressed += _ => PrepareData(UiAction.CreateBottles, null, null, null, _window.BottleAmount.Value);
 
-            _window.PillTypeButton1.OnPressed += _ => PrepareData(UiAction.SetPillType1, null, 1, null, null);
-            _window.PillTypeButton2.OnPressed += _ => PrepareData(UiAction.SetPillType2, null, 2, null, null);
-            _window.PillTypeButton3.OnPressed += _ => PrepareData(UiAction.SetPillType3, null, 3, null, null);
-            _window.PillTypeButton4.OnPressed += _ => PrepareData(UiAction.SetPillType4, null, 4, null, null);
-            _window.PillTypeButton5.OnPressed += _ => PrepareData(UiAction.SetPillType5, null, 5, null, null);
-            _window.PillTypeButton6.OnPressed += _ => PrepareData(UiAction.SetPillType6, null, 6, null, null);
-            _window.PillTypeButton7.OnPressed += _ => PrepareData(UiAction.SetPillType7, null, 7, null, null);
-            _window.PillTypeButton8.OnPressed += _ => PrepareData(UiAction.SetPillType8, null, 8, null, null);
-            _window.PillTypeButton9.OnPressed += _ => PrepareData(UiAction.SetPillType9, null, 9, null, null);
-            _window.PillTypeButton10.OnPressed += _ => PrepareData(UiAction.SetPillType10, null, 10, null, null);
-            _window.PillTypeButton11.OnPressed += _ => PrepareData(UiAction.SetPillType11, null, 11, null, null);
-            _window.PillTypeButton12.OnPressed += _ => PrepareData(UiAction.SetPillType12, null, 12, null, null);
-            _window.PillTypeButton13.OnPressed += _ => PrepareData(UiAction.SetPillType13, null, 13, null, null);
-            _window.PillTypeButton14.OnPressed += _ => PrepareData(UiAction.SetPillType14, null, 14, null, null);
-            _window.PillTypeButton15.OnPressed += _ => PrepareData(UiAction.SetPillType15, null, 15, null, null);
-            _window.PillTypeButton16.OnPressed += _ => PrepareData(UiAction.SetPillType16, null, 16, null, null);
-            _window.PillTypeButton17.OnPressed += _ => PrepareData(UiAction.SetPillType17, null, 17, null, null);
-            _window.PillTypeButton18.OnPressed += _ => PrepareData(UiAction.SetPillType18, null, 18, null, null);
-            _window.PillTypeButton19.OnPressed += _ => PrepareData(UiAction.SetPillType19, null, 19, null, null);
-            _window.PillTypeButton20.OnPressed += _ => PrepareData(UiAction.SetPillType20, null, 20, null, null);
+            for(int i = 0; i < _window.PillTypeButtons.Length; i++)
+            {
+                int type = i;
+                _window.PillTypeButtons[i].OnPressed += _ => PrepareData(UiAction.SetPillType, null, type + 1, null, null);
+            }
 
             _window.OnChemButtonPressed += (args, button) => PrepareData(UiAction.ChemButton, button, null, null, null);
         }
