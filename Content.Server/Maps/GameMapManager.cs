@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Chat.Managers;
 using Content.Shared.CCVar;
+using Robust.Server.Maps;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
@@ -20,6 +21,7 @@ public class GameMapManager : IGameMapManager
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
+    [Dependency] private readonly IMapLoader _mapLoader = default!;
 
     private GameMapPrototype _currentMap = default!;
     private bool _currentMapForced;
@@ -115,5 +117,13 @@ public class GameMapManager : IGameMapManager
     private bool TryLookupMap(string gameMap, [NotNullWhen(true)] out GameMapPrototype? map)
     {
         return _prototypeManager.TryIndex(gameMap, out map);
+    }
+
+    public string GenerateMapName(GameMapPrototype gameMap)
+    {
+        if (gameMap.NameGenerator is not null && gameMap.MapNameTemplate is not null)
+            return gameMap.NameGenerator.FormatName(gameMap.MapNameTemplate);
+        else
+            return gameMap.MapName;
     }
 }
