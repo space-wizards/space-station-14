@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Content.Shared.Acts;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Radiation;
 using Robust.Shared.Analyzers;

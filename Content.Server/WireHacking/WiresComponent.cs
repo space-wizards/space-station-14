@@ -522,7 +522,7 @@ namespace Content.Server.WireHacking
 
             // screws the panel open if the tool can do so
             else if (await toolSystem.UseTool(tool.Owner.Uid, eventArgs.User.Uid, Owner.Uid,
-                0f, 0.5f, _screwingQuality, toolComponent:tool))
+                0f, WireHackingSystem.ScrewTime, _screwingQuality, toolComponent:tool))
             {
                 IsPanelOpen = !IsPanelOpen;
                 if (IsPanelOpen)

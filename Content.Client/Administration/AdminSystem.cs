@@ -14,8 +14,6 @@ namespace Content.Client.Administration
 {
     public partial class AdminSystem : EntitySystem
     {
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-
         public event Action<List<PlayerInfo>>? PlayerListChanged;
 
         private Dictionary<NetUserId, PlayerInfo>? _playerList;
@@ -38,6 +36,12 @@ namespace Content.Client.Administration
             SubscribeNetworkEvent<FullPlayerListEvent>(OnPlayerListChanged);
             SubscribeNetworkEvent<PlayerInfoChangedEvent>(OnPlayerInfoChanged);
             SubscribeNetworkEvent<PlayerInfoRemovalMessage>(OnPlayerInfoRemoval);
+        }
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+            ShutdownOverlay();
         }
 
         private void OnPlayerInfoRemoval(PlayerInfoRemovalMessage ev)

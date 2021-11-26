@@ -515,6 +515,9 @@
   name: livestock crate
   parent: CrateGeneric
   components:
+  - type: EntityStorage
+    Capacity: 500
+    CanWeldShut: false
   - type: Sprite
     sprite: Structures/Storage/Crates/livestock.rsi
     layers:

@@ -71,7 +71,7 @@ namespace Content.Shared.Pulling
 
         public void ForceRelationship(SharedPullerComponent? puller, SharedPullableComponent? pullable)
         {
-            if ((puller != null) && (puller.Pulling == pullable))
+            if (pullable != null && puller != null && (puller.Pulling == pullable.Owner))
             {
                 // Already done
                 return;

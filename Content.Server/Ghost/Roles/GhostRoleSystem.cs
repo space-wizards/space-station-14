@@ -4,6 +4,7 @@ using Content.Server.EUI;
 using Content.Server.Ghost.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.UI;
+using Content.Server.Players;
 using Content.Shared.GameTicking;
 using Content.Shared.Ghost.Roles;
 using Content.Shared.Ghost;
@@ -14,6 +15,7 @@ using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.Utility;
 using Robust.Shared.Enums;
 
 namespace Content.Server.Ghost.Roles
@@ -22,9 +24,9 @@ namespace Content.Server.Ghost.Roles
     public class GhostRoleSystem : EntitySystem
     {
         [Dependency] private readonly EuiManager _euiManager = default!;
-        [Dependency] private IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
 
-        private uint _nextRoleIdentifier = 0;
+        private uint _nextRoleIdentifier;
         private bool _needsUpdateGhostRoleCount = true;
         private readonly Dictionary<uint, GhostRoleComponent> _ghostRoles = new();
         private readonly Dictionary<IPlayerSession, GhostRolesEui> _openUis = new();
@@ -94,7 +96,7 @@ namespace Content.Server.Ghost.Roles
         {
             if (_openMakeGhostRoleUis.Remove(session, out var eui))
             {
-                eui?.Close();
+                eui.Close();
             }
         }
 
@@ -117,8 +119,10 @@ namespace Content.Server.Ghost.Roles
             {
                 _needsUpdateGhostRoleCount = false;
                 var response = new GhostUpdateGhostRoleCountEvent(_ghostRoles.Count);
-                foreach (var player in _playerManager.GetAllPlayers())
+                foreach (var player in _playerManager.Sessions)
+                {
                     RaiseNetworkEvent(response, player.ConnectedClient);
+                }
             }
         }
 
@@ -151,6 +155,24 @@ namespace Content.Server.Ghost.Roles
             if (!_ghostRoles.TryGetValue(identifier, out var role)) return;
             if (!role.Take(player)) return;
             CloseEui(player);
+        }
+
+        public void GhostRoleInternalCreateMindAndTransfer(IPlayerSession player, EntityUid roleUid, EntityUid mob, GhostRoleComponent? role = null)
+        {
+            if (!Resolve(roleUid, ref role)) return;
+
+            var contentData = player.ContentData();
+
+            DebugTools.AssertNotNull(contentData);
+
+            var newMind = new Mind.Mind(player.UserId)
+            {
+                CharacterName = EntityManager.GetComponent<MetaDataComponent>(mob).EntityName
+            };
+            newMind.AddRole(new GhostRoleMarkerRole(newMind, role.RoleName));
+
+            newMind.ChangeOwningPlayer(player.UserId);
+            newMind.TransferTo(mob);
         }
 
         public GhostRoleInfo[] GetGhostRolesInfo()

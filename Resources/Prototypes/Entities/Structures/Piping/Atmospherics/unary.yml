@@ -128,6 +128,7 @@
     - type: Sprite
       netsync: false
       sprite: Structures/Piping/Atmospherics/thermomachine.rsi
+      noRot: true
     - type: Appearance
       visuals:
         - type: PipeConnectorVisualizer

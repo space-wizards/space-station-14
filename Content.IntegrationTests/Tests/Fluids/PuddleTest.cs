@@ -26,7 +26,7 @@ namespace Content.IntegrationTests.Tests.Fluids
 
             server.Assert(() =>
             {
-                var solution = new Solution("water", FixedPoint2.New(20));
+                var solution = new Solution("Water", FixedPoint2.New(20));
                 var grid = GetMainGrid(mapManager);
                 var (x, y) = GetMainTile(grid).GridIndices;
                 var coordinates = new EntityCoordinates(grid.GridEntityId, x, y);
@@ -65,7 +65,7 @@ namespace Content.IntegrationTests.Tests.Fluids
             server.Assert(() =>
             {
                 var coordinates = grid.ToCoordinates();
-                var solution = new Solution("water", FixedPoint2.New(20));
+                var solution = new Solution("Water", FixedPoint2.New(20));
                 var puddle = solution.SpillAt(coordinates, "PuddleSmear");
                 Assert.Null(puddle);
             });
@@ -125,7 +125,7 @@ namespace Content.IntegrationTests.Tests.Fluids
             // Spawn a puddle
             await server.WaitAssertion(() =>
             {
-                var solution = new Solution("water", FixedPoint2.New(amount));
+                var solution = new Solution("Water", FixedPoint2.New(amount));
                 puddle = solution.SpillAt(sCoordinates, "PuddleSmear");
 
                 // Check that the puddle was created

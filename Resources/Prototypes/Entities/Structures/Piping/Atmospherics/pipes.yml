@@ -52,7 +52,7 @@
         acts: ["Destruction"]
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/pipe.rsi
-    drawdepth: BelowFloor
+    drawdepth: ThinPipe
     netsync: false
   - type: Appearance
     visuals:

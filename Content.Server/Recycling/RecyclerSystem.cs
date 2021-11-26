@@ -51,7 +51,7 @@ namespace Content.Server.Recycling
 
         public void Bloodstain(RecyclerComponent component)
         {
-            if (component.Owner.TryGetComponent(out SharedAppearanceComponent? appearance))
+            if (component.Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(RecyclerVisuals.Bloody, true);
             }

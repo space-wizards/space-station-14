@@ -154,7 +154,7 @@ namespace Content.Client.Lobby
                 }
                 else
                 {
-                    text = $"{(int) Math.Floor(difference.TotalMinutes / 60)}:{difference.Seconds:D2}";
+                    text = $"{difference.Minutes}:{difference.Seconds:D2}";
                 }
             }
 

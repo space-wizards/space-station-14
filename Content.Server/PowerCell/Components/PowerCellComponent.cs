@@ -4,7 +4,6 @@ using Content.Server.Power.Components;
 using Content.Shared.Examine;
 using Content.Shared.PowerCell;
 using Content.Shared.Rounding;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;

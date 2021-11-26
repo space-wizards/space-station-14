@@ -92,7 +92,7 @@ namespace Content.Server.Mind.Components
                         EntitySystem.Get<SharedGhostSystem>().SetCanReturnToBody(ghost, false);
                     }
 
-                    Mind!.TransferTo(visiting);
+                    Mind!.TransferTo(visiting.Uid);
                 }
                 else if (GhostOnShutdown)
                 {
@@ -116,7 +116,7 @@ namespace Content.Server.Mind.Components
                         if (Mind != null)
                         {
                             ghost.Name = Mind.CharacterName ?? string.Empty;
-                            Mind.TransferTo(ghost);
+                            Mind.TransferTo(ghost.Uid);
                         }
                     });
                 }

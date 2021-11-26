@@ -293,7 +293,7 @@ namespace Content.Client.Damage
         {
             if (!entity.TryGetComponent<SpriteComponent>(out SpriteComponent? spriteComponent)
                 || !entity.TryGetComponent<DamageableComponent>(out var damageComponent)
-                || !entity.TryGetComponent<AppearanceComponent>(out var appearanceComponent))
+                || !entity.HasComponent<AppearanceComponent>())
                 return;
 
             _thresholds.Add(FixedPoint2.Zero);

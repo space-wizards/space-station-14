@@ -1,3 +1,4 @@
+using Content.Shared.Body.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 

@@ -257,7 +257,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!mapGrid.TryGetTileRef(tile, out var tileRef))
                 return;
 
-            tileRef.PryTile(_mapManager, _tileDefinitionManager, EntityManager);
+            tileRef.PryTile(_mapManager, _tileDefinitionManager, EntityManager, _robustRandom);
         }
 
         #endregion
@@ -988,6 +988,7 @@ namespace Content.Server.Atmos.EntitySystems
         private void UpdateAdjacent(IMapGrid mapGrid, GridAtmosphereComponent gridAtmosphere, TileAtmosphere tileAtmosphere)
         {
             tileAtmosphere.AdjacentBits = AtmosDirection.Invalid;
+            tileAtmosphere.BlockedAirflow = GetBlockedDirections(mapGrid, tileAtmosphere.GridIndices);
 
             for (var i = 0; i < Atmospherics.Directions; i++)
             {
@@ -1006,6 +1007,9 @@ namespace Content.Server.Atmos.EntitySystems
                     tileAtmosphere.AdjacentBits |= direction;
                 }
             }
+
+            if (!tileAtmosphere.AdjacentBits.IsFlagSet(tileAtmosphere.MonstermosInfo.CurrentTransferDirection))
+                tileAtmosphere.MonstermosInfo.CurrentTransferDirection = AtmosDirection.Invalid;
         }
 
         /// <summary>
@@ -1071,6 +1075,9 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 tile.AdjacentBits &= ~direction;
             }
+
+            if (!tile.AdjacentBits.IsFlagSet(tile.MonstermosInfo.CurrentTransferDirection))
+                tile.MonstermosInfo.CurrentTransferDirection = AtmosDirection.Invalid;
         }
 
         #endregion
