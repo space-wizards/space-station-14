@@ -9,7 +9,7 @@ guardian-activator-empty-invalid-creaton = This one is spent. What a shame.
 
 ## Guardian entity specific
 
-guardian-entity-recall = The guardian vanishes into thin air!
+guardian-entity-recall = the guardian vanishes into thin air!
 guardian-entity-taking-damage = Your guardian is taking damage!
 
 ## Health warnings

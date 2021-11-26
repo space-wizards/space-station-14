@@ -73,7 +73,7 @@ namespace Content.Server.Guardian
         /// </summary>
         private void OnActivatorExamined(EntityUid uid, GuardianCreatorComponent component, ExaminedEvent args)
         {
-           if (component.Used)
+           if (component.Used == true)
            {
                string usedstring = Loc.GetString("guardian-activator-empty-invalid-creaton");
                args.Message.AddMarkup("\n" + $"[color=#ba1919]{usedstring}[/color]");
@@ -91,7 +91,7 @@ namespace Content.Server.Guardian
             {
                 if (args.User.TryGetComponent<SharedActionsComponent>(out SharedActionsComponent? action))
                 {
-                    if (!component.Used)
+                    if (component.Used == false)
                     {
                         var hostcomp = args.User.EnsureComponent<GuardianHostComponent>();
                         var guardian = EntityManager.SpawnEntity(component.GuardianType, hostcomp.Owner.Transform.Coordinates);
