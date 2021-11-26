@@ -71,6 +71,7 @@
     - state: mfoam
       map: ["enum.FoamVisualLayers.Base"]
   - type: Physics
+  - type: Fixtures
     fixtures:
     - hard: true
       shape:
@@ -98,6 +99,7 @@
       - state: mfoam
         map: ["enum.FoamVisualLayers.Base"]
   - type: Physics
+  - type: Fixtures
     fixtures:
     - hard: true
       shape:
