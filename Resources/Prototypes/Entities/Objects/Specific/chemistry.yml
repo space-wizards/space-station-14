@@ -243,3 +243,23 @@
     solutions:
       food:
         maxVol: 50
+
+- type: entity
+  name: pill canister
+  id: PillCanister
+  parent: BaseItem
+  description: Holds up to 12 pills.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/pills_canister.rsi
+    state: pill_canister
+  - type: Item
+    sprite: Objects/Specific/Chemistry/pills_canister.rsi
+  - type: Storage
+    capacity: 60
+    quickInsert: true
+    areaInsert: true
+    areaInsertRadius: 1
+    whitelist:
+      tags:
+        - Pill
