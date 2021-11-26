@@ -212,13 +212,6 @@ namespace Content.Shared.SubFloor
                 {
                     if (subFloor) subFloorHideComponent.RevealedBy.Add((EntityUid) revealedUid);
                     else          subFloorHideComponent.RevealedBy.Remove((EntityUid) revealedUid);
-
-                    // if the visibility of this is not equal to if there are any entities
-                    // revealing it, we need to adjust the depth
-                    if (subFloorHideComponent.Visible != (subFloorHideComponent.RevealedBy.Count != 0))
-                        subFloorHideComponent.DepthToggle = subFloor == true
-                            ? SubFloorVisuals.ToggleDepthOn
-                            : SubFloorVisuals.ToggleDepthOff;
                 }
                 else
                 {

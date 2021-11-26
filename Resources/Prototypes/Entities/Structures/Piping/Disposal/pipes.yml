@@ -53,7 +53,6 @@
   - type: Appearance
     visuals:
     - type: SubFloorShowLayerVisualizer
-      rank: 3
     - type: DisposalVisualizer
       state_free: conpipe-s
       state_anchored: pipe-s
@@ -79,7 +78,6 @@
   - type: Appearance
     visuals:
     - type: SubFloorShowLayerVisualizer
-      rank: 3
     - type: DisposalVisualizer
       state_free: conpipe-tagger
       state_anchored: pipe-tagger
@@ -109,7 +107,6 @@
   - type: Appearance
     visuals:
     - type: SubFloorShowLayerVisualizer
-      rank: 3
     - type: DisposalVisualizer
       state_free: conpipe-t
       state_anchored: pipe-t
@@ -139,7 +136,6 @@
   - type: Appearance
     visuals:
     - type: SubFloorShowLayerVisualizer
-      rank: 3
     - type: DisposalVisualizer
       state_free: conpipe-j1s
       state_anchored: pipe-j1s
@@ -174,7 +170,6 @@
   - type: Appearance
     visuals:
     - type: SubFloorShowLayerVisualizer
-      rank: 3
     - type: DisposalVisualizer
       state_free: conpipe-j2s
       state_anchored: pipe-j2s
@@ -206,7 +201,6 @@
   - type: Appearance
     visuals:
     - type: SubFloorShowLayerVisualizer
-      rank: 3
     - type: DisposalVisualizer
       state_free: conpipe-j1
       state_anchored: pipe-j1
@@ -237,7 +231,6 @@
   - type: Appearance
     visuals:
     - type: SubFloorShowLayerVisualizer
-      rank: 3
     - type: DisposalVisualizer
       state_free: conpipe-j2
       state_anchored: pipe-j2
@@ -269,7 +262,6 @@
   - type: Appearance
     visuals:
     - type: SubFloorShowLayerVisualizer
-      rank: 3
     - type: DisposalVisualizer
       state_free: conpipe-y
       state_anchored: pipe-y
@@ -295,7 +287,6 @@
   - type: Appearance
     visuals:
     - type: SubFloorShowLayerVisualizer
-      rank: 3
     - type: DisposalVisualizer
       state_free: conpipe-c
       state_anchored: pipe-c

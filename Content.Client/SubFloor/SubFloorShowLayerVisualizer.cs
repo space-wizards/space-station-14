@@ -9,15 +9,6 @@ namespace Content.Client.SubFloor
     [UsedImplicitly]
     public class SubFloorShowLayerVisualizer : AppearanceVisualizer
     {
-        /// <summary>
-        ///     Set this to any positive value. It will be subtracted from
-        ///     the actual drawdepth of the sprite when the visualizer is
-        ///     set to show subfloor, and added when it is set to not
-        ///     show subfloor.
-        /// </summary>
-        [DataField("rank")]
-        private uint _drawDepth { get; set; } = 0;
-
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
@@ -39,21 +30,6 @@ namespace Content.Client.SubFloor
                 if (sprite.LayerMapTryGet(Layers.FirstLayer, out var firstLayer))
                 {
                     sprite.LayerSetVisible(firstLayer, true);
-                }
-
-                if (component.Owner.TryGetComponent(out SubFloorHideComponent? hide))
-                {
-                    switch (hide.DepthToggle)
-                    {
-                        case SubFloorVisuals.ToggleDepthOn:
-                            sprite.DrawDepth = (int) (sprite.DrawDepth - _drawDepth);
-                            hide.DepthToggle = SubFloorVisuals.ToggleDepthIgnore;
-                            break;
-                        case SubFloorVisuals.ToggleDepthOff:
-                            sprite.DrawDepth = (int) (sprite.DrawDepth + _drawDepth);
-                            hide.DepthToggle = SubFloorVisuals.ToggleDepthIgnore;
-                            break;
-                    }
                 }
             }
         }

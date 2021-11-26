@@ -48,12 +48,6 @@ namespace Content.Shared.SubFloor
         public bool Visible { get; set; }
 
         /// <summary>
-        ///     The current depth toggle of this
-        ///     subfloor.
-        /// </summary>
-        public SubFloorVisuals DepthToggle { get; set; } = SubFloorVisuals.ToggleDepthIgnore;
-
-        /// <summary>
         ///     The entities this subfloor is revealed by.
         /// </summary>
         public HashSet<EntityUid> RevealedBy { get; set; } = new();
