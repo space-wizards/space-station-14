@@ -5,6 +5,7 @@ using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Fluids.Components;
+using Content.Server.Fluids.EntitySystems;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Shared.Body.Components;
@@ -34,6 +35,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly BodySystem _bodySystem = default!;
         [Dependency] private readonly StomachSystem _stomachSystem = default!;
+        [Dependency] private readonly SpillableSystem _spillableSystem = default!;
 
         public override void Initialize()
         {
@@ -148,7 +150,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 var entity = EntityManager.GetEntity(uid);
 
                 var solution = _solutionContainerSystem.Drain(uid, interactions, interactions.DrainAvailable);
-                solution.SpillAt(entity.Uid, "PuddleSmear");
+                _spillableSystem.SpillAt(entity.Uid, solution, "PuddleSmear");
 
                 SoundSystem.Play(Filter.Pvs(entity), component.BurstSound.GetSound(), entity, AudioParams.Default.WithVolume(-4));
             }
@@ -234,7 +236,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
                 if (EntityManager.HasComponent<RefillableSolutionComponent>(uid))
                 {
-                    drain.SpillAt(targetUid, "PuddleSmear");
+                    _spillableSystem.SpillAt(targetUid, drain, "PuddleSmear");
                     return false;
                 }
 
