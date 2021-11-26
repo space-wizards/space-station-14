@@ -12,6 +12,7 @@ game-ticker-player-join-game-message = Welcome to Space Station 14! If this is y
 game-ticker-get-info-text = Hi and welcome to [color=white]Space Station 14![/color]
                             The current game mode is: [color=white]{$gmTitle}[/color].
                             >[color=yellow]{$desc}[/color]
+game-ticker-player-no-jobs-available-when-joining = When attempting to join to the game, no jobs were available.
 
 # Displayed in chat to admins when a player joins
 player-join-message = Player {$name} joined the server!
