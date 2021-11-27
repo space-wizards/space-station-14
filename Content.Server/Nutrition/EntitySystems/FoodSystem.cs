@@ -74,22 +74,33 @@ namespace Content.Server.Nutrition.EntitySystems
         /// <summary>
         /// Feed someone else
         /// </summary>
-        private void OnFeedFood(EntityUid uid, FoodComponent foodComponent, AfterInteractEvent ev)
+        private void OnFeedFood(EntityUid uid, FoodComponent foodComponent, AfterInteractEvent args)
         {
-            if (ev.Handled || ev.TargetUid == null)
+            if (args.Handled || args.TargetUid == null)
                 return;
 
-            if (!_actionBlockerSystem.CanInteract(ev.UserUid) || !_actionBlockerSystem.CanUse(ev.UserUid))
+            if (!_actionBlockerSystem.CanInteract(args.UserUid) || !_actionBlockerSystem.CanUse(args.UserUid))
                 return;
 
-            if (!ev.UserUid.InRangeUnobstructed(uid, popup: true) ||
-                !ev.UserUid.InRangeUnobstructed(ev.TargetUid.Value, popup: true))
+            if (!args.UserUid.InRangeUnobstructed(uid, popup: true))
             {
-                ev.Handled = true;
+                args.Handled = true;
                 return;
             }
 
-            ev.Handled = TryForceFeed(uid, ev.UserUid, ev.TargetUid.Value);
+            if (args.UserUid == args.TargetUid)
+            {
+                args.Handled = TryUseFood(uid, args.UserUid);
+                return;
+            }
+
+            if (!args.UserUid.InRangeUnobstructed(args.TargetUid.Value, popup: true))
+            {
+                args.Handled = true;
+                return;
+            }
+            
+            args.Handled = TryForceFeed(uid, args.UserUid, args.TargetUid.Value);
         }
 
         /// <summary>

@@ -118,8 +118,19 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!_actionBlockerSystem.CanInteract(args.UserUid) || !_actionBlockerSystem.CanUse(args.UserUid))
                 return;
 
-            if (!args.UserUid.InRangeUnobstructed(uid, popup: true) ||
-                !args.UserUid.InRangeUnobstructed(args.TargetUid.Value, popup: true))
+            if (!args.UserUid.InRangeUnobstructed(uid, popup: true))
+            {
+                args.Handled = true;
+                return;
+            }
+
+            if (args.UserUid == args.TargetUid)
+            {
+                args.Handled = TryUseDrink(uid, args.UserUid);
+                return;
+            }
+
+            if (!args.UserUid.InRangeUnobstructed(args.TargetUid.Value, popup: true))
             {
                 args.Handled = true;
                 return;
