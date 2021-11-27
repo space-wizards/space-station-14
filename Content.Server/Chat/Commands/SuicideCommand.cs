@@ -83,8 +83,7 @@ namespace Content.Server.Chat.Commands
             //TODO: needs to check if the mob is actually alive
             //TODO: maybe set a suicided flag to prevent resurrection?
 
-            // I assume player death log impact should generally be high, but this is voluntary
-            EntitySystem.Get<AdminLogSystem>().Add(LogType.Suicide, LogImpact.Medium, $"{player} is committing suicide");
+            EntitySystem.Get<AdminLogSystem>().Add(LogType.Suicide, $"{player.AttachedEntity} is committing suicide");
 
             // Held item suicide
             var handsComponent = owner.GetComponent<HandsComponent>();

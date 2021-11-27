@@ -102,10 +102,10 @@ namespace Content.Server.Weapon.Melee
                     {
                         if (args.Used == args.User)
                             _logSystem.Add(LogType.MeleeHit,
-                                $"{args.User} melee attacked {args.Target} using their hands and dealt {damage.Total} damage");
+                                $"{args.User} melee attacked {args.TargetEntity} using their hands and dealt {damage.Total} damage");
                         else
                             _logSystem.Add(LogType.MeleeHit,
-                                $"{args.User} melee attacked {args.Target} using {args.Used} and dealt {damage.Total} damage");
+                                $"{args.User} melee attacked {args.TargetEntity} using {args.Used} and dealt {damage.Total} damage");
                     }
 
                     SoundSystem.Play(Filter.Pvs(owner), comp.HitSound.GetSound(), target);
