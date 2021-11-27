@@ -24,3 +24,21 @@
     gas: Plasma
   products:
     Phlogiston: 3
+
+- type: reaction
+  id: ChlorineTrifluoride
+  reactants:
+    Chlorine:
+      amount: 1
+    Fluorine:
+      amount: 3
+  effects:
+  # TODO electro's pretty explosions PR make this big and firey!!
+  # TODO solution temperature!!
+  - !type:ExplosionReactionEffect
+    devastationRange: 0
+    heavyImpactRange: 0
+    lightImpactRange: 2
+    scaled: false
+  products:
+    ChlorineTrifluoride: 4

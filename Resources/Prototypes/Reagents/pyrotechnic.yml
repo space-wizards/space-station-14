@@ -36,7 +36,7 @@
   name: napalm
   parent: BasePyrotechnic
   desc: It's just a little flammable.
-  physicalDesc: burning
+  physicalDesc: soapy
   color: "#FA00AF"
   tileReactions:
   - !type:FlammableTileReaction
@@ -81,6 +81,34 @@
       effects:
       - !type:FlammableReaction
         multiplier: 0.2
+      - !type:Ignite
+
+- type: reagent
+  id: ChlorineTrifluoride
+  name: CLF3
+  parent: BasePyrotechnic
+  desc: You really, REALLY don't want to get this shit anywhere near you.
+  physicalDesc: blazing
+  color: "#FFC8C8"
+  tileReactions:
+  - !type:PryTileReaction
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Heat: 1
+      - !type:FlammableReaction
+        multiplier: 0.2
+      - !type:AdjustTemperature
+        amount: 6000
+  reactiveEffects:
+    Flammable:
+      methods: [ Touch ]
+      effects:
+      - !type:FlammableReaction
+        multiplier: 0.3
       - !type:Ignite
 
 - type: reagent
