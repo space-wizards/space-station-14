@@ -143,6 +143,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!flammable.OnFire)
                 return;
 
+            _logSystem.Add(LogType.Healed, $"{uid} stopped being on fire damage");
             flammable.OnFire = false;
             flammable.FireStacks = 0;
 
@@ -158,6 +159,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             if (flammable.FireStacks > 0 && !flammable.OnFire)
             {
+                _logSystem.Add(LogType.Damaged, $"{uid} is on fire");
                 flammable.OnFire = true;
             }
 
@@ -226,20 +228,8 @@ namespace Content.Server.Atmos.EntitySystems
 
                 if (!flammable.OnFire)
                 {
-                    if (flammable.OnFireLogged)
-                    {
-                        flammable.OnFireLogged = false;
-                        _logSystem.Add(LogType.Healed, $"{uid} stopped being on fire damage");
-                    }
-
                     status?.ClearAlert(AlertType.Fire);
                     continue;
-                }
-
-                if (!flammable.OnFireLogged)
-                {
-                    flammable.OnFireLogged = true;
-                    _logSystem.Add(LogType.Damaged, $"{uid} is on fire");
                 }
 
                 status?.ShowAlert(AlertType.Fire);

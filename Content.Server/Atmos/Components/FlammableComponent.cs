@@ -35,10 +35,5 @@ namespace Content.Server.Atmos.Components
         [DataField("damage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier Damage = default!;
-
-        /// <summary>
-        ///     Used to log when the on-fire state changes. Prevents us from having to log every tick of fire damage.
-        /// </summary>
-        public bool OnFireLogged = false;
     }
 }
