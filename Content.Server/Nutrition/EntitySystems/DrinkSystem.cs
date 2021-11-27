@@ -29,6 +29,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using Robust.Shared.Utility.Markup;
 
 namespace Content.Server.Nutrition.EntitySystems
 {

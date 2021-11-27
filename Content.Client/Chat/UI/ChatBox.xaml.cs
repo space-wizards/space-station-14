@@ -18,6 +18,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
+using Robust.Shared.Utility.Markup;
 
 namespace Content.Client.Chat.UI
 {
@@ -502,11 +503,11 @@ namespace Content.Client.Chat.UI
         {
             DebugTools.Assert(!Disposed);
 
-            var formatted = new FormattedMessage(3);
+            var formatted = new FormattedMessage.Builder();
             formatted.PushColor(color);
-            formatted.AddMarkup(message);
+            formatted.AddMessage(Basic.RenderMarkup(message));
             formatted.Pop();
-            Contents.AddMessage(formatted);
+            Contents.AddMessage(formatted.Build());
         }
 
         private void Input_OnTextEntered(LineEdit.LineEditEventArgs args)

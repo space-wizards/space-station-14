@@ -14,6 +14,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
+using Robust.Shared.Utility.Markup;
 
 namespace Content.Server.Weapon.Ranged.Ammunition.Components
 {
@@ -168,7 +169,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             return true;
         }
 
-        public void Examine(FormattedMessage message, bool inDetailsRange)
+        public void Examine(FormattedMessage.Builder message, bool inDetailsRange)
         {
             var text = Loc.GetString("ranged-magazine-component-on-examine", ("magazineType", MagazineType),("caliber", Caliber));
             message.AddMarkup(text);

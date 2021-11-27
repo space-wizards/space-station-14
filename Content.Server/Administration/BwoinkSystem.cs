@@ -14,6 +14,7 @@ using Robust.Shared.Localization;
 using Robust.Server.Player;
 using Robust.Shared.IoC;
 using Robust.Shared.Utility;
+using Robust.Shared.Utility.Markup;
 
 namespace Content.Server.Administration
 {
@@ -39,7 +40,7 @@ namespace Content.Server.Administration
                 return;
             }
 
-            var escapedText = FormattedMessage.EscapeText(message.Text);
+            var escapedText = Basic.EscapeText(message.Text);
 
             var bwoinkText = senderAdmin
                 ? $"[color=red]{senderSession.Name}[/color]: {escapedText}"
