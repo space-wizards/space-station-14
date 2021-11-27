@@ -59,7 +59,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (ev.Handled)
                 return;
 
-            if (!_actionBlockerSystem.CanInteract(ev.UserUid) || _actionBlockerSystem.CanUse(ev.UserUid))
+            if (!_actionBlockerSystem.CanInteract(ev.UserUid) || !_actionBlockerSystem.CanUse(ev.UserUid))
                 return;
 
             if (!ev.UserUid.InRangeUnobstructed(uid, popup: true))
@@ -79,7 +79,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (ev.Handled || ev.TargetUid == null)
                 return;
 
-            if (!_actionBlockerSystem.CanInteract(ev.UserUid) || _actionBlockerSystem.CanUse(ev.UserUid))
+            if (!_actionBlockerSystem.CanInteract(ev.UserUid) || !_actionBlockerSystem.CanUse(ev.UserUid))
                 return;
 
             if (!ev.UserUid.InRangeUnobstructed(uid, popup: true) ||
@@ -351,7 +351,8 @@ namespace Content.Server.Nutrition.EntitySystems
                 DeleteAndSpawnTrash(food);
         }
 
-        private bool TryGetRequiredUtensils(EntityUid userUid, FoodComponent component, out List<UtensilComponent> utensils, HandsComponent? hands = null)
+        private bool TryGetRequiredUtensils(EntityUid userUid, FoodComponent component,
+            out List<UtensilComponent> utensils, HandsComponent? hands = null)
         {
             utensils = new();
 

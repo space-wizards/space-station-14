@@ -115,7 +115,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (args.Handled || args.TargetUid == null)
                 return;
 
-            if (!_actionBlockerSystem.CanInteract(args.UserUid) || _actionBlockerSystem.CanUse(args.UserUid))
+            if (!_actionBlockerSystem.CanInteract(args.UserUid) || !_actionBlockerSystem.CanUse(args.UserUid))
                 return;
 
             if (!args.UserUid.InRangeUnobstructed(uid, popup: true) ||
@@ -135,7 +135,7 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             if (args.Handled) return;
 
-            if (!_actionBlockerSystem.CanInteract(args.UserUid) || _actionBlockerSystem.CanUse(args.UserUid))
+            if (!_actionBlockerSystem.CanInteract(args.UserUid) || !_actionBlockerSystem.CanUse(args.UserUid))
                 return;
 
             if (!args.UserUid.InRangeUnobstructed(uid, popup: true))
