@@ -1,3 +1,4 @@
+using Content.Shared.Administration.Logs;
 using Content.Shared.Hands.Components;
 using Content.Shared.Physics;
 using Content.Shared.Physics.Pull;
@@ -18,6 +19,7 @@ namespace Content.Shared.Throwing
     {
         [Dependency] private readonly SharedBroadphaseSystem _broadphaseSystem = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+        [Dependency] private readonly SharedAdminLogSystem _adminLogSystem = default!;
 
         private const string ThrowingFixture = "throw-fixture";
 
@@ -121,6 +123,10 @@ namespace Content.Shared.Throwing
                 return;
             }
 
+            // Assume it's uninteresting if it has no thrower. For now anyway.
+            if (thrownItem.Thrower is not null)
+                _adminLogSystem.Add(LogType.Landed, LogImpact.Low, $"{landing} thrown by {thrownItem.Thrower:thrower} landed.");
+
             var landMsg = new LandEvent {User = thrownItem.Thrower?.Uid};
             RaiseLocalEvent(landing.Uid, landMsg, false);
         }
@@ -130,6 +136,9 @@ namespace Content.Shared.Throwing
         /// </summary>
         public void ThrowCollideInteraction(IEntity? user, IPhysBody thrown, IPhysBody target)
         {
+            if (user is not null)
+                _adminLogSystem.Add(LogType.ThrowHit, LogImpact.Low,
+                    $"{thrown.Owner:thrown} thrown by {user:thrower} hit {target.Owner:target}.");
             // TODO: Just pass in the bodies directly
             RaiseLocalEvent(target.Owner.Uid, new ThrowHitByEvent(user, thrown.Owner, target.Owner));
             RaiseLocalEvent(thrown.Owner.Uid, new ThrowDoHitEvent(user, thrown.Owner, target.Owner));

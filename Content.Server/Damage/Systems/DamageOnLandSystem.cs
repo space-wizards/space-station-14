@@ -25,10 +25,7 @@ namespace Content.Server.Damage.Systems
             if (dmg == null)
                 return;
 
-            if  (args.User == null)
-                _logSystem.Add(LogType.Landed, $"{uid} landed and took {dmg.Total} damage"); 
-            else
-                _logSystem.Add(LogType.Landed, $"{uid} thrown by {args.User.Value} landed and took {dmg.Total} damage");
+            _logSystem.Add(LogType.Landed, $"{component.Owner} received {dmg.Total} damage from landing"); 
         }
     }
 }
