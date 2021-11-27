@@ -134,7 +134,7 @@ namespace Content.Server.GameTicking
                 jobSpecial.AfterEquip(mob);
             }
 
-            _stationSystem.TryAssignJobToStation(station, jobId);
+            _stationSystem.TryAssignJobToStation(station, jobPrototype);
 
             if (lateJoin)
                 _adminLogSystem.Add(LogType.LateJoin, LogImpact.Medium, $"Player {player.Name} late joined as {character.Name:characterName} on station {_stationSystem.StationInfo[station].Name:stationName} with {mob} as a {job.Name:jobName}.");
