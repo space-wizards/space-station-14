@@ -39,7 +39,8 @@ namespace Content.Server.Construction
         private void AddDeconstructVerb(EntityUid uid, ConstructionComponent component, GetOtherVerbsEvent args)
         {
             if (!args.User.IsInSameOrParentContainer(args.Target) ||
-                _sharedInteractionSystem.InRangeUnobstructed(args.User, args.Target, ignoreInsideBlocker: true))
+                !_sharedInteractionSystem.InRangeUnobstructed(args.User, args.Target, ignoreInsideBlocker: true))
+                return;
 
             if (component.TargetNode == component.DeconstructionNode ||
                 component.Node == component.DeconstructionNode)
