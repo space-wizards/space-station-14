@@ -40,5 +40,10 @@ public enum LogType
     Pickup = 36,
     Drop = 37,
     BulletHit = 38,
+    MeleeHit = 41,
+    HitScanHit = 42,
+    Suicide = 43,
+    Explosion = 44,
+    Radiation = 45,
     CrayonDraw = 39,
 }

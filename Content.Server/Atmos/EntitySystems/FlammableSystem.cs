@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using Content.Server.Administration.Logs;
 using Content.Server.Alert;
 using Content.Server.Atmos.Components;
 using Content.Server.Stunnable;
 using Content.Server.Temperature.Systems;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
@@ -26,6 +28,7 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly StunSystem _stunSystem = default!;
         [Dependency] private readonly TemperatureSystem _temperatureSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly AdminLogSystem _logSystem = default!;
 
         private const float MinimumFireStacks = -10f;
         private const float MaximumFireStacks = 20f;
@@ -223,8 +226,20 @@ namespace Content.Server.Atmos.EntitySystems
 
                 if (!flammable.OnFire)
                 {
+                    if (flammable.OnFireLogged)
+                    {
+                        flammable.OnFireLogged = false;
+                        _logSystem.Add(LogType.Healed, $"{uid} stopped being on fire damage");
+                    }
+
                     status?.ClearAlert(AlertType.Fire);
                     continue;
+                }
+
+                if (!flammable.OnFireLogged)
+                {
+                    flammable.OnFireLogged = true;
+                    _logSystem.Add(LogType.Damaged, $"{uid} is on fire");
                 }
 
                 status?.ShowAlert(AlertType.Fire);

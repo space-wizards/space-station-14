@@ -11,6 +11,8 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
+using Content.Shared.Administration.Logs;
+using Content.Server.Administration.Logs;
 
 namespace Content.Server.Mining.Components
 {
@@ -37,6 +39,8 @@ namespace Content.Server.Mining.Components
             if (!item.TryGetComponent(out MeleeWeaponComponent? meleeWeaponComponent))
                 return false;
 
+            // how old is this code!?
+            EntitySystem.Get<AdminLogSystem>().Add(LogType.Damaged, $"{eventArgs.User} is mining {eventArgs.Target}");
             EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner.Uid, meleeWeaponComponent.Damage);
 
             if (!item.TryGetComponent(out PickaxeComponent? pickaxeComponent))
