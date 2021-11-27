@@ -78,7 +78,7 @@ namespace Content.Shared.Singularity
                 appearance.SetData(SingularityVisuals.Level, value);
             }
 
-            if (physics != null && _fixtures.GetFixture(physics, DeleteFixture) is {Shape: PhysShapeCircle circle})
+            if (physics != null && _fixtures.GetFixtureOrNull(physics, DeleteFixture) is {Shape: PhysShapeCircle circle})
             {
                 circle.Radius = value - 0.5f;
             }

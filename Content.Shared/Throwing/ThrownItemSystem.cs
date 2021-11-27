@@ -54,7 +54,7 @@ namespace Content.Shared.Throwing
             if (!component.Owner.TryGetComponent(out PhysicsComponent? physicsComponent) ||
                 physicsComponent.Fixtures.Count != 1) return;
 
-            if (_fixtures.GetFixture(physicsComponent, ThrowingFixture) != null)
+            if (_fixtures.GetFixtureOrNull(physicsComponent, ThrowingFixture) != null)
             {
                 Logger.Error($"Found existing throwing fixture on {component.Owner}");
                 return;
@@ -97,7 +97,7 @@ namespace Content.Shared.Throwing
         {
             if (EntityManager.TryGetComponent(uid, out PhysicsComponent? physicsComponent))
             {
-                var fixture = _fixtures.GetFixture(physicsComponent, ThrowingFixture);
+                var fixture = _fixtures.GetFixtureOrNull(physicsComponent, ThrowingFixture);
 
                 if (fixture != null)
                 {

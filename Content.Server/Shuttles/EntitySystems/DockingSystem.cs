@@ -107,7 +107,7 @@ namespace Content.Server.Shuttles.EntitySystems
                 !EntityManager.HasComponent<ShuttleComponent>(grid.GridEntityId)) return null;
 
             var transform = body.GetTransform();
-            var dockingFixture = _fixtureSystem.GetFixture(body, DockingFixture);
+            var dockingFixture = _fixtureSystem.GetFixtureOrNull(body, DockingFixture);
 
             if (dockingFixture == null)
             {
@@ -141,7 +141,7 @@ namespace Content.Server.Shuttles.EntitySystems
                         !EntityManager.TryGetComponent(ent, out PhysicsComponent? otherBody)) continue;
 
                     var otherTransform = otherBody.GetTransform();
-                    var otherDockingFixture = _fixtureSystem.GetFixture(otherBody, DockingFixture);
+                    var otherDockingFixture = _fixtureSystem.GetFixtureOrNull(otherBody, DockingFixture);
 
                     if (otherDockingFixture == null)
                     {
@@ -384,8 +384,8 @@ namespace Content.Server.Shuttles.EntitySystems
                 return;
             }
 
-            var fixtureA = _fixtureSystem.GetFixture(bodyA, DockingFixture);
-            var fixtureB = _fixtureSystem.GetFixture(bodyB, DockingFixture);
+            var fixtureA = _fixtureSystem.GetFixtureOrNull(bodyA, DockingFixture);
+            var fixtureB = _fixtureSystem.GetFixtureOrNull(bodyB, DockingFixture);
 
             if (fixtureA == null || fixtureB == null)
             {
