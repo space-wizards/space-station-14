@@ -5,6 +5,11 @@
       methods: [ Touch ]
       effects:
       - !type:FlammableReaction
+  plantMetabolism:
+  - !type:PlantAdjustWeeds
+    amount: -2
+  - !type:PlantAdjustHealth
+    amount: -2
 
 - type: reagent
   id: Thermite
@@ -25,6 +30,29 @@
         damage:
           types:
             Heat: 2
+
+- type: reagent
+  id: Napalm
+  name: napalm
+  parent: BasePyrotechnic
+  tileReactions:
+  - !type:FlammableTileReaction
+    temperatureMultiplier: 5
+  reactiveEffects:
+    Flammable:
+      methods: [ Touch ]
+      effects:
+      - !type:FlammableReaction
+        multiplier: 0.4
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Heat: 1
+      - !type:FlammableReaction
+        multiplier: 0.4
 
 - type: reagent
   id: FoamingAgent

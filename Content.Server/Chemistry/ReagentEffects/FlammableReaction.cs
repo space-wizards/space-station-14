@@ -14,11 +14,14 @@ namespace Content.Server.Chemistry.ReagentEffects
     [UsedImplicitly]
     public class FlammableReaction : ReagentEffect
     {
+        [DataField("multiplier")]
+        public float Multiplier = 0.05f;
+
         public override void Effect(ReagentEffectArgs args)
         {
             if (!args.EntityManager.TryGetComponent(args.SolutionEntity, out FlammableComponent? flammable)) return;
 
-            EntitySystem.Get<FlammableSystem>().AdjustFireStacks(args.SolutionEntity, args.Quantity.Float() / 5f, flammable);
+            EntitySystem.Get<FlammableSystem>().AdjustFireStacks(args.SolutionEntity, args.Quantity.Float() * Multiplier, flammable);
             args.Source?.RemoveReagent(args.Reagent.ID, args.Quantity);
         }
     }
