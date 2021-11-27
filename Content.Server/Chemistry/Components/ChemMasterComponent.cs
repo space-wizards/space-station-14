@@ -5,6 +5,7 @@ using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
+using Content.Server.Sprite;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
@@ -37,6 +38,9 @@ namespace Content.Server.Chemistry.Components
     [ComponentReference(typeof(SharedChemMasterComponent))]
     public class ChemMasterComponent : SharedChemMasterComponent, IActivate
     {
+        [ViewVariables]
+        private uint _pillType = 1;
+        
         [ViewVariables]
         private bool _bufferModeTransfer = true;
 
@@ -103,7 +107,7 @@ namespace Content.Server.Chemistry.Components
             }
 
             var msg = (UiActionMessage) obj.Message;
-            var needsPower = msg.action switch
+            var needsPower = msg.Action switch
             {
                 UiAction.Eject => false,
                 _ => true,
@@ -112,13 +116,13 @@ namespace Content.Server.Chemistry.Components
             if (!PlayerCanUseChemMaster(obj.Session.AttachedEntity, needsPower))
                 return;
 
-            switch (msg.action)
+            switch (msg.Action)
             {
                 case UiAction.Eject:
                     EntitySystem.Get<ItemSlotsSystem>().TryEjectToHands(OwnerUid, BeakerSlot, obj.Session.AttachedEntityUid);
                     break;
                 case UiAction.ChemButton:
-                    TransferReagent(msg.id, msg.amount, msg.isBuffer);
+                    TransferReagent(msg.Id, msg.Amount, msg.IsBuffer);
                     break;
                 case UiAction.Transfer:
                     _bufferModeTransfer = true;
@@ -128,14 +132,18 @@ namespace Content.Server.Chemistry.Components
                     _bufferModeTransfer = false;
                     UpdateUserInterface();
                     break;
+                case UiAction.SetPillType:
+                    _pillType = msg.PillType;
+                    UpdateUserInterface();
+                    break;
                 case UiAction.CreatePills:
                 case UiAction.CreateBottles:
-                    TryCreatePackage(obj.Session.AttachedEntity, msg.action, msg.pillAmount, msg.bottleAmount);
+                    TryCreatePackage(obj.Session.AttachedEntity, msg.Action, msg.PillAmount, msg.BottleAmount);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-
+            UpdateUserInterface();
             ClickSound();
         }
 
@@ -175,13 +183,13 @@ namespace Content.Server.Chemistry.Components
             {
                 return new ChemMasterBoundUserInterfaceState(Powered, false, FixedPoint2.New(0), FixedPoint2.New(0),
                     "", Owner.Name, new List<Solution.ReagentQuantity>(), BufferSolution.Contents, _bufferModeTransfer,
-                    BufferSolution.TotalVolume);
+                    BufferSolution.TotalVolume, _pillType);
             }
 
             return new ChemMasterBoundUserInterfaceState(Powered, true, beakerSolution.CurrentVolume,
                 beakerSolution.MaxVolume,
                 beaker.Name, Owner.Name, beakerSolution.Contents, BufferSolution.Contents, _bufferModeTransfer,
-                BufferSolution.TotalVolume);
+                BufferSolution.TotalVolume, _pillType);
         }
 
         public void UpdateUserInterface()
@@ -245,7 +253,7 @@ namespace Content.Server.Chemistry.Components
                         {
                             actualAmount = FixedPoint2.Min(reagent.Quantity, amount);
                         }
-
+                        
                         EntitySystem.Get<SolutionContainerSystem>().TryRemoveReagent(beaker.Uid, beakerSolution, id, actualAmount);
                         BufferSolution.AddReagent(id, actualAmount);
                         break;
@@ -309,6 +317,13 @@ namespace Content.Server.Chemistry.Components
 
                     var pillSolution = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(pill.Uid, "food");
                     EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(pill.Uid, pillSolution, bufferSolution);
+
+                    //Change pill Sprite component state
+                    if (!pill.TryGetComponent(out SpriteComponent? sprite))
+                    {
+                        return;
+                    }
+                    sprite?.LayerSetState(0, "pill" + _pillType);
 
                     //Try to give them the bottle
                     if (user.TryGetComponent<HandsComponent>(out var hands) &&
