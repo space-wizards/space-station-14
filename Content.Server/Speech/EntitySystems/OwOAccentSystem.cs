@@ -24,21 +24,21 @@ namespace Content.Server.Speech.EntitySystems
             SubscribeLocalEvent<OwOAccentComponent, AccentGetEvent>(OnAccent);
         }
 
-        public static string Accentuate(string message, IRobustRandom random)
+        public string Accentuate(string message)
         {
             foreach (var (word, repl) in SpecialWords)
             {
                 message = message.Replace(word, repl);
             }
 
-            return message.Replace("!", random.Pick(Faces))
+            return message.Replace("!", _random.Pick(Faces))
                 .Replace("r", "w").Replace("R", "W")
                 .Replace("l", "w").Replace("L", "W");
         }
 
         private void OnAccent(EntityUid uid, OwOAccentComponent component, AccentGetEvent args)
         {
-            args.Message = Accentuate(args.Message, _random);
+            args.Message = Accentuate(args.Message);
         }
     }
 }

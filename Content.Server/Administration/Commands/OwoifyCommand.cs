@@ -38,8 +38,9 @@ public class OwoifyCommand : IConsoleCommand
         var meta = entityManager.GetComponent<MetaDataComponent>(eUid);
 
         var random = IoCManager.Resolve<IRobustRandom>();
+        var owoSys = EntitySystem.Get<OwOAccentSystem>();
 
-        meta.EntityName = OwOAccentSystem.Accentuate(meta.EntityName, random);
-        meta.EntityDescription = OwOAccentSystem.Accentuate(meta.EntityDescription, random);
+        meta.EntityName = owoSys.Accentuate(meta.EntityName);
+        meta.EntityDescription = owoSys.Accentuate(meta.EntityDescriptionm);
     }
 }
