@@ -132,9 +132,9 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             }
         }
 
-        protected override void OnAdd()
+        protected override void Initialize()
         {
-            base.OnAdd();
+            base.Initialize();
 
             Owner.EnsureComponentWarn(out ServerRangedWeaponComponent rangedWeaponComponent);
 
