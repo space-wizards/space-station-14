@@ -67,6 +67,20 @@
     maxTargets: 3
 
 - type: action
+  actionType: PAIMidi
+  icon: Interface/Actions/midi.png
+  name: "Play MIDI"
+  description: "Open your portable MIDI interface to soothe your owner."
+  filters:
+    - pai
+    - music
+  behaviorType: Instant
+  behavior: !type:PAIMidi
+    radius: 3
+    cooldown: 0
+    maxTargets: 3
+
+- type: action
   actionType: DebugInstant
   icon: Interface/Alerts/human_health.rsi/health1.png
   name: "[color=red]Debug Instant[/color]"
@@ -132,4 +146,5 @@
   behaviorType: TargetEntity
   repeat: true
   behavior: !type:DebugTargetEntity { }
+
 
