@@ -1,14 +1,4 @@
 Entries:
-- author: TaralGit
-  changes:
-  - {message: (Re)Added the machete and the baseball bat (melee weapons)., type: Add}
-  - {message: Added inhands for the beaker and large beaker., type: Add}
-  - {message: minor changes to the laser gun sprite and mag-unshaded files., type: Fix}
-  - {message: 'reworked the inhands for the homemade pistol, clarissa, giskard  and
-      mk58 (both variants),', type: Fix}
-  - {message: nerfed melee weapons, type: Fix}
-  id: 170
-  time: '2021-04-28T21:14:28.0000000+00:00'
 - author: Swept
   changes:
   - {message: 'Adds a ton of food, ingredients and condiments from different codebases',
@@ -2858,3 +2848,10 @@ Entries:
       on touch.', type: Add}
   id: 671
   time: '2021-11-27T07:31:50.0000000+00:00'
+- author: Pancake
+  changes:
+  - {message: Trash Bags have been added to the Janitor Cargo Crate., type: Tweak}
+  - {message: Emergency Suits have been added to the Emergency Internals Cargo Crate.,
+    type: Tweak}
+  id: 672
+  time: '2021-11-27T08:54:08.0000000+00:00'
