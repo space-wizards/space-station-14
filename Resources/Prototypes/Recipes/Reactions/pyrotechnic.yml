@@ -1,0 +1,26 @@
+﻿- type: reaction
+  id: Napalm
+  reactants:
+    Oil:
+      amount: 1
+    WeldingFuel:
+      amount: 1
+    Ethanol:
+      amount: 1
+  products:
+    Napalm: 3
+
+- type: reaction
+  id: Phlogiston
+  reactants:
+    Phosphorus:
+      amount: 1
+    SulfuricAcid:
+      amount: 1
+    Plasma:
+      amount: 1
+  effects:
+  - !type:CreateGas
+    gas: Plasma
+  products:
+    Phlogiston: 3

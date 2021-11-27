@@ -35,6 +35,9 @@
   id: Napalm
   name: napalm
   parent: BasePyrotechnic
+  desc: It's just a little flammable.
+  physicalDesc: burning
+  color: "#FA00AF"
   tileReactions:
   - !type:FlammableTileReaction
     temperatureMultiplier: 5
@@ -53,6 +56,32 @@
             Heat: 1
       - !type:FlammableReaction
         multiplier: 0.4
+
+- type: reagent
+  id: Phlogiston
+  name: phlogiston
+  parent: BasePyrotechnic
+  desc: Catches you on fire and makes you ignite.
+  physicalDesc: burning
+  color: "#D4872A"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Heat: 3
+      - !type:FlammableReaction
+        multiplier: 0.1
+      - !type:AdjustTemperature
+        amount: 6000
+  reactiveEffects:
+    Flammable:
+      methods: [ Touch ]
+      effects:
+      - !type:FlammableReaction
+        multiplier: 0.2
+      - !type:Ignite
 
 - type: reagent
   id: FoamingAgent
