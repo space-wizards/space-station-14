@@ -3,6 +3,7 @@ using Content.Shared.Interaction;
 using Content.Shared.PAI;
 using Content.Shared.Verbs;
 using Content.Server.Popups;
+using Content.Server.Instruments;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Mind.Components;
 using Robust.Shared.IoC;
@@ -97,6 +98,7 @@ namespace Content.Server.PAI
         private void PAITurningOff(EntityUid uid)
         {
             UpdatePAIAppearance(uid, PAIStatus.Off);
+            if (EntityManager.TryGetComponent<InstrumentComponent>(uid, out var instrument)) instrument.Clean();
             if (EntityManager.TryGetComponent<MetaDataComponent>(uid, out var metadata))
             {
                 var proto = metadata.EntityPrototype;
