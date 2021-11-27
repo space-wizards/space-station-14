@@ -41,6 +41,6 @@ public class OwoifyCommand : IConsoleCommand
         var owoSys = EntitySystem.Get<OwOAccentSystem>();
 
         meta.EntityName = owoSys.Accentuate(meta.EntityName);
-        meta.EntityDescription = owoSys.Accentuate(meta.EntityDescriptionm);
+        meta.EntityDescription = owoSys.Accentuate(meta.EntityDescription);
     }
 }
