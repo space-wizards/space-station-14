@@ -44,9 +44,9 @@ namespace Content.Client.Chemistry.UI
             _window.CreatePillButton.OnPressed += _ => PrepareData(UiAction.CreatePills, null, null, _window.PillAmount.Value, null);
             _window.CreateBottleButton.OnPressed += _ => PrepareData(UiAction.CreateBottles, null, null, null, _window.BottleAmount.Value);
 
-            for(int i = 0; i < _window.PillTypeButtons.Length; i++)
+            for(uint i = 0; i < _window.PillTypeButtons.Length; i++)
             {
-                int type = i;
+                uint type = i;
                 _window.PillTypeButtons[i].OnPressed += _ => PrepareData(UiAction.SetPillType, null, type + 1, null, null);
             }
 
@@ -69,11 +69,11 @@ namespace Content.Client.Chemistry.UI
             _window?.UpdateState(castState); //Update window state
         }
 
-        private void PrepareData(UiAction action, ChemButton? button, int? pillType, int? pillAmount, int? bottleAmount)
+        private void PrepareData(UiAction action, ChemButton? button, uint? pillType, int? pillAmount, int? bottleAmount)
         {
             if (button != null)
             {
-                SendMessage(new UiActionMessage(action, button.Amount, button.Id, button.isBuffer, null, null, null));
+                SendMessage(new UiActionMessage(action, button.Amount, button.Id, button.IsBuffer, null, null, null));
             }
             else
             {

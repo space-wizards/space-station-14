@@ -39,7 +39,7 @@ namespace Content.Server.Chemistry.Components
     public class ChemMasterComponent : SharedChemMasterComponent, IActivate
     {
         [ViewVariables]
-        private FixedPoint2 _pillType = FixedPoint2.New(1);
+        private uint _pillType = 1;
         
         [ViewVariables]
         private bool _bufferModeTransfer = true;
@@ -107,7 +107,7 @@ namespace Content.Server.Chemistry.Components
             }
 
             var msg = (UiActionMessage) obj.Message;
-            var needsPower = msg.action switch
+            var needsPower = msg.Action switch
             {
                 UiAction.Eject => false,
                 _ => true,
@@ -116,13 +116,13 @@ namespace Content.Server.Chemistry.Components
             if (!PlayerCanUseChemMaster(obj.Session.AttachedEntity, needsPower))
                 return;
 
-            switch (msg.action)
+            switch (msg.Action)
             {
                 case UiAction.Eject:
                     EntitySystem.Get<ItemSlotsSystem>().TryEjectToHands(OwnerUid, BeakerSlot, obj.Session.AttachedEntityUid);
                     break;
                 case UiAction.ChemButton:
-                    TransferReagent(msg.id, msg.amount, msg.isBuffer);
+                    TransferReagent(msg.Id, msg.Amount, msg.IsBuffer);
                     break;
                 case UiAction.Transfer:
                     _bufferModeTransfer = true;
@@ -133,12 +133,12 @@ namespace Content.Server.Chemistry.Components
                     UpdateUserInterface();
                     break;
                 case UiAction.SetPillType:
-                    _pillType = msg.pillType;
+                    _pillType = msg.PillType;
                     UpdateUserInterface();
                     break;
                 case UiAction.CreatePills:
                 case UiAction.CreateBottles:
-                    TryCreatePackage(obj.Session.AttachedEntity, msg.action, msg.pillAmount, msg.bottleAmount);
+                    TryCreatePackage(obj.Session.AttachedEntity, msg.Action, msg.PillAmount, msg.BottleAmount);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

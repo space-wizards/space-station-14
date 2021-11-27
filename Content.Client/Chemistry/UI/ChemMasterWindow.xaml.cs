@@ -30,9 +30,10 @@ namespace Content.Client.Chemistry.UI
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         public event Action<BaseButton.ButtonEventArgs, ChemButton>? OnChemButtonPressed;
-
-        private const string _pillsRsiPath = "/Textures/Objects/Specific/Chemistry/pills.rsi";
         public readonly Button[] PillTypeButtons;
+
+        private const string PillsRsiPath = "/Textures/Objects/Specific/Chemistry/pills.rsi";
+
         private static bool IsSpinValid(int n)
         {
             return n is > 0 and <= 10;
@@ -49,15 +50,15 @@ namespace Content.Client.Chemistry.UI
 
             //Pill type selection buttons, in total there are 20 pills.
             //Pill rsi file should have states named as pill1, pill2, and so on.
-            var resourcePath = new ResourcePath(_pillsRsiPath);
+            var resourcePath = new ResourcePath(PillsRsiPath);
             var pillTypeGroup = new ButtonGroup();
             PillTypeButtons = new Button[20];
-            for (int i = 0; i < PillTypeButtons.Length; i++)
+            for (uint i = 0; i < PillTypeButtons.Length; i++)
             {
                 //For every button decide which stylebase to have
                 //Every row has 10 buttons
                 String styleBase = StyleBase.ButtonOpenBoth;
-                int modulo = i % 10;
+                uint modulo = i % 10;
                 if (i > 0 && modulo == 0)
                     styleBase = StyleBase.ButtonOpenRight;
                 else if (i > 0 && modulo == 9)
@@ -117,7 +118,7 @@ namespace Content.Client.Chemistry.UI
                 EjectButton.Disabled = !castState.HasBeaker;
             }
 
-            PillTypeButtons[castState.SelectedPillType.Int() - 1].Pressed = true;
+            PillTypeButtons[castState.SelectedPillType - 1].Pressed = true;
         }
 
         /// <summary>
@@ -254,15 +255,15 @@ namespace Content.Client.Chemistry.UI
     public class ChemButton : Button
     {
         public FixedPoint2 Amount { get; set; }
-        public bool isBuffer = true;
+        public bool IsBuffer = true;
         public string Id { get; set; }
-        public ChemButton(string _text, FixedPoint2 _amount, string _id, bool _isBuffer, string _styleClass)
+        public ChemButton(string text, FixedPoint2 amount, string id, bool isBuffer, string styleClass)
         {
-            AddStyleClass(_styleClass);
-            Text = _text;
-            Amount = _amount;
-            Id = _id;
-            isBuffer = _isBuffer;
+            AddStyleClass(styleClass);
+            Text = text;
+            Amount = amount;
+            Id = id;
+            IsBuffer = isBuffer;
         }
 
     }
