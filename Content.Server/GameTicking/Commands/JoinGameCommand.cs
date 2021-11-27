@@ -46,7 +46,7 @@ namespace Content.Server.GameTicking.Commands
 
             if (!ticker.PlayersInLobby.ContainsKey(player))
             {
-                shell.WriteError($"{player.Name} not in the lobby.   This incident will be reported.");
+                shell.WriteError($"{player.Name} is not in the lobby.   This incident will be reported.");
                 return;
             }
 
