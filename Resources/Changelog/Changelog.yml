@@ -1,66 +1,4 @@
 Entries:
-- author: Hardly
-  changes:
-  - {message: Bar backroom in Saltern, type: Add}
-  - {message: BarDrobe, type: Add}
-  id: 160
-  time: '2021-04-15T18:24:55.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Destroyed state for canisters, type: Add}
-  - {message: Buffed canister HP from 100 to 300, type: Tweak}
-  id: 161
-  time: '2021-04-15T21:14:47.0000000+00:00'
-- author: SweptWasTaken
-  changes:
-  - {message: Bucket now works and there's one in botany and janitor hut, type: Fix}
-  - {message: Janitorial items now have proper inhands, type: Add}
-  id: 162
-  time: '2021-04-15T21:21:10.0000000+00:00'
-- author: SweptWasTaken
-  changes:
-  - {message: 'Names for tanks, solar stuff and more are fixed.', type: Fix}
-  id: 163
-  time: '2021-04-16T05:28:09.0000000+00:00'
-- author: MehimoNemo
-  changes:
-  - {message: Thrown PDAs and IDs now open doors. Try it out!, type: Add}
-  id: 164
-  time: '2021-04-18T08:03:31.0000000+00:00'
-- author: PJB
-  changes:
-  - {message: Improved shadow edges somewhat., type: Tweak}
-  id: 165
-  time: '2021-04-19T07:49:27.579650+00:00'
-- author: PJB
-  changes:
-  - {message: The game viewport is now a limited size (21x15 tiles)., type: Add}
-  - {message: 'As part of this, the game viewport is now scaled to match your window
-      size.', type: Add}
-  - {message: Scaling is quite intelligent and will use integer-scale nearest neighbor
-      where applicable. So people playing on fullscreen 1080p/1440p monitors will
-      experience perfect crisp graphics., type: Add}
-  id: 166
-  time: '2021-04-19T07:52:40.0000000+00:00'
-- author: chairbender and ike709
-  changes:
-  - {message: Completely redid the chatbox., type: Add}
-  - {message: Chat can now be resized (Unless in the lobby)., type: Add}
-  - {message: Chat can now be filtered., type: Add}
-  - {message: 'To talk in a channel, you now switch to it rather than using a prefix.',
-    type: Tweak}
-  - {message: The chat channel focus keys have changed. Check keybinds for a list.,
-    type: Tweak}
-  - {message: Added channel focus keys for radio and in-character., type: Add}
-  - {message: 'Tab and Ctrl+Tab will cycle channels, as an alternative to focus hotkeys.',
-    type: Add}
-  id: 167
-  time: '2021-04-20T23:39:39.0000000+00:00'
-- author: Visne
-  changes:
-  - {message: Added advertising to vending machines, type: Add}
-  id: 168
-  time: '2021-04-21T10:00:15.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix footstep sounds exception, type: Fix}
@@ -2863,3 +2801,59 @@ Entries:
   - {message: fixed crash when admin log has the same object more then once., type: Fix}
   id: 661
   time: '2021-11-26T07:39:36.0000000+00:00'
+- author: Hoolny
+  changes:
+  - {message: Readded cows into cargo, type: Tweak}
+  id: 662
+  time: '2021-11-26T09:11:42.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Broken solar panels now spit out shards when deconstructed., type: Tweak}
+  - {message: Solar assemblies are now de-rotated when deconstructing., type: Fix}
+  id: 663
+  time: '2021-11-26T09:17:21.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Station names are now randomly generated., type: Add}
+  id: 664
+  time: '2021-11-26T13:54:32.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Added chemistry recipes for creating cheese (40 milk, 5 enzyme), dough
+      (15 flour, 10 water), and cake batter (15 flour, 5 sugar, and 12 eggs or soy
+      milk)', type: Add}
+  - {message: Added more ingredients to the chef's locker, type: Tweak}
+  - {message: 'Several microwave recipes that used to require flour now need dough,
+      batter, or bread slices.', type: Tweak}
+  id: 665
+  time: '2021-11-26T22:50:14.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'NT14 Knightship models have been taken in for a refit, and now have
+      thrusters, gyroscopes and a docking airlock.', type: Add}
+  id: 666
+  time: '2021-11-26T22:50:36.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed cigar case visuals. Can no longer see the cigars when case is
+      closed., type: Fix}
+  id: 667
+  time: '2021-11-27T06:43:19.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Administrators have had an essential command added to their toolset.,
+    type: Add}
+  id: 668
+  time: '2021-11-27T06:43:33.0000000+00:00'
+- author: Pancake
+  changes:
+  - {message: Lanterns and hardhats have been upgraded to starting with Small High-Capacity
+      Power Cells., type: Tweak}
+  id: 669
+  time: '2021-11-27T06:43:38.0000000+00:00'
+- author: artak10t
+  changes:
+  - {message: Added pills types selection in ChemMaster, type: Add}
+  - {message: Added pills canister, type: Add}
+  id: 670
+  time: '2021-11-27T06:44:36.0000000+00:00'

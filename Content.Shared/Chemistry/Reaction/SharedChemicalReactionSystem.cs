@@ -46,6 +46,17 @@ namespace Content.Shared.Chemistry.Reaction
                 if (!solution.ContainsReagent(reactantName, out var reactantQuantity))
                     return false;
 
+                if (reactantData.Value.Catalyst)
+                {
+                    // catalyst is not consumed, so will not limit the reaction. But it still needs to be present, and
+                    // for quantized reactions we need to have a minimum amount
+
+                    if (reactantQuantity == FixedPoint2.Zero || reaction.Quantized && reactantQuantity < reactantCoefficient)
+                        return false;
+
+                    continue;
+                }
+
                 var unitReactions = reactantQuantity / reactantCoefficient;
 
                 if (unitReactions < lowestUnitReactions)
@@ -53,7 +64,11 @@ namespace Content.Shared.Chemistry.Reaction
                     lowestUnitReactions = unitReactions;
                 }
             }
-            return true;
+
+            if (reaction.Quantized)
+                lowestUnitReactions = (int) lowestUnitReactions;
+
+            return lowestUnitReactions > 0;
         }
 
         /// <summary>
