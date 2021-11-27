@@ -33,6 +33,10 @@
   - Theatre
   - Bar
   - Chemistry
+  - Armory
+  - ChiefEngineer
+  - ChiefMedicalOfficer
+  - HeadOfSecurity
 
 - type: startingGear
   id: CaptainGear

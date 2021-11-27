@@ -80,12 +80,68 @@
     access: [["Command"]]
 
 - type: entity
+  parent: AirlockCommand
+  id: AirlockCaptainLocked
+  suffix: Captain, Locked
+  components:
+  - type: AccessReader
+    access: [["Captain"]]
+
+- type: entity
+  parent: AirlockCommand
+  id: AirlockChiefMedicalOfficerLocked
+  suffix: ChiefMedicalOfficer, Locked
+  components:
+  - type: AccessReader
+    access: [["ChiefMedicalOfficer"]]
+
+- type: entity
+  parent: AirlockCommand
+  id: AirlockChiefEngineerLocked
+  suffix: ChiefEngineer, Locked
+  components:
+  - type: AccessReader
+    access: [["ChiefEngineer"]]
+
+- type: entity
+  parent: AirlockCommand
+  id: AirlockHeadOfSecurityLocked
+  suffix: HeadOfSecurity, Locked
+  components:
+  - type: AccessReader
+    access: [["HeadOfSecurity"]]
+
+- type: entity
+  parent: AirlockCommand
+  id: AirlockResearchDirectorLocked
+  suffix: ResearchDirector, Locked
+  components:
+  - type: AccessReader
+    access: [["ResearchDirector"]]
+    
+- type: entity
+  parent: AirlockCommand
+  id: AirlockHeadOfPersonnelLocked
+  suffix: HeadOfPersonnel, Locked
+  components:
+  - type: AccessReader
+    access: [["HeadOfPersonnel"]]
+
+- type: entity
   parent: AirlockSecurity
   id: AirlockSecurityLocked
   suffix: Security, Locked
   components:
   - type: AccessReader
     access: [["Security"]]
+
+- type: entity
+  parent: AirlockSecurity
+  id: AirlockArmoryLocked
+  suffix: Armory, Locked
+  components:
+  - type: AccessReader
+    access: [["Armory"]]
 
 - type: entity
   parent: AirlockSecurity
@@ -272,3 +328,11 @@
   components:
   - type: AccessReader
     access: [["Security"]]
+    
+- type: entity
+  parent: AirlockMaint
+  id: AirlockMaintJannyLocked
+  suffix: Janitor, Locked
+  components:
+  - type: AccessReader
+    access: [["Janitor"]]

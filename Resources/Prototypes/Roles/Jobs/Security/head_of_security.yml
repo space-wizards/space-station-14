@@ -17,6 +17,8 @@
   - Security
   - Maintenance
   - Service
+  - HeadOfSecurity
+  - Armory
 
 - type: startingGear
   id: HoSGear
