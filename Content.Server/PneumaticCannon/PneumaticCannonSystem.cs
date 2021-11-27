@@ -242,8 +242,7 @@ namespace Content.Server.PneumaticCannon
             ent.TryThrow(data.Direction, data.Strength, data.User, GetPushbackRatioFromPower(comp.Power));
 
             // lasagna, anybody?
-            var feedOnCollide = ent.EnsureComponent<ForcefeedOnCollideComponent>();
-            feedOnCollide.Source = data.User.Uid;
+            ent.EnsureComponent<ForcefeedOnCollideComponent>();
 
             if(data.User.TryGetComponent<StatusEffectsComponent>(out var status)
                && comp.Power == PneumaticCannonPower.High)

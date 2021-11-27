@@ -19,7 +19,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
         private void OnThrowDoHit(EntityUid uid, ForcefeedOnCollideComponent component, ThrowDoHitEvent args)
         {
-            _foodSystem.ProjectileForceFeed(uid, args.Target.Uid, component.Source);
+            _foodSystem.ProjectileForceFeed(uid, args.Target.Uid, args.User?.Uid);
         }
 
         private void OnLand(EntityUid uid, ForcefeedOnCollideComponent component, LandEvent args)

@@ -50,7 +50,7 @@ namespace Content.Server.Nutrition.Components
         public float ForceFeedDelay = 3;
 
         /// <summary>
-        ///     This drink has some drinking DoAfter active (e.g., someone is being force fed).
+        ///     If true, this drink has some DoAfter active (someone is being force fed).
         /// </summary>
         public bool InUse = false;
     }

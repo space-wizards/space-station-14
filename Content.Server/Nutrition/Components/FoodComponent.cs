@@ -55,7 +55,7 @@ namespace Content.Server.Nutrition.Components
         public float ForceFeedDelay = 3;
 
         /// <summary>
-        /// Is the item currently in use? Used for force-feeding.
+        ///     If true, this food has some DoAfter active (someone is being force fed).
         /// </summary>
         public bool InUse = false;
 

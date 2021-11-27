@@ -327,7 +327,7 @@ namespace Content.Server.Nutrition.EntitySystems
         /// <summary>
         ///     Force feeds someone remotely. Does not require utensils (well, not the normal type anyways).
         /// </summary>
-        public void ProjectileForceFeed(EntityUid uid, EntityUid target, EntityUid user, FoodComponent? food = null, BodyComponent? body = null)
+        public void ProjectileForceFeed(EntityUid uid, EntityUid target, EntityUid? user, FoodComponent? food = null, BodyComponent? body = null)
         {
             if (!Resolve(uid, ref food) || !Resolve(target, ref body, false))
                 return;
@@ -346,10 +346,13 @@ namespace Content.Server.Nutrition.EntitySystems
                 return;
 
             // logging
-            var userEntity = EntityManager.GetEntity(user);
+            var userEntity = (user == null) ? null : EntityManager.GetEntity(user.Value);
             var targetEntity = EntityManager.GetEntity(target);
             var edible = EntityManager.GetEntity(uid);
-            _logSystem.Add(LogType.ForceFeed, $"{userEntity} launched {edible} into the mouth of {targetEntity}");
+            if (userEntity == null)
+                _logSystem.Add(LogType.ForceFeed, $"{edible} was thrown into the mouth of {targetEntity}");
+            else
+                _logSystem.Add(LogType.ForceFeed, $"{userEntity} threw {edible} into the mouth of {targetEntity}");
             _popupSystem.PopupEntity(Loc.GetString(food.EatMessage), target, Filter.Entities(target));
 
             foodSolution.DoEntityReaction(uid, ReactionMethod.Ingestion);
