@@ -15,6 +15,8 @@ public class Electrocute : ReagentEffect
 
     [DataField("electrocuteDamageScale")] public int ElectrocuteDamageScale = 5;
 
+    public override bool ShouldLog => true;
+
     public override void Effect(ReagentEffectArgs args)
     {
         EntitySystem.Get<ElectrocutionSystem>().TryDoElectrocution(args.SolutionEntity, null,

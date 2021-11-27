@@ -160,10 +160,13 @@ namespace Content.Server.Body.Systems
                         if (!effect.ShouldApply(args, _random))
                             continue;
 
-                        var entity = EntityManager.GetEntity(args.SolutionEntity);
-                        _logSystem.Add(LogType.ReagentEffect, LogImpact.Low,
-                            $"Metabolism effect {effect.GetType().Name} of reagent {args.Reagent.Name:reagent} applied on entity {entity} at {entity.Transform.Coordinates}");
-                        effect.Effect(args);
+                        if (effect.ShouldLog)
+                        {
+                            var entity = EntityManager.GetEntity(args.SolutionEntity);
+                            _logSystem.Add(LogType.ReagentEffect, effect.LogImpact,
+                                $"Metabolism effect {effect.GetType().Name} of reagent {args.Reagent.Name:reagent} applied on entity {entity} at {entity.Transform.Coordinates}");
+                            effect.Effect(args);
+                        }
                     }
                 }
 
