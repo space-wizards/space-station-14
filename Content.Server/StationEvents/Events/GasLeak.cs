@@ -31,7 +31,7 @@ namespace Content.Server.StationEvents.Events
 
         private static readonly Gas[] LeakableGases = {
             Gas.Plasma,
-            Gas.Tritium,
+            Gas.WaterVapor,
         };
 
         public override int EarliestStart => 10;
