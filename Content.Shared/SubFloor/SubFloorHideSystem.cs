@@ -76,12 +76,11 @@ namespace Content.Shared.SubFloor
 
         private void OnInteractionAttempt(EntityUid uid, SubFloorHideComponent component, InteractUsingEvent args)
         {
-            Logger.DebugS("SubFloorSystem", "Attempting an interaction now");
             if (!EntityManager.TryGetComponent(uid, out TransformComponent? transform))
                 return;
 
             if (_mapManager.TryGetGrid(transform.GridID, out var grid)
-                && IsSubFloor(grid, grid.TileIndicesFor(transform.Coordinates)))
+                && !IsSubFloor(grid, grid.TileIndicesFor(transform.Coordinates)))
             {
                 args.Handled = true;
             }
@@ -148,6 +147,7 @@ namespace Content.Shared.SubFloor
 
         private void UpdateTile(IMapGrid grid, Vector2i position)
         {
+            Logger.DebugS("SubFloorSystem", "Tile updating");
             var isSubFloor = IsSubFloor(grid, position);
 
             foreach (var uid in grid.GetAnchoredEntities(position))
