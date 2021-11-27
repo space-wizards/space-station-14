@@ -99,7 +99,10 @@ namespace Content.Server.Instruments
             }
         }
 
-        public IPlayerSession? InstrumentPlayer => Owner.GetComponentOrNull<ActivatableUIComponent>()?.CurrentSingleUser;
+
+        public IPlayerSession? InstrumentPlayer =>
+        Owner.GetComponentOrNull<ActivatableUIComponent>()?.CurrentSingleUser
+        ?? Owner.GetComponentOrNull<ActorComponent>()?.PlayerSession;
 
         /// <summary>
         ///     Whether the instrument is currently playing or not.
