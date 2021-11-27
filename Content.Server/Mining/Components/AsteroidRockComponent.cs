@@ -11,8 +11,6 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using Content.Shared.Administration.Logs;
-using Content.Server.Administration.Logs;
 
 namespace Content.Server.Mining.Components
 {

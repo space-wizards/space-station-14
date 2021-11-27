@@ -57,7 +57,7 @@ namespace Content.Server.Damage.Systems
             var dmg = _damageableSystem.TryChangeDamage(uid, component.Damage * damageScale);
 
             if (dmg != null)
-                _logSystem.Add(LogType.Damaged, $"{uid} took {dmg.Total} damage from a high speed collision");
+                _logSystem.Add(LogType.Damaged, $"{component.Owner} took {dmg.Total} damage from a high speed collision");
         }
     }
 }

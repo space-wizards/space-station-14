@@ -109,7 +109,7 @@ namespace Content.Server.Electrocution
 
                     var actual = _damageableSystem.TryChangeDamage(finished.Electrocuting, damage);
                     if (actual != null)
-                        _logSystem.Add(LogType.Damaged,
+                        _logSystem.Add(LogType.Electrocution,
                             $"{finished.Owner} took {actual.Total} powered electrocution damage");
                 }
 
@@ -348,8 +348,8 @@ namespace Content.Server.Electrocution
                     new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>(DamageType), dmg));
 
                 if (actual != null)
-                    _logSystem.Add(LogType.Damaged,
-                        $"{uid} took {actual.Total} powered electrocution damage");
+                    _logSystem.Add(LogType.Electrocution,
+                        $"{statusEffects.Owner} took {actual.Total} powered electrocution damage");
             }
 
             _stutteringSystem.DoStutter(uid, time * StutteringTimeMultiplier, statusEffects, alerts);

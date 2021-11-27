@@ -316,7 +316,7 @@ namespace Content.Server.Body.Components
         private void TakeSuffocationDamage()
         {
             if (!Suffocating)
-                EntitySystem.Get<AdminLogSystem>().Add(LogType.Damaged, $"{OwnerUid} started suffocating");
+                EntitySystem.Get<AdminLogSystem>().Add(LogType.Asphyxiation, $"{Owner} started suffocating");
 
             Suffocating = true;
 
@@ -331,7 +331,7 @@ namespace Content.Server.Body.Components
         private void StopSuffocation()
         {
             if (Suffocating)
-                EntitySystem.Get<AdminLogSystem>().Add(LogType.Healed, $"{OwnerUid} stopped suffocating");
+                EntitySystem.Get<AdminLogSystem>().Add(LogType.Asphyxiation, $"{Owner} stopped suffocating");
 
             Suffocating = false;
 

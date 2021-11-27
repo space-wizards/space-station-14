@@ -143,7 +143,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!flammable.OnFire)
                 return;
 
-            _logSystem.Add(LogType.Healed, $"{uid} stopped being on fire damage");
+            _logSystem.Add(LogType.Flammable, $"{flammable.Owner} stopped being on fire damage");
             flammable.OnFire = false;
             flammable.FireStacks = 0;
 
@@ -159,7 +159,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             if (flammable.FireStacks > 0 && !flammable.OnFire)
             {
-                _logSystem.Add(LogType.Damaged, $"{uid} is on fire");
+                _logSystem.Add(LogType.Flammable, $"{flammable.Owner} is on fire");
                 flammable.OnFire = true;
             }
 

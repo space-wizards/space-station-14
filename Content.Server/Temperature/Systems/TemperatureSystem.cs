@@ -165,7 +165,7 @@ namespace Content.Server.Temperature.Systems
             {
                 if (!temperature.TakingDamage)
                 {
-                    _logSystem.Add(LogType.Damaged, $"{uid} started taking high temperature damage");
+                    _logSystem.Add(LogType.Temperature, $"{temperature.Owner} started taking high temperature damage");
                     temperature.TakingDamage = true;
                 }
 
@@ -177,7 +177,7 @@ namespace Content.Server.Temperature.Systems
             {
                 if (!temperature.TakingDamage)
                 {
-                    _logSystem.Add(LogType.Damaged, $"{uid} started taking low temperature damage");
+                    _logSystem.Add(LogType.Temperature, $"{temperature.Owner} started taking low temperature damage");
                     temperature.TakingDamage = true;
                 }
 
@@ -188,7 +188,7 @@ namespace Content.Server.Temperature.Systems
             }
             else if (temperature.TakingDamage)
             {
-                _logSystem.Add(LogType.Damaged, $"{uid} stopped taking temperature damage");
+                _logSystem.Add(LogType.Temperature, $"{temperature.Owner} stopped taking temperature damage");
                 temperature.TakingDamage = false;
             }
         }
