@@ -54,6 +54,9 @@ namespace Content.Shared.Placeable
             if(!args.User.TryGetComponent<SharedHandsComponent>(out var handComponent))
                 return;
 
+            if (!args.ClickLocation.IsValid(args.User.EntityManager))
+                return;
+
             if(!handComponent.TryDropEntity(args.Used, surface.Owner.Transform.Coordinates))
                 return;
 

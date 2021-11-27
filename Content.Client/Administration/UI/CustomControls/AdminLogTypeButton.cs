@@ -8,6 +8,7 @@ public class AdminLogTypeButton : Button
     public AdminLogTypeButton(LogType type)
     {
         Type = type;
+        ClipText = true;
         ToggleMode = true;
         Pressed = true;
     }

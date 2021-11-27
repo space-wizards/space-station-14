@@ -71,6 +71,7 @@ namespace Content.Server.GameTicking.Commands
                 shell.ExecuteCommand("aghost");
 
             shell.ExecuteCommand($"tp 0 0 {mapId}");
+            shell.RemoteExecuteCommand("showmarkers");
 
             var newGrid = mapManager.GetAllGrids().OrderByDescending(g => (int) g.Index).First();
             var pauseManager = IoCManager.Resolve<IPauseManager>();

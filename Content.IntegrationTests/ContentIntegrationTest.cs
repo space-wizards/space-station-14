@@ -319,7 +319,7 @@ namespace Content.IntegrationTests
         protected async Task WaitUntil(IntegrationInstance instance, Func<bool> func, int maxTicks = 600,
             int tickStep = 1)
         {
-            await WaitUntil(instance, async () => await Task.FromResult(func()), maxTicks);
+            await WaitUntil(instance, async () => await Task.FromResult(func()), maxTicks, tickStep);
         }
 
         protected async Task WaitUntil(IntegrationInstance instance, Func<Task<bool>> func, int maxTicks = 600,

@@ -1,6 +1,7 @@
 using Content.Server.Throwing;
 using Content.Shared.Acts;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Maths;
 
 namespace Content.Server.Explosion.Components
 {
@@ -19,7 +20,12 @@ namespace Content.Server.Explosion.Components
 
             if (sourceLocation.Equals(targetLocation)) return;
 
-            var direction = (targetLocation.ToMapPos(Owner.EntityManager) - sourceLocation.ToMapPos(Owner.EntityManager)).Normalized;
+            var offset = (targetLocation.ToMapPos(Owner.EntityManager) - sourceLocation.ToMapPos(Owner.EntityManager));
+
+            //Don't throw if the direction is center (0,0)
+            if (offset == Vector2.Zero) return;
+
+            var direction = offset.Normalized;
 
             var throwForce = eventArgs.Severity switch
             {

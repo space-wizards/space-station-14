@@ -143,7 +143,7 @@ namespace Content.Server.GameTicking.Presets
         {
             // Collate people to avoid...
             var existingPlayerPoints = new List<EntityCoordinates>();
-            foreach (var player in _playerManager.GetAllPlayers())
+            foreach (var player in _playerManager.ServerSessions)
             {
                 var avoidMeMind = player.Data.ContentData()?.Mind;
                 if ((avoidMeMind == null) || (avoidMeMind == ignoreMe))

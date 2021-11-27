@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Sound;
@@ -36,8 +37,20 @@ namespace Content.Shared.Chemistry.Reaction
         /// </summary>
         [DataField("effects", serverOnly: true)] public List<ReagentEffect> Effects = new();
 
+        /// <summary>
+        /// How dangerous is this effect? Stuff like bicaridine should be low, while things like methamphetamine
+        /// or potas/water should be high.
+        /// </summary>
+        [DataField("impact", serverOnly: true)] public LogImpact Impact = LogImpact.Low;
+
         // TODO SERV3: Empty on the client, (de)serialize on the server with module manager is server module
         [DataField("sound", serverOnly: true)] public SoundSpecifier Sound { get; private set; } = new SoundPathSpecifier("/Audio/Effects/Chemistry/bubbles.ogg");
+
+        /// <summary>
+        /// If true, this reaction will only consume only integer multiples of the reactant amounts. If there are not
+        /// enough reactants, the reaction does not occur. Useful for spawn-entity reactions (e.g. creating cheese).
+        /// </summary>
+        [DataField("quantized")] public bool Quantized = false;
     }
 
     /// <summary>

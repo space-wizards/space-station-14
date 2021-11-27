@@ -4,7 +4,6 @@ using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Smoking;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.Chemistry.Components

@@ -1,7 +1,11 @@
-﻿using Content.Shared.Popups;
+using System.Collections.Generic;
+using System.Linq;
+using Content.Shared.Popups;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
+using Robust.Shared.Player;
 
 namespace Content.Server.Popups
 {
@@ -13,18 +17,11 @@ namespace Content.Server.Popups
         /// </summary>
         /// <param name="source">The entity on which to popup the message.</param>
         /// <param name="message">The message to show.</param>
-        /// <param name="playerManager">
-        ///     The instance of player manager to use, will be resolved automatically
-        ///     if null.
-        /// </param>
-        /// <param name="range">
-        ///     The range in which to search for players, defaulting to one screen.
-        /// </param>
-        public static void PopupMessageOtherClients(this IEntity source, string message, IPlayerManager? playerManager = null, int range = 15)
+        public static void PopupMessageOtherClients(this IEntity source, string message)
         {
-            playerManager ??= IoCManager.Resolve<IPlayerManager>();
-
-            var viewers = playerManager.GetPlayersInRange(source.Transform.Coordinates, range);
+            var viewers = Filter.Empty()
+                .AddPlayersByPvs(source)
+                .Recipients;
 
             foreach (var viewer in viewers)
             {
@@ -55,7 +52,7 @@ namespace Content.Server.Popups
         public static void PopupMessageEveryone(this IEntity source, string message, IPlayerManager? playerManager = null, int range = 15)
         {
             source.PopupMessage(message);
-            source.PopupMessageOtherClients(message, playerManager, range);
+            source.PopupMessageOtherClients(message);
         }
     }
 }

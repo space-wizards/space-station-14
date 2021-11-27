@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
@@ -18,6 +19,7 @@ namespace Content.Shared.Chemistry.Reaction
 
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] protected readonly SharedAdminLogSystem _logSystem = default!;
 
         public override void Initialize()
         {
@@ -44,6 +46,17 @@ namespace Content.Shared.Chemistry.Reaction
                 if (!solution.ContainsReagent(reactantName, out var reactantQuantity))
                     return false;
 
+                if (reactantData.Value.Catalyst)
+                {
+                    // catalyst is not consumed, so will not limit the reaction. But it still needs to be present, and
+                    // for quantized reactions we need to have a minimum amount
+
+                    if (reactantQuantity == FixedPoint2.Zero || reaction.Quantized && reactantQuantity < reactantCoefficient)
+                        return false;
+
+                    continue;
+                }
+
                 var unitReactions = reactantQuantity / reactantCoefficient;
 
                 if (unitReactions < lowestUnitReactions)
@@ -51,7 +64,11 @@ namespace Content.Shared.Chemistry.Reaction
                     lowestUnitReactions = unitReactions;
                 }
             }
-            return true;
+
+            if (reaction.Quantized)
+                lowestUnitReactions = (int) lowestUnitReactions;
+
+            return lowestUnitReactions > 0;
         }
 
         /// <summary>
@@ -97,6 +114,9 @@ namespace Content.Shared.Chemistry.Reaction
                 if (!effect.ShouldApply(args))
                     continue;
 
+                var entity = EntityManager.GetEntity(args.SolutionEntity);
+                _logSystem.Add(LogType.ReagentEffect, LogImpact.Low,
+                    $"Reaction effect {effect.GetType().Name} of reaction ${reaction.ID:reaction} applied on entity {entity} at {entity.Transform.Coordinates}");
                 effect.Effect(args);
             }
         }

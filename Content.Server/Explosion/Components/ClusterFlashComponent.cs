@@ -6,7 +6,6 @@ using Content.Server.Flash.Components;
 using Content.Server.Throwing;
 using Content.Shared.Explosion;
 using Content.Shared.Interaction;
-using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
