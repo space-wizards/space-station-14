@@ -75,7 +75,7 @@
         acts: [ "Destruction" ]
   - type: Appearance
     visuals:
-    - type: SubFloorShowLayerVisualizer
+    - type: TrayScannerVisualizer
     - type: CableVisualizer
       base: hvcable_
 
@@ -116,6 +116,7 @@
         acts: [ "Destruction" ]
   - type: Appearance
     visuals:
+    - type: TrayScannerVisualizer
     - type: CableVisualizer
       base: mvcable_
 
@@ -159,5 +160,6 @@
         acts: [ "Destruction" ]
   - type: Appearance
     visuals:
+    - type: TrayScannerVisualizer
     - type: CableVisualizer
       base: lvcable_

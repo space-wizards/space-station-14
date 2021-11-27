@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -48,6 +49,7 @@ namespace Content.Shared.SubFloor
             SubscribeLocalEvent<SubFloorHideComponent, ComponentShutdown>(OnSubFloorTerminating);
             SubscribeLocalEvent<SubFloorHideComponent, AnchorStateChangedEvent>(HandleAnchorChanged);
             SubscribeLocalEvent<SubFloorHideComponent, ComponentHandleState>(HandleComponentState);
+            SubscribeLocalEvent<SubFloorHideComponent, InteractUsingEvent>(OnInteractionAttempt);
         }
 
         public override void Shutdown()
@@ -70,6 +72,19 @@ namespace Content.Shared.SubFloor
             subFloor.RequireAnchored = requireAnchored;
             subFloor.Dirty();
             UpdateEntity(subFloor.Owner.Uid);
+        }
+
+        private void OnInteractionAttempt(EntityUid uid, SubFloorHideComponent component, InteractUsingEvent args)
+        {
+            Logger.DebugS("SubFloorSystem", "Attempting an interaction now");
+            if (!EntityManager.TryGetComponent(uid, out TransformComponent? transform))
+                return;
+
+            if (_mapManager.TryGetGrid(transform.GridID, out var grid)
+                && IsSubFloor(grid, grid.TileIndicesFor(transform.Coordinates)))
+            {
+                args.Handled = true;
+            }
         }
 
         private void OnSubFloorStarted(EntityUid uid, SubFloorHideComponent component, ComponentStartup _)
@@ -159,7 +174,7 @@ namespace Content.Shared.SubFloor
         }
 
         // Toggles an enumerable set of entities to display.
-        public void ToggleSubfloorEntities(IEnumerable<EntityUid> entities, bool visible, EntityUid? uid = null)
+        public void ToggleSubfloorEntities(IEnumerable<EntityUid> entities, bool visible, EntityUid? uid = null, IEnumerable<object>? appearanceKeys = null)
         {
             foreach (var entity in entities)
             {
@@ -170,12 +185,12 @@ namespace Content.Shared.SubFloor
                 if (_mapManager.TryGetGrid(transform.GridID, out var grid))
                 {
                     bool isSubFloor = IsSubFloor(grid, grid.TileIndicesFor(transform.Coordinates));
-                    UpdateEntity(entity, visible, uid);
+                    UpdateEntity(entity, visible, uid, appearanceKeys);
                 }
             }
         }
 
-        private void UpdateEntity(EntityUid uid, bool subFloor, EntityUid? revealedUid = null)
+        private void UpdateEntity(EntityUid uid, bool subFloor, EntityUid? revealedUid = null, IEnumerable<object>? appearanceKeys = null)
         {
             // We raise an event to allow other entity systems to handle this.
             var subFloorHideEvent = new SubFloorHideEvent(subFloor);
@@ -226,10 +241,12 @@ namespace Content.Shared.SubFloor
             // Whether to show this entity as visible, visually.
             var subFloorVisible = ShowAll || subFloor;
 
-            ShowSubfloorSprite(uid, subFloorVisible);
+            if (appearanceKeys == null) appearanceKeys = _defaultVisualizerKeys;
+
+            ShowSubfloorSprite(uid, subFloorVisible, appearanceKeys);
         }
 
-        private void ShowSubfloorSprite(EntityUid uid, bool subFloorVisible)
+        private void ShowSubfloorSprite(EntityUid uid, bool subFloorVisible, IEnumerable<object> appearanceKeys)
         {
             // Show sprite
             if (EntityManager.TryGetComponent(uid, out SharedSpriteComponent? spriteComponent))
@@ -240,9 +257,22 @@ namespace Content.Shared.SubFloor
             // Set an appearance data value so visualizers can use this as needed.
             if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearanceComponent))
             {
-                appearanceComponent.SetData(SubFloorVisuals.SubFloor, subFloorVisible);
+                foreach (var key in appearanceKeys)
+                {
+                    switch (key)
+                    {
+                        case Enum enumKey:
+                            appearanceComponent.SetData(enumKey, subFloorVisible);
+                            break;
+                        case string stringKey:
+                            appearanceComponent.SetData(stringKey, subFloorVisible);
+                            break;
+                    }
+                }
             }
         }
+
+        private static List<object> _defaultVisualizerKeys = new List<object>{ SubFloorVisuals.SubFloor };
     }
 
     public class SubFloorHideEvent : HandledEntityEventArgs
@@ -259,9 +289,5 @@ namespace Content.Shared.SubFloor
     public enum SubFloorVisuals : byte
     {
         SubFloor,
-        ToggleDepth,
-        ToggleDepthOn,
-        ToggleDepthOff,
-        ToggleDepthIgnore
     }
 }

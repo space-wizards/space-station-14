@@ -67,7 +67,7 @@ public class TrayScannerSystem : SharedTrayScannerSystem
         // the active scanner list
         if (!scanner.Toggled)
         {
-            _subfloorSystem.ToggleSubfloorEntities(scanner.RevealedSubfloors, false, uid);
+            _subfloorSystem.ToggleSubfloorEntities(scanner.RevealedSubfloors, false, uid, _visualizerKeys);
             scanner.LastLocation = Vector2.Zero;
             scanner.RevealedSubfloors.Clear();
             return false;
@@ -108,17 +108,23 @@ public class TrayScannerSystem : SharedTrayScannerSystem
         scanner.RevealedSubfloors.ExceptWith(nearby);
 
         // hide all of them, since they're no longer needed
-        _subfloorSystem.ToggleSubfloorEntities(scanner.RevealedSubfloors, false, uid);
+        _subfloorSystem.ToggleSubfloorEntities(scanner.RevealedSubfloors, false, uid, _visualizerKeys);
         scanner.RevealedSubfloors.Clear();
 
         // set the revealedsubfloor set to the new nearby set
         scanner.RevealedSubfloors.UnionWith(nearby);
 
         // show all the new subfloor
-        _subfloorSystem.ToggleSubfloorEntities(scanner.RevealedSubfloors, true, uid);
+        _subfloorSystem.ToggleSubfloorEntities(scanner.RevealedSubfloors, true, uid, _visualizerKeys);
 
         return true;
     }
+
+    private static IEnumerable<object> _visualizerKeys = new List<object>
+    {
+        SubFloorVisuals.SubFloor,
+        TrayScannerTransparency.Key
+    };
 
     private bool FilterAnchored(EntityUid uid)
     {

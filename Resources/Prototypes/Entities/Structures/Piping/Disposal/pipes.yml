@@ -52,6 +52,7 @@
   - type: DisposalTransit
   - type: Appearance
     visuals:
+    - type: TrayScannerVisualizer
     - type: SubFloorShowLayerVisualizer
     - type: DisposalVisualizer
       state_free: conpipe-s
@@ -77,6 +78,7 @@
   - type: DisposalTagger
   - type: Appearance
     visuals:
+    - type: TrayScannerVisualizer
     - type: SubFloorShowLayerVisualizer
     - type: DisposalVisualizer
       state_free: conpipe-tagger
@@ -106,6 +108,7 @@
   - type: DisposalEntry
   - type: Appearance
     visuals:
+    - type: TrayScannerVisualizer
     - type: SubFloorShowLayerVisualizer
     - type: DisposalVisualizer
       state_free: conpipe-t
@@ -135,6 +138,7 @@
     - 180
   - type: Appearance
     visuals:
+    - type: TrayScannerVisualizer
     - type: SubFloorShowLayerVisualizer
     - type: DisposalVisualizer
       state_free: conpipe-j1s
@@ -169,6 +173,7 @@
     - 180
   - type: Appearance
     visuals:
+    - type: TrayScannerVisualizer
     - type: SubFloorShowLayerVisualizer
     - type: DisposalVisualizer
       state_free: conpipe-j2s
@@ -200,6 +205,7 @@
     - 180
   - type: Appearance
     visuals:
+    - type: TrayScannerVisualizer
     - type: SubFloorShowLayerVisualizer
     - type: DisposalVisualizer
       state_free: conpipe-j1
@@ -230,6 +236,7 @@
     - 180
   - type: Appearance
     visuals:
+    - type: TrayScannerVisualizer
     - type: SubFloorShowLayerVisualizer
     - type: DisposalVisualizer
       state_free: conpipe-j2
@@ -261,6 +268,7 @@
     - -90
   - type: Appearance
     visuals:
+    - type: TrayScannerVisualizer
     - type: SubFloorShowLayerVisualizer
     - type: DisposalVisualizer
       state_free: conpipe-y
@@ -286,6 +294,7 @@
   - type: DisposalBend
   - type: Appearance
     visuals:
+    - type: TrayScannerVisualizer
     - type: SubFloorShowLayerVisualizer
     - type: DisposalVisualizer
       state_free: conpipe-c

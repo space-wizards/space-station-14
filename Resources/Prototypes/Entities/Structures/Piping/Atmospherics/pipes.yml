@@ -55,9 +55,9 @@
     netsync: false
   - type: Appearance
     visuals:
-    - type: SubFloorShowLayerVisualizer
     - type: PipeConnectorVisualizer
     - type: PipeColorVisualizer
+    - type: TrayScannerVisualizer
   - type: NodeContainer
   - type: AtmosUnsafeUnanchor
   - type: AtmosPipeColor
