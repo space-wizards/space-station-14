@@ -46,7 +46,7 @@ namespace Content.Server.Shuttles.EntitySystems
         {
             base.Initialize();
             SubscribeLocalEvent<ThrusterComponent, ActivateInWorldEvent>(OnActivateThruster);
-            SubscribeLocalEvent<ThrusterComponent, ComponentStartup>(OnThrusterStartup);
+            SubscribeLocalEvent<ThrusterComponent, ComponentInit>(OnThrusterInit);
             SubscribeLocalEvent<ThrusterComponent, ComponentShutdown>(OnThrusterShutdown);
             SubscribeLocalEvent<ThrusterComponent, PowerChangedEvent>(OnPowerChange);
             SubscribeLocalEvent<ThrusterComponent, AnchorStateChangedEvent>(OnAnchorChange);
@@ -188,7 +188,7 @@ namespace Content.Server.Shuttles.EntitySystems
             }
         }
 
-        private void OnThrusterStartup(EntityUid uid, ThrusterComponent component, ComponentStartup args)
+        private void OnThrusterInit(EntityUid uid, ThrusterComponent component, ComponentInit args)
         {
             _ambient.SetAmbience(uid, false);
 
