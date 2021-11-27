@@ -31,6 +31,15 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField("probability")]
         public float Probability = 1.0f;
 
+        [DataField("logImpact")]
+        public virtual LogImpact LogImpact { get; } = LogImpact.Low;
+
+        /// <summary>
+        ///     Should this reagent effect log at all?
+        /// </summary>
+        [DataField("shouldLog")]
+        public virtual bool ShouldLog { get; } = false;
+
         public abstract void Effect(ReagentEffectArgs args);
     }
 
