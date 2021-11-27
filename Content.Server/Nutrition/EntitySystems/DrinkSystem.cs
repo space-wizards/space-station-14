@@ -8,6 +8,7 @@ using Content.Server.DoAfter;
 using Content.Server.Fluids.Components;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Components;
@@ -39,6 +40,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly StomachSystem _stomachSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SharedAdminLogSystem _logSystem = default!;
+        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
 
         public override void Initialize()
         {
@@ -113,6 +115,9 @@ namespace Content.Server.Nutrition.EntitySystems
             if (args.Handled || args.TargetUid == null)
                 return;
 
+            if (!_actionBlockerSystem.CanInteract(args.UserUid) || _actionBlockerSystem.CanUse(args.UserUid))
+                return;
+
             if (!args.UserUid.InRangeUnobstructed(uid, popup: true) ||
                 !args.UserUid.InRangeUnobstructed(args.TargetUid.Value, popup: true))
             {
@@ -129,6 +134,9 @@ namespace Content.Server.Nutrition.EntitySystems
         private void OnUse(EntityUid uid, DrinkComponent component, UseInHandEvent args)
         {
             if (args.Handled) return;
+
+            if (!_actionBlockerSystem.CanInteract(args.UserUid) || _actionBlockerSystem.CanUse(args.UserUid))
+                return;
 
             if (!args.UserUid.InRangeUnobstructed(uid, popup: true))
             {

@@ -6,6 +6,7 @@ using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Components;
@@ -37,6 +38,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly UtensilSystem _utensilSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SharedAdminLogSystem _logSystem = default!;
+        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
 
         public override void Initialize()
         {
@@ -57,6 +59,9 @@ namespace Content.Server.Nutrition.EntitySystems
             if (ev.Handled)
                 return;
 
+            if (!_actionBlockerSystem.CanInteract(ev.UserUid) || _actionBlockerSystem.CanUse(ev.UserUid))
+                return;
+
             if (!ev.UserUid.InRangeUnobstructed(uid, popup: true))
             {
                 ev.Handled = true;
@@ -72,6 +77,9 @@ namespace Content.Server.Nutrition.EntitySystems
         private void OnFeedFood(EntityUid uid, FoodComponent foodComponent, AfterInteractEvent ev)
         {
             if (ev.Handled || ev.TargetUid == null)
+                return;
+
+            if (!_actionBlockerSystem.CanInteract(ev.UserUid) || _actionBlockerSystem.CanUse(ev.UserUid))
                 return;
 
             if (!ev.UserUid.InRangeUnobstructed(uid, popup: true) ||
