@@ -13,7 +13,14 @@ food-swallow = You swallow the {$food}.
 ## System
 
 food-system-you-cannot-eat-any-more = You can't eat any more!
+food-system-you-cannot-eat-any-more-other = They can't eat any more!
 food-system-try-use-food-is-empty = {$entity} is empty!
 food-system-wrong-utensil = you can't eat {$food} with a {$utensil}.
 
 food-system-verb-eat = Eat
+
+## Force feeding
+
+food-system-force-feed = {$user} is trying feed you something!
+food-system-force-feed-success = You eat whatever {$user} gave you.
+food-system-force-feed-success-user = You successfully feed {$target}

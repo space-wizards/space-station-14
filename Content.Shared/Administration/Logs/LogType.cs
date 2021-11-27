@@ -41,4 +41,5 @@ public enum LogType
     Drop = 37,
     BulletHit = 38,
     CrayonDraw = 39,
+    ForceFeed = 40,
 }

@@ -42,5 +42,16 @@ namespace Content.Server.Nutrition.Components
 
         [DataField("burstSound")]
         public SoundSpecifier BurstSound = new SoundPathSpecifier("/Audio/Effects/flash_bang.ogg");
+
+        /// <summary>
+        ///     This is how many seconds it takes to force feed someone this drink.
+        /// </summary>
+        [DataField("forceFeedDelay")]
+        public float ForceFeedDelay = 3;
+
+        /// <summary>
+        ///     This drink has some drinking DoAfter active (e.g., someone is being force fed).
+        /// </summary>
+        public bool InUse = false;
     }
 }
