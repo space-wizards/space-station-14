@@ -1339,6 +1339,7 @@ entities:
         ents: []
       machine_parts: !type:Container
         ents: []
+      ChemMaster-beaker: !type:ContainerSlot {}
     type: ContainerContainer
   - solutions:
       buffer:
@@ -5939,12 +5940,9 @@ entities:
     parent: 853
     type: Transform
 - uid: 561
-  type: AirlockCommandGlassLocked
+  type: AirlockHeadOfSecurityLocked
   components:
-  - name: Head of Security's Office
-    type: MetaData
-  - rot: 4.371139006309477E-08 rad
-    pos: -8.5,18.5
+  - pos: -8.5,18.5
     parent: 853
     type: Transform
   - containers:
@@ -6084,12 +6082,9 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 574
-  type: AirlockVaultLocked
+  type: AirlockHeadOfSecurityLocked
   components:
-  - name: Armory
-    type: MetaData
-  - rot: 4.371139006309477E-08 rad
-    pos: -10.5,20.5
+  - pos: -10.5,20.5
     parent: 853
     type: Transform
   - containers:
@@ -6097,12 +6092,9 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 575
-  type: AirlockVaultLocked
+  type: AirlockArmoryLocked
   components:
-  - name: Armory
-    type: MetaData
-  - rot: 4.371139006309477E-08 rad
-    pos: -12.5,17.5
+  - pos: -12.5,17.5
     parent: 853
     type: Transform
   - containers:
@@ -6139,6 +6131,7 @@ entities:
         ents: []
       machine_parts: !type:Container
         ents: []
+      ReagentDispenser-beaker: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 580
   type: SuspicionHitscanSpawner
@@ -6273,12 +6266,9 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 593
-  type: AirlockCommandGlassLocked
+  type: AirlockResearchDirectorLocked
   components:
-  - name: Research Director's Office
-    type: MetaData
-  - rot: 4.371139006309477E-08 rad
-    pos: -3.5,-21.5
+  - pos: -3.5,-21.5
     parent: 853
     type: Transform
   - containers:
@@ -6286,12 +6276,9 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 594
-  type: AirlockCommandGlassLocked
+  type: AirlockResearchDirectorLocked
   components:
-  - name: Server Room
-    type: MetaData
-  - rot: 4.371139006309477E-08 rad
-    pos: -8.5,-21.5
+  - pos: -8.5,-21.5
     parent: 853
     type: Transform
   - containers:
@@ -6299,12 +6286,9 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 595
-  type: AirlockCommandGlassLocked
+  type: AirlockChiefMedicalOfficerLocked
   components:
-  - name: Chief Medical Officer's Office
-    type: MetaData
-  - rot: 4.371139006309477E-08 rad
-    pos: 20.5,-13.5
+  - pos: 20.5,-13.5
     parent: 853
     type: Transform
   - containers:
@@ -6570,12 +6554,9 @@ entities:
     parent: 853
     type: Transform
 - uid: 620
-  type: AirlockCommandGlassLocked
+  type: AirlockChiefEngineerLocked
   components:
-  - name: Chief Engineer's Office
-    type: MetaData
-  - rot: 4.371139006309477E-08 rad
-    pos: 38.5,1.5
+  - pos: 38.5,1.5
     parent: 853
     type: Transform
   - containers:
@@ -6793,12 +6774,9 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 639
-  type: AirlockCommandLocked
+  type: AirlockCaptainLocked
   components:
-  - name: Captain's Office
-    type: MetaData
-  - rot: 4.371139006309477E-08 rad
-    pos: 5.5,25.5
+  - pos: 10.5,26.5
     parent: 853
     type: Transform
   - containers:
@@ -7382,11 +7360,6 @@ entities:
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
-  - cellInsertSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magout.ogg
-    cellRemoveSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magin.ogg
-    type: PowerCellSlot
 - uid: 708
   type: WallReinforced
   components:
@@ -8507,6 +8480,7 @@ entities:
     type: Transform
   - containers:
       ReagentDispenser-reagentContainerContainer: !type:ContainerSlot {}
+      ReagentDispenser-beaker: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 826
   type: Catwalk
@@ -23723,12 +23697,9 @@ entities:
     parent: 853
     type: Transform
 - uid: 1869
-  type: AirlockCommandLocked
+  type: AirlockHeadOfPersonnelLocked
   components:
-  - name: Head of Personnel's Office
-    type: MetaData
-  - rot: 4.371139006309477E-08 rad
-    pos: 6.5,17.5
+  - pos: 6.5,17.5
     parent: 853
     type: Transform
   - containers:
@@ -28082,6 +28053,7 @@ entities:
     type: Transform
   - containers:
       ReagentDispenser-reagentContainerContainer: !type:ContainerSlot {}
+      ReagentDispenser-beaker: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 2474
   type: PoweredSmallLight
@@ -35316,6 +35288,16 @@ entities:
     type: Physics
   - color: '#7F007FFF'
     type: AtmosPipeColor
+- uid: 3170
+  type: AirlockCaptainLocked
+  components:
+  - pos: 5.5,25.5
+    parent: 853
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 3171
   type: CableApcExtension
   components:
@@ -38764,7 +38746,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-
 - uid: 3540
   type: CableHV
   components:
@@ -52637,16 +52618,6 @@ entities:
   - pos: 13.5,26.5
     parent: 853
     type: Transform
-- uid: 5089
-  type: AirlockCommandLocked
-  components:
-  - pos: 10.5,26.5
-    parent: 853
-    type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 5090
   type: ToiletEmpty
   components:

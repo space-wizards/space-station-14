@@ -16761,7 +16761,7 @@ entities:
   - enabled: False
     type: AmbientSound
 - uid: 598
-  type: AirlockMaintCommandLocked
+  type: AirlockMaintHOPLocked
   components:
   - pos: 14.5,-6.5
     parent: 0
@@ -16771,10 +16771,8 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 599
-  type: AirlockCommandLocked
+  type: AirlockHeadOfPersonnelLocked
   components:
-  - name: Head of Personnel's Office
-    type: MetaData
   - pos: 13.5,-3.5
     parent: 0
     type: Transform
@@ -16984,7 +16982,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 623
-  type: AirlockScienceLocked
+  type: AirlockCommand
   components:
   - pos: 24.5,-11.5
     parent: 0
@@ -17556,7 +17554,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 710
-  type: AirlockCommandLocked
+  type: AirlockChiefEngineerLocked
   components:
   - pos: 24.5,-17.5
     parent: 0
@@ -19394,7 +19392,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 970
-  type: AirlockCommandLocked
+  type: AirlockChiefEngineerLocked
   components:
   - pos: 14.5,-34.5
     parent: 0
@@ -29199,9 +29197,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 2397
-  type: AirlockCommandGlassLocked
+  type: AirlockArmoryLocked
   components:
-  - pos: 42.5,23.5
+  - pos: 39.5,25.5
     parent: 0
     type: Transform
   - containers:
@@ -30984,9 +30982,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 2638
-  type: AirlockCommandLocked
+  type: AirlockCaptainLocked
   components:
-  - pos: 35.5,40.5
+  - pos: 32.5,44.5
     parent: 0
     type: Transform
   - containers:
@@ -30994,9 +30992,9 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 2639
-  type: AirlockCommandLocked
+  type: AirlockCaptainLocked
   components:
-  - pos: 32.5,44.5
+  - pos: 35.5,40.5
     parent: 0
     type: Transform
   - containers:
@@ -32244,7 +32242,7 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 2810
-  type: AirlockCommandLocked
+  type: AirlockChiefEngineerLocked
   components:
   - pos: 16.5,36.5
     parent: 0
@@ -49306,7 +49304,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 5062
-  type: AirlockCommandGlassLocked
+  type: AirlockChiefMedicalOfficerLocked
   components:
   - pos: 56.5,-8.5
     parent: 0
@@ -51111,7 +51109,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 5255
-  type: AirlockCommandGlassLocked
+  type: AirlockResearchDirectorLocked
   components:
   - pos: 62.5,12.5
     parent: 0
@@ -51290,7 +51288,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 5275
-  type: AirlockCommandLocked
+  type: AirlockResearchDirectorLocked
   components:
   - pos: 52.5,24.5
     parent: 0
@@ -51300,9 +51298,9 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 5276
-  type: AirlockCommandLocked
+  type: AirlockResearchDirectorLocked
   components:
-  - pos: 50.5,24.5
+  - pos: 56.5,26.5
     parent: 0
     type: Transform
   - containers:
@@ -64815,6 +64813,36 @@ entities:
   - pos: 13.5,-12.5
     parent: 0
     type: Transform
+- uid: 6804
+  type: AirlockResearchDirectorLocked
+  components:
+  - pos: 50.5,24.5
+    parent: 0
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 6805
+  type: AirlockHeadOfSecurityLocked
+  components:
+  - pos: 41.5,23.5
+    parent: 0
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 6806
+  type: AirlockArmoryLocked
+  components:
+  - pos: 40.5,25.5
+    parent: 0
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 6808
   type: WallReinforced
   components:
@@ -108011,16 +108039,6 @@ entities:
       board: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 11055
-  type: AirlockCommand
-  components:
-  - pos: 56.5,28.5
-    parent: 0
-    type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 11056
   type: AirlockMaintLocked
   components:
@@ -109273,26 +109291,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 11202
-  type: AirlockVaultLocked
-  components:
-  - pos: 39.5,25.5
-    parent: 0
-    type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 11203
-  type: AirlockVaultLocked
-  components:
-  - pos: 40.5,25.5
-    parent: 0
-    type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 11204
   type: PowerCellMediumStandard
   components:

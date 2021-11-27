@@ -328,11 +328,11 @@
   components:
   - type: AccessReader
     access: [["Security"]]
-    
+
 - type: entity
   parent: AirlockMaint
-  id: AirlockMaintJannyLocked
-  suffix: Janitor, Locked
+  id: AirlockMaintHOPLocked
+  suffix: HeadOfPersonnel, Locked
   components:
   - type: AccessReader
-    access: [["Janitor"]]
+    access: [["HeadOfPersonnel"]]
