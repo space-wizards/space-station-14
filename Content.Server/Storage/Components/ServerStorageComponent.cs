@@ -361,7 +361,6 @@ namespace Content.Server.Storage.Components
                 SubscribedSessions.Add(session);
             }
 
-
             if (SubscribedSessions.Count == 1)
                 UpdateStorageVisualization();
         }
