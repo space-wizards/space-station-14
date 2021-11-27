@@ -1,4 +1,5 @@
 ﻿using Content.Server.Atmos.EntitySystems;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.GameObjects;
 
@@ -9,6 +10,9 @@ namespace Content.Server.Chemistry.ReagentEffects;
 /// </summary>
 public class Ignite : ReagentEffect
 {
+    public override bool ShouldLog => true;
+    public override LogImpact LogImpact => LogImpact.Medium;
+
     public override void Effect(ReagentEffectArgs args)
     {
         var flamSys = EntitySystem.Get<FlammableSystem>();

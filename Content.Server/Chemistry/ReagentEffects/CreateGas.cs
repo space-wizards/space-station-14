@@ -1,5 +1,6 @@
 ﻿using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Prototypes;
 using Content.Shared.Chemistry.Reagent;
@@ -21,6 +22,9 @@ public class CreateGas : ReagentEffect
     /// </summary>
     [DataField("multiplier")]
     public float Multiplier = 3f;
+
+    public override bool ShouldLog => true;
+    public override LogImpact LogImpact => LogImpact.High;
 
     public override void Effect(ReagentEffectArgs args)
     {

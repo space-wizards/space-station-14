@@ -22,6 +22,9 @@
   effects:
   - !type:CreateGas
     gas: Plasma
+  - !type:PopupMessage
+    messages: [ "phlogiston-plasma-created" ]
+    type: Pvs
   products:
     Phlogiston: 3
 
@@ -40,5 +43,8 @@
     heavyImpactRange: 0
     lightImpactRange: 2
     scaled: false
+  - !type:PopupMessage
+    messages: [ "clf3-explosion" ]
+    type: Pvs
   products:
     ChlorineTrifluoride: 4
