@@ -4,6 +4,7 @@ using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Chemistry.Components
 {
@@ -11,7 +12,9 @@ namespace Content.Shared.Chemistry.Components
     public abstract class SharedHyposprayComponent : Component
     {
         public sealed override string Name => "Hypospray";
-        public const string SolutionName = "hypospray";
+
+        [DataField("solutionName")]
+        public string SolutionName = "hypospray";
 
         [Serializable, NetSerializable]
         protected sealed class HyposprayComponentState : ComponentState

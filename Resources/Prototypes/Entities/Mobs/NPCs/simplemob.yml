@@ -5,15 +5,10 @@
   suffix: AI
   components:
   - type: Reactive
-    reactions:
-    - reagents: [Water]
-      methods: [Touch]
-      effects:
-      - !type:ExtinguishReaction
-    - reagents: [WeldingFuel, Thermite, Plasma, Ethanol]
-      methods: [Touch]
-      effects:
-      - !type:FlammableReaction
+    groups:
+      Flammable: [Touch]
+      Extinguish: [Touch]
+      Acidic: [Touch, Ingestion]
   - type: UtilityAI
     behaviorSets:
     # - Clothing

@@ -1,3 +1,4 @@
+using System;
 using Content.Client.Stylesheets;
 using Content.Shared.Voting;
 using JetBrains.Annotations;
@@ -104,8 +105,15 @@ namespace Content.Client.Voting.UI
 
             if (!isAvailable)
             {
-                var remaining = timeout - _gameTiming.RealTime;
-                VoteTypeTimeoutLabel.Text = Loc.GetString("ui-vote-type-timeout", ("remaining", remaining.ToString("mm\\:ss")));
+                if (timeout == TimeSpan.Zero)
+                {
+                    VoteTypeTimeoutLabel.Text = Loc.GetString("ui-vote-type-not-available");
+                }
+                else
+                {
+                    var remaining = timeout - _gameTiming.RealTime;
+                    VoteTypeTimeoutLabel.Text = Loc.GetString("ui-vote-type-timeout", ("remaining", remaining.ToString("mm\\:ss")));
+                }
             }
         }
 

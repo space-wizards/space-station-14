@@ -28,6 +28,7 @@
     fireRate: 2
     powerCellPrototype: PowerCellSmallStandard
     powerCellRemovable: true
+    fireCost: 40
     ammoPrototype: RedLaser
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser.ogg
@@ -41,6 +42,141 @@
       magState: mag
       steps: 5
       zeroVisible: true
+
+- type: entity
+  name: makeshift laser gun
+  parent: BaseItem
+  id: MakeshiftLaser
+  description: Better pray it won't burn your hands off.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Battery/makeshift.rsi
+    layers:
+      - state: base
+        map: ["enum.RangedBarrelVisualLayers.Base"]
+      - state: mag-unshaded-4
+        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Guns/Battery/makeshift.rsi
+  - type: RangedWeapon
+  - type: BatteryBarrel
+    currentSelector: Single
+    allSelectors:
+    - Single
+    fireRate: 2
+    minAngle: 0
+    maxAngle: 45
+    angleIncrease: 15
+    angleDecay: 45
+    powerCellPrototype: PowerCellSmallStandard
+    powerCellRemovable: true
+    fireCost: 40
+    ammoPrototype: RedLaser
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser.ogg
+    soundPowerCellInsert:
+      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+    soundPowerCellEject:
+      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer
+      magState: mag
+      steps: 5
+      zeroVisible: false
+
+- type: entity
+  name: svalinn laser pistol
+  parent: BaseItem
+  id: LaserPistolSvalinn
+  description: A cheap and widely used laser pistol.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Battery/svalinn.rsi
+    layers:
+      - state: base
+        map: ["enum.RangedBarrelVisualLayers.Base"]
+      - state: mag-unshaded-4
+        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Guns/Battery/svalinn.rsi
+  - type: RangedWeapon
+  - type: BatteryBarrel
+    currentSelector: Single
+    allSelectors:
+    - Single
+    fireRate: 2
+    minAngle: 0
+    maxAngle: 45
+    angleIncrease: 15
+    angleDecay: 45
+    powerCellPrototype: PowerCellSmallStandard
+    powerCellRemovable: true
+    fireCost: 20
+    ammoPrototype: RedLaser
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser.ogg
+    soundPowerCellInsert:
+      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+    soundPowerCellEject:
+      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer
+      magState: mag
+      steps: 5
+      zeroVisible: false
+
+- type: entity
+  name: cog laser carbine
+  parent: BaseItem
+  id: LaserRifleCog
+  description: Favoured by Nanotrasen Security for being cheap and easy to use.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Battery/cog.rsi
+    layers:
+      - state: base
+        map: ["enum.RangedBarrelVisualLayers.Base"]
+      - state: mag-unshaded-4
+        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Guns/Battery/cog.rsi
+  - type: RangedWeapon
+  - type: BatteryBarrel
+    currentSelector: Single
+    allSelectors:
+    - Single
+    fireRate: 2
+    minAngle: 0
+    maxAngle: 45
+    angleIncrease: 15
+    angleDecay: 45
+    powerCellPrototype: PowerCellSmallStandard
+    powerCellRemovable: true
+    fireCost: 10
+    ammoPrototype: RedLaser
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser.ogg
+    soundPowerCellInsert:
+      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+    soundPowerCellEject:
+      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer
+      magState: mag
+      steps: 5
+      zeroVisible: false
 
 - type: entity
   name: laser cannon
@@ -72,6 +208,7 @@
     angleDecay: 45
     powerCellPrototype: PowerCellSmallSuper
     powerCellRemovable: true
+    fireCost: 600
     ammoPrototype: RedHeavyLaser
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
@@ -168,6 +305,7 @@
     angleDecay: 15
     powerCellPrototype: PowerCellSmallStandard
     powerCellRemovable: false
+    fireCost: 80
     ammoPrototype: BulletTaser
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser.ogg
@@ -186,7 +324,7 @@
   name: laser gun
   parent: BaseItem
   id: LaserSecGun
-  description: Standard issued laser carbine for Nanotrasen security operatives.
+  description: A laser gun.
   components:
   - type: Sprite
     netsync: false

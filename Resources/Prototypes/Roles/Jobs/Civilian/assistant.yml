@@ -1,7 +1,6 @@
 - type: job
   id: Assistant
   name: "assistant"
-  positions: -1 # Treated as infinite.
   startingGear: AssistantGear
   departments:
   - Civilian

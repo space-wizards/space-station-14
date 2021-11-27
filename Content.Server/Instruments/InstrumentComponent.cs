@@ -25,26 +25,10 @@ namespace Content.Server.Instruments
 {
 
     [RegisterComponent]
-    [ComponentReference(typeof(IActivate))]
     public class InstrumentComponent
-        : SharedInstrumentComponent,
-            IDropped,
-            IHandSelected,
-            IHandDeselected,
-            IActivate,
-            IUse,
-            IThrown
+        : SharedInstrumentComponent
     {
         private InstrumentSystem _instrumentSystem = default!;
-
-        /// <summary>
-        ///     The client channel currently playing the instrument, or null if there's none.
-        /// </summary>
-        [ViewVariables]
-        private IPlayerSession? _instrumentPlayer;
-
-        [DataField("handheld")]
-        private bool _handheld;
 
         [ViewVariables]
         private bool _playing = false;
@@ -115,11 +99,7 @@ namespace Content.Server.Instruments
             }
         }
 
-        /// <summary>
-        ///     Whether the instrument is an item which can be held or not.
-        /// </summary>
-        [ViewVariables]
-        public bool Handheld => _handheld;
+        public IPlayerSession? InstrumentPlayer => Owner.GetComponentOrNull<ActivatableUIComponent>()?.CurrentSingleUser;
 
         /// <summary>
         ///     Whether the instrument is currently playing or not.
@@ -135,40 +115,11 @@ namespace Content.Server.Instruments
             }
         }
 
-        public IPlayerSession? InstrumentPlayer
-        {
-            get => _instrumentPlayer;
-            private set
-            {
-                Playing = false;
-
-                if (_instrumentPlayer != null)
-                    _instrumentPlayer.PlayerStatusChanged -= OnPlayerStatusChanged;
-
-                _instrumentPlayer = value;
-
-                if (value != null)
-                    _instrumentPlayer!.PlayerStatusChanged += OnPlayerStatusChanged;
-            }
-        }
-
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(InstrumentUiKey.Key);
-
-        private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
-        {
-            if (e.Session != _instrumentPlayer || e.NewStatus != SessionStatus.Disconnected) return;
-            InstrumentPlayer = null;
-            Clean();
-        }
 
         protected override void Initialize()
         {
             base.Initialize();
-
-            if (UserInterface != null)
-            {
-                UserInterface.OnClosed += UserInterfaceOnClosed;
-            }
 
             _instrumentSystem = EntitySystem.Get<InstrumentSystem>();
         }
@@ -190,7 +141,7 @@ namespace Content.Server.Instruments
             switch (message)
             {
                 case InstrumentMidiEventMessage midiEventMsg:
-                    if (!Playing || session != _instrumentPlayer || InstrumentPlayer == null) return;
+                    if (!Playing || session != InstrumentPlayer || InstrumentPlayer == null) return;
 
                     var send = true;
 
@@ -237,12 +188,12 @@ namespace Content.Server.Instruments
                     _lastSequencerTick = Math.Max(maxTick, minTick);
                     break;
                 case InstrumentStartMidiMessage startMidi:
-                    if (session != _instrumentPlayer)
+                    if (session != InstrumentPlayer)
                         break;
                     Playing = true;
                     break;
                 case InstrumentStopMidiMessage stopMidi:
-                    if (session != _instrumentPlayer)
+                    if (session != InstrumentPlayer)
                         break;
                     Playing = false;
                     Clean();
@@ -250,97 +201,18 @@ namespace Content.Server.Instruments
             }
         }
 
-        private void Clean()
+        public void Clean()
         {
+            if (Playing)
+            {
+#pragma warning disable 618
+                SendNetworkMessage(new InstrumentStopMidiMessage());
+#pragma warning restore 618
+            }
             Playing = false;
             _lastSequencerTick = 0;
             _batchesDropped = 0;
             _laggedBatches = 0;
-        }
-
-        void IDropped.Dropped(DroppedEventArgs eventArgs)
-        {
-            Clean();
-#pragma warning disable 618
-            SendNetworkMessage(new InstrumentStopMidiMessage());
-#pragma warning restore 618
-            InstrumentPlayer = null;
-            UserInterface?.CloseAll();
-        }
-
-        void IThrown.Thrown(ThrownEventArgs eventArgs)
-        {
-            Clean();
-#pragma warning disable 618
-            SendNetworkMessage(new InstrumentStopMidiMessage());
-#pragma warning restore 618
-            InstrumentPlayer = null;
-            UserInterface?.CloseAll();
-        }
-
-        void IHandSelected.HandSelected(HandSelectedEventArgs eventArgs)
-        {
-            if (eventArgs.User == null || !eventArgs.User.TryGetComponent(out ActorComponent? actor))
-                return;
-
-            var session = actor.PlayerSession;
-
-            if (session.Status != SessionStatus.InGame) return;
-
-            InstrumentPlayer = session;
-        }
-
-        void IHandDeselected.HandDeselected(HandDeselectedEventArgs eventArgs)
-        {
-            Clean();
-#pragma warning disable 618
-            SendNetworkMessage(new InstrumentStopMidiMessage());
-#pragma warning restore 618
-            UserInterface?.CloseAll();
-        }
-
-        void IActivate.Activate(ActivateEventArgs eventArgs)
-        {
-            if (Handheld)
-                return;
-
-            InteractInstrument(eventArgs.User);
-        }
-
-        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
-        {
-            InteractInstrument(eventArgs.User);
-            return false;
-        }
-
-        private void InteractInstrument(IEntity user)
-        {
-            if (!user.TryGetComponent(out ActorComponent? actor)) return;
-
-            if ((!Handheld && InstrumentPlayer != null)
-                || (Handheld && actor.PlayerSession != InstrumentPlayer)
-                || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user.Uid)) return;
-
-            InstrumentPlayer = actor.PlayerSession;
-            OpenUserInterface(InstrumentPlayer);
-
-            return;
-        }
-
-        private void UserInterfaceOnClosed(IPlayerSession player)
-        {
-            if (Handheld || player != InstrumentPlayer) return;
-
-            Clean();
-            InstrumentPlayer = null;
-#pragma warning disable 618
-            SendNetworkMessage(new InstrumentStopMidiMessage());
-#pragma warning restore 618
-        }
-
-        private void OpenUserInterface(IPlayerSession session)
-        {
-            UserInterface?.Toggle(session);
         }
 
         public override void Update(float delta)
@@ -350,37 +222,22 @@ namespace Content.Server.Instruments
             var maxMidiLaggedBatches = _instrumentSystem.MaxMidiLaggedBatches;
             var maxMidiBatchDropped = _instrumentSystem.MaxMidiBatchesDropped;
 
-            if (_instrumentPlayer != null
-                && (_instrumentPlayer.AttachedEntityUid == null
-                    || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(_instrumentPlayer.AttachedEntityUid.Value)))
-            {
-                InstrumentPlayer = null;
-                Clean();
-                UserInterface?.CloseAll();
-            }
-
             if ((_batchesDropped >= maxMidiBatchDropped
                     || _laggedBatches >= maxMidiLaggedBatches)
                 && InstrumentPlayer != null && _respectMidiLimits)
             {
                 var mob = InstrumentPlayer.AttachedEntity;
 
-#pragma warning disable 618
-                SendNetworkMessage(new InstrumentStopMidiMessage());
-#pragma warning restore 618
-                Playing = false;
-
+                // Just in case
+                Clean();
                 UserInterface?.CloseAll();
 
                 if (mob != null)
                 {
                     EntitySystem.Get<StunSystem>().TryParalyze(mob.Uid, TimeSpan.FromSeconds(1));
-                    Clean();
 
                     Owner.PopupMessage(mob, "instrument-component-finger-cramps-max-message");
                 }
-
-                InstrumentPlayer = null;
             }
 
             _timer += delta;

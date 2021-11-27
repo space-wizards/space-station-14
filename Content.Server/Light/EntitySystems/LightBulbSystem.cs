@@ -2,7 +2,6 @@ using Content.Server.Light.Components;
 using Content.Server.Light.Events;
 using Content.Shared.Light;
 using Content.Shared.Throwing;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;

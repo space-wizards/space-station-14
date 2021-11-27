@@ -2,6 +2,7 @@
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Coordinates.Helpers;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
@@ -41,16 +42,9 @@ namespace Content.Server.Chemistry.ReactionEffects
         [DataField("diluteReagents")] private bool _diluteReagents;
 
         /// <summary>
-        /// At what range should the reagents volume stay the same. If the effect range is higher than this then the reagents
-        /// will get diluted. If the effect range is lower than this then the reagents will get concentrated.
+        /// Used to calculate dilution. Increasing this makes the reagents more diluted.
         /// </summary>
-        [DataField("reagentDilutionStart")] private int _reagentDilutionStart = 4;
-
-        /// <summary>
-        /// Used to calculate dilution. Increasing this makes the reagents get more diluted. This means that a lower range
-        /// will be needed to make the reagents volume get closer to zero.
-        /// </summary>
-        [DataField("reagentDilutionFactor")] private float _reagentDilutionFactor = 1;
+        [DataField("reagentDilutionFactor")] private float _reagentDilutionFactor = 1f;
 
         /// <summary>
         /// Used to calculate concentration. Reagents get linearly more concentrated as the range goes from
@@ -85,6 +79,9 @@ namespace Content.Server.Chemistry.ReactionEffects
         /// </summary>
         [DataField("sound", required: true)] private SoundSpecifier _sound = default!;
 
+        public override bool ShouldLog => true;
+        public override LogImpact LogImpact => LogImpact.High;
+
         void ISerializationHooks.AfterDeserialization()
         {
             IoCManager.InjectDependencies(this);
@@ -105,20 +102,10 @@ namespace Content.Server.Chemistry.ReactionEffects
                 // The maximum value of solutionFraction is _reagentMaxConcentrationFactor, achieved when amount = 0
                 // The infimum of solutionFraction is 0, which is approached when amount tends to infinity
                 // solutionFraction is equal to 1 only when amount equals _reagentDilutionStart
-                float solutionFraction;
-                if (amount >= _reagentDilutionStart)
-                {
-                    // Weird formulas here but basically when amount increases, solutionFraction gets closer to 0 in a reciprocal manner
-                    // _reagentDilutionFactor defines how fast solutionFraction gets closer to 0
-                    solutionFraction = 1 / (_reagentDilutionFactor*(amount - _reagentDilutionStart) + 1);
-                }
-                else
-                {
-                    // Here when amount decreases, solutionFraction gets closer to _reagentMaxConcentrationFactor in a linear manner
-                    solutionFraction = amount * (1 - _reagentMaxConcentrationFactor) / _reagentDilutionStart +
-                                       _reagentMaxConcentrationFactor;
-                }
-                splitSolution.RemoveSolution(splitSolution.TotalVolume * solutionFraction);
+                // Weird formulas here but basically when amount increases, solutionFraction gets closer to 0 in a reciprocal manner
+                // _reagentDilutionFactor defines how fast solutionFraction gets closer to 0
+                float solutionFraction = 1 / (_reagentDilutionFactor*(amount) + 1);
+                splitSolution.RemoveSolution(splitSolution.TotalVolume * (1 - solutionFraction));
             }
 
             var transform = args.EntityManager.GetComponent<TransformComponent>(args.SolutionEntity);

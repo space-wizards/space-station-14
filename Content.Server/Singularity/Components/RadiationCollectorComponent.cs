@@ -4,7 +4,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Radiation;
 using Content.Shared.Singularity.Components;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;

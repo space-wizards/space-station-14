@@ -44,7 +44,7 @@ namespace Content.Shared.Nutrition.EntitySystems
 
             creamPied.CreamPied = value;
 
-            if (EntityManager.TryGetComponent(uid, out SharedAppearanceComponent? appearance))
+            if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
             {
                 appearance.SetData(CreamPiedVisuals.Creamed, value);
             }

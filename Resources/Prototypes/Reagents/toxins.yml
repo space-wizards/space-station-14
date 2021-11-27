@@ -32,7 +32,19 @@
     amount: -4
   - !type:PlantAdjustHealth
     amount: -8
-  # TODO MIRROR acid! hurt people on contact
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: false
+        damage:
+          groups:
+            Caustic: 0.5
+      - !type:DoAction
+        probability: 0.3
+        action: HumanScream
   metabolisms:
     Poison:
       effects:
@@ -53,7 +65,19 @@
   color: "#5050ff"
   boilingPoint: 165
   meltingPoint: -87
-  # TODO MIRROR acid! hurt people on contact
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: false
+        damage:
+          groups:
+            Caustic: 0.3
+      - !type:DoAction
+        probability: 0.2
+        action: HumanScream
   metabolisms:
     Poison:
       effects:
@@ -81,6 +105,19 @@
     amount: -2
   - !type:PlantAdjustHealth
     amount: -5
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: false
+        damage:
+          groups:
+            Caustic: 0.1
+      - !type:DoAction
+        probability: 0.1
+        action: HumanScream
   metabolisms:
     Poison:
       effects:
@@ -112,9 +149,14 @@
         damage:
           types:
             Poison: 3
-      - !type:RemoveReagent
+      - !type:AdjustReagent
         reagent: Inaprovaline
-        amount: 2
+        amount: -2.0
+  reactiveEffects:
+    Flammable:
+      methods: [ Touch ]
+      effects:
+      - !type:FlammableReaction
 
 - type: reagent
   id: UnstableMutagen

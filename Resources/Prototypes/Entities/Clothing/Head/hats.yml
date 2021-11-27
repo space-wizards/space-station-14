@@ -34,7 +34,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatBeretHoS
-  name: HoS beret
+  name: head of security's beret
   description: A black beret with a commander's rank emblem. For officers that are more inclined towards style than safety.
   components:
   - type: Sprite
@@ -111,7 +111,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatFedoraBrown
-  name:  brown fedora
+  name: brown fedora
   description: It's a brown fedora.
   components:
   - type: Sprite
@@ -144,7 +144,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatHopcap
-  name: hop cap
+  name: head of personnel's cap
   description: A grand, stylish captain cap.
   components:
   - type: Sprite
@@ -155,7 +155,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatHoshat
-  name: HoS hat
+  name: head of security's hat
   description: "There's a new sheriff in station."
   components:
   - type: Sprite
