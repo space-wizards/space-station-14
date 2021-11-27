@@ -114,9 +114,13 @@ namespace Content.Shared.Chemistry.Reaction
                 if (!effect.ShouldApply(args))
                     continue;
 
-                var entity = EntityManager.GetEntity(args.SolutionEntity);
-                _logSystem.Add(LogType.ReagentEffect, LogImpact.Low,
-                    $"Reaction effect {effect.GetType().Name} of reaction ${reaction.ID:reaction} applied on entity {entity} at {entity.Transform.Coordinates}");
+                if (effect.ShouldLog)
+                {
+                    var entity = EntityManager.GetEntity(args.SolutionEntity);
+                    _logSystem.Add(LogType.ReagentEffect, effect.LogImpact,
+                        $"Reaction effect {effect.GetType().Name} of reaction ${reaction.ID:reaction} applied on entity {entity} at {entity.Transform.Coordinates}");
+                }
+
                 effect.Effect(args);
             }
         }
