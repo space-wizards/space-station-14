@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix footstep sounds exception, type: Fix}
-  id: 169
-  time: '2021-04-21T10:14:40.0000000+00:00'
 - author: TaralGit
   changes:
   - {message: (Re)Added the machete and the baseball bat (melee weapons)., type: Add}
@@ -2857,3 +2852,9 @@ Entries:
   - {message: Added pills canister, type: Add}
   id: 670
   time: '2021-11-27T06:44:36.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Acids including fluorosulfuric, polytrinic, and sulfuric now have effects
+      on touch.', type: Add}
+  id: 671
+  time: '2021-11-27T07:31:50.0000000+00:00'
