@@ -46,7 +46,7 @@ namespace Content.Server.Shuttles.EntitySystems
         {
             base.Initialize();
             SubscribeLocalEvent<ThrusterComponent, ActivateInWorldEvent>(OnActivateThruster);
-            SubscribeLocalEvent<ThrusterComponent, ComponentInit>(OnThrusterInit);
+            SubscribeLocalEvent<ThrusterComponent, ComponentStartup>(OnThrusterStartup);
             SubscribeLocalEvent<ThrusterComponent, ComponentShutdown>(OnThrusterShutdown);
             SubscribeLocalEvent<ThrusterComponent, PowerChangedEvent>(OnPowerChange);
             SubscribeLocalEvent<ThrusterComponent, AnchorStateChangedEvent>(OnAnchorChange);
@@ -69,9 +69,9 @@ namespace Content.Server.Shuttles.EntitySystems
 
             args.PushMarkup(enabled);
 
-            var xform = EntityManager.GetComponent<TransformComponent>(uid);
-
-            if (xform.Anchored)
+            if (component.Type == ThrusterType.Linear &&
+                EntityManager.TryGetComponent(uid, out TransformComponent? xform) &&
+                xform.Anchored)
             {
                 var nozzleDir = Loc.GetString("thruster-comp-nozzle-direction",
                     ("direction", xform.LocalRotation.Opposite().ToWorldVec().GetDir().ToString().ToLowerInvariant()));
@@ -136,11 +136,33 @@ namespace Content.Server.Shuttles.EntitySystems
         {
             // TODO: Disable visualizer for old direction
 
-            if (!component.IsOn ||
+            if (!component.Enabled ||
                 component.Type != ThrusterType.Linear ||
                 !EntityManager.TryGetComponent(uid, out TransformComponent? xform) ||
                 !_mapManager.TryGetGrid(xform.GridID, out var grid) ||
-                !EntityManager.TryGetComponent(grid.GridEntityId, out ShuttleComponent? shuttleComponent)) return;
+                !EntityManager.TryGetComponent(grid.GridEntityId, out ShuttleComponent? shuttleComponent))
+            {
+                return;
+            }
+
+            var canEnable = CanEnable(uid, component);
+
+            // If it's not on then don't enable it inadvertantly (given we don't have an old rotation)
+            if (!canEnable && !component.IsOn) return;
+
+            // Enable it if it was turned off but new tile is valid
+            if (!component.IsOn && canEnable)
+            {
+                EnableThruster(uid, component);
+                return;
+            }
+
+            // Disable if new tile invalid
+            if (component.IsOn && !canEnable)
+            {
+                DisableThruster(uid, component, xform, args.OldRotation);
+                return;
+            }
 
             var oldDirection = (int) args.OldRotation.GetCardinalDir() / 2;
             var direction = (int) args.NewRotation.GetCardinalDir() / 2;
@@ -166,7 +188,7 @@ namespace Content.Server.Shuttles.EntitySystems
             }
         }
 
-        private void OnThrusterInit(EntityUid uid, ThrusterComponent component, ComponentInit args)
+        private void OnThrusterStartup(EntityUid uid, ThrusterComponent component, ComponentStartup args)
         {
             _ambient.SetAmbience(uid, false);
 
@@ -261,11 +283,7 @@ namespace Content.Server.Shuttles.EntitySystems
         /// <summary>
         /// Tries to disable the thruster.
         /// </summary>
-        /// <param name="uid"></param>
-        /// <param name="component"></param>
-        /// <param name="xform"></param>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public void DisableThruster(EntityUid uid, ThrusterComponent component, TransformComponent? xform = null)
+        public void DisableThruster(EntityUid uid, ThrusterComponent component, TransformComponent? xform = null, Angle? angle = null)
         {
             if (!component.IsOn ||
                 !Resolve(uid, ref xform) ||
@@ -280,7 +298,8 @@ namespace Content.Server.Shuttles.EntitySystems
             switch (component.Type)
             {
                 case ThrusterType.Linear:
-                    var direction = ((int) xform.LocalRotation.GetCardinalDir() / 2);
+                    angle ??= xform.LocalRotation;
+                    var direction = (int) angle.Value.GetCardinalDir() / 2;
 
                     shuttleComponent.LinearThrusterImpulse[direction] -= component.Impulse;
                     DebugTools.Assert(shuttleComponent.LinearThrusters[direction].Contains(component));
