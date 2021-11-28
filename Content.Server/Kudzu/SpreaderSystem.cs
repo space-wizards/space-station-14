@@ -92,9 +92,11 @@ public class SpreaderSystem : EntitySystem
         for (var i = 0; i < 4; i++)
         {
             var direction = (DirectionFlag) (1 << i);
-            var ents = grid.GetInDir(transform.Coordinates, direction.AsDir()).ToArray();
+            var coords =transform.Coordinates.Offset(direction.AsDir().ToVec());
+            var ents = grid.GetLocal(coords).ToArray();
 
-            if (ents.Any(x => IsTileBlockedFrom(x, direction))) continue;
+
+            if (ents.Any(x => IsTileBlockedFrom(x, direction)) || !grid.TryGetTileRef(coords, out _)) continue;
 
             // Ok, spawn a plant
             didGrow = true;
