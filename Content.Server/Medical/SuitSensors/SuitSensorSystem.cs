@@ -137,7 +137,7 @@ namespace Content.Server.Medical.SuitSensors
             {
                 CreateVerb(uid, component, args.User.Uid, SuitSensorMode.SensorOff),
                 CreateVerb(uid, component, args.User.Uid, SuitSensorMode.SensorBinary),
-                CreateVerb(uid, component, args.User.Uid,SuitSensorMode.SensorVitals),
+                CreateVerb(uid, component, args.User.Uid, SuitSensorMode.SensorVitals),
                 CreateVerb(uid, component, args.User.Uid, SuitSensorMode.SensorCords)
             });
         }
