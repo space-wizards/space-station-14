@@ -54,7 +54,8 @@ public class SlowContactsSystem : EntitySystem
         if (!_statusCapableInContact.ContainsKey(otherUid))
             Logger.Error("Somehow an entity left a body it was never in?");
         _statusCapableInContact[otherUid]--;
-        EntityManager.RemoveComponent<SlowsOnContactComponent>(otherUid);
+        if (_statusCapableInContact[otherUid] == 0)
+            EntityManager.RemoveComponent<SlowsOnContactComponent>(otherUid);
         _speedModifierSystem.RefreshMovementSpeedModifiers(otherUid);
 
     }
