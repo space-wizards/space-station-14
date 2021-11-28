@@ -30,6 +30,9 @@ namespace Content.Server.Medical.SuitSensors
         [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
+        private const float UpdateRate = 0.5f;
+        private float _updateDif;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -44,13 +47,20 @@ namespace Content.Server.Medical.SuitSensors
         {
             base.Update(frameTime);
 
+            // check update rate
+            _updateDif += frameTime;
+            if (_updateDif < UpdateRate)
+                return;
+            _updateDif = 0f;
+
+            var curTime = _gameTiming.CurTime;
             var sensors = EntityManager.EntityQuery<SuitSensorComponent, DeviceNetworkComponent>();
             foreach (var (sensor, device) in sensors)
             {
                 // check if sensor is ready to update
-                if (_gameTiming.CurTime - sensor.LastUpdate < TimeSpan.FromSeconds(sensor.UpdateRate))
+                if (curTime - sensor.LastUpdate < TimeSpan.FromSeconds(sensor.UpdateRate))
                     continue;
-                sensor.LastUpdate = _gameTiming.CurTime;
+                sensor.LastUpdate = curTime;
 
                 // get sensor status
                 var status = GetSensorState(sensor.OwnerUid, sensor);

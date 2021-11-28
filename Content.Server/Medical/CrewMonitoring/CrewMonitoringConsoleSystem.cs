@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Medical.SuitSensors;
 using Content.Server.UserInterface;
@@ -15,8 +14,8 @@ namespace Content.Server.Medical.CrewMonitoring
         [Dependency] private readonly SuitSensorSystem _sensors = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-        private float _updateDif = 0f;
-        private float _updateRate = 3f;
+        private const float UpdateRate = 3f;
+        private float _updateDif;
 
         public override void Initialize()
         {
@@ -31,7 +30,7 @@ namespace Content.Server.Medical.CrewMonitoring
 
             // check update rate
             _updateDif += frameTime;
-            if (_updateDif < _updateRate)
+            if (_updateDif < UpdateRate)
                 return;
             _updateDif = 0f;
 
