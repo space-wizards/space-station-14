@@ -153,6 +153,7 @@ namespace Content.Server.Physics.Controllers
                     var angle = linearInput.ToWorldAngle();
                     var linearDir = angle.GetDir();
                     var dockFlag = linearDir.AsFlag();
+                    var shuttleNorth = EntityManager.GetComponent<TransformComponent>(body.OwnerUid).WorldRotation.ToWorldVec();
 
                     // Won't just do cardinal directions.
                     foreach (DirectionFlag dir in Enum.GetValues(typeof(DirectionFlag)))
@@ -177,8 +178,8 @@ namespace Content.Server.Physics.Controllers
 
                         thrusterSystem.EnableLinearThrustDirection(shuttle, dir);
 
+                        // TODO: This isn't taking the inputs correctly for length / angle so need to do that.
                         var index = (int) Math.Log2((int) dir);
-
                         var speed = shuttle.LinearThrusterImpulse[index] * linearLength;
 
                         speed /= 10f;
@@ -189,7 +190,7 @@ namespace Content.Server.Physics.Controllers
                         }
 
                         body.ApplyLinearImpulse(
-                            angle.RotateVec(EntityManager.GetComponent<TransformComponent>(body.OwnerUid).WorldRotation.ToWorldVec()) *
+                            angle.RotateVec(shuttleNorth) *
                             speed *
                             frameTime);
                     }
