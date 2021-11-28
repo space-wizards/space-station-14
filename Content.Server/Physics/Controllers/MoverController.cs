@@ -169,7 +169,11 @@ namespace Content.Server.Physics.Controllers
                                 continue;
                         }
 
-                        if ((dir & dockFlag) == 0x0) continue;
+                        if ((dir & dockFlag) == 0x0)
+                        {
+                            thrusterSystem.DisableLinearThrustDirection(shuttle, dir);
+                            continue;
+                        }
 
                         thrusterSystem.EnableLinearThrustDirection(shuttle, dir);
 
@@ -177,11 +181,11 @@ namespace Content.Server.Physics.Controllers
 
                         var speed = shuttle.LinearThrusterImpulse[index] * linearLength;
 
-                        speed /= 5f;
+                        speed /= 10f;
 
                         if (body.LinearVelocity.LengthSquared == 0f)
                         {
-                            speed *= 5f;
+                            speed *= 10f;
                         }
 
                         body.ApplyLinearImpulse(
