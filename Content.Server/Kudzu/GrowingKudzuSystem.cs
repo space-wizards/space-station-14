@@ -38,7 +38,7 @@ public class GrowingKudzuSystem : EntitySystem
 
         foreach (var (kudzu, appearance) in EntityManager.EntityQuery<GrowingKudzuComponent, AppearanceComponent>())
         {
-            if (kudzu.GrowthLevel >= 3 || !_robustRandom.Prob(1.0f/6.0f)) continue;
+            if (kudzu.GrowthLevel >= 3 || !_robustRandom.Prob(kudzu.GrowthTickSkipChange)) continue;
             kudzu.GrowthLevel += 1;
 
             if (kudzu.GrowthLevel == 3 &&

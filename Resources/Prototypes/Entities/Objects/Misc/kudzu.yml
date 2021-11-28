@@ -52,6 +52,6 @@
     - type: Spreader
       growthResult: Kudzu
     - type: GrowingKudzu
-    - type: SlowsContacts
+    - type: SlowContacts
       walkSpeedModifier: 0.2
       sprintSpeedModifier: 0.2

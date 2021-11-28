@@ -71,7 +71,11 @@ namespace Content.Shared.DrawDepth
 
         Doors = DrawDepthTag.Default + 5,
 
+        /// <summary>
+        /// Stuff that needs to draw over most things, but not effects, like Kudzu.
+        /// </summary>
         Overdoors = DrawDepthTag.Default + 6,
+
         /// <summary>
         ///     Explosions, fire, melee swings. Whatever.
         /// </summary>

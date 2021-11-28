@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Atmos.Components;
+using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Movement.EntitySystems;
 using Robust.Shared.GameObjects;
@@ -29,6 +30,7 @@ public class SpreaderSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<SpreaderComponent, ComponentAdd>(SpreaderAddHandler);
+        SubscribeLocalEvent<AirtightChanged>(e => UpdateNearbySpreaders(e.Airtight.OwnerUid, e.Airtight));
     }
 
     private void SpreaderAddHandler(EntityUid uid, SpreaderComponent component, ComponentAdd args)
@@ -85,10 +87,9 @@ public class SpreaderSystem : EntitySystem
         if (!Resolve(ent, ref transform, ref spreader, false))
             return false;
 
-        if (!_mapManager.TryGetGrid(transform.GridID, out var grid)) return false;
+        if (spreader.Enabled == false) return false;
 
-        if (spreader.Enabled == false)
-            return false;
+        if (!_mapManager.TryGetGrid(transform.GridID, out var grid)) return false;
 
         var didGrow = false;
 

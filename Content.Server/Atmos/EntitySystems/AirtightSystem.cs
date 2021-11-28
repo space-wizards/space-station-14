@@ -43,9 +43,9 @@ namespace Content.Server.Atmos.EntitySystems
         private void OnAirtightShutdown(EntityUid uid, AirtightComponent airtight, ComponentShutdown args)
         {
             SetAirblocked(airtight, false);
-            _spreaderSystem.UpdateNearbySpreaders(uid, airtight);
 
             InvalidatePosition(airtight.LastPosition.Item1, airtight.LastPosition.Item2, airtight.FixVacuum);
+            RaiseLocalEvent(new AirtightChanged() { Airtight = airtight });
         }
 
         private void OnMapInit(EntityUid uid, AirtightComponent airtight, MapInitEvent args)
@@ -72,14 +72,14 @@ namespace Content.Server.Atmos.EntitySystems
 
             airtight.CurrentAirBlockedDirection = (int) Rotate((AtmosDirection)airtight.InitialAirBlockedDirection, ev.NewRotation);
             UpdatePosition(airtight);
-            _spreaderSystem.UpdateNearbySpreaders(uid, airtight);
+            RaiseLocalEvent(uid, new AirtightChanged() { Airtight = airtight });
         }
 
         public void SetAirblocked(AirtightComponent airtight, bool airblocked)
         {
             airtight.AirBlocked = airblocked;
             UpdatePosition(airtight);
-            _spreaderSystem.UpdateNearbySpreaders(airtight.OwnerUid, airtight);
+            RaiseLocalEvent(airtight.OwnerUid, new AirtightChanged() { Airtight = airtight });
         }
 
         public void UpdatePosition(AirtightComponent airtight)
@@ -123,5 +123,10 @@ namespace Content.Server.Atmos.EntitySystems
 
             return newAirBlockedDirs;
         }
+    }
+
+    public class AirtightChanged : EntityEventArgs
+    {
+        public AirtightComponent Airtight;
     }
 }

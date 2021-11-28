@@ -1,6 +1,7 @@
 using Content.Shared.Station;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -16,7 +17,7 @@ public class KudzuGrowth : StationEvent
     public override string Name => "KudzuGrowth";
 
     public override string? StartAnnouncement =>
-        "Attention crew, we have detected a Type 2 Biological Invader on-station, that poses potentially serious threat to crew productivity. We advise you to exterminate it.";
+        Loc.GetString("station-event-kudzu-growth-start-announcement");
 
     public override string? StartAudio => "/Audio/Announcements/bloblarm.ogg";
 
