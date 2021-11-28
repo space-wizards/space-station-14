@@ -1,12 +1,4 @@
 Entries:
-- author: Swept
-  changes:
-  - {message: 'Adds a ton of food, ingredients and condiments from different codebases',
-    type: Add}
-  - {message: Removes some old/duplicate food items, type: Remove}
-  - {message: You will never bite into food only to find it's empty again, type: Fix}
-  id: 171
-  time: '2021-05-03T11:17:22.0000000+00:00'
 - author: Macoron
   changes:
   - {message: Chairs and other object will change their direction when you pull them.,
@@ -2855,3 +2847,10 @@ Entries:
     type: Tweak}
   id: 672
   time: '2021-11-27T08:54:08.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Pill canisters can now be found in a box in chemistry's locker., type: Add}
+  - {message: 'Cargo now has access to the chemistry supplies crate, allowing them
+      to replace chemistry''s things after they are all stolen or blown up.', type: Add}
+  id: 673
+  time: '2021-11-28T01:30:47.0000000+00:00'
