@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
@@ -32,13 +33,15 @@ namespace Content.Shared.Chemistry.Reaction
         public override void Initialize()
         {
             base.Initialize();
-            InitializeReactions();
+
+            InitializeReactionCache();
+            _prototypeManager.PrototypesReloaded += OnPrototypesReloaded;
         }
 
         /// <summary>
         ///     Handles building the reaction cache.
         /// </summary>
-        private void InitializeReactions()
+        private void InitializeReactionCache()
         {
             _reactions = new Dictionary<string, List<ReactionPrototype>>();
 
@@ -67,6 +70,28 @@ namespace Content.Shared.Chemistry.Reaction
 
                 cache.Add(reaction);
                 return; // Only need to cache based on the first reagent.
+            }
+        }
+
+        /// <summary>
+        ///     Updates the reaction cache when the prototypes are reloaded.
+        /// </summary>
+        /// <param name="eventArgs">The set of modified prototypes.</param>
+        private void OnPrototypesReloaded(PrototypesReloadedEventArgs eventArgs)
+        {
+            if (!eventArgs.ByType.TryGetValue(typeof(ReactionPrototype), out var set))
+                return;
+
+            foreach (var (reactant, cache) in _reactions)
+            {
+                cache.RemoveAll((reaction) => set.Modified.ContainsKey(reaction.ID));
+                if (cache.Count == 0)
+                    _reactions.Remove(reactant);
+            }
+
+            foreach (var prototype in set.Modified.Values)
+            {
+                CacheReaction((ReactionPrototype) prototype);
             }
         }
 
@@ -173,9 +198,8 @@ namespace Content.Shared.Chemistry.Reaction
         ///     Removes the reactants from the solution, then returns a solution with all products.
         ///     WARNING: Does not trigger reactions between solution and new products.
         /// </summary>
-        private Solution ProcessReactions(Solution solution, EntityUid ownerUid)
+        private bool ProcessReactions(Solution solution, EntityUid ownerUid, [MaybeNullWhen(false)] out Solution productSolution)
         {
-            var overallProducts = new Solution();
             foreach(var reactant in solution.Contents)
             {
                 if (!_reactions.TryGetValue(reactant.ReagentId, out var reactions))
@@ -186,12 +210,13 @@ namespace Content.Shared.Chemistry.Reaction
                     if (!CanReact(solution, reaction, out var unitReactions))
                         continue;
 
-                    var reactionProducts = PerformReaction(solution, ownerUid, reaction, unitReactions);
-                    overallProducts.AddSolution(reactionProducts);
-                    return overallProducts;
+                    productSolution = PerformReaction(solution, ownerUid, reaction, unitReactions);
+                    return true;
                 }
             }
-            return overallProducts;
+
+            productSolution = null;
+            return false;
         }
 
         /// <summary>
@@ -201,7 +226,8 @@ namespace Content.Shared.Chemistry.Reaction
         {
             for (var i = 0; i < MaxReactionIterations; i++)
             {
-                var products = ProcessReactions(solution, ownerUid);
+                if (!ProcessReactions(solution, ownerUid, out var products))
+                    return;
 
                 if (products.TotalVolume <= 0)
                     return;
@@ -219,7 +245,8 @@ namespace Content.Shared.Chemistry.Reaction
         {
             for (var i = 0; i < MaxReactionIterations; i++)
             {
-                var products = ProcessReactions(solution, ownerUid);
+                if (!ProcessReactions(solution, ownerUid, out var products))
+                    return;
 
                 if (products.TotalVolume <= 0)
                     return;
