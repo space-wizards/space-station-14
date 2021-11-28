@@ -47,7 +47,6 @@ public class SlowContactsSystem : EntitySystem
 
     private void OnEntityExit(EntityUid uid, SlowContactsComponent component, EndCollideEvent args)
     {
-        Logger.Debug("F");
         var otherUid = args.OtherFixture.Body.OwnerUid;
         if (!EntityManager.HasComponent<MovementSpeedModifierComponent>(otherUid))
             return;
@@ -59,7 +58,6 @@ public class SlowContactsSystem : EntitySystem
 
     private void OnEntityEnter(EntityUid uid, SlowContactsComponent component, StartCollideEvent args)
     {
-        Logger.Debug("E");
         var otherUid = args.OtherFixture.Body.OwnerUid;
         if (!EntityManager.HasComponent<MovementSpeedModifierComponent>(otherUid))
             return;
