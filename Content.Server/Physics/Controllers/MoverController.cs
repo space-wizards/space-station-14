@@ -57,7 +57,7 @@ namespace Content.Server.Physics.Controllers
                 HandleMobMovement(mover, physics, mobMover);
             }
 
-            HandleShuttleMovement();
+            HandleShuttleMovement(frameTime);
 
             foreach (var (mover, physics) in EntityManager.EntityQuery<IMoverComponent, PhysicsComponent>(true))
             {
@@ -99,7 +99,7 @@ namespace Content.Server.Physics.Controllers
             {
                 if (newPilots.ContainsKey(shuttle)) continue;
 
-                thrusterSystem.DisableAllThrustDirections(shuttle);
+                thrusterSystem.DisableLinearThrusters(shuttle);
             }
 
             // Collate all of the linear / angular velocites for a shuttle
@@ -141,7 +141,7 @@ namespace Content.Server.Physics.Controllers
                 if (linearInput.Length.Equals(0f))
                 {
                     // TODO: This visualization doesn't work with multiple pilots so need to address that somehow.
-                    thrusterSystem.DisableAllThrustDirections(shuttle);
+                    thrusterSystem.DisableLinearThrusters(shuttle);
                     body.LinearDamping = shuttleSystem.ShuttleIdleLinearDamping;
                 }
                 else
@@ -168,7 +168,7 @@ namespace Content.Server.Physics.Controllers
 
                         if ((dir & dockFlag) == 0x0) continue;
 
-                        thrusterSystem.EnableThrustDirection(shuttle, dir);
+                        thrusterSystem.EnableLinearThrustDirection(shuttle, dir);
 
                         var index = (int) Math.Log2((int) dir);
 
@@ -192,13 +192,13 @@ namespace Content.Server.Physics.Controllers
 
                 if (MathHelper.CloseTo(angularInput, 0f))
                 {
-                    thrusterSystem.DisableAllThrustDirections(shuttle);
+                    thrusterSystem.SetAngularThrust(shuttle, false);
                     body.AngularDamping = shuttleSystem.ShuttleIdleAngularDamping;
                 }
                 else
                 {
                     body.AngularDamping = shuttleSystem.ShuttleMovingAngularDamping;
-                    var angularSpeed = 0f;
+                    var angularSpeed = shuttle.AngularThrust;
 
                     if (body.AngularVelocity.Equals(0f))
                     {
@@ -209,19 +209,10 @@ namespace Content.Server.Physics.Controllers
                     body.ApplyAngularImpulse(
                         angularInput *
                         angularSpeed *
+                        frameTime *
                         body.Mass / 100f);
 
-                    // TODO: Angular thrusters
-                    if (angularInput < 0f)
-                    {
-                        system.EnableThrustDirection(shuttleComponent, DirectionFlag.West);
-                        system.DisableThrustDirection(shuttleComponent, DirectionFlag.East);
-                    }
-                    else
-                    {
-                        system.EnableThrustDirection(shuttleComponent, DirectionFlag.East);
-                        system.DisableThrustDirection(shuttleComponent, DirectionFlag.West);
-                    }
+                    thrusterSystem.SetAngularThrust(shuttle, true);
                 }
             }
 
