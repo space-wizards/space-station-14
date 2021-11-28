@@ -48,12 +48,15 @@ public class SlowContactsSystem : EntitySystem
     private void OnEntityExit(EntityUid uid, SlowContactsComponent component, EndCollideEvent args)
     {
         var otherUid = args.OtherFixture.Body.OwnerUid;
-        if (!EntityManager.HasComponent<MovementSpeedModifierComponent>(otherUid))
+        if (!EntityManager.HasComponent<MovementSpeedModifierComponent>(otherUid)
+            || !EntityManager.HasComponent<SlowsOnContactComponent>(otherUid))
             return;
         if (!_statusCapableInContact.ContainsKey(otherUid))
             Logger.Error("Somehow an entity left a body it was never in?");
         _statusCapableInContact[otherUid]--;
+        EntityManager.RemoveComponent<SlowsOnContactComponent>(otherUid);
         _speedModifierSystem.RefreshMovementSpeedModifiers(otherUid);
+
     }
 
     private void OnEntityEnter(EntityUid uid, SlowContactsComponent component, StartCollideEvent args)
@@ -64,6 +67,8 @@ public class SlowContactsSystem : EntitySystem
         if (!_statusCapableInContact.ContainsKey(otherUid))
             _statusCapableInContact[otherUid] = 0;
         _statusCapableInContact[otherUid]++;
+        if (!EntityManager.HasComponent<SlowsOnContactComponent>(otherUid))
+            EntityManager.AddComponent<SlowsOnContactComponent>(otherUid);
         _speedModifierSystem.RefreshMovementSpeedModifiers(otherUid);
     }
 
