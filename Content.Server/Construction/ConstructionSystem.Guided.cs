@@ -4,12 +4,9 @@ using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
 using Content.Shared.Examine;
-using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
 namespace Content.Server.Construction
@@ -17,8 +14,6 @@ namespace Content.Server.Construction
     public partial class ConstructionSystem
     {
         private readonly Dictionary<ConstructionPrototype, ConstructionGuide> _guideCache = new();
-
-        [Dependency] private readonly SharedInteractionSystem _sharedInteractionSystem = default!;
 
         private void InitializeGuided()
         {
