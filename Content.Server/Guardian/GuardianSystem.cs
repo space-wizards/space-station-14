@@ -30,57 +30,6 @@ namespace Content.Server.Guardian
         }
 
         /// <summary>
-        /// Triggers when the host recives damage which puts the host in either critical or killed state
-        /// </summary>
-        private void OnHostStateChange(EntityUid uid, GuardianHostComponent component, MobStateChangedEvent args)
-        {
-            if (EntityManager.GetEntity(component.HostedGuardian) != null)
-            {
-                if (args.State.IsCritical())
-                {
-                    var guard = EntityManager.GetEntity(component.HostedGuardian);
-                    _popupSystem.PopupCoordinates(Loc.GetString("guardian-host-critical-warn"), guard.Transform.Coordinates, Filter.Entities(guard.Uid));
-                    SoundSystem.Play(Filter.Local(), "/Audio/Effects/guardian_warn.ogg", uid);
-                }
-                else if (args.State.IsDead())
-                {
-                    var guard = EntityManager.GetEntity(component.HostedGuardian);
-                    SoundSystem.Play(Filter.Pvs(guard), "/Audio/Voice/Human/malescream_guardian.ogg", uid, AudioHelpers.WithVariation(0.20f));
-                    EntityManager.QueueDeleteEntity(guard);
-                    EntityManager.QueueDeleteEntity(uid);
-                }
-            }
-        }
-
-        private void OnGuardianDamaged(EntityUid uid, GuardianComponent component, DamageChangedEvent args)
-        {
-            if (EntityManager.GetEntity(uid).TryGetComponent<DamageableComponent>(out DamageableComponent? guardiandamage))
-            {
-                EntityManager.GetEntity(component.Host).TryGetComponent<DamageableComponent>(out DamageableComponent? hostdamage);
-                if (hostdamage != null)
-                {
-                    if (args.DamageDelta != null)
-                    {
-                        EntitySystem.Get<DamageableSystem>().SetDamage(hostdamage, (hostdamage.Damage + args.DamageDelta * component.DamageShare));
-                        _popupSystem.PopupCoordinates(Loc.GetString("guardian-entity-taking-damage"), hostdamage.Owner.Transform.Coordinates, Filter.Entities(hostdamage.OwnerUid));
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Triggers while trying to examine an activator to see if it's used
-        /// </summary>
-        private void OnActivatorExamined(EntityUid uid, GuardianCreatorComponent component, ExaminedEvent args)
-        {
-           if (component.Used == true)
-           {
-               string usedstring = Loc.GetString("guardian-activator-empty-invalid-creaton");
-               args.Message.AddMarkup("\n" + $"[color=#ba1919]{usedstring}[/color]");
-           }
-        }
-
-        /// <summary>
         /// Adds the guardian host component to the user and spawns the guardian inside said component
         /// </summary>
         private void OnGuardianCreated(EntityUid uid, GuardianCreatorComponent component, UseInHandEvent args)
@@ -107,7 +56,7 @@ namespace Content.Server.Guardian
                             _popupSystem.PopupCoordinates(Loc.GetString("guardian-created"), hostcomp.Owner.Transform.Coordinates, Filter.Entities(args.User.Uid));
                             //Exhaust the activator
                             component.Used = true;
-                        }                   
+                        }
                     }
                     else
                     {
@@ -123,6 +72,55 @@ namespace Content.Server.Guardian
             {
                 _popupSystem.PopupCoordinates(Loc.GetString("guardian-already-present-invalid-creation"), args.User.Transform.Coordinates, Filter.Entities(args.User.Uid));
             }
+        }
+
+        /// <summary>
+        /// Triggers when the host recives damage which puts the host in either critical or killed state
+        /// </summary>
+        private void OnHostStateChange(EntityUid uid, GuardianHostComponent component, MobStateChangedEvent args)
+        {
+                if (args.State.IsCritical())
+                {
+                    _popupSystem.PopupCoordinates(Loc.GetString("guardian-host-critical-warn"), EntityManager.GetComponent<TransformComponent>(uid).Coordinates, Filter.Entities(component.HostedGuardian));
+                    SoundSystem.Play(Filter.Local(), "/Audio/Effects/guardian_warn.ogg", component.HostedGuardian);
+                }
+                else if (args.State.IsDead())
+                {
+                    SoundSystem.Play(Filter.Pvs(component.HostedGuardian), "/Audio/Voice/Human/malescream_guardian.ogg", uid, AudioHelpers.WithVariation(0.20f));
+                    EntityManager.QueueDeleteEntity(component.HostedGuardian);
+                    EntityManager.QueueDeleteEntity(uid);
+                }
+        }
+
+        /// <summary>
+        /// Handles guardian reciving damage and splitting it with the host according to his defence percent
+        /// </summary>
+        private void OnGuardianDamaged(EntityUid uid, GuardianComponent component, DamageChangedEvent args)
+        {
+            if (EntityManager.TryGetComponent<DamageableComponent>(uid, out DamageableComponent? damageable))
+            {
+                EntityManager.TryGetComponent<DamageableComponent>(component.Host, out DamageableComponent? hostdamage);
+                if (hostdamage != null)
+                {
+                    if (args.DamageDelta != null)
+                    {
+                        EntitySystem.Get<DamageableSystem>().SetDamage(hostdamage, (hostdamage.Damage + args.DamageDelta * component.DamageShare));
+                        _popupSystem.PopupCoordinates(Loc.GetString("guardian-entity-taking-damage"), hostdamage.Owner.Transform.Coordinates, Filter.Entities(hostdamage.OwnerUid));
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Triggers while trying to examine an activator to see if it's used
+        /// </summary>
+        private void OnActivatorExamined(EntityUid uid, GuardianCreatorComponent component, ExaminedEvent args)
+        {
+           if (component.Used == true)
+           {
+               string usedstring = Loc.GetString("guardian-activator-empty-invalid-creaton");
+               args.Message.AddMarkup("\n" + $"[color=#ba1919]{usedstring}[/color]");
+           }
         }
 
         /// <summary>
@@ -153,24 +151,22 @@ namespace Content.Server.Guardian
         {
             if (component.GuardianLoose == true)
             {
-                var guardian = EntityManager.GetEntity(uid);
-                var host = EntityManager.GetEntity(component.Host);
                 //Compares the distance to allowed distance, otherwise forces a recall action from the host
-                if (!host.Transform.Coordinates.InRange(EntityManager, guardian.Transform.Coordinates, component.DistanceAllowed))
+                if (!EntityManager.GetComponent<TransformComponent>(component.Host).Coordinates.InRange(EntityManager, EntityManager.GetComponent<TransformComponent>(uid).Coordinates, component.DistanceAllowed))
                 {
-                    OnGuardianManifestAction(uid, host.Uid);
+                    OnGuardianManifestAction(uid, component.Host);
                 }
             }
         }
 
         public void OnGuardianManifestAction(EntityUid guardian, EntityUid host)
         {
-            var guardianloose = EntityManager.GetEntity(guardian).GetComponent<GuardianComponent>().GuardianLoose;
+            var guardianloose = EntityManager.GetComponent<GuardianComponent>(guardian).GuardianLoose;
             //the loose parameter toggling is inside the shared component
             if (guardianloose == false)
             {
                 //Ejects the guardian if it isn't inside
-                EntityManager.GetEntity(host).GetComponent<GuardianHostComponent>().EjectBody();
+                EntityManager.GetComponent<GuardianHostComponent>(host).EjectBody();
             }
             else if (guardianloose == true)
             {
