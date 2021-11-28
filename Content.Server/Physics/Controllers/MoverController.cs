@@ -102,6 +102,8 @@ namespace Content.Server.Physics.Controllers
                 thrusterSystem.DisableLinearThrusters(shuttle);
             }
 
+            _shuttlePilots = newPilots;
+
             // Collate all of the linear / angular velocites for a shuttle
             // then do the movement input once for it.
             foreach (var (shuttle, pilots) in _shuttlePilots)
@@ -118,7 +120,7 @@ namespace Content.Server.Physics.Controllers
                         foreach (var (pilot, mover) in pilots)
                         {
                             var sprint = mover.VelocityDir.sprinting;
-                            linearInput += sprint.Y;
+                            linearInput += new Vector2(0, sprint.Y);
                             angularInput += sprint.X;
                         }
                         break;
@@ -136,11 +138,11 @@ namespace Content.Server.Physics.Controllers
                 var count = pilots.Count;
                 linearInput /= count;
                 angularInput /= count;
+                var linearLength = linearInput.Length;
 
                 // Handle shuttle movement
-                if (linearInput.Length.Equals(0f))
+                if (linearLength.Equals(0f))
                 {
-                    // TODO: This visualization doesn't work with multiple pilots so need to address that somehow.
                     thrusterSystem.DisableLinearThrusters(shuttle);
                     body.LinearDamping = shuttleSystem.ShuttleIdleLinearDamping;
                 }
@@ -148,8 +150,9 @@ namespace Content.Server.Physics.Controllers
                 {
                     body.LinearDamping = shuttleSystem.ShuttleMovingLinearDamping;
 
-                    var dockDirection = linearInput.ToWorldAngle().GetDir();
-                    var dockFlag = dockDirection.AsFlag();
+                    var angle = linearInput.ToWorldAngle();
+                    var linearDir = angle.GetDir();
+                    var dockFlag = linearDir.AsFlag();
 
                     // Won't just do cardinal directions.
                     foreach (DirectionFlag dir in Enum.GetValues(typeof(DirectionFlag)))
@@ -172,7 +175,7 @@ namespace Content.Server.Physics.Controllers
 
                         var index = (int) Math.Log2((int) dir);
 
-                        var speed = shuttle.LinearThrusterImpulse[index];
+                        var speed = shuttle.LinearThrusterImpulse[index] * linearLength;
 
                         speed /= 5f;
 
@@ -181,10 +184,8 @@ namespace Content.Server.Physics.Controllers
                             speed *= 5f;
                         }
 
-                        var moveAngle = linearInput.ToWorldAngle();
-
                         body.ApplyLinearImpulse(
-                            moveAngle.RotateVec(body.Owner.Transform.WorldRotation.ToWorldVec()) *
+                            angle.RotateVec(EntityManager.GetComponent<TransformComponent>(body.OwnerUid).WorldRotation.ToWorldVec()) *
                             speed *
                             frameTime);
                     }
@@ -207,7 +208,7 @@ namespace Content.Server.Physics.Controllers
 
                     // Scale rotation by mass just to make rotating larger things a bit more bearable.
                     body.ApplyAngularImpulse(
-                        angularInput *
+                        -angularInput *
                         angularSpeed *
                         frameTime *
                         body.Mass / 100f);
@@ -215,8 +216,6 @@ namespace Content.Server.Physics.Controllers
                     thrusterSystem.SetAngularThrust(shuttle, true);
                 }
             }
-
-            _shuttlePilots = newPilots;
         }
 
         protected override void HandleFootsteps(IMoverComponent mover, IMobMoverComponent mobMover)
