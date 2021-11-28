@@ -10,7 +10,6 @@ public class AdminLogTypeButton : Button
         Type = type;
         ClipText = true;
         ToggleMode = true;
-        Pressed = true;
     }
 
     public LogType Type { get; }
