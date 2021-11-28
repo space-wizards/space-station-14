@@ -173,7 +173,7 @@ namespace Content.Server.StationEvents.Events
         {
             tile = default;
             robustRandom ??= IoCManager.Resolve<IRobustRandom>();
-            entityManager ??= IoCManager.Resolve<EntityManager>();
+            entityManager ??= IoCManager.Resolve<IEntityManager>();
 
             targetCoords = EntityCoordinates.Invalid;
             targetStation = robustRandom.Pick(entityManager.EntityQuery<StationComponent>().ToArray()).Station;
