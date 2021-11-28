@@ -49,7 +49,6 @@
     - type: AtmosExposed
     - type: Spreader
       growthResult: Kudzu
-      enabled: false
     - type: GrowingKudzu
     - type: SlowsContacts
       walkSpeedModifier: 0.2

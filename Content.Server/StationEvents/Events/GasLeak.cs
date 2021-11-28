@@ -92,7 +92,7 @@ namespace Content.Server.StationEvents.Events
             base.Startup();
 
             // Essentially we'll pick out a target amount of gas to leak, then a rate to leak it at, then work out the duration from there.
-            if (TryFindRandomTile(out _targetTile))
+            if (TryFindRandomTile(out _targetTile, out _targetStation, out _targetGrid, out _targetCoords))
             {
                 _foundTile = true;
 
@@ -169,16 +169,20 @@ namespace Content.Server.StationEvents.Events
             }
         }
 
-        private bool TryFindRandomTile(out Vector2i tile)
+        public static bool TryFindRandomTile(out Vector2i tile, out StationId targetStation, out IEntity? targetGrid, out EntityCoordinates targetCoords, IRobustRandom? robustRandom = null, IEntityManager? entityManager = null)
         {
             tile = default;
+            robustRandom ??= IoCManager.Resolve<IRobustRandom>();
+            entityManager ??= IoCManager.Resolve<EntityManager>();
 
-            _targetStation = _robustRandom.Pick(_entityManager.EntityQuery<StationComponent>().ToArray()).Station;
-            var possibleTargets = _entityManager.EntityQuery<StationComponent>()
-                .Where(x => x.Station == _targetStation).ToArray();
-            _targetGrid = _robustRandom.Pick(possibleTargets).Owner;
+            targetCoords = EntityCoordinates.Invalid;
+            targetStation = robustRandom.Pick(entityManager.EntityQuery<StationComponent>().ToArray()).Station;
+            var t = targetStation; // thanks C#
+            var possibleTargets = entityManager.EntityQuery<StationComponent>()
+                .Where(x => x.Station == t).ToArray();
+            targetGrid = robustRandom.Pick(possibleTargets).Owner;
 
-            if (!_entityManager.TryGetComponent<IMapGridComponent>(_targetGrid!.Uid, out var gridComp))
+            if (!entityManager.TryGetComponent<IMapGridComponent>(targetGrid!.Uid, out var gridComp))
                 return false;
             var grid = gridComp.Grid;
 
@@ -189,13 +193,13 @@ namespace Content.Server.StationEvents.Events
 
             for (var i = 0; i < 10; i++)
             {
-                var randomX = _robustRandom.Next((int) gridBounds.Left, (int) gridBounds.Right);
-                var randomY = _robustRandom.Next((int) gridBounds.Bottom, (int) gridBounds.Top);
+                var randomX = robustRandom.Next((int) gridBounds.Left, (int) gridBounds.Right);
+                var randomY = robustRandom.Next((int) gridBounds.Bottom, (int) gridBounds.Top);
 
                 tile = new Vector2i(randomX - (int) gridPos.X, randomY - (int) gridPos.Y);
                 if (atmosphereSystem.IsTileSpace(grid, tile) || atmosphereSystem.IsTileAirBlocked(grid, tile)) continue;
                 found = true;
-                _targetCoords = grid.GridTileToLocal(tile);
+                targetCoords = grid.GridTileToLocal(tile);
                 break;
             }
 

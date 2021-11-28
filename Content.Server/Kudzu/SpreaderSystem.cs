@@ -77,12 +77,15 @@ public class SpreaderSystem : EntitySystem
         }
     }
 
-    public bool TryGrow(EntityUid ent, TransformComponent? transform = null, SpreaderComponent? spreader = null)
+    private bool TryGrow(EntityUid ent, TransformComponent? transform = null, SpreaderComponent? spreader = null)
     {
         if (!Resolve(ent, ref transform, ref spreader, false))
             return false;
 
         if (!_mapManager.TryGetGrid(transform.GridID, out var grid)) return false;
+
+        if (spreader.Enabled == false)
+            return false;
 
         var didGrow = false;
 
@@ -124,5 +127,4 @@ public class SpreaderSystem : EntitySystem
 
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _speedModifierSystem = default!;
 }
