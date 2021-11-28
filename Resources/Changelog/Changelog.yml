@@ -1,10 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: Chairs and other object will change their direction when you pull them.,
-    type: Tweak}
-  id: 172
-  time: '2021-05-05T03:29:26.0000000+00:00'
 - author: ShadowCommander
   changes:
   - {message: Fixed food wrappers playing the pickup animation when they weren't supposed
@@ -2854,3 +2848,8 @@ Entries:
       to replace chemistry''s things after they are all stolen or blown up.', type: Add}
   id: 673
   time: '2021-11-28T01:30:47.0000000+00:00'
+- author: iczero
+  changes:
+  - {message: Protolathes and autolathes can now be constructed, type: Add}
+  id: 674
+  time: '2021-11-28T01:38:07.0000000+00:00'
