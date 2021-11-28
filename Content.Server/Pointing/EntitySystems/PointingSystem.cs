@@ -46,6 +46,8 @@ namespace Content.Server.Pointing.EntitySystems
 
         private const float PointingRange = 15f;
 
+        private MapCoordinates playerCoordinates;
+
         private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
         {
             if (e.NewStatus != SessionStatus.Disconnected)
@@ -98,6 +100,8 @@ namespace Content.Server.Pointing.EntitySystems
             {
                 return false;
             }
+
+            playerCoordinates = player.Transform.MapPosition;
 
             if (_pointers.TryGetValue(session!, out var lastTime) &&
                 _gameTiming.CurTime < lastTime + PointDelay)
@@ -186,6 +190,7 @@ namespace Content.Server.Pointing.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<GetOtherVerbsEvent>(AddPointingVerb);
+            SubscribeLocalEvent<PointingArrowComponent, ComponentStartup>(OnPointingArrowCompStartup);
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
 
@@ -210,8 +215,19 @@ namespace Content.Server.Pointing.EntitySystems
             Verb verb = new();
             verb.Text = Loc.GetString("pointing-verb-get-data-text");
             verb.IconTexture = "/Textures/Interface/VerbIcons/point.svg.192dpi.png";
-            verb.Act = () => TryPoint(actor.PlayerSession, args.Target.Transform.Coordinates, args.Target.Uid); ;
+            verb.Act = () => TryPoint(actor.PlayerSession, args.Target.Transform.Coordinates, args.Target.Uid);
             args.Verbs.Add(verb);
+        }
+
+        private void OnPointingArrowCompStartup(EntityUid uid, PointingArrowComponent component, ComponentStartup args)
+        {
+            if(component._isFlying)
+            {
+                component._pointerCoord = playerCoordinates;
+                component._pointedCoord = EntityManager.GetEntity(uid).Transform.MapPosition;
+                //Sets the initial arrow position to the player coordinates.
+                EntityManager.GetEntity(uid).Transform.WorldPosition = playerCoordinates.Position;
+            }
         }
 
         public override void Shutdown()
@@ -226,7 +242,43 @@ namespace Content.Server.Pointing.EntitySystems
         {
             foreach (var component in EntityManager.EntityQuery<PointingArrowComponent>())
             {
-                component.Update(frameTime);
+                if(component._isFlying)
+                {
+                    var directionStep = component._pointedCoord.Position - component._pointerCoord.Position;
+                    component.Owner.Transform.WorldPosition += directionStep * frameTime * component._flyingSpeed;
+
+                    if(component.Owner.Transform.WorldPosition.EqualsApprox(component._pointedCoord.Position, 0.01f))
+                    {
+                        component._isFlying = false;
+                    }
+                }
+                else
+                {
+                    var movement = component._speed * frameTime * (component._up ? 1 : -1);
+                    component.Owner.Transform.LocalPosition += (0, movement);
+
+                    component._duration -= frameTime;
+                    component._currentStep -= frameTime;
+
+                    if (component._duration <= 0)
+                    {
+                        if (component._rogue)
+                        {
+                            component.Owner.RemoveComponent<PointingArrowComponent>();
+                            component.Owner.AddComponent<RoguePointingArrowComponent>();
+                            return;
+                        }
+
+                        component.Owner.Delete();
+                        return;
+                    }
+
+                    if (component._currentStep <= 0)
+                    {
+                        component._currentStep = component._step;
+                        component._up ^= true;
+                    }
+                }
             }
         }
     }
