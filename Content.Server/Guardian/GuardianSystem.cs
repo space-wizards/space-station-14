@@ -173,10 +173,10 @@ namespace Content.Server.Guardian
                 //Recalls guardian if it's outside
                 //Message first otherwise it's a dead giveaway
                 _popupSystem.PopupCoordinates(Loc.GetString("guardian-entity-recall"), EntityManager.GetEntity(guardian).Transform.Coordinates, Filter.Pvs(EntityManager.GetEntity(guardian)));
-                EntityManager.GetEntity(host).GetComponent<GuardianHostComponent>().GuardianContainer.Insert(EntityManager.GetEntity(guardian));
+                EntityManager.GetComponent<GuardianHostComponent>(host).GuardianContainer.Insert(EntityManager.GetEntity(guardian));
             }
             //Update the guardian loose value
-            EntityManager.GetEntity(guardian).GetComponent<GuardianComponent>().GuardianLoose = !guardianloose;
+            EntityManager.GetComponent<GuardianComponent>(guardian).GuardianLoose = !guardianloose;
         }
     }
 }
