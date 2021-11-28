@@ -10,13 +10,6 @@ public class KudzuVisualizer : AppearanceVisualizer
     [DataField("layer")]
     private int Layer { get; } = 0;
 
-    public override void InitializeEntity(IEntity entity)
-    {
-        base.InitializeEntity(entity);
-
-        entity.GetComponentOrNull<SpriteComponent>()?.LayerMapReserveBlank(Layer);
-    }
-
     public override void OnChangeData(AppearanceComponent component)
     {
         base.OnChangeData(component);

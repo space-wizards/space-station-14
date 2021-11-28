@@ -10,6 +10,9 @@ namespace Content.Shared.Movement.EntitySystems;
 
 public class SlowContactsSystem : EntitySystem
 {
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly MovementSpeedModifierSystem _speedModifierSystem = default!;
+
     private readonly Dictionary<EntityUid, int> _statusCapableInContact = new();
 
     public override void Initialize()
@@ -22,7 +25,6 @@ public class SlowContactsSystem : EntitySystem
 
     private void MovementSpeedCheck(EntityUid uid, SlowsOnContactComponent component, RefreshMovementSpeedModifiersEvent args)
     {
-
         if (!_statusCapableInContact.ContainsKey(uid) || _statusCapableInContact[uid] <= 0)
             return;
 
@@ -52,7 +54,7 @@ public class SlowContactsSystem : EntitySystem
             || !EntityManager.HasComponent<SlowsOnContactComponent>(otherUid))
             return;
         if (!_statusCapableInContact.ContainsKey(otherUid))
-            Logger.Error("Somehow an entity left a body it was never in?");
+            Logger.ErrorS("slowscontacts", $"The entity {otherUid} left a body ({uid}) it was never in.");
         _statusCapableInContact[otherUid]--;
         if (_statusCapableInContact[otherUid] == 0)
             EntityManager.RemoveComponent<SlowsOnContactComponent>(otherUid);
@@ -72,7 +74,4 @@ public class SlowContactsSystem : EntitySystem
             EntityManager.AddComponent<SlowsOnContactComponent>(otherUid);
         _speedModifierSystem.RefreshMovementSpeedModifiers(otherUid);
     }
-
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _speedModifierSystem = default!;
 }

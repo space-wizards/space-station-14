@@ -1,5 +1,5 @@
 - type: entity
-  id: Kudzu
+  id: kudzu
   name: Kudzu
   description: A rapidly growing, dangerous plant. WHY ARE YOU STOPPING TO LOOK AT IT?!
   placement:
@@ -36,9 +36,6 @@
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
     - type: Temperature
-      coldDamage:
-        types:
-          Cold: 5
       heatDamage:
         types:
           Heat: 5
@@ -47,6 +44,10 @@
       damage:
         types:
           Heat: 1
+    - type: Reactive
+      groups:
+        Flammable: [Touch]
+        Extinguish: [Touch]
     - type: AtmosExposed
     - type: Spreader
       growthResult: Kudzu

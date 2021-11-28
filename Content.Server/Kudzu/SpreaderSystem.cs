@@ -14,6 +14,9 @@ namespace Content.Server.Kudzu;
 // Future work includes making the growths per interval thing not global, but instead per "group"
 public class SpreaderSystem : EntitySystem
 {
+    [Dependency] private readonly IRobustRandom _robustRandom = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
+
     /// <summary>
     /// Maximum number of edges that can grow out every interval.
     /// </summary>
@@ -92,10 +95,11 @@ public class SpreaderSystem : EntitySystem
         for (var i = 0; i < 4; i++)
         {
             var direction = (DirectionFlag) (1 << i);
-            var coords =transform.Coordinates.Offset(direction.AsDir().ToVec());
-            var ents = grid.GetLocal(coords).ToArray();
+            var coords = transform.Coordinates.Offset(direction.AsDir().ToVec());
+            if (grid.GetTileRef(coords).Tile.IsEmpty || _robustRandom.Prob(spreader.Chance)) continue;
+            var ents = grid.GetLocal(coords);
 
-            if (ents.Any(x => IsTileBlockedFrom(x, direction)) || grid.GetTileRef(coords).Tile.IsEmpty) continue;
+            if (ents.Any(x => IsTileBlockedFrom(x, direction))) continue;
 
             // Ok, spawn a plant
             didGrow = true;
@@ -125,7 +129,4 @@ public class SpreaderSystem : EntitySystem
 
         return airtight.AirBlocked && airtight.AirBlockedDirection.IsFlagSet(oppositeDir);
     }
-
-    [Dependency] private readonly IRobustRandom _robustRandom = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
 }

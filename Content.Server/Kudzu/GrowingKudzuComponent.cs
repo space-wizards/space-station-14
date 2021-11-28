@@ -1,4 +1,5 @@
 using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Kudzu;
@@ -8,6 +9,6 @@ public class GrowingKudzuComponent : Component
 {
     public override string Name => "GrowingKudzu";
 
-    [ViewVariables]
+    [DataField("growthLevel")]
     public int GrowthLevel = 1;
 }

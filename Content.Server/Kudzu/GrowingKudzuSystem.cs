@@ -9,6 +9,8 @@ namespace Content.Server.Kudzu;
 
 public class GrowingKudzuSystem : EntitySystem
 {
+    [Dependency] private readonly IRobustRandom _robustRandom = default!;
+
     private float _accumulatedFrameTime = 0.0f;
 
     public override void Initialize()
@@ -19,10 +21,7 @@ public class GrowingKudzuSystem : EntitySystem
     private void SetupKudzu(EntityUid uid, GrowingKudzuComponent component, ComponentAdd args)
     {
         if (!EntityManager.TryGetComponent<AppearanceComponent>(uid, out var appearance))
-        {
-            Logger.Warning("Kudzu without an appearance component?");
             return;
-        }
 
         appearance.SetData(KudzuVisuals.Variant, _robustRandom.Next(1, 3));
         appearance.SetData(KudzuVisuals.GrowthLevel, 1);
@@ -52,7 +51,4 @@ public class GrowingKudzuSystem : EntitySystem
             appearance.SetData(KudzuVisuals.GrowthLevel, kudzu.GrowthLevel);
         }
     }
-
-    [Dependency] private readonly SpreaderSystem _spreaderSystem = default!;
-    [Dependency] private readonly IRobustRandom _robustRandom = default!;
 }
