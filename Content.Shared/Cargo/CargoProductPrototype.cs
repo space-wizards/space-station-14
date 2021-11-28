@@ -18,7 +18,7 @@ namespace Content.Shared.Cargo
         [DataField("description")] private string _description = string.Empty;
 
         [ViewVariables]
-        [DataField("id", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        [DataField("id", required: true)]
         public string ID { get; } = default!;
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Content.Shared.Cargo
         ///     The prototype name of the product.
         /// </summary>
         [ViewVariables]
-        [DataField("product", customTypeSerializer: typeof(PrototypeIdSerializer<CargoProductPrototype>))]
+        [DataField("product", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string Product { get; } = string.Empty;
 
         /// <summary>
