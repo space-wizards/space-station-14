@@ -337,7 +337,7 @@ namespace Content.Shared.Containers.ItemSlots
                 return false;
 
             if (user != null && EntityManager.TryGetComponent(user.Value, out SharedHandsComponent? hands))
-                hands.TryPutInAnyHand(item);
+                hands.TryPutInActiveHandOrAny(item);
 
             return true;
         }
