@@ -95,8 +95,7 @@ public class SpreaderSystem : EntitySystem
             var coords =transform.Coordinates.Offset(direction.AsDir().ToVec());
             var ents = grid.GetLocal(coords).ToArray();
 
-
-            if (ents.Any(x => IsTileBlockedFrom(x, direction)) || !grid.TryGetTileRef(coords, out _)) continue;
+            if (ents.Any(x => IsTileBlockedFrom(x, direction)) || grid.GetTileRef(coords).Tile.IsEmpty) continue;
 
             // Ok, spawn a plant
             didGrow = true;
