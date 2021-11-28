@@ -11,8 +11,8 @@ namespace Content.Server.Shuttles.EntitySystems
     {
         private const float TileMassMultiplier = 4f;
 
-        public float ShuttleIdleLinearDamping = 0.2f;
-        public float ShuttleIdleAngularDamping = 0.3f;
+        public float ShuttleIdleLinearDamping = 0.1f;
+        public float ShuttleIdleAngularDamping = 0.2f;
 
         public float ShuttleMovingLinearDamping = 0.05f;
         public float ShuttleMovingAngularDamping = 0.05f;
