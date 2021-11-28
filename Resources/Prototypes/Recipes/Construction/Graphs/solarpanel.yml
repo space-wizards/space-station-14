@@ -59,6 +59,8 @@
       edges:
         - to: solarassembly
           completed:
+            - !type:SnapToGrid
+              southRotation: true
             - !type:SpawnPrototype
               prototype: SheetGlass1
               amount: 2
@@ -68,12 +70,31 @@
           steps:
             - tool: Prying
               doAfter: 0.5
-            
+
+    - node: solarpanel_broken
+      entity: SolarPanelBroken
+      edges:
+        - to: solarassembly
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+            - !type:SpawnPrototype
+              prototype: ShardGlass
+              amount: 2
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - tool: Prying
+              doAfter: 0.5
+
     - node: solartracker
       entity: SolarTracker
       edges:
         - to: solarassembly
           completed:
+            - !type:SnapToGrid
+              southRotation: true
             - !type:SpawnPrototype
               prototype: SheetGlass1
               amount: 2

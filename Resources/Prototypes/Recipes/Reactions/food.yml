@@ -1,0 +1,59 @@
+- type: reaction
+  id: Curdling
+  impact: Low
+  quantized: true
+  reactants:
+    Milk:
+      amount: 40
+    Enzyme:
+      amount: 5
+      catalyst: true
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: FoodCheese
+
+- type: reaction
+  id: CreateDough
+  impact: Low
+  quantized: true
+  reactants:
+    Flour:
+      amount: 15
+    Water:
+      amount: 10
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: FoodDough
+
+- type: reaction
+  id: CreateCakeBatter
+  impact: Low
+  quantized: true
+  reactants:
+    Flour:
+      amount: 15
+    Egg:
+      amount: 12
+    Sugar:
+      amount: 5
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: FoodCakeBatter
+
+# TG has a cake recipe that uses soy milk instead of eggs.
+# but afaik it spawns the exact same cake batter entity. 
+# Maybe change this if you want to do allergies or something
+- type: reaction
+  id: CreateVeganCakeBatter
+  impact: Low
+  quantized: true
+  reactants:
+    Flour:
+      amount: 15
+    MilkSoy:
+      amount: 12
+    Sugar:
+      amount: 5
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: FoodCakeBatter

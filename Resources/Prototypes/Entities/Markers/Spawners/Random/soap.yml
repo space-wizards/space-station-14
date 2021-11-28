@@ -1,0 +1,20 @@
+- type: entity
+  id: RandomSoap
+  name: random soap spawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - texture: Objects/Specific/Janitorial/soap.rsi/soap.png
+  - type: RandomSpawner
+    prototypes:
+      - Soap
+      - SoapHomemade
+      - SoapNT
+      - SoapDeluxe
+    chance: 0.95
+    rarePrototypes:
+      - SoapSyndie
+      - SoapOmega
+    rareChance: 0.05
