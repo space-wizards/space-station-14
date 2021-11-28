@@ -214,14 +214,18 @@ namespace Content.Server.Medical.SuitSensors
             }
 
             // get health mob state
-            if (!EntityManager.TryGetComponent(sensor.User.Value, out MobStateComponent? mobState))
-                return null;
-            var isAlive = mobState.IsAlive();
+            var isAlive = false;
+            if (EntityManager.TryGetComponent(sensor.User.Value, out MobStateComponent? mobState))
+            {
+                isAlive = mobState.IsAlive();
+            }
 
             // get mob total damage
-            if (!EntityManager.TryGetComponent(sensor.User.Value, out DamageableComponent? damageable))
-                return null;
-            var totalDamage = damageable.TotalDamage.Int();
+            var totalDamage = 0;
+            if (EntityManager.TryGetComponent(sensor.User.Value, out DamageableComponent? damageable))
+            {
+                totalDamage = damageable.TotalDamage.Int();
+            }
 
             // finally, form suit sensor status
             var status = new SuitSensorStatus(userName, userJob);
