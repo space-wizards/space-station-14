@@ -23,10 +23,8 @@
       path: /Audio/Effects/hit_kick.ogg
   - type: Sprite
     drawdepth: Mobs
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: tech_basic
-      sprite: Mobs/Aliens/Guardians/guardians.rsi
+    sprite: Mobs/Aliens/Guardians/guardians.rsi
+    state: tech_basic
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
