@@ -6,6 +6,7 @@ using Content.Server.Fluids.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Throwing;
 using Content.Shared.Verbs;
@@ -51,7 +52,7 @@ public class SpillableSystem : EntitySystem
     public PuddleComponent? SpillAt(EntityUid uid, Solution solution, string prototype,
         bool sound = true, bool combine = true, TransformComponent? transformComponent = null)
     {
-        return !Resolve(uid, ref transformComponent)
+        return !Resolve(uid, ref transformComponent, false)
             ? null
             : SpillAt(solution, transformComponent.Coordinates, prototype, sound: sound, combine: combine);
     }
