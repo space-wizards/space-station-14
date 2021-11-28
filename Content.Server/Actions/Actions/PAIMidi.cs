@@ -23,7 +23,6 @@ namespace Content.Server.Actions.Actions
 
         public void DoInstantAction(InstantActionEventArgs args)
         {
-            if (!args.Performer.TryGetComponent<SharedActionsComponent>(out var actions)) return;
             if (!args.Performer.TryGetComponent<ServerUserInterfaceComponent>(out var serverUi)) return;
             if (!args.Performer.TryGetComponent<ActorComponent>(out var actor)) return;
 			if (!serverUi.TryGetBoundUserInterface(InstrumentUiKey.Key,out var bui)) return;

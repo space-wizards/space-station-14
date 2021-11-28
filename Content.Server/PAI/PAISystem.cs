@@ -17,6 +17,7 @@ namespace Content.Server.PAI
     public class PAISystem : SharedPAISystem
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly InstrumentSystem _instrumentSystem = default!;
 
         public override void Initialize()
         {
@@ -98,7 +99,12 @@ namespace Content.Server.PAI
         private void PAITurningOff(EntityUid uid)
         {
             UpdatePAIAppearance(uid, PAIStatus.Off);
-            if (EntityManager.TryGetComponent<InstrumentComponent>(uid, out var instrument)) instrument.Clean();
+            if (!args.Performer.TryGetComponent<ServerUserInterfaceComponent>(out var serverUi)) return;
+            if (!args.Performer.TryGetComponent<ActorComponent>(out var actor)) return;
+			if (!serverUi.TryGetBoundUserInterface(InstrumentUiKey.Key,out var bui)) return;
+
+			bui.Close(actor.PlayerSession);
+            if (EntityManager.TryGetComponent<InstrumentComponent>(uid, out var instrument)) _instrumentSystem.Clean(uid, instrument);
             if (EntityManager.TryGetComponent<MetaDataComponent>(uid, out var metadata))
             {
                 var proto = metadata.EntityPrototype;
