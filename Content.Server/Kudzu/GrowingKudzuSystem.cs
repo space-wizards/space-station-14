@@ -20,7 +20,7 @@ public class GrowingKudzuSystem : EntitySystem
     {
         if (!EntityManager.TryGetComponent<AppearanceComponent>(uid, out var appearance))
         {
-            Logger.Error("Kudzu without an appearance component?");
+            Logger.Warning("Kudzu without an appearance component?");
             return;
         }
 
