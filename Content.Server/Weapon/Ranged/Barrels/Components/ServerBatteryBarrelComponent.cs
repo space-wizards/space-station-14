@@ -1,9 +1,7 @@
 using System;
-using System.Threading.Tasks;
 using Content.Server.Power.Components;
 using Content.Server.Projectiles.Components;
 using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Interaction;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -184,16 +182,6 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             Dirty();
             UpdateAppearance();
             return entity;
-        }
-
-        public override bool UseEntity(UseEntityEventArgs eventArgs)
-        {
-            return false;
-        }
-
-        public override Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
-        {
-            return Task.FromResult(false);
         }
     }
 }

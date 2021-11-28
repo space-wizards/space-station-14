@@ -35,7 +35,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
     /// Only difference between them is how they retrieve a projectile to shoot (battery, magazine, etc.)
     /// </summary>
 #pragma warning disable 618
-    public abstract class ServerRangedBarrelComponent : SharedRangedBarrelComponent, IUse, IInteractUsing, IExamine, ISerializationHooks
+    public abstract class ServerRangedBarrelComponent : SharedRangedBarrelComponent, IExamine, ISerializationHooks
 #pragma warning restore 618
     {
         // There's still some of py01 and PJB's work left over, especially in underlying shooting logic,
@@ -165,10 +165,6 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             var angle = Angle.FromDegrees(direction.Degrees + _currentAngle.Degrees * random);
             return angle;
         }
-
-        public abstract bool UseEntity(UseEntityEventArgs eventArgs);
-
-        public abstract Task<bool> InteractUsing(InteractUsingEventArgs eventArgs);
 
         public void ChangeFireSelector(FireRateSelector rateSelector)
         {

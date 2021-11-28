@@ -26,7 +26,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
     [RegisterComponent]
     [NetworkedComponent()]
 #pragma warning disable 618
-    public sealed class BoltActionBarrelComponent : ServerRangedBarrelComponent, IMapInit, IExamine
+    public sealed class BoltActionBarrelComponent : ServerRangedBarrelComponent, IUse, IInteractUsing, IMapInit, IExamine
 #pragma warning restore 618
     {
         // Originally I had this logic shared with PumpBarrel and used a couple of variables to control things
@@ -267,7 +267,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             return false;
         }
 
-        public override bool UseEntity(UseEntityEventArgs eventArgs)
+        public bool UseEntity(UseEntityEventArgs eventArgs)
         {
             if (BoltOpen)
             {
@@ -281,7 +281,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             return true;
         }
 
-        public override async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             return TryInsertBullet(eventArgs.User, eventArgs.Using);
         }
