@@ -1,5 +1,5 @@
 - type: entity
-  id: BaseBatteryGun
+  id: BatteryGunBase
   parent: BaseItem
   abstract: true
   components:
@@ -35,7 +35,7 @@
 
 - type: entity
   name: retro laser gun
-  parent: BaseBatteryGun
+  parent: BatteryGunBase
   id: LaserGun
   description: A weapon using light amplified by the stimulated emission of radiation.
   components:
@@ -64,7 +64,7 @@
 
 - type: entity
   name: makeshift laser gun
-  parent: BaseBatteryGun
+  parent: BatteryGunBase
   id: MakeshiftLaser
   description: Better pray it won't burn your hands off.
   components:
@@ -85,7 +85,7 @@
 
 - type: entity
   name: svalinn laser pistol
-  parent: BaseBatteryGun
+  parent: BatteryGunBase
   id: LaserPistolSvalinn
   description: A cheap and widely used laser pistol.
   components:
@@ -106,7 +106,7 @@
 
 - type: entity
   name: cog laser carbine
-  parent: BaseBatteryGun
+  parent: BatteryGunBase
   id: LaserRifleCog
   description: Favoured by Nanotrasen Security for being cheap and easy to use.
   components:
@@ -127,7 +127,7 @@
 
 - type: entity
   name: laser cannon
-  parent: BaseBatteryGun
+  parent: BatteryGunBase
   id: LaserCannon
   description: A heavy duty, high powered laser weapon.
   components:
@@ -161,7 +161,7 @@
 
 - type: entity
   name: x-ray cannon
-  parent: BaseBatteryGun
+  parent: BatteryGunBase
   id: XrayCannon
   description: An experimental weapon that uses concentrated x-ray energy against its target.
   components:
@@ -201,7 +201,7 @@
 
 - type: entity
   name: taser
-  parent: BaseBatteryGun
+  parent: BatteryGunBase
   id: TaserGun
   description: A low-capacity, energy-based stun gun used by security teams to subdue targets at range.
   components:
@@ -250,7 +250,7 @@
 
 - type: entity
   name: laser gun
-  parent: BaseBatteryGun
+  parent: BatteryGunBase
   id: LaserSecGun
   description: A laser gun.
   components:
