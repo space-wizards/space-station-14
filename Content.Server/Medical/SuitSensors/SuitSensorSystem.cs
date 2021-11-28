@@ -58,7 +58,7 @@ namespace Content.Server.Medical.SuitSensors
                     continue;
 
                 // broadcast it to device network
-                var payload = SuitSensorToPackage(status);
+                var payload = SuitSensorToPacket(status);
                 _deviceNetworkSystem.QueuePacket(sensor.OwnerUid, DeviceNetworkConstants.NullAddress, device.Frequency, payload, true);
             }
         }
@@ -244,7 +244,10 @@ namespace Content.Server.Medical.SuitSensors
             return status;
         }
 
-        public NetworkPayload SuitSensorToPackage(SuitSensorStatus status)
+        /// <summary>
+        ///     Serialize suit sensor status into device network package.
+        /// </summary>
+        public NetworkPayload SuitSensorToPacket(SuitSensorStatus status)
         {
             var payload = new NetworkPayload()
             {
@@ -262,7 +265,10 @@ namespace Content.Server.Medical.SuitSensors
             return payload;
         }
 
-        public SuitSensorStatus? PackageToSuitSensor(NetworkPayload payload)
+        /// <summary>
+        ///     Try to deserialize device network message into suit sensor status
+        /// </summary>
+        public SuitSensorStatus? PacketToSuitSensor(NetworkPayload payload)
         {
             // check command
             if (!payload.TryGetValue(DeviceNetworkConstants.Command, out string? command))

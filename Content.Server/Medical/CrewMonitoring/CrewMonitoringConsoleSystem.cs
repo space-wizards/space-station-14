@@ -50,7 +50,7 @@ namespace Content.Server.Medical.CrewMonitoring
 
         private void OnPacketReceived(EntityUid uid, CrewMonitoringConsoleComponent component, PacketSentEvent args)
         {
-            var suitSensor = _sensors.PackageToSuitSensor(args.Data);
+            var suitSensor = _sensors.PacketToSuitSensor(args.Data);
             if (suitSensor == null)
                 return;
 
