@@ -4,7 +4,7 @@ using Robust.Shared.Maths;
 
 namespace Content.Client.SubFloor;
 
-public class TrayScannerVisualizer : AppearanceVisualizer
+public class TrayScannerSubFloorVisualizer : AppearanceVisualizer
 {
     public override void OnChangeData(AppearanceComponent component)
     {

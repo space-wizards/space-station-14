@@ -38,7 +38,6 @@ public abstract class SharedTrayScannerSystem : EntitySystem
         if (args.Current is not TrayScannerState state)
             return;
 
-        Logger.DebugS("TrayScannerSystem", $"Handling state now: {scanner.Toggled}");
         ToggleTrayScanner(uid, state.Toggled, scanner);
     }
 

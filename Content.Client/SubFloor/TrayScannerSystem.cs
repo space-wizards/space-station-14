@@ -7,6 +7,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Utility;
 
 namespace Content.Client.SubFloor;
 
@@ -31,7 +32,7 @@ public class TrayScannerSystem : SharedTrayScannerSystem
     }
 
     private HashSet<EntityUid> _activeScanners = new();
-    private HashSet<EntityUid> _invalidScanners = new();
+    private RemQueue<EntityUid> _invalidScanners = new();
 
     public override void Update(float frameTime)
     {
@@ -43,8 +44,10 @@ public class TrayScannerSystem : SharedTrayScannerSystem
                 _invalidScanners.Add(scanner);
         }
 
-        _activeScanners.ExceptWith(_invalidScanners);
-        _invalidScanners.Clear();
+        foreach (var invalidScanner in _invalidScanners)
+            _activeScanners.Remove(invalidScanner);
+
+        if (_invalidScanners.List != null) _invalidScanners.List.Clear();
     }
 
     /// <summary>
@@ -78,13 +81,16 @@ public class TrayScannerSystem : SharedTrayScannerSystem
         Vector2 flooredPos;
 
         // zero vector implies container
-        if (transform.LocalPosition == Vector2.Zero && transform.Parent != null)
-            if (_containerSystem.ContainsEntity(transform.Parent.Owner.Uid, uid))
-                flooredPos = transform.Parent.LocalPosition.Rounded();
-            else
-                flooredPos = transform.LocalPosition.Rounded();
+        if (transform.LocalPosition == Vector2.Zero
+            && transform.Parent != null
+            && _containerSystem.ContainsEntity(transform.Parent.Owner.Uid, uid))
+        {
+            flooredPos = transform.Parent.LocalPosition.Rounded();
+        }
         else
+        {
             flooredPos = transform.LocalPosition.Rounded();
+        }
 
         if (flooredPos == scanner.LastLocation
             || (float.IsNaN(flooredPos.X) && float.IsNaN(flooredPos.Y)))
@@ -96,13 +102,12 @@ public class TrayScannerSystem : SharedTrayScannerSystem
         if (!EntityManager.TryGetEntity(uid, out var entity))
             return true;
 
-        // hide all the existing subfloor
-
         // get all entities in range by uid
-        var nearby = _entityLookup.GetEntitiesInRange(entity, scanner.Range)
-            .Select(ent => ent.Uid)
-            .Where(FilterAnchored)
-            .ToHashSet();
+        // but without using LINQ
+        HashSet<EntityUid> nearby = new();
+
+        foreach (var entityInRange in _entityLookup.GetEntitiesInRange(entity, scanner.Range))
+            if (FilterAnchored(entityInRange.Uid)) nearby.Add(entityInRange.Uid);
 
         // get all the old elements that are no longer detected
         scanner.RevealedSubfloors.ExceptWith(nearby);

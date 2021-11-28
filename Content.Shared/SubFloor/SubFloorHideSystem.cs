@@ -147,7 +147,6 @@ namespace Content.Shared.SubFloor
 
         private void UpdateTile(IMapGrid grid, Vector2i position)
         {
-            Logger.DebugS("SubFloorSystem", "Tile updating");
             var isSubFloor = IsSubFloor(grid, position);
 
             foreach (var uid in grid.GetAnchoredEntities(position))
@@ -200,6 +199,7 @@ namespace Content.Shared.SubFloor
             if (subFloorHideEvent.Handled)
                 return;
 
+            bool revealedWithoutEntity = false;
 
             if (EntityManager.TryGetComponent(uid, out SubFloorHideComponent? subFloorHideComponent))
             {
@@ -234,14 +234,21 @@ namespace Content.Shared.SubFloor
                 }
 
                 subFloor = subFloorHideComponent.RevealedBy.Count != 0 || subFloorHideComponent.RevealedWithoutEntity;
-                subFloorHideComponent.Visible = subFloor;
+                revealedWithoutEntity = subFloorHideComponent.RevealedWithoutEntity;
             }
 
 
             // Whether to show this entity as visible, visually.
             var subFloorVisible = ShowAll || subFloor;
 
-            if (appearanceKeys == null) appearanceKeys = _defaultVisualizerKeys;
+            // if there are no keys given,
+            // or if the subfloor is already revealed,
+            // set the keys to the default:
+            //
+            // the reason why it's set to default when the subfloor is
+            // revealed without an entity is because the appearance keys
+            // should only apply if the visualizer is underneath a subfloor
+            if (appearanceKeys == null || revealedWithoutEntity) appearanceKeys = _defaultVisualizerKeys;
 
             ShowSubfloorSprite(uid, subFloorVisible, appearanceKeys);
         }
