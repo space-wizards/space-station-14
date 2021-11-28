@@ -1,5 +1,12 @@
 # Last match in file takes precedence.
 
+# Badmin.
+/Content.Server/Administration/ @moonheart08
+/Content.Shared/Administration/ @moonheart08
+/Content.Client/Administration/ @moonheart08
+/Resources/Server\ Info/ @moonheart08
+/Resources/engineCommandPerms.yml @moonheart08
+
 # I pretend to have authority over these things.
 /Resources/ @SweptWasTaken
 
