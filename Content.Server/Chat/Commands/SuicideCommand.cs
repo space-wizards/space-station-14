@@ -1,12 +1,14 @@
 using System.Linq;
 using Content.Server.Act;
 using Content.Server.Administration;
+using Content.Server.Administration.Logs;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.Players;
 using Content.Server.Popups;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Popups;
@@ -80,6 +82,8 @@ namespace Content.Server.Chat.Commands
 
             //TODO: needs to check if the mob is actually alive
             //TODO: maybe set a suicided flag to prevent resurrection?
+
+            EntitySystem.Get<AdminLogSystem>().Add(LogType.Suicide, $"{player.AttachedEntity} is committing suicide");
 
             // Held item suicide
             var handsComponent = owner.GetComponent<HandsComponent>();

@@ -22,6 +22,8 @@ using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Maths;
 using Content.Shared.Audio;
+using Content.Server.Administration.Logs;
+using Content.Shared.Administration.Logs;
 
 namespace Content.Server.Light.EntitySystems
 {
@@ -35,6 +37,7 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSystem = default!;
         [Dependency] private readonly LightBulbSystem _bulbSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+        [Dependency] private readonly AdminLogSystem _logSystem = default!;
 
         private static readonly TimeSpan ThunkDelay = TimeSpan.FromSeconds(2);
 
@@ -112,7 +115,13 @@ namespace Content.Server.Light.EntitySystems
                     // apply damage to users hands and show message with sound
                     var burnMsg = Loc.GetString("powered-light-component-burn-hand");
                     _popupSystem.PopupEntity(burnMsg, uid, Filter.Entities(userUid));
-                    _damageableSystem.TryChangeDamage(userUid, light.Damage);
+
+                    var damage = _damageableSystem.TryChangeDamage(userUid, light.Damage);
+
+                    if (damage != null)
+                        _logSystem.Add(LogType.Damaged,
+                            $"{args.User} burned their hand on {args.Target} and received {damage.Total} damage");
+
                     SoundSystem.Play(Filter.Pvs(uid), light.BurnHandSound.GetSound(), uid);
 
                     args.Handled = true;

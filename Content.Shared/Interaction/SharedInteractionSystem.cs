@@ -544,18 +544,6 @@ namespace Content.Shared.Interaction
 
         #region Throw
         /// <summary>
-        /// Activates the Throw behavior of an object
-        /// Verifies that the user is capable of doing the throw interaction first
-        /// </summary>
-        public bool TryThrowInteraction(IEntity user, IEntity item)
-        {
-            if (user == null || item == null || !_actionBlockerSystem.CanThrow(user.Uid)) return false;
-
-            ThrownInteraction(user, item);
-            return true;
-        }
-
-        /// <summary>
         ///     Calls Thrown on all components that implement the IThrown interface
         ///     on an entity that has been thrown.
         /// </summary>

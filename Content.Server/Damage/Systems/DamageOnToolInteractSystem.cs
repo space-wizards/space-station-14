@@ -1,5 +1,7 @@
+using Content.Server.Administration.Logs;
 using Content.Server.Damage.Components;
 using Content.Server.Tools.Components;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Damage;
 using Content.Shared.Interaction;
 using Robust.Shared.GameObjects;
@@ -10,6 +12,7 @@ namespace Content.Server.Damage.Systems
     public class DamageOnToolInteractSystem : EntitySystem
     {
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly AdminLogSystem _logSystem = default!;
 
         public override void Initialize()
         {
@@ -27,18 +30,25 @@ namespace Content.Server.Damage.Systems
                 && args.Used.TryGetComponent<WelderComponent>(out var welder)
                 && welder.Lit)
             {
-                _damageableSystem.TryChangeDamage(args.Target.Uid, weldingDamage);
-                args.Handled = true;
-                return;
-            }
+                var dmg = _damageableSystem.TryChangeDamage(args.Target.Uid, weldingDamage);
 
-            if (component.DefaultDamage is {} damage
+                if (dmg != null)
+                    _logSystem.Add(LogType.Damaged,
+                        $"{args.User} used {args.Used} as a welder to deal {dmg.Total} damage to {args.Target}");
+
+                args.Handled = true;
+            }
+            else if (component.DefaultDamage is {} damage
                 && args.Used.TryGetComponent<ToolComponent>(out var tool)
                 && tool.Qualities.ContainsAny(component.Tools))
             {
-                _damageableSystem.TryChangeDamage(args.Target.Uid, damage);
+                var dmg = _damageableSystem.TryChangeDamage(args.Target.Uid, damage);
+
+                if (dmg != null)
+                    _logSystem.Add(LogType.Damaged,
+                        $"{args.User} used {args.Used} as a tool to deal {dmg.Total} damage to {args.Target}");
+
                 args.Handled = true;
-                return;
             }
         }
     }

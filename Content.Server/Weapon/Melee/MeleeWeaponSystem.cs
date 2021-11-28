@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.Administration.Logs;
 using Content.Server.Body.Components;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Cooldown;
 using Content.Server.Weapon.Melee.Components;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Damage;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
@@ -28,6 +30,7 @@ namespace Content.Server.Weapon.Melee
         [Dependency] private IGameTiming _gameTiming = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private SolutionContainerSystem _solutionsSystem = default!;
+        [Dependency] private readonly AdminLogSystem _logSystem = default!;
 
         public override void Initialize()
         {
@@ -92,8 +95,19 @@ namespace Content.Server.Weapon.Melee
 
                     RaiseLocalEvent(target.Uid, new AttackedEvent(args.Used, args.User, args.ClickLocation));
 
-                    _damageableSystem.TryChangeDamage(target.Uid,
+                    var damage = _damageableSystem.TryChangeDamage(target.Uid,
                         DamageSpecifier.ApplyModifierSets(comp.Damage, hitEvent.ModifiersList));
+
+                    if (damage != null)
+                    {
+                        if (args.Used == args.User)
+                            _logSystem.Add(LogType.MeleeHit,
+                                $"{args.User} melee attacked {args.TargetEntity} using their hands and dealt {damage.Total} damage");
+                        else
+                            _logSystem.Add(LogType.MeleeHit,
+                                $"{args.User} melee attacked {args.TargetEntity} using {args.Used} and dealt {damage.Total} damage");
+                    }
+
                     SoundSystem.Play(Filter.Pvs(owner), comp.HitSound.GetSound(), target);
                 }
             }
@@ -160,8 +174,18 @@ namespace Content.Server.Weapon.Melee
                 {
                     RaiseLocalEvent(entity.Uid, new AttackedEvent(args.Used, args.User, args.ClickLocation));
 
-                    _damageableSystem.TryChangeDamage(entity.Uid,
-                            DamageSpecifier.ApplyModifierSets(comp.Damage, hitEvent.ModifiersList));
+                    var damage = _damageableSystem.TryChangeDamage(entity.Uid,
+                        DamageSpecifier.ApplyModifierSets(comp.Damage, hitEvent.ModifiersList));
+
+                    if (damage != null)
+                    {
+                        if (args.Used == args.User)
+                            _logSystem.Add(LogType.MeleeHit,
+                                $"{args.User} melee attacked {entity} using their hands and dealt {damage.Total} damage");
+                        else
+                            _logSystem.Add(LogType.MeleeHit,
+                                $"{args.User} melee attacked {entity} using {args.Used} and dealt {damage.Total} damage");
+                    }
                 }
             }
 

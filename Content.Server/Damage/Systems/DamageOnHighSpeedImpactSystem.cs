@@ -1,7 +1,9 @@
 using System;
+using Content.Server.Administration.Logs;
 using Content.Server.Damage.Components;
 using Content.Server.Stunnable;
 using Content.Server.Stunnable.Components;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Stunnable;
@@ -23,6 +25,7 @@ namespace Content.Server.Damage.Systems
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly StunSystem _stunSystem = default!;
+        [Dependency] private readonly AdminLogSystem _logSystem = default!;
 
         public override void Initialize()
         {
@@ -50,7 +53,11 @@ namespace Content.Server.Damage.Systems
                 _stunSystem.TryStun(uid, TimeSpan.FromSeconds(component.StunSeconds));
 
             var damageScale = (speed / component.MinimumSpeed) * component.Factor;
-            _damageableSystem.TryChangeDamage(uid, component.Damage * damageScale);
+
+            var dmg = _damageableSystem.TryChangeDamage(uid, component.Damage * damageScale);
+
+            if (dmg != null)
+                _logSystem.Add(LogType.Damaged, $"{component.Owner} took {dmg.Total} damage from a high speed collision");
         }
     }
 }

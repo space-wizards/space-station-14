@@ -13,6 +13,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.ViewVariables;
+using Content.Shared.Administration.Logs;
 
 namespace Content.Shared.Damage
 {
@@ -93,7 +94,11 @@ namespace Content.Shared.Damage
                 damage.DamageDict.Add(typeID, damageValue);
             }
 
-            EntitySystem.Get<DamageableSystem>().TryChangeDamage(OwnerUid, damage);
+            var actual = EntitySystem.Get<DamageableSystem>().TryChangeDamage(OwnerUid, damage);
+
+            // should logging be disabled during rad storms? a lot of entities are going to be damaged.
+            if (actual != null)
+                EntitySystem.Get<SharedAdminLogSystem>().Add(LogType.Radiation, $"{Owner} took {actual.Total} radiation damage");
         }
 
         // TODO EXPLOSION Remove this.
@@ -114,7 +119,11 @@ namespace Content.Shared.Damage
                 damage.DamageDict.Add(typeID, damageValue);
             }
 
-            EntitySystem.Get<DamageableSystem>().TryChangeDamage(OwnerUid, damage);
+            var actual = EntitySystem.Get<DamageableSystem>().TryChangeDamage(OwnerUid, damage);
+
+            // will logging handle nukes?
+            if (actual != null)
+                EntitySystem.Get<SharedAdminLogSystem>().Add(LogType.Explosion, $"{Owner} took {actual.Total} explosion damage");
         }
     }
 
