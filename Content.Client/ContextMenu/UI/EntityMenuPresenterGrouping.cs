@@ -37,8 +37,14 @@ namespace Content.Client.ContextMenu.UI
                 (a, b) => a.Prototype!.ID == b.Prototype!.ID,
                 (a, b) =>
                 {
-                    var xStates = a.GetComponent<ISpriteComponent>().AllLayers.Where(e => e.Visible).Select(s => s.RsiState.Name);
-                    var yStates = b.GetComponent<ISpriteComponent>().AllLayers.Where(e => e.Visible).Select(s => s.RsiState.Name);
+                    a.TryGetComponent<ISpriteComponent>(out var spriteA);
+                    b.TryGetComponent<ISpriteComponent>(out var spriteB);
+
+                    if (spriteA == null || spriteB == null)
+                        return spriteA == spriteB;
+
+                    var xStates = spriteA.AllLayers.Where(e => e.Visible).Select(s => s.RsiState.Name);
+                    var yStates = spriteB.AllLayers.Where(e => e.Visible).Select(s => s.RsiState.Name);
 
                     return xStates.OrderBy(t => t).SequenceEqual(yStates.OrderBy(t => t));
                 },

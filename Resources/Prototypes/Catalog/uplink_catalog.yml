@@ -9,11 +9,11 @@
   price: 6
 
 - type: uplinkListing
-  id: UplinkRevolverInspector
+  id: UplinkRevolverPredator
   category: Weapons
-  itemId: RevolverInspector
-  listingName: Inspector
-  description: A .40 magnum caliber revolver. Still quite deadly, despite its ancient design.
+  itemId: RevolverPredator
+  listingName: Predator
+  description: A loud and deadly revolver. Uses .40 Magnum.
   price: 8
 
 # Inbuilt suppressor so it's sneaky + more expensive.
@@ -136,6 +136,13 @@
   itemId: ClothingBackpackDuffelSyndicateFilledGrenadeLauncher
   price: 25
   icon: /Textures/Objects/Weapons/Guns/Launchers/china_lake.rsi/icon.png
+
+- type: uplinkListing
+  id: UplinkCarbineBundle
+  category: Bundles
+  itemId: ClothingBackpackDuffelSyndicateFilledCarbine
+  price: 35
+  icon: /Textures/Objects/Weapons/Guns/Rifles/carbine.rsi/icon.png
 
 # Tools
 

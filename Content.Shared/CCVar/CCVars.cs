@@ -298,6 +298,9 @@ namespace Content.Shared.CCVar
          * Admin logs
          */
 
+        public static readonly CVarDef<bool> AdminLogsEnabled =
+            CVarDef.Create("adminlogs.enabled", true, CVar.SERVERONLY);
+
         public static readonly CVarDef<float> AdminLogsQueueSendDelay =
             CVarDef.Create("adminlogs.queue_send_delay_seconds", 5f, CVar.SERVERONLY);
 

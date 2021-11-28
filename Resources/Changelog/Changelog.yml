@@ -1,101 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Make GasOverlayData great again, type: Tweak}
-  id: 156
-  time: '2021-04-12T13:01:17.0000000+00:00'
-- author: BulletGrade
-  changes:
-  - {message: Mask of joy now available in AutoDrobe., type: Add}
-  id: 157
-  time: '2021-04-13T00:32:02.0000000+00:00'
-- author: ike709
-  changes:
-  - {message: Added a library to the Saltern., type: Add}
-  id: 158
-  time: '2021-04-13T00:32:20.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Add named fixtures so banana peel doesn't spin out of control, type: Add}
-  id: 159
-  time: '2021-04-13T10:57:29.0000000+00:00'
-- author: Hardly
-  changes:
-  - {message: Bar backroom in Saltern, type: Add}
-  - {message: BarDrobe, type: Add}
-  id: 160
-  time: '2021-04-15T18:24:55.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Destroyed state for canisters, type: Add}
-  - {message: Buffed canister HP from 100 to 300, type: Tweak}
-  id: 161
-  time: '2021-04-15T21:14:47.0000000+00:00'
-- author: SweptWasTaken
-  changes:
-  - {message: Bucket now works and there's one in botany and janitor hut, type: Fix}
-  - {message: Janitorial items now have proper inhands, type: Add}
-  id: 162
-  time: '2021-04-15T21:21:10.0000000+00:00'
-- author: SweptWasTaken
-  changes:
-  - {message: 'Names for tanks, solar stuff and more are fixed.', type: Fix}
-  id: 163
-  time: '2021-04-16T05:28:09.0000000+00:00'
-- author: MehimoNemo
-  changes:
-  - {message: Thrown PDAs and IDs now open doors. Try it out!, type: Add}
-  id: 164
-  time: '2021-04-18T08:03:31.0000000+00:00'
-- author: PJB
-  changes:
-  - {message: Improved shadow edges somewhat., type: Tweak}
-  id: 165
-  time: '2021-04-19T07:49:27.579650+00:00'
-- author: PJB
-  changes:
-  - {message: The game viewport is now a limited size (21x15 tiles)., type: Add}
-  - {message: 'As part of this, the game viewport is now scaled to match your window
-      size.', type: Add}
-  - {message: Scaling is quite intelligent and will use integer-scale nearest neighbor
-      where applicable. So people playing on fullscreen 1080p/1440p monitors will
-      experience perfect crisp graphics., type: Add}
-  id: 166
-  time: '2021-04-19T07:52:40.0000000+00:00'
-- author: chairbender and ike709
-  changes:
-  - {message: Completely redid the chatbox., type: Add}
-  - {message: Chat can now be resized (Unless in the lobby)., type: Add}
-  - {message: Chat can now be filtered., type: Add}
-  - {message: 'To talk in a channel, you now switch to it rather than using a prefix.',
-    type: Tweak}
-  - {message: The chat channel focus keys have changed. Check keybinds for a list.,
-    type: Tweak}
-  - {message: Added channel focus keys for radio and in-character., type: Add}
-  - {message: 'Tab and Ctrl+Tab will cycle channels, as an alternative to focus hotkeys.',
-    type: Add}
-  id: 167
-  time: '2021-04-20T23:39:39.0000000+00:00'
-- author: Visne
-  changes:
-  - {message: Added advertising to vending machines, type: Add}
-  id: 168
-  time: '2021-04-21T10:00:15.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix footstep sounds exception, type: Fix}
-  id: 169
-  time: '2021-04-21T10:14:40.0000000+00:00'
-- author: TaralGit
-  changes:
-  - {message: (Re)Added the machete and the baseball bat (melee weapons)., type: Add}
-  - {message: Added inhands for the beaker and large beaker., type: Add}
-  - {message: minor changes to the laser gun sprite and mag-unshaded files., type: Fix}
-  - {message: 'reworked the inhands for the homemade pistol, clarissa, giskard  and
-      mk58 (both variants),', type: Fix}
-  - {message: nerfed melee weapons, type: Fix}
-  id: 170
-  time: '2021-04-28T21:14:28.0000000+00:00'
 - author: Swept
   changes:
   - {message: 'Adds a ton of food, ingredients and condiments from different codebases',
@@ -2855,3 +2758,100 @@ Entries:
       professionals now., type: Add}
   id: 657
   time: '2021-11-25T06:07:07.0000000+00:00'
+- author: moonheart08
+  changes:
+  - {message: Lobby timer now actually shows minutes., type: Fix}
+  id: 658
+  time: '2021-11-25T19:30:36.0000000+00:00'
+- author: Taral
+  changes:
+  - {message: new laser guns, type: Add}
+  - {message: Z8 carbine bundle, type: Add}
+  - {message: firecost for most battery guns, type: Add}
+  - {message: Inspector has been replaced with the Predator in the uplink and bundle,
+    type: Tweak}
+  - {message: replaced old c20r cev eris sprite with a newer one from the same source,
+    type: Tweak}
+  - {message: Inspector had it's ammo capacity reduced from 7 to 6, type: Tweak}
+  id: 659
+  time: '2021-11-25T22:37:21.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Chemist's maintenance access updated to comply with current NT access
+      policy., type: Tweak}
+  id: 660
+  time: '2021-11-26T03:37:05.0000000+00:00'
+- author: wrexbe
+  changes:
+  - {message: fixed crash when admin log has the same object more then once., type: Fix}
+  id: 661
+  time: '2021-11-26T07:39:36.0000000+00:00'
+- author: Hoolny
+  changes:
+  - {message: Readded cows into cargo, type: Tweak}
+  id: 662
+  time: '2021-11-26T09:11:42.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Broken solar panels now spit out shards when deconstructed., type: Tweak}
+  - {message: Solar assemblies are now de-rotated when deconstructing., type: Fix}
+  id: 663
+  time: '2021-11-26T09:17:21.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Station names are now randomly generated., type: Add}
+  id: 664
+  time: '2021-11-26T13:54:32.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Added chemistry recipes for creating cheese (40 milk, 5 enzyme), dough
+      (15 flour, 10 water), and cake batter (15 flour, 5 sugar, and 12 eggs or soy
+      milk)', type: Add}
+  - {message: Added more ingredients to the chef's locker, type: Tweak}
+  - {message: 'Several microwave recipes that used to require flour now need dough,
+      batter, or bread slices.', type: Tweak}
+  id: 665
+  time: '2021-11-26T22:50:14.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'NT14 Knightship models have been taken in for a refit, and now have
+      thrusters, gyroscopes and a docking airlock.', type: Add}
+  id: 666
+  time: '2021-11-26T22:50:36.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed cigar case visuals. Can no longer see the cigars when case is
+      closed., type: Fix}
+  id: 667
+  time: '2021-11-27T06:43:19.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Administrators have had an essential command added to their toolset.,
+    type: Add}
+  id: 668
+  time: '2021-11-27T06:43:33.0000000+00:00'
+- author: Pancake
+  changes:
+  - {message: Lanterns and hardhats have been upgraded to starting with Small High-Capacity
+      Power Cells., type: Tweak}
+  id: 669
+  time: '2021-11-27T06:43:38.0000000+00:00'
+- author: artak10t
+  changes:
+  - {message: Added pills types selection in ChemMaster, type: Add}
+  - {message: Added pills canister, type: Add}
+  id: 670
+  time: '2021-11-27T06:44:36.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Acids including fluorosulfuric, polytrinic, and sulfuric now have effects
+      on touch.', type: Add}
+  id: 671
+  time: '2021-11-27T07:31:50.0000000+00:00'
+- author: Pancake
+  changes:
+  - {message: Trash Bags have been added to the Janitor Cargo Crate., type: Tweak}
+  - {message: Emergency Suits have been added to the Emergency Internals Cargo Crate.,
+    type: Tweak}
+  id: 672
+  time: '2021-11-27T08:54:08.0000000+00:00'

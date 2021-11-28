@@ -45,6 +45,12 @@ namespace Content.Shared.Chemistry.Reaction
 
         // TODO SERV3: Empty on the client, (de)serialize on the server with module manager is server module
         [DataField("sound", serverOnly: true)] public SoundSpecifier Sound { get; private set; } = new SoundPathSpecifier("/Audio/Effects/Chemistry/bubbles.ogg");
+
+        /// <summary>
+        /// If true, this reaction will only consume only integer multiples of the reactant amounts. If there are not
+        /// enough reactants, the reaction does not occur. Useful for spawn-entity reactions (e.g. creating cheese).
+        /// </summary>
+        [DataField("quantized")] public bool Quantized = false;
     }
 
     /// <summary>
