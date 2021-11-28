@@ -69,7 +69,7 @@ namespace Content.Shared.Containers.ItemSlots
     /// </summary>
     [DataDefinition]
     [Friend(typeof(ItemSlotsSystem))]
-    public class ItemSlot : ISerializationHooks
+    public class ItemSlot
     {
         [DataField("whitelist")]
         public EntityWhitelist? Whitelist;
@@ -85,7 +85,8 @@ namespace Content.Shared.Containers.ItemSlots
         /// <summary>
         ///     Options used for playing the insert/eject sounds.
         /// </summary>
-        [DataField("soundOptions")] public AudioParams SoundOptions = AudioParams.Default; 
+        [DataField("soundOptions")]
+        public AudioParams SoundOptions = AudioParams.Default; 
 
         /// <summary>
         ///     The name of this item slot. This will be shown to the user in the verb menu.
