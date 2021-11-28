@@ -28,7 +28,7 @@ namespace Content.Server.Doors.Components
         public readonly ServerDoorComponent? DoorComponent = null;
 
         [ComponentDependency]
-        public readonly SharedAppearanceComponent? AppearanceComponent = null;
+        public readonly AppearanceComponent? AppearanceComponent = null;
 
         [ComponentDependency]
         public readonly ApcPowerReceiverComponent? ReceiverComponent = null;

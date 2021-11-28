@@ -48,7 +48,7 @@ namespace Content.Server.Cabinet
 
         private void UpdateAppearance(EntityUid uid,
             ItemCabinetComponent? cabinet = null,
-            SharedAppearanceComponent? appearance = null)
+            AppearanceComponent? appearance = null)
         {
             if (!Resolve(uid, ref cabinet, ref appearance, false))
                 return;

@@ -2,19 +2,21 @@
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Maps;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Whitelist;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Chemistry.TileReactions;
 
 [DataDefinition]
-public class CreateEntityReaction : ITileReaction
+public class CreateEntityTileReaction : ITileReaction
 {
     [DataField("entity", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string Entity = default!;
@@ -33,6 +35,9 @@ public class CreateEntityReaction : ITileReaction
     /// </summary>
     [DataField("maxOnTileWhitelist")]
     public EntityWhitelist? Whitelist;
+
+    [DataField("randomOffsetMax")]
+    public float RandomOffsetMax = 0.0f;
 
     public FixedPoint2 TileReact(TileRef tile, ReagentPrototype reagent, FixedPoint2 reactVolume)
     {
@@ -54,7 +59,13 @@ public class CreateEntityReaction : ITileReaction
                 }
             }
 
-            entMan.SpawnEntity(Entity, tile.GridPosition().Offset(new Vector2(0.5f, 0.5f)));
+            var random = IoCManager.Resolve<IRobustRandom>();
+            var xoffs = random.NextFloat(-RandomOffsetMax, RandomOffsetMax);
+            var yoffs = random.NextFloat(-RandomOffsetMax, RandomOffsetMax);
+
+            var pos = tile.GridPosition().Offset(new Vector2(0.5f + xoffs, 0.5f + yoffs));
+            entMan.SpawnEntity(Entity, pos);
+
             return Usage;
         }
 

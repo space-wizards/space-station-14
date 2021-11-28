@@ -44,7 +44,7 @@ namespace Content.Client.Conveyor.Visualizers
         {
             base.InitializeEntity(entity);
 
-            var appearance = entity.EnsureComponent<AppearanceComponent>();
+            var appearance = entity.EnsureComponent<ClientAppearanceComponent>();
             ChangeState(appearance);
         }
 

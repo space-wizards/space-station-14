@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
@@ -14,6 +15,9 @@ namespace Content.Server.Chemistry.ReagentEffects
     [UsedImplicitly]
     public class FlammableReaction : ReagentEffect
     {
+        public override bool ShouldLog => true;
+        public override LogImpact LogImpact => LogImpact.Medium;
+
         public override void Effect(ReagentEffectArgs args)
         {
             if (!args.EntityManager.TryGetComponent(args.SolutionEntity, out FlammableComponent? flammable)) return;

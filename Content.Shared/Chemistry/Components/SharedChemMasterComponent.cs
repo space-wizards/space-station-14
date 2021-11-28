@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Cloning;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Chemistry.Components
 {
@@ -15,6 +15,9 @@ namespace Content.Shared.Chemistry.Components
     /// </summary>
     public class SharedChemMasterComponent : Component
     {
+        [DataField("beakerSlot")]
+        public ItemSlot BeakerSlot = new();
+
         public override string Name => "ChemMaster";
         public const string SolutionName = "buffer";
 
@@ -40,9 +43,10 @@ namespace Content.Shared.Chemistry.Components
             public readonly bool BufferModeTransfer;
 
             public readonly FixedPoint2 BufferCurrentVolume;
+            public readonly uint SelectedPillType;
 
             public ChemMasterBoundUserInterfaceState(bool hasPower, bool hasBeaker, FixedPoint2 beakerCurrentVolume, FixedPoint2 beakerMaxVolume, string containerName,
-                string dispenserName, IReadOnlyList<Solution.ReagentQuantity> containerReagents, IReadOnlyList<Solution.ReagentQuantity> bufferReagents, bool bufferModeTransfer, FixedPoint2 bufferCurrentVolume)
+                string dispenserName, IReadOnlyList<Solution.ReagentQuantity> containerReagents, IReadOnlyList<Solution.ReagentQuantity> bufferReagents, bool bufferModeTransfer, FixedPoint2 bufferCurrentVolume, uint selectedPillType)
             {
                 HasPower = hasPower;
                 HasBeaker = hasBeaker;
@@ -54,6 +58,7 @@ namespace Content.Shared.Chemistry.Components
                 BufferReagents = bufferReagents;
                 BufferModeTransfer = bufferModeTransfer;
                 BufferCurrentVolume = bufferCurrentVolume;
+                SelectedPillType = selectedPillType;
             }
         }
 
@@ -63,34 +68,36 @@ namespace Content.Shared.Chemistry.Components
         [Serializable, NetSerializable]
         public class UiActionMessage : BoundUserInterfaceMessage
         {
-            public readonly UiAction action;
-            public readonly FixedPoint2 amount;
-            public readonly string id = "";
-            public readonly bool isBuffer;
-            public readonly int pillAmount;
-            public readonly int bottleAmount;
+            public readonly UiAction Action;
+            public readonly FixedPoint2 Amount;
+            public readonly string Id = "";
+            public readonly bool IsBuffer;
+            public readonly uint PillType;
+            public readonly int PillAmount;
+            public readonly int BottleAmount;
 
-            public UiActionMessage(UiAction _action, FixedPoint2? _amount, string? _id, bool? _isBuffer, int? _pillAmount, int? _bottleAmount)
+            public UiActionMessage(UiAction action, FixedPoint2? amount, string? id, bool? isBuffer, uint? pillType, int? pillAmount, int? bottleAmount)
             {
-                action = _action;
-                if (action == UiAction.ChemButton)
+                Action = action;
+                if (Action == UiAction.ChemButton)
                 {
-                    amount = _amount.GetValueOrDefault();
-                    if (_id == null)
+                    Amount = amount.GetValueOrDefault();
+                    if (id == null)
                     {
-                        id = "null";
+                        Id = "null";
                     }
                     else
                     {
-                        id = _id;
+                        Id = id;
                     }
 
-                    isBuffer = _isBuffer.GetValueOrDefault();
+                    isBuffer = isBuffer.GetValueOrDefault();
                 }
                 else
                 {
-                    pillAmount = _pillAmount.GetValueOrDefault();
-                    bottleAmount = _bottleAmount.GetValueOrDefault();
+                    PillAmount = pillAmount.GetValueOrDefault();
+                    PillType = pillType.GetValueOrDefault();
+                    BottleAmount = bottleAmount.GetValueOrDefault();
                 }
             }
         }
@@ -111,8 +118,8 @@ namespace Content.Shared.Chemistry.Components
             Discard,
             ChemButton,
             CreatePills,
-            CreateBottles
+            CreateBottles,
+            SetPillType
         }
-
     }
 }

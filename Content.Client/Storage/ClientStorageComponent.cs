@@ -7,9 +7,7 @@ using Content.Client.Items.Managers;
 using Content.Client.Items.Components;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.DragDrop;
-using Content.Shared.Stacks;
 using Content.Shared.Storage;
-using Content.Shared.Storage.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
@@ -42,14 +40,6 @@ namespace Content.Client.Storage
         private StorageWindow? _window;
 
         public override IReadOnlyList<IEntity> StoredEntities => _storedEntities;
-
-        protected override void Initialize()
-        {
-            base.Initialize();
-
-            // Hide stackVisualizer on start
-            ChangeStorageVisualization(SharedBagState.Close);
-        }
 
         protected override void OnAdd()
         {
@@ -142,36 +132,14 @@ namespace Content.Client.Storage
             if (_window == null) return;
 
             if (_window.IsOpen)
-            {
                 _window.Close();
-                ChangeStorageVisualization(SharedBagState.Close);
-            }
             else
-            {
                 _window.OpenCentered();
-                ChangeStorageVisualization(SharedBagState.Open);
-            }
         }
 
         private void CloseUI()
         {
-            if (_window == null) return;
-
-            _window.Close();
-            ChangeStorageVisualization(SharedBagState.Close);
-
-        }
-
-        private void ChangeStorageVisualization(SharedBagState state)
-        {
-            if (Owner.TryGetComponent<AppearanceComponent>(out var appearanceComponent))
-            {
-                appearanceComponent.SetData(SharedBagOpenVisuals.BagState, state);
-                if (Owner.HasComponent<ItemCounterComponent>())
-                {
-                    appearanceComponent.SetData(StackVisuals.Hide, state == SharedBagState.Close);
-                }
-            }
+            _window?.Close();
         }
 
         /// <summary>

@@ -10,9 +10,6 @@ namespace Content.Server.Disposal.Tube.Components
         Container Contents { get; }
 
         Direction NextDirection(DisposalHolderComponent holder);
-        Vector2 ExitVector(DisposalHolderComponent holder);
-        bool Remove(DisposalHolderComponent holder);
-        bool TransferTo(DisposalHolderComponent holder, IDisposalTubeComponent to);
         bool CanConnect(Direction direction, IDisposalTubeComponent with);
         void PopupDirections(IEntity entity);
     }

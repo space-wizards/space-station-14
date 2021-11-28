@@ -5,7 +5,6 @@ using Content.Server.Items;
 using Content.Shared.FixedPoint;
 using Content.Shared.Foam;
 using Content.Shared.Inventory;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 

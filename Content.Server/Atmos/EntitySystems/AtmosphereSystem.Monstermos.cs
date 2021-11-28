@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Content.Server.Atmos.Components;
 using Content.Server.Doors.Components;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Atmos;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -15,6 +16,11 @@ namespace Content.Server.Atmos.EntitySystems
     public partial class AtmosphereSystem
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
+
+        /// <summary>
+        ///     Threshold for logging explosive depressurization.
+        /// </summary>
+        private const float DepressurizationLogThreshold = Atmospherics.MolesCellStandard * 10;
 
         private readonly TileAtmosphereComparer _monstermosComparer = new();
 
@@ -360,7 +366,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             const int limit = Atmospherics.MonstermosHardTileLimit;
 
-            var totalGasesRemoved = 0f;
+            var totalMolesRemoved = 0f;
             var queueCycle = ++gridAtmosphere.EqualizationQueueCycleControl;
 
             var tileCount = 0;
@@ -447,7 +453,7 @@ namespace Content.Server.Atmos.EntitySystems
                 var otherTile2 = otherTile.AdjacentTiles[otherTile.MonstermosInfo.CurrentTransferDirection.ToIndex()];
                 if (otherTile2?.Air == null) continue;
                 var sum = otherTile2.Air.TotalMoles;
-                totalGasesRemoved += sum;
+                totalMolesRemoved += sum;
                 otherTile.MonstermosInfo.CurrentTransferAmount += sum;
                 otherTile2.MonstermosInfo.CurrentTransferAmount += otherTile.MonstermosInfo.CurrentTransferAmount;
                 otherTile.PressureDifference = otherTile.MonstermosInfo.CurrentTransferAmount;
@@ -471,9 +477,13 @@ namespace Content.Server.Atmos.EntitySystems
                 var gridPhysics = EntityManager.GetComponent<PhysicsComponent>(mapGrid.GridEntityId);
 
                 // TODO ATMOS: Come up with better values for these.
-                gridPhysics.ApplyLinearImpulse(direction * totalGasesRemoved * gridPhysics.Mass);
-                gridPhysics.ApplyAngularImpulse(Vector2.Cross(tile.GridIndices - gridPhysics.LocalCenter, direction) * totalGasesRemoved);
+                gridPhysics.ApplyLinearImpulse(direction * totalMolesRemoved * gridPhysics.Mass);
+                gridPhysics.ApplyAngularImpulse(Vector2.Cross(tile.GridIndices - gridPhysics.LocalCenter, direction) * totalMolesRemoved);
             }
+
+            if(totalMolesRemoved > DepressurizationLogThreshold)
+                _adminLog.Add(LogType.ExplosiveDepressurization, LogImpact.High,
+                    $"Explosive depressurization removed {totalMolesRemoved} moles from {tileCount} tiles starting from position {tile.GridIndices:position} on grid ID {tile.GridIndex:grid}");
 
             Array.Clear(_depressurizeTiles, 0, Atmospherics.MonstermosHardTileLimit);
             Array.Clear(_depressurizeSpaceTiles, 0, Atmospherics.MonstermosHardTileLimit);

@@ -7,11 +7,13 @@ using Content.Server.Damage.Systems;
 using Content.Server.Power.Components;
 using Content.Server.Shuttles.Components;
 using Content.Shared.Damage;
+using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Shuttles.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -53,7 +55,37 @@ namespace Content.Server.Shuttles.EntitySystems
             SubscribeLocalEvent<ThrusterComponent, StartCollideEvent>(OnStartCollide);
             SubscribeLocalEvent<ThrusterComponent, EndCollideEvent>(OnEndCollide);
 
+            SubscribeLocalEvent<ThrusterComponent, ExaminedEvent>(OnThrusterExamine);
+
             _mapManager.TileChanged += OnTileChange;
+        }
+
+        private void OnThrusterExamine(EntityUid uid, ThrusterComponent component, ExaminedEvent args)
+        {
+            // Powered is already handled by other power components
+            var enabled = Loc.GetString("thruster-comp-enabled",
+                ("enabledColor", component.Enabled ? "green": "red"),
+                ("enabled", component.Enabled ? "on": "off"));
+
+            args.PushMarkup(enabled);
+
+            if (component.Type == ThrusterType.Linear &&
+                EntityManager.TryGetComponent(uid, out TransformComponent? xform) &&
+                xform.Anchored)
+            {
+                var nozzleDir = Loc.GetString("thruster-comp-nozzle-direction",
+                    ("direction", xform.LocalRotation.Opposite().ToWorldVec().GetDir().ToString().ToLowerInvariant()));
+
+                args.PushMarkup(nozzleDir);
+
+                var exposed = NozzleExposed(xform);
+
+                var nozzleText = Loc.GetString("thruster-comp-nozzle-exposed",
+                    ("exposedColor", exposed ? "green" : "red"),
+                    ("exposed", exposed ? "is": "is not"));
+
+                args.PushMarkup(nozzleText);
+            }
         }
 
         public override void Shutdown()
@@ -104,11 +136,33 @@ namespace Content.Server.Shuttles.EntitySystems
         {
             // TODO: Disable visualizer for old direction
 
-            if (!component.IsOn ||
+            if (!component.Enabled ||
                 component.Type != ThrusterType.Linear ||
                 !EntityManager.TryGetComponent(uid, out TransformComponent? xform) ||
                 !_mapManager.TryGetGrid(xform.GridID, out var grid) ||
-                !EntityManager.TryGetComponent(grid.GridEntityId, out ShuttleComponent? shuttleComponent)) return;
+                !EntityManager.TryGetComponent(grid.GridEntityId, out ShuttleComponent? shuttleComponent))
+            {
+                return;
+            }
+
+            var canEnable = CanEnable(uid, component);
+
+            // If it's not on then don't enable it inadvertantly (given we don't have an old rotation)
+            if (!canEnable && !component.IsOn) return;
+
+            // Enable it if it was turned off but new tile is valid
+            if (!component.IsOn && canEnable)
+            {
+                EnableThruster(uid, component);
+                return;
+            }
+
+            // Disable if new tile invalid
+            if (component.IsOn && !canEnable)
+            {
+                DisableThruster(uid, component, xform, args.OldRotation);
+                return;
+            }
 
             var oldDirection = (int) args.OldRotation.GetCardinalDir() / 2;
             var direction = (int) args.NewRotation.GetCardinalDir() / 2;
@@ -218,7 +272,7 @@ namespace Content.Server.Shuttles.EntitySystems
                     throw new ArgumentOutOfRangeException();
             }
 
-            if (EntityManager.TryGetComponent(uid, out SharedAppearanceComponent? appearanceComponent))
+            if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearanceComponent))
             {
                 appearanceComponent.SetData(ThrusterVisualState.State, true);
             }
@@ -229,11 +283,7 @@ namespace Content.Server.Shuttles.EntitySystems
         /// <summary>
         /// Tries to disable the thruster.
         /// </summary>
-        /// <param name="uid"></param>
-        /// <param name="component"></param>
-        /// <param name="xform"></param>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public void DisableThruster(EntityUid uid, ThrusterComponent component, TransformComponent? xform = null)
+        public void DisableThruster(EntityUid uid, ThrusterComponent component, TransformComponent? xform = null, Angle? angle = null)
         {
             if (!component.IsOn ||
                 !Resolve(uid, ref xform) ||
@@ -248,7 +298,8 @@ namespace Content.Server.Shuttles.EntitySystems
             switch (component.Type)
             {
                 case ThrusterType.Linear:
-                    var direction = ((int) xform.LocalRotation.GetCardinalDir() / 2);
+                    angle ??= xform.LocalRotation;
+                    var direction = (int) angle.Value.GetCardinalDir() / 2;
 
                     shuttleComponent.LinearThrusterImpulse[direction] -= component.Impulse;
                     DebugTools.Assert(shuttleComponent.LinearThrusters[direction].Contains(component));
@@ -263,7 +314,7 @@ namespace Content.Server.Shuttles.EntitySystems
                     throw new ArgumentOutOfRangeException();
             }
 
-            if (EntityManager.TryGetComponent(uid, out SharedAppearanceComponent? appearanceComponent))
+            if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearanceComponent))
             {
                 appearanceComponent.SetData(ThrusterVisualState.State, false);
             }
@@ -294,6 +345,11 @@ namespace Content.Server.Shuttles.EntitySystems
             if (component.Type == ThrusterType.Angular)
                 return true;
 
+            return NozzleExposed(xform);
+        }
+
+        private bool NozzleExposed(TransformComponent xform)
+        {
             var (x, y) = xform.LocalPosition + xform.LocalRotation.Opposite().ToWorldVec();
             var tile = _mapManager.GetGrid(xform.GridID).GetTileRef(new Vector2i((int) Math.Floor(x), (int) Math.Floor(y)));
 
@@ -361,7 +417,7 @@ namespace Content.Server.Shuttles.EntitySystems
                     case ShuttleMode.Cruise:
                         foreach (var comp in component.AngularThrusters)
                         {
-                            if (!EntityManager.TryGetComponent(comp.OwnerUid, out SharedAppearanceComponent? appearanceComponent))
+                            if (!EntityManager.TryGetComponent(comp.OwnerUid, out AppearanceComponent? appearanceComponent))
                                 continue;
 
                             comp.Firing = true;
@@ -373,7 +429,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
                         foreach (var comp in component.LinearThrusters[index])
                         {
-                            if (!EntityManager.TryGetComponent(comp.OwnerUid, out SharedAppearanceComponent? appearanceComponent))
+                            if (!EntityManager.TryGetComponent(comp.OwnerUid, out AppearanceComponent? appearanceComponent))
                                 continue;
 
                             comp.Firing = true;
@@ -389,7 +445,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
                 foreach (var comp in component.LinearThrusters[index])
                 {
-                    if (!EntityManager.TryGetComponent(comp.OwnerUid, out SharedAppearanceComponent? appearanceComponent))
+                    if (!EntityManager.TryGetComponent(comp.OwnerUid, out AppearanceComponent? appearanceComponent))
                         continue;
 
                     comp.Firing = true;
@@ -414,7 +470,7 @@ namespace Content.Server.Shuttles.EntitySystems
                     case ShuttleMode.Cruise:
                         foreach (var comp in component.AngularThrusters)
                         {
-                            if (!EntityManager.TryGetComponent(comp.OwnerUid, out SharedAppearanceComponent? appearanceComponent))
+                            if (!EntityManager.TryGetComponent(comp.OwnerUid, out AppearanceComponent? appearanceComponent))
                                 continue;
 
                             comp.Firing = false;
@@ -426,7 +482,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
                         foreach (var comp in component.LinearThrusters[index])
                         {
-                            if (!EntityManager.TryGetComponent(comp.OwnerUid, out SharedAppearanceComponent? appearanceComponent))
+                            if (!EntityManager.TryGetComponent(comp.OwnerUid, out AppearanceComponent? appearanceComponent))
                                 continue;
 
                             comp.Firing = false;
@@ -442,7 +498,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
                 foreach (var comp in component.LinearThrusters[index])
                 {
-                    if (!EntityManager.TryGetComponent(comp.OwnerUid, out SharedAppearanceComponent? appearanceComponent))
+                    if (!EntityManager.TryGetComponent(comp.OwnerUid, out AppearanceComponent? appearanceComponent))
                         continue;
 
                     comp.Firing = false;
