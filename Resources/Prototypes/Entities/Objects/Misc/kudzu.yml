@@ -25,7 +25,7 @@
         shape:
           !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.5"
-        mask:
+        layer:
           - MobImpassable
     - type: Damageable
       damageModifierSet: Wood
