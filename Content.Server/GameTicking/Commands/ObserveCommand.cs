@@ -22,7 +22,10 @@ namespace Content.Server.GameTicking.Commands
             }
 
             var ticker = EntitySystem.Get<GameTicker>();
-            ticker.MakeObserve(player);
+            if (ticker.PlayersInLobby.ContainsKey(player))
+                ticker.MakeObserve(player);
+            else
+                shell.WriteError($"{player.Name} is not in the lobby.   This incident will be reported.");
         }
     }
 }

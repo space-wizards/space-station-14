@@ -64,6 +64,7 @@ namespace Content.Server.GameTicking.Commands
                     return;
             }
 
+            shell.ExecuteCommand("sudo cvar events.enabled false");
             shell.ExecuteCommand($"addmap {mapId} false");
             shell.ExecuteCommand($"loadbp {mapId} \"{CommandParsing.Escape(mapName)}\" true");
 
