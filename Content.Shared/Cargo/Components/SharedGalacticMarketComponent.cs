@@ -8,7 +8,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Cargo.Components
 {
@@ -17,7 +17,7 @@ namespace Content.Shared.Cargo.Components
     {
         public sealed override string Name => "GalacticMarket";
 
-        [DataField("products", customTypeSerializer: typeof(PrototypeIdSerializer<CargoProductPrototype>))]
+        [DataField("products", customTypeSerializer: typeof(PrototypeIdListSerializer<CargoProductPrototype>))]
         protected List<string> _productIds = new();
 
         protected readonly List<CargoProductPrototype> _products = new();
