@@ -66,12 +66,12 @@ namespace Content.Client.Medical.CrewMonitoring
                 {
                     posText = Loc.GetString("crew-monitoring-user-interface-no-info");
                 }
-                var podLabel = new Label()
+                var posLabel = new Label()
                 {
                     Text = posText
                 };
-                SensorsTable.AddChild(podLabel);
-                _rowsContent.Add(podLabel);
+                SensorsTable.AddChild(posLabel);
+                _rowsContent.Add(posLabel);
             }
         }
 
