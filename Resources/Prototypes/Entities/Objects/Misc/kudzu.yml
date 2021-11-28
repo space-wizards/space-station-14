@@ -28,6 +28,7 @@
         layer:
           - MobImpassable
     - type: Damageable
+      damageModifierSet: Wood
     - type: Destructible
       thresholds:
       - trigger:
