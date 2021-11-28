@@ -112,7 +112,7 @@ namespace Content.Client.Chemistry.UI
         {
             var castState = (ChemMasterBoundUserInterfaceState) state;
             Title = castState.DispenserName;
-            SetCurrentLabel(castState.Label);
+            LabelLine = castState.Label;
             UpdatePanelInfo(castState);
             if (Contents.Children != null)
             {
@@ -196,7 +196,8 @@ namespace Content.Client.Chemistry.UI
 
             if (!state.BufferReagents.Any())
             {
-                BufferInfo.Children.Add(new Label {Text = Loc.GetString("chem-master-window-buffer-empty-text") });
+                BufferInfo.Children.Add(new Label { Text = Loc.GetString("chem-master-window-buffer-empty-text") });
+                
                 return;
             }
 
@@ -253,14 +254,16 @@ namespace Content.Client.Chemistry.UI
             }
         }
 
-        public void SetCurrentLabel(string label)
+        public String LabelLine
         {
-            LabelLineEdit.Text = label;
-        }
-
-        public String GetCurrentLabel()
-        {
-            return LabelLineEdit.Text;
+            get
+            {
+                return LabelLineEdit.Text;
+            }
+            set
+            {
+                LabelLineEdit.Text = value;
+            }
         }
     }
 

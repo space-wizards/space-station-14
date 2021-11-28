@@ -41,8 +41,8 @@ namespace Content.Client.Chemistry.UI
             _window.EjectButton.OnPressed += _ => PrepareData(UiAction.Eject, null, null, null, null, null);
             _window.BufferTransferButton.OnPressed += _ => PrepareData(UiAction.Transfer, null, null, null, null, null);
             _window.BufferDiscardButton.OnPressed += _ => PrepareData(UiAction.Discard, null, null, null, null, null);
-            _window.CreatePillButton.OnPressed += _ => PrepareData(UiAction.CreatePills, null, _window.GetCurrentLabel(), null, _window.PillAmount.Value, null);
-            _window.CreateBottleButton.OnPressed += _ => PrepareData(UiAction.CreateBottles, null, _window.GetCurrentLabel(), null, null, _window.BottleAmount.Value);
+            _window.CreatePillButton.OnPressed += _ => PrepareData(UiAction.CreatePills, null, _window.LabelLine, null, _window.PillAmount.Value, null);
+            _window.CreateBottleButton.OnPressed += _ => PrepareData(UiAction.CreateBottles, null, _window.LabelLine, null, null, _window.BottleAmount.Value);
 
             for(uint i = 0; i < _window.PillTypeButtons.Length; i++)
             {
@@ -73,12 +73,10 @@ namespace Content.Client.Chemistry.UI
         {
             if (button != null)
             {
-                bool b = button.IsBuffer;
-
                 SendMessage(new UiActionMessage(action, button.Amount, button.Id, button.IsBuffer, null, null, null, null));
             }
             else
-            {
+            { 
                 SendMessage(new UiActionMessage(action, null, null, null, label, pillType, pillAmount, bottleAmount));
             }
         }

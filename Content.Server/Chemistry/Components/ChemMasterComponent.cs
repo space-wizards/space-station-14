@@ -107,9 +107,7 @@ namespace Content.Server.Chemistry.Components
         private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
             if (obj.Session.AttachedEntity == null)
-            {
                 return;
-            }
 
             var msg = (UiActionMessage) obj.Message;
             var needsPower = msg.Action switch
@@ -286,13 +284,19 @@ namespace Content.Server.Chemistry.Components
         private void TryCreatePackage(IEntity user, UiAction action, string label, int pillAmount, int bottleAmount)
         {
             if (BufferSolution.TotalVolume == 0)
+            {
+                user.PopupMessageCursor(Loc.GetString("chem-master-window-buffer-empty-text"));
                 return;
+            }
 
             if (action == UiAction.CreateBottles)
             {
                 var individualVolume = BufferSolution.TotalVolume / FixedPoint2.New(bottleAmount);
                 if (individualVolume < FixedPoint2.New(1))
+                {
+                    user.PopupMessageCursor(Loc.GetString("chem-master-window-buffer-low-text"));
                     return;
+                }
 
                 var actualVolume = FixedPoint2.Min(individualVolume, FixedPoint2.New(30));
                 for (int i = 0; i < bottleAmount; i++)
@@ -331,7 +335,10 @@ namespace Content.Server.Chemistry.Components
             {
                 var individualVolume = BufferSolution.TotalVolume / FixedPoint2.New(pillAmount);
                 if (individualVolume < FixedPoint2.New(1))
+                {
+                    user.PopupMessageCursor(Loc.GetString("chem-master-window-buffer-low-text"));
                     return;
+                }
 
                 var actualVolume = FixedPoint2.Min(individualVolume, FixedPoint2.New(50));
                 for (int i = 0; i < pillAmount; i++)

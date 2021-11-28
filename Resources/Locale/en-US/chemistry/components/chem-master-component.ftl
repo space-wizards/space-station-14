@@ -16,6 +16,7 @@ chem-master-window-buffer-label = buffer:
 chem-master-window-buffer-all-amount = All
 chem-master-current-text-label = Label
 chem-master-window-buffer-empty-text = Buffer empty.
+chem-master-window-buffer-low-text = Not enough solution in buffer
 chem-master-window-transfer-button = Transfer
 chem-master-window-discard-button = Discard
 chem-master-window-packaging-text = Packaging
