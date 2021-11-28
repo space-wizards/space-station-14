@@ -1,10 +1,13 @@
 using System;
 using System.Data;
+using Content.Server.Administration.Logs;
 using Content.Server.Alert;
 using Content.Server.Atmos.Components;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
+using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -15,6 +18,7 @@ namespace Content.Server.Atmos.EntitySystems
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly AdminLogSystem _logSystem = default!;
 
         private const float UpdateTimer = 1f;
 
@@ -105,6 +109,12 @@ namespace Content.Server.Atmos.EntitySystems
                         // Deal damage and ignore resistances. Resistance to pressure damage should be done via pressure protection gear.
                         _damageableSystem.TryChangeDamage(uid, barotrauma.Damage * Atmospherics.LowPressureDamage, true, false);
 
+                        if (!barotrauma.TakingDamage)
+                        {
+                            barotrauma.TakingDamage = true;
+                            _logSystem.Add(LogType.Barotrauma, $"{barotrauma.Owner} started taking low pressure damage");
+                        }
+
                         if (status == null) break;
 
                         if (pressure <= Atmospherics.HazardLowPressure)
@@ -128,6 +138,12 @@ namespace Content.Server.Atmos.EntitySystems
                         // Deal damage and ignore resistances. Resistance to pressure damage should be done via pressure protection gear.
                         _damageableSystem.TryChangeDamage(uid, barotrauma.Damage * damageScale, true, false);
 
+                        if (!barotrauma.TakingDamage)
+                        {
+                            barotrauma.TakingDamage = true;
+                            _logSystem.Add(LogType.Barotrauma, $"{barotrauma.Owner} started taking high pressure damage");
+                        }
+
                         if (status == null) break;
 
                         if (pressure >= Atmospherics.HazardHighPressure)
@@ -141,6 +157,11 @@ namespace Content.Server.Atmos.EntitySystems
 
                     // Normal pressure.
                     default:
+                        if (barotrauma.TakingDamage)
+                        {
+                            barotrauma.TakingDamage = false;
+                            _logSystem.Add(LogType.Barotrauma, $"{barotrauma.Owner} stopped taking pressure damage");
+                        }
                         status?.ClearAlertCategory(AlertCategory.Pressure);
                         break;
                 }
