@@ -1,6 +1,6 @@
 - type: entity
-  id: kudzu
-  name: Kudzu
+  id: Kudzu
+  name: kudzu
   description: A rapidly growing, dangerous plant. WHY ARE YOU STOPPING TO LOOK AT IT?!
   placement:
     mode: SnapgridCenter
@@ -51,8 +51,9 @@
         Extinguish: [Touch]
     - type: AtmosExposed
     - type: Spreader
-      growthResult: kudzu
+      growthResult: Kudzu
     - type: GrowingKudzu
+      growthTickSkipChance: 0.1666
     - type: SlowContacts
       walkSpeedModifier: 0.2
       sprintSpeedModifier: 0.2
