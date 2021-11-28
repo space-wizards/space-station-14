@@ -254,6 +254,7 @@
   - type: GalacticMarket
     products:
       - MedicalSupplies
+      - MedicalChemistrySupplies
       - EmergencyExplosive
       - EmergencyFire
       - EmergencyInternals

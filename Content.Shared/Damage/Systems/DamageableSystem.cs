@@ -24,7 +24,10 @@ namespace Content.Shared.Damage
             SubscribeLocalEvent<DamageableComponent, ComponentGetState>(DamageableGetState);
         }
 
-        protected virtual void SetTotalDamage(DamageableComponent damageable, FixedPoint2 @new)
+        /// <summary>
+        ///     Update the total damage value and optionally add to admin logs
+        /// </summary>
+        protected virtual void SetTotalDamage(DamageableComponent damageable, FixedPoint2 @new, bool logChange)
         {
             var owner = damageable.Owner;
             var old = damageable.TotalDamage;
@@ -33,6 +36,11 @@ namespace Content.Shared.Damage
             {
                 return;
             }
+
+            damageable.TotalDamage = @new;
+
+            if (!logChange)
+                return;
 
             LogType logType;
             string type;
@@ -53,7 +61,6 @@ namespace Content.Shared.Damage
 
             _logs.Add(logType, $"{owner} {type} {change} damage. Old: {old} | New: {@new}");
 
-            damageable.TotalDamage = @new;
         }
 
         /// <summary>
@@ -104,7 +111,7 @@ namespace Content.Shared.Damage
         public void SetDamage(DamageableComponent damageable, DamageSpecifier damage)
         {
             damageable.Damage = damage;
-            DamageChanged(damageable);
+            DamageChanged(damageable, false);
         }
 
         /// <summary>
@@ -114,10 +121,11 @@ namespace Content.Shared.Damage
         ///     This updates cached damage information, flags the component as dirty, and raises a damage changed event.
         ///     The damage changed event is used by other systems, such as damage thresholds.
         /// </remarks>
-        public void DamageChanged(DamageableComponent component, DamageSpecifier? damageDelta = null, bool interruptsDoAfters = true)
+        public void DamageChanged(DamageableComponent component, bool logChange, DamageSpecifier? damageDelta = null,
+            bool interruptsDoAfters = true)
         {
             component.DamagePerGroup = component.Damage.GetDamagePerGroup();
-            SetTotalDamage(component, component.Damage.Total);
+            SetTotalDamage(component, component.Damage.Total, logChange);
             component.Dirty();
 
             if (EntityManager.TryGetComponent<AppearanceComponent>(component.OwnerUid, out var appearance) && damageDelta != null)
@@ -137,7 +145,8 @@ namespace Content.Shared.Damage
         ///     Returns a <see cref="DamageSpecifier"/> with information about the actual damage changes. This will be
         ///     null if the user had no applicable components that can take damage.
         /// </returns>
-        public DamageSpecifier? TryChangeDamage(EntityUid uid, DamageSpecifier damage, bool ignoreResistances = false, bool interruptsDoAfters = true)
+        public DamageSpecifier? TryChangeDamage(EntityUid uid, DamageSpecifier damage, bool ignoreResistances = false,
+            bool interruptsDoAfters = true, bool logChange = false)
         {
             if (!EntityManager.TryGetComponent<DamageableComponent>(uid, out var damageable))
             {
@@ -186,7 +195,7 @@ namespace Content.Shared.Damage
 
             if (!delta.Empty)
             {
-                DamageChanged(damageable, delta, interruptsDoAfters);
+                DamageChanged(damageable, logChange, delta, interruptsDoAfters);
             }
 
             return delta;
@@ -213,7 +222,7 @@ namespace Content.Shared.Damage
 
             // Setting damage does not count as 'dealing' damage, even if it is set to a larger value, so we pass an
             // empty damage delta.
-            DamageChanged(component, new DamageSpecifier());
+            DamageChanged(component, false, new DamageSpecifier());
         }
 
         private void DamageableGetState(EntityUid uid, DamageableComponent component, ref ComponentGetState args)
@@ -238,7 +247,7 @@ namespace Content.Shared.Damage
             if (!delta.Empty)
             {
                 component.Damage = newDamage;
-                DamageChanged(component, delta);
+                DamageChanged(component, false, delta);
             }
         }
     }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.Administration.Logs;
 using Content.Server.Alert;
 using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
@@ -8,10 +9,12 @@ using Content.Server.Body.Behavior;
 using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
 using Content.Shared.Damage;
+using Content.Shared.Database;
 using Content.Shared.MobState.Components;
 using Content.Shared.Popups;
 using Robust.Shared.GameObjects;
@@ -313,6 +316,9 @@ namespace Content.Server.Body.Components
 
         private void TakeSuffocationDamage()
         {
+            if (!Suffocating)
+                EntitySystem.Get<AdminLogSystem>().Add(LogType.Asphyxiation, $"{Owner} started suffocating");
+
             Suffocating = true;
 
             if (Owner.TryGetComponent(out ServerAlertsComponent? alertsComponent))
@@ -325,6 +331,9 @@ namespace Content.Server.Body.Components
 
         private void StopSuffocation()
         {
+            if (Suffocating)
+                EntitySystem.Get<AdminLogSystem>().Add(LogType.Asphyxiation, $"{Owner} stopped suffocating");
+
             Suffocating = false;
 
             if (Owner.TryGetComponent(out ServerAlertsComponent? alertsComponent))

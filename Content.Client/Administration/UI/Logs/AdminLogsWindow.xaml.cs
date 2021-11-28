@@ -36,6 +36,7 @@ public partial class AdminLogsWindow : SS14Window
         SelectAllTypesButton.OnPressed += SelectAllTypes;
         SelectNoTypesButton.OnPressed += SelectNoTypes;
 
+        SelectAllPlayersButton.OnPressed += SelectAllPlayers;
         SelectNoPlayersButton.OnPressed += SelectNoPlayers;
 
         RoundSpinBox.IsValid = i => i > 0 && i <= CurrentRound;
@@ -91,7 +92,7 @@ public partial class AdminLogsWindow : SS14Window
         UpdateTypes();
     }
 
-    private void PlayerSearchChanged(LineEditEventArgs obj)
+    private void PlayerSearchChanged(LineEditEventArgs args)
     {
         UpdatePlayers();
     }
@@ -101,7 +102,7 @@ public partial class AdminLogsWindow : SS14Window
         UpdateLogs();
     }
 
-    private void SelectAllTypes(ButtonEventArgs obj)
+    private void SelectAllTypes(ButtonEventArgs args)
     {
         SelectedTypes.Clear();
 
@@ -119,7 +120,7 @@ public partial class AdminLogsWindow : SS14Window
         UpdateLogs();
     }
 
-    private void SelectNoTypes(ButtonEventArgs obj)
+    private void SelectNoTypes(ButtonEventArgs args)
     {
         SelectedTypes.Clear();
 
@@ -137,7 +138,25 @@ public partial class AdminLogsWindow : SS14Window
         UpdateLogs();
     }
 
-    private void SelectNoPlayers(ButtonEventArgs obj)
+    private void SelectAllPlayers(ButtonEventArgs args)
+    {
+        SelectedPlayers.Clear();
+
+        foreach (var control in PlayersContainer.Children)
+        {
+            if (control is not AdminLogPlayerButton player)
+            {
+                continue;
+            }
+
+            player.Pressed = true;
+            SelectedPlayers.Add(player.Id);
+        }
+
+        UpdateLogs();
+    }
+
+    private void SelectNoPlayers(ButtonEventArgs args)
     {
         SelectedPlayers.Clear();
 
@@ -312,7 +331,8 @@ public partial class AdminLogsWindow : SS14Window
         {
             var button = new AdminLogTypeButton(type)
             {
-                Text = type.ToString()
+                Text = type.ToString(),
+                Pressed = true
             };
 
             SelectedTypes.Add(type);
@@ -350,7 +370,8 @@ public partial class AdminLogsWindow : SS14Window
         {
             var button = new AdminLogPlayerButton(id)
             {
-                Text = name
+                Text = name,
+                Pressed = true
             };
 
             SelectedPlayers.Add(id);
@@ -398,8 +419,9 @@ public partial class AdminLogsWindow : SS14Window
         LogSearch.OnTextChanged -= LogSearchChanged;
 
         SelectAllTypesButton.OnPressed -= SelectAllTypes;
-
         SelectNoTypesButton.OnPressed -= SelectNoTypes;
+
+        SelectAllPlayersButton.OnPressed -= SelectAllPlayers;
         SelectNoPlayersButton.OnPressed -= SelectNoPlayers;
 
         RoundSpinBox.IsValid = null;

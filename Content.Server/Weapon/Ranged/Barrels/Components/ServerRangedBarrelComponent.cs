@@ -2,11 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Server.Administration.Logs;
 using Content.Server.Camera;
 using Content.Server.Projectiles.Components;
 using Content.Server.Weapon.Ranged.Ammunition.Components;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
+using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Sound;
@@ -396,7 +399,10 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 var result = rayCastResults[0];
                 var distance = result.Distance;
                 hitscan.FireEffects(shooter, distance, angle, result.HitEntity);
-                EntitySystem.Get<DamageableSystem>().TryChangeDamage(result.HitEntity.Uid, hitscan.Damage);
+                var dmg = EntitySystem.Get<DamageableSystem>().TryChangeDamage(result.HitEntity.Uid, hitscan.Damage);
+                if (dmg != null)
+                    EntitySystem.Get<AdminLogSystem>().Add(LogType.HitScanHit,
+                        $"{shooter} hit {result.HitEntity} using {hitscan.Owner} and dealt {dmg.Total} damage");
             }
             else
             {

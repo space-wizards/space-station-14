@@ -178,7 +178,7 @@ namespace Content.Shared.Verbs
             Target = target;
 
             CanAccess = force || (Target == User) || user.IsInSameOrParentContainer(target) &&
-                EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(user, target);
+                EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(user, target, ignoreInsideBlocker: true);
 
             // A large number of verbs need to check action blockers. Instead of repeatedly having each system individually
             // call ActionBlocker checks, just cache it for the verb request.
