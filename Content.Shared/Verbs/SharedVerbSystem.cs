@@ -1,7 +1,10 @@
 using System.Collections.Generic;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
+using Content.Shared.Interaction;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
@@ -10,6 +13,8 @@ namespace Content.Shared.Verbs
     public abstract class SharedVerbSystem : EntitySystem
     {
         [Dependency] private readonly SharedAdminLogSystem _logSystem = default!;
+        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
 
         /// <summary>
         ///     Raises a number of events in order to get all verbs of the given type(s) defined in local systems. This
@@ -19,30 +24,61 @@ namespace Content.Shared.Verbs
         {
             Dictionary<VerbType, SortedSet<Verb>> verbs = new();
 
+            // accessibility checks
+            bool canAccess = false;
+            if (force || target == user)
+                canAccess = true;
+            else if (_interactionSystem.InRangeUnobstructed(user, target, ignoreInsideBlocker: true))
+            {
+                if (user.IsInSameOrParentContainer(target))
+                    canAccess = true;
+                else
+                    // the item might be in a backpack that the user has open
+                    canAccess = _interactionSystem.CanAccessViaStorage(user.Uid, target.Uid);
+            }
+
+            // A large number of verbs need to check action blockers. Instead of repeatedly having each system individually
+            // call ActionBlocker checks, just cache it for the verb request.
+            var canInteract = force || _actionBlockerSystem.CanInteract(user.Uid);
+
+            IEntity? @using = null;
+            if (user.TryGetComponent(out SharedHandsComponent? hands) && (force || _actionBlockerSystem.CanUse(user.Uid)))
+            {
+                hands.TryGetActiveHeldEntity(out @using);
+
+                // Check whether the "Held" entity is a virtual pull entity. If yes, set that as the entity being "Used".
+                // This allows you to do things like buckle a dragged person onto a surgery table, without click-dragging
+                // their sprite.
+                if (@using != null && @using.TryGetComponent<HandVirtualItemComponent>(out var pull))
+                {
+                    @using = IoCManager.Resolve<IEntityManager>().GetEntity(pull.BlockingEntity);
+                }
+            }
+
             if ((verbTypes & VerbType.Interaction) == VerbType.Interaction)
             {
-                GetInteractionVerbsEvent getVerbEvent = new(user, target, force);
+                GetInteractionVerbsEvent getVerbEvent = new(user, target, @using, hands, canInteract, canAccess);
                 RaiseLocalEvent(target.Uid, getVerbEvent);
                 verbs.Add(VerbType.Interaction, getVerbEvent.Verbs);
             }
 
             if ((verbTypes & VerbType.Activation) == VerbType.Activation)
             {
-                GetActivationVerbsEvent getVerbEvent = new(user, target, force);
+                GetActivationVerbsEvent getVerbEvent = new(user, target, @using, hands, canInteract, canAccess);
                 RaiseLocalEvent(target.Uid, getVerbEvent);
                 verbs.Add(VerbType.Activation, getVerbEvent.Verbs);
             }
 
             if ((verbTypes & VerbType.Alternative) == VerbType.Alternative)
             {
-                GetAlternativeVerbsEvent getVerbEvent = new(user, target, force);
+                GetAlternativeVerbsEvent getVerbEvent = new(user, target, @using, hands, canInteract, canAccess);
                 RaiseLocalEvent(target.Uid, getVerbEvent);
                 verbs.Add(VerbType.Alternative, getVerbEvent.Verbs);
             }
 
             if ((verbTypes & VerbType.Other) == VerbType.Other)
             {
-                GetOtherVerbsEvent getVerbEvent = new(user, target, force);
+                GetOtherVerbsEvent getVerbEvent = new(user, target, @using, hands, canInteract, canAccess);
                 RaiseLocalEvent(target.Uid, getVerbEvent);
                 verbs.Add(VerbType.Other, getVerbEvent.Verbs);
             }
