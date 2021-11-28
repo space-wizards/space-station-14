@@ -10,6 +10,7 @@
     - type: Sprite
       sprite: Objects/Misc/kudzu.rsi
       state: kudzu_11
+      drawdepth: Overdoors
     - type: Appearance
       visuals:
         - type: KudzuVisualizer
