@@ -21,7 +21,9 @@ public class GrowingKudzuSystem : EntitySystem
     private void SetupKudzu(EntityUid uid, GrowingKudzuComponent component, ComponentAdd args)
     {
         if (!EntityManager.TryGetComponent<AppearanceComponent>(uid, out var appearance))
+        {
             return;
+        }
 
         appearance.SetData(KudzuVisuals.Variant, _robustRandom.Next(1, 3));
         appearance.SetData(KudzuVisuals.GrowthLevel, 1);

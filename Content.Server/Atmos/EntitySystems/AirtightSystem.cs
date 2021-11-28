@@ -45,7 +45,7 @@ namespace Content.Server.Atmos.EntitySystems
             SetAirblocked(airtight, false);
 
             InvalidatePosition(airtight.LastPosition.Item1, airtight.LastPosition.Item2, airtight.FixVacuum);
-            RaiseLocalEvent(new AirtightChanged() { Airtight = airtight });
+            RaiseLocalEvent(new AirtightChanged(airtight));
         }
 
         private void OnMapInit(EntityUid uid, AirtightComponent airtight, MapInitEvent args)
@@ -72,14 +72,14 @@ namespace Content.Server.Atmos.EntitySystems
 
             airtight.CurrentAirBlockedDirection = (int) Rotate((AtmosDirection)airtight.InitialAirBlockedDirection, ev.NewRotation);
             UpdatePosition(airtight);
-            RaiseLocalEvent(uid, new AirtightChanged() { Airtight = airtight });
+            RaiseLocalEvent(uid, new AirtightChanged(airtight));
         }
 
         public void SetAirblocked(AirtightComponent airtight, bool airblocked)
         {
             airtight.AirBlocked = airblocked;
             UpdatePosition(airtight);
-            RaiseLocalEvent(airtight.OwnerUid, new AirtightChanged() { Airtight = airtight });
+            RaiseLocalEvent(airtight.OwnerUid, new AirtightChanged(airtight));
         }
 
         public void UpdatePosition(AirtightComponent airtight)
@@ -128,5 +128,10 @@ namespace Content.Server.Atmos.EntitySystems
     public class AirtightChanged : EntityEventArgs
     {
         public AirtightComponent Airtight;
+
+        public AirtightChanged(AirtightComponent airtight)
+        {
+            Airtight = airtight;
+        }
     }
 }

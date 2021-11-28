@@ -11,9 +11,10 @@
       sprite: Objects/Misc/kudzu.rsi
       state: kudzu_11
       drawdepth: Overdoors
+      netsync: false
     - type: Appearance
       visuals:
-        - type: KudzuVisualizer
+      - type: KudzuVisualizer
     - type: Clickable
     - type: Transform
       anchored: true
@@ -50,7 +51,7 @@
         Extinguish: [Touch]
     - type: AtmosExposed
     - type: Spreader
-      growthResult: Kudzu
+      growthResult: kudzu
     - type: GrowingKudzu
     - type: SlowContacts
       walkSpeedModifier: 0.2
