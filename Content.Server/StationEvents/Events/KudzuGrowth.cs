@@ -43,7 +43,7 @@ public class KudzuGrowth : StationEvent
     {
         base.Startup();
 
-        // Essentially we'll pick out a target amount of gas to leak, then a rate to leak it at, then work out the duration from there.
+        // Pick a place to plant the kudzu.
         if (TryFindRandomTile(out _targetTile, out _targetStation, out _targetGrid, out _targetCoords, _robustRandom, _entityManager))
         {
             _entityManager.SpawnEntity("Kudzu", _targetCoords);
