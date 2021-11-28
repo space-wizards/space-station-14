@@ -27,6 +27,12 @@
             </BoxContainer>
         </PanelContainer>
         <Control MinSize="0 10" />
+        <!-- Labels for pills/bottles -->
+        <BoxContainer Orientation="Horizontal">
+            <Label Name="CurrentTextLabel" Text="{Loc 'chem-master-current-text-label'}" />
+            <Control HorizontalExpand="True" />
+            <LineEdit Name="LabelLineEdit" MinSize="170 0"/>
+        </BoxContainer>
         <!-- Buffer -->
         <BoxContainer Orientation="Horizontal">
             <Label Text="{Loc 'chem-master-window-buffer-text'}" />
@@ -41,7 +47,7 @@
                     StyleClasses="OpenLeft" />
         </BoxContainer>
         <!-- Buffer info -->
-        <PanelContainer VerticalExpand="True" SizeFlagsStretchRatio="6" MinSize="0 100">
+        <PanelContainer VerticalExpand="True" SizeFlagsStretchRatio="1" MinSize="0 150">
             <PanelContainer.PanelOverride>
                 <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
             </PanelContainer.PanelOverride>

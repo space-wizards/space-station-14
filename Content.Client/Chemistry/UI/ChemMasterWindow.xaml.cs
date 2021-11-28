@@ -29,6 +29,7 @@ namespace Content.Client.Chemistry.UI
     public partial class ChemMasterWindow : SS14Window
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        public event Action<string>? OnLabelEntered;
         public event Action<BaseButton.ButtonEventArgs, ChemButton>? OnChemButtonPressed;
         public readonly Button[] PillTypeButtons;
 
@@ -47,6 +48,7 @@ namespace Content.Client.Chemistry.UI
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
+            LabelLineEdit.OnTextEntered += e => OnLabelEntered?.Invoke(e.Text);
 
             //Pill type selection buttons, in total there are 20 pills.
             //Pill rsi file should have states named as pill1, pill2, and so on.
@@ -74,7 +76,6 @@ namespace Content.Client.Chemistry.UI
                     MaxSize = (42, 28),
                     Group = pillTypeGroup
                 };
-
 
                 //Generate buttons textures
                 var specifier = new SpriteSpecifier.Rsi(resourcePath, "pill" + (i + 1));
@@ -111,6 +112,7 @@ namespace Content.Client.Chemistry.UI
         {
             var castState = (ChemMasterBoundUserInterfaceState) state;
             Title = castState.DispenserName;
+            SetCurrentLabel(castState.Label);
             UpdatePanelInfo(castState);
             if (Contents.Children != null)
             {
@@ -249,6 +251,16 @@ namespace Content.Client.Chemistry.UI
                     });
                 }
             }
+        }
+
+        public void SetCurrentLabel(string label)
+        {
+            LabelLineEdit.Text = label;
+        }
+
+        public String GetCurrentLabel()
+        {
+            return LabelLineEdit.Text;
         }
     }
 
