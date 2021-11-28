@@ -100,7 +100,7 @@ namespace Content.Server.Access.Systems
                 return true;
 
             // check inventory slot?
-            return TryGeIdCardSlot(uid, out idCard);
+            return TryGetIdCardSlot(uid, out idCard);
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace Content.Server.Access.Systems
         /// <summary>
         ///     Try get id card from mobs ID inventory slot
         /// </summary>
-        public bool TryGeIdCardSlot(EntityUid uid, [NotNullWhen(true)] out IdCardComponent? idCard)
+        public bool TryGetIdCardSlot(EntityUid uid, [NotNullWhen(true)] out IdCardComponent? idCard)
         {
             idCard = null;
             return EntityManager.TryGetComponent(uid, out InventoryComponent? inventoryComponent) &&
