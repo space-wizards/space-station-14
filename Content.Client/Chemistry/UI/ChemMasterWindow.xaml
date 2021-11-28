@@ -1,4 +1,4 @@
-﻿<SS14Window xmlns="https://spacestation14.io"
+<SS14Window xmlns="https://spacestation14.io"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
             MinSize="400 525"
@@ -72,6 +72,15 @@
                     <!-- Packaging Info -->
                     <BoxContainer Orientation="Vertical"
                                   HorizontalExpand="True">
+                        <BoxContainer Orientation="Horizontal">
+                            <!-- Pills Type Buttons -->
+                            <Label Text="{Loc 'chem-master-window-pill-type-label'}"/>
+                            <Control HorizontalExpand="True"
+                                     MinSize="50 0"></Control>
+                            <GridContainer Name="Grid" Columns="10">
+                                <!-- Pills type buttons are generated in the code -->
+                            </GridContainer>
+                        </BoxContainer>
                         <BoxContainer Orientation="Horizontal">
                             <Label Text="{Loc 'chem-master-window-pills-label'}" />
                             <Control HorizontalExpand="True"

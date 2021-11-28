@@ -2,6 +2,7 @@ using System;
 using Content.Shared.Chemistry;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -21,8 +22,6 @@ namespace Content.Client.Chemistry.Visualizers
         {
             base.OnChangeData(component);
 
-            if (_maxFillLevels <= 0 || _fillBaseName == null) return;
-
             if (!component.TryGetData(SolutionContainerVisuals.VisualState,
                 out SolutionContainerVisualState state)) return;
 
@@ -34,6 +33,8 @@ namespace Content.Client.Chemistry.Visualizers
 
             if (closestFillSprite > 0)
             {
+                if (_fillBaseName == null) return;
+
                 sprite.LayerSetVisible(fillLayer, true);
 
                 var stateName = _fillBaseName + closestFillSprite;

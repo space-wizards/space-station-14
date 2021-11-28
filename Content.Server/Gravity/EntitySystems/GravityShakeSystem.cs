@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Server.Camera;
 using Content.Shared.Gravity;
 using Robust.Server.Player;
@@ -25,7 +25,7 @@ namespace Content.Server.Gravity.EntitySystems
         private const float GravityKick = 100.0f;
         private const uint ShakeTimes = 10;
 
-        private float _internalTimer = 0.0f;
+        private float _internalTimer;
 
         public override void Update(float frameTime)
         {
@@ -77,7 +77,7 @@ namespace Content.Server.Gravity.EntitySystems
 
         private void ShakeGrid(GridId gridId)
         {
-            foreach (var player in _playerManager.GetAllPlayers())
+            foreach (var player in _playerManager.Sessions)
             {
                 if (player.AttachedEntity == null
                     || player.AttachedEntity.Transform.GridID != gridId

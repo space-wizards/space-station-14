@@ -65,8 +65,8 @@ namespace Content.Server.Nutrition.Components
             {
                 return false;
             }
-
-            if (!eventArgs.Using.TryGetComponent(out UtensilComponent? utensil) || !utensil.HasType(UtensilType.Knife))
+            
+            if (!eventArgs.Using.TryGetComponent(out UtensilComponent? utensil) || (utensil.Types & UtensilType.Knife) == 0)
             {
                 return false;
             }

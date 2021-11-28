@@ -78,7 +78,7 @@ namespace Content.Server.Verbs.Commands
                 verbs.TryGetValue(key, out var vset) &&
                 vset.Any())
             {
-                verbSystem.ExecuteVerb(vset.First());
+                verbSystem.ExecuteVerb(vset.First(), playerEntity.Uid, target.Uid, forced: true);
                 shell.WriteLine(Loc.GetString("invoke-verb-command-success", ("verb", verbName), ("target", target), ("player", playerEntity)));
                 return;
             }
@@ -89,7 +89,7 @@ namespace Content.Server.Verbs.Commands
                 {
                     if (verb.Text.ToLowerInvariant() == verbName)
                     {
-                        verbSystem.ExecuteVerb(verb);
+                        verbSystem.ExecuteVerb(verb, playerEntity.Uid, target.Uid, forced: true);
                         shell.WriteLine(Loc.GetString("invoke-verb-command-success", ("verb", verb.Text), ("target", target), ("player", playerEntity)));
                         return;
                     }

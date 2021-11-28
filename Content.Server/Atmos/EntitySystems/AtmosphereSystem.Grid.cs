@@ -257,7 +257,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!mapGrid.TryGetTileRef(tile, out var tileRef))
                 return;
 
-            tileRef.PryTile(_mapManager, _tileDefinitionManager, EntityManager);
+            tileRef.PryTile(_mapManager, _tileDefinitionManager, EntityManager, _robustRandom);
         }
 
         #endregion

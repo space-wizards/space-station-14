@@ -2,16 +2,11 @@
 using Content.Server.Cleanable;
 using Content.Server.Coordinates.Helpers;
 using Content.Server.Decals;
-using Content.Server.GameObjects.Components;
-using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Decals;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Chemistry.TileReactions
@@ -19,6 +14,10 @@ namespace Content.Server.Chemistry.TileReactions
     [DataDefinition]
     public class CleanTileReaction : ITileReaction
     {
+
+        [DataField("cleanAmountMultiplier")]
+        public float CleanAmountMultiplier { get; private set; } = 1.0f;
+
         FixedPoint2 ITileReaction.TileReact(TileRef tile, ReagentPrototype reagent, FixedPoint2 reactVolume)
         {
             var entities = tile.GetEntitiesInTileFast().ToArray();
@@ -27,7 +26,7 @@ namespace Content.Server.Chemistry.TileReactions
             {
                 if (entity.TryGetComponent(out CleanableComponent? cleanable))
                 {
-                    var next = amount + cleanable.CleanAmount;
+                    var next = (amount + cleanable.CleanAmount) * CleanAmountMultiplier;
                     // Nothing left?
                     if (reactVolume < next)
                         break;
@@ -38,7 +37,6 @@ namespace Content.Server.Chemistry.TileReactions
             }
 
             var decalSystem = EntitySystem.Get<DecalSystem>();
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             foreach (var uid in decalSystem.GetDecalsOnTile(tile.GridIndex, tile.GridIndices, x => x.Cleanable))
             {
                 decalSystem.RemoveDecal(tile.GridIndex, uid);

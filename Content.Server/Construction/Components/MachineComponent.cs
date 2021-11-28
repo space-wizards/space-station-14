@@ -88,9 +88,6 @@ namespace Content.Server.Construction.Components
             {
                 var stack = EntitySystem.Get<StackSystem>().Spawn(amount, stackType, Owner.Transform.Coordinates);
 
-                if (stack == null)
-                    throw new Exception($"Couldn't spawn stack of type {stackType}!");
-
                 if (!partContainer.Insert(Owner.EntityManager.GetEntity(stack)))
                     throw new Exception($"Couldn't insert machine material of type {stackType} to machine with prototype {Owner.Prototype?.ID ?? "N/A"}");
             }

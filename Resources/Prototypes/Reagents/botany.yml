@@ -81,23 +81,50 @@
       amount: -6
 
 - type: reagent
-  id: THC
-  name: THC
-  desc: The main psychoactive compound in cannabis.
-  color: "#808080"
-  physicalDesc: crystalline
+  id: Ammonia
+  name: ammonia
+  desc: An effective fertilizer which is better than what is available to the botanist initially, though it isn't as powerful as Diethylamine
+  physicalDesc: pungent
+  color: "#77b58e"
+  boilingPoint: -33.0
+  meltingPoint: -77.7
   plantMetabolism:
-    - !type:PlantAdjustNutrition
-      amount: -5
-    - !type:PlantAdjustHealth
-      amount: -1
+  - !type:PlantAdjustNutrition
+    amount: 1
+  - !type:PlantAdjustHealth
+    amount: 0.5
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Caustic: 1
 
 - type: reagent
-  id: Nicotine
-  name: Nicotine
-  desc: Dangerous and highly addictive.
-  color: "#C0C0C0"
-  physicalDesc: strong smelling
+  id: Diethylamine
+  name: diethylamine
+  desc: A very potent fertilizer.
+  physicalDesc: strong-smelling
+  color: "#a1000b"
+  boilingPoint: 55.5
+  meltingPoint: -50.0
   plantMetabolism:
-    - !type:PlantAdjustHealth
-      amount: -5
+  - !type:PlantAdjustNutrition
+    amount: 0.1
+  - !type:PlantAdjustPests
+    prob: 0.1
+    amount: -1
+  - !type:PlantAdjustHealth
+    amount: 0.1
+  - !type:PlantAffectGrowth
+    prob: 0.2
+    amount: 1
+  - !type:PlantDiethylamine {}
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Caustic: 1

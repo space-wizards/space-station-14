@@ -501,7 +501,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
         public void UpdateVisualState(DisposalUnitComponent component, bool flush)
         {
-            if (!component.Owner.TryGetComponent(out SharedAppearanceComponent? appearance))
+            if (!component.Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
                 return;
             }

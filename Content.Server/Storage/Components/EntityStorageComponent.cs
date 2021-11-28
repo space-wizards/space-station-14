@@ -18,7 +18,6 @@ using Content.Shared.Storage;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
 using Content.Shared.Verbs;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;

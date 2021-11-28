@@ -1,8 +1,6 @@
 - type: job
   id: Scientist
   name: "scientist"
-  positions: 3
-  spawnPositions: 2
   startingGear: ScientistGear
   departments:
   - Science

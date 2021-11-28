@@ -4,7 +4,6 @@ using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Smoking;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.Chemistry.Components
@@ -14,7 +13,7 @@ namespace Content.Server.Chemistry.Components
     public class SmokeSolutionAreaEffectComponent : SolutionAreaEffectComponent
     {
         public override string Name => "SmokeSolutionAreaEffect";
-        public new const string SolutionName = "smoke";
+        public new const string SolutionName = "solutionArea";
 
         protected override void UpdateVisuals()
         {
@@ -37,7 +36,7 @@ namespace Content.Server.Chemistry.Components
                 internals.AreInternalsWorking())
                 return;
 
-            var chemistry = EntitySystem.Get<ChemistrySystem>();
+            var chemistry = EntitySystem.Get<ReactiveSystem>();
             var cloneSolution = solution.Clone();
             var transferAmount = FixedPoint2.Min(cloneSolution.TotalVolume * solutionFraction, bloodstream.EmptyVolume);
             var transferSolution = cloneSolution.SplitSolution(transferAmount);

@@ -26,9 +26,13 @@
   id: ClothingHeadHardsuitBase
   name: base hardsuit helmet
   components:
+  - type: Clothing
+    size: 15
   - type: PressureProtection
-    highPressureMultiplier: 0.5
+    highPressureMultiplier: 0.3
     lowPressureMultiplier: 100
+  - type: TemperatureProtection
+    coefficient: 0.1
   - type: Armor
     modifiers:
       coefficients:

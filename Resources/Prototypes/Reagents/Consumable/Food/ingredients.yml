@@ -100,3 +100,14 @@
       effects:
       - !type:SatiateHunger
         factor: 1
+
+- type: reagent
+  id: Oil
+  name: oil
+  desc: Used by chefs to cook.
+  physicalDesc: oily
+  color: "#b67823"
+  boilingPoint: 300.0
+  meltingPoint: -16.0
+  tileReactions:
+  - !type:FlammableTileReaction {}

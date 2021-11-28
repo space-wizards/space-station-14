@@ -11,6 +11,7 @@ using Content.Shared.Morgue;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Standing;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -131,9 +132,7 @@ namespace Content.Server.Morgue.Components
 
         SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)
         {
-            var mind = victim.PlayerSession()?.ContentData()?.Mind;
-
-            if (mind != null)
+            if (victim.TryGetComponent(out ActorComponent? actor) && actor.PlayerSession.ContentData()?.Mind is {} mind)
             {
                 EntitySystem.Get<GameTicker>().OnGhostAttempt(mind, false);
                 mind.OwnedEntity?.PopupMessage(Loc.GetString("crematorium-entity-storage-component-suicide-message"));

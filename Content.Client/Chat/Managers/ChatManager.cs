@@ -4,12 +4,14 @@ using System.Linq;
 using Content.Client.Administration.Managers;
 using Content.Client.Chat.UI;
 using Content.Client.Ghost;
+using Content.Client.Viewport;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Robust.Client.Console;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
+using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Configuration;
@@ -94,6 +96,7 @@ namespace Content.Client.Chat.Managers
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IClientAdminManager _adminMgr = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] private readonly IStateManager _stateManager = default!;
 
         /// <summary>
         /// Current chat box control. This can be modified, so do not depend on saving a reference to this.
@@ -133,6 +136,7 @@ namespace Content.Client.Chat.Managers
             LayoutContainer.SetAnchorPreset(_speechBubbleRoot, LayoutContainer.LayoutPreset.Wide);
             _userInterfaceManager.StateRoot.AddChild(_speechBubbleRoot);
             _speechBubbleRoot.SetPositionFirst();
+            _stateManager.OnStateChanged += _ => UpdateChannelPermissions();
         }
 
         public void PostInject()
@@ -188,19 +192,21 @@ namespace Content.Client.Chat.Managers
             // can always hear server (nobody can actually send server messages).
             FilterableChannels |= ChatChannel.Server;
 
-            // can always hear local / radio / emote
-            // todo: this makes no sense the lobby exists fix this.
-            FilterableChannels |= ChatChannel.Local;
-            FilterableChannels |= ChatChannel.Radio;
-            FilterableChannels |= ChatChannel.Emotes;
-
-            // Can only send local / radio / emote when attached to a non-ghost entity.
-            // TODO: this logic is iffy (checking if controlling something that's NOT a ghost), is there a better way to check this?
-            if (!IsGhost)
+            if (_stateManager.CurrentState is GameScreenBase)
             {
-                SelectableChannels |= ChatSelectChannel.Local;
-                SelectableChannels |= ChatSelectChannel.Radio;
-                SelectableChannels |= ChatSelectChannel.Emotes;
+                // can always hear local / radio / emote when in the game
+                FilterableChannels |= ChatChannel.Local;
+                FilterableChannels |= ChatChannel.Radio;
+                FilterableChannels |= ChatChannel.Emotes;
+
+                // Can only send local / radio / emote when attached to a non-ghost entity.
+                // TODO: this logic is iffy (checking if controlling something that's NOT a ghost), is there a better way to check this?
+                if (!IsGhost)
+                {
+                    SelectableChannels |= ChatSelectChannel.Local;
+                    SelectableChannels |= ChatSelectChannel.Radio;
+                    SelectableChannels |= ChatSelectChannel.Emotes;
+                }
             }
 
             // Only ghosts and admins can send / see deadchat.
@@ -363,19 +369,22 @@ namespace Content.Client.Chat.Managers
         private void OnChatMessage(MsgChatMessage msg)
         {
             // Log all incoming chat to repopulate when filter is un-toggled
-            var storedMessage = new StoredChatMessage(msg);
-            _history.Add(storedMessage);
-            MessageAdded?.Invoke(storedMessage);
-
-            if (!storedMessage.Read)
+            if (!msg.HideChat)
             {
-                Logger.Debug($"Message filtered: {storedMessage.Channel}: {storedMessage.Message}");
-                if (!_unreadMessages.TryGetValue(msg.Channel, out var count))
-                    count = 0;
+                var storedMessage = new StoredChatMessage(msg);
+                _history.Add(storedMessage);
+                MessageAdded?.Invoke(storedMessage);
 
-                count += 1;
-                _unreadMessages[msg.Channel] = count;
-                UnreadMessageCountsUpdated?.Invoke();
+                if (!storedMessage.Read)
+                {
+                    Logger.Debug($"Message filtered: {storedMessage.Channel}: {storedMessage.Message}");
+                    if (!_unreadMessages.TryGetValue(msg.Channel, out var count))
+                        count = 0;
+
+                    count += 1;
+                    _unreadMessages[msg.Channel] = count;
+                    UnreadMessageCountsUpdated?.Invoke();
+                }
             }
 
             // Local messages that have an entity attached get a speech bubble.

@@ -17,11 +17,18 @@ namespace Content.Server.Players
         public NetUserId UserId { get; }
 
         /// <summary>
+        ///     This is a backup copy of the player name stored on connection.
+        ///     This is useful in the event the player disconnects.
+        /// </summary>
+        [ViewVariables]
+        public string Name { get; }
+
+        /// <summary>
         ///     The currently occupied mind of the player owning this data.
         ///     DO NOT DIRECTLY SET THIS UNLESS YOU KNOW WHAT YOU'RE DOING.
         /// </summary>
         [ViewVariables]
-        public Mind.Mind? Mind { get; set; }
+        public Mind.Mind? Mind { get; private set; }
 
         /// <summary>
         ///     If true, the player is an admin and they explicitly de-adminned mid-game,
@@ -32,13 +39,22 @@ namespace Content.Server.Players
         public void WipeMind()
         {
             Mind?.TransferTo(null);
-            Mind?.RemoveOwningPlayer();
-            Mind = null;
+            // This will ensure Mind == null
+            Mind?.ChangeOwningPlayer(null);
         }
 
-        public PlayerData(NetUserId userId)
+        /// <summary>
+        /// Called from Mind.ChangeOwningPlayer *and nowhere else.*
+        /// </summary>
+        public void UpdateMindFromMindChangeOwningPlayer(Mind.Mind? mind)
+        {
+            Mind = mind;
+        }
+
+        public PlayerData(NetUserId userId, string name)
         {
             UserId = userId;
+            Name = name;
         }
     }
 

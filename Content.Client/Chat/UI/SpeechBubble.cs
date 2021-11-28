@@ -88,19 +88,6 @@ namespace Content.Client.Chat.UI
 
             _timeLeft -= args.DeltaSeconds;
 
-            if (_timeLeft <= FadeTime)
-            {
-                // Update alpha if we're fading.
-                Modulate = Color.White.WithAlpha(_timeLeft / FadeTime);
-            }
-
-            if (_senderEntity.Deleted || _timeLeft <= 0)
-            {
-                // Timer spawn to prevent concurrent modification exception.
-                Timer.Spawn(0, Die);
-                return;
-            }
-
             // Lerp to our new vertical offset if it's been modified.
             if (MathHelper.CloseToPercent(_verticalOffsetAchieved - VerticalOffset, 0, 0.1))
             {
@@ -112,7 +99,28 @@ namespace Content.Client.Chat.UI
             }
 
             if (!_senderEntity.Transform.Coordinates.IsValid(_senderEntity.EntityManager))
+            {
+                Modulate = Color.White.WithAlpha(0);
                 return;
+            }
+
+            if (_timeLeft <= FadeTime)
+            {
+                // Update alpha if we're fading.
+                Modulate = Color.White.WithAlpha(_timeLeft / FadeTime);
+            }
+            else
+            {
+                // Make opaque otherwise, because it might have been hidden before
+                Modulate = Color.White;
+            }
+
+            if (_senderEntity.Deleted || _timeLeft <= 0)
+            {
+                // Timer spawn to prevent concurrent modification exception.
+                Timer.Spawn(0, Die);
+                return;
+            }
 
             var worldPos = _senderEntity.Transform.WorldPosition;
             var scale = _eyeManager.MainViewport.GetRenderScale();
