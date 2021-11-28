@@ -9,6 +9,7 @@ using Content.Server.Cooldown;
 using Content.Server.Weapon.Melee.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Damage;
+using Content.Shared.Database;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Physics;

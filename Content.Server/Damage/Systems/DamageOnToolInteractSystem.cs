@@ -3,6 +3,7 @@ using Content.Server.Damage.Components;
 using Content.Server.Tools.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Damage;
+using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;

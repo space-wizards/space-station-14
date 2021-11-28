@@ -2,6 +2,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Damage.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Damage;
+using Content.Shared.Database;
 using Content.Shared.Throwing;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -25,7 +26,7 @@ namespace Content.Server.Damage.Systems
             if (dmg == null)
                 return;
 
-            _logSystem.Add(LogType.Landed, $"{component.Owner} received {dmg.Total} damage from landing"); 
+            _logSystem.Add(LogType.Landed, $"{component.Owner} received {dmg.Total} damage from landing");
         }
     }
 }

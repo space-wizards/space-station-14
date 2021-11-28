@@ -4,6 +4,7 @@ using Content.Server.Projectiles.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
 using Content.Shared.Damage;
+using Content.Shared.Database;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;

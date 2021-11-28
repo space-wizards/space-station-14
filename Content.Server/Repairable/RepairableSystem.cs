@@ -3,6 +3,7 @@ using Content.Server.Tools;
 using Content.Server.Tools.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Damage;
+using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Tools.Components;

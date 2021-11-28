@@ -14,6 +14,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.ViewVariables;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 
 namespace Content.Shared.Damage
 {

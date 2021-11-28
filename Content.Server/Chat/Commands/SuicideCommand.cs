@@ -11,6 +11,7 @@ using Content.Server.Popups;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Database;
 using Content.Shared.Popups;
 using Robust.Server.Player;
 using Robust.Shared.Console;
