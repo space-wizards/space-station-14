@@ -13,18 +13,60 @@ namespace Content.Shared.Chemistry.Reaction
 {
     public abstract class SharedChemicalReactionSystem : EntitySystem
     {
-        private IEnumerable<ReactionPrototype> _reactions = default!;
 
+        /// <summary>
+        /// 
+        /// </summary>
         private const int MaxReactionIterations = 20;
 
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] protected readonly SharedAdminLogSystem _logSystem = default!;
+        [Dependency] protected readonly SharedAdminLogSystem LogSystem = default!;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private IDictionary<string, List<ReactionPrototype>> _reactions = default!;
 
         public override void Initialize()
         {
             base.Initialize();
-            _reactions = _prototypeManager.EnumeratePrototypes<ReactionPrototype>();
+            InitializeReactions();
+        }
+
+        /// <summary>
+        ///     Handles building the reaction cache.
+        /// </summary>
+        private void InitializeReactions()
+        {
+            _reactions = new Dictionary<string, List<ReactionPrototype>>();
+
+            var reactions = _prototypeManager.EnumeratePrototypes<ReactionPrototype>();
+            foreach(var reaction in reactions)
+            {
+                CacheReaction(reaction);
+            }
+        }
+
+        /// <summary>
+        ///     Caches a reaction by its first required reagent.
+        ///     Used to build the reaction cache.
+        /// </summary>
+        /// <param name="reaction">A reaction prototype to cache.</param>
+        private void CacheReaction(ReactionPrototype reaction)
+        {
+            var reagents = reaction.Reactants.Keys;
+            foreach(var reagent in reagents)
+            {
+                if(!_reactions.TryGetValue(reagent, out var cache))
+                {
+                    cache = new List<ReactionPrototype>();
+                    _reactions.Add(reagent, cache);
+                }
+
+                cache.Add(reaction);
+                return; // Only need to cache based on the first reagent.
+            }
         }
 
         /// <summary>
@@ -117,7 +159,7 @@ namespace Content.Shared.Chemistry.Reaction
                 if (effect.ShouldLog)
                 {
                     var entity = EntityManager.GetEntity(args.SolutionEntity);
-                    _logSystem.Add(LogType.ReagentEffect, effect.LogImpact,
+                    LogSystem.Add(LogType.ReagentEffect, effect.LogImpact,
                         $"Reaction effect {effect.GetType().Name} of reaction ${reaction.ID:reaction} applied on entity {entity} at {entity.Transform.Coordinates}");
                 }
 
@@ -132,15 +174,20 @@ namespace Content.Shared.Chemistry.Reaction
         /// </summary>
         private Solution ProcessReactions(Solution solution, EntityUid ownerUid)
         {
-            //TODO: make a hashmap at startup and then look up reagents in the contents for a reaction
             var overallProducts = new Solution();
-            foreach (var reaction in _reactions)
+            foreach(var reactant in solution.Contents)
             {
-                if (CanReact(solution, reaction, out var unitReactions))
+                if (!_reactions.TryGetValue(reactant.ReagentId, out var reactions))
+                    continue;
+
+                foreach(var reaction in reactions)
                 {
+                    if (!CanReact(solution, reaction, out var unitReactions))
+                        continue;
+
                     var reactionProducts = PerformReaction(solution, ownerUid, reaction, unitReactions);
                     overallProducts.AddSolution(reactionProducts);
-                    break;
+                    return overallProducts;
                 }
             }
             return overallProducts;
@@ -188,5 +235,11 @@ namespace Content.Shared.Chemistry.Reaction
             }
             Logger.Error($"{nameof(Solution)} {ownerUid} could not finish reacting in under {MaxReactionIterations} loops.");
         }
+    }
+
+    public readonly struct ReactionID
+    {
+        public readonly string ReactionId;
+        public readonly float Priority;
     }
 }
