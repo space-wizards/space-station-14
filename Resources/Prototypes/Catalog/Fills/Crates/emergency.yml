@@ -53,6 +53,8 @@
         amount: 3
       - id: EmergencyOxygenTankFilled
         amount: 3
+      - id: ClothingOuterSuitEmergency
+        amount: 3
 
 - type: entity
   id: CrateEmergencyRadiation

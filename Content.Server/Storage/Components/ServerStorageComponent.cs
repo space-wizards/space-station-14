@@ -14,7 +14,9 @@ using Content.Shared.Item;
 using Content.Shared.Placeable;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
+using Content.Shared.Stacks;
 using Content.Shared.Storage;
+using Content.Shared.Storage.Components;
 using Content.Shared.Whitelist;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -42,6 +44,8 @@ namespace Content.Server.Storage.Components
     [ComponentReference(typeof(IStorageComponent))]
     public class ServerStorageComponent : SharedStorageComponent, IInteractUsing, IUse, IActivate, IStorageComponent, IDestroyAct, IExAct, IAfterInteract
     {
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+
         private const string LoggerName = "Storage";
 
         public Container? Storage;
@@ -87,6 +91,20 @@ namespace Content.Server.Storage.Components
                 _occludesLight = value;
                 if (Storage != null) Storage.OccludesLight = value;
             }
+        }
+
+        private void UpdateStorageVisualization()
+        {
+            if (!_entityManager.TryGetComponent(OwnerUid, out AppearanceComponent appearance))
+                return;
+
+            bool open = SubscribedSessions.Count != 0;
+
+            appearance.SetData(StorageVisuals.Open, open);
+            appearance.SetData(SharedBagOpenVisuals.BagState, open ? SharedBagState.Open : SharedBagState.Closed);
+
+            if (_entityManager.HasComponent<ItemCounterComponent>(OwnerUid))
+                appearance.SetData(StackVisuals.Hide, !open);
         }
 
         private void EnsureInitialCalculated()
@@ -344,9 +362,10 @@ namespace Content.Server.Storage.Components
 
                 session.PlayerStatusChanged += HandlePlayerSessionChangeEvent;
                 SubscribedSessions.Add(session);
-
-                UpdateDoorState();
             }
+
+            if (SubscribedSessions.Count == 1)
+                UpdateStorageVisualization();
         }
 
         /// <summary>
@@ -363,11 +382,12 @@ namespace Content.Server.Storage.Components
 #pragma warning disable 618
                 SendNetworkMessage(new CloseStorageUIMessage(), session.ConnectedClient);
 #pragma warning restore 618
-
-                UpdateDoorState();
             }
 
             CloseNestedInterfaces(session);
+
+            if (SubscribedSessions.Count == 0)
+                UpdateStorageVisualization();
         }
 
         /// <summary>
@@ -407,14 +427,6 @@ namespace Content.Server.Storage.Components
             }
         }
 
-        private void UpdateDoorState()
-        {
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
-            {
-                appearance.SetData(StorageVisuals.Open, SubscribedSessions.Count != 0);
-            }
-        }
-
         protected override void Initialize()
         {
             base.Initialize();
@@ -422,6 +434,7 @@ namespace Content.Server.Storage.Components
             // ReSharper disable once StringLiteralTypo
             Storage = Owner.EnsureContainer<Container>("storagebase");
             Storage.OccludesLight = _occludesLight;
+            UpdateStorageVisualization();
         }
 
         [Obsolete("Component Messages are deprecated, use Entity Events instead.")]

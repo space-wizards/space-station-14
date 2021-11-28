@@ -2,6 +2,7 @@
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Coordinates.Helpers;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
@@ -77,6 +78,9 @@ namespace Content.Server.Chemistry.ReactionEffects
         /// Sound that will get played when this reaction effect occurs.
         /// </summary>
         [DataField("sound", required: true)] private SoundSpecifier _sound = default!;
+
+        public override bool ShouldLog => true;
+        public override LogImpact LogImpact => LogImpact.High;
 
         void ISerializationHooks.AfterDeserialization()
         {

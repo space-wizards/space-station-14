@@ -1,7 +1,6 @@
 - type: job
   id: HeadOfPersonnel
   name: "head of personnel"
-  positions: 1
   startingGear: HoPGear
   departments:
   - Command
