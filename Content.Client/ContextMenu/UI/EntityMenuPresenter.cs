@@ -321,7 +321,7 @@ namespace Content.Client.ContextMenu.UI
         }
 
         /// <summary>
-        ///     Look through a sub-menu and return the first entity.
+        ///     Recursively look through a sub-menu and return the first entity.
         /// </summary>
         private IEntity? GetFirstEntityOrNull(ContextMenuPopup? menu)
         {
@@ -334,8 +334,13 @@ namespace Content.Client.ContextMenu.UI
                     continue;
 
                 if (entityElement.Entity != null)
-                    return entityElement.Entity;
+                {
+                    if (!entityElement.Entity.Deleted)
+                        return entityElement.Entity;
+                    continue;
+                }
 
+                // if the element has no entity, its a group of entities with another attached sub-menu.
                 var entity = GetFirstEntityOrNull(entityElement.SubMenu);
                 if (entity != null)
                     return entity;

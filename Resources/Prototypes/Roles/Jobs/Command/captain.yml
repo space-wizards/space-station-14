@@ -2,7 +2,6 @@
   id: Captain
   name: "captain"
   head: true
-  positions: 1
   startingGear: CaptainGear
   departments:
   - Command
@@ -32,6 +31,7 @@
   - Janitor
   - Theatre
   - Bar
+  - Chemistry
 
 - type: startingGear
   id: CaptainGear

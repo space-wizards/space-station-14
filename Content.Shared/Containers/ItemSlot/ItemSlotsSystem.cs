@@ -1,6 +1,8 @@
 using Content.Shared.ActionBlocker;
+using Content.Shared.Acts;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -10,7 +12,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Player;
-using Robust.Shared.Utility;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
@@ -22,12 +23,13 @@ namespace Content.Shared.Containers.ItemSlots
     public class ItemSlotsSystem : EntitySystem
     {
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            SubscribeLocalEvent<ItemSlotsComponent, ComponentStartup>(OnStartup);
+            SubscribeLocalEvent<ItemSlotsComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<ItemSlotsComponent, ComponentInit>(Oninitialize);
 
             SubscribeLocalEvent<ItemSlotsComponent, InteractUsingEvent>(OnInteractUsing);
@@ -35,6 +37,9 @@ namespace Content.Shared.Containers.ItemSlots
 
             SubscribeLocalEvent<ItemSlotsComponent, GetAlternativeVerbsEvent>(AddEjectVerbs);
             SubscribeLocalEvent<ItemSlotsComponent, GetInteractionVerbsEvent>(AddInteractionVerbsVerbs);
+
+            SubscribeLocalEvent<ItemSlotsComponent, BreakageEventArgs>(OnBreak);
+            SubscribeLocalEvent<ItemSlotsComponent, DestructionEventArgs>(OnBreak);
 
             SubscribeLocalEvent<ItemSlotsComponent, ComponentGetState>(GetItemSlotsState);
             SubscribeLocalEvent<ItemSlotsComponent, ComponentHandleState>(HandleItemSlotsState);
@@ -44,7 +49,7 @@ namespace Content.Shared.Containers.ItemSlots
         /// <summary>
         ///     Spawn in starting items for any item slots that should have one.
         /// </summary>
-        private void OnStartup(EntityUid uid, ItemSlotsComponent itemSlots, ComponentStartup args)
+        private void OnMapInit(EntityUid uid, ItemSlotsComponent itemSlots, MapInitEvent args)
         {
             foreach (var slot in itemSlots.Slots.Values)
             {
@@ -139,7 +144,7 @@ namespace Content.Shared.Containers.ItemSlots
 
             foreach (var slot in itemSlots.Slots.Values)
             {
-                if (!CanInsert(args.UsedUid, slot, swap: true))
+                if (!CanInsert(uid, args.UsedUid, slot, swap: slot.Swap, popup: args.UserUid))
                     continue;
 
                 // Drop the held item onto the floor. Return if the user cannot drop.
@@ -174,7 +179,11 @@ namespace Content.Shared.Containers.ItemSlots
         ///     Check whether a given item can be inserted into a slot. Unless otherwise specified, this will return
         ///     false if the slot is already filled.
         /// </summary>
-        public bool CanInsert(EntityUid uid, ItemSlot slot, bool swap = false)
+        /// <remarks>
+        ///     If a popup entity is given, and if the item slot is set to generate a popup message when it fails to
+        ///     pass the whitelist, then this will generate a popup.
+        /// </remarks>
+        public bool CanInsert(EntityUid uid, EntityUid usedUid, ItemSlot slot, bool swap = false, EntityUid? popup = null)
         {
             if (slot.Locked)
                 return false;
@@ -182,8 +191,12 @@ namespace Content.Shared.Containers.ItemSlots
             if (!swap && slot.HasItem)
                 return false;
 
-            if (slot.Whitelist != null && !slot.Whitelist.IsValid(uid))
+            if (slot.Whitelist != null && !slot.Whitelist.IsValid(usedUid))
+            {
+                if (popup.HasValue && !string.IsNullOrWhiteSpace(slot.WhitelistFailPopup))
+                    _popupSystem.PopupEntity(Loc.GetString(slot.WhitelistFailPopup), uid, Filter.Entities(popup.Value));
                 return false;
+            }
 
             // We should also check ContainerSlot.CanInsert, but that prevents swapping interactions. Given that
             // ContainerSlot.CanInsert gets called when the item is actually inserted anyways, we can just get away with
@@ -212,7 +225,30 @@ namespace Content.Shared.Containers.ItemSlots
         /// <returns>False if failed to insert item</returns>
         public bool TryInsert(EntityUid uid, ItemSlot slot, IEntity item)
         {
-            if (!CanInsert(item.Uid, slot))
+            if (!CanInsert(uid, item.Uid, slot))
+                return false;
+
+            Insert(uid, slot, item);
+            return true;
+        }
+
+        /// <summary>
+        ///     Tries to insert item into a specific slot from an entity's hand.
+        /// </summary>
+        /// <returns>False if failed to insert item</returns>
+        public bool TryInsertFromHand(EntityUid uid, ItemSlot slot, EntityUid user, SharedHandsComponent? hands = null)
+        {
+            if (!Resolve(user, ref hands, false))
+                return false;
+
+            if (!hands.TryGetActiveHeldEntity(out var item))
+                return false;
+
+            if (!CanInsert(uid, item.Uid, slot))
+                return false;
+
+            // hands.Drop(item) checks CanDrop action blocker
+            if (!_actionBlockerSystem.CanInteract(user) && hands.Drop(item))
                 return false;
 
             Insert(uid, slot, item);
@@ -364,7 +400,7 @@ namespace Content.Shared.Containers.ItemSlots
 
             foreach (var slot in itemSlots.Slots.Values)
             {
-                if (!CanInsert(args.Using.Uid, slot))
+                if (!CanInsert(uid, args.Using.Uid, slot))
                     continue;
 
                 var verbSubject = slot.Name != string.Empty
@@ -396,6 +432,18 @@ namespace Content.Shared.Containers.ItemSlots
             }
         }
         #endregion
+
+        /// <summary>
+        ///     Eject items from (some) slots when the entity is destroyed.
+        /// </summary>
+        private void OnBreak(EntityUid uid, ItemSlotsComponent component, EntityEventArgs args)
+        {
+            foreach (var slot in component.Slots.Values)
+            {
+                if (slot.EjectOnBreak && slot.HasItem)
+                    TryEject(uid, slot, out var _);
+            }
+        }
 
         /// <summary>
         ///     Get the contents of some item slot.

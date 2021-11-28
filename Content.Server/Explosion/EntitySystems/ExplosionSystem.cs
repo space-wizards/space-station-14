@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.Administration.Logs;
 using Content.Server.Camera;
 using Content.Server.Explosion.Components;
 using Content.Shared.Acts;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
@@ -48,6 +51,7 @@ namespace Content.Server.Explosion.EntitySystems
         [Dependency] private readonly ActSystem _acts = default!;
         [Dependency] private readonly EffectSystem _effects = default!;
         [Dependency] private readonly TriggerSystem _triggers = default!;
+        [Dependency] private readonly AdminLogSystem _logSystem = default!;
 
         private bool IgnoreExplosivePassable(IEntity e)
         {
@@ -334,6 +338,9 @@ namespace Content.Server.Explosion.EntitySystems
             {
                 return;
             }
+
+            _logSystem.Add(LogType.Damaged, LogImpact.High ,
+                $"Spawned explosion at {epicenter} with range {devastationRange}/{heavyImpactRange}/{lightImpactRange}/{flashRange}");
 
             var maxRange = MathHelper.Max(devastationRange, heavyImpactRange, lightImpactRange, 0);
             var epicenterMapPos = epicenter.ToMapPos(EntityManager);

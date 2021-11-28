@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.Eui;
 using Robust.Shared.Serialization;
 

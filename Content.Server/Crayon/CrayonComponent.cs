@@ -1,8 +1,11 @@
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Server.Administration.Logs;
 using Content.Server.UserInterface;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
 using Content.Shared.Crayon;
+using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
@@ -141,6 +144,7 @@ namespace Content.Server.Crayon
             // Decrease "Ammo"
             Charges--;
             Dirty();
+            EntitySystem.Get<AdminLogSystem>().Add(LogType.CrayonDraw, $"{eventArgs.User:player} drew a {_color:color} {SelectedState}");
             return true;
         }
 

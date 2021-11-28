@@ -2,6 +2,8 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
@@ -34,6 +36,7 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly SharedVerbSystem _verbSystem = default!;
+        [Dependency] private readonly SharedAdminLogSystem _adminLogSystem = default!;
 
         public const float InteractionRange = 2;
         public const float InteractionRangeSquared = InteractionRange * InteractionRange;
@@ -454,13 +457,17 @@ namespace Content.Shared.Interaction
             var activateMsg = new ActivateInWorldEvent(user, used);
             RaiseLocalEvent(used.Uid, activateMsg);
             if (activateMsg.Handled)
+            {
+                _adminLogSystem.Add(LogType.InteractActivate, LogImpact.Low, $"{user} activated {used}");
                 return;
+            }
 
             if (!used.TryGetComponent(out IActivate? activateComp))
                 return;
 
             var activateEventArgs = new ActivateEventArgs(user, used);
             activateComp.Activate(activateEventArgs);
+            _adminLogSystem.Add(LogType.InteractActivate, LogImpact.Low, $"{user} activated {used}"); // No way to check success.
         }
         #endregion
 
@@ -538,18 +545,6 @@ namespace Content.Shared.Interaction
 
         #region Throw
         /// <summary>
-        /// Activates the Throw behavior of an object
-        /// Verifies that the user is capable of doing the throw interaction first
-        /// </summary>
-        public bool TryThrowInteraction(IEntity user, IEntity item)
-        {
-            if (user == null || item == null || !_actionBlockerSystem.CanThrow(user.Uid)) return false;
-
-            ThrownInteraction(user, item);
-            return true;
-        }
-
-        /// <summary>
         ///     Calls Thrown on all components that implement the IThrown interface
         ///     on an entity that has been thrown.
         /// </summary>
@@ -558,7 +553,10 @@ namespace Content.Shared.Interaction
             var throwMsg = new ThrownEvent(user, thrown);
             RaiseLocalEvent(thrown.Uid, throwMsg);
             if (throwMsg.Handled)
+            {
+                _adminLogSystem.Add(LogType.Throw, LogImpact.Low,$"{user} threw {thrown}");
                 return;
+            }
 
             var comps = thrown.GetAllComponents<IThrown>().ToList();
             var args = new ThrownEventArgs(user);
@@ -568,6 +566,7 @@ namespace Content.Shared.Interaction
             {
                 comp.Thrown(args);
             }
+            _adminLogSystem.Add(LogType.Throw, LogImpact.Low,$"{user} threw {thrown}");
         }
         #endregion
 
@@ -658,11 +657,11 @@ namespace Content.Shared.Interaction
         /// Activates the Dropped behavior of an object
         /// Verifies that the user is capable of doing the drop interaction first
         /// </summary>
-        public bool TryDroppedInteraction(IEntity user, IEntity item, bool intentional)
+        public bool TryDroppedInteraction(IEntity user, IEntity item)
         {
             if (user == null || item == null || !_actionBlockerSystem.CanDrop(user.Uid)) return false;
 
-            DroppedInteraction(user, item, intentional);
+            DroppedInteraction(user, item);
             return true;
         }
 
@@ -670,22 +669,26 @@ namespace Content.Shared.Interaction
         ///     Calls Dropped on all components that implement the IDropped interface
         ///     on an entity that has been dropped.
         /// </summary>
-        public void DroppedInteraction(IEntity user, IEntity item, bool intentional)
+        public void DroppedInteraction(IEntity user, IEntity item)
         {
-            var dropMsg = new DroppedEvent(user.Uid, item.Uid, intentional);
+            var dropMsg = new DroppedEvent(user.Uid, item.Uid);
             RaiseLocalEvent(item.Uid, dropMsg);
             if (dropMsg.Handled)
+            {
+                _adminLogSystem.Add(LogType.Drop, LogImpact.Low, $"{user} dropped {item}");
                 return;
+            }
 
-            item.Transform.LocalRotation = intentional ? Angle.Zero : (_random.Next(0, 100) / 100f) * MathHelper.TwoPi;
+            item.Transform.LocalRotation = Angle.Zero;
 
             var comps = item.GetAllComponents<IDropped>().ToList();
 
             // Call Land on all components that implement the interface
             foreach (var comp in comps)
             {
-                comp.Dropped(new DroppedEventArgs(user, intentional));
+                comp.Dropped(new DroppedEventArgs(user));
             }
+            _adminLogSystem.Add(LogType.Drop, LogImpact.Low, $"{user} dropped {item}");
         }
         #endregion
 

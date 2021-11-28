@@ -1,6 +1,9 @@
+using Content.Server.Administration.Logs;
 using Content.Server.Tools;
 using Content.Server.Tools.Components;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Damage;
+using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Tools.Components;
@@ -14,6 +17,7 @@ namespace Content.Server.Repairable
     {
         [Dependency] private readonly ToolSystem _toolSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly AdminLogSystem _logSystem = default!;
 
         public override void Initialize()
         {
@@ -32,6 +36,7 @@ namespace Content.Server.Repairable
 
             // Repair all damage
             _damageableSystem.SetAllDamage(damageable, 0);
+            _logSystem.Add(LogType.Healed, $"{args.User} repaired ${uid} back to full health");
 
             component.Owner.PopupMessage(args.User,
                 Loc.GetString("comp-repairable-repair",

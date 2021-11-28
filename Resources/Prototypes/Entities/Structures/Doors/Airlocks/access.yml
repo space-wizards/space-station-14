@@ -54,6 +54,14 @@
   components:
   - type: AccessReader
     access: [["Medical"]]
+    
+- type: entity
+  parent: AirlockChemistry
+  id: AirlockChemistryLocked
+  suffix: Chemistry, Locked
+  components:
+  - type: AccessReader
+    access: [["Chemistry"]]
 
 - type: entity
   parent: AirlockScience
@@ -232,6 +240,14 @@
   components:
   - type: AccessReader
     access: [["Medical"]]
+
+- type: entity
+  parent: AirlockMaint
+  id: AirlockMaintChemLocked
+  suffix: Chemistry, Locked
+  components:
+  - type: AccessReader
+    access: [["Chemistry"]]
 
 - type: entity
   parent: AirlockMaint

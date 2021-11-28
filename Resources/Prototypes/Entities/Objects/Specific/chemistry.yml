@@ -231,6 +231,7 @@
     sprite: Objects/Specific/Chemistry/pills.rsi
     state: pill
   - type: Item
+    size: 1
     sprite: Objects/Specific/Chemistry/pills.rsi
   - type: Tag
     tags:
@@ -243,3 +244,23 @@
     solutions:
       food:
         maxVol: 50
+
+- type: entity
+  name: pill canister
+  id: PillCanister
+  parent: BaseItem
+  description: Holds up to 12 pills.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/pills_canister.rsi
+    state: pill_canister
+  - type: Item
+    sprite: Objects/Specific/Chemistry/pills_canister.rsi
+  - type: Storage
+    capacity: 12
+    quickInsert: true
+    areaInsert: true
+    areaInsertRadius: 1
+    whitelist:
+      tags:
+        - Pill

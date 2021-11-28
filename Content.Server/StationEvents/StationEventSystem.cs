@@ -8,6 +8,7 @@ using Content.Server.StationEvents.Events;
 using Content.Shared;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
+using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.StationEvents;
 using JetBrains.Annotations;
@@ -32,7 +33,7 @@ namespace Content.Server.StationEvents
         [Dependency] private readonly IServerNetManager _netManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IConGroupController _conGroupController = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly GameTicker _gameTicker = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
         [Dependency] private readonly AdminLogSystem _adminLog = default!;
@@ -247,7 +248,8 @@ namespace Content.Server.StationEvents
                 return;
             }
 
-            if (_timeUntilNextEvent > 0)
+            // Make sure we only count down when no event is running.
+            if (_timeUntilNextEvent > 0 && CurrentEvent == null)
             {
                 _timeUntilNextEvent -= frameTime;
                 return;
@@ -321,7 +323,7 @@ namespace Content.Server.StationEvents
             // playerCount does a lock so we'll just keep the variable here
             if (!ignoreEarliestStart)
             {
-                currentTime = _gameTiming.CurTime;
+                currentTime = _gameTicker.RoundDuration();
             }
             else
             {

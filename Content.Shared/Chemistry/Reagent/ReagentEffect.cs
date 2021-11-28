@@ -2,6 +2,7 @@
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -30,6 +31,15 @@ namespace Content.Shared.Chemistry.Reagent
         /// </summary>
         [DataField("probability")]
         public float Probability = 1.0f;
+
+        [DataField("logImpact")]
+        public virtual LogImpact LogImpact { get; } = LogImpact.Low;
+
+        /// <summary>
+        ///     Should this reagent effect log at all?
+        /// </summary>
+        [DataField("shouldLog")]
+        public virtual bool ShouldLog { get; } = false;
 
         public abstract void Effect(ReagentEffectArgs args);
     }

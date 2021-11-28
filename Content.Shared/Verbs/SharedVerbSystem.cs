@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -73,17 +74,26 @@ namespace Content.Shared.Verbs
             }
         }
 
-        public void LogVerb(Verb verb, EntityUid user, EntityUid target, bool forced)
+        public void LogVerb(Verb verb, EntityUid userUid, EntityUid targetUid, bool forced)
         {
             // first get the held item. again.
-            EntityUid? used = null;
-            if (EntityManager.TryGetComponent(user, out SharedHandsComponent? hands))
+            EntityUid? usedUid = null;
+            if (EntityManager.TryGetComponent(userUid, out SharedHandsComponent? hands))
             {
                 hands.TryGetActiveHeldEntity(out var useEntityd);
-                used = useEntityd?.Uid;
-                if (used != null && EntityManager.TryGetComponent(used.Value, out HandVirtualItemComponent? pull))
-                    used = pull.BlockingEntity;
+                usedUid = useEntityd?.Uid;
+                if (usedUid != null && EntityManager.TryGetComponent(usedUid.Value, out HandVirtualItemComponent? pull))
+                    usedUid = pull.BlockingEntity;
             }
+
+            // get all the entities
+            if (!EntityManager.TryGetEntity(userUid, out var user) ||
+                !EntityManager.TryGetEntity(targetUid, out var target))
+                return;
+
+            IEntity? used = null;
+            if (usedUid != null)
+                EntityManager.TryGetEntity(usedUid.Value, out used);
 
             // then prepare the basic log message body
             var verbText = $"{verb.Category?.Text} {verb.Text}".Trim();

@@ -74,11 +74,11 @@
     contents:
       - id: BoxSurvival
 
-#- type: entity
-#  abstract: true
-#  parent: ClothingBackpackDuffelChemistry
-#  id: ClothingBackpackDuffelChemistryFilled
-#  components:
-#  - type: StorageFill
-#    contents:
-#      - id: BoxSurvival
+- type: entity
+  abstract: true
+  parent: ClothingBackpackDuffelChemistry
+  id: ClothingBackpackDuffelChemistryFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvival
