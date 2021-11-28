@@ -373,6 +373,9 @@ namespace Content.Server.Chemistry.Components
                 }
             }
 
+            if (_bufferSolution?.Contents.Count == 0)
+                _label = "";
+
             UpdateUserInterface();
         }
 
