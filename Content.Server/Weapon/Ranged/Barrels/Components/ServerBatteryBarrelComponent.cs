@@ -20,7 +20,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         public override string Name => "BatteryBarrel";
 
         [DataField("cellSlot", required: true)]
-        public ItemSlot CellSlot = default!;
+        public ItemSlot CellSlot = new();
 
         // The minimum change we need before we can fire
         [DataField("lowerChargeLimit")]
