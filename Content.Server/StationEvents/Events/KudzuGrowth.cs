@@ -31,8 +31,6 @@ public class KudzuGrowth : StationEvent
     // Give crew at least 9 minutes to either have it gone, or to suffer another event. Kudzu is not actually required to be dead for another event to roll.
     protected override float EndAfter => 60*4;
 
-    private StationId _targetStation;
-
     private IEntity? _targetGrid;
 
     private Vector2i _targetTile;
@@ -44,7 +42,7 @@ public class KudzuGrowth : StationEvent
         base.Startup();
 
         // Pick a place to plant the kudzu.
-        if (TryFindRandomTile(out _targetTile, out _targetStation, out _targetGrid, out _targetCoords, _robustRandom, _entityManager))
+        if (TryFindRandomTile(out _targetTile, out _, out _targetGrid, out _targetCoords, _robustRandom, _entityManager))
         {
             _entityManager.SpawnEntity("Kudzu", _targetCoords);
             Logger.InfoS("stationevents", $"Spawning a Kudzu at {_targetTile} on {_targetGrid}");
