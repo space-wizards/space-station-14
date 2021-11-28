@@ -51,7 +51,6 @@ namespace Content.Server.Storage.Components
         public Container? Storage;
         
         private readonly Dictionary<IEntity, int> _sizeCache = new();
-        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         [DataField("occludesLight")]
         private bool _occludesLight = true;
