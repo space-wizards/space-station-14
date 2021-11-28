@@ -120,10 +120,13 @@ namespace Content.Shared.Chemistry.Reagent
                 if (!plantMetabolizable.ShouldApply(args, random))
                     continue;
 
-                var entity = entMan.GetEntity(args.SolutionEntity);
-                EntitySystem.Get<SharedAdminLogSystem>().Add(LogType.ReagentEffect, LogImpact.Low,
-                    $"Plant metabolism effect {plantMetabolizable.GetType().Name:effect} of reagent {ID} applied on entity {entity} at {entity.Transform.Coordinates}");
-                plantMetabolizable.Effect(args);
+                if (plantMetabolizable.ShouldLog)
+                {
+                    var entity = entMan.GetEntity(args.SolutionEntity);
+                    EntitySystem.Get<SharedAdminLogSystem>().Add(LogType.ReagentEffect, plantMetabolizable.LogImpact,
+                        $"Plant metabolism effect {plantMetabolizable.GetType().Name:effect} of reagent {ID} applied on entity {entity} at {entity.Transform.Coordinates}");
+                    plantMetabolizable.Effect(args);
+                }
             }
         }
     }

@@ -23,6 +23,7 @@
     actions:
       - actionType: ToggleLight
   - type: PowerCellSlot
+    startingCellType: PowerCellSmallHigh
 
 - type: entity
   parent: ClothingHeadHatHardhatBase

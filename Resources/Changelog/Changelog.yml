@@ -1,84 +1,4 @@
 Entries:
-- author: SweptWasTaken
-  changes:
-  - {message: 'Names for tanks, solar stuff and more are fixed.', type: Fix}
-  id: 163
-  time: '2021-04-16T05:28:09.0000000+00:00'
-- author: MehimoNemo
-  changes:
-  - {message: Thrown PDAs and IDs now open doors. Try it out!, type: Add}
-  id: 164
-  time: '2021-04-18T08:03:31.0000000+00:00'
-- author: PJB
-  changes:
-  - {message: Improved shadow edges somewhat., type: Tweak}
-  id: 165
-  time: '2021-04-19T07:49:27.579650+00:00'
-- author: PJB
-  changes:
-  - {message: The game viewport is now a limited size (21x15 tiles)., type: Add}
-  - {message: 'As part of this, the game viewport is now scaled to match your window
-      size.', type: Add}
-  - {message: Scaling is quite intelligent and will use integer-scale nearest neighbor
-      where applicable. So people playing on fullscreen 1080p/1440p monitors will
-      experience perfect crisp graphics., type: Add}
-  id: 166
-  time: '2021-04-19T07:52:40.0000000+00:00'
-- author: chairbender and ike709
-  changes:
-  - {message: Completely redid the chatbox., type: Add}
-  - {message: Chat can now be resized (Unless in the lobby)., type: Add}
-  - {message: Chat can now be filtered., type: Add}
-  - {message: 'To talk in a channel, you now switch to it rather than using a prefix.',
-    type: Tweak}
-  - {message: The chat channel focus keys have changed. Check keybinds for a list.,
-    type: Tweak}
-  - {message: Added channel focus keys for radio and in-character., type: Add}
-  - {message: 'Tab and Ctrl+Tab will cycle channels, as an alternative to focus hotkeys.',
-    type: Add}
-  id: 167
-  time: '2021-04-20T23:39:39.0000000+00:00'
-- author: Visne
-  changes:
-  - {message: Added advertising to vending machines, type: Add}
-  id: 168
-  time: '2021-04-21T10:00:15.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix footstep sounds exception, type: Fix}
-  id: 169
-  time: '2021-04-21T10:14:40.0000000+00:00'
-- author: TaralGit
-  changes:
-  - {message: (Re)Added the machete and the baseball bat (melee weapons)., type: Add}
-  - {message: Added inhands for the beaker and large beaker., type: Add}
-  - {message: minor changes to the laser gun sprite and mag-unshaded files., type: Fix}
-  - {message: 'reworked the inhands for the homemade pistol, clarissa, giskard  and
-      mk58 (both variants),', type: Fix}
-  - {message: nerfed melee weapons, type: Fix}
-  id: 170
-  time: '2021-04-28T21:14:28.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: 'Adds a ton of food, ingredients and condiments from different codebases',
-    type: Add}
-  - {message: Removes some old/duplicate food items, type: Remove}
-  - {message: You will never bite into food only to find it's empty again, type: Fix}
-  id: 171
-  time: '2021-05-03T11:17:22.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Chairs and other object will change their direction when you pull them.,
-    type: Tweak}
-  id: 172
-  time: '2021-05-05T03:29:26.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Fixed food wrappers playing the pickup animation when they weren't supposed
-      to., type: Fix}
-  - {message: Fixed bottles and lightbulb glass getting stuck on the player., type: Fix}
-  id: 173
-  time: '2021-05-08T18:27:20.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: Pull-to-location velocity control is more stable. (Won't send items
@@ -2861,3 +2781,75 @@ Entries:
   - {message: Station names are now randomly generated., type: Add}
   id: 664
   time: '2021-11-26T13:54:32.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Added chemistry recipes for creating cheese (40 milk, 5 enzyme), dough
+      (15 flour, 10 water), and cake batter (15 flour, 5 sugar, and 12 eggs or soy
+      milk)', type: Add}
+  - {message: Added more ingredients to the chef's locker, type: Tweak}
+  - {message: 'Several microwave recipes that used to require flour now need dough,
+      batter, or bread slices.', type: Tweak}
+  id: 665
+  time: '2021-11-26T22:50:14.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'NT14 Knightship models have been taken in for a refit, and now have
+      thrusters, gyroscopes and a docking airlock.', type: Add}
+  id: 666
+  time: '2021-11-26T22:50:36.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed cigar case visuals. Can no longer see the cigars when case is
+      closed., type: Fix}
+  id: 667
+  time: '2021-11-27T06:43:19.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Administrators have had an essential command added to their toolset.,
+    type: Add}
+  id: 668
+  time: '2021-11-27T06:43:33.0000000+00:00'
+- author: Pancake
+  changes:
+  - {message: Lanterns and hardhats have been upgraded to starting with Small High-Capacity
+      Power Cells., type: Tweak}
+  id: 669
+  time: '2021-11-27T06:43:38.0000000+00:00'
+- author: artak10t
+  changes:
+  - {message: Added pills types selection in ChemMaster, type: Add}
+  - {message: Added pills canister, type: Add}
+  id: 670
+  time: '2021-11-27T06:44:36.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Acids including fluorosulfuric, polytrinic, and sulfuric now have effects
+      on touch.', type: Add}
+  id: 671
+  time: '2021-11-27T07:31:50.0000000+00:00'
+- author: Pancake
+  changes:
+  - {message: Trash Bags have been added to the Janitor Cargo Crate., type: Tweak}
+  - {message: Emergency Suits have been added to the Emergency Internals Cargo Crate.,
+    type: Tweak}
+  id: 672
+  time: '2021-11-27T08:54:08.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Pill canisters can now be found in a box in chemistry's locker., type: Add}
+  - {message: 'Cargo now has access to the chemistry supplies crate, allowing them
+      to replace chemistry''s things after they are all stolen or blown up.', type: Add}
+  id: 673
+  time: '2021-11-28T01:30:47.0000000+00:00'
+- author: iczero
+  changes:
+  - {message: Protolathes and autolathes can now be constructed, type: Add}
+  id: 674
+  time: '2021-11-28T01:38:07.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Gyroscope examine no longer mentions direction which doesn't matter,
+    type: Fix}
+  - {message: Rotating a thruster will now turn it off / on properly, type: Fix}
+  id: 675
+  time: '2021-11-28T02:03:46.0000000+00:00'

@@ -81,6 +81,15 @@ namespace Content.Server.GameTicking
                 return;
             }
 
+            // Pick best job best on prefs.
+            jobId ??= PickBestAvailableJob(character, station);
+            // If no job available, just bail out.
+            if (jobId is null)
+            {
+                _chatManager.DispatchServerMessage(player, Loc.GetString("game-ticker-player-no-jobs-available-when-joining"));
+                return;
+            }
+
             PlayerJoinGame(player);
 
             var data = player.ContentData();
@@ -93,9 +102,6 @@ namespace Content.Server.GameTicking
                 CharacterName = character.Name
             };
             newMind.ChangeOwningPlayer(data.UserId);
-
-            // Pick best job best on prefs.
-            jobId ??= PickBestAvailableJob(character, station);
 
             var jobPrototype = _prototypeManager.Index<JobPrototype>(jobId);
             var job = new Job(newMind, jobPrototype);
@@ -128,7 +134,7 @@ namespace Content.Server.GameTicking
                 jobSpecial.AfterEquip(mob);
             }
 
-            _stationSystem.TryAssignJobToStation(station, jobId);
+            _stationSystem.TryAssignJobToStation(station, jobPrototype);
 
             if (lateJoin)
                 _adminLogSystem.Add(LogType.LateJoin, LogImpact.Medium, $"Player {player.Name} late joined as {character.Name:characterName} on station {_stationSystem.StationInfo[station].Name:stationName} with {mob} as a {job.Name:jobName}.");

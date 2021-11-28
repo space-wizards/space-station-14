@@ -46,7 +46,7 @@ namespace Content.Server.GameTicking.Commands
 
             if (!ticker.PlayersInLobby.ContainsKey(player))
             {
-                shell.WriteError($"{player.Name} not in the lobby.   This incident will be reported.");
+                shell.WriteError($"{player.Name} is not in the lobby.   This incident will be reported.");
                 return;
             }
 
@@ -65,9 +65,9 @@ namespace Content.Server.GameTicking.Commands
                 }
 
                 var stationId = new StationId(sid);
-                if(!stationSystem.IsJobAvailableOnStation(stationId, id))
+                var jobPrototype = _prototypeManager.Index<JobPrototype>(id);
+                if(!stationSystem.IsJobAvailableOnStation(stationId, jobPrototype))
                 {
-                    var jobPrototype = _prototypeManager.Index<JobPrototype>(id);
                     shell.WriteLine($"{jobPrototype.Name} has no available slots.");
                     return;
                 }
