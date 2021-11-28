@@ -40,8 +40,7 @@ namespace Content.Client.StationEvents
 
         private TimeSpan _lastTick;
 
-        // TODO: When worldHandle can do DrawCircle change this.
-        public override OverlaySpace Space => OverlaySpace.ScreenSpace;
+        public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
         public RadiationPulseOverlay()
         {
@@ -116,29 +115,35 @@ namespace Content.Client.StationEvents
                 return;
             }
 
-            var elapsedTime = (float) (_gameTiming.CurTime - _lastTick).TotalSeconds;
-            _lastTick = _gameTiming.CurTime;
-
             var radiationPulses = _entityManager
                 .EntityQuery<RadiationPulseComponent>(true)
                 .ToList();
 
-            var screenHandle = args.ScreenHandle;
-            var viewport = _eyeManager.GetWorldViewport();
+            if (radiationPulses.Count == 0)
+            {
+                return;
+            }
 
+            var elapsedTime = (float) (_gameTiming.CurTime - _lastTick).TotalSeconds;
+            _lastTick = _gameTiming.CurTime;
+
+            var worldHandle = args.WorldHandle;
+            var viewport = _eyeManager.GetWorldViewport();
             foreach (var grid in _mapManager.FindGridsIntersecting(playerEntity.Transform.MapID, viewport))
             {
+                worldHandle.SetTransform(grid.WorldMatrix);
                 foreach (var pulse in radiationPulses)
                 {
                     if (!pulse.Draw || grid.Index != pulse.Owner.Transform.GridID) continue;
 
-                    // TODO: Check if viewport intersects circle
-                    var circlePosition = args.ViewportControl!.WorldToScreen(pulse.Owner.Transform.WorldPosition);
+                    var pulseTransform = pulse.Owner.Transform;
 
-                    // change to worldhandle when implemented
-                    screenHandle.DrawCircle(
-                        circlePosition,
-                        pulse.Range * 64,
+                    var maxVisibleCircleArea = viewport.Enlarged(pulse.Range * 64);
+                    if (!maxVisibleCircleArea.Contains(pulseTransform.WorldPosition)) continue;
+
+                    worldHandle.DrawCircle(
+                        pulseTransform.LocalPosition,
+                        pulse.Range,
                         GetColor(pulse.Owner, pulse.Decay ? elapsedTime : 0, pulse.EndTime));
                 }
             }
