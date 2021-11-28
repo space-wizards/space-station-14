@@ -25,7 +25,7 @@
         shape:
           !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.5"
-        layer:
+        mask:
           - MobImpassable
     - type: Damageable
       damageModifierSet: Wood
@@ -43,6 +43,8 @@
           Heat: 5
     - type: Flammable
       fireSpread: true #If you walk into incredibly dense, flaming vines, you can expect to burn.
+      cold:
+        types: {}
       damage:
         types:
           Heat: 1

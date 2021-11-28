@@ -34,12 +34,9 @@ public class SlowContactsSystem : EntitySystem
         var walkSpeed = 1.0f;
         var sprintSpeed = 1.0f;
 
-        foreach (var colliding in physicsComponent.Contacts)
+        foreach (var colliding in _physics.GetCollidingEntities(physicsComponent))
         {
-            if (colliding.FixtureA is null)
-                continue;
-
-            var ent = colliding.FixtureA.Body.OwnerUid;
+            var ent = colliding.OwnerUid;
             if (!EntityManager.TryGetComponent<SlowContactsComponent>(ent, out var slowContactsComponent))
                 continue;
 
