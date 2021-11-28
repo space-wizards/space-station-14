@@ -83,7 +83,18 @@ namespace Content.Server.Supermatter.Components
         //When we pass this amount of damage we start shooting bolts
         private const int damagepenaltypoint = 550;
 
+        //---------------------------------------------------------------------------------------\\
+
         public bool FinalCountdown {get; set;} = false;
+
+        public float DamageUpdateAccumulator {get; set;}
+        //update environment damage every second
+        public const float DamageUpdateTimer = 1f;
+
+        public float DelamTimerAccumulator {get; set;}
+        public const int DelamTimerTimer = 30;
+        public float SpeakAccumulator {get; set;} = 5f;
+        public bool AlarmPlaying = false;
 
         //---------------------------------------------------------------------------------------\\
 
@@ -228,13 +239,13 @@ namespace Content.Server.Supermatter.Components
 
         public readonly float[,] gasFacts =
         {
-            //GasTrans, GasHeat, GasPowermix
-            {1.5f, 1f, 1f},   //oxy
-            {0f, -1.5f, -1f}, //nit
-            {0f, 0f, 1f},     //co2
-            {4f, 15f, 1f},    //pla
-            {30f, 0f, 1f},    //tri
-            {2f, 12f, 1f}     //h2o
+            //GasTrans,                             GasHeat,                              GasPowermix
+            {Atmospherics.OxygenTransmitModifier,   Atmospherics.OxygenHeatPenalty,       Atmospherics.OxygenPowerMixRatio},   //oxygen
+            {Atmospherics.NitrogenTransmitModifier, Atmospherics.NitrogenHeatPenalty,     Atmospherics.NitrogenPowerMixRatio}, //nitrogen
+            {Atmospherics.CO2TransmitModifier,      Atmospherics.CO2TransmitModifier,     Atmospherics.CO2PowerMixRatio},      //co2
+            {Atmospherics.PlasmaTransmitModifier,   Atmospherics.PlasmaTransmitModifier,  Atmospherics.PlasmaPowerMixRatio},   //plasma
+            {Atmospherics.TritiumTransmitModifier,  Atmospherics.TritiumTransmitModifier, Atmospherics.TritiumPowerMixRatio},  //tritium
+            {Atmospherics.WaterTransmitModifier,    Atmospherics.WaterTransmitModifier,   Atmospherics.WaterPowerMixRatio},    //water
         };
     }
 }

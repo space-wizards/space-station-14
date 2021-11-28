@@ -74,4 +74,5 @@
     sprite: Objects/Materials/materials.rsi
     state: ash
   - type: Tag
-    id: SMimmune
+    tags:
+      - SMimmune
