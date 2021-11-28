@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.Administration.Logs;
+﻿namespace Content.Shared.Database;
 
 // DO NOT CHANGE THE NUMERIC VALUES OF THESE
 public enum LogType

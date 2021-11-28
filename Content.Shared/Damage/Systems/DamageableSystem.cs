@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;

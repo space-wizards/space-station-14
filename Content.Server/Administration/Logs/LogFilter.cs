@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 
 namespace Content.Server.Administration.Logs;
 
