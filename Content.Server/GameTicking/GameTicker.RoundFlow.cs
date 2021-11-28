@@ -6,10 +6,13 @@ using Content.Server.GameTicking.Events;
 using Content.Server.Players;
 using Content.Server.Mind;
 using Content.Server.Ghost;
+using Content.Server.Roles;
+using Content.Server.Station;
 using Content.Shared.CCVar;
 using Content.Shared.Coordinates;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
+using Content.Shared.Station;
 using Prometheus;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
@@ -64,13 +67,16 @@ namespace Content.Server.GameTicking
         {
             DefaultMap = _mapManager.CreateMap();
             var startTime = _gameTiming.RealTime;
-            var map = _gameMapManager.GetSelectedMapChecked(true).MapPath;
-            var grid = _mapLoader.LoadBlueprint(DefaultMap, map);
+            var map = _gameMapManager.GetSelectedMapChecked(true);
+            var grid = _mapLoader.LoadBlueprint(DefaultMap, map.MapPath);
+
 
             if (grid == null)
             {
-                throw new InvalidOperationException($"No grid found for map {map}");
+                throw new InvalidOperationException($"No grid found for map {map.MapName}");
             }
+
+            _stationSystem.InitialSetupStationGrid(grid.GridEntityId, map);
 
             var stationXform = EntityManager.GetComponent<TransformComponent>(grid.GridEntityId);
 
@@ -87,7 +93,6 @@ namespace Content.Server.GameTicking
                 stationXform.LocalRotation = _robustRandom.NextFloat(MathF.Tau);
             }
 
-            DefaultGridId = grid.Index;
             _spawnPoint = grid.ToCoordinates();
 
             var timeSpan = _gameTiming.RealTime - startTime;
@@ -102,12 +107,6 @@ namespace Content.Server.GameTicking
 
             DebugTools.Assert(RunLevel == GameRunLevel.PreRoundLobby);
             Logger.InfoS("ticker", "Starting round!");
-
-            var playerIds = _playersInLobby.Keys.Select(player => player.UserId.UserId).ToArray();
-            RoundId = await _db.AddNewRound(playerIds);
-
-            var startingEvent = new RoundStartingEvent();
-            RaiseLocalEvent(startingEvent);
 
             SendServerMessage(Loc.GetString("game-ticker-start-round"));
 
@@ -125,6 +124,12 @@ namespace Content.Server.GameTicking
             RunLevel = GameRunLevel.InRound;
 
             RoundLengthMetric.Set(0);
+
+            var playerIds = _playersInLobby.Keys.Select(player => player.UserId.UserId).ToArray();
+            RoundId = await _db.AddNewRound(playerIds);
+
+            var startingEvent = new RoundStartingEvent();
+            RaiseLocalEvent(startingEvent);
 
             // Get the profiles for each player for easier lookup.
             var profiles = _prefsManager.GetSelectedProfilesForPlayers(
@@ -153,14 +158,36 @@ namespace Content.Server.GameTicking
                 var profile = profiles[player.UserId];
                 if (profile.PreferenceUnavailable == PreferenceUnavailableMode.SpawnAsOverflow)
                 {
-                    assignedJobs.Add(player, OverflowJob);
+                    // Pick a random station
+                    var stations = _stationSystem.StationInfo.Keys.ToList();
+                    _robustRandom.Shuffle(stations);
+
+                    if (stations.Count == 0)
+                    {
+                        assignedJobs.Add(player, (FallbackOverflowJob, StationId.Invalid));
+                        continue;
+                    }
+
+                    foreach (var station in stations)
+                    {
+                        // Pick a random overflow job from that station
+                        var overflows = _stationSystem.StationInfo[station].MapPrototype.OverflowJobs.Clone();
+                        _robustRandom.Shuffle(overflows);
+
+                        // Stations with no overflow slots should simply get skipped over.
+                        if (overflows.Count == 0)
+                            continue;
+
+                        // If the overflow exists, put them in as it.
+                        assignedJobs.Add(player, (overflows[0], stations[0]));
+                    }
                 }
             }
 
             // Spawn everybody in!
-            foreach (var (player, job) in assignedJobs)
+            foreach (var (player, (job, station)) in assignedJobs)
             {
-                SpawnPlayer(player, profiles[player.UserId], job, false);
+                SpawnPlayer(player, profiles[player.UserId], station, job, false);
             }
 
             // Time to start the preset.

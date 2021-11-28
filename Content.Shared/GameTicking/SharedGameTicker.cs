@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using Content.Shared.Station;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
@@ -11,8 +12,8 @@ namespace Content.Shared.GameTicking
     {
         // See ideally these would be pulled from the job definition or something.
         // But this is easier, and at least it isn't hardcoded.
-        public const string OverflowJob = "Assistant";
-        public const string OverflowJobName = "assistant";
+        public const string FallbackOverflowJob = "Assistant";
+        public const string FallbackOverflowJobName = "assistant";
     }
 
     [Serializable, NetSerializable]
@@ -109,11 +110,13 @@ namespace Content.Shared.GameTicking
         /// <summary>
         /// The Status of the Player in the lobby (ready, observer, ...)
         /// </summary>
-        public string[] JobsAvailable { get; }
+        public Dictionary<StationId, Dictionary<string, int>> JobsAvailableByStation { get; }
+        public Dictionary<StationId, string> StationNames { get; }
 
-        public TickerJobsAvailableEvent(string[] jobsAvailable)
+        public TickerJobsAvailableEvent(Dictionary<StationId, string> stationNames, Dictionary<StationId, Dictionary<string, int>> jobsAvailableByStation)
         {
-            JobsAvailable = jobsAvailable;
+            StationNames = stationNames;
+            JobsAvailableByStation = jobsAvailableByStation;
         }
     }
 

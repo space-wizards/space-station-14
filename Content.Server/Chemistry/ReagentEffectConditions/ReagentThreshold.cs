@@ -26,9 +26,6 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
 
         public override bool Condition(ReagentEffectArgs args)
         {
-            if (args.Reagent == null)
-                return false;
-
             if (Reagent == null)
                 Reagent = args.Reagent.ID;
 

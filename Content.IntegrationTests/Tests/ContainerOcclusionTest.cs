@@ -59,10 +59,7 @@ namespace Content.IntegrationTests.Tests
 
             s.Post(() =>
             {
-                IoCManager.Resolve<IPlayerManager>()
-                    .GetAllPlayers()
-                    .Single()
-                    .JoinGame();
+                IoCManager.Resolve<IPlayerManager>().ServerSessions.Single().JoinGame();
 
                 var mapMan = IoCManager.Resolve<IMapManager>();
 

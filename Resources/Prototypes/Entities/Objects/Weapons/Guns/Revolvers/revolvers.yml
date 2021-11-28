@@ -55,7 +55,7 @@
   name: Inspector
   parent: RevolverBase
   id: RevolverInspector
-  description: A high caliber revolver. Still quite deadly, despite its ancient design.
+  description: A detective's best friend.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
@@ -69,7 +69,7 @@
     - Single
     fillPrototype: CartridgeMagnum
     caliber: Magnum
-    capacity: 7
+    capacity: 6
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
     soundGunshot:
@@ -90,6 +90,34 @@
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
+  - type: RangedWeapon
+  - type: RevolverBarrel
+    currentSelector: Single
+    allSelectors:
+    - Single
+    fillPrototype: CartridgeMagnum
+    caliber: Magnum
+    capacity: 7
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
+    soundEject:
+      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+
+- type: entity
+  name: Predator
+  parent: RevolverBase
+  id: RevolverPredator
+  description: A robust revolver favoured by Syndicate agents.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Revolvers/predator.rsi
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Guns/Revolvers/predator.rsi
   - type: RangedWeapon
   - type: RevolverBarrel
     currentSelector: Single

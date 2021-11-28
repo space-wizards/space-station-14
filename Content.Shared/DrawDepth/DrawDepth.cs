@@ -9,11 +9,19 @@ namespace Content.Shared.DrawDepth
         /// <summary>
         ///     This is for sub-floors, the floors you see after prying off a tile.
         /// </summary>
-        LowFloors = DrawDepthTag.Default - 6,
+        LowFloors = DrawDepthTag.Default - 10,
+
+        // various entity types that require different
+        // draw depths, as to avoid hiding
+        #region SubfloorEntities
+        ThickPipe = DrawDepthTag.Default - 9,
+        ThickWire = DrawDepthTag.Default - 8,
+        ThinPipe = DrawDepthTag.Default - 7,
+        ThinWire = DrawDepthTag.Default - 6,
+        #endregion
 
         /// <summary>
-        ///     Things that are beneath regular floors, such as wires or pipes. vents/scrubbers also use this to ensure
-        ///     that they appear below carpets.
+        ///     Things that are beneath regular floors.
         /// </summary>
         BelowFloor = DrawDepthTag.Default - 5,
 

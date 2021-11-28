@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.Database;
+using Content.Server.GameTicking;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using NUnit.Framework;
@@ -117,28 +118,22 @@ public class AddTests : ContentIntegrationTest
             return false;
         });
 
-        await server.WaitPost(() =>
+        var filter = new LogFilter
         {
-            Task.Run(async () =>
-            {
-                var filter = new LogFilter
-                {
-                    Round = log.RoundId,
-                    Search = log.Message,
-                    Types = new List<LogType> {log.Type},
-                };
+            Round = log.RoundId,
+            Search = log.Message,
+            Types = new List<LogType> {log.Type},
+        };
 
-                await foreach (var json in sDatabase.GetAdminLogsJson(filter))
-                {
-                    var root = json.RootElement;
+        await foreach (var json in sDatabase.GetAdminLogsJson(filter))
+        {
+            var root = json.RootElement;
 
-                    Assert.That(root.TryGetProperty("entity", out _), Is.True);
-                    Assert.That(root.TryGetProperty("guid", out _), Is.True);
+            Assert.That(root.TryGetProperty("entity", out _), Is.True);
+            Assert.That(root.TryGetProperty("guid", out _), Is.True);
 
-                    json.Dispose();
-                }
-            }).Wait();
-        });
+            json.Dispose();
+        }
     }
 
     [Test]
@@ -218,7 +213,7 @@ public class AddTests : ContentIntegrationTest
         Guid playerGuid = default;
 
         await server.WaitPost(() =>
-        {;
+        {
             var player = sPlayers.ServerSessions.First();
             playerGuid = player.UserId;
 
@@ -240,5 +235,77 @@ public class AddTests : ContentIntegrationTest
 
             return false;
         });
+    }
+
+    [Test]
+    public async Task PreRoundAddAndGetSingle()
+    {
+        var server = StartServer(new ServerContentIntegrationOption
+        {
+            CVarOverrides =
+            {
+                [CCVars.AdminLogsQueueSendDelay.Name] = "0",
+                [CCVars.GameLobbyEnabled.Name] = "true"
+            },
+        });
+        await server.WaitIdleAsync();
+
+        var sDatabase = server.ResolveDependency<IServerDbManager>();
+        var sEntities = server.ResolveDependency<IEntityManager>();
+        var sMaps = server.ResolveDependency<IMapManager>();
+        var sSystems = server.ResolveDependency<IEntitySystemManager>();
+
+        var sAdminLogSystem = sSystems.GetEntitySystem<AdminLogSystem>();
+        var sGamerTicker = sSystems.GetEntitySystem<GameTicker>();
+
+        var guid = Guid.NewGuid();
+
+        await server.WaitPost(() =>
+        {
+            var coordinates = GetMainEntityCoordinates(sMaps);
+            var entity = sEntities.SpawnEntity(null, coordinates);
+
+            sAdminLogSystem.Add(LogType.Unknown, $"{entity} test log: {guid}");
+        });
+
+        await server.WaitPost(() =>
+        {
+            sGamerTicker.StartRound(true);
+        });
+
+        LogRecord log = null;
+
+        await WaitUntil(server, async () =>
+        {
+            var logs = sAdminLogSystem.CurrentRoundLogs(new LogFilter
+            {
+                Search = guid.ToString()
+            });
+
+            await foreach (var found in logs)
+            {
+                log = found;
+                return true;
+            }
+
+            return false;
+        });
+
+        var filter = new LogFilter
+        {
+            Round = log.RoundId,
+            Search = log.Message,
+            Types = new List<LogType> {log.Type},
+        };
+
+        await foreach (var json in sDatabase.GetAdminLogsJson(filter))
+        {
+            var root = json.RootElement;
+
+            Assert.That(root.TryGetProperty("entity", out _), Is.True);
+            Assert.That(root.TryGetProperty("guid", out _), Is.True);
+
+            json.Dispose();
+        }
     }
 }

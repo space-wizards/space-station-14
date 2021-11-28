@@ -48,7 +48,7 @@ public class FilterTests : ContentIntegrationTest
                 sAdminLogSystem.Add(LogType.Unknown, $"{entity:Entity} test log: {commonGuid} {guids[i]}");
             });
 
-            await server.WaitRunTicks(60);
+            await server.WaitRunTicks(100);
         }
 
         await WaitUntil(server, async () =>

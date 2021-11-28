@@ -34,6 +34,14 @@
       - id: MonkeyCubeBox
       - id: SprayBottleWater
       - id: ReagentContainerFlour
+        amount: 2
+      - id: ReagentContainerSugar
+      - id: FoodCondimentBottleEnzyme
+      # really, milk should go in the fridge. Unfortunately saltern only has freezers.
+      # yes, I'm using this as an excuse to not have to do extra work.
+      - id: ReagentContainerMilk
+        amount: 2
+      - id: ReagentContainerMilkSoy
 
 - type: entity
   id: ClosetJanitorFilled

@@ -11,7 +11,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 10
+        maxVol: 50
   - type: SolutionTransfer
     canChangeTransferAmount: true
     maxTransferAmount: 5
@@ -23,7 +23,33 @@
     interfaces:
     - key: enum.TransferAmountUiKey.Key
       type: TransferAmountBoundUserInterface
-
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 5
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 4
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpillBehavior { }
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          BrokenBottle:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 
 # Containers
@@ -61,15 +87,6 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/TrashDrinks/beer_empty.rsi
-
-
-- type: entity
-  name: broken bottle
-  parent: DrinkBottleBaseEmpty  # Can't hold liquids
-  id: DrinkBrokenBottle
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/TrashDrinks/broken_bottle.rsi
 
 
 - type: entity

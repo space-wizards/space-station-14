@@ -22,11 +22,19 @@
   parent: BasePlushie
   id: PlushieBee
   name: bee plushie
-  description: A cute toy that resembles an even cuter programmer.
+  description: A cute toy that resembles an even cuter programmer. You'd have to be a monster to grind this up.
   components:
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: plushie_h
+  - type: Extractable
+    grindableSolutionName: bee
+  - type: SolutionContainerManager
+    solutions:
+      bee:
+        reagents:
+          - ReagentId: GroundBee
+            Quantity: 10
 
 - type: entity
   parent: BasePlushie
