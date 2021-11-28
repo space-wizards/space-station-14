@@ -178,6 +178,8 @@
       - ChemDispenserMachineCircuitboard
       - HydroponicsTrayMachineCircuitboard
       - SolarControlComputerCircuitboard
+      - AutolatheMachineCircuitboard
+      - ProtolatheMachineCircuitboard
       - CrewMonitoringComputerCircuitboard
       - Bucket
       - MopItem

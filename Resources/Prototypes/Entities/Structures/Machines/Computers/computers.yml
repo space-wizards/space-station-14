@@ -284,6 +284,7 @@
   - type: GalacticMarket
     products:
       - MedicalSupplies
+      - MedicalChemistrySupplies
       - EmergencyExplosive
       - EmergencyFire
       - EmergencyInternals
@@ -300,6 +301,7 @@
       - HydroponicsSeeds
       - HydroponicsSeedsExotic
       - LivestockMonkeyCube
+      - LivestockCow
       - FoodPizza
       - ServiceJanitorial
       - ServiceLightsReplacement

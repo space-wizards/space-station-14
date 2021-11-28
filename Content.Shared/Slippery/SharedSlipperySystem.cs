@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
 using JetBrains.Annotations;
