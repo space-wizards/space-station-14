@@ -36,10 +36,10 @@ public class SlowContactsSystem : EntitySystem
 
         foreach (var colliding in physicsComponent.Contacts)
         {
-            if (colliding.FixtureB is null)
+            if (colliding.FixtureA is null)
                 continue;
 
-            var ent = colliding.FixtureB.Body.OwnerUid;
+            var ent = colliding.FixtureA.Body.OwnerUid;
             if (!EntityManager.TryGetComponent<SlowContactsComponent>(ent, out var slowContactsComponent))
                 continue;
 
