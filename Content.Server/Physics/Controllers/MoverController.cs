@@ -57,6 +57,18 @@ namespace Content.Server.Physics.Controllers
                 HandleMobMovement(mover, physics, mobMover);
             }
 
+            HandleShuttleMovement();
+
+            foreach (var (mover, physics) in EntityManager.EntityQuery<IMoverComponent, PhysicsComponent>(true))
+            {
+                if (_excludedMobs.Contains(mover.Owner.Uid)) continue;
+
+                HandleKinematicMovement(mover, physics);
+            }
+        }
+
+        private void HandleShuttleMovement(float frameTime)
+        {
             var newPilots = new Dictionary<ShuttleComponent, List<(PilotComponent, IMoverComponent)>>();
 
             // We just mark off their movement and the shuttle itself does its own movement
@@ -79,6 +91,7 @@ namespace Content.Server.Physics.Controllers
                 pilots.Add((pilot, mover));
             }
 
+            var shuttleSystem = EntitySystem.Get<ShuttleSystem>();
             var thrusterSystem = EntitySystem.Get<ThrusterSystem>();
 
             // Reset inputs for non-piloted shuttles.
@@ -93,7 +106,7 @@ namespace Content.Server.Physics.Controllers
             // then do the movement input once for it.
             foreach (var (shuttle, pilots) in _shuttlePilots)
             {
-                if (shuttle.Paused) continue;
+                if (shuttle.Paused || !EntityManager.TryGetComponent(shuttle.OwnerUid, out PhysicsComponent? body)) continue;
 
                 // Collate movement linear and angular inputs together
                 var linearInput = Vector2.Zero;
@@ -105,7 +118,8 @@ namespace Content.Server.Physics.Controllers
                         foreach (var (pilot, mover) in pilots)
                         {
                             var sprint = mover.VelocityDir.sprinting;
-                            linearInput +=
+                            linearInput += sprint.Y;
+                            angularInput += sprint.X;
                         }
                         break;
                     case ShuttleMode.Docking:
@@ -124,60 +138,17 @@ namespace Content.Server.Physics.Controllers
                 angularInput /= count;
 
                 // Handle shuttle movement
-            }
+                if (linearInput.Length.Equals(0f))
+                {
+                    // TODO: This visualization doesn't work with multiple pilots so need to address that somehow.
+                    thrusterSystem.DisableAllThrustDirections(shuttle);
+                    body.LinearDamping = shuttleSystem.ShuttleIdleLinearDamping;
+                }
+                else
+                {
+                    body.LinearDamping = shuttleSystem.ShuttleMovingLinearDamping;
 
-            _shuttlePilots = newPilots;
-
-            foreach (var (mover, physics) in EntityManager.EntityQuery<IMoverComponent, PhysicsComponent>(true))
-            {
-                if (_excludedMobs.Contains(mover.Owner.Uid)) continue;
-
-                HandleKinematicMovement(mover, physics);
-            }
-        }
-
-        /*
-         * How shuttles work:
-         * 1. Get shuttles with pilots
-         * 2. Collate all of their movement inputs into linear and angular
-         * 3. Apply movement all at once
-         */
-
-        private void HandleShuttleMovement(SharedPlayerInputMoverComponent mover)
-        {
-            var gridId = mover.Owner.Transform.GridID;
-
-            if (!_mapManager.TryGetGrid(gridId, out var grid) || !EntityManager.TryGetEntity(grid.GridEntityId, out var gridEntity)) return;
-
-            if (!gridEntity.TryGetComponent(out ShuttleComponent? shuttleComponent) ||
-                !gridEntity.TryGetComponent(out PhysicsComponent? physicsComponent))
-            {
-                return;
-            }
-
-            // ShuttleSystem has already worked out the ratio so we'll just multiply it back by the mass.
-            var movement = mover.VelocityDir.walking + mover.VelocityDir.sprinting;
-            var system = EntitySystem.Get<ThrusterSystem>();
-            var shuttleSystem = EntitySystem.Get<ShuttleSystem>();
-
-            // TODO: When adding multi-pilot support need to essentially listen to when no more pilots and do this stuff.
-            // RN if someone is holding a button and forced off it never applies.
-            if (movement.Length.Equals(0f))
-            {
-                // TODO: This visualization doesn't work with multiple pilots so need to address that somehow.
-                system.DisableAllThrustDirections(shuttleComponent);
-                physicsComponent.LinearDamping = shuttleSystem.ShuttleIdleLinearDamping;
-                physicsComponent.AngularDamping = shuttleSystem.ShuttleIdleAngularDamping;
-                return;
-            }
-
-            var speedCap = 0f;
-
-            switch (shuttleComponent.Mode)
-            {
-                case ShuttleMode.Docking:
-                    system.DisableAllThrustDirections(shuttleComponent);
-                    var dockDirection = movement.ToWorldAngle().GetDir();
+                    var dockDirection = linearInput.ToWorldAngle().GetDir();
                     var dockFlag = dockDirection.AsFlag();
 
                     // Won't just do cardinal directions.
@@ -197,121 +168,64 @@ namespace Content.Server.Physics.Controllers
 
                         if ((dir & dockFlag) == 0x0) continue;
 
-                        system.EnableThrustDirection(shuttleComponent, dir);
+                        thrusterSystem.EnableThrustDirection(shuttle, dir);
 
                         var index = (int) Math.Log2((int) dir);
 
-                        var dockSpeed = shuttleComponent.LinearThrusterImpulse[index];
+                        var speed = shuttle.LinearThrusterImpulse[index];
 
-                        // TODO: Cvar for the speed drop
-                        dockSpeed /= 5f;
+                        speed /= 5f;
 
-                        if (physicsComponent.LinearVelocity.LengthSquared == 0f)
+                        if (body.LinearVelocity.LengthSquared == 0f)
                         {
-                            dockSpeed *= 5f;
+                            speed *= 5f;
                         }
 
-                        var moveAngle = movement.ToWorldAngle();
+                        var moveAngle = linearInput.ToWorldAngle();
 
-                        physicsComponent.ApplyLinearImpulse(moveAngle.RotateVec(physicsComponent.Owner.Transform.WorldRotation.ToWorldVec()) *
-                                                            dockSpeed);
+                        body.ApplyLinearImpulse(
+                            moveAngle.RotateVec(body.Owner.Transform.WorldRotation.ToWorldVec()) *
+                            speed *
+                            frameTime);
+                    }
+                }
+
+                if (MathHelper.CloseTo(angularInput, 0f))
+                {
+                    thrusterSystem.DisableAllThrustDirections(shuttle);
+                    body.AngularDamping = shuttleSystem.ShuttleIdleAngularDamping;
+                }
+                else
+                {
+                    body.AngularDamping = shuttleSystem.ShuttleMovingAngularDamping;
+                    var angularSpeed = 0f;
+
+                    if (body.AngularVelocity.Equals(0f))
+                    {
+                        angularSpeed *= 10f;
                     }
 
-                    speedCap = _shuttleDockSpeedCap;
-                    break;
-                case ShuttleMode.Cruise:
-                    if (movement.Y == 0f)
+                    // Scale rotation by mass just to make rotating larger things a bit more bearable.
+                    body.ApplyAngularImpulse(
+                        angularInput *
+                        angularSpeed *
+                        body.Mass / 100f);
+
+                    // TODO: Angular thrusters
+                    if (angularInput < 0f)
                     {
-                        system.DisableThrustDirection(shuttleComponent, DirectionFlag.South);
-                        system.DisableThrustDirection(shuttleComponent, DirectionFlag.North);
-                        physicsComponent.LinearDamping = shuttleSystem.ShuttleIdleLinearDamping;
+                        system.EnableThrustDirection(shuttleComponent, DirectionFlag.West);
+                        system.DisableThrustDirection(shuttleComponent, DirectionFlag.East);
                     }
                     else
                     {
-                        physicsComponent.LinearDamping = shuttleSystem.ShuttleMovingLinearDamping;
-
-                        var direction = movement.Y > 0f ? Direction.North : Direction.South;
-                        var linearSpeed = shuttleComponent.LinearThrusterImpulse[(int) direction / 2];
-
-                        if (physicsComponent.LinearVelocity.LengthSquared == 0f)
-                        {
-                            linearSpeed *= 10f;
-                        }
-
-                        // Currently this is slow BUT we'd have a separate multiplier for docking and cruising or whatever.
-                        physicsComponent.ApplyLinearImpulse(physicsComponent.Owner.Transform.WorldRotation.Opposite().ToWorldVec() *
-                                                            linearSpeed *
-                                                            movement.Y);
-
-                        switch (direction)
-                        {
-                            case Direction.North:
-                                system.DisableThrustDirection(shuttleComponent, DirectionFlag.South);
-                                system.EnableThrustDirection(shuttleComponent, DirectionFlag.North);
-                                break;
-                            case Direction.South:
-                                system.DisableThrustDirection(shuttleComponent, DirectionFlag.North);
-                                system.EnableThrustDirection(shuttleComponent, DirectionFlag.South);
-                                break;
-                        }
-                    }
-
-                    var angularSpeed = shuttleComponent.AngularThrust;
-
-                    if (movement.X == 0f)
-                    {
+                        system.EnableThrustDirection(shuttleComponent, DirectionFlag.East);
                         system.DisableThrustDirection(shuttleComponent, DirectionFlag.West);
-                        system.DisableThrustDirection(shuttleComponent, DirectionFlag.East);
-                        physicsComponent.AngularDamping = shuttleSystem.ShuttleIdleAngularDamping;
                     }
-                    else if (movement.X != 0f)
-                    {
-                        physicsComponent.AngularDamping = shuttleSystem.ShuttleMovingAngularDamping;
-
-                        if (physicsComponent.AngularVelocity.Equals(0f))
-                        {
-                            angularSpeed *= 10f;
-                        }
-
-                        // Scale rotation by mass just to make rotating larger things a bit more bearable.
-                        physicsComponent.ApplyAngularImpulse(
-                            -movement.X *
-                            angularSpeed *
-                            physicsComponent.Mass / 100f);
-
-                        if (movement.X < 0f)
-                        {
-                            system.EnableThrustDirection(shuttleComponent, DirectionFlag.West);
-                            system.DisableThrustDirection(shuttleComponent, DirectionFlag.East);
-                        }
-                        else
-                        {
-                            system.EnableThrustDirection(shuttleComponent, DirectionFlag.East);
-                            system.DisableThrustDirection(shuttleComponent, DirectionFlag.West);
-                        }
-                    }
-
-                    // TODO WHEN THIS ACTUALLY WORKS
-                    speedCap = _shuttleDockSpeedCap * 10;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
+                }
             }
 
-            var velocity = physicsComponent.LinearVelocity;
-            var angVelocity = physicsComponent.AngularVelocity;
-
-            if (velocity.Length > speedCap)
-            {
-                physicsComponent.LinearVelocity = velocity.Normalized * speedCap;
-            }
-
-            /* TODO: Need to suss something out but this PR already BEEG
-            if (angVelocity > speedCap)
-            {
-                physicsComponent.AngularVelocity = speedCap;
-            }
-            */
+            _shuttlePilots = newPilots;
         }
 
         protected override void HandleFootsteps(IMoverComponent mover, IMobMoverComponent mobMover)
