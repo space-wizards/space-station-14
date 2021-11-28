@@ -15,16 +15,17 @@ namespace Content.Shared.Chemistry.Reaction
     {
 
         /// <summary>
-        /// 
+        ///     The maximum number of reactions that may occur when a solution is changed.
         /// </summary>
         private const int MaxReactionIterations = 20;
 
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] protected readonly SharedAdminLogSystem LogSystem = default!;
+        [Dependency] protected readonly SharedAdminLogSystem _logSystem = default!;
 
         /// <summary>
-        /// 
+        ///     A cache of all existant chemical reactions indexed by one of their
+        ///     required reactants.
         /// </summary>
         private IDictionary<string, List<ReactionPrototype>> _reactions = default!;
 
@@ -159,7 +160,7 @@ namespace Content.Shared.Chemistry.Reaction
                 if (effect.ShouldLog)
                 {
                     var entity = EntityManager.GetEntity(args.SolutionEntity);
-                    LogSystem.Add(LogType.ReagentEffect, effect.LogImpact,
+                    _logSystem.Add(LogType.ReagentEffect, effect.LogImpact,
                         $"Reaction effect {effect.GetType().Name} of reaction ${reaction.ID:reaction} applied on entity {entity} at {entity.Transform.Coordinates}");
                 }
 

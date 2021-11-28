@@ -16,7 +16,7 @@ namespace Content.Server.Chemistry.EntitySystems
             base.OnReaction(solution, reaction,  randomReagent, ownerUid, unitReactions);
 
             var entity = EntityManager.GetEntity(ownerUid);
-            LogSystem.Add(LogType.ChemicalReaction, reaction.Impact,
+            _logSystem.Add(LogType.ChemicalReaction, reaction.Impact,
                 $"Chemical reaction {reaction.ID} occurred with strength {unitReactions:strength} on entity {entity} at {entity.Transform.Coordinates}");
 
             SoundSystem.Play(Filter.Pvs(ownerUid, entityManager:EntityManager), reaction.Sound.GetSound(), ownerUid);
