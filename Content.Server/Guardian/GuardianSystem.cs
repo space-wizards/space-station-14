@@ -166,10 +166,9 @@ namespace Content.Server.Guardian
             if (guardianloose == false)
             {
                 //Ejects the guardian if it is inside
-                if (EntityManager.GetComponent<GuardianHostComponent>(host).GuardianContainer.ContainedEntity != null)
-                {
-                    EntityManager.GetComponent<GuardianHostComponent>(host).GuardianContainer.Remove(EntityManager.GetComponent<GuardianHostComponent>(host).GuardianContainer.ContainedEntity);
-                }
+                var containedEntity = EntityManager.GetComponent<GuardianHostComponent>(host).GuardianContainer.ContainedEntity;
+                if (containedEntity == null) return;
+                EntityManager.GetComponent<GuardianHostComponent>(host).GuardianContainer.Remove(containedEntity);
             }
             else if (guardianloose == true)
             {
