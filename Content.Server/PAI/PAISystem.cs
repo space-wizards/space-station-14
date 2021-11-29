@@ -2,10 +2,12 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.PAI;
 using Content.Shared.Verbs;
+using Content.Shared.Instruments;
 using Content.Server.Popups;
 using Content.Server.Instruments;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Mind.Components;
+using Robust.Server.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.GameObjects;
@@ -99,11 +101,14 @@ namespace Content.Server.PAI
         private void PAITurningOff(EntityUid uid)
         {
             UpdatePAIAppearance(uid, PAIStatus.Off);
-            if (!args.Performer.TryGetComponent<ServerUserInterfaceComponent>(out var serverUi)) return;
-            if (!args.Performer.TryGetComponent<ActorComponent>(out var actor)) return;
-			if (!serverUi.TryGetBoundUserInterface(InstrumentUiKey.Key,out var bui)) return;
-
+            //  Close the instrument interface if it was open
+            //  before closing
+            if (EntityManager.TryGetComponent<ServerUserInterfaceComponent>(uid, out var serverUi))
+            if (EntityManager.TryGetComponent<ActorComponent>(uid, out var actor))
+            if (serverUi.TryGetBoundUserInterface(InstrumentUiKey.Key,out var bui))
 			bui.Close(actor.PlayerSession);
+
+            //  Stop instrument
             if (EntityManager.TryGetComponent<InstrumentComponent>(uid, out var instrument)) _instrumentSystem.Clean(uid, instrument);
             if (EntityManager.TryGetComponent<MetaDataComponent>(uid, out var metadata))
             {
