@@ -290,7 +290,6 @@
       proper: true
   - type: StandingState
   - type: DoorBumpOpener
-
 - type: entity
   save: false
   name: Urist McHands

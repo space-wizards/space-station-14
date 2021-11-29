@@ -315,7 +315,9 @@ namespace Content.Client.Entry
             "GhostRadio",
             "Armor",
             "Udder",
-            "PneumaticCannon"
+            "PneumaticCannon",
+            "Spreader",
+            "GrowingKudzu"
         };
     }
 }
