@@ -4,6 +4,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Popups;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
+using Content.Shared.Database;
 using Content.Shared.Popups;
 using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;

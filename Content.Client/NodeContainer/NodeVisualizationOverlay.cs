@@ -142,6 +142,7 @@ namespace Content.Client.NodeContainer
             foreach (var (gridId, gridDict) in _gridIndex)
             {
                 var grid = _mapManager.GetGrid(gridId);
+                var lCursorBox = grid.InvWorldMatrix.TransformBox(cursorBox);
                 foreach (var (pos, list) in gridDict)
                 {
                     var centerPos = (Vector2) pos + grid.TileSize / 2f;
@@ -152,7 +153,7 @@ namespace Content.Client.NodeContainer
                     foreach (var (group, node) in list)
                     {
                         var nodePos = centerPos + (offset, offset);
-                        if (cursorBox.Contains(nodePos))
+                        if (lCursorBox.Contains(nodePos))
                             _hovered = (group.NetId, node.NetId);
 
                         _nodeIndex[(group.NetId, node.NetId)] = new NodeRenderData(group, node, nodePos);
