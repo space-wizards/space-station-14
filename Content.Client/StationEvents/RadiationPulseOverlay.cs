@@ -16,7 +16,6 @@ namespace Content.Client.StationEvents
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         private const float MaxDist = 15.0f;
@@ -26,43 +25,46 @@ namespace Content.Client.StationEvents
 
         private TimeSpan _lastTick = default;
 
-        private readonly ShaderInstance _shader;
-        private readonly Dictionary<EntityUid, RadiationShaderInstance> _pulses = new();
+        private readonly ShaderInstance _baseShader;
+        private readonly Dictionary<EntityUid, (ShaderInstance shd, RadiationShaderInstance instance)> _pulses = new();
 
         public RadiationPulseOverlay()
         {
             IoCManager.InjectDependencies(this);
-            _shader = _prototypeManager.Index<ShaderPrototype>("Radiation").Instance().Duplicate();
+            _baseShader = _prototypeManager.Index<ShaderPrototype>("Radiation").Instance().Duplicate();
         }
-
-        /* public override bool OverwriteTargetFrameBuffer() */
-        /* { */
-        /*     return _pulses.Count > 0; */
-        /* } */
 
         protected override void Draw(in OverlayDrawArgs args)
         {
             RadiationQuery(args.Viewport.Eye);
 
-            var viewportWB = _eyeManager.GetWorldViewport();
-            // Has to be correctly handled because of the way intensity/falloff transform works so just do it.
-            _shader?.SetParameter("renderScale", args.Viewport.RenderScale);
-            foreach (RadiationShaderInstance instance in _pulses.Values)
+            if (_pulses.Count == 0)
+                return;
+
+            if (ScreenTexture == null)
+                return;
+
+            var worldHandle = args.WorldHandle;
+            var viewport = args.Viewport;
+
+            foreach ((var shd, var instance) in _pulses.Values)
             {
                 // To be clear, this needs to use "inside-viewport" pixels.
                 // In other words, specifically NOT IViewportControl.WorldToScreen (which uses outer coordinates).
-                var tempCoords = args.Viewport.WorldToLocal(instance.CurrentMapCoords);
-                tempCoords.Y = args.Viewport.Size.Y - tempCoords.Y;
-                _shader?.SetParameter("positionInput", tempCoords);
-                _shader?.SetParameter("range", instance.Range);
-                _shader?.SetParameter("life", ((float) _lastTick.TotalSeconds - instance.Start) / (instance.End / instance.Start));
-                if (ScreenTexture != null)
-                    _shader?.SetParameter("SCREEN_TEXTURE", ScreenTexture);
+                var tempCoords = viewport.WorldToLocal(instance.CurrentMapCoords);
+                tempCoords.Y = viewport.Size.Y - tempCoords.Y;
+                shd?.SetParameter("renderScale", viewport.RenderScale);
+                shd?.SetParameter("positionInput", tempCoords);
+                shd?.SetParameter("range", instance.Range);
+                var life = (_lastTick - instance.Start) / (instance.End - instance.Start);
+                shd?.SetParameter("life", (float) life);
 
-                var worldHandle = args.WorldHandle;
-                worldHandle.UseShader(_shader);
-                /* worldHandle.DrawCircle(instance.CurrentMapCoords, instance.Range + 2.0f, Color.White); */
-                worldHandle.DrawRect(viewportWB, Color.White);
+                // There's probably a very good reason not to do this.
+                // Oh well!
+                shd?.SetParameter("SCREEN_TEXTURE", viewport.RenderTarget.Texture);
+
+                worldHandle.UseShader(shd);
+                worldHandle.DrawRect(Box2.CenteredAround(instance.CurrentMapCoords, new Vector2(instance.Range, instance.Range) * 2f), Color.White);
             }
         }
 
@@ -88,11 +90,14 @@ namespace Content.Client.StationEvents
                 {
                     _pulses.Add(
                             pulseEntity.Uid,
-                            new RadiationShaderInstance(
-                                pulseEntity.Transform.MapPosition.Position,
-                                pulse.Range,
-                                (float) _lastTick.TotalSeconds,
-                                (float) pulse.EndTime.TotalSeconds
+                            (
+                                _baseShader.Duplicate(),
+                                new RadiationShaderInstance(
+                                    pulseEntity.Transform.MapPosition.Position,
+                                    pulse.Range,
+                                    pulse.StartTime,
+                                    pulse.EndTime
+                                )
                             )
                     );
                 }
@@ -106,9 +111,10 @@ namespace Content.Client.StationEvents
                     pulseEntity.TryGetComponent<RadiationPulseComponent>(out var pulse))
                 {
                     var shaderInstance = _pulses[activePulseUid];
-                    shaderInstance.CurrentMapCoords = pulseEntity.Transform.MapPosition.Position;
-                    shaderInstance.Range = pulse.Range;
+                    shaderInstance.instance.CurrentMapCoords = pulseEntity.Transform.MapPosition.Position;
+                    shaderInstance.instance.Range = pulse.Range;
                 } else {
+                    _pulses[activePulseUid].shd.Dispose();
                     _pulses.Remove(activePulseUid);
                 }
             }
@@ -120,12 +126,12 @@ namespace Content.Client.StationEvents
             return pulseEntity.Transform.MapID == currentEyeLoc.MapId && pulseEntity.Transform.Coordinates.InRange(_entityManager, EntityCoordinates.FromMap(_entityManager, pulseEntity.Transform.ParentUid, currentEyeLoc), MaxDist);
         }
 
-        private sealed record RadiationShaderInstance(Vector2 CurrentMapCoords, float Range, float Start, float End)
+        private sealed record RadiationShaderInstance(Vector2 CurrentMapCoords, float Range, TimeSpan Start, TimeSpan End)
         {
             public Vector2 CurrentMapCoords = CurrentMapCoords;
             public float Range = Range;
-            public float Start = Start;
-            public float End = End;
+            public TimeSpan Start = Start;
+            public TimeSpan End = End;
         };
     }
 }

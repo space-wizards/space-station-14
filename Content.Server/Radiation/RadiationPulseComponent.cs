@@ -22,6 +22,7 @@ namespace Content.Server.Radiation
         private float _duration;
         private float _radsPerSecond = 8f;
         private float _range = 5f;
+        private TimeSpan _startTime;
         private TimeSpan _endTime;
         private bool _draw = true;
         private bool _decay = true;
@@ -82,6 +83,7 @@ namespace Content.Server.Radiation
             }
         }
 
+        public override TimeSpan StartTime => _startTime;
         public override TimeSpan EndTime => _endTime;
 
         public void DoPulse()
@@ -89,6 +91,7 @@ namespace Content.Server.Radiation
             if (Decay)
             {
                 var currentTime = _gameTiming.CurTime;
+                _startTime = currentTime;
                 _duration = _random.NextFloat() * (MaxPulseLifespan - MinPulseLifespan) + MinPulseLifespan;
                 _endTime = currentTime + TimeSpan.FromSeconds(_duration);
             }
@@ -100,7 +103,7 @@ namespace Content.Server.Radiation
 
         public override ComponentState GetComponentState(ICommonSession player)
         {
-            return new RadiationPulseState(_radsPerSecond, _range, Draw, Decay, _endTime);
+            return new RadiationPulseState(_radsPerSecond, _range, Draw, Decay, _startTime, _endTime);
         }
 
         public void Update(float frameTime)

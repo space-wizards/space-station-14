@@ -41,7 +41,7 @@ highp float fbm(highp vec2 uv) {
 void fragment() {
 	highp vec2 finalCoords = (FRAGCOORD.xy - positionInput) / (renderScale * 32.0);
 	highp float distanceToCenter = length(finalCoords);
-	highp float nlife = pow(sin(life * 1.5707963) * 1.5, 0.5);
+	highp float nlife = pow(sin(life * 3.141592), 0.5);
 	highp float on = ((range - distanceToCenter) / range);
 	highp float n = on;
 	highp vec2 fcOffset = vec2(fbm(finalCoords.xy + life / 2.0),fbm(finalCoords.yx + life / 2.0));
@@ -81,7 +81,19 @@ void fragment() {
 
 	p = clamp(p, 0.0, 1.0);
 
-	COLOR = zTextureSpec(SCREEN_TEXTURE, (FRAGCOORD.xy*SCREEN_PIXEL_SIZE)+clamp(on*nlife*(fcOffset/8.0), 0.0, 1.0))
-		+ vec4(mix(rCol, lCol, vec3(p)), a);
-		// FYI: If you want a smoother mix, swap lCol and rCol above.
+	highp vec4 warped = zTextureSpec(SCREEN_TEXTURE, (FRAGCOORD.xy*SCREEN_PIXEL_SIZE)+clamp(on*nlife*(fcOffset/8.0), 0.0, 1.0));
+
+	// Extremely hacky way to detect FoV cones
+	highp float osum = warped.r + warped.g + warped.b;
+	highp float osr = osum > 0.1 ? 1.0 : 10 * osum;
+
+	// Apply overlay
+	// FYI: If you want a smoother mix, swap lCol and rCol.
+	warped += mix(
+		vec4(0.0),
+		vec4(mix(rCol, lCol, vec3(p)), a),
+		osr
+	);
+
+	COLOR = warped;
 }
