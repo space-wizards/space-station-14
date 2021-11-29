@@ -1,8 +1,11 @@
 using System.Threading.Tasks;
+using Content.Server.Administration.Logs;
 using Content.Server.Stack;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Stacks;
@@ -62,7 +65,15 @@ namespace Content.Server.Medical.Components
                 return true;
             }
 
-            EntitySystem.Get<DamageableSystem>().TryChangeDamage(eventArgs.Target.Uid, Damage, true);
+            var healed = EntitySystem.Get<DamageableSystem>().TryChangeDamage(eventArgs.Target.Uid, Damage, true);
+
+            if (healed == null)
+                return true;
+
+            if (eventArgs.Target != eventArgs.User)
+                EntitySystem.Get<AdminLogSystem>().Add(LogType.Healed, $"{eventArgs.User} healed {eventArgs.Target} for {healed.Total} damage");
+            else
+                EntitySystem.Get<AdminLogSystem>().Add(LogType.Healed, $"{eventArgs.User} healed themselves for {healed.Total} damage");
 
             return true;
         }

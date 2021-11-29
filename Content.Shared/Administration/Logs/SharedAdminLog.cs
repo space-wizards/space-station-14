@@ -1,4 +1,5 @@
 ﻿using System;
+using Content.Shared.Database;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Administration.Logs;

@@ -38,6 +38,7 @@ namespace Content.Client.Storage
         private int StorageSizeUsed;
         private int StorageCapacityMax;
         private StorageWindow? _window;
+        public bool UIOpen => _window?.IsOpen ?? false;
 
         public override IReadOnlyList<IEntity> StoredEntities => _storedEntities;
 
