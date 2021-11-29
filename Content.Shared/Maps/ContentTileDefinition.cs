@@ -38,6 +38,9 @@ namespace Content.Shared.Maps
 
         [DataField("thermalConductivity")] public float ThermalConductivity { get; set; } = 0.05f;
 
+        // Heat capacity is opt-in, not opt-out.
+        [DataField("heatCapacity")] public float HeatCapacity = float.PositiveInfinity;
+
         [DataField("item_drop", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string ItemDropPrototypeName { get; } = "FloorTileItemSteel";
 
