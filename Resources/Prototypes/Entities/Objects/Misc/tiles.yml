@@ -342,6 +342,8 @@
     outputs:
       - plating
       - floor_gold
+  - type: Stack
+    stackType: FloorTileGold
 
 - type: entity
   name: silver tile
@@ -356,6 +358,8 @@
     outputs:
       - plating
       - floor_silver
+  - type: Stack
+    stackType: FloorTileSilver
 
 # Circuits
 - type: entity

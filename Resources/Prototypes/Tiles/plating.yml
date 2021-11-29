@@ -21,6 +21,7 @@
   friction: 0.5
   is_space: true
 
+# TODO kill underplating and all its usages since it is deprecated
 - type: tile
   name: underplating
   display_name: underplating

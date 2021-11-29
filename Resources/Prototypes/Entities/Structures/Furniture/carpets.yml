@@ -1,3 +1,4 @@
+# TODO move all of this to tiles once tile smoothing is supported
 - type: entity
   id: CarpetBase
   parent: BaseStructure
@@ -31,7 +32,6 @@
           - !type:DoActsBehavior
             acts: [ "Destruction" ]
 
-# TODO rename this ID and all its usages in maps to CarpetRed
 - type: entity
   id: Carpet
   parent: CarpetBase
