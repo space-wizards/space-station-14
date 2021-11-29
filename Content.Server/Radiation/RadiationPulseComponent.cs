@@ -59,7 +59,7 @@ namespace Content.Server.Radiation
             }
         }
 
-        [DataField("sound")] public SoundSpecifier Sound { get; set; } = new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/laser3.ogg");
+        [DataField("sound")] public SoundSpecifier Sound { get; set; } = new SoundCollectionSpecifier("RadiationPulse");
 
         [DataField("range")]
         public override float Range
