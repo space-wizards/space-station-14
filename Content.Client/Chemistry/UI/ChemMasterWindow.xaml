@@ -27,12 +27,6 @@
             </BoxContainer>
         </PanelContainer>
         <Control MinSize="0 10" />
-        <!-- Labels for pills/bottles -->
-        <BoxContainer Orientation="Horizontal">
-            <Label Name="CurrentTextLabel" Text="{Loc 'chem-master-current-text-label'}" />
-            <Control HorizontalExpand="True" />
-            <LineEdit Name="LabelLineEdit" MinSize="170 0"/>
-        </BoxContainer>
         <!-- Buffer -->
         <BoxContainer Orientation="Horizontal">
             <Label Text="{Loc 'chem-master-window-buffer-text'}" />
@@ -72,47 +66,50 @@
                 <PanelContainer.PanelOverride>
                     <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
                 </PanelContainer.PanelOverride>
-                <!-- Packaging options -->
+                <!-- Packaging Info -->
                 <BoxContainer Orientation="Vertical"
-                              HorizontalExpand="True">
-                    <!-- Packaging Info -->
-                    <BoxContainer Orientation="Vertical"
-                                  HorizontalExpand="True">
-                        <BoxContainer Orientation="Horizontal">
-                            <!-- Pills Type Buttons -->
-                            <Label Text="{Loc 'chem-master-window-pill-type-label'}"/>
-                            <Control HorizontalExpand="True"
-                                     MinSize="50 0"></Control>
-                            <GridContainer Name="Grid" Columns="10">
-                                <!-- Pills type buttons are generated in the code -->
-                            </GridContainer>
-                        </BoxContainer>
-                        <BoxContainer Orientation="Horizontal">
-                            <Label Text="{Loc 'chem-master-window-pills-label'}" />
-                            <Control HorizontalExpand="True"
-                                     MinSize="50 0" />
-                            <SpinBox Name="PillAmount"
-                                     Access="Public"
-                                     Value="1" />
-                            <Button Name="CreatePillButton"
+                                HorizontalExpand="True"
+                                VerticalExpand="True"
+                                SeparationOverride="5">
+                    <!-- Label for output -->
+                    <BoxContainer Orientation="Horizontal">
+                        <Label Text="{Loc 'chem-master-current-text-label'}" />
+                        <Control HorizontalExpand="True" MinSize="50 0"/>
+                        <LineEdit Name="LabelLineEdit" SetWidth="455"/>
+                    </BoxContainer>
+                    <!-- Pills Type Buttons -->
+                    <BoxContainer Orientation="Horizontal">
+                        <Label Text="{Loc 'chem-master-window-pill-type-label'}"/>
+                        <Control HorizontalExpand="True" MinSize="50 0"/>
+                        <GridContainer Name="Grid" Columns="10">
+                            <!-- Pills type buttons are generated in the code -->
+                        </GridContainer>
+                    </BoxContainer>
+                    <BoxContainer Orientation="Horizontal">
+                        <Label Text="{Loc 'chem-master-window-pills-label'}" />
+                        <Control HorizontalExpand="True"
+                                    MinSize="50 0" />
+                        <SpinBox Name="PillAmount"
                                     Access="Public"
-                                    Text="{Loc 'chem-master-window-create-pill-button'}" />
-                            <Label Text="{Loc 'chem-master-window-max-pills-volume-text'}"
-                                   StyleClasses="LabelSecondaryColor" />
-                        </BoxContainer>
-                        <BoxContainer Orientation="Horizontal">
-                            <Label Text="{Loc 'chem-master-window-bottles-label'}" />
-                            <Control HorizontalExpand="True"
-                                     MinSize="50 0" />
-                            <SpinBox Name="BottleAmount"
-                                     Access="Public"
-                                     Value="1" />
-                            <Button Name="CreateBottleButton"
+                                    Value="1" />
+                        <Button Name="CreatePillButton"
+                                Access="Public"
+                                Text="{Loc 'chem-master-window-create-pill-button'}" />
+                        <Label Text="{Loc 'chem-master-window-max-pills-volume-text'}"
+                                StyleClasses="LabelSecondaryColor" />
+                    </BoxContainer>
+                    <BoxContainer Orientation="Horizontal">
+                        <Label Text="{Loc 'chem-master-window-bottles-label'}" />
+                        <Control HorizontalExpand="True"
+                                    MinSize="50 0" />
+                        <SpinBox Name="BottleAmount"
                                     Access="Public"
-                                    Text="{Loc 'chem-master-window-create-bottle-button'}" />
-                            <Label Text="{Loc 'chem-master-window-max-bottles-volume-text'}"
-                                   StyleClasses="LabelSecondaryColor" />
-                        </BoxContainer>
+                                    Value="1" />
+                        <Button Name="CreateBottleButton"
+                                Access="Public"
+                                Text="{Loc 'chem-master-window-create-bottle-button'}" />
+                        <Label Text="{Loc 'chem-master-window-max-bottles-volume-text'}"
+                                StyleClasses="LabelSecondaryColor" />
                     </BoxContainer>
                 </BoxContainer>
             </PanelContainer>
