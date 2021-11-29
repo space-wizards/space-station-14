@@ -26,7 +26,6 @@ namespace Content.Server.Atmos
         [DataField("moles")] [ViewVariables]
         public float[] Moles = new float[Atmospherics.AdjustedNumberOfGases];
 
-        [DataField("molesArchived")] [ViewVariables]
         public float[] MolesArchived = new float[Atmospherics.AdjustedNumberOfGases];
 
         [DataField("temperature")] [ViewVariables]
@@ -73,7 +72,6 @@ namespace Content.Server.Atmos
             }
         }
 
-        [DataField("temperatureArchived")] [ViewVariables]
         public float TemperatureArchived { get; private set; }
 
         [DataField("volume")] [ViewVariables]
