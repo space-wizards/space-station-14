@@ -1,20 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: Fixed cloning pod neural activity indicator, type: Fix}
-  - {message: Cloning timer reduced to 30 seconds, type: Tweak}
-  id: 176
-  time: '2021-05-11T23:16:08.0000000+00:00'
-- author: StrawberryMoses
-  changes:
-  - {message: Fixed beard saving in character creation, type: Fix}
-  id: 177
-  time: '2021-05-12T01:12:27.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Fixed items with no inhands showing the error sprite., type: Fix}
-  id: 178
-  time: '2021-05-12T22:43:53.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: 'Added a battery charge indicator on examination of substations, APCs,
@@ -2856,3 +2840,29 @@ Entries:
       box UI.', type: Tweak}
   id: 677
   time: '2021-11-28T23:25:22.0000000+00:00'
+- author: artak10t
+  changes:
+  - {message: Added auto labeler for ChemMaster., type: Add}
+  - {message: Added popup messages for ChemMaster buttons., type: Add}
+  id: 678
+  time: '2021-11-29T02:25:23.0000000+00:00'
+- author: moonheart08
+  changes:
+  - {message: 'Nanotrasen has recently obtained reports of a mysterious, extremely
+      fast growing space plant that rapidly consumes entire stations if left unharmed.',
+    type: Add}
+  id: 679
+  time: '2021-11-29T02:25:36.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Added Napalm, a chemical that makes people extremely susceptible to
+      being lit on fire. It''s made using three basic flammable chemicals.', type: Add}
+  - {message: 'Added Phlogiston, a chemical that makes plasma when mixed and lights
+      people on fire on touch. It''s made using phosphorus, a certain acid, and a
+      dangerous but common toxin found in Chemistry.', type: Add}
+  - {message: 'Added Chlorine Trifluoride (CLF3), an extraordinarily dangerous chemical
+      that rips up tiles and will always light people on fire. This one should be
+      pretty self explanatory to make. Be wary about mixing it, as it''s very, very
+      reactive.', type: Add}
+  id: 680
+  time: '2021-11-29T02:25:51.0000000+00:00'
