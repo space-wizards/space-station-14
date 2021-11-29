@@ -92,7 +92,7 @@ namespace Content.Server.Atmos.EntitySystems
                     if(tileCount < Atmospherics.MonstermosHardTileLimit)
                         _equalizeTiles[tileCount++] = adj;
 
-                    if (adj.Air.Immutable)
+                    if (adj.Air.Immutable && MonstermosDepressurization)
                     {
                         // Looks like someone opened an airlock to space!
 
@@ -466,6 +466,7 @@ namespace Content.Server.Atmos.EntitySystems
                     otherTile2.PressureDirection = otherTile.MonstermosInfo.CurrentTransferDirection;
                 }
 
+                otherTile.Air!.Temperature = Atmospherics.TCMB;
                 otherTile.Air?.Clear();
                 InvalidateVisuals(otherTile.GridIndex, otherTile.GridIndices);
                 HandleDecompressionFloorRip(mapGrid, otherTile, sum);
