@@ -2,8 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Temperature.Systems;
 using Content.Shared.Atmos;
-using Content.Shared.Movement.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -31,6 +31,7 @@ public class SpreaderSystem : EntitySystem
     {
         SubscribeLocalEvent<SpreaderComponent, ComponentAdd>(SpreaderAddHandler);
         SubscribeLocalEvent<AirtightChanged>(e => UpdateNearbySpreaders(e.Airtight.OwnerUid, e.Airtight));
+        UpdatesAfter.Add(typeof(TemperatureSystem));
     }
 
     private void SpreaderAddHandler(EntityUid uid, SpreaderComponent component, ComponentAdd args)
