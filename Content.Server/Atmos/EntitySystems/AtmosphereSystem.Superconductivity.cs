@@ -61,8 +61,8 @@ namespace Content.Server.Atmos.EntitySystems
                 return false;
 
             if (tile.Air == null || tile.Air.Temperature < (starting
-                ? Atmospherics.MinimumTemperatureStartSuperConduction
-                : Atmospherics.MinimumTemperatureForSuperconduction))
+                    ? Atmospherics.MinimumTemperatureStartSuperConduction
+                    : Atmospherics.MinimumTemperatureForSuperconduction))
                 return false;
 
             return !(GetHeatCapacity(tile.Air) < Atmospherics.MCellWithRatio)

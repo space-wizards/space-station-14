@@ -6,6 +6,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
+using Content.Shared.Atmos;
 
 namespace Content.Shared.Maps
 {
@@ -39,7 +40,7 @@ namespace Content.Shared.Maps
         [DataField("thermalConductivity")] public float ThermalConductivity { get; set; } = 0.05f;
 
         // Heat capacity is opt-in, not opt-out.
-        [DataField("heatCapacity")] public float HeatCapacity = float.PositiveInfinity;
+        [DataField("heatCapacity")] public float HeatCapacity = Atmospherics.MinimumHeatCapacity;
 
         [DataField("item_drop", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string ItemDropPrototypeName { get; } = "FloorTileItemSteel";
