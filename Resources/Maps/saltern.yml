@@ -44544,28 +44544,28 @@ entities:
     parent: 853
     type: Transform
 - uid: 4129
-  type: CarpetGay
+  type: CarpetPink
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -29.5,-4.5
     parent: 853
     type: Transform
 - uid: 4130
-  type: CarpetGay
+  type: CarpetPink
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -29.5,-5.5
     parent: 853
     type: Transform
 - uid: 4131
-  type: CarpetGay
+  type: CarpetPink
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -28.5,-4.5
     parent: 853
     type: Transform
 - uid: 4132
-  type: CarpetGay
+  type: CarpetPink
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -28.5,-5.5

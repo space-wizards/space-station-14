@@ -1,9 +1,9 @@
 ﻿- type: tile
   name: plating
-  display_name: Plating
+  display_name: plating
   texture: plating
   base_turfs:
-  - underplating
+  - lattice
   is_subfloor: true
   footstep_sounds:
     collection: footstep_plating
@@ -23,7 +23,7 @@
 
 - type: tile
   name: underplating
-  display_name: Underplating
+  display_name: underplating
   texture: underplating
   base_turfs:
   - lattice
