@@ -165,14 +165,17 @@ namespace Content.Server.Guardian
             //the loose parameter toggling is inside the shared component
             if (guardianloose == false)
             {
-                //Ejects the guardian if it isn't inside
-                EntityManager.GetComponent<GuardianHostComponent>(host).EjectBody();
+                //Ejects the guardian if it is inside
+                if (EntityManager.GetComponent<GuardianHostComponent>(host).GuardianContainer.ContainedEntity != null)
+                {
+                    EntityManager.GetComponent<GuardianHostComponent>(host).GuardianContainer.Remove(EntityManager.GetComponent<GuardianHostComponent>(host).GuardianContainer.ContainedEntity);
+                }
             }
             else if (guardianloose == true)
             {
                 //Recalls guardian if it's outside
                 //Message first otherwise it's a dead giveaway
-                _popupSystem.PopupCoordinates(Loc.GetString("guardian-entity-recall"), EntityManager.GetEntity(guardian).Transform.Coordinates, Filter.Pvs(EntityManager.GetEntity(guardian)));
+                _popupSystem.PopupCoordinates(Loc.GetString("guardian-entity-recall"), EntityManager.GetEntity(guardian).Transform.Coordinates, Filter.Pvs(guardian));
                 EntityManager.GetComponent<GuardianHostComponent>(host).GuardianContainer.Insert(EntityManager.GetEntity(guardian));
             }
             //Update the guardian loose value

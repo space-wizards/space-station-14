@@ -33,17 +33,5 @@ namespace Content.Server.Guardian
             base.Initialize();
             GuardianContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "GuardianContainer");
         }
-
-        public void InsertBody(IEntity guardian)
-        {
-            GuardianContainer.Insert(guardian);
-        }
-
-        public void EjectBody()
-        {
-            var containedEntity = GuardianContainer.ContainedEntity;
-            if (containedEntity == null) return;
-            GuardianContainer.Remove(containedEntity);
-        }
     }
 }
