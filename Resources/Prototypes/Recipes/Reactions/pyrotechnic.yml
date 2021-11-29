@@ -35,16 +35,16 @@
       amount: 1
     Fluorine:
       amount: 3
-#  effects:
+  effects:
   # TODO electro's pretty explosions PR make this big and firey!!
   # TODO solution temperature!!
-#  - !type:ExplosionReactionEffect
-#    devastationRange: 0
-#    heavyImpactRange: 0
-#    lightImpactRange: 2
-#    scaled: false
-#  - !type:PopupMessage
-#    messages: [ "clf3-explosion" ]
-#    type: Pvs
+  - !type:ExplosionReactionEffect
+    devastationRange: 0
+    heavyImpactRange: 0
+    lightImpactRange: 2
+    scaled: false
+  - !type:PopupMessage
+    messages: [ "clf3-explosion" ]
+    type: Pvs
   products:
     ChlorineTrifluoride: 4
