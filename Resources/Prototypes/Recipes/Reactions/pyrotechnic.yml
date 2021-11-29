@@ -19,12 +19,12 @@
       amount: 1
     Plasma:
       amount: 1
-#  effects:
-#  - !type:CreateGas
-#    gas: Plasma
-#  - !type:PopupMessage
-#    messages: [ "phlogiston-plasma-created" ]
-#    type: Pvs
+  effects:
+  - !type:CreateGas
+    gas: Plasma
+  - !type:PopupMessage
+    messages: [ "phlogiston-plasma-created" ]
+    type: Pvs
   products:
     Phlogiston: 3
 
