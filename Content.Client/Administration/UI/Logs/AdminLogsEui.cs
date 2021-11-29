@@ -46,16 +46,17 @@ public class AdminLogsEui : BaseEui
         SendMessage(request);
     }
 
-    private void TrySetFirstState(AdminLogsEuiState state)
+    private bool TrySetFirstState(AdminLogsEuiState state)
     {
         if (!FirstState)
         {
-            return;
+            return false;
         }
 
         FirstState = false;
         Window.SetCurrentRound(state.RoundId);
         Window.SetRoundSpinBox(state.RoundId);
+        return true;
     }
 
     public override void Opened()
@@ -67,7 +68,7 @@ public class AdminLogsEui : BaseEui
     {
         var s = (AdminLogsEuiState) state;
 
-        TrySetFirstState(s);
+        var first = TrySetFirstState(s);
 
         if (s.IsLoading)
         {
@@ -76,6 +77,11 @@ public class AdminLogsEui : BaseEui
 
         Window.SetCurrentRound(s.RoundId);
         Window.SetPlayers(s.Players);
+
+        if (first)
+        {
+            RequestLogs();
+        }
     }
 
     public override void HandleMessage(EuiMessageBase msg)

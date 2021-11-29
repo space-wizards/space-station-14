@@ -7,6 +7,7 @@ using Robust.Shared.GameObjects;
 using Robust.Server.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Log;
 
 namespace Content.Server.Solar.EntitySystems
 {
@@ -27,7 +28,7 @@ namespace Content.Server.Solar.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<SolarControlConsoleComponent, ServerBoundUserInterfaceMessage>(OnUIMessage);
+            SubscribeLocalEvent<SolarControlConsoleComponent, SolarControlConsoleAdjustMessage>(OnUIMessage);
         }
 
         public override void Update(float frameTime)
@@ -44,23 +45,17 @@ namespace Content.Server.Solar.EntitySystems
             }
         }
  
-        private void OnUIMessage(EntityUid uid, SolarControlConsoleComponent component, ServerBoundUserInterfaceMessage obj)
+        private void OnUIMessage(EntityUid uid, SolarControlConsoleComponent component, SolarControlConsoleAdjustMessage msg)
         {
-            if (component.Deleted) return;
-            switch (obj.Message)
+            if (double.IsFinite(msg.Rotation))
             {
-                case SolarControlConsoleAdjustMessage msg:
-                    if (double.IsFinite(msg.Rotation))
-                    {
-                        _powerSolarSystem.TargetPanelRotation = msg.Rotation.Reduced();
-                    }
-                    if (double.IsFinite(msg.AngularVelocity))
-                    {
-                        var degrees = msg.AngularVelocity.Degrees;
-                        degrees = Math.Clamp(degrees, -PowerSolarSystem.MaxPanelVelocityDegrees, PowerSolarSystem.MaxPanelVelocityDegrees);
-                        _powerSolarSystem.TargetPanelVelocity = Angle.FromDegrees(degrees);
-                    }
-                    break;
+                _powerSolarSystem.TargetPanelRotation = msg.Rotation.Reduced();
+            }
+            if (double.IsFinite(msg.AngularVelocity))
+            {
+                var degrees = msg.AngularVelocity.Degrees;
+                degrees = Math.Clamp(degrees, -PowerSolarSystem.MaxPanelVelocityDegrees, PowerSolarSystem.MaxPanelVelocityDegrees);
+                _powerSolarSystem.TargetPanelVelocity = Angle.FromDegrees(degrees);
             }
         }
 

@@ -54,7 +54,7 @@ namespace Content.Shared.CCVar
             GameLobbyEnabled = CVarDef.Create("game.lobbyenabled", false, CVar.ARCHIVE);
 
         public static readonly CVarDef<int>
-            GameLobbyDuration = CVarDef.Create("game.lobbyduration", 60, CVar.ARCHIVE);
+            GameLobbyDuration = CVarDef.Create("game.lobbyduration", 150, CVar.ARCHIVE);
 
         public static readonly CVarDef<bool>
             GameDisallowLateJoins = CVarDef.Create("game.disallowlatejoins", false, CVar.ARCHIVE | CVar.SERVERONLY);
@@ -137,7 +137,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("traitor.min_players", 5);
 
         public static readonly CVarDef<int> TraitorMaxTraitors =
-            CVarDef.Create("traitor.max_traitors", 4);
+            CVarDef.Create("traitor.max_traitors", 7);
 
         public static readonly CVarDef<int> TraitorPlayersPerTraitor =
             CVarDef.Create("traitor.players_per_traitor", 5);
@@ -149,7 +149,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("traitor.starting_balance", 20);
 
         public static readonly CVarDef<int> TraitorMaxDifficulty =
-            CVarDef.Create("traitor.max_difficulty", 4);
+            CVarDef.Create("traitor.max_difficulty", 6);
 
         public static readonly CVarDef<int> TraitorMaxPicks =
             CVarDef.Create("traitor.max_picks", 20);
@@ -298,11 +298,17 @@ namespace Content.Shared.CCVar
          * Admin logs
          */
 
+        public static readonly CVarDef<bool> AdminLogsEnabled =
+            CVarDef.Create("adminlogs.enabled", true, CVar.SERVERONLY);
+
         public static readonly CVarDef<float> AdminLogsQueueSendDelay =
             CVarDef.Create("adminlogs.queue_send_delay_seconds", 5f, CVar.SERVERONLY);
 
         public static readonly CVarDef<int> AdminLogsQueueMax =
             CVarDef.Create("adminlogs.queue_max", 5000, CVar.SERVERONLY);
+
+        public static readonly CVarDef<int> AdminLogsPreRoundQueueMax =
+            CVarDef.Create("adminlogs.pre_round_queue_max", 5000, CVar.SERVERONLY);
 
         // How many logs to send to the client at once
         public static readonly CVarDef<int> AdminLogsClientBatchSize =
