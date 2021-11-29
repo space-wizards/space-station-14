@@ -358,8 +358,6 @@
     outputs:
       - plating
       - floor_silver
-  - type: Stack
-    stackType: FloorTileSilver
 
 # Circuits
 - type: entity
