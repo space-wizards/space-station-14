@@ -31,7 +31,6 @@ public class SpreaderSystem : EntitySystem
     {
         SubscribeLocalEvent<SpreaderComponent, ComponentAdd>(SpreaderAddHandler);
         SubscribeLocalEvent<AirtightChanged>(e => UpdateNearbySpreaders(e.Airtight.OwnerUid, e.Airtight));
-        UpdatesAfter.Add(typeof(TemperatureSystem));
     }
 
     private void SpreaderAddHandler(EntityUid uid, SpreaderComponent component, ComponentAdd args)
