@@ -4,6 +4,7 @@ using Content.Server.Projectiles.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
 using Content.Shared.Damage;
+using Content.Shared.Database;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -57,9 +58,8 @@ namespace Content.Server.Projectiles
                 component.DamagedEntity = true;
 
                 if (dmg is not null && EntityManager.TryGetEntity(component.Shooter, out var shooter))
-                    _adminLogSystem.Add(LogType.BulletHit, LogImpact.Low, $"Bullet shot by {shooter} hit {otherEntity}");
-                // "DamagedEntity" is misleading. Hit entity may be more accurate, as the damage may have been resisted
-                // by resistance sets.
+                    _adminLogSystem.Add(LogType.BulletHit, LogImpact.Low,
+                        $"Projectile {component.Owner} shot by {shooter} hit {otherEntity} and dealt {dmg.Total} damage");
             }
 
             // Damaging it can delete it

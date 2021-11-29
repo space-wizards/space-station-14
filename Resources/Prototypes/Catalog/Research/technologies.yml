@@ -222,6 +222,8 @@
     - RCDAmmo
     - FlashlightLantern
     - FireExtinguisher
+    - AutolatheMachineCircuitboard
+    - ProtolatheMachineCircuitboard
 
 - type: technology
   name: material sheet printing

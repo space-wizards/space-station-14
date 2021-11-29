@@ -70,5 +70,10 @@ namespace Content.Server.Temperature.Components
         [DataField("damageCap")]
         [ViewVariables(VVAccess.ReadWrite)]
         public FixedPoint2 DamageCap = FixedPoint2.New(8);
+
+        /// <summary>
+        ///     Used to keep track of when damage starts/stops. Useful for logs.
+        /// </summary>
+        public bool TakingDamage = false;
     }
 }

@@ -17,6 +17,7 @@ using Content.Server.Speech.Components;
 using Content.Server.Station;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CharacterAppearance.Systems;
+using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
 using Content.Shared.Inventory;
@@ -134,7 +135,7 @@ namespace Content.Server.GameTicking
                 jobSpecial.AfterEquip(mob);
             }
 
-            _stationSystem.TryAssignJobToStation(station, jobId);
+            _stationSystem.TryAssignJobToStation(station, jobPrototype);
 
             if (lateJoin)
                 _adminLogSystem.Add(LogType.LateJoin, LogImpact.Medium, $"Player {player.Name} late joined as {character.Name:characterName} on station {_stationSystem.StationInfo[station].Name:stationName} with {mob} as a {job.Name:jobName}.");

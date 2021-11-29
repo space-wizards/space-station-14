@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Sound;
 using Robust.Shared.Prototypes;
