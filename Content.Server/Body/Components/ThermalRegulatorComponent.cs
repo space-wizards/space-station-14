@@ -59,4 +59,6 @@ public class ThermalRegulatorComponent : Component
     /// </summary>
     [DataField("thermalRegulationTemperatureThreshold")]
     public float ThermalRegulationTemperatureThreshold { get; private set; }
+
+    public float AccumulatedFrametime;
 }

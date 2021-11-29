@@ -17,6 +17,11 @@ public class ThermalRegulatorSystem : EntitySystem
     {
         foreach (var regulator in EntityManager.EntityQuery<ThermalRegulatorComponent>())
         {
+            regulator.AccumulatedFrametime += frameTime;
+            if (regulator.AccumulatedFrametime < 1)
+                continue;
+
+            regulator.AccumulatedFrametime -= 1;
             ProcessThermalRegulation(regulator.OwnerUid, regulator);
         }
     }
