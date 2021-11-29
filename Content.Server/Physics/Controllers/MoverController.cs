@@ -204,9 +204,9 @@ namespace Content.Server.Physics.Controllers
 
                         speed /= 10f;
 
-                        if (body.LinearVelocity.LengthSquared < 1f)
+                        if (body.LinearVelocity.LengthSquared < 0.5f)
                         {
-                            speed *= 10f;
+                            speed *= 5f;
                         }
 
                         body.ApplyLinearImpulse(
@@ -226,9 +226,9 @@ namespace Content.Server.Physics.Controllers
                     body.AngularDamping = shuttleSystem.ShuttleMovingAngularDamping;
                     var angularSpeed = shuttle.AngularThrust;
 
-                    if (body.AngularVelocity < 1f)
+                    if (body.AngularVelocity < 0.5f)
                     {
-                        angularSpeed *= 10f;
+                        angularSpeed *= 5f;
                     }
 
                     // Scale rotation by mass just to make rotating larger things a bit more bearable.

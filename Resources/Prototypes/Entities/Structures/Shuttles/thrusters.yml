@@ -70,7 +70,7 @@
   components:
   - type: Thruster
     thrusterType: Angular
-    impulse: 600
+    impulse: 200
   - type: Sprite
     # Listen I'm not the biggest fan of the sprite but it was the most appropriate thing I could find.
     sprite: Structures/Shuttles/gyroscope.rsi
