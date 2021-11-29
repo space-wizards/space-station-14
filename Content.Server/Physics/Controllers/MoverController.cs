@@ -138,10 +138,9 @@ namespace Content.Server.Physics.Controllers
                 var count = pilots.Count;
                 linearInput /= count;
                 angularInput /= count;
-                var linearLength = linearInput.Length;
 
                 // Handle shuttle movement
-                if (linearLength.Equals(0f))
+                if (linearInput.Length.Equals(0f))
                 {
                     thrusterSystem.DisableLinearThrusters(shuttle);
                     body.LinearDamping = shuttleSystem.ShuttleIdleLinearDamping;
@@ -176,15 +175,36 @@ namespace Content.Server.Physics.Controllers
                             continue;
                         }
 
+                        float length;
+
+                        switch (dir)
+                        {
+                            case DirectionFlag.North:
+                                length = linearInput.Y;
+                                break;
+                            case DirectionFlag.South:
+                                length = -linearInput.Y;
+                                break;
+                            case DirectionFlag.East:
+                                length = linearInput.X;
+                                break;
+                            case DirectionFlag.West:
+                                length = -linearInput.X;
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
+
                         thrusterSystem.EnableLinearThrustDirection(shuttle, dir);
 
                         // TODO: This isn't taking the inputs correctly for length / angle so need to do that.
+                        // Need to get direction as an angle and then use that for rotation; also need to multiply it by linearInput length in that direction
                         var index = (int) Math.Log2((int) dir);
-                        var speed = shuttle.LinearThrusterImpulse[index] * linearLength;
+                        var speed = shuttle.LinearThrusterImpulse[index] * length;
 
                         speed /= 10f;
 
-                        if (body.LinearVelocity.LengthSquared == 0f)
+                        if (body.LinearVelocity.LengthSquared < 1f)
                         {
                             speed *= 10f;
                         }
@@ -206,7 +226,7 @@ namespace Content.Server.Physics.Controllers
                     body.AngularDamping = shuttleSystem.ShuttleMovingAngularDamping;
                     var angularSpeed = shuttle.AngularThrust;
 
-                    if (body.AngularVelocity.Equals(0f))
+                    if (body.AngularVelocity < 1f)
                     {
                         angularSpeed *= 10f;
                     }
