@@ -63,7 +63,8 @@ SERVER_IGNORED_RESOURCES = {
 SERVER_CONTENT_ASSEMBLIES = [
     "Content.Server.Database",
     "Content.Server",
-    "Content.Shared"
+    "Content.Shared",
+    "Content.Shared.Database"
 ]
 
 # Extra assemblies to copy on the server, with a startswith

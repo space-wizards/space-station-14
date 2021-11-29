@@ -1,12 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.Administration.Logs;
 using Content.Server.Alert;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Temperature.Components;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
+using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -17,6 +20,7 @@ namespace Content.Server.Temperature.Systems
     {
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+        [Dependency] private readonly AdminLogSystem _logSystem = default!;
 
         /// <summary>
         ///     All the components that will have their damage updated at the end of the tick.
@@ -160,16 +164,33 @@ namespace Content.Server.Temperature.Systems
 
             if (temperature.CurrentTemperature >= temperature.HeatDamageThreshold)
             {
+                if (!temperature.TakingDamage)
+                {
+                    _logSystem.Add(LogType.Temperature, $"{temperature.Owner} started taking high temperature damage");
+                    temperature.TakingDamage = true;
+                }
+
                 var diff = Math.Abs(temperature.CurrentTemperature - temperature.HeatDamageThreshold);
                 var tempDamage = c / (1 + a * Math.Pow(Math.E, -heatK * diff)) - y;
                 _damageableSystem.TryChangeDamage(uid, temperature.HeatDamage * tempDamage);
             }
             else if (temperature.CurrentTemperature <= temperature.ColdDamageThreshold)
             {
+                if (!temperature.TakingDamage)
+                {
+                    _logSystem.Add(LogType.Temperature, $"{temperature.Owner} started taking low temperature damage");
+                    temperature.TakingDamage = true;
+                }
+
                 var diff = Math.Abs(temperature.CurrentTemperature - temperature.ColdDamageThreshold);
                 var tempDamage =
                     Math.Sqrt(diff * (Math.Pow(temperature.DamageCap.Double(), 2) / temperature.ColdDamageThreshold));
                 _damageableSystem.TryChangeDamage(uid, temperature.ColdDamage * tempDamage);
+            }
+            else if (temperature.TakingDamage)
+            {
+                _logSystem.Add(LogType.Temperature, $"{temperature.Owner} stopped taking temperature damage");
+                temperature.TakingDamage = false;
             }
         }
 

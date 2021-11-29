@@ -1,4 +1,5 @@
 using Content.Server.Atmos.Components;
+using Content.Server.Kudzu;
 using Content.Shared.Atmos;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -13,6 +14,7 @@ namespace Content.Server.Atmos.EntitySystems
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+        [Dependency] private readonly SpreaderSystem _spreaderSystem = default!;
 
         public override void Initialize()
         {
@@ -43,6 +45,7 @@ namespace Content.Server.Atmos.EntitySystems
             SetAirblocked(airtight, false);
 
             InvalidatePosition(airtight.LastPosition.Item1, airtight.LastPosition.Item2, airtight.FixVacuum);
+            RaiseLocalEvent(new AirtightChanged(airtight));
         }
 
         private void OnMapInit(EntityUid uid, AirtightComponent airtight, MapInitEvent args)
@@ -69,12 +72,14 @@ namespace Content.Server.Atmos.EntitySystems
 
             airtight.CurrentAirBlockedDirection = (int) Rotate((AtmosDirection)airtight.InitialAirBlockedDirection, ev.NewRotation);
             UpdatePosition(airtight);
+            RaiseLocalEvent(uid, new AirtightChanged(airtight));
         }
 
         public void SetAirblocked(AirtightComponent airtight, bool airblocked)
         {
             airtight.AirBlocked = airblocked;
             UpdatePosition(airtight);
+            RaiseLocalEvent(airtight.OwnerUid, new AirtightChanged(airtight));
         }
 
         public void UpdatePosition(AirtightComponent airtight)
@@ -117,6 +122,16 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             return newAirBlockedDirs;
+        }
+    }
+
+    public class AirtightChanged : EntityEventArgs
+    {
+        public AirtightComponent Airtight;
+
+        public AirtightChanged(AirtightComponent airtight)
+        {
+            Airtight = airtight;
         }
     }
 }

@@ -8,7 +8,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.GameTicking.Commands
 {
-    [AdminCommand(AdminFlags.Server)]
+    [AdminCommand(AdminFlags.Round)]
     public class RestartRoundCommand : IConsoleCommand
     {
         public string Command => "restartround";
@@ -29,7 +29,7 @@ namespace Content.Server.GameTicking.Commands
         }
     }
 
-    [AdminCommand(AdminFlags.Server)]
+    [AdminCommand(AdminFlags.Round)]
     public class RestartRoundNowCommand : IConsoleCommand
     {
         public string Command => "restartroundnow";

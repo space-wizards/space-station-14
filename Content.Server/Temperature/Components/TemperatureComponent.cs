@@ -45,7 +45,7 @@ namespace Content.Server.Temperature.Components
         {
             get
             {
-                if (Owner.TryGetComponent<IPhysBody>(out var physics))
+                if (Owner.TryGetComponent<IPhysBody>(out var physics) && physics.Mass != 0)
                 {
                     return SpecificHeat * physics.Mass;
                 }
@@ -70,5 +70,10 @@ namespace Content.Server.Temperature.Components
         [DataField("damageCap")]
         [ViewVariables(VVAccess.ReadWrite)]
         public FixedPoint2 DamageCap = FixedPoint2.New(8);
+
+        /// <summary>
+        ///     Used to keep track of when damage starts/stops. Useful for logs.
+        /// </summary>
+        public bool TakingDamage = false;
     }
 }
