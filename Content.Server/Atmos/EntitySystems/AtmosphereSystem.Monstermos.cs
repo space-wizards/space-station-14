@@ -18,11 +18,6 @@ namespace Content.Server.Atmos.EntitySystems
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
-        /// <summary>
-        ///     Threshold for logging explosive depressurization.
-        /// </summary>
-        private const float DepressurizationLogThreshold = Atmospherics.MolesCellStandard * 10;
-
         private readonly TileAtmosphereComparer _monstermosComparer = new();
 
         private readonly TileAtmosphere?[] _equalizeTiles = new TileAtmosphere[Atmospherics.MonstermosHardTileLimit];
@@ -467,7 +462,7 @@ namespace Content.Server.Atmos.EntitySystems
                 }
 
                 otherTile.Air!.Temperature = Atmospherics.TCMB;
-                otherTile.Air?.Clear();
+                otherTile.Air.Clear();
                 InvalidateVisuals(otherTile.GridIndex, otherTile.GridIndices);
                 HandleDecompressionFloorRip(mapGrid, otherTile, sum);
             }
@@ -483,7 +478,7 @@ namespace Content.Server.Atmos.EntitySystems
                 gridPhysics.ApplyAngularImpulse(Vector2.Cross(tile.GridIndices - gridPhysics.LocalCenter, direction) * totalMolesRemoved);
             }
 
-            if(totalMolesRemoved > DepressurizationLogThreshold)
+            if(tileCount > 10 && (totalMolesRemoved / tileCount) > 20)
                 _adminLog.Add(LogType.ExplosiveDepressurization, LogImpact.High,
                     $"Explosive depressurization removed {totalMolesRemoved} moles from {tileCount} tiles starting from position {tile.GridIndices:position} on grid ID {tile.GridIndex:grid}");
 
