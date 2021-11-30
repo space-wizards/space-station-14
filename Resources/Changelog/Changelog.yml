@@ -1,12 +1,6 @@
 Entries:
 - author: 20kdc
   changes:
-  - {message: 'Added a battery charge indicator on examination of substations, APCs,
-      and SMESes.', type: Add}
-  id: 179
-  time: '2021-05-12T23:10:58.0000000+00:00'
-- author: 20kdc
-  changes:
   - {message: '"Kill X" traitor goal will no longer consider gibbed bodies (brains)
       "alive"', type: Fix}
   id: 180
@@ -2866,3 +2860,8 @@ Entries:
       reactive.', type: Add}
   id: 680
   time: '2021-11-29T02:25:51.0000000+00:00'
+- author: FoLoKe
+  changes:
+  - {message: Added space carps "dead" sprite, type: Add}
+  id: 681
+  time: '2021-11-30T10:12:19.0000000+00:00'
