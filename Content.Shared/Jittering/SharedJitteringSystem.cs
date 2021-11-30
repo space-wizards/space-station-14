@@ -57,8 +57,10 @@ namespace Content.Shared.Jittering
         /// <param name="frequency">Frequency for jittering. See <see cref="MaxFrequency"/> and <see cref="MinFrequency"/>.</param>
         /// <param name="forceValueChange">Whether to change any existing jitter value even if they're greater than the ones we're setting.</param>
         /// <param name="status">The status effects component to modify.</param>
+        /// <param name="alerts">The alerts component.</param>
         public void DoJitter(EntityUid uid, TimeSpan time, float amplitude = 10f, float frequency = 4f, bool forceValueChange = false,
-            StatusEffectsComponent? status=null)
+            StatusEffectsComponent? status = null,
+            SharedAlertsComponent? alerts = null)
         {
             if (!Resolve(uid, ref status, false))
                 return;
@@ -66,7 +68,7 @@ namespace Content.Shared.Jittering
             amplitude = Math.Clamp(amplitude, MinAmplitude, MaxAmplitude);
             frequency = Math.Clamp(frequency, MinFrequency, MaxFrequency);
 
-            if (StatusEffects.TryAddStatusEffect<JitteringComponent>(uid, "Jitter", time, status))
+            if (StatusEffects.TryAddStatusEffect<JitteringComponent>(uid, "Jitter", time, status, alerts))
             {
                 var jittering = EntityManager.GetComponent<JitteringComponent>(uid);
 

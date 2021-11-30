@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
@@ -5,7 +6,6 @@ using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using System.Threading.Tasks;
 
 namespace Content.IntegrationTests.Tests.DeviceNetwork
 {
@@ -28,7 +28,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
   id: DummyWiredNetworkDevice
   components:
     - type: DeviceNetworkComponent
-      deviceNetId: 1
+      deviceNetId: Wired
     - type: WiredNetworkConnection
     - type: ApcPowerReceiver
 
@@ -38,7 +38,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
   components:
     - type: DeviceNetworkComponent
       frequency: 100
-      deviceNetId: 1
+      deviceNetId: Wireless
     - type: WirelessNetworkConnection
       range: 100
         ";
@@ -54,7 +54,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                 }
             };
 
-            var server = StartServerDummyTicker(options);
+            var server = StartServer(options);
 
             await server.WaitIdleAsync();
 
@@ -116,7 +116,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                 }
             };
 
-            var server = StartServerDummyTicker(options);
+            var server = StartServer(options);
 
             await server.WaitIdleAsync();
 
@@ -198,7 +198,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                 }
             };
 
-            var server = StartServerDummyTicker(options);
+            var server = StartServer(options);
 
             await server.WaitIdleAsync();
 

@@ -2,11 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Server.Administration.Logs;
 using Content.Server.Camera;
 using Content.Server.Projectiles.Components;
 using Content.Server.Weapon.Ranged.Ammunition.Components;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
+using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Sound;
@@ -34,7 +37,9 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
     /// All of the ranged weapon components inherit from this to share mechanics like shooting etc.
     /// Only difference between them is how they retrieve a projectile to shoot (battery, magazine, etc.)
     /// </summary>
+#pragma warning disable 618
     public abstract class ServerRangedBarrelComponent : SharedRangedBarrelComponent, IUse, IInteractUsing, IExamine, ISerializationHooks
+#pragma warning restore 618
     {
         // There's still some of py01 and PJB's work left over, especially in underlying shooting logic,
         // it's just when I re-organised it changed me as the contributor
@@ -357,9 +362,11 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 });
 
 
-                projectile.Transform.LocalRotation = projectileAngle + MathHelper.PiOver2;
+                projectile.Transform.WorldRotation = projectileAngle + MathHelper.PiOver2;
             }
+#pragma warning disable 618
             ammo.SendMessage(this, new BarrelFiredMessage(firedProjectiles));
+#pragma warning restore 618
         }
 
         /// <summary>
@@ -392,7 +399,10 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 var result = rayCastResults[0];
                 var distance = result.Distance;
                 hitscan.FireEffects(shooter, distance, angle, result.HitEntity);
-                EntitySystem.Get<DamageableSystem>().TryChangeDamage(result.HitEntity.Uid, hitscan.Damage);
+                var dmg = EntitySystem.Get<DamageableSystem>().TryChangeDamage(result.HitEntity.Uid, hitscan.Damage);
+                if (dmg != null)
+                    EntitySystem.Get<AdminLogSystem>().Add(LogType.HitScanHit,
+                        $"{shooter} hit {result.HitEntity} using {hitscan.Owner} and dealt {dmg.Total} damage");
             }
             else
             {
@@ -415,7 +425,9 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         }
     }
 
+#pragma warning disable 618
     public class BarrelFiredMessage : ComponentMessage
+#pragma warning restore 618
     {
         public readonly List<IEntity> FiredProjectiles;
 

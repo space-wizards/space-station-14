@@ -20,7 +20,7 @@ namespace Content.Shared.Storage.EntitySystems
 
         private void InitLayers(EntityUid uid, ItemMapperComponent component, ComponentInit args)
         {
-            if (component.Owner.TryGetComponent(out SharedAppearanceComponent? appearanceComponent))
+            if (component.Owner.TryGetComponent(out AppearanceComponent? appearanceComponent))
             {
                 var list = new List<string>(component.MapLayers.Keys);
                 appearanceComponent.SetData(StorageMapVisuals.InitLayers, new ShowLayerData(list));
@@ -30,7 +30,7 @@ namespace Content.Shared.Storage.EntitySystems
         private void MapperEntityRemoved(EntityUid uid, ItemMapperComponent itemMapper,
             EntRemovedFromContainerMessage args)
         {
-            if (itemMapper.Owner.TryGetComponent(out SharedAppearanceComponent? appearanceComponent)
+            if (itemMapper.Owner.TryGetComponent(out AppearanceComponent? appearanceComponent)
                 && TryGetLayers(args, itemMapper, out var containedLayers))
             {
                 appearanceComponent.SetData(StorageMapVisuals.LayerChanged, new ShowLayerData(containedLayers));
@@ -40,7 +40,7 @@ namespace Content.Shared.Storage.EntitySystems
         private void MapperEntityInserted(EntityUid uid, ItemMapperComponent itemMapper,
             EntInsertedIntoContainerMessage args)
         {
-            if (itemMapper.Owner.TryGetComponent(out SharedAppearanceComponent? appearanceComponent)
+            if (itemMapper.Owner.TryGetComponent(out AppearanceComponent? appearanceComponent)
                 && TryGetLayers(args, itemMapper, out var containedLayers))
             {
                 appearanceComponent.SetData(StorageMapVisuals.LayerChanged, new ShowLayerData(containedLayers));

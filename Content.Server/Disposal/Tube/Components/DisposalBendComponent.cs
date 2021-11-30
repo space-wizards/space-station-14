@@ -25,15 +25,14 @@ namespace Content.Server.Disposal.Tube.Components
         public override Direction NextDirection(DisposalHolderComponent holder)
         {
             var directions = ConnectableDirections();
-            var previousTube = holder.PreviousTube;
+            var previousDF = holder.PreviousDirectionFrom;
 
-            if (previousTube == null)
+            if (previousDF == Direction.Invalid)
             {
                 return directions[0];
             }
 
-            var previousDirection = DirectionTo(previousTube);
-            return previousDirection == directions[0] ? directions[1] : directions[0];
+            return previousDF == directions[0] ? directions[1] : directions[0];
         }
     }
 }

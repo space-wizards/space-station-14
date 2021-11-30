@@ -1,7 +1,9 @@
 using Content.Server.Administration;
 using Content.Server.Window;
+using Content.Server.Power.Components;
 using Content.Shared.Administration;
 using Content.Shared.Construction;
+using Content.Shared.Tag;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
@@ -74,9 +76,20 @@ namespace Content.Server.Construction.Commands
 
                 var valid = false;
 
-                valid |= childEntity.HasComponent<OccluderComponent>();
+                // Occluders should only count if the state of it right now is enabled.
+                // This prevents issues with edge firelocks.
+                if (entityManager.TryGetComponent<OccluderComponent>(childUid, out var occluder))
+                {
+                    valid |= occluder.Enabled;
+                }
+                // low walls & grilles
                 valid |= childEntity.HasComponent<SharedCanBuildWindowOnTopComponent>();
-                valid |= childEntity.HasComponent<WindowComponent>();
+                // cables
+                valid |= childEntity.HasComponent<CableComponent>();
+                // anything else that might need this forced
+                valid |= childEntity.HasTag("ForceFixRotations");
+                // override
+                valid &= !childEntity.HasTag("ForceNoFixRotations");
 
                 if (!valid)
                 {

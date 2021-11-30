@@ -22,7 +22,10 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 using System;
 using System.Linq;
+using Content.Server.Administration.Logs;
 using Content.Server.Popups;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.Popups;
 
 namespace Content.Server.Actions.Actions
@@ -65,10 +68,9 @@ namespace Content.Server.Actions.Actions
             }
 
             if (!args.Performer.TryGetComponent<SharedActionsComponent>(out var actions)) return;
-            if (args.Target == args.Performer || !EntitySystem.Get<ActionBlockerSystem>().CanAttack(args.Performer)) return;
+            if (args.Target == args.Performer || !EntitySystem.Get<ActionBlockerSystem>().CanAttack(args.Performer.Uid)) return;
 
             var random = IoCManager.Resolve<IRobustRandom>();
-            var audio = EntitySystem.Get<AudioSystem>();
             var system = EntitySystem.Get<MeleeWeaponSystem>();
 
             var diff = args.Target.Transform.MapPosition.Position - args.Performer.Transform.MapPosition.Position;
@@ -94,6 +96,8 @@ namespace Content.Server.Actions.Actions
             var eventArgs = new DisarmedActEvent() { Target = args.Target, Source = args.Performer, PushProbability = _pushProb };
 
             IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(args.Target.Uid, eventArgs);
+
+            EntitySystem.Get<AdminLogSystem>().Add(LogType.DisarmedAction, LogImpact.Low, $"{args.Performer:performer} used disarm on {args.Target:target}");
 
             // Check if the event has been handled, and if so, do nothing else!
             if (eventArgs.Handled)

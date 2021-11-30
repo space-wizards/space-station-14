@@ -4,7 +4,7 @@ namespace Content.Shared.Transform
 {
     public static class TransformExtensions
     {
-        public static void AttachToGrandparent(this ITransformComponent transform)
+        public static void AttachToGrandparent(this TransformComponent transform)
         {
             var grandParent = transform.Parent?.Parent;
 

@@ -10,7 +10,9 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Client.Utility;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
@@ -24,8 +26,6 @@ namespace Content.Client.Cargo.UI
         public event Action<ButtonEventArgs>? OnItemSelected;
         public event Action<ButtonEventArgs>? OnOrderApproved;
         public event Action<ButtonEventArgs>? OnOrderCanceled;
-
-        public Button CallShuttleButton => CallShuttleButtonProtected;
 
         private readonly List<string> _categoryStrings = new();
         private string? _category;
@@ -148,6 +148,15 @@ namespace Content.Client.Cargo.UI
 
             foreach (var order in Owner.Orders.Orders)
             {
+                var productName = Owner.Market.GetProduct(order.ProductId)?.Name;
+
+                if (productName == null)
+                {
+                    DebugTools.Assert(false);
+                    Logger.ErrorS("cargo", $"Unable to find product name for {order.ProductId}");
+                    continue;
+                }
+
                 var row = new CargoOrderRow
                 {
                     Order = order,
@@ -156,7 +165,7 @@ namespace Content.Client.Cargo.UI
                     {
                         Text = Loc.GetString(
                             "cargo-console-menu-populate-orders-cargo-order-row-product-name-text",
-                            ("productName", Owner.Market.GetProduct(order.ProductId)?.Name!),
+                            ("productName", productName),
                             ("orderAmount", order.Amount),
                             ("orderRequester", order.Requester))
                     },

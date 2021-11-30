@@ -2,7 +2,6 @@
 
 using System.Threading.Tasks;
 using Content.Server.Climbing.Components;
-using Content.Shared.Physics;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -36,7 +35,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Movement
         public async Task Test()
         {
             var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
-            var server = StartServerDummyTicker(options);
+            var server = StartServer(options);
 
             IEntity human;
             IEntity table;
@@ -56,7 +55,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Movement
                 // Test for climb components existing
                 // Players and tables should have these in their prototypes.
                 Assert.That(human.TryGetComponent(out climbing!), "Human has no climbing");
-                Assert.That(table.TryGetComponent(out ClimbableComponent _), "Table has no climbable");
+                Assert.That(table.TryGetComponent(out ClimbableComponent? _), "Table has no climbable");
 
                 // Now let's make the player enter a climbing transitioning state.
                 climbing.IsClimbing = true;

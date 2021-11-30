@@ -8,7 +8,6 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
-using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -18,7 +17,9 @@ using Robust.Shared.Utility;
 namespace Content.Server.Weapon.Ranged.Ammunition.Components
 {
     [RegisterComponent]
+#pragma warning disable 618
     public sealed class AmmoBoxComponent : Component, IInteractUsing, IUse, IInteractHand, IMapInit, IExamine
+#pragma warning restore 618
     {
         public override string Name => "AmmoBox";
 

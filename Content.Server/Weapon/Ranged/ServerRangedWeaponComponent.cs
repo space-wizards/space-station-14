@@ -89,10 +89,11 @@ namespace Content.Server.Weapon.Ranged
 
         private bool UserCanFire(IEntity user)
         {
-            return (UserCanFireHandler == null || UserCanFireHandler(user)) && EntitySystem.Get<ActionBlockerSystem>().CanInteract(user);
+            return (UserCanFireHandler == null || UserCanFireHandler(user)) && EntitySystem.Get<ActionBlockerSystem>().CanInteract(user.Uid);
         }
 
         /// <inheritdoc />
+        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
         {
             base.HandleNetworkMessage(message, channel, session);

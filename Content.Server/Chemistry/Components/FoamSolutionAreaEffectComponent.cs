@@ -1,12 +1,10 @@
-﻿using Content.Server.Body.Circulatory;
+﻿using Content.Server.Body.Components;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
-using Content.Shared.Chemistry;
-using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Content.Shared.Foam;
 using Content.Shared.Inventory;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -17,14 +15,14 @@ namespace Content.Server.Chemistry.Components
     public class FoamSolutionAreaEffectComponent : SolutionAreaEffectComponent
     {
         public override string Name => "FoamSolutionAreaEffect";
-        public static string SolutionName = "foam";
+        public new const string SolutionName = "solutionArea";
 
         [DataField("foamedMetalPrototype")] private string? _foamedMetalPrototype;
 
         protected override void UpdateVisuals()
         {
             if (Owner.TryGetComponent(out AppearanceComponent? appearance) &&
-                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
+                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution))
             {
                 appearance.SetData(FoamVisuals.Color, solution.Color.WithAlpha(0.80f));
             }
@@ -32,7 +30,7 @@ namespace Content.Server.Chemistry.Components
 
         protected override void ReactWithEntity(IEntity entity, double solutionFraction)
         {
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution))
                 return;
 
             if (!entity.TryGetComponent(out BloodstreamComponent? bloodstream))
@@ -51,13 +49,13 @@ namespace Content.Server.Chemistry.Components
                         slot == EquipmentSlotDefines.Slots.IDCARD)
                         continue;
 
-                    if (inventory.TryGetSlotItem(slot, out ItemComponent _))
+                    if (inventory.TryGetSlotItem(slot, out ItemComponent? _))
                         protection += 0.025f;
                 }
             }
 
             var cloneSolution = solution.Clone();
-            var transferAmount = ReagentUnit.Min(cloneSolution.TotalVolume * solutionFraction * (1 - protection),
+            var transferAmount = FixedPoint2.Min(cloneSolution.TotalVolume * solutionFraction * (1 - protection),
                 bloodstream.EmptyVolume);
             var transferSolution = cloneSolution.SplitSolution(transferAmount);
 

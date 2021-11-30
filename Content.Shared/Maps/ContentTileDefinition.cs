@@ -32,7 +32,7 @@ namespace Content.Shared.Maps
 
         [DataField("can_crowbar")] public bool CanCrowbar { get; private set; }
 
-        [DataField("footstep_sounds", required: true)] public SoundSpecifier FootstepSounds { get; } = default!;
+        [DataField("footstep_sounds")] public SoundSpecifier? FootstepSounds { get; }
 
         [DataField("friction")] public float Friction { get; set; }
 
@@ -42,6 +42,7 @@ namespace Content.Shared.Maps
         public string ItemDropPrototypeName { get; } = "FloorTileItemSteel";
 
         [DataField("is_space")] public bool IsSpace { get; private set; }
+        [DataField("sturdy")] public bool Sturdy { get; private set; } = true;
 
         public void AssignTileId(ushort id)
         {

@@ -3,8 +3,6 @@ using System.Threading.Tasks;
 using Content.Server.Storage.Components;
 using NUnit.Framework;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -14,7 +12,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task TestStorageFillPrototypes()
         {
-            var server = StartServerDummyTicker();
+            var server = StartServer();
             await server.WaitIdleAsync();
             var protoManager = server.ResolveDependency<IPrototypeManager>();
 
@@ -26,16 +24,8 @@ namespace Content.IntegrationTests.Tests
 
                     foreach (var entry in storage.Contents)
                     {
-                        var id = entry.PrototypeId;
-
-                        if (id == null)
-                        {
-                            continue;
-                        }
-
-                        Assert.That(protoManager.HasIndex<EntityPrototype>(id), $"Unable to find StorageFill prototype of {id} in prototype {proto.ID}");
-                        Assert.That(entry.Amount > 0, $"Specified invalid amount of {entry.Amount} for prototype {proto.ID}");
-                        Assert.That(entry.SpawnProbability > 0, $"Specified invalid probability of {entry.SpawnProbability} for prototype {proto.ID}");
+                        Assert.That(entry.Amount, Is.GreaterThan(0), $"Specified invalid amount of {entry.Amount} for prototype {proto.ID}");
+                        Assert.That(entry.SpawnProbability, Is.GreaterThan(0), $"Specified invalid probability of {entry.SpawnProbability} for prototype {proto.ID}");
                     }
                 }
             });

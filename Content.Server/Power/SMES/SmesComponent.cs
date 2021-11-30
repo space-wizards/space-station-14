@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Server.Power.Components;
 using Content.Shared.Power;
 using Content.Shared.Rounding;
@@ -36,7 +36,7 @@ namespace Content.Server.Power.SMES
         {
             base.Initialize();
 
-            Owner.EnsureComponentWarn<AppearanceComponent>();
+            Owner.EnsureComponentWarn<ServerAppearanceComponent>();
         }
 
         public void OnUpdate()

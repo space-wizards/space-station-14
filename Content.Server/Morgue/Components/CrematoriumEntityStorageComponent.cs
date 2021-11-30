@@ -11,6 +11,7 @@ using Content.Shared.Morgue;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Standing;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -27,7 +28,9 @@ namespace Content.Server.Morgue.Components
     [ComponentReference(typeof(EntityStorageComponent))]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
+#pragma warning disable 618
     public class CrematoriumEntityStorageComponent : MorgueEntityStorageComponent, IExamine, ISuicideAct
+#pragma warning restore 618
     {
         public override string Name => "CrematoriumEntityStorage";
 
@@ -129,9 +132,7 @@ namespace Content.Server.Morgue.Components
 
         SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)
         {
-            var mind = victim.PlayerSession()?.ContentData()?.Mind;
-
-            if (mind != null)
+            if (victim.TryGetComponent(out ActorComponent? actor) && actor.PlayerSession.ContentData()?.Mind is {} mind)
             {
                 EntitySystem.Get<GameTicker>().OnGhostAttempt(mind, false);
                 mind.OwnedEntity?.PopupMessage(Loc.GetString("crematorium-entity-storage-component-suicide-message"));

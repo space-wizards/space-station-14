@@ -7,10 +7,9 @@ using Content.Server.Popups;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.Kitchen.Components;
-using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -106,7 +105,7 @@ namespace Content.Server.Kitchen.Components
                 return;
 
             // Prevent dead from being spiked TODO: Maybe remove when rounds can be played and DOT is implemented
-            if (victim.TryGetComponent<IMobStateComponent>(out var state) &&
+            if (victim.TryGetComponent<MobStateComponent>(out var state) &&
                 !state.IsDead())
             {
                 Owner.PopupMessage(user, Loc.GetString("comp-kitchen-spike-deny-not-dead", ("victim", victim)));

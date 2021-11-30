@@ -1,13 +1,24 @@
 using System;
 using System.Collections.Generic;
+using Content.Shared.Containers.ItemSlots;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Access
 {
     public class SharedIdCardConsoleComponent : Component
     {
         public override string Name => "IdCardConsole";
+
+        public const int MaxFullNameLength = 256;
+        public const int MaxJobTitleLength = 256;
+
+        [DataField("privilegedIdSlot")]
+        public ItemSlot PrivilegedIdSlot = new();
+
+        [DataField("targetIdSlot")]
+        public ItemSlot TargetIdSlot = new();
 
         public enum UiButton
         {

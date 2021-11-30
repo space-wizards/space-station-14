@@ -63,10 +63,31 @@ namespace Content.Client.Gravity
                 }
             }
 
-            if (component.TryGetData(GravityGeneratorVisuals.CoreVisible, out bool visible))
+            if (component.TryGetData(GravityGeneratorVisuals.Charge, out float charge))
             {
                 var layer = sprite.LayerMapGet(GravityGeneratorVisualLayers.Core);
-                sprite.LayerSetVisible(layer, visible);
+                switch (charge)
+                {
+                    case < 0.2f:
+                        sprite.LayerSetVisible(layer, false);
+                        break;
+                    case >= 0.2f and < 0.4f:
+                        sprite.LayerSetVisible(layer, true);
+                        sprite.LayerSetState(layer, "startup");
+                        break;
+                    case >= 0.4f and < 0.6f:
+                        sprite.LayerSetVisible(layer, true);
+                        sprite.LayerSetState(layer, "idle");
+                        break;
+                    case >= 0.6f and < 0.8f:
+                        sprite.LayerSetVisible(layer, true);
+                        sprite.LayerSetState(layer, "activating");
+                        break;
+                    default:
+                        sprite.LayerSetVisible(layer, true);
+                        sprite.LayerSetState(layer, "activated");
+                        break;
+                }
             }
         }
 

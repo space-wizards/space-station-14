@@ -96,8 +96,8 @@ namespace Content.Server.Disposal.Unit.Components
 
             var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
 
-            if (!actionBlocker.CanInteract(player) ||
-                !actionBlocker.CanUse(player))
+            if (!actionBlocker.CanInteract(player.Uid) ||
+                !actionBlocker.CanUse(player.Uid))
             {
                 return false;
             }

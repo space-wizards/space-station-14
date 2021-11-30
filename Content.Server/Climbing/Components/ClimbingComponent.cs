@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Climbing;
 using Robust.Shared.GameObjects;
@@ -52,9 +52,12 @@ namespace Content.Server.Climbing.Components
             }
         }
 
+        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
         public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
+#pragma warning disable 618
             base.HandleMessage(message, component);
+#pragma warning restore 618
             switch (message)
             {
                 case BuckleMessage msg:
@@ -76,14 +79,13 @@ namespace Content.Server.Climbing.Components
 
             if (velocity <= 0.0f) return;
 
-            Body.ApplyLinearImpulse((to - from).Normalized * velocity * 400);
+            // Since there are bodies with different masses:
+            // mass * 5 seems enough to move entity
+            // instead of launching cats like rockets against the walls with constant impulse value.  
+            Body.ApplyLinearImpulse((to - from).Normalized * velocity * Body.Mass * 5);
             OwnerIsTransitioning = true;
 
-            Owner.SpawnTimer((int) (BufferTime * 1000), () =>
-            {
-                if (Deleted) return;
-                OwnerIsTransitioning = false;
-            });
+            EntitySystem.Get<ClimbSystem>().UnsetTransitionBoolAfterBufferTime(OwnerUid, this);
         }
 
         public void Update()

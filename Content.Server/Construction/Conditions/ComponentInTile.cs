@@ -1,12 +1,17 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Content.Shared.Construction;
+using Content.Shared.Examine;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Construction.Conditions
 {
@@ -15,16 +20,8 @@ namespace Content.Server.Construction.Conditions
     /// </summary>
     [UsedImplicitly]
     [DataDefinition]
-    public class ComponentInTile : IGraphCondition, ISerializationHooks
+    public class ComponentInTile : IGraphCondition
     {
-        [Dependency] private readonly IComponentFactory _componentFactory = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
-
-        void ISerializationHooks.AfterDeserialization()
-        {
-            IoCManager.InjectDependencies(this);
-        }
-
         /// <summary>
         ///     If true, any entity on the tile must have the component.
         ///     If false, no entity on the tile must have the component.
@@ -32,20 +29,30 @@ namespace Content.Server.Construction.Conditions
         [DataField("hasEntity")]
         public bool HasEntity { get; private set; }
 
+        [DataField("examineText")]
+        public string? ExamineText { get; }
+
+        [DataField("guideText")]
+        public string? GuideText { get; }
+
+        [DataField("guideIcon")]
+        public SpriteSpecifier? GuideIcon { get; }
+
         /// <summary>
         ///     The component name in question.
         /// </summary>
         [DataField("component")]
         public string Component { get; private set; } = string.Empty;
 
-        public async Task<bool> Condition(IEntity entity)
+        public bool Condition(EntityUid uid, IEntityManager entityManager)
         {
             if (string.IsNullOrEmpty(Component)) return false;
 
-            var type = _componentFactory.GetRegistration(Component).Type;
+            var type = IoCManager.Resolve<IComponentFactory>().GetRegistration(Component).Type;
 
-            var indices = entity.Transform.Coordinates.ToVector2i(entity.EntityManager, _mapManager);
-            var entities = indices.GetEntitiesInTile(entity.Transform.GridID, LookupFlags.Approximate | LookupFlags.IncludeAnchored, IoCManager.Resolve<IEntityLookup>());
+            var transform = entityManager.GetComponent<TransformComponent>(uid);
+            var indices = transform.Coordinates.ToVector2i(entityManager, IoCManager.Resolve<IMapManager>());
+            var entities = indices.GetEntitiesInTile(transform.GridID, LookupFlags.Approximate | LookupFlags.IncludeAnchored, IoCManager.Resolve<IEntityLookup>());
 
             foreach (var ent in entities)
             {
@@ -56,6 +63,25 @@ namespace Content.Server.Construction.Conditions
             return !HasEntity;
         }
 
-        // TODO CONSTRUCTION: Custom examine for this condition.
+        public bool DoExamine(ExaminedEvent args)
+        {
+            if (string.IsNullOrEmpty(ExamineText))
+                return false;
+
+            args.PushMarkup(Loc.GetString(ExamineText));
+            return true;
+        }
+
+        public IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()
+        {
+            if (string.IsNullOrEmpty(GuideText))
+                yield break;
+
+            yield return new ConstructionGuideEntry()
+            {
+                Localization = GuideText,
+                Icon = GuideIcon,
+            };
+        }
     }
 }

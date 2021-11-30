@@ -60,7 +60,7 @@ namespace Content.Shared.Construction
         }
 
         /// <summary>
-        /// Send server -> client to tell the client that a ghost has started to be constructed.
+        /// Sent server -> client to tell the client that a ghost has started to be constructed.
         /// </summary>
         [Serializable, NetSerializable]
         public class AckStructureConstructionMessage : EntityEventArgs
@@ -70,6 +70,36 @@ namespace Content.Shared.Construction
             public AckStructureConstructionMessage(int ghostId)
             {
                 GhostId = ghostId;
+            }
+        }
+
+        /// <summary>
+        /// Sent client -> server to request a specific construction guide.
+        /// </summary>
+        [Serializable, NetSerializable]
+        public class RequestConstructionGuide : EntityEventArgs
+        {
+            public readonly string ConstructionId;
+
+            public RequestConstructionGuide(string constructionId)
+            {
+                ConstructionId = constructionId;
+            }
+        }
+
+        /// <summary>
+        /// Sent server -> client as a response to a <see cref="RequestConstructionGuide"/> net message.
+        /// </summary>
+        [Serializable, NetSerializable]
+        public class ResponseConstructionGuide : EntityEventArgs
+        {
+            public readonly string ConstructionId;
+            public readonly ConstructionGuide Guide;
+
+            public ResponseConstructionGuide(string constructionId, ConstructionGuide guide)
+            {
+                ConstructionId = constructionId;
+                Guide = guide;
             }
         }
     }

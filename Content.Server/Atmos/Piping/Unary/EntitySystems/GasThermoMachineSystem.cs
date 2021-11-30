@@ -5,7 +5,6 @@ using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos.Piping;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 

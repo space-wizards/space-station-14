@@ -16,7 +16,6 @@ using Content.Shared.Sound;
 using Content.Shared.Toilet;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -31,8 +30,10 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Toilet
 {
     [RegisterComponent]
+#pragma warning disable 618
     public class ToiletComponent : Component, IInteractUsing,
         IInteractHand, IMapInit, IExamine, ISuicideAct
+#pragma warning restore 618
     {
         public sealed override string Name => "Toilet";
 

@@ -1,8 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Containers.ItemSlots;
+using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Chemistry.Dispenser
 {
@@ -16,6 +19,9 @@ namespace Content.Shared.Chemistry.Dispenser
     {
         public override string Name => "ReagentDispenser";
 
+        [DataField("beakerSlot")]
+        public ItemSlot BeakerSlot = new();
+
         /// <summary>
         /// A list of reagents which this may dispense. Defined in yaml prototype, see <see cref="ReagentDispenserInventoryPrototype"/>.
         /// </summary>
@@ -26,8 +32,8 @@ namespace Content.Shared.Chemistry.Dispenser
         {
             public readonly bool HasPower;
             public readonly bool HasBeaker;
-            public readonly ReagentUnit BeakerCurrentVolume;
-            public readonly ReagentUnit BeakerMaxVolume;
+            public readonly FixedPoint2 BeakerCurrentVolume;
+            public readonly FixedPoint2 BeakerMaxVolume;
             public readonly string ContainerName;
             /// <summary>
             /// A list of the reagents which this dispenser can dispense.
@@ -38,10 +44,10 @@ namespace Content.Shared.Chemistry.Dispenser
             /// </summary>
             public readonly List<Components.Solution.ReagentQuantity>? ContainerReagents;
             public readonly string DispenserName;
-            public readonly ReagentUnit SelectedDispenseAmount;
+            public readonly FixedPoint2 SelectedDispenseAmount;
 
-            public ReagentDispenserBoundUserInterfaceState(bool hasPower, bool hasBeaker, ReagentUnit beakerCurrentVolume, ReagentUnit beakerMaxVolume, string containerName,
-                List<ReagentDispenserInventoryEntry> inventory, string dispenserName, List<Components.Solution.ReagentQuantity>? containerReagents, ReagentUnit selectedDispenseAmount)
+            public ReagentDispenserBoundUserInterfaceState(bool hasPower, bool hasBeaker, FixedPoint2 beakerCurrentVolume, FixedPoint2 beakerMaxVolume, string containerName,
+                List<ReagentDispenserInventoryEntry> inventory, string dispenserName, List<Components.Solution.ReagentQuantity>? containerReagents, FixedPoint2 selectedDispenseAmount)
             {
                 HasPower = hasPower;
                 HasBeaker = hasBeaker;

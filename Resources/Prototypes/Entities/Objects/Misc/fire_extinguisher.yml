@@ -9,7 +9,7 @@
     sprite: Objects/Misc/fire_extinguisher.rsi
     layers:
         - state: fire_extinguisher_closed
-          map: [ "enum.SprayVisualLayers.Base" ]
+          map: [ "enum.FireExtinguisherVisualLayers.Base" ]
   - type: Item
     sprite: Objects/Misc/fire_extinguisher.rsi
     size: 10
@@ -29,7 +29,6 @@
     spraySound:
       path: /Audio/Effects/extinguish.ogg
     sprayedPrototype: ExtinguisherSpray
-    hasSafety: true
     vaporAmount: 3
     vaporSpread: 90
     sprayVelocity: 2.0
@@ -37,6 +36,7 @@
     transferAmount: 5
     impulse: 50.0
   - type: FireExtinguisher
+    hasSafety: true
   - type: MeleeWeapon
     damage: 
       types:
@@ -45,7 +45,7 @@
       path: /Audio/Weapons/smash.ogg
   - type: Appearance
     visuals:
-      - type: SprayVisualizer
+      - type: FireExtinguisherVisualizer
         safety_on_state: fire_extinguisher_closed
         safety_off_state: fire_extinguisher_open
 

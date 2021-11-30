@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Net;
+using System.Text.Json;
+using Content.Shared.Database;
 using Microsoft.EntityFrameworkCore;
 
 namespace Content.Server.Database
@@ -27,8 +30,12 @@ namespace Content.Server.Database
         public DbSet<Preference> Preference { get; set; } = null!;
         public DbSet<Profile> Profile { get; set; } = null!;
         public DbSet<AssignedUserId> AssignedUserId { get; set; } = null!;
+        public DbSet<Player> Player { get; set; } = default!;
         public DbSet<Admin> Admin { get; set; } = null!;
         public DbSet<AdminRank> AdminRank { get; set; } = null!;
+        public DbSet<Round> Round { get; set; } = null!;
+        public DbSet<AdminLog> AdminLog { get; set; } = null!;
+        public DbSet<AdminLogPlayer> AdminLogPlayer { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -77,10 +84,25 @@ namespace Content.Server.Database
             modelBuilder.Entity<AdminRankFlag>()
                 .HasIndex(f => new {f.Flag, f.AdminRankId})
                 .IsUnique();
+
+            modelBuilder.Entity<AdminLog>()
+                .HasKey(log => new {log.Id, log.RoundId});
+
+            modelBuilder.Entity<AdminLog>()
+                .Property(log => log.Id)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<AdminLogPlayer>()
+                .HasOne(player => player.Player)
+                .WithMany(player => player.AdminLogs)
+                .HasForeignKey(player => player.PlayerUserId)
+                .HasPrincipalKey(player => player.UserId);
+
+            modelBuilder.Entity<AdminLogPlayer>()
+                .HasKey(logPlayer => new {logPlayer.PlayerUserId, logPlayer.LogId, logPlayer.RoundId});
         }
     }
 
-    [Table("preference")]
     public class Preference
     {
         // NOTE: on postgres there SHOULD be an FK ensuring that the selected character slot always exists.
@@ -88,49 +110,46 @@ namespace Content.Server.Database
         // Because if I let EFCore know about it it would explode on a circular reference.
         // Also it has to be DEFERRABLE INITIALLY DEFERRED so that insertion of new preferences works.
         // Also I couldn't figure out how to create it on SQLite.
-
-        [Column("preference_id")] public int Id { get; set; }
-        [Column("user_id")] public Guid UserId { get; set; }
-        [Column("selected_character_slot")] public int SelectedCharacterSlot { get; set; }
-        [Column("admin_ooc_color")] public string AdminOOCColor { get; set; } = null!;
+        public int Id { get; set; }
+        public Guid UserId { get; set; }
+        public int SelectedCharacterSlot { get; set; }
+        public string AdminOOCColor { get; set; } = null!;
         public List<Profile> Profiles { get; } = new();
     }
 
-    [Table("profile")]
     public class Profile
     {
-        [Column("profile_id")] public int Id { get; set; }
-        [Column("slot")] public int Slot { get; set; }
+        public int Id { get; set; }
+        public int Slot { get; set; }
         [Column("char_name")] public string CharacterName { get; set; } = null!;
-        [Column("age")] public int Age { get; set; }
-        [Column("sex")] public string Sex { get; set; } = null!;
-        [Column("gender")] public string Gender { get; set; } = null!;
-        [Column("hair_name")] public string HairName { get; set; } = null!;
-        [Column("hair_color")] public string HairColor { get; set; } = null!;
-        [Column("facial_hair_name")] public string FacialHairName { get; set; } = null!;
-        [Column("facial_hair_color")] public string FacialHairColor { get; set; } = null!;
-        [Column("eye_color")] public string EyeColor { get; set; } = null!;
-        [Column("skin_color")] public string SkinColor { get; set; } = null!;
-        [Column("clothing")] public string Clothing { get; set; } = null!;
-        [Column("backpack")] public string Backpack { get; set; } = null!;
+        public int Age { get; set; }
+        public string Sex { get; set; } = null!;
+        public string Gender { get; set; } = null!;
+        public string HairName { get; set; } = null!;
+        public string HairColor { get; set; } = null!;
+        public string FacialHairName { get; set; } = null!;
+        public string FacialHairColor { get; set; } = null!;
+        public string EyeColor { get; set; } = null!;
+        public string SkinColor { get; set; } = null!;
+        public string Clothing { get; set; } = null!;
+        public string Backpack { get; set; } = null!;
         public List<Job> Jobs { get; } = new();
         public List<Antag> Antags { get; } = new();
 
         [Column("pref_unavailable")] public DbPreferenceUnavailableMode PreferenceUnavailable { get; set; }
 
-        [Column("preference_id")] public int PreferenceId { get; set; }
+        public int PreferenceId { get; set; }
         public Preference Preference { get; set; } = null!;
     }
 
-    [Table("job")]
     public class Job
     {
-        [Column("job_id")] public int Id { get; set; }
+        public int Id { get; set; }
         public Profile Profile { get; set; } = null!;
-        [Column("profile_id")] public int ProfileId { get; set; }
+        public int ProfileId { get; set; }
 
-        [Column("job_name")] public string JobName { get; set; } = null!;
-        [Column("priority")] public DbJobPriority Priority { get; set; }
+        public string JobName { get; set; } = null!;
+        public DbJobPriority Priority { get; set; }
     }
 
     public enum DbJobPriority
@@ -142,14 +161,13 @@ namespace Content.Server.Database
         High = 3
     }
 
-    [Table("antag")]
     public class Antag
     {
-        [Column("antag_id")] public int Id { get; set; }
+        public int Id { get; set; }
         public Profile Profile { get; set; } = null!;
-        [Column("profile_id")] public int ProfileId { get; set; }
+        public int ProfileId { get; set; }
 
-        [Column("antag_name")] public string AntagName { get; set; } = null!;
+        public string AntagName { get; set; } = null!;
     }
 
     public enum DbPreferenceUnavailableMode
@@ -159,54 +177,119 @@ namespace Content.Server.Database
         SpawnAsOverflow,
     }
 
-    [Table("assigned_user_id")]
     public class AssignedUserId
     {
-        [Column("assigned_user_id_id")] public int Id { get; set; }
-        [Column("user_name")] public string UserName { get; set; } = null!;
+        public int Id { get; set; }
+        public string UserName { get; set; } = null!;
 
-        [Column("user_id")] public Guid UserId { get; set; }
+        public Guid UserId { get; set; }
     }
 
-    [Table("admin")]
+    [Table("player")]
+    public class Player
+    {
+        public int Id { get; set; }
+
+        // Permanent data
+        public Guid UserId { get; set; }
+        public DateTime FirstSeenTime { get; set; }
+
+        // Data that gets updated on each join.
+        public string LastSeenUserName { get; set; } = null!;
+        public DateTime LastSeenTime { get; set; }
+        public IPAddress LastSeenAddress { get; set; } = null!;
+        public byte[]? LastSeenHWId { get; set; }
+
+        // Data that changes with each round
+        public List<Round> Rounds { get; set; } = null!;
+        public List<AdminLogPlayer> AdminLogs { get; set; } = null!;
+    }
+
     public class Admin
     {
-        [Column("user_id"), Key] public Guid UserId { get; set; }
-        [Column("title")] public string? Title { get; set; }
+        [Key] public Guid UserId { get; set; }
+        public string? Title { get; set; }
 
-        [Column("admin_rank_id")] public int? AdminRankId { get; set; }
+        public int? AdminRankId { get; set; }
         public AdminRank? AdminRank { get; set; }
         public List<AdminFlag> Flags { get; set; } = default!;
     }
 
-    [Table("admin_flag")]
     public class AdminFlag
     {
-        [Column("admin_flag_id")] public int Id { get; set; }
-        [Column("flag")] public string Flag { get; set; } = default!;
-        [Column("negative")] public bool Negative { get; set; }
+        public int Id { get; set; }
+        public string Flag { get; set; } = default!;
+        public bool Negative { get; set; }
 
-        [Column("admin_id")] public Guid AdminId { get; set; }
+        public Guid AdminId { get; set; }
         public Admin Admin { get; set; } = default!;
     }
 
-    [Table("admin_rank")]
     public class AdminRank
     {
-        [Column("admin_rank_id")] public int Id { get; set; }
-        [Column("name")] public string Name { get; set; } = default!;
+        public int Id { get; set; }
+        public string Name { get; set; } = default!;
 
         public List<Admin> Admins { get; set; } = default!;
         public List<AdminRankFlag> Flags { get; set; } = default!;
     }
 
-    [Table("admin_rank_flag")]
     public class AdminRankFlag
     {
-        [Column("admin_rank_flag_id")] public int Id { get; set; }
-        [Column("flag")] public string Flag { get; set; } = default!;
+        public int Id { get; set; }
+        public string Flag { get; set; } = default!;
 
-        [Column("admin_rank_id")] public int AdminRankId { get; set; }
+        public int AdminRankId { get; set; }
         public AdminRank Rank { get; set; } = default!;
+    }
+
+    public class Round
+    {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        public List<Player> Players { get; set; } = default!;
+
+        public List<AdminLog> AdminLogs { get; set; } = default!;
+    }
+
+    [Index(nameof(Type))]
+    public class AdminLog
+    {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        [Key, ForeignKey("Round")] public int RoundId { get; set; }
+        public Round Round { get; set; } = default!;
+
+        [Required] public LogType Type { get; set; }
+
+        [Required] public LogImpact Impact { get; set; }
+
+        [Required] public DateTime Date { get; set; }
+
+        [Required] public string Message { get; set; } = default!;
+
+        [Required, Column(TypeName = "jsonb")] public JsonDocument Json { get; set; } = default!;
+
+        public List<AdminLogPlayer> Players { get; set; } = default!;
+
+        public List<AdminLogEntity> Entities { get; set; } = default!;
+    }
+
+    public class AdminLogPlayer
+    {
+        [Required, Key, ForeignKey("Player")] public Guid PlayerUserId { get; set; }
+        public Player Player { get; set; } = default!;
+
+        [Required, Key] public int LogId { get; set; }
+        [Required, Key] public int RoundId { get; set; }
+        [ForeignKey("LogId,RoundId")] public AdminLog Log { get; set; } = default!;
+    }
+
+    public class AdminLogEntity
+    {
+        [Required, Key] public int Uid { get; set; }
+        public string? Name { get; set; } = default!;
     }
 }

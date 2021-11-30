@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Content.Shared.Access;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -26,6 +27,13 @@ namespace Content.Client.Access.UI
             _window.OpenCentered();
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            if (!disposing) return;
+            _window?.Dispose();
+        }
+
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
@@ -40,6 +48,12 @@ namespace Content.Client.Access.UI
 
         public void SubmitData(string newFullName, string newJobTitle, List<string> newAccessList)
         {
+            if (newFullName.Length > MaxFullNameLength)
+                newFullName = newFullName[..MaxFullNameLength];
+
+            if (newJobTitle.Length > MaxJobTitleLength)
+                newJobTitle = newJobTitle[..MaxJobTitleLength];
+
             SendMessage(new WriteToTargetIdMessage(
                 newFullName,
                 newJobTitle,

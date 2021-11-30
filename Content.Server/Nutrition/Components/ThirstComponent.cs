@@ -1,10 +1,14 @@
 using System;
 using System.Collections.Generic;
+using Content.Server.Administration.Logs;
 using Content.Server.Alert;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
-using Content.Shared.MobState;
+using Content.Shared.Database;
+using Content.Shared.MobState.Components;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.EntitySystems;
 using Content.Shared.Nutrition.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -85,7 +89,7 @@ namespace Content.Server.Nutrition.Components
                 if (_lastThirstThreshold == ThirstThreshold.Parched && _currentThirstThreshold != ThirstThreshold.Dead &&
                     Owner.TryGetComponent(out MovementSpeedModifierComponent? movementSlowdownComponent))
                 {
-                    movementSlowdownComponent.RefreshMovementSpeedModifiers();
+                    EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(OwnerUid);
                 }
 
                 // Update UI
@@ -119,10 +123,7 @@ namespace Content.Server.Nutrition.Components
                         return;
 
                     case ThirstThreshold.Parched:
-                        if (Owner.TryGetComponent(out MovementSpeedModifierComponent? movementSlowdownComponent1))
-                        {
-                            movementSlowdownComponent1.RefreshMovementSpeedModifiers();
-                        }
+                        EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(OwnerUid);
                         _lastThirstThreshold = _currentThirstThreshold;
                         _actualDecayRate = _baseDecayRate * 0.6f;
                         return;
@@ -181,7 +182,7 @@ namespace Content.Server.Nutrition.Components
                 return;
             // --> Current Hunger is below dead threshold
 
-            if (!Owner.TryGetComponent(out IMobStateComponent? mobState))
+            if (!Owner.TryGetComponent(out MobStateComponent? mobState))
                 return;
 
             if (!mobState.IsDead())
@@ -202,6 +203,11 @@ namespace Content.Server.Nutrition.Components
             // _trySound(calculatedThreshold);
             if (calculatedThirstThreshold != _currentThirstThreshold)
             {
+                if (_currentThirstThreshold == ThirstThreshold.Dead)
+                    EntitySystem.Get<AdminLogSystem>().Add(LogType.Thirst, $"{Owner} has stopped taking dehydration damage");
+                else if (calculatedThirstThreshold == ThirstThreshold.Dead)
+                    EntitySystem.Get<AdminLogSystem>().Add(LogType.Thirst, $"{Owner} has started taking dehydration damage");
+
                 _currentThirstThreshold = calculatedThirstThreshold;
                 ThirstThresholdEffect();
                 Dirty();

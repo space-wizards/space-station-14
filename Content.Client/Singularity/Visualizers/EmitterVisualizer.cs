@@ -1,7 +1,9 @@
 using System;
 using Content.Shared.Singularity.Components;
+using Content.Shared.Storage;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Client.Singularity.Visualizers
 {
@@ -20,7 +22,7 @@ namespace Content.Client.Singularity.Visualizers
                 return;
             }
 
-            if (!component.TryGetData(EmitterVisuals.Locked, out bool locked))
+            if (!component.TryGetData(StorageVisuals.Locked, out bool locked))
                 locked = false;
 
 

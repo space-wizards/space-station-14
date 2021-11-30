@@ -11,7 +11,6 @@ using Content.Shared.MachineLinking;
 using Content.Shared.Movement.Components;
 using Content.Shared.Popups;
 using Content.Shared.Stunnable;
-using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -133,7 +132,7 @@ namespace Content.Server.Conveyor
         public IEnumerable<(IEntity, IPhysBody)> GetEntitiesToMove(ConveyorComponent comp)
         {
             //todo uuuhhh cache this
-            foreach (var entity in _entityLookup.GetEntitiesIntersecting(comp.Owner, LookupFlags.Approximate))
+            foreach (var entity in _entityLookup.GetEntitiesIntersecting(comp.Owner, flags: LookupFlags.Approximate))
             {
                 if (entity.Deleted)
                 {

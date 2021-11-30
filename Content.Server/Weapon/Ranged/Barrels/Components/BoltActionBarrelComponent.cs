@@ -6,7 +6,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -26,7 +25,9 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
     /// </summary>
     [RegisterComponent]
     [NetworkedComponent()]
+#pragma warning disable 618
     public sealed class BoltActionBarrelComponent : ServerRangedBarrelComponent, IMapInit, IExamine
+#pragma warning restore 618
     {
         // Originally I had this logic shared with PumpBarrel and used a couple of variables to control things
         // but it felt a lot messier to play around with, especially when adding verbs

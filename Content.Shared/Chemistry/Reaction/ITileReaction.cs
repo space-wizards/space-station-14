@@ -1,10 +1,11 @@
 ﻿using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Map;
 
 namespace Content.Shared.Chemistry.Reaction
 {
     public interface ITileReaction
     {
-        ReagentUnit TileReact(TileRef tile, ReagentPrototype reagent, ReagentUnit reactVolume);
+        FixedPoint2 TileReact(TileRef tile, ReagentPrototype reagent, FixedPoint2 reactVolume);
     }
 }

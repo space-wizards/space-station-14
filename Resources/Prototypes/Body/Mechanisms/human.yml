@@ -9,7 +9,7 @@
   - type: Mechanism
   - type: Food
   - type: Extractable
-    extractableSolution: extractableSolution
+    grindableSolutionName: organ
   - type: SolutionContainerManager
     solutions:
       organ:
@@ -28,12 +28,11 @@
   - type: Mechanism
     size: 1
     compatibility: Biological
-    behaviors:
-    - !type:BrainBehavior {}
   - type: Input
     context: "ghost"
   - type: DummyInputMover
   - type: GhostOnMove
+  - type: Brain
 
 - type: entity
   id: OrganHumanEyes
@@ -103,8 +102,6 @@
     behaviors:
     - !type:LungBehavior {}
 
-# TODO DAMAGE UNITS. Some of these damage effects were scaled up to integers.
-# Scale back down when damage units are in.
 - type: entity
   id: OrganHumanHeart
   parent: BaseHumanOrgan
@@ -116,104 +113,16 @@
   - type: Mechanism
     size: 1
     compatibility: Biological
-    behaviors:
-    - !type:HeartBehavior {}
   # The heart 'metabolizes' medicines and poisons that aren't filtered out by other organs.
   # This is done because these chemicals need to have some effect even if they aren't being filtered out of your body.
   # You're technically 'immune to poison' without a heart, but.. uhh, you'll have bigger problems on your hands.
   - type: Metabolizer
-    metabolisms:
-      Arithrazine:
-        effects:
-        - !type:HealthChange
-          damage:
-            groups:
-              Toxin: -2 # -1  Multiplying by 2. pls give damage units
-              Brute: 1  # 0.5
-      Bicaridine:
-        effects:
-        - !type:HealthChange
-          damage:
-            groups:
-              Brute: -2
-      Dermaline:
-        effects:
-        - !type:HealthChange
-          damage:
-            groups:
-              Burn: -3
-      Dexalin:
-        effects:
-        - !type:HealthChange
-          damage:
-            types:
-              Asphyxiation: -1
-      DexalinPlus:
-        effects:
-        - !type:HealthChange
-          damage:
-            types:
-              Asphyxiation: -3
-      Dylovene:
-        effects:
-        - !type:HealthChange
-          damage:
-            types:
-              Poison: -1
-      Ephedrine:
-        effects:
-          - !type:MovespeedModifier
-            walkSpeedModifier: 1.2
-            sprintSpeedModifier: 1.2
-      HeartbreakerToxin:
-        effects:
-        - !type:HealthChange
-          damage:
-            types:
-              Asphyxiation: 4
-      Kelotane:
-        effects:
-        - !type:HealthChange
-          damage:
-            groups:
-              Burn: -1
-      Lexorin:
-        effects:
-        - !type:HealthChange
-          damage:
-            groups:
-              Airloss: 7
-      Meth:
-        effects:
-        - !type:HealthChange
-          damage:
-            types:
-              Poison: 2 # 2.5
-        - !type:MovespeedModifier
-          walkSpeedModifier: 1.3
-          sprintSpeedModifier: 1.3
-        - !type:HealthChange
-          conditions:
-            - !type:ReagentThreshold
-              min: 10
-          damage:
-            types:
-              Poison: 4 # this is added to the base damage of the meth.
-      Omnizine:
-        effects:
-        - !type:HealthChange
-          damage:
-            groups:
-              Burn: -3 # -2. w/o damage units did not divide into 3 types
-              Toxin: -2
-              Airloss: -2
-              Brute: -3 # -2. w/o damage units did not divide into 3 types
-      Synaptizine:
-        effects:
-        - !type:HealthChange
-          damage:
-            types:
-              Poison: 1 # 0.5 pls damage units
+    maxReagents: 2
+    metabolizerTypes: [Human]
+    groups:
+    - id: Medicine
+    - id: Poison
+    - id: Narcotic
 
 - type: entity
   id: OrganHumanStomach
@@ -226,103 +135,23 @@
   - type: Mechanism
     size: 1
     compatibility: Biological
-    behaviors:
-    - !type:StomachBehavior
-      max_volume: 250
-      digestionDelay: 20
   - type: SolutionContainerManager
     solutions:
       stomach:
         maxVol: 250
+  - type: Stomach
+    maxVolume: 250
+    digestionDelay: 20
   # The stomach metabolizes stuff like foods and drinks.
   # TODO: Have it work off of the ent's solution container, and move this
   # to intestines instead.
-  - type: Metabolizer # Release me from this hell called 1 reagent for every drink
-    # TODO please make every drink their own base thing
-    metabolisms:
-      Flour:
-        effects:
-        - !type:SatiateHunger
-      JuiceApple:
-        effects:
-        - !type:SatiateThirst
-      JuiceBerry:
-        effects:
-        - !type:SatiateThirst
-      JuiceBanana:
-        effects:
-        - !type:SatiateThirst
-      JuiceCarrot:
-        effects:
-        - !type:SatiateThirst
-      JuiceLime:
-        effects:
-        - !type:SatiateThirst
-      JuiceLemon:
-        effects:
-        - !type:SatiateThirst
-      JuiceGrape:
-        effects:
-        - !type:SatiateThirst
-      JuiceOrange:
-        effects:
-        - !type:SatiateThirst
-      JuiceTomato:
-        effects:
-        - !type:SatiateThirst
-      JuiceBerryPoison:
-        effects:
-        - !type:SatiateThirst
-        - !type:HealthChange
-          damage:
-            types:
-              Poison: 1
-      JuiceWatermelon:
-        effects:
-        - !type:SatiateThirst
-      JuicePineapple:
-        effects:
-        - !type:SatiateThirst
-      Nutriment:
-        effects:
-        - !type:SatiateHunger
-      Water:
-        effects:
-        - !type:SatiateThirst
-          hydrationFactor: 2
-      Coffee:
-        effects:
-        - !type:SatiateThirst
-      Tea:
-        effects:
-        - !type:SatiateThirst
-      Milk:
-        effects:
-        - !type:SatiateThirst
-      SpoiledMilk:
-        effects:
-        - !type:SatiateThirst
-          hydrationFactor: -2
-      MilkSoy:
-        effects:
-        - !type:SatiateThirst
-          hydrationFactor: 2 # soyboys stay winning
-      MilkOat:
-        effects:
-        - !type:SatiateThirst
-          hydrationFactor: 2 # oatboys stay winning
-      Cola:
-        effects:
-        - !type:SatiateThirst
-          hydrationFactor: 0.5 # sodaboys stay losing
-      ThirteenLoko:
-        effects:
-        - !type:SatiateThirst
-          hydrationFactor: 2
-        - !type:HealthChange
-          damage:
-            types:
-              Poison: 1
+  - type: Metabolizer
+    # mm yummy
+    maxReagents: 3
+    metabolizerTypes: [Human]
+    groups:
+    - id: Food
+    - id: Drink
 
 - type: entity
   id: OrganHumanLiver
@@ -336,16 +165,11 @@
     size: 1
     compatibility: Biological
   - type: Metabolizer # The liver metabolizes certain chemicals only, like alcohol.
-    metabolisms: # TODO add the rest of alcohol
-      CreamyDelight:
-        effects:
-        - !type:SatiateThirst
-      Lean:
-        effects:
-        - !type:SatiateThirst
-      LeanShine: # who added this?
-        effects:
-        - !type:SatiateThirst
+    maxReagents: 1
+    metabolizerTypes: [Human]
+    groups:
+    - id: Alcohol
+      rateModifier: 0.1 # removes alcohol very slowly along with the stomach removing it as a drink
 
 - type: entity
   id: OrganHumanKidneys
@@ -360,5 +184,8 @@
   - type: Mechanism
     size: 1
     compatibility: Biological
-
-
+  # The kidneys just remove anything that doesn't currently have any metabolisms, as a stopgap.
+  - type: Metabolizer
+    maxReagents: 5
+    metabolizerTypes: [Human]
+    removeEmpty: true

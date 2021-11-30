@@ -4,6 +4,7 @@ using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Timing;
 using Robust.Shared.IoC;
@@ -13,7 +14,7 @@ namespace Content.Shared.Chemistry.Components
     //TODO: refactor movement modifier component because this is a pretty poor solution
     [RegisterComponent]
     [NetworkedComponent]
-    public sealed class MovespeedModifierMetabolismComponent : Component, IMoveSpeedModifier
+    public sealed class MovespeedModifierMetabolismComponent : Component
     {
         [ViewVariables]
         public override string Name => "MovespeedModifierMetabolism";

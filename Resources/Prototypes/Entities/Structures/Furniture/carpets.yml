@@ -5,12 +5,14 @@
   abstract: true
   components:
   - type: Sprite
-    drawdepth: BelowFloor
+    drawdepth: FloorTiles
   - type: Icon
     state: full
   - type: IconSmooth
     key: full
     base: carpet_
+  - type: Tag
+    tags: [ Carpet ]
   - type: Physics
     canCollide: false
     fixtures:

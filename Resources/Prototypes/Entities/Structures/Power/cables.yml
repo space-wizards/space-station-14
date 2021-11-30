@@ -17,7 +17,7 @@
     anchored: true
   - type: Sprite
     netsync: false
-    drawdepth: BelowFloor
+    drawdepth: ThinWire
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -30,6 +30,12 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: SubFloorHide
+  - type: Electrified
+    onBump: false
+    requirePower: true
+    highVoltageNode: power
+    mediumVoltageNode: power
+    lowVoltageNode: power
   - type: CableVis
     node: power
 
@@ -42,6 +48,7 @@
   - type: Sprite
     sprite: Structures/Power/Cables/hv_cable.rsi
     state: hvcable_0
+    drawdepth: ThickWire
   - type: Icon
     sprite: Structures/Power/Cables/hv_cable.rsi
     state: hvcable_4
@@ -50,9 +57,6 @@
       power:
         !type:CableNode
         nodeGroupID: HVPower
-      wire:
-        !type:AdjacentNode
-        nodeGroupID: WireNet
   - type: Cable
     cableDroppedOnCutPrototype: CableHVStack1
     cableType: HighVoltage
@@ -93,9 +97,6 @@
       power:
         !type:CableNode
         nodeGroupID: MVPower
-      wire:
-        !type:AdjacentNode
-        nodeGroupID: WireNet
   - type: Cable
     cableDroppedOnCutPrototype: CableMVStack1
     cableType: MediumVoltage
@@ -136,11 +137,9 @@
       power:
         !type:CableNode
         nodeGroupID: Apc
-      wire:
-        !type:AdjacentNode
-        nodeGroupID: WireNet
   - type: PowerProvider
     voltage: Apc
+  - type: ExtensionCableProvider
   - type: Cable
     cableDroppedOnCutPrototype: CableApcStack1
     cableType: Apc

@@ -10,7 +10,7 @@ namespace Content.Shared.Pulling.Components
 {
     [RegisterComponent]
     [Friend(typeof(SharedPullingStateManagementSystem))]
-    public class SharedPullerComponent : Component, IMoveSpeedModifier
+    public class SharedPullerComponent : Component
     {
         public override string Name => "Puller";
 

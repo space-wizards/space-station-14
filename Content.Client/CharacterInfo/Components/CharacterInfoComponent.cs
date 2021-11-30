@@ -1,3 +1,4 @@
+using System;
 using Content.Client.CharacterInterface;
 using Content.Client.HUD.UI;
 using Content.Client.Stylesheets;
@@ -35,9 +36,12 @@ namespace Content.Client.CharacterInfo.Components
 
         public void Opened()
         {
+#pragma warning disable 618
             SendNetworkMessage(new RequestCharacterInfoMessage());
+#pragma warning restore 618
         }
 
+        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null)
         {
             base.HandleNetworkMessage(message, netChannel, session);
@@ -75,7 +79,7 @@ namespace Content.Client.CharacterInfo.Components
                     Orientation = LayoutOrientation.Horizontal,
                     Children =
                     {
-                        (SpriteView = new SpriteView { Scale = (2, 2)}),
+                        (SpriteView = new SpriteView { OverrideDirection = Direction.South, Scale = (2,2)}),
                         new BoxContainer
                         {
                             Orientation = LayoutOrientation.Vertical,
@@ -92,11 +96,6 @@ namespace Content.Client.CharacterInfo.Components
                             }
                         }
                     }
-                });
-
-                AddChild(new Placeholder()
-                {
-                    PlaceholderText = Loc.GetString("character-info-health-and-status-effects-text")
                 });
 
                 AddChild(new Label

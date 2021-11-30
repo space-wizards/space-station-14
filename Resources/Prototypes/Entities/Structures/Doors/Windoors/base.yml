@@ -10,7 +10,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-        bounds: "-0.49,-0.49,0.49,-0.2"
+        bounds: "-0.49,-0.49,0.49,-0.3"
       mass: 50
       layer:
       - Impassable
@@ -21,7 +21,6 @@
       - VaultImpassable
   - type: Sprite
     netsync: false
-    drawdepth: FloorObjects
     sprite: Structures/Doors/Windoors/windoor.rsi
     layers:
     - state: closed
@@ -37,6 +36,7 @@
     - state: panel_open
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Glass
@@ -59,6 +59,8 @@
   - type: AccessReader
   - type: Airlock
     openPanelVisible: true
+    # needed so that windoors will close regardless of whether there are people in it; it doesn't crush after all
+    safety: false
   - type: Door
     weldable: false
     crushDamage:
@@ -101,7 +103,6 @@
   components:
   - type: Sprite
     netsync: false
-    drawdepth: FloorObjects
     sprite: Structures/Doors/Windoors/windoor.rsi
     layers:
     - state: secure_underlay

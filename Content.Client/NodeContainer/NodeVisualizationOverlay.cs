@@ -113,8 +113,8 @@ namespace Content.Client.NodeContainer
             var cursorBox = Box2.CenteredAround(mouseWorldPos, (nodeSize, nodeSize));
 
             // Group visible nodes by grid tiles.
-            var worldBounds = overlayDrawArgs.WorldBounds;
-            _lookup.FastEntitiesIntersecting(map, ref worldBounds, entity =>
+            var worldAABB = overlayDrawArgs.WorldAABB;
+            _lookup.FastEntitiesIntersecting(map, ref worldAABB, entity =>
             {
                 if (!_system.Entities.TryGetValue(entity.Uid, out var nodeData))
                     return;
@@ -142,9 +142,10 @@ namespace Content.Client.NodeContainer
             foreach (var (gridId, gridDict) in _gridIndex)
             {
                 var grid = _mapManager.GetGrid(gridId);
+                var lCursorBox = grid.InvWorldMatrix.TransformBox(cursorBox);
                 foreach (var (pos, list) in gridDict)
                 {
-                    var centerPos = grid.GridTileToWorld(pos).Position;
+                    var centerPos = (Vector2) pos + grid.TileSize / 2f;
                     list.Sort(NodeDisplayComparer.Instance);
 
                     var offset = -(list.Count - 1) * nodeOffset / 2;
@@ -152,42 +153,47 @@ namespace Content.Client.NodeContainer
                     foreach (var (group, node) in list)
                     {
                         var nodePos = centerPos + (offset, offset);
-                        if (cursorBox.Contains(nodePos))
+                        if (lCursorBox.Contains(nodePos))
                             _hovered = (group.NetId, node.NetId);
 
                         _nodeIndex[(group.NetId, node.NetId)] = new NodeRenderData(group, node, nodePos);
                         offset += nodeOffset;
                     }
                 }
-            }
 
-            foreach (var nodeRenderData in _nodeIndex.Values)
-            {
-                var pos = nodeRenderData.WorldPos;
-                var bounds = Box2.CenteredAround(pos, (nodeSize, nodeSize));
+                handle.SetTransform(grid.WorldMatrix);
 
-                var groupData = nodeRenderData.GroupData;
-                var color = groupData.Color;
-
-                if (!_hovered.HasValue)
-                    color.A = 0.5f;
-                else if (_hovered.Value.group != groupData.NetId)
-                    color.A = 0.2f;
-                else
-                    color.A = 0.75f + MathF.Sin(_time * 4) * 0.25f;
-
-                handle.DrawRect(bounds, color);
-
-                foreach (var reachable in nodeRenderData.NodeDatum.Reachable)
+                foreach (var nodeRenderData in _nodeIndex.Values)
                 {
-                    if (_nodeIndex.TryGetValue((groupData.NetId, reachable), out var reachDat))
+                    var pos = nodeRenderData.NodePos;
+                    var bounds = Box2.CenteredAround(pos, (nodeSize, nodeSize));
+
+                    var groupData = nodeRenderData.GroupData;
+                    var color = groupData.Color;
+
+                    if (!_hovered.HasValue)
+                        color.A = 0.5f;
+                    else if (_hovered.Value.group != groupData.NetId)
+                        color.A = 0.2f;
+                    else
+                        color.A = 0.75f + MathF.Sin(_time * 4) * 0.25f;
+
+                    handle.DrawRect(bounds, color);
+
+                    foreach (var reachable in nodeRenderData.NodeDatum.Reachable)
                     {
-                        handle.DrawLine(pos, reachDat.WorldPos, color);
+                        if (_nodeIndex.TryGetValue((groupData.NetId, reachable), out var reachDat))
+                        {
+                            handle.DrawLine(pos, reachDat.NodePos, color);
+                        }
                     }
                 }
+
+                _nodeIndex.Clear();
             }
 
-            _nodeIndex.Clear();
+
+            handle.SetTransform(Matrix3.Identity);
             _gridIndex.Clear();
         }
 
@@ -219,13 +225,13 @@ namespace Content.Client.NodeContainer
         {
             public GroupData GroupData;
             public NodeDatum NodeDatum;
-            public Vector2 WorldPos;
+            public Vector2 NodePos;
 
-            public NodeRenderData(GroupData groupData, NodeDatum nodeDatum, Vector2 worldPos)
+            public NodeRenderData(GroupData groupData, NodeDatum nodeDatum, Vector2 nodePos)
             {
                 GroupData = groupData;
                 NodeDatum = nodeDatum;
-                WorldPos = worldPos;
+                NodePos = nodePos;
             }
         }
     }

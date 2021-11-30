@@ -1,1 +1,11 @@
-# Bro what do I PUT here
+- type: entity
+  id: CrateFoodPizza
+  name: emergency pizza delivery
+  description: Help do your part to end station hunger by distributing pizza to underfunded departments!
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+    - id: FoodBoxPizzaFilled
+      amount: 4
+    - id: KnifePlastic

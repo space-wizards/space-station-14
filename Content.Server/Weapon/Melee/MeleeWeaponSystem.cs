@@ -1,12 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.Body.Circulatory;
+using Content.Server.Administration.Logs;
+using Content.Server.Body.Components;
 using Content.Server.Chemistry.Components;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Cooldown;
 using Content.Server.Weapon.Melee.Components;
-using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Damage;
+using Content.Shared.Database;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Physics;
@@ -28,6 +31,7 @@ namespace Content.Server.Weapon.Melee
         [Dependency] private IGameTiming _gameTiming = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private SolutionContainerSystem _solutionsSystem = default!;
+        [Dependency] private readonly AdminLogSystem _logSystem = default!;
 
         public override void Initialize()
         {
@@ -90,8 +94,21 @@ namespace Content.Server.Weapon.Melee
                     var targets = new[] { target };
                     SendAnimation(comp.ClickArc, angle, args.User, owner, targets, comp.ClickAttackEffect, false);
 
-                    _damageableSystem.TryChangeDamage(target.Uid,
+                    RaiseLocalEvent(target.Uid, new AttackedEvent(args.Used, args.User, args.ClickLocation));
+
+                    var damage = _damageableSystem.TryChangeDamage(target.Uid,
                         DamageSpecifier.ApplyModifierSets(comp.Damage, hitEvent.ModifiersList));
+
+                    if (damage != null)
+                    {
+                        if (args.Used == args.User)
+                            _logSystem.Add(LogType.MeleeHit,
+                                $"{args.User} melee attacked {args.TargetEntity} using their hands and dealt {damage.Total} damage");
+                        else
+                            _logSystem.Add(LogType.MeleeHit,
+                                $"{args.User} melee attacked {args.TargetEntity} using {args.Used} and dealt {damage.Total} damage");
+                    }
+
                     SoundSystem.Play(Filter.Pvs(owner), comp.HitSound.GetSound(), target);
                 }
             }
@@ -156,8 +173,20 @@ namespace Content.Server.Weapon.Melee
 
                 foreach (var entity in hitEntities)
                 {
-                    _damageableSystem.TryChangeDamage(entity.Uid,
-                            DamageSpecifier.ApplyModifierSets(comp.Damage, hitEvent.ModifiersList));
+                    RaiseLocalEvent(entity.Uid, new AttackedEvent(args.Used, args.User, args.ClickLocation));
+
+                    var damage = _damageableSystem.TryChangeDamage(entity.Uid,
+                        DamageSpecifier.ApplyModifierSets(comp.Damage, hitEvent.ModifiersList));
+
+                    if (damage != null)
+                    {
+                        if (args.Used == args.User)
+                            _logSystem.Add(LogType.MeleeHit,
+                                $"{args.User} melee attacked {entity} using their hands and dealt {damage.Total} damage");
+                        else
+                            _logSystem.Add(LogType.MeleeHit,
+                                $"{args.User} melee attacked {entity} using {args.Used} and dealt {damage.Total} damage");
+                    }
                 }
             }
 

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <!-- Work around https://github.com/dotnet/project-system/issues/4314 -->
     <TargetFramework>$(TargetFramework)</TargetFramework>
-    <LangVersion>9</LangVersion>
+    <LangVersion>10</LangVersion>
     <IsPackable>false</IsPackable>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <Configurations>Release;Debug</Configurations>
@@ -16,6 +16,7 @@
     <PackageReference Include="JetBrains.Annotations" Version="2020.3.0" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Content.Shared.Database\Content.Shared.Database.csproj" />
     <ProjectReference Include="..\RobustToolbox\Lidgren.Network\Lidgren.Network.csproj">
       <Private>false</Private>
     </ProjectReference>

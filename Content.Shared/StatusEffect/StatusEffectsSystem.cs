@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
-using System.Resources;
 using Content.Shared.Alert;
-using Robust.Shared.Exceptions;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
@@ -107,6 +103,33 @@ namespace Content.Shared.StatusEffect
             return false;
         }
 
+        public bool TryAddStatusEffect(EntityUid uid, string key, TimeSpan time, string component,
+            StatusEffectsComponent? status = null,
+            SharedAlertsComponent? alerts = null)
+        {
+            if (!Resolve(uid, ref status, false))
+                return false;
+
+            Resolve(uid, ref alerts, false);
+
+            if (TryAddStatusEffect(uid, key, time, status, alerts))
+            {
+                // If they already have the comp, we just won't bother updating anything.
+                if (!EntityManager.HasComponent(uid, _componentFactory.GetRegistration(component).Type))
+                {
+                    // Fuck this shit I hate it
+                    var newComponent = (Component) _componentFactory.GetComponent(component);
+                    newComponent.Owner = EntityManager.GetEntity(uid);
+
+                    EntityManager.AddComponent(uid, newComponent);
+                    status.ActiveEffects[key].RelevantComponent = component;
+                }
+                return true;
+            }
+
+            return false;
+        }
+
         /// <summary>
         ///     Tries to add a status effect to an entity with a certain timer.
         /// </summary>
@@ -140,11 +163,10 @@ namespace Content.Shared.StatusEffect
 
             (TimeSpan, TimeSpan) cooldown = (_gameTiming.CurTime, _gameTiming.CurTime + time);
 
-            // If they already have this status effect, just bulldoze its cooldown in favor of the new one
-            // and keep the relevant component the same.
+            // If they already have this status effect, add the time onto it's cooldown rather than anything else.
             if (HasStatusEffect(uid, key, status))
             {
-                status.ActiveEffects[key] = new StatusEffectState(cooldown, status.ActiveEffects[key].RelevantComponent);
+                status.ActiveEffects[key].Cooldown.Item2 += time;
             }
             else
             {
@@ -310,16 +332,28 @@ namespace Content.Shared.StatusEffect
         /// <param name="time">The amount of time to add.</param>
         /// <param name="status">The status effect component, should you already have it.</param>
         public bool TryAddTime(EntityUid uid, string key, TimeSpan time,
-            StatusEffectsComponent? status = null)
+            StatusEffectsComponent? status=null,
+            SharedAlertsComponent? alert=null)
         {
             if (!Resolve(uid, ref status, false))
                 return false;
+
+            Resolve(uid, ref alert, false);
 
             if (!HasStatusEffect(uid, key, status))
                 return false;
 
             var timer = status.ActiveEffects[key].Cooldown;
             timer.Item2 += time;
+            status.ActiveEffects[key].Cooldown = timer;
+
+            if (_prototypeManager.TryIndex<StatusEffectPrototype>(key, out var proto)
+                && alert != null
+                && proto.Alert != null)
+            {
+                alert.ShowAlert(proto.Alert.Value, cooldown: GetAlertCooldown(uid, proto.Alert.Value, status));
+
+            }
 
             return true;
         }
@@ -332,10 +366,13 @@ namespace Content.Shared.StatusEffect
         /// <param name="time">The amount of time to add.</param>
         /// <param name="status">The status effect component, should you already have it.</param>
         public bool TryRemoveTime(EntityUid uid, string key, TimeSpan time,
-            StatusEffectsComponent? status = null)
+            StatusEffectsComponent? status=null,
+            SharedAlertsComponent? alert=null)
         {
             if (!Resolve(uid, ref status, false))
                 return false;
+
+            Resolve(uid, ref alert, false);
 
             if (!HasStatusEffect(uid, key, status))
                 return false;
@@ -347,6 +384,15 @@ namespace Content.Shared.StatusEffect
                 return false;
 
             timer.Item2 -= time;
+            status.ActiveEffects[key].Cooldown = timer;
+
+            if (_prototypeManager.TryIndex<StatusEffectPrototype>(key, out var proto)
+                && alert != null
+                && proto.Alert != null)
+            {
+                alert.ShowAlert(proto.Alert.Value, cooldown: GetAlertCooldown(uid, proto.Alert.Value, status));
+
+            }
 
             return true;
         }

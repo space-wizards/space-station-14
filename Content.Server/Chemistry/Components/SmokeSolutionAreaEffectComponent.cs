@@ -1,10 +1,9 @@
-﻿using Content.Server.Body.Circulatory;
-using Content.Server.Body.Respiratory;
+﻿using Content.Server.Body.Components;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Chemistry;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Content.Shared.Smoking;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.Chemistry.Components
@@ -14,12 +13,12 @@ namespace Content.Server.Chemistry.Components
     public class SmokeSolutionAreaEffectComponent : SolutionAreaEffectComponent
     {
         public override string Name => "SmokeSolutionAreaEffect";
-        public const string SolutionName = "smoke";
+        public new const string SolutionName = "solutionArea";
 
         protected override void UpdateVisuals()
         {
             if (Owner.TryGetComponent(out AppearanceComponent? appearance) &&
-                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
+                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution))
             {
                 appearance.SetData(SmokeVisuals.Color, solution.Color);
             }
@@ -27,7 +26,7 @@ namespace Content.Server.Chemistry.Components
 
         protected override void ReactWithEntity(IEntity entity, double solutionFraction)
         {
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution))
                 return;
 
             if (!entity.TryGetComponent(out BloodstreamComponent? bloodstream))
@@ -37,15 +36,15 @@ namespace Content.Server.Chemistry.Components
                 internals.AreInternalsWorking())
                 return;
 
-            var chemistry = EntitySystem.Get<ChemistrySystem>();
+            var chemistry = EntitySystem.Get<ReactiveSystem>();
             var cloneSolution = solution.Clone();
-            var transferAmount = ReagentUnit.Min(cloneSolution.TotalVolume * solutionFraction, bloodstream.EmptyVolume);
+            var transferAmount = FixedPoint2.Min(cloneSolution.TotalVolume * solutionFraction, bloodstream.EmptyVolume);
             var transferSolution = cloneSolution.SplitSolution(transferAmount);
 
             foreach (var reagentQuantity in transferSolution.Contents.ToArray())
             {
-                if (reagentQuantity.Quantity == ReagentUnit.Zero) continue;
-                chemistry.ReactionEntity(entity, ReactionMethod.Ingestion, reagentQuantity.ReagentId, reagentQuantity.Quantity, transferSolution);
+                if (reagentQuantity.Quantity == FixedPoint2.Zero) continue;
+                chemistry.ReactionEntity(entity.Uid, ReactionMethod.Ingestion, reagentQuantity.ReagentId, reagentQuantity.Quantity, transferSolution);
             }
 
             bloodstream.TryTransferSolution(transferSolution);

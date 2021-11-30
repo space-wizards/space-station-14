@@ -10,9 +10,9 @@ namespace Content.Shared.Construction.Steps
         [DataField("tag")]
         private string? _tag = null;
 
-        public override bool EntityValid(IEntity entity)
+        public override bool EntityValid(EntityUid uid, IEntityManager entityManager)
         {
-            return !string.IsNullOrEmpty(_tag) && entity.HasTag(_tag);
+            return !string.IsNullOrEmpty(_tag) && entityManager.TryGetComponent(uid, out TagComponent? tags) && tags.HasTag(_tag);
         }
     }
 }

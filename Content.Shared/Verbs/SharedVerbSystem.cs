@@ -1,106 +1,84 @@
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using Content.Shared.Examine;
-using Content.Shared.Interaction.Helpers;
-using Content.Shared.Tag;
+using Content.Shared.ActionBlocker;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
+using Content.Shared.Hands.Components;
+using Content.Shared.Interaction;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Map;
-using Robust.Shared.Maths;
 
 namespace Content.Shared.Verbs
 {
-    public class SharedVerbSystem : EntitySystem
+    public abstract class SharedVerbSystem : EntitySystem
     {
-        [Dependency] private readonly IEntityLookup _lookup = default!;
+        [Dependency] private readonly SharedAdminLogSystem _logSystem = default!;
+        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
 
         /// <summary>
-        ///     Get all of the entities in an area for displaying on the context menu.
+        ///     Raises a number of events in order to get all verbs of the given type(s) defined in local systems. This
+        ///     does not request verbs from the server.
         /// </summary>
-        /// <param name="buffer">Whether we should slightly extend the entity search area.</param>
-        public bool TryGetContextEntities(IEntity player, MapCoordinates targetPos,
-            [NotNullWhen(true)] out List<IEntity>? contextEntities, bool buffer = false, bool ignoreVisibility = false)
-        {
-            contextEntities = null;
-
-            // Check if we have LOS to the clicked-location.
-            if (!ignoreVisibility && !player.InRangeUnOccluded(targetPos, range: ExamineSystemShared.ExamineRange))
-                return false;
-
-            // Get entities
-            var length = buffer ? 1.0f : 0.5f;
-            var entities = _lookup.GetEntitiesIntersecting(
-                    targetPos.MapId,
-                    Box2.CenteredAround(targetPos.Position, (length, length)))
-                .ToList();
-
-            if (entities.Count == 0) return false;
-
-            if (ignoreVisibility)
-            {
-                contextEntities = entities;
-                return true;
-            }
-
-            // perform visibility checks
-            var playerPos = player.Transform.MapPosition;
-            foreach (var entity in entities.ToList())
-            {
-                if (entity.HasTag("HideContextMenu"))
-                {
-                    entities.Remove(entity);
-                    continue;
-                }
-
-                if (!ExamineSystemShared.InRangeUnOccluded(
-                        playerPos,
-                        entity.Transform.MapPosition,
-                        ExamineSystemShared.ExamineRange,
-                        null) )
-                {
-                    entities.Remove(entity);
-                }
-            }
-
-            if (entities.Count == 0)
-                return false;
-
-            contextEntities = entities;
-            return true;
-        }
-
-        /// <summary>
-        ///     Raises a number of events in order to get all verbs of the given type(s)
-        /// </summary>
-        public Dictionary<VerbType, SortedSet<Verb>> GetVerbs(IEntity target, IEntity user, VerbType verbTypes)
+        public virtual Dictionary<VerbType, SortedSet<Verb>> GetLocalVerbs(IEntity target, IEntity user, VerbType verbTypes, bool force = false)
         {
             Dictionary<VerbType, SortedSet<Verb>> verbs = new();
 
+            // accessibility checks
+            bool canAccess = false;
+            if (force || target == user)
+                canAccess = true;
+            else if (_interactionSystem.InRangeUnobstructed(user, target, ignoreInsideBlocker: true))
+            {
+                if (user.IsInSameOrParentContainer(target))
+                    canAccess = true;
+                else
+                    // the item might be in a backpack that the user has open
+                    canAccess = _interactionSystem.CanAccessViaStorage(user.Uid, target.Uid);
+            }
+
+            // A large number of verbs need to check action blockers. Instead of repeatedly having each system individually
+            // call ActionBlocker checks, just cache it for the verb request.
+            var canInteract = force || _actionBlockerSystem.CanInteract(user.Uid);
+
+            IEntity? @using = null;
+            if (user.TryGetComponent(out SharedHandsComponent? hands) && (force || _actionBlockerSystem.CanUse(user.Uid)))
+            {
+                hands.TryGetActiveHeldEntity(out @using);
+
+                // Check whether the "Held" entity is a virtual pull entity. If yes, set that as the entity being "Used".
+                // This allows you to do things like buckle a dragged person onto a surgery table, without click-dragging
+                // their sprite.
+                if (@using != null && @using.TryGetComponent<HandVirtualItemComponent>(out var pull))
+                {
+                    @using = IoCManager.Resolve<IEntityManager>().GetEntity(pull.BlockingEntity);
+                }
+            }
+
             if ((verbTypes & VerbType.Interaction) == VerbType.Interaction)
             {
-                GetInteractionVerbsEvent getVerbEvent = new(user, target);
+                GetInteractionVerbsEvent getVerbEvent = new(user, target, @using, hands, canInteract, canAccess);
                 RaiseLocalEvent(target.Uid, getVerbEvent);
                 verbs.Add(VerbType.Interaction, getVerbEvent.Verbs);
             }
 
             if ((verbTypes & VerbType.Activation) == VerbType.Activation)
             {
-                GetActivationVerbsEvent getVerbEvent = new(user, target);
+                GetActivationVerbsEvent getVerbEvent = new(user, target, @using, hands, canInteract, canAccess);
                 RaiseLocalEvent(target.Uid, getVerbEvent);
                 verbs.Add(VerbType.Activation, getVerbEvent.Verbs);
             }
 
             if ((verbTypes & VerbType.Alternative) == VerbType.Alternative)
             {
-                GetAlternativeVerbsEvent getVerbEvent = new(user, target);
+                GetAlternativeVerbsEvent getVerbEvent = new(user, target, @using, hands, canInteract, canAccess);
                 RaiseLocalEvent(target.Uid, getVerbEvent);
                 verbs.Add(VerbType.Alternative, getVerbEvent.Verbs);
             }
 
             if ((verbTypes & VerbType.Other) == VerbType.Other)
             {
-                GetOtherVerbsEvent getVerbEvent = new(user, target);
+                GetOtherVerbsEvent getVerbEvent = new(user, target, @using, hands, canInteract, canAccess);
                 RaiseLocalEvent(target.Uid, getVerbEvent);
                 verbs.Add(VerbType.Other, getVerbEvent.Verbs);
             }
@@ -109,41 +87,63 @@ namespace Content.Shared.Verbs
         }
 
         /// <summary>
-        ///     Execute actions associated with the given verb.
+        ///     Execute the provided verb.
         /// </summary>
         /// <remarks>
-        ///     This will try to call delegates and raise any events for the given verb.
+        ///     This will try to call the action delegates and raise the local events for the given verb.
         /// </remarks>
-        public bool TryExecuteVerb(Verb verb)
+        public void ExecuteVerb(Verb verb, EntityUid user, EntityUid target, bool forced = false)
         {
-            var executed = false;
+            // first, lets log the verb. Just in case it ends up crashing the server or something.
+            LogVerb(verb, user, target, forced);
 
-            // Maybe run a delegate
-            if (verb.Act != null)
-            {
-                executed = true;
-                verb.Act.Invoke();
-            }
-            
+            // then invoke any relevant actions
+            verb.Act?.Invoke();
+
             // Maybe raise a local event
-            if (verb.LocalVerbEventArgs != null)
+            if (verb.ExecutionEventArgs != null)
             {
-                executed = true;
-                if (verb.LocalEventTarget.IsValid())
-                    RaiseLocalEvent(verb.LocalEventTarget, verb.LocalVerbEventArgs);
+                if (verb.EventTarget.IsValid())
+                    RaiseLocalEvent(verb.EventTarget, verb.ExecutionEventArgs);
                 else
-                    RaiseLocalEvent(verb.LocalVerbEventArgs);
+                    RaiseLocalEvent(verb.ExecutionEventArgs);
+            }
+        }
+
+        public void LogVerb(Verb verb, EntityUid userUid, EntityUid targetUid, bool forced)
+        {
+            // first get the held item. again.
+            EntityUid? usedUid = null;
+            if (EntityManager.TryGetComponent(userUid, out SharedHandsComponent? hands))
+            {
+                hands.TryGetActiveHeldEntity(out var useEntityd);
+                usedUid = useEntityd?.Uid;
+                if (usedUid != null && EntityManager.TryGetComponent(usedUid.Value, out HandVirtualItemComponent? pull))
+                    usedUid = pull.BlockingEntity;
             }
 
-            // maybe raise a network event
-            if (verb.NetworkVerbEventArgs != null)
-            {
-                executed = true;
-                RaiseNetworkEvent(verb.NetworkVerbEventArgs);
-            }
-                
-            // return false if all of these were null
-            return executed;
+            // get all the entities
+            if (!EntityManager.TryGetEntity(userUid, out var user) ||
+                !EntityManager.TryGetEntity(targetUid, out var target))
+                return;
+
+            IEntity? used = null;
+            if (usedUid != null)
+                EntityManager.TryGetEntity(usedUid.Value, out used);
+
+            // then prepare the basic log message body
+            var verbText = $"{verb.Category?.Text} {verb.Text}".Trim();
+            var logText = forced
+                ? $"was forced to execute the '{verbText}' verb targeting " // let's not frame people, eh?
+                : $"executed '{verbText}' verb targeting ";
+
+            // then log with entity information
+            if (used != null)
+                _logSystem.Add(LogType.Verb, verb.Impact,
+                       $"{user} {logText} {target} while holding {used}");
+            else
+                _logSystem.Add(LogType.Verb, verb.Impact,
+                       $"{user} {logText} {target}");
         }
     }
 }
