@@ -5,8 +5,10 @@ using System.Linq;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Construction.Components;
 using Content.Server.Fluids.Components;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Database;
 using Content.Shared.Directions;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
@@ -59,7 +61,7 @@ namespace Content.Server.Fluids.EntitySystems
         private void UpdateVisuals(EntityUid uid, PuddleComponent puddleComponent)
         {
             if (puddleComponent.Owner.Deleted || EmptyHolder(uid, puddleComponent) ||
-                !EntityManager.TryGetComponent<SharedAppearanceComponent>(uid, out var appearanceComponent))
+                !EntityManager.TryGetComponent<AppearanceComponent>(uid, out var appearanceComponent))
             {
                 return;
             }
@@ -104,6 +106,7 @@ namespace Content.Server.Fluids.EntitySystems
             // TODO VERB ICONS spill icon? pouring out a glass/beaker?
             verb.Act = () => _solutionContainerSystem.SplitSolution(args.Target.Uid,
                 solution, solution.DrainAvailable).SpillAt(args.Target.Transform.Coordinates, "PuddleSmear");
+            verb.Impact = LogImpact.Medium; // dangerous reagent reaction are logged separately.
             args.Verbs.Add(verb);
         }
 

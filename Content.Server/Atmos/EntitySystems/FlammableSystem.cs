@@ -1,17 +1,19 @@
 using System;
 using System.Collections.Generic;
+using Content.Server.Administration.Logs;
 using Content.Server.Alert;
 using Content.Server.Atmos.Components;
 using Content.Server.Stunnable;
 using Content.Server.Temperature.Systems;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
+using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Temperature;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -27,6 +29,7 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly StunSystem _stunSystem = default!;
         [Dependency] private readonly TemperatureSystem _temperatureSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly AdminLogSystem _logSystem = default!;
 
         private const float MinimumFireStacks = -10f;
         private const float MaximumFireStacks = 20f;
@@ -141,6 +144,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!flammable.OnFire)
                 return;
 
+            _logSystem.Add(LogType.Flammable, $"{flammable.Owner} stopped being on fire damage");
             flammable.OnFire = false;
             flammable.FireStacks = 0;
 
@@ -156,6 +160,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             if (flammable.FireStacks > 0 && !flammable.OnFire)
             {
+                _logSystem.Add(LogType.Flammable, $"{flammable.Owner} is on fire");
                 flammable.OnFire = true;
             }
 

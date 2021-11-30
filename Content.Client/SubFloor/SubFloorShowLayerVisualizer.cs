@@ -1,6 +1,7 @@
 using Content.Shared.SubFloor;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Client.SubFloor
 {

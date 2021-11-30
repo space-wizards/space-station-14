@@ -13,12 +13,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 36
         reagents:
         - ReagentId: Nutriment
-          Quantity: 15
+          Quantity: 30
   - type: SliceableFood
-    count: 8
+    count: 6
   - type: Item
     size: 8
   - type: Tag
@@ -26,12 +26,15 @@
     - Pizza
 
 - type: entity
-  parent: FoodPizzaBase
+  parent: FoodInjectableBase # Not sliceable
   id: FoodPizzaSliceBase
   abstract: true
   components:
   - type: Food
     trash: FoodPlateSmall
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Baked/pizza.rsi
+    netsync: false
   - type: SolutionContainerManager
     solutions:
       food:

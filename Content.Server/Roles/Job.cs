@@ -14,10 +14,13 @@ namespace Content.Server.Roles
 
         public string? StartingGear => Prototype.StartingGear;
 
+        public bool CanBeAntag;
+
         public Job(Mind.Mind mind, JobPrototype jobPrototype) : base(mind)
         {
             Prototype = jobPrototype;
             Name = jobPrototype.Name;
+            CanBeAntag = jobPrototype.CanBeAntag;
         }
 
         public override void Greet()
@@ -36,7 +39,7 @@ namespace Content.Server.Roles
 
                 if(Prototype.JoinNotifyCrew && Mind.CharacterName != null)
                     chat.DispatchStationAnnouncement(Loc.GetString("job-greet-join-notify-crew", ("jobName", Name), ("characterName", Mind.CharacterName)),
-                        Loc.GetString("job-greet-join-notify-crew-announcer"));
+                        Loc.GetString("job-greet-join-notify-crew-announcer"), false);
             }
         }
     }

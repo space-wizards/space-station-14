@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Content.Server.Administration.Logs;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
@@ -8,9 +9,11 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Power.NodeGroups;
 using Content.Server.Window;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Database;
 using Content.Shared.Electrocution;
 using Content.Shared.Interaction;
 using Content.Shared.Jittering;
@@ -46,6 +49,7 @@ namespace Content.Server.Electrocution
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly NodeGroupSystem _nodeGroupSystem = default!;
+        [Dependency] private readonly AdminLogSystem _logSystem = default!;
 
         private const string StatusEffectKey = "Electrocution";
         private const string DamageType = "Shock";
@@ -104,7 +108,10 @@ namespace Content.Server.Electrocution
                         _prototypeManager.Index<DamageTypePrototype>(DamageType),
                         (int) finished.AccumulatedDamage);
 
-                    _damageableSystem.TryChangeDamage(finished.Electrocuting, damage);
+                    var actual = _damageableSystem.TryChangeDamage(finished.Electrocuting, damage);
+                    if (actual != null)
+                        _logSystem.Add(LogType.Electrocution,
+                            $"{finished.Owner} took {actual.Total} powered electrocution damage");
                 }
 
                 EntityManager.DeleteEntity(uid);
@@ -337,8 +344,14 @@ namespace Content.Server.Electrocution
             // TODO: Sparks here.
 
             if(shockDamage is {} dmg)
-                _damageableSystem.TryChangeDamage(uid,
+            {
+                var actual = _damageableSystem.TryChangeDamage(uid,
                     new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>(DamageType), dmg));
+
+                if (actual != null)
+                    _logSystem.Add(LogType.Electrocution,
+                        $"{statusEffects.Owner} took {actual.Total} powered electrocution damage");
+            }
 
             _stutteringSystem.DoStutter(uid, time * StutteringTimeMultiplier, statusEffects, alerts);
             _jitteringSystem.DoJitter(uid, time * JitterTimeMultiplier, JitterAmplitude, JitterFrequency, true,

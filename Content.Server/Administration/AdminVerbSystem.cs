@@ -15,7 +15,9 @@ using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Shared.Administration;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
+using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
@@ -67,6 +69,7 @@ namespace Content.Server.Administration
                 verb.Category = VerbCategory.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png";
                 verb.Act = () => args.Target.Delete();
+                verb.Impact = LogImpact.Medium;
                 args.Verbs.Add(verb);
             }
 
@@ -78,6 +81,7 @@ namespace Content.Server.Administration
                 verb.Category = VerbCategory.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/rejuvenate.svg.192dpi.png";
                 verb.Act = () => RejuvenateCommand.PerformRejuvenate(args.Target);
+                verb.Impact = LogImpact.Medium;
                 args.Verbs.Add(verb);
             }
 
@@ -95,6 +99,7 @@ namespace Content.Server.Administration
                 {
                     player.ContentData()?.Mind?.TransferTo(args.Target.Uid, ghostCheckOverride: true);
                 };
+                verb.Impact = LogImpact.High;
                 args.Verbs.Add(verb);
             }
 
@@ -108,9 +113,11 @@ namespace Content.Server.Administration
                 verb.Category = VerbCategory.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/sentient.svg.192dpi.png";
                 verb.Act = () => MakeSentientCommand.MakeSentient(args.Target.Uid, EntityManager);
+                verb.Impact = LogImpact.Medium;
                 args.Verbs.Add(verb);
             }
 
+            // Atillery
             if (_adminManager.HasAdminFlag(player, AdminFlags.Fun))
             {
                 Verb verb = new();
@@ -125,6 +132,7 @@ namespace Content.Server.Administration
                         body.Gib();
                     }
                 };
+                verb.Impact = LogImpact.Extreme; // if you're just outright killing a person, I guess that deserves to be extreme?
                 args.Verbs.Add(verb);
             }
 
@@ -137,6 +145,7 @@ namespace Content.Server.Administration
                 verb.Category = VerbCategory.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/outfit.svg.192dpi.png";
                 verb.Act = () => _euiManager.OpenEui(new SetOutfitEui(args.Target), player);
+                verb.Impact = LogImpact.Medium;
                 args.Verbs.Add(verb);
             }
 
@@ -179,6 +188,7 @@ namespace Content.Server.Administration
                 // TODO VERB ICON add ghost icon
                 // Where is the national park service icon for haunted forests?
                 verb.Act = () => _ghostRoleSystem.OpenMakeGhostRoleEui(player, args.Target.Uid);
+                verb.Impact = LogImpact.Medium;
                 args.Verbs.Add(verb);
             }
 
@@ -203,6 +213,7 @@ namespace Content.Server.Administration
                 verb.Category = VerbCategory.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/spill.svg.192dpi.png";
                 verb.Act = () => OpenEditSolutionsEui(player, args.Target.Uid);
+                verb.Impact = LogImpact.Medium; // maybe high depending on WHAT reagents they add...
                 args.Verbs.Add(verb);
             }
         }

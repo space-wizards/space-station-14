@@ -10,7 +10,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.GameTicking.Commands
 {
-    [AdminCommand(AdminFlags.Server)]
+    [AdminCommand(AdminFlags.Round)]
     public class GoLobbyCommand : IConsoleCommand
     {
         public string Command => "golobby";

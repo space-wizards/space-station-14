@@ -6,8 +6,6 @@ using Content.Client.Verbs;
 using Content.Client.Viewport;
 using Content.Shared.CCVar;
 using Content.Shared.Input;
-using Content.Shared.Interaction.Helpers;
-using Content.Shared.Verbs;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -46,6 +44,7 @@ namespace Content.Client.ContextMenu.UI
         [Dependency] private readonly IEyeManager _eyeManager = default!;
 
         private readonly VerbSystem _verbSystem;
+        private readonly ExamineSystem _examineSystem;
 
         /// <summary>
         ///     This maps the currently displayed entities to the actual GUI elements.
@@ -60,6 +59,7 @@ namespace Content.Client.ContextMenu.UI
             IoCManager.InjectDependencies(this);
 
             _verbSystem = verbSystem;
+            _examineSystem = EntitySystem.Get<ExamineSystem>();
 
             _cfg.OnValueChanged(CCVars.EntityMenuGroupingType, OnGroupingChanged, true);
 
@@ -119,8 +119,12 @@ namespace Content.Client.ContextMenu.UI
             }
 
             // do some other server-side interaction?
-            if (args.Function == EngineKeyFunctions.Use || args.Function == ContentKeyFunctions.AltActivateItemInWorld || args.Function == ContentKeyFunctions.Point ||
-                args.Function == ContentKeyFunctions.TryPullObject || args.Function == ContentKeyFunctions.MovePulledObject)
+            if (args.Function == EngineKeyFunctions.Use ||
+                args.Function == ContentKeyFunctions.ActivateItemInWorld ||
+                args.Function == ContentKeyFunctions.AltActivateItemInWorld ||
+                args.Function == ContentKeyFunctions.Point ||
+                args.Function == ContentKeyFunctions.TryPullObject ||
+                args.Function == ContentKeyFunctions.MovePulledObject)
             {
                 var inputSys = _systemManager.GetEntitySystem<InputSystem>();
 
@@ -140,11 +144,6 @@ namespace Content.Client.ContextMenu.UI
                 args.Handle();
                 return;
             }
-
-            if (_itemSlotManager.OnButtonPressed(args, entity))
-            {
-                _verbSystem.CloseAllMenus();
-            }
         }
 
         private bool HandleOpenEntityMenu(in PointerInputCmdHandler.PointerInputCmdArgs args)
@@ -157,10 +156,9 @@ namespace Content.Client.ContextMenu.UI
 
             var coords = args.Coordinates.ToMap(_entityManager);
 
-            if (!_verbSystem.TryGetEntityMenuEntities(coords, out var entities))
-                return false;
+            if (_verbSystem.TryGetEntityMenuEntities(coords, out var entities))
+                OpenRootMenu(entities);
 
-            OpenRootMenu(entities);
             return true;
         }
 
@@ -183,7 +181,7 @@ namespace Content.Client.ContextMenu.UI
 
             foreach (var entity in Elements.Keys.ToList())
             {
-                if (entity.Deleted || !ignoreFov && !player.InRangeUnOccluded(entity))
+                if (entity.Deleted || !ignoreFov && !_examineSystem.CanExamine(player, entity))
                     RemoveEntity(entity);
             }
         }
@@ -320,7 +318,7 @@ namespace Content.Client.ContextMenu.UI
         }
 
         /// <summary>
-        ///     Look through a sub-menu and return the first entity.
+        ///     Recursively look through a sub-menu and return the first entity.
         /// </summary>
         private IEntity? GetFirstEntityOrNull(ContextMenuPopup? menu)
         {
@@ -333,8 +331,13 @@ namespace Content.Client.ContextMenu.UI
                     continue;
 
                 if (entityElement.Entity != null)
-                    return entityElement.Entity;
+                {
+                    if (!entityElement.Entity.Deleted)
+                        return entityElement.Entity;
+                    continue;
+                }
 
+                // if the element has no entity, its a group of entities with another attached sub-menu.
                 var entity = GetFirstEntityOrNull(entityElement.SubMenu);
                 if (entity != null)
                     return entity;

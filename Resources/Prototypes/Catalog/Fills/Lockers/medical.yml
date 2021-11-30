@@ -50,3 +50,5 @@
         prob: 1
       - id: BoxBeaker
         prob: 1
+      - id: BoxPillCanister
+        prob: 1

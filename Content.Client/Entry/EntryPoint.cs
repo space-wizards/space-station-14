@@ -89,6 +89,7 @@ namespace Content.Client.Entry
             prototypes.RegisterIgnore("objective");
             prototypes.RegisterIgnore("holiday");
             prototypes.RegisterIgnore("aiFaction");
+            prototypes.RegisterIgnore("gameMap");
             prototypes.RegisterIgnore("behaviorSet");
             prototypes.RegisterIgnore("advertisementsPack");
             prototypes.RegisterIgnore("metabolizerType");

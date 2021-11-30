@@ -1,4 +1,6 @@
 using Content.Server.Morgue.Components;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -28,6 +30,7 @@ namespace Content.Server.Morgue
             verb.Text = Loc.GetString("cremate-verb-get-data-text");
             // TODO VERB ICON add flame/burn symbol?
             verb.Act = () => component.TryCremate();
+            verb.Impact = LogImpact.Medium; // could be a body? or evidence? I dunno.
             args.Verbs.Add(verb);
         }
 

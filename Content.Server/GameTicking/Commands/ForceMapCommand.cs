@@ -1,4 +1,5 @@
 ﻿using Content.Server.Administration;
+using Content.Server.Maps;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
@@ -9,7 +10,7 @@ using Robust.Shared.Localization;
 
 namespace Content.Server.GameTicking.Commands
 {
-    [AdminCommand(AdminFlags.Server)]
+    [AdminCommand(AdminFlags.Round)]
     class ForceMapCommand : IConsoleCommand
     {
         public string Command => "forcemap";
@@ -24,10 +25,10 @@ namespace Content.Server.GameTicking.Commands
                 return;
             }
 
-            var cfg = IoCManager.Resolve<IConfigurationManager>();
+            var gameMap = IoCManager.Resolve<IGameMapManager>();
             var name = args[0];
 
-            cfg.SetCVar(CCVars.GameMap, name);
+            gameMap.ForceSelectMap(name);
             shell.WriteLine(Loc.GetString("forcemap-command-success", ("map", name)));
         }
     }

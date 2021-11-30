@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Light.Component;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.Light.Visualizers

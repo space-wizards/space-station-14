@@ -42,7 +42,6 @@ namespace Content.IntegrationTests.Tests
     Slots:
     - idcard
   - type: PDA
-    idCard: AssistantIDCard
 ";
         [Test]
         public async Task SpawnItemInSlotTest()

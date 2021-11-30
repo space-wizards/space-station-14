@@ -1,4 +1,4 @@
-﻿using Content.Client.Tabletop.Components;
+using Content.Client.Tabletop.Components;
 using Content.Client.Tabletop.UI;
 using Content.Client.Viewport;
 using Content.Shared.Tabletop;

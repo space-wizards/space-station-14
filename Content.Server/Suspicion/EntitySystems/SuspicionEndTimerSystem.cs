@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Content.Shared.GameTicking;
 using Content.Shared.Suspicion;
@@ -54,7 +54,7 @@ namespace Content.Server.Suspicion.EntitySystems
 
         private void SendUpdateToAll()
         {
-            foreach (var player in _playerManager.GetAllPlayers().Where(p => p.Status == SessionStatus.InGame))
+            foreach (var player in _playerManager.ServerSessions.Where(p => p.Status == SessionStatus.InGame))
             {
                 SendUpdateTimerMessage(player);
             }

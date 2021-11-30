@@ -13,6 +13,6 @@ namespace Content.Shared.Storage.Components
     public enum SharedBagState : byte
     {
         Open,
-        Close,
+        Closed,
     }
 }

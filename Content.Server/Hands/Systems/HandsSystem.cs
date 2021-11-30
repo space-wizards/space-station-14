@@ -8,6 +8,7 @@ using Content.Server.Items;
 using Content.Server.Stack;
 using Content.Server.Storage.Components;
 using Content.Server.Throwing;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Examine;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
@@ -35,6 +36,7 @@ namespace Content.Server.Hands.Systems
         [Dependency] private readonly InteractionSystem _interactionSystem = default!;
         [Dependency] private readonly StackSystem _stackSystem = default!;
         [Dependency] private readonly HandVirtualItemSystem _virtualItemSystem = default!;
+        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
 
         public override void Initialize()
         {
@@ -166,18 +168,6 @@ namespace Content.Server.Hands.Systems
             hands.ActivateHeldEntity(msg.HandName);
         }
 
-        protected override void DropAllItemsInHands(IEntity entity, bool doMobChecks = true)
-        {
-            base.DropAllItemsInHands(entity, doMobChecks);
-
-            if (!entity.TryGetComponent(out HandsComponent? hands)) return;
-
-            foreach (var heldItem in hands.GetAllHeldItems())
-            {
-                hands.Drop(heldItem.Owner, doMobChecks, false);
-            }
-        }
-
         //TODO: Actually shows all items/clothing/etc.
         private void HandleExamined(EntityUid uid, HandsComponent component, ExaminedEvent args)
         {
@@ -235,7 +225,7 @@ namespace Content.Server.Hands.Systems
                 playerEnt.IsInContainer() ||
                 !playerEnt.TryGetComponent(out SharedHandsComponent? hands) ||
                 !hands.TryGetActiveHeldEntity(out var throwEnt) ||
-                !_interactionSystem.TryThrowInteraction(hands.Owner, throwEnt))
+                !_actionBlockerSystem.CanThrow(playerEnt.Uid))
                 return false;
 
             if (throwEnt.TryGetComponent(out StackComponent? stack) && stack.Count > 1 && stack.ThrowIndividually)

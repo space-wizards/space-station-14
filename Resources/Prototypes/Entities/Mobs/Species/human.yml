@@ -11,15 +11,11 @@
     - CanPilot
     - FootstepSound
   - type: Reactive
+    groups:
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
+      Acidic: [Touch, Ingestion]
     reactions:
-    - reagents: [Water]
-      methods: [Touch]
-      effects:
-      - !type:ExtinguishReaction
-    - reagents: [WeldingFuel, Thermite, Plasma, Ethanol]
-      methods: [Touch]
-      effects:
-      - !type:FlammableReaction
     - reagents: [Water, SpaceCleaner]
       methods: [Touch]
       effects:
@@ -193,7 +189,7 @@
     preset: HumanPreset
   - type: Damageable
     damageContainer: Biological
-  - type: Respirator
+  - type: ThermalRegulator
     metabolismHeat: 800
     radiatedHeat: 100
     implicitHeatRegulation: 500
@@ -201,6 +197,7 @@
     shiveringHeatRegulation: 2000
     normalBodyTemperature: 310.15
     thermalRegulationTemperatureThreshold: 25
+  - type: Respirator
     needsGases:
       Oxygen: 0.00060763888
     producesGases:
@@ -294,7 +291,6 @@
       proper: true
   - type: StandingState
   - type: DoorBumpOpener
-
 - type: entity
   save: false
   name: Urist McHands
@@ -341,6 +337,14 @@
         color: "#e8b59b"
         sprite: Mobs/Species/Human/parts.rsi
         state: l_leg
+      - map: [ "enum.HumanoidVisualLayers.LFoot" ]
+        color: "#e8b59b"
+        sprite: Mobs/Species/Human/parts.rsi
+        state: l_foot
+      - map: [ "enum.HumanoidVisualLayers.RFoot" ]
+        color: "#e8b59b"
+        sprite: Mobs/Species/Human/parts.rsi
+        state: r_foot
       - shader: StencilClear
       - shader: StencilMask
         map: ["enum.HumanoidVisualLayers.StencilMask"]

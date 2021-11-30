@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Buckle.Components;
 using Content.Shared.GameTicking;
@@ -14,6 +15,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Players;
@@ -23,9 +25,16 @@ namespace Content.Shared.Pulling
 {
     public abstract partial class SharedPullingSystem : EntitySystem
     {
+        [Dependency] private readonly ActionBlockerSystem _blocker = default!;
+
         public bool CanPull(IEntity puller, IEntity pulled)
         {
             if (!puller.HasComponent<SharedPullerComponent>())
+            {
+                return false;
+            }
+
+            if (!_blocker.CanInteract(puller.Uid))
             {
                 return false;
             }
@@ -107,7 +116,7 @@ namespace Content.Shared.Pulling
         // The main "start pulling" function.
         public bool TryStartPull(SharedPullerComponent puller, SharedPullableComponent pullable)
         {
-            if (puller.Pulling == pullable)
+            if (puller.Pulling == pullable.Owner)
                 return true;
 
             // Pulling a new object : Perform sanity checks.

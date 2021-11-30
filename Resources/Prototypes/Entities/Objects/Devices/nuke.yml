@@ -22,18 +22,16 @@
         mask:
         - VaultImpassable
     - type: Nuke
+      diskSlot:
+        name: Disk
+        insertSound:
+          path: /Audio/Machines/terminal_insert_disc.ogg
+        ejectSound:
+          path: /Audio/Machines/terminal_insert_disc.ogg
+        whitelist:
+          tags:
+          - NukeDisk
     - type: InteractionOutline
-    - type: ItemSlots
-      slots:
-        DiskSlot:
-          name: Disk
-          insertSound:
-            path: /Audio/Machines/terminal_insert_disc.ogg
-          ejectSound:
-            path: /Audio/Machines/terminal_insert_disc.ogg
-          whitelist:
-            tags:
-              - NukeDisk
     - type: UserInterface
       interfaces:
         - key: enum.NukeUiKey.Key

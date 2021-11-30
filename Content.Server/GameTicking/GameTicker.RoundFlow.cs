@@ -1,13 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.Database;
+using Content.Server.GameTicking.Events;
 using Content.Server.Players;
 using Content.Server.Mind;
 using Content.Server.Ghost;
+using Content.Server.Roles;
+using Content.Server.Station;
 using Content.Shared.CCVar;
 using Content.Shared.Coordinates;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
+using Content.Shared.Station;
 using Prometheus;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
@@ -17,7 +22,6 @@ using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -32,6 +36,8 @@ namespace Content.Server.GameTicking
         private static readonly Gauge RoundLengthMetric = Metrics.CreateGauge(
             "ss14_round_length",
             "Round length in seconds.");
+
+        [Dependency] private readonly IServerDbManager _db = default!;
 
         [ViewVariables]
         private TimeSpan _roundStartTimeSpan;
@@ -54,17 +60,23 @@ namespace Content.Server.GameTicking
             }
         }
 
+        [ViewVariables]
+        public int RoundId { get; private set; }
+
         private void PreRoundSetup()
         {
             DefaultMap = _mapManager.CreateMap();
             var startTime = _gameTiming.RealTime;
-            var map = ChosenMap;
-            var grid = _mapLoader.LoadBlueprint(DefaultMap, map);
+            var map = _gameMapManager.GetSelectedMapChecked(true);
+            var grid = _mapLoader.LoadBlueprint(DefaultMap, map.MapPath);
+
 
             if (grid == null)
             {
-                throw new InvalidOperationException($"No grid found for map {map}");
+                throw new InvalidOperationException($"No grid found for map {map.MapName}");
             }
+
+            _stationSystem.InitialSetupStationGrid(grid.GridEntityId, map);
 
             var stationXform = EntityManager.GetComponent<TransformComponent>(grid.GridEntityId);
 
@@ -81,14 +93,13 @@ namespace Content.Server.GameTicking
                 stationXform.LocalRotation = _robustRandom.NextFloat(MathF.Tau);
             }
 
-            DefaultGridId = grid.Index;
             _spawnPoint = grid.ToCoordinates();
 
             var timeSpan = _gameTiming.RealTime - startTime;
             Logger.InfoS("ticker", $"Loaded map in {timeSpan.TotalMilliseconds:N2}ms.");
         }
 
-        public void StartRound(bool force = false)
+        public async void StartRound(bool force = false)
         {
             // If this game ticker is a dummy, do nothing!
             if (DummyTicker)
@@ -113,6 +124,12 @@ namespace Content.Server.GameTicking
             RunLevel = GameRunLevel.InRound;
 
             RoundLengthMetric.Set(0);
+
+            var playerIds = _playersInLobby.Keys.Select(player => player.UserId.UserId).ToArray();
+            RoundId = await _db.AddNewRound(playerIds);
+
+            var startingEvent = new RoundStartingEvent();
+            RaiseLocalEvent(startingEvent);
 
             // Get the profiles for each player for easier lookup.
             var profiles = _prefsManager.GetSelectedProfilesForPlayers(
@@ -141,14 +158,36 @@ namespace Content.Server.GameTicking
                 var profile = profiles[player.UserId];
                 if (profile.PreferenceUnavailable == PreferenceUnavailableMode.SpawnAsOverflow)
                 {
-                    assignedJobs.Add(player, OverflowJob);
+                    // Pick a random station
+                    var stations = _stationSystem.StationInfo.Keys.ToList();
+                    _robustRandom.Shuffle(stations);
+
+                    if (stations.Count == 0)
+                    {
+                        assignedJobs.Add(player, (FallbackOverflowJob, StationId.Invalid));
+                        continue;
+                    }
+
+                    foreach (var station in stations)
+                    {
+                        // Pick a random overflow job from that station
+                        var overflows = _stationSystem.StationInfo[station].MapPrototype.OverflowJobs.Clone();
+                        _robustRandom.Shuffle(overflows);
+
+                        // Stations with no overflow slots should simply get skipped over.
+                        if (overflows.Count == 0)
+                            continue;
+
+                        // If the overflow exists, put them in as it.
+                        assignedJobs.Add(player, (overflows[0], stations[0]));
+                    }
                 }
             }
 
             // Spawn everybody in!
-            foreach (var (player, job) in assignedJobs)
+            foreach (var (player, (job, station)) in assignedJobs)
             {
-                SpawnPlayer(player, profiles[player.UserId], job, false);
+                SpawnPlayer(player, profiles[player.UserId], station, job, false);
             }
 
             // Time to start the preset.
@@ -185,7 +224,7 @@ namespace Content.Server.GameTicking
             }
             Preset.OnGameStarted();
 
-            _roundStartTimeSpan = IoCManager.Resolve<IGameTiming>().RealTime;
+            _roundStartTimeSpan = _gameTiming.RealTime;
             SendStatusToAll();
             ReqWindowAttentionAll();
             UpdateLateJoinStatus();
@@ -208,12 +247,12 @@ namespace Content.Server.GameTicking
             var roundEndText = text + $"\n{Preset?.GetRoundEndDescription() ?? string.Empty}";
 
             //Get the timespan of the round.
-            var roundDuration = IoCManager.Resolve<IGameTiming>().RealTime.Subtract(_roundStartTimeSpan);
+            var roundDuration = RoundDuration();
 
             //Generate a list of basic player info to display in the end round summary.
             var listOfPlayerInfo = new List<RoundEndMessageEvent.RoundEndPlayerInfo>();
             // Grab the great big book of all the Minds, we'll need them for this.
-            var allMinds = EntitySystem.Get<MindTrackerSystem>().AllMinds;
+            var allMinds = Get<MindTrackerSystem>().AllMinds;
             foreach (var mind in allMinds)
             {
                 if (mind != null)
@@ -307,7 +346,7 @@ namespace Content.Server.GameTicking
         private void ResettingCleanup()
         {
             // Move everybody currently in the server to lobby.
-            foreach (var player in _playerManager.GetAllPlayers())
+            foreach (var player in _playerManager.ServerSessions)
             {
                 PlayerJoinLobby(player);
             }
@@ -381,6 +420,11 @@ namespace Content.Server.GameTicking
             }
 
             StartRound();
+        }
+
+        public TimeSpan RoundDuration()
+        {
+            return _gameTiming.RealTime.Subtract(_roundStartTimeSpan);
         }
     }
 

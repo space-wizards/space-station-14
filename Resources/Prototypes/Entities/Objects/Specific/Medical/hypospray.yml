@@ -18,3 +18,48 @@
   - type: ExaminableSolution
     solution: hypospray
   - type: Hypospray
+
+- type: entity
+  name: chemical medipen
+  parent: BaseItem
+  description: A sterile injector for rapid administration of drugs to patients. This one can't be refilled.
+  id: ChemicalMedipen
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/medipen.rsi
+    netsync: false
+    layers:
+    - state: medipen
+      map: ["enum.SolutionContainerLayers.Fill"]
+  - type: Item
+    sprite: Objects/Specific/Medical/medipen.rsi
+    size: 5
+  - type: SolutionContainerManager
+    solutions:
+      pen:
+        maxVol: 15
+  - type: ExaminableSolution
+    solution: pen
+  - type: Hypospray
+    solutionName: pen
+    transferAmount: 15
+  - type: Appearance
+    visuals:
+    - type: SolutionContainerVisualizer
+      maxFillLevels: 1
+      changeColor: false
+      emptySpriteName: medipen_empty
+
+- type: entity
+  name: epinephrine medipen
+  parent: ChemicalMedipen
+  id: EpinephrineMedipen
+  description: A rapid and safe way to stabilize patients in critical condition for personnel without advanced medical knowledge. Beware, as it's easy to overdose on epinephrine.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      pen:
+        maxVol: 15
+        reagents:
+        - ReagentId: Epinephrine
+          Quantity: 15
