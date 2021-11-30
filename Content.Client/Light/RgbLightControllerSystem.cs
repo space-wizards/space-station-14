@@ -16,18 +16,18 @@ namespace Content.Client.Light
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
-
+            var curTime = _gameTiming.CurTime;
             foreach (var (rgb, light, sprite) in EntityManager.EntityQuery<RgbLightControllerComponent, PointLightComponent, SpriteComponent>())
             {
-                light.Color = GetCurrentRgbColor(_gameTiming, TimeSpan.FromSeconds(rgb.CreationTick.Value * _gameTiming.TickPeriod.TotalSeconds), rgb);
-                sprite.Color = GetCurrentRgbColor(_gameTiming, TimeSpan.FromSeconds(rgb.CreationTick.Value * _gameTiming.TickPeriod.TotalSeconds), rgb);
+                light.Color = GetCurrentRgbColor(curTime, TimeSpan.FromSeconds(rgb.CreationTick.Value * _gameTiming.TickPeriod.TotalSeconds), rgb);
+                sprite.Color = GetCurrentRgbColor(curTime, TimeSpan.FromSeconds(rgb.CreationTick.Value * _gameTiming.TickPeriod.TotalSeconds), rgb);
             }
         }
 
-        public static Color GetCurrentRgbColor(IGameTiming gameTiming, TimeSpan offset, RgbLightControllerComponent rgb)
+        public static Color GetCurrentRgbColor(TimeSpan curTime, TimeSpan offset, RgbLightControllerComponent rgb)
         {
             return Color.FromHsv(new Vector4(
-                (float) (((gameTiming.CurTime.TotalSeconds - offset.TotalSeconds) / rgb.CycleRate + Math.Abs(rgb.Owner.Uid.GetHashCode() * 0.1)) % 1),
+                (float) (((curTime.TotalSeconds - offset.TotalSeconds) / rgb.CycleRate + Math.Abs(rgb.Owner.Uid.GetHashCode() * 0.1)) % 1),
                 1.0f,
                 1.0f,
                 1.0f
