@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Cooldown;
@@ -32,6 +33,7 @@ namespace Content.Server.Weapon.Melee
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private SolutionContainerSystem _solutionsSystem = default!;
         [Dependency] private readonly AdminLogSystem _logSystem = default!;
+        [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
 
         public override void Initialize()
         {
@@ -285,7 +287,7 @@ namespace Content.Server.Weapon.Melee
             foreach (var bloodstream in hitBloodstreams)
             {
                 var individualInjection = solutionToInject.SplitSolution(volPerBloodstream);
-                bloodstream.TryTransferSolution(individualInjection);
+                _bloodstreamSystem.TryAddToBloodstream(bloodstream.OwnerUid, individualInjection, bloodstream);
             }
         }
 
