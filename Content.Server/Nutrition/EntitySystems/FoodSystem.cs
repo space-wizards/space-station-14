@@ -116,7 +116,8 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!Resolve(uid, ref component))
                 return false;
 
-            if (EntityManager.TryGetComponent<MobStateComponent>(uid, out var mobState) && mobState.IsAlive())
+            if (uid == userUid || //Suppresses self-eating
+                EntityManager.TryGetComponent<MobStateComponent>(uid, out var mobState) && mobState.IsAlive()) // Suppresses eating alive mobs
                 return false;
 
             if (!_solutionContainerSystem.TryGetSolution(uid, component.SolutionName, out var solution))
