@@ -3,6 +3,7 @@ using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
 using Content.Server.Popups;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
@@ -188,7 +189,7 @@ namespace Content.Server.Body.Behavior
                 return;
             }
 
-            bloodstream.PumpToxins(Air);
+            EntitySystem.Get<BloodstreamSystem>().PumpToxins(Body.OwnerUid, Air, bloodstream);
 
             var lungRemoved = Air.RemoveRatio(0.5f);
             EntitySystem.Get<AtmosphereSystem>().Merge(to, lungRemoved);
