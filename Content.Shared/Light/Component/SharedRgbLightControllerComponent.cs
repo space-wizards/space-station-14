@@ -5,6 +5,9 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Light.Component
 {
+    /// <summary>
+    /// Networked solely for admemes.
+    /// </summary>
     [NetworkedComponent]
     [RegisterComponent]
     public class SharedRgbLightControllerComponent : Robust.Shared.GameObjects.Component
