@@ -16,11 +16,13 @@
       - state: glass
         map: ["enum.ItemCabinetVisualLayers.Door"]
     - type: ItemCabinet
+      cabinetSlot:
+        ejectOnInteract: true
+        whitelist:
+          tags:
+          - FireAxe
       doorSound:
         path: /Audio/Machines/machine_switch.ogg
-      whitelist:
-        tags:
-        - FireAxe
     - type: Appearance
       visuals:
         - type: ItemCabinetVisualizer
@@ -42,8 +44,13 @@
   parent: FireAxeCabinet
   suffix: Filled
   components:
-    - type: ItemCabinet
-      spawnPrototype: FireAxe
+  - type: ItemCabinet
+    cabinetSlot:
+      startingItem: FireAxe
+      ejectOnInteract: true
+      whitelist:
+        tags:
+        - FireAxe
 
 - type: entity
   id: FireAxeCabinetFilledOpen

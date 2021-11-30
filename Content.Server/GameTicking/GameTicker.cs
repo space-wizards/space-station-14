@@ -1,5 +1,9 @@
+using Content.Server.Administration.Logs;
 using Content.Server.Chat.Managers;
+using Content.Server.Maps;
 using Content.Server.Preferences.Managers;
+using Content.Server.Roles;
+using Content.Server.Station;
 using Content.Shared.Chat;
 using Content.Shared.GameTicking;
 using Content.Shared.GameWindow;
@@ -26,7 +30,6 @@ namespace Content.Server.GameTicking
         [ViewVariables] private bool _postInitialized;
 
         [ViewVariables] public MapId DefaultMap { get; private set; }
-        [ViewVariables] public GridId DefaultGridId { get; private set; }
 
         public override void Initialize()
         {
@@ -85,5 +88,8 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly IBaseServer _baseServer = default!;
         [Dependency] private readonly IWatchdogApi _watchdogApi = default!;
         [Dependency] private readonly IReflectionManager _reflectionManager = default!;
+        [Dependency] private readonly IGameMapManager _gameMapManager = default!;
+        [Dependency] private readonly StationSystem _stationSystem = default!;
+        [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
     }
 }

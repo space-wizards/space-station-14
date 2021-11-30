@@ -4,19 +4,18 @@
   name: cheeseburger recipe
   result: FoodBurgerCheese
   time: 5
-  reagents:
-    Flour: 5
   solids:
+    FoodBreadPlainSlice: 2 # its not a burger bun, but its good enough
     FoodMeat: 1
+    FoodCheeseSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeClownBurger
   name: clownburger recipe
   result: FoodBurgerClown
   time: 5
-  reagents:
-    Flour: 5
   solids:
+    FoodBreadPlainSlice: 2
     ClothingMaskClown: 1
 
 # - type: microwaveMealRecipe
@@ -34,9 +33,8 @@
   name: xenoburger recipe
   result: FoodBurgerXeno
   time: 5
-  reagents:
-    Flour: 5
   solids:
+    FoodBreadPlainSlice: 2
     FoodMeatXeno: 1
 
 #- type: microwaveMealRecipe
@@ -46,8 +44,8 @@
 #  time: 20
 #  reagents:
 #    Flour: 15
-#    Salt: 5
-#    Pepper: 5
+#    TableSalt: 5
+#    Blackpepper: 5
 #  solids:
 #    FoodMeat: 5
 #    FoodCheeseSlice: 3
@@ -60,8 +58,8 @@
   name: bread recipe
   result: FoodBreadPlain
   time: 15
-  reagents:
-    Flour: 15
+  solids:
+    FoodDough: 1
 
 # - type: microwaveMealRecipe
 #   id: RecipeSandwich
@@ -97,17 +95,16 @@
 #  time: 10
 #  reagents:
 #    Flour: 15
-#    Salt: 1
-#    Pepper: 1
+#    TableSalt: 1
+#    Blackpepper: 1
 
 - type: microwaveMealRecipe
   id: RecipeCreamCheeseBread
   name: cream cheese bread recipe
   result: FoodBreadCreamcheese
   time: 20
-  reagents:
-    Flour: 15
   solids:
+    FoodDough: 1
     FoodCheeseSlice: 2
 
 - type: microwaveMealRecipe
@@ -115,11 +112,8 @@
   name: banana bread recipe
   result: FoodBreadBanana
   time: 25
-  reagents:
-    Flour: 15
-    Milk: 5
   solids:
-    FoodEgg: 3
+    FoodDough: 1
     FoodBanana: 1
 
 #Pizzas
@@ -128,9 +122,8 @@
   name: margherita pizza recipe
   result: FoodPizzaMargherita
   time: 30
-  reagents:
-    Flour: 10
   solids:
+    FoodDough: 1
     FoodCheeseSlice: 4
     FoodTomato: 1
 
@@ -139,9 +132,8 @@
   name: mushroom pizza recipe
   result: FoodPizzaMushroom
   time: 25
-  reagents:
-    Flour: 10
   solids:
+    FoodDough: 1
     FoodMushroom: 5
 
 - type: microwaveMealRecipe
@@ -149,9 +141,8 @@
   name: meat pizza recipe
   result: FoodPizzaMeat
   time: 30
-  reagents:
-    Flour: 10
   solids:
+    FoodDough: 1
     FoodMeat: 3
     FoodCheeseSlice: 1
     FoodTomato: 1
@@ -161,9 +152,8 @@
   name: vegetable pizza recipe
   result: FoodPizzaVegetable
   time: 30
-  reagents:
-    Flour: 10
   solids:
+    FoodDough: 1
     FoodEggplant: 1
     FoodCarrot: 1
     FoodCorn: 1
@@ -255,7 +245,7 @@
 #  time: 10
 #  reagents:
 #    Flour: 10
-#    Salt: 2
+#    TableSalt: 2
 #  solids:
 #    FoodGarlic: 1
 #    FoodCheeseSlice: 1
@@ -314,11 +304,11 @@
 #- type: microwaveMealRecipe
 #  id: RecipeMeatSteak
 #  name: meat steak recipe
-#  result: FoodMeatSteak
+#  result: FoodMeatCooked
 #  time: 10
 #  reagents:
-#    Salt: 1
-#    Pepper: 1
+#    TableSalt: 1
+#    Blackpepper: 1
 #  solids:
 #    FoodMeat: 1
 
@@ -365,10 +355,74 @@
   name: banana cream pie
   result: FoodPieBananaCream
   time: 15
-  reagents:
-    Flour: 10
   solids:
+    FoodCakeBatter: 1 # should really be pie pastry or whatever. Good enough.
     FoodBanana: 3
+
+#Donks i guess
+- type: microwaveMealRecipe
+  id: RecipeWarmDonkpocket
+  name: warm donk pocket recipe
+  result: FoodDonkpocketWarm
+  time: 5
+  solids:
+    FoodDonkpocket: 1
+
+- type: microwaveMealRecipe
+  id: RecipeWarmDankpocket
+  name: warm dank pocket recipe
+  result: FoodDonkpocketDankWarm
+  time: 5
+  solids:
+    FoodDonkpocketDank: 1
+
+- type: microwaveMealRecipe
+  id: RecipeWarmDonkpocketSpicy
+  name: warm spicy donk-pocket recipe
+  result: FoodDonkpocketSpicyWarm
+  time: 5
+  solids:
+    FoodDonkpocketSpicy: 1
+
+- type: microwaveMealRecipe
+  id: RecipeWarmDonkpocketTeriyaki
+  name: warm teriyaki-pocket recipe
+  result: FoodDonkpocketTeriyakiWarm
+  time: 5
+  solids:
+    FoodDonkpocketTeriyaki: 1
+
+- type: microwaveMealRecipe
+  id: RecipeWarmDonkpocketPizza
+  name: warm pizza-pocket recipe
+  result: FoodDonkpocketPizzaWarm
+  time: 5
+  solids:
+    FoodDonkpocketPizza: 1
+
+- type: microwaveMealRecipe
+  id: RecipeDonkpocketHonk
+  name: warm honk-pocket recipe
+  result: FoodDonkpocketHonkWarm
+  time: 5
+  solids:
+    FoodDonkpocketHonk: 1
+
+- type: microwaveMealRecipe
+  id: RecipeDonkpocketBerry
+  name: warm berry-pocket recipe
+  result: FoodDonkpocketBerryWarm
+  time: 5
+  solids:
+    FoodDonkpocketBerry: 1
+
+- type: microwaveMealRecipe
+  id: RecipeDonkpocketGondola
+  name: warm gondola-pocket recipe
+  result: FoodDonkpocketGondolaWarm
+  time: 5
+  solids:
+    FoodDonkpocketGondola: 1
 
 # NOT ACTUAL FOOD
 

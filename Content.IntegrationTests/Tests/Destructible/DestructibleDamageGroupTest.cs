@@ -2,9 +2,9 @@ using System.Threading.Tasks;
 using Content.Server.Destructible.Thresholds.Triggers;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.FixedPoint;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using static Content.IntegrationTests.Tests.Destructible.DestructibleTestPrototypes;
@@ -19,7 +19,7 @@ namespace Content.IntegrationTests.Tests.Destructible
         [Test]
         public async Task AndTest()
         {
-            var server = StartServerDummyTicker(new ServerContentIntegrationOption
+            var server = StartServer(new ServerContentIntegrationOption
             {
                 ExtraPrototypes = Prototypes
             });
@@ -38,13 +38,15 @@ namespace Content.IntegrationTests.Tests.Destructible
 
             await server.WaitPost(() =>
             {
-                var mapId = new MapId(1);
-                var coordinates = new MapCoordinates(0, 0, mapId);
-                sMapManager.CreateMap(mapId);
+                var gridId = GetMainGrid(sMapManager).GridEntityId;
+                var coordinates = new EntityCoordinates(gridId, 0, 0);
 
                 sDestructibleEntity = sEntityManager.SpawnEntity(DestructibleDamageGroupEntityId, coordinates);
                 sDamageableComponent = sDestructibleEntity.GetComponent<DamageableComponent>();
+
                 sTestThresholdListenerSystem = sEntitySystemManager.GetEntitySystem<TestDestructibleListenerSystem>();
+                sTestThresholdListenerSystem.ThresholdsReached.Clear();
+
                 sDamageableSystem = sEntitySystemManager.GetEntitySystem<DamageableSystem>();
             });
 
@@ -60,8 +62,8 @@ namespace Content.IntegrationTests.Tests.Destructible
                 var bruteDamageGroup = sPrototypeManager.Index<DamageGroupPrototype>("TestBrute");
                 var burnDamageGroup = sPrototypeManager.Index<DamageGroupPrototype>("TestBurn");
 
-                DamageSpecifier bruteDamage = new(bruteDamageGroup,5);
-                DamageSpecifier burnDamage = new(burnDamageGroup,5);
+                DamageSpecifier bruteDamage = new(bruteDamageGroup, FixedPoint2.New(5));
+                DamageSpecifier burnDamage = new(burnDamageGroup, FixedPoint2.New(5));
 
                 // Raise brute damage to 5
                 sDamageableSystem.TryChangeDamage(sDestructibleEntity.Uid, bruteDamage, true);
@@ -112,7 +114,7 @@ namespace Content.IntegrationTests.Tests.Destructible
 
                 // Lower brute damage to 0
                 sDamageableSystem.TryChangeDamage(sDestructibleEntity.Uid, bruteDamage * -10);
-                Assert.That(sDamageableComponent.TotalDamage,Is.EqualTo(20));
+                Assert.That(sDamageableComponent.TotalDamage,Is.EqualTo(FixedPoint2.New(20)));
 
                 // No new thresholds reached, healing should not trigger it
                 Assert.IsEmpty(sTestThresholdListenerSystem.ThresholdsReached);

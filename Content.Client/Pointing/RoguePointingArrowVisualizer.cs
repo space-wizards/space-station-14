@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 
 namespace Content.Client.Pointing
@@ -14,11 +15,6 @@ namespace Content.Client.Pointing
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
-
-            if (component.Deleted)
-            {
-                return;
-            }
 
             if (component.TryGetData<double>(RoguePointingArrowVisuals.Rotation, out var degrees))
             {

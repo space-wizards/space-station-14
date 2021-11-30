@@ -1,0 +1,34 @@
+﻿- type: entity
+  id: BlastDoor
+  parent: BaseShutter
+  name: blast door
+  description: This one says 'BLAST DONGER'.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Doors/Shutters/blastdoor.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Door
+    closeTimeOne: 0.4
+    closeTimeTwo: 0.4
+    openTimeOne: 0.4
+    openTimeTwo: 0.4
+    crushDamage:
+      types:
+        Blunt: 25 # yowch
+  - type: Occluder
+  - type: Appearance
+    visuals:
+    - type: AirlockVisualizer
+      simpleVisuals: true
+      animationTime: 1.0
+
+- type: entity
+  id: BlastDoorOpen
+  parent: BlastDoor
+  suffix: Open
+  components:
+  - type: Door
+    startOpen: true

@@ -2,14 +2,14 @@
 
 - type: entity
   name: bowl
-  parent: BaseItem
+  parent: ReagentContainerBase
   id: FoodBowlBig
   description: A simple bowl, used for soups and salads.
   components:
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 50 # enough to make cheese in.
   - type: Sprite
     sprite: Objects/Consumable/Food/bowl.rsi
     state: bowl
@@ -22,7 +22,10 @@
     damage:
       types:
         Blunt: 5
-  - type: Spillable
+  - type: Drink
+    solution: food
+    isOpen: true
+  - type: DrawableSolution
     solution: food
   - type: Damageable
     damageContainer: Inorganic

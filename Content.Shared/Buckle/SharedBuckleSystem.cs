@@ -1,4 +1,5 @@
 using Content.Shared.Buckle.Components;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Movement;
 using Content.Shared.Standing;
 using Content.Shared.Throwing;
@@ -17,6 +18,13 @@ namespace Content.Shared.Buckle
             SubscribeLocalEvent<SharedBuckleComponent, StandAttemptEvent>(HandleStand);
             SubscribeLocalEvent<SharedBuckleComponent, ThrowPushbackAttemptEvent>(HandleThrowPushback);
             SubscribeLocalEvent<SharedBuckleComponent, MovementAttemptEvent>(HandleMove);
+            SubscribeLocalEvent<SharedBuckleComponent, ChangeDirectionAttemptEvent>(OnBuckleChangeDirectionAttempt);
+        }
+
+        private void OnBuckleChangeDirectionAttempt(EntityUid uid, SharedBuckleComponent component, ChangeDirectionAttemptEvent args)
+        {
+            if (component.Buckled)
+                args.Cancel();
         }
 
         private void HandleMove(EntityUid uid, SharedBuckleComponent component, MovementAttemptEvent args)
@@ -49,7 +57,7 @@ namespace Content.Shared.Buckle
 
         private void PreventCollision(EntityUid uid, SharedBuckleComponent component, PreventCollideEvent args)
         {
-            if (args.BodyB.Owner.Uid != component.LastEntityBuckledTo) return;
+            if (args.BodyB.OwnerUid != component.LastEntityBuckledTo) return;
 
             component.IsOnStrapEntityThisFrame = true;
             if (component.Buckled || component.DontCollide)

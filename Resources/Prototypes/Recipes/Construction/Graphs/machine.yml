@@ -6,7 +6,7 @@
       actions:
         - !type:SpawnPrototype
           prototype: SheetSteel1
-        - !type:DeleteEntity {}
+        - !type:DeleteEntity
       edges:
         - to: missingWires
           completed:
@@ -22,11 +22,11 @@
       actions:
         - !type:SpriteStateChange
           state: "box_0"
-        - !type:EmptyAllContainers {}
+        - !type:EmptyAllContainers
       edges:
         - to: machineFrame
           conditions:
-            - !type:EntityAnchored {}
+            - !type:EntityAnchored
           steps:
             - material: Cable
         - to: start
@@ -37,7 +37,7 @@
             - !type:SpawnPrototype
               prototype: SheetSteel1
               amount: 5
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity
           steps:
             - tool: Screwing
               doAfter: 2
@@ -45,22 +45,28 @@
     - node: machineFrame
       entity: MachineFrame
       actions:
-        - !type:MachineFrameRegenerateProgress {}
+        - !type:MachineFrameRegenerateProgress
       edges:
         - to: machine
           conditions:
-            - !type:EntityAnchored {}
-            - !type:MachineFrameComplete {}
+            - !type:EntityAnchored
+            - !type:MachineFrameComplete
+              guideIconBoard:
+                sprite: Objects/Misc/module.rsi
+                state: id_mod
+              guideIconParts:
+                sprite: Objects/Misc/stock_parts.rsi
+                state: scan_module
           completed:
             # Yes, this is snowflaked so we don't have to make an unique graph per machine. You're welcome.
-            - !type:BuildMachine {}
+            - !type:BuildMachine
           steps:
             - tool: Screwing
               doAfter: 0.5
 
         - to: missingWires
           conditions:
-            - !type:EntityAnchored {}
+            - !type:EntityAnchored
           completed:
             - !type:SpawnPrototype
               prototype: CableApcStack1
@@ -68,8 +74,8 @@
             - tool: Prying
               doAfter: 2
               completed:
-                - !type:EmptyAllContainers {}
-                - !type:MachineFrameRegenerateProgress {}
+                - !type:EmptyAllContainers
+                - !type:MachineFrameRegenerateProgress
             - tool: Cutting
               doAfter: 0.25
 
@@ -81,9 +87,14 @@
           container: machine_board
       edges:
         - to: machineFrame
+          completed:
+            - !type:RaiseEvent
+              event: !type:MachineDeconstructedEvent
+              broadcast: false
           conditions:
-            - !type:EntityAnchored {}
-            - !type:WirePanel {}
+            - !type:EntityAnchored
+            - !type:WirePanel
           steps:
             - tool: Prying
               doAfter: 0.25
+

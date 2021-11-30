@@ -1,8 +1,8 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
@@ -16,16 +16,27 @@ namespace Content.IntegrationTests.Tests.Chemistry
     [TestOf(typeof(ReactionPrototype))]
     public class TryAllReactionsTest : ContentIntegrationTest
     {
+        private const string Prototypes = @"
+- type: entity
+  id: TestSolutionContainer
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 50";
+
         [Test]
         public async Task TryAllTest()
         {
-            var server = StartServerDummyTicker();
+            var options = new ServerContentIntegrationOption{ExtraPrototypes = Prototypes};
+            var server = StartServer(options);
 
             await server.WaitIdleAsync();
 
-            var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var prototypeManager = server.ResolveDependency<IPrototypeManager>();
+            var mapManager = server.ResolveDependency<IMapManager>();
+            var coordinates = GetMainEntityCoordinates(mapManager);
 
             foreach (var reactionPrototype in prototypeManager.EnumeratePrototypes<ReactionPrototype>())
             {
@@ -37,11 +48,9 @@ namespace Content.IntegrationTests.Tests.Chemistry
 
                 server.Assert(() =>
                 {
-                    mapManager.CreateNewMapEntity(MapId.Nullspace);
-
-                    beaker = entityManager.SpawnEntity("BluespaceBeaker", MapCoordinates.Nullspace);
+                    beaker = entityManager.SpawnEntity("TestSolutionContainer", coordinates);
                     Assert.That(EntitySystem.Get<SolutionContainerSystem>()
-                        .TryGetSolution(beaker, "beaker", out component));
+                        .TryGetSolution(beaker.Uid, "beaker", out component));
                     foreach (var (id, reactant) in reactionPrototype.Reactants)
                     {
                         Assert.That(EntitySystem.Get<SolutionContainerSystem>()

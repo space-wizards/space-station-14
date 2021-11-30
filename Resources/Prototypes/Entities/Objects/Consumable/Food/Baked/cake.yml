@@ -1,7 +1,7 @@
 # Base
 
 - type: entity
-  parent: BaseItem
+  parent: FoodInjectableBase
   id: FoodCakeBase
   abstract: true
   components:
@@ -13,7 +13,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 26
         reagents:
         - ReagentId: Nutriment
           Quantity: 20
@@ -29,10 +29,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 7
+        maxVol: 8
         reagents:
         - ReagentId: Nutriment
-          Quantity: 7
+          Quantity: 4
 
 # Custom Cake Example
 
@@ -257,6 +257,15 @@
     - state: chocolate
   - type: SliceableFood
     slice: FoodCakeChocolateSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 26
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 20
+        - ReagentId: Theobromine
+          Quantity: 5
 
 - type: entity
   name: slice of chocolate cake
@@ -267,6 +276,15 @@
     layers:
     - state: plate-small
     - state: chocolate-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 8
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4
+        - ReagentId: Theobromine
+          Quantity: 1
 # Tastes like sweetness, cake, chocolate.
 
 - type: entity

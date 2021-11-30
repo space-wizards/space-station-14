@@ -1,7 +1,6 @@
 using Content.Server.Tabletop.Components;
 using Content.Shared.Tabletop;
 using Content.Shared.Tabletop.Events;
-using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
@@ -25,7 +24,7 @@ namespace Content.Server.Tabletop
         /// </summary>
         private void OnTabletopMove(TabletopMoveEvent msg, EntitySessionEventArgs args)
         {
-            if (args.SenderSession as IPlayerSession is not { AttachedEntity: { } playerEntity } playerSession)
+            if (args.SenderSession as IPlayerSession is not { AttachedEntityUid: { } playerEntity } playerSession)
                 return;
 
             if (!EntityManager.TryGetComponent(msg.TableUid, out TabletopGameComponent? tabletop) || tabletop.Session is not {} session)
@@ -36,10 +35,10 @@ namespace Content.Server.Tabletop
                 return;
 
             // Return if can not see table or stunned/no hands
-            if (!EntityManager.TryGetEntity(msg.TableUid, out var table))
+            if (!EntityManager.EntityExists(msg.TableUid))
                 return;
 
-            if (!CanSeeTable(playerEntity, table) || StunnedOrNoHands(playerEntity))
+            if (!CanSeeTable(playerEntity, msg.TableUid) || StunnedOrNoHands(playerEntity))
                 return;
 
             // Check if moved entity exists and has tabletop draggable component
@@ -52,10 +51,9 @@ namespace Content.Server.Tabletop
             // TODO: some permission system, disallow movement if you're not permitted to move the item
 
             // Move the entity and dirty it (we use the map ID from the entity so noone can try to be funny and move the item to another map)
-            var transform = EntityManager.GetComponent<ITransformComponent>(movedEntity.Uid);
+            var transform = EntityManager.GetComponent<TransformComponent>(movedEntity.Uid);
             var entityCoordinates = new EntityCoordinates(_mapManager.GetMapEntityId(transform.MapID), msg.Coordinates.Position);
             transform.Coordinates = entityCoordinates;
-            movedEntity.Dirty();
         }
 
         private void OnDraggingPlayerChanged(TabletopDraggingPlayerChangedEvent msg)

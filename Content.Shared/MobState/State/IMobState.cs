@@ -1,4 +1,5 @@
 ﻿using Content.Shared.ActionBlocker;
+using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 
 namespace Content.Shared.MobState.State
@@ -8,7 +9,7 @@ namespace Content.Shared.MobState.State
     ///     (i.e. Normal, Critical, Dead) and what effects to apply upon entering or
     ///     exiting the state.
     /// </summary>
-    public interface IMobState : IActionBlocker
+    public interface IMobState
     {
         bool IsAlive();
 
@@ -26,16 +27,16 @@ namespace Content.Shared.MobState.State
         /// <summary>
         ///     Called when this state is entered.
         /// </summary>
-        void EnterState(IEntity entity);
+        void EnterState(EntityUid uid, IEntityManager entityManager);
 
         /// <summary>
         ///     Called when this state is left for a different state.
         /// </summary>
-        void ExitState(IEntity entity);
+        void ExitState(EntityUid uid, IEntityManager entityManager);
 
         /// <summary>
         ///     Called when this state is updated.
         /// </summary>
-        void UpdateState(IEntity entity, int threshold);
+        void UpdateState(EntityUid entity, FixedPoint2 threshold, IEntityManager entityManager);
     }
 }

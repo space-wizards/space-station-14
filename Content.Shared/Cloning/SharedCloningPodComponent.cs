@@ -44,13 +44,13 @@ namespace Content.Shared.Cloning
         }
 
         [Serializable, NetSerializable]
-        public enum CloningPodVisuals
+        public enum CloningPodVisuals : byte
         {
             Status
         }
 
         [Serializable, NetSerializable]
-        public enum CloningPodStatus
+        public enum CloningPodStatus : byte
         {
             Idle,
             Cloning,

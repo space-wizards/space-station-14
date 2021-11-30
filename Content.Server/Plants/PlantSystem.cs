@@ -68,7 +68,7 @@ namespace Content.Server.Plants
 
             _timer = 0f;
 
-            foreach (var plantHolder in EntityManager.EntityQuery<PlantHolderComponent>(true))
+            foreach (var plantHolder in EntityManager.EntityQuery<PlantHolderComponent>())
             {
                 plantHolder.Update();
             }

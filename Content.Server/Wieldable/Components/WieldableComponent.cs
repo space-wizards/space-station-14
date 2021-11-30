@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
 using Content.Shared.Sound;
-using Content.Shared.Verbs;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -36,24 +34,5 @@ namespace Content.Server.Wieldable.Components
 
         [DataField("wieldTime")]
         public float WieldTime = 1.5f;
-
-        [Verb]
-        public sealed class ToggleWieldVerb : Verb<WieldableComponent>
-        {
-            protected override void GetData(IEntity user, WieldableComponent component, VerbData data)
-            {
-                data.Visibility = VerbVisibility.Visible;
-                data.Text = component.Wielded ? "Unwield" : "Wield";
-            }
-
-            protected override void Activate(IEntity user, WieldableComponent component)
-            {
-                if(!component.Wielded)
-                    EntitySystem.Get<WieldableSystem>().AttemptWield(component.Owner.Uid, component, user);
-                else
-                    EntitySystem.Get<WieldableSystem>().AttemptUnwield(component.Owner.Uid, component, user);
-
-            }
-        }
     }
 }

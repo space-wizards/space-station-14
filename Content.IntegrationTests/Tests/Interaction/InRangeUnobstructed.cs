@@ -16,7 +16,7 @@ namespace Content.IntegrationTests.Tests.Interaction
     [TestOf(typeof(UnobstructedExtensions))]
     public class InRangeUnobstructed : ContentIntegrationTest
     {
-        private const string HumanId = "BaseHumanMob_Content";
+        private const string HumanId = "MobHumanBase";
 
         private const float InteractionRange = SharedInteractionSystem.InteractionRange;
 
@@ -29,7 +29,7 @@ namespace Content.IntegrationTests.Tests.Interaction
         [Test]
         public async Task EntityEntityTest()
         {
-            var server = StartServerDummyTicker();
+            var server = StartServer();
 
             await server.WaitIdleAsync();
 

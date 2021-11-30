@@ -1,13 +1,13 @@
 ﻿<BoxContainer xmlns="https://spacestation14.io"
               Orientation="Vertical">
     <Control MinSize="0 5" />
-    <BoxContainer Orientation="Horizontal">
-        <!-- <Label Text="{Loc Search}" CustomMinimumSize="100 0" /> -->
-        <!-- <Control CustomMinimumSize="50 0" /> -->
-        <LineEdit Name="FilterLineEdit" MinSize="100 0" SizeFlagsHorizontal="FillExpand" PlaceHolder="{Loc Filter}"/>
-    </BoxContainer>
-    <!-- <Control CustomMinimumSize="0 5" /> -->
-    <ItemList
-        Name="PlayerItemList" SelectMode="Single" SizeFlagsVertical="FillExpand" SizeFlagsHorizontal="FillExpand"
-        MinSize="100 100" />
+    <LineEdit Name="FilterLineEdit"
+              MinSize="100 0"
+              HorizontalExpand="True"
+              PlaceHolder="{Loc Filter}"/>
+    <ItemList Name="PlayerItemList"
+              SelectMode="Single"
+              VerticalExpand="True"
+              HorizontalExpand="True"
+              MinSize="100 100" />
 </BoxContainer>

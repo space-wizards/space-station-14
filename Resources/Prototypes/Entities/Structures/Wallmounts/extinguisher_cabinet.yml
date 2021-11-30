@@ -18,11 +18,13 @@
       - state: closed
         map: ["enum.ItemCabinetVisualLayers.Door"]
     - type: ItemCabinet
+      cabinetSlot:
+        ejectOnInteract: true
+        whitelist:
+          components:
+          - FireExtinguisher
       doorSound:
         path: /Audio/Machines/machine_switch.ogg
-      whitelist:
-        components:
-        - FireExtinguisher
     - type: Appearance
       visuals:
         - type: ItemCabinetVisualizer
@@ -44,8 +46,13 @@
   parent: ExtinguisherCabinet
   suffix: Filled
   components:
-    - type: ItemCabinet
-      spawnPrototype: FireExtinguisher
+  - type: ItemCabinet
+    cabinetSlot:
+      ejectOnInteract: true
+      startingItem: FireExtinguisher
+      whitelist:
+        components:
+        - FireExtinguisher
 
 - type: entity
   id: ExtinguisherCabinetFilledOpen

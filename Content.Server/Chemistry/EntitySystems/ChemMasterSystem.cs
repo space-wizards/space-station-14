@@ -1,24 +1,21 @@
-﻿using Content.Server.Chemistry.Components;
+using Content.Server.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using JetBrains.Annotations;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
     [UsedImplicitly]
-    public class ChemMasterSystem : EntitySystem
+    public sealed class ChemMasterSystem : SharedChemMasterSystem
     {
         public override void Initialize()
         {
             base.Initialize();
-
-            SubscribeLocalEvent<ChemMasterComponent, SolutionChangedEvent>(OnSolutionChange);
-        }
-
-        private void OnSolutionChange(EntityUid uid, ChemMasterComponent component,
-            SolutionChangedEvent solutionChanged)
-        {
-            component.UpdateUserInterface();
+            SubscribeLocalEvent<ChemMasterComponent, ComponentStartup>((_, comp, _) => comp.UpdateUserInterface());
+            SubscribeLocalEvent<ChemMasterComponent, SolutionChangedEvent>((_, comp, _) => comp.UpdateUserInterface());
+            SubscribeLocalEvent<ChemMasterComponent, EntInsertedIntoContainerMessage>((_, comp, _) => comp.UpdateUserInterface());
+            SubscribeLocalEvent<ChemMasterComponent, EntRemovedFromContainerMessage>((_, comp, _) => comp.UpdateUserInterface());
         }
     }
 }

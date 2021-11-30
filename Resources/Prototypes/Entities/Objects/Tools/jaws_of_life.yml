@@ -20,21 +20,21 @@
   - type: Tool
     qualities:
       - Prying
+  - type: MultipleTool
     statusShowBehavior: true
-  - type: MultiTool
-    tools:
+    entries:
       - behavior: Prying
-        state: jaws_pry
-        useSound:
-          path: /Audio/Items/jaws_pry.ogg
-        changeSound:
-          path: /Audio/Items/change_jaws.ogg
+        sprite:
+          sprite: Objects/Tools/jaws_of_life.rsi
+          state: jaws_pry
+        useSound: /Audio/Items/jaws_pry.ogg
+        changeSound: /Audio/Items/change_jaws.ogg
       - behavior: Cutting
-        state: jaws_cutter
-        useSound:
-          path: /Audio/Items/jaws_cut.ogg
-        changeSound:
-          path: /Audio/Items/change_jaws.ogg
+        sprite:
+          sprite: Objects/Tools/jaws_of_life.rsi
+          state: jaws_cutter
+        useSound: /Audio/Items/jaws_cut.ogg
+        changeSound: /Audio/Items/change_jaws.ogg
 
 - type: entity
   name: syndicate jaws of life
@@ -43,10 +43,19 @@
   description: Useful for entering the station or its departments.
   components:
   - type: Sprite
+    sprite: Objects/Tools/jaws_of_life.rsi
     state: syn_jaws_pry
-  - type: MultiTool
-    tools:
+  - type: MultipleTool
+    entries:
       - behavior: Prying
-        state: syn_jaws_pry
+        sprite:
+          sprite: Objects/Tools/jaws_of_life.rsi
+          state: syn_jaws_pry
+        useSound: /Audio/Items/jaws_pry.ogg
+        changeSound: /Audio/Items/change_jaws.ogg
       - behavior: Cutting
-        state: syn_jaws_cutter
+        sprite:
+          sprite: Objects/Tools/jaws_of_life.rsi
+          state: syn_jaws_cutter
+        useSound: /Audio/Items/jaws_cut.ogg
+        changeSound: /Audio/Items/change_jaws.ogg

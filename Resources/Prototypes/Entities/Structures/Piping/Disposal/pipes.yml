@@ -46,7 +46,7 @@
   description: A huge pipe segment used for constructing disposal systems
   components:
   - type: Sprite
-    drawdepth: BelowFloor
+    drawdepth: ThickPipe
     sprite: Structures/Piping/disposal.rsi
     state: conpipe-s
   - type: DisposalTransit
@@ -70,7 +70,7 @@
   description: A pipe that tags entities for routing
   components:
   - type: Sprite
-    drawdepth: BelowFloor
+    drawdepth: ThickPipe
     sprite: Structures/Piping/disposal.rsi
     state: conpipe-tagger
   - type: DisposalTagger
@@ -98,7 +98,7 @@
   description: A pipe trunk used as an entry point for disposal systems
   components:
   - type: Sprite
-    drawdepth: BelowFloor
+    drawdepth: ThickPipe
     sprite: Structures/Piping/disposal.rsi
     state: conpipe-t
   - type: DisposalEntry
@@ -122,7 +122,7 @@
   description: A three-way router. Entities with matching tags get routed to the side
   components:
   - type: Sprite
-    drawdepth: BelowFloor
+    drawdepth: ThickPipe
     sprite: Structures/Piping/disposal.rsi
     state: conpipe-j1s
   - type: DisposalRouter
@@ -137,7 +137,7 @@
       state_anchored: pipe-j1s
       state_broken: pipe-b
   - type: Flippable
-    entity: DisposalRouterFlipped
+    mirrorEntity: DisposalRouterFlipped
   - type: UserInterface
     interfaces:
     - key: enum.DisposalRouterUiKey.Key
@@ -155,7 +155,7 @@
   suffix: flipped
   components:
   - type: Sprite
-    drawdepth: BelowFloor
+    drawdepth: ThickPipe
     sprite: Structures/Piping/disposal.rsi
     state: conpipe-j2s
   - type: DisposalRouter
@@ -170,7 +170,7 @@
       state_anchored: pipe-j2s
       state_broken: pipe-b
   - type: Flippable
-    entity: DisposalRouter
+    mirrorEntity: DisposalRouter
   - type: Physics
     fixtures:
     - shape:
@@ -185,7 +185,7 @@
   description: A three-way junction. The arrow indicates where items exit
   components:
   - type: Sprite
-    drawdepth: BelowFloor
+    drawdepth: ThickPipe
     sprite: Structures/Piping/disposal.rsi
     state: conpipe-j1
   - type: DisposalJunction
@@ -200,7 +200,7 @@
       state_anchored: pipe-j1
       state_broken: pipe-b
   - type: Flippable
-    entity: DisposalJunctionFlipped
+    mirrorEntity: DisposalJunctionFlipped
   - type: Physics
     fixtures:
     - shape:
@@ -214,7 +214,7 @@
   suffix: flipped
   components:
   - type: Sprite
-    drawdepth: BelowFloor
+    drawdepth: ThickPipe
     sprite: Structures/Piping/disposal.rsi
     state: conpipe-j2
   - type: DisposalJunction
@@ -229,7 +229,7 @@
       state_anchored: pipe-j2
       state_broken: pipe-b
   - type: Flippable
-    entity: DisposalJunction
+    mirrorEntity: DisposalJunction
   - type: Physics
     fixtures:
     - shape:
@@ -244,7 +244,7 @@
   description: A three-way junction with another exit point.
   components:
   - type: Sprite
-    drawdepth: BelowFloor
+    drawdepth: ThickPipe
     sprite: Structures/Piping/disposal.rsi
     state: conpipe-y
   - type: DisposalJunction
@@ -272,7 +272,7 @@
   description: A tube bent at a 90 degree angle.
   components:
   - type: Sprite
-    drawdepth: BelowFloor
+    drawdepth: ThickPipe
     sprite: Structures/Piping/disposal.rsi
     state: conpipe-c
   - type: DisposalBend

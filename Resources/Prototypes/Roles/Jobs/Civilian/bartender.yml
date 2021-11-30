@@ -1,11 +1,11 @@
 - type: job
   id: Bartender
   name: "bartender"
-  positions: 1
   startingGear: BartenderGear
   departments:
   - Civilian
   icon: "Bartender"
+  supervisors: "the head of personnel"
   access:
   - Service
   - Maintenance

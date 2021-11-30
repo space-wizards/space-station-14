@@ -192,7 +192,7 @@ namespace Content.Server.Ghost
 
         private IEnumerable<string> GetLocationNames()
         {
-            foreach (var warp in EntityManager.EntityQuery<WarpPointComponent>())
+            foreach (var warp in EntityManager.EntityQuery<WarpPointComponent>(true))
             {
                 if (warp.Location != null)
                 {
@@ -218,7 +218,7 @@ namespace Content.Server.Ghost
         {
             var players = new Dictionary<EntityUid, string>();
 
-            foreach (var player in _playerManager.GetAllPlayers())
+            foreach (var player in _playerManager.Sessions)
             {
                 if (player.AttachedEntity != null)
                 {

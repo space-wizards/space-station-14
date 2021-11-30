@@ -1,6 +1,14 @@
+using System;
+using Content.Server.Alert;
 using Content.Server.Stunnable.Components;
+using Content.Shared.Alert;
+using Content.Shared.Movement.Components;
+using Content.Shared.Standing;
+using Content.Shared.StatusEffect;
+using Content.Shared.Stunnable;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Physics.Dynamics;
 
 namespace Content.Server.Stunnable
@@ -8,6 +16,8 @@ namespace Content.Server.Stunnable
     [UsedImplicitly]
     internal sealed class StunOnCollideSystem : EntitySystem
     {
+        [Dependency] private readonly StunSystem _stunSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -16,11 +26,24 @@ namespace Content.Server.Stunnable
 
         private void HandleCollide(EntityUid uid, StunOnCollideComponent component, StartCollideEvent args)
         {
-            if (args.OtherFixture.Body.Owner.TryGetComponent(out StunnableComponent? stunnableComponent))
+            var otherUid = args.OtherFixture.Body.Owner.Uid;
+
+            if (EntityManager.TryGetComponent<StatusEffectsComponent>(otherUid, out var status))
             {
-                stunnableComponent.Stun(component.StunAmount);
-                stunnableComponent.Knockdown(component.KnockdownAmount);
-                stunnableComponent.Slowdown(component.SlowdownAmount);
+                ServerAlertsComponent? alerts = null;
+                StandingStateComponent? standingState = null;
+                AppearanceComponent? appearance = null;
+
+                // Let the actual methods log errors for these.
+                Resolve(otherUid, ref alerts, ref standingState, ref appearance, false);
+
+                _stunSystem.TryStun(otherUid, TimeSpan.FromSeconds(component.StunAmount), status, alerts);
+
+                _stunSystem.TryKnockdown(otherUid, TimeSpan.FromSeconds(component.KnockdownAmount),
+                    status, alerts);
+
+                _stunSystem.TrySlowdown(otherUid, TimeSpan.FromSeconds(component.SlowdownAmount),
+                    component.WalkSpeedMultiplier, component.RunSpeedMultiplier, status, alerts);
             }
         }
     }

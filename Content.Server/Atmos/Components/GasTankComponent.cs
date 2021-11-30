@@ -1,9 +1,7 @@
 using System;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Body.Respiratory;
-using Content.Server.Explosion;
-using Content.Server.NodeContainer;
-using Content.Server.NodeContainer.Nodes;
+using Content.Server.Body.Components;
+using Content.Server.Explosion.EntitySystems;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
@@ -12,11 +10,9 @@ using Content.Shared.Actions.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Audio;
-using Content.Shared.DragDrop;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Sound;
-using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -33,7 +29,9 @@ namespace Content.Server.Atmos.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
+#pragma warning disable 618
     public class GasTankComponent : Component, IExamine, IGasMixtureHolder, IUse, IDropped, IActivate
+#pragma warning restore 618
     {
         public override string Name => "GasTank";
 
@@ -109,10 +107,11 @@ namespace Content.Server.Atmos.Components
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
-            message.AddMarkup(Loc.GetString("gas-tank-examine", ("pressure", Math.Round(Air?.Pressure ?? 0))));
+            message.AddMarkup(Loc.GetString("comp-gas-tank-examine", ("pressure", Math.Round(Air?.Pressure ?? 0))));
             if (IsConnected)
             {
-                message.AddMarkup(Loc.GetString("gas-tank-connected"));
+                message.AddText("\n");
+                message.AddMarkup(Loc.GetString("comp-gas-tank-connected"));
             }
         }
 
@@ -216,7 +215,7 @@ namespace Content.Server.Atmos.Components
         {
             var user = GetInternalsComponent()?.Owner;
 
-            if (user == null || !EntitySystem.Get<ActionBlockerSystem>().CanUse(user))
+            if (user == null || !EntitySystem.Get<ActionBlockerSystem>().CanUse(user.Uid))
                 return;
 
             if (IsConnected)
@@ -269,7 +268,7 @@ namespace Content.Server.Atmos.Components
                     range = MaxExplosionRange;
                 }
 
-                Owner.SpawnExplosion((int) (range * 0.25f), (int) (range * 0.5f), (int) (range * 1.5f), 1);
+                EntitySystem.Get<ExplosionSystem>().SpawnExplosion(OwnerUid, (int) (range * 0.25f), (int) (range * 0.5f), (int) (range * 1.5f), 1);
 
                 Owner.QueueDelete();
                 return;
@@ -319,37 +318,6 @@ namespace Content.Server.Atmos.Components
         void IDropped.Dropped(DroppedEventArgs eventArgs)
         {
             DisconnectFromInternals(eventArgs.User);
-        }
-
-        /// <summary>
-        /// Open interaction window
-        /// </summary>
-        [Verb]
-        private sealed class ControlVerb : Verb<GasTankComponent>
-        {
-            public override bool RequireInteractionRange => true;
-
-            protected override void GetData(IEntity user, GasTankComponent component, VerbData data)
-            {
-                data.Visibility = VerbVisibility.Invisible;
-                if (!user.HasComponent<ActorComponent>())
-                {
-                    return;
-                }
-
-                data.Visibility = VerbVisibility.Visible;
-                data.Text = Loc.GetString("control-verb-open-control-panel-text");
-            }
-
-            protected override void Activate(IEntity user, GasTankComponent component)
-            {
-                if (!user.TryGetComponent<ActorComponent>(out var actor))
-                {
-                    return;
-                }
-
-                component.OpenInterface(actor.PlayerSession);
-            }
         }
     }
 

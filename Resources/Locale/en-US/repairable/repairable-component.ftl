@@ -4,7 +4,7 @@
 comp-repairable-repair = You repair {PROPER($target) ->
   [true] {""}
   *[false] the{" "}
-}{$target} with {PROPER($welder) ->
+}{$target} with {PROPER($tool) ->
   [true] {""}
   *[false] the{" "}
-}{$welder}
+}{$tool}

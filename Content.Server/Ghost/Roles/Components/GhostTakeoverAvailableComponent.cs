@@ -25,15 +25,12 @@ namespace Content.Server.Ghost.Roles.Components
             var mind = Owner.EnsureComponent<MindComponent>();
 
             if (mind.HasMind)
-                throw new Exception("MindComponent already has a mind!");
+                return false;
 
-            var sessionMind = session.ContentData()?.Mind;
+            var ghostRoleSystem = EntitySystem.Get<GhostRoleSystem>();
+            ghostRoleSystem.GhostRoleInternalCreateMindAndTransfer(session, OwnerUid, OwnerUid, this);
 
-            DebugTools.AssertNotNull(sessionMind);
-
-            sessionMind!.TransferTo(Owner);
-
-            EntitySystem.Get<GhostRoleSystem>().UnregisterGhostRole(this);
+            ghostRoleSystem.UnregisterGhostRole(this);
 
             return true;
         }

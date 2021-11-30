@@ -7,8 +7,11 @@
 - type: stack
   id: CableMV
   name: mv cable
-  spawn: CableHVStack1
+  icon: "/Textures/Objects/Tools/cable-coils.rsi/coilmv-30.png"
+  spawn: CableMVStack1
 
 - type: stack
   id: CableHV
   name: hv cable
+  icon: "/Textures/Objects/Tools/cable-coils.rsi/coilhv-30.png"
+  spawn: CableHVStack1

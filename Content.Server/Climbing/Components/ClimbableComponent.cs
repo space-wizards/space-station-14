@@ -67,7 +67,7 @@ namespace Content.Server.Climbing.Components
         /// <returns></returns>
         private bool CanVault(IEntity user, IEntity target, out string reason)
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user.Uid))
             {
                 reason = Loc.GetString("comp-climbable-cant-interact");
                 return false;
@@ -107,7 +107,7 @@ namespace Content.Server.Climbing.Components
         /// <returns></returns>
         private bool CanVault(IEntity user, IEntity dragged, IEntity target, out string reason)
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user.Uid))
             {
                 reason = Loc.GetString("comp-climbable-cant-interact");
                 return false;
@@ -190,7 +190,7 @@ namespace Content.Server.Climbing.Components
             }
         }
 
-        private async void TryClimb(IEntity user)
+        public async void TryClimb(IEntity user)
         {
             if (!user.TryGetComponent(out ClimbingComponent? climbingComponent) || climbingComponent.IsClimbing)
                 return;
@@ -232,30 +232,6 @@ namespace Content.Server.Climbing.Components
 
                 var selfMessage = Loc.GetString("comp-climbable-user-climbs", ("climbable", Owner));
                 user.PopupMessage(selfMessage);
-            }
-        }
-
-        /// <summary>
-        ///     Allows you to vault an object with the ClimbableComponent through right click
-        /// </summary>
-        [Verb]
-        private sealed class ClimbVerb : Verb<ClimbableComponent>
-        {
-            public override bool AlternativeInteraction => true;
-
-            protected override void GetData(IEntity user, ClimbableComponent component, VerbData data)
-            {
-                if (!component.CanVault(user, component.Owner, out var _))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                }
-
-                data.Text = Loc.GetString("comp-climbable-verb-climb");
-            }
-
-            protected override void Activate(IEntity user, ClimbableComponent component)
-            {
-                component.TryClimb(user);
             }
         }
     }

@@ -11,12 +11,12 @@ using Content.Server.DeviceNetwork;
 using Content.Server.EUI;
 using Content.Server.Holiday;
 using Content.Server.Holiday.Interfaces;
+using Content.Server.Maps;
 using Content.Server.Module;
 using Content.Server.MoMMI;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.Objectives;
 using Content.Server.Objectives.Interfaces;
-using Content.Server.PDA.Managers;
 using Content.Server.Preferences.Managers;
 using Content.Server.Sandbox;
 using Content.Server.Speech;
@@ -42,20 +42,18 @@ namespace Content.Server.IoC
             IoCManager.Register<RecipeManager, RecipeManager>();
             IoCManager.Register<AlertManager, AlertManager>();
             IoCManager.Register<ActionManager, ActionManager>();
-            IoCManager.Register<IPDAUplinkManager,PDAUplinkManager>();
             IoCManager.Register<INodeGroupFactory, NodeGroupFactory>();
             IoCManager.Register<BlackboardManager, BlackboardManager>();
             IoCManager.Register<ConsiderationsManager, ConsiderationsManager>();
-            IoCManager.Register<IAccentManager, AccentManager>();
             IoCManager.Register<IConnectionManager, ConnectionManager>();
             IoCManager.Register<IObjectivesManager, ObjectivesManager>();
             IoCManager.Register<IAdminManager, AdminManager>();
-            IoCManager.Register<IDeviceNetwork, DeviceNetwork.DeviceNetwork>();
             IoCManager.Register<EuiManager, EuiManager>();
             IoCManager.Register<IVoteManager, VoteManager>();
             IoCManager.Register<INpcBehaviorManager, NpcBehaviorManager>();
             IoCManager.Register<IPlayerLocator, PlayerLocator>();
             IoCManager.Register<IAfkManager, AfkManager>();
+            IoCManager.Register<IGameMapManager, GameMapManager>();
         }
     }
 }

@@ -3,6 +3,7 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.CombatMode;
 using Content.Server.Hands.Components;
 using Content.Server.Interaction.Components;
+using Content.Server.Stunnable;
 using Content.Server.Stunnable.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.ActionBlocker;
@@ -10,6 +11,7 @@ using Content.Shared.Damage;
 using Content.Shared.Hands;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
+using Content.Shared.Stunnable;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -87,10 +89,11 @@ namespace Content.Server.Weapon.Ranged
 
         private bool UserCanFire(IEntity user)
         {
-            return (UserCanFireHandler == null || UserCanFireHandler(user)) && EntitySystem.Get<ActionBlockerSystem>().CanInteract(user);
+            return (UserCanFireHandler == null || UserCanFireHandler(user)) && EntitySystem.Get<ActionBlockerSystem>().CanInteract(user.Uid);
         }
 
         /// <inheritdoc />
+        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
         {
             base.HandleNetworkMessage(message, channel, session);
@@ -171,12 +174,7 @@ namespace Content.Server.Weapon.Ranged
             {
                 //Wound them
                 EntitySystem.Get<DamageableSystem>().TryChangeDamage(user.Uid, ClumsyDamage);
-
-                // Knock them down
-                if (user.TryGetComponent(out StunnableComponent? stun))
-                {
-                    stun.Paralyze(3f);
-                }
+                EntitySystem.Get<StunSystem>().TryParalyze(user.Uid, TimeSpan.FromSeconds(3f));
 
                 // Apply salt to the wound ("Honk!")
                 SoundSystem.Play(

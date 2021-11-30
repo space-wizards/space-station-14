@@ -1,12 +1,11 @@
 - type: job
   id: StationEngineer
   name: "station engineer"
-  positions: 3
-  spawnPositions: 2
   startingGear: StationEngineerGear
   departments:
   - Engineering
   icon: "StationEngineer"
+  supervisors: "the chief engineer"
   access:
   - Maintenance
   - Engineering

@@ -1,7 +1,7 @@
 - type: entity
   name: space carp
-  id: CarpMob_Content
-  parent: SimpleMobBase
+  id: MobCarp
+  parent: SimpleSpaceMobBase
   description: It's a space carp.
   components:
   - type: UtilityAI
@@ -18,11 +18,10 @@
       state: alive
       sprite: Mobs/Aliens/Carps/space.rsi
   - type: Physics
-    bodyType: Dynamic
     fixtures:
     - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.35,-0.35,0.35,0.35"
+        !type:PhysShapeCircle
+        radius: 0.40
       mass: 50
       mask:
       - Impassable
@@ -40,12 +39,13 @@
     visuals:
     - type: DamageStateVisualizer
       normal: alive
+      crit: crit
       dead: dead
 
 - type: entity
   name: magicarp
-  parent: CarpMob_Content
-  id: MagicarpMob_Content
+  parent: MobCarp
+  id: MobCarpMagic
   description: Looks like some kind of fish. Might be magical.
   components:
   - type: Sprite
@@ -57,8 +57,8 @@
 
 - type: entity
   name: holocarp
-  parent: CarpMob_Content
-  id: HolocarpMob_Content
+  parent: MobCarp
+  id: MobCarpHolo
   description: Carp made out of holographic energies.
   components:
   - type: Sprite
@@ -68,11 +68,10 @@
       state: alive
       sprite: Mobs/Aliens/Carps/holo.rsi
   - type: Physics
-    bodyType: Dynamic
     fixtures:
     - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.35,-0.35,0.35,0.35"
+        !type:PhysShapeCircle
+        radius: 0.40
       mass: 5
       mask:
         - Impassable

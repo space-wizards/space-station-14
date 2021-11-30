@@ -1,4 +1,4 @@
-﻿using Content.Server.DoAfter;
+using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
 using Content.Server.Hands.Systems;
 using Content.Server.Items;
@@ -7,6 +7,7 @@ using Content.Server.Wieldable.Components;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -29,8 +30,27 @@ namespace Content.Server.Wieldable
             SubscribeLocalEvent<WieldableComponent, ItemUnwieldedEvent>(OnItemUnwielded);
             SubscribeLocalEvent<WieldableComponent, UnequippedHandEvent>(OnItemLeaveHand);
             SubscribeLocalEvent<WieldableComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
+            SubscribeLocalEvent<WieldableComponent, GetInteractionVerbsEvent>(AddToggleWieldVerb);
 
             SubscribeLocalEvent<IncreaseDamageOnWieldComponent, MeleeHitEvent>(OnMeleeHit);
+        }
+
+        private void AddToggleWieldVerb(EntityUid uid, WieldableComponent component, GetInteractionVerbsEvent args)
+        {
+            if (args.Hands == null || !args.CanAccess || !args.CanInteract)
+                return;
+
+            // TODO VERB TOOLTIPS Make CanWield or some other function return string, set as verb tooltip and disable
+            // verb. Or just don't add it to the list if the action is not executable.
+
+            Verb verb = new();
+            // TODO VERBS ICON + localization
+            verb.Text = component.Wielded ? "Unwield" : "Wield";
+            verb.Act = component.Wielded
+                ? () => AttemptUnwield(component.Owner.Uid, component, args.User)
+                : () => AttemptWield(component.Owner.Uid, component, args.User);
+
+            args.Verbs.Add(verb);
         }
 
         private void OnUseInHand(EntityUid uid, WieldableComponent component, UseInHandEvent args)

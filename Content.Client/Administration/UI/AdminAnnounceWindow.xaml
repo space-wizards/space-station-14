@@ -1,0 +1,15 @@
+<SS14Window
+    xmlns="https://spacestation14.io"
+    Title="{Loc 'admin-announce-title'}"
+    MinWidth="500">
+    <GridContainer Columns="1">
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <LineEdit Name="Announcer" Access="Public" PlaceHolder="{Loc 'announcer-placeholder'}" Text="{Loc 'Central Command'}" HorizontalExpand="True" SizeFlagsStretchRatio="2"/>
+            <Control HorizontalExpand="True" SizeFlagsStretchRatio="1" />
+            <OptionButton Name="AnnounceMethod" Access="Public" HorizontalExpand="True" SizeFlagsStretchRatio="2"/>
+        </BoxContainer>
+        <LineEdit Name="Announcement" Access="Public" PlaceHolder="{Loc 'announcement-placeholder'}"/>
+
+        <Button Name="AnnounceButton" Access="Public" Disabled="True" Text="{Loc 'Announce'}" HorizontalAlignment="Center"/>
+    </GridContainer>
+</SS14Window>

@@ -20,8 +20,9 @@
   - type: ShuttleConsole
   - type: ApcPowerReceiver
     powerLoad: 200
+  - type: ExtensionCableReceiver
   - type: PointLight
-    radius: 2
+    radius: 1.5
     energy: 1.6
     color: "#43ccb5"
 
@@ -49,7 +50,7 @@
       key: syndie_key
       screen: syndishuttle
   - type: PointLight
-    radius: 1.6
+    radius: 1.5
     energy: 1.6
     color: "#c94242"
 
@@ -65,7 +66,7 @@
       key: power_key
       screen: power_monitor
   - type: PointLight
-    radius: 1.6
+    radius: 1.5
     energy: 1.6
     color: "#c9c042"
 
@@ -81,7 +82,7 @@
       key: med_key
       screen: medcomp
   - type: PointLight
-    radius: 2
+    radius: 1.5
     energy: 1.6
     color: "#1f8c28"
 
@@ -108,10 +109,11 @@
   - type: ApcPowerReceiver
     powerLoad: 200
     priority: Low
+  - type: ExtensionCableReceiver
   - type: Computer
     board: ResearchComputerCircuitboard
   - type: PointLight
-    radius: 2
+    radius: 1.5
     energy: 1.6
     color: "#b53ca1"
 
@@ -124,6 +126,27 @@
   - type: AccessReader
     access: [["HeadOfPersonnel"]]
   - type: IdCardConsole
+    privilegedIdSlot:
+      name: id-card-console-privileged-id
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+      ejectOnBreak: true
+      swap: false
+      whitelist:
+        components:
+        - IdCard
+    targetIdSlot:
+      name: id-card-console-target-id
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+      ejectOnBreak: true
+      swap: false
+      whitelist:
+        components:
+        - IdCard
+  - type: ActivatableUI
+    key: enum.IdCardConsoleUiKey.Key
+  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.IdCardConsoleUiKey.Key
@@ -136,7 +159,7 @@
   - type: Computer
     board: IDComputerCircuitboard
   - type: PointLight
-    radius: 2
+    radius: 1.5
     energy: 1.6
     color: "#3c5eb5"
 
@@ -159,7 +182,7 @@
   - type: Computer
     board: BodyScannerComputerCircuitboard
   - type: PointLight
-    radius: 2
+    radius: 1.5
     energy: 1.6
     color: "#1f8c28"
 
@@ -175,6 +198,9 @@
       key: generic_key
       screen: comm
   - type: CommunicationsConsole
+  - type: ActivatableUI
+    key: enum.CommunicationsConsoleUiKey.Key
+  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.CommunicationsConsoleUiKey.Key
@@ -182,7 +208,7 @@
   - type: Computer
     board: CommsComputerCircuitboard
   - type: PointLight
-    radius: 2
+    radius: 1.5
     energy: 1.6
     color: "#3c5eb5"
 
@@ -198,6 +224,9 @@
       key: generic_key
       screen: solar_screen
   - type: SolarControlConsole
+  - type: ActivatableUI
+    key: enum.SolarControlConsoleUiKey.Key
+  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.SolarControlConsoleUiKey.Key
@@ -205,7 +234,7 @@
   - type: Computer
     board: SolarControlComputerCircuitboard
   - type: PointLight
-    radius: 2
+    radius: 1.5
     energy: 1.6
     color: "#e6e227"
 
@@ -224,6 +253,8 @@
   - type: CargoOrderDatabase
   - type: GalacticMarket
     products:
+      - MedicalSupplies
+      - MedicalChemistrySupplies
       - EmergencyExplosive
       - EmergencyFire
       - EmergencyInternals
@@ -239,8 +270,13 @@
       - HydroponicsTools
       - HydroponicsSeeds
       - HydroponicsSeedsExotic
+      - LivestockMonkeyCube
+      - LivestockCow
+      - FoodPizza
       - ServiceJanitorial
       - ServiceLightsReplacement
+      - ServiceSmokeables
+      - ServiceCustomSmokable
       - EngineeringCableLv
       - EngineeringCableMv
       - EngineeringCableHv
@@ -256,11 +292,14 @@
       - MaterialGlass
       - MaterialPlastic
       - MaterialPlasteel
+      - MaterialPlasma
       - EngineSingularityEmitter
       - EngineSingularityCollector
       - EngineSingularityGenerator
       - EngineSingularityContainment
       - EngineParticleAccelerator
+      - ShuttleThruster
+      - ShuttleGyroscope
       - AtmosphericsAir
       - AtmosphericsOxygen
       - AtmosphericsNitrogen
@@ -268,6 +307,9 @@
 #      - AtmosphericsWaterVapor
 #      - AtmosphericsPlasma
 #      - AtmosphericsTritium
+  - type: ActivatableUI
+    key: enum.CargoConsoleUiKey.Key
+  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.CargoConsoleUiKey.Key
@@ -275,9 +317,11 @@
   - type: Computer
     board: SupplyComputerCircuitboard
   - type: PointLight
-    radius: 2
+    radius: 1.5
     energy: 1.6
     color: "#b89f25"
+  - type: AccessReader
+    access: [["Cargo"]]
 
 - type: entity
   id: ComputerSupplyRequest
@@ -295,6 +339,6 @@
   - type: Computer
     board: SupplyRequestComputerCircuitboard
   - type: PointLight
-    radius: 2
+    radius: 1.5
     energy: 1.6
     color: "#b89f25"

@@ -1,11 +1,11 @@
 - type: job
   id: Mime
   name: "mime"
-  positions: 1
   startingGear: MimeGear
   departments:
   - Civilian
   icon: "Mime"
+  supervisors: "the head of personnel"
   access:
   - Theatre
   - Maintenance

@@ -33,7 +33,7 @@ namespace Content.Shared.Construction.Conditions
                 return false;
 
             // now we need to check that user actually tries to build wallmount on a wall
-            var physics = EntitySystem.Get<SharedBroadphaseSystem>();
+            var physics = EntitySystem.Get<SharedPhysicsSystem>();
             var rUserToObj = new CollisionRay(userWorldPosition, userToObject.Normalized, (int) CollisionGroup.Impassable);
             var length = userToObject.Length;
             var userToObjRaycastResults = physics.IntersectRayWithPredicate(user.Transform.MapID, rUserToObj, maxLength: length,
@@ -49,6 +49,14 @@ namespace Content.Shared.Construction.Conditions
             var adjWallRaycastResults = physics.IntersectRayWithPredicate(user.Transform.MapID, rAdjWall, maxLength: 0.5f,
                predicate: (e) => e == targetWall || !e.HasTag("Wall"));
             return !adjWallRaycastResults.Any();
+        }
+
+        public ConstructionGuideEntry? GenerateGuideEntry()
+        {
+            return new ConstructionGuideEntry()
+            {
+                Localization = "construction-step-condition-wallmount",
+            };
         }
     }
 }

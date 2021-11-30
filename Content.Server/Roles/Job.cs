@@ -1,6 +1,7 @@
 using Content.Server.Chat.Managers;
 using Content.Shared.Roles;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 
 namespace Content.Server.Roles
 {
@@ -13,10 +14,13 @@ namespace Content.Server.Roles
 
         public string? StartingGear => Prototype.StartingGear;
 
+        public bool CanBeAntag;
+
         public Job(Mind.Mind mind, JobPrototype jobPrototype) : base(mind)
         {
             Prototype = jobPrototype;
             Name = jobPrototype.Name;
+            CanBeAntag = jobPrototype.CanBeAntag;
         }
 
         public override void Greet()
@@ -26,7 +30,16 @@ namespace Content.Server.Roles
             if (Mind.TryGetSession(out var session))
             {
                 var chat = IoCManager.Resolve<IChatManager>();
-                chat.DispatchServerMessage(session, $"You're a new {Name}. Do your best!");
+                chat.DispatchServerMessage(session, Loc.GetString("job-greet-introduce-job-name", ("jobName", Name)));
+
+                if(Prototype.RequireAdminNotify)
+                    chat.DispatchServerMessage(session, Loc.GetString("job-greet-important-disconnect-admin-notify"));
+
+                chat.DispatchServerMessage(session, Loc.GetString("job-greet-supervisors-warning", ("jobName", Name), ("supervisors", Prototype.Supervisors)));
+
+                if(Prototype.JoinNotifyCrew && Mind.CharacterName != null)
+                    chat.DispatchStationAnnouncement(Loc.GetString("job-greet-join-notify-crew", ("jobName", Name), ("characterName", Mind.CharacterName)),
+                        Loc.GetString("job-greet-join-notify-crew-announcer"), false);
             }
         }
     }

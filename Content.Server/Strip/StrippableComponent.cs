@@ -11,7 +11,6 @@ using Content.Shared.DragDrop;
 using Content.Shared.Hands.Components;
 using Content.Shared.Popups;
 using Content.Shared.Strip.Components;
-using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
@@ -145,7 +144,7 @@ namespace Content.Server.Strip
             return dictionary;
         }
 
-        private void OpenUserInterface(IPlayerSession session)
+        public void OpenUserInterface(IPlayerSession session)
         {
             UserInterface?.Open(session);
         }
@@ -161,7 +160,7 @@ namespace Content.Server.Strip
 
             bool Check()
             {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user.Uid))
                     return false;
 
                 if (item == null)
@@ -179,7 +178,7 @@ namespace Content.Server.Strip
                 if (!inventory.HasSlot(slot))
                     return false;
 
-                if (inventory.TryGetSlotItem(slot, out ItemComponent _))
+                if (inventory.TryGetSlotItem(slot, out ItemComponent? _))
                 {
                     user.PopupMessageCursor(Loc.GetString("strippable-component-item-slot-occupied",("owner", Owner)));
                     return false;
@@ -226,7 +225,7 @@ namespace Content.Server.Strip
 
             bool Check()
             {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user.Uid))
                     return false;
 
                 if (item == null)
@@ -291,7 +290,7 @@ namespace Content.Server.Strip
 
             bool Check()
             {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user.Uid))
                     return false;
 
                 if (!inventory.HasSlot(slot))
@@ -347,7 +346,7 @@ namespace Content.Server.Strip
 
             bool Check()
             {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user.Uid))
                     return false;
 
                 if (!hands.HasHand(hand))
@@ -404,7 +403,7 @@ namespace Content.Server.Strip
 
                     if (Owner.TryGetComponent<InventoryComponent>(out var inventory))
                     {
-                        if (inventory.TryGetSlotItem(inventoryMessage.Slot, out ItemComponent _))
+                        if (inventory.TryGetSlotItem(inventoryMessage.Slot, out ItemComponent? _))
                             placingItem = false;
 
                         if (placingItem)
@@ -442,32 +441,6 @@ namespace Content.Server.Strip
                         }
                     }
                     break;
-            }
-        }
-
-        [Verb]
-        private sealed class StripVerb : Verb<StrippableComponent>
-        {
-            protected override void GetData(IEntity user, StrippableComponent component, VerbData data)
-            {
-                if (!component.CanBeStripped(user))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Visibility = VerbVisibility.Visible;
-                data.Text = Loc.GetString("strip-verb-get-data-text");
-            }
-
-            protected override void Activate(IEntity user, StrippableComponent component)
-            {
-                if (!user.TryGetComponent(out ActorComponent? actor))
-                {
-                    return;
-                }
-
-                component.OpenUserInterface(actor.PlayerSession);
             }
         }
     }

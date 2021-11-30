@@ -1,3 +1,4 @@
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -6,18 +7,26 @@ namespace Content.Server.Stunnable.Components
     /// <summary>
     /// Adds stun when it collides with an entity
     /// </summary>
-    [RegisterComponent]
-    internal sealed class StunOnCollideComponent : Component
+    [RegisterComponent, Friend(typeof(StunOnCollideSystem))]
+    public sealed class StunOnCollideComponent : Component
     {
         // TODO: Can probably predict this.
         public override string Name => "StunOnCollide";
 
-        // See stunnable for what these do
+        // See stunsystem for what these do
         [DataField("stunAmount")]
-        internal int StunAmount = default;
+        public int StunAmount;
+
         [DataField("knockdownAmount")]
-        internal int KnockdownAmount = default;
+        public int KnockdownAmount;
+
         [DataField("slowdownAmount")]
-        internal int SlowdownAmount = default;
+        public int SlowdownAmount;
+
+        [DataField("walkSpeedMultiplier")]
+        public float WalkSpeedMultiplier = 1f;
+
+        [DataField("runSpeedMultiplier")]
+        public float RunSpeedMultiplier = 1f;
     }
 }

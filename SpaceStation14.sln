@@ -51,6 +51,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MSBuild", "MSBuild", "{5040
 		RobustToolbox\MSBuild\Robust.Properties.targets = RobustToolbox\MSBuild\Robust.Properties.targets
 		RobustToolbox\MSBuild\XamlIL.targets = RobustToolbox\MSBuild\XamlIL.targets
 		RobustToolbox\MSBuild\Robust.Analyzers.targets = RobustToolbox\MSBuild\Robust.Analyzers.targets
+		RobustToolbox\MSBuild\Robust.Engine.props = RobustToolbox\MSBuild\Robust.Engine.props
+		RobustToolbox\MSBuild\Robust.Engine.Version.props = RobustToolbox\MSBuild\Robust.Engine.Version.props
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{806ED41A-411B-4B3B-BEB6-DEC6DCA4C205}"
@@ -105,6 +107,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluralRules.Generator", "RobustToolbox\Linguini\PluralRules.Generator\PluralRules.Generator.csproj", "{9210CCA8-94AA-407F-8F9A-64101D0E552D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pow3r", "Pow3r\Pow3r.csproj", "{1C048C9F-00A9-4796-BE4D-BB36B7769720}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.Shared.Database", "Content.Shared.Database\Content.Shared.Database.csproj", "{8842381D-3426-4BA8-93DA-599AB14D88E9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -251,6 +255,10 @@ Global
 		{1C048C9F-00A9-4796-BE4D-BB36B7769720}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C048C9F-00A9-4796-BE4D-BB36B7769720}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C048C9F-00A9-4796-BE4D-BB36B7769720}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8842381D-3426-4BA8-93DA-599AB14D88E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8842381D-3426-4BA8-93DA-599AB14D88E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8842381D-3426-4BA8-93DA-599AB14D88E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8842381D-3426-4BA8-93DA-599AB14D88E9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

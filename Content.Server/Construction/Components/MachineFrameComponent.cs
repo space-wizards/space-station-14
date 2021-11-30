@@ -4,10 +4,10 @@ using Content.Server.Stack;
 using Content.Shared.Construction;
 using Content.Shared.Interaction;
 using Content.Shared.Tag;
-using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Construction.Components
@@ -124,16 +124,16 @@ namespace Content.Server.Construction.Components
             if (Owner.TryGetComponent<ConstructionComponent>(out var construction))
             {
                 // Attempt to set pathfinding to the machine node...
-                construction.SetNewTarget("machine");
+                EntitySystem.Get<ConstructionSystem>().SetPathfindingTarget(OwnerUid, "machine", construction);
             }
         }
 
         private void ResetProgressAndRequirements(MachineBoardComponent machineBoard)
         {
-            _requirements = machineBoard.Requirements;
-            _materialRequirements = machineBoard.MaterialIdRequirements;
-            _componentRequirements = machineBoard.ComponentRequirements;
-            _tagRequirements = machineBoard.TagRequirements;
+            _requirements = new Dictionary<MachinePart, int>(machineBoard.Requirements);
+            _materialRequirements = new Dictionary<string, int>(machineBoard.MaterialIdRequirements);
+            _componentRequirements = new Dictionary<string, GenericPartInfo>(machineBoard.ComponentRequirements);
+            _tagRequirements = new Dictionary<string, GenericPartInfo>(machineBoard.TagRequirements);
 
             _progress.Clear();
             _materialProgress.Clear();
@@ -271,7 +271,7 @@ namespace Content.Server.Construction.Components
                     if (Owner.TryGetComponent(out ConstructionComponent? construction))
                     {
                         // So prying the components off works correctly.
-                        construction.ResetEdge();
+                        EntitySystem.Get<ConstructionSystem>().ResetEdge(OwnerUid, construction);
                     }
 
                     return true;
@@ -318,7 +318,7 @@ namespace Content.Server.Construction.Components
                     if (splitStack == null)
                         return false;
 
-                    if(!_partContainer.Insert(splitStack))
+                    if(!_partContainer.Insert(Owner.EntityManager.GetEntity(splitStack.Value)))
                         return false;
 
                     _materialProgress[type] += needed;
@@ -356,5 +356,10 @@ namespace Content.Server.Construction.Components
 
             return false;
         }
+    }
+
+    [DataDefinition]
+    public class MachineDeconstructedEvent : EntityEventArgs
+    {
     }
 }

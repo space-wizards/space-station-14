@@ -1,8 +1,8 @@
-# Anything human specific (e.g. UI, input) goes under HumanMob_Content
+# Anything human specific (e.g. UI, input) goes under MobHuman
 - type: entity
   save: false
   name: Urist McHands
-  id: BaseHumanMob_Content
+  id: MobHumanBase
   description: A miserable pile of secrets.
   abstract: true
   components:
@@ -11,24 +11,15 @@
     - CanPilot
     - FootstepSound
   - type: Reactive
+    groups:
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
+      Acidic: [Touch, Ingestion]
     reactions:
-    - !type:ExtinguishReaction
-      touch: true
-      reagents:
-      - Water
-    - !type:FlammableReaction
-      touch: true
-      reagents:
-      - WeldingFuel
-      - Thermite
-      - Plasma
-      - Ethanol
-      - Oil
-    - !type:WashCreamPieReaction
-      touch: true
-      reagents:
-      - Water
-      - SpaceCleaner
+    - reagents: [Water, SpaceCleaner]
+      methods: [Touch]
+      effects:
+      - !type:WashCreamPieReaction
   - type: Flashable
   - type: Hands
   - type: MovementSpeedModifier
@@ -62,8 +53,13 @@
     solution: bloodstream
   - type: Bloodstream
     max_volume: 100
-  # StatusEffects
-  - type: Stunnable
+  - type: StatusEffects
+    allowed:
+    - Stun
+    - KnockedDown
+    - SlowedDown
+    - Stutter
+    - Electrocution
   # Other
   - type: Inventory
   - type: Clickable
@@ -175,13 +171,12 @@
     canResistFire: true
     damage:
       types:
-        Heat : 1 #per second, scales with number of fire 'stacks'
+        Heat: 1 #per second, scales with number of fire 'stacks'
   - type: Temperature
     heatDamageThreshold: 360
     coldDamageThreshold: 260
     currentTemperature: 310.15
     specificHeat: 42
-    tempDamageCoefficient: 0.1
     coldDamage:
       types:
         Cold : 1 #per second, scales with temperature & other constants
@@ -194,14 +189,15 @@
     preset: HumanPreset
   - type: Damageable
     damageContainer: Biological
-  - type: Respirator
-    metabolismHeat: 5000
-    radiatedHeat: 400
-    implicitHeatRegulation: 5000
-    sweatHeatRegulation: 5000
-    shiveringHeatRegulation: 5000
+  - type: ThermalRegulator
+    metabolismHeat: 800
+    radiatedHeat: 100
+    implicitHeatRegulation: 500
+    sweatHeatRegulation: 2000
+    shiveringHeatRegulation: 2000
     normalBodyTemperature: 310.15
     thermalRegulationTemperatureThreshold: 25
+  - type: Respirator
     needsGases:
       Oxygen: 0.00060763888
     producesGases:
@@ -227,6 +223,12 @@
         damage: 400
       behaviors:
       - !type:GibBehavior { }
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      40: 0.8
+      60: 0.6
+      80: 0.4
+      90: 0.2
   - type: HeatResistance
   - type: Appearance
     visuals:
@@ -240,6 +242,21 @@
     - type: CreamPiedVisualizer
       state: creampie_human
     - type: HandsVisualizer
+    - type: DamageVisualizer
+      thresholds: [20, 40, 100]
+      targetLayers:
+      - "enum.HumanoidVisualLayers.Chest"
+      - "enum.HumanoidVisualLayers.Head"
+      - "enum.HumanoidVisualLayers.LArm"
+      - "enum.HumanoidVisualLayers.LLeg"
+      - "enum.HumanoidVisualLayers.RArm"
+      - "enum.HumanoidVisualLayers.RLeg"
+      damageOverlayGroups:
+        Brute:
+          sprite: Mobs/Effects/brute_damage.rsi
+          color: "#FF0000"
+        Burn:
+          sprite: Mobs/Effects/burn_damage.rsi
   - type: CombatMode
   - type: Climbing
   - type: Cuffable
@@ -274,11 +291,10 @@
       proper: true
   - type: StandingState
   - type: DoorBumpOpener
-
 - type: entity
   save: false
   name: Urist McHands
-  id: HumanMob_Dummy
+  id: MobHumanDummy
   abstract: true
   description: A dummy human meant to be used in character setup.
   components:
@@ -321,6 +337,14 @@
         color: "#e8b59b"
         sprite: Mobs/Species/Human/parts.rsi
         state: l_leg
+      - map: [ "enum.HumanoidVisualLayers.LFoot" ]
+        color: "#e8b59b"
+        sprite: Mobs/Species/Human/parts.rsi
+        state: l_foot
+      - map: [ "enum.HumanoidVisualLayers.RFoot" ]
+        color: "#e8b59b"
+        sprite: Mobs/Species/Human/parts.rsi
+        state: r_foot
       - shader: StencilClear
       - shader: StencilMask
         map: ["enum.HumanoidVisualLayers.StencilMask"]

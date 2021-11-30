@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules;
@@ -12,22 +11,25 @@ using Content.Server.PDA;
 using Content.Server.Players;
 using Content.Server.Spawners.Components;
 using Content.Server.Traitor;
+using Content.Server.Traitor.Uplink;
+using Content.Server.Traitor.Uplink.Account;
+using Content.Server.Traitor.Uplink.Components;
 using Content.Server.TraitorDeathMatch.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.Inventory;
-using Content.Shared.MobState;
-using Content.Shared.PDA;
+using Content.Shared.MobState.Components;
+using Content.Shared.Traitor.Uplink;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Content.Shared.Damage.Prototypes;
 
 namespace Content.Server.GameTicking.Presets
 {
@@ -102,13 +104,19 @@ namespace Content.Server.GameTicking.Presets
                 inventory.Equip(EquipmentSlotDefines.Slots.BACKPACK, newTmp.GetComponent<ItemComponent>());
 
                 // Like normal traitors, they need access to a traitor account.
-                var uplinkAccount = new UplinkAccount(mind.OwnedEntity.Uid, startingBalance);
-                var pdaComponent = newPDA.GetComponent<PDAComponent>();
-                pdaComponent.InitUplinkAccount(uplinkAccount);
+                var uplinkAccount = new UplinkAccount(startingBalance, mind.OwnedEntity.Uid);
+                var accounts = _entityManager.EntitySysManager.GetEntitySystem<UplinkAccountsSystem>();
+                accounts.AddNewAccount(uplinkAccount);
+
+                _entityManager.EntitySysManager.GetEntitySystem<UplinkSystem>()
+                    .AddUplink(mind.OwnedEntity, uplinkAccount, newPDA);
+
                 _allOriginalNames[uplinkAccount] = mind.OwnedEntity.Name;
 
                 // The PDA needs to be marked with the correct owner.
-                pdaComponent.SetPDAOwner(mind.OwnedEntity.Name);
+                var pda = newPDA.GetComponent<PDAComponent>();
+                _entityManager.EntitySysManager.GetEntitySystem<PDASystem>()
+                    .SetOwner(pda, mind.OwnedEntity.Name);
                 newPDA.AddComponent<TraitorDeathMatchReliableOwnerTagComponent>().UserId = mind.UserId;
             }
 
@@ -135,7 +143,7 @@ namespace Content.Server.GameTicking.Presets
         {
             // Collate people to avoid...
             var existingPlayerPoints = new List<EntityCoordinates>();
-            foreach (var player in _playerManager.GetAllPlayers())
+            foreach (var player in _playerManager.ServerSessions)
             {
                 var avoidMeMind = player.Data.ContentData()?.Mind;
                 if ((avoidMeMind == null) || (avoidMeMind == ignoreMe))
@@ -143,7 +151,7 @@ namespace Content.Server.GameTicking.Presets
                 var avoidMeEntity = avoidMeMind.OwnedEntity;
                 if (avoidMeEntity == null)
                     continue;
-                if (avoidMeEntity.TryGetComponent(out IMobStateComponent? mobState))
+                if (avoidMeEntity.TryGetComponent(out MobStateComponent? mobState))
                 {
                     // Does have mob state component; if critical or dead, they don't really matter for spawn checks
                     if (mobState.IsCritical() || mobState.IsDead())
@@ -190,7 +198,7 @@ namespace Content.Server.GameTicking.Presets
         public override bool OnGhostAttempt(Mind.Mind mind, bool canReturnGlobal)
         {
             var entity = mind.OwnedEntity;
-            if ((entity != null) && (entity.TryGetComponent(out IMobStateComponent? mobState)))
+            if ((entity != null) && (entity.TryGetComponent(out MobStateComponent? mobState)))
             {
                 if (mobState.IsCritical())
                 {
@@ -216,15 +224,15 @@ namespace Content.Server.GameTicking.Presets
         public override string GetRoundEndDescription()
         {
             var lines = new List<string>();
-            lines.Add("traitor-death-match-end-round-description-first-line");
-            foreach (var pda in _entityManager.EntityQuery<PDAComponent>())
+            lines.Add(Loc.GetString("traitor-death-match-end-round-description-first-line"));
+            foreach (var uplink in _entityManager.EntityQuery<UplinkComponent>(true))
             {
-                var uplink = pda.SyndicateUplinkAccount;
-                if (uplink != null && _allOriginalNames.ContainsKey(uplink))
+                var uplinkAcc = uplink.UplinkAccount;
+                if (uplinkAcc != null && _allOriginalNames.ContainsKey(uplinkAcc))
                 {
                     lines.Add(Loc.GetString("traitor-death-match-end-round-description-entry",
-                                            ("originalName", _allOriginalNames[uplink]),
-                                            ("tcBalance", uplink.Balance)));
+                                            ("originalName", _allOriginalNames[uplinkAcc]),
+                                            ("tcBalance", uplinkAcc.Balance)));
                 }
             }
             return string.Join('\n', lines);

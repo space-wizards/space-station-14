@@ -18,16 +18,20 @@ namespace Content.Shared.Construction.Steps
             return list == null || list.Count == 0;
         }
 
-        public override bool EntityValid(IEntity entity)
+        public override bool EntityValid(EntityUid uid, IEntityManager entityManager)
         {
             // This step can only happen if either list has tags.
             if (IsNullOrEmpty(_allTags) && IsNullOrEmpty(_anyTags))
                 return false; // Step is somehow invalid, we return.
 
-            if (_allTags != null && !entity.HasAllTags(_allTags))
+            // No tags at all.
+            if (!entityManager.TryGetComponent(uid, out TagComponent? tags))
+                return false;
+
+            if (_allTags != null && !tags.HasAllTags(_allTags))
                 return false; // We don't have all the tags needed.
 
-            if (_anyTags != null && !entity.HasAnyTag(_anyTags))
+            if (_anyTags != null && !tags.HasAnyTag(_anyTags))
                 return false; // We don't have any of the tags needed.
 
             // This entity is valid!

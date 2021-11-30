@@ -1,6 +1,9 @@
 name: RSI Validator
 
-on: [pull_request]
+on:
+  pull_request: 
+    paths:
+      - '**.rsi/**'
 jobs:
   validate_rsis:
     name: Validate RSIs

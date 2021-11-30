@@ -1,11 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
+using Content.Shared.CCVar;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.Dataset;
 using Content.Shared.GameTicking;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Roles;
+using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -96,7 +99,7 @@ namespace Content.Shared.Preferences
                 BackpackPreference.Backpack,
                 new Dictionary<string, JobPriority>
                 {
-                    {SharedGameTicker.OverflowJob, JobPriority.High}
+                    {SharedGameTicker.FallbackOverflowJob, JobPriority.High}
                 },
                 PreferenceUnavailableMode.SpawnAsOverflow,
                 new List<string>());
@@ -117,7 +120,7 @@ namespace Content.Shared.Preferences
             return new HumanoidCharacterProfile(name, age, sex, gender, HumanoidCharacterAppearance.Random(sex), ClothingPreference.Jumpsuit, BackpackPreference.Backpack,
                 new Dictionary<string, JobPriority>
                 {
-                    {SharedGameTicker.OverflowJob, JobPriority.High}
+                    {SharedGameTicker.FallbackOverflowJob, JobPriority.High}
                 }, PreferenceUnavailableMode.StayInLobby, new List<string>());
         }
 
@@ -261,7 +264,7 @@ namespace Content.Shared.Preferences
             string name;
             if (string.IsNullOrEmpty(Name))
             {
-                name = "Urist McHands";
+                name = RandomName();
             }
             else if (Name.Length > MaxNameLength)
             {
@@ -272,11 +275,17 @@ namespace Content.Shared.Preferences
                 name = Name;
             }
 
-            // TODO: Avoid Z̨͇̙͉͎̭͔̼̿͋A͚̖̞̗̞͈̓̾̀ͩͩ̔L̟ͮ̈͝G̙O͍͎̗̺̺ͫ̀̽͊̓͝ͅ tier shenanigans.
-            // And other stuff like RTL overrides and such.
-            // Probably also emojis...
-
             name = name.Trim();
+
+            if (IoCManager.Resolve<IConfigurationManager>().GetCVar(CCVars.RestrictedNames))
+            {
+                name = Regex.Replace(name, @"[^A-Z,a-z,0-9, -]", string.Empty);
+            }
+
+            if (string.IsNullOrEmpty(name))
+            {
+                name = RandomName();
+            }
 
             var appearance = HumanoidCharacterAppearance.EnsureValid(Appearance);
 
@@ -337,6 +346,15 @@ namespace Content.Shared.Preferences
 
             _antagPreferences.Clear();
             _antagPreferences.AddRange(antags);
+
+            string RandomName()
+            {
+                var random = IoCManager.Resolve<IRobustRandom>();
+                var protoMan = IoCManager.Resolve<IPrototypeManager>();
+                var firstName = random.Pick(Sex.FirstNames(protoMan).Values);
+                var lastName = random.Pick(protoMan.Index<DatasetPrototype>("names_last"));
+                return $"{firstName} {lastName}";
+            }
         }
 
         public override bool Equals(object? obj)

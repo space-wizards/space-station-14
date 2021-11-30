@@ -1,6 +1,7 @@
 using Content.Shared.Crayon;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 
 namespace Content.Client.Crayon
@@ -22,11 +23,6 @@ namespace Content.Client.Crayon
             if (component.TryGetData(CrayonVisuals.Color, out string color))
             {
                 sprite.LayerSetColor(0, Color.FromName(color));
-            }
-
-            if (component.TryGetData(CrayonVisuals.Rotation, out Angle rotation))
-            {
-                sprite.Rotation = rotation;
             }
         }
     }

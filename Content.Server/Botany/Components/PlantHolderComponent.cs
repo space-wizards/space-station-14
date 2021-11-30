@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Fluids.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Plants;
@@ -9,9 +10,10 @@ using Content.Server.Popups;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.Botany;
-using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Examine;
+using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
@@ -33,11 +35,12 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Botany.Components
 {
     [RegisterComponent]
+#pragma warning disable 618
     public class PlantHolderComponent : Component, IInteractUsing, IInteractHand, IActivate, IExamine
+#pragma warning restore 618
     {
         public const float HydroponicsSpeedMultiplier = 1f;
         public const float HydroponicsConsumptionMultiplier = 4f;
-        private const string SoilSolutionName = "soil";
 
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -119,6 +122,9 @@ namespace Content.Server.Botany.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool ForceUpdate { get; set; }
+
+        [DataField("solution")]
+        public string SoilSolutionName { get; set; } = "soil";
 
         public void WeedInvasion()
         {
@@ -415,7 +421,7 @@ namespace Content.Server.Botany.Components
 
         public bool DoHarvest(IEntity user)
         {
-            if (Seed == null || user.Deleted || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
+            if (Seed == null || user.Deleted || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user.Uid))
                 return false;
 
             if (Harvest && !Dead)
@@ -543,7 +549,7 @@ namespace Content.Server.Botany.Components
         public void UpdateReagents()
         {
             var solutionSystem = EntitySystem.Get<SolutionContainerSystem>();
-            if (!solutionSystem.TryGetSolution(Owner, SoilSolutionName, out var solution))
+            if (!solutionSystem.TryGetSolution(Owner.Uid, SoilSolutionName, out var solution))
                 return;
 
             if (solution.TotalVolume <= 0 || MutationLevel >= 25)
@@ -556,11 +562,11 @@ namespace Content.Server.Botany.Components
             }
             else
             {
-                var one = ReagentUnit.New(1);
-                foreach (var reagent in solutionSystem.RemoveEachReagent(solution, one))
+                var amt = FixedPoint2.New(1);
+                foreach (var reagent in solutionSystem.RemoveEachReagent(OwnerUid, solution, amt))
                 {
                     var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagent);
-                    reagentProto.ReactionPlant(Owner);
+                    reagentProto.ReactionPlant(OwnerUid, new Solution.ReagentQuantity(reagent, amt), solution);
                 }
             }
 
@@ -645,7 +651,7 @@ namespace Content.Server.Botany.Components
             var user = eventArgs.User;
             var usingItem = eventArgs.Using;
 
-            if (usingItem.Deleted || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
+            if (usingItem.Deleted || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user.Uid))
                 return false;
 
             if (usingItem.TryGetComponent(out SeedComponent? seeds))
@@ -721,9 +727,9 @@ namespace Content.Server.Botany.Components
 
             var solutionSystem = EntitySystem.Get<SolutionContainerSystem>();
             if (solutionSystem.TryGetDrainableSolution(usingItem.Uid, out var solution)
-                && solutionSystem.TryGetSolution(Owner, SoilSolutionName, out var targetSolution))
+                && solutionSystem.TryGetSolution(Owner.Uid, SoilSolutionName, out var targetSolution))
             {
-                var amount = ReagentUnit.New(5);
+                var amount = FixedPoint2.New(5);
                 var sprayed = false;
                 var targetEntity = Owner.Uid;
                 var solutionEntity = usingItem.Uid;
@@ -731,7 +737,7 @@ namespace Content.Server.Botany.Components
                 if (usingItem.TryGetComponent(out SprayComponent? spray))
                 {
                     sprayed = true;
-                    amount = ReagentUnit.New(1);
+                    amount = FixedPoint2.New(1);
 
                     SoundSystem.Play(Filter.Pvs(usingItem), spray.SpraySound.GetSound(), usingItem,
                         AudioHelpers.WithVariation(0.125f));
@@ -798,7 +804,7 @@ namespace Content.Server.Botany.Components
                 return DoHarvest(user);
             }
 
-            if (usingItem.HasComponent<ProduceComponent>())
+            if (usingItem.TryGetComponent<ProduceComponent>(out var produce))
             {
                 user.PopupMessageCursor(Loc.GetString("plant-holder-component-compost-message",
                     ("owner", Owner),
@@ -808,7 +814,7 @@ namespace Content.Server.Botany.Components
                     ("usingItem", usingItem),
                     ("owner", Owner)));
 
-                if (solutionSystem.TryGetSolution(usingItem, ProduceComponent.SolutionName, out var solution2))
+                if (solutionSystem.TryGetSolution(usingItem.Uid, produce.SolutionName, out var solution2))
                 {
                     // This deliberately discards overfill.
                     solutionSystem.TryAddSolution(usingItem.Uid, solution2,

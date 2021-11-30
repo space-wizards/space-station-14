@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Shared.Disposal.Components;
 using Content.Shared.SubFloor;
 using JetBrains.Annotations;
@@ -56,7 +56,7 @@ namespace Content.Client.Disposal.Visualizers
         {
             base.InitializeEntity(entity);
 
-            var appearance = entity.EnsureComponent<AppearanceComponent>();
+            var appearance = entity.EnsureComponent<ClientAppearanceComponent>();
             ChangeState(appearance);
         }
 

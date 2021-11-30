@@ -1,11 +1,11 @@
 - type: job
   id: Clown
   name: "clown"
-  positions: 1
   startingGear: ClownGear
   departments:
   - Civilian
   icon: "Clown"
+  supervisors: "the head of personnel"
   access:
   - Theatre
   - Maintenance

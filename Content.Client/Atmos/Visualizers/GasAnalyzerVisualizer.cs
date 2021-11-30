@@ -1,6 +1,7 @@
 ﻿using Content.Shared.Atmos.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.Atmos.Visualizers
@@ -16,11 +17,6 @@ namespace Content.Client.Atmos.Visualizers
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
-
-            if (component.Deleted)
-            {
-                return;
-            }
 
             if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite))
             {

@@ -23,7 +23,7 @@ namespace Content.Server.DoAfter
 
         public void HandleDamage(EntityUid _, DoAfterComponent component, DamageChangedEvent args)
         {
-            if (component.DoAfters.Count == 0 || !args.DamageIncreased)
+            if (component.DoAfters.Count == 0 || !args.InterruptsDoAfters)
             {
                 return;
             }
@@ -41,7 +41,7 @@ namespace Content.Server.DoAfter
         {
             base.Update(frameTime);
 
-            foreach (var comp in EntityManager.EntityQuery<DoAfterComponent>(true))
+            foreach (var comp in EntityManager.EntityQuery<DoAfterComponent>())
             {
                 foreach (var doAfter in comp.DoAfters.ToArray())
                 {

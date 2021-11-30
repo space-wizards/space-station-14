@@ -1,0 +1,151 @@
+﻿- type: reagent
+  id: BasePyrotechnic
+  reactiveEffects:
+    Flammable:
+      methods: [ Touch ]
+      effects:
+      - !type:FlammableReaction
+  plantMetabolism:
+  - !type:PlantAdjustWeeds
+    amount: -2
+  - !type:PlantAdjustHealth
+    amount: -2
+
+- type: reagent
+  id: Thermite
+  name: thermite
+  parent: BasePyrotechnic
+  desc: A mixture that becomes extremely hot when ignited, and which can burn straight through walls when applied and ignited. It'll slowly inflict burn damage to anybody dumb enough to ingest it, but can't be ignited inside inside said dumb person.
+  physicalDesc: grainy
+  color: "#757245"
+  boilingPoint: 2977.0 # Aluminum oxide
+  meltingPoint: 2030.0
+  tileReactions:
+  - !type:FlammableTileReaction
+    temperatureMultiplier: 2
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Heat: 2
+
+- type: reagent
+  id: Napalm
+  name: napalm
+  parent: BasePyrotechnic
+  desc: It's just a little flammable.
+  physicalDesc: soapy
+  color: "#FA00AF"
+  tileReactions:
+  - !type:FlammableTileReaction
+    temperatureMultiplier: 5
+  reactiveEffects:
+    Flammable:
+      methods: [ Touch ]
+      effects:
+      - !type:FlammableReaction
+        multiplier: 0.4
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Heat: 1
+      - !type:FlammableReaction
+        multiplier: 0.4
+
+- type: reagent
+  id: Phlogiston
+  name: phlogiston
+  parent: BasePyrotechnic
+  desc: Catches you on fire and makes you ignite.
+  physicalDesc: burning
+  color: "#D4872A"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Heat: 3
+      - !type:FlammableReaction
+        multiplier: 0.1
+      - !type:AdjustTemperature
+        amount: 6000
+  reactiveEffects:
+    Flammable:
+      methods: [ Touch ]
+      effects:
+      - !type:FlammableReaction
+        multiplier: 0.2
+      - !type:Ignite
+
+- type: reagent
+  id: ChlorineTrifluoride
+  name: CLF3
+  parent: BasePyrotechnic
+  desc: You really, REALLY don't want to get this shit anywhere near you.
+  physicalDesc: blazing
+  color: "#FFC8C8"
+  tileReactions:
+  - !type:PryTileReaction
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Heat: 1
+      - !type:FlammableReaction
+        multiplier: 0.2
+      - !type:AdjustTemperature
+        amount: 6000
+  reactiveEffects:
+    Flammable:
+      methods: [ Touch ]
+      effects:
+      - !type:FlammableReaction
+        multiplier: 0.3
+      - !type:Ignite
+      - !type:DoAction
+        probability: 0.2
+        action: HumanScream
+      - !type:PopupMessage
+        messages: [ "clf3-it-burns", "clf3-get-away" ]
+        probability: 0.3
+        type: Local
+
+- type: reagent
+  id: FoamingAgent
+  name: foaming agent
+  parent: BasePyrotechnic
+  desc: Makes foam such as that's required in metal foam grenades.
+  physicalDesc: foamy
+  color: "#215263"
+  boilingPoint: 418.0 # I went with ammonium lauryl sulfate as the basis for this
+  meltingPoint: 7.4 # I made this up
+
+- type: reagent
+  id: WeldingFuel
+  name: welding fuel
+  parent: BasePyrotechnic
+  desc: Used by welders to weld.
+  physicalDesc: oily
+  color: "#a76b1c"
+  boilingPoint: -84.7 # Acetylene. Close enough.
+  meltingPoint: -80.7
+  tileReactions:
+  - !type:FlammableTileReaction {}
+
+- type: reagent
+  id: Fluorosurfactant
+  name: fluorosurfactant
+  parent: BasePyrotechnic
+  desc: A perfluoronated sulfonic acid that forms a foam when mixed with water.
+  physicalDesc: opaque
+  color: "#9e6b38"
+  boilingPoint: 190.0 # Perfluorooctanoic Acid.
+  meltingPoint: 45.0

@@ -3,14 +3,17 @@ using Content.Client.Chat;
 using Content.Client.Chat.Managers;
 using Content.Client.Chat.UI;
 using Content.Client.Construction.UI;
+using Content.Client.Hands;
 using Content.Client.HUD;
 using Content.Client.HUD.UI;
 using Content.Client.Voting;
 using Content.Shared.Chat;
+using Content.Shared.CCVar;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -29,9 +32,14 @@ namespace Content.Client.Viewport
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IVoteManager _voteManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
+        [Dependency] private readonly IOverlayManager _overlayManager = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
         [ViewVariables] private ChatBox? _gameChat;
         private ConstructionMenuPresenter? _constructionMenu;
+
+        private FpsCounter _fpsCounter = default!;
 
         public MainViewport Viewport { get; private set; } = default!;
 
@@ -70,10 +78,18 @@ namespace Content.Client.Viewport
             SetupPresenters();
 
             _eyeManager.MainViewport = Viewport.Viewport;
+
+            _overlayManager.AddOverlay(new ShowHandItemOverlay());
+
+            _fpsCounter = new FpsCounter(_gameTiming);
+            _userInterfaceManager.StateRoot.AddChild(_fpsCounter);
+            _fpsCounter.Visible = _configurationManager.GetCVar(CCVars.HudFpsCounterVisible);
+            _configurationManager.OnValueChanged(CCVars.HudFpsCounterVisible, (show) => { _fpsCounter.Visible = show; });
         }
 
         public override void Shutdown()
         {
+            _overlayManager.RemoveOverlay<ShowHandItemOverlay>();
             DisposePresenters();
 
             base.Shutdown();
@@ -83,6 +99,7 @@ namespace Content.Client.Viewport
             _gameHud.RootControl.Orphan();
             // Clear viewport to some fallback, whatever.
             _eyeManager.MainViewport = _userInterfaceManager.MainViewport;
+            _fpsCounter.Dispose();
         }
 
         /// <summary>

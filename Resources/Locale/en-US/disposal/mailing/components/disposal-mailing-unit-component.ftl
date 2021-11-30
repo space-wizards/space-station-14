@@ -22,6 +22,4 @@ disposal-self-insert-verb-get-data-text = Jump inside
 
 disposal-flush-verb-get-data-text = Flush
 
-## EjectVerb
-
-disposal-eject-verb-get-data-text = Eject
+disposal-eject-verb-contents = contents

@@ -1,7 +1,10 @@
+using Content.Server.Administration.Logs;
 using Content.Server.Camera;
 using Content.Server.Projectiles.Components;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
 using Content.Shared.Damage;
+using Content.Shared.Database;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -15,6 +18,7 @@ namespace Content.Server.Projectiles
     internal sealed class ProjectileSystem : EntitySystem
     {
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
 
         public override void Initialize()
         {
@@ -50,10 +54,12 @@ namespace Content.Server.Projectiles
 
             if (!otherEntity.Deleted)
             {
-                _damageableSystem.TryChangeDamage(otherEntity.Uid, component.Damage);
+                var dmg = _damageableSystem.TryChangeDamage(otherEntity.Uid, component.Damage);
                 component.DamagedEntity = true;
-                // "DamagedEntity" is misleading. Hit entity may be more accurate, as the damage may have been resisted
-                // by resistance sets.
+
+                if (dmg is not null && EntityManager.TryGetEntity(component.Shooter, out var shooter))
+                    _adminLogSystem.Add(LogType.BulletHit, LogImpact.Low,
+                        $"Projectile {component.Owner} shot by {shooter} hit {otherEntity} and dealt {dmg.Total} damage");
             }
 
             // Damaging it can delete it

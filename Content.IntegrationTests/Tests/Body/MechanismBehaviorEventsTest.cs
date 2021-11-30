@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Body.Behavior;
 using Content.Shared.Body.Components;
-using Content.Shared.Body.Mechanism;
 using Content.Shared.Body.Part;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
@@ -117,7 +116,7 @@ namespace Content.IntegrationTests.Tests.Body
         public async Task EventsTest()
         {
             var options = new ServerContentIntegrationOption {ExtraPrototypes = Prototypes};
-            var server = StartServerDummyTicker(options);
+            var server = StartServer(options);
 
             await server.WaitAssertion(() =>
             {

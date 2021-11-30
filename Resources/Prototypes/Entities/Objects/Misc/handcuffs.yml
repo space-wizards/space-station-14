@@ -4,6 +4,8 @@
   id: Handcuffs
   parent: BaseItem
   components:
+  - type: Item
+    size: 3
   - type: Handcuff
     cuffTime: 3.0
     uncuffTime: 3.0
@@ -14,9 +16,9 @@
   - type: Sprite
     sprite: Objects/Misc/handcuffs.rsi
     state: handcuff
-  - type: Clothing
-    sprite: Objects/Misc/handcuffs.rsi
-    Slots: [belt]
+  - type: Tag
+    tags:
+    - Handcuffs
 
 - type: entity
   name: makeshift handcuffs
@@ -24,6 +26,8 @@
   id: Cablecuffs
   parent: Handcuffs
   components:
+  - type: Item
+    size: 5
   - type: Handcuff
     cuffTime: 3.5
     uncuffTime: 3.5
@@ -49,13 +53,7 @@
   - type: Construction
     graph: makeshifthandcuffs
     node: cuffscable
-
   - type: Sprite
     sprite: Objects/Misc/cablecuffs.rsi
     state: cuff
     color: red
-
-  - type: Clothing
-    sprite: Objects/Misc/cablecuffs.rsi
-    color: red
-    Slots: [belt]

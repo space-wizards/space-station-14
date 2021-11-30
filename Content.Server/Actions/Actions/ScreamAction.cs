@@ -1,9 +1,9 @@
-using Content.Server.CharacterAppearance.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions.Behaviors;
 using Content.Shared.Actions.Components;
 using Content.Shared.Audio;
 using Content.Shared.CharacterAppearance;
+using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.Cooldown;
 using Content.Shared.Sound;
 using JetBrains.Annotations;
@@ -41,7 +41,7 @@ namespace Content.Server.Actions.Actions
 
         public void DoInstantAction(InstantActionEventArgs args)
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanSpeak(args.Performer)) return;
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanSpeak(args.Performer.Uid)) return;
             if (!args.Performer.TryGetComponent<HumanoidAppearanceComponent>(out var humanoid)) return;
             if (!args.Performer.TryGetComponent<SharedActionsComponent>(out var actions)) return;
 

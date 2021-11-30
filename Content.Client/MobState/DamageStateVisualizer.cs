@@ -1,10 +1,11 @@
 using System.Collections.Generic;
-using Content.Shared.DrawDepth;
 using Content.Shared.MobState;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
+using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Client.MobState
 {
@@ -69,10 +70,10 @@ namespace Content.Client.MobState
             }
 
             // So they don't draw over mobs anymore
-            if (_data == DamageState.Dead)
+            if (_data == DamageState.Dead && sprite.DrawDepth > (int) DrawDepth.Items)
             {
                 _originalDrawDepth = sprite.DrawDepth;
-                sprite.DrawDepth = (int) DrawDepth.FloorObjects;
+                sprite.DrawDepth = (int) DrawDepth.Items;
             }
             else if (_originalDrawDepth != null)
             {

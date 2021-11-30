@@ -1,5 +1,4 @@
 ﻿using Content.Shared.Alert;
-using Content.Shared.Hands;
 using Content.Shared.Standing;
 using Robust.Shared.GameObjects;
 
@@ -12,83 +11,28 @@ namespace Content.Shared.MobState.State
     {
         protected override DamageState DamageState => DamageState.Critical;
 
-        public override void EnterState(IEntity entity)
+        public override void EnterState(EntityUid uid, IEntityManager entityManager)
         {
-            base.EnterState(entity);
+            base.EnterState(uid, entityManager);
 
-            if (entity.TryGetComponent(out SharedAlertsComponent? status))
+            if (entityManager.TryGetComponent(uid, out SharedAlertsComponent? status))
             {
                 status.ShowAlert(AlertType.HumanCrit); // TODO: combine humancrit-0 and humancrit-1 into a gif and display it
             }
 
-            EntitySystem.Get<StandingStateSystem>().Down(entity);
+            EntitySystem.Get<StandingStateSystem>().Down(uid);
 
-            if (entity.TryGetComponent(out SharedAppearanceComponent? appearance))
+            if (entityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
             {
                 appearance.SetData(DamageStateVisuals.State, DamageState.Critical);
             }
         }
 
-        public override void ExitState(IEntity entity)
+        public override void ExitState(EntityUid uid, IEntityManager entityManager)
         {
-            base.ExitState(entity);
+            base.ExitState(uid, entityManager);
 
-            EntitySystem.Get<StandingStateSystem>().Stand(entity);
-        }
-
-        public override bool CanInteract()
-        {
-            return false;
-        }
-
-        public override bool CanUse()
-        {
-            return false;
-        }
-
-        public override bool CanThrow()
-        {
-            return false;
-        }
-
-        public override bool CanSpeak()
-        {
-            return false;
-        }
-
-        public override bool CanDrop()
-        {
-            return false;
-        }
-
-        public override bool CanPickup()
-        {
-            return false;
-        }
-
-        public override bool CanEmote()
-        {
-            return false;
-        }
-
-        public override bool CanAttack()
-        {
-            return false;
-        }
-
-        public override bool CanEquip()
-        {
-            return false;
-        }
-
-        public override bool CanUnequip()
-        {
-            return false;
-        }
-
-        public override bool CanChangeDirection()
-        {
-            return false;
+            EntitySystem.Get<StandingStateSystem>().Stand(uid);
         }
     }
 }

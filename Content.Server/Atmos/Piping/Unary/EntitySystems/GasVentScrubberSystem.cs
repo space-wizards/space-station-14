@@ -7,7 +7,6 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Unary.Visuals;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -79,7 +78,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (scrubber.PumpDirection == ScrubberPumpDirection.Scrubbing)
             {
                 appearance?.SetData(ScrubberVisuals.State, scrubber.WideNet ? ScrubberState.WideScrub : ScrubberState.Scrub);
-                var transferMoles = MathF.Min(1f, (scrubber.VolumeRate / tile.Volume) * tile.TotalMoles);
+                var transferMoles = MathF.Min(1f, scrubber.VolumeRate / tile.Volume) * tile.TotalMoles;
 
                 // Take a gas sample.
                 var removed = tile.Remove(transferMoles);

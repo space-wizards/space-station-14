@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -17,9 +18,10 @@ namespace Content.Server.Construction.Conditions
         [DataField("value")]
         public bool Value { get; private set; } = true;
 
-        public async Task<bool> Condition(IEntity entity)
+        public bool Condition(EntityUid uid, IEntityManager entityManager)
         {
-            if (!entity.TryGetComponent(out AirlockComponent? airlock)) return true;
+            if (!entityManager.TryGetComponent(uid, out AirlockComponent? airlock))
+                return true;
 
             return airlock.BoltsDown == Value;
         }
@@ -33,13 +35,21 @@ namespace Content.Server.Construction.Conditions
             if (airlock.BoltsDown != Value)
             {
                 if (Value == true)
-                    args.PushMarkup(Loc.GetString("construction-condition-airlock-bolt", ("entityName", entity.Name)) + "\n");
+                    args.PushMarkup(Loc.GetString("construction-examine-condition-airlock-bolt", ("entityName", entity.Name)) + "\n");
                 else
-                    args.PushMarkup(Loc.GetString("construction-condition-airlock-unbolt", ("entityName", entity.Name)) + "\n");
+                    args.PushMarkup(Loc.GetString("construction-examine-condition-airlock-unbolt", ("entityName", entity.Name)) + "\n");
                 return true;
             }
 
             return false;
+        }
+
+        public IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()
+        {
+            yield return new ConstructionGuideEntry()
+            {
+                Localization = Value ? "construction-step-condition-airlock-bolt" : "construction-step-condition-airlock-unbolt"
+            };
         }
     }
 }

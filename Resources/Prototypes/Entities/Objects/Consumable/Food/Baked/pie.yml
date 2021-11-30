@@ -1,7 +1,7 @@
 # Base
 
 - type: entity
-  parent: BaseItem
+  parent: FoodInjectableBase
   id: FoodPieBase
   abstract: true
   components:
@@ -13,10 +13,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 24
         reagents:
         - ReagentId: Nutriment
-          Quantity: 15
+          Quantity: 20
   - type: SliceableFood
     count: 4
   - type: Tag
@@ -24,20 +24,26 @@
     - NoSpinOnThrow
 
 - type: entity
-  parent: FoodPieBase
+  parent: FoodInjectableBase # Not sliceable
   id: FoodPieSliceBase
   abstract: true
   description: A slice of pie. Tasty!
   components:
   - type: Food
     trash: FoodPlateSmall
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Baked/pie.rsi
+    netsync: false
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 5
+        maxVol: 6
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
+  - type: Tag
+    tags:
+    - NoSpinOnThrow
 
 # Pie
 
@@ -104,10 +110,6 @@
     - state: tin
     - state: plain
   - type: CreamPie
-  - type: Ammo
-    caliber: CreamPie
-    caseless: true
-    projectile: BulletCreampie
 # Tastes like pie, cream, banana.
 
 - type: entity
@@ -327,4 +329,13 @@
     layers:
     - state: plate-tart
     - state: cocolava
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 26
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 15
+        - ReagentId: Theobromine
+          Quantity: 2
 # Tastes like tart, dark chocolate.

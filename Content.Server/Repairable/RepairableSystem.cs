@@ -1,17 +1,23 @@
+using Content.Server.Administration.Logs;
+using Content.Server.Tools;
 using Content.Server.Tools.Components;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Damage;
+using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
-using Content.Shared.Tool;
+using Content.Shared.Tools.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
 namespace Content.Server.Repairable
 {
-    public class ReairableSystem : EntitySystem
+    public class RepairableSystem : EntitySystem
     {
+        [Dependency] private readonly ToolSystem _toolSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly AdminLogSystem _logSystem = default!;
 
         public override void Initialize()
         {
@@ -20,25 +26,22 @@ namespace Content.Server.Repairable
 
         public async void Repair(EntityUid uid, RepairableComponent component, InteractUsingEvent args)
         {
-            // Only repair if you are using a lit welder
-            if (!args.Used.TryGetComponent(out WelderComponent? welder) || !welder.WelderLit)
-                return;
-
             // Only try repair the target if it is damaged
             if (!component.Owner.TryGetComponent(out DamageableComponent? damageable) || damageable.TotalDamage == 0)
                 return;
 
-            // Can the welder actually repair this, does it have enough fuel?
-            if (!await welder.UseTool(args.User, component.Owner, component.DoAfterDelay, ToolQuality.Welding, component.FuelCost))
+            // Can the tool actually repair this, does it have enough fuel?
+            if (!await _toolSystem.UseTool(args.Used.Uid, args.User.Uid, uid, component.FuelCost, component.DoAfterDelay, component.QualityNeeded))
                 return;
 
             // Repair all damage
             _damageableSystem.SetAllDamage(damageable, 0);
+            _logSystem.Add(LogType.Healed, $"{args.User} repaired ${uid} back to full health");
 
             component.Owner.PopupMessage(args.User,
                 Loc.GetString("comp-repairable-repair",
                     ("target", component.Owner),
-                    ("welder", args.Used)));
+                    ("tool", args.Used)));
 
             args.Handled = true;
         }

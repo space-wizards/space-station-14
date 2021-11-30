@@ -1,12 +1,9 @@
 using System;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.Examine;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Sound;
-using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -23,7 +20,9 @@ namespace Content.Server.PowerCell.Components
     /// <see cref="PowerCellSize"/>. Intended to supplement other components, not very useful by itself.
     /// </summary>
     [RegisterComponent]
+#pragma warning disable 618
     public class PowerCellSlotComponent : Component, IExamine, IMapInit
+#pragma warning restore 618
     {
         public override string Name => "PowerCellSlot";
 
@@ -174,42 +173,6 @@ namespace Content.Server.PowerCell.Components
 
             Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new PowerCellChangedEvent(false), false);
             return true;
-        }
-
-        [Verb]
-        public sealed class EjectCellVerb : Verb<PowerCellSlotComponent>
-        {
-            public override bool AlternativeInteraction => true;
-
-            protected override void GetData(IEntity user, PowerCellSlotComponent component, VerbData data)
-            {
-                if (!component.ShowVerb || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                if (component.Cell == null)
-                {
-                    data.Text = Loc.GetString("power-cell-slot-component-no-cell");
-                    data.Visibility = VerbVisibility.Disabled;
-                }
-                else
-                {
-                    data.Text = Loc.GetString("power-cell-slot-component-eject-cell");
-                    data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
-                }
-
-                if (component.Cell == null || !component.CanRemoveCell)
-                {
-                    data.Visibility = VerbVisibility.Disabled;
-                }
-            }
-
-            protected override void Activate(IEntity user, PowerCellSlotComponent component)
-            {
-                component.EjectCell(user);
-            }
         }
 
         void IMapInit.MapInit()

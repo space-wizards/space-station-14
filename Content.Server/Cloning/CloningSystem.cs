@@ -40,7 +40,7 @@ namespace Content.Server.Cloning
                 mindComp.Mind != null)
                 return;
 
-            mind.TransferTo(entity, ghostCheckOverride: true);
+            mind.TransferTo(entity.Uid, ghostCheckOverride: true);
             mind.UnVisit();
             ClonesWaitingForMind.Remove(mind);
         }
@@ -72,7 +72,7 @@ namespace Content.Server.Cloning
 
         public override void Update(float frameTime)
         {
-            foreach (var (cloning, power) in EntityManager.EntityQuery<CloningPodComponent, ApcPowerReceiverComponent>(true))
+            foreach (var (cloning, power) in EntityManager.EntityQuery<CloningPodComponent, ApcPowerReceiverComponent>())
             {
                 if (cloning.UiKnownPowerState != power.Powered)
                 {
@@ -127,7 +127,7 @@ namespace Content.Server.Cloning
 
         public void OnChangeMadeToDnaScans()
         {
-            foreach (var cloning in EntityManager.EntityQuery<CloningPodComponent>(true))
+            foreach (var cloning in EntityManager.EntityQuery<CloningPodComponent>())
                 UpdateUserInterface(cloning);
         }
 

@@ -391,11 +391,15 @@ namespace Content.Client.Light.Components
             base.Startup();
 
             CopyLightSettings();
-            Owner.EnsureComponentWarn<AnimationPlayerComponent>();
+
+            // TODO: Do NOT ensure component here. And use eventbus events instead...
+            Owner.EnsureComponent<AnimationPlayerComponent>();
 
             if (Owner.TryGetComponent(out AnimationPlayerComponent? animation))
             {
+#pragma warning disable 618
                 animation.AnimationCompleted += OnAnimationCompleted;
+#pragma warning restore 618
             }
 
             foreach (var container in _animations)

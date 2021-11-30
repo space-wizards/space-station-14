@@ -25,13 +25,13 @@
   meltingPoint: -101.5
   boilingPoint: -34.04
   plantMetabolism:
-    - !type:AdjustWater
+    - !type:PlantAdjustWater
       amount: -0.5
-    - !type:AdjustToxins
+    - !type:PlantAdjustToxins
       amount: 15
-    - !type:AdjustWeeds
+    - !type:PlantAdjustWeeds
       amount: -3
-    - !type:AdjustHealth
+    - !type:PlantAdjustHealth
       amount: -1
 
 - type: reagent
@@ -52,14 +52,23 @@
   boilingPoint: -188.11
   meltingPoint: -219.67
   plantMetabolism:
-    - !type:AdjustWater
+    - !type:PlantAdjustWater
       amount: -0.5
-    - !type:AdjustToxins
+    - !type:PlantAdjustToxins
       amount: 25
-    - !type:AdjustWeeds
+    - !type:PlantAdjustWeeds
       amount: -4
-    - !type:AdjustHealth
+    - !type:PlantAdjustHealth
       amount: -2
+
+- type: reagent
+  id: Gold
+  name: gold
+  desc: Gold is a dense, soft, shiny metal and the most malleable and ductile metal known.
+  physicalDesc: metallic
+  color: "#F7C430"
+  boilingPoint: 2700.0
+  meltingPoint: 1064.76
 
 - type: reagent
   id: Hydrogen
@@ -69,6 +78,15 @@
   color: "#808080"
   boilingPoint: -253.0
   meltingPoint: -259.2
+
+- type: reagent
+  id: Iodine
+  name: iodine
+  desc: Commonly added to table salt as a nutrient. On its own it tastes far less pleasing.
+  physicalDesc: Dark Brown
+  color: "#BC8A00"
+  boilingPoint: 184.3
+  meltingPoint: 113.7
 
 - type: reagent
   id: Iron
@@ -87,6 +105,7 @@
   color: "#c6c8cc"
   meltingPoint: 180.5
   boilingPoint: 1330.0
+  # TODO: cause confusion and some brain damage
 
 - type: reagent
   id: Mercury
@@ -96,6 +115,13 @@
   color: "#929296"
   meltingPoint: -38.83
   boilingPoint: 356.73
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 2
 
 - type: reagent
   id: Nitrogen
@@ -133,32 +159,22 @@
   meltingPoint: 44.2
   boilingPoint: 280.5
   plantMetabolism:
-    - !type:AdjustNutrition
+    - !type:PlantAdjustNutrition
       amount: 0.1
-    - !type:AdjustWater
+    - !type:PlantAdjustWater
       amount: -0.5
-    - !type:AdjustWeeds
+    - !type:PlantAdjustWeeds
       amount: -2
 
 - type: reagent
   id: Radium
   name: radium
-  desc: A radioactive metal, silvery-white in it's pure form. It glows due to it's radioactivity and is highly toxic.
+  parent: Uranium
+  desc: A radioactive metal, silvery-white in its pure form. It glows due to its radioactivity and is highly toxic.
   physicalDesc: glowing
   color: "#00ff04"
   meltingPoint: 700.0
   boilingPoint: 1737.0
-  customPlantMetabolism: 2
-  plantMetabolism:
-    - !type:AdjustMutationLevel
-      amount: 0.6
-    - !type:AdjustToxins
-      amount: 4
-    - !type:AdjustHealth
-      amount: -1.5
-    - !type:AdjustMutationMod
-      prob: 0.2
-      amount: 0.1
 
 - type: reagent
   id: Silicon
@@ -168,6 +184,15 @@
   color: "#364266"
   boilingPoint: 3265.0
   meltingPoint: 1414.0
+
+- type: reagent
+  id: Silver
+  name: silver
+  desc: A soft, white, lustrous transition metal, it has the highest electrical conductivity of any element and the highest thermal conductivity of any metal.
+  physicalDesc: reasonably metallic
+  color: "#d0d0d0"
+  boilingPoint: 2212.0
+  meltingPoint: 960.5
 
 - type: reagent
   id: Sulfur
@@ -181,7 +206,7 @@
 - type: reagent
   id: Sodium
   name: sodium
-  desc: A silvery-white alkali metal. Highly reactive in it's pure form.
+  desc: A silvery-white alkali metal. Highly reactive in its pure form. #thanks visne <3
   physicalDesc: metallic
   color: "#c6c8cc"
   meltingPoint: 97.8
@@ -195,3 +220,20 @@
   color: "#8fa191"
   meltingPoint: 1133.0
   boilingPoint: 4131.0
+  plantMetabolism:
+  - !type:PlantAdjustMutationLevel
+    amount: 0.6
+  - !type:PlantAdjustToxins
+    amount: 4
+  - !type:PlantAdjustHealth
+    amount: -1.5
+  - !type:PlantAdjustMutationMod
+    prob: 0.2
+    amount: 0.1
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Radiation: 2

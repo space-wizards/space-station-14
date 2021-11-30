@@ -4,6 +4,7 @@ using Content.Server.Buckle.Components;
 using Content.Server.Chat.Managers;
 using Content.Server.Popups;
 using Content.Server.Storage.Components;
+using Content.Server.Tools;
 using Content.Server.Tools.Components;
 using Content.Shared.Audio;
 using Content.Shared.Body.Components;
@@ -13,8 +14,8 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Toilet;
-using Content.Shared.Tool;
-using Robust.Server.GameObjects;
+using Content.Shared.Tools;
+using Content.Shared.Tools.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -22,20 +23,26 @@ using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Toilet
 {
     [RegisterComponent]
+#pragma warning disable 618
     public class ToiletComponent : Component, IInteractUsing,
         IInteractHand, IMapInit, IExamine, ISuicideAct
+#pragma warning restore 618
     {
         public sealed override string Name => "Toilet";
 
         private const float PryLidTime = 1f;
 
         private bool _isPrying = false;
+
+        [DataField("pryingQuality", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
+        private string _pryingQuality = "Prying";
 
         [ViewVariables] public bool LidOpen { get; private set; }
         [ViewVariables] public bool IsSeatUp { get; private set; }
@@ -62,14 +69,14 @@ namespace Content.Server.Toilet
         {
             // are player trying place or lift of cistern lid?
             if (eventArgs.Using.TryGetComponent(out ToolComponent? tool)
-                && tool!.HasQuality(ToolQuality.Prying))
+                && tool.Qualities.Contains(_pryingQuality))
             {
                 // check if someone is already prying this toilet
                 if (_isPrying)
                     return false;
                 _isPrying = true;
 
-                if (!await tool.UseTool(eventArgs.User, Owner, PryLidTime, ToolQuality.Prying))
+                if (!await EntitySystem.Get<ToolSystem>().UseTool(eventArgs.Using.Uid, eventArgs.User.Uid, Owner.Uid, 0f, PryLidTime, _pryingQuality))
                 {
                     _isPrying = false;
                     return false;

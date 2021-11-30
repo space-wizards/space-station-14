@@ -15,6 +15,7 @@ namespace Content.Shared.Stacks
     {
         public sealed override string Name => "Stack";
 
+
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("stackType", required:true, customTypeSerializer:typeof(PrototypeIdSerializer<StackPrototype>))]
         public string StackTypeId { get; private set; } = string.Empty;
@@ -32,7 +33,14 @@ namespace Content.Shared.Stacks
         /// </summary>
         [ViewVariables(VVAccess.ReadOnly)]
         [DataField("max")]
-        public int MaxCount { get; set; } = 30;
+        public int MaxCount  { get; set; } = 30;
+
+        /// <summary>
+        ///     Set to true to not reduce the count when used.
+        /// </summary>
+        [DataField("unlimited")]
+        [ViewVariables(VVAccess.ReadOnly)]
+        public bool Unlimited { get; set; }
 
         [ViewVariables]
         public int AvailableSpace => MaxCount - Count;

@@ -8,6 +8,6 @@ namespace Content.Shared.Construction.Steps
     {
         [DataField("store")] public string Store { get; } = string.Empty;
 
-        public abstract bool EntityValid(IEntity entity);
+        public abstract bool EntityValid(EntityUid uid, IEntityManager entityManager);
     }
 }

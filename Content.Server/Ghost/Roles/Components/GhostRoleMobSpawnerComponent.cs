@@ -47,17 +47,15 @@ namespace Content.Server.Ghost.Roles.Components
             var mob = Owner.EntityManager.SpawnEntity(Prototype, Owner.Transform.Coordinates);
 
             if(_makeSentient)
-                MakeSentientCommand.MakeSentient(mob);
+                MakeSentientCommand.MakeSentient(mob.Uid, Owner.EntityManager);
 
             mob.EnsureComponent<MindComponent>();
 
-            var mind = session.ContentData()?.Mind;
+            var ghostRoleSystem = EntitySystem.Get<GhostRoleSystem>();
+            ghostRoleSystem.GhostRoleInternalCreateMindAndTransfer(session, OwnerUid, mob.Uid, this);
 
-            DebugTools.AssertNotNull(mind);
-
-            mind!.TransferTo(mob);
-
-            if (++_currentTakeovers < _availableTakeovers) return true;
+            if (++_currentTakeovers < _availableTakeovers)
+                return true;
 
             Taken = true;
 

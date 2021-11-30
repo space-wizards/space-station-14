@@ -9,6 +9,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
+using Content.Shared.Stunnable;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -146,7 +147,7 @@ namespace Content.Server.Cuffs.Components
         {
             if (_cuffing) return true;
 
-            if (eventArgs.Target == null || !EntitySystem.Get<ActionBlockerSystem>().CanUse(eventArgs.User) || !eventArgs.Target.TryGetComponent<CuffableComponent>(out var cuffed))
+            if (eventArgs.Target == null || !EntitySystem.Get<ActionBlockerSystem>().CanUse(eventArgs.User.Uid) || !eventArgs.Target.TryGetComponent<CuffableComponent>(out var cuffed))
             {
                 return false;
             }
@@ -169,7 +170,7 @@ namespace Content.Server.Cuffs.Components
                 return true;
             }
 
-            if (cuffed.CuffedHandCount == hands.Count)
+            if (cuffed.CuffedHandCount >= hands.Count)
             {
                 eventArgs.User.PopupMessage(Loc.GetString("handcuff-component-target-has-no-free-hands-error",("targetName", eventArgs.Target)));
                 return true;
@@ -197,7 +198,7 @@ namespace Content.Server.Cuffs.Components
         {
             var cuffTime = CuffTime;
 
-            if (target.TryGetComponent<StunnableComponent>(out var stun) && stun.Stunned)
+            if (target.HasComponent<StunnedComponent>())
             {
                 cuffTime = MathF.Max(0.1f, cuffTime - StunBonus);
             }

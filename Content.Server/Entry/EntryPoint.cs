@@ -10,8 +10,8 @@ using Content.Server.EUI;
 using Content.Server.GameTicking;
 using Content.Server.Holiday.Interfaces;
 using Content.Server.IoC;
+using Content.Server.Maps;
 using Content.Server.NodeContainer.NodeGroups;
-using Content.Server.PDA.Managers;
 using Content.Server.Preferences.Managers;
 using Content.Server.Sandbox;
 using Content.Server.Speech;
@@ -19,6 +19,7 @@ using Content.Server.Voting.Managers;
 using Content.Shared.Actions;
 using Content.Shared.Alert;
 using Content.Shared.Kitchen;
+using Robust.Server.Bql;
 using Robust.Server.Player;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
@@ -73,7 +74,6 @@ namespace Content.Server.Entry
             IoCManager.Resolve<IServerDbManager>().Init();
             IoCManager.Resolve<IServerPreferencesManager>().Init();
             IoCManager.Resolve<INodeGroupFactory>().Initialize();
-            IoCManager.Resolve<IAccentManager>().Initialize();
             _voteManager.Initialize();
         }
 
@@ -87,13 +87,14 @@ namespace Content.Server.Entry
             IoCManager.Resolve<ActionManager>().Initialize();
             IoCManager.Resolve<BlackboardManager>().Initialize();
             IoCManager.Resolve<ConsiderationsManager>().Initialize();
-            IoCManager.Resolve<IPDAUplinkManager>().Initialize();
             IoCManager.Resolve<IAdminManager>().Initialize();
             IoCManager.Resolve<INpcBehaviorManager>().Initialize();
             IoCManager.Resolve<IAfkManager>().Initialize();
             _euiManager.Initialize();
 
+            IoCManager.Resolve<IGameMapManager>().Initialize();
             IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<GameTicker>().PostInitialize();
+            IoCManager.Resolve<IBqlQueryManager>().DoAutoRegistrations();
         }
 
         public override void Update(ModUpdateLevel level, FrameEventArgs frameEventArgs)

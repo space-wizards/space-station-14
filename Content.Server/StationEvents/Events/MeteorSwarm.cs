@@ -73,7 +73,7 @@ namespace Content.Server.StationEvents.Events
 
             if (_waveCounter <= 0)
             {
-                EndAfter = float.MinValue;
+                Running = false;
                 return;
             }
             _cooldown -= frameTime;
@@ -113,6 +113,8 @@ namespace Content.Server.StationEvents.Events
                 var meteor = _entityManager.SpawnEntity("MeteorLarge", spawnPosition);
                 var physics = _entityManager.GetComponent<PhysicsComponent>(meteor.Uid);
                 physics.BodyStatus = BodyStatus.InAir;
+                physics.LinearDamping = 0f;
+                physics.AngularDamping = 0f;
                 physics.ApplyLinearImpulse(-offset.Normalized * MeteorVelocity * physics.Mass);
                 physics.ApplyAngularImpulse(
                     // Get a random angular velocity.

@@ -54,6 +54,7 @@ binds:
 - function: CycleChatChannelForward
   type: State
   key: Tab
+  priority: 1 # Before tab complete
 - function: CycleChatChannelBackward
   type: State
   key: Tab
@@ -162,6 +163,7 @@ binds:
   type: State
   key: MouseRight
   canFocus: true
+  priority: -1 # UIRightClick & EditorCancelPlace should fire first.
 - function: OpenCraftingMenu
   type: State
   key: G
@@ -297,6 +299,9 @@ binds:
   type: State
   key: Delete
   canRepeat: true
+- function: TextTabComplete
+  type: State
+  key: Tab
 - function: OpenEntitySpawnWindow
   type: State
   key: F5

@@ -5,7 +5,6 @@ using Content.Server.Power.Components;
 using Content.Server.Power.Nodes;
 using Content.Shared.Wires;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -49,7 +48,12 @@ namespace Content.Server.Power.EntitySystems
 
                 var mask = WireVisDirFlags.None;
 
-                var transform = EntityManager.GetComponent<ITransformComponent>(uid);
+                var transform = EntityManager.GetComponent<TransformComponent>(uid);
+
+                // Only valid grids allowed.
+                if(!transform.GridID.IsValid())
+                    continue;
+
                 var grid = _mapManager.GetGrid(transform.GridID);
                 var tile = grid.TileIndicesFor(transform.Coordinates);
                 var node = nodeContainer.GetNode<CableNode>(cableVis.Node);

@@ -1,12 +1,11 @@
 - type: job
   id: Botanist
   name: "botanist"
-  positions: 2
-  spawnPositions: 2
   startingGear: BotanistGear
   departments:
   - Civilian
   icon: "Botanist"
+  supervisors: "the head of personnel"
   access:
   - Service
   - Maintenance

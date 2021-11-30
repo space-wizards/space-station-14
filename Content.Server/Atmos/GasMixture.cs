@@ -26,6 +26,8 @@ namespace Content.Server.Atmos
         [DataField("moles")] [ViewVariables]
         public float[] Moles = new float[Atmospherics.AdjustedNumberOfGases];
 
+        public float[] MolesArchived = new float[Atmospherics.AdjustedNumberOfGases];
+
         [DataField("temperature")] [ViewVariables]
         private float _temperature = Atmospherics.TCMB;
 
@@ -70,6 +72,8 @@ namespace Content.Server.Atmos
             }
         }
 
+        public float TemperatureArchived { get; private set; }
+
         [DataField("volume")] [ViewVariables]
         public float Volume { get; set; }
 
@@ -88,6 +92,13 @@ namespace Content.Server.Atmos
         public void MarkImmutable()
         {
             Immutable = true;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Archive()
+        {
+            Moles.AsSpan().CopyTo(MolesArchived.AsSpan());
+            TemperatureArchived = Temperature;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -240,6 +251,7 @@ namespace Content.Server.Atmos
         {
             // The arrays MUST have a specific length.
             Array.Resize(ref Moles, Atmospherics.AdjustedNumberOfGases);
+            Array.Resize(ref MolesArchived, Atmospherics.AdjustedNumberOfGases);
         }
 
         public override bool Equals(object? obj)
@@ -254,10 +266,12 @@ namespace Content.Server.Atmos
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
             return Moles.SequenceEqual(other.Moles)
+                   && MolesArchived.SequenceEqual(other.MolesArchived)
                    && _temperature.Equals(other._temperature)
                    && ReactionResults.SequenceEqual(other.ReactionResults)
                    && Immutable == other.Immutable
                    && LastShare.Equals(other.LastShare)
+                   && TemperatureArchived.Equals(other.TemperatureArchived)
                    && Volume.Equals(other.Volume);
         }
 
@@ -268,10 +282,13 @@ namespace Content.Server.Atmos
             for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
             {
                 var moles = Moles[i];
+                var molesArchived = MolesArchived[i];
                 hashCode.Add(moles);
+                hashCode.Add(molesArchived);
             }
 
             hashCode.Add(_temperature);
+            hashCode.Add(TemperatureArchived);
             hashCode.Add(Immutable);
             hashCode.Add(LastShare);
             hashCode.Add(Volume);
@@ -284,9 +301,11 @@ namespace Content.Server.Atmos
             var newMixture = new GasMixture()
             {
                 Moles = (float[])Moles.Clone(),
+                MolesArchived = (float[])MolesArchived.Clone(),
                 _temperature = _temperature,
                 Immutable = Immutable,
                 LastShare = LastShare,
+                TemperatureArchived = TemperatureArchived,
                 Volume = Volume,
             };
             return newMixture;

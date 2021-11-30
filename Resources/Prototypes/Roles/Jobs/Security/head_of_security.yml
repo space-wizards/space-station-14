@@ -2,15 +2,17 @@
   id: HeadOfSecurity
   name: "head of security"
   head: true
-  positions: 1
   startingGear: HoSGear
   departments:
   - Command
   - Security
   icon: "HeadOfSecurity"
+  requireAdminNotify: true
+  supervisors: "the captain"
+  canBeAntag: false
   access:
   - Command
-  - Brig
+#  - Brig
   - Security
   - Maintenance
   - Service

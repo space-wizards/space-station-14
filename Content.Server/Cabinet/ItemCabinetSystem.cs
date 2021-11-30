@@ -1,12 +1,12 @@
-using Content.Server.Hands.Components;
-using Content.Server.Items;
 using Content.Shared.Audio;
 using Content.Shared.Cabinet;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Interaction;
-using Content.Shared.Popups;
+using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 
@@ -14,174 +14,98 @@ namespace Content.Server.Cabinet
 {
     public class ItemCabinetSystem : EntitySystem
     {
+        [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
 
-            SubscribeLocalEvent<ItemCabinetComponent, MapInitEvent>(OnMapInitialize);
+            SubscribeLocalEvent<ItemCabinetComponent, ComponentInit>(OnComponentInit);
+            SubscribeLocalEvent<ItemCabinetComponent, ComponentRemove>(OnComponentRemove);
+            SubscribeLocalEvent<ItemCabinetComponent, ComponentStartup>(OnComponentStartup);
 
-            SubscribeLocalEvent<ItemCabinetComponent, InteractUsingEvent>(OnInteractUsing);
-            SubscribeLocalEvent<ItemCabinetComponent, InteractHandEvent>(OnInteractHand);
             SubscribeLocalEvent<ItemCabinetComponent, ActivateInWorldEvent>(OnActivateInWorld);
+            SubscribeLocalEvent<ItemCabinetComponent, GetActivationVerbsEvent>(AddToggleOpenVerb);
 
-            SubscribeLocalEvent<ItemCabinetComponent, TryEjectItemCabinetEvent>(OnTryEjectItemCabinet);
-            SubscribeLocalEvent<ItemCabinetComponent, TryInsertItemCabinetEvent>(OnTryInsertItemCabinet);
-            SubscribeLocalEvent<ItemCabinetComponent, ToggleItemCabinetEvent>(OnToggleItemCabinet);
+            SubscribeLocalEvent<ItemCabinetComponent, EntInsertedIntoContainerMessage>(OnContainerModified);
+            SubscribeLocalEvent<ItemCabinetComponent, EntRemovedFromContainerMessage>(OnContainerModified);
         }
 
-        private void OnMapInitialize(EntityUid uid, ItemCabinetComponent comp, MapInitEvent args)
+        private void OnComponentInit(EntityUid uid, ItemCabinetComponent cabinet, ComponentInit args)
         {
-            var owner = EntityManager.GetEntity(uid);
-            comp.ItemContainer =
-                owner.EnsureContainer<ContainerSlot>("item_cabinet", out _);
-
-            if (comp.SpawnPrototype != null)
-                comp.ItemContainer.Insert(EntityManager.SpawnEntity(comp.SpawnPrototype, owner.Transform.Coordinates));
-
-            UpdateVisuals(comp);
+            _itemSlotsSystem.AddItemSlot(uid, cabinet.Name, cabinet.CabinetSlot);
+        }
+        private void OnComponentRemove(EntityUid uid, ItemCabinetComponent cabinet, ComponentRemove args)
+        {
+            _itemSlotsSystem.RemoveItemSlot(uid, cabinet.CabinetSlot);
         }
 
-        private void OnInteractUsing(EntityUid uid, ItemCabinetComponent comp, InteractUsingEvent args)
+        private void OnComponentStartup(EntityUid uid, ItemCabinetComponent cabinet, ComponentStartup args)
         {
-            args.Handled = true;
-            if (!comp.Opened)
+            UpdateAppearance(uid, cabinet);
+            _itemSlotsSystem.SetLock(uid, cabinet.CabinetSlot.ID, !cabinet.Opened);
+        }
+
+        private void UpdateAppearance(EntityUid uid,
+            ItemCabinetComponent? cabinet = null,
+            AppearanceComponent? appearance = null)
+        {
+            if (!Resolve(uid, ref cabinet, ref appearance, false))
+                return;
+
+            appearance.SetData(ItemCabinetVisuals.IsOpen, cabinet.Opened);
+            appearance.SetData(ItemCabinetVisuals.ContainsItem, cabinet.CabinetSlot.HasItem);
+        }
+
+        private void OnContainerModified(EntityUid uid, ItemCabinetComponent cabinet, ContainerModifiedMessage args)
+        {
+            if (args.Container.ID == cabinet.CabinetSlot.ID)
+                UpdateAppearance(uid, cabinet);
+        }
+
+        private void AddToggleOpenVerb(EntityUid uid, ItemCabinetComponent cabinet, GetActivationVerbsEvent args)
+        {
+            if (args.Hands == null || !args.CanAccess || !args.CanInteract)
+                return;
+
+            // Toggle open verb
+            Verb toggleVerb = new();
+            toggleVerb.Act = () => ToggleItemCabinet(uid, cabinet);
+            if (cabinet.Opened)
             {
-                RaiseLocalEvent(uid, new ToggleItemCabinetEvent(), false);
+                toggleVerb.Text = Loc.GetString("verb-common-close");
+                toggleVerb.IconTexture = "/Textures/Interface/VerbIcons/close.svg.192dpi.png";
             }
             else
             {
-                RaiseLocalEvent(uid, new TryInsertItemCabinetEvent(args.User, args.Used), false);
+                toggleVerb.Text = Loc.GetString("verb-common-open");
+                toggleVerb.IconTexture = "/Textures/Interface/VerbIcons/open.svg.192dpi.png";
             }
-
-            args.Handled = true;
-        }
-
-        private void OnInteractHand(EntityUid uid, ItemCabinetComponent comp, InteractHandEvent args)
-        {
-            args.Handled = true;
-            if (comp.Opened)
-            {
-                if (comp.ItemContainer.ContainedEntity == null)
-                {
-                    RaiseLocalEvent(uid, new ToggleItemCabinetEvent(), false);
-                    return;
-                }
-                RaiseLocalEvent(uid, new TryEjectItemCabinetEvent(args.User), false);
-            }
-            else
-            {
-                RaiseLocalEvent(uid, new ToggleItemCabinetEvent(), false);
-            }
+            args.Verbs.Add(toggleVerb);
         }
 
         private void OnActivateInWorld(EntityUid uid, ItemCabinetComponent comp, ActivateInWorldEvent args)
         {
+            if (args.Handled)
+                return;
+
             args.Handled = true;
-            RaiseLocalEvent(uid, new ToggleItemCabinetEvent(), false);
+            ToggleItemCabinet(uid, comp);
         }
 
         /// <summary>
         ///     Toggles the ItemCabinet's state.
         /// </summary>
-        private void OnToggleItemCabinet(EntityUid uid, ItemCabinetComponent comp, ToggleItemCabinetEvent args)
+        private void ToggleItemCabinet(EntityUid uid, ItemCabinetComponent? cabinet = null)
         {
-            comp.Opened = !comp.Opened;
-            ClickLatchSound(comp);
-            UpdateVisuals(comp);
-        }
-
-        /// <summary>
-        ///     Tries to insert an entity into the ItemCabinet's slot from the user's hands.
-        /// </summary>
-        private static void OnTryInsertItemCabinet(EntityUid uid, ItemCabinetComponent comp, TryInsertItemCabinetEvent args)
-        {
-            if (comp.ItemContainer.ContainedEntity != null || args.Cancelled || (comp.Whitelist != null && !comp.Whitelist.IsValid(args.Item)))
-            {
+            if (!Resolve(uid, ref cabinet))
                 return;
-            }
 
-            if (!args.User.TryGetComponent<HandsComponent>(out var hands) || !hands.Drop(args.Item, comp.ItemContainer))
-            {
-                return;
-            }
+            cabinet.Opened = !cabinet.Opened;
+            SoundSystem.Play(Filter.Pvs(uid), cabinet.DoorSound.GetSound(), uid, AudioHelpers.WithVariation(0.15f));
+            _itemSlotsSystem.SetLock(uid, cabinet.CabinetSlot.ID, !cabinet.Opened);
 
-            UpdateVisuals(comp);
-        }
-
-        /// <summary>
-        ///     Tries to eject the ItemCabinet's item, either into the user's hands or onto the floor.
-        /// </summary>
-        private static void OnTryEjectItemCabinet(EntityUid uid, ItemCabinetComponent comp, TryEjectItemCabinetEvent args)
-        {
-            if (comp.ItemContainer.ContainedEntity == null || args.Cancelled)
-                return;
-            if (args.User.TryGetComponent(out HandsComponent? hands))
-            {
-
-                if (comp.ItemContainer.ContainedEntity.TryGetComponent<ItemComponent>(out var item))
-                {
-                    comp.Owner.PopupMessage(args.User,
-                        Loc.GetString("comp-item-cabinet-successfully-taken",
-                            ("item", comp.ItemContainer.ContainedEntity),
-                            ("cabinet", comp.Owner)));
-                    hands.PutInHandOrDrop(item);
-                }
-            }
-            else if (comp.ItemContainer.Remove(comp.ItemContainer.ContainedEntity))
-            {
-                comp.ItemContainer.ContainedEntity.Transform.Coordinates = args.User.Transform.Coordinates;
-            }
-            UpdateVisuals(comp);
-        }
-
-        private static void UpdateVisuals(ItemCabinetComponent comp)
-        {
-            if (comp.Owner.TryGetComponent(out SharedAppearanceComponent? appearance))
-            {
-                appearance.SetData(ItemCabinetVisuals.IsOpen, comp.Opened);
-                appearance.SetData(ItemCabinetVisuals.ContainsItem, comp.ItemContainer.ContainedEntity != null);
-            }
-        }
-
-        private static void ClickLatchSound(ItemCabinetComponent comp)
-        {
-            SoundSystem.Play(Filter.Pvs(comp.Owner), comp.DoorSound.GetSound(), comp.Owner, AudioHelpers.WithVariation(0.15f));
-        }
-    }
-
-    public class ToggleItemCabinetEvent : EntityEventArgs
-    {
-    }
-
-    public class TryEjectItemCabinetEvent : CancellableEntityEventArgs
-    {
-        /// <summary>
-        ///     The user who tried to eject the item.
-        /// </summary>
-        public IEntity User;
-
-        public TryEjectItemCabinetEvent(IEntity user)
-        {
-            User = user;
-        }
-    }
-
-    public class TryInsertItemCabinetEvent : CancellableEntityEventArgs
-    {
-        /// <summary>
-        ///     The user who tried to eject the item.
-        /// </summary>
-        public IEntity User;
-
-        /// <summary>
-        ///     The item to be inserted.
-        /// </summary>
-        public IEntity Item;
-
-        public TryInsertItemCabinetEvent(IEntity user, IEntity item)
-        {
-            User = user;
-            Item = item;
+            UpdateAppearance(uid, cabinet);
         }
     }
 }

@@ -1,11 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Content.Server.Atmos;
 using Content.Server.Disposal.Unit.EntitySystems;
-using Content.Server.DoAfter;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
@@ -13,12 +10,10 @@ using Content.Shared.Acts;
 using Content.Shared.Atmos;
 using Content.Shared.Disposal.Components;
 using Content.Shared.DragDrop;
-using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -56,13 +51,13 @@ namespace Content.Server.Disposal.Unit.Components
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("entryDelay")]
-        private float _entryDelay = 0.5f;
+        public float EntryDelay = 0.5f;
 
         /// <summary>
         ///     Delay from trying to shove someone else into disposals.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        private float _draggedEntryDelay = 0.5f;
+        public float DraggedEntryDelay = 0.5f;
 
         /// <summary>
         ///     Token used to cancel the automatic engage of a disposal unit
@@ -90,43 +85,7 @@ namespace Content.Server.Disposal.Unit.Components
         [ViewVariables] public BoundUserInterface? UserInterface => Owner.GetUIOrNull(DisposalUnitUiKey.Key);
 
         [DataField("air")]
-        public GasMixture Air { get; set; } = new GasMixture(Atmospherics.CellVolume);
-
-        public async Task<bool> TryInsert(IEntity entity, IEntity? user = default)
-        {
-            if (!EntitySystem.Get<DisposalUnitSystem>().CanInsert(this, entity))
-                return false;
-
-            var delay = user == entity ? _entryDelay : _draggedEntryDelay;
-
-            if (user != null && delay > 0.0f)
-            {
-                var doAfterSystem = EntitySystem.Get<DoAfterSystem>();
-
-                // Can't check if our target AND disposals moves currently so we'll just check target.
-                // if you really want to check if disposals moves then add a predicate.
-                var doAfterArgs = new DoAfterEventArgs(user, delay, default, entity)
-                {
-                    BreakOnDamage = true,
-                    BreakOnStun = true,
-                    BreakOnTargetMove = true,
-                    BreakOnUserMove = true,
-                    NeedHand = false,
-                };
-
-                var result = await doAfterSystem.WaitDoAfter(doAfterArgs);
-
-                if (result == DoAfterStatus.Cancelled)
-                    return false;
-            }
-
-            if (!Container.Insert(entity))
-                return false;
-
-            EntitySystem.Get<DisposalUnitSystem>().AfterInsert(this, entity);
-
-            return true;
-        }
+        public GasMixture Air { get; set; } = new(Atmospherics.CellVolume);
 
         private bool PlayerCanUse(IEntity? player)
         {
@@ -137,8 +96,8 @@ namespace Content.Server.Disposal.Unit.Components
 
             var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
 
-            if (!actionBlocker.CanInteract(player) ||
-                !actionBlocker.CanUse(player))
+            if (!actionBlocker.CanInteract(player.Uid) ||
+                !actionBlocker.CanUse(player.Uid))
             {
                 return false;
             }
@@ -189,86 +148,8 @@ namespace Content.Server.Disposal.Unit.Components
 
         public override bool DragDropOn(DragDropEvent eventArgs)
         {
-            _ = TryInsert(eventArgs.Dragged, eventArgs.User);
+            EntitySystem.Get<DisposalUnitSystem>().TryInsert(Owner.Uid, eventArgs.Dragged.Uid, eventArgs.User.Uid);
             return true;
-        }
-
-        [Verb]
-        private sealed class SelfInsertVerb : Verb<DisposalUnitComponent>
-        {
-            protected override void GetData(IEntity user, DisposalUnitComponent component, VerbData data)
-            {
-                data.Visibility = VerbVisibility.Invisible;
-
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) ||
-                    component.ContainedEntities.Contains(user))
-                {
-                    return;
-                }
-
-                data.Visibility = VerbVisibility.Visible;
-                data.Text = Loc.GetString("disposal-self-insert-verb-get-data-text");
-            }
-
-            protected override void Activate(IEntity user, DisposalUnitComponent component)
-            {
-                _ = component.TryInsert(user, user);
-            }
-        }
-
-        [Verb]
-        private sealed class FlushVerb : Verb<DisposalUnitComponent>
-        {
-            protected override void GetData(IEntity user, DisposalUnitComponent component, VerbData data)
-            {
-                data.Visibility = VerbVisibility.Invisible;
-
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) ||
-                    component.ContainedEntities.Contains(user))
-                {
-                    return;
-                }
-
-                data.Visibility = VerbVisibility.Visible;
-                data.Text = Loc.GetString("disposal-flush-verb-get-data-text");
-                data.IconTexture = "/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png";
-            }
-
-            protected override void Activate(IEntity user, DisposalUnitComponent component)
-            {
-                EntitySystem.Get<DisposalUnitSystem>().Engage(component);
-            }
-        }
-
-        [Verb]
-        private sealed class EjectVerb : Verb<DisposalUnitComponent>
-        {
-            public override bool AlternativeInteraction => true;
-
-            protected override void GetData(IEntity user, DisposalUnitComponent component, VerbData data)
-            {
-                data.Visibility = VerbVisibility.Invisible;
-
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) ||
-                    component.ContainedEntities.Contains(user))
-                {
-                    return;
-                }
-
-                // Only show verb if actually containing any entities.
-                if (component.ContainedEntities.Count > 0)
-                    data.Visibility = VerbVisibility.Visible;
-                else
-                    data.Visibility = VerbVisibility.Invisible;
-
-                data.Text = Loc.GetString("disposal-eject-verb-get-data-text");
-                data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
-            }
-
-            protected override void Activate(IEntity user, DisposalUnitComponent component)
-            {
-                EntitySystem.Get<DisposalUnitSystem>().TryEjectContents(component); 
-            }
         }
 
         void IDestroyAct.OnDestroy(DestructionEventArgs eventArgs)

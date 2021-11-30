@@ -4,6 +4,7 @@ using Content.Shared.Light.Component;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
 
 namespace Content.Client.Light.Visualizers
@@ -14,11 +15,6 @@ namespace Content.Client.Light.Visualizers
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
-
-            if (component.Deleted)
-            {
-                return;
-            }
 
             if (component.TryGetData(ExpendableLightVisuals.Behavior, out string lightBehaviourID))
             {

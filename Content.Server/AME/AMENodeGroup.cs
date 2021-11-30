@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.AME.Components;
-using Content.Server.Explosion;
+using Content.Server.Explosion.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.ViewVariables;
 
@@ -46,11 +46,6 @@ namespace Content.Server.AME
             foreach (var node in groupNodes)
             {
                 var nodeOwner = node.Owner;
-                if (nodeOwner.TryGetComponent(out AMEControllerComponent? controller))
-                {
-                    _masterController = controller;
-                }
-
                 if (nodeOwner.TryGetComponent(out AMEShieldComponent? shield))
                 {
                     var nodeNeighbors = grid.GetCellsInSquareArea(nodeOwner.Transform.Coordinates, 1)
@@ -61,6 +56,7 @@ namespace Content.Server.AME
                     {
                         _cores.Add(shield);
                         shield.SetCore();
+                        // Core visuals will be updated later.
                     }
                     else
                     {
@@ -68,10 +64,36 @@ namespace Content.Server.AME
                     }
                 }
             }
+
+            // Separate to ensure core count is correctly updated.
+            foreach (var node in groupNodes)
+            {
+                var nodeOwner = node.Owner;
+                if (nodeOwner.TryGetComponent(out AMEControllerComponent? controller))
+                {
+                    if (_masterController == null)
+                    {
+                        // Has to be the first one, as otherwise IsMasterController will return true on them all for this first update.
+                        _masterController = controller;
+                    }
+                    controller.OnAMENodeGroupUpdate();
+                }
+            }
+
+            UpdateCoreVisuals();
         }
 
-        public void UpdateCoreVisuals(int injectionAmount, bool injecting)
+        public void UpdateCoreVisuals()
         {
+            var injectionAmount = 0;
+            var injecting = false;
+
+            if (_masterController != null)
+            {
+                injectionAmount = _masterController.InjectionAmount;
+                injecting = _masterController.Injecting;
+            }
+
             var injectionStrength = CoreCount > 0 ? injectionAmount / CoreCount : 0;
 
             foreach (AMEShieldComponent core in _cores)
@@ -80,7 +102,7 @@ namespace Content.Server.AME
             }
         }
 
-        public int InjectFuel(int fuel, out bool overloading)
+        public float InjectFuel(int fuel, out bool overloading)
         {
             overloading = false;
             if(fuel > 0 && CoreCount > 0)
@@ -115,7 +137,8 @@ namespace Content.Server.AME
                     }
                 }
                 // Note the float conversions. The maths will completely fail if not done using floats.
-                return (int) ((((float) fuel) / CoreCount) * fuel * 20000);
+                // Oh, and don't ever stuff the result of this in an int. Seriously.
+                return (((float) fuel) / CoreCount) * fuel * 20000;
             }
             return 0;
         }
@@ -154,7 +177,7 @@ namespace Content.Server.AME
 
             intensity = Math.Min(intensity, 8);
 
-            epicenter.Owner.SpawnExplosion(intensity / 2, intensity, intensity * 2, intensity * 3);
+            EntitySystem.Get<ExplosionSystem>().SpawnExplosion(epicenter.Owner.Uid, intensity / 2, intensity, intensity * 2, intensity * 3);
         }
     }
 }

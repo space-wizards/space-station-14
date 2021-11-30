@@ -45,7 +45,7 @@ namespace Content.Shared.Atmos.EntitySystems
         {
             public readonly byte FireState;
             public readonly float FireTemperature;
-            public readonly GasData[] Gas;
+            public readonly GasData[]? Gas;
             public readonly int HashCode;
 
             public GasOverlayData(byte fireState, float fireTemperature, GasData[] gas)

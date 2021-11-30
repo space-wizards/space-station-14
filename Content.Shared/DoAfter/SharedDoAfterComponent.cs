@@ -25,7 +25,9 @@ namespace Content.Shared.DoAfter
     }
 
     [Serializable, NetSerializable]
+#pragma warning disable 618
     public sealed class CancelledDoAfterMessage : ComponentMessage
+#pragma warning restore 618
     {
         public byte ID { get; }
 

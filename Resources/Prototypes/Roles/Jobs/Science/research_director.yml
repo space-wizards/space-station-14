@@ -2,12 +2,14 @@
   id: ResearchDirector
   name: "research director"
   head: true
-  positions: 1
   startingGear: ResearchDirectorGear
   departments:
   - Command
   - Science
   icon: "ResearchDirector"
+  requireAdminNotify: true
+  supervisors: "the captain"
+  canBeAntag: false
   access:
   - Research
   - Command

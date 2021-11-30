@@ -1,19 +1,18 @@
 using System;
+using Content.Server.Climbing;
 using Content.Server.Cloning;
 using Content.Server.Mind.Components;
 using Content.Server.Power.Components;
 using Content.Server.Preferences.Managers;
 using Content.Server.UserInterface;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
 using Content.Shared.Damage;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.MedicalScanner;
-using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
 using Content.Shared.Popups;
 using Content.Shared.Preferences;
-using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -36,7 +35,6 @@ namespace Content.Server.Medical.Components
         public TimeSpan LastInternalOpenAttempt;
 
         private ContainerSlot _bodyContainer = default!;
-        private readonly Vector2 _ejectOffset = new(0f, 0f);
 
         [ViewVariables]
         private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
@@ -111,7 +109,7 @@ namespace Content.Server.Medical.Components
             UserInterface?.SetState(newState);
         }
 
-        private MedicalScannerStatus GetStatusFromDamageState(IMobStateComponent state)
+        private MedicalScannerStatus GetStatusFromDamageState(MobStateComponent state)
         {
             if (state.IsAlive())
             {
@@ -136,7 +134,7 @@ namespace Content.Server.Medical.Components
             if (Powered)
             {
                 var body = _bodyContainer.ContainedEntity;
-                var state = body?.GetComponentOrNull<IMobStateComponent>();
+                var state = body?.GetComponentOrNull<MobStateComponent>();
 
                 return state == null
                     ? MedicalScannerStatus.Open
@@ -167,51 +165,6 @@ namespace Content.Server.Medical.Components
             UserInterface?.Open(actor.PlayerSession);
         }
 
-        [Verb]
-        public sealed class EnterVerb : Verb<MedicalScannerComponent>
-        {
-            protected override void GetData(IEntity user, MedicalScannerComponent component, VerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Text = Loc.GetString("enter-verb-get-data-text");
-                data.Visibility = component.IsOccupied ? VerbVisibility.Invisible : VerbVisibility.Visible;
-            }
-
-            protected override void Activate(IEntity user, MedicalScannerComponent component)
-            {
-                component.InsertBody(user);
-            }
-        }
-
-        [Verb]
-        public sealed class EjectVerb : Verb<MedicalScannerComponent>
-        {
-            public override bool AlternativeInteraction => true;
-
-            protected override void GetData(IEntity user, MedicalScannerComponent component, VerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Text = Loc.GetString("medical-scanner-eject-verb-get-data-text");
-                data.Visibility = component.IsOccupied ? VerbVisibility.Visible : VerbVisibility.Invisible;
-                data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
-            }
-
-            protected override void Activate(IEntity user, MedicalScannerComponent component)
-            {
-                component.EjectBody();
-            }
-        }
-
         public void InsertBody(IEntity user)
         {
             _bodyContainer.Insert(user);
@@ -224,9 +177,9 @@ namespace Content.Server.Medical.Components
             var containedEntity = _bodyContainer.ContainedEntity;
             if (containedEntity == null) return;
             _bodyContainer.Remove(containedEntity);
-            containedEntity.Transform.WorldPosition += _ejectOffset;
             UpdateUserInterface();
             UpdateAppearance();
+            EntitySystem.Get<ClimbSystem>().ForciblySetClimbing(containedEntity.Uid);
         }
 
         public void Update(float frameTime)
