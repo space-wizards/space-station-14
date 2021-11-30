@@ -73,7 +73,7 @@ namespace Content.Shared.MobState.Components
             base.OnRemove();
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new MobStateComponentState(CurrentThreshold);
         }

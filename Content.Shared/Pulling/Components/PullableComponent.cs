@@ -38,7 +38,7 @@ namespace Content.Shared.Pulling.Components
 
         public EntityCoordinates? MovingTo { get; set; }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new PullableComponentState(Puller?.Uid);
         }
