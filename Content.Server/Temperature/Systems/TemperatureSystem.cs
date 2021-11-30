@@ -98,7 +98,7 @@ namespace Content.Server.Temperature.Systems
         private void OnAtmosExposedUpdate(EntityUid uid, TemperatureComponent temperature, ref AtmosExposedUpdateEvent args)
         {
             var temperatureDelta = args.GasMixture.Temperature - temperature.CurrentTemperature;
-            var tileHeatCapacity = _atmosphereSystem.GetHeatCapacity(args.GasMixture);
+            var tileHeatCapacity = _atmosphereSystem.GetTileHeatCapacity(args.Coordinates);
             var heat = temperatureDelta * (tileHeatCapacity * temperature.HeatCapacity / (tileHeatCapacity + temperature.HeatCapacity));
             ChangeHeat(uid, heat * temperature.AtmosTemperatureTransferEfficiency, temperature: temperature );
         }
