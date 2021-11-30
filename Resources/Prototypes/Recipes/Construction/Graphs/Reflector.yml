@@ -1,0 +1,99 @@
+- type: constructionGraph
+  id: reflector
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: base
+          completed:
+          - !type:SetAnchor
+            value: false
+          steps:
+            - material: Steel
+              amount: 5
+              doAfter: 2
+
+    - node: base
+      entity: ReflectorBase
+      actions:
+        - !type:SnapToGrid {}
+        - !type:SetAnchor {}
+      edges:
+        - to: single
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - material: Glass
+              amount: 5
+              doAfter: 1
+        - to: double
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - material: ReinforcedGlass
+              amount: 10
+              doAfter: 1
+        - to: box
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - material: Diamond
+              amount: 1
+              doAfter: 1
+        - to: start
+          conditions:
+            - !type:EntityAnchored {}
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 5
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Welding
+              doAfter: 2
+
+    - node: single
+      entity: RefectorSingle
+      edges:
+        - to: base
+          conditions:
+            - !type:EntityAnchored {}
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetGlass1
+              amount: 5
+          steps:
+            - tool: Welding
+              doAfter: 2
+
+    - node: double
+      entity: RefectorDouble
+      edges:
+        - to: base
+          conditions:
+            - !type:EntityAnchored {}
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetRGlass1
+              amount: 10
+          steps:
+            - tool: Welding
+              doAfter: 2
+
+    - node: box
+      entity: RefectorBox
+      edges:
+        - to: base
+          conditions:
+            - !type:EntityAnchored {}
+          completed:
+            - !type:SpawnPrototype
+              prototype: MaterialDiamond1
+              amount: 1
+          steps:
+            - tool: Welding
+              doAfter: 2
+

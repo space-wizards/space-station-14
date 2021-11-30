@@ -1,0 +1,170 @@
+- type: entity
+  id: ReflectorBase
+  parent: BaseMachine
+  name: reflector base
+  description: A base for reflector assemblies.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/Reflector.rsi
+    layers:
+      - state: base
+  - type: Physics
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.25,-0.5,0.25,0.5"
+      mask:
+      - Impassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+      mass: 100
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
+  - type: Construction
+    graph: reflector
+    node: base
+
+- type: entity
+  id: RefectorSingle
+  parent: ReflectorBase
+  name: reflector
+  description: An angled mirror for reflecting laser beams.
+  components:
+  - type: Reflector
+    whitelist:
+      tags:
+        - EmitterBolt
+    Angle: 0
+    Type: 0
+  - type: Sprite
+    sprite: Structures/Machines/Reflector.rsi
+    rotation: -90
+    layers:
+      - state: base
+      - state: single
+        rotation: 0
+  - type: Physics
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.25,-0.5,0.25,0.5"
+      mask:
+      - Impassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+      mass: 100
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
+  - type: Construction
+    graph: reflector
+    node: single
+
+- type: entity
+  id: RefectorDouble
+  parent: ReflectorBase
+  name: double sided reflector
+  description: A double sided angled mirror for reflecting laser beams.
+  components:
+  - type: Reflector
+    whitelist:
+      tags:
+        - EmitterBolt
+    Angle: 0
+    Type: 1
+  - type: Sprite
+    sprite: Structures/Machines/Reflector.rsi
+    rotation: -90
+    layers:
+      - state: base
+      - state: double
+        rotation: 0
+  - type: Physics
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.25,-0.5,0.25,0.5"
+      mask:
+      - Impassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+      mass: 100
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
+  - type: Construction
+    graph: reflector
+    node: double
+
+- type: entity
+  id: RefectorBox
+  parent: ReflectorBase
+  name: reflector box
+  description: A box with an internal set of mirrors that reflects all laser beams in a single direction.
+  components:
+  - type: Reflector
+    whitelist:
+      tags:
+        - EmitterBolt
+    Angle: 0
+    Type: 2
+  - type: Sprite
+    sprite: Structures/Machines/Reflector.rsi
+    rotation: -90
+    layers:
+      - state: base
+      - state: box
+        rotation: 0
+  - type: Physics
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.25,-0.5,0.25,0.5"
+      mask:
+      - Impassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+      mass: 100
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
+  - type: Construction
+    graph: reflector
+    node: box
