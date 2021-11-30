@@ -1,11 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: 'Added a command, drainallbatteries, so admins can drain all the batteries.
-      Useful for local testing and/or training of Station Engineers on what to do
-      in a power outage...', type: Add}
-  id: 182
-  time: '2021-05-12T23:12:36.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Fixes radio messages not sending., type: Fix}
@@ -2865,3 +2858,9 @@ Entries:
   - {message: Added a FPS counter game option., type: Add}
   id: 683
   time: '2021-11-30T11:31:13.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Effects (i.e. melee and hitscan weapons like lasers) now have the correct
+      rotation, type: Fix}
+  id: 684
+  time: '2021-11-30T13:38:13.0000000+00:00'
