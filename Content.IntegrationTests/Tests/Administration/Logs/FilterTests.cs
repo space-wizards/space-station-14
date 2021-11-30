@@ -4,6 +4,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.GameTicking;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
+using Content.Shared.Database;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -48,7 +49,7 @@ public class FilterTests : ContentIntegrationTest
                 sAdminLogSystem.Add(LogType.Unknown, $"{entity:Entity} test log: {commonGuid} {guids[i]}");
             });
 
-            await server.WaitRunTicks(60);
+            await server.WaitRunTicks(100);
         }
 
         await WaitUntil(server, async () =>

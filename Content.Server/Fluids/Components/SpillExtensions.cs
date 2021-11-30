@@ -27,10 +27,11 @@ namespace Content.Server.Fluids.Components
         /// <param name="prototype">The prototype to use.</param>
         /// <param name="sound">Play the spill sound.</param>
         /// <returns>The puddle if one was created, null otherwise.</returns>
+        /// <param name="combine">Whether to attempt to merge with existing puddles</param>
         public static PuddleComponent? SpillAt(this Solution solution, IEntity entity, string prototype,
-            bool sound = true)
+            bool sound = true, bool combine = true)
         {
-            return solution.SpillAt(entity.Transform.Coordinates, prototype, sound);
+            return solution.SpillAt(entity.Transform.Coordinates, prototype, sound, combine: combine);
         }
 
         /// <summary>
@@ -43,13 +44,14 @@ namespace Content.Server.Fluids.Components
         /// <param name="prototype">The prototype to use.</param>
         /// <param name="sound">Play the spill sound.</param>
         /// <param name="entityManager"></param>
+        /// <param name="combine">Whether to attempt to merge with existing puddles</param>
         /// <returns>The puddle if one was created, null otherwise.</returns>
         public static PuddleComponent? SpillAt(this Solution solution, EntityUid entity, string prototype,
-            bool sound = true, IEntityManager? entityManager = null)
+            bool sound = true, IEntityManager? entityManager = null, bool combine = true)
         {
             entityManager ??= IoCManager.Resolve<IEntityManager>();
 
-            return solution.SpillAt(entityManager.GetComponent<TransformComponent>(entity).Coordinates, prototype, sound);
+            return solution.SpillAt(entityManager.GetComponent<TransformComponent>(entity).Coordinates, prototype, sound, combine: combine);
         }
 
         /// <summary>
@@ -62,11 +64,12 @@ namespace Content.Server.Fluids.Components
         /// <param name="prototype">The prototype to use.</param>
         /// <param name="puddle">The puddle if one was created, null otherwise.</param>
         /// <param name="sound">Play the spill sound.</param>
+        /// <param name="combine">Whether to attempt to merge with existing puddles</param>
         /// <returns>True if a puddle was created, false otherwise.</returns>
         public static bool TrySpillAt(this Solution solution, IEntity entity, string prototype,
-            [NotNullWhen(true)] out PuddleComponent? puddle, bool sound = true)
+            [NotNullWhen(true)] out PuddleComponent? puddle, bool sound = true, bool combine = true)
         {
-            puddle = solution.SpillAt(entity, prototype, sound);
+            puddle = solution.SpillAt(entity, prototype, sound, combine: combine);
             return puddle != null;
         }
 
@@ -77,9 +80,10 @@ namespace Content.Server.Fluids.Components
         /// <param name="coordinates">The coordinates to spill the solution at.</param>
         /// <param name="prototype">The prototype to use.</param>
         /// <param name="sound">Whether or not to play the spill sound.</param>
+        /// <param name="combine">Whether to attempt to merge with existing puddles</param>
         /// <returns>The puddle if one was created, null otherwise.</returns>
         public static PuddleComponent? SpillAt(this Solution solution, EntityCoordinates coordinates, string prototype,
-            bool overflow = true, bool sound = true)
+            bool overflow = true, bool sound = true, bool combine = true)
         {
             if (solution.TotalVolume == 0) return null;
 
@@ -89,7 +93,7 @@ namespace Content.Server.Fluids.Components
             if (!mapManager.TryGetGrid(coordinates.GetGridId(entityManager), out var mapGrid))
                 return null; // Let's not spill to space.
 
-            return SpillAt(mapGrid.GetTileRef(coordinates), solution, prototype, overflow, sound);
+            return SpillAt(mapGrid.GetTileRef(coordinates), solution, prototype, overflow, sound, combine: combine);
         }
 
         /// <summary>
@@ -100,11 +104,12 @@ namespace Content.Server.Fluids.Components
         /// <param name="prototype">The prototype to use.</param>
         /// <param name="puddle">The puddle if one was created, null otherwise.</param>
         /// <param name="sound">Play the spill sound.</param>
+        /// <param name="combine">Whether to attempt to merge with existing puddles</param>
         /// <returns>True if a puddle was created, false otherwise.</returns>
         public static bool TrySpillAt(this Solution solution, EntityCoordinates coordinates, string prototype,
-            [NotNullWhen(true)] out PuddleComponent? puddle, bool sound = true)
+            [NotNullWhen(true)] out PuddleComponent? puddle, bool sound = true, bool combine = true)
         {
-            puddle = solution.SpillAt(coordinates, prototype, sound);
+            puddle = solution.SpillAt(coordinates, prototype, sound, combine: combine);
             return puddle != null;
         }
 
@@ -125,16 +130,16 @@ namespace Content.Server.Fluids.Components
         }
 
         public static PuddleComponent? SpillAt(this TileRef tileRef, Solution solution, string prototype,
-            bool overflow = true, bool sound = true, bool noTileReact = false)
+            bool overflow = true, bool sound = true, bool noTileReact = false, bool combine = true)
         {
             if (solution.TotalVolume <= 0) return null;
+
+            // If space return early, let that spill go out into the void
+            if (tileRef.Tile.IsEmpty) return null;
 
             var mapManager = IoCManager.Resolve<IMapManager>();
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             var serverEntityManager = IoCManager.Resolve<IServerEntityManager>();
-
-            // If space return early, let that spill go out into the void
-            if (tileRef.Tile.IsEmpty) return null;
 
             var gridId = tileRef.GridIndex;
             if (!mapManager.TryGetGrid(gridId, out var mapGrid)) return null; // Let's not spill to invalid grids.
@@ -155,10 +160,7 @@ namespace Content.Server.Fluids.Components
 
             // Get normalized co-ordinate for spill location and spill it in the centre
             // TODO: Does SnapGrid or something else already do this?
-            var spillGridCoords = mapGrid.GridTileToLocal(tileRef.GridIndices);
-
-            PuddleComponent? puddle = null;
-            var spilt = false;
+            var spillGridCoords = mapGrid.GridTileToWorld(tileRef.GridIndices);
 
             var spillEntities = IoCManager.Resolve<IEntityLookup>()
                 .GetEntitiesIntersecting(mapGrid.ParentMapId, spillGridCoords.Position).ToArray();
@@ -177,21 +179,19 @@ namespace Content.Server.Fluids.Components
 
             var puddleSystem = EntitySystem.Get<PuddleSystem>();
 
-            foreach (var spillEntity in spillEntities)
+            if (combine)
             {
-                if (!spillEntity.TryGetComponent(out PuddleComponent? puddleComponent)) continue;
+                foreach (var spillEntity in spillEntities)
+                {
+                    if (!spillEntity.TryGetComponent(out PuddleComponent? puddleComponent)) continue;
 
-                if (!overflow && puddleSystem.WouldOverflow(puddleComponent.Owner.Uid, solution, puddleComponent)) return null;
+                    if (!overflow && puddleSystem.WouldOverflow(puddleComponent.Owner.Uid, solution, puddleComponent)) return null;
 
-                if (!puddleSystem.TryAddSolution(puddleComponent.Owner.Uid, solution, sound)) continue;
+                    if (!puddleSystem.TryAddSolution(puddleComponent.Owner.Uid, solution, sound)) continue;
 
-                puddle = puddleComponent;
-                spilt = true;
-                break;
+                    return puddleComponent;
+                }
             }
-
-            // Did we add to an existing puddle
-            if (spilt) return puddle;
 
             var puddleEnt = serverEntityManager.SpawnEntity(prototype, spillGridCoords);
             var newPuddleComponent = puddleEnt.GetComponent<PuddleComponent>();

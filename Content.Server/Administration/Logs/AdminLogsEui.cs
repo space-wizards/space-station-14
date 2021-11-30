@@ -144,6 +144,7 @@ public sealed class AdminLogsEui : BaseEui
 
     private async void SendLogs(bool replace)
     {
+        // TODO ADMIN LOGS array pool
         var logs = new List<SharedAdminLog>(_clientBatchSize);
 
         await Task.Run(async () =>

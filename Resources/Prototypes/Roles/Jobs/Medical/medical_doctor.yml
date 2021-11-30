@@ -1,8 +1,6 @@
 - type: job
   id: MedicalDoctor
   name: "medical doctor"
-  positions: 3
-  spawnPositions: 2
   startingGear: DoctorGear
   departments:
   - Medical

@@ -100,7 +100,7 @@
       - state: box
       - state: writing
   - type: Item
-    size: 15
+    size: 20
   - type: Storage
     capacity: 20
     size: 25

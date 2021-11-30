@@ -50,6 +50,7 @@ namespace Content.Client.Entry
             "AccessReader",
             "IdCardConsole",
             "Airlock",
+            "ThermalRegulator",
             "AtmosFixMarker",
             "CablePlacer",
             "Drink",
@@ -216,6 +217,8 @@ namespace Content.Client.Entry
             "Log",
             "Hoe",
             "Seed",
+            "ActivatableUI",
+            "ActivatableUIRequiresPower",
             "BotanySharp",
             "PlantSampleTaker",
             "Internals",
@@ -234,7 +237,6 @@ namespace Content.Client.Entry
             "MorgueEntityStorage",
             "MorgueTray",
             "CrematoriumEntityStorage",
-            "RandomArcade",
             "RandomSpriteState",
             "DebugEquip",
             "InnateActions",
@@ -314,7 +316,9 @@ namespace Content.Client.Entry
             "GhostRadio",
             "Armor",
             "Udder",
-            "PneumaticCannon"
+            "PneumaticCannon",
+            "Spreader",
+            "GrowingKudzu"
         };
     }
 }

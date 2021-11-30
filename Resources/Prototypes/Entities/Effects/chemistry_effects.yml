@@ -18,6 +18,7 @@
     solutions:
       solutionArea:
         maxVol: 600
+        canReact: false
 
 - type: entity
   id: Foam
@@ -54,6 +55,7 @@
     solutions:
       solutionArea:
         maxVol: 600
+        canReact: false
   - type: Slippery
 
 - type: entity

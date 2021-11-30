@@ -43,7 +43,7 @@ namespace Content.Shared.Standing
             // and ultimately this is just to avoid boilerplate in Down callers + keep their behavior consistent.
             if (dropHeldItems && hands != null)
             {
-                _sharedHandsSystem.DropHandItems(uid, false, hands);
+                RaiseLocalEvent(uid, new DropHandItemsEvent(), false);
             }
 
             var msg = new DownAttemptEvent();
@@ -95,6 +95,10 @@ namespace Content.Shared.Standing
             appearance?.SetData(RotationVisuals.RotationState, RotationState.Vertical);
             return true;
         }
+    }
+
+    public sealed class DropHandItemsEvent : EventArgs
+    {
     }
 
     /// <summary>

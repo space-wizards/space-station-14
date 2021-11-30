@@ -14,6 +14,7 @@
     groups:
       Flammable: [ Touch ]
       Extinguish: [ Touch ]
+      Acidic: [Touch, Ingestion]
     reactions:
     - reagents: [Water, SpaceCleaner]
       methods: [Touch]
@@ -188,7 +189,7 @@
     preset: HumanPreset
   - type: Damageable
     damageContainer: Biological
-  - type: Respirator
+  - type: ThermalRegulator
     metabolismHeat: 800
     radiatedHeat: 100
     implicitHeatRegulation: 500
@@ -196,6 +197,7 @@
     shiveringHeatRegulation: 2000
     normalBodyTemperature: 310.15
     thermalRegulationTemperatureThreshold: 25
+  - type: Respirator
     needsGases:
       Oxygen: 0.00060763888
     producesGases:
@@ -289,7 +291,6 @@
       proper: true
   - type: StandingState
   - type: DoorBumpOpener
-
 - type: entity
   save: false
   name: Urist McHands

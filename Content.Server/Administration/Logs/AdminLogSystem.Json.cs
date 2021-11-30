@@ -32,7 +32,7 @@ public partial class AdminLogSystem
         }
 
         var converterNames = _jsonOptions.Converters.Select(converter => converter.GetType().Name);
-        _sawmill.Info($"Admin log converters found: {string.Join(" ", converterNames)}");
+        _sawmill.Debug($"Admin log converters found: {string.Join(" ", converterNames)}");
     }
 
     private (JsonDocument json, List<Guid> players, List<(int id, string? name)> entities) ToJson(
@@ -72,6 +72,8 @@ public partial class AdminLogSystem
                 ? resolvedEntity.Name
                 : null;
 
+            if (entities.Any(e => e.id == (int) uid)) continue;
+
             entities.Add(((int) uid, entityName));
 
             if (_entityManager.TryGetComponent(uid, out ActorComponent? actor))
@@ -82,5 +84,4 @@ public partial class AdminLogSystem
 
         return (JsonSerializer.SerializeToDocument(parsed, _jsonOptions), players, entities);
     }
-
 }

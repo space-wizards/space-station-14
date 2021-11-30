@@ -101,7 +101,7 @@ namespace Content.Shared.Containers.ItemSlots
         ///     This doesn't have to mean the slot is somehow physically locked. In the case of the item cabinet, the
         ///     cabinet may simply be closed at the moment and needs to be opened first.
         /// </remarks>
-        [DataField("locked")]
+        [DataField("locked", readOnly: true)]
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Locked = false;
 
@@ -133,10 +133,47 @@ namespace Content.Shared.Containers.ItemSlots
         [ViewVariables]
         public ContainerSlot ContainerSlot = default!;
 
+        /// <summary>
+        ///     If this slot belongs to some de-constructible component, should the item inside the slot be ejected upon
+        ///     deconstruction?
+        /// </summary>
+        /// <remarks>
+        ///     The actual deconstruction logic is handled by the server-side EmptyOnMachineDeconstructSystem.
+        /// </remarks>
+        [DataField("ejectOnDeconstruct")]
+        public bool EjectOnDeconstruct = true;
+
+        /// <summary>
+        ///     If this slot belongs to some breakable or destructible entity, should the item inside the slot be
+        ///     ejected when it is broken or destroyed?
+        /// </summary>
+        [DataField("ejectOnBreak")]
+        public bool EjectOnBreak = false;
+
+        /// <summary>
+        ///     If this is not an empty string, this will generate a popup when someone attempts to insert a bad item
+        ///     into this slot. This string will be passed through localization.
+        /// </summary>
+        [DataField("whitelistFailPopup")]
+        public string WhitelistFailPopup = string.Empty;
+
+        /// <summary>
+        ///     If the user interacts with an entity with an already-filled item slot, should they attempt to swap out the item?
+        /// </summary>
+        /// <remarks>
+        ///     Useful for things like chem dispensers, but undesirable for things like the ID card console, where you
+        ///     want to insert more than one item that matches the same whitelist.
+        /// </remarks>
+        [DataField("swap")]
+        public bool Swap = true;
+
         public string ID => ContainerSlot.ID;
 
         // Convenience properties
         public bool HasItem => ContainerSlot.ContainedEntity != null;
         public IEntity? Item => ContainerSlot.ContainedEntity;
+
+        // and to make it easier for  whenever IEntity is removed
+        public EntityUid? ItemUid => ContainerSlot.ContainedEntity?.Uid;
     }
 }

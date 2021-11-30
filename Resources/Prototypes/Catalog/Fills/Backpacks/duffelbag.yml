@@ -56,6 +56,18 @@
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateAmmo
+  id: ClothingBackpackDuffelSyndicateFilledRevolver
+  name: Predator bundle
+  description: "Go loud and proud with a fully loaded Magnum Predator, bundled with two speed loaders." 
+  components:
+  - type: StorageFill
+    contents:
+      - id: RevolverPredator
+      - id: SLMagnum
+        amount: 2
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateAmmo
   id: ClothingBackpackDuffelSyndicateFilledLMG
   name: L6 Saw bundle
   description: "More dakka: The iconic L6 lightmachinegun, bundled with 2 box magazines."
@@ -82,6 +94,24 @@
         amount: 3
   - type: Storage
     capacity: 200
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateAmmo
+  id: ClothingBackpackDuffelSyndicateFilledCarbine
+  name: Z8 Bulldog bundle
+  description: "A versatile battle rifle with an attached grenade launcher, bundled with 3 magazines and 6 grenades of various capabilities."
+  components:
+  - type: StorageFill
+    contents:
+      - id: RifleCarbine
+      - id: MagazineSRifle
+        amount: 2
+      - id: GrenadeBlast
+        amount: 2
+      - id: GrenadeFlash
+        amount: 2
+      - id: GrenadeFrag
+        amount: 2
 
 - type: entity
   parent: ClothingBackpackDuffel

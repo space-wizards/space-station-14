@@ -6,6 +6,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.GameTicking;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
+using Content.Shared.Database;
 using NUnit.Framework;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
@@ -34,7 +35,7 @@ public class QueryTests : ContentIntegrationTest
         var sPlayers = server.ResolveDependency<IPlayerManager>();
 
         var sAdminLogSystem = sSystems.GetEntitySystem<AdminLogSystem>();
-        var sGameTicker = sSystems.GetEntitySystem<GameTicker>();
+        var sGamerTicker = sSystems.GetEntitySystem<GameTicker>();
 
         var date = DateTime.UtcNow;
         var guid = Guid.NewGuid();
@@ -43,14 +44,14 @@ public class QueryTests : ContentIntegrationTest
 
         await server.WaitPost(() =>
         {
-            player = sPlayers.GetAllPlayers().First();
+            player = sPlayers.ServerSessions.First();
 
             sAdminLogSystem.Add(LogType.Unknown, $"{player.AttachedEntity:Entity} test log: {guid}");
         });
 
         var filter = new LogFilter
         {
-            Round = sGameTicker.RoundId,
+            Round = sGamerTicker.RoundId,
             Search = guid.ToString(),
             Types = new List<LogType> {LogType.Unknown},
             After = date,

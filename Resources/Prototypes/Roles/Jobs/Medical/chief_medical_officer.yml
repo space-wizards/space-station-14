@@ -4,7 +4,6 @@
   id: ChiefMedicalOfficer
   name: "chief medical officer"
   head: true
-  positions: 1
   startingGear: CMOGear
   departments:
   - Command
@@ -17,6 +16,7 @@
   - Medical
   - Command
   - Maintenance
+  - Chemistry
 
 - type: startingGear
   id: CMOGear
