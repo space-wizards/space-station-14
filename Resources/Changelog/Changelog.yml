@@ -1,9 +1,4 @@
 Entries:
-- author: StrawberryMoses
-  changes:
-  - {message: Added missing flavor text to vending machines, type: Add}
-  id: 184
-  time: '2021-05-14T00:41:05.0000000+00:00'
 - author: Clyybber
   changes:
   - {message: Chat no longer defaults to OOC if IC channels are available., type: Remove}
@@ -2864,3 +2859,8 @@ Entries:
   - {message: Added inflatable wall crate to cargo under emergency tab., type: Add}
   id: 685
   time: '2021-11-30T20:48:58.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Weedkiller and Pest-B-Gone now harms kudzu., type: Add}
+  id: 686
+  time: '2021-11-30T22:58:37.776324+00:00'
