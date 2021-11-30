@@ -1,5 +1,6 @@
 using Content.Server.Morgue.Components;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;

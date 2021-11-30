@@ -50,6 +50,7 @@ namespace Content.Client.Entry
             "AccessReader",
             "IdCardConsole",
             "Airlock",
+            "ThermalRegulator",
             "AtmosFixMarker",
             "CablePlacer",
             "Drink",
@@ -315,7 +316,9 @@ namespace Content.Client.Entry
             "GhostRadio",
             "Armor",
             "Udder",
-            "PneumaticCannon"
+            "PneumaticCannon",
+            "Spreader",
+            "GrowingKudzu"
         };
     }
 }

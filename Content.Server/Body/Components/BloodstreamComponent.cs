@@ -1,6 +1,7 @@
 using System;
 using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
@@ -73,6 +74,7 @@ namespace Content.Server.Body.Components
         public void PumpToxins(GasMixture to)
         {
             var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
+            var respiratorSystem = EntitySystem.Get<RespiratorSystem>();
 
             if (!Owner.TryGetComponent(out RespiratorComponent? metabolism))
             {
@@ -81,7 +83,7 @@ namespace Content.Server.Body.Components
                 return;
             }
 
-            var toxins = metabolism.Clean(this);
+            var toxins = respiratorSystem.Clean(OwnerUid, metabolism, this);
             var toOld = new float[to.Moles.Length];
             Array.Copy(to.Moles, toOld, toOld.Length);
 

@@ -32,7 +32,7 @@ namespace Content.IntegrationTests.Tests.Body
     template: HumanoidTemplate
     preset: HumanPreset
     centerSlot: torso
-  - type: Respirator
+  - type: ThermalRegulator
     metabolismHeat: 5000
     radiatedHeat: 400
     implicitHeatRegulation: 5000
@@ -40,6 +40,7 @@ namespace Content.IntegrationTests.Tests.Body
     shiveringHeatRegulation: 5000
     normalBodyTemperature: 310.15
     thermalRegulationTemperatureThreshold: 25
+  - type: Respirator
     needsGases:
       Oxygen: 0.00060763888
     producesGases:

@@ -18,7 +18,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Body.Part
+namespace Content.Server.Body.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedBodyPartComponent))]

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
@@ -12,12 +13,14 @@ using Content.Shared.Throwing;
 using Content.Shared.Timing;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
+using Robust.Shared.Players;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 
@@ -32,7 +35,6 @@ namespace Content.Shared.Interaction
     public abstract class SharedInteractionSystem : EntitySystem
     {
         [Dependency] private readonly SharedPhysicsSystem _sharedBroadphaseSystem = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly SharedVerbSystem _verbSystem = default!;
         [Dependency] private readonly SharedAdminLogSystem _adminLogSystem = default!;
@@ -453,6 +455,11 @@ namespace Content.Shared.Interaction
             if (!InRangeUnobstructed(user, used, ignoreInsideBlocker: true, popup: true))
                 return;
 
+            // Check if interacted entity is in the same container, the direct child, or direct parent of the user.
+            // This is bypassed IF the interaction happened through an item slot (e.g., backpack UI)
+            if (!user.IsInSameOrParentContainer(used) && !CanAccessViaStorage(user.Uid, used.Uid))
+                return;
+
             var activateMsg = new ActivateInWorldEvent(user, used);
             RaiseLocalEvent(used.Uid, activateMsg);
             if (activateMsg.Handled)
@@ -528,33 +535,13 @@ namespace Content.Shared.Interaction
         public void AltInteract(IEntity user, IEntity target)
         {
             // Get list of alt-interact verbs
-            GetAlternativeVerbsEvent getVerbEvent = new(user, target);
-            RaiseLocalEvent(target.Uid, getVerbEvent);
-
-            foreach (var verb in getVerbEvent.Verbs)
-            {
-                if (verb.Disabled)
-                    continue;
-
-                _verbSystem.ExecuteVerb(verb, user.Uid, target.Uid);
-                break;
-            }
+            var verbs = _verbSystem.GetLocalVerbs(target, user, VerbType.Alternative)[VerbType.Alternative];
+            if (verbs.Any())
+                _verbSystem.ExecuteVerb(verbs.First(), user.Uid, target.Uid);
         }
         #endregion
 
         #region Throw
-        /// <summary>
-        /// Activates the Throw behavior of an object
-        /// Verifies that the user is capable of doing the throw interaction first
-        /// </summary>
-        public bool TryThrowInteraction(IEntity user, IEntity item)
-        {
-            if (user == null || item == null || !_actionBlockerSystem.CanThrow(user.Uid)) return false;
-
-            ThrownInteraction(user, item);
-            return true;
-        }
-
         /// <summary>
         ///     Calls Thrown on all components that implement the IThrown interface
         ///     on an entity that has been thrown.
@@ -744,6 +731,13 @@ namespace Content.Shared.Interaction
             }
         }
         #endregion
+
+        /// <summary>
+        ///     If a target is in range, but not in the same container as the user, it may be inside of a backpack. This
+        ///     checks if the user can access the item in these situations.
+        /// </summary>
+        public abstract bool CanAccessViaStorage(EntityUid user, EntityUid target);
+
         #endregion
     }
 

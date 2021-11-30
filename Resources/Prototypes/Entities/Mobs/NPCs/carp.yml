@@ -39,7 +39,7 @@
     visuals:
     - type: DamageStateVisualizer
       normal: alive
-      crit: dead
+      crit: crit
       dead: dead
 
 - type: entity

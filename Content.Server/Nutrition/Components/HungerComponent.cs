@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
+using Content.Server.Administration.Logs;
 using Content.Server.Alert;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
+using Content.Shared.Database;
 using Content.Shared.MobState.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.EntitySystems;
@@ -203,6 +206,11 @@ namespace Content.Server.Nutrition.Components
             // _trySound(calculatedThreshold);
             if (calculatedHungerThreshold != _currentHungerThreshold)
             {
+                if (_currentHungerThreshold == HungerThreshold.Dead)
+                    EntitySystem.Get<AdminLogSystem>().Add(LogType.Hunger, $"{Owner} has stopped starving");
+                else if (calculatedHungerThreshold == HungerThreshold.Dead)
+                    EntitySystem.Get<AdminLogSystem>().Add(LogType.Hunger, $"{Owner} has started starving");
+
                 _currentHungerThreshold = calculatedHungerThreshold;
                 HungerThresholdEffect();
                 Dirty();
@@ -215,7 +223,7 @@ namespace Content.Server.Nutrition.Components
             UpdateCurrentThreshold();
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new HungerComponentState(_currentHungerThreshold);
         }
