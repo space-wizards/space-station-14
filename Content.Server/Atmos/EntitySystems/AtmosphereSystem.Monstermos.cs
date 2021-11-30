@@ -461,8 +461,14 @@ namespace Content.Server.Atmos.EntitySystems
                     otherTile2.PressureDirection = otherTile.MonstermosInfo.CurrentTransferDirection;
                 }
 
-                otherTile.Air!.Temperature = Atmospherics.TCMB;
-                otherTile.Air.Clear();
+
+                // This gas mixture cannot be null, no tile in _depressurizeProgressionOrder can have a null gas mixture
+                otherTile.Air!.Clear();
+
+                // This is a little hacky, but hear me out. It makes sense. We have just vacuumed all of the tile's air
+                // therefore there is no more gas in the tile, therefore the tile should be as cold as space!
+                otherTile.Air.Temperature = Atmospherics.TCMB;
+
                 InvalidateVisuals(otherTile.GridIndex, otherTile.GridIndices);
                 HandleDecompressionFloorRip(mapGrid, otherTile, sum);
             }
