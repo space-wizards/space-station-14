@@ -15,6 +15,7 @@ using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
+using Content.Shared.MobState.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -115,6 +116,10 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!Resolve(uid, ref component))
                 return false;
 
+            if (uid == userUid || //Suppresses self-eating
+                EntityManager.TryGetComponent<MobStateComponent>(uid, out var mobState) && mobState.IsAlive()) // Suppresses eating alive mobs
+                return false;
+
             if (!_solutionContainerSystem.TryGetSolution(uid, component.SolutionName, out var solution))
                 return false;
 
@@ -201,16 +206,20 @@ namespace Content.Server.Nutrition.EntitySystems
 
         private void AddEatVerb(EntityUid uid, FoodComponent component, GetInteractionVerbsEvent ev)
         {
-            if (!ev.CanInteract ||
+            if (uid == ev.UserUid ||
+                !ev.CanInteract ||
                 !ev.CanAccess ||
-                !EntityManager.TryGetComponent(ev.User.Uid, out SharedBodyComponent? body) ||
-                !_bodySystem.TryGetComponentsOnMechanisms<StomachComponent>(ev.User.Uid, out var stomachs, body))
+                !EntityManager.TryGetComponent(ev.UserUid, out SharedBodyComponent? body) ||
+                !_bodySystem.TryGetComponentsOnMechanisms<StomachComponent>(ev.UserUid, out var stomachs, body))
+                return;
+
+            if (EntityManager.TryGetComponent<MobStateComponent>(uid, out var mobState) && mobState.IsAlive())
                 return;
 
             Verb verb = new();
             verb.Act = () =>
             {
-                TryUseFood(uid, ev.User.Uid, component);
+                TryUseFood(uid, ev.UserUid, component);
             };
             
             verb.Text = Loc.GetString("food-system-verb-eat");
