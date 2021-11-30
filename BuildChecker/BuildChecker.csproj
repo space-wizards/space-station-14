@@ -33,9 +33,7 @@ https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild
     <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
   <Target Name="Build">
-		<!--
     <Exec Command="$(Python) git_helper.py" CustomErrorRegularExpression="^Error" />
-    -->
   </Target>
   <Target Name="Rebuild" DependsOnTargets="Build" />
   <Target Name="Clean">
