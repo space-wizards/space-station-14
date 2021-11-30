@@ -1,10 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: '"Kill X" traitor goal will no longer consider gibbed bodies (brains)
-      "alive"', type: Fix}
-  id: 180
-  time: '2021-05-12T23:11:26.0000000+00:00'
 - author: Macoron
   changes:
   - {message: Fix underfloor wires sprites, type: Fix}
@@ -2865,3 +2859,9 @@ Entries:
   - {message: Added space carps "dead" sprite, type: Add}
   id: 681
   time: '2021-11-30T10:12:19.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: 'The space around you feels colder... Depressurized rooms will now be
+      very, very cold.', type: Tweak}
+  id: 682
+  time: '2021-11-30T10:42:48.0000000+00:00'
