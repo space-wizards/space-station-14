@@ -503,11 +503,7 @@ namespace Content.Client.Chat.UI
         {
             DebugTools.Assert(!Disposed);
 
-            var formatted = new FormattedMessage.Builder();
-            formatted.PushColor(color);
-            formatted.AddMessage(Basic.RenderMarkup(message));
-            formatted.Pop();
-            Contents.AddMessage(formatted.Build());
+            Contents.AddMessage(Basic.RenderMarkup(message, new Section{Color=color.ToArgb()}));
         }
 
         private void Input_OnTextEntered(LineEdit.LineEditEventArgs args)
