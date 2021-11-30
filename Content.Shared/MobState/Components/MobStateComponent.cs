@@ -312,17 +312,8 @@ namespace Content.Shared.MobState.Components
             state.EnterState(OwnerUid, Owner.EntityManager);
             state.UpdateState(OwnerUid, threshold, Owner.EntityManager);
 
-            if (old != null)
-            {
-               var stateChangeEvent = new MobStateChangedEvent(this, old, state);
-               Owner.EntityManager.EventBus.RaiseLocalEvent(OwnerUid, stateChangeEvent);
-            }
-            else
-            {
-                var stateChangeEvent = new MobStateChangedEvent(this, old, state);
-                Owner.EntityManager.EventBus.RaiseLocalEvent(OwnerUid, stateChangeEvent);
-            }
-            
+            var stateChangeEvent = new MobStateChangedEvent(this, old, state);
+            Owner.EntityManager.EventBus.RaiseLocalEvent(OwnerUid, stateChangeEvent);
 
             var message = new MobStateChangedMessage(this, old, state);
 #pragma warning disable 618

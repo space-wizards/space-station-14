@@ -1,7 +1,7 @@
 
 ## Guardian host specific
 
-guardian-created = You feel... haunted.
+guardian-created = You feel... Haunted.
 guardian-missing-invalid-action = There is no guardian under your control!
 guardian-already-present-invalid-creation = You are NOT re-living that haunting experience!
 guardian-no-actions-invalid-creation = You don't have the ability to host a guardian!
@@ -14,6 +14,6 @@ guardian-entity-taking-damage = Your guardian is taking damage!
 
 ## Health warnings
 guardian-host-critical-warn = YOUR HOST IS WOUNDED!
-guardian-host-death-warn = YOUR FORM SUCCUMBS TO NONEXISTANCE!
+guardian-host-death-warn = YOUR FORM SUCCUMBS TO NONEXISTENCE!
 host-guardian-death-warn = YOUR BODY IS PIERCED BY SUBATOMIC PAIN AS IT DISINTEGRATES!
 
