@@ -17,14 +17,14 @@ namespace Content.Client.Light
         {
             base.Update(frameTime);
 
-            foreach (var (rgb, light, sprite) in EntityManager.EntityQuery<SharedRgbLightControllerComponent, PointLightComponent, SpriteComponent>())
+            foreach (var (rgb, light, sprite) in EntityManager.EntityQuery<RgbLightControllerComponent, PointLightComponent, SpriteComponent>())
             {
                 light.Color = GetCurrentRgbColor(_gameTiming, TimeSpan.FromSeconds(rgb.CreationTick.Value * _gameTiming.TickPeriod.TotalSeconds), rgb);
                 sprite.Color = GetCurrentRgbColor(_gameTiming, TimeSpan.FromSeconds(rgb.CreationTick.Value * _gameTiming.TickPeriod.TotalSeconds), rgb);
             }
         }
 
-        public static Color GetCurrentRgbColor(IGameTiming gameTiming, TimeSpan offset, SharedRgbLightControllerComponent rgb)
+        public static Color GetCurrentRgbColor(IGameTiming gameTiming, TimeSpan offset, RgbLightControllerComponent rgb)
         {
             return Color.FromHsv(new Vector4(
                 (float) (((gameTiming.CurTime.TotalSeconds - offset.TotalSeconds) / rgb.CycleRate + Math.Abs(rgb.Owner.Uid.GetHashCode() * 0.1)) % 1),

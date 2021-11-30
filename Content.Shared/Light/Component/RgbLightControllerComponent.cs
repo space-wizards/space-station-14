@@ -10,7 +10,7 @@ namespace Content.Shared.Light.Component
     /// </summary>
     [NetworkedComponent]
     [RegisterComponent]
-    public class SharedRgbLightControllerComponent : Robust.Shared.GameObjects.Component
+    public class RgbLightControllerComponent : Robust.Shared.GameObjects.Component
     {
         public override string Name => "RgbLightController";
 
