@@ -119,8 +119,21 @@ namespace Content.Server.Physics.Controllers
                     case ShuttleMode.Cruise:
                         foreach (var (pilot, mover) in pilots)
                         {
+                            var console = pilot.Console;
+
+                            if (console == null)
+                            {
+                                DebugTools.Assert(false);
+                                continue;
+                            }
+
                             var sprint = mover.VelocityDir.sprinting;
-                            linearInput += new Vector2(0, sprint.Y);
+
+                            if (sprint.Equals(Vector2.Zero)) continue;
+
+                            var offsetRotation = EntityManager.GetComponent<TransformComponent>(console.OwnerUid).LocalRotation;
+
+                            linearInput += offsetRotation.RotateVec(new Vector2(0f, sprint.Y));
                             angularInput += sprint.X;
                         }
                         break;
@@ -128,7 +141,22 @@ namespace Content.Server.Physics.Controllers
                         // No angular input possible
                         foreach (var (pilot, mover) in pilots)
                         {
-                            linearInput += mover.VelocityDir.sprinting;
+                            var console = pilot.Console;
+
+                            if (console == null)
+                            {
+                                DebugTools.Assert(false);
+                                continue;
+                            }
+
+                            var sprint = mover.VelocityDir.sprinting;
+
+                            if (sprint.Equals(Vector2.Zero)) continue;
+
+                            var offsetRotation = EntityManager.GetComponent<TransformComponent>(console.OwnerUid).LocalRotation;
+                            sprint = offsetRotation.RotateVec(sprint);
+
+                            linearInput += sprint;
                         }
                         break;
                     default:
@@ -197,12 +225,8 @@ namespace Content.Server.Physics.Controllers
 
                         thrusterSystem.EnableLinearThrustDirection(shuttle, dir);
 
-                        // TODO: This isn't taking the inputs correctly for length / angle so need to do that.
-                        // Need to get direction as an angle and then use that for rotation; also need to multiply it by linearInput length in that direction
                         var index = (int) Math.Log2((int) dir);
                         var speed = shuttle.LinearThrusterImpulse[index] * length;
-
-                        speed /= 10f;
 
                         if (body.LinearVelocity.LengthSquared < 0.5f)
                         {
