@@ -4,6 +4,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.UserInterface;
 using Content.Shared.Audio;
 using Content.Shared.Crayon;
+using Content.Server.Decals;
 using Content.Shared.Decals;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
