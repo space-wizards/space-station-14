@@ -37,6 +37,11 @@ namespace Content.Server.Atmos.EntitySystems
 
         public float GetHeatCapacity(GasMixture mixture)
         {
+            if (mixture.Immutable && MathHelper.CloseTo(NumericsHelpers.HorizontalAdd(mixture.Moles), 0f))
+            {
+                return Atmospherics.SpaceHeatCapacity;
+            }
+
             Span<float> tmp = stackalloc float[mixture.Moles.Length];
             NumericsHelpers.Multiply(mixture.Moles, GasSpecificHeats, tmp);
             return MathF.Max(NumericsHelpers.HorizontalAdd(tmp), Atmospherics.MinimumHeatCapacity);
@@ -44,6 +49,11 @@ namespace Content.Server.Atmos.EntitySystems
 
         public float GetHeatCapacityArchived(GasMixture mixture)
         {
+            if (mixture.Immutable && MathHelper.CloseTo(NumericsHelpers.HorizontalAdd(mixture.MolesArchived), 0f))
+            {
+                return Atmospherics.SpaceHeatCapacity;
+            }
+
             Span<float> tmp = stackalloc float[mixture.Moles.Length];
             NumericsHelpers.Multiply(mixture.MolesArchived, GasSpecificHeats, tmp);
             return MathF.Max(NumericsHelpers.HorizontalAdd(tmp), Atmospherics.MinimumHeatCapacity);
