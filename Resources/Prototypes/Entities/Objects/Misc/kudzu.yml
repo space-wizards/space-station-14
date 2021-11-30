@@ -52,6 +52,15 @@
       groups:
         Flammable: [Touch]
         Extinguish: [Touch]
+      reactions:
+      - reagents: [WeedKiller, PlantBGone]
+        methods: [Touch]
+        effects:
+        - !type:HealthChange
+          scaled: true
+          damage:
+            types:
+              Heat: 10
     - type: AtmosExposed
     - type: Spreader
       growthResult: Kudzu
