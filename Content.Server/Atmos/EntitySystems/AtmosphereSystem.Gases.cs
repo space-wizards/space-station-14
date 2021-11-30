@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Reactions;
 using Content.Shared.Atmos;
-using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using DependencyAttribute = Robust.Shared.IoC.DependencyAttribute;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -37,25 +38,25 @@ namespace Content.Server.Atmos.EntitySystems
 
         public float GetHeatCapacity(GasMixture mixture)
         {
-            if (mixture.Immutable && MathHelper.CloseTo(NumericsHelpers.HorizontalAdd(mixture.Moles), 0f))
-            {
-                return Atmospherics.SpaceHeatCapacity;
-            }
-
-            Span<float> tmp = stackalloc float[mixture.Moles.Length];
-            NumericsHelpers.Multiply(mixture.Moles, GasSpecificHeats, tmp);
-            return MathF.Max(NumericsHelpers.HorizontalAdd(tmp), Atmospherics.MinimumHeatCapacity);
+            return GetHeatCapacityCalculation(mixture.Moles, mixture.Immutable);
         }
 
         public float GetHeatCapacityArchived(GasMixture mixture)
         {
-            if (mixture.Immutable && MathHelper.CloseTo(NumericsHelpers.HorizontalAdd(mixture.MolesArchived), 0f))
+            return GetHeatCapacityCalculation(mixture.MolesArchived, mixture.Immutable);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private float GetHeatCapacityCalculation(float[] moles, bool immutable)
+        {
+            // Little hack to make space gas mixtures have heat capacity, therefore allowing them to cool down rooms.
+            if (immutable && MathHelper.CloseTo(NumericsHelpers.HorizontalAdd(moles), 0f))
             {
                 return Atmospherics.SpaceHeatCapacity;
             }
 
-            Span<float> tmp = stackalloc float[mixture.Moles.Length];
-            NumericsHelpers.Multiply(mixture.MolesArchived, GasSpecificHeats, tmp);
+            Span<float> tmp = stackalloc float[moles.Length];
+            NumericsHelpers.Multiply(moles, GasSpecificHeats, tmp);
             return MathF.Max(NumericsHelpers.HorizontalAdd(tmp), Atmospherics.MinimumHeatCapacity);
         }
 
