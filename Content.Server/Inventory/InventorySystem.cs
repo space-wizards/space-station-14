@@ -20,6 +20,7 @@ namespace Content.Server.Inventory
 
             SubscribeLocalEvent<HumanInventoryControllerComponent, EntRemovedFromContainerMessage>(HandleRemovedFromContainer);
             SubscribeLocalEvent<InventoryComponent, EntRemovedFromContainerMessage>(HandleInvRemovedFromContainer);
+
             SubscribeLocalEvent<InventoryComponent, HighPressureEvent>(OnHighPressureEvent);
             SubscribeLocalEvent<InventoryComponent, LowPressureEvent>(OnLowPressureEvent);
             SubscribeLocalEvent<InventoryComponent, DamageModifyEvent>(OnDamageModify);
@@ -27,7 +28,11 @@ namespace Content.Server.Inventory
             SubscribeLocalEvent<InventoryComponent, SlipAttemptEvent>(OnSlipAttemptEvent);
             SubscribeLocalEvent<InventoryComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
             SubscribeLocalEvent<InventoryComponent, ModifyChangedTemperatureEvent>(OnModifyTemperature);
+
+
         }
+
+        #region EventRelay
 
         private void OnModifyTemperature(EntityUid uid, InventoryComponent component, ModifyChangedTemperatureEvent args)
         {
@@ -45,16 +50,6 @@ namespace Content.Server.Inventory
         private void OnRefreshMovespeed(EntityUid uid, InventoryComponent component, RefreshMovementSpeedModifiersEvent args)
         {
             RelayInventoryEvent(component, args);
-        }
-
-        private static void HandleInvRemovedFromContainer(EntityUid uid, InventoryComponent component, EntRemovedFromContainerMessage args)
-        {
-            component.ForceUnequip(args.Container, args.Entity);
-        }
-
-        private static void HandleRemovedFromContainer(EntityUid uid, HumanInventoryControllerComponent component, EntRemovedFromContainerMessage args)
-        {
-            component.CheckUniformExists();
         }
 
         private void OnHighPressureEvent(EntityUid uid, InventoryComponent component, HighPressureEvent args)
@@ -83,6 +78,18 @@ namespace Content.Server.Inventory
             {
                 RaiseLocalEvent(equipped.Uid, args, false);
             }
+        }
+
+        #endregion
+
+        private void HandleRemovedFromContainer(EntityUid uid, HumanInventoryControllerComponent component, EntRemovedFromContainerMessage args)
+        {
+            component.CheckUniformExists();
+        }
+
+        private void HandleInvRemovedFromContainer(EntityUid uid, InventoryComponent component, EntRemovedFromContainerMessage args)
+        {
+            component.ForceUnequip(args.Container, args.Entity);
         }
     }
 }

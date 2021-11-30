@@ -40,64 +40,7 @@ namespace Content.Server.Inventory.Components
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
-        [ViewVariables] private readonly Dictionary<Slots, ContainerSlot> _slotContainers = new();
-
         private KeyValuePair<Slots, (EntityUid entity, bool fits)>? _hoverEntity;
-
-        public IEnumerable<Slots> Slots => _slotContainers.Keys;
-
-        public event Action? OnItemChanged;
-
-        protected override void Initialize()
-        {
-            base.Initialize();
-
-            foreach (var slotName in InventoryInstance.SlotMasks)
-            {
-                if (slotName != EquipmentSlotDefines.Slots.NONE)
-                {
-                    AddSlot(slotName);
-                }
-            }
-        }
-
-        protected override void OnRemove()
-        {
-            var slots = _slotContainers.Keys.ToList();
-
-            foreach (var slot in slots)
-            {
-                if (TryGetSlotItem(slot, out ItemComponent? item))
-                {
-                    item.Owner.Delete();
-                }
-
-                RemoveSlot(slot);
-            }
-
-            base.OnRemove();
-        }
-
-        public IEnumerable<IEntity> GetAllHeldItems()
-        {
-            foreach (var (_, container) in _slotContainers)
-            {
-                foreach (var entity in container.ContainedEntities)
-                {
-                    yield return entity;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Helper to get container name for specified slot on this component
-        /// </summary>
-        /// <param name="slot"></param>
-        /// <returns></returns>
-        private string GetSlotString(Slots slot)
-        {
-            return Name + "_" + Enum.GetName(typeof(Slots), slot);
-        }
 
         /// <summary>
         ///     Gets the clothing equipped to the specified slot.
@@ -339,31 +282,6 @@ namespace Content.Server.Inventory.Components
         }
 
         /// <summary>
-        ///     Adds a new slot to this inventory component.
-        /// </summary>
-        /// <param name="slot">The name of the slot to add.</param>
-        /// <exception cref="InvalidOperationException">
-        ///     Thrown if the slot with specified name already exists.
-        /// </exception>
-        public ContainerSlot AddSlot(Slots slot)
-        {
-            if (HasSlot(slot))
-            {
-                throw new InvalidOperationException($"Slot '{slot}' already exists.");
-            }
-
-            Dirty();
-
-            var container = ContainerHelpers.CreateContainer<ContainerSlot>(Owner, GetSlotString(slot));
-            container.OccludesLight = false;
-            _slotContainers[slot] = container;
-
-            OnItemChanged?.Invoke();
-
-            return _slotContainers[slot];
-        }
-
-        /// <summary>
         ///     Removes a slot from this inventory component.
         /// </summary>
         /// <remarks>
@@ -387,16 +305,6 @@ namespace Content.Server.Inventory.Components
             OnItemChanged?.Invoke();
 
             Dirty();
-        }
-
-        /// <summary>
-        ///     Checks whether a slot with the specified name exists.
-        /// </summary>
-        /// <param name="slot">The slot name to check.</param>
-        /// <returns>True if the slot exists, false otherwise.</returns>
-        public bool HasSlot(Slots slot)
-        {
-            return _slotContainers.ContainsKey(slot);
         }
 
         /// <summary>
