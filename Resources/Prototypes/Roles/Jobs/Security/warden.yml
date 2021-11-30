@@ -1,7 +1,6 @@
 - type: job
   id: Warden
   name: "warden"
-  positions: 1
   startingGear: WardenGear
   departments:
   - Security

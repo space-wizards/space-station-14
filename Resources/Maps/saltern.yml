@@ -6097,7 +6097,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 575
-  type: AirlockVaultLocked
+  type: AirlockArmoryLocked
   components:
   - name: Armory
     type: MetaData
@@ -35316,6 +35316,12 @@ entities:
     type: Physics
   - color: '#7F007FFF'
     type: AtmosPipeColor
+- uid: 3170
+  type: SpawnPointWarden
+  components:
+  - pos: -5.5,14.5
+    parent: 853
+    type: Transform
 - uid: 3171
   type: CableApcExtension
   components:
@@ -35609,6 +35615,18 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
+- uid: 3199
+  type: LockerWardenFilled
+  components:
+  - pos: -11.5,13.5
+    parent: 853
+    type: Transform
+  - isPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 3200
   type: CableApcExtension
   components:
