@@ -77,7 +77,7 @@
 - type: entity
   id: CrateEmergencyInflatablewall
   name: inflatable wall crate
-  parent: CrateEngineering
+  parent: CratePlastic
   components:
   - type: StorageFill
     contents:
