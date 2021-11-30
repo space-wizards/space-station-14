@@ -1,9 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Fixes radio messages not sending., type: Fix}
-  id: 183
-  time: '2021-05-13T16:23:49.015456+00:00'
 - author: StrawberryMoses
   changes:
   - {message: Added missing flavor text to vending machines, type: Add}
@@ -2864,3 +2859,8 @@ Entries:
       rotation, type: Fix}
   id: 684
   time: '2021-11-30T13:38:13.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added inflatable wall crate to cargo under emergency tab., type: Add}
+  id: 685
+  time: '2021-11-30T20:48:58.0000000+00:00'
