@@ -7,7 +7,7 @@ namespace Content.Server.Cargo.Components
     [RegisterComponent]
     public class GalacticMarketComponent : SharedGalacticMarketComponent
     {
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new GalacticMarketState(GetProductIdList());
         }

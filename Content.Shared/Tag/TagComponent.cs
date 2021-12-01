@@ -32,7 +32,7 @@ namespace Content.Shared.Tag
             }
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             var tags = new string[_tags.Count];
             var i = 0;

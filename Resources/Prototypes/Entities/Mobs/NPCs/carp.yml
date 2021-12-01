@@ -18,6 +18,7 @@
       state: alive
       sprite: Mobs/Aliens/Carps/space.rsi
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
@@ -39,7 +40,7 @@
     visuals:
     - type: DamageStateVisualizer
       normal: alive
-      crit: dead
+      crit: crit
       dead: dead
 
 - type: entity
@@ -68,6 +69,7 @@
       state: alive
       sprite: Mobs/Aliens/Carps/holo.rsi
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle

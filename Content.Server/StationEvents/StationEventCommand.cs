@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Content.Server.StationEvents
 {
-    [AdminCommand(AdminFlags.Server)]
+    [AdminCommand(AdminFlags.Round)]
     public sealed class StationEventCommand : IConsoleCommand
     {
         public string Command => "events";

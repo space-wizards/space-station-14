@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
+using Content.Server.Administration.Logs;
 using Content.Server.Alert;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
+using Content.Shared.Database;
 using Content.Shared.MobState.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.EntitySystems;
@@ -200,6 +203,11 @@ namespace Content.Server.Nutrition.Components
             // _trySound(calculatedThreshold);
             if (calculatedThirstThreshold != _currentThirstThreshold)
             {
+                if (_currentThirstThreshold == ThirstThreshold.Dead)
+                    EntitySystem.Get<AdminLogSystem>().Add(LogType.Thirst, $"{Owner} has stopped taking dehydration damage");
+                else if (calculatedThirstThreshold == ThirstThreshold.Dead)
+                    EntitySystem.Get<AdminLogSystem>().Add(LogType.Thirst, $"{Owner} has started taking dehydration damage");
+
                 _currentThirstThreshold = calculatedThirstThreshold;
                 ThirstThresholdEffect();
                 Dirty();
@@ -212,7 +220,7 @@ namespace Content.Server.Nutrition.Components
             UpdateCurrentThreshold();
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new ThirstComponentState(_currentThirstThreshold);
         }

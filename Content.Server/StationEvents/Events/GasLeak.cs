@@ -92,7 +92,7 @@ namespace Content.Server.StationEvents.Events
             base.Startup();
 
             // Essentially we'll pick out a target amount of gas to leak, then a rate to leak it at, then work out the duration from there.
-            if (TryFindRandomTile(out _targetTile))
+            if (TryFindRandomTile(out _targetTile, out _targetStation, out _targetGrid, out _targetCoords))
             {
                 _foundTile = true;
 
@@ -167,41 +167,6 @@ namespace Content.Server.StationEvents.Events
                 atmosphereSystem.HotspotExpose(_targetGrid.Transform.GridID, _targetTile, 700f, 50f, true);
                 SoundSystem.Play(Filter.Pvs(_targetCoords), "/Audio/Effects/sparks4.ogg", _targetCoords);
             }
-        }
-
-        private bool TryFindRandomTile(out Vector2i tile)
-        {
-            tile = default;
-
-            _targetStation = _robustRandom.Pick(_entityManager.EntityQuery<StationComponent>().ToArray()).Station;
-            var possibleTargets = _entityManager.EntityQuery<StationComponent>()
-                .Where(x => x.Station == _targetStation).ToArray();
-            _targetGrid = _robustRandom.Pick(possibleTargets).Owner;
-
-            if (!_entityManager.TryGetComponent<IMapGridComponent>(_targetGrid!.Uid, out var gridComp))
-                return false;
-            var grid = gridComp.Grid;
-
-            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
-            var found = false;
-            var gridBounds = grid.WorldBounds;
-            var gridPos = grid.WorldPosition;
-
-            for (var i = 0; i < 10; i++)
-            {
-                var randomX = _robustRandom.Next((int) gridBounds.Left, (int) gridBounds.Right);
-                var randomY = _robustRandom.Next((int) gridBounds.Bottom, (int) gridBounds.Top);
-
-                tile = new Vector2i(randomX - (int) gridPos.X, randomY - (int) gridPos.Y);
-                if (atmosphereSystem.IsTileSpace(grid, tile) || atmosphereSystem.IsTileAirBlocked(grid, tile)) continue;
-                found = true;
-                _targetCoords = grid.GridTileToLocal(tile);
-                break;
-            }
-
-            if (!found) return false;
-
-            return true;
         }
     }
 }

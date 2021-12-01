@@ -29,6 +29,7 @@ namespace Content.Shared.Chemistry.Components
             public readonly FixedPoint2 BeakerCurrentVolume;
             public readonly FixedPoint2 BeakerMaxVolume;
             public readonly string ContainerName;
+            public readonly string Label;
 
             /// <summary>
             /// A list of the reagents and their amounts within the beaker/reagent container, if applicable.
@@ -45,7 +46,7 @@ namespace Content.Shared.Chemistry.Components
             public readonly FixedPoint2 BufferCurrentVolume;
             public readonly uint SelectedPillType;
 
-            public ChemMasterBoundUserInterfaceState(bool hasPower, bool hasBeaker, FixedPoint2 beakerCurrentVolume, FixedPoint2 beakerMaxVolume, string containerName,
+            public ChemMasterBoundUserInterfaceState(bool hasPower, bool hasBeaker, FixedPoint2 beakerCurrentVolume, FixedPoint2 beakerMaxVolume, string containerName, string label,
                 string dispenserName, IReadOnlyList<Solution.ReagentQuantity> containerReagents, IReadOnlyList<Solution.ReagentQuantity> bufferReagents, bool bufferModeTransfer, FixedPoint2 bufferCurrentVolume, uint selectedPillType)
             {
                 HasPower = hasPower;
@@ -53,6 +54,7 @@ namespace Content.Shared.Chemistry.Components
                 BeakerCurrentVolume = beakerCurrentVolume;
                 BeakerMaxVolume = beakerMaxVolume;
                 ContainerName = containerName;
+                Label = label;
                 DispenserName = dispenserName;
                 ContainerReagents = containerReagents;
                 BufferReagents = bufferReagents;
@@ -72,11 +74,12 @@ namespace Content.Shared.Chemistry.Components
             public readonly FixedPoint2 Amount;
             public readonly string Id = "";
             public readonly bool IsBuffer;
+            public readonly string Label = "";
             public readonly uint PillType;
             public readonly int PillAmount;
             public readonly int BottleAmount;
 
-            public UiActionMessage(UiAction action, FixedPoint2? amount, string? id, bool? isBuffer, uint? pillType, int? pillAmount, int? bottleAmount)
+            public UiActionMessage(UiAction action, FixedPoint2? amount, string? id, bool? isBuffer, string? label, uint? pillType, int? pillAmount, int? bottleAmount)
             {
                 Action = action;
                 if (Action == UiAction.ChemButton)
@@ -91,13 +94,22 @@ namespace Content.Shared.Chemistry.Components
                         Id = id;
                     }
 
-                    isBuffer = isBuffer.GetValueOrDefault();
+                    IsBuffer = isBuffer.GetValueOrDefault();
                 }
                 else
                 {
                     PillAmount = pillAmount.GetValueOrDefault();
                     PillType = pillType.GetValueOrDefault();
                     BottleAmount = bottleAmount.GetValueOrDefault();
+
+                    if (label == null)
+                    {
+                        Label = "null";
+                    }
+                    else
+                    {
+                        Label = label;
+                    }
                 }
             }
         }

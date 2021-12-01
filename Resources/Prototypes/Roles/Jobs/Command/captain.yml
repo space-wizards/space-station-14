@@ -19,11 +19,11 @@
   - HeadOfPersonnel
   - Command
   - Security
-  - Brig
+ # - Brig
   - Engineering
   - Medical
   - Cargo
-  - ResearchDirector
+ # - ResearchDirector
   - Research
   - Service
   - Maintenance

@@ -4,6 +4,7 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -15,6 +16,9 @@ namespace Content.Server.Chemistry.ReagentEffects
     [UsedImplicitly]
     public class FlammableReaction : ReagentEffect
     {
+        [DataField("multiplier")]
+        public float Multiplier = 0.05f;
+        
         public override bool ShouldLog => true;
         public override LogImpact LogImpact => LogImpact.Medium;
 
@@ -22,7 +26,7 @@ namespace Content.Server.Chemistry.ReagentEffects
         {
             if (!args.EntityManager.TryGetComponent(args.SolutionEntity, out FlammableComponent? flammable)) return;
 
-            EntitySystem.Get<FlammableSystem>().AdjustFireStacks(args.SolutionEntity, args.Quantity.Float() / 5f, flammable);
+            EntitySystem.Get<FlammableSystem>().AdjustFireStacks(args.SolutionEntity, args.Quantity.Float() * Multiplier, flammable);
             args.Source?.RemoveReagent(args.Reagent.ID, args.Quantity);
         }
     }
