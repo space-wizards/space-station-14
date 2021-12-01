@@ -93,7 +93,8 @@ namespace Content.Server.Toilet
             // maybe player trying to hide something inside cistern?
             else if (LidOpen)
             {
-                return _secretStash.TryHideItem(eventArgs.User, eventArgs.Using);
+                return false;
+                //return _secretStash.TryHideItem(eventArgs.User, eventArgs.Using);
             }
 
             return false;
@@ -104,7 +105,8 @@ namespace Content.Server.Toilet
             // trying get something from stash?
             if (LidOpen)
             {
-                var gotItem = _secretStash.TryGetItem(eventArgs.User);
+                var gotItem = false;
+                //var gotItem = _secretStash.TryGetItem(eventArgs.User);
 
                 if (gotItem)
                     return true;
@@ -126,7 +128,7 @@ namespace Content.Server.Toilet
         {
             if (inDetailsRange && LidOpen)
             {
-                if (_secretStash.HasItemInside())
+                //if (_secretStash.HasItemInside())
                 {
                     message.AddMarkup(Loc.GetString("toilet-component-on-examine-found-hidden-item"));
                 }

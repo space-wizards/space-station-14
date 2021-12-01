@@ -2,6 +2,7 @@
 using Content.Server.Popups;
 using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.Interaction;
 using Robust.Shared.Audio;
@@ -16,6 +17,7 @@ namespace Content.Server.Plants.Systems
     {
         [Dependency] private readonly SecretStashSystem _stashSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly ActionBlockerSystem _blocker = default!;
 
         public override void Initialize()
         {
@@ -32,12 +34,24 @@ namespace Content.Server.Plants.Systems
 
         private void OnInteractUsing(EntityUid uid, PottedPlantHideComponent component, InteractUsingEvent args)
         {
+            if (args.Handled)
+                return;
+
+            // standard interaction checks
+            if (!_blocker.CanInteract(args.UserUid)) return;
+
             Rustle(uid, component);
-            args.Handled = _stashSystem.TryHideItem(uid, args.UsedUid, args.UsedUid);
+            args.Handled = _stashSystem.TryHideItem(uid, args.UserUid, args.UsedUid);
         }
 
         private void OnInteractHand(EntityUid uid, PottedPlantHideComponent component, InteractHandEvent args)
         {
+            if (args.Handled)
+                return;
+
+            // standard interaction checks
+            if (!_blocker.CanInteract(args.UserUid)) return;
+
             Rustle(uid, component);
 
             var gotItem = _stashSystem.TryGetItem(uid, args.UserUid);
