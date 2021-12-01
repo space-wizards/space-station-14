@@ -23,6 +23,7 @@
     damage:
       types:
         Blunt: 10
+        Heat: 10 # Hotfix to make kudzu die.
   - type: ItemStatus
   - type: RefillableSolution
     solution: Welder

@@ -22,7 +22,7 @@ namespace Content.Server.Lathe.Components
         [DataField("StorageLimit")]
         private int _storageLimit = -1;
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new MaterialStorageState(Storage);
         }

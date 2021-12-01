@@ -142,7 +142,7 @@ namespace Content.Server.Suspicion
             message.AddMarkup(tooltip);
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             if (Role == null)
             {

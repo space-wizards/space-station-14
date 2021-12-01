@@ -6,8 +6,6 @@ using Content.Client.Verbs;
 using Content.Client.Viewport;
 using Content.Shared.CCVar;
 using Content.Shared.Input;
-using Content.Shared.Interaction.Helpers;
-using Content.Shared.Verbs;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -121,8 +119,12 @@ namespace Content.Client.ContextMenu.UI
             }
 
             // do some other server-side interaction?
-            if (args.Function == EngineKeyFunctions.Use || args.Function == ContentKeyFunctions.AltActivateItemInWorld || args.Function == ContentKeyFunctions.Point ||
-                args.Function == ContentKeyFunctions.TryPullObject || args.Function == ContentKeyFunctions.MovePulledObject)
+            if (args.Function == EngineKeyFunctions.Use ||
+                args.Function == ContentKeyFunctions.ActivateItemInWorld ||
+                args.Function == ContentKeyFunctions.AltActivateItemInWorld ||
+                args.Function == ContentKeyFunctions.Point ||
+                args.Function == ContentKeyFunctions.TryPullObject ||
+                args.Function == ContentKeyFunctions.MovePulledObject)
             {
                 var inputSys = _systemManager.GetEntitySystem<InputSystem>();
 
@@ -141,11 +143,6 @@ namespace Content.Client.ContextMenu.UI
                 _verbSystem.CloseAllMenus();
                 args.Handle();
                 return;
-            }
-
-            if (_itemSlotManager.OnButtonPressed(args, entity))
-            {
-                _verbSystem.CloseAllMenus();
             }
         }
 

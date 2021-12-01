@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry;
@@ -18,6 +19,7 @@ namespace Content.Server.Nutrition.EntitySystems
     {
         [Dependency] private readonly ReactiveSystem _reactiveSystem = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
 
         private const float UpdateTimer = 3f;
 
@@ -97,8 +99,8 @@ namespace Content.Server.Nutrition.EntitySystems
                     !containerManager.Owner.TryGetComponent(out BloodstreamComponent? bloodstream))
                     continue;
 
-                _reactiveSystem.ReactionEntity(containerManager.Owner.Uid, ReactionMethod.Ingestion, inhaledSolution);
-                bloodstream.TryTransferSolution(inhaledSolution);
+                _reactiveSystem.ReactionEntity(containerManager.OwnerUid, ReactionMethod.Ingestion, inhaledSolution);
+                _bloodstreamSystem.TryAddToBloodstream(containerManager.OwnerUid, inhaledSolution, bloodstream);
             }
 
             _timer -= UpdateTimer;
