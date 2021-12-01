@@ -46,5 +46,12 @@ namespace Content.Client.Paper.UI
                 }
             }
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            if (!disposing) return;
+            _window?.Dispose();
+        }
     }
 }

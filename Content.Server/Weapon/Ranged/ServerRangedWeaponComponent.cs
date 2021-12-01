@@ -134,7 +134,7 @@ namespace Content.Server.Weapon.Ranged
             }
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new RangedWeaponComponentState(FireRateSelector);
         }

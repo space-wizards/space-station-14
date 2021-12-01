@@ -8,6 +8,7 @@ using Content.Server.GameTicking;
 using Content.Server.GameTicking.Events;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
+using Content.Shared.Database;
 using Prometheus;
 using Robust.Shared;
 using Robust.Shared.Configuration;
@@ -176,6 +177,8 @@ public partial class AdminLogSystem : SharedAdminLogSystem
 
     private async Task SaveLogs()
     {
+        _accumulatedFrameTime = 0;
+
         // TODO ADMIN LOGS array pool
         var copy = new List<QueuedLog>(_logQueue.Count + _preRoundLogQueue.Count);
 
@@ -199,8 +202,6 @@ public partial class AdminLogSystem : SharedAdminLogSystem
 
         _preRoundLogQueue.Clear();
         PreRoundQueue.Set(0);
-
-        _accumulatedFrameTime = 0;
 
         // ship the logs to Azkaban
         var task = Task.Run(async () =>

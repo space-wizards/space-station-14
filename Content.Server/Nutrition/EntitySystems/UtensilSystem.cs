@@ -54,7 +54,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!userUid.InRangeUnobstructed(targetUid, popup: true))
                 return false;
 
-            return _foodSystem.TryUseFood(targetUid, userUid, userUid);
+            return _foodSystem.TryUseFood(targetUid, userUid);
         }
 
         /// <summary>

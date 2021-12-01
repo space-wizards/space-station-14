@@ -8,6 +8,7 @@
     groups:
       Flammable: [Touch]
       Extinguish: [Touch]
+      Acidic: [Touch, Ingestion]
   - type: UtilityAI
     behaviorSets:
     # - Clothing
@@ -141,7 +142,7 @@
     damage:
       types:
         Blunt: 1 #per second, scales with pressure and other constants.
-  - type: Respirator
+  - type: ThermalRegulator
     metabolismHeat: 800
     radiatedHeat: 100
     implicitHeatRegulation: 250
@@ -149,6 +150,7 @@
     shiveringHeatRegulation: 500
     normalBodyTemperature: 310.15
     thermalRegulationTemperatureThreshold: 25
+  - type: Respirator
     needsGases:
       Oxygen: 0.00060763888
     producesGases:

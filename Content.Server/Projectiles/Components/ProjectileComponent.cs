@@ -38,7 +38,7 @@ namespace Content.Server.Projectiles.Components
             Dirty();
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new ProjectileComponentState(Shooter, IgnoreShooter);
         }

@@ -53,7 +53,18 @@ namespace Content.Server.Projectiles.Components
             _startTime = _gameTiming.CurTime;
             _deathTime = _startTime + TimeSpan.FromSeconds(1);
 
-            var afterEffect = AfterEffects(user.Transform.Coordinates, angle, distance, 1.0f);
+            var mapManager = IoCManager.Resolve<IMapManager>();
+
+            // We'll get the effects relative to the grid / map of the firer
+            var gridOrMap = user.Transform.GridID == GridId.Invalid ? mapManager.GetMapEntityId(user.Transform.MapID) :
+                mapManager.GetGrid(user.Transform.GridID).GridEntityId;
+
+            var parentXform = Owner.EntityManager.GetComponent<TransformComponent>(gridOrMap);
+
+            var localCoordinates = new EntityCoordinates(gridOrMap, parentXform.InvWorldMatrix.Transform(user.Transform.WorldPosition));
+            var localAngle = angle - parentXform.WorldRotation;
+
+            var afterEffect = AfterEffects(localCoordinates, localAngle, distance, 1.0f);
             if (afterEffect != null)
             {
                 effectSystem.CreateParticle(afterEffect);
@@ -62,13 +73,13 @@ namespace Content.Server.Projectiles.Components
             // if we're too close we'll stop the impact and muzzle / impact sprites from clipping
             if (distance > 1.0f)
             {
-                var impactEffect = ImpactFlash(distance, angle);
+                var impactEffect = ImpactFlash(distance, localAngle);
                 if (impactEffect != null)
                 {
                     effectSystem.CreateParticle(impactEffect);
                 }
 
-                var muzzleEffect = MuzzleFlash(user.Transform.Coordinates, angle);
+                var muzzleEffect = MuzzleFlash(localCoordinates, localAngle);
                 if (muzzleEffect != null)
                 {
                     effectSystem.CreateParticle(muzzleEffect);
@@ -78,8 +89,8 @@ namespace Content.Server.Projectiles.Components
             if (hitEntity != null && _soundHitWall != null)
             {
                 // TODO: No wall component so ?
-                var offset = angle.ToVec().Normalized / 2;
-                var coordinates = user.Transform.Coordinates.Offset(offset);
+                var offset = localAngle.ToVec().Normalized / 2;
+                var coordinates = localCoordinates.Offset(offset);
                 SoundSystem.Play(Filter.Pvs(coordinates), _soundHitWall.GetSound(), coordinates);
             }
 

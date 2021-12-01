@@ -1,8 +1,6 @@
 - type: job
   id: StationEngineer
   name: "station engineer"
-  positions: 3
-  spawnPositions: 2
   startingGear: StationEngineerGear
   departments:
   - Engineering

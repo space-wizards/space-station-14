@@ -47,7 +47,7 @@ namespace Content.Shared.Shuttles.Components
             Console = shuttleConsoleComponent;
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new PilotComponentState(Console?.OwnerUid);
         }
