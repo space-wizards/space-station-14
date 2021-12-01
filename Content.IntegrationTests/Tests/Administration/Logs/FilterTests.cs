@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
-using Content.Server.GameTicking;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
@@ -37,20 +37,26 @@ public class FilterTests : ContentIntegrationTest
         var sAdminLogSystem = sSystems.GetEntitySystem<AdminLogSystem>();
 
         var commonGuid = Guid.NewGuid();
-        var guids = new[] {Guid.NewGuid(), Guid.NewGuid()};
+        var firstGuid = Guid.NewGuid();
+        var secondGuid = Guid.NewGuid();
 
-        for (var i = 0; i < 2; i++)
+        await server.WaitPost(() =>
         {
-            await server.WaitPost(() =>
-            {
-                var coordinates = GetMainEntityCoordinates(sMaps);
-                var entity = sEntities.SpawnEntity(null, coordinates);
+            var coordinates = GetMainEntityCoordinates(sMaps);
+            var entity = sEntities.SpawnEntity(null, coordinates);
 
-                sAdminLogSystem.Add(LogType.Unknown, $"{entity:Entity} test log: {commonGuid} {guids[i]}");
-            });
+            sAdminLogSystem.Add(LogType.Unknown, $"{entity:Entity} test log: {commonGuid} {firstGuid}");
+        });
 
-            await server.WaitRunTicks(100);
-        }
+        Thread.Sleep(2000);
+
+        await server.WaitPost(() =>
+        {
+            var coordinates = GetMainEntityCoordinates(sMaps);
+            var entity = sEntities.SpawnEntity(null, coordinates);
+
+            sAdminLogSystem.Add(LogType.Unknown, $"{entity:Entity} test log: {commonGuid} {secondGuid}");
+        });
 
         await WaitUntil(server, async () =>
         {
@@ -63,13 +69,13 @@ public class FilterTests : ContentIntegrationTest
             {
                 case DateOrder.Ascending:
                     // Oldest first
-                    firstGuidStr = guids[0].ToString();
-                    secondGuidStr = guids[1].ToString();
+                    firstGuidStr = firstGuid.ToString();
+                    secondGuidStr = secondGuid.ToString();
                     break;
                 case DateOrder.Descending:
                     // Newest first
-                    firstGuidStr = guids[1].ToString();
-                    secondGuidStr = guids[0].ToString();
+                    firstGuidStr = secondGuid.ToString();
+                    secondGuidStr = firstGuid.ToString();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(order), order, null);

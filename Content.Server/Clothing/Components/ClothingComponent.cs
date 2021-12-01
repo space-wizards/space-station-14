@@ -52,7 +52,7 @@ namespace Content.Server.Clothing.Components
             }
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new ClothingComponentState(ClothingEquippedPrefix, EquippedPrefix);
         }

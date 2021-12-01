@@ -138,7 +138,7 @@ namespace Content.Shared.Body.Components
             Dirty();
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             var mechanismIds = new EntityUid[_mechanisms.Count];
 

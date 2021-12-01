@@ -8,7 +8,7 @@
   supervisors: "the head of security"
   access:
   - Security
-  - Brig
+ # - Brig
   - Maintenance
   - Service
 

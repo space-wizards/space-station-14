@@ -4,7 +4,6 @@ using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Alert;
 using Content.Server.Atmos;
-using Content.Server.Body.Behavior;
 using Content.Server.Body.Components;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
@@ -23,6 +22,8 @@ namespace Content.Server.Body.Systems
     {
         [Dependency] private readonly DamageableSystem _damageableSys = default!;
         [Dependency] private readonly AdminLogSystem _logSys = default!;
+        [Dependency] private readonly BodySystem _bodySystem = default!;
+        [Dependency] private readonly LungSystem _lungSystem = default!;
 
         public override void Update(float frameTime)
         {
@@ -136,10 +137,16 @@ namespace Content.Server.Body.Systems
             if (!Resolve(uid, ref bloodstream, ref body, false))
                 return;
 
-            var lungs = body.GetMechanismBehaviors<LungBehavior>().ToArray();
+            var lungs = _bodySystem.GetComponentsOnMechanisms<LungComponent>(uid, body).ToArray();
 
             var needs = NeedsAndDeficit(respirator, frameTime);
             var used = 0f;
+
+            foreach (var (lung, mech) in lungs)
+            {
+                _lungSystem.UpdateLung(lung.OwnerUid, frameTime, lung, mech);
+            }
+
             foreach (var (gas, amountNeeded) in needs)
             {
                 var bloodstreamAmount = bloodstream.Air.GetMoles(gas);
@@ -150,9 +157,9 @@ namespace Content.Server.Body.Systems
                     if (!EntityManager.GetComponent<MobStateComponent>(uid).IsCritical())
                     {
                         // Panic inhale
-                        foreach (var lung in lungs)
+                        foreach (var (lung, mech) in lungs)
                         {
-                            lung.Gasp();
+                            _lungSystem.Gasp(lung.OwnerUid, lung, mech);
                         }
                     }
 

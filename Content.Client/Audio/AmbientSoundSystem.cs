@@ -10,6 +10,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Audio
 {
@@ -19,6 +20,7 @@ namespace Content.Client.Audio
     public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
     {
         [Dependency] private IEntityLookup _lookup = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
@@ -74,6 +76,8 @@ namespace Content.Client.Audio
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
+
+            if (!_gameTiming.IsFirstTimePredicted) return;
 
             if (_cooldown <= 0f)
             {

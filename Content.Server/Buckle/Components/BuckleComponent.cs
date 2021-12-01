@@ -390,7 +390,7 @@ namespace Content.Server.Buckle.Components
             base.Shutdown();
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             int? drawDepth = null;
 

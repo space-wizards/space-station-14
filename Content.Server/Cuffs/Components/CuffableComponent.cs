@@ -56,7 +56,7 @@ namespace Content.Server.Cuffs.Components
             Owner.EnsureComponentWarn<HandsComponent>();
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             // there are 2 approaches i can think of to handle the handcuff overlay on players
             // 1 - make the current RSI the handcuff type that's currently active. all handcuffs on the player will appear the same.
