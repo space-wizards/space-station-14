@@ -5,7 +5,9 @@ using System.Globalization;
 using Content.Shared.CCVar;
 using Robust.Shared;
 using Robust.Shared.Configuration;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 
 
 namespace Content.Server.Chat.Managers;
@@ -17,27 +19,33 @@ public class ChatSanitizationManager : IChatSanitizationManager
     private static readonly Dictionary<string, string> SmilelyToEmote = new()
     {
         // I could've done this with regex, but felt it wasn't the right idea.
-        { ":)", "smiles" },
-        { ":]", "smiles" },
-        { "(:", "smiles" },
-        { "[:", "smiles" },
-        { ":(", "frowns" },
-        { "):", "frowns" },
-        { "]:", "frowns" },
-        { ":[", "frowns" },
-        { ":D", "smiles widely" },
-        { "D:", "frowns deeply" },
-        { ":O", "looks surprised" },
-        { ":3", "smiles" }, //nope
-        { ":S", "looks uncertain" },
-        { ":>", "grins" },
-        { ":<", "pouts" }, //maybe smth better for this
-        { "xD", "laughs" },
-        { ";-;", "cries" },
-        { ";_;", "cries" },
+        { ":)", "chatsan-smiles" },
+        { ":]", "chatsan-smiles" },
+        { "(:", "chatsan-smiles" },
+        { "[:", "chatsan-smiles" },
+        { ":(", "chatsan-frowns" },
+        { "):", "chatsan-frowns" },
+        { "]:", "chatsan-frowns" },
+        { ":[", "chatsan-frowns" },
+        { ":D", "chatsan-smiles-widely" },
+        { "D:", "chatsan-frowns-deeply" },
+        { ":O", "chatsan-surprised" },
+        { ":3", "chatsan-smiles" }, //nope
+        { ":S", "chatsan-uncertain" },
+        { ":>", "chatsan-grins" },
+        { ":<", "chatsan-pouts" }, //maybe smth better for this
+        { "xD", "chatsan-laughs" },
+        { ";-;", "chatsan-cries" },
+        { ";_;", "chatsan-cries" },
+        { ":u", "chatsan-smiles-smugly" },
+        { ":v", "chatsan-smiles-smugly" },
+        { ">:i", "chatsan-annoyed" },
+        { ":i", "chatsan-sighs" },
+        { ":p", "chatsan-stick-out-tongue" },
+        { ":b", "chatsan-stick-out-tongue" },
     };
 
-    public bool TrySanitizeOutSmilies(string input, out string sanitized, [NotNullWhen(true)] out string? emote)
+    public bool TrySanitizeOutSmilies(string input, IEntity speaker, out string sanitized, [NotNullWhen(true)] out string? emote)
     {
         if (!_configurationManager.GetCVar(CCVars.ChatSanitizerEnabled))
         {
@@ -54,7 +62,7 @@ public class ChatSanitizationManager : IChatSanitizationManager
             {
                 var idx = input.LastIndexOf(smiley, StringComparison.Ordinal);
                 sanitized = input.Remove(idx).TrimEnd();
-                emote = SmilelyToEmote[smiley];
+                emote = Loc.GetString(SmilelyToEmote[smiley], ("ent", speaker));
                 return true;
             }
         }
