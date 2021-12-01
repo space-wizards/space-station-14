@@ -102,8 +102,8 @@ namespace Content.Shared.Hands
             if (hand.Name == hands.ActiveHand)
                 RaiseLocalEvent(entity.Uid, new HandDeselectedEvent(uid, entity.Uid), false);
 
-            if (EntityManager.TryGetComponent(entity.Uid, out SharedItemComponent? item))
-                item.RemovedFromSlot();
+            if (EntityManager.TryGetComponent(entity.Uid, out SharedSpriteComponent? component))
+                component.Visible = true;
 
             hands.Dirty();
         }
@@ -133,16 +133,16 @@ namespace Content.Shared.Hands
             if (hand.Name == hands.ActiveHand)
                 RaiseLocalEvent(entity.Uid, new HandSelectedEvent(uid, entity.Uid), false);
 
-            if (EntityManager.TryGetComponent(entity.Uid, out SharedItemComponent? item))
-                item.EquippedToSlot();
+            if (EntityManager.TryGetComponent(entity.Uid, out SharedSpriteComponent? component))
+                component.Visible = false;
 
             entity.Transform.LocalPosition = Vector2.Zero;
 
             hands.Dirty();
         }
 
-        public abstract void PickupAnimation(EntityUid uid, IEntity item, bool animateUser,
-            EntityCoordinates initialPosition, Vector2 finalPosition);
+        public abstract void PickupAnimation(IEntity item, EntityCoordinates initialPosition, Vector2 finalPosition,
+            EntityUid? exclude);
         #endregion
 
         #region visuals

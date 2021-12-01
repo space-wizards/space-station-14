@@ -33,7 +33,7 @@ namespace Content.Client.Hands
             SubscribeLocalEvent<HandsComponent, ComponentRemove>(HandleCompRemove);
             SubscribeLocalEvent<HandsComponent, ComponentHandleState>(HandleComponentState);
 
-            SubscribeAllEvent<PickupAnimationEvent>(HandlePickupAnimation);
+            SubscribeNetworkEvent<PickupAnimationEvent>(HandlePickupAnimation);
         }
 
         #region StateHandling
@@ -97,8 +97,8 @@ namespace Content.Client.Hands
             PickupAnimation(item, msg.InitialPosition, msg.FinalPosition);
         }
 
-        public override void PickupAnimation(EntityUid uid, IEntity item, bool animateUser,
-            EntityCoordinates initialPosition, Vector2 finalPosition)
+        public override void PickupAnimation(IEntity item, EntityCoordinates initialPosition, Vector2 finalPosition,
+            EntityUid? exclude)
         {
             PickupAnimation(item, initialPosition, finalPosition);
         }

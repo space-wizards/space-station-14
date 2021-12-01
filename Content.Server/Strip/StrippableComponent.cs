@@ -271,7 +271,7 @@ namespace Content.Server.Strip
             if (result != DoAfterStatus.Finished) return;
 
             userHands.Drop(hand);
-            hands.TryPickupEntity(hand, item!.Owner, true, checkActionBlocker: false);
+            hands.TryPickupEntity(hand, item!.Owner, animateUser: true);
             UpdateSubscribed();
         }
 

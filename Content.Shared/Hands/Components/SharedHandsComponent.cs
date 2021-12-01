@@ -481,17 +481,17 @@ namespace Content.Shared.Hands.Components
         /// <summary>
         ///     Tries to pick up an entity to a specific hand.
         /// </summary>
-        public bool TryPickupEntity(string handName, IEntity entity, bool animateUser, bool checkActionBlocker = true)
+        public bool TryPickupEntity(string handName, IEntity entity, bool checkActionBlocker = true, bool animateUser = false)
         {
             if (!TryGetHand(handName, out var hand))
                 return false;
 
-            return TryPickupEntity(hand, entity, animateUser, checkActionBlocker);
+            return TryPickupEntity(hand, entity, checkActionBlocker, animateUser);
         }
 
-        public bool TryPickupEntityToActiveHand(IEntity entity, bool animateUser, bool checkActionBlocker = true)
+        public bool TryPickupEntityToActiveHand(IEntity entity, bool checkActionBlocker = true, bool animateUser = false)
         {
-            return ActiveHand != null && TryPickupEntity(ActiveHand, entity, animateUser, checkActionBlocker);
+            return ActiveHand != null && TryPickupEntity(ActiveHand, entity, checkActionBlocker, animateUser);
         }
 
         /// <summary>
@@ -509,7 +509,7 @@ namespace Content.Shared.Hands.Components
             return true;
         }
 
-        private bool TryPickupEntity(Hand hand, IEntity entity, bool animateUser, bool checkActionBlocker = true)
+        private bool TryPickupEntity(Hand hand, IEntity entity, bool checkActionBlocker = true, bool animateUser = false)
         {
             if (!CanInsertEntityIntoHand(hand, entity))
                 return false;
@@ -524,7 +524,7 @@ namespace Content.Shared.Hands.Components
             var finalPosition = Owner.Transform.LocalPosition;
             if (!finalPosition.EqualsApprox(initialPosition.Position))
             {
-                handSys.PickupAnimation(OwnerUid, entity, animateUser, initialPosition, finalPosition);
+                handSys.PickupAnimation(entity, initialPosition, finalPosition, animateUser ? null : OwnerUid);
             }
 
             handSys.PutEntityIntoHand(OwnerUid, hand, entity, this);

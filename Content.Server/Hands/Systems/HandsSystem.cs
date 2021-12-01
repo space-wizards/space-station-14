@@ -107,13 +107,13 @@ namespace Content.Server.Hands.Systems
             _logSystem.Add(LogType.Pickup, LogImpact.Low, $"{EntityManager.GetEntity(uid)} picked up {entity}");
         }
 
-        public override void PickupAnimation(EntityUid uid, IEntity item, bool animateUser,
-            EntityCoordinates initialPosition, Vector2 finalPosition)
+        public override void PickupAnimation(IEntity item, EntityCoordinates initialPosition, Vector2 finalPosition,
+            EntityUid? exclude)
         {
-            var filter = Filter.Pvs(uid);
+            var filter = Filter.Pvs(item.Uid);
 
-            if (!animateUser && EntityManager.TryGetComponent(uid, out ActorComponent actor))
-                filter = filter.RemovePlayer(actor.PlayerSession);
+            if (exclude != null)
+                filter = filter.RemoveWhereAttachedEntity(entity => entity == exclude);
 
             RaiseNetworkEvent(new PickupAnimationEvent(item.Uid, initialPosition, finalPosition), filter);
         }
@@ -286,7 +286,7 @@ namespace Content.Server.Hands.Systems
                     var lastStoredEntity = Enumerable.Last(storageComponent.StoredEntities);
                     if (storageComponent.Remove(lastStoredEntity))
                     {
-                        if (!hands.TryPickupEntityToActiveHand(lastStoredEntity, true))
+                        if (!hands.TryPickupEntityToActiveHand(lastStoredEntity, animateUser: true))
                             lastStoredEntity.Transform.Coordinates = plyEnt.Transform.Coordinates;
                     }
                 }

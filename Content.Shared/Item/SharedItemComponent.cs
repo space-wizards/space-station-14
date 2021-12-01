@@ -150,7 +150,7 @@ namespace Content.Shared.Item
             if (activeHand == null)
                 return false;
 
-            hands.TryPickupEntityToActiveHand(Owner, true);
+            hands.TryPickupEntityToActiveHand(Owner, animateUser: true);
             return true;
         }
 
@@ -165,18 +165,14 @@ namespace Content.Shared.Item
 
         public void RemovedFromSlot()
         {
-            foreach (var component in Owner.GetAllComponents<SharedSpriteComponent>())
-            {
+            if (Owner.EntityManager.TryGetComponent(OwnerUid, out SharedSpriteComponent component))
                 component.Visible = true;
-            }
         }
 
         public virtual void EquippedToSlot()
         {
-            foreach (var component in Owner.GetAllComponents<SharedSpriteComponent>())
-            {
+            if (Owner.EntityManager.TryGetComponent(OwnerUid, out SharedSpriteComponent component))
                 component.Visible = false;
-            }
         }
     }
 
