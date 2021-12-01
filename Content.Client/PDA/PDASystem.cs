@@ -1,4 +1,5 @@
 using Content.Shared.PDA;
+using Robust.Shared.GameObjects;
 
 namespace Content.Client.PDA
 {

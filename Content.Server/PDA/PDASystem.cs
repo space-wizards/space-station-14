@@ -1,4 +1,3 @@
-using Content.Server.Access.Components;
 using Content.Server.Light.Components;
 using Content.Server.Light.EntitySystems;
 using Content.Server.Light.Events;
@@ -24,23 +23,18 @@ namespace Content.Server.PDA
         {
             base.Initialize();
 
-            SubscribeLocalEvent<PDAComponent, ComponentInit>(OnComponentInit);
-
             SubscribeLocalEvent<PDAComponent, ActivateInWorldEvent>(OnActivateInWorld);
             SubscribeLocalEvent<PDAComponent, UseInHandEvent>(OnUse);
             SubscribeLocalEvent<PDAComponent, LightToggleEvent>(OnLightToggle);
         }
 
-        protected override void OnComponentInit(EntityUid uid, SharedPDAComponent pda, ComponentInit args)
+        protected override void OnComponentInit(EntityUid uid, PDAComponent pda, ComponentInit args)
         {
             base.OnComponentInit(uid, pda, args);
 
             var ui = pda.Owner.GetUIOrNull(PDAUiKey.Key);
             if (ui != null)
                 ui.OnReceiveMessage += (msg) => OnUIMessage(pda, msg);
-
-            if (pda.IdCard != null)
-                pda.IdSlot.StartingItem = pda.IdCard;
         }
 
 

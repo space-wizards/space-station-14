@@ -5,6 +5,7 @@ using Content.Server.PDA;
 using Content.Shared.Access;
 using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
+using Content.Shared.PDA;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using System.Diagnostics.CodeAnalysis;

@@ -40,7 +40,7 @@ namespace Content.Shared.Verbs
             // The one exception here is the "other" verb type, which has 3-4 verbs + all the debug verbs.
 
             // Find the requested verb.
-            if (verbs.TryGetValue(args.Verb, out var verb))
+            if (verbs.TryGetValue(args.RequestedVerb, out var verb))
                 ExecuteVerb(verb, userEntity.Uid, args.Target);
         }
 

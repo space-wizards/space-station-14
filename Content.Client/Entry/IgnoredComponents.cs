@@ -45,7 +45,6 @@ namespace Content.Client.Entry
             "ResearchServer",
             "ResearchPointSource",
             "ResearchClient",
-            "IdCard",
             "Access",
             "AccessReader",
             "IdCardConsole",

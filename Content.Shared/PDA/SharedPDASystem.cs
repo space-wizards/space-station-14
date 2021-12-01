@@ -1,4 +1,4 @@
-using Content.Shared.Access.Components;
+using Content.Shared.Access;
 using Content.Shared.Containers.ItemSlots;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -23,6 +23,9 @@ namespace Content.Shared.PDA
 
         protected virtual void OnComponentInit(EntityUid uid, PDAComponent pda, ComponentInit args)
         {
+            if (pda.IdCard != null)
+                pda.IdSlot.StartingItem = pda.IdCard;
+
             ItemSlotsSystem.AddItemSlot(uid, $"{pda.Name}-id", pda.IdSlot);
             ItemSlotsSystem.AddItemSlot(uid, $"{pda.Name}-pen", pda.PenSlot);
         }
