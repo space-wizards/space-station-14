@@ -1,6 +1,5 @@
 ﻿using System;
 using Content.Server.Atmos;
-using Content.Server.Body.Behavior;
 using Content.Server.Body.Systems;
 using Content.Shared.Atmos;
 using Robust.Shared.Analyzers;
@@ -21,7 +20,6 @@ public class LungComponent : Component
     public TimeSpan LastGaspPopupTime;
 
     [DataField("air")]
-    [ViewVariables]
     public GasMixture Air { get; set; } = new()
     {
         Volume = 6,
@@ -29,13 +27,12 @@ public class LungComponent : Component
     };
 
     [DataField("gaspPopupCooldown")]
-    [ViewVariables]
     public TimeSpan GaspPopupCooldown { get; private set; } = TimeSpan.FromSeconds(8);
 
-    [ViewVariables] public LungStatus Status { get; set; }
+    [ViewVariables]
+    public LungStatus Status { get; set; }
 
     [DataField("cycleDelay")]
-    [ViewVariables]
     public float CycleDelay { get; set; } = 2;
 }
 

@@ -142,7 +142,7 @@ public class LungSystem : EntitySystem
     /// <summary>
     ///     Inhales directly from a given mixture.
     /// </summary>
-    private void TakeGasFrom(EntityUid uid, float frameTime, GasMixture from,
+    public void TakeGasFrom(EntityUid uid, float frameTime, GasMixture from,
         LungComponent? lung=null,
         MechanismComponent? mech=null)
     {
@@ -187,7 +187,7 @@ public class LungSystem : EntitySystem
     /// <summary>
     ///     Pushes gas from the lungs to a gas mixture.
     /// </summary>
-    private void PushGasTo(EntityUid uid, GasMixture to,
+    public void PushGasTo(EntityUid uid, GasMixture to,
         LungComponent? lung=null,
         MechanismComponent? mech=null)
     {
@@ -201,7 +201,7 @@ public class LungSystem : EntitySystem
         if (!EntityManager.TryGetComponent(mech.Body.OwnerUid, out BloodstreamComponent? bloodstream))
             return;
 
-        _bloodstreamSystem.PumpToxins(uid, lung.Air, bloodstream);
+        _bloodstreamSystem.PumpToxins(mech.Body.OwnerUid, lung.Air, bloodstream);
 
         var lungRemoved = lung.Air.RemoveRatio(0.5f);
         _atmosSys.Merge(to, lungRemoved);
