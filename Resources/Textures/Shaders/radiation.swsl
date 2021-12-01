@@ -85,7 +85,7 @@ void fragment() {
 
 	// Extremely hacky way to detect FoV cones
 	highp float osum = warped.r + warped.g + warped.b;
-	highp float osr = osum > 0.1 ? 1.0 : 10 * osum;
+	highp float osr = osum > 0.1 ? 1.0 : 10.0 * osum;
 
 	// Apply overlay
 	// FYI: If you want a smoother mix, swap lCol and rCol.
