@@ -106,3 +106,5 @@
     solution: ammo
   - type: SolutionInjectOnCollide
     transferAmount: 15
+  - type: InjectableSolution
+    solution: ammo

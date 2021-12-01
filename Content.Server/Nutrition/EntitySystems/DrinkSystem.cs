@@ -28,6 +28,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
@@ -265,8 +266,8 @@ namespace Content.Server.Nutrition.EntitySystems
 
             var transferAmount = FixedPoint2.Min(drink.TransferAmount, drinkSolution.DrainAvailable);
             var drain = _solutionContainerSystem.Drain(uid, drinkSolution, transferAmount);
-            var firstStomach = stomachs.FirstOrDefault(
-                stomach => _stomachSystem.CanTransferSolution(stomach.OwnerUid, drain));
+            var firstStomach = stomachs.FirstOrNull(
+                stomach => _stomachSystem.CanTransferSolution(stomach.Comp.OwnerUid, drain));
 
             // All stomach are full or can't handle whatever solution we have.
             if (firstStomach == null)
@@ -291,7 +292,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 Filter.Pvs(userUid));
 
             drain.DoEntityReaction(userUid, ReactionMethod.Ingestion);
-            _stomachSystem.TryTransferSolution(firstStomach.OwnerUid, drain, firstStomach);
+            _stomachSystem.TryTransferSolution(firstStomach.Value.Comp.OwnerUid, drain, firstStomach.Value.Comp);
 
             return true;
         }
@@ -373,8 +374,8 @@ namespace Content.Server.Nutrition.EntitySystems
                 return;
             }
 
-            var firstStomach = stomachs.FirstOrDefault(
-                stomach => _stomachSystem.CanTransferSolution(stomach.OwnerUid, drained));
+            var firstStomach = stomachs.FirstOrNull(
+                stomach => _stomachSystem.CanTransferSolution(stomach.Comp.OwnerUid, drained));
 
             // All stomach are full or can't handle whatever solution we have.
             if (firstStomach == null)
@@ -401,7 +402,7 @@ namespace Content.Server.Nutrition.EntitySystems
             SoundSystem.Play(Filter.Pvs(uid), args.Drink.UseSound.GetSound(), uid, AudioParams.Default.WithVolume(-2f));
 
             drained.DoEntityReaction(uid, ReactionMethod.Ingestion);
-            _stomachSystem.TryTransferSolution(firstStomach.OwnerUid, drained, firstStomach);
+            _stomachSystem.TryTransferSolution(firstStomach.Value.Comp.OwnerUid, drained, firstStomach.Value.Comp);
         }
 
         private void OnForceDrinkCancelled(ForceDrinkCancelledEvent args)

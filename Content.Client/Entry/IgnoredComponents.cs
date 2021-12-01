@@ -116,6 +116,7 @@ namespace Content.Client.Entry
             "PowerSupplier",
             "PowerConsumer",
             "Battery",
+            "Lung",
             "BatteryDischarger",
             "Apc",
             "PowerProvider",
