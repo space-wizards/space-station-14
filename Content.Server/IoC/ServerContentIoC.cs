@@ -34,6 +34,7 @@ namespace Content.Server.IoC
         public static void Register()
         {
             IoCManager.Register<IChatManager, ChatManager>();
+            IoCManager.Register<IChatSanitizationManager, ChatSanitizationManager>();
             IoCManager.Register<IMoMMILink, MoMMILink>();
             IoCManager.Register<ISandboxManager, SandboxManager>();
             IoCManager.Register<IModuleManager, ServerModuleManager>();
