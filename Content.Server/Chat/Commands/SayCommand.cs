@@ -64,7 +64,8 @@ namespace Content.Server.Chat.Commands
                 }
 
                 var emote = chatSanitizer.TrySanitizeOutSmilies(message, mindComponent.OwnedEntity, out var sanitized, out var emoteStr);
-                chat.EntitySay(mindComponent.OwnedEntity, sanitized);
+                if (sanitized.Length != 0)
+                    chat.EntitySay(mindComponent.OwnedEntity, sanitized);
                 if (emote)
                     chat.EntityMe(mindComponent.OwnedEntity, emoteStr!);
             }
