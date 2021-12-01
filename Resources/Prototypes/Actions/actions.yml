@@ -76,9 +76,6 @@
     - music
   behaviorType: Instant
   behavior: !type:PAIMidi
-    radius: 3
-    cooldown: 0
-    maxTargets: 3
 
 - type: action
   actionType: DebugInstant
