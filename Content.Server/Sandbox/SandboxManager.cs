@@ -139,7 +139,7 @@ namespace Content.Server.Sandbox
                         if (pda.Owner.TryGetComponent(out ItemSlotsComponent? itemSlots))
                         {
                             _entityManager.EntitySysManager.GetEntitySystem<ItemSlotsSystem>().
-                                TryInsert(wornItem.Owner.Uid, pda.IdSlot, newID);
+                                TryInsert(wornItem.Owner.Uid, pda.IdSlot, newID, null);
                         }
                     }
                     else

@@ -213,7 +213,8 @@ namespace Content.Client.Verbs
             }
 
             if (verb.ClientExclusive)
-                RaiseLocalEvent(new ExecuteVerbEvent(target, verb, verbType));
+                // is this a client exclusive (gui) verb?
+                ExecuteVerb(verb, user.Value, target);
             else
                 EntityManager.RaisePredictiveEvent(new ExecuteVerbEvent(target, verb, verbType));
         }
