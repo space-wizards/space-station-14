@@ -5,6 +5,7 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Popups;
 using Content.Shared.Atmos;
+using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
 using Content.Shared.MobState.Components;
 using Robust.Shared.GameObjects;
@@ -33,19 +34,9 @@ public class LungSystem : EntitySystem
         Inhale(uid, component.CycleDelay);
     }
 
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        foreach (var (lung, mechanism) in EntityManager.EntityQuery<LungComponent, MechanismComponent>())
-        {
-            UpdateLung(lung.OwnerUid, frameTime, lung, mechanism);
-        }
-    }
-
     public void Gasp(EntityUid uid,
         LungComponent? lung=null,
-        MechanismComponent? mech=null)
+        SharedMechanismComponent? mech=null)
     {
         if (!Resolve(uid, ref lung))
             return;
@@ -59,9 +50,9 @@ public class LungSystem : EntitySystem
         Inhale(uid, lung.CycleDelay);
     }
 
-    private void UpdateLung(EntityUid uid, float frameTime,
+    public void UpdateLung(EntityUid uid, float frameTime,
         LungComponent? lung=null,
-        MechanismComponent? mech=null)
+        SharedMechanismComponent? mech=null)
     {
         if (!Resolve(uid, ref lung, ref mech))
             return;
@@ -113,7 +104,7 @@ public class LungSystem : EntitySystem
     /// </summary>
     public void Inhale(EntityUid uid, float frameTime,
         LungComponent? lung=null,
-        MechanismComponent? mech=null)
+        SharedMechanismComponent? mech=null)
     {
         if (!Resolve(uid, ref lung, ref mech))
             return;
@@ -144,7 +135,7 @@ public class LungSystem : EntitySystem
     /// </summary>
     public void TakeGasFrom(EntityUid uid, float frameTime, GasMixture from,
         LungComponent? lung=null,
-        MechanismComponent? mech=null)
+        SharedMechanismComponent? mech=null)
     {
         if (!Resolve(uid, ref lung, ref mech))
             return;
@@ -171,7 +162,7 @@ public class LungSystem : EntitySystem
     /// </summary>
     public void Exhale(EntityUid uid, float frameTime,
         LungComponent? lung=null,
-        MechanismComponent? mech=null)
+        SharedMechanismComponent? mech=null)
     {
         if (!Resolve(uid, ref lung, ref mech))
             return;
@@ -189,7 +180,7 @@ public class LungSystem : EntitySystem
     /// </summary>
     public void PushGasTo(EntityUid uid, GasMixture to,
         LungComponent? lung=null,
-        MechanismComponent? mech=null)
+        SharedMechanismComponent? mech=null)
     {
         if (!Resolve(uid, ref lung, ref mech))
             return;

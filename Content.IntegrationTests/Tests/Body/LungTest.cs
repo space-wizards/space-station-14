@@ -81,7 +81,7 @@ namespace Content.IntegrationTests.Tests.Body
                 gas.AdjustMoles(Gas.Oxygen, originalOxygen);
                 gas.AdjustMoles(Gas.Nitrogen, originalNitrogen);
 
-                var lung = lungs[0];
+                var (lung, _) = lungs[0];
                 lungSys.TakeGasFrom(lung.OwnerUid, 1, gas, lung);
 
                 var lungOxygen = originalOxygen * breathedPercentage;

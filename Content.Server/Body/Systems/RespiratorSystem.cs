@@ -141,6 +141,12 @@ namespace Content.Server.Body.Systems
 
             var needs = NeedsAndDeficit(respirator, frameTime);
             var used = 0f;
+
+            foreach (var (lung, mech) in lungs)
+            {
+                _lungSystem.UpdateLung(lung.OwnerUid, frameTime, lung, mech);
+            }
+
             foreach (var (gas, amountNeeded) in needs)
             {
                 var bloodstreamAmount = bloodstream.Air.GetMoles(gas);
@@ -151,9 +157,9 @@ namespace Content.Server.Body.Systems
                     if (!EntityManager.GetComponent<MobStateComponent>(uid).IsCritical())
                     {
                         // Panic inhale
-                        foreach (var lung in lungs)
+                        foreach (var (lung, mech) in lungs)
                         {
-                            _lungSystem.Gasp(lung.OwnerUid, lung);
+                            _lungSystem.Gasp(lung.OwnerUid, lung, mech);
                         }
                     }
 
