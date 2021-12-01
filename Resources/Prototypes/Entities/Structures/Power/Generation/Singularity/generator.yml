@@ -13,6 +13,7 @@
   - type: Clickable
   - type: Physics
     bodyType: Static
+  - type: Fixtures
     fixtures:
     - shape:
         # Using a circle here makes it a lot easier to pull it all the way from Cargo

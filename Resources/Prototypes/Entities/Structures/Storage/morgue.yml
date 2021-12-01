@@ -17,6 +17,7 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -59,6 +60,7 @@
   components:
   - type: Physics
     bodyType: Static
+  - type: Fixtures
     fixtures:
       - shape:
           !type:PhysShapeAabb
@@ -97,6 +99,7 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
