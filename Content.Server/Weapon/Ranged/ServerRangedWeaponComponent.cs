@@ -30,7 +30,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Weapon.Ranged
 {
     [RegisterComponent]
-    public sealed class ServerRangedWeaponComponent : SharedRangedWeaponComponent, IHandSelected
+    public sealed class ServerRangedWeaponComponent : SharedRangedWeaponComponent
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
@@ -196,12 +196,6 @@ namespace Content.Server.Weapon.Ranged
                 EntitySystem.Get<AtmosphereSystem>().HotspotExpose(user.Transform.Coordinates, 700, 50);
             }
             FireHandler?.Invoke(user, targetPos);
-        }
-
-        // Probably a better way to do this.
-        void IHandSelected.HandSelected(HandSelectedEventArgs eventArgs)
-        {
-            Dirty();
         }
     }
 }

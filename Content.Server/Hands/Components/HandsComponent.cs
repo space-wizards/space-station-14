@@ -36,32 +36,6 @@ namespace Content.Server.Hands.Components
 
         int IDisarmedAct.Priority => int.MaxValue; // We want this to be the last disarm act to run.
 
-        protected override void OnHeldEntityRemovedFromHand(IEntity heldEntity, HandState handState)
-        {
-            if (heldEntity.TryGetComponent(out ItemComponent? item))
-            {
-                item.RemovedFromSlot();
-                _entitySystemManager.GetEntitySystem<InteractionSystem>().UnequippedHandInteraction(Owner, heldEntity, handState);
-            }
-            if (heldEntity.TryGetComponent(out SpriteComponent? sprite))
-            {
-                sprite.RenderOrder = heldEntity.EntityManager.CurrentTick.Value;
-            }
-        }
-
-        protected override void HandlePickupAnimation(IEntity entity)
-        {
-            var initialPosition = EntityCoordinates.FromMap(Owner.Transform.Parent?.Owner ?? Owner, entity.Transform.MapPosition);
-
-            var finalPosition = Owner.Transform.LocalPosition;
-
-            if (finalPosition.EqualsApprox(initialPosition.Position))
-                return;
-
-            Owner.EntityManager.EntityNetManager!.SendSystemNetworkMessage(
-                new PickupAnimationMessage(entity.Uid, finalPosition, initialPosition));
-        }
-
         #region Pull/Disarm
 
         void IBodyPartAdded.BodyPartAdded(BodyPartAddedEventArgs args)
@@ -202,24 +176,6 @@ namespace Content.Server.Hands.Components
                 if (entity.TryGetComponent(out ItemComponent? item))
                     yield return item;
             }
-        }
-
-        /// <summary>
-        ///     Checks if any hand can pick up an item.
-        /// </summary>
-        public bool CanPutInHand(ItemComponent item, bool mobCheck = true)
-        {
-            var entity = item.Owner;
-
-            if (mobCheck && !PlayerCanPickup())
-                return false;
-
-            foreach (var hand in Hands)
-            {
-                if (CanInsertEntityIntoHand(hand, entity))
-                    return true;
-            }
-            return false;
         }
         #endregion
     }

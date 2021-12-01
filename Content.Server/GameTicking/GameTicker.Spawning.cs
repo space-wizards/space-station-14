@@ -249,7 +249,7 @@ namespace Content.Server.GameTicking
                 foreach (var (hand, prototype) in inhand)
                 {
                     var inhandEntity = EntityManager.SpawnEntity(prototype, entity.Transform.Coordinates);
-                    handsComponent.TryPickupEntity(hand, inhandEntity, checkActionBlocker: false);
+                    handsComponent.TryPickupEntity(hand, inhandEntity, true, checkActionBlocker: false);
                 }
             }
         }

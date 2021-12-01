@@ -1,9 +1,11 @@
 using System;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Inventory;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Maths;
@@ -148,11 +150,18 @@ namespace Content.Shared.Item
             if (activeHand == null)
                 return false;
 
-            hands.TryPickupEntityToActiveHand(Owner);
+            hands.TryPickupEntityToActiveHand(Owner, true);
             return true;
         }
 
-        protected virtual void OnEquippedPrefixChange() { }
+        private void OnEquippedPrefixChange()
+        {
+            if (!Owner.TryGetContainer(out var container) ||
+                Owner.EntityManager.TryGetComponent(container.Owner.Uid, out SharedHandsComponent hands))
+                return;
+
+            EntitySystem.Get<SharedHandsSystem>().UpdateHandVisualizer(OwnerUid, hands);
+        }
 
         public virtual void RemovedFromSlot() { }
 

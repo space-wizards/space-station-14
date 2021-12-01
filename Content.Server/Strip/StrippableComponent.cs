@@ -54,16 +54,11 @@ namespace Content.Server.Strip
                 inventory.OnItemChanged += UpdateSubscribed;
             }
 
-            if (Owner.TryGetComponent(out HandsComponent? hands))
-            {
-                hands.OnItemChanged += UpdateSubscribed;
-            }
-
             // Initial update.
             UpdateSubscribed();
         }
 
-        private void UpdateSubscribed()
+        public void UpdateSubscribed()
         {
             if (UserInterface == null)
             {
@@ -276,7 +271,7 @@ namespace Content.Server.Strip
             if (result != DoAfterStatus.Finished) return;
 
             userHands.Drop(hand);
-            hands.TryPickupEntity(hand, item!.Owner, checkActionBlocker: false);
+            hands.TryPickupEntity(hand, item!.Owner, true, checkActionBlocker: false);
             UpdateSubscribed();
         }
 

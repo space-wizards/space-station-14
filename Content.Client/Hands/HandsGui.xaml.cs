@@ -58,24 +58,18 @@ namespace Content.Client.Hands
         {
             base.EnteredTree();
 
-            _handsSystem.GuiStateUpdated += HandsSystemOnGuiStateUpdated;
             _configManager.OnValueChanged(CCVars.HudTheme, UpdateHudTheme);
-
-            HandsSystemOnGuiStateUpdated();
         }
 
         protected override void ExitedTree()
         {
             base.ExitedTree();
 
-            _handsSystem.GuiStateUpdated -= HandsSystemOnGuiStateUpdated;
             _configManager.UnsubValueChanged(CCVars.HudTheme, UpdateHudTheme);
         }
 
-        private void HandsSystemOnGuiStateUpdated()
+        public void Update(HandsGuiState state)
         {
-            var state = _handsSystem.GetGuiState();
-
             ActiveHand = state.ActiveHand;
             _hands = state.GuiHands;
             Array.Sort(_hands, HandOrderComparer.Instance);

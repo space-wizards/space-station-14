@@ -537,7 +537,7 @@ namespace Content.Shared.Interaction
             // Get list of alt-interact verbs
             var verbs = _verbSystem.GetLocalVerbs(target, user, VerbType.Alternative)[VerbType.Alternative];
             if (verbs.Any())
-                _verbSystem.ExecuteVerb(verbs.First(), user.Uid, target.Uid);
+                _verbSystem.ExecuteVerb(verbs.First(), user.Uid, target.Uid, false);
         }
         #endregion
 
@@ -614,7 +614,7 @@ namespace Content.Shared.Interaction
         ///     Calls EquippedHand on all components that implement the IEquippedHand interface
         ///     on an item.
         /// </summary>
-        public void EquippedHandInteraction(IEntity user, IEntity item, HandState hand)
+        public void EquippedHandInteraction(IEntity user, IEntity item, Hand hand)
         {
             var equippedHandMessage = new EquippedHandEvent(user, item, hand);
             RaiseLocalEvent(item.Uid, equippedHandMessage);
@@ -633,7 +633,7 @@ namespace Content.Shared.Interaction
         ///     Calls UnequippedHand on all components that implement the IUnequippedHand interface
         ///     on an item.
         /// </summary>
-        public void UnequippedHandInteraction(IEntity user, IEntity item, HandState hand)
+        public void UnequippedHandInteraction(IEntity user, IEntity item, Hand hand)
         {
             var unequippedHandMessage = new UnequippedHandEvent(user, item, hand);
             RaiseLocalEvent(item.Uid, unequippedHandMessage);
@@ -687,48 +687,6 @@ namespace Content.Shared.Interaction
                 comp.Dropped(new DroppedEventArgs(user));
             }
             _adminLogSystem.Add(LogType.Drop, LogImpact.Low, $"{user} dropped {item}");
-        }
-        #endregion
-
-        #region Hand Selected
-        /// <summary>
-        ///     Calls HandSelected on all components that implement the IHandSelected interface
-        ///     on an item entity on a hand that has just been selected.
-        /// </summary>
-        public void HandSelectedInteraction(IEntity user, IEntity item)
-        {
-            var handSelectedMsg = new HandSelectedEvent(user, item);
-            RaiseLocalEvent(item.Uid, handSelectedMsg);
-            if (handSelectedMsg.Handled)
-                return;
-
-            var comps = item.GetAllComponents<IHandSelected>().ToList();
-
-            // Call Land on all components that implement the interface
-            foreach (var comp in comps)
-            {
-                comp.HandSelected(new HandSelectedEventArgs(user));
-            }
-        }
-
-        /// <summary>
-        ///     Calls HandDeselected on all components that implement the IHandDeselected interface
-        ///     on an item entity on a hand that has just been deselected.
-        /// </summary>
-        public void HandDeselectedInteraction(IEntity user, IEntity item)
-        {
-            var handDeselectedMsg = new HandDeselectedEvent(user, item);
-            RaiseLocalEvent(item.Uid, handDeselectedMsg);
-            if (handDeselectedMsg.Handled)
-                return;
-
-            var comps = item.GetAllComponents<IHandDeselected>().ToList();
-
-            // Call Land on all components that implement the interface
-            foreach (var comp in comps)
-            {
-                comp.HandDeselected(new HandDeselectedEventArgs(user));
-            }
         }
         #endregion
 
