@@ -12,7 +12,7 @@ using Robust.Shared.Log;
 
 namespace Content.Shared.DangerousPickUp
 {
-    public abstract class DangerousPickUpSystem : EntitySystem
+    public class DangerousPickUpSystem : EntitySystem
     {
         
         public override void Initialize()
@@ -25,17 +25,17 @@ namespace Content.Shared.DangerousPickUp
 
         private void OnEquippedHand(EntityUid uid, DangerousPickUpComponent component, EquippedHandEvent args)
         {
-            Console.Write("Received equipped hand event");
+            Logger.Info("Received equipped hand event");
             string glovesType;
             glovesType  = TryGetGlovesType(args.User);
-            Console.Write("Received glove type" + glovesType + "from TryGetGlovesType");
+            Logger.Info("Received glove type" + glovesType + "from TryGetGlovesType");
             if(!args.User.TryGetComponent<SharedHandsComponent>(out var handComponent))
             return;
             
             if (glovesType != component.dangerType)
             {
-               Console.Write("Trying to drop...");
-               handComponent.TryDropEntity(args.Equipped,args.User.Transform.Coordinates,false);
+               Logger.Info("Trying to drop...");
+               handComponent.TryDropEntity(args.Equipped,args.User.Transform.Coordinates,true);
             }
         }
         
@@ -45,16 +45,16 @@ namespace Content.Shared.DangerousPickUp
         {
             if (!user.TryGetComponent<InventoryComponent>(out var inventoryComp))
             {
-                Console.Write("Trying to fetch inventory component...");
+                Logger.Info("Trying to fetch inventory component...");
                 return string.Empty;
             }
 
             if (inventoryComp.TryGetSlotItem(EquipmentSlotDefines.Slots.GLOVES, out ItemComponent? gloves))
             {
-                Console.Write("Trying to fetch gloves item component...");
+                Logger.Info("Trying to fetch gloves item component...");
                 if (gloves.Owner.TryGetComponent(out DangerousPickUpProtectionComponent? glovesProtection))
                 {
-                        Console.Write("Trying to extract glove type...");
+                        Logger.Info("Trying to extract glove type...");
                         return glovesProtection?.protectionType ?? string.Empty;
                 }
             }
