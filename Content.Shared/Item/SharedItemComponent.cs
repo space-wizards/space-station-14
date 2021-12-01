@@ -163,9 +163,21 @@ namespace Content.Shared.Item
             EntitySystem.Get<SharedHandsSystem>().UpdateHandVisualizer(OwnerUid, hands);
         }
 
-        public virtual void RemovedFromSlot() { }
+        public void RemovedFromSlot()
+        {
+            foreach (var component in Owner.GetAllComponents<SharedSpriteComponent>())
+            {
+                component.Visible = true;
+            }
+        }
 
-        public virtual void EquippedToSlot() { }
+        public virtual void EquippedToSlot()
+        {
+            foreach (var component in Owner.GetAllComponents<SharedSpriteComponent>())
+            {
+                component.Visible = false;
+            }
+        }
     }
 
     [Serializable, NetSerializable]

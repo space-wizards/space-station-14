@@ -156,7 +156,7 @@ namespace Content.Shared.Hands
         /// </summary>
         public void UpdateHandVisualizer(EntityUid uid, SharedHandsComponent? handComp = null, AppearanceComponent? appearance = null)
         {
-            if (!Resolve(uid, ref handComp, ref appearance))
+            if (!Resolve(uid, ref handComp, ref appearance, false))
                 return;
 
             var handsVisuals = new List<HandVisualState>();
