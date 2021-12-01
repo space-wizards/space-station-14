@@ -84,7 +84,7 @@ namespace Content.Client.Items.Managers
             }
             else if (args.Function == ContentKeyFunctions.AltActivateItemInWorld)
             {
-                _entityManager.EntityNetManager?.SendSystemNetworkMessage(new InteractInventorySlotEvent(item.Uid, altInteract: true));
+                _entityManager.RaisePredictiveEvent(new InteractInventorySlotEvent(item.Uid, altInteract: true));
             }
             else
             {

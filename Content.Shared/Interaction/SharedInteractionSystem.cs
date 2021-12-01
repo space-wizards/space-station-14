@@ -1,11 +1,15 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
+using Content.Shared.CombatMode;
 using Content.Shared.Database;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
+using Content.Shared.Input;
+using Content.Shared.Interaction.Helpers;
 using Content.Shared.Inventory;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
@@ -15,8 +19,10 @@ using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
@@ -38,11 +44,177 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly SharedVerbSystem _verbSystem = default!;
         [Dependency] private readonly SharedAdminLogSystem _adminLogSystem = default!;
+        [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
 
         public const float InteractionRange = 2;
         public const float InteractionRangeSquared = InteractionRange * InteractionRange;
 
         public delegate bool Ignored(IEntity entity);
+
+        public override void Initialize()
+        {
+            SubscribeAllEvent<InteractInventorySlotEvent>(HandleInteractInventorySlotEvent);
+
+            CommandBinds.Builder
+                .Bind(ContentKeyFunctions.AltActivateItemInWorld,
+                    new PointerInputCmdHandler(HandleAltUseInteraction))
+                .Register<SharedInteractionSystem>();
+        }
+
+        public override void Shutdown()
+        {
+            CommandBinds.Unregister<SharedInteractionSystem>();
+            base.Shutdown();
+        }
+
+        /// <summary>
+        ///     Handles the event were a client uses an item in their inventory or in their hands, either by
+        ///     alt-clicking it or pressing 'E' while hovering over it.
+        /// </summary>
+        private void HandleInteractInventorySlotEvent(InteractInventorySlotEvent msg, EntitySessionEventArgs args)
+        {
+            if (!EntityManager.TryGetEntity(msg.ItemUid, out var item))
+            {
+                Logger.WarningS("system.interaction",
+                    $"Client sent inventory interaction with an invalid target item. Session={args.SenderSession}");
+                return;
+            }
+
+            // client sanitization
+            if (!ValidateClientInput(args.SenderSession, item.Transform.Coordinates, msg.ItemUid, out var userEntity))
+            {
+                Logger.InfoS("system.interaction", $"Inventory interaction validation failed.  Session={args.SenderSession}");
+                return;
+            }
+
+            if (msg.AltInteract)
+                // Use 'UserInteraction' function - behaves as if the user alt-clicked the item in the world.
+                UserInteraction(userEntity, item.Transform.Coordinates, msg.ItemUid, msg.AltInteract);
+            else
+                // User used 'E'. We want to activate it, not simulate clicking on the item
+                InteractionActivate(userEntity, item);
+        }
+
+        public bool HandleAltUseInteraction(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
+        {
+            // client sanitization
+            if (!ValidateClientInput(session, coords, uid, out var userEntity))
+            {
+                Logger.InfoS("system.interaction", $"Alt-use input validation failed");
+                return true;
+            }
+
+            UserInteraction(userEntity, coords, uid, altInteract: true);
+
+            return false;
+        }
+
+        /// <summary>
+        ///     Resolves user interactions with objects.
+        /// </summary>
+        /// <remarks>
+        ///     Checks Whether combat mode is enabled and whether the user can actually interact with the given entity.
+        /// </remarks>
+        /// <param name="altInteract">Whether to use default or alternative interactions (usually as a result of
+        /// alt+clicking). If combat mode is enabled, the alternative action is to perform the default non-combat
+        /// interaction. Having an item in the active hand also disables alternative interactions.</param>
+        public async void UserInteraction(IEntity user, EntityCoordinates coordinates, EntityUid clickedUid, bool altInteract = false)
+        {
+            // TODO COMBAT Consider using alt-interact for advanced combat? maybe alt-interact disarms?
+            if (!altInteract && user.TryGetComponent(out SharedCombatModeComponent? combatMode) && combatMode.IsInCombatMode)
+            {
+                DoAttack(user, coordinates, false, clickedUid);
+                return;
+            }
+
+            if (!ValidateInteractAndFace(user, coordinates))
+                return;
+
+            if (!_actionBlockerSystem.CanInteract(user.Uid))
+                return;
+
+            // Get entity clicked upon from UID if valid UID, if not assume no entity clicked upon and null
+            EntityManager.TryGetEntity(clickedUid, out var target);
+
+            // Check if interacted entity is in the same container, the direct child, or direct parent of the user.
+            // This is bypassed IF the interaction happened through an item slot (e.g., backpack UI)
+            if (target != null && !user.IsInSameOrParentContainer(target) && !CanAccessViaStorage(user.Uid, target.Uid))
+            {
+                Logger.WarningS("system.interaction",
+                    $"User entity named {user.Name} clicked on object {target.Name} that isn't the parent, child, or in the same container");
+                return;
+            }
+
+            // Verify user has a hand, and find what object they are currently holding in their active hand
+            if (!user.TryGetComponent<SharedHandsComponent>(out var hands))
+                return;
+
+            hands.TryGetActiveHeldEntity(out var item);
+
+            // TODO: Replace with body interaction range when we get something like arm length or telekinesis or something.
+            var inRangeUnobstructed = user.InRangeUnobstructed(coordinates, ignoreInsideBlocker: true);
+            if (target == null || !inRangeUnobstructed)
+            {
+                if (item == null)
+                    return;
+
+                if (!await InteractUsingRanged(user, item, target, coordinates, inRangeUnobstructed) &&
+                    !inRangeUnobstructed)
+                {
+                    var message = Loc.GetString("interaction-system-user-interaction-cannot-reach");
+                    user.PopupMessage(message);
+                }
+
+                return;
+            }
+            else
+            {
+                // We are close to the nearby object.
+                if (altInteract)
+                    // Perform alternative interactions, using context menu verbs.
+                    AltInteract(user, target);
+                else if (item != null && item != target)
+                    // We are performing a standard interaction with an item, and the target isn't the same as the item
+                    // currently in our hand. We will use the item in our hand on the nearby object via InteractUsing
+                    await InteractUsing(user, item, target, coordinates);
+                else if (item == null)
+                    // Since our hand is empty we will use InteractHand/Activate
+                    InteractHand(user, target);
+            }
+        }
+
+        public virtual void InteractHand(IEntity user, IEntity target)
+        {
+            // TODO move to shared
+        }
+
+        public virtual void DoAttack(IEntity user, EntityCoordinates coordinates, bool wideAttack,
+            EntityUid targetUid = default)
+        {
+            // TODO move to shared
+        }
+
+        public virtual async Task<bool> InteractUsingRanged(IEntity user, IEntity used, IEntity? target,
+            EntityCoordinates clickLocation, bool inRangeUnobstructed)
+        {
+            // TODO move to shared
+            return await Task.FromResult(true);
+        }
+
+        protected bool ValidateInteractAndFace(IEntity user, EntityCoordinates coordinates)
+        {
+            // Verify user is on the same map as the entity they clicked on
+            if (coordinates.GetMapId(EntityManager) != user.Transform.MapID)
+            {
+                Logger.WarningS("system.interaction",
+                    $"User entity named {user.Name} clicked on a map they aren't located on");
+                return false;
+            }
+
+            _rotateToFaceSystem.TryFaceCoordinates(user, coordinates.ToMapPos(EntityManager));
+
+            return true;
+        }
 
         /// <summary>
         ///     Traces a ray from coords to otherCoords and returns the length
@@ -737,6 +909,36 @@ namespace Content.Shared.Interaction
         ///     checks if the user can access the item in these situations.
         /// </summary>
         public abstract bool CanAccessViaStorage(EntityUid user, EntityUid target);
+
+        protected bool ValidateClientInput(ICommonSession? session, EntityCoordinates coords,
+            EntityUid uid, [NotNullWhen(true)] out IEntity? userEntity)
+        {
+            userEntity = null;
+
+            if (!coords.IsValid(EntityManager))
+            {
+                Logger.InfoS("system.interaction", $"Invalid Coordinates: client={session}, coords={coords}");
+                return false;
+            }
+
+            if (uid.IsClientSide())
+            {
+                Logger.WarningS("system.interaction",
+                    $"Client sent interaction with client-side entity. Session={session}, Uid={uid}");
+                return false;
+            }
+
+            userEntity = session?.AttachedEntity;
+
+            if (userEntity == null || !userEntity.IsValid())
+            {
+                Logger.WarningS("system.interaction",
+                    $"Client sent interaction with no attached entity. Session={session}");
+                return false;
+            }
+
+            return true;
+        }
 
         #endregion
     }

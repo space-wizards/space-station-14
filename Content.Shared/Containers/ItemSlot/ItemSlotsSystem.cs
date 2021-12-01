@@ -12,6 +12,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
@@ -24,6 +25,7 @@ namespace Content.Shared.Containers.ItemSlots
     {
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override void Initialize()
         {
@@ -171,7 +173,7 @@ namespace Content.Shared.Containers.ItemSlots
             slot.ContainerSlot.Insert(item);
             // ContainerSlot automatically raises a directed EntInsertedIntoContainerMessage
 
-            if (slot.InsertSound != null)
+            if (slot.InsertSound != null && _gameTiming.IsFirstTimePredicted)
                 SoundSystem.Play(Filter.Pvs(uid), slot.InsertSound.GetSound(), uid);
         }
 
@@ -266,7 +268,7 @@ namespace Content.Shared.Containers.ItemSlots
             slot.ContainerSlot.Remove(item);
             // ContainerSlot automatically raises a directed EntRemovedFromContainerMessage
 
-            if (slot.EjectSound != null)
+            if (slot.EjectSound != null && _gameTiming.IsFirstTimePredicted)
                 SoundSystem.Play(Filter.Pvs(uid), slot.EjectSound.GetSound(), uid);
         }
 
