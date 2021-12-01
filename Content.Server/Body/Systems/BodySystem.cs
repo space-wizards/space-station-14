@@ -47,8 +47,8 @@ namespace Content.Server.Body.Systems
         /// <param name="uid">The entity to check for the component on.</param>
         /// <param name="body">The body to check for mechanisms on.</param>
         /// <typeparam name="T">The component to check for.</typeparam>
-        public IEnumerable<(T, SharedMechanismComponent)> GetComponentsOnMechanisms<T>(EntityUid uid,
-            SharedBodyComponent? body) where T : Component
+        public IEnumerable<(T Comp, SharedMechanismComponent Mech)> GetComponentsOnMechanisms<T>(EntityUid uid,
+            SharedBodyComponent? body=null) where T : Component
         {
             if (!Resolve(uid, ref body))
                 yield break;
@@ -71,8 +71,8 @@ namespace Content.Server.Body.Systems
         /// <typeparam name="T">The component to check for.</typeparam>
         /// <returns>Whether any were found.</returns>
         public bool TryGetComponentsOnMechanisms<T>(EntityUid uid,
-            [NotNullWhen(true)] out IEnumerable<(T, SharedMechanismComponent)>? comps,
-            SharedBodyComponent? body) where T: Component
+            [NotNullWhen(true)] out IEnumerable<(T Comp, SharedMechanismComponent Mech)>? comps,
+            SharedBodyComponent? body=null) where T: Component
         {
             if (!Resolve(uid, ref body))
             {

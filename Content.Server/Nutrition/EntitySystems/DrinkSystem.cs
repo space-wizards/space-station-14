@@ -265,7 +265,7 @@ namespace Content.Server.Nutrition.EntitySystems
             var transferAmount = FixedPoint2.Min(drink.TransferAmount, drinkSolution.DrainAvailable);
             var drain = _solutionContainerSystem.Drain(uid, drinkSolution, transferAmount);
             var firstStomach = stomachs.FirstOrNull(
-                stomach => _stomachSystem.CanTransferSolution(stomach.Item1.OwnerUid, drain));
+                stomach => _stomachSystem.CanTransferSolution(stomach.Comp.OwnerUid, drain));
 
             // All stomach are full or can't handle whatever solution we have.
             if (firstStomach == null)
@@ -290,7 +290,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 Filter.Pvs(userUid));
 
             drain.DoEntityReaction(userUid, ReactionMethod.Ingestion);
-            _stomachSystem.TryTransferSolution(firstStomach.Value.Item1.OwnerUid, drain, firstStomach.Value.Item1);
+            _stomachSystem.TryTransferSolution(firstStomach.Value.Comp.OwnerUid, drain, firstStomach.Value.Comp);
 
             return true;
         }
@@ -373,7 +373,7 @@ namespace Content.Server.Nutrition.EntitySystems
             }
 
             var firstStomach = stomachs.FirstOrNull(
-                stomach => _stomachSystem.CanTransferSolution(stomach.Item1.OwnerUid, drained));
+                stomach => _stomachSystem.CanTransferSolution(stomach.Comp.OwnerUid, drained));
 
             // All stomach are full or can't handle whatever solution we have.
             if (firstStomach == null)
@@ -400,7 +400,7 @@ namespace Content.Server.Nutrition.EntitySystems
             SoundSystem.Play(Filter.Pvs(uid), args.Drink.UseSound.GetSound(), uid, AudioParams.Default.WithVolume(-2f));
 
             drained.DoEntityReaction(uid, ReactionMethod.Ingestion);
-            _stomachSystem.TryTransferSolution(firstStomach.Value.Item1.OwnerUid, drained, firstStomach.Value.Item1);
+            _stomachSystem.TryTransferSolution(firstStomach.Value.Comp.OwnerUid, drained, firstStomach.Value.Comp);
         }
 
         private void OnForceDrinkCancelled(ForceDrinkCancelledEvent args)

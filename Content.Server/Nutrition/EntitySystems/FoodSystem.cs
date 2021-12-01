@@ -146,7 +146,7 @@ namespace Content.Server.Nutrition.EntitySystems
             var transferAmount = component.TransferAmount != null ? FixedPoint2.Min((FixedPoint2) component.TransferAmount, solution.CurrentVolume) : solution.CurrentVolume;
             var split = _solutionContainerSystem.SplitSolution(uid, solution, transferAmount);
             var firstStomach = stomachs.FirstOrNull(
-                stomach => _stomachSystem.CanTransferSolution(stomach.Item1.OwnerUid, split));
+                stomach => _stomachSystem.CanTransferSolution(stomach.Comp.OwnerUid, split));
 
             if (firstStomach == null)
             {
@@ -157,7 +157,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             // TODO: Account for partial transfer.
             split.DoEntityReaction(userUid, ReactionMethod.Ingestion);
-            _stomachSystem.TryTransferSolution(firstStomach.Value.Item1.OwnerUid, split, firstStomach.Value.Item1);
+            _stomachSystem.TryTransferSolution(firstStomach.Value.Comp.OwnerUid, split, firstStomach.Value.Comp);
 
             SoundSystem.Play(Filter.Pvs(userUid), component.UseSound.GetSound(), userUid, AudioParams.Default.WithVolume(-1f));
             _popupSystem.PopupEntity(Loc.GetString(component.EatMessage, ("food", component.Owner)), userUid, Filter.Entities(userUid));
@@ -295,7 +295,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             var split = _solutionContainerSystem.SplitSolution(args.Food.OwnerUid, args.FoodSolution, transferAmount);
             var firstStomach = stomachs.FirstOrNull(
-                stomach => _stomachSystem.CanTransferSolution(stomach.Item1.OwnerUid, split));
+                stomach => _stomachSystem.CanTransferSolution(stomach.Comp.OwnerUid, split));
 
             if (firstStomach == null)
             {
@@ -305,7 +305,7 @@ namespace Content.Server.Nutrition.EntitySystems
             }
 
             split.DoEntityReaction(uid, ReactionMethod.Ingestion);
-            _stomachSystem.TryTransferSolution(firstStomach.Value.Item1.OwnerUid, split, firstStomach.Value.Item1);
+            _stomachSystem.TryTransferSolution(firstStomach.Value.Comp.OwnerUid, split, firstStomach.Value.Comp);
 
             EntityManager.TryGetComponent(uid, out MetaDataComponent? targetMeta);
             var targetName = targetMeta?.EntityName ?? string.Empty;
@@ -354,7 +354,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 DeleteAndSpawnTrash(food);
 
             var firstStomach = stomachs.FirstOrNull(
-                stomach => _stomachSystem.CanTransferSolution(stomach.Item1.OwnerUid, foodSolution));
+                stomach => _stomachSystem.CanTransferSolution(stomach.Comp.OwnerUid, foodSolution));
 
             if (firstStomach == null)
                 return;
@@ -370,7 +370,7 @@ namespace Content.Server.Nutrition.EntitySystems
             _popupSystem.PopupEntity(Loc.GetString(food.EatMessage), target, Filter.Entities(target));
 
             foodSolution.DoEntityReaction(uid, ReactionMethod.Ingestion);
-            _stomachSystem.TryTransferSolution(firstStomach.Value.Item1.OwnerUid, foodSolution, firstStomach.Value.Item1);
+            _stomachSystem.TryTransferSolution(firstStomach.Value.Comp.OwnerUid, foodSolution, firstStomach.Value.Comp);
             SoundSystem.Play(Filter.Pvs(target), food.UseSound.GetSound(), target, AudioParams.Default.WithVolume(-1f));
 
             if (string.IsNullOrEmpty(food.TrashPrototype))
