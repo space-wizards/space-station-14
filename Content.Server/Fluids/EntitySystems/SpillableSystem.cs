@@ -1,9 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.Administration.Logs;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Coordinates.Helpers;
 using Content.Server.Fluids.Components;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
@@ -29,6 +29,7 @@ public class SpillableSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IEntityLookup _entityLookup = default!;
     [Dependency] private readonly GridTileLookupSystem _gridTileLookupSystem = default!;
+    [Dependency] private readonly AdminLogSystem _logSystem = default!;
 
     public override void Initialize()
     {
@@ -59,12 +60,16 @@ public class SpillableSystem : EntitySystem
 
     private void SpillOnLand(EntityUid uid, SpillableComponent component, LandEvent args)
     {
-        if (args.User != null &&
-            _solutionContainerSystem.TryGetSolution(uid, component.SolutionName, out var solutionComponent))
+        if (!_solutionContainerSystem.TryGetSolution(uid, component.SolutionName, out var solution)) return;
+
+        if (args.User != null && EntityManager.TryGetEntity(args.User.Value, out var userEntity))
         {
-            var solution = _solutionContainerSystem.Drain(uid, solutionComponent, solutionComponent.DrainAvailable);
-            SpillAt(solution, EntityManager.GetComponent<TransformComponent>(uid).Coordinates, "PuddleSmear");
+            _logSystem.Add(LogType.Landed,
+                $"{userEntity} spilled ${SolutionContainerSystem.ToPrettyString(solution)} on landing");
         }
+
+        var drainedSolution = _solutionContainerSystem.Drain(uid, solution, solution.DrainAvailable);
+        SpillAt(drainedSolution, EntityManager.GetComponent<TransformComponent>(uid).Coordinates, "PuddleSmear");
     }
 
     private void AddSpillVerb(EntityUid uid, SpillableComponent component, GetOtherVerbsEvent args)
@@ -105,7 +110,7 @@ public class SpillableSystem : EntitySystem
         bool overflow = true, bool sound = true, bool combine = true)
     {
         if (solution.TotalVolume == 0) return null;
-        
+
 
         if (!_mapManager.TryGetGrid(coordinates.GetGridId(EntityManager), out var mapGrid))
             return null; // Let's not spill to space.
