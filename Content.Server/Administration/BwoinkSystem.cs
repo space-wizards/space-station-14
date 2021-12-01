@@ -38,7 +38,7 @@ namespace Content.Server.Administration
 
             var bwoinkText = senderAdmin switch
             {
-                var x when x is not null && x.HasFlag(AdminFlags.Adminhelp) && (x.Flags & ~AdminFlags.Adminhelp) == 0 =>
+                var x when x is not null && x.Flags == AdminFlags.Adminhelp =>
                     $"[color=purple]{senderSession.Name}[/color]: {escapedText}",
                 var x when x is not null && x.HasFlag(AdminFlags.Adminhelp) =>
                     $"[color=red]{senderSession.Name}[/color]: {escapedText}",
