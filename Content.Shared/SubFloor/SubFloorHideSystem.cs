@@ -181,11 +181,7 @@ namespace Content.Shared.SubFloor
                     continue;
 
                 var transform = EntityManager.GetComponent<TransformComponent>(entity);
-                if (_mapManager.TryGetGrid(transform.GridID, out var grid))
-                {
-                    bool isSubFloor = IsSubFloor(grid, grid.TileIndicesFor(transform.Coordinates));
-                    UpdateEntity(entity, visible, uid, appearanceKeys);
-                }
+                UpdateEntity(entity, visible, uid, appearanceKeys);
             }
         }
 

@@ -20,15 +20,17 @@ public class TrayScannerSystem : SharedTrayScannerSystem
     public override void Initialize()
     {
         base.Initialize();
-
-        SubscribeLocalEvent<TrayScannerComponent, TrayScannerToggleEvent>(OnTrayScannerToggle);
     }
 
-    private void OnTrayScannerToggle(EntityUid uid, TrayScannerComponent scanner, TrayScannerToggleEvent args)
+    public override void ToggleTrayScanner(EntityUid uid, bool toggle, TrayScannerComponent? scanner = null)
     {
+        if (!Resolve(uid, ref scanner))
+            return;
+
+        scanner.Toggled = toggle;
         UpdateTrayScanner(uid, scanner);
 
-        if (scanner.Toggled) _activeScanners.Add(uid);
+        if (toggle) _activeScanners.Add(uid);
     }
 
     private HashSet<EntityUid> _activeScanners = new();
