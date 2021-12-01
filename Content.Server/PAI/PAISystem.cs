@@ -106,7 +106,7 @@ namespace Content.Server.PAI
             if (EntityManager.TryGetComponent<ServerUserInterfaceComponent>(uid, out var serverUi))
             if (EntityManager.TryGetComponent<ActorComponent>(uid, out var actor))
             if (serverUi.TryGetBoundUserInterface(InstrumentUiKey.Key,out var bui))
-			bui.Close(actor.PlayerSession);
+            bui.Close(actor.PlayerSession);
 
             //  Stop instrument
             if (EntityManager.TryGetComponent<InstrumentComponent>(uid, out var instrument)) _instrumentSystem.Clean(uid, instrument);
