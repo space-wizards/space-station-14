@@ -125,7 +125,7 @@
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterCoatPirate
-  name: pirate
+  name: pirate garb
   description: Yarr.
   components:
   - type: Sprite
