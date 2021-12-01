@@ -25,7 +25,7 @@ namespace Content.Server.Actions.Actions
         {
             if (!args.Performer.TryGetComponent<ServerUserInterfaceComponent>(out var serverUi)) return;
             if (!args.Performer.TryGetComponent<ActorComponent>(out var actor)) return;
-		    if (!serverUi.TryGetBoundUserInterface(InstrumentUiKey.Key,out var bui)) return;
+            if (!serverUi.TryGetBoundUserInterface(InstrumentUiKey.Key,out var bui)) return;
 
             bui.Toggle(actor.PlayerSession);
 
