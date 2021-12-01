@@ -1,6 +1,8 @@
+using Content.Server.Storage.EntitySystems;
 using Content.Server.Toilet;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Item;
+using Robust.Shared.Analyzers;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -10,10 +12,11 @@ namespace Content.Server.Storage.Components
 {
     /// <summary>
     ///     Logic for a secret slot stash, like plant pot or toilet cistern.
-    ///     Unlike <see cref="ItemSlotsComponent"/> it doesn't have interaction logic.
+    ///     Unlike <see cref="ItemSlotsComponent"/> it doesn't have interaction logic or verbs.
     ///     Other classes like <see cref="ToiletComponent"/> should implement it.
     /// </summary>
     [RegisterComponent]
+    [Friend(typeof(SecretStashSystem))]
     public class SecretStashComponent : Component
     {
         public override string Name => "SecretStash";
@@ -36,6 +39,6 @@ namespace Content.Server.Storage.Components
         /// </summary>
         [ViewVariables]
         public ContainerSlot ItemContainer = default!;
-        
+
     }
 }
