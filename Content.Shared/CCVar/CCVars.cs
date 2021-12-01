@@ -90,7 +90,7 @@ namespace Content.Shared.CCVar
             GameLobbyFallbackPreset = CVarDef.Create("game.fallbackpreset", "Sandbox", CVar.ARCHIVE);
 
         /// <summary>
-        ///     Controls if people can win the game in Suspicion or Deathmatch. Doesn't do anything to traitor for some reason.
+        ///     Controls if people can win the game in Suspicion or Deathmatch.
         /// </summary>
         public static readonly CVarDef<bool>
             GameLobbyEnableWin = CVarDef.Create("game.enablewin", true, CVar.ARCHIVE);
