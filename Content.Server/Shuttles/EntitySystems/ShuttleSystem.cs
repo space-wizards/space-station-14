@@ -101,6 +101,9 @@ namespace Content.Server.Shuttles.EntitySystems
 
         private void OnShuttleShutdown(EntityUid uid, ShuttleComponent component, ComponentShutdown args)
         {
+            // None of the below is necessary for any cleanup if we're just deleting.
+            if (EntityManager.GetComponent<MetaDataComponent>(uid).EntityLifeStage >= EntityLifeStage.Terminating) return;
+
             if (!component.Owner.TryGetComponent(out PhysicsComponent? physicsComponent))
             {
                 return;
