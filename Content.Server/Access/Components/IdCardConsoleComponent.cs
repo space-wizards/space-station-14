@@ -116,6 +116,9 @@ namespace Content.Server.Access.Components
 
         public void UpdateUserInterface()
         {
+            if (!Initialized)
+                return;
+
             var targetIdEntity = TargetIdSlot.Item;
             IdCardConsoleBoundUserInterfaceState newState;
             // this could be prettier

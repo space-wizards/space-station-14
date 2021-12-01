@@ -28,6 +28,8 @@ namespace Content.Shared.PDA
 
             ItemSlotsSystem.AddItemSlot(uid, $"{pda.Name}-id", pda.IdSlot);
             ItemSlotsSystem.AddItemSlot(uid, $"{pda.Name}-pen", pda.PenSlot);
+
+            UpdatePDAAppearance(pda);
         }
 
         private void OnComponentRemove(EntityUid uid, PDAComponent pda, ComponentRemove args)
@@ -38,6 +40,8 @@ namespace Content.Shared.PDA
 
         protected virtual void OnItemInserted(EntityUid uid, PDAComponent pda, EntInsertedIntoContainerMessage args)
         {
+            if (!pda.Initialized) return;
+
             if (args.Container.ID == pda.IdSlot.ID)
                 pda.ContainedID = args.Entity.GetComponentOrNull<IdCardComponent>();
 
