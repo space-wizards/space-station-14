@@ -1,13 +1,6 @@
 Entries:
 - author: 20kdc
   changes:
-  - {message: Paper can't be used to create exceptions by writing bad markup inside
-      it and then examining it., type: Fix}
-  - {message: Examining paper no longer shows the contents., type: Remove}
-  id: 186
-  time: '2021-05-15T15:43:19.0000000+00:00'
-- author: 20kdc
-  changes:
   - {message: Die a glorious death succeeds when you're dead instead of when you're
       alive., type: Fix}
   - {message: Stay Alive / Die A Glorious Death don't treat brains as alive., type: Fix}
@@ -2862,3 +2855,8 @@ Entries:
   - {message: Shuttle movement now uses significantly less bandwidth., type: Fix}
   id: 687
   time: '2021-12-01T07:32:37.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Instruments network again, type: Fix}
+  id: 688
+  time: '2021-12-01T14:00:11.0000000+00:00'
