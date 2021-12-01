@@ -9,12 +9,8 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Robust.Client.GameObjects;
-using Robust.Client.Graphics;
-using Robust.Client.Input;
-using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -41,20 +37,17 @@ namespace Content.Client.Items.Managers
             }
             else
             {
-                ISpriteComponent? sprite;
-                if (entity.TryGetComponent(out HandVirtualItemComponent? virtPull)
-                    && _entityManager.TryGetComponent(virtPull.BlockingEntity, out ISpriteComponent pulledSprite))
+                SpriteComponent? sprite;
+                if (!entity.TryGetComponent(out HandVirtualItemComponent? virtPull) ||
+                    !_entityManager.TryGetComponent(virtPull.BlockingEntity, out sprite))
                 {
-                    sprite = pulledSprite;
-                }
-                else if (!entity.TryGetComponent(out sprite))
-                {
-                    return false;
+                    if (!_entityManager.TryGetComponent(entity.Uid, out sprite))
+                        return false;
                 }
 
                 button.ClearHover();
                 button.SpriteView.Sprite = sprite;
-                button.StorageButton.Visible = entity.HasComponent<ClientStorageComponent>();
+                button.StorageButton.Visible = _entityManager.HasComponent<ClientStorageComponent>(entity.Uid);
             }
 
             button.Entity = entity?.Uid ?? default;
