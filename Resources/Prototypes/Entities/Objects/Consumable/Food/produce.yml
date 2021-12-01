@@ -123,7 +123,7 @@
       food:
         reagents:
         - ReagentId: Histamine
-          Quantity: 30
+          Quantity: 25
   - type: Produce
     seed: nettle
   - type: MeleeChemicalInjector
@@ -132,8 +132,8 @@
     grindableSolutionName: "food"
   - type: InjectableSolution
     solution: "food"
-  - type: DangerousPickUp
-    dangerType: plant
+#  - type: DangerousPickUp
+#    dangerType: plant
 
 - type: entity
   name: banana

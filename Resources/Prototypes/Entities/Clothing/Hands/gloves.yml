@@ -94,8 +94,8 @@
   - type: Clothing
     sprite: Clothing/Hands/Gloves/leather.rsi
     HeatResistance: 1400
-  - type: DangerousPickUpProtection
-    protectionType: plant
+#  - type: DangerousPickUpProtection
+#    protectionType: plant
 
 - type: entity
   parent: ClothingHandsBase

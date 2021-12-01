@@ -445,5 +445,5 @@
   chemicals:
     Histamine:
       Min: 1
-      Max: 30
-      PotencyDivisor: 10
+      Max: 25
+      PotencyDivisor: 4
