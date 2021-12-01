@@ -3,7 +3,6 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Item;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -27,17 +26,16 @@ namespace Content.Server.Storage.Components
 
         /// <summary>
         ///     IC secret stash name. For example "the toilet cistern".
+        ///     If empty string, will replace it with entity name in init.
         /// </summary>
         [ViewVariables] [DataField("secretPartName")]
-        public string? SecretPartNameOverride;
+        public string SecretPartName = "";
 
         /// <summary>
         ///     Container used to keep secret stash item.
         /// </summary>
         [ViewVariables]
         public ContainerSlot ItemContainer = default!;
-
-        // todo remove
-        public string SecretPartName => SecretPartNameOverride ?? Loc.GetString("comp-secret-stash-secret-part-name", ("name", Owner.Name));
+        
     }
 }
