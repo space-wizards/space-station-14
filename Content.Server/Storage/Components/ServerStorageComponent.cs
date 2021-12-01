@@ -14,7 +14,9 @@ using Content.Shared.Item;
 using Content.Shared.Placeable;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
+using Content.Shared.Stacks;
 using Content.Shared.Storage;
+using Content.Shared.Storage.Components;
 using Content.Shared.Whitelist;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -29,6 +31,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Storage.Components
@@ -41,9 +44,12 @@ namespace Content.Server.Storage.Components
     [ComponentReference(typeof(IStorageComponent))]
     public class ServerStorageComponent : SharedStorageComponent, IInteractUsing, IUse, IActivate, IStorageComponent, IDestroyAct, IExAct, IAfterInteract
     {
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+
         private const string LoggerName = "Storage";
 
-        private Container? _storage;
+        public Container? Storage;
+        
         private readonly Dictionary<IEntity, int> _sizeCache = new();
 
         [DataField("occludesLight")]
@@ -73,7 +79,7 @@ namespace Content.Server.Storage.Components
         public SoundSpecifier StorageSoundCollection { get; set; } = new SoundCollectionSpecifier("storageRustle");
 
         [ViewVariables]
-        public override IReadOnlyList<IEntity>? StoredEntities => _storage?.ContainedEntities;
+        public override IReadOnlyList<IEntity>? StoredEntities => Storage?.ContainedEntities;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool OccludesLight
@@ -82,8 +88,22 @@ namespace Content.Server.Storage.Components
             set
             {
                 _occludesLight = value;
-                if (_storage != null) _storage.OccludesLight = value;
+                if (Storage != null) Storage.OccludesLight = value;
             }
+        }
+
+        private void UpdateStorageVisualization()
+        {
+            if (!_entityManager.TryGetComponent(OwnerUid, out AppearanceComponent appearance))
+                return;
+
+            bool open = SubscribedSessions.Count != 0;
+
+            appearance.SetData(StorageVisuals.Open, open);
+            appearance.SetData(SharedBagOpenVisuals.BagState, open ? SharedBagState.Open : SharedBagState.Closed);
+
+            if (_entityManager.HasComponent<ItemCounterComponent>(OwnerUid))
+                appearance.SetData(StackVisuals.Hide, !open);
         }
 
         private void EnsureInitialCalculated()
@@ -102,12 +122,12 @@ namespace Content.Server.Storage.Components
         {
             _storageUsed = 0;
 
-            if (_storage == null)
+            if (Storage == null)
             {
                 return;
             }
 
-            foreach (var entity in _storage.ContainedEntities)
+            foreach (var entity in Storage.ContainedEntities)
             {
                 var item = entity.GetComponent<SharedItemComponent>();
                 _storageUsed += item.Size;
@@ -155,18 +175,18 @@ namespace Content.Server.Storage.Components
         /// <returns>true if the entity was inserted, false otherwise</returns>
         public bool Insert(IEntity entity)
         {
-            return CanInsert(entity) && _storage?.Insert(entity) == true;
+            return CanInsert(entity) && Storage?.Insert(entity) == true;
         }
 
         public override bool Remove(IEntity entity)
         {
             EnsureInitialCalculated();
-            return _storage?.Remove(entity) == true;
+            return Storage?.Remove(entity) == true;
         }
 
         public void HandleEntityMaybeInserted(EntInsertedIntoContainerMessage message)
         {
-            if (message.Container != _storage)
+            if (message.Container != Storage)
             {
                 return;
             }
@@ -188,7 +208,7 @@ namespace Content.Server.Storage.Components
 
         public void HandleEntityMaybeRemoved(EntRemovedFromContainerMessage message)
         {
-            if (message.Container != _storage)
+            if (message.Container != Storage)
             {
                 return;
             }
@@ -306,9 +326,9 @@ namespace Content.Server.Storage.Components
                 return;
             }
 
-            if (_storage == null)
+            if (Storage == null)
             {
-                Logger.WarningS(LoggerName, $"{nameof(UpdateClientInventory)} called with null {nameof(_storage)}");
+                Logger.WarningS(LoggerName, $"{nameof(UpdateClientInventory)} called with null {nameof(Storage)}");
 
                 return;
             }
@@ -341,9 +361,10 @@ namespace Content.Server.Storage.Components
 
                 session.PlayerStatusChanged += HandlePlayerSessionChangeEvent;
                 SubscribedSessions.Add(session);
-
-                UpdateDoorState();
             }
+
+            if (SubscribedSessions.Count == 1)
+                UpdateStorageVisualization();
         }
 
         /// <summary>
@@ -360,8 +381,38 @@ namespace Content.Server.Storage.Components
 #pragma warning disable 618
                 SendNetworkMessage(new CloseStorageUIMessage(), session.ConnectedClient);
 #pragma warning restore 618
+            }
 
-                UpdateDoorState();
+            CloseNestedInterfaces(session);
+
+            if (SubscribedSessions.Count == 0)
+                UpdateStorageVisualization();
+        }
+
+        /// <summary>
+        ///     If the user has nested-UIs open (e.g., PDA UI open when pda is in a backpack), close them.
+        /// </summary>
+        /// <param name="session"></param>
+        public void CloseNestedInterfaces(IPlayerSession session)
+        {
+            if (StoredEntities == null)
+                return;
+
+            foreach (var entity in StoredEntities)
+            {
+                if (_entityManager.TryGetComponent(entity.Uid, out ServerStorageComponent storageComponent))
+                {
+                    DebugTools.Assert(storageComponent != this, $"Storage component contains itself!? Entity: {OwnerUid}");
+                    storageComponent.UnsubscribeSession(session);
+                }
+
+                if (_entityManager.TryGetComponent(entity.Uid, out ServerUserInterfaceComponent uiComponent))
+                {
+                    foreach (var ui in uiComponent.Interfaces)
+                    {
+                        ui.Close(session);
+                    }
+                }
             }
         }
 
@@ -375,21 +426,14 @@ namespace Content.Server.Storage.Components
             }
         }
 
-        private void UpdateDoorState()
-        {
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
-            {
-                appearance.SetData(StorageVisuals.Open, SubscribedSessions.Count != 0);
-            }
-        }
-
         protected override void Initialize()
         {
             base.Initialize();
 
             // ReSharper disable once StringLiteralTypo
-            _storage = Owner.EnsureContainer<Container>("storagebase");
-            _storage.OccludesLight = _occludesLight;
+            Storage = Owner.EnsureContainer<Container>("storagebase");
+            Storage.OccludesLight = _occludesLight;
+            UpdateStorageVisualization();
         }
 
         [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
@@ -424,7 +468,7 @@ namespace Content.Server.Storage.Components
                         break;
                     }
 
-                    if (!Owner.EntityManager.TryGetEntity(remove.EntityUid, out var entity) || _storage?.Contains(entity) == false)
+                    if (!Owner.EntityManager.TryGetEntity(remove.EntityUid, out var entity) || Storage?.Contains(entity) == false)
                     {
                         break;
                     }

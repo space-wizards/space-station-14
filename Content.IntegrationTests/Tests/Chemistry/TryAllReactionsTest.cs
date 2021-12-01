@@ -16,10 +16,20 @@ namespace Content.IntegrationTests.Tests.Chemistry
     [TestOf(typeof(ReactionPrototype))]
     public class TryAllReactionsTest : ContentIntegrationTest
     {
+        private const string Prototypes = @"
+- type: entity
+  id: TestSolutionContainer
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 50";
+
         [Test]
         public async Task TryAllTest()
         {
-            var server = StartServer();
+            var options = new ServerContentIntegrationOption{ExtraPrototypes = Prototypes};
+            var server = StartServer(options);
 
             await server.WaitIdleAsync();
 
@@ -38,7 +48,7 @@ namespace Content.IntegrationTests.Tests.Chemistry
 
                 server.Assert(() =>
                 {
-                    beaker = entityManager.SpawnEntity("BluespaceBeaker", coordinates);
+                    beaker = entityManager.SpawnEntity("TestSolutionContainer", coordinates);
                     Assert.That(EntitySystem.Get<SolutionContainerSystem>()
                         .TryGetSolution(beaker.Uid, "beaker", out component));
                     foreach (var (id, reactant) in reactionPrototype.Reactants)

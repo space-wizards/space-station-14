@@ -56,17 +56,17 @@
   - type: PresetIdCard
     job: SecurityOfficer
 
-# - type: entity
-#   parent: IDCardStandard
-#   id: WardenIDCard
-#   name: warden ID card
-#   components:
-#     - type: Sprite
-#       layers:
-#         - state: default
-#         - state: idwarden
-#     - type: PresetIdCard
-#       job: Warden
+- type: entity
+  parent: IDCardStandard
+  id: WardenIDCard
+  name: warden ID card
+  components:
+    - type: Sprite
+      layers:
+        - state: default
+        - state: idwarden
+    - type: PresetIdCard
+      job: Warden
 
 - type: entity
   parent: IDCardStandard
@@ -94,6 +94,18 @@
 
 - type: entity
   parent: IDCardStandard
+  id: ChemistIDCard
+  name: chemist ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idchemist
+  - type: PresetIdCard
+    job: Chemist
+
+- type: entity
+  parent: IDCardStandard
   id: CargoIDCard
   name: cargo ID card
   components:
@@ -104,17 +116,17 @@
   - type: PresetIdCard
     job: CargoTechnician
 
-#- type: entity
-#  parent: IDCardStandard
-#  id: QuartermasterIDCard
-#  name: quartermaster ID card
-#  components:
-#    - type: Sprite
-#      layers:
-#        - state: default
-#        - state: idquartermaster
-#    - type: PresetIdCard
-#      job: Quartermaster
+- type: entity
+  parent: IDCardStandard
+  id: QuartermasterIDCard
+  name: quartermaster ID card
+  components:
+    - type: Sprite
+      layers:
+        - state: default
+        - state: idquartermaster
+    - type: PresetIdCard
+      job: Quartermaster
 
 - type: entity
   parent: IDCardStandard
@@ -152,19 +164,17 @@
   - type: PresetIdCard
     job: Mime
 
-#- type: entity
-#  parent: IDCardStandard
-#  id: ChaplainIDCard
-#  name: chaplain ID card
-#  components:
-#    - type: Sprite
-#      layers:
-#        - state: default
-#
-#        - state: idchaplain
-#
-#    - type: PresetIdCard
-#      job: Chaplain
+- type: entity
+  parent: IDCardStandard
+  id: ChaplainIDCard
+  name: chaplain ID card
+  components:
+    - type: Sprite
+      layers:
+        - state: default
+        - state: idchaplain
+    - type: PresetIdCard
+      job: Chaplain
 
 - type: entity
   parent: IDCardStandard
@@ -302,23 +312,23 @@
     tags:
     - Maintenance
     - Cargo
-    - Quartermaster
+  #  - Quartermaster
     - Engineering
-    - ChiefEngineer
+  #  - ChiefEngineer
     - Medical
-    - ChiefMedicalOfficer
+  #  - ChiefMedicalOfficer
     - Research
-    - ResearchDirector
+  #  - ResearchDirector
     - Security
     - Service
     - Captain
     - Command
     - External
-    - HeadOfSecurity
+    #- HeadOfSecurity
     - HeadOfPersonnel
     - Bar
-    - Hydroponics
-    - Kitchen
+    #- Hydroponics
+    #- Kitchen
     - Janitor
     - Theatre
 

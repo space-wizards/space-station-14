@@ -17,6 +17,7 @@
       state: bat
       sprite: Mobs/Animals/bat.rsi
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
@@ -53,6 +54,7 @@
       state: 0
       sprite: Mobs/Animals/bee.rsi
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
@@ -76,6 +78,9 @@
       normal: 0
       crit: dead
       dead: dead
+  - type: Tag
+    tags:
+    - Bee
 
 - type: entity
   name: chicken
@@ -112,6 +117,7 @@
       state: butterfly
       sprite: Mobs/Animals/butterfly.rsi
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
@@ -159,6 +165,7 @@
       state: cow
       sprite: Mobs/Animals/cow.rsi
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
@@ -203,6 +210,7 @@
       state: crab
       sprite: Mobs/Animals/crab.rsi
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
@@ -275,6 +283,7 @@
       state: crawling
       sprite: Mobs/Animals/gorilla.rsi
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
@@ -346,6 +355,7 @@
     Slots:
     - Helmet
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
@@ -372,8 +382,6 @@
       normal: mouse-0
       crit: dead-0
       dead: splat-0
-# Eek! You can eat them alive for now until someone makes something that detects when
-# a mob is dead or something idk
   - type: Food
   - type: Extractable
     grindableSolutionName: food
@@ -442,6 +450,7 @@
       state: parrot
       sprite: Mobs/Animals/parrot.rsi
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
@@ -474,6 +483,7 @@
       state: penguin
       sprite: Mobs/Animals/penguin.rsi
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
@@ -506,6 +516,7 @@
       state: snake
       sprite: Mobs/Animals/snake.rsi
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
@@ -543,6 +554,7 @@
       state: tarantula
       sprite: Mobs/Animals/spider.rsi
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle

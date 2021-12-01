@@ -9,11 +9,19 @@ namespace Content.Shared.DrawDepth
         /// <summary>
         ///     This is for sub-floors, the floors you see after prying off a tile.
         /// </summary>
-        LowFloors = DrawDepthTag.Default - 6,
+        LowFloors = DrawDepthTag.Default - 10,
+
+        // various entity types that require different
+        // draw depths, as to avoid hiding
+        #region SubfloorEntities
+        ThickPipe = DrawDepthTag.Default - 9,
+        ThickWire = DrawDepthTag.Default - 8,
+        ThinPipe = DrawDepthTag.Default - 7,
+        ThinWire = DrawDepthTag.Default - 6,
+        #endregion
 
         /// <summary>
-        ///     Things that are beneath regular floors, such as wires or pipes. vents/scrubbers also use this to ensure
-        ///     that they appear below carpets.
+        ///     Things that are beneath regular floors.
         /// </summary>
         BelowFloor = DrawDepthTag.Default - 5,
 
@@ -64,16 +72,21 @@ namespace Content.Shared.DrawDepth
         Doors = DrawDepthTag.Default + 5,
 
         /// <summary>
+        /// Stuff that needs to draw over most things, but not effects, like Kudzu.
+        /// </summary>
+        Overdoors = DrawDepthTag.Default + 6,
+
+        /// <summary>
         ///     Explosions, fire, melee swings. Whatever.
         /// </summary>
-        Effects = DrawDepthTag.Default + 6,
+        Effects = DrawDepthTag.Default + 7,
 
-        Ghosts = DrawDepthTag.Default + 7,
+        Ghosts = DrawDepthTag.Default + 8,
 
         /// <summary>
         ///    Use this selectively if it absolutely needs to be drawn above (almost) everything else. Examples include
         ///    the pointing arrow, the drag & drop ghost-entity, and some debug tools.
         /// </summary>
-        Overlays = DrawDepthTag.Default + 8,
+        Overlays = DrawDepthTag.Default + 9,
     }
 }

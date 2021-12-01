@@ -17,7 +17,7 @@ namespace Content.Server.Lathe.Components
 
         public override string Name => "ProtolatheDatabase";
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new ProtolatheDatabaseState(GetRecipeIdList());
         }

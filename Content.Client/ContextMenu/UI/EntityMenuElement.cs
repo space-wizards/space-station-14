@@ -57,7 +57,8 @@ namespace Content.Client.ContextMenu.UI
         /// </summary>
         public void UpdateEntity(IEntity? entity = null)
         {
-            entity ??= Entity;
+            if (Entity != null && !Entity.Deleted)
+                entity ??= Entity;
 
             EntityIcon.Sprite = entity?.GetComponentOrNull<ISpriteComponent>();
 

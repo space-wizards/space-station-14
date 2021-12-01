@@ -30,8 +30,12 @@
                 <BoxContainer Orientation="Vertical" MinWidth="200">
                     <LineEdit Name="PlayerSearch" Access="Public" StyleClasses="actionSearchBox"
                               HorizontalExpand="true" PlaceHolder="{Loc admin-logs-search-players-placeholder}"/>
-                    <Button Name="SelectNoPlayersButton" Text="{Loc admin-logs-select-none}"
-                            StyleClasses="ButtonSquare"/>
+                    <BoxContainer Orientation="Horizontal">
+                        <Button Name="SelectAllPlayersButton" Text="{Loc admin-logs-select-all}"
+                                MinWidth="100" StyleClasses="ButtonSquare"></Button>
+                        <Button Name="SelectNoPlayersButton" Text="{Loc admin-logs-select-none}"
+                                MinWidth="100" StyleClasses="ButtonSquare"/>
+                    </BoxContainer>
                     <ScrollContainer VerticalExpand="True">
                         <BoxContainer Name="PlayersContainer" Access="Public" Orientation="Vertical"/>
                     </ScrollContainer>

@@ -547,7 +547,7 @@ namespace Content.Shared.Body.Components
             return SlotParts.ElementAt(index);
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             var parts = new (string slot, EntityUid partId)[SlotParts.Count];
 

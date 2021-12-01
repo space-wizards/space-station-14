@@ -99,7 +99,7 @@ namespace Content.Server.Climbing.Components
                 IsClimbing = false;
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new ClimbModeComponentState(_isClimbing, OwnerIsTransitioning);
         }
