@@ -23,6 +23,7 @@ namespace Content.Client.Animations
             }
             var sprite = animatableClone.GetComponent<SpriteComponent>();
             sprite.CopyFrom(sprite0);
+            sprite.Visible = true;
 
             var animations = animatableClone.GetComponent<AnimationPlayerComponent>();
             animations.AnimationCompleted += (_) => {

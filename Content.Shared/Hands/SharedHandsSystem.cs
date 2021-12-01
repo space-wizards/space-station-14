@@ -107,7 +107,6 @@ namespace Content.Shared.Hands
 
             hands.Dirty();
         }
-
         
         /// <summary>
         ///     Puts an entity into the player's hand, assumes that the insertion is allowed.
