@@ -1,9 +1,4 @@
 Entries:
-- author: Hardly
-  changes:
-  - {message: R&D Now starts with crates of materials, type: Add}
-  id: 188
-  time: '2021-05-15T17:45:32.0000000+00:00'
 - author: Timrod
   changes:
   - {message: Reduced deadliness of Boda machine., type: Fix}
@@ -2858,3 +2853,8 @@ Entries:
   - {message: Radiation storms are scary., type: Tweak}
   id: 689
   time: '2021-12-01T20:21:18.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Corrected the names of a bunch of clothing items., type: Fix}
+  id: 690
+  time: '2021-12-01T21:19:36.0000000+00:00'
