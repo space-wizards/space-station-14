@@ -18,6 +18,7 @@
     prefixCreator: '14'
   mapPath: Maps/knightship.yml
   minPlayers: 0
+  votable: false
   overflowJobs:
     - Assistant
   availableJobs:
