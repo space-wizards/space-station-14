@@ -45,6 +45,8 @@
   - type: Wires
     BoardName: "Vending Machine"
     LayoutId: Vending
+    wireActions:
+    - !type:PowerWireAction
   - type: Anchorable
   - type: PointLight
     enabled: false
