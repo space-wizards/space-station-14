@@ -4,7 +4,6 @@
   name: atmos plaque
   components:
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb

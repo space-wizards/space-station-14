@@ -10,7 +10,6 @@
       anchored: true
     - type: Physics
       bodyType: Static
-    - type: Fixtures
       fixtures:
       - shape:
           !type:PhysShapeAabb
@@ -61,7 +60,6 @@
       anchored: true
     - type: Physics
       bodyType: Static
-    - type: Fixtures
       fixtures:
       - shape:
           !type:PhysShapeAabb

@@ -13,7 +13,6 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
-  - type: Fixtures
   - type: Transform
     anchored: true
   - type: Anchorable
@@ -58,7 +57,6 @@
       state_anchored: pipe-s
       state_broken: pipe-b
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -87,7 +85,6 @@
     - key: enum.DisposalTaggerUiKey.Key
       type: DisposalTaggerBoundUserInterface
   - type: Physics
-  - type: Fixtures
     fixtures:
       - shape:
           !type:PhysShapeAabb
@@ -112,7 +109,6 @@
       state_anchored: pipe-t
       state_broken: pipe-b
   - type: Physics
-  - type: Fixtures
     fixtures:
       - shape:
           !type:PhysShapeAabb
@@ -147,7 +143,6 @@
     - key: enum.DisposalRouterUiKey.Key
       type: DisposalRouterBoundUserInterface
   - type: Physics
-  - type: Fixtures
     fixtures:
       - shape:
           !type:PhysShapeAabb
@@ -177,7 +172,6 @@
   - type: Flippable
     mirrorEntity: DisposalRouter
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -208,7 +202,6 @@
   - type: Flippable
     mirrorEntity: DisposalJunctionFlipped
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -238,7 +231,6 @@
   - type: Flippable
     mirrorEntity: DisposalJunction
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -267,7 +259,6 @@
       state_anchored: pipe-y
       state_broken: pipe-b
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -292,7 +283,6 @@
       state_anchored: pipe-c
       state_broken: pipe-b
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb

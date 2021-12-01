@@ -36,7 +36,6 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: KinematicController # Same for all inheritors
-  - type: Fixtures
     fixtures:
     - shape:
         # Circles, cuz rotation of rectangles looks very bad

@@ -117,7 +117,6 @@
     enabled: false
   - type: Physics
     bodyType: Dynamic
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb

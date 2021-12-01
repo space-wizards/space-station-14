@@ -20,7 +20,6 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -64,7 +63,6 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -96,7 +94,6 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -156,7 +153,6 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb

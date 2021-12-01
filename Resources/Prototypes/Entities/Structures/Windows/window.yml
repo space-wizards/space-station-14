@@ -21,7 +21,6 @@
     state: full
   - type: Physics
     bodyType: Static
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb {}
@@ -89,7 +88,6 @@
     sprite: Structures/Windows/directional.rsi
     state: window
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb

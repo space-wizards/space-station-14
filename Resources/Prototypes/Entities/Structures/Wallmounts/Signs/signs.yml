@@ -10,7 +10,6 @@
   description: Return to monky.
   components:
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -32,7 +31,6 @@
   components:
   - type: Rotatable
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -52,7 +50,6 @@
   components:
   - type: Rotatable
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -73,7 +70,6 @@
   components:
   - type: Rotatable
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -94,7 +90,6 @@
   components:
   - type: Rotatable
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -115,7 +110,6 @@
   components:
   - type: Rotatable
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -135,7 +129,6 @@
   components:
   - type: Rotatable
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -155,7 +148,6 @@
   components:
   - type: Rotatable
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -176,7 +168,6 @@
   name: armory sign
   components:
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -195,7 +186,6 @@
   name: tool storage sign
   components:
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -214,7 +204,6 @@
   name: anomaly lab sign
   components:
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -233,7 +222,6 @@
   name: atmos sign
   components:
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -252,7 +240,6 @@
   name: bar sign
   components:
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -271,7 +258,6 @@
   name: library sign
   components:
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -290,7 +276,6 @@
   name: chapel sign
   components:
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -309,7 +294,6 @@
   name: head sign
   components:
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -328,7 +312,6 @@
   name: conference room sign
   components:
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -347,7 +330,6 @@
   name: drones sign
   components:
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -365,7 +347,6 @@
   name: engine sign
   components:
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -383,7 +364,6 @@
   name: cloning sign
   components:
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -401,7 +381,6 @@
   name: interrogation sign
   components:
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -419,7 +398,6 @@
   name: surgery sign
   components:
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -437,7 +415,6 @@
   name: telecomms sign
   components:
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -455,7 +432,6 @@
   name: cargo sign
   components:
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -473,7 +449,6 @@
   name: cargo dock sign
   components:
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -491,7 +466,6 @@
   name: chemistry sign
   components:
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -509,7 +483,6 @@
   name: docking sign
   components:
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -527,7 +500,6 @@
   name: engineering sign
   components:
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -545,7 +517,6 @@
   name: EVA sign
   components:
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -563,7 +534,6 @@
   name: gravity sign
   components:
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -581,7 +551,6 @@
   name: medbay sign
   components:
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -599,7 +568,6 @@
   name: morgue sign
   components:
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -617,7 +585,6 @@
   name: prison sign
   components:
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -635,7 +602,6 @@
   name: research and development sign
   components:
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -653,7 +619,6 @@
   name: science sign
   components:
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -671,7 +636,6 @@
   name: toxins sign
   components:
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -689,7 +653,6 @@
   name: bridge sign
   components:
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -710,7 +673,6 @@
   description: WARNING! Air flow tube. Ensure the flow is disengaged before working.
   components:
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -729,7 +691,6 @@
   description: WARNING! CO2 flow tube. Ensure the flow is disengaged before working.
   components:
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -748,7 +709,6 @@
   description: WARNING! N2 flow tube. Ensure the flow is disengaged before working.
   components:
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -767,7 +727,6 @@
   description: WARNING! N2O flow tube. Ensure the flow is disengaged before working.
   components:
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -786,7 +745,6 @@
   description: WARNING! O2 flow tube. Ensure the flow is disengaged before working.
   components:
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -805,7 +763,6 @@
   description: WARNING! Plasma flow tube. Ensure the flow is disengaged before working.
   components:
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -824,7 +781,6 @@
   description: WARNING! Waste flow tube. Ensure the flow is disengaged before working.
   components:
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -843,7 +799,6 @@
   description: A warning sign which reads 'NO SMOKING'
   components:
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -862,7 +817,6 @@
   description: Technical information of some sort, shame its too worn-out to read.
   components:
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -881,7 +835,6 @@
   description: Looks like a planet crashing by some station above it. Its kinda scary.
   components:
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb

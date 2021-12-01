@@ -279,18 +279,18 @@ namespace Content.Server.Storage.Components
 
         private void ModifyComponents()
         {
-            if (!_isCollidableWhenOpen && Owner.TryGetComponent<FixturesComponent>(out var manager))
+            if (!_isCollidableWhenOpen && Owner.TryGetComponent<IPhysBody>(out var physics))
             {
                 if (Open)
                 {
-                    foreach (var (_, fixture) in manager.Fixtures)
+                    foreach (var fixture in physics.Fixtures)
                     {
                         fixture.CollisionLayer &= ~OpenMask;
                     }
                 }
                 else
                 {
-                    foreach (var (_, fixture) in manager.Fixtures)
+                    foreach (var fixture in physics.Fixtures)
                     {
                         fixture.CollisionLayer |= OpenMask;
                     }

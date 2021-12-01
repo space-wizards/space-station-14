@@ -2,9 +2,7 @@
 using Content.Shared.Radiation;
 using Content.Shared.Singularity.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Maths;
-using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Dynamics;
 
@@ -12,8 +10,6 @@ namespace Content.Shared.Singularity
 {
     public abstract class SharedSingularitySystem : EntitySystem
     {
-        [Dependency] private readonly FixtureSystem _fixtures = default!;
-
         public const string DeleteFixture = "DeleteCircle";
 
         private float GetFalloff(int level)
@@ -78,7 +74,8 @@ namespace Content.Shared.Singularity
                 appearance.SetData(SingularityVisuals.Level, value);
             }
 
-            if (physics != null && _fixtures.GetFixtureOrNull(physics, DeleteFixture) is {Shape: PhysShapeCircle circle})
+            if (physics != null &&
+                physics.GetFixture(DeleteFixture) is {Shape: PhysShapeCircle circle})
             {
                 circle.Radius = value - 0.5f;
             }

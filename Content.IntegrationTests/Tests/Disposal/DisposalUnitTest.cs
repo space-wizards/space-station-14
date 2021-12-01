@@ -81,7 +81,6 @@ namespace Content.IntegrationTests.Tests.Disposal
     damageContainer: Biological
   - type: Physics
     bodyType: KinematicController
-  - type: Fixtures
   - type: DoAfter
 
 - type: entity
@@ -94,7 +93,6 @@ namespace Content.IntegrationTests.Tests.Disposal
       - Anchoring
   - type: Physics
     bodyType: Dynamic
-  - type: Fixtures
   - type: DoAfter
 
 - type: entity
@@ -108,7 +106,6 @@ namespace Content.IntegrationTests.Tests.Disposal
   - type: ApcPowerReceiver
   - type: Physics
     bodyType: Static
-  - type: Fixtures
 
 - type: entity
   name: DisposalTrunkDummy

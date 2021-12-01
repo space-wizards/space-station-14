@@ -20,7 +20,6 @@ namespace Content.IntegrationTests.Tests.Doors
   components:
   - type: Physics
     bodyType: Dynamic
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
@@ -36,7 +35,6 @@ namespace Content.IntegrationTests.Tests.Doors
   - type: Airlock
   - type: Physics
     bodyType: Static
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb

@@ -8,7 +8,6 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Dynamic
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -73,7 +72,6 @@
     state: plant-25
   - type: Physics
     bodyType: Dynamic
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb

@@ -13,9 +13,6 @@
     state: bullet
   - type: Physics
     bodyType: Dynamic
-    linearDamping: 0
-    angularDamping: 0
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -25,6 +22,8 @@
       - Impassable
       layer:
       - MobImpassable
+    linearDamping: 0
+    angularDamping: 0
   - type: Projectile
     damage:
       types:
@@ -105,7 +104,6 @@
     - state: spark
       shader: unshaded
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -140,7 +138,6 @@
     sprite: Structures/Power/Generation/Singularity/emitter.rsi
     state: 'projectile'
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb

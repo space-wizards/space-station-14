@@ -20,7 +20,6 @@
   - type: Physics
     bodyType: Dynamic
     fixedRotation: false
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb

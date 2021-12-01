@@ -17,7 +17,6 @@
       state: bat
       sprite: Mobs/Animals/bat.rsi
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
@@ -54,7 +53,6 @@
       state: 0
       sprite: Mobs/Animals/bee.rsi
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
@@ -117,7 +115,6 @@
       state: butterfly
       sprite: Mobs/Animals/butterfly.rsi
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
@@ -165,7 +162,6 @@
       state: cow
       sprite: Mobs/Animals/cow.rsi
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
@@ -210,7 +206,6 @@
       state: crab
       sprite: Mobs/Animals/crab.rsi
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
@@ -283,7 +278,6 @@
       state: crawling
       sprite: Mobs/Animals/gorilla.rsi
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
@@ -355,7 +349,6 @@
     Slots:
     - Helmet
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
@@ -450,7 +443,6 @@
       state: parrot
       sprite: Mobs/Animals/parrot.rsi
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
@@ -483,7 +475,6 @@
       state: penguin
       sprite: Mobs/Animals/penguin.rsi
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
@@ -516,7 +507,6 @@
       state: snake
       sprite: Mobs/Animals/snake.rsi
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
@@ -554,7 +544,6 @@
       state: tarantula
       sprite: Mobs/Animals/spider.rsi
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle

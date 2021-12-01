@@ -152,7 +152,6 @@
     - map: [ "enum.Slots.POCKET2" ]
   - type: Physics
     bodyType: KinematicController
-  - type: Fixtures
     fixtures: # TODO: This needs a second fixture just for mob collisions.
     - shape:
         !type:PhysShapeCircle
@@ -390,7 +389,6 @@
       - map: ["hand-right"]
     - type: Physics
       bodyType: Dynamic
-    - type: Fixtures
       fixtures:
       - shape:
           !type:PhysShapeAabb

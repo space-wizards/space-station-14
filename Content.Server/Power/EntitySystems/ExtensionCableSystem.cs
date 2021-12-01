@@ -66,11 +66,6 @@ namespace Content.Server.Power.EntitySystems
 
             foreach (var receiver in receivers)
             {
-                // No point resetting what the receiver is doing if it's deleting, plus significant perf savings
-                // in not doing needless lookups
-                if (EntityManager.GetComponent<MetaDataComponent>(receiver.OwnerUid).EntityLifeStage >
-                    EntityLifeStage.MapInitialized) continue;
-
                 TryFindAndSetProvider(receiver);
             }
         }

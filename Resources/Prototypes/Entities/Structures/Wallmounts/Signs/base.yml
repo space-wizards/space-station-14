@@ -8,7 +8,6 @@
   - type: Physics
     bodyType: Static
     canCollide: false
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb {}

@@ -20,7 +20,6 @@
       map: ["enum.StorageVisualLayers.Welded"]
   - type: InteractionOutline
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb

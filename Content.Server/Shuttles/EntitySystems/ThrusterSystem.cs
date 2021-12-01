@@ -28,7 +28,7 @@ namespace Content.Server.Shuttles.EntitySystems
     {
         [Robust.Shared.IoC.Dependency] private readonly IMapManager _mapManager = default!;
         [Robust.Shared.IoC.Dependency] private readonly AmbientSoundSystem _ambient = default!;
-        [Robust.Shared.IoC.Dependency] private readonly FixtureSystem _fixtureSystem = default!;
+        [Robust.Shared.IoC.Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
         [Robust.Shared.IoC.Dependency] private readonly DamageableSystem _damageable = default!;
 
         // Essentially whenever thruster enables we update the shuttle's available impulses which are used for movement.
@@ -259,7 +259,7 @@ namespace Content.Server.Shuttles.EntitySystems
                             CollisionLayer = (int) CollisionGroup.MobImpassable
                         };
 
-                        _fixtureSystem.CreateFixture(physicsComponent, fixture);
+                        _broadphase.CreateFixture(physicsComponent, fixture);
                     }
 
                     break;
@@ -323,7 +323,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
             if (EntityManager.TryGetComponent(uid, out PhysicsComponent? physicsComponent))
             {
-                _fixtureSystem.DestroyFixture(physicsComponent, BurnFixture);
+                _broadphase.DestroyFixture(physicsComponent, BurnFixture);
             }
 
             _activeThrusters.Remove(component);

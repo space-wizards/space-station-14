@@ -92,7 +92,6 @@
         shader: unshaded
         visible: false
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb {}
@@ -160,7 +159,6 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb {}

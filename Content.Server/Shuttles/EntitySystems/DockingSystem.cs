@@ -21,8 +21,9 @@ namespace Content.Server.Shuttles.EntitySystems
     public sealed class DockingSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
+        [Dependency] private readonly SharedBroadphaseSystem _broadphaseSystem = default!;
         [Dependency] private readonly SharedJointSystem _jointSystem = default!;
+        [Dependency] private readonly AirtightSystem _airtightSystem = default!;
 
         private const string DockingFixture = "docking";
         private const string DockingJoint = "docking";
@@ -107,7 +108,7 @@ namespace Content.Server.Shuttles.EntitySystems
                 !EntityManager.HasComponent<ShuttleComponent>(grid.GridEntityId)) return null;
 
             var transform = body.GetTransform();
-            var dockingFixture = _fixtureSystem.GetFixtureOrNull(body, DockingFixture);
+            var dockingFixture = body.GetFixture(DockingFixture);
 
             if (dockingFixture == null)
             {
@@ -141,7 +142,7 @@ namespace Content.Server.Shuttles.EntitySystems
                         !EntityManager.TryGetComponent(ent, out PhysicsComponent? otherBody)) continue;
 
                     var otherTransform = otherBody.GetTransform();
-                    var otherDockingFixture = _fixtureSystem.GetFixtureOrNull(otherBody, DockingFixture);
+                    var otherDockingFixture = otherBody.GetFixture(DockingFixture);
 
                     if (otherDockingFixture == null)
                     {
@@ -266,7 +267,7 @@ namespace Content.Server.Shuttles.EntitySystems
                 return;
             }
 
-            _fixtureSystem.DestroyFixture(physicsComponent, DockingFixture);
+            _broadphaseSystem.DestroyFixture(physicsComponent, DockingFixture);
         }
 
         private void EnableDocking(EntityUid uid, DockingComponent component)
@@ -296,7 +297,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
             // TODO: I want this to ideally be 2 fixtures to force them to have some level of alignment buuuttt
             // I also need collisionmanager for that yet again so they get dis.
-            _fixtureSystem.CreateFixture(physicsComponent, fixture);
+            _broadphaseSystem.CreateFixture(physicsComponent, fixture);
         }
 
         /// <summary>
@@ -384,8 +385,8 @@ namespace Content.Server.Shuttles.EntitySystems
                 return;
             }
 
-            var fixtureA = _fixtureSystem.GetFixtureOrNull(bodyA, DockingFixture);
-            var fixtureB = _fixtureSystem.GetFixtureOrNull(bodyB, DockingFixture);
+            var fixtureA = bodyA.GetFixture(DockingFixture);
+            var fixtureB = bodyB.GetFixture(DockingFixture);
 
             if (fixtureA == null || fixtureB == null)
             {

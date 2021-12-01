@@ -14,7 +14,6 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: corgi
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
@@ -66,7 +65,6 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: cat
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
@@ -140,7 +138,6 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: sloth
   - type: Physics
-  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
