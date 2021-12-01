@@ -1,11 +1,4 @@
 Entries:
-- author: Clyybber
-  changes:
-  - {message: Chat no longer defaults to OOC if IC channels are available., type: Remove}
-  - {message: Can now cycle channels while typing., type: Add}
-  - {message: Focus channel keybinds now actually focus the chatbox., type: Fix}
-  id: 185
-  time: '2021-05-15T10:28:05.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: Paper can't be used to create exceptions by writing bad markup inside
@@ -2864,3 +2857,8 @@ Entries:
   - {message: Weedkiller and Pest-B-Gone now harms kudzu., type: Add}
   id: 686
   time: '2021-11-30T22:58:37.776324+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Shuttle movement now uses significantly less bandwidth., type: Fix}
+  id: 687
+  time: '2021-12-01T07:32:37.0000000+00:00'
