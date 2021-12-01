@@ -1,4 +1,5 @@
 using System;
+using Content.Shared.Hands.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -96,6 +97,64 @@ namespace Content.Shared.Hands
         {
             BlockingEntity = blockingEntity;
             User = user;
+        }
+    }
+
+    /// <summary>
+    ///     Raised when putting an entity into a hand slot
+    /// </summary>
+    [PublicAPI]
+    public class EquippedHandEvent : HandledEntityEventArgs
+    {
+        /// <summary>
+        ///     Entity that equipped the item.
+        /// </summary>
+        public IEntity User { get; }
+
+        /// <summary>
+        ///     Item that was equipped.
+        /// </summary>
+        public IEntity Equipped { get; }
+
+        /// <summary>
+        ///     Hand that the item was placed into.
+        /// </summary>
+        public Hand Hand { get; }
+
+        public EquippedHandEvent(IEntity user, IEntity equipped, Hand hand)
+        {
+            User = user;
+            Equipped = equipped;
+            Hand = hand;
+        }
+    }
+
+    /// <summary>
+    ///     Raised when removing an entity from an inventory slot.
+    /// </summary>
+    [PublicAPI]
+    public class UnequippedHandEvent : HandledEntityEventArgs
+    {
+        /// <summary>
+        ///     Entity that equipped the item.
+        /// </summary>
+        public IEntity User { get; }
+
+        /// <summary>
+        ///     Item that was unequipped.
+        /// </summary>
+        public IEntity Unequipped { get; }
+
+        /// <summary>
+        ///     Hand that the item is removed from.
+        /// </summary>
+        public Hand Hand { get; }
+
+        public UnequippedHandEvent(IEntity user, IEntity unequipped, Hand hand)
+        {
+            User = user;
+            Unequipped = unequipped;
+            Hand = hand;
         }
     }
 }

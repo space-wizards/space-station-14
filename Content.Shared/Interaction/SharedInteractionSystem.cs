@@ -608,46 +608,6 @@ namespace Content.Shared.Interaction
                 comp.Unequipped(new UnequippedEventArgs(user, slot));
             }
         }
-
-        #region Equip Hand
-        /// <summary>
-        ///     Calls EquippedHand on all components that implement the IEquippedHand interface
-        ///     on an item.
-        /// </summary>
-        public void EquippedHandInteraction(IEntity user, IEntity item, Hand hand)
-        {
-            var equippedHandMessage = new EquippedHandEvent(user, item, hand);
-            RaiseLocalEvent(item.Uid, equippedHandMessage);
-            if (equippedHandMessage.Handled)
-                return;
-
-            var comps = item.GetAllComponents<IEquippedHand>().ToList();
-
-            foreach (var comp in comps)
-            {
-                comp.EquippedHand(new EquippedHandEventArgs(user, hand));
-            }
-        }
-
-        /// <summary>
-        ///     Calls UnequippedHand on all components that implement the IUnequippedHand interface
-        ///     on an item.
-        /// </summary>
-        public void UnequippedHandInteraction(IEntity user, IEntity item, Hand hand)
-        {
-            var unequippedHandMessage = new UnequippedHandEvent(user, item, hand);
-            RaiseLocalEvent(item.Uid, unequippedHandMessage);
-            if (unequippedHandMessage.Handled)
-                return;
-
-            var comps = item.GetAllComponents<IUnequippedHand>().ToList();
-
-            foreach (var comp in comps)
-            {
-                comp.UnequippedHand(new UnequippedHandEventArgs(user, hand));
-            }
-        }
-        #endregion
         #endregion
 
         #region Drop

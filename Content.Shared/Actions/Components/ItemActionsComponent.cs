@@ -22,7 +22,7 @@ namespace Content.Shared.Actions.Components
     /// Currently only maintained server side and not synced to client, as are all the equip/unequip events.
     /// </summary>
     [RegisterComponent]
-    public class ItemActionsComponent : Component, IEquippedHand, IEquipped, IUnequipped, IUnequippedHand
+    public class ItemActionsComponent : Component, IEquipped, IUnequipped
     {
         public override string Name => "ItemActions";
 
@@ -180,15 +180,15 @@ namespace Content.Shared.Actions.Components
             GrantOrUpdate(actionType, toggleOn: toggleOn);
         }
 
-        void IEquippedHand.EquippedHand(EquippedHandEventArgs eventArgs)
+        public void EquippedHand(IEntity user, Hand hand)
         {
             // this entity cannot be granted actions if no actions component
-            if (!eventArgs.User.TryGetComponent<SharedActionsComponent>(out var actionsComponent))
+            if (!user.TryGetComponent<SharedActionsComponent>(out var actionsComponent))
                 return;
-            Holder = eventArgs.User;
+            Holder = user;
             _holderActionsComponent = actionsComponent;
             InSlot = EquipmentSlotDefines.Slots.NONE;
-            InHand = eventArgs.Hand;
+            InHand = hand;
             GrantOrUpdateAllToHolder();
         }
 
@@ -214,7 +214,7 @@ namespace Content.Shared.Actions.Components
 
         }
 
-        void IUnequippedHand.UnequippedHand(UnequippedHandEventArgs eventArgs)
+        public void UnequippedHand()
         {
             RevokeAllFromHolder();
             Holder = null;

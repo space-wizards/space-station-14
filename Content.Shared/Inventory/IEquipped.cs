@@ -11,7 +11,7 @@ namespace Content.Shared.Inventory
     ///     regardless of where it came from.  This includes moving the entity from a hand slot into a non-hand slot
     ///     (which would also fire <see cref="IUnequippedHand"/>).
     ///
-    ///     This DOES NOT fire when putting the entity into a hand slot (<see cref="IEquippedHand"/>), nor
+    ///     This DOES NOT fire when putting the entity into a hand slot (<see cref="EquippedHandEvent"/>), nor
     ///     does it fire when putting the entity into held/equipped storage.
     /// </summary>
     [RequiresExplicitImplementation]

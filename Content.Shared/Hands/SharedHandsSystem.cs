@@ -11,6 +11,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Content.Shared.Hands
 {
@@ -97,15 +98,18 @@ namespace Content.Shared.Hands
                 return;
             }
 
-            _interactionSystem.UnequippedHandInteraction(owner, entity, hand);
-
-            if (hand.Name == hands.ActiveHand)
-                RaiseLocalEvent(entity.Uid, new HandDeselectedEvent(uid, entity.Uid), false);
-
             if (EntityManager.TryGetComponent(entity.Uid, out SharedSpriteComponent? component))
                 component.Visible = true;
 
             hands.Dirty();
+
+            var unequippedHandMessage = new UnequippedHandEvent(owner, entity, hand);
+            RaiseLocalEvent(entity.Uid, unequippedHandMessage);
+            if (unequippedHandMessage.Handled)
+                return;
+
+            if (hand.Name == hands.ActiveHand)
+                RaiseLocalEvent(entity.Uid, new HandDeselectedEvent(uid, entity.Uid), false);
         }
         
         /// <summary>
@@ -127,17 +131,20 @@ namespace Content.Shared.Hands
                 return;
             }
 
-            _interactionSystem.EquippedHandInteraction(owner, entity, hand);
-
-            if (hand.Name == hands.ActiveHand)
-                RaiseLocalEvent(entity.Uid, new HandSelectedEvent(uid, entity.Uid), false);
-
             if (EntityManager.TryGetComponent(entity.Uid, out SharedSpriteComponent? component))
                 component.Visible = false;
 
-            entity.Transform.LocalPosition = Vector2.Zero;
-
             hands.Dirty();
+
+            var equippedHandMessage = new EquippedHandEvent(owner, entity, hand);
+            RaiseLocalEvent(entity.Uid, equippedHandMessage);
+
+            // If one of the interactions resulted in the item being dropped, return early.
+            if (equippedHandMessage.Handled)
+                return;
+
+            if (hand.Name == hands.ActiveHand)
+                RaiseLocalEvent(entity.Uid, new HandSelectedEvent(uid, entity.Uid), false);
         }
 
         public abstract void PickupAnimation(IEntity item, EntityCoordinates initialPosition, Vector2 finalPosition,
