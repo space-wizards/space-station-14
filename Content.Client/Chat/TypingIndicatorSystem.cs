@@ -50,9 +50,9 @@ namespace Content.Client.Chat
             RaiseNetworkEvent(new ClientTypingMessage(_playerManager?.LocalPlayer?.UserId, _attachedEntity?.Uid));
             _canTransmit = false;
             Timer.Spawn(1000 * (int) _cfg.GetCVar(CCVars.ChatTypingIndicatorPollRate), () =>
-             {
-                 _canTransmit = true;
-             });
+            {
+                _canTransmit = true;
+            });
         }
 
         private void HandleRemoteTyping(RemoteClientTypingMessage ev)
