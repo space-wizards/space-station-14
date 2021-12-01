@@ -9,6 +9,7 @@ using Content.Server.Inventory.Components;
 using Content.Server.Items;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
+using Robust.Shared.Map;
 
 namespace Content.Shared.DangerousPickUp
 {
@@ -25,17 +26,13 @@ namespace Content.Shared.DangerousPickUp
 
         private void OnEquippedHand(EntityUid uid, DangerousPickUpComponent component, EquippedHandEvent args)
         {
-            Logger.Info("Received equipped hand event");
+            args.User.TryGetComponent(out SharedHandsComponent? handComponent);
             string glovesType;
             glovesType  = TryGetGlovesType(args.User);
-            Logger.Info("Received glove type" + glovesType + "from TryGetGlovesType");
-            if(!args.User.TryGetComponent<SharedHandsComponent>(out var handComponent))
-            return;
             
             if (glovesType != component.dangerType)
             {
-               Logger.Info("Trying to drop...");
-               handComponent.TryDropEntity(args.Equipped,args.User.Transform.Coordinates,true);
+               handComponent?.Drop(args.Hand.Name);
             }
         }
         
