@@ -1,4 +1,5 @@
 ﻿using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
@@ -54,12 +55,14 @@ namespace Content.Server.Chemistry.Components
                 }
             }
 
+            var bloodstreamSys = EntitySystem.Get<BloodstreamSystem>();
+
             var cloneSolution = solution.Clone();
             var transferAmount = FixedPoint2.Min(cloneSolution.TotalVolume * solutionFraction * (1 - protection),
-                bloodstream.EmptyVolume);
+                bloodstream.Solution.AvailableVolume);
             var transferSolution = cloneSolution.SplitSolution(transferAmount);
 
-            bloodstream.TryTransferSolution(transferSolution);
+            bloodstreamSys.TryAddToBloodstream(entity.Uid, transferSolution, bloodstream);
         }
 
         protected override void OnKill()

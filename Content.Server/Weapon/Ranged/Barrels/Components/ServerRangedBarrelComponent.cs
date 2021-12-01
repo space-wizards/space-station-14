@@ -318,7 +318,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 sprayAngleChange = Linspace(-evenSpreadAngle / 2, evenSpreadAngle / 2, count);
             }
 
-            var firedProjectiles = new List<IEntity>();
+            var firedProjectiles = new EntityUid[count];
             for (var i = 0; i < count; i++)
             {
                 IEntity projectile;
@@ -332,7 +332,8 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                     projectile =
                         Owner.EntityManager.SpawnEntity(baseProjectile.Prototype?.ID, baseProjectile.Transform.Coordinates);
                 }
-                firedProjectiles.Add(projectile);
+
+                firedProjectiles[i] = projectile.Uid;
 
                 Angle projectileAngle;
 
@@ -364,9 +365,9 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
                 projectile.Transform.WorldRotation = projectileAngle + MathHelper.PiOver2;
             }
-#pragma warning disable 618
-            ammo.SendMessage(this, new BarrelFiredMessage(firedProjectiles));
-#pragma warning restore 618
+
+            Owner.EntityManager.EventBus.RaiseLocalEvent(OwnerUid, new GunShotEvent(firedProjectiles));
+            Owner.EntityManager.EventBus.RaiseLocalEvent(ammo.Uid, new AmmoShotEvent(firedProjectiles));
         }
 
         /// <summary>
@@ -425,13 +426,37 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         }
     }
 
-#pragma warning disable 618
-    public class BarrelFiredMessage : ComponentMessage
-#pragma warning restore 618
+    /// <summary>
+    /// Raised on a gun when it fires projectiles.
+    /// </summary>
+    public sealed class GunShotEvent : EntityEventArgs
     {
-        public readonly List<IEntity> FiredProjectiles;
+        /// <summary>
+        /// Uid of the entity that shot.
+        /// </summary>
+        public EntityUid Uid;
 
-        public BarrelFiredMessage(List<IEntity> firedProjectiles)
+        public readonly EntityUid[] FiredProjectiles;
+
+        public GunShotEvent(EntityUid[] firedProjectiles)
+        {
+            FiredProjectiles = firedProjectiles;
+        }
+    }
+
+    /// <summary>
+    /// Raised on ammo when it is fired.
+    /// </summary>
+    public sealed class AmmoShotEvent : EntityEventArgs
+    {
+        /// <summary>
+        /// Uid of the entity that shot.
+        /// </summary>
+        public EntityUid Uid;
+
+        public readonly EntityUid[] FiredProjectiles;
+
+        public AmmoShotEvent(EntityUid[] firedProjectiles)
         {
             FiredProjectiles = firedProjectiles;
         }

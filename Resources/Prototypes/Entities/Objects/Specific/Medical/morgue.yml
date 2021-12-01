@@ -5,7 +5,7 @@
   components:
   - type: Sprite
     netsync: false
-    drawdepth: SmallObjects # I guess body bags need appear above a coroner's table? 
+    drawdepth: SmallObjects # I guess body bags need appear above a coroner's table?
     sprite: Objects/Specific/Medical/Morgue/bodybags.rsi
     layers:
     - state: bag
@@ -21,6 +21,7 @@
   - type: MovedByPressure
   - type: Physics
     bodyType: Dynamic
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
