@@ -19,6 +19,7 @@
     - type: Transform
       anchored: true
     - type: Physics
+    - type: Fixtures
       fixtures:
       - hard: false
         mass: 7
