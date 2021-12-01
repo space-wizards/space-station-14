@@ -1,7 +1,7 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Content.Server.Access.Components;
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.Hands.Components;
 using Content.Server.Inventory.Components;
+using Content.Shared.Access.Components;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.PDA
