@@ -4,7 +4,7 @@
   graph:
     - node: start
       edges:
-        - to: cratengineering
+        - to: cratescience
           steps:
             - material: Steel
               amount: 5
