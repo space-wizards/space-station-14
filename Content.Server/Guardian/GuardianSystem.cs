@@ -18,6 +18,7 @@ namespace Content.Server.Guardian
     public class GuardianSystem : EntitySystem
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly DamageableSystem _damageSystem = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -104,7 +105,7 @@ namespace Content.Server.Guardian
                 {
                     if (args.DamageDelta != null)
                     {
-                        EntitySystem.Get<DamageableSystem>().SetDamage(hostdamage, (hostdamage.Damage + args.DamageDelta * component.DamageShare));
+                        _damageSystem.SetDamage(hostdamage, (hostdamage.Damage + args.DamageDelta * component.DamageShare));
                         _popupSystem.PopupCoordinates(Loc.GetString("guardian-entity-taking-damage"), hostdamage.Owner.Transform.Coordinates, Filter.Entities(hostdamage.OwnerUid));
                     }
                 }
