@@ -17,15 +17,8 @@ namespace Content.Client.CharacterInfo.Components
 
         public CharacterInfoControl Control = default!;
 
-        public Control Scene { get; private set; } = default!;
+        public Control Scene { get; set; } = default!;
         public UIPriority Priority => UIPriority.Info;
-
-        protected override void OnAdd()
-        {
-            base.OnAdd();
-
-            Scene = Control = new CharacterInfoControl();
-        }
 
         public void Opened()
         {

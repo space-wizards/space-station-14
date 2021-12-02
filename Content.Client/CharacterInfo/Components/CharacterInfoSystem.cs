@@ -17,6 +17,12 @@ public class CharacterInfoSystem : EntitySystem
         base.Initialize();
 
         SubscribeNetworkEvent<CharacterInfoEvent>(OnCharacterInfoEvent);
+        SubscribeLocalEvent<CharacterInfoComponent, ComponentAdd>(OnComponentAdd);
+    }
+
+    private void OnComponentAdd(EntityUid uid, CharacterInfoComponent component, ComponentAdd args)
+    {
+        component.Scene = component.Control = new CharacterInfoComponent.CharacterInfoControl();
     }
 
     public void RequestCharacterInfo(EntityUid entityUid)
