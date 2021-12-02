@@ -34,6 +34,7 @@ namespace Content.Server.Nutrition.EntitySystems
     [UsedImplicitly]
     public class DrinkSystem : EntitySystem
     {
+        [Dependency] private readonly FoodSystem _foodSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
@@ -262,6 +263,14 @@ namespace Content.Server.Nutrition.EntitySystems
                 return true;
             }
 
+            if (_foodSystem.IsMouthBlocked(userUid, out var blocker))
+            {
+                var name = EntityManager.GetComponent<MetaDataComponent>(blocker.Value).EntityName;
+                _popupSystem.PopupEntity(Loc.GetString("food-system-remove-mask", ("entity", name)),
+                    userUid, Filter.Entities(userUid));
+                return true;
+            }
+
             var transferAmount = FixedPoint2.Min(drink.TransferAmount, drinkSolution.DrainAvailable);
             var drain = _solutionContainerSystem.Drain(uid, drinkSolution, transferAmount);
             var firstStomach = stomachs.FirstOrNull(
@@ -324,6 +333,14 @@ namespace Content.Server.Nutrition.EntitySystems
             {
                 _popupSystem.PopupEntity(Loc.GetString("drink-component-try-use-drink-is-empty",
                     ("entity", drink.Owner.Name)), uid, Filter.Entities(userUid));
+                return true;
+            }
+
+            if (_foodSystem.IsMouthBlocked(targetUid, out var blocker))
+            {
+                var name = EntityManager.GetComponent<MetaDataComponent>(blocker.Value).EntityName;
+                _popupSystem.PopupEntity(Loc.GetString("food-system-remove-mask", ("entity", name)),
+                    userUid, Filter.Entities(userUid));
                 return true;
             }
 
