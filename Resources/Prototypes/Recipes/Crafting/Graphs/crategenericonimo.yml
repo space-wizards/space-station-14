@@ -1,0 +1,25 @@
+- type: constructionGraph
+  id: CrateGenericonimo
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: crategenericonimo
+          steps:
+            - material: Steel
+              amount: 5
+              doAfter: 5
+
+              
+    - node: crategenericonimo
+      entity: CrateGenericonimo
+      edges:
+        - to: start
+          steps:
+            - tool: Screwing
+              doAfter: 5
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 5
+            - !type:DeleteEntity {}

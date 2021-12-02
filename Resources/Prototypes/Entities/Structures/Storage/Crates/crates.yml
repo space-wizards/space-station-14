@@ -20,6 +20,9 @@
     - type: StorageVisualizer
       state_open: crate_open
       state_closed: crate_door
+  - type: Construction
+    graph: CrateGenericonimo
+    node: crategenericonimo
 
 - type: entity
   id: CratePlastic
@@ -43,6 +46,9 @@
     - type: StorageVisualizer
       state_open: plasticcrate_open
       state_closed: plasticcrate_door
+  - type: Construction
+    graph: CratePlastic
+    node: crateplastic
 
 - type: entity
   id: CrateFreezer
@@ -569,4 +575,5 @@
       - SmallImpassable
   - type: Construction
     graph: CrateLivestock
-    node: start
+    node: cratelivestock
+
