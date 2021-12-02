@@ -52,6 +52,10 @@ namespace Content.Client.Tabletop
 
         public override void Update(float frameTime)
         {
+            // don't send network messages when doing prediction.
+            if (!_gameTiming.IsFirstTimePredicted)
+                return;
+
             // If there is no player entity, return
             if (_playerManager.LocalPlayer is not { ControlledEntity: { Uid: var playerEntity } }) return;
 
@@ -98,8 +102,7 @@ namespace Content.Client.Tabletop
             // Only send new position to server when Delay is reached
             if (_timePassed >= Delay && _table != null)
             {
-                if (_gameTiming.IsFirstTimePredicted)
-                    RaiseNetworkEvent(new TabletopMoveEvent(_draggedEntity.Value, clampedCoords, _table.Value));
+                RaiseNetworkEvent(new TabletopMoveEvent(_draggedEntity.Value, clampedCoords, _table.Value));
                 _timePassed -= Delay;
             }
         }
