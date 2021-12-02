@@ -9,15 +9,16 @@
         - texture: Structures/Storage/Crates/generic.rsi/crate_icon.png
     - type: RandomSpawner
       rarePrototypes:
+        - SalvageHumanCorpse
         - CrateMaterialPlasteel
-        - CrateMaterialPlasma
+        - CrateMaterialWood
+        - CrateMaterialPlastic
         - CrateSalvageEquipment
-      rareChance: 0.125
-      prototypes:
         - CrateMaterialSteel
         - CrateMaterialGlass
-        - CrateMaterialPlastic
-        - CrateMaterialWood
+      rareChance: 0.4
+      prototypes:
+        - CrateSalvageAssortedGoodies
       chance: 0.9
       offset: 0.0
 
