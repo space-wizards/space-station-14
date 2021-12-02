@@ -6,6 +6,7 @@ using Content.Server.Administration;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
@@ -32,6 +33,13 @@ namespace Content.Server.GameTicking.Commands
 #if DEBUG
             shell.WriteError("WARNING: The server is using a debug build. You are risking losing your changes.");
 #endif
+
+            var ticker = EntitySystem.Get<GameTicker>();
+            if (ticker.LobbyEnabled)
+            {
+                shell.WriteLine("Cannot enter mapping mode when lobby is enabled");
+                return;
+            }
 
             var mapManager = IoCManager.Resolve<IMapManager>();
             int mapId;
