@@ -96,9 +96,10 @@ namespace Content.Client.Tabletop
             _timePassed += frameTime;
 
             // Only send new position to server when Delay is reached
-            if (_timePassed >= Delay && _table != null && _gameTiming.IsFirstTimePredicted)
+            if (_timePassed >= Delay && _table != null)
             {
-                RaiseNetworkEvent(new TabletopMoveEvent(_draggedEntity.Value, clampedCoords, _table.Value));
+                if (_gameTiming.IsFirstTimePredicted)
+                    RaiseNetworkEvent(new TabletopMoveEvent(_draggedEntity.Value, clampedCoords, _table.Value));
                 _timePassed -= Delay;
             }
         }
