@@ -14,7 +14,7 @@ public class ChatSanitizationManager : IChatSanitizationManager
 {
     [Dependency] private IConfigurationManager _configurationManager = default!;
 
-    private static readonly Dictionary<string, string> SmilelyToEmote = new()
+    private static readonly Dictionary<string, string> SmileyToEmote = new()
     {
         // I could've done this with regex, but felt it wasn't the right idea.
         { ":)", "chatsan-smiles" },
@@ -73,12 +73,12 @@ public class ChatSanitizationManager : IChatSanitizationManager
 
         input = input.TrimEnd();
 
-        foreach (var smiley in SmilelyToEmote.Keys)
+        foreach (var smiley in SmileyToEmote.Keys)
         {
             if (input.EndsWith(smiley, true, CultureInfo.InvariantCulture))
             {
                 sanitized = input.Remove(input.Length - smiley.Length).TrimEnd();
-                emote = Loc.GetString(SmilelyToEmote[smiley], ("ent", speaker));
+                emote = Loc.GetString(SmileyToEmote[smiley], ("ent", speaker));
                 return true;
             }
         }
