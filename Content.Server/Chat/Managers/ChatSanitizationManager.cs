@@ -19,8 +19,12 @@ public class ChatSanitizationManager : IChatSanitizationManager
         // I could've done this with regex, but felt it wasn't the right idea.
         { ":)", "chatsan-smiles" },
         { ":]", "chatsan-smiles" },
+        { "=)", "chatsan-smiles" },
+        { "=]", "chatsan-smiles" },
         { "(:", "chatsan-smiles" },
         { "[:", "chatsan-smiles" },
+        { "(=", "chatsan-smiles" },
+        { "[=", "chatsan-smiles" },
         { ":(", "chatsan-frowns" },
         { "):", "chatsan-frowns" },
         { "]:", "chatsan-frowns" },
@@ -31,7 +35,7 @@ public class ChatSanitizationManager : IChatSanitizationManager
         { ":3", "chatsan-smiles" }, //nope
         { ":S", "chatsan-uncertain" },
         { ":>", "chatsan-grins" },
-        { ":<", "chatsan-pouts" }, //maybe smth better for this
+        { ":<", "chatsan-pouts" },
         { "xD", "chatsan-laughs" },
         { ";-;", "chatsan-cries" },
         { ";_;", "chatsan-cries" },
@@ -39,11 +43,17 @@ public class ChatSanitizationManager : IChatSanitizationManager
         { ":v", "chatsan-smiles-smugly" },
         { ">:i", "chatsan-annoyed" },
         { ":i", "chatsan-sighs" },
+        { ":|", "chatsan-sighs" },
         { ":p", "chatsan-stick-out-tongue" },
         { ":b", "chatsan-stick-out-tongue" },
         { "0-0", "chatsan-wide-eyed" },
         { "o-o", "chatsan-wide-eyed" },
         { "o.o", "chatsan-wide-eyed" },
+        { "._.", "chatsan-surprised" },
+        { ".-.", "chatsan-confused" },
+        { "-_-", "chatsan-unimpressed" },
+        { "o/", "chatsan-waves" },
+        { "^^/", "chatsan-waves" },
     };
 
     public bool TrySanitizeOutSmilies(string input, IEntity speaker, out string sanitized, [NotNullWhen(true)] out string? emote)
