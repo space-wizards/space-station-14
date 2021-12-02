@@ -1,18 +1,24 @@
 using System;
 using System.Threading.Tasks;
+using Content.Server.Administration.Logs;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
+using Content.Server.DoAfter;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
+using Content.Shared.MobState.Components;
 using Content.Shared.Popups;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -46,11 +52,15 @@ namespace Content.Server.Chemistry.Components
         private FixedPoint2 _transferAmount = FixedPoint2.New(5);
 
         /// <summary>
-        /// Initial storage volume of the injector
+        /// Injection delay (seconds) when the target is a mob.
         /// </summary>
-        [ViewVariables]
-        [DataField("initialMaxVolume")]
-        private FixedPoint2 _initialMaxVolume = FixedPoint2.New(15);
+        [DataField("delay")]
+        public float Delay = 5;
+
+        /// <summary>
+        ///     Is this component currently being used in a DoAfter?
+        /// </summary>
+        public bool InUse = false;
 
         private InjectorToggleMode _toggleState;
 
@@ -111,7 +121,13 @@ namespace Content.Server.Chemistry.Components
         /// <param name="eventArgs"></param>
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
+            if (InUse)
+                return false;
+
             if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
+                return false;
+
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User.Uid))
                 return false;
 
             var solutionsSys = EntitySystem.Get<SolutionContainerSystem>();
@@ -123,6 +139,13 @@ namespace Content.Server.Chemistry.Components
 
             var targetEntity = eventArgs.Target;
 
+            // is the target a mob? If yes, add a use delay
+            if (Owner.EntityManager.HasComponent<MobStateComponent>(targetEntity.Uid) ||
+                Owner.EntityManager.HasComponent<BloodstreamComponent>(targetEntity.Uid))
+            {
+                if (!await TryInjectDoAfter(eventArgs.User.Uid, eventArgs.Target.Uid))
+                    return true;
+            }
 
             // Handle injecting/drawing for solutions
             if (ToggleState == InjectorToggleMode.Inject)
@@ -161,6 +184,51 @@ namespace Content.Server.Chemistry.Components
             }
 
             return true;
+        }
+
+        /// <summary>
+        ///     Send informative pop-up messages and wait for a Do-After to complete.
+        /// </summary>
+        public async Task<bool> TryInjectDoAfter(EntityUid user, EntityUid target)
+        {
+            InUse = true;
+            var popupSys = EntitySystem.Get<SharedPopupSystem>();
+
+            // for the user
+            popupSys.PopupEntity(Loc.GetString("injector-component-injecting-user"), target, Filter.Entities(user));
+
+            if (user != target)
+            {
+                // for the target
+                var userName = Owner.EntityManager.GetComponent<MetaDataComponent>(user).EntityName;
+                popupSys.PopupEntity(Loc.GetString("injector-component-injecting-target",
+                    ("user", userName)), user, Filter.Entities(target));
+
+                // also, lets log this
+                var userEntity = Owner.EntityManager.GetEntity(user);
+                var targetEntity = Owner.EntityManager.GetEntity(target);
+
+                var text = ToggleState == InjectorToggleMode.Inject
+                    ? "inject reagents into"
+                    : "draw reagents from";
+
+                // using the "force feed" log type. It's not quite feeding, but the effect is the same.
+                EntitySystem.Get<AdminLogSystem>().Add(LogType.ForceFeed,
+                    $"{userEntity} is attempting to {text} {targetEntity}");
+            }
+
+            var status = await EntitySystem.Get<DoAfterSystem>().WaitDoAfter(
+                new DoAfterEventArgs(user, Delay, target: target)
+                {
+                    BreakOnUserMove = true,
+                    BreakOnDamage = true,
+                    BreakOnStun = true,
+                    BreakOnTargetMove = true,
+                    MovementThreshold = 1.0f
+                });
+            InUse = false;
+
+            return status == DoAfterStatus.Finished;
         }
 
         /// <summary>
