@@ -72542,4 +72542,10 @@ entities:
     pos: 23.5,11.5
     parent: 853
     type: Transform
+- uid: 7117
+  type: CrateSalvageEquipment
+  components:
+  - pos: 23.5,13.5
+    parent: 853
+    type: Transform
 ...

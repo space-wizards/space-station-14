@@ -11,6 +11,7 @@
       rarePrototypes:
         - CrateMaterialPlasteel
         - CrateMaterialPlasma
+        - CrateSalvageEquipment
       rareChance: 0.125
       prototypes:
         - CrateMaterialSteel

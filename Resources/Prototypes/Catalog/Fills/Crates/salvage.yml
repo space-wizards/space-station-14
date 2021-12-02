@@ -1,0 +1,21 @@
+- type: entity
+  id: CrateSalvageEquipment
+  name: "salvage equipment crate"
+  description: For the daring.
+  suffix: Filled
+  parent: CrateGenericonimo
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHeadHelmetHardsuitSalvage
+      - id: ClothingOuterHardsuitSalvage
+      - id: ClothingMaskBreath
+      - id: OxygenTankFilled
+      - id: ClothingShoesBootsMag
+      # bare-minimum for cutting apart walls
+      # not giving them wirecutters/etc. for balance reasons
+      - id: Welder
+      - id: Wrench
+      - id: Screwdriver
+      - id: Crowbar
+
