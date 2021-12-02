@@ -43,6 +43,7 @@
           nodeGroupID: Apc
     - type: Physics
       bodyType: Static
+    - type: Fixtures
       fixtures:
         - shape:
             !type:PhysShapeAabb
@@ -85,6 +86,7 @@
       node: grilleBroken
       deconstructionTarget: start
     - type: Physics
+    - type: Fixtures
       fixtures:
         - shape:
             !type:PhysShapeAabb

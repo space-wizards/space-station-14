@@ -23,9 +23,6 @@ namespace Content.Server.Cargo.Components
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
 
-        [ViewVariables]
-        public int Points = 1000;
-
         private CargoBankAccount? _bankAccount;
 
         [ViewVariables]

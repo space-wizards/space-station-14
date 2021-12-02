@@ -24,6 +24,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using System.Collections.Generic;
 using System.Linq;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
@@ -100,7 +101,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 args.Handled = true;
                 return;
             }
-            
+
             args.Handled = TryForceFeed(uid, args.UserUid, args.TargetUid.Value);
         }
 
@@ -144,7 +145,8 @@ namespace Content.Server.Nutrition.EntitySystems
 
             var transferAmount = component.TransferAmount != null ? FixedPoint2.Min((FixedPoint2) component.TransferAmount, solution.CurrentVolume) : solution.CurrentVolume;
             var split = _solutionContainerSystem.SplitSolution(uid, solution, transferAmount);
-            var firstStomach = stomachs.FirstOrDefault(stomach => _stomachSystem.CanTransferSolution(stomach.OwnerUid, split));
+            var firstStomach = stomachs.FirstOrNull(
+                stomach => _stomachSystem.CanTransferSolution(stomach.Comp.OwnerUid, split));
 
             if (firstStomach == null)
             {
@@ -155,7 +157,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             // TODO: Account for partial transfer.
             split.DoEntityReaction(userUid, ReactionMethod.Ingestion);
-            _stomachSystem.TryTransferSolution(firstStomach.OwnerUid, split, firstStomach);
+            _stomachSystem.TryTransferSolution(firstStomach.Value.Comp.OwnerUid, split, firstStomach.Value.Comp);
 
             SoundSystem.Play(Filter.Pvs(userUid), component.UseSound.GetSound(), userUid, AudioParams.Default.WithVolume(-1f));
             _popupSystem.PopupEntity(Loc.GetString(component.EatMessage, ("food", component.Owner)), userUid, Filter.Entities(userUid));
@@ -221,7 +223,7 @@ namespace Content.Server.Nutrition.EntitySystems
             {
                 TryUseFood(uid, ev.UserUid, component);
             };
-            
+
             verb.Text = Loc.GetString("food-system-verb-eat");
             verb.Priority = -1;
             ev.Verbs.Add(verb);
@@ -275,7 +277,7 @@ namespace Content.Server.Nutrition.EntitySystems
             var target = EntityManager.GetEntity(targetUid);
             var edible = EntityManager.GetEntity(uid);
             _logSystem.Add(LogType.ForceFeed, LogImpact.Medium, $"{user} is forcing {target} to eat {edible}");
-           
+
             food.InUse = true;
             return true;
         }
@@ -292,7 +294,8 @@ namespace Content.Server.Nutrition.EntitySystems
                 : args.FoodSolution.CurrentVolume;
 
             var split = _solutionContainerSystem.SplitSolution(args.Food.OwnerUid, args.FoodSolution, transferAmount);
-            var firstStomach = stomachs.FirstOrDefault(stomach => _stomachSystem.CanTransferSolution(stomach.OwnerUid, split));
+            var firstStomach = stomachs.FirstOrNull(
+                stomach => _stomachSystem.CanTransferSolution(stomach.Comp.OwnerUid, split));
 
             if (firstStomach == null)
             {
@@ -302,7 +305,7 @@ namespace Content.Server.Nutrition.EntitySystems
             }
 
             split.DoEntityReaction(uid, ReactionMethod.Ingestion);
-            _stomachSystem.TryTransferSolution(firstStomach.OwnerUid, split, firstStomach);
+            _stomachSystem.TryTransferSolution(firstStomach.Value.Comp.OwnerUid, split, firstStomach.Value.Comp);
 
             EntityManager.TryGetComponent(uid, out MetaDataComponent? targetMeta);
             var targetName = targetMeta?.EntityName ?? string.Empty;
@@ -350,7 +353,9 @@ namespace Content.Server.Nutrition.EntitySystems
             if (food.UsesRemaining <= 0)
                 DeleteAndSpawnTrash(food);
 
-            var firstStomach = stomachs.FirstOrDefault(stomach => _stomachSystem.CanTransferSolution(stomach.OwnerUid, foodSolution));
+            var firstStomach = stomachs.FirstOrNull(
+                stomach => _stomachSystem.CanTransferSolution(stomach.Comp.OwnerUid, foodSolution));
+
             if (firstStomach == null)
                 return;
 
@@ -365,7 +370,7 @@ namespace Content.Server.Nutrition.EntitySystems
             _popupSystem.PopupEntity(Loc.GetString(food.EatMessage), target, Filter.Entities(target));
 
             foodSolution.DoEntityReaction(uid, ReactionMethod.Ingestion);
-            _stomachSystem.TryTransferSolution(firstStomach.OwnerUid, foodSolution, firstStomach);
+            _stomachSystem.TryTransferSolution(firstStomach.Value.Comp.OwnerUid, foodSolution, firstStomach.Value.Comp);
             SoundSystem.Play(Filter.Pvs(target), food.UseSound.GetSound(), target, AudioParams.Default.WithVolume(-1f));
 
             if (string.IsNullOrEmpty(food.TrashPrototype))

@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Body.Components;
@@ -175,13 +176,8 @@ namespace Content.Server.Chemistry.Components
 
         private void TryInjectIntoBloodstream(BloodstreamComponent targetBloodstream, IEntity user)
         {
-            if (!EntitySystem.Get<SolutionContainerSystem>()
-                    .TryGetSolution(user.Uid, SharedBloodstreamComponent.DefaultSolutionName, out var bloodstream)
-                || bloodstream.CurrentVolume == 0)
-                return;
-
             // Get transfer amount. May be smaller than _transferAmount if not enough room
-            var realTransferAmount = FixedPoint2.Min(_transferAmount, targetBloodstream.EmptyVolume);
+            var realTransferAmount = FixedPoint2.Min(_transferAmount, targetBloodstream.Solution.AvailableVolume);
 
             if (realTransferAmount <= 0)
             {
@@ -192,18 +188,10 @@ namespace Content.Server.Chemistry.Components
 
             // Move units from attackSolution to targetSolution
             var removedSolution =
-                EntitySystem.Get<SolutionContainerSystem>().SplitSolution(user.Uid, bloodstream, realTransferAmount);
+                EntitySystem.Get<SolutionContainerSystem>().SplitSolution(user.Uid, targetBloodstream.Solution, realTransferAmount);
 
-            if (!bloodstream.CanAddSolution(removedSolution))
-            {
-                return;
-            }
-
-            // TODO: Account for partial transfer.
-            var bloodsStreamEntity = Owner.EntityManager.GetEntity(user.Uid);
-            removedSolution.DoEntityReaction(bloodsStreamEntity.Uid, ReactionMethod.Injection);
-
-            EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(user.Uid, bloodstream, removedSolution);
+            var bloodstreamSys = EntitySystem.Get<BloodstreamSystem>();
+            bloodstreamSys.TryAddToBloodstream(targetBloodstream.OwnerUid, removedSolution, targetBloodstream);
 
             removedSolution.DoEntityReaction(targetBloodstream.Owner.Uid, ReactionMethod.Injection);
 
