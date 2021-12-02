@@ -27,5 +27,19 @@ namespace Content.Server.Salvage
         [ViewVariables]
         [DataField("size", required: true)]
         public float Size { get; } = 1.0f;
+
+        /// <summary>
+        /// Name for admin use
+        /// </summary>
+        [ViewVariables]
+        [DataField("name")]
+        public string Name { get; } = "";
+
+        /// <summary>
+        /// If this is an asteroid
+        /// </summary>
+        [ViewVariables]
+        [DataField("isAsteroid")]
+        public bool IsAsteroid { get; }
     }
 }

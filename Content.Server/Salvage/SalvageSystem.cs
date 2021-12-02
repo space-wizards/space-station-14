@@ -6,6 +6,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Shared.Administration.Logs;
+using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
@@ -15,6 +16,7 @@ using Content.Shared.Popups;
 using Robust.Server.Player;
 using Robust.Server.Maps;
 using Robust.Shared.Audio;
+using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
@@ -36,6 +38,7 @@ namespace Content.Server.Salvage
         [Dependency] private readonly IMapLoader _mapLoader = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
@@ -129,22 +132,31 @@ namespace Content.Server.Salvage
 
             SalvageMapPrototype? map = null;
 
-            var allSalvageMaps = GetAllSalvageMaps().ToList();
-
-            for (var i = 0; i < allSalvageMaps.Count; i++)
+            var forcedSalvage = _configurationManager.GetCVar<string>(CCVars.SalvageForced);
+            if (forcedSalvage == "")
             {
-                map = _random.PickAndTake(allSalvageMaps);
+                var allSalvageMaps = GetAllSalvageMaps().ToList();
 
-                if (_physicsSystem.TryCollideRect(Box2.CenteredAround(spl.Position, new Vector2(map.Size * 2.0f, map.Size * 2.0f)), spl.MapId, false))
+                for (var i = 0; i < allSalvageMaps.Count; i++)
                 {
-                    // collided: set map to null so we don't spawn it
-                    map = null;
-                }
-                else
-                {
-                    break;
+                    map = _random.PickAndTake(allSalvageMaps);
+
+                    if (_physicsSystem.TryCollideRect(Box2.CenteredAround(spl.Position, new Vector2(map.Size * 2.0f, map.Size * 2.0f)), spl.MapId, false))
+                    {
+                        // collided: set map to null so we don't spawn it
+                        map = null;
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
             }
+            else
+            {
+                _prototypeManager.TryIndex<SalvageMapPrototype>(forcedSalvage, out map);
+            }
+
             if (map == null)
             {
                 return Loc.GetString("salvage-system-announcement-spawn-no-debris-available");
