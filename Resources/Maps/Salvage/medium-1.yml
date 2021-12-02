@@ -1284,4 +1284,414 @@ entities:
   - pos: -5.5,2.5
     parent: 0
     type: Transform
+- uid: 106
+  type: SalternSubstation
+  components:
+  - pos: 0.5,-2.5
+    parent: 0
+    type: Transform
+  - startingCharge: 3990010
+    type: Battery
+  - supplyRampPosition: 2.3437593
+    type: PowerNetworkBattery
+- uid: 107
+  type: CableMV
+  components:
+  - pos: 0.5,-2.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 108
+  type: CableMV
+  components:
+  - pos: 1.5,-2.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 109
+  type: CableMV
+  components:
+  - pos: 1.5,-1.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 110
+  type: CableMV
+  components:
+  - pos: 1.5,-0.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 111
+  type: CableMV
+  components:
+  - pos: 1.5,0.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 112
+  type: CableMV
+  components:
+  - pos: 1.5,1.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 113
+  type: CableMV
+  components:
+  - pos: 1.5,2.5
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 114
+  type: SalternApc
+  components:
+  - pos: 1.5,2.5
+    parent: 0
+    type: Transform
+  - startingCharge: 12000
+    type: Battery
+- uid: 115
+  type: CableApcExtension
+  components:
+  - pos: 1.5,2.5
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 116
+  type: CableApcExtension
+  components:
+  - pos: 1.5,1.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 117
+  type: CableApcExtension
+  components:
+  - pos: 1.5,0.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 118
+  type: CableApcExtension
+  components:
+  - pos: 1.5,-0.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 119
+  type: CableApcExtension
+  components:
+  - pos: 0.5,-0.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 120
+  type: CableApcExtension
+  components:
+  - pos: -0.5,-0.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 121
+  type: CableApcExtension
+  components:
+  - pos: -1.5,-0.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 122
+  type: CableApcExtension
+  components:
+  - pos: -2.5,-0.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 123
+  type: CableApcExtension
+  components:
+  - pos: -1.5,-0.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 124
+  type: CableApcExtension
+  components:
+  - pos: -1.5,-1.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 125
+  type: CableApcExtension
+  components:
+  - pos: -1.5,-2.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 126
+  type: CableApcExtension
+  components:
+  - pos: -1.5,-3.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 127
+  type: CableApcExtension
+  components:
+  - pos: -1.5,-4.5
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 128
+  type: CableApcExtension
+  components:
+  - pos: -2.5,-4.5
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 129
+  type: CableApcExtension
+  components:
+  - pos: -0.5,0.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 130
+  type: CableApcExtension
+  components:
+  - pos: -0.5,1.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 131
+  type: CableApcExtension
+  components:
+  - pos: 1.5,3.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 132
+  type: CableApcExtension
+  components:
+  - pos: 1.5,4.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 133
+  type: CableApcExtension
+  components:
+  - pos: 0.5,4.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 134
+  type: CableApcExtension
+  components:
+  - pos: -0.5,4.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 135
+  type: CableApcExtension
+  components:
+  - pos: -1.5,4.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 136
+  type: Poweredlight
+  components:
+  - pos: -0.5,4.5
+    parent: 0
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 137
+  type: Poweredlight
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 1.5,0.5
+    parent: 0
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 138
+  type: Poweredlight
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -1.5,-3.5
+    parent: 0
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 139
+  type: Poweredlight
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -2.5,0.5
+    parent: 0
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 140
+  type: Poweredlight
+  components:
+  - pos: 2.5,-2.5
+    parent: 0
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 141
+  type: Poweredlight
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 3.5,-1.5
+    parent: 0
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 142
+  type: CableApcExtension
+  components:
+  - pos: 1.5,-1.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 143
+  type: CableApcExtension
+  components:
+  - pos: 1.5,-2.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 144
+  type: CableApcExtension
+  components:
+  - pos: 2.5,-2.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 145
+  type: CableApcExtension
+  components:
+  - pos: 3.5,-2.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 146
+  type: CableApcExtension
+  components:
+  - pos: 3.5,-1.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
 ...
