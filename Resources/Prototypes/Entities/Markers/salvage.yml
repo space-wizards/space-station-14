@@ -1,0 +1,17 @@
+- type: entity
+  id: SalvageOffsetMarker
+  parent: MarkerBase
+  name: salvage offset marker
+  description: "Salvage this way. You may need to disable PVS (--cvar net.pvs=False) and increase eye zoom to 5 to see the target cross."
+  components:
+  - type: Sprite
+    layers:
+      - sprite: Markers/arrow.rsi
+        state: mono
+        shader: unshaded
+      - sprite: Markers/cross.rsi
+        state: red
+        shader: unshaded
+        # It's done this way because the salvage offset marker has to be anchored to the station.
+        offset: 0, -56
+
