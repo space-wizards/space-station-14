@@ -5,11 +5,22 @@
 
 - type: salvageMap
   id: salvageSmall1
+  name: "Engineering Storage 1"
   mapPath: Maps/Salvage/small-1.yml
   size: 3.5
 
 - type: salvageMap
   id: salvageSmall2
+  name: "Gaming Nook 1"
   mapPath: Maps/Salvage/small-2.yml
+  size: 3.5
+
+# Small - Asteroids
+
+- type: salvageMap
+  id: salvageSmallA1
+  name: "Small Asteroid 1 / Plasmafire"
+  isAsteroid: true
+  mapPath: Maps/Salvage/small-a-1.yml
   size: 3.5
 
