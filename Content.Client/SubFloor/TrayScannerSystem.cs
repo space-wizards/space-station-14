@@ -20,6 +20,14 @@ public class TrayScannerSystem : SharedTrayScannerSystem
     public override void Initialize()
     {
         base.Initialize();
+
+        SubscribeLocalEvent<TrayScannerComponent, ComponentShutdown>(OnComponentShutdown);
+    }
+
+    public void OnComponentShutdown(EntityUid uid, TrayScannerComponent scanner, ComponentShutdown args)
+    {
+        _subfloorSystem.ToggleSubfloorEntities(scanner.RevealedSubfloors, false, uid, _visualizerKeys);
+        _invalidScanners.Add(uid);
     }
 
     public override void ToggleTrayScanner(EntityUid uid, bool toggle, TrayScannerComponent? scanner = null)
@@ -42,6 +50,10 @@ public class TrayScannerSystem : SharedTrayScannerSystem
 
         foreach (var scanner in _activeScanners)
         {
+            if (_invalidScanners.List != null
+                && _invalidScanners.List.Contains(scanner))
+                continue;
+
             if (!UpdateTrayScanner(scanner))
                 _invalidScanners.Add(scanner);
         }
@@ -88,10 +100,33 @@ public class TrayScannerSystem : SharedTrayScannerSystem
             && _containerSystem.ContainsEntity(transform.Parent.Owner.Uid, uid))
         {
             flooredPos = transform.Parent.LocalPosition.Rounded();
+
+            // could recurse through fully but i think that's useless,
+            // just attempt to check through the gp's transform and if
+            // that doesn't work, just don't bother any further
+            if (flooredPos == Vector2.Zero)
+            {
+                if (EntityManager.TryGetComponent(transform.Parent.Owner.Uid, out TransformComponent? gpTransform)
+                    && gpTransform.Parent != null
+                    && _containerSystem.ContainsEntity(gpTransform.Parent.Owner.Uid, transform.Parent.Owner.Uid))
+                {
+                    flooredPos = gpTransform.Parent.LocalPosition.Rounded();
+                }
+            }
         }
         else
         {
             flooredPos = transform.LocalPosition.Rounded();
+        }
+
+        // is the position still logically zero? just clear,
+        // but we need to keep it as 'true' since this t-ray
+        // is still technically on
+        if (flooredPos == Vector2.Zero)
+        {
+            _subfloorSystem.ToggleSubfloorEntities(scanner.RevealedSubfloors, false, uid, _visualizerKeys);
+            scanner.RevealedSubfloors.Clear();
+            return true;
         }
 
         if (flooredPos == scanner.LastLocation

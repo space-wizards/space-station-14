@@ -180,21 +180,12 @@ namespace Content.Shared.SubFloor
                 if (!EntityManager.HasComponent<SubFloorHideComponent>(entity))
                     continue;
 
-                var transform = EntityManager.GetComponent<TransformComponent>(entity);
                 UpdateEntity(entity, visible, uid, appearanceKeys);
             }
         }
 
         private void UpdateEntity(EntityUid uid, bool subFloor, EntityUid? revealedUid = null, IEnumerable<object>? appearanceKeys = null)
         {
-            // We raise an event to allow other entity systems to handle this.
-            var subFloorHideEvent = new SubFloorHideEvent(subFloor);
-            RaiseLocalEvent(uid, subFloorHideEvent, false);
-
-            // Check if it has been handled by someone else.
-            if (subFloorHideEvent.Handled)
-                return;
-
             bool revealedWithoutEntity = false;
 
             if (EntityManager.TryGetComponent(uid, out SubFloorHideComponent? subFloorHideComponent))
@@ -276,16 +267,6 @@ namespace Content.Shared.SubFloor
         }
 
         private static List<object> _defaultVisualizerKeys = new List<object>{ SubFloorVisuals.SubFloor };
-    }
-
-    public class SubFloorHideEvent : HandledEntityEventArgs
-    {
-        public bool SubFloor { get; }
-
-        public SubFloorHideEvent(bool subFloor)
-        {
-            SubFloor = subFloor;
-        }
     }
 
     [Serializable, NetSerializable]

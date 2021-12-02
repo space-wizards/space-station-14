@@ -67,16 +67,6 @@ public abstract class SharedTrayScannerSystem : EntitySystem
     }
 }
 
-public class TrayScannerToggleEvent : EntityEventArgs
-{
-    public bool Toggle { get; }
-
-    public TrayScannerToggleEvent(bool toggle)
-    {
-        Toggle = toggle;
-    }
-}
-
 [Serializable, NetSerializable]
 public enum TrayScannerVisual : sbyte
 {
