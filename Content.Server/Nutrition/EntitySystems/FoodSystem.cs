@@ -456,7 +456,7 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             blockingEntity = null;
 
-            if (!Resolve(uid, ref inventory))
+            if (!Resolve(uid, ref inventory, false))
                 return false;
 
             // check masks
