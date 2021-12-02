@@ -1,0 +1,15 @@
+- type: entity
+  id: SalvageMagnet
+  parent: BaseMachine
+  name: salvage magnet
+  description: "Pulls in salvage."
+  components:
+  - type: Sprite
+    layers:
+      - sprite: Markers/arrow.rsi
+        state: mono
+        shader: unshaded
+  - type: Rotatable
+  - type: SalvageMagnet
+    offset: 0, -24
+

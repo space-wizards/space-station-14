@@ -1,4 +1,15 @@
+# ALL SALVAGE MAPS SHOULD BE SETUP SUCH THAT TILE REF -1,-1 IS THEIR OFFICIAL CENTRE,
+# AND FOR EASE OF UNDERSTANDING, USE - pos: 0.5, 0.5 FOR SAVED POSITION.
+
+# "Small"-class maps - Max size square: 7x7, indicated size: 3.5
+
 - type: salvageMap
   id: salvageSmall1
   mapPath: Maps/Salvage/small-1.yml
+  size: 3.5
+
+#- type: salvageMap
+#  id: salvageSmall2
+#  mapPath: Maps/Salvage/small-2.yml
+#  size: 3.5
 

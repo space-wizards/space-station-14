@@ -7,7 +7,11 @@ using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
+using Content.Shared.Examine;
 using Content.Shared.GameTicking;
+using Content.Shared.Interaction;
+using Content.Shared.Hands.Components;
+using Content.Shared.Popups;
 using Robust.Server.Player;
 using Robust.Server.Maps;
 using Robust.Shared.Audio;
@@ -21,6 +25,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
+using Robust.Shared.Physics;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Salvage
@@ -31,7 +36,9 @@ namespace Content.Server.Salvage
         [Dependency] private readonly IMapLoader _mapLoader = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
         [ViewVariables]
         public EntityUid PulledObject = EntityUid.Invalid;
@@ -52,6 +59,30 @@ namespace Content.Server.Salvage
             base.Initialize();
 
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
+            SubscribeLocalEvent<SalvageMagnetComponent, InteractHandEvent>(OnInteractHand);
+            SubscribeLocalEvent<SalvageMagnetComponent, ExaminedEvent>(OnExamined);
+        }
+
+        private void OnExamined(EntityUid uid, SalvageMagnetComponent comp, ExaminedEvent args)
+        {
+            if (!args.IsInDetailsRange)
+                return;
+
+            switch (State)
+            {
+                case SalvageSystemState.Inactive:
+                    args.PushMarkup(Loc.GetString("salvage-system-magnet-examined-inactive"));
+                    break;
+                case SalvageSystemState.PullingIn:
+                    args.PushMarkup(Loc.GetString("salvage-system-magnet-examined-pulling-in"));
+                    break;
+                case SalvageSystemState.Active:
+                    args.PushMarkup(Loc.GetString("salvage-system-magnet-examined-active"));
+                    break;
+                case SalvageSystemState.LettingGo:
+                    args.PushMarkup(Loc.GetString("salvage-system-magnet-examined-letting-go"));
+                    break;
+            }
         }
 
         private void Reset(RoundRestartCleanupEvent ev)
@@ -59,6 +90,14 @@ namespace Content.Server.Salvage
             PulledObject = EntityUid.Invalid;
             State = SalvageSystemState.Inactive;
             StateTimer = 0.0f;
+        }
+
+        private void OnInteractHand(EntityUid uid, SalvageMagnetComponent sm, InteractHandEvent args)
+        {
+            if (args.Handled)
+                return;
+            args.Handled = true;
+            _popupSystem.PopupEntity(CallSalvage(), uid, Filter.Entities(args.User.Uid));
         }
 
         private MapCoordinates GetSalvagePlacementLocation()
@@ -75,29 +114,46 @@ namespace Content.Server.Salvage
             return _prototypeManager.EnumeratePrototypes<SalvageMapPrototype>();
         }
 
-        private bool SpawnSalvage()
+        // String is announced
+        private string SpawnSalvage()
         {
-            var allSalvageMaps = GetAllSalvageMaps().ToList();
-            if (allSalvageMaps.Count == 0)
-            {
-                Logger.ErrorS("c.s.salvage", "Unable to spawn salvage: no maps!");
-                return false;
-            }
-
-            var map = _random.Pick(allSalvageMaps);
+            // In case of failure
+            State = SalvageSystemState.Inactive;
+            StateTimer = 0.0f;
 
             var spl = GetSalvagePlacementLocation();
             if (spl == MapCoordinates.Nullspace)
             {
-                Logger.ErrorS("c.s.salvage", "Unable to spawn salvage: map coordinates bad!");
-                return false;
+                return Loc.GetString("salvage-system-announcement-spawn-magnet-lost");
+            }
+
+            SalvageMapPrototype? map = null;
+
+            var allSalvageMaps = GetAllSalvageMaps().ToList();
+
+            for (var i = 0; i < allSalvageMaps.Count; i++)
+            {
+                map = _random.PickAndTake(allSalvageMaps);
+
+                if (_physicsSystem.TryCollideRect(Box2.CenteredAround(spl.Position, new Vector2(map.Size * 2.0f, map.Size * 2.0f)), spl.MapId, false))
+                {
+                    // collided: set map to null so we don't spawn it
+                    map = null;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            if (map == null)
+            {
+                return Loc.GetString("salvage-system-announcement-spawn-no-debris-available");
             }
 
             var bp = _mapLoader.LoadBlueprint(spl.MapId, map.MapPath);
             if (bp == null)
             {
-                Logger.ErrorS("c.s.salvage", "Unable to spawn salvage: blueprint yielded no grid!");
-                return false;
+                return Loc.GetString("salvage-system-announcement-spawn-debris-disintegrated");
             }
 
             PulledObject = bp.GridEntityId;
@@ -108,7 +164,9 @@ namespace Content.Server.Salvage
                 phys.AngularDamping = 0.0f;
                 phys.AngularVelocity = (_random.NextFloat() - 0.5f) * 2.0f * AngularVelocityRangeRadians;
             }
-            return true;
+            // Alright, salvage magnet is active.
+            State = SalvageSystemState.Active;
+            return Loc.GetString("salvage-system-announcement-arrived");
         }
 
         public override void Update(float frameTime)
@@ -121,20 +179,7 @@ namespace Content.Server.Salvage
                 case SalvageSystemState.PullingIn:
                     if (StateTimer >= PullInTimer)
                     {
-                        string report = Loc.GetString("salvage-system-announcement-arrived");
-                        if (SpawnSalvage())
-                        {
-                            // Done!
-                            State = SalvageSystemState.Active;
-                            StateTimer = 0.0f;
-                        }
-                        else
-                        {
-                            report = Loc.GetString("salvage-system-announcement-wtf");
-                            // Uhoh
-                            State = SalvageSystemState.Inactive;
-                            StateTimer = 0.0f;
-                        }
+                        string report = SpawnSalvage();
                         _chatManager.DispatchStationAnnouncement(report, Loc.GetString("salvage-system-announcement-source"));
                     }
                     break;

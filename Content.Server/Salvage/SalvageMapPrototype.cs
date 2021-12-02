@@ -20,5 +20,12 @@ namespace Content.Server.Salvage
         [ViewVariables]
         [DataField("mapPath", required: true)]
         public string MapPath { get; } = default!;
+
+        /// <summary>
+        /// Size *from 0,0* in units of the map (used to determine if it fits)
+        /// </summary>
+        [ViewVariables]
+        [DataField("size", required: true)]
+        public float Size { get; } = 1.0f;
     }
 }
