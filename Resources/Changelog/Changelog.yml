@@ -1,9 +1,4 @@
 Entries:
-- author: Timrod
-  changes:
-  - {message: Reduced deadliness of Boda machine., type: Fix}
-  id: 189
-  time: '2021-05-17T07:39:37.0000000+00:00'
 - author: ShadowCommander
   changes:
   - {message: Fixed the meat spike only working on things that are alive., type: Tweak}
@@ -2858,3 +2853,8 @@ Entries:
   - {message: Corrected the names of a bunch of clothing items., type: Fix}
   id: 690
   time: '2021-12-01T21:19:36.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added LV cable to the autolathe., type: Add}
+  id: 691
+  time: '2021-12-02T02:49:45.0000000+00:00'
