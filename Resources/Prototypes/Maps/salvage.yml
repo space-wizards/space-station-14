@@ -8,8 +8,8 @@
   mapPath: Maps/Salvage/small-1.yml
   size: 3.5
 
-#- type: salvageMap
-#  id: salvageSmall2
-#  mapPath: Maps/Salvage/small-2.yml
-#  size: 3.5
+- type: salvageMap
+  id: salvageSmall2
+  mapPath: Maps/Salvage/small-2.yml
+  size: 3.5
 

@@ -17,8 +17,8 @@
         - CrateMaterialGlass
         - CrateMaterialPlastic
         - CrateMaterialWood
-      chance: 0.5
-      offset: 0.2
+      chance: 0.9
+      offset: 0.0
 
 - type: entity
   name: Salvage Canister Spawner
@@ -39,8 +39,8 @@
         - OxygenCanister
         - CarbonDioxideCanister
         - WaterVaporCanister
-      chance: 0.5
-      offset: 0.2
+      chance: 0.9
+      offset: 0.0
 
 - type: entity
   name: Salvage Mob Spawner

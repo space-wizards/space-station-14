@@ -52,7 +52,7 @@ grids:
 entities:
 - uid: 0
   components:
-  - pos: 0.46875,0.57818604
+  - pos: 0.5, 0.5
     parent: null
     type: Transform
   - index: 0
