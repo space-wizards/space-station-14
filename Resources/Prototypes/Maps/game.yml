@@ -85,3 +85,20 @@
     MedicalDoctor: [ 1, 1 ]
     ResearchDirector: [ 1, 1 ]
     Botanist: [ 1, 1 ]
+
+- type: gameMap
+  id: vesmirnaya
+  mapName: 'Vesmirnaya'
+  mapNameTemplate: '{0} Vesmirnaya {1}'
+  nameGenerator:
+    !type:NanotrasenNameGenerator
+    prefixCreator: '14'
+  mapPath: Maps/vesmirnaya.yml
+  minPlayers: 0
+  maxPlayers: 5
+  overflowJobs:
+    - Assistant
+  availableJobs:
+    Assistant: [ -1, -1 ]
+    Bartender: [ 1, 2 ]
+    Chef: [ 1, 2 ]
