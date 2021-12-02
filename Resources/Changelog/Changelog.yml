@@ -1,10 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Fixes bug where reconnecting wouldn't let you interact with anything.,
-    type: Fix}
-  id: 193
-  time: '2021-05-18T16:00:48.095633+00:00'
 - author: 20kdc
   changes:
   - {message: Fixed dropping being offset on a translated grid, type: Fix}
@@ -2858,3 +2852,9 @@ Entries:
   - {message: Masks & some headwear now blocks eating & drinking, type: Tweak}
   id: 694
   time: '2021-12-02T14:51:05.0000000+00:00'
+- author: hubismal
+  changes:
+  - {message: pAIs have been outfitted with cheap ringtone synthesizers to play their
+      own music., type: Add}
+  id: 695
+  time: '2021-12-02T18:49:18.0000000+00:00'
