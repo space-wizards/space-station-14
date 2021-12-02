@@ -24,7 +24,6 @@
     size: 1
     compatibility: Biological
     symmetry: Left
-  - type: Grasp
 
 - type: entity
   id: LegsAnimal

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
@@ -48,7 +48,7 @@ public class FilterTests : ContentIntegrationTest
             sAdminLogSystem.Add(LogType.Unknown, $"{entity:Entity} test log: {commonGuid} {firstGuid}");
         });
 
-        Thread.Sleep(2000);
+        await Task.Delay(2000);
 
         await server.WaitPost(() =>
         {

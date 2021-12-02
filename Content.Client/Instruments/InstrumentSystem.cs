@@ -322,7 +322,7 @@ namespace Content.Client.Instruments
                     UpdateRenderer(instrument.OwnerUid, instrument);
 
                 if (!instrument.IsMidiOpen && !instrument.IsInputOpen)
-                    return;
+                    continue;
 
                 var now = _gameTiming.RealTime;
                 var oneSecAGo = now.Add(OneSecAgo);
@@ -333,7 +333,7 @@ namespace Content.Client.Instruments
                     instrument.SentWithinASec = 0;
                 }
 
-                if (instrument.MidiEventBuffer.Count == 0) return;
+                if (instrument.MidiEventBuffer.Count == 0) continue;
 
                 var max = instrument.RespectMidiLimits ?
                     Math.Min(MaxMidiEventsPerBatch, MaxMidiEventsPerSecond - instrument.SentWithinASec)
@@ -342,7 +342,7 @@ namespace Content.Client.Instruments
                 if (max <= 0)
                 {
                     // hit event/sec limit, have to lag the batch or drop events
-                    return;
+                    continue;
                 }
 
                 // fix cross-fade events generating retroactive events
@@ -364,7 +364,7 @@ namespace Content.Client.Instruments
                 var eventCount = events.Length;
 
                 if (eventCount == 0)
-                    return;
+                    continue;
 
                 RaiseNetworkEvent(new InstrumentMidiEventEvent(instrument.OwnerUid, events));
 
