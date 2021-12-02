@@ -102,7 +102,7 @@
   id: CrateEngineering
   graph: CrateEngineering   
   startNode: start
-  targetNode: cratengineering
+  targetNode: crateengineering
   category: Storage
   description: "A crate for storing engineering supplies"
   icon: Structures/Storage/Crates/engicrate.rsi/engicrate_icon.png
