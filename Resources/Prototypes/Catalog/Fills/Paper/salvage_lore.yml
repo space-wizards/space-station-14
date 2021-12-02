@@ -1,3 +1,20 @@
+# ---- SPECIFICS ----
+
+- type: entity
+  id: PaperWrittenSalvageLoreMedium1PlasmaTrap
+  abstract: true # keep this from spamming spawn sheet
+  suffix: "Salvage: Lore: Medium 1: Plasma Trap"
+  parent: PaperWritten
+  components:
+  - type: Paper
+    content: |
+      Heheheheh, no way in hell they're going to get at our stash NOW, is there?
+      I rigged the area where our stuff's at to be a toasty thousand K.
+      You know how to drain it when we need it out.
+       - J.
+
+# ---- GAMING ----
+
 - type: entity
   name: Salvage Lore Paper Gaming Spawner
   id: SalvageLorePaperGamingSpawner
@@ -79,4 +96,6 @@
       It's amazing.
       But not in a good way.
       Cheers, - Arielle
+
+# ----
 

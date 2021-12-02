@@ -4,23 +4,31 @@
 # "Small"-class maps - Max size square: 7x7, indicated size: 3.5
 
 - type: salvageMap
-  id: salvageSmall1
-  name: "Engineering Storage 1"
+  id: small1
+  name: "Small / Engineering Storage 1"
   mapPath: Maps/Salvage/small-1.yml
   size: 3.5
 
 - type: salvageMap
-  id: salvageSmall2
-  name: "Gaming Nook 1"
+  id: small2
+  name: "Small / Gaming Nook 1"
   mapPath: Maps/Salvage/small-2.yml
   size: 3.5
 
 # Small - Asteroids
 
 - type: salvageMap
-  id: salvageSmallA1
-  name: "Small Asteroid 1 / Plasmafire"
+  id: smallA1
+  name: "Small / Asteroid 1 Plasmafire"
   isAsteroid: true
   mapPath: Maps/Salvage/small-a-1.yml
   size: 3.5
+
+# "Medium"-class maps - Max size square: 15x15, indicated size: 7.5
+
+- type: salvageMap
+  id: medium1
+  name: "Medium / Plasma-Trapped Cache 1"
+  mapPath: Maps/Salvage/medium-1.yml
+  size: 7.5
 
