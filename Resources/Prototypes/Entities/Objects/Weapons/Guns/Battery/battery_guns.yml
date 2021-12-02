@@ -92,7 +92,7 @@
   name: svalinn laser pistol
   parent: BaseItem
   id: LaserPistolSvalinn
-  description: A cheap and widely used laser pistol.
+  description: A simple, yet reliable laser pistol.
   components:
   - type: Sprite
     netsync: false
@@ -118,7 +118,7 @@
     angleDecay: 45
     powerCellPrototype: PowerCellSmallStandard
     powerCellRemovable: true
-    fireCost: 20
+    fireCost: 25
     ammoPrototype: RedLaser
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser.ogg
@@ -137,7 +137,7 @@
   name: cog laser carbine
   parent: BaseItem
   id: LaserRifleCog
-  description: Favoured by Nanotrasen Security for being cheap and easy to use.
+  description: A laser carbine favoured by Nanotrasen Security officers.
   components:
   - type: Sprite
     netsync: false
@@ -163,7 +163,7 @@
     angleDecay: 45
     powerCellPrototype: PowerCellSmallStandard
     powerCellRemovable: true
-    fireCost: 10
+    fireCost: 12
     ammoPrototype: RedLaser
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser.ogg
@@ -319,47 +319,3 @@
       magState: mag
       steps: 5
       zeroVisible: true
-
-- type: entity
-  name: laser gun
-  parent: BaseItem
-  id: LaserSecGun
-  description: A laser gun.
-  components:
-  - type: Sprite
-    netsync: false
-    sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
-    layers:
-      - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: mag-unshaded-4
-        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
-        shader: unshaded
-  - type: Item
-    size: 24
-    sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
-  - type: RangedWeapon
-  - type: BatteryBarrel
-    minAngle: 10
-    maxAngle: 45
-    angleIncrease: 15
-    angleDecay: 45
-    currentSelector: Single
-    allSelectors:
-    - Single
-    fireRate: 6
-    powerCellPrototype: PowerCellMediumStandard
-    powerCellRemovable: true
-    ammoPrototype: RedLaser
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/laser.ogg
-    soundPowerCellInsert:
-      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
-    soundPowerCellEject:
-      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
-  - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 5
-      zeroVisible: false
