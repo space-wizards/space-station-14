@@ -1,0 +1,4 @@
+- type: salvageMap
+  id: salvageSmall1
+  mapPath: Maps/Salvage/small-1.yml
+

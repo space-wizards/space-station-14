@@ -13,5 +13,7 @@
         state: red
         shader: unshaded
         # It's done this way because the salvage offset marker has to be anchored to the station.
-        offset: 0, -56
+        offset: 0, -16
+  - type: SalvageMagnet
+    offset: 0, -16
 
