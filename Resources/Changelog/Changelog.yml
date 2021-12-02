@@ -1,12 +1,6 @@
 Entries:
 - author: Zumorica
   changes:
-  - {message: You feel as if the essence of things that are erased lingers for an
-      extra moment before disappearing. Creepy., type: Fix}
-  id: 192
-  time: '2021-05-17T11:14:29.0000000+00:00'
-- author: Zumorica
-  changes:
   - {message: Fixes bug where reconnecting wouldn't let you interact with anything.,
     type: Fix}
   id: 193
@@ -2859,3 +2853,8 @@ Entries:
   - {message: Donk pockets now fit into their boxes again., type: Fix}
   id: 693
   time: '2021-12-02T14:37:40.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Masks & some headwear now blocks eating & drinking, type: Tweak}
+  id: 694
+  time: '2021-12-02T14:51:05.0000000+00:00'
