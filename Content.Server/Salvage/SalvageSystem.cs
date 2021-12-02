@@ -80,7 +80,7 @@ namespace Content.Server.Salvage
                     args.PushMarkup(Loc.GetString("salvage-system-magnet-examined-pulling-in"));
                     break;
                 case SalvageSystemState.Active:
-                    args.PushMarkup(Loc.GetString("salvage-system-magnet-examined-active"));
+                    args.PushMarkup(Loc.GetString("salvage-system-magnet-examined-active", ("timeLeft", Math.Floor(StateTimer))));
                     break;
                 case SalvageSystemState.LettingGo:
                     args.PushMarkup(Loc.GetString("salvage-system-magnet-examined-letting-go"));
@@ -122,7 +122,6 @@ namespace Content.Server.Salvage
         {
             // In case of failure
             State = SalvageSystemState.Inactive;
-            StateTimer = 0.0f;
 
             var spl = GetSalvagePlacementLocation();
             if (spl == MapCoordinates.Nullspace)
@@ -178,18 +177,19 @@ namespace Content.Server.Salvage
             }
             // Alright, salvage magnet is active.
             State = SalvageSystemState.Active;
-            return Loc.GetString("salvage-system-announcement-arrived");
+            StateTimer = HoldTimer;
+            return Loc.GetString("salvage-system-announcement-arrived", ("timeLeft", StateTimer));
         }
 
         public override void Update(float frameTime)
         {
-            StateTimer += frameTime;
             switch (State)
             {
                 case SalvageSystemState.Inactive:
                     break;
                 case SalvageSystemState.PullingIn:
-                    if (StateTimer >= PullInTimer)
+                    StateTimer -= frameTime;
+                    if (StateTimer <= 0.0f)
                     {
                         string report = SpawnSalvage();
                         _chatManager.DispatchStationAnnouncement(report, Loc.GetString("salvage-system-announcement-source"));
@@ -200,7 +200,8 @@ namespace Content.Server.Salvage
                     // write base and factor into prototype!!!
                     // also determine if magnet is unpowered and if so auto-lose???
                     // CURRENTLY: 
-                    if (StateTimer >= HoldTimer)
+                    StateTimer -= frameTime;
+                    if (StateTimer <= 0.0f)
                     {
                         ReturnSalvage();
                     }
@@ -209,7 +210,6 @@ namespace Content.Server.Salvage
                     if (!EntityManager.EntityExists(PulledObject))
                     {
                         State = SalvageSystemState.Inactive;
-                        StateTimer = 0.0f;
                         PulledObject = EntityUid.Invalid;
                         _chatManager.DispatchStationAnnouncement(Loc.GetString("salvage-system-announcement-lost"), Loc.GetString("salvage-system-announcement-source"));
                     }
@@ -237,7 +237,7 @@ namespace Content.Server.Salvage
                 return Loc.GetString("salvage-system-report-already-active");
             // Confirm
             State = SalvageSystemState.PullingIn;
-            StateTimer = 0.0f;
+            StateTimer = PullInTimer;
             return Loc.GetString("salvage-system-report-activate-success");
         }
 
@@ -247,7 +247,6 @@ namespace Content.Server.Salvage
                 return Loc.GetString("salvage-system-report-not-active");
             // Confirm
             State = SalvageSystemState.LettingGo;
-            StateTimer = 0.0f;
             // Enable killswitch, announce, report success
             if (EntityManager.TryGetComponent<SalvageComponent>(PulledObject, out var salvage))
             {
@@ -259,7 +258,7 @@ namespace Content.Server.Salvage
                 // Oh no you DON'T, you aren't getting away that easily
                 EntityManager.QueueDeleteEntity(PulledObject);
             }
-            _chatManager.DispatchStationAnnouncement(Loc.GetString("salvage-system-announcement-losing"), Loc.GetString("salvage-system-announcement-source"));
+            _chatManager.DispatchStationAnnouncement(Loc.GetString("salvage-system-announcement-losing", ("timeLeft", LeaveTimer)), Loc.GetString("salvage-system-announcement-source"));
             return Loc.GetString("salvage-system-report-deactivate-success");
         }
     }
@@ -267,8 +266,8 @@ namespace Content.Server.Salvage
     public enum SalvageSystemState
     {
         Inactive,
-        PullingIn,
-        Active,
+        PullingIn, // Timer: Time left to completion
+        Active, // Timer: Time left to letting go
         LettingGo
     }
 }
