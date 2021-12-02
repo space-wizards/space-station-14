@@ -12,4 +12,4 @@ chatsan-smiles-smugly = smiles smugly
 chatsan-annoyed = looks annoyed
 chatsan-sighs = sighs
 chatsan-stick-out-tongue = sticks { POSS-ADJ($ent) } tongue out
-chatsan-wide-eyed = is wide-eyed
+chatsan-wide-eyed = looks shocked

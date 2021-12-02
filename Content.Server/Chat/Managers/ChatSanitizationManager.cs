@@ -61,8 +61,7 @@ public class ChatSanitizationManager : IChatSanitizationManager
         {
             if (input.EndsWith(smiley, true, CultureInfo.InvariantCulture))
             {
-                var idx = input.LastIndexOf(smiley, StringComparison.Ordinal);
-                sanitized = input.Remove(idx).TrimEnd();
+                sanitized = input.Remove(input.Length - smiley.Length).TrimEnd();
                 emote = Loc.GetString(SmilelyToEmote[smiley], ("ent", speaker));
                 return true;
             }
