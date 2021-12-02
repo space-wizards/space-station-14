@@ -72,6 +72,9 @@
     - type: StorageVisualizer
       state_open: freezer_open
       state_closed: freezer_door
+  - type: Construction
+    graph: CrateFreezer
+    node: cratefreezer
 
 - type: entity
   id: CrateHydroponics
@@ -95,6 +98,10 @@
     - type: StorageVisualizer
       state_open: hydrocrate_open
       state_closed: hydrocrate_door
+  - type: Construction
+    graph: CrateHydroponics
+    node: cratehydroponics
+
 
 - type: entity
   id: CrateMedical
@@ -118,6 +125,9 @@
     - type: StorageVisualizer
       state_open: medicalcrate_open
       state_closed: medicalcrate_door
+  - type: Construction
+    graph: CrateMedical
+    node: cratemedical
 
 - type: entity
   id: CrateRadiation
@@ -142,6 +152,9 @@
     - type: StorageVisualizer
       state_open: radiationcrate_open
       state_closed: radiationcrate_door
+  - type: Construction
+    graph: CrateRadiation
+    node: crateradiation
 
 - type: entity
   id: CrateInternals
@@ -165,6 +178,10 @@
     - type: StorageVisualizer
       state_open: o2crate_open
       state_closed: o2crate_door
+  - type: Construction
+    graph: CrateInternals
+    node: crateinternals
+
 
 - type: entity
   id: CrateElectrical
@@ -188,6 +205,9 @@
     - type: StorageVisualizer
       state_open: electricalcrate_open
       state_closed: electricalcrate_door
+  - type: Construction
+    graph: CrateElectrical
+    node: crateelectrical
 
 - type: entity
   id: CrateEngineering
@@ -211,6 +231,9 @@
     - type: StorageVisualizer
       state_open: engicrate_open
       state_closed: engicrate_door
+  - type: Construction
+    graph: CrateEngineering 
+    node: crateengineering
 
 - type: entity
   id: CrateScience
@@ -234,6 +257,9 @@
     - type: StorageVisualizer
       state_open: scicrate_open
       state_closed: scicrate_door
+  - type: Construction
+    graph: CrateScience
+    node: cratescience
 
 - type: entity
   id: CrateSurgery
@@ -257,6 +283,9 @@
     - type: StorageVisualizer
       state_open: surgerycrate_open
       state_closed: surgerycrate_door
+  - type: Construction
+    graph: CrateSurgery
+    node: cratesurgery
 
 # Secure Crates
 

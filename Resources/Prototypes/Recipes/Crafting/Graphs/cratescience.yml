@@ -1,18 +1,18 @@
 - type: constructionGraph
-  id: CrateGenericonimo
+  id: CrateScience  
   start: start
   graph:
     - node: start
       edges:
-        - to: crategenericonimo
+        - to: cratengineering
           steps:
             - material: Steel
               amount: 5
               doAfter: 5
 
               
-    - node: crategenericonimo
-      entity: CrateGenericonimo
+    - node: cratescience
+      entity: CrateScience
       edges:
         - to: start
           steps:

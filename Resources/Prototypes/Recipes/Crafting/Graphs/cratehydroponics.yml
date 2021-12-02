@@ -1,18 +1,18 @@
 - type: constructionGraph
-  id: CrateGenericonimo
+  id: CrateHydroponics
   start: start
   graph:
     - node: start
       edges:
-        - to: crategenericonimo
+        - to: cratehydroponics
           steps:
             - material: Steel
               amount: 5
               doAfter: 5
 
               
-    - node: crategenericonimo
-      entity: CrateGenericonimo
+    - node: cratehydroponics
+      entity: CrateHydroponics
       edges:
         - to: start
           steps:

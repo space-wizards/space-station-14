@@ -1,25 +1,23 @@
 - type: constructionGraph
-  id: CrateGenericonimo
+  id: CrateFreezer
   start: start
   graph:
     - node: start
       edges:
-        - to: crategenericonimo
+        - to: cratefreezer
           steps:
             - material: Steel
               amount: 5
               doAfter: 5
 
               
-    - node: crategenericonimo
-      entity: CrateGenericonimo
+    - node: cratefreezer
+      entity: CrateFreezer
       edges:
         - to: start
           steps:
             - tool: Screwing
               doAfter: 5
-#          conditions:
-#            - !type:StorageWelded
           completed:
             - !type:SpawnPrototype
               prototype: SheetSteel1
