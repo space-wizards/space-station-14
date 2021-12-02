@@ -58,7 +58,7 @@ namespace Content.Server.Chemistry.Components
         public float Delay = 5;
 
         /// <summary>
-        ///     Is this component currently being used in a DoAfter?
+        /// Is this component currently being used in a DoAfter?
         /// </summary>
         public bool InUse = false;
 
@@ -187,7 +187,7 @@ namespace Content.Server.Chemistry.Components
         }
 
         /// <summary>
-        ///     Send informative pop-up messages and wait for a Do-After to complete.
+        /// Send informative pop-up messages and wait for a Do-After to complete.
         /// </summary>
         public async Task<bool> TryInjectDoAfter(EntityUid user, EntityUid target)
         {
