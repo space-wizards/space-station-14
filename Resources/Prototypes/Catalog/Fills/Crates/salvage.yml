@@ -11,6 +11,7 @@
       - id: ClothingOuterHardsuitSalvage
       - id: ClothingMaskBreath
       - id: OxygenTankFilled
+      - id: FireExtinguisher
       - id: ClothingShoesBootsMag
       - id: Pickaxe
       # bare-minimum for cutting apart walls
