@@ -60,21 +60,24 @@ namespace Content.IntegrationTests.Tests
                 mapLoader.LoadMap(new MapId(10), mapPath);
             });
             await server.WaitIdleAsync();
-
+            await server.WaitAssertion(() =>
             {
-                if(!mapManager.TryFindGridAt(new MapId(10), new Vector2(10,10), out var mapGrid))
-                    Assert.Fail();
+                {
+                    if (!mapManager.TryFindGridAt(new MapId(10), new Vector2(10, 10), out var mapGrid))
+                        Assert.Fail();
 
-                Assert.That(mapGrid.WorldPosition, Is.EqualTo(new Vector2(10, 10)));
-                Assert.That(mapGrid.GetTileRef(new Vector2i(0, 0)).Tile, Is.EqualTo(new Tile(1, 512)));
-            }
-            {
-                if (!mapManager.TryFindGridAt(new MapId(10), new Vector2(-8, -8), out var mapGrid))
-                    Assert.Fail();
+                    Assert.That(mapGrid.WorldPosition, Is.EqualTo(new Vector2(10, 10)));
 
-                Assert.That(mapGrid.WorldPosition, Is.EqualTo(new Vector2(-8, -8)));
-                Assert.That(mapGrid.GetTileRef(new Vector2i(0, 0)).Tile, Is.EqualTo(new Tile(2, 511)));
-            }
+                    Assert.That(mapGrid.GetTileRef(new Vector2i(0, 0)).Tile, Is.EqualTo(new Tile(1, 512)));
+                }
+                {
+                    if (!mapManager.TryFindGridAt(new MapId(10), new Vector2(-8, -8), out var mapGrid))
+                        Assert.Fail();
+
+                    Assert.That(mapGrid.WorldPosition, Is.EqualTo(new Vector2(-8, -8)));
+                    Assert.That(mapGrid.GetTileRef(new Vector2i(0, 0)).Tile, Is.EqualTo(new Tile(2, 511)));
+                }
+            });
 
         }
     }
