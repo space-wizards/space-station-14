@@ -94,7 +94,7 @@
   targetNode: crateelectrical
   category: Storage
   description: "A crate for storing electrical equipment and components"
-  icon: Structures/Storage/Crates/electricalcrate.si/electricalcrate_icon.png
+  icon: Structures/Storage/Crates/electricalcrate.rsi/electricalcrate_icon.png
   objectType: Structure
   
 - type: construction
@@ -105,7 +105,7 @@
   targetNode: cratengineering
   category: Storage
   description: "A crate for storing engineering supplies"
-  icon: Structures/Storage/Crates/engicrate.si/engicrate_icon.png
+  icon: Structures/Storage/Crates/engicrate.rsi/engicrate_icon.png
   objectType: Structure
   
 - type: construction
@@ -116,7 +116,7 @@
   targetNode: cratescience
   category: Storage
   description: "A crate for storing scientific equipment and supplies"
-  icon: Structures/Storage/Crates/scicrate.si/scicrate_icon.png
+  icon: Structures/Storage/Crates/scicrate.rsi/scicrate_icon.png
   objectType: Structure
   
 - type: construction
@@ -127,5 +127,5 @@
   targetNode: cratesurgery
   category: Storage
   description: "A crate for storing surgical supplies"
-  icon: Structures/Storage/Crates/surgerycrate.si/surgerycrate_icon.png
+  icon: Structures/Storage/Crates/surgerycrate.rsi/surgerycrate_icon.png
   objectType: Structure
