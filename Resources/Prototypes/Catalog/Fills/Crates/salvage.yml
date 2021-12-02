@@ -12,6 +12,7 @@
       - id: ClothingMaskBreath
       - id: OxygenTankFilled
       - id: ClothingShoesBootsMag
+      - id: Pickaxe
       # bare-minimum for cutting apart walls
       # not giving them wirecutters/etc. for balance reasons
       - id: Welder
