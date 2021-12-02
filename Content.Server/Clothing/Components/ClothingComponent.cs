@@ -23,18 +23,11 @@ namespace Content.Server.Clothing.Components
     {
         public override string Name => "Clothing";
 
-        [ViewVariables]
-        [DataField("Slots")]
-        public SlotFlags SlotFlags = SlotFlags.PREVENTEQUIP; //Different from None, NONE allows equips if no slot flags are required
-
         [DataField("QuickEquip")]
         private bool _quickEquipEnabled = true;
 
         [DataField("HeatResistance")]
         private int _heatResistance = 323;
-
-        [DataField("EquipSound")]
-        public SoundSpecifier? EquipSound { get; set; } = default!;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public int HeatResistance => _heatResistance;

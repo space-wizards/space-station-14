@@ -4,6 +4,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Inventory;
+using Content.Shared.Sound;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Maths;
@@ -55,6 +56,13 @@ namespace Content.Shared.Item
         }
         [DataField("HeldPrefix")]
         private string? _equippedPrefix;
+
+        [ViewVariables]
+        [DataField("Slots")]
+        public EquipmentSlotDefines.SlotFlags SlotFlags = EquipmentSlotDefines.SlotFlags.PREVENTEQUIP; //Different from None, NONE allows equips if no slot flags are required
+
+        [DataField("EquipSound")]
+        public SoundSpecifier? EquipSound { get; set; } = default!;
 
         /// <summary>
         ///     Color of the sprite shown on the player when this item is in their hands.

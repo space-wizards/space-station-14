@@ -84,19 +84,6 @@ namespace Content.Shared.Inventory
         public abstract bool IsEquipped(IEntity item);
 
         [Serializable, NetSerializable]
-        protected class InventoryComponentState : ComponentState
-        {
-            public List<KeyValuePair<Slots, EntityUid>> Entities { get; }
-            public KeyValuePair<Slots, (EntityUid entity, bool fits)>? HoverEntity { get; }
-
-            public InventoryComponentState(List<KeyValuePair<Slots, EntityUid>> entities, KeyValuePair<Slots, (EntityUid entity, bool fits)>? hoverEntity = null)
-            {
-                Entities = entities;
-                HoverEntity = hoverEntity;
-            }
-        }
-
-        [Serializable, NetSerializable]
 #pragma warning disable 618
         public class ClientInventoryMessage : ComponentMessage
 #pragma warning restore 618
