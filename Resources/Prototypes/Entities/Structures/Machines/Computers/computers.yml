@@ -259,6 +259,7 @@
       - EmergencyFire
       - EmergencyInternals
       - EmergencyRadiation
+      - EmergencyInflatablewall
       - ArmorySmg
       - ArmoryShotgun
       - SecurityArmor

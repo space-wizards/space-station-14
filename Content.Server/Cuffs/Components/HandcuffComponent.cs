@@ -138,7 +138,7 @@ namespace Content.Server.Cuffs.Components
         /// </summary>
         private bool _cuffing;
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new HandcuffedComponentState(Broken ? BrokenState : string.Empty);
         }

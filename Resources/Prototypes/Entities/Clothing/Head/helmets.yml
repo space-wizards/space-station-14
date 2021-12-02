@@ -12,7 +12,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHelmetCosmonaut
-  name: cosmonaut
+  name: cosmonaut helmet
   description: A deceptively well armored space helmet. Ancient design, but advanced manufacturing.
   components:
   - type: Sprite
@@ -96,7 +96,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHelmetSyndicate
-  name: syndicate
+  name: syndicate helmet
   description: A stylish, robust syndicate helmet
   components:
   - type: Sprite
@@ -118,7 +118,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHelmetThunderdome
-  name: thunderdome
+  name: thunderdome helmet
   description: Let the battle commence!
   components:
   - type: Sprite

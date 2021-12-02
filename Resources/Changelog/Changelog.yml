@@ -1,64 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: 'Added a battery charge indicator on examination of substations, APCs,
-      and SMESes.', type: Add}
-  id: 179
-  time: '2021-05-12T23:10:58.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: '"Kill X" traitor goal will no longer consider gibbed bodies (brains)
-      "alive"', type: Fix}
-  id: 180
-  time: '2021-05-12T23:11:26.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Fix underfloor wires sprites, type: Fix}
-  id: 181
-  time: '2021-05-12T23:11:49.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: 'Added a command, drainallbatteries, so admins can drain all the batteries.
-      Useful for local testing and/or training of Station Engineers on what to do
-      in a power outage...', type: Add}
-  id: 182
-  time: '2021-05-12T23:12:36.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fixes radio messages not sending., type: Fix}
-  id: 183
-  time: '2021-05-13T16:23:49.015456+00:00'
-- author: StrawberryMoses
-  changes:
-  - {message: Added missing flavor text to vending machines, type: Add}
-  id: 184
-  time: '2021-05-14T00:41:05.0000000+00:00'
-- author: Clyybber
-  changes:
-  - {message: Chat no longer defaults to OOC if IC channels are available., type: Remove}
-  - {message: Can now cycle channels while typing., type: Add}
-  - {message: Focus channel keybinds now actually focus the chatbox., type: Fix}
-  id: 185
-  time: '2021-05-15T10:28:05.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Paper can't be used to create exceptions by writing bad markup inside
-      it and then examining it., type: Fix}
-  - {message: Examining paper no longer shows the contents., type: Remove}
-  id: 186
-  time: '2021-05-15T15:43:19.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Die a glorious death succeeds when you're dead instead of when you're
-      alive., type: Fix}
-  - {message: Stay Alive / Die A Glorious Death don't treat brains as alive., type: Fix}
-  id: 187
-  time: '2021-05-15T15:46:56.0000000+00:00'
-- author: Hardly
-  changes:
-  - {message: R&D Now starts with crates of materials, type: Add}
-  id: 188
-  time: '2021-05-15T17:45:32.0000000+00:00'
 - author: Timrod
   changes:
   - {message: Reduced deadliness of Boda machine., type: Fix}
@@ -2866,3 +2806,55 @@ Entries:
       reactive.', type: Add}
   id: 680
   time: '2021-11-29T02:25:51.0000000+00:00'
+- author: FoLoKe
+  changes:
+  - {message: Added space carps "dead" sprite, type: Add}
+  id: 681
+  time: '2021-11-30T10:12:19.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: 'The space around you feels colder... Depressurized rooms will now be
+      very, very cold.', type: Tweak}
+  id: 682
+  time: '2021-11-30T10:42:48.0000000+00:00'
+- author: pointer-to-null
+  changes:
+  - {message: Added a FPS counter game option., type: Add}
+  id: 683
+  time: '2021-11-30T11:31:13.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Effects (i.e. melee and hitscan weapons like lasers) now have the correct
+      rotation, type: Fix}
+  id: 684
+  time: '2021-11-30T13:38:13.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added inflatable wall crate to cargo under emergency tab., type: Add}
+  id: 685
+  time: '2021-11-30T20:48:58.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Weedkiller and Pest-B-Gone now harms kudzu., type: Add}
+  id: 686
+  time: '2021-11-30T22:58:37.776324+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Shuttle movement now uses significantly less bandwidth., type: Fix}
+  id: 687
+  time: '2021-12-01T07:32:37.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Instruments network again, type: Fix}
+  id: 688
+  time: '2021-12-01T14:00:11.0000000+00:00'
+- author: Efruit
+  changes:
+  - {message: Radiation storms are scary., type: Tweak}
+  id: 689
+  time: '2021-12-01T20:21:18.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Corrected the names of a bunch of clothing items., type: Fix}
+  id: 690
+  time: '2021-12-01T21:19:36.0000000+00:00'

@@ -19,6 +19,7 @@
     - type: Transform
       anchored: true
     - type: Physics
+    - type: Fixtures
       fixtures:
       - hard: false
         mass: 7
@@ -52,6 +53,15 @@
       groups:
         Flammable: [Touch]
         Extinguish: [Touch]
+      reactions:
+      - reagents: [WeedKiller, PlantBGone]
+        methods: [Touch]
+        effects:
+        - !type:HealthChange
+          scaled: true
+          damage:
+            types:
+              Heat: 10
     - type: AtmosExposed
     - type: Spreader
       growthResult: Kudzu

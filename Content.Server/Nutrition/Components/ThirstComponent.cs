@@ -220,7 +220,7 @@ namespace Content.Server.Nutrition.Components
             UpdateCurrentThreshold();
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new ThirstComponentState(_currentThirstThreshold);
         }
