@@ -58,6 +58,8 @@ public class ChatSanitizationManager : IChatSanitizationManager
         { "-_-", "chatsan-unimpressed" },
         { "o/", "chatsan-waves" },
         { "^^/", "chatsan-waves" },
+        { ":/", "chatsan-uncertain" },
+        { ":\\", "chatsan-uncertain" },
     };
 
     public bool TrySanitizeOutSmilies(string input, IEntity speaker, out string sanitized, [NotNullWhen(true)] out string? emote)
