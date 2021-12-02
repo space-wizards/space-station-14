@@ -13,3 +13,13 @@
   - type: SalvageMagnet
     offset: 0, -24
 
+# For Knightship
+- type: entity
+  id: SalvageLocator
+  parent: SalvageMagnet
+  name: salvage locator
+  description: "Locates salvage."
+  components:
+  - type: SalvageMagnet
+    offset: 0, -12
+
