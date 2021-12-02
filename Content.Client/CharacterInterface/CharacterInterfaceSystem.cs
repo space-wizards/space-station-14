@@ -26,13 +26,49 @@ namespace Content.Client.CharacterInterface
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.OpenCharacterMenu,
-                InputCmdHandler.FromDelegate(s => HandleOpenCharacterMenu()))
+                InputCmdHandler.FromDelegate(_ => HandleOpenCharacterMenu()))
                 .Register<CharacterInterfaceSystem>();
 
             SubscribeLocalEvent<CharacterInterfaceComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<CharacterInterfaceComponent, ComponentRemove>(OnComponentRemove);
             SubscribeLocalEvent<CharacterInterfaceComponent, PlayerAttachedEvent>(OnPlayerAttached);
             SubscribeLocalEvent<CharacterInterfaceComponent, PlayerDetachedEvent>(OnPlayerDetached);
+        }
+
+        public override void Shutdown()
+        {
+            CommandBinds.Unregister<CharacterInterfaceSystem>();
+            base.Shutdown();
+        }
+
+        private void OnComponentInit(EntityUid uid, CharacterInterfaceComponent comp, ComponentInit args)
+        {
+            //Use all the character ui interfaced components to create the character window
+            comp.UIComponents = EntityManager.GetComponents<ICharacterUI>(uid).ToList();
+            if (comp.UIComponents.Count == 0)
+                return;
+
+            comp.Window = new CharacterInterfaceComponent.CharacterWindow(comp.UIComponents);
+            comp.Window.OnClose += () => _gameHud.CharacterButtonDown = false;
+        }
+
+        private void OnComponentRemove(EntityUid uid, CharacterInterfaceComponent comp, ComponentRemove args)
+        {
+            if (comp.UIComponents != null)
+            {
+                foreach (var component in comp.UIComponents)
+                {
+                    // Make sure these don't get deleted when the window is disposed.
+                    component.Scene.Orphan();
+                }
+            }
+
+            comp.UIComponents = null;
+
+            comp.Window?.Close();
+            comp.Window = null;
+
+            _inputManager.SetInputCommand(ContentKeyFunctions.OpenCharacterMenu, null);
         }
 
         private void OnPlayerAttached(EntityUid uid, CharacterInterfaceComponent comp, PlayerAttachedEvent args)
@@ -59,67 +95,22 @@ namespace Content.Client.CharacterInterface
             comp.Window.Close();
         }
 
-        private void OnComponentRemove(EntityUid uid, CharacterInterfaceComponent comp, ComponentRemove args)
-        {
-            if (comp.UIComponents != null)
-            {
-                foreach (var component in comp.UIComponents)
-                {
-                    // Make sure these don't get deleted when the window is disposed.
-                    component.Scene.Orphan();
-                }
-            }
-
-            comp.UIComponents = null;
-
-            comp.Window?.Close();
-            comp.Window = null;
-
-            _inputManager.SetInputCommand(ContentKeyFunctions.OpenCharacterMenu, null);
-        }
-
-        private void OnComponentInit(EntityUid uid, CharacterInterfaceComponent comp, ComponentInit args)
-        {
-            //Use all the character ui interfaced components to create the character window
-            comp.UIComponents = EntityManager.GetComponents<ICharacterUI>(uid).ToList();
-            if (comp.UIComponents.Count == 0)
-                return;
-
-            comp.Window = new CharacterInterfaceComponent.CharacterWindow(comp.UIComponents);
-            comp.Window.OnClose += () => _gameHud.CharacterButtonDown = false;
-        }
-
-        public override void Shutdown()
-        {
-            CommandBinds.Unregister<CharacterInterfaceSystem>();
-            base.Shutdown();
-        }
-
         private void HandleOpenCharacterMenu()
         {
             if (_playerManager.LocalPlayer?.ControlledEntity == null
                 || !_playerManager.LocalPlayer.ControlledEntity.TryGetComponent(out CharacterInterfaceComponent? characterInterface))
-            {
                 return;
-            }
 
             var menu = characterInterface.Window;
-
             if (menu == null)
-            {
                 return;
-            }
 
             if (menu.IsOpen)
             {
                 if (menu.IsAtFront())
-                {
                     _setOpenValue(menu, false);
-                }
                 else
-                {
                     menu.MoveToFront();
-                }
             }
             else
             {
@@ -129,16 +120,11 @@ namespace Content.Client.CharacterInterface
 
         private void _setOpenValue(SS14Window menu, bool value)
         {
+            _gameHud.CharacterButtonDown = value;
             if (value)
-            {
-                _gameHud.CharacterButtonDown = true;
                 menu.OpenCentered();
-            }
             else
-            {
-                _gameHud.CharacterButtonDown = false;
                 menu.Close();
-            }
         }
     }
 }

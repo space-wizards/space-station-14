@@ -6,11 +6,6 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.CharacterInfo;
 
-public class SharedCharacterInfoSystem : EntitySystem
-{
-
-}
-
 [Serializable, NetSerializable]
 public class RequestCharacterInfoEvent : EntityEventArgs
 {

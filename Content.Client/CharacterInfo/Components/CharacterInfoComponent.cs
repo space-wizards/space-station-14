@@ -1,8 +1,6 @@
 using Content.Client.CharacterInterface;
 using Content.Client.HUD.UI;
 using Content.Client.Stylesheets;
-using Content.Shared.CharacterInfo;
-using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
@@ -13,9 +11,9 @@ using Robust.Shared.Maths;
 namespace Content.Client.CharacterInfo.Components
 {
     [RegisterComponent]
-    public sealed class CharacterInfoComponent : SharedCharacterInfoComponent, ICharacterUI
+    public sealed class CharacterInfoComponent : Component, ICharacterUI
     {
-        [Dependency] private readonly IResourceCache _resourceCache = default!;
+        public override string Name => "CharacterInfo";
 
         public CharacterInfoControl Control = default!;
 
@@ -26,7 +24,7 @@ namespace Content.Client.CharacterInfo.Components
         {
             base.OnAdd();
 
-            Scene = Control = new CharacterInfoControl(_resourceCache);
+            Scene = Control = new CharacterInfoControl();
         }
 
         public void Opened()
@@ -42,7 +40,7 @@ namespace Content.Client.CharacterInfo.Components
 
             public BoxContainer ObjectivesContainer { get; }
 
-            public CharacterInfoControl(IResourceCache resourceCache)
+            public CharacterInfoControl()
             {
                 IoCManager.InjectDependencies(this);
 
@@ -64,7 +62,7 @@ namespace Content.Client.CharacterInfo.Components
                                 (SubText = new Label
                                 {
                                     VerticalAlignment = VAlignment.Top,
-                                    StyleClasses = {StyleNano.StyleClassLabelSubText},
+                                    StyleClasses = {StyleBase.StyleClassLabelSubText},
 
                                 })
                             }
