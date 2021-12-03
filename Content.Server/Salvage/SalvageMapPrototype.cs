@@ -34,12 +34,5 @@ namespace Content.Server.Salvage
         [ViewVariables]
         [DataField("name")]
         public string Name { get; } = "";
-
-        /// <summary>
-        /// If this is an asteroid
-        /// </summary>
-        [ViewVariables]
-        [DataField("isAsteroid")]
-        public bool IsAsteroid { get; }
     }
 }
