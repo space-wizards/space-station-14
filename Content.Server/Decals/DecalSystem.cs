@@ -244,8 +244,12 @@ namespace Content.Server.Decals
         {
             base.Update(frameTime);
 
-            foreach (var playerSession in _playerManager.GetAllPlayers())
+
+            foreach (var session in Filter.Broadcast().Recipients)
             {
+                if(session is not IPlayerSession playerSession || playerSession.Status != SessionStatus.InGame)
+                    continue;
+
                 var chunks = GetChunksForSession(playerSession);
                 var updatedChunks = new Dictionary<GridId, HashSet<Vector2i>>();
                 foreach (var (gridId, gridChunks) in chunks)
