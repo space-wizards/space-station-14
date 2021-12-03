@@ -144,14 +144,13 @@ namespace Content.IntegrationTests.Tests.Doors
             await server.WaitIdleAsync();
 
             // Push the human towards the airlock
-            Assert.That(physBody != null);
-            physBody.LinearVelocity = (0.5f, 0);
+            await server.WaitAssertion(() => Assert.That(physBody != null));
+            await server.WaitPost(() => physBody.LinearVelocity = (0.5f, 0));
 
             for (var i = 0; i < 240; i += 10)
             {
                 // Keep the airlock awake so they collide
-                airlock.GetComponent<IPhysBody>().WakeBody();
-
+                server.Post(() => airlock.GetComponent<IPhysBody>().WakeBody());
 
                 await server.WaitRunTicks(10);
                 await server.WaitIdleAsync();
@@ -164,7 +163,7 @@ namespace Content.IntegrationTests.Tests.Doors
             // Assert.That(physicsDummy.Transform.MapPosition.X, Is.GreaterThan(physicsDummyStartingX));
 
             // Blocked by the airlock
-            Assert.That(Math.Abs(physicsDummy.Transform.MapPosition.X - 1) > 0.01f);
+            await server.WaitAssertion(() => Assert.That(Math.Abs(physicsDummy.Transform.MapPosition.X - 1) > 0.01f));
         }
     }
 }

@@ -179,9 +179,6 @@ namespace Content.IntegrationTests.Tests.Fluids
             // Puddle evaporation should have ticked
             await server.WaitAssertion(() =>
             {
-                // Check that the puddle is unpaused
-                Assert.False(puddle.Owner.Paused);
-
                 // Check that puddle has been deleted
                 Assert.True(puddle.Deleted);
             });
