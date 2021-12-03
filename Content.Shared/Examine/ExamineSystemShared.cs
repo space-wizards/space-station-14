@@ -71,7 +71,7 @@ namespace Content.Shared.Examine
         [Pure]
         public virtual bool CanExamine(IEntity examiner, MapCoordinates target, Ignored? predicate = null)
         {
-            if (!examiner.TryGetComponent(out ExaminerComponent? examinerComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(examiner.Uid, out ExaminerComponent? examinerComponent))
                 return false;
 
             if (!examinerComponent.DoRangeCheck)
@@ -128,7 +128,7 @@ namespace Content.Shared.Examine
 
             foreach (var result in rayResults)
             {
-                if (!result.HitEntity.TryGetComponent(out OccluderComponent? o))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(result.HitEntity.Uid, out OccluderComponent? o))
                 {
                     continue;
                 }

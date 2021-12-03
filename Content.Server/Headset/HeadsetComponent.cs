@@ -59,7 +59,7 @@ namespace Content.Server.Headset
         {
             if (Owner.TryGetContainer(out var container))
             {
-                if (!container.Owner.TryGetComponent(out ActorComponent? actor))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(container.Owner.Uid, out ActorComponent? actor))
                     return;
 
                 var playerChannel = actor.PlayerSession.ConnectedClient;

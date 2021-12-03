@@ -17,7 +17,7 @@ namespace Content.Shared.Movement.Components
         public static bool IsWeightless(this IEntity entity, PhysicsComponent? body = null, EntityCoordinates? coords = null, IMapManager? mapManager = null, IEntityManager? entityManager = null)
         {
             if (body == null)
-                entity.TryGetComponent(out body);
+                IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out body);
 
             if (IoCManager.Resolve<IEntityManager>().HasComponent<MovementIgnoreGravityComponent>(entity.Uid) ||
                 (body?.BodyType & (BodyType.Static | BodyType.Kinematic)) != 0) return false;

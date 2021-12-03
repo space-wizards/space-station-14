@@ -33,7 +33,7 @@ namespace Content.Client.Buckle
         {
             var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner.Uid);
 
-            if (!sprite.Owner.TryGetComponent(out AnimationPlayerComponent? animation))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(sprite.Owner.Uid, out AnimationPlayerComponent? animation))
             {
                 sprite.Rotation = rotation;
                 return;

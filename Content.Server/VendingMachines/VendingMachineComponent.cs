@@ -41,7 +41,7 @@ namespace Content.Server.VendingMachines
         private string _packPrototypeId = string.Empty;
         private string _spriteName = "";
 
-        private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
+        private bool Powered => !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
         private bool _broken;
 
         [DataField("soundVend")]
@@ -57,7 +57,7 @@ namespace Content.Server.VendingMachines
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if(!eventArgs.User.TryGetComponent(out ActorComponent? actor))
+            if(!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User.Uid, out ActorComponent? actor))
             {
                 return;
             }
@@ -109,7 +109,7 @@ namespace Content.Server.VendingMachines
                 UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
             }
 
-            if (Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ApcPowerReceiverComponent? receiver))
             {
                 TrySetVisualState(receiver.Powered ? VendingMachineVisualState.Normal : VendingMachineVisualState.Off);
             }
@@ -193,7 +193,7 @@ namespace Content.Server.VendingMachines
 
         private void TryEject(string id, IEntity? sender)
         {
-            if (Owner.TryGetComponent<AccessReader>(out var accessReader))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<AccessReader?>(Owner.Uid, out var accessReader))
             {
                 var accessSystem = EntitySystem.Get<AccessReaderSystem>();
                 if (sender == null || !accessSystem.IsAllowed(accessReader, sender.Uid))
@@ -235,7 +235,7 @@ namespace Content.Server.VendingMachines
                 finalState = VendingMachineVisualState.Off;
             }
 
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance))
             {
                 appearance.SetData(VendingMachineVisuals.VisualState, finalState);
             }

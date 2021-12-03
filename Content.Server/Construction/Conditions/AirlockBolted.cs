@@ -8,6 +8,7 @@ using Robust.Shared.Utility;
 using System.Threading.Tasks;
 using Content.Server.Doors.Components;
 using Content.Shared.Examine;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Construction.Conditions
 {
@@ -30,7 +31,7 @@ namespace Content.Server.Construction.Conditions
         {
             var entity = args.Examined;
 
-            if (!entity.TryGetComponent(out AirlockComponent? airlock)) return false;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out AirlockComponent? airlock)) return false;
 
             if (airlock.BoltsDown != Value)
             {

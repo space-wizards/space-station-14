@@ -146,12 +146,12 @@ namespace Content.Server.Weapon.Ranged
         /// <param name="targetPos">Target position on the map to shoot at.</param>
         private void TryFire(IEntity user, Vector2 targetPos)
         {
-            if (!user.TryGetComponent(out HandsComponent? hands) || hands.GetActiveHand?.Owner != Owner)
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out HandsComponent? hands) || hands.GetActiveHand?.Owner != Owner)
             {
                 return;
             }
 
-            if (!user.TryGetComponent(out CombatModeComponent? combat) || !combat.IsInCombatMode)
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out CombatModeComponent? combat) || !combat.IsInCombatMode)
             {
                 return;
             }

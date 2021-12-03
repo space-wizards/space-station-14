@@ -27,7 +27,7 @@ namespace Content.Server.AI.Utility.Actions.Combat.Melee
         {
             MoveToEntityOperator moveOperator;
             var equipped = context.GetState<EquippedEntityState>().GetValue();
-            if (equipped != null && equipped.TryGetComponent(out MeleeWeaponComponent? meleeWeaponComponent))
+            if (equipped != null && IoCManager.Resolve<IEntityManager>().TryGetComponent(equipped.Uid, out MeleeWeaponComponent? meleeWeaponComponent))
             {
                 moveOperator = new MoveToEntityOperator(Owner, Target, meleeWeaponComponent.Range - 0.01f);
             }

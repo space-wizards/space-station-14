@@ -106,7 +106,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 _ammoContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-ammo-container");
             }
 
-            if (Owner.TryGetComponent(out AppearanceComponent? appearanceComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearanceComponent))
             {
                 _appearanceComponent = appearanceComponent;
             }
@@ -178,13 +178,13 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 entity = IoCManager.Resolve<IEntityManager>().SpawnEntity(_ammoPrototype, spawnAt);
             }
 
-            if (entity.TryGetComponent(out ProjectileComponent? projectileComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out ProjectileComponent? projectileComponent))
             {
                 if (energyRatio < 1.0)
                 {
                     projectileComponent.Damage *= energyRatio;
                 }
-            } else if (entity.TryGetComponent(out HitscanComponent? hitscanComponent))
+            } else if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out HitscanComponent? hitscanComponent))
             {
                 hitscanComponent.Damage *= energyRatio;
                 hitscanComponent.ColorModifier = energyRatio;
@@ -242,7 +242,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 return false;
             }
 
-            if (!user.TryGetComponent(out HandsComponent? hands))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out HandsComponent? hands))
             {
                 return false;
             }

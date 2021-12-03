@@ -122,7 +122,7 @@ namespace Content.Server.Chat.Managers
             }
 
             // Check if message exceeds the character limit if the sender is a player
-            if (source.TryGetComponent(out ActorComponent? actor) &&
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(source.Uid, out ActorComponent? actor) &&
                 message.Length > MaxMessageLength)
             {
                 var feedback = Loc.GetString("chat-manager-max-message-length-exceeded-message", ("limit", MaxMessageLength));
@@ -168,9 +168,9 @@ namespace Content.Server.Chat.Managers
                 message = message[0].ToString().ToUpper() +
                           message.Remove(0, 1);
 
-                if (source.TryGetComponent(out InventoryComponent? inventory) &&
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(source.Uid, out InventoryComponent? inventory) &&
                     inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.EARS, out ItemComponent? item) &&
-                    item.Owner.TryGetComponent(out HeadsetComponent? headset))
+                    IoCManager.Resolve<IEntityManager>().TryGetComponent(item.Owner.Uid, out HeadsetComponent? headset))
                 {
                     headset.RadioRequested = true;
                 }
@@ -208,7 +208,7 @@ namespace Content.Server.Chat.Managers
             }
 
             // Check if entity is a player
-            if (!source.TryGetComponent(out ActorComponent? actor))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(source.Uid, out ActorComponent? actor))
             {
                 return;
             }

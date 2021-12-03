@@ -66,7 +66,7 @@ namespace Content.Shared.MobState.Components
 
         protected override void OnRemove()
         {
-            if (Owner.TryGetComponent(out SharedAlertsComponent? status))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out SharedAlertsComponent? status))
             {
                 status.ClearAlert(AlertType.HumanHealth);
             }

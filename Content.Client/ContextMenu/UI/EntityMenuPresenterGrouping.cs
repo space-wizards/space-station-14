@@ -39,8 +39,8 @@ namespace Content.Client.ContextMenu.UI
                 (a, b) => IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(a.Uid).EntityPrototype!.ID == IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(b.Uid).EntityPrototype!.ID,
                 (a, b) =>
                 {
-                    a.TryGetComponent<ISpriteComponent>(out var spriteA);
-                    b.TryGetComponent<ISpriteComponent>(out var spriteB);
+                    IoCManager.Resolve<IEntityManager>().TryGetComponent<ISpriteComponent?>(a.Uid, out var spriteA);
+                    IoCManager.Resolve<IEntityManager>().TryGetComponent<ISpriteComponent?>(b.Uid, out var spriteB);
 
                     if (spriteA == null || spriteB == null)
                         return spriteA == spriteB;

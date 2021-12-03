@@ -84,7 +84,7 @@ namespace Content.Server.Light.EntitySystems
                 component.PointLightComponent.Enabled = component.CurrentState == SmokableState.Lit;
             }
 
-            if (component.Owner.TryGetComponent(out ItemComponent? item))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out ItemComponent? item))
             {
                 switch (component.CurrentState)
                 {
@@ -97,7 +97,7 @@ namespace Content.Server.Light.EntitySystems
                 }
             }
 
-            if (component.Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out AppearanceComponent? appearance))
             {
                 appearance.SetData(SmokingVisuals.Smoking, component.CurrentState);
             }

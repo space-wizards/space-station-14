@@ -53,7 +53,7 @@ namespace Content.Server.Administration.Commands
 
             var target = entityManager.GetEntity(eUid);
 
-            if (!target.TryGetComponent<InventoryComponent>(out var inventoryComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<InventoryComponent?>(target.Uid, out var inventoryComponent))
             {
                 shell.WriteLine(Loc.GetString("shell-target-entity-does-not-have-message",("missing", "inventory")));
                 return;
@@ -82,7 +82,7 @@ namespace Content.Server.Administration.Commands
 
             HumanoidCharacterProfile? profile = null;
             // Check if we are setting the outfit of a player to respect the preferences
-            if (target.TryGetComponent<ActorComponent>(out var actorComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<ActorComponent?>(target.Uid, out var actorComponent))
             {
                 var userId = actorComponent.PlayerSession.UserId;
                 var preferencesManager = IoCManager.Resolve<IServerPreferencesManager>();
@@ -100,7 +100,7 @@ namespace Content.Server.Administration.Commands
                 }
                 var equipmentEntity = entityManager.SpawnEntity(gearStr, target.Transform.Coordinates);
                 if (slot == EquipmentSlotDefines.Slots.IDCARD &&
-                    equipmentEntity.TryGetComponent<PDAComponent>(out var pdaComponent) &&
+                    IoCManager.Resolve<IEntityManager>().TryGetComponent<PDAComponent?>(equipmentEntity.Uid, out var pdaComponent) &&
                     pdaComponent.ContainedID != null)
                 {
                     pdaComponent.ContainedID.FullName = target.Name;

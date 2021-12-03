@@ -42,12 +42,12 @@ namespace Content.Client.Items.Managers
             else
             {
                 ISpriteComponent? sprite;
-                if (entity.TryGetComponent(out HandVirtualItemComponent? virtPull)
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out HandVirtualItemComponent? virtPull)
                     && _entityManager.TryGetComponent(virtPull.BlockingEntity, out ISpriteComponent pulledSprite))
                 {
                     sprite = pulledSprite;
                 }
-                else if (!entity.TryGetComponent(out sprite))
+                else if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out sprite))
                 {
                     return false;
                 }
@@ -105,7 +105,7 @@ namespace Content.Client.Items.Managers
 
             if (entity == null ||
                 (!IoCManager.Resolve<IEntityManager>().EntityExists(entity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted ||
-                !entity.TryGetComponent(out ItemCooldownComponent? cooldown) ||
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out ItemCooldownComponent? cooldown) ||
                 !cooldown.CooldownStart.HasValue ||
                 !cooldown.CooldownEnd.HasValue)
             {

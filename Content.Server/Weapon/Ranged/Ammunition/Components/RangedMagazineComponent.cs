@@ -77,7 +77,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
                 }
             }
 
-            if (Owner.TryGetComponent(out AppearanceComponent? appearanceComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearanceComponent))
             {
                 _appearanceComponent = appearanceComponent;
             }
@@ -93,7 +93,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
         public bool TryInsertAmmo(IEntity user, IEntity ammo)
         {
-            if (!ammo.TryGetComponent(out AmmoComponent? ammoComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(ammo.Uid, out AmmoComponent? ammoComponent))
             {
                 return false;
             }
@@ -142,7 +142,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out HandsComponent? handsComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User.Uid, out HandsComponent? handsComponent))
             {
                 return false;
             }

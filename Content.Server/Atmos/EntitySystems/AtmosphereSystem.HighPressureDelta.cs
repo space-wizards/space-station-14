@@ -5,6 +5,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
@@ -33,7 +34,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             foreach (var entity in _gridtileLookupSystem.GetEntitiesIntersecting(tile.GridIndex, tile.GridIndices))
             {
-                if (!entity.TryGetComponent(out IPhysBody? physics)
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out IPhysBody? physics)
                     || !entity.IsMovedByPressure(out var pressure)
                     || entity.IsInContainer())
                     continue;

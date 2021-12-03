@@ -87,13 +87,13 @@ namespace Content.Server.Nutrition.Components
             {
                 // Revert slow speed if required
                 if (_lastThirstThreshold == ThirstThreshold.Parched && _currentThirstThreshold != ThirstThreshold.Dead &&
-                    Owner.TryGetComponent(out MovementSpeedModifierComponent? movementSlowdownComponent))
+                    IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out MovementSpeedModifierComponent? movementSlowdownComponent))
                 {
                     EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(OwnerUid);
                 }
 
                 // Update UI
-                Owner.TryGetComponent(out ServerAlertsComponent? alertsComponent);
+                IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ServerAlertsComponent? alertsComponent);
 
                 if (ThirstThresholdAlertTypes.TryGetValue(_currentThirstThreshold, out var alertId))
                 {
@@ -182,7 +182,7 @@ namespace Content.Server.Nutrition.Components
                 return;
             // --> Current Hunger is below dead threshold
 
-            if (!Owner.TryGetComponent(out MobStateComponent? mobState))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out MobStateComponent? mobState))
                 return;
 
             if (!mobState.IsDead())

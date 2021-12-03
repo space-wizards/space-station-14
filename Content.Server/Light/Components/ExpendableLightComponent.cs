@@ -36,14 +36,14 @@ namespace Content.Server.Light.Components
         {
             base.Initialize();
 
-            if (Owner.TryGetComponent<ItemComponent>(out var item))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<ItemComponent?>(Owner.Uid, out var item))
             {
                 item.EquippedPrefix = "unlit";
             }
 
             CurrentState = ExpendableLightState.BrandNew;
             Owner.EnsureComponent<PointLightComponent>();
-            Owner.TryGetComponent(out _appearance);
+            IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out _appearance);
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Content.Server.Light.Components
         {
             if (!Activated && CurrentState == ExpendableLightState.BrandNew)
             {
-                if (Owner.TryGetComponent<ItemComponent>(out var item))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<ItemComponent?>(Owner.Uid, out var item))
                 {
                     item.EquippedPrefix = "lit";
                 }
@@ -92,7 +92,7 @@ namespace Content.Server.Light.Components
 
         private void UpdateSpriteAndSounds(bool on)
         {
-            if (Owner.TryGetComponent(out SpriteComponent? sprite))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out SpriteComponent? sprite))
             {
                 switch (CurrentState)
                 {
@@ -126,7 +126,7 @@ namespace Content.Server.Light.Components
                 }
             }
 
-            if (Owner.TryGetComponent(out ClothingComponent? clothing))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ClothingComponent? clothing))
             {
                 clothing.ClothingEquippedPrefix = on ? "Activated" : string.Empty;
             }
@@ -161,7 +161,7 @@ namespace Content.Server.Light.Components
                         UpdateSpriteAndSounds(Activated);
                         UpdateVisualizer();
 
-                        if (Owner.TryGetComponent<ItemComponent>(out var item))
+                        if (IoCManager.Resolve<IEntityManager>().TryGetComponent<ItemComponent?>(Owner.Uid, out var item))
                         {
                             item.EquippedPrefix = "unlit";
                         }

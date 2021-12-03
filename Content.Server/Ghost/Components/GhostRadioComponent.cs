@@ -26,7 +26,7 @@ namespace Content.Server.Ghost.Components
 
         public void Receive(string message, int channel, IEntity speaker)
         {
-            if (!Owner.TryGetComponent(out ActorComponent? actor))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ActorComponent? actor))
                 return;
 
             var playerChannel = actor.PlayerSession.ConnectedClient;

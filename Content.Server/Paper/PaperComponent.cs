@@ -43,7 +43,7 @@ namespace Content.Server.Paper
             Content = content + '\n';
             UpdateUserInterface();
 
-            if (!Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance))
                 return;
 
             var status = string.IsNullOrWhiteSpace(content)
@@ -74,7 +74,7 @@ namespace Content.Server.Paper
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User.Uid, out ActorComponent? actor))
                 return false;
 
             _mode = PaperAction.Read;
@@ -91,7 +91,7 @@ namespace Content.Server.Paper
 
             Content += msg.Text + '\n';
 
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance))
             {
                 appearance.SetData(PaperVisuals.Status, PaperStatus.Written);
             }
@@ -104,7 +104,7 @@ namespace Content.Server.Paper
         {
             if (!eventArgs.Using.HasTag("Write"))
                 return false;
-            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User.Uid, out ActorComponent? actor))
                 return false;
 
             _mode = PaperAction.Write;

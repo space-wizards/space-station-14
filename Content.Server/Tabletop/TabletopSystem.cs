@@ -42,7 +42,7 @@ namespace Content.Server.Tabletop
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            if (!args.User.TryGetComponent<ActorComponent>(out var actor))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ActorComponent?>(args.User.Uid, out var actor))
                 return;
 
             Verb verb = new();
@@ -97,7 +97,7 @@ namespace Content.Server.Tabletop
                 if (!EntityManager.EntityExists(gamer.Tabletop))
                     continue;
 
-                if (!gamer.Owner.TryGetComponent(out ActorComponent? actor))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(gamer.Owner.Uid, out ActorComponent? actor))
                 {
                     IoCManager.Resolve<IEntityManager>().RemoveComponent<TabletopGamerComponent>(gamer.Owner.Uid);
                     return;

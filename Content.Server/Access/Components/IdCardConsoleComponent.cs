@@ -22,7 +22,7 @@ namespace Content.Server.Access.Components
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(IdCardConsoleUiKey.Key);
-        [ViewVariables] private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
+        [ViewVariables] private bool Powered => !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         protected override void Initialize()
         {
@@ -69,7 +69,7 @@ namespace Content.Server.Access.Components
         /// </summary>
         private bool PrivilegedIdIsAuthorized()
         {
-            if (!Owner.TryGetComponent(out AccessReader? reader))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AccessReader? reader))
             {
                 return true;
             }

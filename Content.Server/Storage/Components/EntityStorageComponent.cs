@@ -152,7 +152,7 @@ namespace Content.Server.Storage.Components
             Contents.ShowContents = _showContents;
             Contents.OccludesLight = _occludesLight;
 
-            if (Owner.TryGetComponent<PlaceableSurfaceComponent>(out var surface))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<PlaceableSurfaceComponent?>(Owner.Uid, out var surface))
             {
                 EntitySystem.Get<PlaceableSurfaceSystem>().SetPlaceable(Owner.Uid, Open, surface);
             }
@@ -173,7 +173,7 @@ namespace Content.Server.Storage.Components
                 return false;
             }
 
-            if (Owner.TryGetComponent<LockComponent>(out var @lock) && @lock.Locked)
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<LockComponent?>(Owner.Uid, out var @lock) && @lock.Locked)
             {
                 if (!silent) Owner.PopupMessage(user, Loc.GetString("entity-storage-component-locked-message"));
                 return false;
@@ -270,7 +270,7 @@ namespace Content.Server.Storage.Components
 
         private void UpdateAppearance()
         {
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance))
             {
                 appearance.SetData(StorageVisuals.CanWeld, _canWeldShut);
                 appearance.SetData(StorageVisuals.Welded, _isWeldedShut);
@@ -279,7 +279,7 @@ namespace Content.Server.Storage.Components
 
         private void ModifyComponents()
         {
-            if (!_isCollidableWhenOpen && Owner.TryGetComponent<FixturesComponent>(out var manager))
+            if (!_isCollidableWhenOpen && IoCManager.Resolve<IEntityManager>().TryGetComponent<FixturesComponent?>(Owner.Uid, out var manager))
             {
                 if (Open)
                 {
@@ -297,12 +297,12 @@ namespace Content.Server.Storage.Components
                 }
             }
 
-            if (Owner.TryGetComponent<PlaceableSurfaceComponent>(out var surface))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<PlaceableSurfaceComponent?>(Owner.Uid, out var surface))
             {
                 EntitySystem.Get<PlaceableSurfaceSystem>().SetPlaceable(Owner.Uid, Open, surface);
             }
 
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance))
             {
                 appearance.SetData(StorageVisuals.Open, Open);
             }
@@ -311,7 +311,7 @@ namespace Content.Server.Storage.Components
         protected virtual bool AddToContents(IEntity entity)
         {
             if (entity == Owner) return false;
-            if (entity.TryGetComponent(out IPhysBody? entityPhysicsComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out IPhysBody? entityPhysicsComponent))
             {
                 if (MaxSize < entityPhysicsComponent.GetWorldAABB().Size.X
                     || MaxSize < entityPhysicsComponent.GetWorldAABB().Size.Y)
@@ -335,7 +335,7 @@ namespace Content.Server.Storage.Components
                 if (Contents.Remove(contained))
                 {
                     contained.Transform.WorldPosition = ContentsDumpPosition();
-                    if (contained.TryGetComponent<IPhysBody>(out var physics))
+                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent<IPhysBody?>(contained.Uid, out var physics))
                     {
                         physics.CanCollide = true;
                     }
@@ -376,7 +376,7 @@ namespace Content.Server.Storage.Components
             if (!Contents.Insert(entity)) return false;
 
             entity.Transform.LocalPosition = Vector2.Zero;
-            if (entity.TryGetComponent(out IPhysBody? body))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out IPhysBody? body))
             {
                 body.CanCollide = false;
             }

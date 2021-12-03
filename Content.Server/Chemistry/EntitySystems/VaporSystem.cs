@@ -52,7 +52,7 @@ namespace Content.Server.Chemistry.EntitySystems
             vapor.Target = target;
             vapor.AliveTime = aliveTime;
             // Set Move
-            if (vapor.Owner.TryGetComponent(out PhysicsComponent? physics))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(vapor.Owner.Uid, out PhysicsComponent? physics))
             {
                 physics.BodyStatus = BodyStatus.InAir;
                 physics.ApplyLinearImpulse(dir * speed);

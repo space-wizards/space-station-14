@@ -21,7 +21,7 @@ namespace Content.Client.Commands
 
             foreach (var mechanism in mechanisms)
             {
-                if (!mechanism.Owner.TryGetComponent(out SpriteComponent? sprite))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(mechanism.Owner.Uid, out SpriteComponent? sprite))
                 {
                     continue;
                 }

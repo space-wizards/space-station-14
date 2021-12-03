@@ -10,6 +10,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Stacks;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
@@ -40,7 +41,7 @@ namespace Content.Server.Medical.Components
                 return false;
             }
 
-            if (!eventArgs.Target.TryGetComponent<DamageableComponent>(out DamageableComponent? targetDamage))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Target.Uid, out DamageableComponent? targetDamage))
             {
                 return true;
             }
@@ -60,7 +61,7 @@ namespace Content.Server.Medical.Components
                 return true;
             }
 
-            if (Owner.TryGetComponent<SharedStackComponent>(out var stack) && !EntitySystem.Get<StackSystem>().Use(Owner.Uid, 1, stack))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedStackComponent?>(Owner.Uid, out var stack) && !EntitySystem.Get<StackSystem>().Use(Owner.Uid, 1, stack))
             {
                 return true;
             }

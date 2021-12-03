@@ -44,7 +44,7 @@ namespace Content.Server.Disposal
                 return;
             }
 
-            if (!entity.TryGetComponent(out IDisposalTubeComponent? tube))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out IDisposalTubeComponent? tube))
             {
                 shell.WriteLine(Loc.GetString("shell-entity-with-uid-lacks-component",
                                               ("uid", id),

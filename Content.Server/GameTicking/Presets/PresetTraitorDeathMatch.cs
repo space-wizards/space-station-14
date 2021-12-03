@@ -80,7 +80,7 @@ namespace Content.Server.GameTicking.Presets
 
             // Delete anything that may contain "dangerous" role-specific items.
             // (This includes the PDA, as everybody gets the captain PDA in this mode for true-all-access reasons.)
-            if (mind.OwnedEntity != null && mind.OwnedEntity.TryGetComponent(out InventoryComponent? inventory))
+            if (mind.OwnedEntity != null && IoCManager.Resolve<IEntityManager>().TryGetComponent(mind.OwnedEntity.Uid, out InventoryComponent? inventory))
             {
                 var victimSlots = new[] {EquipmentSlotDefines.Slots.IDCARD, EquipmentSlotDefines.Slots.BELT, EquipmentSlotDefines.Slots.BACKPACK};
                 foreach (var slot in victimSlots)
@@ -151,7 +151,7 @@ namespace Content.Server.GameTicking.Presets
                 var avoidMeEntity = avoidMeMind.OwnedEntity;
                 if (avoidMeEntity == null)
                     continue;
-                if (avoidMeEntity.TryGetComponent(out MobStateComponent? mobState))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(avoidMeEntity.Uid, out MobStateComponent? mobState))
                 {
                     // Does have mob state component; if critical or dead, they don't really matter for spawn checks
                     if (mobState.IsCritical() || mobState.IsDead())
@@ -198,7 +198,7 @@ namespace Content.Server.GameTicking.Presets
         public override bool OnGhostAttempt(Mind.Mind mind, bool canReturnGlobal)
         {
             var entity = mind.OwnedEntity;
-            if ((entity != null) && (entity.TryGetComponent(out MobStateComponent? mobState)))
+            if ((entity != null) && IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out MobStateComponent? mobState))
             {
                 if (mobState.IsCritical())
                 {

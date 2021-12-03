@@ -126,8 +126,8 @@ namespace Content.Server.Traitor.Uplink
                 return;
             }
 
-            if (player.TryGetComponent(out HandsComponent? hands) &&
-                entity.TryGetComponent(out ItemComponent? item))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(player.Uid, out HandsComponent? hands) &&
+                IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out ItemComponent? item))
             {
                 hands.PutInHandOrDrop(item);
             }
@@ -153,7 +153,7 @@ namespace Content.Server.Traitor.Uplink
                 return;
 
             // try to put it into players hands
-            if (player.TryGetComponent(out SharedHandsComponent? hands))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(player.Uid, out SharedHandsComponent? hands))
                 hands.TryPutInAnyHand(EntityManager.GetEntity(tcUid.Value));
 
             // play buying sound
@@ -208,7 +208,7 @@ namespace Content.Server.Traitor.Uplink
         private IEntity? FindUplinkTarget(IEntity user)
         {
             // Try to find PDA in inventory
-            if (user.TryGetComponent(out InventoryComponent? inventory))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out InventoryComponent? inventory))
             {
                 var foundPDA = inventory.LookupItems<PDAComponent>().FirstOrDefault();
                 if (foundPDA != null)
@@ -216,7 +216,7 @@ namespace Content.Server.Traitor.Uplink
             }
 
             // Also check hands
-            if (user.TryGetComponent(out HandsComponent? hands))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out HandsComponent? hands))
             {
                 var heldItems = hands.GetAllHeldItems();
                 foreach (var item in heldItems)

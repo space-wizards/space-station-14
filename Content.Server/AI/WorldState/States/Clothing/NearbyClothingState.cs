@@ -19,7 +19,7 @@ namespace Content.Server.AI.WorldState.States.Clothing
         {
             var result = new List<IEntity>();
 
-            if (!Owner.TryGetComponent(out AiControllerComponent? controller))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AiControllerComponent? controller))
             {
                 return result;
             }

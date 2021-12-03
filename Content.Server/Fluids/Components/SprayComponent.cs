@@ -137,7 +137,7 @@ namespace Content.Server.Fluids.Components
                 var vapor = entManager.SpawnEntity(_vaporPrototype, playerPos.Offset(distance < 1 ? quarter : threeQuarters));
                 vapor.Transform.LocalRotation = rotation;
 
-                if (vapor.TryGetComponent(out AppearanceComponent? appearance))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(vapor.Uid, out AppearanceComponent? appearance))
                 {
                     appearance.SetData(VaporVisuals.Color, contents.Color.WithAlpha(1f));
                     appearance.SetData(VaporVisuals.State, true);
@@ -152,7 +152,7 @@ namespace Content.Server.Fluids.Components
                 var impulseDirection = vapor.Transform.WorldRotation.ToVec();
                 vaporSystem.Start(vaporComponent, impulseDirection, _sprayVelocity, target, _sprayAliveTime);
 
-                if (_impulse > 0f && eventArgs.User.TryGetComponent(out IPhysBody? body))
+                if (_impulse > 0f && IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User.Uid, out IPhysBody? body))
                 {
                     body.ApplyLinearImpulse(-impulseDirection * _impulse);
                 }
@@ -163,7 +163,7 @@ namespace Content.Server.Fluids.Components
             _lastUseTime = curTime;
             _cooldownEnd = _lastUseTime + TimeSpan.FromSeconds(_cooldownTime);
 
-            if (Owner.TryGetComponent(out ItemCooldownComponent? cooldown))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ItemCooldownComponent? cooldown))
             {
                 cooldown.CooldownStart = _lastUseTime;
                 cooldown.CooldownEnd = _cooldownEnd;

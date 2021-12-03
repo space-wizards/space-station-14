@@ -65,7 +65,7 @@ namespace Content.IntegrationTests.Tests.Doors
 
                 airlock = entityManager.SpawnEntity("AirlockDummy", MapCoordinates.Nullspace);
 
-                Assert.True(airlock.TryGetComponent(out doorComponent));
+                Assert.True(IoCManager.Resolve<IEntityManager>().TryGetComponent(airlock.Uid, out doorComponent));
                 Assert.That(doorComponent.State, Is.EqualTo(SharedDoorComponent.DoorState.Closed));
             });
 
@@ -136,9 +136,9 @@ namespace Content.IntegrationTests.Tests.Doors
 
                 airlock = entityManager.SpawnEntity("AirlockDummy", new MapCoordinates((0, 0), mapId));
 
-                Assert.True(physicsDummy.TryGetComponent(out physBody));
+                Assert.True(IoCManager.Resolve<IEntityManager>().TryGetComponent(physicsDummy.Uid, out physBody));
 
-                Assert.True(airlock.TryGetComponent(out doorComponent));
+                Assert.True(IoCManager.Resolve<IEntityManager>().TryGetComponent(airlock.Uid, out doorComponent));
                 Assert.That(doorComponent.State, Is.EqualTo(SharedDoorComponent.DoorState.Closed));
             });
 

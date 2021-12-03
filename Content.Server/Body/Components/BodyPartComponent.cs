@@ -66,7 +66,7 @@ namespace Content.Server.Body.Components
             {
                 var entity = IoCManager.Resolve<IEntityManager>().SpawnEntity(mechanismId, Owner.Transform.MapPosition);
 
-                if (!entity.TryGetComponent(out SharedMechanismComponent? mechanism))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out SharedMechanismComponent? mechanism))
                 {
                     Logger.Error($"Entity {mechanismId} does not have a {nameof(SharedMechanismComponent)} component.");
                     continue;
@@ -104,7 +104,7 @@ namespace Content.Server.Body.Components
             _surgeonCache = null;
             _owningBodyCache = null;
 
-            if (eventArgs.Target.TryGetComponent(out SharedBodyComponent? body))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Target.Uid, out SharedBodyComponent? body))
             {
                 SendSlots(eventArgs, body);
             }
@@ -161,7 +161,7 @@ namespace Content.Server.Body.Components
         private void ReceiveBodyPartSlot(int key)
         {
             if (_surgeonCache == null ||
-                !_surgeonCache.TryGetComponent(out ActorComponent? actor))
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(_surgeonCache.Uid, out ActorComponent? actor))
             {
                 return;
             }

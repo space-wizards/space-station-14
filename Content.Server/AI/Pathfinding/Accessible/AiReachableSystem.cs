@@ -181,7 +181,7 @@ namespace Content.Server.AI.Pathfinding.Accessible
             var targetNode = _pathfindingSystem.GetNode(targetTile);
 
             var collisionMask = 0;
-            if (entity.TryGetComponent(out IPhysBody? physics))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out IPhysBody? physics))
             {
                 collisionMask = physics.CollisionMask;
             }

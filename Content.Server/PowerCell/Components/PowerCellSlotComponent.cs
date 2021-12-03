@@ -81,7 +81,7 @@ namespace Content.Server.PowerCell.Components
             get
             {
                 if (_cellContainer.ContainedEntity == null) return null;
-                return _cellContainer.ContainedEntity.TryGetComponent(out PowerCellComponent? cell) ? cell : null;
+                return IoCManager.Resolve<IEntityManager>().TryGetComponent(_cellContainer.ContainedEntity.Uid, out PowerCellComponent? cell) ? cell : null;
             }
         }
 
@@ -134,7 +134,7 @@ namespace Content.Server.PowerCell.Components
             //Dirty();
             if (user != null)
             {
-                if (!user.TryGetComponent(out HandsComponent? hands) || !hands.PutInHand(IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(cell.Owner.Uid)))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out HandsComponent? hands) || !hands.PutInHand(IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(cell.Owner.Uid)))
                 {
                     cell.Owner.Transform.Coordinates = user.Transform.Coordinates;
                 }
@@ -162,8 +162,8 @@ namespace Content.Server.PowerCell.Components
         public bool InsertCell(IEntity cell, bool playSound = true)
         {
             if (Cell != null) return false;
-            if (!cell.TryGetComponent<ItemComponent>(out var _)) return false;
-            if (!cell.TryGetComponent<PowerCellComponent>(out var cellComponent)) return false;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(cell.Uid, out (ItemComponent?) var _)) return false;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<PowerCellComponent?>(cell.Uid, out var cellComponent)) return false;
             if (cellComponent.CellSize != SlotSize) return false;
             if (!_cellContainer.Insert(cell)) return false;
             //Dirty();

@@ -71,7 +71,7 @@ namespace Content.Shared.Pulling.Components
                 return;
             }
 
-            if (!entity.TryGetComponent<SharedPullerComponent>(out var comp))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedPullerComponent?>(entity.Uid, out var comp))
             {
                 Logger.Error($"Entity {state.Puller.Value} for pulling had no Puller component");
                 // ensure it disconnects from any different puller, still

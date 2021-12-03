@@ -63,7 +63,7 @@ namespace Content.Server.Projectiles
             }
 
             // Damaging it can delete it
-            if (!((!IoCManager.Resolve<IEntityManager>().EntityExists(otherEntity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(otherEntity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted) && otherEntity.TryGetComponent(out CameraRecoilComponent? recoilComponent))
+            if (!((!IoCManager.Resolve<IEntityManager>().EntityExists(otherEntity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(otherEntity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted) && IoCManager.Resolve<IEntityManager>().TryGetComponent(otherEntity.Uid, out CameraRecoilComponent? recoilComponent))
             {
                 var direction = args.OurFixture.Body.LinearVelocity.Normalized;
                 recoilComponent.Kick(direction);

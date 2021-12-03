@@ -225,7 +225,7 @@ namespace Content.Server.Interaction
                 return true;
             }
 
-            if (userEntity.TryGetComponent(out CombatModeComponent? combatMode) && combatMode.IsInCombatMode)
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(userEntity.Uid, out CombatModeComponent? combatMode) && combatMode.IsInCombatMode)
                 DoAttack(userEntity, coords, true);
 
             return true;
@@ -291,7 +291,7 @@ namespace Content.Server.Interaction
             if (!InRangeUnobstructed(userEntity, pulledObject, popup: true))
                 return false;
 
-            if (!pulledObject.TryGetComponent(out SharedPullableComponent? pull))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(pulledObject.Uid, out SharedPullableComponent? pull))
                 return false;
 
             return _pullSystem.TogglePull(userEntity, pull);
@@ -309,7 +309,7 @@ namespace Content.Server.Interaction
         public async void UserInteraction(IEntity user, EntityCoordinates coordinates, EntityUid clickedUid, bool altInteract = false)
         {
             // TODO COMBAT Consider using alt-interact for advanced combat? maybe alt-interact disarms?
-            if (!altInteract && user.TryGetComponent(out CombatModeComponent? combatMode) && combatMode.IsInCombatMode)
+            if (!altInteract && IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out CombatModeComponent? combatMode) && combatMode.IsInCombatMode)
             {
                 DoAttack(user, coordinates, false, clickedUid);
                 return;
@@ -334,7 +334,7 @@ namespace Content.Server.Interaction
             }
 
             // Verify user has a hand, and find what object they are currently holding in their active hand
-            if (!user.TryGetComponent<HandsComponent>(out var hands))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<HandsComponent?>(user.Uid, out var hands))
                 return;
 
             var item = hands.GetActiveHand?.Owner;
@@ -481,7 +481,7 @@ namespace Content.Server.Interaction
             }
 
             // Verify user has a hand, and find what object they are currently holding in their active hand
-            if (user.TryGetComponent<HandsComponent>(out var hands))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<HandsComponent?>(user.Uid, out var hands))
             {
                 var item = hands.GetActiveHand?.Owner;
 

@@ -117,7 +117,7 @@ namespace Content.Server.Storage.EntitySystems
         {
             var oldParentEntity = message.Container.Owner;
 
-            if (oldParentEntity.TryGetComponent(out ServerStorageComponent? storageComp))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(oldParentEntity.Uid, out ServerStorageComponent? storageComp))
             {
                 storageComp.HandleEntityMaybeRemoved(message);
             }
@@ -127,7 +127,7 @@ namespace Content.Server.Storage.EntitySystems
         {
             var oldParentEntity = message.Container.Owner;
 
-            if (oldParentEntity.TryGetComponent(out ServerStorageComponent? storageComp))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(oldParentEntity.Uid, out ServerStorageComponent? storageComp))
             {
                 storageComp.HandleEntityMaybeInserted(message);
             }

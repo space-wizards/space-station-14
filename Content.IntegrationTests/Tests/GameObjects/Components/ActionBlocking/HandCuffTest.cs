@@ -66,11 +66,13 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
                 human.Transform.WorldPosition = otherHuman.Transform.WorldPosition;
 
                 // Test for components existing
-                Assert.True(human.TryGetComponent(out cuffed!), $"Human has no {nameof(CuffableComponent)}");
-                Assert.True(human.TryGetComponent(out hands!), $"Human has no {nameof(HandsComponent)}");
-                Assert.True(human.TryGetComponent(out SharedBodyComponent? _), $"Human has no {nameof(SharedBodyComponent)}");
-                Assert.True(cuffs.TryGetComponent(out HandcuffComponent? _), $"Handcuff has no {nameof(HandcuffComponent)}");
-                Assert.True(secondCuffs.TryGetComponent(out HandcuffComponent? _), $"Second handcuffs has no {nameof(HandcuffComponent)}");
+                ref CuffableComponent? comp = ref cuffed!;
+                Assert.True(IoCManager.Resolve<IEntityManager>().TryGetComponent(human.Uid, out comp), $"Human has no {nameof(CuffableComponent)}");
+                ref HandsComponent? comp1 = ref hands!;
+                Assert.True(IoCManager.Resolve<IEntityManager>().TryGetComponent(human.Uid, out comp1), $"Human has no {nameof(HandsComponent)}");
+                Assert.True(IoCManager.Resolve<IEntityManager>().TryGetComponent(human.Uid, out SharedBodyComponent? _), $"Human has no {nameof(SharedBodyComponent)}");
+                Assert.True(IoCManager.Resolve<IEntityManager>().TryGetComponent(cuffs.Uid, out HandcuffComponent? _), $"Handcuff has no {nameof(HandcuffComponent)}");
+                Assert.True(IoCManager.Resolve<IEntityManager>().TryGetComponent(secondCuffs.Uid, out HandcuffComponent? _), $"Second handcuffs has no {nameof(HandcuffComponent)}");
 
                 // Test to ensure cuffed players register the handcuffs
                 cuffed.TryAddNewCuffs(human, cuffs);

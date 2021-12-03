@@ -1,4 +1,5 @@
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Shared.CombatMode
 {
@@ -16,7 +17,7 @@ namespace Content.Shared.CombatMode
         {
             var entity = eventArgs.SenderSession?.AttachedEntity;
 
-            if (entity == null || !entity.TryGetComponent(out SharedCombatModeComponent? combatModeComponent))
+            if (entity == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out SharedCombatModeComponent? combatModeComponent))
             {
                 return;
             }

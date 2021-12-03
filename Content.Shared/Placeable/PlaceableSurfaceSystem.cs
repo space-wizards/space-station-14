@@ -52,7 +52,7 @@ namespace Content.Shared.Placeable
             if (!surface.IsPlaceable)
                 return;
 
-            if(!args.User.TryGetComponent<SharedHandsComponent>(out var handComponent))
+            if(!IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedHandsComponent?>(args.User.Uid, out var handComponent))
                 return;
 
             if (!args.ClickLocation.IsValid(IoCManager.Resolve<IEntityManager>()))

@@ -267,7 +267,7 @@ namespace Content.Server.AI.Pathfinding
         {
             if ((!IoCManager.Resolve<IEntityManager>().EntityExists(entity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted ||
                 _lastKnownPositions.ContainsKey(entity) ||
-                !entity.TryGetComponent(out IPhysBody? physics) ||
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out IPhysBody? physics) ||
                 !PathfindingNode.IsRelevant(entity, physics))
             {
                 return;
@@ -306,7 +306,7 @@ namespace Content.Server.AI.Pathfinding
         {
             // If we've moved to space or the likes then remove us.
             if ((!IoCManager.Resolve<IEntityManager>().EntityExists(moveEvent.Sender.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(moveEvent.Sender.Uid).EntityLifeStage) >= EntityLifeStage.Deleted ||
-                !moveEvent.Sender.TryGetComponent(out IPhysBody? physics) ||
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(moveEvent.Sender.Uid, out IPhysBody? physics) ||
                 !PathfindingNode.IsRelevant(moveEvent.Sender, physics) ||
                 moveEvent.NewPosition.GetGridId(EntityManager) == GridId.Invalid)
             {
@@ -371,7 +371,7 @@ namespace Content.Server.AI.Pathfinding
 
         public bool CanTraverse(IEntity entity, PathfindingNode node)
         {
-            if (entity.TryGetComponent(out IPhysBody? physics) &&
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out IPhysBody? physics) &&
                 (physics.CollisionMask & node.BlockedCollisionMask) != 0)
             {
                 return false;

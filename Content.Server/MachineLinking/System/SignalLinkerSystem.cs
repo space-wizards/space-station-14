@@ -13,6 +13,7 @@ using Content.Shared.MachineLinking;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 
@@ -80,8 +81,8 @@ namespace Content.Server.MachineLinking.System
         {
             if (args.Handled) return;
 
-            if (!args.Used.TryGetComponent<SignalLinkerComponent>(out var linker) || !linker.Port.HasValue ||
-                !args.User.TryGetComponent(out ActorComponent? actor) ||
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SignalLinkerComponent?>(args.Used.Uid, out var linker) || !linker.Port.HasValue ||
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User.Uid, out ActorComponent? actor) ||
                 !linker.Port.Value.transmitter.Outputs.TryGetPort(linker.Port.Value.port, out var port))
             {
                 return;
@@ -120,9 +121,9 @@ namespace Content.Server.MachineLinking.System
             {
                 case SignalPortSelected portSelected:
                     if (msg.Session.AttachedEntity == null ||
-                        !msg.Session.AttachedEntity.TryGetComponent(out HandsComponent? hands) ||
+                        !IoCManager.Resolve<IEntityManager>().TryGetComponent(msg.Session.AttachedEntity.Uid, out HandsComponent? hands) ||
                         !hands.TryGetActiveHeldEntity(out var heldEntity) ||
-                        !heldEntity.TryGetComponent(out SignalLinkerComponent? signalLinkerComponent) ||
+                        !IoCManager.Resolve<IEntityManager>().TryGetComponent(heldEntity.Uid, out SignalLinkerComponent? signalLinkerComponent) ||
                         !_interaction.InRangeUnobstructed(msg.Session.AttachedEntity, component.Owner, ignoreInsideBlocker: true) ||
                         !signalLinkerComponent.Port.HasValue ||
                         !signalLinkerComponent.Port.Value.transmitter.Outputs.ContainsPort(signalLinkerComponent.Port
@@ -160,9 +161,9 @@ namespace Content.Server.MachineLinking.System
             {
                 case SignalPortSelected portSelected:
                     if (msg.Session.AttachedEntity == null ||
-                        !msg.Session.AttachedEntity.TryGetComponent(out HandsComponent? hands) ||
+                        !IoCManager.Resolve<IEntityManager>().TryGetComponent(msg.Session.AttachedEntity.Uid, out HandsComponent? hands) ||
                         !hands.TryGetActiveHeldEntity(out var heldEntity) ||
-                        !heldEntity.TryGetComponent(out SignalLinkerComponent? signalLinkerComponent) ||
+                        !IoCManager.Resolve<IEntityManager>().TryGetComponent(heldEntity.Uid, out SignalLinkerComponent? signalLinkerComponent) ||
                         !_interaction.InRangeUnobstructed(msg.Session.AttachedEntity, component.Owner, ignoreInsideBlocker: true))
                         return;
                     LinkerSaveInteraction(msg.Session.AttachedEntity, signalLinkerComponent, component,
@@ -176,8 +177,8 @@ namespace Content.Server.MachineLinking.System
         {
             if (args.Handled) return;
 
-            if (!args.Used.TryGetComponent<SignalLinkerComponent>(out var linker) ||
-                !args.User.TryGetComponent(out ActorComponent? actor))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SignalLinkerComponent?>(args.Used.Uid, out var linker) ||
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User.Uid, out ActorComponent? actor))
             {
                 return;
             }
@@ -276,10 +277,8 @@ namespace Content.Server.MachineLinking.System
         private bool IsInRange(SignalTransmitterComponent transmitterComponent,
             SignalReceiverComponent receiverComponent)
         {
-            if (transmitterComponent.Owner.TryGetComponent<ApcPowerReceiverComponent>(
-                    out var transmitterPowerReceiverComponent) &&
-                receiverComponent.Owner.TryGetComponent<ApcPowerReceiverComponent>(
-                    out var receiverPowerReceiverComponent)
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<ApcPowerReceiverComponent?>(transmitterComponent.Owner.Uid, out var transmitterPowerReceiverComponent) &&
+                IoCManager.Resolve<IEntityManager>().TryGetComponent<ApcPowerReceiverComponent?>(receiverComponent.Owner.Uid, out var receiverPowerReceiverComponent)
             ) //&& todo are they on the same powernet?
             {
                 return true;

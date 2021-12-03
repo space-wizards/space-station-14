@@ -5,6 +5,7 @@ using Content.Shared.Storage.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -31,7 +32,7 @@ namespace Content.Client.Storage.Visualizers
             base.InitializeEntity(entity);
 
             if (_openIcon != null &&
-                entity.TryGetComponent<SpriteComponent>(out var spriteComponent) &&
+                IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(entity.Uid, out var spriteComponent) &&
                 spriteComponent.BaseRSI?.Path != null)
             {
                 spriteComponent.LayerMapReserveBlank(OpenIcon);

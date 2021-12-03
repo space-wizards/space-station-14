@@ -115,7 +115,7 @@ namespace Content.Client.Viewport
             InteractionOutlineComponent? outline;
             if(!_outlineEnabled || !ConfigurationManager.GetCVar(CCVars.OutlineEnabled))
             {
-                if(entityToClick != null && entityToClick.TryGetComponent(out outline))
+                if(entityToClick != null && IoCManager.Resolve<IEntityManager>().TryGetComponent(entityToClick.Uid, out outline))
                 {
                     outline.OnMouseLeave(); //Prevent outline remains from persisting post command.
                 }
@@ -124,7 +124,7 @@ namespace Content.Client.Viewport
 
             if (entityToClick == _lastHoveredEntity)
             {
-                if (entityToClick != null && entityToClick.TryGetComponent(out outline))
+                if (entityToClick != null && IoCManager.Resolve<IEntityManager>().TryGetComponent(entityToClick.Uid, out outline))
                 {
                     outline.UpdateInRange(inRange, renderScale);
                 }
@@ -133,14 +133,14 @@ namespace Content.Client.Viewport
             }
 
             if (_lastHoveredEntity != null && !((!IoCManager.Resolve<IEntityManager>().EntityExists(_lastHoveredEntity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_lastHoveredEntity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted) &&
-                _lastHoveredEntity.TryGetComponent(out outline))
+                IoCManager.Resolve<IEntityManager>().TryGetComponent(_lastHoveredEntity.Uid, out outline))
             {
                 outline.OnMouseLeave();
             }
 
             _lastHoveredEntity = entityToClick;
 
-            if (_lastHoveredEntity != null && _lastHoveredEntity.TryGetComponent(out outline))
+            if (_lastHoveredEntity != null && IoCManager.Resolve<IEntityManager>().TryGetComponent(_lastHoveredEntity.Uid, out outline))
             {
                 outline.OnMouseEnter(inRange, renderScale);
             }
@@ -167,7 +167,7 @@ namespace Content.Client.Viewport
             var foundEntities = new List<(IEntity clicked, int drawDepth, uint renderOrder)>();
             foreach (var entity in entities)
             {
-                if (entity.TryGetComponent<ClickableComponent>(out var component)
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<ClickableComponent?>(entity.Uid, out var component)
                     && !entity.IsInContainer()
                     && component.CheckClick(coordinates.Position, out var drawDepthClicked, out var renderOrder))
                 {

@@ -294,7 +294,7 @@ namespace Content.Server.Chemistry.EntitySystems
         {
             var reagentQuantity = FixedPoint2.New(0);
             if (EntityManager.TryGetEntity(ownerUid, out var owner)
-                && owner.TryGetComponent(out SolutionContainerManagerComponent? managerComponent))
+                && IoCManager.Resolve<IEntityManager>().TryGetComponent(owner.Uid, out SolutionContainerManagerComponent? managerComponent))
             {
                 foreach (var solution in managerComponent.Solutions.Values)
                 {

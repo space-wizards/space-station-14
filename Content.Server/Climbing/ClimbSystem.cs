@@ -41,7 +41,7 @@ namespace Content.Server.Climbing
                 return;
 
             // Check that the user climb.
-            if (!args.User.TryGetComponent(out ClimbingComponent? climbingComponent) ||
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User.Uid, out ClimbingComponent? climbingComponent) ||
                 climbingComponent.IsClimbing)
                 return;
 

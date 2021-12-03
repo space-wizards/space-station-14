@@ -55,7 +55,7 @@ namespace Content.Server.Actions.Actions
 
             if (disarmedActs.Length == 0)
             {
-                if (args.Performer.TryGetComponent(out ActorComponent? actor))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(args.Performer.Uid, out ActorComponent? actor))
                 {
                     // Fall back to a normal interaction with the entity
                     var player = actor.PlayerSession;
@@ -68,7 +68,7 @@ namespace Content.Server.Actions.Actions
                 return;
             }
 
-            if (!args.Performer.TryGetComponent<SharedActionsComponent>(out var actions)) return;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedActionsComponent?>(args.Performer.Uid, out var actions)) return;
             if (args.Target == args.Performer || !EntitySystem.Get<ActionBlockerSystem>().CanAttack(args.Performer.Uid)) return;
 
             var random = IoCManager.Resolve<IRobustRandom>();

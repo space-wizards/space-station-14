@@ -35,7 +35,7 @@ namespace Content.Server.Throwing
         {
             if ((!IoCManager.Resolve<IEntityManager>().EntityExists(entity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted ||
                 strength <= 0f ||
-                !entity.TryGetComponent(out PhysicsComponent? physicsComponent))
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out PhysicsComponent? physicsComponent))
             {
                 return;
             }
@@ -94,7 +94,7 @@ namespace Content.Server.Throwing
             }
 
             // Give thrower an impulse in the other direction
-            if (user != null && pushbackRatio > 0.0f && user.TryGetComponent(out IPhysBody? body))
+            if (user != null && pushbackRatio > 0.0f && IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out IPhysBody? body))
             {
                 var msg = new ThrowPushbackAttemptEvent();
                 IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(body.Owner.Uid, msg);

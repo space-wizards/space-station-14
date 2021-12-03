@@ -75,7 +75,7 @@ namespace Content.Server.Climbing.Components
             }
 
             if (!IoCManager.Resolve<IEntityManager>().HasComponent<ClimbingComponent>(user.Uid) ||
-                !user.TryGetComponent(out SharedBodyComponent? body))
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out SharedBodyComponent? body))
             {
                 reason = Loc.GetString("comp-climbable-cant-climb");
                 return false;
@@ -159,7 +159,7 @@ namespace Content.Server.Climbing.Components
 
             var result = await EntitySystem.Get<DoAfterSystem>().WaitDoAfter(doAfterEventArgs);
 
-            if (result != DoAfterStatus.Cancelled && entityToMove.TryGetComponent(out PhysicsComponent? body) && body.Fixtures.Count >= 1)
+            if (result != DoAfterStatus.Cancelled && IoCManager.Resolve<IEntityManager>().TryGetComponent(entityToMove.Uid, out PhysicsComponent? body) && body.Fixtures.Count >= 1)
             {
                 var entityPos = entityToMove.Transform.WorldPosition;
 
@@ -193,7 +193,7 @@ namespace Content.Server.Climbing.Components
 
         public async void TryClimb(IEntity user)
         {
-            if (!user.TryGetComponent(out ClimbingComponent? climbingComponent) || climbingComponent.IsClimbing)
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out ClimbingComponent? climbingComponent) || climbingComponent.IsClimbing)
                 return;
 
             var doAfterEventArgs = new DoAfterEventArgs(user, _climbDelay, default, Owner)
@@ -206,7 +206,7 @@ namespace Content.Server.Climbing.Components
 
             var result = await EntitySystem.Get<DoAfterSystem>().WaitDoAfter(doAfterEventArgs);
 
-            if (result != DoAfterStatus.Cancelled && user.TryGetComponent(out PhysicsComponent? body) && body.Fixtures.Count >= 1)
+            if (result != DoAfterStatus.Cancelled && IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out PhysicsComponent? body) && body.Fixtures.Count >= 1)
             {
                 // TODO: Remove the copy-paste code
                 var userPos = user.Transform.WorldPosition;

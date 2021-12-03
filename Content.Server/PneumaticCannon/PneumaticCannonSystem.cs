@@ -109,7 +109,7 @@ namespace Content.Server.PneumaticCannon
                 return;
             }
 
-            if (args.Used.TryGetComponent<ToolComponent>(out var tool))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<ToolComponent?>(args.Used.Uid, out var tool))
             {
                 if (tool.Qualities.Contains(component.ToolModifyMode))
                 {
@@ -138,8 +138,8 @@ namespace Content.Server.PneumaticCannon
             // this overrides the ServerStorageComponent's insertion stuff because
             // it's not event-based yet and I can't cancel it, so tools and stuff
             // will modify mode/power then get put in anyway
-            if (args.Used.TryGetComponent<ItemComponent>(out var item)
-                && component.Owner.TryGetComponent<ServerStorageComponent>(out var storage))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<ItemComponent?>(args.Used.Uid, out var item)
+                && IoCManager.Resolve<IEntityManager>().TryGetComponent<ServerStorageComponent?>(component.Owner.Uid, out var storage))
             {
                 if (storage.CanInsert(args.Used))
                 {
@@ -175,7 +175,7 @@ namespace Content.Server.PneumaticCannon
 
         public void AddToQueue(PneumaticCannonComponent comp, IEntity user, EntityCoordinates click)
         {
-            if (!comp.Owner.TryGetComponent<ServerStorageComponent>(out var storage))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ServerStorageComponent?>(comp.Owner.Uid, out var storage))
                 return;
             if (storage.StoredEntities == null) return;
             if (storage.StoredEntities.Count == 0)
@@ -221,7 +221,7 @@ namespace Content.Server.PneumaticCannon
                 return;
             }
 
-            if (!comp.Owner.TryGetComponent<ServerStorageComponent>(out var storage))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ServerStorageComponent?>(comp.Owner.Uid, out var storage))
                 return;
 
             if ((!IoCManager.Resolve<IEntityManager>().EntityExists(data.User.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(data.User.Uid).EntityLifeStage) >= EntityLifeStage.Deleted)
@@ -234,7 +234,7 @@ namespace Content.Server.PneumaticCannon
             storage.Remove(ent);
 
             SoundSystem.Play(Filter.Pvs(data.User), comp.FireSound.GetSound(), comp.OwnerUid, AudioParams.Default);
-            if (data.User.TryGetComponent<CameraRecoilComponent>(out var recoil))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<CameraRecoilComponent?>(data.User.Uid, out var recoil))
             {
                 recoil.Kick(Vector2.One * data.Strength);
             }
@@ -244,7 +244,7 @@ namespace Content.Server.PneumaticCannon
             // lasagna, anybody?
             ent.EnsureComponent<ForcefeedOnCollideComponent>();
 
-            if(data.User.TryGetComponent<StatusEffectsComponent>(out var status)
+            if(IoCManager.Resolve<IEntityManager>().TryGetComponent<StatusEffectsComponent?>(data.User.Uid, out var status)
                && comp.Power == PneumaticCannonPower.High)
             {
                 _stun.TryParalyze(data.User.Uid, TimeSpan.FromSeconds(comp.HighPowerStunTime), status);
@@ -276,7 +276,7 @@ namespace Content.Server.PneumaticCannon
                 return false;
 
             // not sure how it wouldnt, but it might not! who knows
-            if (component.GasTankSlot.ContainedEntity.TryGetComponent<GasTankComponent>(out var tank))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<GasTankComponent?>(component.GasTankSlot.ContainedEntity.Uid, out var tank))
             {
                 if (tank.Air.TotalMoles < usage)
                     return false;
@@ -323,7 +323,7 @@ namespace Content.Server.PneumaticCannon
             var ent = component.GasTankSlot.ContainedEntity;
             if (component.GasTankSlot.Remove(ent))
             {
-                if (user.TryGetComponent<HandsComponent>(out var hands))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<HandsComponent?>(user.Uid, out var hands))
                 {
                     hands.TryPutInActiveHandOrAny(ent);
                 }
@@ -336,7 +336,7 @@ namespace Content.Server.PneumaticCannon
 
         public void TryEjectAllItems(PneumaticCannonComponent component, IEntity user)
         {
-            if (component.Owner.TryGetComponent<ServerStorageComponent>(out var storage))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<ServerStorageComponent?>(component.Owner.Uid, out var storage))
             {
                 if (storage.StoredEntities == null) return;
                 foreach (var entity in storage.StoredEntities.ToArray())
@@ -351,7 +351,7 @@ namespace Content.Server.PneumaticCannon
 
         private void UpdateAppearance(PneumaticCannonComponent component)
         {
-            if (component.Owner.TryGetComponent<AppearanceComponent>(out var appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<AppearanceComponent?>(component.Owner.Uid, out var appearance))
             {
                 appearance.SetData(PneumaticCannonVisuals.Tank,
                     component.GasTankSlot.ContainedEntities.Count != 0);

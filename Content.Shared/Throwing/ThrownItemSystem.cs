@@ -53,7 +53,7 @@ namespace Content.Shared.Throwing
 
         private void ThrowItem(EntityUid uid, ThrownItemComponent component, ThrownEvent args)
         {
-            if (!component.Owner.TryGetComponent(out PhysicsComponent? physicsComponent) ||
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out PhysicsComponent? physicsComponent) ||
                 physicsComponent.Fixtures.Count != 1) return;
 
             if (_fixtures.GetFixtureOrNull(physicsComponent, ThrowingFixture) != null)

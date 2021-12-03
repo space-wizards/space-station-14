@@ -59,7 +59,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
         private void UpdateAppearance()
         {
-            if (Owner.TryGetComponent(out AppearanceComponent? appearanceComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearanceComponent))
             {
                 appearanceComponent?.SetData(MagazineBarrelVisuals.MagLoaded, true);
                 appearanceComponent?.SetData(AmmoVisuals.AmmoCount, AmmoLeft);
@@ -69,7 +69,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
         public bool TryInsertAmmo(IEntity user, IEntity entity)
         {
-            if (!entity.TryGetComponent(out AmmoComponent? ammoComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out AmmoComponent? ammoComponent))
             {
                 return false;
             }
@@ -95,7 +95,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
         private bool UseEntity(IEntity user)
         {
-            if (!user.TryGetComponent(out HandsComponent? handsComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out HandsComponent? handsComponent))
             {
                 return false;
             }
@@ -147,7 +147,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             // This area is dirty but not sure of an easier way to do it besides add an interface or somethin
             var changed = false;
 
-            if (eventArgs.Target.TryGetComponent(out RevolverBarrelComponent? revolverBarrel))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Target.Uid, out RevolverBarrelComponent? revolverBarrel))
             {
                 for (var i = 0; i < Capacity; i++)
                 {
@@ -167,7 +167,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
                     TryInsertAmmo(eventArgs.User, ammo);
                     break;
                 }
-            } else if (eventArgs.Target.TryGetComponent(out BoltActionBarrelComponent? boltActionBarrel))
+            } else if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Target.Uid, out BoltActionBarrelComponent? boltActionBarrel))
             {
                 for (var i = 0; i < Capacity; i++)
                 {

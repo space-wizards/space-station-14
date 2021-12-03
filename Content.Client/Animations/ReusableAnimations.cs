@@ -17,7 +17,7 @@ namespace Content.Client.Animations
             var animatableClone = IoCManager.Resolve<IEntityManager>().SpawnEntity("clientsideclone", initialPosition);
             animatableClone.Name = entity.Name;
 
-            if (!entity.TryGetComponent(out SpriteComponent? sprite0))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out SpriteComponent? sprite0))
             {
                 Logger.Error("Entity ({0}) couldn't be animated for pickup since it doesn't have a {1}!", entity.Name, nameof(SpriteComponent));
                 return;

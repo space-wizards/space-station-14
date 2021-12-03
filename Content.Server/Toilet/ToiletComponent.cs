@@ -68,7 +68,7 @@ namespace Content.Server.Toilet
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             // are player trying place or lift of cistern lid?
-            if (eventArgs.Using.TryGetComponent(out ToolComponent? tool)
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Using.Uid, out ToolComponent? tool)
                 && tool.Qualities.Contains(_pryingQuality))
             {
                 // check if someone is already prying this toilet
@@ -112,7 +112,7 @@ namespace Content.Server.Toilet
 
             // just want to up/down seat?
             // check that nobody seats on seat right now
-            if (Owner.TryGetComponent(out StrapComponent? strap))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out StrapComponent? strap))
             {
                 if (strap.BuckledEntities.Count != 0)
                     return false;
@@ -143,7 +143,7 @@ namespace Content.Server.Toilet
 
         private void UpdateSprite()
         {
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance))
             {
                 appearance.SetData(ToiletVisuals.LidOpen, LidOpen);
                 appearance.SetData(ToiletVisuals.SeatUp, IsSeatUp);
@@ -153,7 +153,7 @@ namespace Content.Server.Toilet
         SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)
         {
             // check that victim even have head
-            if (victim.TryGetComponent<SharedBodyComponent>(out var body) &&
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedBodyComponent?>(victim.Uid, out var body) &&
                 body.HasPartOfType(BodyPartType.Head))
             {
                 var othersMessage = Loc.GetString("toilet-component-suicide-head-message-others", ("victim",victim.Name),("owner", Owner.Name));

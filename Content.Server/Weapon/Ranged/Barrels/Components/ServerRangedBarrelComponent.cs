@@ -149,7 +149,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         protected override void OnRemove()
         {
             base.OnRemove();
-            if (Owner.TryGetComponent(out ServerRangedWeaponComponent? rangedWeaponComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ServerRangedWeaponComponent? rangedWeaponComponent))
             {
                 rangedWeaponComponent.Barrel = null;
                 rangedWeaponComponent.FireHandler -= Fire;
@@ -215,19 +215,19 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             var direction = (targetPos - shooter.Transform.WorldPosition).ToAngle();
             var angle = GetRecoilAngle(direction);
             // This should really be client-side but for now we'll just leave it here
-            if (shooter.TryGetComponent(out CameraRecoilComponent? recoilComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(shooter.Uid, out CameraRecoilComponent? recoilComponent))
             {
                 recoilComponent.Kick(-angle.ToVec() * 0.15f);
             }
 
             // This section probably needs tweaking so there can be caseless hitscan etc.
-            if (projectile.TryGetComponent(out HitscanComponent? hitscan))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(projectile.Uid, out HitscanComponent? hitscan))
             {
                 FireHitscan(shooter, hitscan, angle);
             }
             else if (IoCManager.Resolve<IEntityManager>().HasComponent<ProjectileComponent>(projectile.Uid) &&
                      ammo != null &&
-                     ammo.TryGetComponent(out AmmoComponent? ammoComponent))
+                     IoCManager.Resolve<IEntityManager>().TryGetComponent(ammo.Uid, out AmmoComponent? ammoComponent))
             {
                 FireProjectiles(shooter, projectile, ammoComponent.ProjectilesFired, ammoComponent.EvenSpreadAngle, angle, ammoComponent.Velocity, ammo);
 

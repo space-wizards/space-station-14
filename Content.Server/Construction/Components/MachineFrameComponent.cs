@@ -122,7 +122,7 @@ namespace Content.Server.Construction.Components
 
             RegenerateProgress();
 
-            if (Owner.TryGetComponent<ConstructionComponent>(out var construction))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<ConstructionComponent?>(Owner.Uid, out var construction))
             {
                 // Attempt to set pathfinding to the machine node...
                 EntitySystem.Get<ConstructionSystem>().SetPathfindingTarget(OwnerUid, "machine", construction);
@@ -168,7 +168,7 @@ namespace Content.Server.Construction.Components
 
             if (!HasBoard)
             {
-                if (Owner.TryGetComponent(out appearance))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out appearance))
                 {
                     appearance.SetData(MachineFrameVisuals.State, 1);
                 }
@@ -187,10 +187,10 @@ namespace Content.Server.Construction.Components
 
             var board = _boardContainer.ContainedEntities[0];
 
-            if (!board.TryGetComponent<MachineBoardComponent>(out var machineBoard))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<MachineBoardComponent?>(board.Uid, out var machineBoard))
                 return;
 
-            if (Owner.TryGetComponent(out appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out appearance))
             {
                 appearance.SetData(MachineFrameVisuals.State, 2);
             }
@@ -199,7 +199,7 @@ namespace Content.Server.Construction.Components
 
             foreach (var part in _partContainer.ContainedEntities)
             {
-                if (part.TryGetComponent<MachinePartComponent>(out var machinePart))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<MachinePartComponent?>(part.Uid, out var machinePart))
                 {
                     // Check this is part of the requirements...
                     if (!Requirements.ContainsKey(machinePart.PartType))
@@ -211,7 +211,7 @@ namespace Content.Server.Construction.Components
                         _progress[machinePart.PartType]++;
                 }
 
-                if (part.TryGetComponent<StackComponent>(out var stack))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<StackComponent?>(part.Uid, out var stack))
                 {
                     var type = stack.StackTypeId;
                     // Check this is part of the requirements...
@@ -254,7 +254,7 @@ namespace Content.Server.Construction.Components
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!HasBoard && eventArgs.Using.TryGetComponent<MachineBoardComponent>(out var machineBoard))
+            if (!HasBoard && IoCManager.Resolve<IEntityManager>().TryGetComponent<MachineBoardComponent?>(eventArgs.Using.Uid, out var machineBoard))
             {
                 if (eventArgs.Using.TryRemoveFromContainer())
                 {
@@ -264,12 +264,12 @@ namespace Content.Server.Construction.Components
                     // Setup requirements and progress...
                     ResetProgressAndRequirements(machineBoard);
 
-                    if (Owner.TryGetComponent<AppearanceComponent>(out var appearance))
+                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent<AppearanceComponent?>(Owner.Uid, out var appearance))
                     {
                         appearance.SetData(MachineFrameVisuals.State, 2);
                     }
 
-                    if (Owner.TryGetComponent(out ConstructionComponent? construction))
+                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ConstructionComponent? construction))
                     {
                         // So prying the components off works correctly.
                         EntitySystem.Get<ConstructionSystem>().ResetEdge(OwnerUid, construction);
@@ -280,7 +280,7 @@ namespace Content.Server.Construction.Components
             }
             else if (HasBoard)
             {
-                if (eventArgs.Using.TryGetComponent<MachinePartComponent>(out var machinePart))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<MachinePartComponent?>(eventArgs.Using.Uid, out var machinePart))
                 {
                     if (!Requirements.ContainsKey(machinePart.PartType))
                         return false;
@@ -293,7 +293,7 @@ namespace Content.Server.Construction.Components
                     }
                 }
 
-                if (eventArgs.Using.TryGetComponent<StackComponent>(out var stack))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<StackComponent?>(eventArgs.Using.Uid, out var stack))
                 {
                     var type = stack.StackTypeId;
                     if (!MaterialRequirements.ContainsKey(type))

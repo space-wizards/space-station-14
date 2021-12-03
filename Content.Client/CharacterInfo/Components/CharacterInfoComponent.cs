@@ -50,7 +50,7 @@ namespace Content.Client.CharacterInfo.Components
             {
                 case CharacterInfoMessage characterInfoMessage:
                     _control.UpdateUI(characterInfoMessage);
-                    if (Owner.TryGetComponent(out ISpriteComponent? spriteComponent))
+                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ISpriteComponent? spriteComponent))
                     {
                         _control.SpriteView.Sprite = spriteComponent;
                     }

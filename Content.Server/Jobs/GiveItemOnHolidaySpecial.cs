@@ -32,7 +32,7 @@ namespace Content.Server.Jobs
 
             var entity = IoCManager.Resolve<IEntityManager>().SpawnEntity(Prototype, mob.Transform.Coordinates);
 
-            if (!entity.TryGetComponent(out ItemComponent? item) || !mob.TryGetComponent(out HandsComponent? hands))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out ItemComponent? item) || !IoCManager.Resolve<IEntityManager>().TryGetComponent(mob.Uid, out HandsComponent? hands))
                 return;
 
             hands.PutInHand(item, false);

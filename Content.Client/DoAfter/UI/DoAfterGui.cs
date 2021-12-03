@@ -153,7 +153,7 @@ namespace Content.Client.DoAfter.UI
             }
 
             if (RETURNED_VALUE != true ||
-                !AttachedEntity.TryGetComponent(out DoAfterComponent? doAfterComponent))
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(AttachedEntity.Uid, out DoAfterComponent? doAfterComponent))
             {
                 Visible = false;
                 return;

@@ -129,7 +129,7 @@ namespace Content.Server.AI.Steering
         /// <exception cref="InvalidOperationException"></exception>
         public void Unregister(IEntity entity)
         {
-            if (entity.TryGetComponent(out AiControllerComponent? controller))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out AiControllerComponent? controller))
             {
                 controller.VelocityDir = Vector2.Zero;
             }
@@ -249,7 +249,7 @@ namespace Content.Server.AI.Steering
         {
             // Main optimisation to be done below is the redundant calls and adding more variables
             if ((!IoCManager.Resolve<IEntityManager>().EntityExists(entity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted ||
-                !entity.TryGetComponent(out AiControllerComponent? controller) ||
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out AiControllerComponent? controller) ||
                 !EntitySystem.Get<ActionBlockerSystem>().CanMove(entity.Uid) ||
                 !entity.Transform.GridID.IsValid())
             {
@@ -420,7 +420,7 @@ namespace Content.Server.AI.Steering
             var startTile = gridManager.GetTileRef(entity.Transform.Coordinates);
             var endTile = gridManager.GetTileRef(steeringRequest.TargetGrid);
             var collisionMask = 0;
-            if (entity.TryGetComponent(out IPhysBody? physics))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out IPhysBody? physics))
             {
                 collisionMask = physics.CollisionMask;
             }
@@ -606,7 +606,7 @@ namespace Content.Server.AI.Steering
                 return Vector2.Zero;
             }
 
-            if (target.TryGetComponent(out IPhysBody? physics))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(target.Uid, out IPhysBody? physics))
             {
                 var targetDistance = (targetPos.Position - entityPos.Position);
                 targetPos = targetPos.Offset(physics.LinearVelocity * targetDistance);
@@ -624,7 +624,7 @@ namespace Content.Server.AI.Steering
         /// <returns></returns>
         private Vector2 CollisionAvoidance(IEntity entity, Vector2 direction, ICollection<IEntity> ignoredTargets)
         {
-            if (direction == Vector2.Zero || !entity.TryGetComponent(out IPhysBody? physics))
+            if (direction == Vector2.Zero || !IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out IPhysBody? physics))
             {
                 return Vector2.Zero;
             }
@@ -665,7 +665,7 @@ namespace Content.Server.AI.Steering
                     // if we're moving in the same direction then ignore
                     // So if 2 entities are moving towards each other and both detect a collision they'll both move in the same direction
                     // i.e. towards the right
-                    if (physicsEntity.TryGetComponent(out IPhysBody? otherPhysics) &&
+                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent(physicsEntity.Uid, out IPhysBody? otherPhysics) &&
                         Vector2.Dot(otherPhysics.LinearVelocity, direction) > 0)
                     {
                         continue;

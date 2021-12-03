@@ -3,6 +3,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using System;
+using Robust.Shared.IoC;
 
 namespace Content.Shared.Hands
 {
@@ -22,7 +23,7 @@ namespace Content.Shared.Hands
         {
             var entity = eventArgs.SenderSession.AttachedEntity;
 
-            if (entity == null || !entity.TryGetComponent(out SharedHandsComponent? hands))
+            if (entity == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out SharedHandsComponent? hands))
                 return;
 
             hands.ActiveHand = msg.HandName;

@@ -67,7 +67,7 @@ namespace Content.Server.Cuffs.Components
 
             if (CuffedHandCount > 0)
             {
-                if (LastAddedCuffs.TryGetComponent<HandcuffComponent>(out var cuffs))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<HandcuffComponent?>(LastAddedCuffs.Uid, out var cuffs))
                 {
                     return new CuffableComponentState(CuffedHandCount,
                        CanStillInteract,
@@ -105,14 +105,14 @@ namespace Content.Server.Cuffs.Components
             }
 
             // Success!
-            if (user.TryGetComponent(out HandsComponent? handsComponent) && handsComponent.IsHolding(handcuff))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out HandsComponent? handsComponent) && handsComponent.IsHolding(handcuff))
             {
                 // Good lord handscomponent is scuffed, I hope some smug person will fix it someday
                 handsComponent.Drop(handcuff);
             }
 
             Container.Insert(handcuff);
-            CanStillInteract = Owner.TryGetComponent(out HandsComponent? ownerHands) && ownerHands.HandNames.Count() > CuffedHandCount;
+            CanStillInteract = IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out HandsComponent? ownerHands) && ownerHands.HandNames.Count() > CuffedHandCount;
 
             OnCuffedStateChanged?.Invoke();
             UpdateAlert();
@@ -132,7 +132,7 @@ namespace Content.Server.Cuffs.Components
         /// </summary>
         public void UpdateHeldItems()
         {
-            if (!Owner.TryGetComponent(out HandsComponent? handsComponent)) return;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out HandsComponent? handsComponent)) return;
 
             var itemCount = handsComponent.GetAllHeldItems().Count();
             var freeHandCount = handsComponent.HandNames.Count() - CuffedHandCount;
@@ -159,7 +159,7 @@ namespace Content.Server.Cuffs.Components
         /// </summary>
         private void UpdateAlert()
         {
-            if (Owner.TryGetComponent(out ServerAlertsComponent? status))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ServerAlertsComponent? status))
             {
                 if (CanStillInteract)
                 {
@@ -201,7 +201,7 @@ namespace Content.Server.Cuffs.Components
                 }
             }
 
-            if (!cuffsToRemove.TryGetComponent<HandcuffComponent>(out var cuff))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<HandcuffComponent?>(cuffsToRemove.Uid, out var cuff))
             {
                 Logger.Warning($"A user is trying to remove handcuffs without a {nameof(HandcuffComponent)}. This should never happen!");
                 return;
@@ -270,13 +270,13 @@ namespace Content.Server.Cuffs.Components
                     cuffsToRemove.Name = cuff.BrokenName;
                     IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(cuffsToRemove.Uid).EntityDescription = cuff.BrokenDesc;
 
-                    if (cuffsToRemove.TryGetComponent<SpriteComponent>(out var sprite) && cuff.BrokenState != null)
+                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(cuffsToRemove.Uid, out var sprite) && cuff.BrokenState != null)
                     {
                         sprite.LayerSetState(0, cuff.BrokenState); // TODO: safety check to see if RSI contains the state?
                     }
                 }
 
-                CanStillInteract = Owner.TryGetComponent(out HandsComponent? handsComponent) && handsComponent.HandNames.Count() > CuffedHandCount;
+                CanStillInteract = IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out HandsComponent? handsComponent) && handsComponent.HandNames.Count() > CuffedHandCount;
                 OnCuffedStateChanged?.Invoke();
                 UpdateAlert();
                 Dirty();

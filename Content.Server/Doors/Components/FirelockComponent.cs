@@ -2,6 +2,7 @@ using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Doors;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Doors.Components
@@ -30,7 +31,7 @@ namespace Content.Server.Doors.Components
             if (DoorComponent != null && DoorComponent.State == SharedDoorComponent.DoorState.Open && DoorComponent.CanCloseGeneric())
             {
                 DoorComponent.Close();
-                if (Owner.TryGetComponent(out AirtightComponent? airtight))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AirtightComponent? airtight))
                 {
                     EntitySystem.Get<AirtightSystem>().SetAirblocked(airtight, true);
                 }

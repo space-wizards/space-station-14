@@ -105,7 +105,7 @@ namespace Content.Shared.Pulling
             if (args.Pulled.OwnerUid != uid)
                 return;
 
-            if (component.Owner.TryGetComponent(out SharedAlertsComponent? alerts))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out SharedAlertsComponent? alerts))
                 alerts.ShowAlert(AlertType.Pulled);
         }
 
@@ -114,7 +114,7 @@ namespace Content.Shared.Pulling
             if (args.Pulled.OwnerUid != uid)
                 return;
 
-            if (component.Owner.TryGetComponent(out SharedAlertsComponent? alerts))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out SharedAlertsComponent? alerts))
                 alerts.ClearAlert(AlertType.Pulled);
         }
 
@@ -170,7 +170,7 @@ namespace Content.Shared.Pulling
                 return;
             }
 
-            if (!pulled.TryGetComponent(out IPhysBody? physics))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(pulled.Uid, out IPhysBody? physics))
             {
                 return;
             }
@@ -183,16 +183,16 @@ namespace Content.Shared.Pulling
         // TODO: When Joint networking is less shitcodey fix this to use a dedicated joints message.
         private void HandleContainerInsert(EntInsertedIntoContainerMessage message)
         {
-            if (message.Entity.TryGetComponent(out SharedPullableComponent? pullable))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(message.Entity.Uid, out SharedPullableComponent? pullable))
             {
                 TryStopPull(pullable);
             }
 
-            if (message.Entity.TryGetComponent(out SharedPullerComponent? puller))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(message.Entity.Uid, out SharedPullerComponent? puller))
             {
                 if (puller.Pulling == null) return;
 
-                if (!puller.Pulling.TryGetComponent(out SharedPullableComponent? pulling))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(puller.Pulling.Uid, out SharedPullableComponent? pulling))
                 {
                     return;
                 }
@@ -215,7 +215,7 @@ namespace Content.Shared.Pulling
                 return false;
             }
 
-            if (!pulled.TryGetComponent(out SharedPullableComponent? pullable))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(pulled.Uid, out SharedPullableComponent? pullable))
             {
                 return false;
             }
@@ -253,7 +253,7 @@ namespace Content.Shared.Pulling
         private void UpdatePulledRotation(IEntity puller, IEntity pulled)
         {
             // TODO: update once ComponentReference works with directed event bus.
-            if (!pulled.TryGetComponent(out RotatableComponent? rotatable))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(pulled.Uid, out RotatableComponent? rotatable))
                 return;
 
             if (!rotatable.RotateWhilePulling)

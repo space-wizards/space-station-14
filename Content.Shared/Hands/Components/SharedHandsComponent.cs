@@ -102,7 +102,7 @@ namespace Content.Shared.Hands.Components
 
         public void UpdateHandVisualizer()
         {
-            if (!Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance))
                 return;
 
             var hands = new List<HandVisualState>();
@@ -111,7 +111,7 @@ namespace Content.Shared.Hands.Components
                 if (hand.HeldEntity == null)
                     continue;
 
-                if (!hand.HeldEntity.TryGetComponent(out SharedItemComponent? item) || item.RsiPath == null)
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(hand.HeldEntity.Uid, out SharedItemComponent? item) || item.RsiPath == null)
                     continue;
 
                 var handState = new HandVisualState(item.RsiPath, item.EquippedPrefix, hand.Location, item.Color);

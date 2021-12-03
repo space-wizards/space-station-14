@@ -1,6 +1,7 @@
 ﻿using Content.Shared.Buckle.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Client.Buckle
 {
@@ -30,7 +31,7 @@ namespace Content.Client.Buckle
             LastEntityBuckledTo = buckle.LastEntityBuckledTo;
             DontCollide = buckle.DontCollide;
 
-            if (!Owner.TryGetComponent(out SpriteComponent? ownerSprite))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out SpriteComponent? ownerSprite))
             {
                 return;
             }

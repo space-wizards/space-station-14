@@ -303,9 +303,9 @@ namespace Content.Server.Physics.Controllers
 
             mobMover.StepSoundDistance -= distanceNeeded;
 
-            if (mover.Owner.TryGetComponent<InventoryComponent>(out var inventory)
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<InventoryComponent?>(mover.Owner.Uid, out var inventory)
                 && inventory.TryGetSlotItem<ItemComponent>(EquipmentSlotDefines.Slots.SHOES, out var item)
-                && item.Owner.TryGetComponent<FootstepModifierComponent>(out var modifier))
+                && IoCManager.Resolve<IEntityManager>().TryGetComponent<FootstepModifierComponent?>(item.Owner.Uid, out var modifier))
             {
                 modifier.PlayFootstep();
             }

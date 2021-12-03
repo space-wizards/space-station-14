@@ -154,7 +154,7 @@ namespace Content.Shared.Interaction
 
             foreach (var result in rayResults)
             {
-                if (!result.HitEntity.TryGetComponent(out IPhysBody? p))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(result.HitEntity.Uid, out IPhysBody? p))
                 {
                     continue;
                 }
@@ -441,7 +441,7 @@ namespace Content.Shared.Interaction
 
         protected void InteractionActivate(IEntity user, IEntity used)
         {
-            if (used.TryGetComponent<UseDelayComponent>(out var delayComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<UseDelayComponent?>(used.Uid, out var delayComponent))
             {
                 if (delayComponent.ActiveDelay)
                     return;
@@ -469,7 +469,7 @@ namespace Content.Shared.Interaction
                 return;
             }
 
-            if (!used.TryGetComponent(out IActivate? activateComp))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(used.Uid, out IActivate? activateComp))
                 return;
 
             var activateEventArgs = new ActivateEventArgs(user, used);
@@ -503,7 +503,7 @@ namespace Content.Shared.Interaction
         /// </summary>
         public void UseInteraction(IEntity user, IEntity used)
         {
-            if (used.TryGetComponent<UseDelayComponent>(out var delayComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<UseDelayComponent?>(used.Uid, out var delayComponent))
             {
                 if (delayComponent.ActiveDelay)
                     return;

@@ -12,6 +12,7 @@ using Content.Shared.Verbs;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -80,10 +81,10 @@ namespace Content.Server.Configurable
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (UserInterface == null || !eventArgs.User.TryGetComponent(out ActorComponent? actor))
+            if (UserInterface == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User.Uid, out ActorComponent? actor))
                 return false;
 
-            if (!eventArgs.Using.TryGetComponent<ToolComponent>(out var tool) || !tool.Qualities.Contains(_qualityNeeded))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ToolComponent?>(eventArgs.Using.Uid, out var tool) || !tool.Qualities.Contains(_qualityNeeded))
                 return false;
 
             OpenUserInterface(actor);

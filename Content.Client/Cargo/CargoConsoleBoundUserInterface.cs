@@ -4,6 +4,7 @@ using Content.Shared.Cargo;
 using Content.Shared.Cargo.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.Cargo.Components.SharedCargoConsoleComponent;
 using static Robust.Client.UserInterface.Controls.BaseButton;
@@ -49,8 +50,8 @@ namespace Content.Client.Cargo
         {
             base.Open();
 
-            if (!Owner.Owner.TryGetComponent(out GalacticMarketComponent? market) ||
-                !Owner.Owner.TryGetComponent(out CargoOrderDatabaseComponent? orders)) return;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Owner.Uid, out GalacticMarketComponent? market) ||
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Owner.Uid, out CargoOrderDatabaseComponent? orders)) return;
 
             Market = market;
             Orders = orders;

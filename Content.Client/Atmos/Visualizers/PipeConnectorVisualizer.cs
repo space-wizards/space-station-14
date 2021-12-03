@@ -41,7 +41,7 @@ namespace Content.Client.Atmos.Visualizers
         {
             base.InitializeEntity(entity);
 
-            if (!entity.TryGetComponent<ISpriteComponent>(out var sprite))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ISpriteComponent?>(entity.Uid, out var sprite))
                 return;
 
             if (_connectorRsi == null)

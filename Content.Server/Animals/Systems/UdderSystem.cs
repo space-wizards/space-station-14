@@ -42,7 +42,7 @@ namespace Content.Server.Animals.Systems
                     continue;
 
                 // Actually there is food digestion so no problem with instant reagent generation "OnFeed"
-                if (udder.Owner.TryGetComponent<HungerComponent>(out var hunger))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<HungerComponent?>(udder.Owner.Uid, out var hunger))
                 {
                     hunger.HungerThresholds.TryGetValue(HungerThreshold.Peckish, out var targetThreshold);
 

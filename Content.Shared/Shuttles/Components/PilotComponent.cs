@@ -39,7 +39,7 @@ namespace Content.Shared.Shuttles.Components
             }
 
             if (!IoCManager.Resolve<IEntityManager>().TryGetEntity(state.Console.Value, out var consoleEnt) ||
-                !consoleEnt.TryGetComponent(out SharedShuttleConsoleComponent? shuttleConsoleComponent))
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(consoleEnt.Uid, out SharedShuttleConsoleComponent? shuttleConsoleComponent))
             {
                 Logger.Warning($"Unable to set Helmsman console to {state.Console.Value}");
                 return;

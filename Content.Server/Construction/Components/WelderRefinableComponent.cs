@@ -41,7 +41,7 @@ namespace Content.Server.Construction.Components
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             // check if object is welder
-            if (!eventArgs.Using.TryGetComponent(out ToolComponent? tool))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Using.Uid, out ToolComponent? tool))
                 return false;
 
             // check if someone is already welding object
@@ -70,7 +70,7 @@ namespace Content.Server.Construction.Components
 
                 // TODO: If something has a stack... Just use a prototype with a single thing in the stack.
                 // This is not a good way to do it.
-                if (droppedEnt.TryGetComponent<StackComponent>(out var stack))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<StackComponent?>(droppedEnt.Uid, out var stack))
                     EntitySystem.Get<StackSystem>().SetCount(droppedEnt.Uid,1, stack);
             }
 

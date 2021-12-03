@@ -34,7 +34,7 @@ namespace Content.Shared.Construction.Steps
 
         public bool EntityValid(IEntity entity, [NotNullWhen(true)] out SharedStackComponent? stack)
         {
-            if (entity.TryGetComponent(out SharedStackComponent? otherStack) && otherStack.StackTypeId.Equals(MaterialPrototypeId) && otherStack.Count >= Amount)
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out SharedStackComponent? otherStack) && otherStack.StackTypeId.Equals(MaterialPrototypeId) && otherStack.Count >= Amount)
                 stack = otherStack;
             else
                 stack = null;

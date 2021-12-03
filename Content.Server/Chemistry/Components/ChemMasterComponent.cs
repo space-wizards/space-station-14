@@ -51,7 +51,7 @@ namespace Content.Server.Chemistry.Components
         private bool _bufferModeTransfer = true;
 
         [ViewVariables]
-        private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
+        private bool Powered => !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         [ViewVariables]
         private Solution BufferSolution => _bufferSolution ??= EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner.Uid, SolutionName);
@@ -183,7 +183,7 @@ namespace Content.Server.Chemistry.Components
         private ChemMasterBoundUserInterfaceState GetUserInterfaceState()
         {
             var beaker = BeakerSlot.Item;
-            if (beaker is null || !beaker.TryGetComponent(out FitsInDispenserComponent? fits) ||
+            if (beaker is null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(beaker.Uid, out FitsInDispenserComponent? fits) ||
                 !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(beaker.Uid, fits.Solution, out var beakerSolution))
             {
                 return new ChemMasterBoundUserInterfaceState(Powered, false, FixedPoint2.New(0), FixedPoint2.New(0),
@@ -208,7 +208,7 @@ namespace Content.Server.Chemistry.Components
             if (!BeakerSlot.HasItem && _bufferModeTransfer) return;
             var beaker = BeakerSlot.Item;
 
-            if (beaker is null || !beaker.TryGetComponent(out FitsInDispenserComponent? fits) ||
+            if (beaker is null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(beaker.Uid, out FitsInDispenserComponent? fits) ||
                 !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(beaker.Uid, fits.Solution, out var beakerSolution))
                 return;
 
@@ -316,8 +316,8 @@ namespace Content.Server.Chemistry.Components
                     EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(bottle.Uid, bottleSolution, bufferSolution);
 
                     //Try to give them the bottle
-                    if (user.TryGetComponent<HandsComponent>(out var hands) &&
-                        bottle.TryGetComponent<ItemComponent>(out var item))
+                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent<HandsComponent?>(user.Uid, out var hands) &&
+                        IoCManager.Resolve<IEntityManager>().TryGetComponent<ItemComponent?>(bottle.Uid, out var item))
                     {
                         if (hands.CanPutInHand(item))
                         {
@@ -357,15 +357,15 @@ namespace Content.Server.Chemistry.Components
                     EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(pill.Uid, pillSolution, bufferSolution);
 
                     //Change pill Sprite component state
-                    if (!pill.TryGetComponent(out SpriteComponent? sprite))
+                    if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(pill.Uid, out SpriteComponent? sprite))
                     {
                         return;
                     }
                     sprite?.LayerSetState(0, "pill" + _pillType);
 
                     //Try to give them the bottle
-                    if (user.TryGetComponent<HandsComponent>(out var hands) &&
-                        pill.TryGetComponent<ItemComponent>(out var item))
+                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent<HandsComponent?>(user.Uid, out var hands) &&
+                        IoCManager.Resolve<IEntityManager>().TryGetComponent<ItemComponent?>(pill.Uid, out var item))
                     {
                         if (hands.CanPutInHand(item))
                         {
@@ -393,12 +393,12 @@ namespace Content.Server.Chemistry.Components
         /// <param name="args">Data relevant to the event such as the actor which triggered it.</param>
         void IActivate.Activate(ActivateEventArgs args)
         {
-            if (!args.User.TryGetComponent(out ActorComponent? actor))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User.Uid, out ActorComponent? actor))
             {
                 return;
             }
 
-            if (!args.User.TryGetComponent(out HandsComponent? hands))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User.Uid, out HandsComponent? hands))
             {
                 Owner.PopupMessage(args.User, Loc.GetString("chem-master-component-activate-no-hands"));
                 return;

@@ -4,6 +4,7 @@ using Content.Server.Shuttles;
 using Content.Server.Shuttles.Components;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
@@ -30,8 +31,8 @@ namespace Content.IntegrationTests.Tests
                 var grid = mapMan.CreateGrid(mapId);
                 gridEnt = entMan.GetEntity(grid.GridEntityId);
 
-                Assert.That(gridEnt.TryGetComponent(out ShuttleComponent? shuttleComponent));
-                Assert.That(gridEnt.TryGetComponent(out PhysicsComponent? physicsComponent));
+                Assert.That(IoCManager.Resolve<IEntityManager>().TryGetComponent(gridEnt.Uid, out ShuttleComponent? shuttleComponent));
+                Assert.That(IoCManager.Resolve<IEntityManager>().TryGetComponent(gridEnt.Uid, out PhysicsComponent? physicsComponent));
                 Assert.That(physicsComponent!.BodyType, Is.EqualTo(BodyType.Dynamic));
                 Assert.That(gridEnt.Transform.LocalPosition, Is.EqualTo(Vector2.Zero));
                 physicsComponent.ApplyLinearImpulse(Vector2.One);

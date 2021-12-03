@@ -68,7 +68,7 @@ namespace Content.Server.Kitchen.Components
         /// </summary>
         [ViewVariables] private uint _currentCookTimerTime = 1;
 
-        private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
+        private bool Powered => !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         private bool HasContents => EntitySystem.Get<SolutionContainerSystem>()
                                         .TryGetSolution(Owner.Uid, SolutionName, out var solution) &&
@@ -206,7 +206,7 @@ namespace Content.Server.Kitchen.Components
                 finalState = MicrowaveVisualState.Broken;
             }
 
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance))
             {
                 appearance.SetData(PowerDeviceVisuals.VisualState, finalState);
             }
@@ -220,7 +220,7 @@ namespace Content.Server.Kitchen.Components
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor) || !Powered)
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User.Uid, out ActorComponent? actor) || !Powered)
             {
                 return;
             }
@@ -251,7 +251,7 @@ namespace Content.Server.Kitchen.Components
                 return false;
             }
 
-            if (itemEntity.TryGetComponent<SolutionTransferComponent>(out var attackPourable))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SolutionTransferComponent?>(itemEntity.Uid, out var attackPourable))
             {
                 var solutionsSystem = EntitySystem.Get<SolutionContainerSystem>();
                 if (!solutionsSystem.TryGetDrainableSolution(itemEntity.Uid, out var attackSolution))
@@ -517,7 +517,7 @@ namespace Content.Server.Kitchen.Components
         {
             var headCount = 0;
 
-            if (victim.TryGetComponent<SharedBodyComponent>(out var body))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedBodyComponent?>(victim.Uid, out var body))
             {
                 var headSlots = body.GetSlotsOfType(BodyPartType.Head);
 

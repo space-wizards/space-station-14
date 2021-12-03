@@ -39,7 +39,7 @@ namespace Content.Shared.Pulling
                 return false;
             }
 
-            if (!pulled.TryGetComponent<IPhysBody>(out var _physics))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<IPhysBody?>(pulled.Uid, out var _physics))
             {
                 return false;
             }
@@ -59,7 +59,7 @@ namespace Content.Shared.Pulling
                 return false;
             }
 
-            if (puller.TryGetComponent<SharedBuckleComponent>(out var buckle))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedBuckleComponent?>(puller.Uid, out var buckle))
             {
                 // Prevent people pulling the chair they're on, etc.
                 if (buckle.Buckled && (buckle.LastEntityBuckledTo == pulled.Uid))
@@ -102,11 +102,11 @@ namespace Content.Shared.Pulling
 
         public bool TryStartPull(IEntity puller, IEntity pullable)
         {
-            if (!puller.TryGetComponent<SharedPullerComponent>(out var pullerComp))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedPullerComponent?>(puller.Uid, out var pullerComp))
             {
                 return false;
             }
-            if (!pullable.TryGetComponent<SharedPullableComponent>(out var pullableComp))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedPullableComponent?>(pullable.Uid, out var pullableComp))
             {
                 return false;
             }
@@ -126,12 +126,12 @@ namespace Content.Shared.Pulling
                 return false;
             }
 
-            if (!puller.Owner.TryGetComponent<PhysicsComponent>(out var pullerPhysics))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<PhysicsComponent?>(puller.Owner.Uid, out var pullerPhysics))
             {
                 return false;
             }
 
-            if (!pullable.Owner.TryGetComponent<PhysicsComponent>(out var pullablePhysics))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<PhysicsComponent?>(pullable.Owner.Uid, out var pullablePhysics))
             {
                 return false;
             }
@@ -143,7 +143,7 @@ namespace Content.Shared.Pulling
             var oldPullable = puller.Pulling;
             if (oldPullable != null)
             {
-                if (oldPullable.TryGetComponent<SharedPullableComponent>(out var oldPullableComp))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedPullableComponent?>(oldPullable.Uid, out var oldPullableComp))
                 {
                     if (!TryStopPull(oldPullableComp))
                     {

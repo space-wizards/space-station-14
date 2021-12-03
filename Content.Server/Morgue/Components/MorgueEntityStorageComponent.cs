@@ -124,7 +124,7 @@ namespace Content.Server.Morgue.Components
                 count++;
                 if (!hasMob && IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(entity.Uid))
                     hasMob = true;
-                if (!hasSoul && entity.TryGetComponent<ActorComponent>(out var actor) && actor.PlayerSession != null)
+                if (!hasSoul && IoCManager.Resolve<IEntityManager>().TryGetComponent<ActorComponent?>(entity.Uid, out var actor) && actor.PlayerSession != null)
                     hasSoul = true;
             }
             Appearance?.SetData(MorgueVisuals.HasContents, count > 0);

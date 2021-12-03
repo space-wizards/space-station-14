@@ -136,7 +136,7 @@ namespace Content.Client.Examine
             };
             vBox.AddChild(hBox);
 
-            if (entity.TryGetComponent(out ISpriteComponent? sprite))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out ISpriteComponent? sprite))
             {
                 hBox.AddChild(new SpriteView { Sprite = sprite, OverrideDirection = Direction.South });
             }

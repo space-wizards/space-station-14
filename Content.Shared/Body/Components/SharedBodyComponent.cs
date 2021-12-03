@@ -547,7 +547,7 @@ namespace Content.Shared.Body.Components
                     continue;
                 }
 
-                if (!entity.TryGetComponent(out SharedBodyPartComponent? part))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out SharedBodyPartComponent? part))
                 {
                     continue;
                 }

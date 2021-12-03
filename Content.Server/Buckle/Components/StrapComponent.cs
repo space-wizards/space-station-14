@@ -9,6 +9,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -148,7 +149,7 @@ namespace Content.Server.Buckle.Components
         {
             foreach (var entity in _buckledEntities.ToArray())
             {
-                if (entity.TryGetComponent<BuckleComponent>(out var buckle))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<BuckleComponent?>(entity.Uid, out var buckle))
                 {
                     buckle.TryUnbuckle(entity, true);
                 }
@@ -165,7 +166,7 @@ namespace Content.Server.Buckle.Components
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent<BuckleComponent>(out var buckle))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<BuckleComponent?>(eventArgs.User.Uid, out var buckle))
             {
                 return false;
             }
@@ -175,7 +176,7 @@ namespace Content.Server.Buckle.Components
 
         public override bool DragDropOn(DragDropEvent eventArgs)
         {
-            if (!eventArgs.Dragged.TryGetComponent(out BuckleComponent? buckleComponent)) return false;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Dragged.Uid, out BuckleComponent? buckleComponent)) return false;
             return buckleComponent.TryBuckle(eventArgs.User, Owner);
         }
     }

@@ -275,8 +275,8 @@ namespace Content.Server.NodeContainer.Nodes
         /// </summary>
         private void UpdateAppearance()
         {
-            if (!Owner.TryGetComponent(out AppearanceComponent? appearance)
-                || !Owner.TryGetComponent(out NodeContainerComponent? container))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance)
+                || !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out NodeContainerComponent? container))
                 return;
 
             var netConnectedDirections = PipeDirection.None;

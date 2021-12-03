@@ -52,7 +52,7 @@ namespace Content.Shared.Interaction
             }
             else
             {
-                if (user.TryGetComponent(out SharedBuckleComponent? buckle) && buckle.Buckled)
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out SharedBuckleComponent? buckle) && buckle.Buckled)
                 {
                     var suid = buckle.LastEntityBuckledTo;
                     if (suid != null)

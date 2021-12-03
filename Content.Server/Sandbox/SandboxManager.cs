@@ -124,19 +124,19 @@ namespace Content.Server.Sandbox
                 .EnumeratePrototypes<AccessLevelPrototype>()
                 .Select(p => p.ID).ToArray();
 
-            if (player.AttachedEntity.TryGetComponent(out InventoryComponent? inv)
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(player.AttachedEntity.Uid, out InventoryComponent? inv)
                 && inv.TryGetSlotItem(Slots.IDCARD, out ItemComponent? wornItem))
             {
                 if (IoCManager.Resolve<IEntityManager>().HasComponent<AccessComponent>(wornItem.Owner.Uid))
                 {
                     UpgradeId(wornItem.Owner);
                 }
-                else if (wornItem.Owner.TryGetComponent(out PDAComponent? pda))
+                else if (IoCManager.Resolve<IEntityManager>().TryGetComponent(wornItem.Owner.Uid, out PDAComponent? pda))
                 {
                     if (pda.ContainedID == null)
                     {
                         var newID = CreateFreshId();
-                        if (pda.Owner.TryGetComponent(out ItemSlotsComponent? itemSlots))
+                        if (IoCManager.Resolve<IEntityManager>().TryGetComponent(pda.Owner.Uid, out ItemSlotsComponent? itemSlots))
                         {
                             _entityManager.EntitySysManager.GetEntitySystem<ItemSlotsSystem>().
                                 TryInsert(wornItem.Owner.Uid, pda.IdSlot, newID);
@@ -148,10 +148,10 @@ namespace Content.Server.Sandbox
                     }
                 }
             }
-            else if (player.AttachedEntity.TryGetComponent<HandsComponent>(out var hands))
+            else if (IoCManager.Resolve<IEntityManager>().TryGetComponent<HandsComponent?>(player.AttachedEntity.Uid, out var hands))
             {
                 var card = CreateFreshId();
-                if (!player.AttachedEntity.TryGetComponent(out inv) || !inv.Equip(Slots.IDCARD, card))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(player.AttachedEntity.Uid, out inv) || !inv.Equip(Slots.IDCARD, card))
                 {
                     hands.PutInHandOrDrop(IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(card.Uid));
                 }
@@ -162,7 +162,7 @@ namespace Content.Server.Sandbox
                 var accessSystem = EntitySystem.Get<AccessSystem>();
                 accessSystem.TrySetTags(id.Uid, allAccess);
 
-                if (id.TryGetComponent(out SpriteComponent? sprite))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(id.Uid, out SpriteComponent? sprite))
                 {
                     sprite.LayerSetState(0, "gold");
                 }

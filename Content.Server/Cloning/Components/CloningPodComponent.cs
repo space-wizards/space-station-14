@@ -26,7 +26,7 @@ namespace Content.Server.Cloning.Components
         [Dependency] private readonly EuiManager _euiManager = null!;
 
         [ViewVariables]
-        public bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
+        public bool Powered => !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         [ViewVariables]
         public BoundUserInterface? UserInterface =>
@@ -70,7 +70,7 @@ namespace Content.Server.Cloning.Components
 
         private void UpdateAppearance()
         {
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance))
             {
                 appearance.SetData(CloningPodVisuals.Status, Status);
             }
@@ -108,9 +108,9 @@ namespace Content.Server.Cloning.Components
                     if (cloningSystem.ClonesWaitingForMind.TryGetValue(mind, out var cloneUid))
                     {
                         if (IoCManager.Resolve<IEntityManager>().TryGetEntity(cloneUid, out var clone) &&
-                            clone.TryGetComponent<MobStateComponent>(out var cloneState) &&
+                            IoCManager.Resolve<IEntityManager>().TryGetComponent<MobStateComponent?>(clone.Uid, out var cloneState) &&
                             !cloneState.IsDead() &&
-                            clone.TryGetComponent(out MindComponent? cloneMindComp) &&
+                            IoCManager.Resolve<IEntityManager>().TryGetComponent(clone.Uid, out MindComponent? cloneMindComp) &&
                             (cloneMindComp.Mind == null || cloneMindComp.Mind == mind))
                         {
                             obj.Session.AttachedEntity?.PopupMessageCursor(Loc.GetString("cloning-pod-component-msg-already-cloning"));
@@ -121,7 +121,7 @@ namespace Content.Server.Cloning.Components
                     }
 
                     if (mind.OwnedEntity != null &&
-                        mind.OwnedEntity.TryGetComponent<MobStateComponent>(out var state) &&
+                        IoCManager.Resolve<IEntityManager>().TryGetComponent<MobStateComponent?>(mind.OwnedEntity.Uid, out var state) &&
                         !state.IsDead())
                     {
                         obj.Session.AttachedEntity?.PopupMessageCursor(Loc.GetString("cloning-pod-component-msg-already-alive"));

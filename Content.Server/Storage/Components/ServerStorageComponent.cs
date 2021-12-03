@@ -143,13 +143,13 @@ namespace Content.Server.Storage.Components
         {
             EnsureInitialCalculated();
 
-            if (entity.TryGetComponent(out ServerStorageComponent? storage) &&
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out ServerStorageComponent? storage) &&
                 storage._storageCapacityMax >= _storageCapacityMax)
             {
                 return false;
             }
 
-            if (entity.TryGetComponent(out SharedItemComponent? store) &&
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out SharedItemComponent? store) &&
                 store.Size > _storageCapacityMax - _storageUsed)
             {
                 return false;
@@ -197,7 +197,7 @@ namespace Content.Server.Storage.Components
             Logger.DebugS(LoggerName, $"Storage (UID {Owner.Uid}) had entity (UID {message.Entity.Uid}) inserted into it.");
 
             var size = 0;
-            if (message.Entity.TryGetComponent(out SharedItemComponent? storable))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(message.Entity.Uid, out SharedItemComponent? storable))
                 size = storable.Size;
 
             _storageUsed += size;
@@ -239,7 +239,7 @@ namespace Content.Server.Storage.Components
         {
             EnsureInitialCalculated();
 
-            if (!player.TryGetComponent(out HandsComponent? hands) ||
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(player.Uid, out HandsComponent? hands) ||
                 hands.GetActiveHand == null)
             {
                 return false;
@@ -473,7 +473,7 @@ namespace Content.Server.Storage.Components
                         break;
                     }
 
-                    if (!entity.TryGetComponent(out ItemComponent? item) || !player.TryGetComponent(out HandsComponent? hands))
+                    if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out ItemComponent? item) || !IoCManager.Resolve<IEntityManager>().TryGetComponent(player.Uid, out HandsComponent? hands))
                     {
                         break;
                     }

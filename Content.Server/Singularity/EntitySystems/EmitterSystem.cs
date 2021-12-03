@@ -44,7 +44,7 @@ namespace Content.Server.Singularity.EntitySystems
                 return;
             }
 
-            if (component.Owner.TryGetComponent(out PhysicsComponent? phys) && phys.BodyType == BodyType.Static)
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out PhysicsComponent? phys) && phys.BodyType == BodyType.Static)
             {
                 if (!component.IsOn)
                 {
@@ -168,7 +168,7 @@ namespace Content.Server.Singularity.EntitySystems
         {
             var projectile = IoCManager.Resolve<IEntityManager>().SpawnEntity(component.BoltType, component.Owner.Transform.Coordinates);
 
-            if (!projectile.TryGetComponent<PhysicsComponent>(out var physicsComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<PhysicsComponent?>(projectile.Uid, out var physicsComponent))
             {
                 Logger.Error("Emitter tried firing a bolt, but it was spawned without a PhysicsComponent");
                 return;
@@ -176,7 +176,7 @@ namespace Content.Server.Singularity.EntitySystems
 
             physicsComponent.BodyStatus = BodyStatus.InAir;
 
-            if (!projectile.TryGetComponent<ProjectileComponent>(out var projectileComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ProjectileComponent?>(projectile.Uid, out var projectileComponent))
             {
                 Logger.Error("Emitter tried firing a bolt, but it was spawned without a ProjectileComponent");
                 return;

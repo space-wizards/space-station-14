@@ -121,7 +121,7 @@ namespace Content.Server.Stunnable
 
         private void StunEntity(IEntity entity, StunbatonComponent comp)
         {
-            if (!entity.TryGetComponent(out StatusEffectsComponent? status) || !comp.Activated) return;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out StatusEffectsComponent? status) || !comp.Activated) return;
 
             // TODO: Make slowdown inflicted customizable.
 
@@ -145,7 +145,7 @@ namespace Content.Server.Stunnable
             _jitterSystem.DoJitter(entity.Uid, slowdownTime, status:status);
             _stutteringSystem.DoStutter(entity.Uid, slowdownTime, status);
 
-            if (!comp.Owner.TryGetComponent<PowerCellSlotComponent>(out var slot) || slot.Cell == null || !(slot.Cell.CurrentCharge < comp.EnergyPerUse))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<PowerCellSlotComponent?>(comp.Owner.Uid, out var slot) || slot.Cell == null || !(slot.Cell.CurrentCharge < comp.EnergyPerUse))
                 return;
 
             SoundSystem.Play(Filter.Pvs(comp.Owner), comp.SparksSound.GetSound(), comp.Owner, AudioHelpers.WithVariation(0.25f));
@@ -159,8 +159,8 @@ namespace Content.Server.Stunnable
                 return;
             }
 
-            if (!comp.Owner.TryGetComponent<SpriteComponent>(out var sprite) ||
-                !comp.Owner.TryGetComponent<ItemComponent>(out var item)) return;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(comp.Owner.Uid, out var sprite) ||
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent<ItemComponent?>(comp.Owner.Uid, out var item)) return;
 
             SoundSystem.Play(Filter.Pvs(comp.Owner), comp.SparksSound.GetSound(), comp.Owner, AudioHelpers.WithVariation(0.25f));
             item.EquippedPrefix = "off";
@@ -176,12 +176,12 @@ namespace Content.Server.Stunnable
                 return;
             }
 
-            if (!comp.Owner.TryGetComponent<SpriteComponent>(out var sprite) ||
-                !comp.Owner.TryGetComponent<ItemComponent>(out var item))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(comp.Owner.Uid, out var sprite) ||
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent<ItemComponent?>(comp.Owner.Uid, out var item))
                 return;
 
             var playerFilter = Filter.Pvs(comp.Owner);
-            if (!comp.Owner.TryGetComponent<PowerCellSlotComponent>(out var slot))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<PowerCellSlotComponent?>(comp.Owner.Uid, out var slot))
                 return;
 
             if (slot.Cell == null)

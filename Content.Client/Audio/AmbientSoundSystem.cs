@@ -136,7 +136,7 @@ namespace Content.Client.Audio
             foreach (var entity in _lookup.GetEntitiesInRange(coordinates, _maxAmbientRange,
                 LookupFlags.Approximate | LookupFlags.IncludeAnchored))
             {
-                if (!entity.TryGetComponent(out AmbientSoundComponent? ambientComp) ||
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out AmbientSoundComponent? ambientComp) ||
                     _playingSounds.ContainsKey(ambientComp) ||
                     !ambientComp.Enabled ||
                     // We'll also do this crude distance check because it's what we're doing in the active loop above.

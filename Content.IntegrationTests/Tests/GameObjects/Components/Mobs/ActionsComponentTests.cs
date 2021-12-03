@@ -251,7 +251,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                 // spawn and give them an item that has actions
                 serverFlashlight = serverEntManager.SpawnEntity("TestFlashlight",
                     new EntityCoordinates(serverPlayerEnt.Uid, (0, 0)));
-                Assert.That(serverFlashlight.TryGetComponent<ItemActionsComponent>(out var itemActions));
+                Assert.That(IoCManager.Resolve<IEntityManager>().TryGetComponent<ItemActionsComponent?>(serverFlashlight.Uid, out var itemActions));
                 // we expect this only to have a toggle light action initially
                 var actionConfigs = itemActions.ActionConfigs.ToList();
                 Assert.That(actionConfigs.Count == 1);

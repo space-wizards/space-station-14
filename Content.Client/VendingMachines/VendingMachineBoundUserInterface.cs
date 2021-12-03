@@ -2,6 +2,7 @@
 using Content.Shared.VendingMachines;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.VendingMachines.SharedVendingMachineComponent;
 
@@ -22,7 +23,7 @@ namespace Content.Client.VendingMachines
         {
             base.Open();
 
-            if (!Owner.Owner.TryGetComponent(out SharedVendingMachineComponent? vendingMachine))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Owner.Uid, out SharedVendingMachineComponent? vendingMachine))
             {
                 return;
             }

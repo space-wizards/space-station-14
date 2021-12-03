@@ -4,6 +4,7 @@ using Content.Shared.Singularity.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -35,7 +36,7 @@ namespace Content.Client.ParticleAccelerator
         public override void InitializeEntity(IEntity entity)
         {
             base.InitializeEntity(entity);
-            if (!entity.TryGetComponent<ISpriteComponent>(out var sprite))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ISpriteComponent?>(entity.Uid, out var sprite))
             {
                 throw new EntityCreationException("No sprite component found in entity that has ParticleAcceleratorPartVisualizer");
             }

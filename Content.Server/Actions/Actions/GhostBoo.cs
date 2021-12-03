@@ -23,7 +23,7 @@ namespace Content.Server.Actions.Actions
 
         public void DoInstantAction(InstantActionEventArgs args)
         {
-            if (!args.Performer.TryGetComponent<SharedActionsComponent>(out var actions)) return;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedActionsComponent?>(args.Performer.Uid, out var actions)) return;
 
             // find all IGhostBooAffected nearby and do boo on them
             var ents = IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(args.Performer, _radius);

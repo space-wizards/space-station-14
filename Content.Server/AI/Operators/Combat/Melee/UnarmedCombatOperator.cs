@@ -29,7 +29,7 @@ namespace Content.Server.AI.Operators.Combat.Melee
                 return true;
             }
 
-            if (!_owner.TryGetComponent(out CombatModeComponent? combatModeComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(_owner.Uid, out CombatModeComponent? combatModeComponent))
             {
                 return false;
             }
@@ -39,7 +39,7 @@ namespace Content.Server.AI.Operators.Combat.Melee
                 combatModeComponent.IsInCombatMode = true;
             }
 
-            if (_owner.TryGetComponent(out UnarmedCombatComponent? unarmedCombatComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(_owner.Uid, out UnarmedCombatComponent? unarmedCombatComponent))
             {
                 _unarmedCombat = unarmedCombatComponent;
             }
@@ -56,7 +56,7 @@ namespace Content.Server.AI.Operators.Combat.Melee
             if (!base.Shutdown(outcome))
                 return false;
 
-            if (_owner.TryGetComponent(out CombatModeComponent? combatModeComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(_owner.Uid, out CombatModeComponent? combatModeComponent))
             {
                 combatModeComponent.IsInCombatMode = false;
             }

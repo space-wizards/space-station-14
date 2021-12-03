@@ -3,7 +3,9 @@ using Content.Shared.Pulling;
 using Content.Shared.Pulling.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Input.Binding;
+using Robust.Shared.IoC;
 using Robust.Shared.Players;
 
 namespace Content.Server.Pulling
@@ -39,7 +41,7 @@ namespace Content.Server.Pulling
                 return;
             }
 
-            if (!pulled.TryGetComponent(out SharedPullableComponent? pullable))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(pulled.Uid, out SharedPullableComponent? pullable))
             {
                 return;
             }

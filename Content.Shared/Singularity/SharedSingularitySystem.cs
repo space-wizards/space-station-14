@@ -68,12 +68,12 @@ namespace Content.Shared.Singularity
 
             singularity.Level = value;
 
-            if (singularity.Owner.TryGetComponent(out SharedRadiationPulseComponent? pulse))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(singularity.Owner.Uid, out SharedRadiationPulseComponent? pulse))
             {
                 pulse.RadsPerSecond = 10 * value;
             }
 
-            if (singularity.Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(singularity.Owner.Uid, out AppearanceComponent? appearance))
             {
                 appearance.SetData(SingularityVisuals.Level, value);
             }
@@ -83,7 +83,7 @@ namespace Content.Shared.Singularity
                 circle.Radius = value - 0.5f;
             }
 
-            if (singularity.Owner.TryGetComponent(out SingularityDistortionComponent? distortion))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(singularity.Owner.Uid, out SingularityDistortionComponent? distortion))
             {
                 distortion.Falloff = GetFalloff(value);
                 distortion.Intensity = GetIntensity(value);

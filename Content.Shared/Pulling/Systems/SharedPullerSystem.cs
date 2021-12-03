@@ -48,7 +48,7 @@ namespace Content.Shared.Pulling.Systems
             if (args.Puller.OwnerUid != uid)
                 return;
 
-            if (component.Owner.TryGetComponent(out SharedAlertsComponent? alerts))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out SharedAlertsComponent? alerts))
                 alerts.ShowAlert(AlertType.Pulling);
 
             RefreshMovementSpeed(component);
@@ -62,7 +62,7 @@ namespace Content.Shared.Pulling.Systems
             if (args.Puller.OwnerUid != uid)
                 return;
 
-            if (component.Owner.TryGetComponent(out SharedAlertsComponent? alerts))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out SharedAlertsComponent? alerts))
                 alerts.ClearAlert(AlertType.Pulling);
 
             RefreshMovementSpeed(component);

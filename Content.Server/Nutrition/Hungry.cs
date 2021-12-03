@@ -4,6 +4,8 @@ using Content.Shared.Administration;
 using Content.Shared.Nutrition.Components;
 using Robust.Server.Player;
 using Robust.Shared.Console;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Nutrition
 {
@@ -29,7 +31,7 @@ namespace Content.Server.Nutrition
                 return;
             }
 
-            if (!player.AttachedEntity.TryGetComponent(out HungerComponent? hunger))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(player.AttachedEntity.Uid, out HungerComponent? hunger))
             {
                 shell.WriteLine($"Your entity does not have a {nameof(HungerComponent)} component.");
                 return;

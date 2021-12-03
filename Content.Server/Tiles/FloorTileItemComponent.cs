@@ -58,7 +58,7 @@ namespace Content.Server.Tiles
             if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
                 return true;
 
-            if (!Owner.TryGetComponent(out StackComponent? stack))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out StackComponent? stack))
                 return true;
 
             var mapManager = IoCManager.Resolve<IMapManager>();

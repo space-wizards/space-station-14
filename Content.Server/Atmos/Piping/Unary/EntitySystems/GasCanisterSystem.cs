@@ -244,7 +244,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnCanisterActivate(EntityUid uid, GasCanisterComponent component, ActivateInWorldEvent args)
         {
-            if (!args.User.TryGetComponent(out ActorComponent? actor))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User.Uid, out ActorComponent? actor))
                 return;
 
             _userInterfaceSystem.GetUiOrNull(uid, GasCanisterUiKey.Key)?.Open(actor.PlayerSession);
@@ -254,7 +254,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnCanisterInteractHand(EntityUid uid, GasCanisterComponent component, InteractHandEvent args)
         {
-            if (!args.User.TryGetComponent(out ActorComponent? actor))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User.Uid, out ActorComponent? actor))
                 return;
 
             _userInterfaceSystem.GetUiOrNull(uid, GasCanisterUiKey.Key)?.Open(actor.PlayerSession);
@@ -271,11 +271,11 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return;
 
             // Check the used item is valid...
-            if (!args.Used.TryGetComponent(out GasTankComponent? _))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.Used.Uid, out GasTankComponent? _))
                 return;
 
             // Check the user has hands.
-            if (!args.User.TryGetComponent(out HandsComponent? hands))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User.Uid, out HandsComponent? hands))
                 return;
 
             if (!args.User.InRangeUnobstructed(canister, SharedInteractionSystem.InteractionRange, popup: true))

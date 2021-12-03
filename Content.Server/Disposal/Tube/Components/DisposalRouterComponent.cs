@@ -36,7 +36,7 @@ namespace Content.Server.Disposal.Tube.Components
 
         [ViewVariables]
         public bool Anchored =>
-            !Owner.TryGetComponent(out IPhysBody? physics) ||
+            !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out IPhysBody? physics) ||
             physics.BodyType == BodyType.Static;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(DisposalRouterUiKey.Key);
@@ -160,12 +160,12 @@ namespace Content.Server.Disposal.Tube.Components
         /// <param name="args">Data relevant to the event such as the actor which triggered it.</param>
         void IActivate.Activate(ActivateEventArgs args)
         {
-            if (!args.User.TryGetComponent(out ActorComponent? actor))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User.Uid, out ActorComponent? actor))
             {
                 return;
             }
 
-            if (!args.User.TryGetComponent(out HandsComponent? hands))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User.Uid, out HandsComponent? hands))
             {
                 Owner.PopupMessage(args.User, Loc.GetString("disposal-router-window-tag-input-activate-no-hands"));
                 return;

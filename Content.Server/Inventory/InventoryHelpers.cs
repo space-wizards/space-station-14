@@ -38,7 +38,7 @@ namespace Content.Server.Inventory
             }
 
             // If this doesn't have an item component, then we can't do anything with it.
-            if (!item.TryGetComponent(out ItemComponent? itemComp))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(item.Uid, out ItemComponent? itemComp))
                 return DeleteItem();
 
             // We finally try to equip the item, otherwise we delete it.

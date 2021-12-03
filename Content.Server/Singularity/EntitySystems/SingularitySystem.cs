@@ -114,7 +114,7 @@ namespace Content.Server.Singularity.EntitySystems
             if (CanDestroy(component, entity)) return;
 
             // Singularity priority management / etc.
-            if (entity.TryGetComponent<ServerSingularityComponent>(out var otherSingulo))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<ServerSingularityComponent?>(entity.Uid, out var otherSingulo))
             {
                 // MERGE
                 if (!otherSingulo.BeingDeletedByAnotherSingularity)
@@ -127,7 +127,7 @@ namespace Content.Server.Singularity.EntitySystems
 
             IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(entity.Uid);
 
-            if (entity.TryGetComponent<SinguloFoodComponent>(out var singuloFood))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SinguloFoodComponent?>(entity.Uid, out var singuloFood))
                 component.Energy += singuloFood.Energy;
             else
                 component.Energy++;
@@ -166,7 +166,7 @@ namespace Content.Server.Singularity.EntitySystems
             {
                 // I tried having it so level 6 can de-anchor. BAD IDEA, MASSIVE LAG.
                 if (entity == component.Owner ||
-                    !entity.TryGetComponent<PhysicsComponent>(out var collidableComponent) ||
+                    !IoCManager.Resolve<IEntityManager>().TryGetComponent<PhysicsComponent?>(entity.Uid, out var collidableComponent) ||
                     collidableComponent.BodyType == BodyType.Static) continue;
 
                 if (!CanPull(entity)) continue;

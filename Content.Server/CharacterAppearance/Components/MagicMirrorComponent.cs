@@ -48,7 +48,7 @@ namespace Content.Server.CharacterAppearance.Components
                 return;
             }
 
-            if (!obj.Session.AttachedEntity.TryGetComponent(out HumanoidAppearanceComponent? looks))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(obj.Session.AttachedEntity.Uid, out HumanoidAppearanceComponent? looks))
             {
                 return;
             }
@@ -96,12 +96,12 @@ namespace Content.Server.CharacterAppearance.Components
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User.Uid, out ActorComponent? actor))
             {
                 return;
             }
 
-            if (!eventArgs.User.TryGetComponent(out HumanoidAppearanceComponent? looks))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User.Uid, out HumanoidAppearanceComponent? looks))
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("magic-mirror-component-activate-user-has-no-hair"));
                 return;

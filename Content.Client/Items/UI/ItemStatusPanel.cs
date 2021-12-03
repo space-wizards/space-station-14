@@ -156,7 +156,7 @@ namespace Content.Client.Items.UI
             if (_entity == null)
                 return;
 
-            if (_entity.TryGetComponent(out HandVirtualItemComponent? virtualItem)
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(_entity.Uid, out HandVirtualItemComponent? virtualItem)
                 && _entityManager.TryGetEntity(virtualItem.BlockingEntity, out var blockEnt))
             {
                 _itemNameLabel.Text = blockEnt.Name;

@@ -39,7 +39,7 @@ namespace Content.Server.Rotatable
 
             // Check if the object is anchored, and whether we are still allowed to rotate it.
             if (!component.RotateWhileAnchored &&
-                component.Owner.TryGetComponent(out IPhysBody? physics) &&
+                IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out IPhysBody? physics) &&
                 physics.BodyType == BodyType.Static)
                 return;
 
@@ -76,7 +76,7 @@ namespace Content.Server.Rotatable
         /// </summary>
         public static void TryFlip(FlippableComponent component, IEntity user)
         {
-            if (component.Owner.TryGetComponent(out IPhysBody? physics) &&
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out IPhysBody? physics) &&
                 physics.BodyType == BodyType.Static)
             {
                 component.Owner.PopupMessage(user, Loc.GetString("flippable-component-try-flip-is-stuck"));

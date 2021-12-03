@@ -5,6 +5,7 @@ using Content.Shared.Physics;
 using Content.Shared.Singularity.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
@@ -113,11 +114,11 @@ namespace Content.Server.Singularity.Components
                 }
                 if(closestResult == null) continue;
                 var ent = closestResult.Value.HitEntity;
-                if (!ent.TryGetComponent<ContainmentFieldGeneratorComponent>(out var fieldGeneratorComponent) ||
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ContainmentFieldGeneratorComponent?>(ent.Uid, out var fieldGeneratorComponent) ||
                     fieldGeneratorComponent.Owner == Owner ||
                     !fieldGeneratorComponent.HasFreeConnections() ||
                     IsConnectedWith(fieldGeneratorComponent) ||
-                    !ent.TryGetComponent<PhysicsComponent>(out var collidableComponent) ||
+                    !IoCManager.Resolve<IEntityManager>().TryGetComponent<PhysicsComponent?>(ent.Uid, out var collidableComponent) ||
                     collidableComponent.BodyType != BodyType.Static)
                 {
                     continue;

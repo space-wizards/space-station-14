@@ -108,7 +108,7 @@ namespace Content.Client.StationEvents
             {
                 if (_entityManager.TryGetEntity(activePulseUid, out var pulseEntity) &&
                     PulseQualifies(pulseEntity, currentEyeLoc) &&
-                    pulseEntity.TryGetComponent<RadiationPulseComponent>(out var pulse))
+                    IoCManager.Resolve<IEntityManager>().TryGetComponent<RadiationPulseComponent?>(pulseEntity.Uid, out var pulse))
                 {
                     var shaderInstance = _pulses[activePulseUid];
                     shaderInstance.instance.CurrentMapCoords = pulseEntity.Transform.MapPosition.Position;

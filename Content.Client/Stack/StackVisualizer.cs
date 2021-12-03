@@ -5,6 +5,7 @@ using Content.Shared.Stacks;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
@@ -83,7 +84,7 @@ namespace Content.Client.Stack
 
             if (_isComposite
                 && _spriteLayers.Count > 0
-                && entity.TryGetComponent<ISpriteComponent>(out var spriteComponent))
+                && IoCManager.Resolve<IEntityManager>().TryGetComponent<ISpriteComponent?>(entity.Uid, out var spriteComponent))
             {
                 var spritePath = _spritePath ?? spriteComponent.BaseRSI!.Path!;
 

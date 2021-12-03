@@ -9,6 +9,7 @@ using Content.Shared.Examine;
 using Content.Shared.MobState.Components;
 using Content.Shared.Suspicion;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Players;
 using Robust.Shared.Utility;
@@ -59,7 +60,7 @@ namespace Content.Server.Suspicion
 
         public bool IsDead()
         {
-            return Owner.TryGetComponent(out MobStateComponent? state) &&
+            return IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out MobStateComponent? state) &&
                    state.IsDead();
         }
 
@@ -75,7 +76,7 @@ namespace Content.Server.Suspicion
 
         public void SyncRoles()
         {
-            if (!Owner.TryGetComponent(out MindComponent? mind) ||
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out MindComponent? mind) ||
                 !mind.HasMind)
             {
                 return;

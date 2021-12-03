@@ -82,7 +82,7 @@ namespace Content.Server.Physics.Controllers
                     continue;
                 }
 
-                if (!pullable.Owner.TryGetComponent<PhysicsComponent>(out var physics) ||
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<PhysicsComponent?>(pullable.Owner.Uid, out var physics) ||
                     physics.BodyType == BodyType.Static ||
                     movingTo.MapId != pullable.Owner.Transform.MapID)
                 {
@@ -119,7 +119,7 @@ namespace Content.Server.Physics.Controllers
                 var impulse = accel * physics.Mass * frameTime;
                 physics.ApplyLinearImpulse(impulse);
 
-                if (puller.TryGetComponent<PhysicsComponent>(out var pullerPhysics))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<PhysicsComponent?>(puller.Uid, out var pullerPhysics))
                 {
                     pullerPhysics.WakeBody();
                     pullerPhysics.ApplyLinearImpulse(-impulse);

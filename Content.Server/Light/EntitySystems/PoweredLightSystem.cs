@@ -340,7 +340,7 @@ namespace Content.Server.Light.EntitySystems
 
             light.IsBlinking = isNowBlinking;
 
-            if (!light.Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(light.Owner.Uid, out AppearanceComponent? appearance))
                 return;
             appearance.SetData(PoweredLightVisuals.Blinking, isNowBlinking);
         }

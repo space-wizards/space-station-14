@@ -60,7 +60,7 @@ namespace Content.Server.Body.Components
                     // a crash within the character preview menu in the lobby
                     var entity = IoCManager.Resolve<IEntityManager>().SpawnEntity(preset.PartIDs[slot.Id], Owner.Transform.MapPosition);
 
-                    if (!entity.TryGetComponent(out SharedBodyPartComponent? part))
+                    if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out SharedBodyPartComponent? part))
                     {
                         Logger.Error($"Entity {slot.Id} does not have a {nameof(SharedBodyPartComponent)} component.");
                         continue;
@@ -90,7 +90,7 @@ namespace Content.Server.Body.Components
 
             SoundSystem.Play(Filter.Pvs(Owner), _gibSound.GetSound(), Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.025f));
 
-            if (Owner.TryGetComponent(out ContainerManagerComponent? container))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ContainerManagerComponent? container))
             {
                 foreach (var cont in container.GetAllContainers())
                 {

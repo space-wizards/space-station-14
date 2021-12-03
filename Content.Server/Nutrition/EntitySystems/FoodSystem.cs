@@ -207,7 +207,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 EntityManager.DeleteEntity(component.OwnerUid);
 
                 // Put the trash in the user's hand
-                if (finisher.TryGetComponent(out ItemComponent? item) &&
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(finisher.Uid, out ItemComponent? item) &&
                     handsComponent.CanPutInHand(item))
                 {
                     handsComponent.PutInHand(item);
@@ -420,7 +420,7 @@ namespace Content.Server.Nutrition.EntitySystems
             foreach (var item in hands.GetAllHeldItems())
             {
                 // Is utensil?
-                if (!item.Owner.TryGetComponent(out UtensilComponent? utensil))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(item.Owner.Uid, out UtensilComponent? utensil))
                     continue;
 
                 if ((utensil.Types & component.Utensil) != 0 && // Acceptable type?

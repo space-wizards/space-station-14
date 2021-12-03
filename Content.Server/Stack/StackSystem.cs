@@ -89,7 +89,7 @@ namespace Content.Server.Stack
             if (args.Handled)
                 return;
 
-            if (!args.Used.TryGetComponent<StackComponent>(out var otherStack))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<StackComponent?>(args.Used.Uid, out var otherStack))
                 return;
 
             if (!otherStack.StackTypeId.Equals(stack.StackTypeId))

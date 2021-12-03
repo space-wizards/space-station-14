@@ -39,7 +39,7 @@ namespace Content.Client.Weapons.Melee.Components
                 offset *= (ResetTime - _time) / ResetTime;
             }
 
-            if (Owner.TryGetComponent(out ISpriteComponent? spriteComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ISpriteComponent? spriteComponent))
             {
                 spriteComponent.Offset = offset;
             }

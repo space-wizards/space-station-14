@@ -64,7 +64,7 @@ namespace Content.Server.Ghost
             visibility.Layer |= (int) VisibilityFlags.Ghost;
             visibility.Layer &= ~(int) VisibilityFlags.Normal;
 
-            if (component.Owner.TryGetComponent(out EyeComponent? eye))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out EyeComponent? eye))
             {
                 eye.VisibilityMask |= (uint) VisibilityFlags.Ghost;
             }
@@ -78,14 +78,14 @@ namespace Content.Server.Ghost
             if ((!IoCManager.Resolve<IEntityManager>().EntityExists(component.Owner.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(component.Owner.Uid).EntityLifeStage) < EntityLifeStage.Terminating)
             {
                 // Entity can't be seen by ghosts anymore.
-                if (component.Owner.TryGetComponent(out VisibilityComponent? visibility))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out VisibilityComponent? visibility))
                 {
                     visibility.Layer &= ~(int) VisibilityFlags.Ghost;
                     visibility.Layer |= (int) VisibilityFlags.Normal;
                 }
 
                 // Entity can't see ghosts anymore.
-                if (component.Owner.TryGetComponent(out EyeComponent? eye))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out EyeComponent? eye))
                 {
                     eye.VisibilityMask &= ~(uint) VisibilityFlags.Ghost;
                 }
@@ -132,9 +132,9 @@ namespace Content.Server.Ghost
             var entity = args.SenderSession.AttachedEntity;
 
             if (entity == null ||
-                !entity.TryGetComponent(out GhostComponent? ghost) ||
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out GhostComponent? ghost) ||
                 !ghost.CanReturnToBody ||
-                !entity.TryGetComponent(out ActorComponent? actor))
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out ActorComponent? actor))
             {
                 Logger.Warning($"User {args.SenderSession.Name} sent an invalid {nameof(GhostReturnToBodyRequest)}");
                 return;
@@ -146,7 +146,7 @@ namespace Content.Server.Ghost
         private void OnGhostWarpToLocationRequest(GhostWarpToLocationRequestEvent msg, EntitySessionEventArgs args)
         {
             if (args.SenderSession.AttachedEntity == null ||
-                !args.SenderSession.AttachedEntity.TryGetComponent(out GhostComponent? ghost))
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(args.SenderSession.AttachedEntity.Uid, out GhostComponent? ghost))
             {
                 Logger.Warning($"User {args.SenderSession.Name} tried to warp to {msg.Name} without being a ghost.");
                 return;
@@ -163,7 +163,7 @@ namespace Content.Server.Ghost
         private void OnGhostWarpToTargetRequest(GhostWarpToTargetRequestEvent msg, EntitySessionEventArgs args)
         {
             if (args.SenderSession.AttachedEntity == null ||
-                !args.SenderSession.AttachedEntity.TryGetComponent(out GhostComponent? ghost))
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(args.SenderSession.AttachedEntity.Uid, out GhostComponent? ghost))
             {
                 Logger.Warning($"User {args.SenderSession.Name} tried to warp to {msg.Target} without being a ghost.");
                 return;
@@ -185,7 +185,7 @@ namespace Content.Server.Ghost
                 || (!IoCManager.Resolve<IEntityManager>().EntityExists(entity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityLifeStage) == EntityLifeStage.Terminating)
                 return;
 
-            if (entity.TryGetComponent<MindComponent>(out var mind))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<MindComponent?>(entity.Uid, out var mind))
                 mind.GhostOnShutdown = false;
             IoCManager.Resolve<IEntityManager>().DeleteEntity(entity.Uid);
         }

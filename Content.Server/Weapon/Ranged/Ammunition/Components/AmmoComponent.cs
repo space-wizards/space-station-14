@@ -117,7 +117,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             }
 
             _spent = true;
-            if (Owner.TryGetComponent(out AppearanceComponent? appearanceComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearanceComponent))
             {
                 appearanceComponent.SetData(AmmoVisuals.Spent, true);
             }

@@ -4,6 +4,7 @@ using Content.Shared.Construction;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -28,7 +29,7 @@ namespace Content.Server.Construction.Conditions
         {
             var entity = args.Examined;
 
-            if (!entity.TryGetComponent(out ServerDoorComponent? door)) return false;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out ServerDoorComponent? door)) return false;
 
             if (door.IsWeldedShut != Welded)
             {

@@ -167,22 +167,22 @@ namespace Content.Server.Light.Components
 
         private void SetState(bool on)
         {
-            if (Owner.TryGetComponent(out SpriteComponent? sprite))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out SpriteComponent? sprite))
             {
                 sprite.LayerSetVisible(1, on);
             }
 
-            if (Owner.TryGetComponent(out PointLightComponent? light))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out PointLightComponent? light))
             {
                 light.Enabled = on;
             }
 
-            if (Owner.TryGetComponent(out ClothingComponent? clothing))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ClothingComponent? clothing))
             {
                 clothing.ClothingEquippedPrefix = Loc.GetString(on ? "on" : "off");
             }
 
-            if (Owner.TryGetComponent(out ItemComponent? item))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ItemComponent? item))
             {
                 item.EquippedPrefix = Loc.GetString(on ? "on" : "off");
             }
@@ -254,7 +254,7 @@ namespace Content.Server.Light.Components
     {
         public bool DoToggleAction(ToggleItemActionEventArgs args)
         {
-            if (!args.Item.TryGetComponent<HandheldLightComponent>(out var lightComponent)) return false;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<HandheldLightComponent?>(args.Item.Uid, out var lightComponent)) return false;
             if (lightComponent.Activated == args.ToggledOn) return false;
             return lightComponent.ToggleStatus(args.Performer);
         }

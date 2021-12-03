@@ -33,7 +33,7 @@ namespace Content.Server.Disposal.Tube.Components
 
         [ViewVariables]
         public bool Anchored =>
-            !Owner.TryGetComponent(out PhysicsComponent? physics) ||
+            !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out PhysicsComponent? physics) ||
             physics.BodyType == BodyType.Static;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(DisposalTaggerUiKey.Key);
@@ -126,12 +126,12 @@ namespace Content.Server.Disposal.Tube.Components
         /// <param name="args">Data relevant to the event such as the actor which triggered it.</param>
         void IActivate.Activate(ActivateEventArgs args)
         {
-            if (!args.User.TryGetComponent(out ActorComponent? actor))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User.Uid, out ActorComponent? actor))
             {
                 return;
             }
 
-            if (!args.User.TryGetComponent(out HandsComponent? hands))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User.Uid, out HandsComponent? hands))
             {
                 Owner.PopupMessage(args.User, Loc.GetString("disposal-tagger-window-activate-no-hands"));
                 return;

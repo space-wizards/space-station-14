@@ -42,14 +42,14 @@ namespace Content.Shared.Verbs
             var canInteract = force || _actionBlockerSystem.CanInteract(user.Uid);
 
             IEntity? @using = null;
-            if (user.TryGetComponent(out SharedHandsComponent? hands) && (force || _actionBlockerSystem.CanUse(user.Uid)))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out SharedHandsComponent? hands) && (force || _actionBlockerSystem.CanUse(user.Uid)))
             {
                 hands.TryGetActiveHeldEntity(out @using);
 
                 // Check whether the "Held" entity is a virtual pull entity. If yes, set that as the entity being "Used".
                 // This allows you to do things like buckle a dragged person onto a surgery table, without click-dragging
                 // their sprite.
-                if (@using != null && @using.TryGetComponent<HandVirtualItemComponent>(out var pull))
+                if (@using != null && IoCManager.Resolve<IEntityManager>().TryGetComponent<HandVirtualItemComponent?>(@using.Uid, out var pull))
                 {
                     @using = IoCManager.Resolve<IEntityManager>().GetEntity(pull.BlockingEntity);
                 }

@@ -1,6 +1,7 @@
 using Content.Server.DeviceNetwork.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.DeviceNetwork.Systems
 {
@@ -24,7 +25,7 @@ namespace Content.Server.DeviceNetwork.Systems
             var position = sender.Transform.WorldPosition;
             var distance = (ownPosition - position).Length;
 
-            if(sender.TryGetComponent<WirelessNetworkComponent>(out var sendingComponent) && distance > sendingComponent.Range)
+            if(IoCManager.Resolve<IEntityManager>().TryGetComponent<WirelessNetworkComponent?>(sender.Uid, out var sendingComponent) && distance > sendingComponent.Range)
             {
                 args.Cancel();
             }

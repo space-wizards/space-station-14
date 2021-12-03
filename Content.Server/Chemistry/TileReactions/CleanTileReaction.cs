@@ -25,7 +25,7 @@ namespace Content.Server.Chemistry.TileReactions
             var amount = FixedPoint2.Zero;
             foreach (var entity in entities)
             {
-                if (entity.TryGetComponent(out CleanableComponent? cleanable))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out CleanableComponent? cleanable))
                 {
                     var next = (amount + cleanable.CleanAmount) * CleanAmountMultiplier;
                     // Nothing left?

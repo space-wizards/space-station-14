@@ -2,6 +2,7 @@ using Content.Shared.MobState.Components;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Enums;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
@@ -31,7 +32,7 @@ namespace Content.Client.MobState.Overlays
                 return false;
             }
 
-            if (playerEntity.TryGetComponent<MobStateComponent>(out var mobState))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<MobStateComponent?>(playerEntity.Uid, out var mobState))
             {
                 if (critical)
                     if (mobState.IsCritical())

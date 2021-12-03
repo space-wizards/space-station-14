@@ -42,9 +42,9 @@ namespace Content.Server.Conveyor
 
         private void UpdateAppearance(ConveyorComponent component)
         {
-            if (component.Owner.TryGetComponent<AppearanceComponent>(out var appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<AppearanceComponent?>(component.Owner.Uid, out var appearance))
             {
-                if (component.Owner.TryGetComponent<ApcPowerReceiverComponent>(out var receiver) && receiver.Powered)
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<ApcPowerReceiverComponent?>(component.Owner.Uid, out var receiver) && receiver.Powered)
                 {
                     appearance.SetData(ConveyorVisuals.State, component.State);
                 }
@@ -100,7 +100,7 @@ namespace Content.Server.Conveyor
                 return false;
             }
 
-            if (component.Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) &&
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out ApcPowerReceiverComponent? receiver) &&
                 !receiver.Powered)
             {
                 return false;
@@ -144,7 +144,7 @@ namespace Content.Server.Conveyor
                     continue;
                 }
 
-                if (!entity.TryGetComponent(out IPhysBody? physics) ||
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out IPhysBody? physics) ||
                     physics.BodyType == BodyType.Static || physics.BodyStatus == BodyStatus.InAir || entity.IsWeightless())
                 {
                     continue;

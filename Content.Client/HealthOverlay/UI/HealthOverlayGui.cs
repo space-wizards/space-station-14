@@ -77,8 +77,8 @@ namespace Content.Client.HealthOverlay.UI
                 return;
             }
 
-            if (!Entity.TryGetComponent(out MobStateComponent? mobState) ||
-                !Entity.TryGetComponent(out DamageableComponent? damageable))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Entity.Uid, out MobStateComponent? mobState) ||
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(Entity.Uid, out DamageableComponent? damageable))
             {
                 CritBar.Visible = false;
                 HealthBar.Visible = false;

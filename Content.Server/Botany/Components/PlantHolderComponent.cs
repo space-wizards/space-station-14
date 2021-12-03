@@ -426,7 +426,7 @@ namespace Content.Server.Botany.Components
 
             if (Harvest && !Dead)
             {
-                if (user.TryGetComponent(out HandsComponent? hands))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out HandsComponent? hands))
                 {
                     if (!Seed.CheckHarvest(user, hands.GetActiveHand?.Owner))
                         return false;
@@ -654,7 +654,7 @@ namespace Content.Server.Botany.Components
             if ((!IoCManager.Resolve<IEntityManager>().EntityExists(usingItem.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(usingItem.Uid).EntityLifeStage) >= EntityLifeStage.Deleted || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user.Uid))
                 return false;
 
-            if (usingItem.TryGetComponent(out SeedComponent? seeds))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(usingItem.Uid, out SeedComponent? seeds))
             {
                 if (Seed == null)
                 {
@@ -734,7 +734,7 @@ namespace Content.Server.Botany.Components
                 var targetEntity = Owner.Uid;
                 var solutionEntity = usingItem.Uid;
 
-                if (usingItem.TryGetComponent(out SprayComponent? spray))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(usingItem.Uid, out SprayComponent? spray))
                 {
                     sprayed = true;
                     amount = FixedPoint2.New(1);
@@ -804,7 +804,7 @@ namespace Content.Server.Botany.Components
                 return DoHarvest(user);
             }
 
-            if (usingItem.TryGetComponent<ProduceComponent>(out var produce))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<ProduceComponent?>(usingItem.Uid, out var produce))
             {
                 user.PopupMessageCursor(Loc.GetString("plant-holder-component-compost-message",
                     ("owner", Owner),

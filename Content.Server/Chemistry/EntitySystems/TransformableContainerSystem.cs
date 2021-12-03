@@ -51,7 +51,7 @@ namespace Content.Server.Chemistry.EntitySystems
                     new SpriteSpecifier.Rsi(
                         new ResourcePath("Objects/Consumable/Drinks/" + proto.SpriteReplacementPath), "icon");
                 var ownerEntity = EntityManager.GetEntity(uid);
-                if (ownerEntity.TryGetComponent(out SpriteComponent? sprite))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(ownerEntity.Uid, out SpriteComponent? sprite))
                 {
                     sprite?.LayerSetSprite(0, spriteSpec);
                 }
@@ -68,7 +68,7 @@ namespace Content.Server.Chemistry.EntitySystems
             component.CurrentReagent = null;
             component.Transformed = false;
 
-            if (component.Owner.TryGetComponent(out SpriteComponent? sprite) &&
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out SpriteComponent? sprite) &&
                 component.InitialSprite != null)
             {
                 sprite.LayerSetSprite(0, component.InitialSprite);

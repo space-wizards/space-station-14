@@ -7,6 +7,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Placeable;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
@@ -28,7 +29,7 @@ namespace Content.Shared.Storage
 
         bool IDraggable.CanDrop(CanDropEvent args)
         {
-            return args.Target.TryGetComponent(out PlaceableSurfaceComponent? placeable) &&
+            return IoCManager.Resolve<IEntityManager>().TryGetComponent(args.Target.Uid, out PlaceableSurfaceComponent? placeable) &&
                    placeable.IsPlaceable;
         }
 

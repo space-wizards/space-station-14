@@ -25,7 +25,7 @@ namespace Content.Client.Interactable.Components
         {
             _lastRenderScale = renderScale;
             _inRange = inInteractionRange;
-            if (Owner.TryGetComponent(out ISpriteComponent? sprite))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ISpriteComponent? sprite))
             {
                 sprite.PostShader = MakeNewShader(inInteractionRange, renderScale);
                 sprite.RenderOrder = IoCManager.Resolve<IEntityManager>().CurrentTick.Value;
@@ -34,7 +34,7 @@ namespace Content.Client.Interactable.Components
 
         public void OnMouseLeave()
         {
-            if (Owner.TryGetComponent(out ISpriteComponent? sprite))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ISpriteComponent? sprite))
             {
                 sprite.PostShader = null;
                 sprite.RenderOrder = 0;
@@ -46,7 +46,7 @@ namespace Content.Client.Interactable.Components
 
         public void UpdateInRange(bool inInteractionRange, int renderScale)
         {
-            if (Owner.TryGetComponent(out ISpriteComponent? sprite)
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ISpriteComponent? sprite)
                 && (inInteractionRange != _inRange || _lastRenderScale != renderScale))
             {
                 _inRange = inInteractionRange;

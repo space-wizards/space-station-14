@@ -296,7 +296,7 @@ namespace Content.Server.Mind
 
             if (IsVisitingEntity
                 && (ghostCheckOverride // to force mind transfer, for example from ControlMobVerb
-                || !VisitingEntity!.TryGetComponent(out GhostComponent? ghostComponent) // visiting entity is not a Ghost
+                || !IoCManager.Resolve<IEntityManager>().TryGetComponent(VisitingEntity!.Uid, out GhostComponent? ghostComponent) // visiting entity is not a Ghost
                 || !ghostComponent.CanReturnToBody))  // it is a ghost, but cannot return to body anyway, so it's okay
             {
                 VisitingEntity = null;

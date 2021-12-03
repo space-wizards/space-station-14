@@ -66,11 +66,11 @@ namespace Content.IntegrationTests.Tests.Body
                 var bodySys = EntitySystem.Get<BodySystem>();
                 var lungSys = EntitySystem.Get<LungSystem>();
 
-                Assert.That(human.TryGetComponent(out SharedBodyComponent body));
+                Assert.That(IoCManager.Resolve<IEntityManager>().TryGetComponent(human.Uid, out SharedBodyComponent body));
 
                 var lungs = bodySys.GetComponentsOnMechanisms<LungComponent>(human.Uid, body).ToArray();
                 Assert.That(lungs.Count, Is.EqualTo(1));
-                Assert.That(human.TryGetComponent(out BloodstreamComponent bloodstream));
+                Assert.That(IoCManager.Resolve<IEntityManager>().TryGetComponent(human.Uid, out BloodstreamComponent bloodstream));
 
                 var gas = new GasMixture(1);
 
@@ -172,7 +172,7 @@ namespace Content.IntegrationTests.Tests.Body
                 human = entityManager.SpawnEntity("HumanBodyAndBloodstreamDummy", coordinates);
 
                 Assert.True(IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(human.Uid));
-                Assert.True(human.TryGetComponent(out respirator));
+                Assert.True(IoCManager.Resolve<IEntityManager>().TryGetComponent(human.Uid, out respirator));
                 Assert.False(respirator.Suffocating);
             });
 

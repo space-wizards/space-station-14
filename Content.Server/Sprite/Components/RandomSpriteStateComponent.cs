@@ -23,7 +23,7 @@ namespace Content.Server.Sprite.Components
         {
             base.Initialize();
             if (_spriteStates == null) return;
-            if (!Owner.TryGetComponent(out SpriteComponent? spriteComponent)) return;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out SpriteComponent? spriteComponent)) return;
             spriteComponent.LayerSetState(_spriteLayer, _random.Pick(_spriteStates));
         }
     }

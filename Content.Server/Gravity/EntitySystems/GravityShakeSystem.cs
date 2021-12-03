@@ -81,7 +81,7 @@ namespace Content.Server.Gravity.EntitySystems
             {
                 if (player.AttachedEntity == null
                     || player.AttachedEntity.Transform.GridID != gridId
-                    || !player.AttachedEntity.TryGetComponent(out CameraRecoilComponent? recoil))
+                    || !IoCManager.Resolve<IEntityManager>().TryGetComponent(player.AttachedEntity.Uid, out CameraRecoilComponent? recoil))
                 {
                     continue;
                 }

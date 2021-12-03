@@ -65,7 +65,7 @@ namespace Content.Client.Weapons.Melee
                 // Due to ISpriteComponent limitations, weapons that don't use an RSI won't have this effect.
                 if (EntityManager.TryGetEntity(msg.Source, out var source) &&
                     msg.TextureEffect &&
-                    source.TryGetComponent(out ISpriteComponent? sourceSprite) &&
+                    IoCManager.Resolve<IEntityManager>().TryGetComponent(source.Uid, out ISpriteComponent? sourceSprite) &&
                     sourceSprite.BaseRSI?.Path != null)
                 {
                     var curTime = _gameTiming.CurTime;
@@ -93,7 +93,7 @@ namespace Content.Client.Weapons.Melee
                     continue;
                 }
 
-                if (!hitEntity.TryGetComponent(out ISpriteComponent? sprite))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(hitEntity.Uid, out ISpriteComponent? sprite))
                 {
                     continue;
                 }

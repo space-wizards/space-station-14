@@ -82,7 +82,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             {
                 slotsSpent[i] = null;
                 var ammoEntity = _ammoSlots[i];
-                if (ammoEntity != null && ammoEntity.TryGetComponent(out AmmoComponent? ammo))
+                if (ammoEntity != null && IoCManager.Resolve<IEntityManager>().TryGetComponent(ammoEntity.Uid, out AmmoComponent? ammo))
                 {
                     slotsSpent[i] = ammo.Spent;
                 }
@@ -126,7 +126,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         private void UpdateAppearance()
         {
-            if (!Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance))
             {
                 return;
             }
@@ -139,7 +139,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         public bool TryInsertBullet(IEntity user, IEntity entity)
         {
-            if (!entity.TryGetComponent(out AmmoComponent? ammoComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out AmmoComponent? ammoComponent))
             {
                 return false;
             }

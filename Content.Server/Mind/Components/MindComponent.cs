@@ -87,7 +87,7 @@ namespace Content.Server.Mind.Components
                 var visiting = Mind?.VisitingEntity;
                 if (visiting != null)
                 {
-                    if (visiting.TryGetComponent(out GhostComponent? ghost))
+                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent(visiting.Uid, out GhostComponent? ghost))
                     {
                         EntitySystem.Get<SharedGhostSystem>().SetCanReturnToBody(ghost, false);
                     }
@@ -131,7 +131,7 @@ namespace Content.Server.Mind.Components
             }
 
             var dead =
-                Owner.TryGetComponent<MobStateComponent>(out var state) &&
+                IoCManager.Resolve<IEntityManager>().TryGetComponent<MobStateComponent?>(Owner.Uid, out var state) &&
                 state.IsDead();
 
             if (!HasMind)

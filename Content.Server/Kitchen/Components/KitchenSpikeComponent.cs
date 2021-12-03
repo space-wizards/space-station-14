@@ -67,7 +67,7 @@ namespace Content.Server.Kitchen.Components
 
         private void UpdateAppearance()
         {
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance))
             {
                 appearance.SetData(KitchenSpikeVisuals.Status, (_meatParts > 0) ? KitchenSpikeStatus.Bloody : KitchenSpikeStatus.Empty);
             }
@@ -83,7 +83,7 @@ namespace Content.Server.Kitchen.Components
                 return false;
             }
 
-            if (!victim.TryGetComponent(out butcherable))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(victim.Uid, out butcherable))
             {
                 Owner.PopupMessage(user, Loc.GetString("comp-kitchen-spike-deny-butcher", ("victim", victim), ("this", Owner)));
                 return false;
@@ -106,7 +106,7 @@ namespace Content.Server.Kitchen.Components
                 return;
 
             // Prevent dead from being spiked TODO: Maybe remove when rounds can be played and DOT is implemented
-            if (victim.TryGetComponent<MobStateComponent>(out var state) &&
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<MobStateComponent?>(victim.Uid, out var state) &&
                 !state.IsDead())
             {
                 Owner.PopupMessage(user, Loc.GetString("comp-kitchen-spike-deny-not-dead", ("victim", victim)));

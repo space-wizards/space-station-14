@@ -38,7 +38,7 @@ namespace Content.Server.Disposal.Tube.Components
 
         [ViewVariables]
         private bool Anchored =>
-            !Owner.TryGetComponent(out PhysicsComponent? physics) ||
+            !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out PhysicsComponent? physics) ||
             physics.BodyType == BodyType.Static;
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Content.Server.Disposal.Tube.Components
 
             foreach (var entity in Contents.ContainedEntities.ToArray())
             {
-                if (!entity.TryGetComponent(out DisposalHolderComponent? holder))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out DisposalHolderComponent? holder))
                 {
                     continue;
                 }
@@ -109,7 +109,7 @@ namespace Content.Server.Disposal.Tube.Components
 
         private void UpdateVisualState()
         {
-            if (!Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance))
             {
                 return;
             }
@@ -125,7 +125,7 @@ namespace Content.Server.Disposal.Tube.Components
 
         public void AnchoredChanged()
         {
-            if (!Owner.TryGetComponent(out PhysicsComponent? physics))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out PhysicsComponent? physics))
             {
                 return;
             }

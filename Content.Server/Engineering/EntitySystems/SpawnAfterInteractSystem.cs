@@ -60,7 +60,7 @@ namespace Content.Server.Engineering.EntitySystems
             if (component.Deleted || (!IoCManager.Resolve<IEntityManager>().EntityExists(component.Owner.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(component.Owner.Uid).EntityLifeStage) >= EntityLifeStage.Deleted)
                 return;
 
-            if (component.Owner.TryGetComponent<SharedStackComponent>(out var stackComp)
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedStackComponent?>(component.Owner.Uid, out var stackComp)
                 && component.RemoveOnInteract && !_stackSystem.Use(uid, 1, stackComp))
             {
                 return;

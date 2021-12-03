@@ -32,7 +32,7 @@ namespace Content.Server.Construction.Components
         {
             foreach (var entity in _partContainer.ContainedEntities)
             {
-                if (entity.TryGetComponent<MachinePartComponent>(out var machinePart))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<MachinePartComponent?>(entity.Uid, out var machinePart))
                     yield return machinePart;
             }
         }
@@ -70,7 +70,7 @@ namespace Content.Server.Construction.Components
                 throw new Exception($"Couldn't insert board with prototype {BoardPrototype} to machine with prototype {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityPrototype?.ID ?? "N/A"}!");
             }
 
-            if (!board.TryGetComponent<MachineBoardComponent>(out var machineBoard))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<MachineBoardComponent?>(board.Uid, out var machineBoard))
             {
                 throw new Exception($"Entity with prototype {BoardPrototype} doesn't have a {nameof(MachineBoardComponent)}!");
             }

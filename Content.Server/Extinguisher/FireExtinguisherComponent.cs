@@ -104,13 +104,13 @@ namespace Content.Server.Extinguisher
 
             _safety = state;
 
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance))
                 appearance.SetData(FireExtinguisherVisuals.Safety, _safety);
         }
 
         void IDropped.Dropped(DroppedEventArgs eventArgs)
         {
-            if (_hasSafety && Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (_hasSafety && IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance))
                 appearance.SetData(FireExtinguisherVisuals.Safety, _safety);
         }
     }

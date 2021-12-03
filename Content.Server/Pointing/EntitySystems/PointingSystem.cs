@@ -122,7 +122,7 @@ namespace Content.Server.Pointing.EntitySystems
             var arrow = EntityManager.SpawnEntity("pointingarrow", mapCoords);
 
             var layer = (int) VisibilityFlags.Normal;
-            if (player.TryGetComponent(out VisibilityComponent? playerVisibility))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(player.Uid, out VisibilityComponent? playerVisibility))
             {
                 var arrowVisibility = arrow.EnsureComponent<VisibilityComponent>();
                 layer = arrowVisibility.Layer = playerVisibility.Layer;
@@ -133,7 +133,7 @@ namespace Content.Server.Pointing.EntitySystems
             {
                 var ent = playerSession.ContentData()?.Mind?.CurrentEntity;
 
-                if (ent is null || (!ent.TryGetComponent<EyeComponent>(out var eyeComp) || (eyeComp.VisibilityMask & layer) == 0)) return false;
+                if (ent is null || (!IoCManager.Resolve<IEntityManager>().TryGetComponent<EyeComponent?>(ent.Uid, out var eyeComp) || (eyeComp.VisibilityMask & layer) == 0)) return false;
 
                 return ent.Transform.MapPosition.InRange(player.Transform.MapPosition, PointingRange);
             }
@@ -203,7 +203,7 @@ namespace Content.Server.Pointing.EntitySystems
             if (IoCManager.Resolve<IEntityManager>().HasComponent<PointingArrowComponent>(args.Target.Uid))
                 return;
 
-            if (!args.User.TryGetComponent<ActorComponent>(out var actor)  ||
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ActorComponent?>(args.User.Uid, out var actor)  ||
                 !InRange(args.User, args.Target.Transform.Coordinates))
                 return;
 

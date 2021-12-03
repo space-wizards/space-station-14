@@ -99,13 +99,13 @@ namespace Content.Server.Gravity.EntitySystems
 
         private void EntParentChanged(ref EntParentChangedMessage ev)
         {
-            if (!ev.Entity.TryGetComponent(out ServerAlertsComponent? status))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(ev.Entity.Uid, out ServerAlertsComponent? status))
             {
                 return;
             }
 
             if (ev.OldParent != null &&
-                ev.OldParent.TryGetComponent(out IMapGridComponent? mapGrid))
+                IoCManager.Resolve<IEntityManager>().TryGetComponent(ev.OldParent.Uid, out IMapGridComponent? mapGrid))
             {
                 var oldGrid = mapGrid.GridIndex;
 

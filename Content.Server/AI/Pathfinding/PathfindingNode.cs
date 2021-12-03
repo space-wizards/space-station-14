@@ -267,7 +267,7 @@ namespace Content.Server.AI.Pathfinding
                 // TODO: Check for powered I think (also need an event for when it's depowered
                 // AccessReader calls this whenever opening / closing but it can seem to get called multiple times
                 // Which may or may not be intended?
-                if (entity.TryGetComponent(out AccessReader? accessReader) && !_accessReaders.ContainsKey(entity))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out AccessReader? accessReader) && !_accessReaders.ContainsKey(entity))
                 {
                     _accessReaders.Add(entity, accessReader);
                     ParentChunk.Dirty();

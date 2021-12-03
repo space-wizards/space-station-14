@@ -166,7 +166,7 @@ namespace Content.Shared.Movement
             return body.BodyStatus == BodyStatus.OnGround &&
                    IoCManager.Resolve<IEntityManager>().HasComponent<MobStateComponent>(body.Owner.Uid) &&
                    // If we're being pulled then don't mess with our velocity.
-                   (!body.Owner.TryGetComponent(out SharedPullableComponent? pullable) || !pullable.BeingPulled) &&
+                   (!IoCManager.Resolve<IEntityManager>().TryGetComponent(body.Owner.Uid, out SharedPullableComponent? pullable) || !pullable.BeingPulled) &&
                    _blocker.CanMove(body.OwnerUid);
         }
 
@@ -186,7 +186,7 @@ namespace Content.Shared.Movement
                     !otherCollider.CanCollide ||
                     ((collider.CollisionMask & otherCollider.CollisionLayer) == 0 &&
                     (otherCollider.CollisionMask & collider.CollisionLayer) == 0) ||
-                    (otherCollider.Owner.TryGetComponent(out SharedPullableComponent? pullable) && pullable.BeingPulled))
+                    (IoCManager.Resolve<IEntityManager>().TryGetComponent(otherCollider.Owner.Uid, out SharedPullableComponent? pullable) && pullable.BeingPulled))
                 {
                     continue;
                 }

@@ -183,7 +183,7 @@ namespace Content.Client.DragDrop
                 return false;
             }
 
-            if (_dragDropHelper.Dragged.TryGetComponent<SpriteComponent>(out var draggedSprite))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(_dragDropHelper.Dragged.Uid, out var draggedSprite))
             {
                 // pop up drag shadow under mouse
                 var mousePos = _eyeManager.ScreenToMap(_dragDropHelper.MouseScreenPosition);
@@ -374,7 +374,7 @@ namespace Content.Client.DragDrop
             var pvsEntities = IoCManager.Resolve<IEntityLookup>().GetEntitiesIntersecting(_eyeManager.CurrentMap, bounds, LookupFlags.Approximate | LookupFlags.IncludeAnchored);
             foreach (var pvsEntity in pvsEntities)
             {
-                if (!pvsEntity.TryGetComponent(out ISpriteComponent? inRangeSprite) ||
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(pvsEntity.Uid, out ISpriteComponent? inRangeSprite) ||
                     !inRangeSprite.Visible ||
                     pvsEntity == _dragDropHelper.Dragged) continue;
 

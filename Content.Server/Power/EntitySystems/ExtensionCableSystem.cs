@@ -120,7 +120,7 @@ namespace Content.Server.Power.EntitySystems
 
         private void OnReceiverStarted(EntityUid uid, ExtensionCableReceiverComponent receiver, ComponentStartup args)
         {
-            if (receiver.Owner.TryGetComponent(out PhysicsComponent? physicsComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(receiver.Owner.Uid, out PhysicsComponent? physicsComponent))
             {
                 receiver.Connectable = physicsComponent.BodyType == BodyType.Static;
             }
@@ -181,7 +181,7 @@ namespace Content.Server.Power.EntitySystems
 
             foreach (var entity in nearbyEntities)
             {
-                if (!entity.TryGetComponent<ExtensionCableProviderComponent>(out var provider)) continue;
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ExtensionCableProviderComponent?>(entity.Uid, out var provider)) continue;
 
                 if (!provider.Connectable) continue;
 

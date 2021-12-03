@@ -225,7 +225,7 @@ namespace Content.Server.Inventory.Components
                 }
             }
 
-            if (Owner.TryGetComponent(out IInventoryController? controller))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out IInventoryController? controller))
             {
                 pass = controller.CanEquip(slot, item.Owner, pass, out var controllerReason);
                 reason = controllerReason ?? reason;
@@ -411,7 +411,7 @@ namespace Content.Server.Inventory.Components
             if (container is not ContainerSlot slot || !_slotContainers.ContainsValue(slot))
                 return;
 
-            if (entity.TryGetComponent(out ItemComponent? itemComp))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out ItemComponent? itemComp))
             {
                 itemComp.RemovedFromSlot();
             }
@@ -434,7 +434,7 @@ namespace Content.Server.Inventory.Components
                     var hands = IoCManager.Resolve<IEntityManager>().GetComponent<HandsComponent>(Owner.Uid);
                     var activeHand = hands.ActiveHand;
                     var activeItem = hands.GetActiveHand;
-                    if (activeHand != null && activeItem != null && activeItem.Owner.TryGetComponent(out ItemComponent? item))
+                    if (activeHand != null && activeItem != null && IoCManager.Resolve<IEntityManager>().TryGetComponent(activeItem.Owner.Uid, out ItemComponent? item))
                     {
                         hands.TryDropNoInteraction();
                         if (!Equip(msg.Inventoryslot, item, true, out var reason))
@@ -511,7 +511,7 @@ namespace Content.Server.Inventory.Components
                     if (!HasSlot(msg.Slot)) // client input sanitization
                         return;
                     var item = GetSlotItem(msg.Slot);
-                    if (item != null && item.Owner.TryGetComponent(out ServerStorageComponent? storage))
+                    if (item != null && IoCManager.Resolve<IEntityManager>().TryGetComponent(item.Owner.Uid, out ServerStorageComponent? storage))
                         storage.OpenStorageUI(Owner);
                     break;
             }

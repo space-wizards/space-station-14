@@ -54,7 +54,7 @@ namespace Content.Server.Singularity.Components
             {
                 var currentCoords = pos1.Offset(currentOffset);
                 var newEnt = entityManager.SpawnEntity("ContainmentField", currentCoords);
-                if (!newEnt.TryGetComponent<ContainmentFieldComponent>(out var containmentFieldComponent))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ContainmentFieldComponent?>(newEnt.Uid, out var containmentFieldComponent))
                 {
                     Logger.Error("While creating Fields in ContainmentFieldConnection, a ContainmentField without a ContainmentFieldComponent was created. Deleting newly spawned ContainmentField...");
                     IoCManager.Resolve<IEntityManager>().DeleteEntity(newEnt.Uid);
@@ -75,7 +75,7 @@ namespace Content.Server.Singularity.Components
         public bool CanRepell(IEntity toRepell)
         {
             var powerNeeded = 1;
-            if (toRepell.TryGetComponent<ServerSingularityComponent>(out var singularityComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<ServerSingularityComponent?>(toRepell.Uid, out var singularityComponent))
             {
                 powerNeeded += 2*singularityComponent.Level;
             }

@@ -291,8 +291,8 @@ namespace Content.Client.Damage
 
         private void InitializeVisualizer(IEntity entity, DamageVisualizerDataComponent damageData)
         {
-            if (!entity.TryGetComponent<SpriteComponent>(out SpriteComponent? spriteComponent)
-                || !entity.TryGetComponent<DamageableComponent>(out var damageComponent)
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out SpriteComponent? spriteComponent)
+                || !IoCManager.Resolve<IEntityManager>().TryGetComponent<DamageableComponent?>(entity.Uid, out var damageComponent)
                 || !IoCManager.Resolve<IEntityManager>().HasComponent<AppearanceComponent>(entity.Uid))
                 return;
 

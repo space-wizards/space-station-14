@@ -47,7 +47,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             foreach (var entity in holder.Container.ContainedEntities.ToArray())
             {
-                if (entity.TryGetComponent(out IPhysBody? physics))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out IPhysBody? physics))
                 {
                     physics.CanCollide = true;
                 }

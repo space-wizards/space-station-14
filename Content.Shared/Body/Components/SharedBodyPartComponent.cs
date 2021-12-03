@@ -370,7 +370,7 @@ namespace Content.Shared.Body.Components
                     continue;
                 }
 
-                if (!entity.TryGetComponent(out SharedMechanismComponent? mechanism))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out SharedMechanismComponent? mechanism))
                 {
                     continue;
                 }

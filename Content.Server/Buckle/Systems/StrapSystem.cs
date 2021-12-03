@@ -61,7 +61,7 @@ namespace Content.Server.Buckle.Systems
             }
 
             // Add a verb to buckle the user.
-            if (args.User.TryGetComponent<BuckleComponent>(out var buckle) &&
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<BuckleComponent?>(args.User.Uid, out var buckle) &&
                 buckle.BuckledTo != component &&
                 args.User != component.Owner &&
                 component.HasSpace(buckle) &&
@@ -76,7 +76,7 @@ namespace Content.Server.Buckle.Systems
 
             // If the user is currently holding/pulling an entity that can be buckled, add a verb for that.
             if (args.Using != null &&
-                args.Using.TryGetComponent<BuckleComponent>(out var usingBuckle) &&
+                IoCManager.Resolve<IEntityManager>().TryGetComponent<BuckleComponent?>(args.Using.Uid, out var usingBuckle) &&
                 component.HasSpace(usingBuckle) &&
                 _interactionSystem.InRangeUnobstructed(args.Using, args.Target, range: usingBuckle.Range))
             {

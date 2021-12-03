@@ -126,7 +126,7 @@ namespace Content.Server.Chemistry.Components
             }
 
 
-            if (CanReceive && target.TryGetComponent(out ReagentTankComponent? tank)
+            if (CanReceive && IoCManager.Resolve<IEntityManager>().TryGetComponent(target.Uid, out ReagentTankComponent? tank)
                            && solutionsSys.TryGetRefillableSolution(Owner.Uid, out var ownerRefill)
                            && solutionsSys.TryGetDrainableSolution(eventArgs.Target.Uid, out var targetDrain))
             {

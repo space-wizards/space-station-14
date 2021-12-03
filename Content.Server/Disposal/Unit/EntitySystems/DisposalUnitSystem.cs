@@ -172,7 +172,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         #region Eventbus Handlers
         private void HandleActivate(EntityUid uid, DisposalUnitComponent component, ActivateInWorldEvent args)
         {
-            if (!args.User.TryGetComponent(out ActorComponent? actor))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User.Uid, out ActorComponent? actor))
             {
                 return;
             }
@@ -187,7 +187,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
         private void HandleInteractHand(EntityUid uid, DisposalUnitComponent component, InteractHandEvent args)
         {
-            if (!args.User.TryGetComponent(out ActorComponent? actor)) return;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User.Uid, out ActorComponent? actor)) return;
 
             // Duplicated code here, not sure how else to get actor inside to make UserInterface happy.
 
@@ -198,7 +198,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
         private void HandleInteractUsing(EntityUid uid, DisposalUnitComponent component, InteractUsingEvent args)
         {
-            if (!args.User.TryGetComponent(out HandsComponent? hands))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User.Uid, out HandsComponent? hands))
             {
                 return;
             }
@@ -302,7 +302,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         {
             var currentTime = GameTiming.CurTime;
 
-            if (!args.Entity.TryGetComponent(out HandsComponent? hands) ||
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.Entity.Uid, out HandsComponent? hands) ||
                 hands.Count == 0 ||
                 currentTime < component.LastExitAttempt + ExitAttemptDelay)
             {
@@ -351,7 +351,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             if (count > 0)
             {
-                if (!component.Owner.TryGetComponent(out PhysicsComponent? disposalsBody))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out PhysicsComponent? disposalsBody))
                 {
                     component.RecentlyEjected.Clear();
                 }
@@ -504,7 +504,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
         public void UpdateVisualState(DisposalUnitComponent component, bool flush)
         {
-            if (!component.Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out AppearanceComponent? appearance))
             {
                 return;
             }
@@ -633,7 +633,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         {
             TryQueueEngage(component);
 
-            if (entity.TryGetComponent(out ActorComponent? actor))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out ActorComponent? actor))
             {
                 component.UserInterface?.Close(actor.PlayerSession);
             }

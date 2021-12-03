@@ -118,7 +118,7 @@ namespace Content.Server.Fluids.Components
         {
             foreach (var entity in tileRef.GetEntitiesInTileFast(gridTileLookupSystem))
             {
-                if (entity.TryGetComponent(out PuddleComponent? p))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out PuddleComponent? p))
                 {
                     puddle = p;
                     return true;
@@ -183,7 +183,7 @@ namespace Content.Server.Fluids.Components
             {
                 foreach (var spillEntity in spillEntities)
                 {
-                    if (!spillEntity.TryGetComponent(out PuddleComponent? puddleComponent)) continue;
+                    if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(spillEntity.Uid, out PuddleComponent? puddleComponent)) continue;
 
                     if (!overflow && puddleSystem.WouldOverflow(puddleComponent.Owner.Uid, solution, puddleComponent)) return null;
 

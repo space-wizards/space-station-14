@@ -60,7 +60,7 @@ namespace Content.Server.Light.Components
         /// </summary>
         public void UpdateState()
         {
-            if (!Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ApcPowerReceiverComponent? receiver))
             {
                 return;
             }
@@ -80,7 +80,7 @@ namespace Content.Server.Light.Components
 
         public void OnUpdate(float frameTime)
         {
-            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(Owner.Uid) || !Owner.TryGetComponent(out BatteryComponent? battery) || IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityPaused))
+            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(Owner.Uid) || !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out BatteryComponent? battery) || IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityPaused))
             {
                 return;
             }
@@ -98,7 +98,7 @@ namespace Content.Server.Light.Components
                 battery.CurrentCharge += _chargingWattage * frameTime * _chargingEfficiency;
                 if (battery.IsFullyCharged)
                 {
-                    if (Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver))
+                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ApcPowerReceiverComponent? receiver))
                     {
                         receiver.Load = 1;
                     }
@@ -110,23 +110,23 @@ namespace Content.Server.Light.Components
 
         private void TurnOff()
         {
-            if (Owner.TryGetComponent(out PointLightComponent? light))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out PointLightComponent? light))
             {
                 light.Enabled = false;
             }
 
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance))
                 appearance.SetData(EmergencyLightVisuals.On, false);
         }
 
         private void TurnOn()
         {
-            if (Owner.TryGetComponent(out PointLightComponent? light))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out PointLightComponent? light))
             {
                 light.Enabled = true;
             }
 
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance))
                 appearance.SetData(EmergencyLightVisuals.On, true);
         }
 

@@ -95,7 +95,7 @@ namespace Content.Server.Disposal.Unit.Components
                 return false;
             }
 
-            if (entity.TryGetComponent(out IPhysBody? physics))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out IPhysBody? physics))
             {
                 physics.CanCollide = false;
             }

@@ -59,7 +59,7 @@ namespace Content.Server.Storage.EntitySystems
             }
 
             if (entityToPlaceInHands != null
-                && args.User.TryGetComponent<SharedHandsComponent>(out var hands))
+                && IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedHandsComponent?>(args.User.Uid, out var hands))
             {
                 hands.TryPutInAnyHand(entityToPlaceInHands);
             }

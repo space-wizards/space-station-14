@@ -100,7 +100,7 @@ namespace Content.Server.Power.NodeGroups
         public void RemoveDischarger(BatteryDischargerComponent discharger)
         {
             // Can be missing if the entity is being deleted, not a big deal.
-            if (discharger.Owner.TryGetComponent(out PowerNetworkBatteryComponent? battery))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(discharger.Owner.Uid, out PowerNetworkBatteryComponent? battery))
                 battery.NetworkBattery.LinkedNetworkCharging = default;
 
             Dischargers.Remove(discharger);
@@ -118,7 +118,7 @@ namespace Content.Server.Power.NodeGroups
         public void RemoveCharger(BatteryChargerComponent charger)
         {
             // Can be missing if the entity is being deleted, not a big deal.
-            if (charger.Owner.TryGetComponent(out PowerNetworkBatteryComponent? battery))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(charger.Owner.Uid, out PowerNetworkBatteryComponent? battery))
                 battery.NetworkBattery.LinkedNetworkCharging = default;
 
             Chargers.Remove(charger);

@@ -231,7 +231,7 @@ namespace Content.Client.Actions.UI
             {
                 ActionPrototype actionPrototype => new ActionAttempt(actionPrototype),
                 ItemActionPrototype itemActionPrototype =>
-                    (Item != null && Item.TryGetComponent<ItemActionsComponent>(out var itemActions)) ?
+                    (Item != null && IoCManager.Resolve<IEntityManager>().TryGetComponent<ItemActionsComponent?>(Item.Uid, out var itemActions)) ?
                         new ItemActionAttempt(itemActionPrototype, Item, itemActions) : null,
                 _ => null
             };
@@ -504,7 +504,7 @@ namespace Content.Client.Actions.UI
 
             if (Item != null)
             {
-                SetItemIcon(Item.TryGetComponent<ISpriteComponent>(out var spriteComponent) ? spriteComponent : null);
+                SetItemIcon(IoCManager.Resolve<IEntityManager>().TryGetComponent<ISpriteComponent?>(Item.Uid, out var spriteComponent) ? spriteComponent : null);
             }
             else
             {

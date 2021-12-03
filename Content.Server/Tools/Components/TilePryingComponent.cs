@@ -34,7 +34,7 @@ namespace Content.Server.Tools.Components
 
         public async void TryPryTile(IEntity user, EntityCoordinates clickLocation)
         {
-            if (!Owner.TryGetComponent<ToolComponent>(out var tool) && _toolComponentNeeded)
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ToolComponent?>(Owner.Uid, out var tool) && _toolComponentNeeded)
                 return;
 
             if (!_mapManager.TryGetGrid(clickLocation.GetGridId(IoCManager.Resolve<IEntityManager>()), out var mapGrid))

@@ -82,7 +82,7 @@ namespace Content.Server.Explosion.EntitySystems
 
             foreach (var player in players)
             {
-                if (player.AttachedEntity == null || !player.AttachedEntity.TryGetComponent(out CameraRecoilComponent? recoil))
+                if (player.AttachedEntity == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(player.AttachedEntity.Uid, out CameraRecoilComponent? recoil))
                 {
                     continue;
                 }
@@ -141,7 +141,7 @@ namespace Content.Server.Explosion.EntitySystems
                     continue;
                 }
 
-                if (!entity.TryGetComponent(out PhysicsComponent? body) || body.Fixtures.Count < 1)
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out PhysicsComponent? body) || body.Fixtures.Count < 1)
                 {
                     continue;
                 }

@@ -4,6 +4,7 @@ using Content.Server.AI.Utils;
 using Content.Server.Weapon.Melee.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.AI.WorldState.States.Combat.Nearby
 {
@@ -16,7 +17,7 @@ namespace Content.Server.AI.WorldState.States.Combat.Nearby
         {
             var result = new List<IEntity>();
 
-            if (!Owner.TryGetComponent(out AiControllerComponent? controller))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AiControllerComponent? controller))
             {
                 return result;
             }

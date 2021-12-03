@@ -197,7 +197,7 @@ namespace Content.Server.Damage.Commands
                     return;
             }
 
-            if (!entity.TryGetComponent(out DamageableComponent? damageable))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out DamageableComponent? damageable))
             {
                 shell.WriteLine($"Entity {entity.Name} with id {entity.Uid} does not have a {nameof(DamageableComponent)}.");
                 return;

@@ -3,6 +3,7 @@ using Content.Server.PowerCell.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.Interaction;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Weapon
 {
@@ -18,13 +19,13 @@ namespace Content.Server.Weapon
 
         public override bool IsEntityCompatible(IEntity entity)
         {
-            return entity.TryGetComponent(out ServerBatteryBarrelComponent? battery) && battery.PowerCell != null ||
-                   entity.TryGetComponent(out PowerCellSlotComponent? slot) && slot.HasCell;
+            return IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out ServerBatteryBarrelComponent? battery) && battery.PowerCell != null ||
+                   IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out PowerCellSlotComponent? slot) && slot.HasCell;
         }
 
         protected override BatteryComponent? GetBatteryFrom(IEntity entity)
         {
-            if (entity.TryGetComponent(out PowerCellSlotComponent? slot))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out PowerCellSlotComponent? slot))
             {
                 if (slot.Cell != null)
                 {
@@ -32,7 +33,7 @@ namespace Content.Server.Weapon
                 }
             }
 
-            if (entity.TryGetComponent(out ServerBatteryBarrelComponent? battery))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out ServerBatteryBarrelComponent? battery))
             {
                 if (battery.PowerCell != null)
                 {

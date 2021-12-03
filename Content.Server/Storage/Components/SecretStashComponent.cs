@@ -5,6 +5,7 @@ using Content.Shared.Item;
 using Content.Shared.Popups;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -49,7 +50,7 @@ namespace Content.Server.Storage.Components
                 return false;
             }
 
-            if (!itemToHide.TryGetComponent(out ItemComponent? item))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(itemToHide.Uid, out ItemComponent? item))
                 return false;
 
             if (item.Size > _maxItemSize)
@@ -59,7 +60,7 @@ namespace Content.Server.Storage.Components
                 return false;
             }
 
-            if (!user.TryGetComponent(out HandsComponent? hands))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out HandsComponent? hands))
                 return false;
 
             if (!hands.Drop(itemToHide, _itemContainer))
@@ -82,9 +83,9 @@ namespace Content.Server.Storage.Components
 
             Owner.PopupMessage(user, Loc.GetString("comp-secret-stash-action-get-item-found-something", ("stash", SecretPartName)));
 
-            if (user.TryGetComponent(out HandsComponent? hands))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out HandsComponent? hands))
             {
-                if (!_itemContainer.ContainedEntity.TryGetComponent(out ItemComponent? item))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(_itemContainer.ContainedEntity.Uid, out ItemComponent? item))
                     return false;
                 hands.PutInHandOrDrop(item);
             }

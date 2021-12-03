@@ -19,7 +19,7 @@ namespace Content.Server.Chemistry.Components
 
         protected override void UpdateVisuals()
         {
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance) &&
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance) &&
                 EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution))
             {
                 appearance.SetData(SmokeVisuals.Color, solution.Color);
@@ -31,10 +31,10 @@ namespace Content.Server.Chemistry.Components
             if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution))
                 return;
 
-            if (!entity.TryGetComponent(out BloodstreamComponent? bloodstream))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out BloodstreamComponent? bloodstream))
                 return;
 
-            if (entity.TryGetComponent(out InternalsComponent? internals) &&
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out InternalsComponent? internals) &&
                 internals.AreInternalsWorking())
                 return;
 

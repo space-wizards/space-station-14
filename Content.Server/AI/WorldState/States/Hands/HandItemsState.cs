@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Content.Server.Hands.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.AI.WorldState.States.Hands
 {
@@ -12,7 +13,7 @@ namespace Content.Server.AI.WorldState.States.Hands
         public override List<IEntity> GetValue()
         {
             var result = new List<IEntity>();
-            if (!Owner.TryGetComponent(out HandsComponent? handsComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out HandsComponent? handsComponent))
             {
                 return result;
             }

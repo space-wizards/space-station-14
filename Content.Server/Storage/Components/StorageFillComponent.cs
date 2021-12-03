@@ -28,7 +28,7 @@ namespace Content.Server.Storage.Components
                 return;
             }
 
-            if (!Owner.TryGetComponent(out IStorageComponent? storage))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out IStorageComponent? storage))
             {
                 Logger.Error($"StorageFillComponent couldn't find any StorageComponent ({Owner})");
                 return;

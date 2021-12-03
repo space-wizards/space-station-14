@@ -64,7 +64,7 @@ namespace Content.Server.GameTicking.Rules
             {
                 var playerEntity = playerSession.AttachedEntity;
                 if (playerEntity == null
-                    || !playerEntity.TryGetComponent(out MobStateComponent? state))
+                    || !IoCManager.Resolve<IEntityManager>().TryGetComponent(playerEntity.Uid, out MobStateComponent? state))
                 {
                     continue;
                 }

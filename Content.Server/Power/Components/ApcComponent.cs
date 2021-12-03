@@ -56,7 +56,7 @@ namespace Content.Server.Power.Components
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ApcUiKey.Key);
 
-        public BatteryComponent? Battery => Owner.TryGetComponent(out BatteryComponent? batteryComponent) ? batteryComponent : null;
+        public BatteryComponent? Battery => IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out BatteryComponent? batteryComponent) ? batteryComponent : null;
 
         [ComponentDependency] private AccessReader? _accessReader = null;
 
@@ -117,12 +117,12 @@ namespace Content.Server.Power.Components
                 _lastChargeState = newState;
                 _lastChargeStateChange = _gameTiming.CurTime;
 
-                if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance))
                 {
                     appearance.SetData(ApcVisuals.ChargeState, newState);
                 }
 
-                if (Owner.TryGetComponent(out SharedPointLightComponent? light))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out SharedPointLightComponent? light))
                 {
                     light.Color = newState switch
                     {
@@ -135,7 +135,7 @@ namespace Content.Server.Power.Components
                 }
             }
 
-            Owner.TryGetComponent(out BatteryComponent? battery);
+            IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out BatteryComponent? battery);
 
             var newCharge = battery?.CurrentCharge;
             if (newCharge != null && newCharge != _lastCharge && _lastChargeChange + TimeSpan.FromSeconds(VisualsChangeDelay) < _gameTiming.CurTime)
@@ -162,7 +162,7 @@ namespace Content.Server.Power.Components
 
         private ApcChargeState CalcChargeState()
         {
-            if (!Owner.TryGetComponent(out BatteryComponent? battery))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out BatteryComponent? battery))
             {
                 return ApcChargeState.Lack;
             }
@@ -203,7 +203,7 @@ namespace Content.Server.Power.Components
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User.Uid, out ActorComponent? actor))
             {
                 return;
             }

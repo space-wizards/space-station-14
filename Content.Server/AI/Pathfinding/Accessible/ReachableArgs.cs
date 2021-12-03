@@ -29,7 +29,7 @@ namespace Content.Server.AI.Pathfinding.Accessible
         public static ReachableArgs GetArgs(IEntity entity)
         {
             var collisionMask = 0;
-            if (entity.TryGetComponent(out IPhysBody? physics))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out IPhysBody? physics))
             {
                 collisionMask = physics.CollisionMask;
             }

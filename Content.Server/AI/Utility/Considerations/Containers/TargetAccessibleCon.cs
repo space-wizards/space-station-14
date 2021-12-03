@@ -5,6 +5,7 @@ using Content.Server.Storage.Components;
 using Content.Shared.Interaction;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Utility.Considerations.Containers
 {
@@ -24,7 +25,7 @@ namespace Content.Server.AI.Utility.Considerations.Containers
 
             if (target.TryGetContainer(out var container))
             {
-                if (container.Owner.TryGetComponent(out EntityStorageComponent? storageComponent))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(container.Owner.Uid, out EntityStorageComponent? storageComponent))
                 {
                     if (storageComponent.IsWeldedShut && !storageComponent.Open)
                     {

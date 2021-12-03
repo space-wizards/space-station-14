@@ -5,6 +5,7 @@ using Content.Server.Roles;
 using Content.Shared.CharacterInfo;
 using Content.Shared.Objectives;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
 
@@ -23,7 +24,7 @@ namespace Content.Server.CharacterInfo
                 case RequestCharacterInfoMessage _:
                     var conditions = new Dictionary<string, List<ConditionInfo>>();
                     var jobTitle = "No Profession";
-                    if (Owner.TryGetComponent(out MindComponent? mindComponent))
+                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out MindComponent? mindComponent))
                     {
                         var mind = mindComponent.Mind;
 

@@ -114,7 +114,7 @@ namespace Content.Server.Administration.Commands
                 if (found.GetGridId(entMan) != GridId.Invalid)
                 {
                     player.AttachedEntity.Transform.Coordinates = found;
-                    if (player.AttachedEntity.TryGetComponent(out IPhysBody? physics))
+                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent(player.AttachedEntity.Uid, out IPhysBody? physics))
                     {
                         physics.LinearVelocity = Vector2.Zero;
                     }

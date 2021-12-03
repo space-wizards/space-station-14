@@ -155,14 +155,14 @@ namespace Content.Server.Atmos.Components
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor)) return false;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User.Uid, out ActorComponent? actor)) return false;
             OpenInterface(actor.PlayerSession);
             return true;
         }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor)) return;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User.Uid, out ActorComponent? actor)) return;
             OpenInterface(actor.PlayerSession);
         }
 
@@ -328,7 +328,7 @@ namespace Content.Server.Atmos.Components
     {
         public bool DoToggleAction(ToggleItemActionEventArgs args)
         {
-            if (!args.Item.TryGetComponent<GasTankComponent>(out var gasTankComponent)) return false;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<GasTankComponent?>(args.Item.Uid, out var gasTankComponent)) return false;
             // no change
             if (gasTankComponent.IsConnected == args.ToggledOn) return false;
             gasTankComponent.ToggleInternals();

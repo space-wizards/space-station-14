@@ -51,7 +51,7 @@ namespace Content.Server.Power.Components
             var droppedEnt = IoCManager.Resolve<IEntityManager>().SpawnEntity(_cableDroppedOnCutPrototype, eventArgs.ClickLocation);
 
             // TODO: Literally just use a prototype that has a single thing in the stack, it's not that complicated...
-            if (droppedEnt.TryGetComponent<StackComponent>(out var stack))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<StackComponent?>(droppedEnt.Uid, out var stack))
                 EntitySystem.Get<StackSystem>().SetCount(droppedEnt.Uid, 1, stack);
 
             return true;

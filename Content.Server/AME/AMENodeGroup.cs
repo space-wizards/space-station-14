@@ -46,7 +46,7 @@ namespace Content.Server.AME
             foreach (var node in groupNodes)
             {
                 var nodeOwner = node.Owner;
-                if (nodeOwner.TryGetComponent(out AMEShieldComponent? shield))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(nodeOwner.Uid, out AMEShieldComponent? shield))
                 {
                     var nodeNeighbors = grid.GetCellsInSquareArea(nodeOwner.Transform.Coordinates, 1)
                         .Select(sgc => IoCManager.Resolve<IEntityManager>().GetEntity(sgc))
@@ -69,7 +69,7 @@ namespace Content.Server.AME
             foreach (var node in groupNodes)
             {
                 var nodeOwner = node.Owner;
-                if (nodeOwner.TryGetComponent(out AMEControllerComponent? controller))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(nodeOwner.Uid, out AMEControllerComponent? controller))
                 {
                     if (_masterController == null)
                     {

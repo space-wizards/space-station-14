@@ -73,7 +73,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
         private void UpdateAppearance()
         {
-            if (Owner.TryGetComponent(out AppearanceComponent? appearanceComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearanceComponent))
             {
                 appearanceComponent.SetData(MagazineBarrelVisuals.MagLoaded, true);
                 appearanceComponent.SetData(AmmoVisuals.AmmoCount, AmmoLeft);
@@ -104,7 +104,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
         public bool TryInsertAmmo(IEntity user, IEntity entity)
         {
-            if (!entity.TryGetComponent(out AmmoComponent? ammoComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out AmmoComponent? ammoComponent))
             {
                 return false;
             }
@@ -134,7 +134,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
                 return TryInsertAmmo(eventArgs.User, eventArgs.Using);
             }
 
-            if (eventArgs.Using.TryGetComponent(out RangedMagazineComponent? rangedMagazine))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Using.Uid, out RangedMagazineComponent? rangedMagazine))
             {
                 for (var i = 0; i < Math.Max(10, rangedMagazine.ShotsLeft); i++)
                 {
@@ -160,7 +160,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
         private bool TryUse(IEntity user)
         {
-            if (!user.TryGetComponent(out HandsComponent? handsComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out HandsComponent? handsComponent))
             {
                 return false;
             }
@@ -172,7 +172,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
                 return false;
             }
 
-            if (ammo.TryGetComponent(out ItemComponent? item))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(ammo.Uid, out ItemComponent? item))
             {
                 if (!handsComponent.CanPutInHand(item))
                 {

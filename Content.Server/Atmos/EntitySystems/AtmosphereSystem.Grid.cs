@@ -1526,7 +1526,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         public bool TryGetMapGrid(GridAtmosphereComponent gridAtmosphere, [NotNullWhen(true)] out IMapGrid? mapGrid)
         {
-            if (gridAtmosphere.Owner.TryGetComponent(out IMapGridComponent? mapGridComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(gridAtmosphere.Owner.Uid, out IMapGridComponent? mapGridComponent))
             {
                 mapGrid = mapGridComponent.Grid;
                 return true;

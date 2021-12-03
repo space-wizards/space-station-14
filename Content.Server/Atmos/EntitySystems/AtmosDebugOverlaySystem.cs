@@ -7,6 +7,7 @@ using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -142,7 +143,7 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     if (!EntityManager.TryGetEntity(grid.GridEntityId, out var gridEnt)) continue;
 
-                    if (!gridEnt.TryGetComponent<GridAtmosphereComponent>(out var gam)) continue;
+                    if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<GridAtmosphereComponent?>(gridEnt.Uid, out var gam)) continue;
 
                     var entityTile = grid.GetTileRef(entity.Transform.Coordinates).GridIndices;
                     var baseTile = new Vector2i(entityTile.X - (LocalViewRange / 2), entityTile.Y - (LocalViewRange / 2));

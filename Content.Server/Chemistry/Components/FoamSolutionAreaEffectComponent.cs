@@ -23,7 +23,7 @@ namespace Content.Server.Chemistry.Components
 
         protected override void UpdateVisuals()
         {
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance) &&
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance) &&
                 EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution))
             {
                 appearance.SetData(FoamVisuals.Color, solution.Color.WithAlpha(0.80f));
@@ -35,13 +35,13 @@ namespace Content.Server.Chemistry.Components
             if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution))
                 return;
 
-            if (!entity.TryGetComponent(out BloodstreamComponent? bloodstream))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out BloodstreamComponent? bloodstream))
                 return;
 
             // TODO: Add a permeability property to clothing
             // For now it just adds to protection for each clothing equipped
             var protection = 0f;
-            if (entity.TryGetComponent(out InventoryComponent? inventory))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out InventoryComponent? inventory))
             {
                 foreach (var slot in inventory.Slots)
                 {
@@ -70,7 +70,7 @@ namespace Content.Server.Chemistry.Components
         {
             if ((!IoCManager.Resolve<IEntityManager>().EntityExists(Owner.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityLifeStage) >= EntityLifeStage.Deleted)
                 return;
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance))
             {
                 appearance.SetData(FoamVisuals.State, true);
             }

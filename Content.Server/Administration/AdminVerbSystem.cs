@@ -56,7 +56,7 @@ namespace Content.Server.Administration
 
         private void AddDebugVerbs(GetOtherVerbsEvent args)
         {
-            if (!args.User.TryGetComponent<ActorComponent>(out var actor))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ActorComponent?>(args.User.Uid, out var actor))
                 return;
 
             var player = actor.PlayerSession;
@@ -89,7 +89,7 @@ namespace Content.Server.Administration
             if (_groupController.CanCommand(player, "controlmob") &&
                 args.User != args.Target &&
                 IoCManager.Resolve<IEntityManager>().HasComponent<MindComponent>(args.User.Uid) &&
-                args.Target.TryGetComponent<MindComponent>(out var targetMind))
+                IoCManager.Resolve<IEntityManager>().TryGetComponent<MindComponent?>(args.Target.Uid, out var targetMind))
             {
                 Verb verb = new();
                 verb.Text = Loc.GetString("control-mob-verb-get-data-text");
@@ -127,7 +127,7 @@ namespace Content.Server.Administration
                 {
                     var coords = args.Target.Transform.Coordinates;
                     Timer.Spawn(_gameTiming.TickPeriod, () => _explosions.SpawnExplosion(coords, 0, 1, 2, 1), CancellationToken.None);
-                    if (args.Target.TryGetComponent(out SharedBodyComponent? body))
+                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent(args.Target.Uid, out SharedBodyComponent? body))
                     {
                         body.Gib();
                     }
@@ -168,7 +168,7 @@ namespace Content.Server.Administration
 
             // Get Disposal tube direction verb
             if (_groupController.CanCommand(player, "tubeconnections") &&
-                args.Target.TryGetComponent<IDisposalTubeComponent>(out var tube))
+                IoCManager.Resolve<IEntityManager>().TryGetComponent<IDisposalTubeComponent?>(args.Target.Uid, out var tube))
             {
                 Verb verb = new();
                 verb.Text = Loc.GetString("tube-direction-verb-get-data-text");
@@ -194,7 +194,7 @@ namespace Content.Server.Administration
 
             // Configuration verb. Is this even used for anything!?
             if (_groupController.CanAdminMenu(player) &&
-                args.Target.TryGetComponent<ConfigurationComponent>(out var config))
+                IoCManager.Resolve<IEntityManager>().TryGetComponent<ConfigurationComponent?>(args.Target.Uid, out var config))
             {
                 Verb verb = new();
                 verb.Text = Loc.GetString("configure-verb-get-data-text");

@@ -43,7 +43,7 @@ namespace Content.Shared.Pulling
             ForceSetMovingTo(pullable, null);
 
             // Joint shutdown
-            if (puller.Owner.TryGetComponent<JointComponent>(out var jointComp))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<JointComponent?>(puller.Owner.Uid, out var jointComp))
             {
                 if (jointComp.GetJoints.Contains(pullable.PullJoint!))
                 {

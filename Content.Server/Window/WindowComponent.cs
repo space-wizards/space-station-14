@@ -44,8 +44,8 @@ namespace Content.Server.Window
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
-            if (!Owner.TryGetComponent(out DamageableComponent? damageable) ||
-                !Owner.TryGetComponent(out DestructibleComponent? destructible))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out DamageableComponent? damageable) ||
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out DestructibleComponent? destructible))
             {
                 return;
             }

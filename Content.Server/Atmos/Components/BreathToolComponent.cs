@@ -1,6 +1,7 @@
 ﻿using Content.Server.Body.Components;
 using Content.Shared.Inventory;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Atmos.Components
@@ -32,7 +33,7 @@ namespace Content.Server.Atmos.Components
             if ((EquipmentSlotDefines.SlotMasks[eventArgs.Slot] & _allowedSlots) != _allowedSlots) return;
             IsFunctional = true;
 
-            if (eventArgs.User.TryGetComponent(out InternalsComponent? internals))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User.Uid, out InternalsComponent? internals))
             {
                 ConnectedInternalsEntity = eventArgs.User;
                 internals.ConnectBreathTool(Owner);
@@ -49,7 +50,7 @@ namespace Content.Server.Atmos.Components
             var old = ConnectedInternalsEntity;
             ConnectedInternalsEntity = null;
 
-            if (old != null && old.TryGetComponent<InternalsComponent>(out var internalsComponent))
+            if (old != null && IoCManager.Resolve<IEntityManager>().TryGetComponent<InternalsComponent?>(old.Uid, out var internalsComponent))
             {
                 internalsComponent.DisconnectBreathTool();
             }

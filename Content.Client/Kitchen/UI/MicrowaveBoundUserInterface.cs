@@ -121,11 +121,11 @@ namespace Content.Client.Kitchen.UI
                 }
 
                 Texture? texture;
-                if (entity.TryGetComponent(out IconComponent? iconComponent))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out IconComponent? iconComponent))
                 {
                     texture = iconComponent.Icon?.Default;
                 }
-                else if (entity.TryGetComponent(out SpriteComponent? spriteComponent))
+                else if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out SpriteComponent? spriteComponent))
                 {
                     texture = spriteComponent.Icon?.Default;
                 }

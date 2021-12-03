@@ -6,6 +6,7 @@ using Content.Shared.Alert;
 using Content.Shared.Coordinates;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
 namespace Content.IntegrationTests.Tests.Gravity
@@ -52,7 +53,7 @@ namespace Content.IntegrationTests.Tests.Gravity
                 var coordinates = grid.ToCoordinates();
                 human = entityManager.SpawnEntity("HumanDummy", coordinates);
 
-                Assert.True(human.TryGetComponent(out alerts));
+                Assert.True(IoCManager.Resolve<IEntityManager>().TryGetComponent(human.Uid, out alerts));
             });
 
             // Let WeightlessSystem and GravitySystem tick

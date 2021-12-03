@@ -67,9 +67,9 @@ namespace Content.Server.BarSign.Systems
                 return;
             }
 
-            if (component.Owner.TryGetComponent(out SpriteComponent? sprite))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out SpriteComponent? sprite))
             {
-                if (!component.Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || !receiver.Powered)
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out ApcPowerReceiverComponent? receiver) || !receiver.Powered)
                 {
                     sprite.LayerSetState(0, "empty");
                     sprite.LayerSetShader(0, "shaded");

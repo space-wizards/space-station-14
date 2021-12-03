@@ -3,6 +3,7 @@ using Content.Shared.Recycling;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.Recycling
@@ -20,8 +21,8 @@ namespace Content.Client.Recycling
         {
             base.InitializeEntity(entity);
 
-            if (!entity.TryGetComponent(out ISpriteComponent? sprite) ||
-                !entity.TryGetComponent(out AppearanceComponent? appearance))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out ISpriteComponent? sprite) ||
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out AppearanceComponent? appearance))
             {
                 return;
             }

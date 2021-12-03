@@ -41,7 +41,7 @@ namespace Content.Server.Construction.Completions
 
             var board = container.ContainedEntities[0];
 
-            if (!board.TryGetComponent(out ComputerBoardComponent? boardComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(board.Uid, out ComputerBoardComponent? boardComponent))
             {
                 Logger.Warning($"Computer entity {uid} had an invalid entity in container \"{Container}\"! Aborting build computer action.");
                 return;

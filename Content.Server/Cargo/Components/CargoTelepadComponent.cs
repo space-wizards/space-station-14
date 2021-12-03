@@ -67,14 +67,14 @@ namespace Content.Server.Cargo.Components
         {
             if (args.Powered && _currentState == CargoTelepadState.Unpowered) {
                 _currentState = CargoTelepadState.Idle;
-                if(Owner.TryGetComponent<SpriteComponent>(out var spriteComponent) && spriteComponent.LayerCount > 0)
+                if(IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(Owner.Uid, out var spriteComponent) && spriteComponent.LayerCount > 0)
                     spriteComponent.LayerSetState(0, "idle");
                 TeleportLoop();
             }
             else if (!args.Powered)
             {
                 _currentState = CargoTelepadState.Unpowered;
-                if (Owner.TryGetComponent<SpriteComponent>(out var spriteComponent) && spriteComponent.LayerCount > 0)
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(Owner.Uid, out var spriteComponent) && spriteComponent.LayerCount > 0)
                     spriteComponent.LayerSetState(0, "offline");
             }
         }
@@ -83,14 +83,14 @@ namespace Content.Server.Cargo.Components
             if (_currentState == CargoTelepadState.Idle && _teleportQueue.Count > 0)
             {
                 _currentState = CargoTelepadState.Charging;
-                if (Owner.TryGetComponent<SpriteComponent>(out var spriteComponent) && spriteComponent.LayerCount > 0)
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(Owner.Uid, out var spriteComponent) && spriteComponent.LayerCount > 0)
                     spriteComponent.LayerSetState(0, "idle");
                 Owner.SpawnTimer((int) (TeleportDelay * 1000), () =>
                 {
                     if (!Deleted && !((!IoCManager.Resolve<IEntityManager>().EntityExists(Owner.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityLifeStage) >= EntityLifeStage.Deleted) && _currentState == CargoTelepadState.Charging && _teleportQueue.Count > 0)
                     {
                         _currentState = CargoTelepadState.Teleporting;
-                        if (Owner.TryGetComponent<SpriteComponent>(out var spriteComponent) && spriteComponent.LayerCount > 0)
+                        if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(Owner.Uid, out var spriteComponent) && spriteComponent.LayerCount > 0)
                             spriteComponent.LayerSetState(0, "beam");
                         Owner.SpawnTimer((int) (TeleportDuration * 1000), () =>
                         {
@@ -99,7 +99,7 @@ namespace Content.Server.Cargo.Components
                                 SoundSystem.Play(Filter.Pvs(Owner), _teleportSound.GetSound(), Owner, AudioParams.Default.WithVolume(-8f));
                                 SpawnProduct(_teleportQueue[0]);
                                 _teleportQueue.RemoveAt(0);
-                                if (Owner.TryGetComponent<SpriteComponent>(out var spriteComponent) && spriteComponent.LayerCount > 0)
+                                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(Owner.Uid, out var spriteComponent) && spriteComponent.LayerCount > 0)
                                     spriteComponent.LayerSetState(0, "idle");
                                 _currentState = CargoTelepadState.Idle;
                                 TeleportLoop();

@@ -148,7 +148,7 @@ namespace Content.Server.Cuffs.Components
         {
             if (_cuffing) return true;
 
-            if (eventArgs.Target == null || !EntitySystem.Get<ActionBlockerSystem>().CanUse(eventArgs.User.Uid) || !eventArgs.Target.TryGetComponent<CuffableComponent>(out var cuffed))
+            if (eventArgs.Target == null || !EntitySystem.Get<ActionBlockerSystem>().CanUse(eventArgs.User.Uid) || !IoCManager.Resolve<IEntityManager>().TryGetComponent<CuffableComponent?>(eventArgs.Target.Uid, out var cuffed))
             {
                 return false;
             }
@@ -165,7 +165,7 @@ namespace Content.Server.Cuffs.Components
                 return true;
             }
 
-            if (!eventArgs.Target.TryGetComponent<HandsComponent>(out var hands))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<HandsComponent?>(eventArgs.Target.Uid, out var hands))
             {
                 eventArgs.User.PopupMessage(Loc.GetString("handcuff-component-target-has-no-hands-error",("targetName", eventArgs.Target)));
                 return true;

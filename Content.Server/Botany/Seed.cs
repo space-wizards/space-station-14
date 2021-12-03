@@ -257,7 +257,7 @@ namespace Content.Server.Botany
             var seedComp = seed.EnsureComponent<SeedComponent>();
             seedComp.Seed = this;
 
-            if (seed.TryGetComponent(out SpriteComponent? sprite))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(seed.Uid, out SpriteComponent? sprite))
             {
                 // Seed state will always be seed. Blame the spriter if that's not the case!
                 sprite.LayerSetSprite(0, new SpriteSpecifier.Rsi(PlantRsi, "seed"));

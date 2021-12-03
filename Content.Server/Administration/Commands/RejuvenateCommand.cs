@@ -59,17 +59,17 @@ namespace Content.Server.Administration.Commands
 
             EntitySystem.Get<StatusEffectsSystem>().TryRemoveAllStatusEffects(target.Uid);
 
-            if (target.TryGetComponent(out FlammableComponent? flammable))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(target.Uid, out FlammableComponent? flammable))
             {
                 EntitySystem.Get<FlammableSystem>().Extinguish(target.Uid, flammable);
             }
 
-            if (target.TryGetComponent(out DamageableComponent? damageable))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(target.Uid, out DamageableComponent? damageable))
             {
                 EntitySystem.Get<DamageableSystem>().SetAllDamage(damageable, 0);
             }
 
-            if (target.TryGetComponent(out CreamPiedComponent? creamPied))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(target.Uid, out CreamPiedComponent? creamPied))
             {
                 EntitySystem.Get<CreamPieSystem>().SetCreamPied(target.Uid, creamPied, false);
             }

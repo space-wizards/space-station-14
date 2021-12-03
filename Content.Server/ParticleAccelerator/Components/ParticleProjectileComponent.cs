@@ -22,21 +22,21 @@ namespace Content.Server.ParticleAccelerator.Components
         {
             State = state;
 
-            if (!Owner.TryGetComponent<PhysicsComponent>(out var physicsComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<PhysicsComponent?>(Owner.Uid, out var physicsComponent))
             {
                 Logger.Error("ParticleProjectile tried firing, but it was spawned without a CollidableComponent");
                 return;
             }
             physicsComponent.BodyStatus = BodyStatus.InAir;
 
-            if (!Owner.TryGetComponent<ProjectileComponent>(out var projectileComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ProjectileComponent?>(Owner.Uid, out var projectileComponent))
             {
                 Logger.Error("ParticleProjectile tried firing, but it was spawned without a ProjectileComponent");
                 return;
             }
             projectileComponent.IgnoreEntity(firer);
 
-            if (!Owner.TryGetComponent<SinguloFoodComponent>(out var singuloFoodComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SinguloFoodComponent?>(Owner.Uid, out var singuloFoodComponent))
             {
                 Logger.Error("ParticleProjectile tried firing, but it was spawned without a SinguloFoodComponent");
                 return;
@@ -61,7 +61,7 @@ namespace Content.Server.ParticleAccelerator.Components
                 _ => "0"
             };
 
-            if (!Owner.TryGetComponent<SpriteComponent>(out var spriteComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(Owner.Uid, out var spriteComponent))
             {
                 Logger.Error("ParticleProjectile tried firing, but it was spawned without a SpriteComponent");
                 return;

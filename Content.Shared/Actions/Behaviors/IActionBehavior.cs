@@ -1,6 +1,7 @@
 ﻿using System;
 using Content.Shared.Actions.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Shared.Actions.Behaviors
 {
@@ -34,7 +35,7 @@ namespace Content.Shared.Actions.Behaviors
         {
             Performer = performer;
             ActionType = actionType;
-            if (!Performer.TryGetComponent(out PerformerActions))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Performer.Uid, out PerformerActions))
             {
                 throw new InvalidOperationException($"performer {performer.Name} tried to perform action {actionType} " +
                                                     $" but the performer had no actions component," +

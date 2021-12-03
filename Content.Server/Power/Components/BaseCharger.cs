@@ -98,12 +98,12 @@ namespace Content.Server.Power.Components
 
             Container.Remove(heldItem);
             _heldBattery = null;
-            if (user.TryGetComponent(out HandsComponent? handsComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out HandsComponent? handsComponent))
             {
                 handsComponent.PutInHandOrDrop(IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(heldItem.Uid));
             }
 
-            if (heldItem.TryGetComponent(out ServerBatteryBarrelComponent? batteryBarrelComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(heldItem.Uid, out ServerBatteryBarrelComponent? batteryBarrelComponent))
             {
                 batteryBarrelComponent.UpdateAppearance();
             }
@@ -118,7 +118,7 @@ namespace Content.Server.Power.Components
 
         private CellChargerStatus GetStatus()
         {
-            if (Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) &&
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ApcPowerReceiverComponent? receiver) &&
                 !receiver.Powered)
             {
                 return CellChargerStatus.Off;
@@ -161,13 +161,13 @@ namespace Content.Server.Power.Components
             // Not called UpdateAppearance just because it messes with the load
             var status = GetStatus();
             if (_status == status ||
-                !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver))
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ApcPowerReceiverComponent? receiver))
             {
                 return;
             }
 
             _status = status;
-            Owner.TryGetComponent(out AppearanceComponent? appearance);
+            IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance);
 
             switch (_status)
             {
@@ -206,7 +206,7 @@ namespace Content.Server.Power.Components
 
         private void TransferPower(float frameTime)
         {
-            if (Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) &&
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ApcPowerReceiverComponent? receiver) &&
                 !receiver.Powered)
             {
                 return;

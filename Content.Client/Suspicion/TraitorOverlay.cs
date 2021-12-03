@@ -41,7 +41,7 @@ namespace Content.Client.Suspicion
             var viewport = _eyeManager.GetWorldViewport();
 
             var ent = _playerManager.LocalPlayer?.ControlledEntity;
-            if (ent == null || ent.TryGetComponent(out SuspicionRoleComponent? sus) != true)
+            if (ent == null || IoCManager.Resolve<IEntityManager>().TryGetComponent(ent.Uid, out SuspicionRoleComponent? sus) != true)
             {
                 return;
             }
@@ -54,7 +54,7 @@ namespace Content.Client.Suspicion
                     continue;
                 }
 
-                if (!ally.TryGetComponent(out IPhysBody? physics))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(ally.Uid, out IPhysBody? physics))
                 {
                     continue;
                 }

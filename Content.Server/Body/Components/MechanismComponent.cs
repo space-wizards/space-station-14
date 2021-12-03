@@ -9,6 +9,7 @@ using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -43,11 +44,11 @@ namespace Content.Server.Body.Components
             PerformerCache = null;
             BodyCache = null;
 
-            if (eventArgs.Target.TryGetComponent(out SharedBodyComponent? body))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Target.Uid, out SharedBodyComponent? body))
             {
                 SendBodyPartListToUser(eventArgs, body);
             }
-            else if (eventArgs.Target.TryGetComponent<SharedBodyPartComponent>(out var part))
+            else if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedBodyPartComponent?>(eventArgs.Target.Uid, out var part))
             {
                 DebugTools.AssertNotNull(part);
 
@@ -76,7 +77,7 @@ namespace Content.Server.Body.Components
             }
 
             if (OptionsCache.Count > 0 &&
-                eventArgs.User.TryGetComponent(out ActorComponent? actor))
+                IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User.Uid, out ActorComponent? actor))
             {
                 OpenSurgeryUI(actor.PlayerSession);
                 UpdateSurgeryUIBodyPartRequest(actor.PlayerSession, toSend);
@@ -96,7 +97,7 @@ namespace Content.Server.Body.Components
         private void HandleReceiveBodyPart(int key)
         {
             if (PerformerCache == null ||
-                !PerformerCache.TryGetComponent(out ActorComponent? actor))
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(PerformerCache.Uid, out ActorComponent? actor))
             {
                 return;
             }

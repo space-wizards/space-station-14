@@ -26,8 +26,8 @@ namespace Content.Server.Computer
             // Let's ensure the container manager and container are here.
             Owner.EnsureContainer<Container>("board", out var _);
 
-            if (Owner.TryGetComponent(out ApcPowerReceiverComponent? powerReceiver) &&
-                Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ApcPowerReceiverComponent? powerReceiver) &&
+                IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance))
             {
                 appearance.SetData(ComputerVisuals.Powered, powerReceiver.Powered);
             }
@@ -49,7 +49,7 @@ namespace Content.Server.Computer
 
         private void PowerReceiverOnOnPowerStateChanged(PowerChangedMessage e)
         {
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance))
             {
                 appearance.SetData(ComputerVisuals.Powered, e.Powered);
             }
@@ -63,7 +63,7 @@ namespace Content.Server.Computer
         private void CreateComputerBoard()
         {
             // Ensure that the construction component is aware of the board container.
-            if (Owner.TryGetComponent(out ConstructionComponent? construction))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ConstructionComponent? construction))
                 EntitySystem.Get<ConstructionSystem>().AddContainer(Owner.Uid, "board", construction);
 
             // We don't do anything if this is null or empty.

@@ -42,7 +42,7 @@ namespace Content.Server.Lathe.Components
         [ViewVariables]
         private LatheRecipePrototype? _producingRecipe;
         [ViewVariables]
-        private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
+        private bool Powered => !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         private static readonly TimeSpan InsertionTime = TimeSpan.FromSeconds(0.9f);
 
@@ -82,13 +82,13 @@ namespace Content.Server.Lathe.Components
                     break;
 
                 case LatheServerSelectionMessage _:
-                    if (!Owner.TryGetComponent(out ResearchClientComponent? researchClient)) return;
+                    if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ResearchClientComponent? researchClient)) return;
                     researchClient.OpenUserInterface(message.Session);
                     break;
 
                 case LatheServerSyncMessage _:
-                    if (!Owner.TryGetComponent(out TechnologyDatabaseComponent? database)
-                    || !Owner.TryGetComponent(out ProtolatheDatabaseComponent? protoDatabase)) return;
+                    if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out TechnologyDatabaseComponent? database)
+                    || !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ProtolatheDatabaseComponent? protoDatabase)) return;
 
                     if (database.SyncWithServer())
                         protoDatabase.Sync();
@@ -101,7 +101,7 @@ namespace Content.Server.Lathe.Components
 
         internal bool Produce(LatheRecipePrototype recipe)
         {
-            if (Producing || !Powered || !CanProduce(recipe) || !Owner.TryGetComponent(out MaterialStorageComponent? storage)) return false;
+            if (Producing || !Powered || !CanProduce(recipe) || !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out MaterialStorageComponent? storage)) return false;
 
             UserInterface?.SendMessage(new LatheFullQueueMessage(GetIdQueue()));
 
@@ -139,7 +139,7 @@ namespace Content.Server.Lathe.Components
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User.Uid, out ActorComponent? actor))
                 return;
             if (!Powered)
             {
@@ -151,12 +151,12 @@ namespace Content.Server.Lathe.Components
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!Owner.TryGetComponent(out MaterialStorageComponent? storage)
-                ||  !eventArgs.Using.TryGetComponent(out MaterialComponent? material)) return false;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out MaterialStorageComponent? storage)
+                ||  !IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Using.Uid, out MaterialComponent? material)) return false;
 
             var multiplier = 1;
 
-            if (eventArgs.Using.TryGetComponent(out StackComponent? stack)) multiplier = stack.Count;
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Using.Uid, out StackComponent? stack)) multiplier = stack.Count;
 
             var totalAmount = 0;
 
@@ -209,7 +209,7 @@ namespace Content.Server.Lathe.Components
 
         private void SetAppearance(LatheVisualState state)
         {
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance))
             {
                 appearance.SetData(PowerDeviceVisuals.VisualState, state);
             }

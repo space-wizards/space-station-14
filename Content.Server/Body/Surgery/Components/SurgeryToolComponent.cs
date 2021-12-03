@@ -54,7 +54,7 @@ namespace Content.Server.Body.Surgery.Components
                 return false;
             }
 
-            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User.Uid, out ActorComponent? actor))
             {
                 return false;
             }
@@ -62,7 +62,7 @@ namespace Content.Server.Body.Surgery.Components
             CloseAllSurgeryUIs();
 
             // Attempt surgery on a body by sending a list of operable parts for the client to choose from
-            if (eventArgs.Target.TryGetComponent(out SharedBodyComponent? body))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Target.Uid, out SharedBodyComponent? body))
             {
                 // Create dictionary to send to client (text to be shown : data sent back if selected)
                 var toSend = new Dictionary<string, int>();
@@ -89,7 +89,7 @@ namespace Content.Server.Body.Surgery.Components
                     NotUsefulPopup();
                 }
             }
-            else if (eventArgs.Target.TryGetComponent<SharedBodyPartComponent>(out var part))
+            else if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedBodyPartComponent?>(eventArgs.Target.Uid, out var part))
             {
                 // Attempt surgery on a DroppedBodyPart - there's only one possible target so no need for selection UI
                 PerformerCache = eventArgs.User;
@@ -214,7 +214,7 @@ namespace Content.Server.Body.Surgery.Components
         private void HandleReceiveBodyPart(int key)
         {
             if (PerformerCache == null ||
-                !PerformerCache.TryGetComponent(out ActorComponent? actor))
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(PerformerCache.Uid, out ActorComponent? actor))
             {
                 return;
             }
@@ -248,7 +248,7 @@ namespace Content.Server.Body.Surgery.Components
                 !_optionsCache.TryGetValue(key, out var targetObject) ||
                 targetObject is not MechanismComponent target ||
                 PerformerCache == null ||
-                !PerformerCache.TryGetComponent(out ActorComponent? actor))
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(PerformerCache.Uid, out ActorComponent? actor))
             {
                 NotUsefulAnymorePopup();
                 return;

@@ -45,11 +45,11 @@ namespace Content.Server.Construction
         // LEGACY CODE. See warning at the top of the file!
         private IEnumerable<IEntity> EnumerateNearby(IEntity user)
         {
-            if (user.TryGetComponent(out HandsComponent? hands))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out HandsComponent? hands))
             {
                 foreach (var itemComponent in hands?.GetAllHeldItems()!)
                 {
-                    if (itemComponent.Owner.TryGetComponent(out ServerStorageComponent? storage))
+                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent(itemComponent.Owner.Uid, out ServerStorageComponent? storage))
                     {
                         foreach (var storedEntity in storage.StoredEntities!)
                         {
@@ -61,11 +61,11 @@ namespace Content.Server.Construction
                 }
             }
 
-            if (user!.TryGetComponent(out InventoryComponent? inventory))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(user!.Uid, out InventoryComponent? inventory))
             {
                 foreach (var held in inventory.GetAllHeldItems())
                 {
-                    if (held.TryGetComponent(out ServerStorageComponent? storage))
+                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent(held.Uid, out ServerStorageComponent? storage))
                     {
                         foreach (var storedEntity in storage.StoredEntities!)
                         {
@@ -299,7 +299,7 @@ namespace Content.Server.Construction
 
             if (user == null || !Get<ActionBlockerSystem>().CanInteract(user.Uid)) return;
 
-            if (!user.TryGetComponent(out HandsComponent? hands)) return;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out HandsComponent? hands)) return;
 
             foreach (var condition in constructionPrototype.Conditions)
             {
@@ -328,7 +328,7 @@ namespace Content.Server.Construction
 
             var item = await Construct(user, "item_construction", constructionGraph, edge, targetNode);
 
-            if(item != null && item.TryGetComponent(out ItemComponent? itemComp))
+            if(item != null && IoCManager.Resolve<IEntityManager>().TryGetComponent(item.Uid, out ItemComponent? itemComp))
                 hands.PutInHandOrDrop(itemComp);
         }
 
@@ -399,7 +399,7 @@ namespace Content.Server.Construction
 
             if (user == null
                 || !Get<ActionBlockerSystem>().CanInteract(user.Uid)
-                || !user.TryGetComponent(out HandsComponent? hands) || hands.GetActiveHand == null
+                || !IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out HandsComponent? hands) || hands.GetActiveHand == null
                 || !user.InRangeUnobstructed(ev.Location, ignoreInsideBlocker:constructionPrototype.CanBuildInImpassable))
             {
                 Cleanup();

@@ -27,7 +27,7 @@ namespace Content.Server.Repairable
         public async void Repair(EntityUid uid, RepairableComponent component, InteractUsingEvent args)
         {
             // Only try repair the target if it is damaged
-            if (!component.Owner.TryGetComponent(out DamageableComponent? damageable) || damageable.TotalDamage == 0)
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out DamageableComponent? damageable) || damageable.TotalDamage == 0)
                 return;
 
             // Can the tool actually repair this, does it have enough fuel?

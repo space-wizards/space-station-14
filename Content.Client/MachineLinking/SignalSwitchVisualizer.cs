@@ -2,6 +2,7 @@
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.MachineLinking
@@ -16,7 +17,7 @@ namespace Content.Client.MachineLinking
         {
             base.InitializeEntity(entity);
 
-            if (entity.TryGetComponent(out SpriteComponent? sprite))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out SpriteComponent? sprite))
             {
                 sprite.LayerMapReserveBlank(Layer);
             }

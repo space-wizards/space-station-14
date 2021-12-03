@@ -136,7 +136,7 @@ namespace Content.Server.Chemistry.Components
                 {
                     TryInject(targetEntity, refillableSolution, eventArgs.User, true);
                 }
-                else if (targetEntity.TryGetComponent(out BloodstreamComponent? bloodstream))
+                else if (IoCManager.Resolve<IEntityManager>().TryGetComponent(targetEntity.Uid, out BloodstreamComponent? bloodstream))
                 {
                     TryInjectIntoBloodstream(bloodstream, eventArgs.User);
                 }

@@ -133,7 +133,7 @@ namespace Content.Server.Morgue.Components
 
         SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)
         {
-            if (victim.TryGetComponent(out ActorComponent? actor) && actor.PlayerSession.ContentData()?.Mind is {} mind)
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(victim.Uid, out ActorComponent? actor) && actor.PlayerSession.ContentData()?.Mind is {} mind)
             {
                 EntitySystem.Get<GameTicker>().OnGhostAttempt(mind, false);
                 mind.OwnedEntity?.PopupMessage(Loc.GetString("crematorium-entity-storage-component-suicide-message"));

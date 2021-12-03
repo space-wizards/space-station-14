@@ -291,7 +291,7 @@ namespace Content.Server.Doors.Components
             {
                 Open();
 
-                if (user.TryGetComponent(out HandsComponent? hands) && hands.Count == 0)
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out HandsComponent? hands) && hands.Count == 0)
                 {
                     SoundSystem.Play(Filter.Pvs(Owner), _tryOpenDoorSound.GetSound(), Owner,
                         AudioParams.Default.WithVolume(-2));
@@ -310,7 +310,7 @@ namespace Content.Server.Doors.Components
                 return false;
             }
 
-            if (!Owner.TryGetComponent(out AccessReader? access))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AccessReader? access))
             {
                 return true;
             }
@@ -334,7 +334,7 @@ namespace Content.Server.Doors.Components
         /// </summary>
         private bool HasAccessType(string accessType)
         {
-            if (Owner.TryGetComponent(out AccessReader? access))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AccessReader? access))
             {
                 return access.AccessLists.Any(list => list.Contains(accessType));
             }
@@ -365,12 +365,12 @@ namespace Content.Server.Doors.Components
         public void Open()
         {
             State = DoorState.Opening;
-            if (Occludes && Owner.TryGetComponent(out OccluderComponent? occluder))
+            if (Occludes && IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out OccluderComponent? occluder))
             {
                 occluder.Enabled = false;
             }
 
-            if (ChangeAirtight && Owner.TryGetComponent(out AirtightComponent? airtight))
+            if (ChangeAirtight && IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AirtightComponent? airtight))
             {
                 EntitySystem.Get<AirtightSystem>().SetAirblocked(airtight, false);
             }
@@ -398,7 +398,7 @@ namespace Content.Server.Doors.Components
         {
             base.OnPartialOpen();
 
-            if (ChangeAirtight && Owner.TryGetComponent(out AirtightComponent? airtight))
+            if (ChangeAirtight && IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AirtightComponent? airtight))
             {
                 EntitySystem.Get<AirtightSystem>().SetAirblocked(airtight, false);
             }
@@ -408,7 +408,7 @@ namespace Content.Server.Doors.Components
 
         private void QuickOpen(bool refresh)
         {
-            if (Occludes && Owner.TryGetComponent(out OccluderComponent? occluder))
+            if (Occludes && IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out OccluderComponent? occluder))
             {
                 occluder.Enabled = false;
             }
@@ -445,7 +445,7 @@ namespace Content.Server.Doors.Components
                 return false;
             }
 
-            if (!Owner.TryGetComponent(out AccessReader? access))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AccessReader? access))
             {
                 return true;
             }
@@ -483,7 +483,7 @@ namespace Content.Server.Doors.Components
         {
             var safety = SafetyCheck();
 
-            if (safety && Owner.TryGetComponent(out PhysicsComponent? physicsComponent))
+            if (safety && IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out PhysicsComponent? physicsComponent))
             {
                 var broadPhaseSystem = EntitySystem.Get<SharedPhysicsSystem>();
 
@@ -527,7 +527,7 @@ namespace Content.Server.Doors.Components
                 OnPartialClose();
                 await Timer.Delay(CloseTimeTwo, _stateChangeCancelTokenSource.Token);
 
-                if (Occludes && Owner.TryGetComponent(out OccluderComponent? occluder))
+                if (Occludes && IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out OccluderComponent? occluder))
                 {
                     occluder.Enabled = true;
                 }
@@ -543,7 +543,7 @@ namespace Content.Server.Doors.Components
             // if safety is off, crushes people inside of the door, temporarily turning off collisions with them while doing so.
             var becomeairtight = ChangeAirtight && (SafetyCheck() || !TryCrush());
 
-            if (becomeairtight && Owner.TryGetComponent(out AirtightComponent? airtight))
+            if (becomeairtight && IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AirtightComponent? airtight))
             {
                 EntitySystem.Get<AirtightSystem>().SetAirblocked(airtight, true);
             }
@@ -673,7 +673,7 @@ namespace Content.Server.Doors.Components
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if(!eventArgs.Using.TryGetComponent(out ToolComponent? tool))
+            if(!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Using.Uid, out ToolComponent? tool))
             {
                 return false;
             }
@@ -710,7 +710,7 @@ namespace Content.Server.Doors.Components
             }
 
             // for welding doors
-            if (CanWeldShut && tool.Owner.TryGetComponent(out WelderComponent? welder) && welder.Lit)
+            if (CanWeldShut && IoCManager.Resolve<IEntityManager>().TryGetComponent(tool.Owner.Uid, out WelderComponent? welder) && welder.Lit)
             {
                 if(!_beingWelded)
                 {
@@ -745,7 +745,7 @@ namespace Content.Server.Doors.Components
         private void CreateDoorElectronicsBoard()
         {
             // Ensure that the construction component is aware of the board container.
-            if (Owner.TryGetComponent(out ConstructionComponent? construction))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ConstructionComponent? construction))
                 EntitySystem.Get<ConstructionSystem>().AddContainer(Owner.Uid, "board", construction);
 
             // We don't do anything if this is null or empty.

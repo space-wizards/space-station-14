@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.NodeGroups;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -67,7 +68,7 @@ namespace Content.Server.Power.Components
 
         private bool TryFindNet([NotNullWhen(true)] out TNetType? foundNet)
         {
-            if (Owner.TryGetComponent<NodeContainerComponent>(out var container))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<NodeContainerComponent?>(Owner.Uid, out var container))
             {
                 var compatibleNet = container.Nodes.Values
                     .Where(node => (NodeId == null || NodeId == node.Name) && node.NodeGroupID == (NodeGroupID) Voltage)

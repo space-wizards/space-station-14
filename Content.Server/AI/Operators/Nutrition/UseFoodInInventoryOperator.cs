@@ -30,8 +30,8 @@ namespace Content.Server.AI.Operators.Nutrition
 
             // TODO: Also have this check storage a la backpack etc.
             if ((!IoCManager.Resolve<IEntityManager>().EntityExists(_target.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_target.Uid).EntityLifeStage) >= EntityLifeStage.Deleted ||
-                !_owner.TryGetComponent(out HandsComponent? handsComponent) ||
-                !_target.TryGetComponent(out ItemComponent? itemComponent))
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(_owner.Uid, out HandsComponent? handsComponent) ||
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(_target.Uid, out ItemComponent? itemComponent))
             {
                 return Outcome.Failed;
             }
@@ -42,7 +42,7 @@ namespace Content.Server.AI.Operators.Nutrition
             {
                 if (handsComponent.GetItem(slot) != itemComponent) continue;
                 handsComponent.ActiveHand = slot;
-                if (!_target.TryGetComponent(out foodComponent))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(_target.Uid, out foodComponent))
                 {
                     return Outcome.Failed;
                 }
@@ -59,7 +59,7 @@ namespace Content.Server.AI.Operators.Nutrition
 
             if ((!IoCManager.Resolve<IEntityManager>().EntityExists(_target.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_target.Uid).EntityLifeStage) >= EntityLifeStage.Deleted ||
                 foodComponent.UsesRemaining == 0 ||
-                _owner.TryGetComponent(out HungerComponent? hungerComponent) &&
+                IoCManager.Resolve<IEntityManager>().TryGetComponent(_owner.Uid, out HungerComponent? hungerComponent) &&
                 hungerComponent.CurrentHunger >= hungerComponent.HungerThresholds[HungerThreshold.Okay])
             {
                 return Outcome.Success;

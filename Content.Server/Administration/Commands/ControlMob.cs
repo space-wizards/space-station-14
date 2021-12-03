@@ -50,7 +50,7 @@ namespace Content.Server.Administration.Commands
             }
 
             var target = entityManager.GetEntity(eUid);
-            if (!target.TryGetComponent(out MindComponent? mindComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(target.Uid, out MindComponent? mindComponent))
             {
                 shell.WriteLine(Loc.GetString("shell-entity-is-not-mob"));
                 return;

@@ -97,7 +97,7 @@ namespace Content.Server.Crayon
         // Opens the selection window
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
-            if (eventArgs.User.TryGetComponent(out ActorComponent? actor))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User.Uid, out ActorComponent? actor))
             {
                 UserInterface?.Toggle(actor.PlayerSession);
                 if (UserInterface?.SessionHasOpen(actor.PlayerSession) == true)
@@ -132,7 +132,7 @@ namespace Content.Server.Crayon
             }
 
             var entity = IoCManager.Resolve<IEntityManager>().SpawnEntity("CrayonDecal", eventArgs.ClickLocation);
-            if (entity.TryGetComponent(out AppearanceComponent? appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out AppearanceComponent? appearance))
             {
                 appearance.SetData(CrayonVisuals.State, SelectedState);
                 appearance.SetData(CrayonVisuals.Color, _color);
@@ -150,7 +150,7 @@ namespace Content.Server.Crayon
 
         void IDropped.Dropped(DroppedEventArgs eventArgs)
         {
-            if (eventArgs.User.TryGetComponent(out ActorComponent? actor))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User.Uid, out ActorComponent? actor))
                 UserInterface?.Close(actor.PlayerSession);
         }
     }

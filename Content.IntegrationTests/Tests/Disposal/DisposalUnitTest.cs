@@ -146,7 +146,8 @@ namespace Content.IntegrationTests.Tests.Disposal
                 disposalTrunk = entityManager.SpawnEntity("DisposalTrunkDummy", disposalUnit.Transform.MapPosition);
 
                 // Test for components existing
-                Assert.True(disposalUnit.TryGetComponent(out unit!));
+                ref DisposalUnitComponent? comp = ref unit!;
+                Assert.True(IoCManager.Resolve<IEntityManager>().TryGetComponent(disposalUnit.Uid, out comp));
                 Assert.True(IoCManager.Resolve<IEntityManager>().HasComponent<DisposalEntryComponent>(disposalTrunk.Uid));
 
                 // Can't insert, unanchored and unpowered
@@ -190,7 +191,7 @@ namespace Content.IntegrationTests.Tests.Disposal
             await server.WaitAssertion(() =>
             {
                 // Remove power need
-                Assert.True(disposalUnit.TryGetComponent(out ApcPowerReceiverComponent power));
+                Assert.True(IoCManager.Resolve<IEntityManager>().TryGetComponent(disposalUnit.Uid, out ApcPowerReceiverComponent power));
                 power!.NeedsPower = false;
                 Assert.True(unit.Powered);
 

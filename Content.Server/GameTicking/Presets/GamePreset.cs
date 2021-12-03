@@ -58,7 +58,7 @@ namespace Content.Server.GameTicking.Presets
             //   (If the mob survives, that's a bug. Ghosting is kept regardless.)
             var canReturn = canReturnGlobal && mind.CharacterDeadPhysically;
 
-            if (playerEntity != null && canReturnGlobal && playerEntity.TryGetComponent(out MobStateComponent? mobState))
+            if (playerEntity != null && canReturnGlobal && IoCManager.Resolve<IEntityManager>().TryGetComponent(playerEntity.Uid, out MobStateComponent? mobState))
             {
                 if (mobState.IsCritical())
                 {

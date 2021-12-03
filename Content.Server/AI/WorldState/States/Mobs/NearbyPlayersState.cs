@@ -20,7 +20,7 @@ namespace Content.Server.AI.WorldState.States.Mobs
         {
             var result = new List<IEntity>();
 
-            if (!Owner.TryGetComponent(out AiControllerComponent? controller))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AiControllerComponent? controller))
             {
                 return result;
             }

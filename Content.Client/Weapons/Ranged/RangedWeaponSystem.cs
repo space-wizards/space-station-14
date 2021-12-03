@@ -48,12 +48,12 @@ namespace Content.Client.Weapons.Ranged
             }
 
             var entity = _playerManager.LocalPlayer?.ControlledEntity;
-            if (entity == null || !entity.TryGetComponent(out SharedHandsComponent? hands))
+            if (entity == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out SharedHandsComponent? hands))
             {
                 return;
             }
 
-            if (!hands.TryGetActiveHeldEntity(out var held) || !held.TryGetComponent(out ClientRangedWeaponComponent? weapon))
+            if (!hands.TryGetActiveHeldEntity(out var held) || !IoCManager.Resolve<IEntityManager>().TryGetComponent(held.Uid, out ClientRangedWeaponComponent? weapon))
             {
                 _blocked = true;
                 return;

@@ -112,7 +112,7 @@ namespace Content.Server.PDA
 
         private bool OpenUI(PDAComponent pda, IEntity user)
         {
-            if (!user.TryGetComponent(out ActorComponent? actor))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out ActorComponent? actor))
                 return false;
 
             var ui = pda.Owner.GetUIOrNull(PDAUiKey.Key);
@@ -123,7 +123,7 @@ namespace Content.Server.PDA
 
         private void UpdatePDAAppearance(PDAComponent pda)
         {
-            if (pda.Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(pda.Owner.Uid, out AppearanceComponent? appearance))
                 appearance.SetData(PDAVisuals.IDCardInserted, pda.ContainedID != null);
         }
 
@@ -155,7 +155,7 @@ namespace Content.Server.PDA
                     break;
                 case PDAToggleFlashlightMessage _:
                     {
-                        if (pda.Owner.TryGetComponent(out UnpoweredFlashlightComponent? flashlight))
+                        if (IoCManager.Resolve<IEntityManager>().TryGetComponent(pda.Owner.Uid, out UnpoweredFlashlightComponent? flashlight))
                             _unpoweredFlashlight.ToggleLight(flashlight);
                         break;
                     }
@@ -172,7 +172,7 @@ namespace Content.Server.PDA
                     }
                 case PDAShowUplinkMessage _:
                     {
-                        if (pda.Owner.TryGetComponent(out UplinkComponent? uplink))
+                        if (IoCManager.Resolve<IEntityManager>().TryGetComponent(pda.Owner.Uid, out UplinkComponent? uplink))
                             _uplinkSystem.ToggleUplinkUI(uplink, msg.Session);
                         break;
                     }

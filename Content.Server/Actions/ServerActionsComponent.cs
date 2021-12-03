@@ -160,7 +160,7 @@ namespace Content.Server.Actions
                         return null;
                     }
 
-                    if (!item.TryGetComponent<ItemActionsComponent>(out var actionsComponent))
+                    if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ItemActionsComponent?>(item.Uid, out var actionsComponent))
                     {
                         Logger.DebugS("action", "user {0} attempted to perform" +
                                                 " item action {1} for item {2} which has no ItemActionsComponent",

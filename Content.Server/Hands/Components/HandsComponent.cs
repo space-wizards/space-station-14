@@ -38,12 +38,12 @@ namespace Content.Server.Hands.Components
 
         protected override void OnHeldEntityRemovedFromHand(IEntity heldEntity, HandState handState)
         {
-            if (heldEntity.TryGetComponent(out ItemComponent? item))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(heldEntity.Uid, out ItemComponent? item))
             {
                 item.RemovedFromSlot();
                 _entitySystemManager.GetEntitySystem<InteractionSystem>().UnequippedHandInteraction(Owner, heldEntity, handState);
             }
-            if (heldEntity.TryGetComponent(out SpriteComponent? sprite))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(heldEntity.Uid, out SpriteComponent? sprite))
             {
                 sprite.RenderOrder = IoCManager.Resolve<IEntityManager>().CurrentTick.Value;
             }
@@ -123,8 +123,8 @@ namespace Content.Server.Hands.Components
         private bool BreakPulls()
         {
             // What is this API??
-            if (!Owner.TryGetComponent(out SharedPullerComponent? puller)
-                || puller.Pulling == null || !puller.Pulling.TryGetComponent(out SharedPullableComponent? pullable))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out SharedPullerComponent? puller)
+                || puller.Pulling == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(puller.Pulling.Uid, out SharedPullableComponent? pullable))
                 return false;
 
             return _entitySystemManager.GetEntitySystem<PullingSystem>().TryStopPull(pullable);
@@ -163,7 +163,7 @@ namespace Content.Server.Hands.Components
             if (!TryGetHeldEntity(handName, out var heldEntity))
                 return null;
 
-            heldEntity.TryGetComponent(out ItemComponent? item);
+            IoCManager.Resolve<IEntityManager>().TryGetComponent(heldEntity.Uid, out ItemComponent? item);
             return item;
         }
 
@@ -177,7 +177,7 @@ namespace Content.Server.Hands.Components
             if (!TryGetHeldEntity(handName, out var heldEntity))
                 return false;
 
-            return heldEntity.TryGetComponent(out item);
+            return IoCManager.Resolve<IEntityManager>().TryGetComponent(heldEntity.Uid, out item);
         }
 
         /// <summary>
@@ -190,7 +190,7 @@ namespace Content.Server.Hands.Components
                 if (!TryGetActiveHeldEntity(out var heldEntity))
                     return null;
 
-                heldEntity.TryGetComponent(out ItemComponent? item);
+                IoCManager.Resolve<IEntityManager>().TryGetComponent(heldEntity.Uid, out ItemComponent? item);
                 return item;
             }
         }
@@ -199,7 +199,7 @@ namespace Content.Server.Hands.Components
         {
             foreach (var entity in GetAllHeldEntities())
             {
-                if (entity.TryGetComponent(out ItemComponent? item))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out ItemComponent? item))
                     yield return item;
             }
         }

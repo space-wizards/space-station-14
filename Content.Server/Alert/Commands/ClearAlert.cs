@@ -5,6 +5,7 @@ using Content.Shared.Administration;
 using Content.Shared.Alert;
 using Robust.Server.Player;
 using Robust.Shared.Console;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Alert.Commands
@@ -33,7 +34,7 @@ namespace Content.Server.Alert.Commands
                 if (!CommandUtils.TryGetAttachedEntityByUsernameOrId(shell, target, player, out attachedEntity)) return;
             }
 
-            if (!attachedEntity.TryGetComponent(out ServerAlertsComponent? alertsComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(attachedEntity.Uid, out ServerAlertsComponent? alertsComponent))
             {
                 shell.WriteLine("user has no alerts component");
                 return;

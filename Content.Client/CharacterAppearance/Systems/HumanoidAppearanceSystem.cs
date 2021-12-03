@@ -50,7 +50,7 @@ namespace Content.Client.CharacterAppearance.Systems
             {
                 foreach (var (part, _) in body.Parts)
                 {
-                    if (part.Owner.TryGetComponent(out SpriteComponent? partSprite))
+                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent(part.Owner.Uid, out SpriteComponent? partSprite))
                     {
                         partSprite!.Color = component.Appearance.SkinColor;
                     }
@@ -108,7 +108,7 @@ namespace Content.Client.CharacterAppearance.Systems
         private void BodyPartAdded(HumanoidAppearanceBodyPartAddedEvent args)
         {
             if(!EntityManager.TryGetEntity(args.Uid, out var owner)) return;
-            if (!owner.TryGetComponent(out SpriteComponent? sprite))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(owner.Uid, out SpriteComponent? sprite))
             {
                 return;
             }
@@ -132,7 +132,7 @@ namespace Content.Client.CharacterAppearance.Systems
         private void BodyPartRemoved(HumanoidAppearanceBodyPartRemovedEvent args)
         {
             if(!EntityManager.TryGetEntity(args.Uid, out var owner)) return;
-            if (!owner.TryGetComponent(out SpriteComponent? sprite))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(owner.Uid, out SpriteComponent? sprite))
             {
                 return;
             }

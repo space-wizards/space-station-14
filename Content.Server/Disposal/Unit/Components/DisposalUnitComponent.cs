@@ -14,6 +14,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -74,7 +75,7 @@ namespace Content.Server.Disposal.Unit.Components
 
         [ViewVariables]
         public bool Powered =>
-            !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) ||
+            !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ApcPowerReceiverComponent? receiver) ||
             receiver.Powered;
 
         [ViewVariables] public PressureState State => Pressure >= 1 ? PressureState.Ready : PressureState.Pressurizing;

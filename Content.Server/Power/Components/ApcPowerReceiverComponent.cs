@@ -87,7 +87,7 @@ namespace Content.Server.Power.Components
 #pragma warning restore 618
             IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner.Uid, new PowerChangedEvent(Powered, NetworkLoad.ReceivingPower));
 
-            if (Owner.TryGetComponent<AppearanceComponent>(out var appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<AppearanceComponent?>(Owner.Uid, out var appearance))
             {
                 appearance.SetData(PowerDeviceVisuals.Powered, Powered);
             }

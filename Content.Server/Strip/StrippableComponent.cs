@@ -45,17 +45,17 @@ namespace Content.Server.Strip
             Owner.EnsureComponentWarn<HandsComponent>();
             Owner.EnsureComponentWarn<CuffableComponent>();
 
-            if (Owner.TryGetComponent(out CuffableComponent? cuffed))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out CuffableComponent? cuffed))
             {
                 cuffed.OnCuffedStateChanged += UpdateSubscribed;
             }
 
-            if (Owner.TryGetComponent(out InventoryComponent? inventory))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out InventoryComponent? inventory))
             {
                 inventory.OnItemChanged += UpdateSubscribed;
             }
 
-            if (Owner.TryGetComponent(out HandsComponent? hands))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out HandsComponent? hands))
             {
                 hands.OnItemChanged += UpdateSubscribed;
             }
@@ -80,7 +80,7 @@ namespace Content.Server.Strip
 
         public override bool Drop(DragDropEvent args)
         {
-            if (!args.User.TryGetComponent(out ActorComponent? actor)) return false;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User.Uid, out ActorComponent? actor)) return false;
 
             OpenUserInterface(actor.PlayerSession);
             return true;
@@ -90,7 +90,7 @@ namespace Content.Server.Strip
         {
             var dictionary = new Dictionary<EntityUid, string>();
 
-            if (!Owner.TryGetComponent(out CuffableComponent? cuffed))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out CuffableComponent? cuffed))
             {
                 return dictionary;
             }
@@ -107,7 +107,7 @@ namespace Content.Server.Strip
         {
             var dictionary = new Dictionary<Slots, string>();
 
-            if (!Owner.TryGetComponent(out InventoryComponent? inventory))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out InventoryComponent? inventory))
             {
                 return dictionary;
             }
@@ -124,7 +124,7 @@ namespace Content.Server.Strip
         {
             var dictionary = new Dictionary<string, string>();
 
-            if (!Owner.TryGetComponent(out HandsComponent? hands))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out HandsComponent? hands))
             {
                 return dictionary;
             }
@@ -394,7 +394,7 @@ namespace Content.Server.Strip
         private void HandleUserInterfaceMessage(ServerBoundUserInterfaceMessage obj)
         {
             var user = obj.Session.AttachedEntity;
-            if (user == null || !(user.TryGetComponent(out HandsComponent? userHands))) return;
+            if (user == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out HandsComponent? userHands)) return;
 
             var placingItem = userHands.GetActiveHand != null;
 
@@ -402,7 +402,7 @@ namespace Content.Server.Strip
             {
                 case StrippingInventoryButtonPressed inventoryMessage:
 
-                    if (Owner.TryGetComponent<InventoryComponent>(out var inventory))
+                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent<InventoryComponent?>(Owner.Uid, out var inventory))
                     {
                         if (inventory.TryGetSlotItem(inventoryMessage.Slot, out ItemComponent? _))
                             placingItem = false;
@@ -416,7 +416,7 @@ namespace Content.Server.Strip
 
                 case StrippingHandButtonPressed handMessage:
 
-                    if (Owner.TryGetComponent<HandsComponent>(out var hands))
+                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent<HandsComponent?>(Owner.Uid, out var hands))
                     {
                         if (hands.TryGetItem(handMessage.Hand, out _))
                             placingItem = false;
@@ -430,7 +430,7 @@ namespace Content.Server.Strip
 
                 case StrippingHandcuffButtonPressed handcuffMessage:
 
-                    if (Owner.TryGetComponent<CuffableComponent>(out var cuffed))
+                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent<CuffableComponent?>(Owner.Uid, out var cuffed))
                     {
                         foreach (var entity in cuffed.StoredEntities)
                         {

@@ -82,7 +82,7 @@ namespace Content.Server.Tabletop
             if (session.Players.ContainsKey(player))
                 return;
 
-            if(attachedEntity.TryGetComponent<TabletopGamerComponent>(out var gamer))
+            if(IoCManager.Resolve<IEntityManager>().TryGetComponent<TabletopGamerComponent?>(attachedEntity.Uid, out var gamer))
                 CloseSessionFor(player, gamer.Tabletop, false);
 
             // Set the entity as an absolute GAMER.
@@ -111,7 +111,7 @@ namespace Content.Server.Tabletop
             if (!session.Players.TryGetValue(player, out var data))
                 return;
 
-            if(removeGamerComponent && player.AttachedEntity is {} attachedEntity && attachedEntity.TryGetComponent(out TabletopGamerComponent? gamer))
+            if(removeGamerComponent && player.AttachedEntity is {} attachedEntity && IoCManager.Resolve<IEntityManager>().TryGetComponent(attachedEntity.Uid, out TabletopGamerComponent? gamer))
             {
                 // We invalidate this to prevent an infinite feedback from removing the component.
                 gamer.Tabletop = EntityUid.Invalid;

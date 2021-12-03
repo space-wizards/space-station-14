@@ -46,8 +46,8 @@ namespace Content.Server.Engineering.EntitySystems
 
             var entity = EntityManager.SpawnEntity(component.Prototype, component.Owner.Transform.Coordinates);
 
-            if (args.User.TryGetComponent<HandsComponent>(out var hands)
-                && entity.TryGetComponent<ItemComponent>(out var item))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<HandsComponent?>(args.User.Uid, out var hands)
+                && IoCManager.Resolve<IEntityManager>().TryGetComponent<ItemComponent?>(entity.Uid, out var item))
             {
                 hands.PutInHandOrDrop(item);
             }

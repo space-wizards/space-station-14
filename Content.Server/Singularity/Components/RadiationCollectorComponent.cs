@@ -74,7 +74,7 @@ namespace Content.Server.Singularity.Components
 
         protected void SetAppearance(RadiationCollectorVisualState state)
         {
-            if (Owner.TryGetComponent<AppearanceComponent>(out var appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<AppearanceComponent?>(Owner.Uid, out var appearance))
             {
                 appearance.SetData(RadiationCollectorVisuals.VisualState, state);
             }

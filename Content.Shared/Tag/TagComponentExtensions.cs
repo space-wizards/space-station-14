@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Tag
@@ -71,7 +72,7 @@ namespace Content.Shared.Tag
         /// </exception>
         public static bool TryAddTag(this IEntity entity, string id)
         {
-            return entity.TryGetComponent(out TagComponent? tagComponent) &&
+            return IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out TagComponent? tagComponent) &&
                    tagComponent.AddTag(id);
         }
 
@@ -89,7 +90,7 @@ namespace Content.Shared.Tag
         /// </exception>
         public static bool TryAddTags(this IEntity entity, params string[] ids)
         {
-            return entity.TryGetComponent(out TagComponent? tagComponent) &&
+            return IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out TagComponent? tagComponent) &&
                    tagComponent.AddTags(ids);
         }
 
@@ -107,7 +108,7 @@ namespace Content.Shared.Tag
         /// </exception>
         public static bool TryAddTags(this IEntity entity, IEnumerable<string> ids)
         {
-            return entity.TryGetComponent(out TagComponent? tagComponent) &&
+            return IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out TagComponent? tagComponent) &&
                    tagComponent.AddTags(ids);
         }
 
@@ -122,7 +123,7 @@ namespace Content.Shared.Tag
         /// </exception>
         public static bool HasTag(this IEntity entity, string id)
         {
-            return entity.TryGetComponent(out TagComponent? tagComponent) &&
+            return IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out TagComponent? tagComponent) &&
                    tagComponent.HasTag(id);
         }
 
@@ -137,7 +138,7 @@ namespace Content.Shared.Tag
         /// </exception>
         public static bool HasAllTags(this IEntity entity, params string[] ids)
         {
-            return entity.TryGetComponent(out TagComponent? tagComponent) &&
+            return IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out TagComponent? tagComponent) &&
                    tagComponent.HasAllTags(ids);
         }
 
@@ -152,7 +153,7 @@ namespace Content.Shared.Tag
         /// </exception>
         public static bool HasAllTags(this IEntity entity, IEnumerable<string> ids)
         {
-            return entity.TryGetComponent(out TagComponent? tagComponent) &&
+            return IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out TagComponent? tagComponent) &&
                    tagComponent.HasAllTags(ids);
         }
 
@@ -167,7 +168,7 @@ namespace Content.Shared.Tag
         /// </exception>
         public static bool HasAnyTag(this IEntity entity, params string[] ids)
         {
-            return entity.TryGetComponent(out TagComponent? tagComponent) &&
+            return IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out TagComponent? tagComponent) &&
                    tagComponent.HasAnyTag(ids);
         }
 
@@ -182,7 +183,7 @@ namespace Content.Shared.Tag
         /// </exception>
         public static bool HasAnyTag(this IEntity entity, IEnumerable<string> ids)
         {
-            return entity.TryGetComponent(out TagComponent? tagComponent) &&
+            return IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out TagComponent? tagComponent) &&
                    tagComponent.HasAnyTag(ids);
         }
 
@@ -199,7 +200,7 @@ namespace Content.Shared.Tag
         /// </exception>
         public static bool RemoveTag(this IEntity entity, string id)
         {
-            return entity.TryGetComponent(out TagComponent? tagComponent) &&
+            return IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out TagComponent? tagComponent) &&
                    tagComponent.RemoveTag(id);
         }
 
@@ -216,7 +217,7 @@ namespace Content.Shared.Tag
         /// </returns>
         public static bool RemoveTags(this IEntity entity, params string[] ids)
         {
-            return entity.TryGetComponent(out TagComponent? tagComponent) &&
+            return IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out TagComponent? tagComponent) &&
                    tagComponent.RemoveTags(ids);
         }
 
@@ -233,7 +234,7 @@ namespace Content.Shared.Tag
         /// </exception>
         public static bool RemoveTags(this IEntity entity, IEnumerable<string> ids)
         {
-            return entity.TryGetComponent(out TagComponent? tagComponent) &&
+            return IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out TagComponent? tagComponent) &&
                    tagComponent.RemoveTags(ids);
         }
     }

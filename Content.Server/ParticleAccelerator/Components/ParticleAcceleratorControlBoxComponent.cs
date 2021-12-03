@@ -222,12 +222,12 @@ namespace Content.Server.ParticleAccelerator.Components
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User.Uid, out ActorComponent? actor))
             {
                 return;
             }
 
-            if (Owner.TryGetComponent<WiresComponent>(out var wires) && wires.IsPanelOpen)
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<WiresComponent?>(Owner.Uid, out var wires) && wires.IsPanelOpen)
             {
                 wires.OpenInterface(actor.PlayerSession);
             }
@@ -334,7 +334,7 @@ namespace Content.Server.ParticleAccelerator.Components
 
         private void UpdateWireStatus()
         {
-            if (!Owner.TryGetComponent(out WiresComponent? wires))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out WiresComponent? wires))
             {
                 return;
             }
@@ -577,7 +577,7 @@ namespace Content.Server.ParticleAccelerator.Components
 
         private void UpdateAppearance()
         {
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance))
             {
                 appearance.SetData(ParticleAcceleratorVisuals.VisualState,
                     _apcPowerReceiverComponent!.Powered
@@ -683,7 +683,7 @@ namespace Content.Server.ParticleAccelerator.Components
 
         private void UpdatePartVisualState(ParticleAcceleratorPartComponent? component)
         {
-            if (component == null || !component.Owner.TryGetComponent<AppearanceComponent>(out var appearanceComponent))
+            if (component == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent<AppearanceComponent?>(component.Owner.Uid, out var appearanceComponent))
             {
                 return;
             }

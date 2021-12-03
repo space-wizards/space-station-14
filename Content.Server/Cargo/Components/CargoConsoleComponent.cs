@@ -58,7 +58,7 @@ namespace Content.Server.Cargo.Components
         [DataField("errorSound")]
         private SoundSpecifier _errorSound = new SoundPathSpecifier("/Audio/Effects/error.ogg");
 
-        private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
+        private bool Powered => !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
         private CargoConsoleSystem _cargoConsoleSystem = default!;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(CargoConsoleUiKey.Key);
@@ -91,7 +91,7 @@ namespace Content.Server.Cargo.Components
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
         {
-            if (!Owner.TryGetComponent(out CargoOrderDatabaseComponent? orders))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out CargoOrderDatabaseComponent? orders))
             {
                 return;
             }
@@ -175,7 +175,7 @@ namespace Content.Server.Cargo.Components
                     {
                         foreach (IEntity entity in enumerator)
                         {
-                            if (IoCManager.Resolve<IEntityManager>().HasComponent<CargoTelepadComponent>(entity.Uid) && entity.TryGetComponent<ApcPowerReceiverComponent>(out var powerReceiver) && powerReceiver.Powered)
+                            if (IoCManager.Resolve<IEntityManager>().HasComponent<CargoTelepadComponent>(entity.Uid) && IoCManager.Resolve<IEntityManager>().TryGetComponent<ApcPowerReceiverComponent?>(entity.Uid, out var powerReceiver) && powerReceiver.Powered)
                             {
                                 cargoTelepad = entity;
                                 break;
@@ -184,7 +184,7 @@ namespace Content.Server.Cargo.Components
                     }
                     if (cargoTelepad != null)
                     {
-                        if (cargoTelepad.TryGetComponent<CargoTelepadComponent>(out var telepadComponent))
+                        if (IoCManager.Resolve<IEntityManager>().TryGetComponent<CargoTelepadComponent?>(cargoTelepad.Uid, out var telepadComponent))
                         {
                             var approvedOrders = _cargoConsoleSystem.RemoveAndGetApprovedOrders(orders.Database.Id);
                             orders.Database.ClearOrderCapacity();

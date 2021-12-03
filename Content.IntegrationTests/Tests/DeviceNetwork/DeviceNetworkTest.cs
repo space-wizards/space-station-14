@@ -82,13 +82,13 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
 
                 device1 = entityManager.SpawnEntity("DummyNetworkDevice", MapCoordinates.Nullspace);
 
-                Assert.That(device1.TryGetComponent(out networkComponent1), Is.True);
+                Assert.That(IoCManager.Resolve<IEntityManager>().TryGetComponent(device1.Uid, out networkComponent1), Is.True);
                 Assert.That(networkComponent1.Open, Is.True);
                 Assert.That(networkComponent1.Address, Is.Not.EqualTo(string.Empty));
 
                 device2 = entityManager.SpawnEntity("DummyNetworkDevice", MapCoordinates.Nullspace);
 
-                Assert.That(device2.TryGetComponent(out networkComponent2), Is.True);
+                Assert.That(IoCManager.Resolve<IEntityManager>().TryGetComponent(device2.Uid, out networkComponent2), Is.True);
                 Assert.That(networkComponent2.Open, Is.True);
                 Assert.That(networkComponent2.Address, Is.Not.EqualTo(string.Empty));
 
@@ -145,14 +145,14 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
 
                 device1 = entityManager.SpawnEntity("DummyWirelessNetworkDevice", MapCoordinates.Nullspace);
 
-                Assert.That(device1.TryGetComponent(out networkComponent1), Is.True);
-                Assert.That(device1.TryGetComponent(out wirelessNetworkComponent), Is.True);
+                Assert.That(IoCManager.Resolve<IEntityManager>().TryGetComponent(device1.Uid, out networkComponent1), Is.True);
+                Assert.That(IoCManager.Resolve<IEntityManager>().TryGetComponent(device1.Uid, out wirelessNetworkComponent), Is.True);
                 Assert.That(networkComponent1.Open, Is.True);
                 Assert.That(networkComponent1.Address, Is.Not.EqualTo(string.Empty));
 
                 device2 = entityManager.SpawnEntity("DummyWirelessNetworkDevice", new MapCoordinates(new Robust.Shared.Maths.Vector2(0,50), MapId.Nullspace));
 
-                Assert.That(device2.TryGetComponent(out networkComponent2), Is.True);
+                Assert.That(IoCManager.Resolve<IEntityManager>().TryGetComponent(device2.Uid, out networkComponent2), Is.True);
                 Assert.That(networkComponent2.Open, Is.True);
                 Assert.That(networkComponent2.Address, Is.Not.EqualTo(string.Empty));
 
@@ -232,14 +232,14 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
 
                 device1 = entityManager.SpawnEntity("DummyWiredNetworkDevice", MapCoordinates.Nullspace);
 
-                Assert.That(device1.TryGetComponent(out networkComponent1), Is.True);
-                Assert.That(device1.TryGetComponent(out wiredNetworkComponent), Is.True);
+                Assert.That(IoCManager.Resolve<IEntityManager>().TryGetComponent(device1.Uid, out networkComponent1), Is.True);
+                Assert.That(IoCManager.Resolve<IEntityManager>().TryGetComponent(device1.Uid, out wiredNetworkComponent), Is.True);
                 Assert.That(networkComponent1.Open, Is.True);
                 Assert.That(networkComponent1.Address, Is.Not.EqualTo(string.Empty));
 
                 device2 = entityManager.SpawnEntity("DummyWiredNetworkDevice", new MapCoordinates(new Robust.Shared.Maths.Vector2(0, 2), MapId.Nullspace));
 
-                Assert.That(device2.TryGetComponent(out networkComponent2), Is.True);
+                Assert.That(IoCManager.Resolve<IEntityManager>().TryGetComponent(device2.Uid, out networkComponent2), Is.True);
                 Assert.That(networkComponent2.Open, Is.True);
                 Assert.That(networkComponent2.Address, Is.Not.EqualTo(string.Empty));
 

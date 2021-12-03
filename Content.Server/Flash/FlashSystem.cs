@@ -88,7 +88,7 @@ namespace Content.Server.Flash
             if (comp.HasUses)
             {
                 // TODO flash visualizer
-                if (!comp.Owner.TryGetComponent<SpriteComponent>(out var sprite))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(comp.Owner.Uid, out var sprite))
                     return false;
 
                 if (--comp.Uses == 0)

@@ -18,7 +18,7 @@ namespace Content.Server.ParticleAccelerator.Components
         {
             var projectile = IoCManager.Resolve<IEntityManager>().SpawnEntity("ParticlesProjectile", Owner.Transform.Coordinates);
 
-            if (!projectile.TryGetComponent<ParticleProjectileComponent>(out var particleProjectileComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ParticleProjectileComponent?>(projectile.Uid, out var particleProjectileComponent))
             {
                 Logger.Error("ParticleAcceleratorEmitter tried firing particles, but they was spawned without a ParticleProjectileComponent");
                 return;

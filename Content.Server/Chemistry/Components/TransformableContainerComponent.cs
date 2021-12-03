@@ -23,7 +23,7 @@ namespace Content.Server.Chemistry.Components
         {
             base.Initialize();
 
-            if (Owner.TryGetComponent(out SpriteComponent? sprite) &&
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out SpriteComponent? sprite) &&
                 sprite.BaseRSIPath != null)
             {
                 InitialSprite = new SpriteSpecifier.Rsi(new ResourcePath(sprite.BaseRSIPath), "icon");

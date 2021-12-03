@@ -3,6 +3,7 @@ using Content.Server.Access.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Inventory.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.PDA
 {
@@ -18,18 +19,18 @@ namespace Content.Server.PDA
         {
             IdCardComponent? firstIdInPda = null;
 
-            if (player.TryGetComponent(out HandsComponent? hands))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(player.Uid, out HandsComponent? hands))
             {
                 foreach (var item in hands.GetAllHeldItems())
                 {
                     if (firstIdInPda == null &&
-                        item.Owner.TryGetComponent(out PDAComponent? pda) &&
+                        IoCManager.Resolve<IEntityManager>().TryGetComponent(item.Owner.Uid, out PDAComponent? pda) &&
                         pda.ContainedID != null)
                     {
                         firstIdInPda = pda.ContainedID;
                     }
 
-                    if (item.Owner.TryGetComponent(out IdCardComponent? card))
+                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent(item.Owner.Uid, out IdCardComponent? card))
                     {
                         return card;
                     }
@@ -43,18 +44,18 @@ namespace Content.Server.PDA
 
             IdCardComponent? firstIdInInventory = null;
 
-            if (player.TryGetComponent(out InventoryComponent? inventory))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(player.Uid, out InventoryComponent? inventory))
             {
                 foreach (var item in inventory.GetAllHeldItems())
                 {
                     if (firstIdInInventory == null &&
-                        item.TryGetComponent(out PDAComponent? pda) &&
+                        IoCManager.Resolve<IEntityManager>().TryGetComponent(item.Uid, out PDAComponent? pda) &&
                         pda.ContainedID != null)
                     {
                         firstIdInInventory = pda.ContainedID;
                     }
 
-                    if (item.TryGetComponent(out IdCardComponent? card))
+                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent(item.Uid, out IdCardComponent? card))
                     {
                         return card;
                     }

@@ -1,5 +1,6 @@
 ﻿using Content.Server.Atmos.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Body.Components
@@ -16,7 +17,7 @@ namespace Content.Server.Body.Components
             var old = BreathToolEntity;
             BreathToolEntity = null;
 
-            if (old != null && old.TryGetComponent(out BreathToolComponent? breathTool) )
+            if (old != null && IoCManager.Resolve<IEntityManager>().TryGetComponent(old.Uid, out BreathToolComponent? breathTool) )
             {
                 breathTool.DisconnectInternals();
                 DisconnectTank();
@@ -25,7 +26,7 @@ namespace Content.Server.Body.Components
 
         public void ConnectBreathTool(IEntity toolEntity)
         {
-            if (BreathToolEntity != null && BreathToolEntity.TryGetComponent(out BreathToolComponent? tool))
+            if (BreathToolEntity != null && IoCManager.Resolve<IEntityManager>().TryGetComponent(BreathToolEntity.Uid, out BreathToolComponent? tool))
             {
                 tool.DisconnectInternals();
             }
@@ -35,7 +36,7 @@ namespace Content.Server.Body.Components
 
         public void DisconnectTank()
         {
-            if (GasTankEntity != null && GasTankEntity.TryGetComponent(out GasTankComponent? tank))
+            if (GasTankEntity != null && IoCManager.Resolve<IEntityManager>().TryGetComponent(GasTankEntity.Uid, out GasTankComponent? tank))
             {
                 tank.DisconnectFromInternals(Owner);
             }
@@ -48,7 +49,7 @@ namespace Content.Server.Body.Components
             if (BreathToolEntity == null)
                 return false;
 
-            if (GasTankEntity != null && GasTankEntity.TryGetComponent(out GasTankComponent? tank))
+            if (GasTankEntity != null && IoCManager.Resolve<IEntityManager>().TryGetComponent(GasTankEntity.Uid, out GasTankComponent? tank))
             {
                 tank.DisconnectFromInternals(Owner);
             }
@@ -61,9 +62,9 @@ namespace Content.Server.Body.Components
         {
             return BreathToolEntity != null &&
                    GasTankEntity != null &&
-                   BreathToolEntity.TryGetComponent(out BreathToolComponent? breathTool) &&
+                   IoCManager.Resolve<IEntityManager>().TryGetComponent(BreathToolEntity.Uid, out BreathToolComponent? breathTool) &&
                    breathTool.IsFunctional &&
-                   GasTankEntity.TryGetComponent(out GasTankComponent? gasTank) &&
+                   IoCManager.Resolve<IEntityManager>().TryGetComponent(GasTankEntity.Uid, out GasTankComponent? gasTank) &&
                    gasTank.Air != null;
         }
 

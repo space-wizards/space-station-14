@@ -55,7 +55,7 @@ namespace Content.Server.StationEvents.Events
             {
                 if ((!IoCManager.Resolve<IEntityManager>().EntityExists(entity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted) continue;
 
-                if (entity.TryGetComponent(out ApcPowerReceiverComponent? powerReceiverComponent))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out ApcPowerReceiverComponent? powerReceiverComponent))
                 {
                     powerReceiverComponent.PowerDisabled = false;
                 }

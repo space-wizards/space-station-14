@@ -42,7 +42,7 @@ namespace Content.Client.Gravity
         {
             base.InitializeEntity(entity);
 
-            if (!entity.TryGetComponent(out SpriteComponent? sprite))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out SpriteComponent? sprite))
                 return;
 
             sprite.LayerMapReserveBlank(GravityGeneratorVisualLayers.Base);

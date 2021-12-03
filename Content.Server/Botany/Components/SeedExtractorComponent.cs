@@ -27,7 +27,7 @@ namespace Content.Server.Botany.Components
             if (!_powerReceiver?.Powered ?? false)
                 return false;
 
-            if (eventArgs.Using.TryGetComponent(out ProduceComponent? produce) && produce.Seed != null)
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Using.Uid, out ProduceComponent? produce) && produce.Seed != null)
             {
                 eventArgs.User.PopupMessageCursor(Loc.GetString("seed-extractor-component-interact-message",("name", eventArgs.Using.Name)));
 

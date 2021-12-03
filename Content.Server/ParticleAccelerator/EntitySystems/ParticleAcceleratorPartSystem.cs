@@ -1,6 +1,7 @@
 ﻿using Content.Server.ParticleAccelerator.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.ParticleAccelerator.EntitySystems
 {
@@ -25,7 +26,7 @@ namespace Content.Server.ParticleAccelerator.EntitySystems
 
         private static void RotateEvent(ref RotateEvent ev)
         {
-            if (ev.Sender.TryGetComponent(out ParticleAcceleratorPartComponent? part))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(ev.Sender.Uid, out ParticleAcceleratorPartComponent? part))
             {
                 part.Rotated();
             }

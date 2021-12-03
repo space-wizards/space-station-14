@@ -95,7 +95,7 @@ namespace Content.Client.Singularity
                     }
                     else
                     {
-                        if (!singuloEntity.TryGetComponent<SingularityDistortionComponent>(out var distortion))
+                        if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SingularityDistortionComponent?>(singuloEntity.Uid, out var distortion))
                         {
                             _singularities.Remove(activeSinguloUid);
                         }

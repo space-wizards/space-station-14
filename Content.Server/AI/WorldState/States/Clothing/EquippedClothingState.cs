@@ -3,6 +3,7 @@ using Content.Server.Inventory.Components;
 using Content.Shared.Inventory;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.AI.WorldState.States.Clothing
 {
@@ -15,7 +16,7 @@ namespace Content.Server.AI.WorldState.States.Clothing
         {
             var result = new Dictionary<EquipmentSlotDefines.Slots, IEntity>();
 
-            if (!Owner.TryGetComponent(out InventoryComponent? inventoryComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out InventoryComponent? inventoryComponent))
             {
                 return result;
             }

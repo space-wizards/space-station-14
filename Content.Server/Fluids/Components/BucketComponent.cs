@@ -56,7 +56,7 @@ namespace Content.Server.Fluids.Components
             var solutionsSys = EntitySystem.Get<SolutionContainerSystem>();
             if (!solutionsSys.TryGetSolution(Owner.Uid, SolutionName, out var contents) ||
                 _currentlyUsing.Contains(eventArgs.Using.Uid) ||
-                !eventArgs.Using.TryGetComponent(out MopComponent? mopComponent) ||
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Using.Uid, out MopComponent? mopComponent) ||
                 mopComponent.Mopping)
             {
                 return false;

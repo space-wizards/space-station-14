@@ -117,7 +117,7 @@ namespace Content.Server.WireHacking
 
         private void UpdateAppearance()
         {
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance))
             {
                 appearance.SetData(WiresVisuals.MaintenancePanelState, IsPanelOpen && IsPanelVisible);
             }
@@ -175,7 +175,7 @@ namespace Content.Server.WireHacking
             base.Initialize();
             _audioSystem = EntitySystem.Get<AudioSystem>();
 
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance))
             {
                 appearance.SetData(WiresVisuals.MaintenancePanelState, IsPanelOpen);
             }
@@ -416,7 +416,7 @@ namespace Content.Server.WireHacking
                         return;
                     }
 
-                    if (!player.TryGetComponent(out HandsComponent? handsComponent))
+                    if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(player.Uid, out HandsComponent? handsComponent))
                     {
                         Owner.PopupMessage(player, Loc.GetString("wires-component-ui-on-receive-message-no-hands"));
                         return;
@@ -431,7 +431,7 @@ namespace Content.Server.WireHacking
                     var activeHandEntity = handsComponent.GetActiveHand?.Owner;
                     ToolComponent? tool = null;
                     if(activeHandEntity != null)
-                        activeHandEntity.TryGetComponent(out tool);
+                        IoCManager.Resolve<IEntityManager>().TryGetComponent(activeHandEntity.Uid, out tool);
                     var toolSystem = EntitySystem.Get<ToolSystem>();
 
                     switch (msg.Action)
@@ -502,7 +502,7 @@ namespace Content.Server.WireHacking
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.Using.TryGetComponent<ToolComponent>(out var tool))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ToolComponent?>(eventArgs.Using.Uid, out var tool))
             {
                 return false;
             }
@@ -514,7 +514,7 @@ namespace Content.Server.WireHacking
                (tool.Qualities.Contains(_cuttingQuality) ||
                 tool.Qualities.Contains(_pulsingQuality)))
             {
-                if (eventArgs.User.TryGetComponent(out ActorComponent? actor))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User.Uid, out ActorComponent? actor))
                 {
                     OpenInterface(actor.PlayerSession);
                     return true;

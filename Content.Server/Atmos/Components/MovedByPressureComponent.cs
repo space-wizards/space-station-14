@@ -42,7 +42,7 @@ namespace Content.Server.Atmos.Components
         public void ExperiencePressureDifference(int cycle, float pressureDifference, AtmosDirection direction,
             float pressureResistanceProbDelta, EntityCoordinates throwTarget)
         {
-            if (!Owner.TryGetComponent(out PhysicsComponent? physics))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out PhysicsComponent? physics))
                 return;
 
             // TODO ATMOS stuns?
@@ -72,7 +72,7 @@ namespace Content.Server.Atmos.Components
 
                     Owner.SpawnTimer(2000, () =>
                     {
-                        if (Deleted || !Owner.TryGetComponent(out PhysicsComponent? physicsComponent)) return;
+                        if (Deleted || !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out PhysicsComponent? physicsComponent)) return;
 
                         // Uhh if you get race conditions good luck buddy.
                         if (IoCManager.Resolve<IEntityManager>().HasComponent<MobStateComponent>(physicsComponent.Owner.Uid))
@@ -118,7 +118,7 @@ namespace Content.Server.Atmos.Components
 
         public static bool IsMovedByPressure(this IEntity entity, [NotNullWhen(true)] out MovedByPressureComponent? moved)
         {
-            return entity.TryGetComponent(out moved) &&
+            return IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out moved) &&
                    moved.Enabled;
         }
     }

@@ -71,7 +71,7 @@ namespace Content.Server.Labels
 
         private void OnUseInHand(EntityUid uid, HandLabelerComponent handLabeler, UseInHandEvent args)
         {
-            if (!args.User.TryGetComponent(out ActorComponent? actor))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User.Uid, out ActorComponent? actor))
                 return;
 
             handLabeler.Owner.GetUIOrNull(HandLabelerUiKey.Key)?.Open(actor.PlayerSession);

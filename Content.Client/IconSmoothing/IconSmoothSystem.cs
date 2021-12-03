@@ -53,7 +53,7 @@ namespace Content.Client.IconSmoothing
             var senderEnt = ev.Sender;
             if (IoCManager.Resolve<IEntityManager>().EntityExists(senderEnt.Uid) &&
                 _mapManager.TryGetGrid(senderEnt.Transform.GridID, out var grid1) &&
-                senderEnt.TryGetComponent(out IconSmoothComponent? iconSmooth)
+                IoCManager.Resolve<IEntityManager>().TryGetComponent(senderEnt.Uid, out IconSmoothComponent? iconSmooth)
                 && iconSmooth.Running)
             {
                 var coords = senderEnt.Transform.Coordinates;

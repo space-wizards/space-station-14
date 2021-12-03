@@ -4,6 +4,7 @@ using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -183,7 +184,7 @@ namespace Content.Shared.Actions.Components
         void IEquippedHand.EquippedHand(EquippedHandEventArgs eventArgs)
         {
             // this entity cannot be granted actions if no actions component
-            if (!eventArgs.User.TryGetComponent<SharedActionsComponent>(out var actionsComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedActionsComponent?>(eventArgs.User.Uid, out var actionsComponent))
                 return;
             Holder = eventArgs.User;
             _holderActionsComponent = actionsComponent;
@@ -195,7 +196,7 @@ namespace Content.Shared.Actions.Components
         void IEquipped.Equipped(EquippedEventArgs eventArgs)
         {
             // this entity cannot be granted actions if no actions component
-            if (!eventArgs.User.TryGetComponent<SharedActionsComponent>(out var actionsComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedActionsComponent?>(eventArgs.User.Uid, out var actionsComponent))
                 return;
             Holder = eventArgs.User;
             _holderActionsComponent = actionsComponent;

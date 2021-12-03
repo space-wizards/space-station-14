@@ -52,7 +52,7 @@ namespace Content.Server.AI.EntitySystems
             {
                 // TODO: Need to generecise this but that will be part of a larger cleanup later anyway.
                 if ((!IoCManager.Resolve<IEntityManager>().EntityExists(message.Entity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(message.Entity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted ||
-                    !message.Entity.TryGetComponent(out UtilityAi? controller))
+                    !IoCManager.Resolve<IEntityManager>().TryGetComponent(message.Entity.Uid, out UtilityAi? controller))
                 {
                     continue;
                 }

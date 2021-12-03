@@ -85,7 +85,7 @@ namespace Content.Server.Chemistry.Components
 
                 var newEffect = IoCManager.Resolve<IEntityManager>().SpawnEntity(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityPrototype.ID, grid.DirectionToGrid(coords, dir));
 
-                if (!newEffect.TryGetComponent(out SolutionAreaEffectComponent? effectComponent))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(newEffect.Uid, out SolutionAreaEffectComponent? effectComponent))
                 {
                     IoCManager.Resolve<IEntityManager>().DeleteEntity(newEffect.Uid);
                     return;

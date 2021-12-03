@@ -89,7 +89,7 @@ namespace Content.Client.Hands
         {
             var player = _playerManager.LocalPlayer?.ControlledEntity;
 
-            if (player == null || !player.TryGetComponent(out HandsComponent? hands))
+            if (player == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(player.Uid, out HandsComponent? hands))
                 return null;
 
             return hands;

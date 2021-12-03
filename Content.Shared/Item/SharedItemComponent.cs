@@ -6,6 +6,7 @@ using Content.Shared.Interaction.Helpers;
 using Content.Shared.Inventory;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Players;
@@ -117,7 +118,7 @@ namespace Content.Shared.Item
             if (user.Transform.MapID != Owner.Transform.MapID)
                 return false;
 
-            if (!Owner.TryGetComponent(out IPhysBody? physics) || physics.BodyType == BodyType.Static)
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out IPhysBody? physics) || physics.BodyType == BodyType.Static)
                 return false;
 
             return user.InRangeUnobstructed(Owner, ignoreInsideBlocker: true, popup: popup);
@@ -140,7 +141,7 @@ namespace Content.Shared.Item
             if (!CanPickup(user))
                 return false;
 
-            if (!user.TryGetComponent(out SharedHandsComponent? hands))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out SharedHandsComponent? hands))
                 return false;
 
             var activeHand = hands.ActiveHand;

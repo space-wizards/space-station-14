@@ -147,7 +147,7 @@ namespace Content.Client.Construction
 
             var entity = EntityManager.GetEntity(args.EntityUid);
 
-            if (!entity.TryGetComponent<ConstructionGhostComponent>(out var ghostComp))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ConstructionGhostComponent?>(entity.Uid, out var ghostComp))
                 return false;
 
             TryStartConstruction(ghostComp.GhostId);

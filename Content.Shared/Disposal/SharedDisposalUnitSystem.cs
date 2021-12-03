@@ -53,17 +53,17 @@ namespace Content.Shared.Disposal
                 return false;
 
             // TODO: Probably just need a disposable tag.
-            if (!entity.TryGetComponent(out SharedItemComponent? storable) &&
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out SharedItemComponent? storable) &&
                 !IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(entity.Uid))
             {
                 return false;
             }
 
 
-            if (!entity.TryGetComponent(out IPhysBody? physics) ||
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out IPhysBody? physics) ||
                 !physics.CanCollide && storable == null)
             {
-                if (!(entity.TryGetComponent(out MobStateComponent? damageState) && damageState.IsDead()))
+                if (!(IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out MobStateComponent? damageState) && damageState.IsDead()))
                 {
                     return false;
                 }

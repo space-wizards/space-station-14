@@ -29,7 +29,7 @@ namespace Content.Client.Clickable
         /// <returns>True if the click worked, false otherwise.</returns>
         public bool CheckClick(Vector2 worldPos, out int drawDepth, out uint renderOrder)
         {
-            if (!Owner.TryGetComponent(out ISpriteComponent? sprite) || !sprite.Visible)
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ISpriteComponent? sprite) || !sprite.Visible)
             {
                 drawDepth = default;
                 renderOrder = default;

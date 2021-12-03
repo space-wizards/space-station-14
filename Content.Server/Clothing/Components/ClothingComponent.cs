@@ -61,8 +61,8 @@ namespace Content.Server.Clothing.Components
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             if (!_quickEquipEnabled) return false;
-            if (!eventArgs.User.TryGetComponent(out InventoryComponent? inv)
-            ||  !eventArgs.User.TryGetComponent(out HandsComponent? hands)) return false;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User.Uid, out InventoryComponent? inv)
+            ||  !IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User.Uid, out HandsComponent? hands)) return false;
 
             foreach (var (slot, flag) in SlotMasks)
             {

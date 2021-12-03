@@ -4,6 +4,7 @@ using Content.Shared.Security;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using System;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Security.Systems
 {
@@ -18,7 +19,7 @@ namespace Content.Server.Security.Systems
 
         private void OnStartup(EntityUid uid, DeployableBarrierComponent component, ComponentStartup args)
         {
-            if (!component.Owner.TryGetComponent(out LockComponent? lockComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out LockComponent? lockComponent))
                 return;
 
             ToggleBarrierDeploy(component, lockComponent.Locked);
@@ -33,13 +34,13 @@ namespace Content.Server.Security.Systems
         {
             component.Owner.Transform.Anchored = isDeployed;
 
-            if (!component.Owner.TryGetComponent(out AppearanceComponent? appearanceComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out AppearanceComponent? appearanceComponent))
                 return;
 
             var state = isDeployed ? DeployableBarrierState.Deployed : DeployableBarrierState.Idle;
             appearanceComponent.SetData(DeployableBarrierVisuals.State, state);
 
-            if (component.Owner.TryGetComponent(out PointLightComponent? light))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out PointLightComponent? light))
                 light.Enabled = isDeployed;
         }
     }

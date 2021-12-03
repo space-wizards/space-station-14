@@ -57,7 +57,7 @@ namespace Content.Server.Power.Components
                 }
             }
 
-            if (Owner.TryGetComponent<StackComponent>(out var stack)
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<StackComponent?>(Owner.Uid, out var stack)
                 && !EntitySystem.Get<StackSystem>().Use(Owner.Uid, 1, stack))
                 return false;
 

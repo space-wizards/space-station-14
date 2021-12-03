@@ -154,7 +154,7 @@ namespace Content.Server.Buckle.Components
                 return false;
             }
 
-            if (!to.TryGetComponent(out strap))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(to.Uid, out strap))
             {
                 return false;
             }
@@ -255,7 +255,7 @@ namespace Content.Server.Buckle.Components
             SendMessage(new BuckleMessage(Owner, to));
 #pragma warning restore 618
 
-            if (Owner.TryGetComponent(out SharedPullableComponent? ownerPullable))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out SharedPullableComponent? ownerPullable))
             {
                 if (ownerPullable.Puller != null)
                 {
@@ -263,7 +263,7 @@ namespace Content.Server.Buckle.Components
                 }
             }
 
-            if (to.TryGetComponent(out SharedPullableComponent? toPullable))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(to.Uid, out SharedPullableComponent? toPullable))
             {
                 if (toPullable.Puller == Owner)
                 {
