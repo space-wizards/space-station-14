@@ -51,12 +51,7 @@
     - type: Foldable
     - type: Appearance
       visuals:
-        - type: ToggleVisualizer
-          stateSuffix: "_buckled"
-          key: StrapState
-        - type: ToggleVisualizer
-          stateSuffix: "_folded"
-          key: FoldedState
+        - type: RollerbedVisualizer
 
 - type: entity
   id: CheapRollerBed

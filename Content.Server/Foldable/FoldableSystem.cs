@@ -33,7 +33,7 @@ namespace Content.Server.Foldable
             base.Initialize();
 
             SubscribeLocalEvent<FoldableComponent, InteractHandEvent>(OnInteract);
-            SubscribeLocalEvent<FoldableComponent, PickedUpAttemptEvent>(OnPickedUpAttempt);
+            SubscribeLocalEvent<FoldableComponent, PickupAttemptEvent>(OnPickedUpAttempt);
             SubscribeLocalEvent<FoldableComponent, UseInHandEvent>(OnUse);
 
             SubscribeLocalEvent<FoldableComponent, GetInteractionVerbsEvent>(AddFoldVerb);
@@ -83,10 +83,6 @@ namespace Content.Server.Foldable
             // You can't buckle an entity to a folded object
             if (component.Owner.TryGetComponent(out StrapComponent? strap))
                 strap.Enabled = !component.IsFolded;
-
-            // A folded object is collision-less
-            if (component.Owner.TryGetComponent(out PhysicsComponent? physicsComponent))
-                physicsComponent.CanCollide = !component.IsFolded;
 
             // Update visuals only if the value has changed
             if (component.Owner.TryGetComponent(out AppearanceComponent? appearance))
@@ -165,9 +161,8 @@ namespace Content.Server.Foldable
         /// <param name="uid"></param>
         /// <param name="component"></param>
         /// <param name="args"></param>
-        private void OnPickedUpAttempt(EntityUid uid, FoldableComponent component, PickedUpAttemptEvent args)
+        private void OnPickedUpAttempt(EntityUid uid, FoldableComponent component, PickupAttemptEvent args)
         {
-            if (args.Cancelled) return;
             if (!component.IsFolded)
                 args.Cancel();
         }
