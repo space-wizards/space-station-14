@@ -2,7 +2,7 @@
 
 namespace Content.Shared.Inventory.New.Events;
 
-public class EquipAttemptEvent : CancellableEntityEventArgs
+public abstract class EquipAttemptBase : CancellableEntityEventArgs
 {
     /// <summary>
     /// The entity equipping.
@@ -24,10 +24,24 @@ public class EquipAttemptEvent : CancellableEntityEventArgs
     /// </summary>
     public string? Reason;
 
-    public EquipAttemptEvent(EntityUid equipee, EntityUid equipment, EquipmentSlotDefines.SlotFlags slotFlags)
+    public EquipAttemptBase(EntityUid equipee, EntityUid equipment, EquipmentSlotDefines.SlotFlags slotFlags)
     {
         Equipee = equipee;
         Equipment = equipment;
         SlotFlags = slotFlags;
+    }
+}
+
+public class BeingEquippedAttemptEvent : EquipAttemptBase
+{
+    public BeingEquippedAttemptEvent(EntityUid equipee, EntityUid equipment, EquipmentSlotDefines.SlotFlags slotFlags) : base(equipee, equipment, slotFlags)
+    {
+    }
+}
+
+public class IsEquippingAttemptEvent : EquipAttemptBase
+{
+    public IsEquippingAttemptEvent(EntityUid equipee, EntityUid equipment, EquipmentSlotDefines.SlotFlags slotFlags) : base(equipee, equipment, slotFlags)
+    {
     }
 }
