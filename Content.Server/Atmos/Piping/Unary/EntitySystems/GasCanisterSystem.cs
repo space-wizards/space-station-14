@@ -117,7 +117,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             }
 
             _userInterfaceSystem.TrySetUiState(uid, GasCanisterUiKey.Key,
-                new GasCanisterBoundUserInterfaceState(canister.Owner.Name,
+                new GasCanisterBoundUserInterfaceState(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(canister.Owner.Uid).EntityName,
                     canister.Air.Pressure, portStatus, tankLabel, tankPressure, canister.ReleasePressure,
                     canister.ReleaseValve, canister.MinReleasePressure, canister.MaxReleasePressure));
         }

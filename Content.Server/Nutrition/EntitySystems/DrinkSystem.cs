@@ -241,7 +241,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!drink.Opened)
             {
                 _popupSystem.PopupEntity(Loc.GetString("drink-component-try-use-drink-not-open",
-                    ("owner", drink.Owner.Name)), uid, Filter.Entities(userUid));
+                    ("owner", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(drink.Owner.Uid).EntityName)), uid, Filter.Entities(userUid));
                 return true;
             }
 
@@ -252,7 +252,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 drinkSolution.DrainAvailable <= 0)
             {
                 _popupSystem.PopupEntity(Loc.GetString("drink-component-try-use-drink-is-empty",
-                    ("entity", drink.Owner.Name)), uid, Filter.Entities(userUid));
+                    ("entity", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(drink.Owner.Uid).EntityName)), uid, Filter.Entities(userUid));
                 return true;
             }
 
@@ -324,7 +324,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!drink.Opened)
             {
                 _popupSystem.PopupEntity(Loc.GetString("drink-component-try-use-drink-not-open",
-                    ("owner", drink.Owner.Name)), uid, Filter.Entities(userUid));
+                    ("owner", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(drink.Owner.Uid).EntityName)), uid, Filter.Entities(userUid));
                 return true;
             }
 
@@ -332,7 +332,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 drinkSolution.DrainAvailable <= 0)
             {
                 _popupSystem.PopupEntity(Loc.GetString("drink-component-try-use-drink-is-empty",
-                    ("entity", drink.Owner.Name)), uid, Filter.Entities(userUid));
+                    ("entity", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(drink.Owner.Uid).EntityName)), uid, Filter.Entities(userUid));
                 return true;
             }
 

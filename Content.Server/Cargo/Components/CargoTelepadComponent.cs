@@ -129,7 +129,8 @@ namespace Content.Server.Cargo.Components
                 return;
 
             // fill in the order data
-            printed.Name = Loc.GetString("cargo-console-paper-print-name", ("orderNumber", data.OrderNumber));
+            string val = Loc.GetString("cargo-console-paper-print-name", ("orderNumber", data.OrderNumber));
+            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(printed.Uid).EntityName = val;
             paper.SetContent(Loc.GetString(
                 "cargo-console-paper-print-text",
                 ("orderNumber", data.OrderNumber),

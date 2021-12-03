@@ -106,7 +106,7 @@ namespace Content.Server.Damage.Commands
                     var damage = new DamageSpecifier(damageGroup, amount);
                     EntitySystem.Get<DamageableSystem>().TryChangeDamage(entity.Uid, damage, ignoreResistances);
 
-                    shell.WriteLine($"Damaged entity {entity.Name} with id {entity.Uid} for {amount} {damageGroup} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
+                    shell.WriteLine($"Damaged entity {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityName} with id {entity.Uid} for {amount} {damageGroup} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
                 };
 
                 return true;
@@ -119,7 +119,7 @@ namespace Content.Server.Damage.Commands
                     var damage = new DamageSpecifier(damageType, amount);
                     EntitySystem.Get<DamageableSystem>().TryChangeDamage(entity.Uid, damage, ignoreResistances);
 
-                    shell.WriteLine($"Damaged entity {entity.Name} with id {entity.Uid} for {amount} {damageType} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
+                    shell.WriteLine($"Damaged entity {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityName} with id {entity.Uid} for {amount} {damageType} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
 
                 };
                 return true;
@@ -199,7 +199,7 @@ namespace Content.Server.Damage.Commands
 
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out DamageableComponent? damageable))
             {
-                shell.WriteLine($"Entity {entity.Name} with id {entity.Uid} does not have a {nameof(DamageableComponent)}.");
+                shell.WriteLine($"Entity {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityName} with id {entity.Uid} does not have a {nameof(DamageableComponent)}.");
                 return;
             }
 

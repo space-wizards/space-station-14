@@ -56,7 +56,8 @@ namespace Content.Server.Chemistry.EntitySystems
                     sprite?.LayerSetSprite(0, spriteSpec);
                 }
 
-                ownerEntity.Name = proto.Name + " glass";
+                string val = proto.Name + " glass";
+                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(ownerEntity.Uid).EntityName = val;
                 IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(ownerEntity.Uid).EntityDescription = proto.Description;
                 component.CurrentReagent = proto;
                 component.Transformed = true;
@@ -74,7 +75,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 sprite.LayerSetSprite(0, component.InitialSprite);
             }
 
-            component.Owner.Name = component.InitialName;
+            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(component.Owner.Uid).EntityName = component.InitialName;
             IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(component.Owner.Uid).EntityDescription = component.InitialDescription;
         }
     }

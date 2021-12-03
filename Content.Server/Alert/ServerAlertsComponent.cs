@@ -2,6 +2,7 @@
 using Content.Server.Gravity.EntitySystems;
 using Content.Shared.Alert;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
@@ -66,7 +67,7 @@ namespace Content.Server.Alert
                     {
                         Logger.DebugS("alert", "user {0} attempted to" +
                                               " click alert {1} which is not currently showing for them",
-                            player.Name, msg.Type);
+                            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(player.Uid).EntityName, msg.Type);
                         break;
                     }
 

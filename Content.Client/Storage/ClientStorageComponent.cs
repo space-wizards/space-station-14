@@ -46,7 +46,7 @@ namespace Content.Client.Storage
         {
             base.OnAdd();
 
-            _window = new StorageWindow(this) {Title = Owner.Name};
+            _window = new StorageWindow(this) {Title = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityName};
             _window.EntityList.GenerateItem += GenerateButton;
             _window.EntityList.ItemPressed += Interact;
         }
@@ -202,7 +202,7 @@ namespace Content.Client.Storage
                     {
                         HorizontalExpand = true,
                         ClipText = true,
-                        Text = entity.Name
+                        Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityName
                     },
                     new Label
                     {

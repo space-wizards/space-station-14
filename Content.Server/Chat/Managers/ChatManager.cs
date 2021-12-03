@@ -194,7 +194,7 @@ namespace Content.Server.Chat.Managers
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.Local;
             msg.Message = message;
-            msg.MessageWrap = Loc.GetString("chat-manager-entity-say-wrap-message",("entityName", source.Name));
+            msg.MessageWrap = Loc.GetString("chat-manager-entity-say-wrap-message",("entityName", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(source.Uid).EntityName));
             msg.SenderEntity = source.Uid;
             msg.HideChat = hideChat;
             _netManager.ServerSendToMany(msg, clients);
@@ -231,7 +231,7 @@ namespace Content.Server.Chat.Managers
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.Emotes;
             msg.Message = action;
-            msg.MessageWrap = Loc.GetString("chat-manager-entity-me-wrap-message", ("entityName",source.Name));
+            msg.MessageWrap = Loc.GetString("chat-manager-entity-me-wrap-message", ("entityName",Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(source.Uid).EntityName));
             msg.SenderEntity = source.Uid;
             _netManager.ServerSendToMany(msg, clients);
         }
@@ -296,9 +296,10 @@ namespace Content.Server.Chat.Managers
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.Dead;
             msg.Message = message;
+            IEntity? tempQualifier = player.AttachedEntity;
             msg.MessageWrap = Loc.GetString("chat-manager-send-dead-chat-wrap-message",
                                             ("deadChannelName", Loc.GetString("chat-manager-dead-channel-name")),
-                                            ("playerName", player.AttachedEntity?.Name ?? "???"));
+                                            ("playerName", (tempQualifier != null ? IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(tempQualifier.Uid).EntityName : null) ?? "???"));
             msg.SenderEntity = player.AttachedEntityUid.GetValueOrDefault();
             _netManager.ServerSendToMany(msg, clients.ToList());
         }

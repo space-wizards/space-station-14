@@ -50,7 +50,7 @@ namespace Content.Server.Buckle.Systems
                 if (entity == args.User)
                     verb.Text = Loc.GetString("verb-self-target-pronoun");
                 else
-                    verb.Text = entity.Name;
+                    verb.Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityName;
 
                 // In the event that you have more than once entity with the same name strapped to the same object,
                 // these two verbs will be identical according to Verb.CompareTo, and only one with actually be added to
@@ -88,7 +88,7 @@ namespace Content.Server.Buckle.Systems
                 Verb verb = new();
                 verb.Act = () => usingBuckle.TryBuckle(args.User, args.Target);
                 verb.Category = VerbCategory.Buckle;
-                verb.Text = args.Using.Name;
+                verb.Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(args.Using.Uid).EntityName;
 
                 // If the used entity is a person being pulled, prioritize this verb. Conversely, if it is
                 // just a held object, the user is probably just trying to sit down.

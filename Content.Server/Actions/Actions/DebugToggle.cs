@@ -2,6 +2,8 @@
 using Content.Shared.Actions.Behaviors;
 using Content.Shared.Actions.Behaviors.Item;
 using JetBrains.Annotations;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Actions.Actions
@@ -17,11 +19,11 @@ namespace Content.Server.Actions.Actions
         {
             if (args.ToggledOn)
             {
-                args.Performer.PopupMessageEveryone(args.Item.Name + ": " + MessageOn);
+                args.Performer.PopupMessageEveryone(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(args.Item.Uid).EntityName + ": " + MessageOn);
             }
             else
             {
-                args.Performer.PopupMessageEveryone(args.Item.Name + ": " +MessageOff);
+                args.Performer.PopupMessageEveryone(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(args.Item.Uid).EntityName + ": " +MessageOff);
             }
 
             return true;

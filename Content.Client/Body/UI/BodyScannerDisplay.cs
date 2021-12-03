@@ -147,7 +147,7 @@ namespace Content.Client.Body.UI
 
         private void UpdateBodyPartBox(SharedBodyPartComponent part, string slotName)
         {
-            BodyPartLabel.Text = $"{Loc.GetString(slotName)}: {Loc.GetString(part.Owner.Name)}";
+            BodyPartLabel.Text = $"{Loc.GetString(slotName)}: {Loc.GetString(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(part.Owner.Uid).EntityName)}";
 
             // TODO BODY Part damage
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent(part.Owner.Uid, out DamageableComponent? damageable))

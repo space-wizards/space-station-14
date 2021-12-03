@@ -274,13 +274,21 @@ namespace Content.Server.GameTicking
                     }
                     // Finish
                     var antag = mind.AllRoles.Any(role => role.Antagonist);
+
+                    var playerIcName = string.Empty;
+
+                    if (mind.CharacterName != null)
+                        playerIcName = mind.CharacterName;
+                    else if (mind.CurrentEntity != null)
+                        playerIcName = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(mind.CurrentEntity.Uid).EntityName;
+
                     var playerEndRoundInfo = new RoundEndMessageEvent.RoundEndPlayerInfo()
                     {
                         // Note that contentPlayerData?.Name sticks around after the player is disconnected.
                         // This is as opposed to ply?.Name which doesn't.
                         PlayerOOCName = contentPlayerData?.Name ?? "(IMPOSSIBLE: REGISTERED MIND WITH NO OWNER)",
                         // Character name takes precedence over current entity name
-                        PlayerICName = mind.CharacterName ?? mind.CurrentEntity?.Name,
+                        PlayerICName = playerIcName,
                         Role = antag
                             ? mind.AllRoles.First(role => role.Antagonist).Name
                             : mind.AllRoles.FirstOrDefault()?.Name ?? Loc.GetString("game-ticker-unknown-role"),

@@ -22,7 +22,7 @@ namespace Content.Client.Access.UI
         {
             base.Open();
 
-            _window = new IdCardConsoleWindow(this, _prototypeManager) {Title = Owner.Owner.Name};
+            _window = new IdCardConsoleWindow(this, _prototypeManager) {Title = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Owner.Uid).EntityName};
             _window.OnClose += Close;
             _window.OpenCentered();
         }

@@ -73,7 +73,8 @@ namespace Content.Server.PAI
             }
 
             // Ownership tag
-            component.Owner.Name = Loc.GetString("pai-system-pai-name", ("owner", args.User));
+            string val = Loc.GetString("pai-system-pai-name", ("owner", args.User));
+            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(component.Owner.Uid).EntityName = val;
 
             var ghostFinder = EntityManager.EnsureComponent<GhostTakeoverAvailableComponent>(uid);
 

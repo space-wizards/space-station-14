@@ -36,7 +36,7 @@ namespace Content.Server.Climbing.Components
 
             if (!Owner.EnsureComponent(out PhysicsComponent _))
             {
-                Logger.Warning($"Entity {Owner.Name} at {IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).MapPosition} didn't have a {nameof(PhysicsComponent)}");
+                Logger.Warning($"Entity {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityName} at {IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).MapPosition} didn't have a {nameof(PhysicsComponent)}");
             }
         }
 

@@ -64,7 +64,7 @@ namespace Content.Server.Lock
             args.PushText(Loc.GetString(lockComp.Locked
                     ? "lock-comp-on-examined-is-locked"
                     : "lock-comp-on-examined-is-unlocked",
-                ("entityName", lockComp.Owner.Name)));
+                ("entityName", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(lockComp.Owner.Uid).EntityName)));
         }
 
         public bool TryLock(EntityUid uid, IEntity user, LockComponent? lockComp = null)
@@ -78,7 +78,7 @@ namespace Content.Server.Lock
             if (!HasUserAccess(uid, user, quiet: false))
                 return false;
 
-            lockComp.Owner.PopupMessage(user, Loc.GetString("lock-comp-do-lock-success", ("entityName",lockComp.Owner.Name)));
+            lockComp.Owner.PopupMessage(user, Loc.GetString("lock-comp-do-lock-success", ("entityName",Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(lockComp.Owner.Uid).EntityName)));
             lockComp.Locked = true;
 
             if(lockComp.LockSound != null)
@@ -107,7 +107,7 @@ namespace Content.Server.Lock
             if (!HasUserAccess(uid, user, quiet: false))
                 return false;
 
-            lockComp.Owner.PopupMessage(user, Loc.GetString("lock-comp-do-unlock-success", ("entityName", lockComp.Owner.Name)));
+            lockComp.Owner.PopupMessage(user, Loc.GetString("lock-comp-do-unlock-success", ("entityName", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(lockComp.Owner.Uid).EntityName)));
             lockComp.Locked = false;
 
             if(lockComp.UnlockSound != null)

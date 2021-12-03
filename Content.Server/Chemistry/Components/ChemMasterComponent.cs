@@ -187,13 +187,13 @@ namespace Content.Server.Chemistry.Components
                 !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(beaker.Uid, fits.Solution, out var beakerSolution))
             {
                 return new ChemMasterBoundUserInterfaceState(Powered, false, FixedPoint2.New(0), FixedPoint2.New(0),
-                    "", _label, Owner.Name, new List<Solution.ReagentQuantity>(), BufferSolution.Contents, _bufferModeTransfer,
+                    "", _label, IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityName, new List<Solution.ReagentQuantity>(), BufferSolution.Contents, _bufferModeTransfer,
                     BufferSolution.TotalVolume, _pillType);
             }
 
             return new ChemMasterBoundUserInterfaceState(Powered, true, beakerSolution.CurrentVolume,
                 beakerSolution.MaxVolume,
-                beaker.Name, _label, Owner.Name, beakerSolution.Contents, BufferSolution.Contents, _bufferModeTransfer,
+                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(beaker.Uid).EntityName, _label, IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityName, beakerSolution.Contents, BufferSolution.Contents, _bufferModeTransfer,
                 BufferSolution.TotalVolume, _pillType);
         }
 
@@ -306,8 +306,9 @@ namespace Content.Server.Chemistry.Components
 
                     //Adding label
                     LabelComponent labelComponent = bottle.EnsureComponent<LabelComponent>();
-                    labelComponent.OriginalName = bottle.Name;
-                    bottle.Name += $" ({label})";
+                    labelComponent.OriginalName = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(bottle.Uid).EntityName;
+                    string val = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(bottle.Uid).EntityName + $" ({label})";
+                    IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(bottle.Uid).EntityName = val;
                     labelComponent.CurrentLabel = label;
 
                     var bufferSolution = BufferSolution.SplitSolution(actualVolume);
@@ -348,8 +349,9 @@ namespace Content.Server.Chemistry.Components
 
                     //Adding label
                     LabelComponent labelComponent = pill.EnsureComponent<LabelComponent>();
-                    labelComponent.OriginalName = pill.Name;
-                    pill.Name += $" ({label})";
+                    labelComponent.OriginalName = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(pill.Uid).EntityName;
+                    string val = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(pill.Uid).EntityName + $" ({label})";
+                    IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(pill.Uid).EntityName = val;
                     labelComponent.CurrentLabel = label;
 
                     var bufferSolution = BufferSolution.SplitSolution(actualVolume);

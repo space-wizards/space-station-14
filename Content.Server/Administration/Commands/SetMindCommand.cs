@@ -69,7 +69,7 @@ namespace Content.Server.Administration.Commands
             {
                 mind = new Mind.Mind(session.UserId)
                 {
-                    CharacterName = target.Name
+                    CharacterName = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(target.Uid).EntityName
                 };
                 mind.ChangeOwningPlayer(session.UserId);
             }

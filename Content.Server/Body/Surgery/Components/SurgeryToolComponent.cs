@@ -109,7 +109,7 @@ namespace Content.Server.Body.Surgery.Components
                 }
 
                 // Log error if the surgery fails somehow.
-                Logger.Debug($"Error when trying to perform surgery on ${nameof(SharedBodyPartComponent)} {eventArgs.User.Name}");
+                Logger.Debug($"Error when trying to perform surgery on ${nameof(SharedBodyPartComponent)} {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(eventArgs.User.Uid).EntityName}");
                 throw new InvalidOperationException();
             }
 

@@ -230,12 +230,12 @@ namespace Content.Server.Chemistry.Components
             {
                 return new ReagentDispenserBoundUserInterfaceState(Powered, false, FixedPoint2.New(0),
                     FixedPoint2.New(0),
-                    string.Empty, Inventory, Owner.Name, null, _dispenseAmount);
+                    string.Empty, Inventory, IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityName, null, _dispenseAmount);
             }
 
             return new ReagentDispenserBoundUserInterfaceState(Powered, true, solution.CurrentVolume,
                 solution.MaxVolume,
-                beaker.Name, Inventory, Owner.Name, solution.Contents.ToList(), _dispenseAmount);
+                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(beaker.Uid).EntityName, Inventory, IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityName, solution.Contents.ToList(), _dispenseAmount);
         }
 
         public void UpdateUserInterface()

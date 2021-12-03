@@ -184,7 +184,7 @@ namespace Content.IntegrationTests.Tests.Body
                 await server.WaitRunTicks(increment);
                 await server.WaitAssertion(() =>
                 {
-                    Assert.False(respirator.Suffocating, $"Entity {human.Name} is suffocating on tick {tick}");
+                    Assert.False(respirator.Suffocating, $"Entity {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(human.Uid).EntityName} is suffocating on tick {tick}");
                 });
             }
 

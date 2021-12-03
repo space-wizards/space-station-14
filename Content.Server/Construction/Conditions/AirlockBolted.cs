@@ -36,9 +36,9 @@ namespace Content.Server.Construction.Conditions
             if (airlock.BoltsDown != Value)
             {
                 if (Value == true)
-                    args.PushMarkup(Loc.GetString("construction-examine-condition-airlock-bolt", ("entityName", entity.Name)) + "\n");
+                    args.PushMarkup(Loc.GetString("construction-examine-condition-airlock-bolt", ("entityName", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityName)) + "\n");
                 else
-                    args.PushMarkup(Loc.GetString("construction-examine-condition-airlock-unbolt", ("entityName", entity.Name)) + "\n");
+                    args.PushMarkup(Loc.GetString("construction-examine-condition-airlock-unbolt", ("entityName", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityName)) + "\n");
                 return true;
             }
 

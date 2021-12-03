@@ -52,7 +52,7 @@ namespace Content.Server.PowerCell
                 return;
 
             Verb verb = new();
-            verb.Text = args.Using.Name;
+            verb.Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(args.Using.Uid).EntityName;
             verb.Category = VerbCategory.Insert;
             verb.Act = () => component.InsertCell(args.Using);
             args.Verbs.Add(verb);

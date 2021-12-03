@@ -173,7 +173,7 @@ namespace Content.Server.Sandbox
                 var card = _entityManager.SpawnEntity("CaptainIDCard", IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.AttachedEntity.Uid).Coordinates);
                 UpgradeId(card);
 
-                IoCManager.Resolve<IEntityManager>().GetComponent<IdCardComponent>(card.Uid).FullName = player.AttachedEntity.Name;
+                IoCManager.Resolve<IEntityManager>().GetComponent<IdCardComponent>(card.Uid).FullName = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(player.AttachedEntity.Uid).EntityName;
                 return card;
             }
         }

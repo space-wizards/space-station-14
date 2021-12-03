@@ -220,7 +220,7 @@ namespace Content.Server.Doors.Components
             {
                 if (!CanWeldShut)
                 {
-                    Logger.Warning("{0} prototype loaded with incompatible flags: 'welded' is true, but door cannot be welded.", Owner.Name);
+                    Logger.Warning("{0} prototype loaded with incompatible flags: 'welded' is true, but door cannot be welded.", IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityName);
                     return;
                 }
                 SetAppearance(DoorVisualState.Welded);
@@ -243,7 +243,7 @@ namespace Content.Server.Doors.Components
             {
                 if (IsWeldedShut)
                 {
-                    Logger.Warning("{0} prototype loaded with incompatible flags: 'welded' and 'startOpen' are both true.", Owner.Name);
+                    Logger.Warning("{0} prototype loaded with incompatible flags: 'welded' and 'startOpen' are both true.", IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityName);
                     return;
                 }
                 QuickOpen(false);

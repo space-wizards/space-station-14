@@ -36,7 +36,7 @@ namespace Content.Server.Ghost.Components
             msg.Channel = ChatChannel.Radio;
             msg.Message = message;
             //Square brackets are added here to avoid issues with escaping
-            msg.MessageWrap = Loc.GetString("chat-radio-message-wrap", ("channel", $"\\[{channel}\\]"), ("name", speaker.Name));
+            msg.MessageWrap = Loc.GetString("chat-radio-message-wrap", ("channel", $"\\[{channel}\\]"), ("name", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(speaker.Uid).EntityName));
             _netManager.ServerSendMessage(msg, playerChannel);
         }
 

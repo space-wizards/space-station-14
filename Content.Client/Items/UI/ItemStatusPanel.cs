@@ -159,11 +159,11 @@ namespace Content.Client.Items.UI
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent(_entity.Uid, out HandVirtualItemComponent? virtualItem)
                 && _entityManager.TryGetEntity(virtualItem.BlockingEntity, out var blockEnt))
             {
-                _itemNameLabel.Text = blockEnt.Name;
+                _itemNameLabel.Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(blockEnt.Uid).EntityName;
             }
             else
             {
-                _itemNameLabel.Text = _entity.Name;
+                _itemNameLabel.Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_entity.Uid).EntityName;
             }
         }
 

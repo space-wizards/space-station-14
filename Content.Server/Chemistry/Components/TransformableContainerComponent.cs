@@ -29,7 +29,7 @@ namespace Content.Server.Chemistry.Components
                 InitialSprite = new SpriteSpecifier.Rsi(new ResourcePath(sprite.BaseRSIPath), "icon");
             }
 
-            InitialName = Owner.Name;
+            InitialName = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityName;
             InitialDescription = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityDescription;
         }
 

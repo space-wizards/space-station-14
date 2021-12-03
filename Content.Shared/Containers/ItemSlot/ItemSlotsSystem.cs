@@ -81,7 +81,7 @@ namespace Content.Shared.Containers.ItemSlots
             var itemSlots = EntityManager.EnsureComponent<ItemSlotsComponent>(uid);
             slot.ContainerSlot = ContainerHelpers.EnsureContainer<ContainerSlot>(itemSlots.Owner, id);
             if (itemSlots.Slots.ContainsKey(id))
-                Logger.Error($"Duplicate item slot key. Entity: {itemSlots.Owner.Name} ({uid}), key: {id}");
+                Logger.Error($"Duplicate item slot key. Entity: {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(itemSlots.Owner.Uid).EntityName} ({uid}), key: {id}");
             itemSlots.Slots[id] = slot;
         }
 
@@ -344,7 +344,7 @@ namespace Content.Shared.Containers.ItemSlots
 
                 var verbSubject = slot.Name != string.Empty
                     ? Loc.GetString(slot.Name)
-                    : slot.Item!.Name ?? string.Empty;
+                    : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(slot.Item!.Uid).EntityName ?? string.Empty;
 
                 Verb verb = new();
                 verb.Act = () => TryEjectToHands(uid, slot, args.User.Uid);
@@ -379,7 +379,7 @@ namespace Content.Shared.Containers.ItemSlots
 
                     var verbSubject = slot.Name != string.Empty
                         ? Loc.GetString(slot.Name)
-                        : slot.Item!.Name ?? string.Empty;
+                        : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(slot.Item!.Uid).EntityName ?? string.Empty;
 
                     Verb takeVerb = new();
                     takeVerb.Act = () => TryEjectToHands(uid, slot, args.User.Uid);
@@ -405,7 +405,7 @@ namespace Content.Shared.Containers.ItemSlots
 
                 var verbSubject = slot.Name != string.Empty
                     ? Loc.GetString(slot.Name)
-                    : args.Using.Name ?? string.Empty;
+                    : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(args.Using.Uid).EntityName ?? string.Empty;
 
                 Verb insertVerb = new();
                 insertVerb.Act = () => Insert(uid, slot, args.Using);

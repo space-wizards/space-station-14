@@ -222,7 +222,7 @@ namespace Content.Server.Ghost
             {
                 if (player.AttachedEntity != null)
                 {
-                    players.Add(player.AttachedEntity.Uid, player.AttachedEntity.Name);
+                    players.Add(player.AttachedEntity.Uid, IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(player.AttachedEntity.Uid).EntityName);
                 }
             }
 

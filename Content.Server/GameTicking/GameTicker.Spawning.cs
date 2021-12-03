@@ -190,7 +190,7 @@ namespace Content.Server.GameTicking
             newMind.AddRole(new ObserverRole(newMind));
 
             var mob = SpawnObserverMob();
-            mob.Name = name;
+            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(mob.Uid).EntityName = name;
             var ghost = IoCManager.Resolve<IEntityManager>().GetComponent<GhostComponent>(mob.Uid);
             EntitySystem.Get<SharedGhostSystem>().SetCanReturnToBody(ghost, false);
             newMind.TransferTo(mob.Uid);
@@ -214,7 +214,7 @@ namespace Content.Server.GameTicking
             if (profile != null)
             {
                 EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(entity.Uid, profile);
-                entity.Name = profile.Name;
+                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityName = profile.Name;
             }
 
             return entity;

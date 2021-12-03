@@ -126,7 +126,7 @@ namespace Content.Server.Administration
             var username = string.Empty;
 
             if(session.AttachedEntity != null)
-                username = session.AttachedEntity.Name;
+                username = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(session.AttachedEntity.Uid).EntityName;
 
             var antag = session.ContentData()?.Mind?.AllRoles.Any(r => r.Antagonist) ?? false;
             var uid = session.AttachedEntity?.Uid ?? EntityUid.Invalid;

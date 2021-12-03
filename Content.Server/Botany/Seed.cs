@@ -263,7 +263,8 @@ namespace Content.Server.Botany
                 sprite.LayerSetSprite(0, new SpriteSpecifier.Rsi(PlantRsi, "seed"));
             }
 
-            seed.Name = Loc.GetString("botany-seed-packet-name", ("seedName", SeedName), ("seedNoun", SeedNoun));
+            string val = Loc.GetString("botany-seed-packet-name", ("seedName", SeedName), ("seedNoun", SeedNoun));
+            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(seed.Uid).EntityName = val;
 
             return seed;
         }
@@ -341,7 +342,8 @@ namespace Content.Server.Botany
 
                 if (Mysterious)
                 {
-                    entity.Name += "?";
+                    string val1 = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityName + "?";
+                    IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityName = val1;
                     string val = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityDescription + (" " + Loc.GetString("botany-mysterious-description-addon"));
                     IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityDescription = val;
                 }

@@ -134,7 +134,7 @@ namespace Content.Client.Kitchen.UI
                     continue;
                 }
 
-                var solidItem = _menu.IngredientsList.AddItem(entity.Name, texture);
+                var solidItem = _menu.IngredientsList.AddItem(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityName, texture);
                 var solidIndex = _menu.IngredientsList.IndexOf(solidItem);
                 _solids.Add(solidIndex, t);
             }

@@ -28,7 +28,7 @@ namespace Content.Server.Storage.Components
 
         [ViewVariables] private ContainerSlot _itemContainer = default!;
 
-        public string SecretPartName => _secretPartNameOverride ?? Loc.GetString("comp-secret-stash-secret-part-name", ("name", Owner.Name));
+        public string SecretPartName => _secretPartNameOverride ?? Loc.GetString("comp-secret-stash-secret-part-name", ("name", IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityName));
 
         protected override void Initialize()
         {

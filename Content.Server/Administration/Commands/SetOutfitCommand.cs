@@ -103,7 +103,7 @@ namespace Content.Server.Administration.Commands
                     IoCManager.Resolve<IEntityManager>().TryGetComponent<PDAComponent?>(equipmentEntity.Uid, out var pdaComponent) &&
                     pdaComponent.ContainedID != null)
                 {
-                    pdaComponent.ContainedID.FullName = target.Name;
+                    pdaComponent.ContainedID.FullName = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(target.Uid).EntityName;
                 }
 
                 inventoryComponent.Equip(slot, IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(equipmentEntity.Uid), false);

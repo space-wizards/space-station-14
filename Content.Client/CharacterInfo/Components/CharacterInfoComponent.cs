@@ -55,7 +55,7 @@ namespace Content.Client.CharacterInfo.Components
                         _control.SpriteView.Sprite = spriteComponent;
                     }
 
-                    _control.NameLabel.Text = Owner.Name;
+                    _control.NameLabel.Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityName;
                     break;
             }
         }

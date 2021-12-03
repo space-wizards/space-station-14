@@ -114,7 +114,12 @@ namespace Content.Server.Strip
 
             foreach (var slot in inventory.Slots)
             {
-                dictionary[slot] = inventory.GetSlotItem(slot)?.Owner.Name ?? "None";
+                var name = "None";
+
+                if (inventory.GetSlotItem(slot) is { } item)
+                    name = item.Owner.Name;
+
+                dictionary[slot] = name;
             }
 
             return dictionary;

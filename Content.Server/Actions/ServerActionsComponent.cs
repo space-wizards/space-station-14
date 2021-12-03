@@ -63,7 +63,7 @@ namespace Content.Server.Actions
             if (!attempt.TryGetActionState(this, out var actionState) || !actionState.Enabled)
             {
                 Logger.DebugS("action", "user {0} attempted to use" +
-                                        " action {1} which is not granted to them", player.Name,
+                                        " action {1} which is not granted to them", IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(player.Uid).EntityName,
                     attempt);
                 return;
             }
@@ -71,7 +71,7 @@ namespace Content.Server.Actions
             if (actionState.IsOnCooldown(GameTiming))
             {
                 Logger.DebugS("action", "user {0} attempted to use" +
-                                        " action {1} which is on cooldown", player.Name,
+                                        " action {1} which is on cooldown", IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(player.Uid).EntityName,
                     attempt);
                 return;
             }
@@ -86,7 +86,7 @@ namespace Content.Server.Actions
                     if (toggleMsg.ToggleOn == actionState.ToggledOn)
                     {
                         Logger.DebugS("action", "user {0} attempted to" +
-                                                " toggle action {1} to {2}, but it is already toggled {2}", player.Name,
+                                                " toggle action {1} to {2}, but it is already toggled {2}", IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(player.Uid).EntityName,
                             attempt.Action.Name, toggleMsg.ToggleOn);
                         return;
                     }
@@ -113,7 +113,7 @@ namespace Content.Server.Actions
                     {
                         Logger.DebugS("action", "user {0} attempted to" +
                                                 " perform target entity action {1} but could not find entity with " +
-                                                "provided uid {2}", player.Name, attempt.Action.Name,
+                                                "provided uid {2}", IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(player.Uid).EntityName, attempt.Action.Name,
                             targetEntityMsg.Target);
                         return;
                     }
@@ -204,7 +204,7 @@ namespace Content.Server.Actions
             {
                 Logger.DebugS("action", "user {0} attempted to" +
                                         " perform target action further than allowed range",
-                    player.Name);
+                    IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(player.Uid).EntityName);
                 return false;
             }
 

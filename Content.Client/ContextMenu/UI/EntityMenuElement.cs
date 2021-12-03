@@ -70,9 +70,9 @@ namespace Content.Client.ContextMenu.UI
             EntityIcon.Sprite = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<ISpriteComponent>(entity.Uid);
 
             if (UserInterfaceManager.DebugMonitors.Visible)
-                Text = $"{entity!.Name} ({entity.Uid})";
+                Text = $"{IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity!.Uid).EntityName} ({entity.Uid})";
             else
-                Text = entity!.Name;
+                Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity!.Uid).EntityName;
         }
     }
 }

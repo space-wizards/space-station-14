@@ -684,7 +684,7 @@ namespace Content.Server.Botany.Components
                 }
 
                 user.PopupMessageCursor(Loc.GetString("plant-holder-component-already-seeded-message",
-                    ("name", Owner.Name)));
+                    ("name", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityName)));
                 return false;
             }
 
@@ -693,9 +693,9 @@ namespace Content.Server.Botany.Components
                 if (WeedLevel > 0)
                 {
                     user.PopupMessageCursor(Loc.GetString("plant-holder-component-remove-weeds-message",
-                        ("name", Owner.Name)));
+                        ("name", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityName)));
                     user.PopupMessageOtherClients(Loc.GetString("plant-holder-component-remove-weeds-others-message",
-                        ("otherName", user.Name)));
+                        ("otherName", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(user.Uid).EntityName)));
                     WeedLevel = 0;
                     UpdateSprite();
                 }
@@ -712,9 +712,9 @@ namespace Content.Server.Botany.Components
                 if (Seed != null)
                 {
                     user.PopupMessageCursor(Loc.GetString("plant-holder-component-remove-plant-message",
-                        ("name", Owner.Name)));
+                        ("name", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityName)));
                     user.PopupMessageOtherClients(Loc.GetString("plant-holder-component-remove-plant-others-message",
-                        ("name", user.Name)));
+                        ("name", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(user.Uid).EntityName)));
                     RemovePlant();
                 }
                 else

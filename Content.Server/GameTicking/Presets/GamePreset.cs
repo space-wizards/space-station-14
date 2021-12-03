@@ -78,9 +78,9 @@ namespace Content.Server.GameTicking.Presets
             // If all else fails, it'll default to the default entity prototype name, "observer".
             // However, that should rarely happen.
             if(!string.IsNullOrWhiteSpace(mind.CharacterName))
-                ghost.Name = mind.CharacterName;
+                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(ghost.Uid).EntityName = mind.CharacterName;
             else if (!string.IsNullOrWhiteSpace(mind.Session?.Name))
-                ghost.Name = mind.Session.Name;
+                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(ghost.Uid).EntityName = mind.Session.Name;
 
             var ghostComponent = IoCManager.Resolve<IEntityManager>().GetComponent<GhostComponent>(ghost.Uid);
 

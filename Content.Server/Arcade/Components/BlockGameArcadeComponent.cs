@@ -668,7 +668,7 @@ namespace Content.Server.Arcade.Components
                 {
                     var blockGameSystem = EntitySystem.Get<BlockGameSystem>();
 
-                    _highScorePlacement = blockGameSystem.RegisterHighScore(_component._player.AttachedEntity.Name, Points);
+                    _highScorePlacement = blockGameSystem.RegisterHighScore(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_component._player.AttachedEntity.Uid).EntityName, Points);
                     SendHighscoreUpdate();
                 }
                 _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameGameOverScreenMessage(Points, _highScorePlacement?.LocalPlacement, _highScorePlacement?.GlobalPlacement));

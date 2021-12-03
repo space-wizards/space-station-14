@@ -41,7 +41,7 @@ namespace Content.Server.Kitchen.Components
             if (!string.IsNullOrEmpty(_meatPrototype))
             {
                 var meat = IoCManager.Resolve<IEntityManager>().SpawnEntity(_meatPrototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
-                meat.Name = _meatName;
+                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(meat.Uid).EntityName = _meatName;
             }
 
             if (_meatParts != 0)

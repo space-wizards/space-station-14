@@ -29,7 +29,7 @@ namespace Content.Server.Botany.Components
 
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Using.Uid, out ProduceComponent? produce) && produce.Seed != null)
             {
-                eventArgs.User.PopupMessageCursor(Loc.GetString("seed-extractor-component-interact-message",("name", eventArgs.Using.Name)));
+                eventArgs.User.PopupMessageCursor(Loc.GetString("seed-extractor-component-interact-message",("name", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(eventArgs.Using.Uid).EntityName)));
 
                 IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(eventArgs.Using.Uid);
 

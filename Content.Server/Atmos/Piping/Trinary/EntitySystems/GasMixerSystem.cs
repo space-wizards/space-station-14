@@ -128,7 +128,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 return;
 
             _userInterfaceSystem.TrySetUiState(uid, GasMixerUiKey.Key,
-                new GasMixerBoundUserInterfaceState(mixer.Owner.Name, mixer.TargetPressure, mixer.Enabled, mixer.InletOneConcentration));
+                new GasMixerBoundUserInterfaceState(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(mixer.Owner.Uid).EntityName, mixer.TargetPressure, mixer.Enabled, mixer.InletOneConcentration));
         }
 
         private void OnToggleStatusMessage(EntityUid uid, GasMixerComponent mixer, GasMixerToggleStatusMessage args)

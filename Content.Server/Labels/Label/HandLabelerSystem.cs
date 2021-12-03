@@ -53,7 +53,7 @@ namespace Content.Server.Labels
             LabelComponent label = target.EnsureComponent<LabelComponent>();
 
             if (label.OriginalName != null)
-                target.Name = label.OriginalName;
+                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(target.Uid).EntityName = label.OriginalName;
             label.OriginalName = null;
 
             if (handLabeler.AssignedLabel == string.Empty)
@@ -63,8 +63,9 @@ namespace Content.Server.Labels
                 return;
             }
 
-            label.OriginalName = target.Name;
-            target.Name += $" ({handLabeler.AssignedLabel})";
+            label.OriginalName = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(target.Uid).EntityName;
+            string val = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(target.Uid).EntityName + $" ({handLabeler.AssignedLabel})";
+            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(target.Uid).EntityName = val;
             label.CurrentLabel = handLabeler.AssignedLabel;
             result = Loc.GetString("hand-labeler-successfully-applied");
         }

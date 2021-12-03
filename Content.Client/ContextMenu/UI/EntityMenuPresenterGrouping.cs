@@ -22,7 +22,7 @@ namespace Content.Client.ContextMenu.UI
         {
             if (GroupingContextMenuType == 0)
             {
-                var newEntities = entities.GroupBy(e => e.Name + (IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(e.Uid).EntityPrototype?.ID ?? string.Empty)).ToList();
+                var newEntities = entities.GroupBy(e => IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(e.Uid).EntityName + (IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(e.Uid).EntityPrototype?.ID ?? string.Empty)).ToList();
                 return newEntities.Select(grp => grp.ToList()).ToList();
             }
             else

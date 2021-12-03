@@ -30,7 +30,7 @@ namespace Content.Client.VendingMachines
 
             VendingMachine = vendingMachine;
 
-            _menu = new VendingMachineMenu(this) {Title = Owner.Owner.Name};
+            _menu = new VendingMachineMenu(this) {Title = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Owner.Uid).EntityName};
             _menu.Populate(VendingMachine.Inventory);
 
             _menu.OnClose += Close;

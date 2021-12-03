@@ -34,9 +34,9 @@ namespace Content.Server.Construction.Conditions
             if (door.IsWeldedShut != Welded)
             {
                 if (Welded == true)
-                    args.PushMarkup(Loc.GetString("construction-examine-condition-door-weld", ("entityName", entity.Name)) + "\n");
+                    args.PushMarkup(Loc.GetString("construction-examine-condition-door-weld", ("entityName", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityName)) + "\n");
                 else
-                    args.PushMarkup(Loc.GetString("construction-examine-condition-door-unweld", ("entityName", entity.Name)) + "\n");
+                    args.PushMarkup(Loc.GetString("construction-examine-condition-door-unweld", ("entityName", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityName)) + "\n");
                 return true;
             }
 

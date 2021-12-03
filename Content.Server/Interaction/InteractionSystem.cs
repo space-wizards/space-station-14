@@ -329,7 +329,7 @@ namespace Content.Server.Interaction
             if (target != null && !user.IsInSameOrParentContainer(target) && !CanAccessViaStorage(user.Uid, target.Uid))
             {
                 Logger.WarningS("system.interaction",
-                    $"User entity named {user.Name} clicked on object {target.Name} that isn't the parent, child, or in the same container");
+                    $"User entity named {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(user.Uid).EntityName} clicked on object {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(target.Uid).EntityName} that isn't the parent, child, or in the same container");
                 return;
             }
 
@@ -377,7 +377,7 @@ namespace Content.Server.Interaction
             if (coordinates.GetMapId(_entityManager) != IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user.Uid).MapID)
             {
                 Logger.WarningS("system.interaction",
-                    $"User entity named {user.Name} clicked on a map they aren't located on");
+                    $"User entity named {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(user.Uid).EntityName} clicked on a map they aren't located on");
                 return false;
             }
 
@@ -471,7 +471,7 @@ namespace Content.Server.Interaction
                 if (targetEnt != null && !user.IsInSameOrParentContainer(targetEnt) && !CanAccessViaStorage(user.Uid, targetEnt.Uid))
                 {
                     Logger.WarningS("system.interaction",
-                        $"User entity named {user.Name} clicked on object {targetEnt.Name} that isn't the parent, child, or in the same container");
+                        $"User entity named {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(user.Uid).EntityName} clicked on object {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(targetEnt.Uid).EntityName} that isn't the parent, child, or in the same container");
                     return;
                 }
 

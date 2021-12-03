@@ -104,7 +104,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 return;
 
             _userInterfaceSystem.TrySetUiState(uid, GasFilterUiKey.Key,
-                new GasFilterBoundUserInterfaceState(filter.Owner.Name, filter.TransferRate, filter.Enabled, filter.FilteredGas));
+                new GasFilterBoundUserInterfaceState(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(filter.Owner.Uid).EntityName, filter.TransferRate, filter.Enabled, filter.FilteredGas));
         }
 
         private void OnToggleStatusMessage(EntityUid uid, GasFilterComponent filter, GasFilterToggleStatusMessage args)

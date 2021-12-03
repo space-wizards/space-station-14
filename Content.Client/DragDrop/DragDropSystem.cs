@@ -207,7 +207,7 @@ namespace Content.Client.DragDrop
             }
 
             Logger.Warning("Unable to display drag shadow for {0} because it" +
-                           " has no sprite component.", _dragDropHelper.Dragged.Name);
+                           " has no sprite component.", IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_dragDropHelper.Dragged.Uid).EntityName);
             return false;
         }
 

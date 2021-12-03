@@ -155,7 +155,7 @@ namespace Content.Server.Light.Components
                     case ExpendableLightState.Fading:
 
                         CurrentState = ExpendableLightState.Dead;
-                        Owner.Name = SpentName;
+                        IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityName = SpentName;
                         IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityDescription = SpentDesc;
 
                         UpdateSpriteAndSounds(Activated);

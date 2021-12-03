@@ -115,7 +115,8 @@ namespace Content.Server.Mind.Components
 
                         if (Mind != null)
                         {
-                            ghost.Name = Mind.CharacterName ?? string.Empty;
+                            string? val = Mind.CharacterName ?? string.Empty;
+                            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(ghost.Uid).EntityName = val;
                             Mind.TransferTo(ghost.Uid);
                         }
                     });

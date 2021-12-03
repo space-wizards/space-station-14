@@ -111,12 +111,12 @@ namespace Content.Server.GameTicking.Presets
                 _entityManager.EntitySysManager.GetEntitySystem<UplinkSystem>()
                     .AddUplink(mind.OwnedEntity, uplinkAccount, newPDA);
 
-                _allOriginalNames[uplinkAccount] = mind.OwnedEntity.Name;
+                _allOriginalNames[uplinkAccount] = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(mind.OwnedEntity.Uid).EntityName;
 
                 // The PDA needs to be marked with the correct owner.
                 var pda = IoCManager.Resolve<IEntityManager>().GetComponent<PDAComponent>(newPDA.Uid);
                 _entityManager.EntitySysManager.GetEntitySystem<PDASystem>()
-                    .SetOwner(pda, mind.OwnedEntity.Name);
+                    .SetOwner(pda, IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(mind.OwnedEntity.Uid).EntityName);
                 IoCManager.Resolve<IEntityManager>().AddComponent<TraitorDeathMatchReliableOwnerTagComponent>(newPDA).UserId = mind.UserId;
             }
 

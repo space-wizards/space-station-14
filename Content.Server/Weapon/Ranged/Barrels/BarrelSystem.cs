@@ -75,7 +75,7 @@ namespace Content.Server.Weapon.Ranged.Barrels
                 return;
 
             Verb verb = new();
-            verb.Text = component.PowerCell.Owner.Name;
+            verb.Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(component.PowerCell.Owner.Uid).EntityName;
             verb.Category = VerbCategory.Eject;
             verb.Act = () => component.TryEjectCell(args.User);
             args.Verbs.Add(verb);
@@ -92,7 +92,7 @@ namespace Content.Server.Weapon.Ranged.Barrels
                 return;
 
             Verb verb = new();
-            verb.Text = args.Using.Name;
+            verb.Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(args.Using.Uid).EntityName;
             verb.Category = VerbCategory.Insert;
             verb.Act = () => component.TryInsertPowerCell(args.Using);
             args.Verbs.Add(verb);
@@ -111,7 +111,7 @@ namespace Content.Server.Weapon.Ranged.Barrels
                 return;
 
             Verb verb = new();
-            verb.Text = component.MagazineContainer.ContainedEntity!.Name;
+            verb.Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(component.MagazineContainer.ContainedEntity!.Uid).EntityName;
             verb.Category = VerbCategory.Eject;
             verb.Act = () => component.RemoveMagazine(args.User);
             args.Verbs.Add(verb);
@@ -140,7 +140,7 @@ namespace Content.Server.Weapon.Ranged.Barrels
 
             // Insert mag verb
             Verb insert = new();
-            insert.Text = args.Using.Name;
+            insert.Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(args.Using.Uid).EntityName;
             insert.Category = VerbCategory.Insert;
             insert.Act = () => component.InsertMagazine(args.User, args.Using);
             args.Verbs.Add(insert);

@@ -1,5 +1,7 @@
 ﻿using System.Text.Json;
 using Robust.Server.Player;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Administration.Logs.Converters;
 
@@ -13,7 +15,7 @@ public class PlayerSessionConverter : AdminLogConverter<SerializablePlayer>
         if (value.Player.AttachedEntity != null)
         {
             writer.WriteNumber("id", (int) value.Player.AttachedEntity.Uid);
-            writer.WriteString("name", value.Player.AttachedEntity.Name);
+            writer.WriteString("name", IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(value.Player.AttachedEntity.Uid).EntityName);
         }
 
         writer.WriteString("player", value.Player.UserId.UserId);

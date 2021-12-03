@@ -38,7 +38,7 @@ namespace Content.Server.Medical
             Verb verb = new();
             verb.Act = () => component.InsertBody(args.Using);
             verb.Category = VerbCategory.Insert;
-            verb.Text = args.Using.Name;
+            verb.Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(args.Using.Uid).EntityName;
             args.Verbs.Add(verb);
         }
 

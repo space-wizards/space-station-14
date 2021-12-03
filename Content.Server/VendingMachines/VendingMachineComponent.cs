@@ -82,7 +82,7 @@ namespace Content.Server.VendingMachines
                 return;
             }
 
-            Owner.Name = packPrototype.Name;
+            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityName = packPrototype.Name;
             _animationDuration = TimeSpan.FromSeconds(packPrototype.AnimationDuration);
             _spriteName = packPrototype.SpriteName;
             if (!string.IsNullOrEmpty(_spriteName))

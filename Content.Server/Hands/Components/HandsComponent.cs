@@ -106,13 +106,13 @@ namespace Content.Server.Hands.Components
                 {
                     if (ActiveHand != null && Drop(ActiveHand, false))
                     {
-                        source.PopupMessageOtherClients(Loc.GetString("hands-component-disarm-success-others-message", ("disarmer", source.Name), ("disarmed", target.Name)));
-                        source.PopupMessageCursor(Loc.GetString("hands-component-disarm-success-message", ("disarmed", target.Name)));
+                        source.PopupMessageOtherClients(Loc.GetString("hands-component-disarm-success-others-message", ("disarmer", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(source.Uid).EntityName), ("disarmed", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(target.Uid).EntityName)));
+                        source.PopupMessageCursor(Loc.GetString("hands-component-disarm-success-message", ("disarmed", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(target.Uid).EntityName)));
                     }
                     else
                     {
-                        source.PopupMessageOtherClients(Loc.GetString("hands-component-shove-success-others-message", ("shover", source.Name), ("shoved", target.Name)));
-                        source.PopupMessageCursor(Loc.GetString("hands-component-shove-success-message", ("shoved", target.Name)));
+                        source.PopupMessageOtherClients(Loc.GetString("hands-component-shove-success-others-message", ("shover", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(source.Uid).EntityName), ("shoved", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(target.Uid).EntityName)));
+                        source.PopupMessageCursor(Loc.GetString("hands-component-shove-success-message", ("shoved", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(target.Uid).EntityName)));
                     }
                 }
             }

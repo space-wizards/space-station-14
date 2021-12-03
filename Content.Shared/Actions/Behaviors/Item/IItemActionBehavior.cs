@@ -43,8 +43,8 @@ namespace Content.Shared.Actions.Behaviors.Item
             Item = item;
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Item.Uid, out ItemActions))
             {
-                throw new InvalidOperationException($"performer {performer.Name} tried to perform item action {actionType} " +
-                                                    $" for item {Item.Name} but the item had no ItemActionsComponent," +
+                throw new InvalidOperationException($"performer {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(performer.Uid).EntityName} tried to perform item action {actionType} " +
+                                                    $" for item {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Item.Uid).EntityName} but the item had no ItemActionsComponent," +
                                                     " which should never occur");
             }
         }

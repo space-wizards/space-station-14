@@ -143,7 +143,7 @@ namespace Content.Client.Examine
 
             hBox.AddChild(new Label
             {
-                Text = entity.Name,
+                Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityName,
                 HorizontalExpand = true,
             });
 

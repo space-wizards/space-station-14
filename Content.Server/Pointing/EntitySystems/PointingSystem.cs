@@ -153,10 +153,10 @@ namespace Content.Server.Pointing.EntitySystems
                     : Loc.GetString("pointing-system-point-at-other", ("other", pointed));
 
                 viewerMessage = player == pointed
-                    ? Loc.GetString("pointing-system-point-at-self-others", ("otherName", player.Name), ("other", player))
-                    : Loc.GetString("pointing-system-point-at-other-others", ("otherName", player.Name), ("other", pointed));
+                    ? Loc.GetString("pointing-system-point-at-self-others", ("otherName", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(player.Uid).EntityName), ("other", player))
+                    : Loc.GetString("pointing-system-point-at-other-others", ("otherName", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(player.Uid).EntityName), ("other", pointed));
 
-                viewerPointedAtMessage = Loc.GetString("pointing-system-point-at-you-other", ("otherName", player.Name));
+                viewerPointedAtMessage = Loc.GetString("pointing-system-point-at-you-other", ("otherName", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(player.Uid).EntityName));
             }
             else
             {
@@ -171,7 +171,7 @@ namespace Content.Server.Pointing.EntitySystems
 
                 selfMessage = Loc.GetString("pointing-system-point-at-tile", ("tileName", tileDef.DisplayName));
 
-                viewerMessage = Loc.GetString("pointing-system-other-point-at-tile", ("otherName", player.Name), ("tileName", tileDef.DisplayName));
+                viewerMessage = Loc.GetString("pointing-system-other-point-at-tile", ("otherName", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(player.Uid).EntityName), ("tileName", tileDef.DisplayName));
             }
 
             _pointers[session!] = _gameTiming.CurTime;

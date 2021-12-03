@@ -101,7 +101,7 @@ namespace Content.Client.Kitchen.UI
                 }
                 var texture = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(entity.Uid).Icon?.Default;
 
-                var solidItem = ChamberContentBox.BoxContents.AddItem(entity.Name, texture);
+                var solidItem = ChamberContentBox.BoxContents.AddItem(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityName, texture);
                 var solidIndex = ChamberContentBox.BoxContents.IndexOf(solidItem);
                 _chamberVisualContents.Add(solidIndex, uid);
             }

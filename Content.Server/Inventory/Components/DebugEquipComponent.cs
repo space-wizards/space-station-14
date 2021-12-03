@@ -2,6 +2,7 @@
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Inventory.Components
 {
@@ -16,22 +17,22 @@ namespace Content.Server.Inventory.Components
 
         void IEquipped.Equipped(EquippedEventArgs eventArgs)
         {
-            eventArgs.User.PopupMessage("equipped " + Owner.Name);
+            eventArgs.User.PopupMessage("equipped " + IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityName);
         }
 
         void IEquippedHand.EquippedHand(EquippedHandEventArgs eventArgs)
         {
-            eventArgs.User.PopupMessage("equipped hand " + Owner.Name);
+            eventArgs.User.PopupMessage("equipped hand " + IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityName);
         }
 
         void IUnequipped.Unequipped(UnequippedEventArgs eventArgs)
         {
-            eventArgs.User.PopupMessage("unequipped " + Owner.Name);
+            eventArgs.User.PopupMessage("unequipped " + IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityName);
         }
 
         void IUnequippedHand.UnequippedHand(UnequippedHandEventArgs eventArgs)
         {
-            eventArgs.User.PopupMessage("unequipped hand" + Owner.Name);
+            eventArgs.User.PopupMessage("unequipped hand" + IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityName);
         }
     }
 }

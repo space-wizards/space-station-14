@@ -15,11 +15,12 @@ namespace Content.Client.Animations
         public static void AnimateEntityPickup(IEntity entity, EntityCoordinates initialPosition, Vector2 finalPosition)
         {
             var animatableClone = IoCManager.Resolve<IEntityManager>().SpawnEntity("clientsideclone", initialPosition);
-            animatableClone.Name = entity.Name;
+            string val = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityName;
+            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(animatableClone.Uid).EntityName = val;
 
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out SpriteComponent? sprite0))
             {
-                Logger.Error("Entity ({0}) couldn't be animated for pickup since it doesn't have a {1}!", entity.Name, nameof(SpriteComponent));
+                Logger.Error("Entity ({0}) couldn't be animated for pickup since it doesn't have a {1}!", IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityName, nameof(SpriteComponent));
                 return;
             }
             var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(animatableClone.Uid);

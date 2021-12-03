@@ -250,7 +250,7 @@ namespace Content.Client.ContextMenu.UI
             // find the element associated with this entity
             if (!Elements.TryGetValue(entity, out var element))
             {
-                Logger.Error($"Attempted to remove unknown entity from the entity menu: {entity.Name} ({entity.Uid})");
+                Logger.Error($"Attempted to remove unknown entity from the entity menu: {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityName} ({entity.Uid})");
                 return;
             }
 

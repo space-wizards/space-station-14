@@ -483,7 +483,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         public void UpdateInterface(DisposalUnitComponent component, bool powered)
         {
             var stateString = Loc.GetString($"{component.State}");
-            var state = new SharedDisposalUnitComponent.DisposalUnitBoundUserInterfaceState(component.Owner.Name, stateString, EstimatedFullPressure(component), powered, component.Engaged);
+            var state = new SharedDisposalUnitComponent.DisposalUnitBoundUserInterfaceState(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(component.Owner.Uid).EntityName, stateString, EstimatedFullPressure(component), powered, component.Engaged);
             component.UserInterface?.SetState(state);
         }
 

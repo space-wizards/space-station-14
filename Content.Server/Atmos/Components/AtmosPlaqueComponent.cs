@@ -70,7 +70,7 @@ namespace Content.Server.Atmos.Components
             };
             IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityDescription = val;
 
-            Owner.Name = _type switch
+            var val1 = _type switch
             {
                 PlaqueType.Zumos =>
                     "ZUM Atmospherics Division plaque",
@@ -83,6 +83,7 @@ namespace Content.Server.Atmos.Components
                 PlaqueType.Unset => "Uhm",
                 _ => "Uhm",
             };
+            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityName = val1;
 
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance))
             {

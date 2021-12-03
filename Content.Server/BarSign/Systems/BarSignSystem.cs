@@ -83,11 +83,12 @@ namespace Content.Server.BarSign.Systems
 
             if (!string.IsNullOrEmpty(prototype.Name))
             {
-                component.Owner.Name = prototype.Name;
+                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(component.Owner.Uid).EntityName = prototype.Name;
             }
             else
             {
-                component.Owner.Name = Loc.GetString("barsign-component-name");
+                string val = Loc.GetString("barsign-component-name");
+                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(component.Owner.Uid).EntityName = val;
             }
 
             IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(component.Owner.Uid).EntityDescription = prototype.Description;

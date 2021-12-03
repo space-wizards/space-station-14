@@ -122,6 +122,7 @@ namespace Content.Server.Access.Components
             // this could be prettier
             if (targetIdEntity == null)
             {
+                IEntity? tempQualifier = PrivilegedIdSlot.Item;
                 newState = new IdCardConsoleBoundUserInterfaceState(
                     PrivilegedIdSlot.HasItem,
                     PrivilegedIdIsAuthorized(),
@@ -129,7 +130,7 @@ namespace Content.Server.Access.Components
                     null,
                     null,
                     null,
-                    PrivilegedIdSlot.Item?.Name ?? string.Empty,
+                    (tempQualifier != null ? IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(tempQualifier.Uid).EntityName : null) ?? string.Empty,
                     string.Empty);
             }
             else
@@ -138,7 +139,7 @@ namespace Content.Server.Access.Components
                 var targetAccessComponent = IoCManager.Resolve<IEntityManager>().GetComponent<AccessComponent>(targetIdEntity.Uid);
                 var name = string.Empty;
                 if(PrivilegedIdSlot.Item != null)
-                    name = PrivilegedIdSlot.Item.Name;
+                    name = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(PrivilegedIdSlot.Item.Uid).EntityName;
                 newState = new IdCardConsoleBoundUserInterfaceState(
                     PrivilegedIdSlot.HasItem,
                     PrivilegedIdIsAuthorized(),
@@ -147,7 +148,7 @@ namespace Content.Server.Access.Components
                     targetIdComponent.JobTitle,
                     targetAccessComponent.Tags.ToArray(),
                     name,
-                    targetIdEntity.Name);
+                    IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(targetIdEntity.Uid).EntityName);
             }
             UserInterface?.SetState(newState);
         }

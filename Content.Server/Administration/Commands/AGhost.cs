@@ -50,15 +50,15 @@ namespace Content.Server.Administration.Commands
             {
                 // TODO: Remove duplication between all this and "GamePreset.OnGhostAttempt()"...
                 if(!string.IsNullOrWhiteSpace(mind.CharacterName))
-                    ghost.Name = mind.CharacterName;
+                    IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(ghost.Uid).EntityName = mind.CharacterName;
                 else if (!string.IsNullOrWhiteSpace(mind.Session?.Name))
-                    ghost.Name = mind.Session.Name;
+                    IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(ghost.Uid).EntityName = mind.Session.Name;
 
                 mind.Visit(ghost);
             }
             else
             {
-                ghost.Name = player.Name;
+                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(ghost.Uid).EntityName = player.Name;
                 mind.TransferTo(ghost.Uid);
             }
 
