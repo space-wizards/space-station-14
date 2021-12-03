@@ -12,6 +12,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Shuttles.Components;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
@@ -233,7 +234,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
             if (!EntityManager.TryGetComponent(grid.GridEntityId, out ShuttleComponent? shuttleComponent)) return;
 
-            Logger.DebugS("thruster", $"Enabled thruster {uid}");
+            // Logger.DebugS("thruster", $"Enabled thruster {uid}");
 
             switch (component.Type)
             {
@@ -277,6 +278,11 @@ namespace Content.Server.Shuttles.EntitySystems
                 appearanceComponent.SetData(ThrusterVisualState.State, true);
             }
 
+            if (EntityManager.TryGetComponent(uid, out PointLightComponent? pointLightComponent))
+            {
+                pointLightComponent.Enabled = true;
+            }
+
             _ambient.SetAmbience(uid, true);
         }
 
@@ -293,7 +299,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
             if (!EntityManager.TryGetComponent(grid.GridEntityId, out ShuttleComponent? shuttleComponent)) return;
 
-            Logger.DebugS("thruster", $"Disabled thruster {uid}");
+            // Logger.DebugS("thruster", $"Disabled thruster {uid}");
 
             switch (component.Type)
             {
@@ -317,6 +323,11 @@ namespace Content.Server.Shuttles.EntitySystems
             if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearanceComponent))
             {
                 appearanceComponent.SetData(ThrusterVisualState.State, false);
+            }
+
+            if (EntityManager.TryGetComponent(uid, out PointLightComponent? pointLightComponent))
+            {
+                pointLightComponent.Enabled = false;
             }
 
             _ambient.SetAmbience(uid, false);

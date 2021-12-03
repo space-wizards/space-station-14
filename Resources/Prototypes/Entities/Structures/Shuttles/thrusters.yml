@@ -87,7 +87,7 @@
   - type: PointLight
     radius: 1.3
     energy: 0.8
-    enabled: true
+    enabled: false
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
     offset: "0, 0.1" # shine from the top, not bottom of the computer
