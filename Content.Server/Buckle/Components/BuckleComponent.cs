@@ -321,6 +321,8 @@ namespace Content.Server.Buckle.Components
             {
                 Owner.Transform.AttachParentToContainerOrGrid();
                 Owner.Transform.WorldRotation = oldBuckledTo.Owner.Transform.WorldRotation;
+                if (oldBuckledTo.UnbuckleOffset != Vector2.Zero)
+                    Owner.Transform.Coordinates = oldBuckledTo.Owner.Transform.Coordinates.Offset(oldBuckledTo.UnbuckleOffset);
             }
 
             Appearance?.SetData(BuckleVisuals.Buckled, false);
@@ -414,7 +416,7 @@ namespace Content.Server.Buckle.Components
             if (!IsOnStrapEntityThisFrame && DontCollide)
             {
                 DontCollide = false;
-                TryUnbuckle(Owner);
+                //TryUnbuckle(Owner);
                 Dirty();
             }
 

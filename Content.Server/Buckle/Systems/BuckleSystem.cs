@@ -40,7 +40,7 @@ namespace Content.Server.Buckle.Systems
         {
             if (!args.CanAccess || !args.CanInteract || !component.Buckled)
                 return;
-            
+
             Verb verb = new();
             verb.Act = () => component.TryUnbuckle(args.User);
             verb.Text = Loc.GetString("verb-categories-unbuckle");
@@ -80,7 +80,7 @@ namespace Content.Server.Buckle.Systems
 
             var strapPosition = strap.Owner.Transform.Coordinates.Offset(buckle.BuckleOffset);
 
-            if (ev.NewPosition.InRange(EntityManager, strapPosition, 0.2f))
+            if (ev.NewPosition.InRange(EntityManager, strapPosition, strap.MaxBuckleDistance))
             {
                 return;
             }

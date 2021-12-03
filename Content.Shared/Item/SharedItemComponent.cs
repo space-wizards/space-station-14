@@ -8,7 +8,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -112,6 +111,9 @@ namespace Content.Shared.Item
         public bool CanPickup(IEntity user, bool popup = true)
         {
             if (!EntitySystem.Get<ActionBlockerSystem>().CanPickup(user.Uid))
+                return false;
+
+            if (!EntitySystem.Get<EffectBlockerSystem>().CanBePickedUp(this.Owner.Uid))
                 return false;
 
             if (user.Transform.MapID != Owner.Transform.MapID)
