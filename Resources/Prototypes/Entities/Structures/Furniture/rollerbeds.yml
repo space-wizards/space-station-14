@@ -1,6 +1,6 @@
 - type: entity
   id: RollerBed
-  parent: BaseStructureDynamic
+  parent: BaseItem
   name: rollerbed
   description: Used to carry patients around without damaging them.
   components:
@@ -17,17 +17,17 @@
       soundHit: /Audio/Effects/bang.ogg
     - type: InteractionOutline
     - type: Physics
+    - type: Fixtures
       fixtures:
         - shape:
-            !type:PhysShapeAabb
-            bounds: "-0.45, -0.45, 0.45, 0.05"
+            !type:PhysShapeCircle
+            radius: 0.35
           mass: 30
           mask:
             - Impassable
-            - VaultImpassable
+            - SmallImpassable
           layer:
             - Opaque
-            - MobImpassable
     - type: Damageable
     - type: Destructible
       thresholds:

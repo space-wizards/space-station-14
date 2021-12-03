@@ -317,12 +317,17 @@ namespace Content.Server.Buckle.Components
 
             BuckledTo = null;
 
-            if (Owner.Transform.Parent == oldBuckledTo.Owner.Transform)
+            var entManager = Owner.EntityManager;
+            var xform = entManager.GetComponent<TransformComponent>(OwnerUid);
+            var oldBuckledXform = entManager.GetComponent<TransformComponent>(oldBuckledTo.OwnerUid);
+
+            if (xform.Parent == oldBuckledXform)
             {
-                Owner.Transform.AttachParentToContainerOrGrid();
-                Owner.Transform.WorldRotation = oldBuckledTo.Owner.Transform.WorldRotation;
+                xform.AttachParentToContainerOrGrid();
+                xform.WorldRotation = oldBuckledXform.WorldRotation;
+
                 if (oldBuckledTo.UnbuckleOffset != Vector2.Zero)
-                    Owner.Transform.Coordinates = oldBuckledTo.Owner.Transform.Coordinates.Offset(oldBuckledTo.UnbuckleOffset);
+                    xform.Coordinates = oldBuckledXform.Coordinates.Offset(oldBuckledTo.UnbuckleOffset);
             }
 
             Appearance?.SetData(BuckleVisuals.Buckled, false);
@@ -416,7 +421,7 @@ namespace Content.Server.Buckle.Components
             if (!IsOnStrapEntityThisFrame && DontCollide)
             {
                 DontCollide = false;
-                //TryUnbuckle(Owner);
+                TryUnbuckle(Owner);
                 Dirty();
             }
 

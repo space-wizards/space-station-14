@@ -34,6 +34,7 @@
       path: /Audio/Misc/zip.ogg
     openSound:
       path: /Audio/Misc/zip.ogg
+  - type: Foldable
   - type: PaperLabel
     labelSlot:
       insertVerbText: Attach Label

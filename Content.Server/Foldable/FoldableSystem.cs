@@ -34,7 +34,6 @@ namespace Content.Server.Foldable
 
             SubscribeLocalEvent<FoldableComponent, InteractHandEvent>(OnInteract);
             SubscribeLocalEvent<FoldableComponent, PickupAttemptEvent>(OnPickedUpAttempt);
-            SubscribeLocalEvent<FoldableComponent, UseInHandEvent>(OnUse);
 
             SubscribeLocalEvent<FoldableComponent, GetInteractionVerbsEvent>(AddFoldVerb);
         }
@@ -59,7 +58,7 @@ namespace Content.Server.Foldable
                 return false;
 
             // First we check if the foldable object has a strap component
-            if (comp.Owner.TryGetComponent(out StrapComponent? strap))
+            if (EntityManager.TryGetComponent(comp.OwnerUid, out StrapComponent? strap))
             {
                 // If an entity is buckled to the object we can't pick it up or fold it
                 if (strap.BuckledEntities.Any())
@@ -81,62 +80,15 @@ namespace Content.Server.Foldable
             component.CanBeFolded = !component.Owner.IsInContainer();
 
             // You can't buckle an entity to a folded object
-            if (component.Owner.TryGetComponent(out StrapComponent? strap))
+            if (EntityManager.TryGetComponent(component.OwnerUid, out StrapComponent? strap))
                 strap.Enabled = !component.IsFolded;
 
             // Update visuals only if the value has changed
-            if (component.Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (EntityManager.TryGetComponent(component.OwnerUid, out AppearanceComponent? appearance))
                 appearance.SetData("FoldedState", folded);
         }
 
-        /// <summary>
-        /// Tries to deploy the foldable in front of the user
-        /// </summary>
-        /// <param name="component"></param>
-        /// <param name="user"></param>
-        /// <param name="newPos"></param>
-        private bool TryDeploy(FoldableComponent component, IEntity user)
-        {
-            var coords = user.Transform.Coordinates;
-            var offsetCoords = user.Transform.Coordinates.Offset(
-                (user.Transform.LocalRotation - Math.PI/2).ToVec().Normalized
-            );
-
-            // Check nothing blocks the way
-            if (!_interactionSystem.InRangeUnobstructed(
-                    user, offsetCoords,
-                    collisionMask: CollisionGroup.MobImpassable,
-                    predicate: (IEntity entity) => entity.Equals(user))
-            )
-            {
-                var message = Loc.GetString("foldable-deploy-fail", ("object", component.Owner.Name));
-                user.PopupMessage(message);
-                return false;
-            }
-
-            Deploy(component, user, offsetCoords);
-            return true;
-        }
-
-        private void Deploy(FoldableComponent component, IEntity user, EntityCoordinates newPos)
-        {
-            // When used, drop the foldable and unfold it
-            if (user.TryGetComponent(out HandsComponent? hands));
-                hands?.Drop(component.Owner);
-
-            // Deploy the foldable in the looking direction
-            component.Owner.Transform.Coordinates = newPos;
-            SetFolded(component, false);
-        }
-
-
         #region Event handlers
-
-        // When clicked in hand, unfold in front of the user
-        private void OnUse(EntityUid uid, FoldableComponent component, UseInHandEvent args)
-        {
-            TryDeploy(component, args.User);
-        }
 
         /// <summary>
         /// Handle pickup events and block them if the object is unfolded
