@@ -20,9 +20,13 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb {}
-      layer: [ Passable ]
+      - shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.37,0.24,0.49"
+        mask:
+          - Impassable
+          - VaultImpassable
+          - SmallImpassable
   - type: Construction
     graph: toilet
     node: toilet
