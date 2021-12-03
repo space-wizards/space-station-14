@@ -26998,14 +26998,21 @@ entities:
     parent: 0
     type: Transform
 - uid: 2090
-  type: SalvageMagnet
+  type: CrateGenericonimo
   components:
   - pos: 6.5,32.5
-    rot: -1.5707963267948966 rad
     parent: 0
     type: Transform
+  - isPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+      labelSlot: !type:ContainerSlot {}
+      PaperLabel: !type:ContainerSlot {}
+    type: ContainerContainer
 - uid: 2091
-  type: CrateSalvageEquipment
+  type: CrateGenericonimo
   components:
   - pos: 7.5,31.5
     parent: 0
