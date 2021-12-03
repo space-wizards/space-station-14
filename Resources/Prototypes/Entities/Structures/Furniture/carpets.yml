@@ -137,6 +137,7 @@
     tags: [ Carpet ]
   - type: Physics
     canCollide: false
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb {}
@@ -152,4 +153,3 @@
         behaviors:
           - !type:DoActsBehavior
             acts: [ "Destruction" ]
-  - type: Rotatable
