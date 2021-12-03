@@ -613,12 +613,6 @@ namespace Content.Shared.Hands.Components
         /// </summary>
         protected bool CanInsertEntityIntoHand(Hand hand, IEntity entity)
         {
-            // I need to put this here even if I shouldn't, until hands system is ported to ECS
-            if (_entitySystemManager
-                .GetEntitySystem<EffectBlockerSystem>()
-                .CanBePickedUp(entity.Uid))
-                return false;
-
             var handContainer = hand.Container;
             if (handContainer == null)
                 return false;
