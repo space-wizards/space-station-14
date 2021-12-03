@@ -1,5 +1,4 @@
 using System;
-using Content.Client.Administration;
 using Content.Client.Administration.Managers;
 using Content.Client.Changelog;
 using Content.Client.CharacterInterface;

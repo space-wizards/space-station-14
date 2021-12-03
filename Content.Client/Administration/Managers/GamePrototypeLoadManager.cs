@@ -6,7 +6,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client.Administration;
+namespace Content.Client.Administration.Managers;
 
 public class GamePrototypeLoadManager : IGamePrototypeLoadManager
 {
