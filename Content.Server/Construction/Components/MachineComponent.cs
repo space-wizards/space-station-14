@@ -39,7 +39,7 @@ namespace Content.Server.Construction.Components
 
         public void RefreshParts()
         {
-            foreach (var refreshable in Owner.GetAllComponents<IRefreshParts>())
+            foreach (var refreshable in IoCManager.Resolve<IEntityManager>().GetComponents<IRefreshParts>(Owner.Uid))
             {
                 refreshable.RefreshParts(GetAllParts());
             }

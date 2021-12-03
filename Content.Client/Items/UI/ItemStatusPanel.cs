@@ -185,7 +185,7 @@ namespace Content.Client.Items.UI
 
             ClearOldStatus();
 
-            foreach (var statusComponent in _entity!.GetAllComponents<IItemStatus>())
+            foreach (var statusComponent in IoCManager.Resolve<IEntityManager>().GetComponents<IItemStatus>(_entity!.Uid))
             {
                 var control = statusComponent.MakeControl();
                 _statusContents.AddChild(control);

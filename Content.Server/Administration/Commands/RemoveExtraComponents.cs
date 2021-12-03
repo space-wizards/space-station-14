@@ -1,4 +1,5 @@
-﻿using Content.Shared.Administration;
+﻿using System.Collections.Generic;
+using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -39,7 +40,7 @@ namespace Content.Server.Administration.Commands
 
                 var modified = false;
 
-                foreach (var component in entity.GetAllComponents())
+                foreach (var component in IoCManager.Resolve<IEntityManager>().GetComponents(entity.Uid))
                 {
                     if (IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityPrototype.Components.ContainsKey(component.Name))
                         continue;

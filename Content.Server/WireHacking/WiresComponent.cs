@@ -230,7 +230,7 @@ namespace Content.Server.WireHacking
                 hackingSystem.TryGetLayout(_layoutId, out layout);
             }
 
-            foreach (var wiresProvider in Owner.GetAllComponents<IWires>())
+            foreach (var wiresProvider in IoCManager.Resolve<IEntityManager>().GetComponents<IWires>(Owner.Uid))
             {
                 var builder = new WiresBuilder(this, wiresProvider, layout);
                 wiresProvider.RegisterWires(builder);

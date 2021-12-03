@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
@@ -226,7 +227,7 @@ namespace Content.Shared.Examine
             RaiseLocalEvent(entity.Uid, examinedEvent);
 
             //Add component statuses from components that report one
-            foreach (var examineComponent in entity.GetAllComponents<IExamine>())
+            foreach (var examineComponent in IoCManager.Resolve<IEntityManager>().GetComponents<IExamine>(entity.Uid))
             {
                 var subMessage = new FormattedMessage();
                 examineComponent.Examine(subMessage, isInDetailsRange);

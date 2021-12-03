@@ -21,6 +21,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Popups;
@@ -48,7 +49,7 @@ namespace Content.Server.Actions.Actions
 
         public void DoTargetEntityAction(TargetEntityActionEventArgs args)
         {
-            var disarmedActs = args.Target.GetAllComponents<IDisarmedAct>().ToArray();
+            var disarmedActs = IoCManager.Resolve<IEntityManager>().GetComponents<IDisarmedAct>(args.Target.Uid).ToArray();
 
             if (!args.Performer.InRangeUnobstructed(args.Target)) return;
 

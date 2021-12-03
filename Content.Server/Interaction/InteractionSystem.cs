@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
@@ -176,7 +177,7 @@ namespace Content.Server.Interaction
 
             // trigger dragdrops on the dropped entity
             RaiseLocalEvent(dropped.Uid, interactionArgs);
-            foreach (var dragDrop in dropped.GetAllComponents<IDraggable>())
+            foreach (var dragDrop in IoCManager.Resolve<IEntityManager>().GetComponents<IDraggable>(dropped.Uid))
             {
                 if (dragDrop.CanDrop(interactionArgs) &&
                     dragDrop.Drop(interactionArgs))
@@ -187,7 +188,7 @@ namespace Content.Server.Interaction
 
             // trigger dragdropons on the targeted entity
             RaiseLocalEvent(target.Uid, interactionArgs, false);
-            foreach (var dragDropOn in target.GetAllComponents<IDragDropOn>())
+            foreach (var dragDropOn in IoCManager.Resolve<IEntityManager>().GetComponents<IDragDropOn>(target.Uid))
             {
                 if (dragDropOn.CanDragDropOn(interactionArgs) &&
                     dragDropOn.DragDropOn(interactionArgs))
@@ -404,7 +405,7 @@ namespace Content.Server.Interaction
 
             var interactHandEventArgs = new InteractHandEventArgs(user, target);
 
-            var interactHandComps = target.GetAllComponents<IInteractHand>().ToList();
+            var interactHandComps = IoCManager.Resolve<IEntityManager>().GetComponents<IInteractHand>(target.Uid).ToList();
             foreach (var interactHandComp in interactHandComps)
             {
                 // If an InteractHand returns a status completion we finish our interaction
@@ -434,7 +435,7 @@ namespace Content.Server.Interaction
                 if (rangedMsg.Handled)
                     return true;
 
-                var rangedInteractions = target.GetAllComponents<IRangedInteract>().ToList();
+                var rangedInteractions = IoCManager.Resolve<IEntityManager>().GetComponents<IRangedInteract>(target.Uid).ToList();
                 var rangedInteractionEventArgs = new RangedInteractEventArgs(user, used, clickLocation);
 
                 // See if we have a ranged interaction

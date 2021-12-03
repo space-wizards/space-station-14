@@ -545,7 +545,7 @@ namespace Content.Server.Inventory.Components
             {
                 foreach (var entity in slot.ContainedEntities)
                 {
-                    var exActs = entity.GetAllComponents<IExAct>().ToList();
+                    var exActs = IoCManager.Resolve<IEntityManager>().GetComponents<IExAct>(entity.Uid).ToList();
                     foreach (var exAct in exActs)
                     {
                         exAct.OnExplosion(eventArgs);

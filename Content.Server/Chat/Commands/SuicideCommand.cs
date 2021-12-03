@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Act;
 using Content.Server.Administration;
@@ -91,7 +92,7 @@ namespace Content.Server.Chat.Commands
             var itemComponent = handsComponent.GetActiveHand;
             if (itemComponent != null)
             {
-                var suicide = itemComponent.Owner.GetAllComponents<ISuicideAct>().FirstOrDefault();
+                var suicide = IoCManager.Resolve<IEntityManager>().GetComponents<ISuicideAct>(itemComponent.Owner.Uid).FirstOrDefault();
 
                 if (suicide != null)
                 {
@@ -108,7 +109,7 @@ namespace Content.Server.Chat.Commands
                 {
                     if (entity.HasComponent<ItemComponent>())
                         continue;
-                    var suicide = entity.GetAllComponents<ISuicideAct>().FirstOrDefault();
+                    var suicide = IoCManager.Resolve<IEntityManager>().GetComponents<ISuicideAct>(entity.Uid).FirstOrDefault();
                     if (suicide != null)
                     {
                         DealDamage(suicide, chat, owner);

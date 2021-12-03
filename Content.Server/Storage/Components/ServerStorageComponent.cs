@@ -685,7 +685,7 @@ namespace Content.Server.Storage.Components
 
             foreach (var entity in storedEntities)
             {
-                var exActs = entity.GetAllComponents<IExAct>().ToArray();
+                var exActs = IoCManager.Resolve<IEntityManager>().GetComponents<IExAct>(entity.Uid).ToArray();
                 foreach (var exAct in exActs)
                 {
                     exAct.OnExplosion(eventArgs);

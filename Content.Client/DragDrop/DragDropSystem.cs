@@ -142,7 +142,7 @@ namespace Content.Client.DragDrop
             }
 
             var canDrag = false;
-            foreach (var draggable in entity.GetAllComponents<IDraggable>())
+            foreach (var draggable in IoCManager.Resolve<IEntityManager>().GetComponents<IDraggable>(entity.Uid))
             {
                 var dragEventArgs = new StartDragDropEvent(dragger, entity);
 
@@ -422,7 +422,7 @@ namespace Content.Client.DragDrop
 
             bool? valid = null;
 
-            foreach (var comp in eventArgs.Target.GetAllComponents<IDragDropOn>())
+            foreach (var comp in IoCManager.Resolve<IEntityManager>().GetComponents<IDragDropOn>(eventArgs.Target.Uid))
             {
                 if (!comp.CanDragDropOn(eventArgs))
                 {
@@ -440,7 +440,7 @@ namespace Content.Client.DragDrop
             // Need at least one IDraggable to return true or else we can't do shit
             valid = false;
 
-            foreach (var comp in eventArgs.User.GetAllComponents<IDraggable>())
+            foreach (var comp in IoCManager.Resolve<IEntityManager>().GetComponents<IDraggable>(eventArgs.User.Uid))
             {
                 if (!comp.CanDrop(eventArgs)) continue;
                 valid = true;

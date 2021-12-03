@@ -463,7 +463,7 @@ namespace Content.Server.Storage.Components
             var containedEntities = Contents.ContainedEntities.ToList();
             foreach (var entity in containedEntities)
             {
-                var exActs = entity.GetAllComponents<IExAct>().ToArray();
+                var exActs = IoCManager.Resolve<IEntityManager>().GetComponents<IExAct>(entity.Uid).ToArray();
                 foreach (var exAct in exActs)
                 {
                     exAct.OnExplosion(eventArgs);

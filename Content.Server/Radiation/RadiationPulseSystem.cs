@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Radiation;
 using Content.Shared.Sound;
@@ -41,7 +42,7 @@ namespace Content.Server.Radiation
 
                         // Note: Radiation is liable for a refactor (stinky Sloth coding a basic version when he did StationEvents)
                         // so this ToArray doesn't really matter.
-                        foreach (var radiation in entity.GetAllComponents<IRadiationAct>().ToArray())
+                        foreach (var radiation in IoCManager.Resolve<IEntityManager>().GetComponents<IRadiationAct>(entity.Uid).ToArray())
                         {
                             radiation.RadiationAct(RadiationCooldown, comp);
                         }
