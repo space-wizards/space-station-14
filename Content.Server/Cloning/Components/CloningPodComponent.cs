@@ -141,7 +141,7 @@ namespace Content.Server.Cloning.Components
                     EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(mob.Uid, dna.Profile);
                     mob.Name = dna.Profile.Name;
 
-                    var cloneMindReturn = mob.AddComponent<BeingClonedComponent>();
+                    var cloneMindReturn = IoCManager.Resolve<IEntityManager>().AddComponent<BeingClonedComponent>(mob);
                     cloneMindReturn.Mind = mind;
                     cloneMindReturn.Parent = Owner.Uid;
 

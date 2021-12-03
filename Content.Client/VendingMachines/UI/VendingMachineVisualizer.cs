@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using static Content.Shared.VendingMachines.SharedVendingMachineComponent;
@@ -122,7 +123,7 @@ namespace Content.Client.VendingMachines.UI
 
             if (!entity.HasComponent<AnimationPlayerComponent>())
             {
-                entity.AddComponent<AnimationPlayerComponent>();
+                IoCManager.Resolve<IEntityManager>().AddComponent<AnimationPlayerComponent>(entity);
             }
         }
 

@@ -53,7 +53,7 @@ namespace Content.Server.Atmos.Commands
                 return;
             }
 
-            grid.AddComponent<GridAtmosphereComponent>();
+            IoCManager.Resolve<IEntityManager>().AddComponent<GridAtmosphereComponent>(grid);
 
             shell.WriteLine($"Added atmosphere to grid {id}.");
         }

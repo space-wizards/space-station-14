@@ -357,7 +357,7 @@ namespace Content.Server.Mind
             Session?.AttachToEntity(entity);
             VisitingEntity = entity;
 
-            var comp = entity.AddComponent<VisitingMindComponent>();
+            var comp = IoCManager.Resolve<IEntityManager>().AddComponent<VisitingMindComponent>(entity);
             comp.Mind = this;
 
             Logger.Info($"Session {Session?.Name} visiting entity {entity}.");

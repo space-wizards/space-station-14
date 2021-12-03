@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Client.Lathe.Visualizers
 {
@@ -51,7 +52,7 @@ namespace Content.Client.Lathe.Visualizers
         {
             if (!entity.HasComponent<AnimationPlayerComponent>())
             {
-                entity.AddComponent<AnimationPlayerComponent>();
+                IoCManager.Resolve<IEntityManager>().AddComponent<AnimationPlayerComponent>(entity);
             }
         }
 

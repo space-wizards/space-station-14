@@ -28,10 +28,10 @@ namespace Content.IntegrationTests.Tests
 
                 var entMgr = IoCManager.Resolve<IEntityManager>();
                 var container = entMgr.SpawnEntity(null, MapCoordinates.Nullspace);
-                var inv = container.AddComponent<InventoryComponent>();
+                var inv = (InventoryComponent) IoCManager.Resolve<IEntityManager>().AddComponent<InventoryComponent>(container);
 
                 var child = entMgr.SpawnEntity(null, MapCoordinates.Nullspace);
-                var item = child.AddComponent<ClothingComponent>();
+                var item = (ClothingComponent) IoCManager.Resolve<IEntityManager>().AddComponent<ClothingComponent>(child);
                 item.SlotFlags = SlotFlags.HEAD;
 
                 // Equip item.

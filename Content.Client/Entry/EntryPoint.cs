@@ -143,7 +143,7 @@ namespace Content.Client.Entry
         /// </summary>
         public static void AttachPlayerToEntity(EntityAttachedEventArgs eventArgs)
         {
-            eventArgs.NewEntity.AddComponent<CharacterInterfaceComponent>();
+            IoCManager.Resolve<IEntityManager>().AddComponent<CharacterInterfaceComponent>(eventArgs.NewEntity);
         }
 
         /// <summary>

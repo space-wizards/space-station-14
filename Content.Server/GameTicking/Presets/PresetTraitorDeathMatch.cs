@@ -117,7 +117,7 @@ namespace Content.Server.GameTicking.Presets
                 var pda = newPDA.GetComponent<PDAComponent>();
                 _entityManager.EntitySysManager.GetEntitySystem<PDASystem>()
                     .SetOwner(pda, mind.OwnedEntity.Name);
-                newPDA.AddComponent<TraitorDeathMatchReliableOwnerTagComponent>().UserId = mind.UserId;
+                IoCManager.Resolve<IEntityManager>().AddComponent<TraitorDeathMatchReliableOwnerTagComponent>(newPDA).UserId = mind.UserId;
             }
 
             // Finally, it would be preferrable if they spawned as far away from other players as reasonably possible.

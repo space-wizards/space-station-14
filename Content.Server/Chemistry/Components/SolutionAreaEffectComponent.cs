@@ -50,7 +50,7 @@ namespace Content.Server.Chemistry.Components
                 return;
 
             Amount = amount;
-            var inception = Owner.AddComponent<SolutionAreaEffectInceptionComponent>();
+            var inception = IoCManager.Resolve<IEntityManager>().AddComponent<SolutionAreaEffectInceptionComponent>(Owner);
 
             inception.Add(this);
             inception.Setup(amount, duration, spreadDelay, removeDelay);

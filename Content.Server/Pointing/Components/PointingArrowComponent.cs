@@ -1,6 +1,7 @@
 ﻿using Content.Shared.Pointing.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
@@ -76,7 +77,7 @@ namespace Content.Server.Pointing.Components
                 if (_rogue)
                 {
                     Owner.RemoveComponent<PointingArrowComponent>();
-                    Owner.AddComponent<RoguePointingArrowComponent>();
+                    IoCManager.Resolve<IEntityManager>().AddComponent<RoguePointingArrowComponent>(Owner);
                     return;
                 }
 

@@ -47,7 +47,7 @@ namespace Content.Server.AI.Commands
                 ent.RemoveComponent<IMoverComponent>();
             }
 
-            var comp = ent.AddComponent<UtilityAi>();
+            var comp = IoCManager.Resolve<IEntityManager>().AddComponent<UtilityAi>(ent);
             var behaviorManager = IoCManager.Resolve<INpcBehaviorManager>();
 
             for (var i = 1; i < args.Length; i++)
