@@ -43,6 +43,7 @@
   - type: Transform
     anchored: true
   - type: Physics
+  - type: Fixtures
     fixtures:
     - hard: false
       shape:
@@ -70,6 +71,7 @@
     - state: mfoam
       map: ["enum.FoamVisualLayers.Base"]
   - type: Physics
+  - type: Fixtures
     fixtures:
     - hard: true
       shape:
@@ -97,6 +99,7 @@
       - state: mfoam
         map: ["enum.FoamVisualLayers.Base"]
   - type: Physics
+  - type: Fixtures
     fixtures:
     - hard: true
       shape:
@@ -130,6 +133,7 @@
     netsync: false
     drawdepth: Walls
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb {}

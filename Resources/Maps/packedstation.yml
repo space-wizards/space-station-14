@@ -64815,6 +64815,48 @@ entities:
   - pos: 13.5,-12.5
     parent: 0
     type: Transform
+- uid: 6804
+  type: AirlockArmoryLocked
+  components:
+  - name: Armory
+    type: MetaData
+  - pos: 40.5,25.5
+    parent: 0
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 6805
+  type: AirlockArmoryLocked
+  components:
+  - name: Armory
+    type: MetaData
+  - pos: 39.5,25.5
+    parent: 0
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 6806
+  type: LockerWardenFilled
+  components:
+  - pos: 38.5,24.5
+    parent: 0
+    type: Transform
+  - isPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 6807
+  type: SpawnPointWarden
+  components:
+  - pos: 29.5,25.5
+    parent: 0
+    type: Transform
 - uid: 6808
   type: WallReinforced
   components:
@@ -109273,26 +109315,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 11202
-  type: AirlockVaultLocked
-  components:
-  - pos: 39.5,25.5
-    parent: 0
-    type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 11203
-  type: AirlockVaultLocked
-  components:
-  - pos: 40.5,25.5
-    parent: 0
-    type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 11204
   type: PowerCellMediumStandard
   components:

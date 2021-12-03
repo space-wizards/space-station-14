@@ -2,9 +2,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.UserInterface;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
 using Content.Shared.Crayon;
+using Content.Server.Decals;
+using Content.Shared.Decals;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
@@ -60,11 +61,8 @@ namespace Content.Server.Crayon
             Charges = Capacity;
 
             // Get the first one from the catalog and set it as default
-            var decals = _prototypeManager.EnumeratePrototypes<CrayonDecalPrototype>().FirstOrDefault();
-            if (decals != null)
-            {
-                SelectedState = decals.Decals.First();
-            }
+            var decal = _prototypeManager.EnumeratePrototypes<DecalPrototype>().FirstOrDefault(x => x.Tags.Contains("crayon"));
+            SelectedState = decal?.ID ?? string.Empty;
             Dirty();
         }
 
@@ -74,14 +72,10 @@ namespace Content.Server.Crayon
             {
                 case CrayonSelectMessage msg:
                     // Check if the selected state is valid
-                    var crayonDecals = _prototypeManager.EnumeratePrototypes<CrayonDecalPrototype>().FirstOrDefault();
-                    if (crayonDecals != null)
+                    if (_prototypeManager.TryIndex<DecalPrototype>(msg.State, out var prototype) && prototype.Tags.Contains("crayon"))
                     {
-                        if (crayonDecals.Decals.Contains(msg.State))
-                        {
-                            SelectedState = msg.State;
-                            Dirty();
-                        }
+                        SelectedState = msg.State;
+                        Dirty();
                     }
                     break;
                 default:
@@ -89,7 +83,7 @@ namespace Content.Server.Crayon
             }
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new CrayonComponentState(_color, SelectedState, Charges, Capacity);
         }
@@ -131,12 +125,8 @@ namespace Content.Server.Crayon
                 return true;
             }
 
-            var entity = Owner.EntityManager.SpawnEntity("CrayonDecal", eventArgs.ClickLocation);
-            if (entity.TryGetComponent(out AppearanceComponent? appearance))
-            {
-                appearance.SetData(CrayonVisuals.State, SelectedState);
-                appearance.SetData(CrayonVisuals.Color, _color);
-            }
+            if(!EntitySystem.Get<DecalSystem>().TryAddDecal(SelectedState, eventArgs.ClickLocation.Offset(new Vector2(-0.5f,-0.5f)), out _, Color.FromName(_color), cleanable: true))
+                return false;
 
             if (_useSound != null)
                 SoundSystem.Play(Filter.Pvs(Owner), _useSound.GetSound(), Owner, AudioHelpers.WithVariation(0.125f));

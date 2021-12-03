@@ -68,8 +68,8 @@ public partial class AdminLogSystem
                 continue;
             }
 
-            var entityName = _entityManager.TryGetEntity(uid, out var resolvedEntity)
-                ? resolvedEntity.Name
+            var entityName = _entityManager.TryGetComponent(uid, out MetaDataComponent? metadata)
+                ? metadata.EntityName
                 : null;
 
             if (entities.Any(e => e.id == (int) uid)) continue;

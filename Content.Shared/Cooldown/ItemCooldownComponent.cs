@@ -53,7 +53,7 @@ namespace Content.Shared.Cooldown
             }
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new ItemCooldownComponentState
             {

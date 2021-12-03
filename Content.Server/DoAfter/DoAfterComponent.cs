@@ -15,7 +15,7 @@ namespace Content.Server.DoAfter
         // we'll just send them the index. Doesn't matter if it wraps around.
         private byte _runningIndex;
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             var toAdd = new List<ClientDoAfter>();
 

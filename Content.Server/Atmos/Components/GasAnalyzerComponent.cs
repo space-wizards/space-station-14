@@ -42,7 +42,7 @@ namespace Content.Server.Atmos.Components
             Owner.TryGetComponent(out _appearance);
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new GasAnalyzerComponentState(_pressureDanger);
         }

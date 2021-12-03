@@ -36,7 +36,7 @@ namespace Content.Shared.Alert
             _alerts = state.Alerts;
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new AlertsComponentState(_alerts);
         }

@@ -15,6 +15,7 @@ using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
+using Content.Shared.MobState.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -23,6 +24,11 @@ using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using System.Collections.Generic;
 using System.Linq;
+using Robust.Shared.Utility;
+using Content.Server.Inventory.Components;
+using Content.Shared.Inventory;
+using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Tag;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
@@ -99,7 +105,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 args.Handled = true;
                 return;
             }
-            
+
             args.Handled = TryForceFeed(uid, args.UserUid, args.TargetUid.Value);
         }
 
@@ -113,6 +119,10 @@ namespace Content.Server.Nutrition.EntitySystems
         public bool TryUseFood(EntityUid uid, EntityUid userUid, FoodComponent? component = null)
         {
             if (!Resolve(uid, ref component))
+                return false;
+
+            if (uid == userUid || //Suppresses self-eating
+                EntityManager.TryGetComponent<MobStateComponent>(uid, out var mobState) && mobState.IsAlive()) // Suppresses eating alive mobs
                 return false;
 
             if (!_solutionContainerSystem.TryGetSolution(uid, component.SolutionName, out var solution))
@@ -129,6 +139,14 @@ namespace Content.Server.Nutrition.EntitySystems
                 !_bodySystem.TryGetComponentsOnMechanisms<StomachComponent>(userUid, out var stomachs, body))
                 return false;
 
+            if (IsMouthBlocked(userUid, out var blocker))
+            {
+                var name = EntityManager.GetComponent<MetaDataComponent>(blocker.Value).EntityName;
+                _popupSystem.PopupEntity(Loc.GetString("food-system-remove-mask", ("entity", name)),
+                    userUid, Filter.Entities(userUid));
+                return true;
+            }
+
             var usedUtensils = new List<UtensilComponent>();
 
             if (!TryGetRequiredUtensils(userUid, component, out var utensils))
@@ -139,7 +157,8 @@ namespace Content.Server.Nutrition.EntitySystems
 
             var transferAmount = component.TransferAmount != null ? FixedPoint2.Min((FixedPoint2) component.TransferAmount, solution.CurrentVolume) : solution.CurrentVolume;
             var split = _solutionContainerSystem.SplitSolution(uid, solution, transferAmount);
-            var firstStomach = stomachs.FirstOrDefault(stomach => _stomachSystem.CanTransferSolution(stomach.OwnerUid, split));
+            var firstStomach = stomachs.FirstOrNull(
+                stomach => _stomachSystem.CanTransferSolution(stomach.Comp.OwnerUid, split));
 
             if (firstStomach == null)
             {
@@ -150,7 +169,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             // TODO: Account for partial transfer.
             split.DoEntityReaction(userUid, ReactionMethod.Ingestion);
-            _stomachSystem.TryTransferSolution(firstStomach.OwnerUid, split, firstStomach);
+            _stomachSystem.TryTransferSolution(firstStomach.Value.Comp.OwnerUid, split, firstStomach.Value.Comp);
 
             SoundSystem.Play(Filter.Pvs(userUid), component.UseSound.GetSound(), userUid, AudioParams.Default.WithVolume(-1f));
             _popupSystem.PopupEntity(Loc.GetString(component.EatMessage, ("food", component.Owner)), userUid, Filter.Entities(userUid));
@@ -201,18 +220,22 @@ namespace Content.Server.Nutrition.EntitySystems
 
         private void AddEatVerb(EntityUid uid, FoodComponent component, GetInteractionVerbsEvent ev)
         {
-            if (!ev.CanInteract ||
+            if (uid == ev.UserUid ||
+                !ev.CanInteract ||
                 !ev.CanAccess ||
-                !EntityManager.TryGetComponent(ev.User.Uid, out SharedBodyComponent? body) ||
-                !_bodySystem.TryGetComponentsOnMechanisms<StomachComponent>(ev.User.Uid, out var stomachs, body))
+                !EntityManager.TryGetComponent(ev.UserUid, out SharedBodyComponent? body) ||
+                !_bodySystem.TryGetComponentsOnMechanisms<StomachComponent>(ev.UserUid, out var stomachs, body))
+                return;
+
+            if (EntityManager.TryGetComponent<MobStateComponent>(uid, out var mobState) && mobState.IsAlive())
                 return;
 
             Verb verb = new();
             verb.Act = () =>
             {
-                TryUseFood(uid, ev.User.Uid, component);
+                TryUseFood(uid, ev.UserUid, component);
             };
-            
+
             verb.Text = Loc.GetString("food-system-verb-eat");
             verb.Priority = -1;
             ev.Verbs.Add(verb);
@@ -241,6 +264,14 @@ namespace Content.Server.Nutrition.EntitySystems
                 return true;
             }
 
+            if (IsMouthBlocked(targetUid, out var blocker))
+            {
+                var name = EntityManager.GetComponent<MetaDataComponent>(blocker.Value).EntityName;
+                _popupSystem.PopupEntity(Loc.GetString("food-system-remove-mask", ("entity", name)),
+                    userUid, Filter.Entities(userUid));
+                return true;
+            }
+
             if (!TryGetRequiredUtensils(userUid, food, out var utensils))
                 return true;
 
@@ -266,7 +297,7 @@ namespace Content.Server.Nutrition.EntitySystems
             var target = EntityManager.GetEntity(targetUid);
             var edible = EntityManager.GetEntity(uid);
             _logSystem.Add(LogType.ForceFeed, LogImpact.Medium, $"{user} is forcing {target} to eat {edible}");
-           
+
             food.InUse = true;
             return true;
         }
@@ -283,7 +314,8 @@ namespace Content.Server.Nutrition.EntitySystems
                 : args.FoodSolution.CurrentVolume;
 
             var split = _solutionContainerSystem.SplitSolution(args.Food.OwnerUid, args.FoodSolution, transferAmount);
-            var firstStomach = stomachs.FirstOrDefault(stomach => _stomachSystem.CanTransferSolution(stomach.OwnerUid, split));
+            var firstStomach = stomachs.FirstOrNull(
+                stomach => _stomachSystem.CanTransferSolution(stomach.Comp.OwnerUid, split));
 
             if (firstStomach == null)
             {
@@ -293,7 +325,7 @@ namespace Content.Server.Nutrition.EntitySystems
             }
 
             split.DoEntityReaction(uid, ReactionMethod.Ingestion);
-            _stomachSystem.TryTransferSolution(firstStomach.OwnerUid, split, firstStomach);
+            _stomachSystem.TryTransferSolution(firstStomach.Value.Comp.OwnerUid, split, firstStomach.Value.Comp);
 
             EntityManager.TryGetComponent(uid, out MetaDataComponent? targetMeta);
             var targetName = targetMeta?.EntityName ?? string.Empty;
@@ -332,6 +364,9 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!Resolve(uid, ref food) || !Resolve(target, ref body, false))
                 return;
 
+            if (IsMouthBlocked(target, out _))
+                return;
+
             if (!_solutionContainerSystem.TryGetSolution(uid, food.SolutionName, out var foodSolution))
                 return;
 
@@ -341,7 +376,9 @@ namespace Content.Server.Nutrition.EntitySystems
             if (food.UsesRemaining <= 0)
                 DeleteAndSpawnTrash(food);
 
-            var firstStomach = stomachs.FirstOrDefault(stomach => _stomachSystem.CanTransferSolution(stomach.OwnerUid, foodSolution));
+            var firstStomach = stomachs.FirstOrNull(
+                stomach => _stomachSystem.CanTransferSolution(stomach.Comp.OwnerUid, foodSolution));
+
             if (firstStomach == null)
                 return;
 
@@ -353,10 +390,12 @@ namespace Content.Server.Nutrition.EntitySystems
                 _logSystem.Add(LogType.ForceFeed, $"{edible} was thrown into the mouth of {targetEntity}");
             else
                 _logSystem.Add(LogType.ForceFeed, $"{userEntity} threw {edible} into the mouth of {targetEntity}");
-            _popupSystem.PopupEntity(Loc.GetString(food.EatMessage), target, Filter.Entities(target));
+
+            var filter = (user == null) ? Filter.Entities(target) : Filter.Entities(target, user.Value);
+            _popupSystem.PopupEntity(Loc.GetString(food.EatMessage), target, filter);
 
             foodSolution.DoEntityReaction(uid, ReactionMethod.Ingestion);
-            _stomachSystem.TryTransferSolution(firstStomach.OwnerUid, foodSolution, firstStomach);
+            _stomachSystem.TryTransferSolution(firstStomach.Value.Comp.OwnerUid, foodSolution, firstStomach.Value.Comp);
             SoundSystem.Play(Filter.Pvs(target), food.UseSound.GetSound(), target, AudioParams.Default.WithVolume(-1f));
 
             if (string.IsNullOrEmpty(food.TrashPrototype))
@@ -406,6 +445,39 @@ namespace Content.Server.Nutrition.EntitySystems
         private void OnForceFeedCancelled(ForceFeedCancelledEvent args)
         {
             args.Food.InUse = false;
+        }
+
+        /// <summary>
+        ///     Is an entity's mouth accessible, or is it blocked by something like a mask? Does not actually check if
+        ///     the user has a mouth. Body system when?
+        /// </summary>
+        public bool IsMouthBlocked(EntityUid uid, [NotNullWhen(true)] out EntityUid? blockingEntity,
+            InventoryComponent? inventory = null)
+        {
+            blockingEntity = null;
+
+            if (!Resolve(uid, ref inventory, false))
+                return false;
+
+            // check masks
+            if (inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.MASK, out ItemComponent? mask))
+            {
+                // For now, lets just assume that any masks always covers the mouth
+                // TODO MASKS if the ability is added to raise/lower masks, this needs to be updated.
+                blockingEntity = mask.OwnerUid;
+                return true;
+            }
+
+            // check helmets. Note that not all helmets cover the face.
+            if (inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.HEAD, out ItemComponent? head) &&
+                EntityManager.TryGetComponent(head.OwnerUid, out TagComponent tag) &&
+                tag.HasTag("ConcealsFace"))
+            {
+                blockingEntity = head.OwnerUid;
+                return true;
+            }
+
+            return false;
         }
     }
 

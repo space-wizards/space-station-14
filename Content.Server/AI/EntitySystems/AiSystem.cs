@@ -91,13 +91,14 @@ namespace Content.Server.AI.EntitySystems
 
             foreach (var npc in _awakeAi)
             {
-                if (npc.Paused) continue;
-
                 if (npc.Deleted)
                 {
                     toRemove.Add(npc);
                     continue;
                 }
+
+                if (npc.Paused)
+                    continue;
 
                 if (count >= maxUpdates)
                 {

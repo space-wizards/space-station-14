@@ -44,38 +44,72 @@ namespace Content.Shared.CCVar
          * Game
          */
 
+        /// <summary>
+        ///     Controls if the game should run station events
+        /// </summary>
         public static readonly CVarDef<bool>
             EventsEnabled = CVarDef.Create("events.enabled", true, CVar.ARCHIVE | CVar.SERVERONLY);
 
         public static readonly CVarDef<bool>
             GameDummyTicker = CVarDef.Create("game.dummyticker", false, CVar.ARCHIVE | CVar.SERVERONLY);
 
+        /// <summary>
+        ///     Controls if the lobby is enabled. If it is not, and there are no available jobs, you may get stuck on a black screen.
+        /// </summary>
         public static readonly CVarDef<bool>
             GameLobbyEnabled = CVarDef.Create("game.lobbyenabled", false, CVar.ARCHIVE);
 
+        /// <summary>
+        ///     Controls the duration of the lobby timer in seconds. Defaults to 2 minutes and 30 seconds.
+        /// </summary>
         public static readonly CVarDef<int>
             GameLobbyDuration = CVarDef.Create("game.lobbyduration", 150, CVar.ARCHIVE);
 
+        /// <summary>
+        ///     Controls if players can latejoin at all.
+        /// </summary>
         public static readonly CVarDef<bool>
             GameDisallowLateJoins = CVarDef.Create("game.disallowlatejoins", false, CVar.ARCHIVE | CVar.SERVERONLY);
 
+        /// <summary>
+        ///     Controls the default game preset.
+        /// </summary>
         public static readonly CVarDef<string>
             GameLobbyDefaultPreset = CVarDef.Create("game.defaultpreset", "Suspicion", CVar.ARCHIVE);
 
+        /// <summary>
+        ///     Controls if the game can force a different preset if the current preset's criteria are not met.
+        /// </summary>
         public static readonly CVarDef<bool>
             GameLobbyFallbackEnabled = CVarDef.Create("game.fallbackenabled", true, CVar.ARCHIVE);
 
+        /// <summary>
+        ///     The preset for the game to fall back to if the selected preset could not be used, and fallback is enabled.
+        /// </summary>
         public static readonly CVarDef<string>
             GameLobbyFallbackPreset = CVarDef.Create("game.fallbackpreset", "Sandbox", CVar.ARCHIVE);
 
+        /// <summary>
+        ///     Controls if people can win the game in Suspicion or Deathmatch.
+        /// </summary>
         public static readonly CVarDef<bool>
             GameLobbyEnableWin = CVarDef.Create("game.enablewin", true, CVar.ARCHIVE);
 
+        /// <summary>
+        ///     Controls the maximum number of character slots a player is allowed to have.
+        /// </summary>
         public static readonly CVarDef<int>
             GameMaxCharacterSlots = CVarDef.Create("game.maxcharacterslots", 10, CVar.ARCHIVE | CVar.SERVERONLY);
 
+        /// <summary>
+        ///     Controls the game map prototype to load. SS14 stores these prototypes in Prototypes/Maps.
+        /// </summary>
         public static readonly CVarDef<string>
             GameMap = CVarDef.Create("game.map", "saltern", CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Controls if the game should obey map criteria or not. Overriden if a map vote or similar occurs.
+        /// </summary>
         public static readonly CVarDef<bool>
             GameMapForced = CVarDef.Create("game.mapforced", false, CVar.SERVERONLY);
 
@@ -262,6 +296,8 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<float> HudHeldItemOffset =
             CVarDef.Create("hud.held_item_offset", 28f, CVar.ARCHIVE | CVar.CLIENTONLY);
 
+        public static readonly CVarDef<bool> HudFpsCounterVisible =
+            CVarDef.Create("hud.fps_counter_visible", false, CVar.CLIENTONLY | CVar.ARCHIVE);
 
         /*
          * AI
@@ -298,6 +334,9 @@ namespace Content.Shared.CCVar
          * Admin logs
          */
 
+        /// <summary>
+        ///     Controls if admin logs are enabled. Highly recommended to shut this off for development.
+        /// </summary>
         public static readonly CVarDef<bool> AdminLogsEnabled =
             CVarDef.Create("adminlogs.enabled", true, CVar.SERVERONLY);
 
@@ -513,6 +552,9 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<int> ChatMaxMessageLength =
             CVarDef.Create("chat.max_message_length", 1000, CVar.SERVER | CVar.REPLICATED);
+
+        public static readonly CVarDef<bool> ChatSanitizerEnabled =
+            CVarDef.Create("chat.chat_sanitizer_enabled", true, CVar.SERVERONLY);
 
         /*
          * AFK

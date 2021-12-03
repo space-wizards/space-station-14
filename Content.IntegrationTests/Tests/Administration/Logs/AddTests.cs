@@ -161,7 +161,7 @@ public class AddTests : ContentIntegrationTest
         await server.WaitPost(() =>
         {
             var coordinates = GetMainEntityCoordinates(sMaps);
-            var entity = sEntities.SpawnEntity(null, coordinates);
+            var entity = sEntities.SpawnEntity(null, coordinates).Uid;
 
             if (parallel)
             {
