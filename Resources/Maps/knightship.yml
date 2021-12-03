@@ -5625,17 +5625,4 @@ entities:
   - pos: 0.5,-9.5
     parent: 0
     type: Transform
-- uid: 559
-  type: SalvageLocator
-  components:
-  - pos: 0.5,5.5
-    rot: 3.141592653589793 rad
-    parent: 0
-    type: Transform
-- uid: 560
-  type: CrateSalvageEquipment
-  components:
-  - pos: 2.5,5.5
-    parent: 0
-    type: Transform
 ...
