@@ -1,17 +1,14 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.AI.Components;
-using Content.Server.AI.Utility.AiLogic;
 using Content.Server.MobState.States;
-using Content.Shared;
 using Content.Shared.CCVar;
 using Content.Shared.MobState;
 using JetBrains.Annotations;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
+using Robust.Shared.Random;
 
 namespace Content.Server.AI.EntitySystems
 {
@@ -22,6 +19,7 @@ namespace Content.Server.AI.EntitySystems
     internal class NPCSystem : EntitySystem
     {
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+        [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         /// <summary>
         ///     To avoid iterating over dead AI continuously they can wake and sleep themselves when necessary.
@@ -92,9 +90,21 @@ namespace Content.Server.AI.EntitySystems
             if (cvarMaxUpdates <= 0) return;
 
             var count = 0;
+            var npcs = _awakeNPCs.ToArray();
+            var startIndex = 0;
 
-            foreach (var npc in _awakeNPCs.ToArray())
+            // If we're overcap we'll just update randomly so they all still at least do something
+            // Didn't randomise the array (even though it'd probably be better) because god damn that'd be expensive.
+            if (npcs.Length > cvarMaxUpdates)
             {
+                startIndex = _robustRandom.Next(npcs.Length);
+            }
+
+            for (var i = 0; i < npcs.Length; i++)
+            {
+                var index = (i + startIndex) % npcs.Length;
+                var npc = npcs[index];
+
                 if (npc.Deleted)
                     continue;
 
