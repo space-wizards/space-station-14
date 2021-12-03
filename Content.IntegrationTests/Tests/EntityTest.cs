@@ -6,6 +6,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Coordinates;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -87,7 +88,7 @@ namespace Content.IntegrationTests.Tests
                                 Logger.LogS(LogLevel.Debug, "EntityTest", $"Testing: {prototype.ID}");
                                 testEntity = entityMan.SpawnEntity(prototype.ID, testLocation);
                                 server.RunTicks(2);
-                                Assert.That(testEntity.Initialized);
+                                Assert.That((!IoCManager.Resolve<IEntityManager>().EntityExists(testEntity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(testEntity.Uid).EntityLifeStage) >= EntityLifeStage.Initialized);
                                 entityMan.DeleteEntity(testEntity.Uid);
                             }, "Entity '{0}' threw an exception.",
                             prototype.ID);
@@ -172,7 +173,7 @@ namespace Content.IntegrationTests.Tests
 
                         var entity = entityManager.SpawnEntity("AllComponentsOneToOneDeleteTestEntity", testLocation);
 
-                        Assert.That(entity.Initialized);
+                        Assert.That((!IoCManager.Resolve<IEntityManager>().EntityExists(entity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityLifeStage) >= EntityLifeStage.Initialized);
 
                         // The component may already exist if it is a mandatory component
                         // such as MetaData or Transform
@@ -301,7 +302,7 @@ namespace Content.IntegrationTests.Tests
                         var testLocation = grid.ToCoordinates();
                         var entity = entityManager.SpawnEntity("AllComponentsOneEntityDeleteTestEntity", testLocation);
 
-                        Assert.That(entity.Initialized);
+                        Assert.That((!IoCManager.Resolve<IEntityManager>().EntityExists(entity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityLifeStage) >= EntityLifeStage.Initialized);
 
                         foreach (var type in distinct.components)
                         {
