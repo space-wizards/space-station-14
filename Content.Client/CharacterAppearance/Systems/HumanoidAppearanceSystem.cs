@@ -50,7 +50,7 @@ namespace Content.Client.CharacterAppearance.Systems
             {
                 foreach (var (part, _) in body.Parts)
                 {
-                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent(part.Owner, out SpriteComponent? partSprite))
+                    if (EntityManager.TryGetComponent(part.OwnerUid, out SpriteComponent? partSprite))
                     {
                         partSprite!.Color = component.Appearance.SkinColor;
                     }
@@ -107,13 +107,13 @@ namespace Content.Client.CharacterAppearance.Systems
         // Scaffolding until Body is moved to ECS.
         private void BodyPartAdded(HumanoidAppearanceBodyPartAddedEvent args)
         {
-            if(!EntityManager.TryGetEntity(args.Uid, out var owner)) return;
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(owner, out SpriteComponent? sprite))
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            if (!entityManager.TryGetComponent(args.Uid, out SpriteComponent? sprite))
             {
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().HasComponent<SpriteComponent>(args.Args.Part.Owner))
+            if (!entityManager.HasComponent<SpriteComponent>(args.Args.Part.OwnerUid))
             {
                 return;
             }
@@ -131,13 +131,12 @@ namespace Content.Client.CharacterAppearance.Systems
 
         private void BodyPartRemoved(HumanoidAppearanceBodyPartRemovedEvent args)
         {
-            if(!EntityManager.TryGetEntity(args.Uid, out var owner)) return;
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(owner, out SpriteComponent? sprite))
+            if (!EntityManager.TryGetComponent(args.Uid, out SpriteComponent? sprite))
             {
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().HasComponent<SpriteComponent>(args.Args.Part.Owner))
+            if (!EntityManager.HasComponent<SpriteComponent>(args.Args.Part.OwnerUid))
             {
                 return;
             }

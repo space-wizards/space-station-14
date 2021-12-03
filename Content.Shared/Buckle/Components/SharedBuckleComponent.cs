@@ -33,7 +33,7 @@ namespace Content.Shared.Buckle.Components
 
         public bool DontCollide { get; set; }
 
-        public abstract bool TryBuckle(IEntity? user, IEntity to);
+        public abstract bool TryBuckle(EntityUid user, EntityUid to);
 
         bool IDraggable.CanDrop(CanDropEvent args)
         {
@@ -80,7 +80,7 @@ namespace Content.Shared.Buckle.Components
         /// <param name="entity">The entity that had its buckling status changed</param>
         /// <param name="strap">The strap that the entity was buckled to or unbuckled from</param>
         /// <param name="buckled">True if the entity was buckled, false otherwise</param>
-        protected BuckleChangeMessage(IEntity entity, IEntity strap, bool buckled)
+        protected BuckleChangeMessage(EntityUid entity, EntityUid strap, bool buckled)
         {
             Entity = entity;
             Strap = strap;
@@ -90,12 +90,12 @@ namespace Content.Shared.Buckle.Components
         /// <summary>
         ///     The entity that had its buckling status changed
         /// </summary>
-        public IEntity Entity { get; }
+        public EntityUid Entity { get; }
 
         /// <summary>
         ///     The strap that the entity was buckled to or unbuckled from
         /// </summary>
-        public IEntity Strap { get; }
+        public EntityUid Strap { get; }
 
         /// <summary>
         ///     True if the entity was buckled, false otherwise.
@@ -111,7 +111,7 @@ namespace Content.Shared.Buckle.Components
         /// </summary>
         /// <param name="entity">The entity that had its buckling status changed</param>
         /// <param name="strap">The strap that the entity was buckled to or unbuckled from</param>
-        public BuckleMessage(IEntity entity, IEntity strap) : base(entity, strap, true)
+        public BuckleMessage(EntityUid entity, EntityUid strap) : base(entity, strap, true)
         {
         }
     }
@@ -124,7 +124,7 @@ namespace Content.Shared.Buckle.Components
         /// </summary>
         /// <param name="entity">The entity that had its buckling status changed</param>
         /// <param name="strap">The strap that the entity was buckled to or unbuckled from</param>
-        public UnbuckleMessage(IEntity entity, IEntity strap) : base(entity, strap, false)
+        public UnbuckleMessage(EntityUid entity, EntityUid strap) : base(entity, strap, false)
         {
         }
     }
