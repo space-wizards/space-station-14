@@ -25,6 +25,7 @@ namespace Content.Server.Toilet
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly SecretStashSystem _secretStash = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly ToolSystem _toolSystem = default!;
 
         public override void Initialize()
         {
@@ -34,6 +35,8 @@ namespace Content.Server.Toilet
             SubscribeLocalEvent<ToiletComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<ToiletComponent, InteractHandEvent>(OnInteractHand);
             SubscribeLocalEvent<ToiletComponent, ExaminedEvent>(OnExamine);
+            SubscribeLocalEvent<ToiletPryFinished>(OnToiletPried);
+            SubscribeLocalEvent<ToiletPryInterrupted>(OnToiletInterrupt);
         }
 
         private void OnInit(EntityUid uid, ToiletComponent component, ComponentInit args)
@@ -62,19 +65,14 @@ namespace Content.Server.Toilet
                     return;
                 component.IsPrying = true;
 
-                /*if (!await EntitySystem.Get<ToolSystem>().UseTool(eventArgs.Using.Uid, eventArgs.User.Uid, Owner.Uid, 0f, PryLidTime, PryingQuality))
+                // try to pry toilet cistern
+                if (!_toolSystem.UseTool(args.UsedUid, args.UserUid, uid, 0f,
+                    component.PryLidTime, component.PryingQuality,
+                    new ToiletPryFinished(uid), new ToiletPryInterrupted(uid)))
                 {
-                    IsPrying = false;
-                    return false;
+                    component.IsPrying = false;
+                    return;
                 }
-
-                IsPrying = false;
-
-                // all cool - toggle lid
-                LidOpen = !LidOpen;
-                UpdateSprite();
-
-                return true;*/
 
                 args.Handled = true;
             }
@@ -162,6 +160,24 @@ namespace Content.Server.Toilet
             }
         }
 
+        private void OnToiletInterrupt(ToiletPryInterrupted ev)
+        {
+            if (!EntityManager.TryGetComponent(ev.Uid, out ToiletComponent? toilet))
+                return;
+
+            toilet.IsPrying = false;
+        }
+
+        private void OnToiletPried(ToiletPryFinished ev)
+        {
+            if (!EntityManager.TryGetComponent(ev.Uid, out ToiletComponent? toilet))
+                return;
+
+            toilet.IsPrying = false;
+            toilet.LidOpen = !toilet.LidOpen;
+            UpdateSprite(ev.Uid, toilet);
+        }
+
         public void ToggleToiletSeat(EntityUid uid, ToiletComponent? component = null)
         {
             if (!Resolve(uid, ref component))
@@ -184,6 +200,26 @@ namespace Content.Server.Toilet
 
             appearance.SetData(ToiletVisuals.LidOpen, component.LidOpen);
             appearance.SetData(ToiletVisuals.SeatUp, component.IsSeatUp);
+        }
+    }
+
+    public class ToiletPryFinished : EntityEventArgs
+    {
+        public EntityUid Uid;
+
+        public ToiletPryFinished(EntityUid uid)
+        {
+            Uid = uid;
+        }
+    }
+
+    public class ToiletPryInterrupted : EntityEventArgs
+    {
+        public EntityUid Uid;
+
+        public ToiletPryInterrupted(EntityUid uid)
+        {
+            Uid = uid;
         }
     }
 }
