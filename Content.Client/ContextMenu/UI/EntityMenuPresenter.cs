@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.Examine;
-using Content.Client.Items.Managers;
 using Content.Client.Verbs;
 using Content.Client.Viewport;
 using Content.Shared.CCVar;
@@ -33,7 +32,6 @@ namespace Content.Client.ContextMenu.UI
     public sealed partial class EntityMenuPresenter : ContextMenuPresenter
     {
         [Dependency] private readonly IEntitySystemManager _systemManager = default!;
-        [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IStateManager _stateManager = default!;
@@ -80,6 +78,10 @@ namespace Content.Client.ContextMenu.UI
         /// </summary>
         public void OpenRootMenu(List<IEntity> entities)
         {
+            // close any old menus first.
+            if (RootMenu.Visible)
+                Close();
+
             var entitySpriteStates = GroupEntities(entities);
             var orderedStates = entitySpriteStates.ToList();
             orderedStates.Sort((x, y) => string.CompareOrdinal(x.First().Prototype?.Name, y.First().Prototype?.Name));
