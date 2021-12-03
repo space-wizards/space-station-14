@@ -300,12 +300,13 @@ namespace Content.Shared.CCVar
             CVarDef.Create("hud.fps_counter_visible", false, CVar.CLIENTONLY | CVar.ARCHIVE);
 
         /*
-         * AI
+         * NPCs
          */
 
-        public static readonly CVarDef<int> AIMaxUpdates =
-            CVarDef.Create("ai.maxupdates", 64);
+        public static readonly CVarDef<int> NPCMaxUpdates =
+            CVarDef.Create("npc.max_updates", 64);
 
+        public static readonly CVarDef<bool> NPCEnabled = CVarDef.Create("npc.enabled", true);
 
         /*
          * Net
