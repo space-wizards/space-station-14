@@ -10,6 +10,8 @@
     collection: footstep_floor
   friction: 0.30
   item_drop: FloorTileItemSteel
+  thermalConductivity: 0.04
+  heatCapacity: 10000
 
 - type: tile
   name: floor_wood
@@ -24,6 +26,8 @@
     collection: footstep_wood
   friction: 0.30
   item_drop: FloorTileItemWood
+  thermalConductivity: 0.04
+  heatCapacity: 10000
 
 - type: tile
   name: floor_white
@@ -37,6 +41,8 @@
     collection: footstep_floor
   friction: 0.25
   item_drop: FloorTileItemWhite
+  thermalConductivity: 0.04
+  heatCapacity: 10000
 
 - type: tile
   name: floor_dark
@@ -50,6 +56,8 @@
     collection: footstep_floor
   friction: 0.30
   item_drop: FloorTileItemDark
+  thermalConductivity: 0.04
+  heatCapacity: 10000
 
 - type: tile
   name: floor_techmaint
@@ -63,6 +71,8 @@
     collection: footstep_floor
   friction: 0.30
   item_drop: FloorTileItemTechmaint
+  thermalConductivity: 0.04
+  heatCapacity: 10000
 
 - type: tile
   name: floor_reinforced
@@ -76,6 +86,8 @@
     collection: footstep_floor
   friction: 0.30
   item_drop: FloorTileItemReinforced
+  thermalConductivity: 0.04
+  heatCapacity: 10000
 
 - type: tile
   name: floor_mono
@@ -89,6 +101,8 @@
     collection: footstep_floor
   friction: 0.30
   item_drop: FloorTileItemMono
+  thermalConductivity: 0.04
+  heatCapacity: 10000
 
 - type: tile
   name: floor_lino
@@ -102,6 +116,8 @@
     collection: footstep_floor
   friction: 0.30
   item_drop: FloorTileItemLino
+  thermalConductivity: 0.04
+  heatCapacity: 10000
 
 - type: tile
   name: floor_steel_dirty
@@ -115,6 +131,8 @@
     collection: footstep_floor
   friction: 0.30
   item_drop: FloorTileItemDirty
+  thermalConductivity: 0.04
+  heatCapacity: 10000
 
 - type: tile
   name: floor_elevator_shaft
@@ -128,6 +146,8 @@
     collection: footstep_floor
   friction: 0.30
   item_drop: FloorTileItemElevatorShaft
+  thermalConductivity: 0.04
+  heatCapacity: 10000
 
 - type: tile
   name: floor_rock_vault
@@ -141,6 +161,8 @@
     collection: footstep_floor
   friction: 0.30
   item_drop: FloorTileItemRockVault
+  thermalConductivity: 0.04
+  heatCapacity: 10000
 
 - type: tile
   name: floor_blue
@@ -153,6 +175,8 @@
   footstep_sounds:
     collection: footstep_floor
   item_drop: FloorTileItemBlue
+  thermalConductivity: 0.04
+  heatCapacity: 10000
 
 # Departamental
 - type: tile
@@ -167,6 +191,8 @@
     collection: footstep_floor
   friction: 0.30
   item_drop: FloorTileItemFreezer
+  thermalConductivity: 0.04
+  heatCapacity: 10000
 
 - type: tile
   name: floor_showroom
@@ -180,6 +206,8 @@
     collection: footstep_floor
   friction: 0.30
   item_drop: FloorTileItemShowroom
+  thermalConductivity: 0.04
+  heatCapacity: 10000
 
 - type: tile
   name: floor_hydro
@@ -193,6 +221,8 @@
     collection: footstep_floor
   friction: 0.30
   item_drop: FloorTileItemHydro
+  thermalConductivity: 0.04
+  heatCapacity: 10000
 
 - type: tile
   name: floor_bar
@@ -206,6 +236,8 @@
     collection: footstep_floor
   friction: 0.30
   item_drop: FloorTileItemBar
+  thermalConductivity: 0.04
+  heatCapacity: 10000
 
 - type: tile
   name: floor_clown
@@ -219,6 +251,8 @@
     collection: footstep_floor
   friction: 0.30
   item_drop: FloorTileItemClown
+  thermalConductivity: 0.04
+  heatCapacity: 10000
 
 - type: tile
   name: floor_mime
@@ -232,6 +266,8 @@
     collection: footstep_floor
   friction: 0.30
   item_drop: FloorTileItemMime
+  thermalConductivity: 0.04
+  heatCapacity: 10000
 
 - type: tile
   name: floor_kitchen
@@ -245,6 +281,8 @@
     collection: footstep_floor
   friction: 0.30
   item_drop: FloorTileItemKitchen
+  thermalConductivity: 0.04
+  heatCapacity: 10000
 
 - type: tile
   name: floor_laundry
@@ -258,6 +296,8 @@
     collection: footstep_floor
   friction: 0.30
   item_drop: FloorTileItemLaundry
+  thermalConductivity: 0.04
+  heatCapacity: 10000
 
 # Materials
 - type: tile
@@ -272,6 +312,8 @@
     collection: footstep_floor
   friction: 0.30
   item_drop: FloorTileItemGold
+  thermalConductivity: 0.04
+  heatCapacity: 10000
 
 - type: tile
   name: floor_silver
@@ -285,6 +327,8 @@
     collection: footstep_floor
   friction: 0.30
   item_drop: FloorTileItemSilver
+  thermalConductivity: 0.04
+  heatCapacity: 10000
 
 - type: tile
   name: floor_glass
@@ -298,6 +342,8 @@
     collection: footstep_floor
   friction: 0.30
   item_drop: SheetGlass1
+  thermalConductivity: 0.04
+  heatCapacity: 10000
 
 - type: tile
   name: floor_rglass
@@ -311,6 +357,8 @@
     collection: footstep_floor
   friction: 0.30
   item_drop: SheetRGlass1
+  thermalConductivity: 0.04
+  heatCapacity: 10000
 
 # Circuits
 - type: tile
@@ -325,6 +373,8 @@
     collection: footstep_floor
   friction: 0.30
   item_drop: FloorTileItemGCircuit
+  thermalConductivity: 0.04
+  heatCapacity: 10000
 
 - type: tile
   name: floor_blue_circuit
@@ -337,7 +387,9 @@
   footstep_sounds:
     collection: footstep_floor
   friction: 0.30
-#  item_drop: FloorTileItem
+  item_drop: FloorTileItemBCircuit
+  thermalConductivity: 0.04
+  heatCapacity: 10000
 
 # Terrain
 - type: tile
@@ -352,6 +404,8 @@
     collection: footstep_snow
   friction: 0.20
   item_drop: FloorTileItemSnow
+  thermalConductivity: 0.04
+  heatCapacity: 10000
 
 - type: tile
   name: floor_grass
@@ -365,6 +419,8 @@
     collection: footstep_floor
   friction: 0.30
   item_drop: FloorTileItemGrass
+  thermalConductivity: 0.04
+  heatCapacity: 10000
 
 # Asteroid
 - type: tile
@@ -378,6 +434,8 @@
   footstep_sounds:
     collection: footstep_asteroid
   friction: 0.30
+  thermalConductivity: 0.04
+  heatCapacity: 10000
 
 - type: tile
   name: floor_asteroid_tile
@@ -390,6 +448,8 @@
   footstep_sounds:
     collection: footstep_asteroid
   friction: 0.30
+  thermalConductivity: 0.04
+  heatCapacity: 10000
 
 - type: tile
   name: floor_asteroid_coarse_sand0
@@ -402,6 +462,8 @@
   footstep_sounds:
     collection: footstep_asteroid
   friction: 0.30
+  thermalConductivity: 0.04
+  heatCapacity: 10000
 
 - type: tile
   name: floor_asteroid_coarse_sand1
@@ -414,6 +476,8 @@
   footstep_sounds:
     collection: footstep_asteroid
   friction: 0.30
+  thermalConductivity: 0.04
+  heatCapacity: 10000
 
 - type: tile
   name: floor_asteroid_coarse_sand2
@@ -426,6 +490,8 @@
   footstep_sounds:
     collection: footstep_asteroid
   friction: 0.30
+  thermalConductivity: 0.04
+  heatCapacity: 10000
 
 - type: tile
   name: floor_asteroid_coarse_sand_dug
@@ -438,3 +504,5 @@
   footstep_sounds:
     collection: footstep_asteroid
   friction: 0.30
+  thermalConductivity: 0.04
+  heatCapacity: 10000

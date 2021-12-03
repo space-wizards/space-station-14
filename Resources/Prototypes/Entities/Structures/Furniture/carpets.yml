@@ -16,6 +16,7 @@
     tags: [ Carpet ]
   - type: Physics
     canCollide: false
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb {}

@@ -99,7 +99,7 @@ namespace Content.Shared.Preferences
                 BackpackPreference.Backpack,
                 new Dictionary<string, JobPriority>
                 {
-                    {SharedGameTicker.OverflowJob, JobPriority.High}
+                    {SharedGameTicker.FallbackOverflowJob, JobPriority.High}
                 },
                 PreferenceUnavailableMode.SpawnAsOverflow,
                 new List<string>());
@@ -120,7 +120,7 @@ namespace Content.Shared.Preferences
             return new HumanoidCharacterProfile(name, age, sex, gender, HumanoidCharacterAppearance.Random(sex), ClothingPreference.Jumpsuit, BackpackPreference.Backpack,
                 new Dictionary<string, JobPriority>
                 {
-                    {SharedGameTicker.OverflowJob, JobPriority.High}
+                    {SharedGameTicker.FallbackOverflowJob, JobPriority.High}
                 }, PreferenceUnavailableMode.StayInLobby, new List<string>());
         }
 

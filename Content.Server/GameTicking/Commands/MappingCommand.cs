@@ -64,6 +64,7 @@ namespace Content.Server.GameTicking.Commands
                     return;
             }
 
+            shell.ExecuteCommand("sudo cvar events.enabled false");
             shell.ExecuteCommand($"addmap {mapId} false");
             shell.ExecuteCommand($"loadbp {mapId} \"{CommandParsing.Escape(mapName)}\" true");
 
@@ -71,6 +72,7 @@ namespace Content.Server.GameTicking.Commands
                 shell.ExecuteCommand("aghost");
 
             shell.ExecuteCommand($"tp 0 0 {mapId}");
+            shell.RemoteExecuteCommand("showmarkers");
 
             var newGrid = mapManager.GetAllGrids().OrderByDescending(g => (int) g.Index).First();
             var pauseManager = IoCManager.Resolve<IPauseManager>();

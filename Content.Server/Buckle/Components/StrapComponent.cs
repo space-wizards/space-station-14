@@ -158,7 +158,7 @@ namespace Content.Server.Buckle.Components
             _occupiedSize = 0;
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new StrapComponentState(Position);
         }

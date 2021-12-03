@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Content.Client.Clickable;
 using Content.Server.GameTicking;
@@ -6,10 +7,8 @@ using NUnit.Framework;
 using Robust.Server.GameObjects;
 using Robust.Shared;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -76,7 +75,7 @@ namespace Content.IntegrationTests.Tests
 
             await _server.WaitPost(() =>
             {
-                var gridEnt = mapManager.GetGrid(gameTicker.DefaultGridId).GridEntityId;
+                var gridEnt = mapManager.GetAllGrids().First().GridEntityId;
                 worldPos = serverEntManager.GetEntity(gridEnt).Transform.WorldPosition;
 
                 var ent = serverEntManager.SpawnEntity(prototype, new EntityCoordinates(gridEnt, 0f, 0f));

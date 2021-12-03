@@ -10,7 +10,7 @@ using Robust.Shared.Localization;
 
 namespace Content.Server.GameTicking.Commands
 {
-    [AdminCommand(AdminFlags.Server)]
+    [AdminCommand(AdminFlags.Round)]
     class ForceMapCommand : IConsoleCommand
     {
         public string Command => "forcemap";

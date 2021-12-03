@@ -254,10 +254,12 @@
   - type: GalacticMarket
     products:
       - MedicalSupplies
+      - MedicalChemistrySupplies
       - EmergencyExplosive
       - EmergencyFire
       - EmergencyInternals
       - EmergencyRadiation
+      - EmergencyInflatablewall
       - ArmorySmg
       - ArmoryShotgun
       - SecurityArmor
@@ -270,6 +272,7 @@
       - HydroponicsSeeds
       - HydroponicsSeedsExotic
       - LivestockMonkeyCube
+      - LivestockCow
       - FoodPizza
       - ServiceJanitorial
       - ServiceLightsReplacement

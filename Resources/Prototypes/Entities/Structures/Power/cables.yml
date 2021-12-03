@@ -6,6 +6,7 @@
   components:
   - type: Clickable
   - type: Physics
+  - type: Fixtures
     fixtures:
       - shape:
           !type:PhysShapeAabb
@@ -17,7 +18,7 @@
     anchored: true
   - type: Sprite
     netsync: false
-    drawdepth: BelowFloor
+    drawdepth: ThinWire
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -31,6 +32,7 @@
         acts: ["Destruction"]
   - type: SubFloorHide
   - type: Electrified
+    onHandInteract: false
     onBump: false
     requirePower: true
     highVoltageNode: power
@@ -48,6 +50,7 @@
   - type: Sprite
     sprite: Structures/Power/Cables/hv_cable.rsi
     state: hvcable_0
+    drawdepth: ThickWire
   - type: Icon
     sprite: Structures/Power/Cables/hv_cable.rsi
     state: hvcable_4

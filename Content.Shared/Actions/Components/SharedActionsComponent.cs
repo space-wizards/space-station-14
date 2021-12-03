@@ -75,7 +75,7 @@ namespace Content.Shared.Actions.Components
         }
 
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new ActionComponentState(_actions, _itemActions);
         }

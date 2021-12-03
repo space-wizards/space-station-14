@@ -36,7 +36,7 @@
 
 - type: latheRecipe
   id: CableStack
-  name: cable coil
+  name: LV cable
   icon: /Textures/Objects/Tools/cable-coils.rsi/coillv-30.png
   result: CableApcStack1
   completetime: 500

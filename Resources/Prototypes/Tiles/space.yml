@@ -6,3 +6,5 @@
   is_subfloor: true
   is_space: true
   sturdy: false
+  thermalConductivity: 0.4
+  heatCapacity: 700000

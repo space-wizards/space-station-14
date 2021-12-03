@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using Content.Shared.Access;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Roles
@@ -43,20 +45,6 @@ namespace Content.Shared.Roles
         [DataField("head")]
         public bool IsHead { get; private set; }
 
-        /// <summary>
-        ///     The total amount of people that can start with this job round-start.
-        /// </summary>
-        public int SpawnPositions => _spawnPositions ?? TotalPositions;
-
-        [DataField("spawnPositions")]
-        private int? _spawnPositions;
-
-        /// <summary>
-        ///     The total amount of positions available.
-        /// </summary>
-        [DataField("positions")]
-        public int TotalPositions { get; private set; }
-
         [DataField("startingGear")]
         public string? StartingGear { get; private set; }
 
@@ -68,7 +56,7 @@ namespace Content.Shared.Roles
         [DataField("departments")]
         public IReadOnlyCollection<string> Departments { get; } = Array.Empty<string>();
 
-        [DataField("access")]
+        [DataField("access", customTypeSerializer: typeof(PrototypeIdListSerializer<AccessLevelPrototype>))]
         public IReadOnlyCollection<string> Access { get; } = Array.Empty<string>();
     }
 }

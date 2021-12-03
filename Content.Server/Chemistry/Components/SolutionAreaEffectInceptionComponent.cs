@@ -15,7 +15,7 @@ namespace Content.Server.Chemistry.Components
     {
         public override string Name => "AreaEffectInception";
 
-        private const float ReactionDelay = 0.5f;
+        private const float ReactionDelay = 1.5f;
 
         private readonly HashSet<SolutionAreaEffectComponent> _group = new();
 

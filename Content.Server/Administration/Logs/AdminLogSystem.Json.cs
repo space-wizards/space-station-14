@@ -72,6 +72,8 @@ public partial class AdminLogSystem
                 ? resolvedEntity.Name
                 : null;
 
+            if (entities.Any(e => e.id == (int) uid)) continue;
+
             entities.Add(((int) uid, entityName));
 
             if (_entityManager.TryGetComponent(uid, out ActorComponent? actor))
