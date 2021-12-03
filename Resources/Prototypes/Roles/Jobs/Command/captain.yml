@@ -19,11 +19,12 @@
   - HeadOfPersonnel
   - Command
   - Security
-  - Brig
+  - Armory
+ # - Brig
   - Engineering
   - Medical
   - Cargo
-  - ResearchDirector
+ # - ResearchDirector
   - Research
   - Service
   - Maintenance

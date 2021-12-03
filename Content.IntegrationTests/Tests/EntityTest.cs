@@ -14,7 +14,7 @@ using Robust.Shared.Timing;
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    [TestOf(typeof(Entity))]
+    [TestOf(typeof(IEntity))]
     public class EntityTest : ContentIntegrationTest
     {
         [Test]

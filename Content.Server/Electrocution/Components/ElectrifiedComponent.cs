@@ -57,7 +57,7 @@ namespace Content.Server.Electrocution
         ///     Shock time, in seconds.
         /// </summary>
         [DataField("shockTime")]
-        public float ShockTime { get; } = 30f;
+        public float ShockTime { get; } = 8f;
 
         [DataField("siemensCoefficient")]
         public float SiemensCoefficient { get; } = 1f;

@@ -12,8 +12,9 @@
   canBeAntag: false
   access:
   - Command
-  - Brig
+#  - Brig
   - Security
+  - Armory
   - Maintenance
   - Service
 

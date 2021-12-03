@@ -55,10 +55,10 @@ namespace Content.IntegrationTests.Tests.Networking
             var clEntityManager = client.ResolveDependency<IEntityManager>();
             var svEntityManager = server.ResolveDependency<IEntityManager>();
 
-            var lastSvEntity = svEntityManager.GetEntities().Last();
-            var lastClEntity = clEntityManager.GetEntity(lastSvEntity.Uid);
+            var lastSvEntity = svEntityManager.GetEntities().Last().Uid;
 
-            Assert.That(lastClEntity.Transform.Coordinates, Is.EqualTo(lastSvEntity.Transform.Coordinates));
+            Assert.That(clEntityManager.GetComponent<TransformComponent>(lastSvEntity).Coordinates,
+                Is.EqualTo(svEntityManager.GetComponent<TransformComponent>(lastSvEntity).Coordinates));
         }
     }
 }

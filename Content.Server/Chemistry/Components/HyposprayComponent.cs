@@ -122,7 +122,7 @@ namespace Content.Server.Chemistry.Components
             return true;
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             var solutionSys = Owner.EntityManager.EntitySysManager.GetEntitySystem<SolutionContainerSystem>();
             return solutionSys.TryGetSolution(Owner.Uid, SolutionName, out var solution)

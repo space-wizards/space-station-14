@@ -26,7 +26,7 @@ namespace Content.Shared.Hands.Components
             }
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new VirtualItemComponentState(BlockingEntity);
         }

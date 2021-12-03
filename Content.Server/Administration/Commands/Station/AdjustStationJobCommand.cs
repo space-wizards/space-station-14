@@ -10,7 +10,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Administration.Commands.Station;
 
-[AdminCommand(AdminFlags.Spawn)]
+[AdminCommand(AdminFlags.Round)]
 public class AdjustStationJobCommand : IConsoleCommand
 {
     public string Command => "adjstationjob";

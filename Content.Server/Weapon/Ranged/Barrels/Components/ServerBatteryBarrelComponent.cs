@@ -81,7 +81,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         [DataField("soundPowerCellEject", required: true)]
         private SoundSpecifier _soundPowerCellEject = default!;
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             (int, int)? count = (ShotsLeft, Capacity);
 

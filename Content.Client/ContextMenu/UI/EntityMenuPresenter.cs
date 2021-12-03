@@ -1,13 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.Examine;
-using Content.Client.Items.Managers;
 using Content.Client.Verbs;
 using Content.Client.Viewport;
 using Content.Shared.CCVar;
 using Content.Shared.Input;
-using Content.Shared.Interaction.Helpers;
-using Content.Shared.Verbs;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -35,7 +32,6 @@ namespace Content.Client.ContextMenu.UI
     public sealed partial class EntityMenuPresenter : ContextMenuPresenter
     {
         [Dependency] private readonly IEntitySystemManager _systemManager = default!;
-        [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IStateManager _stateManager = default!;
@@ -82,6 +78,10 @@ namespace Content.Client.ContextMenu.UI
         /// </summary>
         public void OpenRootMenu(List<IEntity> entities)
         {
+            // close any old menus first.
+            if (RootMenu.Visible)
+                Close();
+
             var entitySpriteStates = GroupEntities(entities);
             var orderedStates = entitySpriteStates.ToList();
             orderedStates.Sort((x, y) => string.CompareOrdinal(x.First().Prototype?.Name, y.First().Prototype?.Name));
@@ -121,8 +121,12 @@ namespace Content.Client.ContextMenu.UI
             }
 
             // do some other server-side interaction?
-            if (args.Function == EngineKeyFunctions.Use || args.Function == ContentKeyFunctions.AltActivateItemInWorld || args.Function == ContentKeyFunctions.Point ||
-                args.Function == ContentKeyFunctions.TryPullObject || args.Function == ContentKeyFunctions.MovePulledObject)
+            if (args.Function == EngineKeyFunctions.Use ||
+                args.Function == ContentKeyFunctions.ActivateItemInWorld ||
+                args.Function == ContentKeyFunctions.AltActivateItemInWorld ||
+                args.Function == ContentKeyFunctions.Point ||
+                args.Function == ContentKeyFunctions.TryPullObject ||
+                args.Function == ContentKeyFunctions.MovePulledObject)
             {
                 var inputSys = _systemManager.GetEntitySystem<InputSystem>();
 
@@ -141,11 +145,6 @@ namespace Content.Client.ContextMenu.UI
                 _verbSystem.CloseAllMenus();
                 args.Handle();
                 return;
-            }
-
-            if (_itemSlotManager.OnButtonPressed(args, entity))
-            {
-                _verbSystem.CloseAllMenus();
             }
         }
 

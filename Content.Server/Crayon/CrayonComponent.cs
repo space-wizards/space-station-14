@@ -83,7 +83,7 @@ namespace Content.Server.Crayon
             }
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new CrayonComponentState(_color, SelectedState, Charges, Capacity);
         }

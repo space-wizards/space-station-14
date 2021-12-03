@@ -44,9 +44,20 @@ namespace Content.Server.Nutrition.Components
         [DataField("utensilRequired")]
         public bool UtensilRequired = false;
 
-
         [DataField("eatMessage")]
         public string EatMessage = "food-nom";
+
+        /// <summary>
+        ///     This is how many seconds it takes to force feed someone this food.
+        ///     Should probably be smaller for small items like pills.
+        /// </summary>
+        [DataField("forceFeedDelay")]
+        public float ForceFeedDelay = 3;
+
+        /// <summary>
+        ///     If true, this food has some DoAfter active (someone is being force fed).
+        /// </summary>
+        public bool InUse = false;
 
         [ViewVariables]
         public int UsesRemaining
