@@ -262,6 +262,9 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
         private void HandlePowerChange(EntityUid uid, DisposalUnitComponent component, PowerChangedEvent args)
         {
+            if (!component.Running)
+                return;
+
             // TODO: Need to check the other stuff.
             if (!args.Powered)
             {

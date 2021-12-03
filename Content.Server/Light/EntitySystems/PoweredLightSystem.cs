@@ -240,8 +240,11 @@ namespace Content.Server.Light.EntitySystems
             ApcPowerReceiverComponent? powerReceiver = null,
             AppearanceComponent? appearance = null)
         {
-            if (!Resolve(uid, ref light, ref powerReceiver, ref appearance))
+            if (!Resolve(uid, ref light, ref powerReceiver))
                 return;
+
+            // Optional component.
+            Resolve(uid, ref appearance, false);
 
             // check if light has bulb
             var bulbUid = GetBulb(uid, light);
