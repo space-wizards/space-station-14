@@ -11,6 +11,10 @@ namespace Content.Shared.Actions
         private const float CooldownCheckIntervalSeconds = 10;
         private float _timeSinceCooldownCheck;
 
+        public override void Initialize()
+        {
+            base.Initialize();
+        }
 
         public override void Update(float frameTime)
         {

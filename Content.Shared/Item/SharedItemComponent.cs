@@ -20,7 +20,7 @@ namespace Content.Shared.Item
     ///    Players can pick up, drop, and put items in bags, and they can be seen in player's hands.
     /// </summary>
     [NetworkedComponent()]
-    public abstract class SharedItemComponent : Component, IEquipped, IUnequipped, IInteractHand
+    public abstract class SharedItemComponent : Component, IInteractHand
     {
         public override string Name => "Item";
 
@@ -59,7 +59,7 @@ namespace Content.Shared.Item
 
         [ViewVariables]
         [DataField("Slots")]
-        public EquipmentSlotDefines.SlotFlags SlotFlags = EquipmentSlotDefines.SlotFlags.PREVENTEQUIP; //Different from None, NONE allows equips if no slot flags are required
+        public SlotFlags SlotFlags = SlotFlags.PREVENTEQUIP; //Different from None, NONE allows equips if no slot flags are required
 
         [DataField("EquipSound")]
         public SoundSpecifier? EquipSound { get; set; } = default!;
@@ -129,16 +129,6 @@ namespace Content.Shared.Item
                 return false;
 
             return user.InRangeUnobstructed(Owner, ignoreInsideBlocker: true, popup: popup);
-        }
-
-        void IEquipped.Equipped(EquippedEventArgs eventArgs)
-        {
-            EquippedToSlot();
-        }
-
-        void IUnequipped.Unequipped(UnequippedEventArgs eventArgs)
-        {
-            RemovedFromSlot();
         }
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)

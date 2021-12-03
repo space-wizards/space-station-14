@@ -1,3 +1,4 @@
+using Content.Shared.Inventory.Events;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -11,6 +12,19 @@ namespace Content.Shared.Item
         {
             base.Initialize();
             SubscribeLocalEvent<SharedItemComponent, GetInteractionVerbsEvent>(AddPickupVerb);
+
+            SubscribeLocalEvent<SharedSpriteComponent, GotEquippedEvent>(OnEquipped);
+            SubscribeLocalEvent<SharedSpriteComponent, GotUnequippedEvent>(OnUnequipped);
+        }
+
+        private void OnUnequipped(EntityUid uid, SharedSpriteComponent component, GotUnequippedEvent args)
+        {
+            component.Visible = true;
+        }
+
+        private void OnEquipped(EntityUid uid, SharedSpriteComponent component, GotEquippedEvent args)
+        {
+            component.Visible = false;
         }
 
         private void AddPickupVerb(EntityUid uid, SharedItemComponent component, GetInteractionVerbsEvent args)
