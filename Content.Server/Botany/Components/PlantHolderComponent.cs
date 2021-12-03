@@ -661,7 +661,7 @@ namespace Content.Server.Botany.Components
                     if (seeds.Seed == null)
                     {
                         user.PopupMessageCursor(Loc.GetString("plant-holder-component-empty-seed-packet-message"));
-                        usingItem.QueueDelete();
+                        IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(usingItem.Uid);
                         return false;
                     }
 
@@ -675,7 +675,7 @@ namespace Content.Server.Botany.Components
                     Health = Seed.Endurance;
                     _lastCycle = _gameTiming.CurTime;
 
-                    usingItem.QueueDelete();
+                    IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(usingItem.Uid);
 
                     CheckLevelSanity();
                     UpdateSprite();
@@ -823,7 +823,7 @@ namespace Content.Server.Botany.Components
                     ForceUpdateByExternalCause();
                 }
 
-                usingItem.QueueDelete();
+                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(usingItem.Uid);
 
                 return true;
             }

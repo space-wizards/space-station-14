@@ -125,7 +125,7 @@ namespace Content.Server.Singularity.EntitySystems
                 otherSingulo.BeingDeletedByAnotherSingularity = true;
             }
 
-            entity.QueueDelete();
+            IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(entity.Uid);
 
             if (entity.TryGetComponent<SinguloFoodComponent>(out var singuloFood))
                 component.Energy += singuloFood.Energy;

@@ -112,7 +112,7 @@ namespace Content.Server.Radiation
                 return;
 
             if (_duration <= 0f)
-                Owner.QueueDelete();
+                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(Owner.Uid);
 
             _duration -= frameTime;
         }

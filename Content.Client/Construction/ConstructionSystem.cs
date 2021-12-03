@@ -226,7 +226,7 @@ namespace Content.Client.Construction
         {
             if (_ghosts.TryGetValue(ghostId, out var ghost))
             {
-                ghost.Owner.QueueDelete();
+                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(ghost.Owner.Uid);
                 _ghosts.Remove(ghostId);
             }
         }
@@ -238,7 +238,7 @@ namespace Content.Client.Construction
         {
             foreach (var (_, ghost) in _ghosts)
             {
-                ghost.Owner.QueueDelete();
+                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(ghost.Owner.Uid);
             }
 
             _ghosts.Clear();

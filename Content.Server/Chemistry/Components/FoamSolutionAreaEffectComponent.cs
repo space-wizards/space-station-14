@@ -82,7 +82,7 @@ namespace Content.Server.Chemistry.Components
                     IoCManager.Resolve<IEntityManager>().SpawnEntity(_foamedMetalPrototype, Owner.Transform.Coordinates);
                 }
 
-                Owner.QueueDelete();
+                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(Owner.Uid);
             });
         }
     }

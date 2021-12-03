@@ -5,6 +5,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Hands.Systems
 {
@@ -73,7 +74,7 @@ namespace Content.Server.Hands.Systems
             var targEv = new VirtualItemDeletedEvent(comp.BlockingEntity, user);
             RaiseLocalEvent(comp.BlockingEntity, targEv, false);
 
-            comp.Owner.QueueDelete();
+            IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(comp.Owner.Uid);
         }
 
         /// <summary>

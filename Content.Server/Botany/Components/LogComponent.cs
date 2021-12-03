@@ -27,7 +27,7 @@ namespace Content.Server.Botany.Components
                     plank.RandomOffset(0.25f);
                 }
 
-                Owner.QueueDelete();
+                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(Owner.Uid);
 
                 return true;
             }

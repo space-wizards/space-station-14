@@ -271,7 +271,7 @@ namespace Content.Server.Atmos.Components
 
                 EntitySystem.Get<ExplosionSystem>().SpawnExplosion(OwnerUid, (int) (range * 0.25f), (int) (range * 0.5f), (int) (range * 1.5f), 1);
 
-                Owner.QueueDelete();
+                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(Owner.Uid);
                 return;
             }
 
@@ -285,7 +285,7 @@ namespace Content.Server.Atmos.Components
 
                     SoundSystem.Play(Filter.Pvs(Owner), _ruptureSound.GetSound(), Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.125f));
 
-                    Owner.QueueDelete();
+                    IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(Owner.Uid);
                     return;
                 }
 

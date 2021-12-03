@@ -45,7 +45,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 ent.Transform.AttachToGridOrMap();
             }
 
-            owner.QueueDelete();
+            IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(owner.Uid);
         }
     }
 }

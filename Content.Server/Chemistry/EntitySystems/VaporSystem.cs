@@ -123,7 +123,7 @@ namespace Content.Server.Chemistry.EntitySystems
             if (contents.CurrentVolume == 0 || vapor.Timer > vapor.AliveTime)
             {
                 // Delete this
-                entity.QueueDelete();
+                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(entity.Uid);
             }
         }
     }

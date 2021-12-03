@@ -31,7 +31,7 @@ namespace Content.Server.Botany.Components
             {
                 eventArgs.User.PopupMessageCursor(Loc.GetString("seed-extractor-component-interact-message",("name", eventArgs.Using.Name)));
 
-                eventArgs.Using.QueueDelete();
+                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(eventArgs.Using.Uid);
 
                 var random = _random.Next(_minSeeds, _maxSeeds);
 

@@ -103,7 +103,7 @@ namespace Content.Server.Body.Components
                 }
             }
 
-            Owner.QueueDelete();
+            IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(Owner.Uid);
         }
     }
 }

@@ -38,7 +38,7 @@ namespace Content.Server.Recycling.Components
 
             }
 
-            Owner.QueueDelete();
+            IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(Owner.Uid);
         }
     }
 }

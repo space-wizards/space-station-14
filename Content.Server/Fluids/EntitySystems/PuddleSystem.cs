@@ -124,7 +124,7 @@ namespace Content.Server.Fluids.EntitySystems
             if (!puddle.Owner.Transform.Anchored)
                 return;
 
-            puddle.Owner.QueueDelete();
+            IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(puddle.Owner.Uid);
         }
 
         /// <summary>
