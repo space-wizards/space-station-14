@@ -56,6 +56,8 @@
   - type: Wires
     BoardName: "Airlock Control"
     LayoutId: Airlock
+    wireActions:
+    - !type:PowerWireAction
   - type: UserInterface
     interfaces:
     - key: enum.WiresUiKey.Key

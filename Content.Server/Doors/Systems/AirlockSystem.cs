@@ -1,15 +1,19 @@
 ﻿using Content.Server.Doors.Components;
 using Content.Server.Power.Components;
+using Content.Server.Wires;
 using Content.Shared.Doors;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
 namespace Content.Server.Doors.Systems
 {
     public class AirlockSystem : EntitySystem
     {
+        [Dependency] private readonly WiresSystem _wiresSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -40,9 +44,9 @@ namespace Content.Server.Doors.Systems
         private void OnStateChanged(EntityUid uid, AirlockComponent component, DoorStateChangedEvent args)
         {
             // Only show the maintenance panel if the airlock is closed
-            if (component.WiresComponent != null)
+            if (EntityManager.TryGetComponent(uid, out WiresComponent? wires))
             {
-                component.WiresComponent.IsPanelVisible =
+                wires.IsPanelVisible =
                     component.OpenPanelVisible
                     ||  args.State != SharedDoorComponent.DoorState.Open;
             }
@@ -86,10 +90,11 @@ namespace Content.Server.Doors.Systems
 
         private void OnDoorClickShouldActivate(EntityUid uid, AirlockComponent component, DoorClickShouldActivateEvent args)
         {
-            if (component.WiresComponent != null && component.WiresComponent.IsPanelOpen &&
+            if (EntityManager.TryGetComponent(uid, out WiresComponent? wires)
+                && wires.IsPanelOpen &&
                 args.Args.User.TryGetComponent(out ActorComponent? actor))
             {
-                component.WiresComponent.OpenInterface(actor.PlayerSession);
+                _wiresSystem.OpenUserInterface(uid, actor.PlayerSession);
                 args.Handled = true;
             }
         }

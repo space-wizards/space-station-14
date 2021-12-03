@@ -12,10 +12,12 @@ using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Reflection;
@@ -41,10 +43,12 @@ public class WiresSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
+
+        // this is a broadcast event
+        SubscribeLocalEvent<WireToolFinishedEvent>(OnToolFinished);
         SubscribeLocalEvent<WiresComponent, ComponentStartup>(OnWiresStartup);
         SubscribeLocalEvent<WiresComponent, WiresActionMessage>(OnWiresActionMessage);
         SubscribeLocalEvent<WiresComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<WiresComponent, WireToolFinishedEvent>(OnToolFinished);
         SubscribeLocalEvent<WiresComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<WiresComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<WiresComponent, WireDoAfterEvent>(OnWireDoAfter);
@@ -58,7 +62,11 @@ public class WiresSystem : EntitySystem
         WireLayout? layout = null;
         if (wires.LayoutId != null)
             TryGetLayout(wires.LayoutId, out layout);
-        CreateWireSet(uid, layout, wires);
+
+        var wireSet = CreateWireSet(uid, layout, wires);
+
+        if (wireSet != null)
+            wires.WiresList.AddRange(wireSet);
 
         if (layout != null)
         {
@@ -173,7 +181,7 @@ public class WiresSystem : EntitySystem
 
         // it would be odd if the entity was removed in the middle of this synchronous
         // operation, wouldn't it?
-        if (_interactionSystem.InRangeUnobstructed(player, EntityManager.GetEntity(uid)))
+        if (!_interactionSystem.InRangeUnobstructed(player, EntityManager.GetEntity(uid)))
         {
             _popupSystem.PopupEntity(Loc.GetString("wires-component-ui-on-receive-message-cannot-reach"), uid, Filter.Entities(player.Uid));
             return;
@@ -192,7 +200,8 @@ public class WiresSystem : EntitySystem
 
     private void OnInteractUsing(EntityUid uid, WiresComponent component, InteractUsingEvent args)
     {
-        if (!EntityManager.TryGetComponent(uid, out ToolComponent? tool))
+        Logger.DebugS("Wires", "Attempting to interact using something");
+        if (!EntityManager.TryGetComponent(args.UsedUid, out ToolComponent? tool))
             return;
 
         if (component.IsPanelOpen &&
@@ -205,25 +214,29 @@ public class WiresSystem : EntitySystem
                 args.Handled = true;
             }
         }
-        else if (_toolSystem.UseTool(args.UsedUid, args.UserUid, uid, 0f, ScrewTime, new string[]{ "Screwing" }, doAfterCompleteEvent:new WireToolFinishedEvent(), toolComponent:tool))
+        else if (_toolSystem.UseTool(args.UsedUid, args.UserUid, uid, 0f, ScrewTime, new string[]{ "Screwing" }, doAfterCompleteEvent:new WireToolFinishedEvent(uid), toolComponent:tool))
         {
+            Logger.DebugS("Wires", "Trying to unscrew now...");
             args.Handled = true;
         }
     }
 
-    private void OnToolFinished(EntityUid uid, WiresComponent component, WireToolFinishedEvent args)
+    private void OnToolFinished(WireToolFinishedEvent args)
     {
+        if (!EntityManager.TryGetComponent(args.Target, out WiresComponent? component))
+            return;
+
         component.IsPanelOpen = !component.IsPanelOpen;
-        UpdateAppearance(uid);
+        UpdateAppearance(args.Target);
 
         if (component.IsPanelOpen)
         {
-            SoundSystem.Play(Filter.Pvs(uid), component.ScrewdriverOpenSound.GetSound(), uid);
+            SoundSystem.Play(Filter.Pvs(args.Target), component.ScrewdriverOpenSound.GetSound(), args.Target);
         }
         else
         {
-            SoundSystem.Play(Filter.Pvs(uid), component.ScrewdriverCloseSound.GetSound(), uid);
-            _uiSystem.GetUiOrNull(uid, WiresUiKey.Key)?.CloseAll();
+            SoundSystem.Play(Filter.Pvs(args.Target), component.ScrewdriverCloseSound.GetSound(), args.Target);
+            _uiSystem.GetUiOrNull(args.Target, WiresUiKey.Key)?.CloseAll();
         }
     }
 
@@ -312,6 +325,11 @@ public class WiresSystem : EntitySystem
                 wires.BoardName,
                 wires.SerialNumber,
                 wires.WireSeed));
+    }
+
+    public void OpenUserInterface(EntityUid uid, IPlayerSession player)
+    {
+        _uiSystem.GetUiOrNull(uid, WiresUiKey.Key)?.Open(player);
     }
 
     public Wire? TryGetWire(EntityUid uid, int id, WiresComponent? wires = null)
@@ -454,7 +472,14 @@ public class WiresSystem : EntitySystem
 
     #region Events
     private class WireToolFinishedEvent : EntityEventArgs
-    {}
+    {
+        public EntityUid Target { get; }
+
+        public WireToolFinishedEvent(EntityUid target)
+        {
+            Target = target;
+        }
+    }
     #endregion
 
 }

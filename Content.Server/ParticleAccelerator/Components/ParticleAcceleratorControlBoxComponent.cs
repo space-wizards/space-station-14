@@ -8,7 +8,7 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.UserInterface;
 using Content.Server.VendingMachines;
-using Content.Server.WireHacking;
+// using Content.Server.WireHacking;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -22,7 +22,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using static Content.Shared.Wires.SharedWiresComponent;
+// using static Content.Shared.Wires.SharedWiresComponent;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.ParticleAccelerator.Components
@@ -35,7 +35,7 @@ namespace Content.Server.ParticleAccelerator.Components
     /// </summary>
     [ComponentReference(typeof(IActivate))]
     [RegisterComponent]
-    public class ParticleAcceleratorControlBoxComponent : ParticleAcceleratorPartComponent, IActivate, IWires
+    public class ParticleAcceleratorControlBoxComponent : ParticleAcceleratorPartComponent, IActivate
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
 
@@ -130,7 +130,7 @@ namespace Content.Server.ParticleAccelerator.Components
         {
             base.Startup();
 
-            UpdateWireStatus();
+            // UpdateWireStatus();
         }
 
         // This is the power state for the PA control box itself.
@@ -227,20 +227,22 @@ namespace Content.Server.ParticleAccelerator.Components
                 return;
             }
 
+            /*
             if (Owner.TryGetComponent<WiresComponent>(out var wires) && wires.IsPanelOpen)
             {
                 wires.OpenInterface(actor.PlayerSession);
             }
             else
             {
-                if (!ConsolePowered)
-                {
-                    return;
-                }
-
-                UserInterface?.Toggle(actor.PlayerSession);
-                UpdateUI();
+            */
+            if (!ConsolePowered)
+            {
+                return;
             }
+
+            UserInterface?.Toggle(actor.PlayerSession);
+            UpdateUI();
+            // }
         }
 
         protected override void OnRemove()
@@ -249,6 +251,7 @@ namespace Content.Server.ParticleAccelerator.Components
             base.OnRemove();
         }
 
+        /*
         void IWires.RegisterWires(WiresComponent.WiresBuilder builder)
         {
             builder.CreateWire(ParticleAcceleratorControlBoxWires.Toggle);
@@ -366,6 +369,7 @@ namespace Content.Server.ParticleAccelerator.Components
             wires.SetStatus(ParticleAcceleratorWireStatus.Limiter, limiterLight);
             wires.SetStatus(ParticleAcceleratorWireStatus.Strength, strengthLight);
         }
+        */
 
         public void RescanParts()
         {

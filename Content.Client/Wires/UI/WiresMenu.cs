@@ -14,7 +14,7 @@ using Robust.Shared.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
-using static Content.Shared.Wires.SharedWiresComponent;
+// using static Content.Shared.Wires.SharedWiresComponent;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Wires.UI

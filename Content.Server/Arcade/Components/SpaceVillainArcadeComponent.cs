@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Server.VendingMachines;
-using Content.Server.WireHacking;
+// using Content.Server.WireHacking;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Arcade;
 using Content.Shared.Interaction;
@@ -24,12 +24,12 @@ namespace Content.Server.Arcade.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class SpaceVillainArcadeComponent : SharedSpaceVillainArcadeComponent, IActivate, IWires
+    public class SpaceVillainArcadeComponent : SharedSpaceVillainArcadeComponent, IActivate
     {
         [Dependency] private readonly IRobustRandom _random = null!;
 
         [ComponentDependency] private readonly ApcPowerReceiverComponent? _powerReceiverComponent = default!;
-        [ComponentDependency] private readonly WiresComponent? _wiresComponent = default!;
+        // [ComponentDependency] private readonly WiresComponent? _wiresComponent = default!;
 
         private bool Powered => _powerReceiverComponent != null && _powerReceiverComponent.Powered;
 
@@ -82,14 +82,17 @@ namespace Content.Server.Arcade.Components
 
             _game ??= new SpaceVillainGame(this);
 
+            UserInterface?.Toggle(actor.PlayerSession);
+
+            /*
             if (_wiresComponent?.IsPanelOpen == true)
             {
                 _wiresComponent.OpenInterface(actor.PlayerSession);
             }
             else
             {
-                UserInterface?.Toggle(actor.PlayerSession);
             }
+            */
         }
 
         protected override void Initialize()
@@ -154,6 +157,7 @@ namespace Content.Server.Arcade.Components
             }
         }
 
+        /*
         public enum Wires
         {
             /// <summary>
@@ -216,6 +220,7 @@ namespace Content.Server.Arcade.Components
                         : SharedWiresComponent.StatusLightState.On,
                     "LIMT"));
         }
+        */
 
         /// <summary>
         /// Called when the user wins the game.

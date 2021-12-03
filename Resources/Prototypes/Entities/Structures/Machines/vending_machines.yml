@@ -48,6 +48,9 @@
     wireActions:
     - !type:PowerWireAction
   - type: Anchorable
+  - type: DoAfter
+  - type: Electrified
+    requiresPower: false
   - type: PointLight
     enabled: false
     castShadows: false

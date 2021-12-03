@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using Content.Server.Power.Components;
 using Content.Server.VendingMachines;
-using Content.Server.WireHacking;
+// using Content.Server.WireHacking;
 using Content.Shared.Doors;
 using Content.Shared.Sound;
 using Robust.Shared.Audio;
@@ -11,8 +11,8 @@ using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using static Content.Shared.Wires.SharedWiresComponent;
-using static Content.Shared.Wires.SharedWiresComponent.WiresAction;
+// using static Content.Shared.Wires.SharedWiresComponent;
+// using static Content.Shared.Wires.SharedWiresComponent.WiresAction;
 
 namespace Content.Server.Doors.Components
 {
@@ -20,7 +20,7 @@ namespace Content.Server.Doors.Components
     /// Companion component to ServerDoorComponent that handles airlock-specific behavior -- wires, requiring power to operate, bolts, and allowing automatic closing.
     /// </summary>
     [RegisterComponent]
-    public class AirlockComponent : Component, IWires
+    public class AirlockComponent : Component
     {
         public override string Name => "Airlock";
 
@@ -33,8 +33,10 @@ namespace Content.Server.Doors.Components
         [ComponentDependency]
         public readonly ApcPowerReceiverComponent? ReceiverComponent = null;
 
+        /*
         [ComponentDependency]
         public readonly WiresComponent? WiresComponent = null;
+        */
 
         /// <summary>
         /// Sound to play when the bolts on the airlock go up.
@@ -73,8 +75,8 @@ namespace Content.Server.Doors.Components
             set
             {
                 _powerWiresPulsed = value;
-                UpdateWiresStatus();
-                UpdatePowerCutStatus();
+                // UpdateWiresStatus();
+                // UpdatePowerCutStatus();
             }
         }
 
@@ -150,6 +152,7 @@ namespace Content.Server.Doors.Components
             }
         }
 
+        /*
         public void UpdateWiresStatus()
         {
             if (DoorComponent == null)
@@ -221,6 +224,7 @@ namespace Content.Server.Doors.Components
                 WiresComponent.IsWireCut(Wires.MainPower) ||
                 WiresComponent.IsWireCut(Wires.BackupPower);
         }
+        */
 
         private void PowerDeviceOnOnPowerStateChanged(PowerChangedMessage e)
         {
@@ -233,6 +237,7 @@ namespace Content.Server.Doors.Components
             UpdateBoltLightStatus();
         }
 
+        /*
         private enum Wires
         {
             /// <summary>
@@ -383,6 +388,7 @@ namespace Content.Server.Doors.Components
             UpdateWiresStatus();
             UpdatePowerCutStatus();
         }
+        */
 
         public void SetBoltsWithAudio(bool newBolts)
         {

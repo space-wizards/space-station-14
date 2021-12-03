@@ -7,7 +7,7 @@ using Content.Server.Advertise;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
-using Content.Server.WireHacking;
+using Content.Server.Wires;
 using Content.Shared.Acts;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -24,13 +24,13 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using static Content.Shared.Wires.SharedWiresComponent;
+// using static Content.Shared.Wires.SharedWiresComponent;
 
 namespace Content.Server.VendingMachines
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class VendingMachineComponent : SharedVendingMachineComponent, IActivate, IBreakAct, IWires
+    public class VendingMachineComponent : SharedVendingMachineComponent, IActivate, IBreakAct
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -65,9 +65,10 @@ namespace Content.Server.VendingMachines
                 return;
 
             var wires = Owner.GetComponent<WiresComponent>();
+            var wireSystem = EntitySystem.Get<WiresSystem>();
             if (wires.IsPanelOpen)
             {
-                wires.OpenInterface(actor.PlayerSession);
+                wireSystem.OpenUserInterface(Owner.Uid, actor.PlayerSession);
             } else
             {
                 UserInterface?.Toggle(actor.PlayerSession);
@@ -247,6 +248,7 @@ namespace Content.Server.VendingMachines
             TrySetVisualState(VendingMachineVisualState.Broken);
         }
 
+        /*
         public enum Wires
         {
             /// <summary>
@@ -268,6 +270,7 @@ namespace Content.Server.VendingMachines
                 EjectRandom();
             }
         }
+        */
 
         /// <summary>
         /// Ejects a random item if present.
@@ -283,6 +286,7 @@ namespace Content.Server.VendingMachines
         }
     }
 
+    /*
     public class WiresUpdateEventArgs : EventArgs
     {
         public readonly object Identifier;
@@ -294,12 +298,15 @@ namespace Content.Server.VendingMachines
             Action = action;
         }
     }
+    */
 
+    // why was this ever here???
+    /*
     public interface IWires
     {
         void RegisterWires(WiresComponent.WiresBuilder builder);
         void WiresUpdate(WiresUpdateEventArgs args);
 
     }
+    */
 }
-

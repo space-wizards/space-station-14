@@ -5,15 +5,18 @@ using Content.Server.DoAfter;
 using Content.Server.Electrocution;
 using Content.Server.Power.Components;
 using Content.Server.Wires;
+using Content.Shared.Power;
 using Content.Shared.Wires;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Power;
 
 // Generic power wire action. Use on anything
 // that requires power.
+[DataDefinition]
 public class PowerWireAction : BaseWireAction
 {
     [DataField("color")]
@@ -27,9 +30,8 @@ public class PowerWireAction : BaseWireAction
 
     private ElectrocutionSystem _electrocutionSystem = default!;
 
-    public PowerWireAction() : base()
+    public PowerWireAction()
     {
-        _electrocutionSystem = EntitySystem.Get<ElectrocutionSystem>();
     }
 
     public override object Identifier { get; } = PowerWireActionKey.Key;
@@ -85,6 +87,9 @@ public class PowerWireAction : BaseWireAction
 
     public override void Initialize(EntityUid uid, Wire wire)
     {
+        base.Initialize(uid, wire);
+
+        _electrocutionSystem = EntitySystem.Get<ElectrocutionSystem>();
         UpdatePowerStatus(wire);
     }
 
@@ -152,12 +157,4 @@ public class PowerWireAction : BaseWireAction
         WiresSystem.SetData(used, PowerWireActionKey.Pulsed, false);
         UpdatePowerStatus(wire);
     }
-}
-
-public enum PowerWireActionKey
-{
-    Key,
-    Status,
-    Pulsed,
-    PulseCancel
 }
