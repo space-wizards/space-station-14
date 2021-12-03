@@ -224,7 +224,7 @@ namespace Content.Server.PneumaticCannon
             if (!comp.Owner.TryGetComponent<ServerStorageComponent>(out var storage))
                 return;
 
-            if (data.User.Deleted)
+            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(data.User.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(data.User.Uid).EntityLifeStage) >= EntityLifeStage.Deleted)
                 return;
 
             if (storage.StoredEntities == null) return;

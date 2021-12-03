@@ -13,7 +13,7 @@ namespace Content.Server.Explosion.Components
 
         void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
         {
-            if (Owner.Deleted)
+            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(Owner.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityLifeStage) >= EntityLifeStage.Deleted)
                 return;
 
             var sourceLocation = eventArgs.Source;

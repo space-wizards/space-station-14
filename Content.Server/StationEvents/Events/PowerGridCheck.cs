@@ -53,7 +53,7 @@ namespace Content.Server.StationEvents.Events
         {
             foreach (var entity in _powered)
             {
-                if (entity.Deleted) continue;
+                if ((!IoCManager.Resolve<IEntityManager>().EntityExists(entity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted) continue;
 
                 if (entity.TryGetComponent(out ApcPowerReceiverComponent? powerReceiverComponent))
                 {

@@ -269,7 +269,7 @@ namespace Content.Server.Weapon.Melee
             var hitBloodstreams = new List<BloodstreamComponent>();
             foreach (var entity in args.HitEntities)
             {
-                if (entity.Deleted)
+                if ((!IoCManager.Resolve<IEntityManager>().EntityExists(entity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted)
                     continue;
 
                 if (entity.TryGetComponent<BloodstreamComponent>(out var bloodstream))

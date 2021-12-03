@@ -6,6 +6,7 @@ using Content.Shared.Coordinates;
 using Content.Shared.FixedPoint;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
@@ -156,7 +157,7 @@ namespace Content.IntegrationTests.Tests.Fluids
                 Assert.True(puddle.Owner.Paused);
 
                 // Check that the puddle still exists
-                Assert.False(puddle.Owner.Deleted);
+                Assert.False((!IoCManager.Resolve<IEntityManager>().EntityExists(puddle.Owner.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(puddle.Owner.Uid).EntityLifeStage) >= EntityLifeStage.Deleted);
             });
 
             // Unpause the map
@@ -170,7 +171,7 @@ namespace Content.IntegrationTests.Tests.Fluids
                 Assert.False(puddle.Owner.Paused);
 
                 // Check that the puddle still exists
-                Assert.False(puddle.Owner.Deleted);
+                Assert.False((!IoCManager.Resolve<IEntityManager>().EntityExists(puddle.Owner.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(puddle.Owner.Uid).EntityLifeStage) >= EntityLifeStage.Deleted);
             });
 
             // Wait enough time for it to evaporate

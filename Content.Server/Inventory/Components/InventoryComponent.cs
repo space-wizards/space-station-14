@@ -124,7 +124,7 @@ namespace Content.Server.Inventory.Components
             }
 
             var containedEntity = _slotContainers[slot].ContainedEntity;
-            if (containedEntity?.Deleted == true)
+            if ((containedEntity != null ? (!IoCManager.Resolve<IEntityManager>().EntityExists(containedEntity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(containedEntity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted : null) == true)
             {
                 _slotContainers.Remove(slot);
                 containedEntity = null;

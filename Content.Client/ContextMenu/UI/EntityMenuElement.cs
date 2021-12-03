@@ -2,6 +2,7 @@ using Content.Client.Stylesheets;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
 namespace Content.Client.ContextMenu.UI
@@ -57,7 +58,7 @@ namespace Content.Client.ContextMenu.UI
         /// </summary>
         public void UpdateEntity(IEntity? entity = null)
         {
-            if (Entity != null && !Entity.Deleted)
+            if (Entity != null && !((!IoCManager.Resolve<IEntityManager>().EntityExists(Entity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Entity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted))
                 entity ??= Entity;
 
             EntityIcon.Sprite = entity?.GetComponentOrNull<ISpriteComponent>();

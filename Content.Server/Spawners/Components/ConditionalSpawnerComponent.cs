@@ -61,7 +61,7 @@ namespace Content.Server.Spawners.Components
                 return;
             }
 
-            if(!Owner.Deleted)
+            if(!((!IoCManager.Resolve<IEntityManager>().EntityExists(Owner.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityLifeStage) >= EntityLifeStage.Deleted))
                 IoCManager.Resolve<IEntityManager>().SpawnEntity(_robustRandom.Pick(Prototypes), Owner.Transform.Coordinates);
         }
 

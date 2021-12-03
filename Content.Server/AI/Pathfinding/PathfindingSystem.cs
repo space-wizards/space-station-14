@@ -265,7 +265,7 @@ namespace Content.Server.AI.Pathfinding
         /// <param name="entity"></param>
         private void HandleEntityAdd(IEntity entity)
         {
-            if (entity.Deleted ||
+            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(entity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted ||
                 _lastKnownPositions.ContainsKey(entity) ||
                 !entity.TryGetComponent(out IPhysBody? physics) ||
                 !PathfindingNode.IsRelevant(entity, physics))
@@ -305,7 +305,7 @@ namespace Content.Server.AI.Pathfinding
         private void HandleEntityMove(MoveEvent moveEvent)
         {
             // If we've moved to space or the likes then remove us.
-            if (moveEvent.Sender.Deleted ||
+            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(moveEvent.Sender.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(moveEvent.Sender.Uid).EntityLifeStage) >= EntityLifeStage.Deleted ||
                 !moveEvent.Sender.TryGetComponent(out IPhysBody? physics) ||
                 !PathfindingNode.IsRelevant(moveEvent.Sender, physics) ||
                 moveEvent.NewPosition.GetGridId(EntityManager) == GridId.Invalid)

@@ -16,7 +16,7 @@ namespace Content.Server.Inventory
             var user = inventory.Owner;
 
             // Let's do nothing if the owner of the inventory has been deleted.
-            if (user.Deleted)
+            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(user.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(user.Uid).EntityLifeStage) >= EntityLifeStage.Deleted)
                 return false;
 
             // If we don't have that slot or there's already an item there, we do nothing.

@@ -30,7 +30,7 @@ namespace Content.Server.AI.Operators.Nutrition
             }
 
             // TODO: Also have this check storage a la backpack etc.
-            if (_target.Deleted ||
+            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(_target.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_target.Uid).EntityLifeStage) >= EntityLifeStage.Deleted ||
                 !_owner.TryGetComponent(out HandsComponent? handsComponent) ||
                 !_target.TryGetComponent(out ItemComponent? itemComponent))
             {

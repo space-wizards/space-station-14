@@ -32,12 +32,12 @@ namespace Content.Server.Radiation
                     comp.Update(RadiationCooldown);
                     var ent = comp.Owner;
 
-                    if (ent.Deleted) continue;
+                    if ((!IoCManager.Resolve<IEntityManager>().EntityExists(ent.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(ent.Uid).EntityLifeStage) >= EntityLifeStage.Deleted) continue;
 
                     foreach (var entity in _lookup.GetEntitiesInRange(ent.Transform.Coordinates, comp.Range))
                     {
                         // For now at least still need this because it uses a list internally then returns and this may be deleted before we get to it.
-                        if (entity.Deleted) continue;
+                        if ((!IoCManager.Resolve<IEntityManager>().EntityExists(entity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted) continue;
 
                         // Note: Radiation is liable for a refactor (stinky Sloth coding a basic version when he did StationEvents)
                         // so this ToArray doesn't really matter.

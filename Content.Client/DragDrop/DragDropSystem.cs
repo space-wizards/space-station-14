@@ -176,7 +176,7 @@ namespace Content.Client.DragDrop
 
         private bool OnBeginDrag()
         {
-            if (_dragDropHelper.Dragged == null || _dragDropHelper.Dragged.Deleted)
+            if (_dragDropHelper.Dragged == null || (!IoCManager.Resolve<IEntityManager>().EntityExists(_dragDropHelper.Dragged.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_dragDropHelper.Dragged.Uid).EntityLifeStage) >= EntityLifeStage.Deleted)
             {
                 // something happened to the clicked entity or we moved the mouse off the target so
                 // we shouldn't replay the original click
@@ -213,7 +213,7 @@ namespace Content.Client.DragDrop
 
         private bool OnContinueDrag(float frameTime)
         {
-            if (_dragDropHelper.Dragged == null || _dragDropHelper.Dragged.Deleted)
+            if (_dragDropHelper.Dragged == null || (!IoCManager.Resolve<IEntityManager>().EntityExists(_dragDropHelper.Dragged.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_dragDropHelper.Dragged.Uid).EntityLifeStage) >= EntityLifeStage.Deleted)
             {
                 return false;
             }
@@ -352,9 +352,9 @@ namespace Content.Client.DragDrop
         private void HighlightTargets()
         {
             if (_dragDropHelper.Dragged == null ||
-                _dragDropHelper.Dragged.Deleted ||
+                (!IoCManager.Resolve<IEntityManager>().EntityExists(_dragDropHelper.Dragged.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_dragDropHelper.Dragged.Uid).EntityLifeStage) >= EntityLifeStage.Deleted ||
                 _dragShadow == null ||
-                _dragShadow.Deleted)
+                (!IoCManager.Resolve<IEntityManager>().EntityExists(_dragShadow.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_dragShadow.Uid).EntityLifeStage) >= EntityLifeStage.Deleted)
             {
                 Logger.Warning("Programming error. Can't highlight drag and drop targets, not currently " +
                                "dragging anything or dragged entity / shadow was deleted.");

@@ -116,7 +116,7 @@ namespace Content.Client.Chat.UI
                 Modulate = Color.White;
             }
 
-            if (_senderEntity.Deleted || _timeLeft <= 0)
+            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(_senderEntity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_senderEntity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted || _timeLeft <= 0)
             {
                 // Timer spawn to prevent concurrent modification exception.
                 Timer.Spawn(0, Die);

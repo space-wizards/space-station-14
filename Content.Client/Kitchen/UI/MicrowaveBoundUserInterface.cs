@@ -115,7 +115,7 @@ namespace Content.Client.Kitchen.UI
                     return;
                 }
 
-                if (entity.Deleted)
+                if ((!IoCManager.Resolve<IEntityManager>().EntityExists(entity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted)
                 {
                     continue;
                 }

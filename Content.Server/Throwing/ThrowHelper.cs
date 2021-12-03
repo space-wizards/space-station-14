@@ -33,7 +33,7 @@ namespace Content.Server.Throwing
         /// <param name="pushbackRatio">The ratio of impulse applied to the thrower</param>
         internal static void TryThrow(this IEntity entity, Vector2 direction, float strength = 1.0f, IEntity? user = null, float pushbackRatio = 1.0f)
         {
-            if (entity.Deleted ||
+            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(entity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted ||
                 strength <= 0f ||
                 !entity.TryGetComponent(out PhysicsComponent? physicsComponent))
             {

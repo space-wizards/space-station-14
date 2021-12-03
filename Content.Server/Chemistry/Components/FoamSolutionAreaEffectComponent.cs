@@ -68,7 +68,7 @@ namespace Content.Server.Chemistry.Components
 
         protected override void OnKill()
         {
-            if (Owner.Deleted)
+            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(Owner.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityLifeStage) >= EntityLifeStage.Deleted)
                 return;
             if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {

@@ -181,7 +181,7 @@ namespace Content.Server.Ghost
         private void DeleteEntity(EntityUid uid)
         {
             if (!EntityManager.TryGetEntity(uid, out var entity)
-                || entity.Deleted
+                || (!IoCManager.Resolve<IEntityManager>().EntityExists(entity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted
                 || (!IoCManager.Resolve<IEntityManager>().EntityExists(entity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityLifeStage) == EntityLifeStage.Terminating)
                 return;
 

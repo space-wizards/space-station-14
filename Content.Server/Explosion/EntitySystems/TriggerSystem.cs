@@ -132,7 +132,7 @@ namespace Content.Server.Explosion.EntitySystems
 
             Timer.Spawn(delay, () =>
             {
-                if (triggered.Deleted) return;
+                if ((!IoCManager.Resolve<IEntityManager>().EntityExists(triggered.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(triggered.Uid).EntityLifeStage) >= EntityLifeStage.Deleted) return;
                 Trigger(triggered, user);
             });
         }

@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Interaction;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Morgue.Components
@@ -15,7 +16,7 @@ namespace Content.Server.Morgue.Components
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (Morgue != null && !Morgue.Deleted && Morgue.TryGetComponent<MorgueEntityStorageComponent>(out var comp))
+            if (Morgue != null && !((!IoCManager.Resolve<IEntityManager>().EntityExists(Morgue.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Morgue.Uid).EntityLifeStage) >= EntityLifeStage.Deleted) && Morgue.TryGetComponent<MorgueEntityStorageComponent>(out var comp))
             {
                 comp.Activate(new ActivateEventArgs(eventArgs.User, Morgue));
             }

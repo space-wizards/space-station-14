@@ -47,7 +47,7 @@ namespace Content.Server.Spawners.Components
                 return;
             }
 
-            if(!Owner.Deleted)
+            if(!((!IoCManager.Resolve<IEntityManager>().EntityExists(Owner.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityLifeStage) >= EntityLifeStage.Deleted))
             {
                 var random = IoCManager.Resolve<IRobustRandom>();
 

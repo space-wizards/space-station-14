@@ -19,6 +19,7 @@ using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -229,7 +230,7 @@ namespace Content.Server.Atmos.Components
 
         private InternalsComponent? GetInternalsComponent(IEntity? owner = null)
         {
-            if (Owner.Deleted) return null;
+            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(Owner.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityLifeStage) >= EntityLifeStage.Deleted) return null;
             if (owner != null) return owner.GetComponentOrNull<InternalsComponent>();
             return Owner.TryGetContainer(out var container)
                 ? container.Owner.GetComponentOrNull<InternalsComponent>()

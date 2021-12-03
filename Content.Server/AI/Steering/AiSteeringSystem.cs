@@ -248,7 +248,7 @@ namespace Content.Server.AI.Steering
         private SteeringStatus Steer(IEntity entity, IAiSteeringRequest steeringRequest, float frameTime)
         {
             // Main optimisation to be done below is the redundant calls and adding more variables
-            if (entity.Deleted ||
+            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(entity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted ||
                 !entity.TryGetComponent(out AiControllerComponent? controller) ||
                 !EntitySystem.Get<ActionBlockerSystem>().CanMove(entity.Uid) ||
                 !entity.Transform.GridID.IsValid())
@@ -258,7 +258,7 @@ namespace Content.Server.AI.Steering
 
             var entitySteering = steeringRequest as EntityTargetSteeringRequest;
 
-            if (entitySteering != null && entitySteering.Target.Deleted)
+            if (entitySteering != null && (!IoCManager.Resolve<IEntityManager>().EntityExists(entitySteering.Target.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entitySteering.Target.Uid).EntityLifeStage) >= EntityLifeStage.Deleted)
             {
                 controller.VelocityDir = Vector2.Zero;
                 return SteeringStatus.NoPath;
@@ -660,7 +660,7 @@ namespace Content.Server.AI.Steering
                     // err for now we'll just assume the first entity is the center and just add a vector for it
 
                     //Pathfinding updates are deferred so this may not be done yet.
-                    if (physicsEntity.Deleted) continue;
+                    if ((!IoCManager.Resolve<IEntityManager>().EntityExists(physicsEntity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(physicsEntity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted) continue;
 
                     // if we're moving in the same direction then ignore
                     // So if 2 entities are moving towards each other and both detect a collision they'll both move in the same direction

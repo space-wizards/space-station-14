@@ -123,7 +123,7 @@ namespace Content.Server.StationEvents.Events
 
             if (!_foundTile ||
                 _targetGrid == null ||
-                _targetGrid.Deleted ||
+                (!IoCManager.Resolve<IEntityManager>().EntityExists(_targetGrid.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_targetGrid.Uid).EntityLifeStage) >= EntityLifeStage.Deleted ||
                 !atmosphereSystem.IsSimulatedGrid(_targetGrid.Transform.GridID))
             {
                 Running = false;
@@ -156,7 +156,7 @@ namespace Content.Server.StationEvents.Events
             {
                 if (!_foundTile ||
                     _targetGrid == null ||
-                    _targetGrid.Deleted ||
+                    (!IoCManager.Resolve<IEntityManager>().EntityExists(_targetGrid.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_targetGrid.Uid).EntityLifeStage) >= EntityLifeStage.Deleted ||
                     !atmosphereSystem.IsSimulatedGrid(_targetGrid.Transform.GridID))
                 {
                     return;

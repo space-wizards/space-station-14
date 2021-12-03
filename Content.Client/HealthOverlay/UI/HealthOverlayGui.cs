@@ -72,7 +72,7 @@ namespace Content.Client.HealthOverlay.UI
 
         private void MoreFrameUpdate(FrameEventArgs args)
         {
-            if (Entity.Deleted)
+            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(Entity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Entity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted)
             {
                 return;
             }
@@ -138,7 +138,7 @@ namespace Content.Client.HealthOverlay.UI
 
             MoreFrameUpdate(args);
 
-            if (Entity.Deleted ||
+            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(Entity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Entity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted ||
                 _eyeManager.CurrentMap != Entity.Transform.MapID)
             {
                 Visible = false;

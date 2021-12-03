@@ -11,6 +11,7 @@ using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -127,7 +128,7 @@ namespace Content.Server.Fluids.Components
             Mopping = false;
 
             if (result == DoAfterStatus.Cancelled ||
-                Owner.Deleted ||
+                (!IoCManager.Resolve<IEntityManager>().EntityExists(Owner.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityLifeStage) >= EntityLifeStage.Deleted ||
                 puddleComponent.Deleted)
                 return false;
 

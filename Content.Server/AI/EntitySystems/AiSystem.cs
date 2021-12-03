@@ -51,7 +51,7 @@ namespace Content.Server.AI.EntitySystems
             foreach (var message in _queuedMobStateMessages)
             {
                 // TODO: Need to generecise this but that will be part of a larger cleanup later anyway.
-                if (message.Entity.Deleted ||
+                if ((!IoCManager.Resolve<IEntityManager>().EntityExists(message.Entity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(message.Entity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted ||
                     !message.Entity.TryGetComponent(out UtilityAi? controller))
                 {
                     continue;

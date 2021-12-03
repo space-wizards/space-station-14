@@ -132,7 +132,7 @@ namespace Content.Client.Viewport
                 return;
             }
 
-            if (_lastHoveredEntity != null && !_lastHoveredEntity.Deleted &&
+            if (_lastHoveredEntity != null && !((!IoCManager.Resolve<IEntityManager>().EntityExists(_lastHoveredEntity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_lastHoveredEntity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted) &&
                 _lastHoveredEntity.TryGetComponent(out outline))
             {
                 outline.OnMouseLeave();

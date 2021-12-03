@@ -51,7 +51,7 @@ namespace Content.Client.Weapons.Melee
                 return;
             }
 
-            if (!attacker.Deleted)
+            if (!((!IoCManager.Resolve<IEntityManager>().EntityExists(attacker.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(attacker.Uid).EntityLifeStage) >= EntityLifeStage.Deleted))
             {
                 var lunge = attacker.EnsureComponent<MeleeLungeComponent>();
                 lunge.SetData(msg.Angle);
@@ -88,7 +88,7 @@ namespace Content.Client.Weapons.Melee
 
             foreach (var uid in msg.Hits)
             {
-                if (!EntityManager.TryGetEntity(uid, out var hitEntity) || hitEntity.Deleted)
+                if (!EntityManager.TryGetEntity(uid, out var hitEntity) || (!IoCManager.Resolve<IEntityManager>().EntityExists(hitEntity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(hitEntity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted)
                 {
                     continue;
                 }

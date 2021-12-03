@@ -93,7 +93,7 @@ namespace Content.Server.Explosion.Components
                 return false;
             Owner.SpawnTimer((int) (_delay * 1000), () =>
             {
-                if (Owner.Deleted)
+                if ((!IoCManager.Resolve<IEntityManager>().EntityExists(Owner.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityLifeStage) >= EntityLifeStage.Deleted)
                     return;
                 _countDown = true;
                 var random = IoCManager.Resolve<IRobustRandom>();
@@ -116,7 +116,7 @@ namespace Content.Server.Explosion.Components
 
                     grenade.SpawnTimer(delay, () =>
                     {
-                        if (grenade.Deleted)
+                        if ((!IoCManager.Resolve<IEntityManager>().EntityExists(grenade.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(grenade.Uid).EntityLifeStage) >= EntityLifeStage.Deleted)
                             return;
 
                         EntitySystem.Get<TriggerSystem>().Trigger(grenade, eventArgs.User);

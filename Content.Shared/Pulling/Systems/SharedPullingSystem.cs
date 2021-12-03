@@ -165,7 +165,7 @@ namespace Content.Shared.Pulling
             // The pulled object may have already been deleted.
             // TODO: Work out why. Monkey + meat spike is a good test for this,
             //  assuming you're still pulling the monkey when it gets gibbed.
-            if (pulled.Deleted)
+            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(pulled.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(pulled.Uid).EntityLifeStage) >= EntityLifeStage.Deleted)
             {
                 return;
             }
