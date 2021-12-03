@@ -191,7 +191,7 @@ namespace Content.Server.Hands.Systems
 
             var playerEnt = playerSession.AttachedEntity;
 
-            if (playerEnt == null || !playerEnt.IsValid())
+            if (playerEnt == null || !IoCManager.Resolve<IEntityManager>().EntityExists(playerEnt.Uid))
                 return false;
 
             return playerEnt.TryGetComponent(out hands);
@@ -221,7 +221,7 @@ namespace Content.Server.Hands.Systems
             var playerEnt = playerSession.AttachedEntity;
 
             if (playerEnt == null ||
-                !playerEnt.IsValid() ||
+                !IoCManager.Resolve<IEntityManager>().EntityExists(playerEnt.Uid) ||
                 playerEnt.IsInContainer() ||
                 !playerEnt.TryGetComponent(out SharedHandsComponent? hands) ||
                 !hands.TryGetActiveHeldEntity(out var throwEnt) ||
@@ -269,7 +269,7 @@ namespace Content.Server.Hands.Systems
 
             var plyEnt = playerSession.AttachedEntity;
 
-            if (plyEnt == null || !plyEnt.IsValid())
+            if (plyEnt == null || !IoCManager.Resolve<IEntityManager>().EntityExists(plyEnt.Uid))
                 return;
 
             if (!plyEnt.TryGetComponent(out SharedHandsComponent? hands) ||

@@ -82,7 +82,7 @@ namespace Content.Shared.Movement.EntitySystems
 
             var ent = session?.AttachedEntity;
 
-            if (ent == null || !ent.IsValid())
+            if (ent == null || !IoCManager.Resolve<IEntityManager>().EntityExists(ent.Uid))
                 return false;
 
             if (!ent.TryGetComponent(out T? comp))

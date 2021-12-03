@@ -98,7 +98,7 @@ namespace Content.IntegrationTests.Tests
 
             server.Assert(() =>
             {
-                Assert.That(mind.CurrentEntity.IsValid(), Is.True);
+                Assert.That(IoCManager.Resolve<IEntityManager>().EntityExists(mind.CurrentEntity.Uid), Is.True);
             });
 
             await server.WaitIdleAsync();
@@ -149,7 +149,7 @@ namespace Content.IntegrationTests.Tests
 
             server.Assert(() =>
             {
-                Assert.That(mind.CurrentEntity.IsValid(), Is.True);
+                Assert.That(IoCManager.Resolve<IEntityManager>().EntityExists(mind.CurrentEntity.Uid), Is.True);
                 Assert.That(mind.CurrentEntity, Is.Not.EqualTo(playerEnt));
             });
 

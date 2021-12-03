@@ -146,7 +146,13 @@ namespace Content.Client.DoAfter.UI
         {
             base.FrameUpdate(args);
 
-            if (AttachedEntity?.IsValid() != true ||
+            IEntity? tempQualifier = AttachedEntity;
+            if (tempQualifier != null)
+            {
+                IoCManager.Resolve<IEntityManager>().EntityExists(tempQualifier.Uid);
+            }
+
+            if (RETURNED_VALUE != true ||
                 !AttachedEntity.TryGetComponent(out DoAfterComponent? doAfterComponent))
             {
                 Visible = false;

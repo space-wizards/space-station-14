@@ -201,7 +201,7 @@ namespace Content.Server.Cargo.Components
 
         private void UpdateUIState()
         {
-            if (_bankAccount == null || !Owner.IsValid())
+            if (_bankAccount == null || !IoCManager.Resolve<IEntityManager>().EntityExists(Owner.Uid))
             {
                 return;
             }

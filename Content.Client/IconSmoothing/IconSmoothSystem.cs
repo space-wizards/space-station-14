@@ -51,7 +51,7 @@ namespace Content.Client.IconSmoothing
             // Yes, we updates ALL smoothing entities surrounding us even if they would never smooth with us.
             // This is simpler to implement. If you want to optimize it be my guest.
             var senderEnt = ev.Sender;
-            if (senderEnt.IsValid() &&
+            if (IoCManager.Resolve<IEntityManager>().EntityExists(senderEnt.Uid) &&
                 _mapManager.TryGetGrid(senderEnt.Transform.GridID, out var grid1) &&
                 senderEnt.TryGetComponent(out IconSmoothComponent? iconSmooth)
                 && iconSmooth.Running)

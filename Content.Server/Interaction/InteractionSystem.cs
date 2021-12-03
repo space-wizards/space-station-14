@@ -90,7 +90,7 @@ namespace Content.Server.Interaction
 
             userEntity = ((IPlayerSession?) session)?.AttachedEntity;
 
-            if (userEntity == null || !userEntity.IsValid())
+            if (userEntity == null || !IoCManager.Resolve<IEntityManager>().EntityExists(userEntity.Uid))
             {
                 Logger.WarningS("system.interaction",
                     $"Client sent interaction with no attached entity. Session={session}");

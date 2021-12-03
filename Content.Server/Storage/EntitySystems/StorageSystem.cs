@@ -151,7 +151,7 @@ namespace Content.Server.Storage.EntitySystems
                 var attachedEntity = session.AttachedEntity;
 
                 // The component manages the set of sessions, so this invalid session should be removed soon.
-                if (attachedEntity == null || !attachedEntity.IsValid())
+                if (attachedEntity == null || !IoCManager.Resolve<IEntityManager>().EntityExists(attachedEntity.Uid))
                     continue;
 
                 if (storageMap != attachedEntity.Transform.MapID)
