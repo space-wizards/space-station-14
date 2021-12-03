@@ -5,6 +5,7 @@ using Content.Shared.Light.Component;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Player;
 using Robust.Shared.ViewVariables;
 
@@ -155,7 +156,7 @@ namespace Content.Server.Light.Components
 
                         CurrentState = ExpendableLightState.Dead;
                         Owner.Name = SpentName;
-                        Owner.Description = SpentDesc;
+                        IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityDescription = SpentDesc;
 
                         UpdateSpriteAndSounds(Activated);
                         UpdateVisualizer();

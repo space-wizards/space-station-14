@@ -2,6 +2,7 @@ using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Chemistry.Components
@@ -29,7 +30,7 @@ namespace Content.Server.Chemistry.Components
             }
 
             InitialName = Owner.Name;
-            InitialDescription = Owner.Description;
+            InitialDescription = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityDescription;
         }
 
         protected override void Startup()

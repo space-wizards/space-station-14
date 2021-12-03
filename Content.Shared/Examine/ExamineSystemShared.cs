@@ -212,9 +212,9 @@ namespace Content.Shared.Examine
             var doNewline = false;
 
             //Add an entity description if one is declared
-            if (!string.IsNullOrEmpty(entity.Description))
+            if (!string.IsNullOrEmpty(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityDescription))
             {
-                message.AddText(entity.Description);
+                message.AddText(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityDescription);
                 doNewline = true;
             }
 

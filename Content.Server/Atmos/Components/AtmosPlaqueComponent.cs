@@ -55,7 +55,7 @@ namespace Content.Server.Atmos.Components
                 return;
             }
 
-            Owner.Description = _type switch
+            var val = _type switch
             {
                 PlaqueType.Zumos =>
                     "This plaque commemorates the rise of the Atmos ZUM division. May they carry the torch that the Atmos ZAS, LINDA and FEA divisions left behind.",
@@ -68,6 +68,7 @@ namespace Content.Server.Atmos.Components
                 PlaqueType.Unset => "Uhm",
                 _ => "Uhm",
             };
+            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityDescription = val;
 
             Owner.Name = _type switch
             {

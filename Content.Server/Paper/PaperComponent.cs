@@ -6,6 +6,7 @@ using Content.Shared.Paper;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
@@ -95,7 +96,7 @@ namespace Content.Server.Paper
                 appearance.SetData(PaperVisuals.Status, PaperStatus.Written);
             }
 
-            Owner.Description = "";
+            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityDescription = "";
             UpdateUserInterface();
         }
 

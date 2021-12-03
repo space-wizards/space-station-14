@@ -90,7 +90,7 @@ namespace Content.Server.BarSign.Systems
                 component.Owner.Name = Loc.GetString("barsign-component-name");
             }
 
-            component.Owner.Description = prototype.Description;
+            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(component.Owner.Uid).EntityDescription = prototype.Description;
         }
     }
 }

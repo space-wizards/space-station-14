@@ -342,7 +342,8 @@ namespace Content.Server.Botany
                 if (Mysterious)
                 {
                     entity.Name += "?";
-                    entity.Description += " " + Loc.GetString("botany-mysterious-description-addon");
+                    string val = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityDescription + (" " + Loc.GetString("botany-mysterious-description-addon"));
+                    IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityDescription = val;
                 }
             }
 

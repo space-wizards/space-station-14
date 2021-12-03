@@ -57,7 +57,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 }
 
                 ownerEntity.Name = proto.Name + " glass";
-                ownerEntity.Description = proto.Description;
+                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(ownerEntity.Uid).EntityDescription = proto.Description;
                 component.CurrentReagent = proto;
                 component.Transformed = true;
             }
@@ -75,7 +75,7 @@ namespace Content.Server.Chemistry.EntitySystems
             }
 
             component.Owner.Name = component.InitialName;
-            component.Owner.Description = component.InitialDescription;
+            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(component.Owner.Uid).EntityDescription = component.InitialDescription;
         }
     }
 }
