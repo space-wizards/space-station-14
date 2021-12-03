@@ -129,11 +129,9 @@
   - type: MeleeChemicalInjector
     transferAmount: 6 #To OD someone you would need 2 nettles and about 6-7 hits, the DOT is likely to crit them if they are running away with almost no health
   - type: Extractable
-    grindableSolutionName: "food"
+    grindableSolutionName: food
   - type: InjectableSolution
-    solution: "food"
-#  - type: DangerousPickUp
-#    dangerType: plant
+    solution: food
 
 - type: entity
   name: banana
