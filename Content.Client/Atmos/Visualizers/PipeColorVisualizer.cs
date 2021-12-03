@@ -14,7 +14,7 @@ namespace Content.Client.Atmos.Visualizers
         {
             base.OnChangeData(component);
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(component.OwnerUid, out SpriteComponent? sprite))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(((IComponent) component).Owner, out SpriteComponent? sprite))
                 return;
 
             if (component.TryGetData(PipeColorVisuals.Color, out Color color))

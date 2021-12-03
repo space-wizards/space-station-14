@@ -225,7 +225,7 @@ namespace Content.Server.Storage.Components
 
                 var targetIsItem = IoCManager.Resolve<IEntityManager>().HasComponent<SharedItemComponent>(entity);
                 var targetIsMob = IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(entity);
-                var storageIsItem = IoCManager.Resolve<IEntityManager>().HasComponent<SharedItemComponent>(OwnerUid);
+                var storageIsItem = IoCManager.Resolve<IEntityManager>().HasComponent<SharedItemComponent>(((IComponent) this).Owner);
 
                 var allowedToEat = false;
 

@@ -102,7 +102,7 @@ namespace Content.Shared.Pulling
         // Raise a "you are being pulled" alert if the pulled entity has alerts.
         private static void PullableHandlePullStarted(EntityUid uid, SharedPullableComponent component, PullStartedMessage args)
         {
-            if (args.Pulled.OwnerUid != uid)
+            if (args.Pulled.Owner != uid)
                 return;
 
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner, out SharedAlertsComponent? alerts))
@@ -111,7 +111,7 @@ namespace Content.Shared.Pulling
 
         private static void PullableHandlePullStopped(EntityUid uid, SharedPullableComponent component, PullStoppedMessage args)
         {
-            if (args.Pulled.OwnerUid != uid)
+            if (args.Pulled.Owner != uid)
                 return;
 
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner, out SharedAlertsComponent? alerts))

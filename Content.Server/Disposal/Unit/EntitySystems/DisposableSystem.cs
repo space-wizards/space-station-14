@@ -59,7 +59,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                     if (duc != null)
                     {
                         // Insert into disposal unit
-                        IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates = new EntityCoordinates(duc.OwnerUid, Vector2.Zero);
+                        IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates = new EntityCoordinates(((IComponent) duc).Owner, Vector2.Zero);
                         duc.Container.Insert(entity);
                     }
                     else
@@ -154,7 +154,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 var currentTube = holder.CurrentTube;
                 if (currentTube == null || currentTube.Deleted)
                 {
-                    ExitDisposals(holder.OwnerUid);
+                    ExitDisposals(((IComponent) holder).Owner);
                     break;
                 }
 
@@ -175,15 +175,15 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 currentTube.Contents.ForceRemove(holder.Owner);
 
                 // Find next tube
-                var nextTube = _disposalTubeSystem.NextTubeFor(currentTube.OwnerUid, holder.CurrentDirection);
+                var nextTube = _disposalTubeSystem.NextTubeFor(currentTube.Owner, holder.CurrentDirection);
                 if (nextTube == null || nextTube.Deleted)
                 {
-                    ExitDisposals(holder.OwnerUid);
+                    ExitDisposals(((IComponent) holder).Owner);
                     break;
                 }
 
                 // Perform remainder of entry process
-                if (!EnterTube(holder.OwnerUid, nextTube.OwnerUid, holder, null, nextTube, null))
+                if (!EnterTube(((IComponent) holder).Owner, nextTube.Owner, holder, null, nextTube, null))
                 {
                     break;
                 }

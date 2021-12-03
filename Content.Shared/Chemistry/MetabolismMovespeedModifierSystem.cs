@@ -75,9 +75,9 @@ namespace Content.Shared.Chemistry
                 if (component.ModifierTimer > currentTime) continue;
 
                 _components.RemoveAt(i);
-                EntityManager.RemoveComponent<MovespeedModifierMetabolismComponent>(component.OwnerUid);
+                EntityManager.RemoveComponent<MovespeedModifierMetabolismComponent>(((IComponent) component).Owner);
 
-                _movespeed.RefreshMovementSpeedModifiers(component.OwnerUid);
+                _movespeed.RefreshMovementSpeedModifiers(((IComponent) component).Owner);
             }
         }
     }

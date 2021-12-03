@@ -45,7 +45,7 @@ namespace Content.Shared.Pulling.Systems
             SharedPullerComponent component,
             PullStartedMessage args)
         {
-            if (args.Puller.OwnerUid != uid)
+            if (args.Puller.Owner != uid)
                 return;
 
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner, out SharedAlertsComponent? alerts))
@@ -59,7 +59,7 @@ namespace Content.Shared.Pulling.Systems
             SharedPullerComponent component,
             PullStoppedMessage args)
         {
-            if (args.Puller.OwnerUid != uid)
+            if (args.Puller.Owner != uid)
                 return;
 
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner, out SharedAlertsComponent? alerts))
@@ -75,7 +75,7 @@ namespace Content.Shared.Pulling.Systems
 
         private void RefreshMovementSpeed(SharedPullerComponent component)
         {
-            _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(component.OwnerUid);
+            _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(((IComponent) component).Owner);
         }
     }
 }

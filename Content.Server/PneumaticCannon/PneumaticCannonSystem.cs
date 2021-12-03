@@ -180,7 +180,7 @@ namespace Content.Server.PneumaticCannon
             if (storage.StoredEntities == null) return;
             if (storage.StoredEntities.Count == 0)
             {
-                SoundSystem.Play(Filter.Pvs(comp.OwnerUid), "/Audio/Weapons/click.ogg", comp.OwnerUid, AudioParams.Default);
+                SoundSystem.Play(Filter.Pvs(((IComponent) comp).Owner), "/Audio/Weapons/click.ogg", ((IComponent) comp).Owner, AudioParams.Default);
                 return;
             }
 
@@ -217,7 +217,7 @@ namespace Content.Server.PneumaticCannon
             {
                 data.User.PopupMessage(Loc.GetString("pneumatic-cannon-component-fire-no-gas",
                     ("cannon", comp.Owner)));
-                SoundSystem.Play(Filter.Pvs(comp.OwnerUid), "/Audio/Items/hiss.ogg", comp.OwnerUid, AudioParams.Default);
+                SoundSystem.Play(Filter.Pvs(((IComponent) comp).Owner), "/Audio/Items/hiss.ogg", ((IComponent) comp).Owner, AudioParams.Default);
                 return;
             }
 
@@ -233,7 +233,7 @@ namespace Content.Server.PneumaticCannon
             IEntity ent = _random.Pick(storage.StoredEntities);
             storage.Remove(ent);
 
-            SoundSystem.Play(Filter.Pvs(data.User), comp.FireSound.GetSound(), comp.OwnerUid, AudioParams.Default);
+            SoundSystem.Play(Filter.Pvs(data.User), comp.FireSound.GetSound(), ((IComponent) comp).Owner, AudioParams.Default);
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent<CameraRecoilComponent?>(data.User, out var recoil))
             {
                 recoil.Kick(Vector2.One * data.Strength);

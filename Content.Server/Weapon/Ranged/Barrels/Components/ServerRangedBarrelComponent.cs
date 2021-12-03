@@ -365,7 +365,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(projectile).WorldRotation = projectileAngle + MathHelper.PiOver2;
             }
 
-            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(OwnerUid, new GunShotEvent(firedProjectiles));
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(((IComponent) this).Owner, new GunShotEvent(firedProjectiles));
             IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(ammo, new AmmoShotEvent(firedProjectiles));
         }
 

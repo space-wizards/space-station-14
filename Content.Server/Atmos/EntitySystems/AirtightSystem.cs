@@ -79,7 +79,7 @@ namespace Content.Server.Atmos.EntitySystems
         {
             airtight.AirBlocked = airblocked;
             UpdatePosition(airtight);
-            RaiseLocalEvent(airtight.OwnerUid, new AirtightChanged(airtight));
+            RaiseLocalEvent(((IComponent) airtight).Owner, new AirtightChanged(airtight));
         }
 
         public void UpdatePosition(AirtightComponent airtight)

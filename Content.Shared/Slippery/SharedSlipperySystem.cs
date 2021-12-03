@@ -33,7 +33,7 @@ namespace Content.Shared.Slippery
 
         private void HandleCollide(EntityUid uid, SlipperyComponent component, StartCollideEvent args)
         {
-            var otherUid = args.OtherFixture.Body.OwnerUid;
+            var otherUid = ((IComponent) args.OtherFixture.Body).Owner;
 
             if (!CanSlip(component, otherUid)) return;
 
@@ -74,7 +74,7 @@ namespace Content.Shared.Slippery
 
         private bool TrySlip(SlipperyComponent component, IPhysBody ourBody, IPhysBody otherBody)
         {
-            if (!CanSlip(component, otherBody.OwnerUid)) return false;
+            if (!CanSlip(component, otherBody.Owner)) return false;
 
             if (otherBody.LinearVelocity.Length < component.RequiredSlipSpeed)
             {
@@ -89,14 +89,14 @@ namespace Content.Shared.Slippery
             }
 
             var ev = new SlipAttemptEvent();
-            RaiseLocalEvent(otherBody.OwnerUid, ev, false);
+            RaiseLocalEvent(otherBody.Owner, ev, false);
             if (ev.Cancelled)
                 return false;
 
             otherBody.LinearVelocity *= component.LaunchForwardsMultiplier;
 
-            _stunSystem.TryParalyze(otherBody.OwnerUid, TimeSpan.FromSeconds(5));
-            component.Slipped.Add(otherBody.OwnerUid);
+            _stunSystem.TryParalyze(otherBody.Owner, TimeSpan.FromSeconds(5));
+            component.Slipped.Add(otherBody.Owner);
             component.Dirty();
 
             PlaySound(component);

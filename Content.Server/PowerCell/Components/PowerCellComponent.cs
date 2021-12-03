@@ -73,7 +73,7 @@ namespace Content.Server.PowerCell.Components
             var light = (int) Math.Ceiling(Math.Sqrt(CurrentCharge) / 30);
 
             CurrentCharge = 0;
-            EntitySystem.Get<ExplosionSystem>().SpawnExplosion(OwnerUid, 0, heavy, light, light*2);
+            EntitySystem.Get<ExplosionSystem>().SpawnExplosion(((IComponent) this).Owner, 0, heavy, light, light*2);
             IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) Owner);
         }
 

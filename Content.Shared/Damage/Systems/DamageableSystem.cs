@@ -128,9 +128,9 @@ namespace Content.Shared.Damage
             SetTotalDamage(component, component.Damage.Total, logChange);
             component.Dirty();
 
-            if (EntityManager.TryGetComponent<AppearanceComponent>(component.OwnerUid, out var appearance) && damageDelta != null)
+            if (EntityManager.TryGetComponent<AppearanceComponent>(((IComponent) component).Owner, out var appearance) && damageDelta != null)
                 appearance.SetData(DamageVisualizerKeys.DamageUpdateGroups, damageDelta.GetDamagePerGroup().Keys.ToList());
-            RaiseLocalEvent(component.OwnerUid, new DamageChangedEvent(component, damageDelta, interruptsDoAfters), false);
+            RaiseLocalEvent(((IComponent) component).Owner, new DamageChangedEvent(component, damageDelta, interruptsDoAfters), false);
         }
 
         /// <summary>

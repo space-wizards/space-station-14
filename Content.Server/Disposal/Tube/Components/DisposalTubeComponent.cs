@@ -96,7 +96,7 @@ namespace Content.Server.Disposal.Tube.Components
                     continue;
                 }
 
-                EntitySystem.Get<DisposableSystem>().ExitDisposals(holder.OwnerUid);
+                EntitySystem.Get<DisposableSystem>().ExitDisposals(((IComponent) holder).Owner);
             }
         }
 

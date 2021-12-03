@@ -141,7 +141,7 @@ namespace Content.Server.Cargo.Components
             // attempt to attach the label
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent(product, out PaperLabelComponent label))
             {
-                EntitySystem.Get<ItemSlotsSystem>().TryInsert(OwnerUid, label.LabelSlot, printed);
+                EntitySystem.Get<ItemSlotsSystem>().TryInsert(((IComponent) this).Owner, label.LabelSlot, printed);
             }
         }
 

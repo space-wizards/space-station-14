@@ -22,7 +22,7 @@ public class ThermalRegulatorSystem : EntitySystem
                 continue;
 
             regulator.AccumulatedFrametime -= 1;
-            ProcessThermalRegulation(regulator.OwnerUid, regulator);
+            ProcessThermalRegulation(((IComponent) regulator).Owner, regulator);
         }
     }
 

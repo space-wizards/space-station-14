@@ -82,7 +82,7 @@ namespace Content.IntegrationTests.Tests.Body
                 gas.AdjustMoles(Gas.Nitrogen, originalNitrogen);
 
                 var (lung, _) = lungs[0];
-                lungSys.TakeGasFrom(lung.OwnerUid, 1, gas, lung);
+                lungSys.TakeGasFrom(((IComponent) lung).Owner, 1, gas, lung);
 
                 var lungOxygen = originalOxygen * breathedPercentage;
                 var lungNitrogen = originalNitrogen * breathedPercentage;
@@ -103,7 +103,7 @@ namespace Content.IntegrationTests.Tests.Body
                 Assert.Zero(lungOxygenBeforeExhale);
                 Assert.Zero(lungNitrogenBeforeExhale);
 
-                lungSys.PushGasTo(lung.OwnerUid, gas, lung);
+                lungSys.PushGasTo(((IComponent) lung).Owner, gas, lung);
 
                 var lungOxygenAfterExhale = lung.Air.GetMoles(Gas.Oxygen);
                 var exhaledOxygen = Math.Abs(lungOxygenBeforeExhale - lungOxygenAfterExhale);

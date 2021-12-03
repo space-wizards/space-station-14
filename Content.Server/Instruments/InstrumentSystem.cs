@@ -153,7 +153,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
                 var mob = instrument.InstrumentPlayer.AttachedEntity;
 
                 // Just in case
-                Clean(instrument.OwnerUid);
+                Clean(((IComponent) instrument).Owner);
                 instrument.UserInterface?.CloseAll();
 
                 if (mob != null)

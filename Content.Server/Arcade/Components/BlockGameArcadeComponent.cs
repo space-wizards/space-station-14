@@ -131,7 +131,7 @@ namespace Content.Server.Arcade.Components
                     if (obj.Session != _player) break;
 
                     // TODO: Should this check if the Owner can interact...?
-                    if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(OwnerUid))
+                    if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(((IComponent) this).Owner))
                     {
                         DeactivePlayer(obj.Session);
                         break;

@@ -37,11 +37,11 @@ namespace Content.Shared.Body.Components
                 {
                     if (old.Body == null)
                     {
-                        IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(OwnerUid, new RemovedFromPartEvent(old));
+                        IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(((IComponent) this).Owner, new RemovedFromPartEvent(old));
                     }
                     else
                     {
-                        IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(OwnerUid, new RemovedFromPartInBodyEvent(old.Body, old));
+                        IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(((IComponent) this).Owner, new RemovedFromPartInBodyEvent(old.Body, old));
                     }
                 }
 
@@ -49,11 +49,11 @@ namespace Content.Shared.Body.Components
                 {
                     if (value.Body == null)
                     {
-                        IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(OwnerUid, new AddedToPartEvent(value));
+                        IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(((IComponent) this).Owner, new AddedToPartEvent(value));
                     }
                     else
                     {
-                        IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(OwnerUid, new AddedToPartInBodyEvent(value.Body, value));
+                        IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(((IComponent) this).Owner, new AddedToPartInBodyEvent(value.Body, value));
                     }
                 }
             }

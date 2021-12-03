@@ -32,7 +32,7 @@ namespace Content.Server.Body.Systems
             foreach (var (respirator, blood, body) in
                      EntityManager.EntityQuery<RespiratorComponent, BloodstreamComponent, SharedBodyComponent>())
             {
-                var uid = respirator.OwnerUid;
+                var uid = ((IComponent) respirator).Owner;
                 if (!EntityManager.TryGetComponent<MobStateComponent>(uid, out var state) ||
                     state.IsDead())
                 {
@@ -144,7 +144,7 @@ namespace Content.Server.Body.Systems
 
             foreach (var (lung, mech) in lungs)
             {
-                _lungSystem.UpdateLung(lung.OwnerUid, frameTime, lung, mech);
+                _lungSystem.UpdateLung(((IComponent) lung).Owner, frameTime, lung, mech);
             }
 
             foreach (var (gas, amountNeeded) in needs)
@@ -159,7 +159,7 @@ namespace Content.Server.Body.Systems
                         // Panic inhale
                         foreach (var (lung, mech) in lungs)
                         {
-                            _lungSystem.Gasp(lung.OwnerUid, lung, mech);
+                            _lungSystem.Gasp(((IComponent) lung).Owner, lung, mech);
                         }
                     }
 

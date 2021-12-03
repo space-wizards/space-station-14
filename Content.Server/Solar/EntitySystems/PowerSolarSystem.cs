@@ -166,7 +166,7 @@ namespace Content.Server.Solar.EntitySystems
 
             // Total coverage calculated; apply it to the panel.
             panel.Coverage = coverage;
-            UpdateSupply(panel.OwnerUid, panel);
+            UpdateSupply(((IComponent) panel).Owner, panel);
         }
 
         public void UpdateSupply(

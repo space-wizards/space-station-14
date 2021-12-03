@@ -112,7 +112,7 @@ namespace Content.Server.Fluids.Components
             }
 
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Target, out PuddleComponent? puddleComponent) ||
-                !solutionSystem.TryGetSolution(puddleComponent.OwnerUid, puddleComponent.SolutionName, out var puddleSolution))
+                !solutionSystem.TryGetSolution(((IComponent) puddleComponent).Owner, puddleComponent.SolutionName, out var puddleSolution))
                 return false;
 
             // So if the puddle has 20 units we mop in 2 seconds. Don't just store CurrentVolume given it can change so need to re-calc it anyway.

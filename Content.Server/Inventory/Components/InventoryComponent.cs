@@ -207,7 +207,7 @@ namespace Content.Server.Inventory.Components
             var pass = false;
             reason = null;
 
-            if (mobCheck && !EntitySystem.Get<ActionBlockerSystem>().CanEquip(OwnerUid))
+            if (mobCheck && !EntitySystem.Get<ActionBlockerSystem>().CanEquip(((IComponent) this).Owner))
             {
                 reason = Loc.GetString("inventory-component-can-equip-cannot");
                 return false;
@@ -295,7 +295,7 @@ namespace Content.Server.Inventory.Components
 
         private void UpdateMovementSpeed()
         {
-            EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(OwnerUid);
+            EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(((IComponent) this).Owner);
         }
 
         public void ForceUnequip(Slots slot)
@@ -331,7 +331,7 @@ namespace Content.Server.Inventory.Components
         /// </returns>
         public bool CanUnequip(Slots slot, bool mobCheck = true)
         {
-            if (mobCheck && !EntitySystem.Get<ActionBlockerSystem>().CanUnequip(OwnerUid))
+            if (mobCheck && !EntitySystem.Get<ActionBlockerSystem>().CanUnequip(((IComponent) this).Owner))
                 return false;
 
             var inventorySlot = _slotContainers[slot];

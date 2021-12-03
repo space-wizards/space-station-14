@@ -33,11 +33,11 @@ namespace Content.Server.Shuttles.Components
 
                 if (!_enabled)
                 {
-                    system.DisableThruster(OwnerUid, this);
+                    system.DisableThruster(((IComponent) this).Owner, this);
                 }
-                else if (system.CanEnable(OwnerUid, this))
+                else if (system.CanEnable(((IComponent) this).Owner, this))
                 {
-                    system.EnableThruster(OwnerUid, this);
+                    system.EnableThruster(((IComponent) this).Owner, this);
                 }
             }
         }

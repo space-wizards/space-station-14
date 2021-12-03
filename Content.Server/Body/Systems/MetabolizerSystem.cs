@@ -43,7 +43,7 @@ namespace Content.Server.Body.Systems
                 {
                     if (mech.Body != null)
                     {
-                        _solutionContainerSystem.EnsureSolution(mech.Body.OwnerUid, component.SolutionName);
+                        _solutionContainerSystem.EnsureSolution(((IComponent) mech.Body).Owner, component.SolutionName);
                     }
                 }
             }
@@ -61,7 +61,7 @@ namespace Content.Server.Body.Systems
                 if (metab.AccumulatedFrametime >= metab.UpdateFrequency)
                 {
                     metab.AccumulatedFrametime -= metab.UpdateFrequency;
-                    TryMetabolize(metab.OwnerUid, metab);
+                    TryMetabolize(((IComponent) metab).Owner, metab);
                 }
             }
         }
@@ -86,9 +86,9 @@ namespace Content.Server.Body.Systems
 
                     if (body != null)
                     {
-                        if (!Resolve(body.OwnerUid, ref manager, false))
+                        if (!Resolve(((IComponent) body).Owner, ref manager, false))
                             return;
-                        _solutionContainerSystem.TryGetSolution(body.OwnerUid, meta.SolutionName, out solution, manager);
+                        _solutionContainerSystem.TryGetSolution(((IComponent) body).Owner, meta.SolutionName, out solution, manager);
                         solutionEntityUid = body.OwnerUid;
                     }
                 }
@@ -152,7 +152,7 @@ namespace Content.Server.Body.Systems
                             continue;
                     }
 
-                    var args = new ReagentEffectArgs(solutionEntityUid.Value, meta.OwnerUid, solution, proto, entry.MetabolismRate,
+                    var args = new ReagentEffectArgs(solutionEntityUid.Value, ((IComponent) meta).Owner, solution, proto, entry.MetabolismRate,
                         EntityManager, null);
 
                     // do all effects, if conditions apply

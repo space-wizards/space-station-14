@@ -86,7 +86,7 @@ namespace Content.Shared.Actions.Components
             if (_holderActionsComponent == null) return;
             foreach (var (actionType, state) in _actions)
             {
-                _holderActionsComponent.GrantOrUpdateItemAction(actionType, OwnerUid, state);
+                _holderActionsComponent.GrantOrUpdateItemAction(actionType, ((IComponent) this).Owner, state);
             }
         }
 
@@ -95,7 +95,7 @@ namespace Content.Shared.Actions.Components
             if (_holderActionsComponent == null) return;
             foreach (var (actionType, state) in _actions)
             {
-                _holderActionsComponent.RevokeItemAction(actionType, OwnerUid);
+                _holderActionsComponent.RevokeItemAction(actionType, ((IComponent) this).Owner);
             }
         }
 
@@ -152,7 +152,7 @@ namespace Content.Shared.Actions.Components
             if (!dirty) return;
 
             _actions[actionType] = actionState;
-            _holderActionsComponent?.GrantOrUpdateItemAction(actionType, OwnerUid, actionState);
+            _holderActionsComponent?.GrantOrUpdateItemAction(actionType, ((IComponent) this).Owner, actionState);
         }
 
         /// <summary>

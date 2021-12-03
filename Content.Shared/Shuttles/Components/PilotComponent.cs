@@ -50,7 +50,10 @@ namespace Content.Shared.Shuttles.Components
 
         public override ComponentState GetComponentState()
         {
-            return new PilotComponentState(Console?.OwnerUid);
+            if(Console == null)
+                return new
+
+            return new PilotComponentState(((IComponent) Console).Owner);
         }
 
         [Serializable, NetSerializable]

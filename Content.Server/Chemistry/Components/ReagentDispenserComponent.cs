@@ -148,7 +148,7 @@ namespace Content.Server.Chemistry.Components
             switch (msg.Button)
             {
                 case UiButton.Eject:
-                    EntitySystem.Get<ItemSlotsSystem>().TryEjectToHands(OwnerUid, BeakerSlot, obj.Session.AttachedEntityUid);
+                    EntitySystem.Get<ItemSlotsSystem>().TryEjectToHands(((IComponent) this).Owner, BeakerSlot, obj.Session.AttachedEntityUid);
                     break;
                 case UiButton.Clear:
                     TryClear();

@@ -59,7 +59,7 @@ public partial class AdminLogSystem
                 EntityUid id => id,
                 IEntity entity => entity,
                 IPlayerSession {AttachedEntityUid: { }} session => session.AttachedEntityUid.Value,
-                IComponent component => component.OwnerUid,
+                IComponent component => component.Owner,
                 _ => null
             };
 

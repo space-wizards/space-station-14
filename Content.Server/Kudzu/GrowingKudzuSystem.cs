@@ -44,10 +44,10 @@ public class GrowingKudzuSystem : EntitySystem
             kudzu.GrowthLevel += 1;
 
             if (kudzu.GrowthLevel == 3 &&
-                EntityManager.TryGetComponent<SpreaderComponent>(kudzu.OwnerUid, out var spreader))
+                EntityManager.TryGetComponent<SpreaderComponent>(((IComponent) kudzu).Owner, out var spreader))
             {
                 // why cache when you can simply cease to be? Also saves a bit of memory/time.
-                EntityManager.RemoveComponent<GrowingKudzuComponent>(kudzu.OwnerUid);
+                EntityManager.RemoveComponent<GrowingKudzuComponent>(((IComponent) kudzu).Owner);
             }
 
             appearance.SetData(KudzuVisuals.GrowthLevel, kudzu.GrowthLevel);

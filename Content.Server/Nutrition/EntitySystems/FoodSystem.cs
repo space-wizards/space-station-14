@@ -158,7 +158,7 @@ namespace Content.Server.Nutrition.EntitySystems
             var transferAmount = component.TransferAmount != null ? FixedPoint2.Min((FixedPoint2) component.TransferAmount, solution.CurrentVolume) : solution.CurrentVolume;
             var split = _solutionContainerSystem.SplitSolution(uid, solution, transferAmount);
             var firstStomach = stomachs.FirstOrNull(
-                stomach => _stomachSystem.CanTransferSolution(stomach.Comp.OwnerUid, split));
+                stomach => _stomachSystem.CanTransferSolution(((IComponent) stomach.Comp).Owner, split));
 
             if (firstStomach == null)
             {
@@ -169,7 +169,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             // TODO: Account for partial transfer.
             split.DoEntityReaction(userUid, ReactionMethod.Ingestion);
-            _stomachSystem.TryTransferSolution(firstStomach.Value.Comp.OwnerUid, split, firstStomach.Value.Comp);
+            _stomachSystem.TryTransferSolution(((IComponent) firstStomach.Value.Comp).Owner, split, firstStomach.Value.Comp);
 
             SoundSystem.Play(Filter.Pvs(userUid), component.UseSound.GetSound(), userUid, AudioParams.Default.WithVolume(-1f));
             _popupSystem.PopupEntity(Loc.GetString(component.EatMessage, ("food", component.Owner)), userUid, Filter.Entities(userUid));
@@ -177,7 +177,7 @@ namespace Content.Server.Nutrition.EntitySystems
             // Try to break all used utensils
             foreach (var utensil in usedUtensils)
             {
-                _utensilSystem.TryBreak(utensil.OwnerUid, userUid);
+                _utensilSystem.TryBreak(((IComponent) utensil).Owner, userUid);
             }
 
             if (component.UsesRemaining > 0)
@@ -186,7 +186,7 @@ namespace Content.Server.Nutrition.EntitySystems
             }
 
             if (string.IsNullOrEmpty(component.TrashPrototype))
-                EntityManager.QueueDeleteEntity(component.OwnerUid);
+                EntityManager.QueueDeleteEntity(((IComponent) component).Owner);
             else
                 DeleteAndSpawnTrash(component, userUid);
 
@@ -204,7 +204,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 EntityManager.TryGetComponent(userUid.Value, out HandsComponent? handsComponent) &&
                 handsComponent.IsHolding(component.Owner))
             {
-                EntityManager.DeleteEntity(component.OwnerUid);
+                EntityManager.DeleteEntity(((IComponent) component).Owner);
 
                 // Put the trash in the user's hand
                 if (IoCManager.Resolve<IEntityManager>().TryGetComponent(finisher, out ItemComponent? item) &&
@@ -215,7 +215,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 return;
             }
 
-            EntityManager.QueueDeleteEntity(component.OwnerUid);
+            EntityManager.QueueDeleteEntity(((IComponent) component).Owner);
         }
 
         private void AddEatVerb(EntityUid uid, FoodComponent component, GetInteractionVerbsEvent ev)
@@ -313,9 +313,9 @@ namespace Content.Server.Nutrition.EntitySystems
                 ? FixedPoint2.Min((FixedPoint2) args.Food.TransferAmount, args.FoodSolution.CurrentVolume)
                 : args.FoodSolution.CurrentVolume;
 
-            var split = _solutionContainerSystem.SplitSolution(args.Food.OwnerUid, args.FoodSolution, transferAmount);
+            var split = _solutionContainerSystem.SplitSolution(((IComponent) args.Food).Owner, args.FoodSolution, transferAmount);
             var firstStomach = stomachs.FirstOrNull(
-                stomach => _stomachSystem.CanTransferSolution(stomach.Comp.OwnerUid, split));
+                stomach => _stomachSystem.CanTransferSolution(((IComponent) stomach.Comp).Owner, split));
 
             if (firstStomach == null)
             {
@@ -325,7 +325,7 @@ namespace Content.Server.Nutrition.EntitySystems
             }
 
             split.DoEntityReaction(uid, ReactionMethod.Ingestion);
-            _stomachSystem.TryTransferSolution(firstStomach.Value.Comp.OwnerUid, split, firstStomach.Value.Comp);
+            _stomachSystem.TryTransferSolution(((IComponent) firstStomach.Value.Comp).Owner, split, firstStomach.Value.Comp);
 
             EntityManager.TryGetComponent(uid, out MetaDataComponent? targetMeta);
             var targetName = targetMeta?.EntityName ?? string.Empty;
@@ -344,14 +344,14 @@ namespace Content.Server.Nutrition.EntitySystems
             // Try to break all used utensils
             foreach (var utensil in args.Utensils)
             {
-                _utensilSystem.TryBreak(utensil.OwnerUid, args.User);
+                _utensilSystem.TryBreak(((IComponent) utensil).Owner, args.User);
             }
 
             if (args.Food.UsesRemaining > 0)
                 return;
 
             if (string.IsNullOrEmpty(args.Food.TrashPrototype))
-                EntityManager.QueueDeleteEntity(args.Food.OwnerUid);
+                EntityManager.QueueDeleteEntity(((IComponent) args.Food).Owner);
             else
                 DeleteAndSpawnTrash(args.Food, args.User);
         }
@@ -377,7 +377,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 DeleteAndSpawnTrash(food);
 
             var firstStomach = stomachs.FirstOrNull(
-                stomach => _stomachSystem.CanTransferSolution(stomach.Comp.OwnerUid, foodSolution));
+                stomach => _stomachSystem.CanTransferSolution(((IComponent) stomach.Comp).Owner, foodSolution));
 
             if (firstStomach == null)
                 return;
@@ -395,11 +395,11 @@ namespace Content.Server.Nutrition.EntitySystems
             _popupSystem.PopupEntity(Loc.GetString(food.EatMessage), target, filter);
 
             foodSolution.DoEntityReaction(uid, ReactionMethod.Ingestion);
-            _stomachSystem.TryTransferSolution(firstStomach.Value.Comp.OwnerUid, foodSolution, firstStomach.Value.Comp);
+            _stomachSystem.TryTransferSolution(((IComponent) firstStomach.Value.Comp).Owner, foodSolution, firstStomach.Value.Comp);
             SoundSystem.Play(Filter.Pvs(target), food.UseSound.GetSound(), target, AudioParams.Default.WithVolume(-1f));
 
             if (string.IsNullOrEmpty(food.TrashPrototype))
-                EntityManager.QueueDeleteEntity(food.OwnerUid);
+                EntityManager.QueueDeleteEntity(((IComponent) food).Owner);
             else
                 DeleteAndSpawnTrash(food);
         }
@@ -470,7 +470,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             // check helmets. Note that not all helmets cover the face.
             if (inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.HEAD, out ItemComponent? head) &&
-                EntityManager.TryGetComponent(head.OwnerUid, out TagComponent tag) &&
+                EntityManager.TryGetComponent(((IComponent) head).Owner, out TagComponent tag) &&
                 tag.HasTag("ConcealsFace"))
             {
                 blockingEntity = head.OwnerUid;

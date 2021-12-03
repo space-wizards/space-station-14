@@ -201,9 +201,9 @@ namespace Content.Server.Atmos.EntitySystems
                 var fireStackDelta = fireStackMod - flammable.FireStacks;
                 if (fireStackDelta > 0)
                 {
-                    AdjustFireStacks(flammable.OwnerUid, fireStackDelta, flammable);
+                    AdjustFireStacks(((IComponent) flammable).Owner, fireStackDelta, flammable);
                 }
-                Ignite(flammable.OwnerUid, flammable);
+                Ignite(((IComponent) flammable).Owner, flammable);
             }
             _fireEvents.Clear();
 

@@ -123,7 +123,7 @@ namespace Content.Client.Inventory
                 }
             }
 
-            EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(OwnerUid);
+            EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(((IComponent) this).Owner);
         }
 
         private void _setSlot(Slots slot, IEntity entity)
