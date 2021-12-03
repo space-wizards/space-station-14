@@ -26,7 +26,7 @@ namespace Content.Server.AI.EntitySystems
         /// <summary>
         ///     To avoid iterating over dead AI continuously they can wake and sleep themselves when necessary.
         /// </summary>
-        private readonly HashSet<AiControllerComponent> _awakeNPCs = new(64);
+        private readonly HashSet<AiControllerComponent> _awakeNPCs = new();
 
         public bool Enabled { get; set; } = true;
 
@@ -38,6 +38,7 @@ namespace Content.Server.AI.EntitySystems
             SubscribeLocalEvent<AiControllerComponent, ComponentInit>(OnNPCInit);
             SubscribeLocalEvent<AiControllerComponent, ComponentShutdown>(OnNPCShutdown);
             _configurationManager.OnValueChanged(CCVars.NPCEnabled, SetEnabled, true);
+            _awakeNPCs.EnsureCapacity(_configurationManager.GetCVar(CCVars.NPCMaxUpdates));
         }
 
         private void SetEnabled(bool value) => Enabled = value;
