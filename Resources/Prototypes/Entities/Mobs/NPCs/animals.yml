@@ -310,6 +310,9 @@
   description: New church of neo-darwinists actually believe that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing.
   components:
   - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: monkey
+    description: Ook ook!
   - type: Sprite
     drawdepth: Mobs
     layers:
