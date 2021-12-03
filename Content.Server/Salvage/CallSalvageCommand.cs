@@ -39,16 +39,16 @@ namespace Content.Server.Salvage
                 shell.WriteError(Loc.GetString("shell-wrong-arguments-number"));
                 return;
             }
-            shell.WriteLine(EntitySystem.Get<SalvageSystem>().ReturnSalvage(false));
+            shell.WriteLine(EntitySystem.Get<SalvageSystem>().ReturnSalvage());
         }
     }
 
     [AdminCommand(AdminFlags.Admin)]
     public class RecallSalvageNowCommand : IConsoleCommand
     {
-        public string Command => "recallsalvagenow";
+        public string Command => "recallsalvagefinishnow";
         public string Description => "Forcibly stops salvage immediately (will delete - good for testing).";
-        public string Help => "Usage: recallsalvagenow";
+        public string Help => "Usage: recallsalvagefinishnow";
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -57,7 +57,13 @@ namespace Content.Server.Salvage
                 shell.WriteError(Loc.GetString("shell-wrong-arguments-number"));
                 return;
             }
-            shell.WriteLine(EntitySystem.Get<SalvageSystem>().ReturnSalvage(true));
+            var salvageSystem = EntitySystem.Get<SalvageSystem>();
+            if ((salvageSystem.State != SalvageSystemState.Active) && (salvageSystem.State != SalvageSystemState.LettingGo))
+            {
+                shell.WriteError("Incorrect state (must be in active or letting-go state)");
+                return;
+            }
+            salvageSystem.DeleteSalvage();
         }
     }
 }

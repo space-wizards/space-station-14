@@ -273,7 +273,7 @@ namespace Content.Server.Salvage
             return Loc.GetString("salvage-system-report-activate-success");
         }
 
-        public string ReturnSalvage(bool immediate = false)
+        public string ReturnSalvage()
         {
             if (State != SalvageSystemState.Active)
                 return Loc.GetString("salvage-system-report-not-active");
@@ -288,12 +288,14 @@ namespace Content.Server.Salvage
                 // The capture message will be given instead if the salvage component is missing.
                 _chatManager.DispatchStationAnnouncement(Loc.GetString("salvage-system-announcement-losing", ("timeLeft", LeaveTimer)), Loc.GetString("salvage-system-announcement-source"));
             }
-            if (immediate)
-            {
-                // Just wipe it
-                EntityManager.QueueDeleteEntity(PulledObject);
-            }
             return Loc.GetString("salvage-system-report-deactivate-success");
+        }
+
+        public void DeleteSalvage()
+        {
+            if ((State != SalvageSystemState.Active) && (State != SalvageSystemState.LettingGo))
+                return;
+            EntityManager.QueueDeleteEntity(PulledObject);
         }
     }
 
