@@ -2,6 +2,7 @@ salvage-system-announcement-source = Salvage Control System
 salvage-system-announcement-arrived = A piece of salvagable debris has been pulled in. Estimate: Can hold for {$timeLeft} seconds.
 salvage-system-announcement-losing = The magnet is no longer able to hold the salvagable debris. Estimate: {$timeLeft} seconds to complete loss.
 salvage-system-announcement-lost = The salvagable debris has been lost.
+salvage-system-announcement-captured = The salvagable debris has been successfully captured.
 
 salvage-system-announcement-spawn-magnet-lost = The salvage magnet has been lost.
 salvage-system-announcement-spawn-no-debris-available = No debris could be recovered by the salvage magnet.

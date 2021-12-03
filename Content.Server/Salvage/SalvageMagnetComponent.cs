@@ -23,7 +23,7 @@ namespace Content.Server.Salvage
         ///     Offset relative to magnet that salvage should spawn.
         ///     Keep in sync with marker sprite (if any???)
         /// </summary>
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         [DataField("offset")]
         public Vector2 Offset = Vector2.Zero;
     }

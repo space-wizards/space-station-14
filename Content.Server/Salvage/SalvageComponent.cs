@@ -20,13 +20,13 @@ namespace Content.Server.Salvage
     public class SalvageComponent : Component
     {
         /// <summary>
-        ///     The salvage will be deleted when no actor remains parented to it, and will be thrown away from the station.
-        ///     Set this when salvage is lost by the magnet.
+        ///     Set this when salvage is no longer held by the magnet.
+        ///     This starts the countdown to complete destruction.
         /// </summary>
         [ViewVariables] public bool Killswitch = false;
 
         /// <summary>
-        ///     Time killswitch has been active for
+        ///     Time killswitch has been active for.
         /// </summary>
         [ViewVariables] public float KillswitchTime = 0.0f;
     }

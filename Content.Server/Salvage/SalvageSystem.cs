@@ -103,13 +103,22 @@ namespace Content.Server.Salvage
             _popupSystem.PopupEntity(CallSalvage(), uid, Filter.Entities(args.User.Uid));
         }
 
-        private MapCoordinates GetSalvagePlacementLocation()
+        private bool TryGetSalvagePlacementLocation(out MapCoordinates coords, out Angle angle)
         {
+            coords = MapCoordinates.Nullspace;
+            angle = Angle.Zero;
             foreach (var (smc, tsc) in EntityManager.EntityQuery<SalvageMagnetComponent, TransformComponent>(true))
             {
-                return (new EntityCoordinates(smc.OwnerUid, smc.Offset).ToMap(EntityManager));
+                coords = new EntityCoordinates(smc.OwnerUid, smc.Offset).ToMap(EntityManager);
+                var grid = tsc.GridID;
+                if (grid != GridId.Invalid)
+                {
+                    // Has a valid grid - synchronize angle so that salvage doesn't have to deal with cross-grid manipulation issues
+                    angle = _mapManager.GetGrid(grid).WorldRotation;
+                }
+                return true;
             }
-            return MapCoordinates.Nullspace;
+            return false;
         }
 
         private IEnumerable<SalvageMapPrototype> GetAllSalvageMaps()
@@ -123,8 +132,7 @@ namespace Content.Server.Salvage
             // In case of failure
             State = SalvageSystemState.Inactive;
 
-            var spl = GetSalvagePlacementLocation();
-            if (spl == MapCoordinates.Nullspace)
+            if (!TryGetSalvagePlacementLocation(out var spl, out var spAngle))
             {
                 return Loc.GetString("salvage-system-announcement-spawn-magnet-lost");
             }
@@ -153,7 +161,9 @@ namespace Content.Server.Salvage
             {
                 map = _random.PickAndTake(allSalvageMaps);
 
-                if (_physicsSystem.TryCollideRect(Box2.CenteredAround(spl.Position, new Vector2(map.Size * 2.0f, map.Size * 2.0f)), spl.MapId, false))
+                var box2 = Box2.CenteredAround(spl.Position, new Vector2(map.Size * 2.0f, map.Size * 2.0f));
+                var box2rot = new Box2Rotated(box2, spAngle, spl.Position);
+                if (_physicsSystem.GetCollidingEntities(spl.MapId, in box2rot).Select(x => EntityManager.HasComponent<IMapGridComponent>(x.OwnerUid)).Count() > 0)
                 {
                     // collided: set map to null so we don't spawn it
                     map = null;
@@ -177,16 +187,34 @@ namespace Content.Server.Salvage
 
             PulledObject = bp.GridEntityId;
             EntityManager.AddComponent<SalvageComponent>(PulledObject);
-            EntityManager.GetComponent<TransformComponent>(PulledObject).Coordinates = EntityCoordinates.FromMap(_mapManager, spl);
-            if (EntityManager.TryGetComponent<PhysicsComponent>(PulledObject, out var phys))
-            {
-                phys.AngularDamping = 0.0f;
-                phys.AngularVelocity = (_random.NextFloat() - 0.5f) * 2.0f * AngularVelocityRangeRadians;
-            }
+
+            var pulledTransform = EntityManager.GetComponent<TransformComponent>(PulledObject);
+            pulledTransform.Coordinates = EntityCoordinates.FromMap(_mapManager, spl);
+            pulledTransform.WorldRotation = spAngle;
+
             // Alright, salvage magnet is active.
             State = SalvageSystemState.Active;
             StateTimer = HoldTimer;
             return Loc.GetString("salvage-system-announcement-arrived", ("timeLeft", StateTimer));
+        }
+
+        private void PulledObjectDeathOrCaptureMonitor()
+        {
+            // This code runs in Active and LettingGo states.
+            // It catches the situation when the pulled object is deleted by the killswitch,
+            //  and the situation when the salvage component is removed by admin intervention (officially a "capture")
+            if (!EntityManager.EntityExists(PulledObject))
+            {
+                State = SalvageSystemState.Inactive;
+                PulledObject = EntityUid.Invalid;
+                _chatManager.DispatchStationAnnouncement(Loc.GetString("salvage-system-announcement-lost"), Loc.GetString("salvage-system-announcement-source"));
+            }
+            else if (!EntityManager.HasComponent<SalvageComponent>(PulledObject))
+            {
+                State = SalvageSystemState.Inactive;
+                PulledObject = EntityUid.Invalid;
+                _chatManager.DispatchStationAnnouncement(Loc.GetString("salvage-system-announcement-captured"), Loc.GetString("salvage-system-announcement-source"));
+            }
         }
 
         public override void Update(float frameTime)
@@ -213,14 +241,10 @@ namespace Content.Server.Salvage
                     {
                         ReturnSalvage();
                     }
+                    PulledObjectDeathOrCaptureMonitor();
                     break;
                 case SalvageSystemState.LettingGo:
-                    if (!EntityManager.EntityExists(PulledObject))
-                    {
-                        State = SalvageSystemState.Inactive;
-                        PulledObject = EntityUid.Invalid;
-                        _chatManager.DispatchStationAnnouncement(Loc.GetString("salvage-system-announcement-lost"), Loc.GetString("salvage-system-announcement-source"));
-                    }
+                    PulledObjectDeathOrCaptureMonitor();
                     break;
             }
             foreach (var smc in EntityManager.EntityQuery<SalvageComponent>(true))
@@ -249,7 +273,7 @@ namespace Content.Server.Salvage
             return Loc.GetString("salvage-system-report-activate-success");
         }
 
-        public string ReturnSalvage()
+        public string ReturnSalvage(bool immediate = false)
         {
             if (State != SalvageSystemState.Active)
                 return Loc.GetString("salvage-system-report-not-active");
@@ -260,13 +284,15 @@ namespace Content.Server.Salvage
             {
                 // Schedule this to auto-delete (and ideally fly away from the station???)
                 salvage.Killswitch = true;
+                // Note "losing" is only given on killswitch activation.
+                // The capture message will be given instead if the salvage component is missing.
+                _chatManager.DispatchStationAnnouncement(Loc.GetString("salvage-system-announcement-losing", ("timeLeft", LeaveTimer)), Loc.GetString("salvage-system-announcement-source"));
             }
-            else
+            if (immediate)
             {
-                // Oh no you DON'T, you aren't getting away that easily
+                // Just wipe it
                 EntityManager.QueueDeleteEntity(PulledObject);
             }
-            _chatManager.DispatchStationAnnouncement(Loc.GetString("salvage-system-announcement-losing", ("timeLeft", LeaveTimer)), Loc.GetString("salvage-system-announcement-source"));
             return Loc.GetString("salvage-system-report-deactivate-success");
         }
     }

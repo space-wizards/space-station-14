@@ -29,7 +29,7 @@ namespace Content.Server.Salvage
     public class RecallSalvageCommand : IConsoleCommand
     {
         public string Command => "recallsalvage";
-        public string Description => "Forcibly stops salvage.";
+        public string Description => "Forcibly recalls salvage.";
         public string Help => "Usage: recallsalvage";
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
@@ -39,7 +39,25 @@ namespace Content.Server.Salvage
                 shell.WriteError(Loc.GetString("shell-wrong-arguments-number"));
                 return;
             }
-            shell.WriteLine(EntitySystem.Get<SalvageSystem>().ReturnSalvage());
+            shell.WriteLine(EntitySystem.Get<SalvageSystem>().ReturnSalvage(false));
+        }
+    }
+
+    [AdminCommand(AdminFlags.Admin)]
+    public class RecallSalvageNowCommand : IConsoleCommand
+    {
+        public string Command => "recallsalvagenow";
+        public string Description => "Forcibly stops salvage immediately (will delete - good for testing).";
+        public string Help => "Usage: recallsalvagenow";
+
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        {
+            if (args.Length != 0)
+            {
+                shell.WriteError(Loc.GetString("shell-wrong-arguments-number"));
+                return;
+            }
+            shell.WriteLine(EntitySystem.Get<SalvageSystem>().ReturnSalvage(true));
         }
     }
 }

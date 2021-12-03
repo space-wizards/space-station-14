@@ -11,7 +11,7 @@
         shader: unshaded
   - type: Rotatable
   - type: SalvageMagnet
-    offset: 0, -24
+    offset: 0, -32
 
 # For Knightship
 - type: entity
