@@ -206,7 +206,7 @@ namespace Content.Client.Verbs
                 return;
             }
 
-            var user = _playerManager.LocalPlayer?.ControlledEntityUid;
+            var user = _playerManager.LocalPlayer?.ControlledEntity;
             if (user == null)
                 return;
 
