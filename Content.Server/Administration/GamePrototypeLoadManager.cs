@@ -1,18 +1,15 @@
+using System;
 using System.Collections.Generic;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Administration;
-
-public interface IGamePrototypeLoadManager
-{
-    public void Initialize();
-}
 
 /// <summary>
 ///     Manages sending runtime-loaded prototypes from game staff to clients.
@@ -23,6 +20,7 @@ public class GamePrototypeLoadManager : IGamePrototypeLoadManager
     [Dependency] private readonly IAdminManager _adminManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly ILocalizationManager _localizationManager = default!;
 
     private readonly List<string> LoadedPrototypes = new();
 
@@ -32,22 +30,37 @@ public class GamePrototypeLoadManager : IGamePrototypeLoadManager
         _netManager.Connected += NetManagerOnConnected;
     }
 
+    public void SendGamePrototype(string prototype)
+    {
+
+    }
+
+    public event Action? GamePrototypeLoaded;
+
     private void ClientLoadsPrototype(GamePrototypeLoadMessage message)
     {
         var player = _playerManager.GetSessionByChannel(message.MsgChannel);
         if (_adminManager.IsAdmin(player))
         {
-            LoadedPrototypes.Add(message.PrototypeData);
-            var msg = _netManager.CreateNetMessage<GamePrototypeLoadMessage>();
-            msg.PrototypeData = message.PrototypeData;
-            _netManager.ServerSendToAll(msg); // everyone load it up!
-            _prototypeManager.LoadString(message.PrototypeData); // server needs it too.
+            LoadPrototypeData(message.PrototypeData);
             Logger.InfoS("adminbus", $"Loaded adminbus prototype data from {player.Name}.");
         }
         else
         {
             message.MsgChannel.Disconnect("Sent prototype message without permission!");
         }
+    }
+
+    private void LoadPrototypeData(string prototypeData)
+    {
+        LoadedPrototypes.Add(prototypeData);
+        var msg = _netManager.CreateNetMessage<GamePrototypeLoadMessage>();
+        msg.PrototypeData = prototypeData;
+        _netManager.ServerSendToAll(msg); // everyone load it up!
+        _prototypeManager.LoadString(prototypeData); // server needs it too.
+        _prototypeManager.Resync();
+        _localizationManager.ReloadLocalizations();
+        GamePrototypeLoaded?.Invoke();
     }
 
     private void NetManagerOnConnected(object? sender, NetChannelArgs e)

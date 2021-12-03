@@ -25,6 +25,7 @@ using Content.Client.Stylesheets;
 using Content.Client.Viewport;
 using Content.Client.Voting;
 using Content.Shared.Actions;
+using Content.Shared.Administration;
 using Content.Shared.Alert;
 using Content.Shared.AME;
 using Content.Shared.Cargo.Components;
