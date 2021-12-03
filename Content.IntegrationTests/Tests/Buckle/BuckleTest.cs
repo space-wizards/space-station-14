@@ -99,7 +99,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.True(buckle.Buckled);
 
                 var player = IoCManager.Resolve<IPlayerManager>().Sessions.Single();
-                Assert.True(((BuckleComponentState) buckle.GetComponentState(player)).Buckled);
+                Assert.True(((BuckleComponentState) buckle.GetComponentState()).Buckled);
                 Assert.False(actionBlocker.CanMove(human.Uid));
                 Assert.False(actionBlocker.CanChangeDirection(human.Uid));
                 Assert.False(standingState.Down(human.Uid));

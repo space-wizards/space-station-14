@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Net;
 using System.Text.Json;
-using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Microsoft.EntityFrameworkCore;
 
 namespace Content.Server.Database

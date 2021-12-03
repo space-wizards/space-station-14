@@ -24,7 +24,6 @@
     size: 1
     compatibility: Biological
     symmetry: Left
-  - type: Grasp
 
 - type: entity
   id: LegsAnimal
@@ -83,8 +82,7 @@
   - type: Mechanism
     size: 1
     compatibility: Biological
-    behaviors:
-    - !type:LungBehavior {}
+  - type: Lung
 
 - type: entity
   id: OrganAnimalStomach

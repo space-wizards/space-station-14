@@ -149,7 +149,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             return types;
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             (int, int)? count = null;
             var magazine = MagazineContainer.ContainedEntity;

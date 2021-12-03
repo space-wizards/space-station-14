@@ -79,6 +79,10 @@ namespace Content.Client.Instruments.UI
             var filters = new FileDialogFilters(new FileDialogFilters.Group("mid", "midi"));
             await using var file = await _fileDialogManager.OpenFile(filters);
 
+            // did the instrument menu get closed while waiting for the user to select a file?
+            if (Disposed)
+                return;
+
             // The following checks are only in place to prevent players from playing MIDI songs locally.
             // There are equivalents for these checks on the server.
 

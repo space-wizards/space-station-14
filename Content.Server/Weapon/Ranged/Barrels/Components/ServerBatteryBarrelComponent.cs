@@ -66,7 +66,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         private AppearanceComponent? _appearanceComponent;
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             (int, int)? count = (ShotsLeft, Capacity);
 

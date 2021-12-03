@@ -166,7 +166,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
 
             instrument.Timer += frameTime;
             if (instrument.Timer < 1)
-                return;
+                continue;
 
             instrument.Timer = 0f;
             instrument.MidiEventCount = 0;

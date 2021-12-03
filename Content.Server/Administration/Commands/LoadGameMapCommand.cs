@@ -13,7 +13,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Administration.Commands
 {
-    [AdminCommand(AdminFlags.Fun)]
+    [AdminCommand(AdminFlags.Round | AdminFlags.Spawn)]
     public sealed class LoadGameMapCommand : IConsoleCommand
     {
         public string Command => "loadgamemap";

@@ -2,6 +2,7 @@
 using Content.Server.Administration.Logs;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Timing;

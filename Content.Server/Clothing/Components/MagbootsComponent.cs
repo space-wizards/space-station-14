@@ -114,7 +114,7 @@ namespace Content.Server.Clothing.Components
             Toggle(eventArgs.User);
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new MagbootsComponentState(On);
         }

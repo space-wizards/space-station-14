@@ -517,7 +517,7 @@ namespace Content.Server.Inventory.Components
             }
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             var list = new List<KeyValuePair<Slots, EntityUid>>();
             foreach (var (slot, container) in _slotContainers)

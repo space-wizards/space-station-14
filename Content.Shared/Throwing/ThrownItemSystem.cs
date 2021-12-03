@@ -1,17 +1,14 @@
-using System.Collections.Generic;
-using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
+using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Physics;
 using Content.Shared.Physics.Pull;
-using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 
@@ -20,11 +17,11 @@ namespace Content.Shared.Throwing
     /// <summary>
     ///     Handles throwing landing and collisions.
     /// </summary>
-    public class ThrownItemSystem : EntitySystem
+    public sealed class ThrownItemSystem : EntitySystem
     {
-        [Dependency] private readonly SharedBroadphaseSystem _broadphaseSystem = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly SharedAdminLogSystem _adminLogSystem = default!;
+        [Dependency] private readonly FixtureSystem _fixtures = default!;
 
         private const string ThrowingFixture = "throw-fixture";
 
@@ -59,14 +56,14 @@ namespace Content.Shared.Throwing
             if (!component.Owner.TryGetComponent(out PhysicsComponent? physicsComponent) ||
                 physicsComponent.Fixtures.Count != 1) return;
 
-            if (physicsComponent.GetFixture(ThrowingFixture) != null)
+            if (_fixtures.GetFixtureOrNull(physicsComponent, ThrowingFixture) != null)
             {
                 Logger.Error($"Found existing throwing fixture on {component.Owner}");
                 return;
             }
 
             var shape = physicsComponent.Fixtures[0].Shape;
-            _broadphaseSystem.CreateFixture(physicsComponent, new Fixture(physicsComponent, shape) {CollisionLayer = (int) CollisionGroup.ThrownItem, Hard = false, ID = ThrowingFixture});
+            _fixtures.CreateFixture(physicsComponent, new Fixture(physicsComponent, shape) {CollisionLayer = (int) CollisionGroup.ThrownItem, Hard = false, ID = ThrowingFixture});
         }
 
         private void HandleCollision(EntityUid uid, ThrownItemComponent component, StartCollideEvent args)
@@ -102,11 +99,11 @@ namespace Content.Shared.Throwing
         {
             if (EntityManager.TryGetComponent(uid, out PhysicsComponent? physicsComponent))
             {
-                var fixture = physicsComponent.GetFixture(ThrowingFixture);
+                var fixture = _fixtures.GetFixtureOrNull(physicsComponent, ThrowingFixture);
 
                 if (fixture != null)
                 {
-                    _broadphaseSystem.DestroyFixture(physicsComponent, fixture);
+                    _fixtures.DestroyFixture(physicsComponent, fixture);
                 }
             }
 
@@ -128,13 +125,12 @@ namespace Content.Shared.Throwing
                 return;
             }
 
-            var landMsg = new LandEvent {User = thrownItem.Thrower?.Uid};
-            RaiseLocalEvent(landing.Uid, landMsg, false);
-
             // Assume it's uninteresting if it has no thrower. For now anyway.
             if (thrownItem.Thrower is not null)
                 _adminLogSystem.Add(LogType.Landed, LogImpact.Low, $"{landing} thrown by {thrownItem.Thrower:thrower} landed.");
 
+            var landMsg = new LandEvent {User = thrownItem.Thrower?.Uid};
+            RaiseLocalEvent(landing.Uid, landMsg, false);
         }
 
         /// <summary>
@@ -142,11 +138,12 @@ namespace Content.Shared.Throwing
         /// </summary>
         public void ThrowCollideInteraction(IEntity? user, IPhysBody thrown, IPhysBody target)
         {
+            if (user is not null)
+                _adminLogSystem.Add(LogType.ThrowHit, LogImpact.Low,
+                    $"{thrown.Owner:thrown} thrown by {user:thrower} hit {target.Owner:target}.");
             // TODO: Just pass in the bodies directly
             RaiseLocalEvent(target.Owner.Uid, new ThrowHitByEvent(user, thrown.Owner, target.Owner));
             RaiseLocalEvent(thrown.Owner.Uid, new ThrowDoHitEvent(user, thrown.Owner, target.Owner));
-            if (user is not null)
-                _adminLogSystem.Add(LogType.ThrowHit, LogImpact.Low, $"{thrown.Owner:thrown} thrown by {user:thrower} hit {target.Owner:target}.");
         }
     }
 }

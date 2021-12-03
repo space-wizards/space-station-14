@@ -75,7 +75,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             _ammoSlots = new IEntity[_serializedCapacity];
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             var slotsSpent = new bool?[Capacity];
             for (var i = 0; i < Capacity; i++)

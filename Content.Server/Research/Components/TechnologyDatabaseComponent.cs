@@ -8,7 +8,7 @@ namespace Content.Server.Research.Components
     [RegisterComponent]
     public class  TechnologyDatabaseComponent : SharedTechnologyDatabaseComponent
     {
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new TechnologyDatabaseState(_technologies);
         }

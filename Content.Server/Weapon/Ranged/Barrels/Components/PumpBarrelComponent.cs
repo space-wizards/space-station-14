@@ -78,7 +78,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             UpdateAppearance();
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             (int, int)? count = (ShotsLeft, Capacity);
             var chamberedExists = _chamberContainer.ContainedEntity != null;

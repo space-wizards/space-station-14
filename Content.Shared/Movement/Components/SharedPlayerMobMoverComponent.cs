@@ -91,7 +91,7 @@ namespace Content.Shared.Movement.Components
             }
         }
 
-        public override ComponentState GetComponentState(ICommonSession session)
+        public override ComponentState GetComponentState()
         {
             return new PlayerMobMoverComponentState(_grabRange, _pushStrength, _weightlessStrength);
         }
