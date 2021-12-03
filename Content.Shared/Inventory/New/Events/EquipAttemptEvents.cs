@@ -17,14 +17,14 @@ public abstract class EquipAttemptBase : CancellableEntityEventArgs
     /// <summary>
     /// The slotFlags of the slot to equip the entity into.
     /// </summary>
-    public readonly EquipmentSlotDefines.SlotFlags SlotFlags;
+    public readonly SlotFlags SlotFlags;
 
     /// <summary>
     /// If cancelling and wanting to provide a custom reason, use this field. Not that this expects a loc-id.
     /// </summary>
     public string? Reason;
 
-    public EquipAttemptBase(EntityUid equipee, EntityUid equipment, EquipmentSlotDefines.SlotFlags slotFlags)
+    public EquipAttemptBase(EntityUid equipee, EntityUid equipment, SlotFlags slotFlags)
     {
         Equipee = equipee;
         Equipment = equipment;
@@ -34,14 +34,14 @@ public abstract class EquipAttemptBase : CancellableEntityEventArgs
 
 public class BeingEquippedAttemptEvent : EquipAttemptBase
 {
-    public BeingEquippedAttemptEvent(EntityUid equipee, EntityUid equipment, EquipmentSlotDefines.SlotFlags slotFlags) : base(equipee, equipment, slotFlags)
+    public BeingEquippedAttemptEvent(EntityUid equipee, EntityUid equipment, SlotFlags slotFlags) : base(equipee, equipment, slotFlags)
     {
     }
 }
 
 public class IsEquippingAttemptEvent : EquipAttemptBase
 {
-    public IsEquippingAttemptEvent(EntityUid equipee, EntityUid equipment, EquipmentSlotDefines.SlotFlags slotFlags) : base(equipee, equipment, slotFlags)
+    public IsEquippingAttemptEvent(EntityUid equipee, EntityUid equipment, SlotFlags slotFlags) : base(equipee, equipment, slotFlags)
     {
     }
 }

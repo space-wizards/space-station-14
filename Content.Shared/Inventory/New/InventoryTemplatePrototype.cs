@@ -21,10 +21,13 @@ public class SlotDefinition
     [DataField("name", required: true)]
     public string Name { get; } = string.Empty;
 
+    [DataField("displayName")]
+    public string? DisplayName { get; }
+
     [DataField("slotTexture")]
     public SpriteSpecifier? Texture;
 
     //todo paul is this how you serialize flags?
     [DataField("SlotFlags")]
-    public EquipmentSlotDefines.SlotFlags SlotFlags;
+    public SlotFlags SlotFlags;
 }
