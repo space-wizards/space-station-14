@@ -40,7 +40,7 @@ public class GamePrototypeLoadManager : IGamePrototypeLoadManager
     private void ClientLoadsPrototype(GamePrototypeLoadMessage message)
     {
         var player = _playerManager.GetSessionByChannel(message.MsgChannel);
-        if (_adminManager.IsAdmin(player))
+        if (_adminManager.IsAdmin(player) && _adminManager.HasAdminFlag(player, AdminFlags.Query))
         {
             LoadPrototypeData(message.PrototypeData);
             Logger.InfoS("adminbus", $"Loaded adminbus prototype data from {player.Name}.");
