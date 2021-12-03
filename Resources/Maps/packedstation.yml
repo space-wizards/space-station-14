@@ -16761,7 +16761,7 @@ entities:
   - enabled: False
     type: AmbientSound
 - uid: 598
-  type: AirlockMaintHOPLocked
+  type: AirlockMaintCommandLocked
   components:
   - pos: 14.5,-6.5
     parent: 0
@@ -16771,8 +16771,10 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 599
-  type: AirlockHeadOfPersonnelLocked
+  type: AirlockCommandLocked
   components:
+  - name: Head of Personnel's Office
+    type: MetaData
   - pos: 13.5,-3.5
     parent: 0
     type: Transform
@@ -16780,8 +16782,6 @@ entities:
       board: !type:Container
         ents: []
     type: ContainerContainer
-  - name: Head of Personnel's Office
-    type: MetaData
 - uid: 600
   type: ComfyChair
   components:
@@ -16984,7 +16984,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 623
-  type: AirlockCommand
+  type: AirlockScienceLocked
   components:
   - pos: 24.5,-11.5
     parent: 0
@@ -17556,7 +17556,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 710
-  type: AirlockChiefEngineerLocked
+  type: AirlockCommandLocked
   components:
   - pos: 24.5,-17.5
     parent: 0
@@ -19394,7 +19394,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 970
-  type: AirlockChiefEngineerLocked
+  type: AirlockCommandLocked
   components:
   - pos: 14.5,-34.5
     parent: 0
@@ -29199,9 +29199,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 2397
-  type: AirlockArmoryLocked
+  type: AirlockCommandGlassLocked
   components:
-  - pos: 39.5,25.5
+  - pos: 42.5,23.5
     parent: 0
     type: Transform
   - containers:
@@ -30984,9 +30984,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 2638
-  type: AirlockCaptainLocked
+  type: AirlockCommandLocked
   components:
-  - pos: 32.5,44.5
+  - pos: 35.5,40.5
     parent: 0
     type: Transform
   - containers:
@@ -30994,9 +30994,9 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 2639
-  type: AirlockCaptainLocked
+  type: AirlockCommandLocked
   components:
-  - pos: 35.5,40.5
+  - pos: 32.5,44.5
     parent: 0
     type: Transform
   - containers:
@@ -32244,7 +32244,7 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 2810
-  type: AirlockChiefEngineerLocked
+  type: AirlockCommandLocked
   components:
   - pos: 16.5,36.5
     parent: 0
@@ -49306,7 +49306,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 5062
-  type: AirlockChiefMedicalOfficerLocked
+  type: AirlockCommandGlassLocked
   components:
   - pos: 56.5,-8.5
     parent: 0
@@ -51111,7 +51111,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 5255
-  type: AirlockResearchDirectorLocked
+  type: AirlockCommandGlassLocked
   components:
   - pos: 62.5,12.5
     parent: 0
@@ -51290,7 +51290,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 5275
-  type: AirlockResearchDirectorLocked
+  type: AirlockCommandLocked
   components:
   - pos: 52.5,24.5
     parent: 0
@@ -51300,9 +51300,9 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 5276
-  type: AirlockResearchDirectorLocked
+  type: AirlockCommandLocked
   components:
-  - pos: 56.5,26.5
+  - pos: 50.5,24.5
     parent: 0
     type: Transform
   - containers:
@@ -64816,28 +64816,10 @@ entities:
     parent: 0
     type: Transform
 - uid: 6804
-  type: AirlockResearchDirectorLocked
-  components:
-  - pos: 50.5,24.5
-    parent: 0
-    type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 6805
-  type: AirlockHeadOfSecurityLocked
-  components:
-  - pos: 41.5,23.5
-    parent: 0
-    type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 6806
   type: AirlockArmoryLocked
   components:
+  - name: Armory
+    type: MetaData
   - pos: 40.5,25.5
     parent: 0
     type: Transform
@@ -64845,6 +64827,36 @@ entities:
       board: !type:Container
         ents: []
     type: ContainerContainer
+- uid: 6805
+  type: AirlockArmoryLocked
+  components:
+  - name: Armory
+    type: MetaData
+  - pos: 39.5,25.5
+    parent: 0
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 6806
+  type: LockerWardenFilled
+  components:
+  - pos: 38.5,24.5
+    parent: 0
+    type: Transform
+  - isPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 6807
+  type: SpawnPointWarden
+  components:
+  - pos: 29.5,25.5
+    parent: 0
+    type: Transform
 - uid: 6808
   type: WallReinforced
   components:
@@ -108041,6 +108053,16 @@ entities:
       board: !type:Container
         ents: []
     type: ContainerContainer
+- uid: 11055
+  type: AirlockCommand
+  components:
+  - pos: 56.5,28.5
+    parent: 0
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 11056
   type: AirlockMaintLocked
   components:
@@ -115005,46 +115027,4 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 12047
-  type: AirlockArmoryLocked
-  components:
-  - name: Armory
-    type: MetaData
-  - pos: 40.5,25.5
-    parent: 0
-    type: Transform
-  - containers:
-      board:
-        ents: []
-    type: ContainerContainer
-- uid: 12048
-  type: AirlockArmoryLocked
-  components:
-  - name: Armory
-    type: MetaData
-  - pos: 39.5,25.5
-    parent: 0
-    type: Transform
-  - containers:
-      board:
-        ents: []
-    type: ContainerContainer
-- uid: 12049
-  type: LockerWardenFilled
-  components:
-  - pos: 38.5,24.5
-    parent: 0
-    type: Transform
-  - isPlaceable: False
-    type: PlaceableSurface
-  - containers:
-      EntityStorageComponent:
-        ents: []
-    type: ContainerContainer
-- uid: 12050
-  type: SpawnPointWarden
-  components:
-  - pos: 29.5,25.5
-    parent: 0
-    type: Transform
 ...

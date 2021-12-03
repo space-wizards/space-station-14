@@ -5937,17 +5937,18 @@ entities:
     parent: 853
     type: Transform
 - uid: 561
-  type: AirlockHeadOfSecurityLocked
+  type: AirlockCommandGlassLocked
   components:
-  - pos: -8.5,18.5
+  - name: Head of Security's Office
+    type: MetaData
+  - rot: 4.371139006309477E-08 rad
+    pos: -8.5,18.5
     parent: 853
     type: Transform
   - containers:
       board: !type:Container
         ents: []
     type: ContainerContainer
-  - name: Head of Security's Office
-    type: MetaData
 - uid: 562
   type: AirlockExternalLocked
   components:
@@ -6081,29 +6082,31 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 574
-  type: AirlockHeadOfSecurityLocked
+  type: AirlockVaultLocked
   components:
-  - pos: -10.5,20.5
+  - name: Armory
+    type: MetaData
+  - rot: 4.371139006309477E-08 rad
+    pos: -10.5,20.5
     parent: 853
     type: Transform
   - containers:
       board: !type:Container
         ents: []
     type: ContainerContainer
-  - name: Armory
-    type: MetaData
 - uid: 575
   type: AirlockArmoryLocked
   components:
-  - pos: -12.5,17.5
+  - name: Armory
+    type: MetaData
+  - rot: 4.371139006309477E-08 rad
+    pos: -12.5,17.5
     parent: 853
     type: Transform
   - containers:
       board: !type:Container
         ents: []
     type: ContainerContainer
-  - name: Armory
-    type: MetaData
 - uid: 576
   type: Firelock
   components:
@@ -6269,41 +6272,44 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 593
-  type: AirlockResearchDirectorLocked
+  type: AirlockCommandGlassLocked
   components:
-  - pos: -3.5,-21.5
-    parent: 853
-    type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
   - name: Research Director's Office
     type: MetaData
-- uid: 594
-  type: AirlockResearchDirectorLocked
-  components:
-  - pos: -8.5,-21.5
+  - rot: 4.371139006309477E-08 rad
+    pos: -3.5,-21.5
     parent: 853
     type: Transform
   - containers:
       board: !type:Container
         ents: []
     type: ContainerContainer
+- uid: 594
+  type: AirlockCommandGlassLocked
+  components:
   - name: Server Room
     type: MetaData
-- uid: 595
-  type: AirlockChiefMedicalOfficerLocked
-  components:
-  - pos: 20.5,-13.5
+  - rot: 4.371139006309477E-08 rad
+    pos: -8.5,-21.5
     parent: 853
     type: Transform
   - containers:
       board: !type:Container
         ents: []
     type: ContainerContainer
+- uid: 595
+  type: AirlockCommandGlassLocked
+  components:
   - name: Chief Medical Officer's Office
     type: MetaData
+  - rot: 4.371139006309477E-08 rad
+    pos: 20.5,-13.5
+    parent: 853
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 596
   type: SpawnPointChemist
   components:
@@ -6563,17 +6569,18 @@ entities:
     parent: 853
     type: Transform
 - uid: 620
-  type: AirlockChiefEngineerLocked
+  type: AirlockCommandGlassLocked
   components:
-  - pos: 38.5,1.5
+  - name: Chief Engineer's Office
+    type: MetaData
+  - rot: 4.371139006309477E-08 rad
+    pos: 38.5,1.5
     parent: 853
     type: Transform
   - containers:
       board: !type:Container
         ents: []
     type: ContainerContainer
-  - name: Chief Engineer's Office
-    type: MetaData
 - uid: 621
   type: AirlockMaintCommonLocked
   components:
@@ -6785,17 +6792,18 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 639
-  type: AirlockCaptainLocked
+  type: AirlockCommandLocked
   components:
-  - pos: 10.5,26.5
+  - name: Captain's Office
+    type: MetaData
+  - rot: 4.371139006309477E-08 rad
+    pos: 5.5,25.5
     parent: 853
     type: Transform
   - containers:
       board: !type:Container
         ents: []
     type: ContainerContainer
-  - name: Captain's Office
-    type: MetaData
 - uid: 640
   type: AirlockCommandGlassLocked
   components:
@@ -7373,9 +7381,9 @@ entities:
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
-  - cellInsertSound:
+  - cellInsertSound: !type:SoundPathSpecifier
       path: /Audio/Items/pistol_magout.ogg
-    cellRemoveSound:
+    cellRemoveSound: !type:SoundPathSpecifier
       path: /Audio/Items/pistol_magin.ogg
     type: PowerCellSlot
 - uid: 708
@@ -23712,17 +23720,18 @@ entities:
     parent: 853
     type: Transform
 - uid: 1869
-  type: AirlockHeadOfPersonnelLocked
+  type: AirlockCommandLocked
   components:
-  - pos: 6.5,17.5
+  - name: Head of Personnel's Office
+    type: MetaData
+  - rot: 4.371139006309477E-08 rad
+    pos: 6.5,17.5
     parent: 853
     type: Transform
   - containers:
       board: !type:Container
         ents: []
     type: ContainerContainer
-  - name: Head of Personnel's Office
-    type: MetaData
 - uid: 1870
   type: WallReinforced
   components:
@@ -35300,15 +35309,11 @@ entities:
   - color: '#7F007FFF'
     type: AtmosPipeColor
 - uid: 3170
-  type: AirlockCaptainLocked
+  type: SpawnPointWarden
   components:
-  - pos: 5.5,25.5
+  - pos: -5.5,14.5
     parent: 853
     type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 3171
   type: CableApcExtension
   components:
@@ -35602,6 +35607,18 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
+- uid: 3199
+  type: LockerWardenFilled
+  components:
+  - pos: -11.5,13.5
+    parent: 853
+    type: Transform
+  - isPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 3200
   type: CableApcExtension
   components:
@@ -52613,6 +52630,16 @@ entities:
   - pos: 13.5,26.5
     parent: 853
     type: Transform
+- uid: 5089
+  type: AirlockCommandLocked
+  components:
+  - pos: 10.5,26.5
+    parent: 853
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 5090
   type: ToiletEmpty
   components:
@@ -72526,22 +72553,4 @@ entities:
   - pos: 14.5,-0.5
     parent: 853
     type: Transform
-- uid: 7116
-  type: SpawnPointWarden
-  components:
-  - pos: -5.5,14.5
-    parent: 853
-    type: Transform
-- uid: 7117
-  type: LockerWardenFilled
-  components:
-  - pos: -11.5,13.5
-    parent: 853
-    type: Transform
-  - isPlaceable: False
-    type: PlaceableSurface
-  - containers:
-      EntityStorageComponent:
-        ents: []
-    type: ContainerContainer
 ...
