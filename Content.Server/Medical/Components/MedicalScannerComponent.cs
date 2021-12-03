@@ -134,11 +134,12 @@ namespace Content.Server.Medical.Components
             if (Powered)
             {
                 var body = _bodyContainer.ContainedEntity;
-                var state = body?.GetComponentOrNull<MobStateComponent>();
+                if (body == null)
+                    return MedicalScannerStatus.Open;
 
-                return state == null
-                    ? MedicalScannerStatus.Open
-                    : GetStatusFromDamageState(state);
+                var state = body.GetComponentOrNull<MobStateComponent>();
+
+                return state == null ? MedicalScannerStatus.Open : GetStatusFromDamageState(state);
             }
 
             return MedicalScannerStatus.Off;

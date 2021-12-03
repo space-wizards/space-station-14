@@ -189,7 +189,10 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 Dirty();
             }
 
-            return chamberEntity?.GetComponentOrNull<AmmoComponent>()?.TakeBullet(spawnAt);
+            if (chamberEntity == null)
+                return null;
+
+            return chamberEntity.GetComponentOrNull<AmmoComponent>()?.TakeBullet(spawnAt);
         }
 
         protected override bool WeaponCanFire()

@@ -62,7 +62,7 @@ namespace Content.Shared.Nutrition.EntitySystems
 
         private void OnCreamPiedHitBy(EntityUid uid, CreamPiedComponent creamPied, ThrowHitByEvent args)
         {
-            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(args.Thrown.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(args.Thrown.Uid).EntityLifeStage) >= EntityLifeStage.Deleted || !args.Thrown.TryGetComponent(out CreamPieComponent? creamPie)) return;
+            if (!IoCManager.Resolve<IEntityManager>().EntityExists(args.Thrown.Uid) || !args.Thrown.TryGetComponent(out CreamPieComponent? creamPie)) return;
 
             SetCreamPied(uid, creamPied, true);
 

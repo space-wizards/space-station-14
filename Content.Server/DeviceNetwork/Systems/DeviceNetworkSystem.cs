@@ -51,7 +51,7 @@ namespace Content.Server.DeviceNetwork.Systems
         /// <param name="uid">The Entity containing a DeviceNetworkComponent</param>
         public void Connect(EntityUid uid)
         {
-            if (EntityManager.GetEntity(uid).TryGetComponent<DeviceNetworkComponent>(out var component))
+            if (EntityManager.TryGetComponent<DeviceNetworkComponent>(uid, out var component))
             {
                 AddConnection(component);
             }
@@ -90,7 +90,7 @@ namespace Content.Server.DeviceNetwork.Systems
         /// <param name="uid">The Entity containing a DeviceNetworkComponent</param>
         public void Disconnect(EntityUid uid)
         {
-            if (EntityManager.GetEntity(uid).TryGetComponent<DeviceNetworkComponent>(out var component))
+            if (EntityManager.TryGetComponent<DeviceNetworkComponent>(uid, out var component))
             {
                 RemoveConnection(component);
             }

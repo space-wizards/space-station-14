@@ -430,7 +430,8 @@ namespace Content.Server.WireHacking
 
                     var activeHandEntity = handsComponent.GetActiveHand?.Owner;
                     ToolComponent? tool = null;
-                    activeHandEntity?.TryGetComponent(out tool);
+                    if(activeHandEntity != null)
+                        activeHandEntity.TryGetComponent(out tool);
                     var toolSystem = EntitySystem.Get<ToolSystem>();
 
                     switch (msg.Action)

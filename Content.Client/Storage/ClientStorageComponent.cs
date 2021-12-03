@@ -252,7 +252,7 @@ namespace Content.Client.Storage
                 {
                     var controlledEntity = IoCManager.Resolve<IPlayerManager>().LocalPlayer?.ControlledEntity;
 
-                    if (controlledEntity?.TryGetComponent(out HandsComponent? hands) ?? false)
+                    if (controlledEntity != null && controlledEntity.TryGetComponent(out HandsComponent? hands))
                     {
 #pragma warning disable 618
                         StorageEntity.SendNetworkMessage(new InsertEntityMessage());

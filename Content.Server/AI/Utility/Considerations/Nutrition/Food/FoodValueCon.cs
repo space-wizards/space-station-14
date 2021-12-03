@@ -13,8 +13,9 @@ namespace Content.Server.AI.Utility.Considerations.Nutrition.Food
         {
             var target = context.GetState<TargetEntityState>().GetValue();
 
-            if (target == null || (!IoCManager.Resolve<IEntityManager>().EntityExists(target.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(target.Uid).EntityLifeStage) >= EntityLifeStage.Deleted || !target.TryGetComponent<FoodComponent>(out var foodComp) ||
-                !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(target.Uid, foodComp.SolutionName, out var food))
+            if (target == null || !IoCManager.Resolve<IEntityManager>().EntityExists(target.Uid)
+                               || !target.TryGetComponent<FoodComponent>(out var foodComp)
+                               || !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(target.Uid, foodComp.SolutionName, out var food))
             {
                 return 0.0f;
             }
