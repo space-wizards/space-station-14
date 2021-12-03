@@ -1,9 +1,4 @@
 Entries:
-- author: Swept
-  changes:
-  - {message: You can splat bags of flour and tomatoes., type: Add}
-  id: 198
-  time: '2021-05-21T00:19:18.0000000+00:00'
 - author: Hardly
   changes:
   - {message: Reduced Syndicate minibomb's radius, type: Tweak}
@@ -2865,3 +2860,8 @@ Entries:
   - {message: Fix ghost role takeovers of monke, type: Fix}
   id: 699
   time: '2021-12-03T09:31:14.0000000+00:00'
+- author: shaeone
+  changes:
+  - {message: Modified gyroscope sprite., type: Tweak}
+  id: 700
+  time: '2021-12-03T09:39:18.0000000+00:00'
