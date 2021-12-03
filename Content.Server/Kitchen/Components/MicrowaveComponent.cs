@@ -286,7 +286,7 @@ namespace Content.Server.Kitchen.Components
                 return true;
             }
 
-            if (!itemEntity.TryGetComponent(typeof(ItemComponent), out var food))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(itemEntity.Uid, typeof(ItemComponent), out var food))
             {
                 Owner.PopupMessage(eventArgs.User, "microwave-component-interact-using-transfer-fail");
                 return false;
