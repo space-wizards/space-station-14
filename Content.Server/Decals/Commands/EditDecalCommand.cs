@@ -154,6 +154,9 @@ Possible modes are:\n
                     shell.WriteError("Failed changing decal cleanable flag.");
                 }
                 break;
+            default:
+                shell.WriteError("Invalid mode.");
+                return;
         }
     }
 }

@@ -111,18 +111,17 @@ namespace Content.Server.Decals
 
         public bool RemoveDecal(GridId gridId, uint uid) => RemoveDecalInternal(gridId, uid);
 
-        public HashSet<uint> GetDecalsOnTile(GridId gridId, Vector2i tileIndices, Func<Decal, bool>? validDelegate = null)
+        public HashSet<uint> GetDecalsInRange(GridId gridId, Vector2 position, float distance = 0.75f, Func<Decal, bool>? validDelegate = null)
         {
             var uids = new HashSet<uint>();
             var chunkCollection = ChunkCollection(gridId);
-            var chunkIndices = GetChunkIndices(tileIndices);
+            var chunkIndices = GetChunkIndices(position);
             if (!chunkCollection.TryGetValue(chunkIndices, out var chunk))
                 return uids;
 
             foreach (var (uid, decal) in chunk)
             {
-                if (tileIndices.X != (int) Math.Floor(decal.Coordinates.X) ||
-                    tileIndices.Y != (int) Math.Floor(decal.Coordinates.Y))
+                if ((position - decal.Coordinates-new Vector2(0.5f, 0.5f)).Length > distance)
                     continue;
 
                 if (validDelegate == null || validDelegate(decal))

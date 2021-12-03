@@ -7,6 +7,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Chemistry.TileReactions
@@ -37,7 +38,7 @@ namespace Content.Server.Chemistry.TileReactions
             }
 
             var decalSystem = EntitySystem.Get<DecalSystem>();
-            foreach (var uid in decalSystem.GetDecalsOnTile(tile.GridIndex, tile.GridIndices, x => x.Cleanable))
+            foreach (var uid in decalSystem.GetDecalsInRange(tile.GridIndex, tile.GridIndices+new Vector2(0.5f, 0.5f), validDelegate: x => x.Cleanable))
             {
                 decalSystem.RemoveDecal(tile.GridIndex, uid);
             }
