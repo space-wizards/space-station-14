@@ -132,28 +132,36 @@ namespace Content.Server.Salvage
             SalvageMapPrototype? map = null;
 
             var forcedSalvage = _configurationManager.GetCVar<string>(CCVars.SalvageForced);
-            if (forcedSalvage == "")
+            List<SalvageMapPrototype> allSalvageMaps;
+            if (string.IsNullOrWhiteSpace(forcedSalvage))
             {
-                var allSalvageMaps = GetAllSalvageMaps().ToList();
-
-                for (var i = 0; i < allSalvageMaps.Count; i++)
-                {
-                    map = _random.PickAndTake(allSalvageMaps);
-
-                    if (_physicsSystem.TryCollideRect(Box2.CenteredAround(spl.Position, new Vector2(map.Size * 2.0f, map.Size * 2.0f)), spl.MapId, false))
-                    {
-                        // collided: set map to null so we don't spawn it
-                        map = null;
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
+                allSalvageMaps = GetAllSalvageMaps().ToList();
             }
             else
             {
-                _prototypeManager.TryIndex<SalvageMapPrototype>(forcedSalvage, out map);
+                allSalvageMaps = new();
+                if (_prototypeManager.TryIndex<SalvageMapPrototype>(forcedSalvage, out map))
+                {
+                    allSalvageMaps.Add(map);
+                }
+                else
+                {
+                    Logger.ErrorS("c.s.salvage", $"Unable to get forced salvage map prototype {forcedSalvage}");
+                }
+            }
+            for (var i = 0; i < allSalvageMaps.Count; i++)
+            {
+                map = _random.PickAndTake(allSalvageMaps);
+
+                if (_physicsSystem.TryCollideRect(Box2.CenteredAround(spl.Position, new Vector2(map.Size * 2.0f, map.Size * 2.0f)), spl.MapId, false))
+                {
+                    // collided: set map to null so we don't spawn it
+                    map = null;
+                }
+                else
+                {
+                    break;
+                }
             }
 
             if (map == null)
