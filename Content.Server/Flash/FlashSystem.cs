@@ -77,7 +77,7 @@ namespace Content.Server.Flash
                 return;
             }
 
-            foreach (var entity in _entityLookup.GetEntitiesInRange(comp.Owner.Transform.Coordinates, comp.Range))
+            foreach (var entity in _entityLookup.GetEntitiesInRange(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(comp.Owner.Uid).Coordinates, comp.Range))
             {
                 Flash(entity.Uid, args.User.Uid, uid, comp.AoeFlashDuration, comp.SlowTo);
             }

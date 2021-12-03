@@ -79,7 +79,7 @@ namespace Content.Server.Computer
                     return;
             }
 
-            var board = IoCManager.Resolve<IEntityManager>().SpawnEntity(_boardPrototype, Owner.Transform.Coordinates);
+            var board = IoCManager.Resolve<IEntityManager>().SpawnEntity(_boardPrototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
 
             if(!container.Insert(board))
                 Logger.Warning($"Couldn't insert board {board} to computer {Owner}!");

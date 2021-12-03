@@ -1,4 +1,5 @@
 ﻿using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Shared.Transform
 {
@@ -19,7 +20,7 @@ namespace Content.Shared.Transform
 
         public static void AttachToGrandparent(this IEntity entity)
         {
-            AttachToGrandparent(entity.Transform);
+            AttachToGrandparent(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid));
         }
     }
 }

@@ -118,8 +118,8 @@ namespace Content.Server.Buckle.Components
         /// <param name="strap">The strap to reattach to.</param>
         public void ReAttach(StrapComponent strap)
         {
-            var ownTransform = Owner.Transform;
-            var strapTransform = strap.Owner.Transform;
+            var ownTransform = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid);
+            var strapTransform = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(strap.Owner.Uid);
 
             ownTransform.AttachParent(strapTransform);
             ownTransform.LocalRotation = Angle.Zero;
@@ -194,10 +194,10 @@ namespace Content.Server.Buckle.Components
                 return false;
             }
 
-            var parent = to.Transform.Parent;
+            var parent = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(to.Uid).Parent;
             while (parent != null)
             {
-                if (parent == user.Transform)
+                if (parent == IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user.Uid))
                 {
                     var message = Loc.GetString(Owner == user
                         ? "buckle-component-cannot-buckle-message"
@@ -317,10 +317,10 @@ namespace Content.Server.Buckle.Components
 
             BuckledTo = null;
 
-            if (Owner.Transform.Parent == oldBuckledTo.Owner.Transform)
+            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Parent == IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(oldBuckledTo.Owner.Uid))
             {
-                Owner.Transform.AttachParentToContainerOrGrid();
-                Owner.Transform.WorldRotation = oldBuckledTo.Owner.Transform.WorldRotation;
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).AttachParentToContainerOrGrid();
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).WorldRotation = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(oldBuckledTo.Owner.Uid).WorldRotation;
             }
 
             Appearance?.SetData(BuckleVisuals.Buckled, false);
@@ -395,7 +395,7 @@ namespace Content.Server.Buckle.Components
             int? drawDepth = null;
 
             if (BuckledTo != null &&
-                BuckledTo.Owner.Transform.LocalRotation.GetCardinalDir() == Direction.North &&
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(BuckledTo.Owner.Uid).LocalRotation.GetCardinalDir() == Direction.North &&
                 BuckledTo.SpriteComponent != null)
             {
                 drawDepth = BuckledTo.SpriteComponent.DrawDepth - 1;

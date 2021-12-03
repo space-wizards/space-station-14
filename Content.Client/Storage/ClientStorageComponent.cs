@@ -120,7 +120,7 @@ namespace Content.Client.Storage
 
                 if (IoCManager.Resolve<IEntityManager>().TryGetEntity(entityId, out var entity))
                 {
-                    ReusableAnimations.AnimateEntityPickup(entity, initialPosition, Owner.Transform.LocalPosition);
+                    ReusableAnimations.AnimateEntityPickup(entity, initialPosition, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).LocalPosition);
                 }
             }
         }

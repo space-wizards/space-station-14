@@ -162,13 +162,13 @@ namespace Content.Server.Cargo.Components
                     // TODO replace with shuttle code
                     // TEMPORARY loop for spawning stuff on telepad (looks for a telepad adjacent to the console)
                     IEntity? cargoTelepad = null;
-                    var indices = Owner.Transform.Coordinates.ToVector2i(IoCManager.Resolve<IEntityManager>(), _mapManager);
+                    var indices = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates.ToVector2i(IoCManager.Resolve<IEntityManager>(), _mapManager);
                     var offsets = new Vector2i[] { new Vector2i(0, 1), new Vector2i(1, 1), new Vector2i(1, 0), new Vector2i(1, -1),
                                                    new Vector2i(0, -1), new Vector2i(-1, -1), new Vector2i(-1, 0), new Vector2i(-1, 1), };
                     var adjacentEntities = new List<IEnumerable<IEntity>>(); //Probably better than IEnumerable.concat
                     foreach (var offset in offsets)
                     {
-                        adjacentEntities.Add((indices+offset).GetEntitiesInTileFast(Owner.Transform.GridID));
+                        adjacentEntities.Add((indices+offset).GetEntitiesInTileFast(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).GridID));
                     }
 
                     foreach (var enumerator in adjacentEntities)

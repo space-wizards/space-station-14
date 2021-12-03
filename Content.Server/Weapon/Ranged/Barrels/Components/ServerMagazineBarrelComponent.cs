@@ -180,7 +180,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
             if (!existing && _magFillPrototype != null)
             {
-                var magEntity = IoCManager.Resolve<IEntityManager>().SpawnEntity(_magFillPrototype, Owner.Transform.Coordinates);
+                var magEntity = IoCManager.Resolve<IEntityManager>().SpawnEntity(_magFillPrototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
                 MagazineContainer.Insert(magEntity);
             }
             Dirty();

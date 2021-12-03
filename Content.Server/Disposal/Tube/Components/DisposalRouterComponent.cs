@@ -52,7 +52,7 @@ namespace Content.Server.Disposal.Tube.Components
                 return directions[1];
             }
 
-            return Owner.Transform.LocalRotation.GetDir();
+            return IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).LocalRotation.GetDir();
         }
 
         protected override void Initialize()

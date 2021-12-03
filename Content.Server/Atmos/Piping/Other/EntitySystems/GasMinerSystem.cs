@@ -37,10 +37,10 @@ namespace Content.Server.Atmos.Piping.Other.EntitySystems
 
         private bool CheckMinerOperation(GasMinerComponent miner, [NotNullWhen(true)] out GasMixture? environment)
         {
-            environment = _atmosphereSystem.GetTileMixture(miner.Owner.Transform.Coordinates, true);
+            environment = _atmosphereSystem.GetTileMixture(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(miner.Owner.Uid).Coordinates, true);
 
             // Space.
-            if (_atmosphereSystem.IsTileSpace(miner.Owner.Transform.Coordinates))
+            if (_atmosphereSystem.IsTileSpace(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(miner.Owner.Uid).Coordinates))
             {
                 miner.Broken = true;
                 return false;

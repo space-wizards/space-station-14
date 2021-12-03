@@ -280,7 +280,7 @@ namespace Content.Server.Inventory.Components
             }
 
             // TODO: The item should be dropped to the container our owner is in, if any.
-            entity.Transform.AttachParentToContainerOrGrid();
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).AttachParentToContainerOrGrid();
 
             _entitySystemManager.GetEntitySystem<InteractionSystem>().UnequippedInteraction(Owner, entity, slot);
 
@@ -310,7 +310,7 @@ namespace Content.Server.Inventory.Components
             var item = IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(entity.Uid);
             inventorySlot.ForceRemove(entity);
 
-            var itemTransform = entity.Transform;
+            var itemTransform = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid);
 
             itemTransform.AttachParentToContainerOrGrid();
 

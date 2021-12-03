@@ -64,7 +64,7 @@ namespace Content.Server.Construction.Completions
 
             var transform = entityManager.GetComponent<TransformComponent>(uid);
             var machine = entityManager.SpawnEntity(boardComponent.Prototype, transform.Coordinates);
-            machine.Transform.LocalRotation = transform.LocalRotation;
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(machine.Uid).LocalRotation = transform.LocalRotation;
 
             var boardContainer = machine.EnsureContainer<Container>(MachineFrameComponent.BoardContainer, out var existed);
 

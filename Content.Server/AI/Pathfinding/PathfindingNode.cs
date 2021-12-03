@@ -44,7 +44,7 @@ namespace Content.Server.AI.Pathfinding
 
         public static bool IsRelevant(IEntity entity, IPhysBody physicsComponent)
         {
-            if (entity.Transform.GridID == GridId.Invalid ||
+            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).GridID == GridId.Invalid ||
                 (PathfindingSystem.TrackedCollisionLayers & physicsComponent.CollisionLayer) == 0)
             {
                 return false;

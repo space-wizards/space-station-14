@@ -51,9 +51,9 @@ namespace Content.Server.Hands.Components
 
         protected override void HandlePickupAnimation(IEntity entity)
         {
-            var initialPosition = EntityCoordinates.FromMap(Owner.Transform.Parent?.Owner ?? Owner, entity.Transform.MapPosition);
+            var initialPosition = EntityCoordinates.FromMap(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Parent?.Owner ?? Owner, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).MapPosition);
 
-            var finalPosition = Owner.Transform.LocalPosition;
+            var finalPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).LocalPosition;
 
             if (finalPosition.EqualsApprox(initialPosition.Position))
                 return;

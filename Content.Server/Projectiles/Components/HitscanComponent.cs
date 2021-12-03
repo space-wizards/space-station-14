@@ -56,12 +56,12 @@ namespace Content.Server.Projectiles.Components
             var mapManager = IoCManager.Resolve<IMapManager>();
 
             // We'll get the effects relative to the grid / map of the firer
-            var gridOrMap = user.Transform.GridID == GridId.Invalid ? mapManager.GetMapEntityId(user.Transform.MapID) :
-                mapManager.GetGrid(user.Transform.GridID).GridEntityId;
+            var gridOrMap = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user.Uid).GridID == GridId.Invalid ? mapManager.GetMapEntityId(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user.Uid).MapID) :
+                mapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user.Uid).GridID).GridEntityId;
 
             var parentXform = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(gridOrMap);
 
-            var localCoordinates = new EntityCoordinates(gridOrMap, parentXform.InvWorldMatrix.Transform(user.Transform.WorldPosition));
+            var localCoordinates = new EntityCoordinates(gridOrMap, parentXform.InvWorldMatrix.Transform(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user.Uid).WorldPosition));
             var localAngle = angle - parentXform.WorldRotation;
 
             var afterEffect = AfterEffects(localCoordinates, localAngle, distance, 1.0f);
@@ -161,7 +161,7 @@ namespace Content.Server.Projectiles.Components
                 EffectSprite = _impactFlash,
                 Born = _startTime,
                 DeathTime = _deathTime,
-                Coordinates = Owner.Transform.Coordinates.Offset(angle.ToVec() * distance),
+                Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates.Offset(angle.ToVec() * distance),
                 //Rotated from east facing
                 Rotation = (float) angle.FlipPositive(),
                 Color = Vector4.Multiply(new Vector4(255, 255, 255, 750), ColorModifier),

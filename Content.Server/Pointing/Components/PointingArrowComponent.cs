@@ -67,7 +67,7 @@ namespace Content.Server.Pointing.Components
         public void Update(float frameTime)
         {
             var movement = _speed * frameTime * (_up ? 1 : -1);
-            Owner.Transform.LocalPosition += (0, movement);
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).LocalPosition += (0, movement);
 
             _duration -= frameTime;
             _currentStep -= frameTime;

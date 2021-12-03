@@ -91,10 +91,10 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
             if (_unspawnedCount > 0)
             {
-                ammo = IoCManager.Resolve<IEntityManager>().SpawnEntity(_fillPrototype, Owner.Transform.Coordinates);
+                ammo = IoCManager.Resolve<IEntityManager>().SpawnEntity(_fillPrototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
 
                 // when dumping from held ammo box, this detaches the spawned ammo from the player.
-                ammo.Transform.AttachParentToContainerOrGrid();
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(ammo.Uid).AttachParentToContainerOrGrid();
 
                 _unspawnedCount--;
             }

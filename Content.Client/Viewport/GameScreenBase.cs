@@ -223,8 +223,8 @@ namespace Content.Client.Viewport
                 }
                 */
 
-                var transX = x.clicked.Transform;
-                var transY = y.clicked.Transform;
+                var transX = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(x.clicked.Uid);
+                var transY = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(y.clicked.Uid);
                 val = transX.Coordinates.Y.CompareTo(transY.Coordinates.Y);
                 if (val != 0)
                 {

@@ -126,7 +126,7 @@ namespace Content.Server.Conveyor
             var adjustment = component.State == ConveyorState.Reversed ? MathHelper.Pi/2 : -MathHelper.Pi/2;
             var radians = MathHelper.DegreesToRadians(component.Angle);
 
-            return new Angle(component.Owner.Transform.LocalRotation.Theta + radians + adjustment);
+            return new Angle(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner.Uid).LocalRotation.Theta + radians + adjustment);
         }
 
         public IEnumerable<(IEntity, IPhysBody)> GetEntitiesToMove(ConveyorComponent comp)

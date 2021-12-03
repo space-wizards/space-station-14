@@ -109,7 +109,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User.Uid, out ActorComponent? actor))
                 return;
 
-            if (component.Owner.Transform.Anchored)
+            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner.Uid).Anchored)
             {
                 _userInterfaceSystem.TryOpen(uid, GasMixerUiKey.Key, actor.PlayerSession);
                 DirtyUI(uid, component);

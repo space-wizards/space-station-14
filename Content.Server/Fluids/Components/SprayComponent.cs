@@ -99,7 +99,7 @@ namespace Content.Server.Fluids.Components
             if(curTime < _cooldownEnd)
                 return true;
 
-            var playerPos = eventArgs.User.Transform.Coordinates;
+            var playerPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(eventArgs.User.Uid).Coordinates;
             var entManager = IoCManager.Resolve<IEntityManager>();
 
             if (eventArgs.ClickLocation.GetGridId(entManager) != playerPos.GetGridId(entManager))
@@ -124,10 +124,10 @@ namespace Content.Server.Fluids.Components
                 var diffNorm = diffPos.Normalized;
                 var diffLength = diffPos.Length;
 
-                var target = eventArgs.User.Transform.Coordinates.Offset((diffNorm + rotation.ToVec()).Normalized * diffLength + quarter);
+                var target = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(eventArgs.User.Uid).Coordinates.Offset((diffNorm + rotation.ToVec()).Normalized * diffLength + quarter);
 
                 if (target.TryDistance(IoCManager.Resolve<IEntityManager>(), playerPos, out var distance) && distance > SprayDistance)
-                    target = eventArgs.User.Transform.Coordinates.Offset(diffNorm * SprayDistance);
+                    target = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(eventArgs.User.Uid).Coordinates.Offset(diffNorm * SprayDistance);
 
                 var solution = EntitySystem.Get<SolutionContainerSystem>().SplitSolution(Owner.Uid, contents, _transferAmount);
 
@@ -135,7 +135,7 @@ namespace Content.Server.Fluids.Components
                     break;
 
                 var vapor = entManager.SpawnEntity(_vaporPrototype, playerPos.Offset(distance < 1 ? quarter : threeQuarters));
-                vapor.Transform.LocalRotation = rotation;
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(vapor.Uid).LocalRotation = rotation;
 
                 if (IoCManager.Resolve<IEntityManager>().TryGetComponent(vapor.Uid, out AppearanceComponent? appearance))
                 {
@@ -149,7 +149,7 @@ namespace Content.Server.Fluids.Components
                 vaporSystem.TryAddSolution(vaporComponent, solution);
 
                 // impulse direction is defined in world-coordinates, not local coordinates
-                var impulseDirection = vapor.Transform.WorldRotation.ToVec();
+                var impulseDirection = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(vapor.Uid).WorldRotation.ToVec();
                 vaporSystem.Start(vaporComponent, impulseDirection, _sprayVelocity, target, _sprayAliveTime);
 
                 if (_impulse > 0f && IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User.Uid, out IPhysBody? body))

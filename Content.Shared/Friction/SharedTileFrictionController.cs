@@ -132,7 +132,7 @@ namespace Content.Shared.Friction
         [Pure]
         private float GetTileFriction(PhysicsComponent body)
         {
-            var transform = body.Owner.Transform;
+            var transform = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(body.Owner.Uid);
             var coords = transform.Coordinates;
 
             // TODO: Make IsWeightless event-based; we already have grid traversals tracked so just raise events

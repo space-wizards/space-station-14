@@ -23,7 +23,7 @@ namespace Content.Server.AI.WorldState.States.Combat.Nearby
             }
 
             foreach (var entity in Visibility
-                .GetNearestEntities(Owner.Transform.Coordinates, typeof(MeleeWeaponComponent), controller.VisionRadius))
+                .GetNearestEntities(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates, typeof(MeleeWeaponComponent), controller.VisionRadius))
             {
                 result.Add(entity);
             }

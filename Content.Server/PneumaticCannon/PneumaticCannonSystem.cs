@@ -195,7 +195,7 @@ namespace Content.Server.PneumaticCannon
 
             for (int i = 0; i < entCounts; i++)
             {
-                var dir = (click.ToMapPos(EntityManager) - user.Transform.WorldPosition).Normalized;
+                var dir = (click.ToMapPos(EntityManager) - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user.Uid).WorldPosition).Normalized;
 
                 var randomAngle = GetRandomFireAngleFromPower(comp.Power).RotateVec(dir);
                 var randomStrengthMult = _random.NextFloat(0.75f, 1.25f);
@@ -256,7 +256,7 @@ namespace Content.Server.PneumaticCannon
             {
                 // we checked for this earlier in HasGas so a GetComp is okay
                 var gas = IoCManager.Resolve<IEntityManager>().GetComponent<GasTankComponent>(comp.GasTankSlot.ContainedEntity.Uid);
-                var environment = _atmos.GetTileMixture(comp.Owner.Transform.Coordinates, true);
+                var environment = _atmos.GetTileMixture(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(comp.Owner.Uid).Coordinates, true);
                 var removed = gas.RemoveAir(GetMoleUsageFromPower(comp.Power));
                 if (environment != null && removed != null)
                 {

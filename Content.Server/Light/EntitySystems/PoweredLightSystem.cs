@@ -75,7 +75,7 @@ namespace Content.Server.Light.EntitySystems
                     _ => throw new ArgumentOutOfRangeException()
                 };
 
-                var entity = EntityManager.SpawnEntity(prototype, light.Owner.Transform.Coordinates);
+                var entity = EntityManager.SpawnEntity(prototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(light.Owner.Uid).Coordinates);
                 light.LightBulbContainer.Insert(entity);
             }
 

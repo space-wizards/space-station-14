@@ -63,7 +63,7 @@ namespace Content.Server.Construction.Components
                     return;
             }
 
-            var board = entityManager.SpawnEntity(BoardPrototype, Owner.Transform.Coordinates);
+            var board = entityManager.SpawnEntity(BoardPrototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
 
             if (!_boardContainer.Insert(board))
             {
@@ -79,7 +79,7 @@ namespace Content.Server.Construction.Components
             {
                 for (var i = 0; i < amount; i++)
                 {
-                    var p = entityManager.SpawnEntity(MachinePartComponent.Prototypes[part], Owner.Transform.Coordinates);
+                    var p = entityManager.SpawnEntity(MachinePartComponent.Prototypes[part], IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
 
                     if (!partContainer.Insert(p))
                         throw new Exception($"Couldn't insert machine part of type {part} to machine with prototype {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityPrototype?.ID ?? "N/A"}!");
@@ -88,7 +88,7 @@ namespace Content.Server.Construction.Components
 
             foreach (var (stackType, amount) in machineBoard.MaterialRequirements)
             {
-                var stack = EntitySystem.Get<StackSystem>().Spawn(amount, stackType, Owner.Transform.Coordinates);
+                var stack = EntitySystem.Get<StackSystem>().Spawn(amount, stackType, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
 
                 if (!partContainer.Insert(IoCManager.Resolve<IEntityManager>().GetEntity(stack)))
                     throw new Exception($"Couldn't insert machine material of type {stackType} to machine with prototype {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityPrototype?.ID ?? "N/A"}");
@@ -98,7 +98,7 @@ namespace Content.Server.Construction.Components
             {
                 for (var i = 0; i < info.Amount; i++)
                 {
-                    var c = entityManager.SpawnEntity(info.DefaultPrototype, Owner.Transform.Coordinates);
+                    var c = entityManager.SpawnEntity(info.DefaultPrototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
 
                     if(!partContainer.Insert(c))
                         throw new Exception($"Couldn't insert machine component part with default prototype '{compName}' to machine with prototype {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityPrototype?.ID ?? "N/A"}");
@@ -109,7 +109,7 @@ namespace Content.Server.Construction.Components
             {
                 for (var i = 0; i < info.Amount; i++)
                 {
-                    var c = entityManager.SpawnEntity(info.DefaultPrototype, Owner.Transform.Coordinates);
+                    var c = entityManager.SpawnEntity(info.DefaultPrototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
 
                     if(!partContainer.Insert(c))
                         throw new Exception($"Couldn't insert machine component part with default prototype '{tagName}' to machine with prototype {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityPrototype?.ID ?? "N/A"}");

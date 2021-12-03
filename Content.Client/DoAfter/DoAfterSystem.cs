@@ -59,23 +59,23 @@ namespace Content.Client.DoAfter
             foreach (var comp in EntityManager.EntityQuery<DoAfterComponent>(true))
             {
                 var doAfters = comp.DoAfters.ToList();
-                var compPos = comp.Owner.Transform.WorldPosition;
+                var compPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(comp.Owner.Uid).WorldPosition;
 
                 if (doAfters.Count == 0 ||
-                    comp.Owner.Transform.MapID != _attachedEntity.Transform.MapID ||
+                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(comp.Owner.Uid).MapID != IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_attachedEntity.Uid).MapID ||
                     !viewbox.Contains(compPos))
                 {
                     comp.Disable();
                     continue;
                 }
 
-                var range = (compPos - _attachedEntity.Transform.WorldPosition).Length +
+                var range = (compPos - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_attachedEntity.Uid).WorldPosition).Length +
                             0.01f;
 
                 if (comp.Owner != _attachedEntity &&
                     !ExamineSystemShared.InRangeUnOccluded(
-                        _attachedEntity.Transform.MapPosition,
-                        comp.Owner.Transform.MapPosition, range,
+                        IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_attachedEntity.Uid).MapPosition,
+                        IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(comp.Owner.Uid).MapPosition, range,
                         entity => entity == comp.Owner || entity == _attachedEntity))
                 {
                     comp.Disable();
@@ -84,7 +84,7 @@ namespace Content.Client.DoAfter
 
                 comp.Enable();
 
-                var userGrid = comp.Owner.Transform.Coordinates;
+                var userGrid = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(comp.Owner.Uid).Coordinates;
 
                 // Check cancellations / finishes
                 foreach (var (id, doAfter) in doAfters)
@@ -117,7 +117,7 @@ namespace Content.Client.DoAfter
                     if (doAfter.BreakOnTargetMove)
                     {
                         if (EntityManager.TryGetEntity(doAfter.TargetUid, out var targetEntity) &&
-                            !targetEntity.Transform.Coordinates.InRange(EntityManager, doAfter.TargetGrid,
+                            !IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(targetEntity.Uid).Coordinates.InRange(EntityManager, doAfter.TargetGrid,
                                 doAfter.MovementThreshold))
                         {
                             comp.Cancel(id, currentTime);

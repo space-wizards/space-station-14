@@ -42,7 +42,7 @@ namespace Content.Server.Storage.EntitySystems
 
                 for (var i = 0; i < storageItem.Amount; i++)
                 {
-                    entityToPlaceInHands = EntityManager.SpawnEntity(storageItem.PrototypeId, args.User.Transform.Coordinates);
+                    entityToPlaceInHands = EntityManager.SpawnEntity(storageItem.PrototypeId, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.User.Uid).Coordinates);
                 }
 
                 if (!string.IsNullOrEmpty(storageItem.GroupId)) alreadySpawnedGroups.Add(storageItem.GroupId);

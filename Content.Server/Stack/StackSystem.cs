@@ -103,7 +103,7 @@ namespace Content.Server.Stack
 
             if (!popupPos.IsValid(EntityManager))
             {
-                popupPos = args.User.Transform.Coordinates;
+                popupPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.User.Uid).Coordinates;
             }
 
             var filter = Filter.Entities(args.User.Uid);

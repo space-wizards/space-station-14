@@ -128,7 +128,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             else if (_unspawnedCount > 0)
             {
                 _unspawnedCount--;
-                ammo = IoCManager.Resolve<IEntityManager>().SpawnEntity(_fillPrototype, Owner.Transform.Coordinates);
+                ammo = IoCManager.Resolve<IEntityManager>().SpawnEntity(_fillPrototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
             }
 
             UpdateAppearance();
@@ -156,7 +156,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             var itemComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(ammo.Uid);
             if (!handsComponent.CanPutInHand(itemComponent))
             {
-                ammo.Transform.Coordinates = eventArgs.User.Transform.Coordinates;
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(ammo.Uid).Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(eventArgs.User.Uid).Coordinates;
                 ServerRangedBarrelComponent.EjectCasing(ammo);
             }
             else

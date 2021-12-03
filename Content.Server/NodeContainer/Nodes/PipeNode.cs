@@ -166,11 +166,11 @@ namespace Content.Server.NodeContainer.Nodes
         /// </summary>
         protected IEnumerable<PipeNode> PipesInDirection(PipeDirection pipeDir)
         {
-            if (!Owner.Transform.Anchored)
+            if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Anchored)
                 yield break;
 
-            var grid = IoCManager.Resolve<IMapManager>().GetGrid(Owner.Transform.GridID);
-            var position = Owner.Transform.Coordinates;
+            var grid = IoCManager.Resolve<IMapManager>().GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).GridID);
+            var position = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates;
             foreach (var entity in grid.GetInDir(position, pipeDir.ToDirection()))
             {
                 if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<NodeContainerComponent>(entity, out var container))
@@ -189,11 +189,11 @@ namespace Content.Server.NodeContainer.Nodes
         /// </summary>
         protected IEnumerable<PipeNode> PipesInTile()
         {
-            if (!Owner.Transform.Anchored)
+            if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Anchored)
                 yield break;
 
-            var grid = IoCManager.Resolve<IMapManager>().GetGrid(Owner.Transform.GridID);
-            var position = Owner.Transform.Coordinates;
+            var grid = IoCManager.Resolve<IMapManager>().GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).GridID);
+            var position = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates;
             foreach (var entity in grid.GetLocal(position))
             {
                 if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<NodeContainerComponent>(entity, out var container))
@@ -215,7 +215,7 @@ namespace Content.Server.NodeContainer.Nodes
         {
             if (RotationsEnabled)
             {
-                CurrentPipeDirection = _originalPipeDirection.RotatePipeDirection(Owner.Transform.LocalRotation);
+                CurrentPipeDirection = _originalPipeDirection.RotatePipeDirection(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).LocalRotation);
             }
             else
             {

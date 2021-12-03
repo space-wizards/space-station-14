@@ -36,8 +36,8 @@ namespace Content.Server.Singularity.Components
             Generator2 = generator2;
 
             //generateFields
-            var pos1 = generator1.Owner.Transform.Coordinates;
-            var pos2 = generator2.Owner.Transform.Coordinates;
+            var pos1 = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(generator1.Owner.Uid).Coordinates;
+            var pos2 = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(generator2.Owner.Uid).Coordinates;
             if (pos1 == pos2)
             {
                 Dispose();
@@ -62,7 +62,7 @@ namespace Content.Server.Singularity.Components
                 }
 
                 containmentFieldComponent.Parent = this;
-                newEnt.Transform.WorldRotation = generator1.Owner.Transform.WorldRotation + dirVec.ToWorldAngle();
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(newEnt.Uid).WorldRotation = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(generator1.Owner.Uid).WorldRotation + dirVec.ToWorldAngle();
 
                 _fields.Add(newEnt);
                 currentOffset += dirVec;

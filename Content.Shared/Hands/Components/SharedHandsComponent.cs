@@ -376,7 +376,7 @@ namespace Content.Shared.Hands.Components
             if (!TryGetHand(handName, out var hand))
                 return false;
 
-            return TryDropHeldEntity(hand, Owner.Transform.Coordinates, checkActionBlocker);
+            return TryDropHeldEntity(hand, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates, checkActionBlocker);
         }
 
         /// <summary>
@@ -387,7 +387,7 @@ namespace Content.Shared.Hands.Components
             if (!TryGetHandHoldingEntity(entity, out var hand))
                 return false;
 
-            return TryDropHeldEntity(hand, Owner.Transform.Coordinates, checkActionBlocker);
+            return TryDropHeldEntity(hand, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates, checkActionBlocker);
         }
 
         /// <summary>
@@ -480,7 +480,7 @@ namespace Content.Shared.Hands.Components
 
             EntitySystem.Get<SharedInteractionSystem>().DroppedInteraction(Owner, heldEntity);
 
-            heldEntity.Transform.WorldPosition = GetFinalDropCoordinates(targetDropLocation);
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(heldEntity.Uid).WorldPosition = GetFinalDropCoordinates(targetDropLocation);
 
             OnItemChanged?.Invoke();
         }
@@ -490,7 +490,7 @@ namespace Content.Shared.Hands.Components
         /// </summary>
         private Vector2 GetFinalDropCoordinates(EntityCoordinates targetCoords)
         {
-            var origin = Owner.Transform.MapPosition;
+            var origin = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).MapPosition;
             var target = targetCoords.ToMap(IoCManager.Resolve<IEntityManager>());
 
             var dropVector = target.Position - origin.Position;
@@ -529,7 +529,7 @@ namespace Content.Shared.Hands.Components
         /// </summary>
         private void DropHeldEntityToFloor(Hand hand)
         {
-            DropHeldEntity(hand, Owner.Transform.Coordinates);
+            DropHeldEntity(hand, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
         }
 
         private bool CanPutHeldEntityIntoContainer(Hand hand, IContainer targetContainer, bool checkActionBlocker)
@@ -653,7 +653,7 @@ namespace Content.Shared.Hands.Components
             if (hand.Name == ActiveHand)
                 SelectActiveHeldEntity();
 
-            entity.Transform.LocalPosition = Vector2.Zero;
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).LocalPosition = Vector2.Zero;
 
             OnItemChanged?.Invoke();
 
@@ -790,7 +790,7 @@ namespace Content.Shared.Hands.Components
             var entity = item.Owner;
 
             if (!TryPutInActiveHandOrAny(entity, checkActionBlocker))
-                entity.Transform.Coordinates = Owner.Transform.Coordinates;
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates;
         }
 
         /// <summary>

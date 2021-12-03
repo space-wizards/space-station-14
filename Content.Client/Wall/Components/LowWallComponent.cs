@@ -42,9 +42,9 @@ namespace Content.Client.Wall.Components
         {
             base.Startup();
 
-            _overlayEntity = IoCManager.Resolve<IEntityManager>().SpawnEntity("LowWallOverlay", Owner.Transform.Coordinates);
-            _overlayEntity.Transform.AttachParent(Owner);
-            _overlayEntity.Transform.LocalPosition = Vector2.Zero;
+            _overlayEntity = IoCManager.Resolve<IEntityManager>().SpawnEntity("LowWallOverlay", IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_overlayEntity.Uid).AttachParent(Owner);
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_overlayEntity.Uid).LocalPosition = Vector2.Zero;
 
             _overlaySprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(_overlayEntity.Uid);
 
@@ -74,13 +74,13 @@ namespace Content.Client.Wall.Components
         {
             base.CalculateNewSprite();
 
-            if (Sprite == null || !Owner.Transform.Anchored || _overlaySprite == null)
+            if (Sprite == null || !IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Anchored || _overlaySprite == null)
             {
                 return;
             }
 
-            var grid = _mapManager.GetGrid(Owner.Transform.GridID);
-            var coords = Owner.Transform.Coordinates;
+            var grid = _mapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).GridID);
+            var coords = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates;
 
             var (n, nl) = MatchingWall(grid.GetInDir(coords, Direction.North));
             var (ne, nel) = MatchingWall(grid.GetInDir(coords, Direction.NorthEast));

@@ -76,14 +76,14 @@ namespace Content.Server.AI.Operators.Combat.Melee
                 return Outcome.Failed;
             }
 
-            if ((_target.Transform.Coordinates.Position - _owner.Transform.Coordinates.Position).Length >
+            if ((IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_target.Uid).Coordinates.Position - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_owner.Uid).Coordinates.Position).Length >
                 _unarmedCombat.Range)
             {
                 return Outcome.Failed;
             }
 
             var interactionSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InteractionSystem>();
-            interactionSystem.AiUseInteraction(_owner, _target.Transform.Coordinates, _target.Uid);
+            interactionSystem.AiUseInteraction(_owner, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_target.Uid).Coordinates, _target.Uid);
             _elapsedTime += frameTime;
             return Outcome.Continuing;
         }

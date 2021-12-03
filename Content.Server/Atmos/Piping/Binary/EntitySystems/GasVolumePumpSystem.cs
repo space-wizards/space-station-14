@@ -39,7 +39,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
         private void OnExamined(EntityUid uid, GasVolumePumpComponent pump, ExaminedEvent args)
         {
-            if (!pump.Owner.Transform.Anchored || !args.IsInDetailsRange) // Not anchored? Out of range? No status.
+            if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pump.Owner.Uid).Anchored || !args.IsInDetailsRange) // Not anchored? Out of range? No status.
                 return;
 
             if (Loc.TryGetString("gas-volume-pump-system-examined", out var str,
@@ -83,7 +83,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             // Some of the gas from the mixture leaks when overclocked.
             if (pump.Overclocked)
             {
-                var tile = _atmosphereSystem.GetTileMixture(pump.Owner.Transform.Coordinates, true);
+                var tile = _atmosphereSystem.GetTileMixture(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pump.Owner.Uid).Coordinates, true);
 
                 if (tile != null)
                 {
@@ -100,7 +100,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User.Uid, out ActorComponent? actor))
                 return;
 
-            if (component.Owner.Transform.Anchored)
+            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner.Uid).Anchored)
             {
                 _userInterfaceSystem.TryOpen(uid, GasVolumePumpUiKey.Key, actor.PlayerSession);
                 DirtyUI(uid, component);

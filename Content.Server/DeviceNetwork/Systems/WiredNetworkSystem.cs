@@ -5,6 +5,7 @@ using Content.Server.Power.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using System.Diagnostics.CodeAnalysis;
+using Robust.Shared.IoC;
 
 namespace Content.Server.DeviceNetwork.Systems
 {
@@ -25,7 +26,7 @@ namespace Content.Server.DeviceNetwork.Systems
             IEntity sender = EntityManager.GetEntity(args.Sender);
             IEntity receiver = EntityManager.GetEntity(uid);
 
-            if (receiver.Transform.GridID != sender.Transform.GridID)
+            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(receiver.Uid).GridID != IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(sender.Uid).GridID)
             {
                 args.Cancel();
             }

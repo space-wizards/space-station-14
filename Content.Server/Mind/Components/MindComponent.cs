@@ -96,7 +96,7 @@ namespace Content.Server.Mind.Components
                 }
                 else if (GhostOnShutdown)
                 {
-                    var spawnPosition = Owner.Transform.Coordinates;
+                    var spawnPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates;
                     // Use a regular timer here because the entity has probably been deleted.
                     Timer.Spawn(0, () =>
                     {

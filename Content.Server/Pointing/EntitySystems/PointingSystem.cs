@@ -82,7 +82,7 @@ namespace Content.Server.Pointing.EntitySystems
         {
             if (IoCManager.Resolve<IEntityManager>().HasComponent<GhostComponent>(pointer.Uid))
             {
-                return pointer.Transform.Coordinates.InRange(EntityManager, coordinates, 15);
+                return IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pointer.Uid).Coordinates.InRange(EntityManager, coordinates, 15);
             }
             else
             {
@@ -135,7 +135,7 @@ namespace Content.Server.Pointing.EntitySystems
 
                 if (ent is null || (!IoCManager.Resolve<IEntityManager>().TryGetComponent<EyeComponent?>(ent.Uid, out var eyeComp) || (eyeComp.VisibilityMask & layer) == 0)) return false;
 
-                return ent.Transform.MapPosition.InRange(player.Transform.MapPosition, PointingRange);
+                return IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(ent.Uid).MapPosition.InRange(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.Uid).MapPosition, PointingRange);
             }
 
             var viewers = Filter.Empty()
@@ -204,13 +204,13 @@ namespace Content.Server.Pointing.EntitySystems
                 return;
 
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ActorComponent?>(args.User.Uid, out var actor)  ||
-                !InRange(args.User, args.Target.Transform.Coordinates))
+                !InRange(args.User, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.Target.Uid).Coordinates))
                 return;
 
             Verb verb = new();
             verb.Text = Loc.GetString("pointing-verb-get-data-text");
             verb.IconTexture = "/Textures/Interface/VerbIcons/point.svg.192dpi.png";
-            verb.Act = () => TryPoint(actor.PlayerSession, args.Target.Transform.Coordinates, args.Target.Uid); ;
+            verb.Act = () => TryPoint(actor.PlayerSession, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.Target.Uid).Coordinates, args.Target.Uid); ;
             args.Verbs.Add(verb);
         }
 

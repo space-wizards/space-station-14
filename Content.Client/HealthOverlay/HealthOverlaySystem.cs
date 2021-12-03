@@ -83,13 +83,13 @@ namespace Content.Client.HealthOverlay
             {
                 var entity = mobState.Owner;
 
-                if (_attachedEntity.Transform.MapID != entity.Transform.MapID ||
-                    !viewBox.Contains(entity.Transform.WorldPosition))
+                if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_attachedEntity.Uid).MapID != IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).MapID ||
+                    !viewBox.Contains(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).WorldPosition))
                 {
                     if (_guis.TryGetValue(entity.Uid, out var oldGui))
                     {
                         _guis.Remove(entity.Uid);
-                        oldGui.Dispose();                       
+                        oldGui.Dispose();
                     }
 
                     continue;

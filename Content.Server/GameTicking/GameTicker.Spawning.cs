@@ -237,7 +237,7 @@ namespace Content.Server.GameTicking
                     var equipmentStr = startingGear.GetGear(slot, profile);
                     if (!string.IsNullOrEmpty(equipmentStr))
                     {
-                        var equipmentEntity = EntityManager.SpawnEntity(equipmentStr, entity.Transform.Coordinates);
+                        var equipmentEntity = EntityManager.SpawnEntity(equipmentStr, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates);
                         inventory.Equip(slot, IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(equipmentEntity.Uid));
                     }
                 }
@@ -248,7 +248,7 @@ namespace Content.Server.GameTicking
                 var inhand = startingGear.Inhand;
                 foreach (var (hand, prototype) in inhand)
                 {
-                    var inhandEntity = EntityManager.SpawnEntity(prototype, entity.Transform.Coordinates);
+                    var inhandEntity = EntityManager.SpawnEntity(prototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates);
                     handsComponent.TryPickupEntity(hand, inhandEntity, checkActionBlocker: false);
                 }
             }

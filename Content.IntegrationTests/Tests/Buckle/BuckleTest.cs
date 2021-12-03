@@ -103,7 +103,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.False(actionBlocker.CanMove(human.Uid));
                 Assert.False(actionBlocker.CanChangeDirection(human.Uid));
                 Assert.False(standingState.Down(human.Uid));
-                Assert.That((human.Transform.WorldPosition - chair.Transform.WorldPosition).Length, Is.LessThanOrEqualTo(buckle.BuckleOffset.Length));
+                Assert.That((IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(human.Uid).WorldPosition - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(chair.Uid).WorldPosition).Length, Is.LessThanOrEqualTo(buckle.BuckleOffset.Length));
 
                 // Side effects of buckling for the strap
                 Assert.That(strap.BuckledEntities, Does.Contain(human));
@@ -171,7 +171,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.False(buckle.Buckled);
 
                 // Move away from the chair
-                human.Transform.WorldPosition += (1000, 1000);
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(human.Uid).WorldPosition += (1000, 1000);
 
                 // Out of range
                 Assert.False(buckle.TryBuckle(human, chair));
@@ -179,7 +179,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.False(buckle.ToggleBuckle(human, chair));
 
                 // Move near the chair
-                human.Transform.WorldPosition = chair.Transform.WorldPosition + (0.5f, 0);
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(human.Uid).WorldPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(chair.Uid).WorldPosition + (0.5f, 0);
 
                 // In range
                 Assert.True(buckle.TryBuckle(human, chair));
@@ -200,7 +200,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.True(buckle.TryBuckle(human, chair));
 
                 // Move away from the chair
-                human.Transform.WorldPosition += (1, 0);
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(human.Uid).WorldPosition += (1, 0);
             });
 
             await server.WaitRunTicks(1);
@@ -333,7 +333,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.True(buckle.Buckled);
 
                 // Move the buckled entity away
-                human.Transform.WorldPosition += (100, 0);
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(human.Uid).WorldPosition += (100, 0);
             });
 
             await WaitUntil(server, () => !buckle.Buckled, 10);
@@ -343,7 +343,7 @@ namespace Content.IntegrationTests.Tests.Buckle
             await server.WaitAssertion(() =>
             {
                 // Move the now unbuckled entity back onto the chair
-                human.Transform.WorldPosition -= (100, 0);
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(human.Uid).WorldPosition -= (100, 0);
 
                 // Buckle
                 Assert.True(buckle.TryBuckle(human, chair));

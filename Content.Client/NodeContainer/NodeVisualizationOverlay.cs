@@ -8,6 +8,7 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
@@ -80,9 +81,9 @@ namespace Content.Client.NodeContainer
 
             var entity = _entityManager.GetEntity(node.Entity);
 
-            var gridId = entity.Transform.GridID;
+            var gridId = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).GridID;
             var grid = _mapManager.GetGrid(gridId);
-            var gridTile = grid.TileIndicesFor(entity.Transform.Coordinates);
+            var gridTile = grid.TileIndicesFor(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates);
 
             var sb = new StringBuilder();
             sb.Append($"entity: {entity}\n");
@@ -119,10 +120,10 @@ namespace Content.Client.NodeContainer
                 if (!_system.Entities.TryGetValue(entity.Uid, out var nodeData))
                     return;
 
-                var gridId = entity.Transform.GridID;
+                var gridId = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).GridID;
                 var grid = _mapManager.GetGrid(gridId);
                 var gridDict = _gridIndex.GetOrNew(gridId);
-                var coords = entity.Transform.Coordinates;
+                var coords = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates;
 
                 // TODO: This probably shouldn't be capable of returning NaN...
                 if (float.IsNaN(coords.Position.X) || float.IsNaN(coords.Position.Y))

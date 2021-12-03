@@ -123,7 +123,7 @@ namespace Content.Server.Lathe.Components
             {
                 Producing = false;
                 _producingRecipe = null;
-                IoCManager.Resolve<IEntityManager>().SpawnEntity(recipe.Result, Owner.Transform.Coordinates);
+                IoCManager.Resolve<IEntityManager>().SpawnEntity(recipe.Result, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
                 UserInterface?.SendMessage(new LatheStoppedProducingRecipeMessage());
                 State = LatheState.Base;
                 SetAppearance(LatheVisualState.Idle);

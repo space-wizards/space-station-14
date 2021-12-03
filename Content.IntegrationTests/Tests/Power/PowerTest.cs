@@ -499,7 +499,7 @@ namespace Content.IntegrationTests.Tests.Power
                 }
 
                 var terminal = _entityManager.SpawnEntity("CableTerminal", grid.ToCoordinates(0, 1));
-                terminal.Transform.LocalRotation = Angle.FromDegrees(180);
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(terminal.Uid).LocalRotation = Angle.FromDegrees(180);
 
                 var batteryEnt = _entityManager.SpawnEntity("FullBatteryDummy", grid.ToCoordinates(0, 2));
                 var supplyEnt = _entityManager.SpawnEntity("GeneratorDummy", grid.ToCoordinates(0, 0));
@@ -567,7 +567,7 @@ namespace Content.IntegrationTests.Tests.Power
                 }
 
                 var terminal = _entityManager.SpawnEntity("CableTerminal", grid.ToCoordinates(0, 1));
-                terminal.Transform.LocalRotation = Angle.FromDegrees(180);
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(terminal.Uid).LocalRotation = Angle.FromDegrees(180);
 
                 var batteryEnt = _entityManager.SpawnEntity("FullBatteryDummy", grid.ToCoordinates(0, 2));
                 var supplyEnt = _entityManager.SpawnEntity("GeneratorDummy", grid.ToCoordinates(0, 0));
@@ -643,7 +643,7 @@ namespace Content.IntegrationTests.Tests.Power
 
                 _entityManager.SpawnEntity("CableTerminal", grid.ToCoordinates(0, 2));
                 var terminal = _entityManager.SpawnEntity("CableTerminal", grid.ToCoordinates(0, 2));
-                terminal.Transform.LocalRotation = Angle.FromDegrees(180);
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(terminal.Uid).LocalRotation = Angle.FromDegrees(180);
 
                 var batteryEnt1 = _entityManager.SpawnEntity("FullBatteryDummy", grid.ToCoordinates(0, 1));
                 var batteryEnt2 = _entityManager.SpawnEntity("FullBatteryDummy", grid.ToCoordinates(0, 3));
@@ -730,7 +730,7 @@ namespace Content.IntegrationTests.Tests.Power
 
                 _entityManager.SpawnEntity("CableTerminal", grid.ToCoordinates(0, 2));
                 var terminal = _entityManager.SpawnEntity("CableTerminal", grid.ToCoordinates(0, 2));
-                terminal.Transform.LocalRotation = Angle.FromDegrees(180);
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(terminal.Uid).LocalRotation = Angle.FromDegrees(180);
 
                 var batteryEnt1 = _entityManager.SpawnEntity("FullBatteryDummy", grid.ToCoordinates(0, 1));
                 var batteryEnt2 = _entityManager.SpawnEntity("FullBatteryDummy", grid.ToCoordinates(0, 3));
@@ -800,7 +800,7 @@ namespace Content.IntegrationTests.Tests.Power
                 }
 
                 var terminal = _entityManager.SpawnEntity("CableTerminal", grid.ToCoordinates(0, 1));
-                terminal.Transform.LocalRotation = Angle.FromDegrees(180);
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(terminal.Uid).LocalRotation = Angle.FromDegrees(180);
 
                 var batteryEnt = _entityManager.SpawnEntity("FullBatteryDummy", grid.ToCoordinates(0, 2));
                 var supplyEnt = _entityManager.SpawnEntity("GeneratorDummy", grid.ToCoordinates(0, 0));
@@ -879,7 +879,7 @@ namespace Content.IntegrationTests.Tests.Power
                 var rightEnt = _entityManager.SpawnEntity("CableHV", grid.ToCoordinates(0, 3));
 
                 var terminal = _entityManager.SpawnEntity("CableTerminal", grid.ToCoordinates(0, 1));
-                terminal.Transform.LocalRotation = Angle.FromDegrees(180);
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(terminal.Uid).LocalRotation = Angle.FromDegrees(180);
 
                 var battery = _entityManager.SpawnEntity("FullBatteryDummy", grid.ToCoordinates(0, 2));
                 var batteryNodeContainer = IoCManager.Resolve<IEntityManager>().GetComponent<NodeContainerComponent>(battery.Uid);

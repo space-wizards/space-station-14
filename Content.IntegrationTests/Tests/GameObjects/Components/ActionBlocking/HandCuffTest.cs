@@ -63,7 +63,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
                 cuffs = entityManager.SpawnEntity("HandcuffsDummy", coordinates);
                 secondCuffs = entityManager.SpawnEntity("HandcuffsDummy", coordinates);
 
-                human.Transform.WorldPosition = otherHuman.Transform.WorldPosition;
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(human.Uid).WorldPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(otherHuman.Uid).WorldPosition;
 
                 // Test for components existing
                 ref CuffableComponent? comp = ref cuffed!;

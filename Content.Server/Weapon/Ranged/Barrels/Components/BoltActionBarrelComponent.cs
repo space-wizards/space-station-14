@@ -111,7 +111,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 if (_unspawnedCount > 0)
                 {
                     _unspawnedCount--;
-                    var chamberEntity = IoCManager.Resolve<IEntityManager>().SpawnEntity(_fillPrototype, Owner.Transform.Coordinates);
+                    var chamberEntity = IoCManager.Resolve<IEntityManager>().SpawnEntity(_fillPrototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
                     _chamberContainer.Insert(chamberEntity);
                 }
             }
@@ -323,7 +323,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             else if (_unspawnedCount > 0)
             {
                 _unspawnedCount--;
-                var ammoEntity = IoCManager.Resolve<IEntityManager>().SpawnEntity(_fillPrototype, Owner.Transform.Coordinates);
+                var ammoEntity = IoCManager.Resolve<IEntityManager>().SpawnEntity(_fillPrototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
                 _chamberContainer.Insert(ammoEntity);
                 return true;
             }

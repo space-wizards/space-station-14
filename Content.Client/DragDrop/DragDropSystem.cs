@@ -196,7 +196,7 @@ namespace Content.Client.DragDrop
                 dragSprite.DrawDepth = (int) DrawDepth.Overlays;
                 if (!dragSprite.NoRotation)
                 {
-                    _dragShadow.Transform.WorldRotation = _dragDropHelper.Dragged.Transform.WorldRotation;
+                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_dragShadow.Uid).WorldRotation = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_dragDropHelper.Dragged.Uid).WorldRotation;
                 }
 
                 HighlightTargets();
@@ -233,7 +233,7 @@ namespace Content.Client.DragDrop
             if (_dragShadow == null)
                 return false;
 
-            _dragShadow.Transform.WorldPosition = mousePos.Position;
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_dragShadow.Uid).WorldPosition = mousePos.Position;
 
             _targetRecheckTime += frameTime;
             if (_targetRecheckTime > TargetRecheckInterval)
@@ -295,7 +295,7 @@ namespace Content.Client.DragDrop
 
             // now when ending the drag, we will not replay the click because
             // by this time we've determined the input was actually a drag attempt
-            var range = (args.Coordinates.ToMapPos(EntityManager) - _dragger.Transform.MapPosition.Position).Length + 0.01f;
+            var range = (args.Coordinates.ToMapPos(EntityManager) - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_dragger.Uid).MapPosition.Position).Length + 0.01f;
             // tell the server we are dropping if we are over a valid drop target in range.
             // We don't use args.EntityUid here because drag interactions generally should
             // work even if there's something "on top" of the drop target
@@ -379,7 +379,7 @@ namespace Content.Client.DragDrop
                     pvsEntity == _dragDropHelper.Dragged) continue;
 
                 // check if it's able to be dropped on by current dragged entity
-                var dropArgs = new DragDropEvent(_dragger!, pvsEntity.Transform.Coordinates, _dragDropHelper.Dragged, pvsEntity);
+                var dropArgs = new DragDropEvent(_dragger!, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pvsEntity.Uid).Coordinates, _dragDropHelper.Dragged, pvsEntity);
 
                 var valid = ValidDragDrop(dropArgs);
                 if (valid == null) continue;

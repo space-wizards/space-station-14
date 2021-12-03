@@ -111,7 +111,7 @@ namespace Content.Client.Verbs
                 if (!_examineSystem.CanExamine(player, targetPos, predicate))
                     return false;
             }
-                          
+
             // Get entities
             var entities = _entityLookup.GetEntitiesInRange(targetPos.MapId, targetPos.Position, EntityMenuLookupSize)
                 .ToList();
@@ -155,12 +155,12 @@ namespace Content.Client.Verbs
             // Remove any entities that do not have LOS
             if ((visibility & MenuVisibility.NoFov) == 0)
             {
-                var playerPos = player.Transform.MapPosition;
+                var playerPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.Uid).MapPosition;
                 foreach (var entity in entities.ToList())
                 {
                     if (!ExamineSystemShared.InRangeUnOccluded(
                         playerPos,
-                        entity.Transform.MapPosition,
+                        IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).MapPosition,
                         ExamineSystemShared.ExamineRange,
                         null))
                     {
@@ -186,7 +186,7 @@ namespace Content.Client.Verbs
             {
                 RaiseNetworkEvent(new RequestServerVerbsEvent(target.Uid, verbTypes));
             }
-            
+
             return GetLocalVerbs(target, user, verbTypes);
         }
 

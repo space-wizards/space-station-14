@@ -164,7 +164,7 @@ namespace Content.IntegrationTests.Tests.Doors
             // Assert.That(physicsDummy.Transform.MapPosition.X, Is.GreaterThan(physicsDummyStartingX));
 
             // Blocked by the airlock
-            await server.WaitAssertion(() => Assert.That(Math.Abs(physicsDummy.Transform.MapPosition.X - 1) > 0.01f));
+            await server.WaitAssertion(() => Assert.That(Math.Abs(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(physicsDummy.Uid).MapPosition.X - 1) > 0.01f));
         }
     }
 }

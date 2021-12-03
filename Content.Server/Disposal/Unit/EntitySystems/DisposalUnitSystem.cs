@@ -444,8 +444,8 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return false;
             }
 
-            var grid = _mapManager.GetGrid(component.Owner.Transform.GridID);
-            var coords = component.Owner.Transform.Coordinates;
+            var grid = _mapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner.Uid).GridID);
+            var coords = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner.Uid).Coordinates;
             var entry = grid.GetLocal(coords)
                 .FirstOrDefault(entity => EntityManager.HasComponent<DisposalEntryComponent>(entity));
 
@@ -457,7 +457,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             var air = component.Air;
             var entryComponent = EntityManager.GetComponent<DisposalEntryComponent>(entry);
 
-            if (_atmosSystem.GetTileMixture(component.Owner.Transform.Coordinates, true) is {Temperature: > 0} environment)
+            if (_atmosSystem.GetTileMixture(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner.Uid).Coordinates, true) is {Temperature: > 0} environment)
             {
                 var transferMoles = 0.1f * (0.05f * Atmospherics.OneAtmosphere * 1.01f - air.Pressure) * air.Volume / (environment.Temperature * Atmospherics.R);
 
@@ -509,7 +509,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return;
             }
 
-            if (!component.Owner.Transform.Anchored)
+            if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner.Uid).Anchored)
             {
                 appearance.SetData(SharedDisposalUnitComponent.Visuals.VisualState, SharedDisposalUnitComponent.VisualState.UnAnchored);
                 appearance.SetData(SharedDisposalUnitComponent.Visuals.Handle, SharedDisposalUnitComponent.HandleState.Normal);
@@ -567,7 +567,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
         public bool CanFlush(DisposalUnitComponent component)
         {
-            return component.State == SharedDisposalUnitComponent.PressureState.Ready && component.Powered && component.Owner.Transform.Anchored;
+            return component.State == SharedDisposalUnitComponent.PressureState.Ready && component.Powered && IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner.Uid).Anchored;
         }
 
         public void Engage(DisposalUnitComponent component)

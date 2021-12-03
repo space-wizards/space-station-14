@@ -58,7 +58,7 @@ namespace Content.Server.Body.Components
                 {
                     // Using MapPosition instead of Coordinates here prevents
                     // a crash within the character preview menu in the lobby
-                    var entity = IoCManager.Resolve<IEntityManager>().SpawnEntity(preset.PartIDs[slot.Id], Owner.Transform.MapPosition);
+                    var entity = IoCManager.Resolve<IEntityManager>().SpawnEntity(preset.PartIDs[slot.Id], IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).MapPosition);
 
                     if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out SharedBodyPartComponent? part))
                     {
@@ -88,7 +88,7 @@ namespace Content.Server.Body.Components
         {
             base.Gib(gibParts);
 
-            SoundSystem.Play(Filter.Pvs(Owner), _gibSound.GetSound(), Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.025f));
+            SoundSystem.Play(Filter.Pvs(Owner), _gibSound.GetSound(), IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates, AudioHelpers.WithVariation(0.025f));
 
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ContainerManagerComponent? container))
             {
@@ -97,7 +97,7 @@ namespace Content.Server.Body.Components
                     foreach (var ent in cont.ContainedEntities)
                     {
                         cont.ForceRemove(ent);
-                        ent.Transform.Coordinates = Owner.Transform.Coordinates;
+                        IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(ent.Uid).Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates;
                         ent.RandomOffset(0.25f);
                     }
                 }

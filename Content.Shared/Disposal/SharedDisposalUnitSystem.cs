@@ -49,7 +49,7 @@ namespace Content.Shared.Disposal
 
         public virtual bool CanInsert(SharedDisposalUnitComponent component, IEntity entity)
         {
-            if (!component.Owner.Transform.Anchored)
+            if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner.Uid).Anchored)
                 return false;
 
             // TODO: Probably just need a disposable tag.

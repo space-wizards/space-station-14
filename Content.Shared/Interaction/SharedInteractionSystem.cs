@@ -213,7 +213,7 @@ namespace Content.Shared.Interaction
             bool popup = false)
         {
             predicate ??= e => e == origin || e == other;
-            return InRangeUnobstructed(origin, other.Transform.MapPosition, range, collisionMask, predicate, ignoreInsideBlocker, popup);
+            return InRangeUnobstructed(origin, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other.Uid).MapPosition, range, collisionMask, predicate, ignoreInsideBlocker, popup);
         }
 
         /// <summary>
@@ -345,7 +345,7 @@ namespace Content.Shared.Interaction
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
-            var originPosition = origin.Transform.MapPosition;
+            var originPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(origin.Uid).MapPosition;
             predicate ??= e => e == origin;
 
             var inRange = InRangeUnobstructed(originPosition, other, range, collisionMask, predicate, ignoreInsideBlocker);
@@ -678,7 +678,7 @@ namespace Content.Shared.Interaction
                 return;
             }
 
-            item.Transform.LocalRotation = Angle.Zero;
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(item.Uid).LocalRotation = Angle.Zero;
 
             var comps = IoCManager.Resolve<IEntityManager>().GetComponents<IDropped>(item.Uid).ToList();
 

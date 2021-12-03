@@ -92,15 +92,15 @@ namespace Content.Server.GameTicking.Presets
                 // Replace their items:
 
                 //  pda
-                var newPDA = _entityManager.SpawnEntity(PDAPrototypeName, mind.OwnedEntity.Transform.Coordinates);
+                var newPDA = _entityManager.SpawnEntity(PDAPrototypeName, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(mind.OwnedEntity.Uid).Coordinates);
                 inventory.Equip(EquipmentSlotDefines.Slots.IDCARD, IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(newPDA.Uid));
 
                 //  belt
-                var newTmp = _entityManager.SpawnEntity(BeltPrototypeName, mind.OwnedEntity.Transform.Coordinates);
+                var newTmp = _entityManager.SpawnEntity(BeltPrototypeName, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(mind.OwnedEntity.Uid).Coordinates);
                 inventory.Equip(EquipmentSlotDefines.Slots.BELT, IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(newTmp.Uid));
 
                 //  backpack
-                newTmp = _entityManager.SpawnEntity(BackpackPrototypeName, mind.OwnedEntity.Transform.Coordinates);
+                newTmp = _entityManager.SpawnEntity(BackpackPrototypeName, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(mind.OwnedEntity.Uid).Coordinates);
                 inventory.Equip(EquipmentSlotDefines.Slots.BACKPACK, IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(newTmp.Uid));
 
                 // Like normal traitors, they need access to a traitor account.
@@ -123,7 +123,7 @@ namespace Content.Server.GameTicking.Presets
             // Finally, it would be preferrable if they spawned as far away from other players as reasonably possible.
             if (mind.OwnedEntity != null && FindAnyIsolatedSpawnLocation(mind, out var bestTarget))
             {
-                mind.OwnedEntity.Transform.Coordinates = bestTarget;
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(mind.OwnedEntity.Uid).Coordinates = bestTarget;
             }
             else
             {
@@ -162,7 +162,7 @@ namespace Content.Server.GameTicking.Presets
                     // Doesn't have mob state component. Assume something interesting is going on and don't count this as someone to avoid.
                     continue;
                 }
-                existingPlayerPoints.Add(avoidMeEntity.Transform.Coordinates);
+                existingPlayerPoints.Add(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(avoidMeEntity.Uid).Coordinates);
             }
 
             // Iterate over each possible spawn point, comparing to the existing player points.
@@ -176,18 +176,18 @@ namespace Content.Server.GameTicking.Presets
             var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
             foreach (var entity in ents)
             {
-                if (!atmosphereSystem.IsTileMixtureProbablySafe(entity.Transform.Coordinates))
+                if (!atmosphereSystem.IsTileMixtureProbablySafe(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates))
                     continue;
 
                 var distanceFromNearest = float.PositiveInfinity;
                 foreach (var existing in existingPlayerPoints)
                 {
-                    if (entity.Transform.Coordinates.TryDistance(_entityManager, existing, out var dist))
+                    if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates.TryDistance(_entityManager, existing, out var dist))
                         distanceFromNearest = Math.Min(distanceFromNearest, dist);
                 }
                 if (bestTargetDistanceFromNearest < distanceFromNearest)
                 {
-                    bestTarget = entity.Transform.Coordinates;
+                    bestTarget = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates;
                     bestTargetDistanceFromNearest = distanceFromNearest;
                     foundATarget = true;
                 }

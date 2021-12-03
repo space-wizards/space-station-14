@@ -77,10 +77,11 @@ namespace Content.IntegrationTests.Tests
             await _server.WaitPost(() =>
             {
                 var gridEnt = mapManager.GetAllGrids().First().GridEntityId;
-                worldPos = serverEntManager.GetEntity(gridEnt).Transform.WorldPosition;
+                IEntity tempQualifier = serverEntManager.GetEntity(gridEnt);
+                worldPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(tempQualifier.Uid).WorldPosition;
 
                 var ent = serverEntManager.SpawnEntity(prototype, new EntityCoordinates(gridEnt, 0f, 0f));
-                ent.Transform.LocalRotation = angle;
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(ent.Uid).LocalRotation = angle;
                 IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(ent.Uid).Scale = (scale, scale);
                 entity = ent.Uid;
             });

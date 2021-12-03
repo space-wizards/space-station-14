@@ -36,7 +36,7 @@ namespace Content.Client.Clickable
                 return false;
             }
 
-            var transform = Owner.Transform;
+            var transform = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid);
             var localPos = transform.InvWorldMatrix.Transform(worldPos);
             var spriteMatrix = Matrix3.Invert(sprite.GetLocalMatrix());
 

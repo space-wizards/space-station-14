@@ -34,7 +34,7 @@ namespace Content.Server.Light.EntitySystems
                 if (match.CurrentState != SmokableState.Lit)
                     continue;
 
-                _atmosphereSystem.HotspotExpose(match.Owner.Transform.Coordinates, 400, 50, true);
+                _atmosphereSystem.HotspotExpose(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(match.Owner.Uid).Coordinates, 400, 50, true);
             }
         }
 

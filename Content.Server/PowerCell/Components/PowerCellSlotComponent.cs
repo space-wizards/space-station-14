@@ -136,12 +136,12 @@ namespace Content.Server.PowerCell.Components
             {
                 if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out HandsComponent? hands) || !hands.PutInHand(IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(cell.Owner.Uid)))
                 {
-                    cell.Owner.Transform.Coordinates = user.Transform.Coordinates;
+                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(cell.Owner.Uid).Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user.Uid).Coordinates;
                 }
             }
             else
             {
-                cell.Owner.Transform.Coordinates = Owner.Transform.Coordinates;
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(cell.Owner.Uid).Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates;
             }
 
             if (playSound)
@@ -199,7 +199,7 @@ namespace Content.Server.PowerCell.Components
                 };
             }
 
-            var cell = IoCManager.Resolve<IEntityManager>().SpawnEntity(type, Owner.Transform.Coordinates);
+            var cell = IoCManager.Resolve<IEntityManager>().SpawnEntity(type, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
             _cellContainer.Insert(cell);
         }
     }

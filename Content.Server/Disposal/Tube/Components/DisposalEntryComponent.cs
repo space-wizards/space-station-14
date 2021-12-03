@@ -21,7 +21,7 @@ namespace Content.Server.Disposal.Tube.Components
 
         public bool TryInsert(DisposalUnitComponent from)
         {
-            var holder = IoCManager.Resolve<IEntityManager>().SpawnEntity(HolderPrototypeId, Owner.Transform.MapPosition);
+            var holder = IoCManager.Resolve<IEntityManager>().SpawnEntity(HolderPrototypeId, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).MapPosition);
             var holderComponent = IoCManager.Resolve<IEntityManager>().GetComponent<DisposalHolderComponent>(holder.Uid);
 
             foreach (var entity in from.ContainedEntities.ToArray())
@@ -37,7 +37,7 @@ namespace Content.Server.Disposal.Tube.Components
 
         protected override Direction[] ConnectableDirections()
         {
-            return new[] {Owner.Transform.LocalRotation.GetDir()};
+            return new[] {IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).LocalRotation.GetDir()};
         }
 
         /// <summary>

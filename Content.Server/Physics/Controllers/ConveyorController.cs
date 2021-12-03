@@ -41,11 +41,11 @@ namespace Content.Server.Physics.Controllers
             }
 
             var direction = system.GetAngle(comp).ToVec();
-            var ownerPos = comp.Owner.Transform.WorldPosition;
+            var ownerPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(comp.Owner.Uid).WorldPosition;
 
             foreach (var (entity, physics) in EntitySystem.Get<ConveyorSystem>().GetEntitiesToMove(comp))
             {
-                var itemRelativeToConveyor = entity.Transform.WorldPosition - ownerPos;
+                var itemRelativeToConveyor = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).WorldPosition - ownerPos;
                 physics.LinearVelocity += Convey(direction, comp.Speed, frameTime, itemRelativeToConveyor);
             }
         }

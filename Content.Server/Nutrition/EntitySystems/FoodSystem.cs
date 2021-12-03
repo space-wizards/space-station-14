@@ -196,7 +196,7 @@ namespace Content.Server.Nutrition.EntitySystems
         private void DeleteAndSpawnTrash(FoodComponent component, EntityUid? userUid = null)
         {
             //We're empty. Become trash.
-            var position = component.Owner.Transform.Coordinates;
+            var position = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner.Uid).Coordinates;
             var finisher = IoCManager.Resolve<IEntityManager>().SpawnEntity(component.TrashPrototype, position);
 
             // If the user is holding the item

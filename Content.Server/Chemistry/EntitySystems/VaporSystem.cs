@@ -97,12 +97,12 @@ namespace Content.Server.Chemistry.EntitySystems
             vapor.Timer += frameTime;
             vapor.ReactTimer += frameTime;
 
-            if (vapor.ReactTimer >= ReactTime && vapor.Owner.Transform.GridID.IsValid())
+            if (vapor.ReactTimer >= ReactTime && IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(vapor.Owner.Uid).GridID.IsValid())
             {
                 vapor.ReactTimer = 0;
-                var mapGrid = _mapManager.GetGrid(entity.Transform.GridID);
+                var mapGrid = _mapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).GridID);
 
-                var tile = mapGrid.GetTileRef(entity.Transform.Coordinates.ToVector2i(EntityManager, _mapManager));
+                var tile = mapGrid.GetTileRef(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates.ToVector2i(EntityManager, _mapManager));
                 foreach (var reagentQuantity in contents.Contents.ToArray())
                 {
                     if (reagentQuantity.Quantity == FixedPoint2.Zero) continue;
@@ -114,7 +114,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
             // Check if we've reached our target.
             if (!vapor.Reached &&
-                vapor.Target.TryDistance(EntityManager, entity.Transform.Coordinates, out var distance) &&
+                vapor.Target.TryDistance(EntityManager, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates, out var distance) &&
                 distance <= 0.5f)
             {
                 vapor.Reached = true;

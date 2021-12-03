@@ -174,7 +174,7 @@ namespace Content.Client.Construction
             var comp = IoCManager.Resolve<IEntityManager>().GetComponent<ConstructionGhostComponent>(ghost.Uid);
             comp.Prototype = prototype;
             comp.GhostId = _nextId++;
-            ghost.Transform.LocalRotation = dir.ToAngle();
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(ghost.Uid).LocalRotation = dir.ToAngle();
             _ghosts.Add(comp.GhostId, comp);
             var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(ghost.Uid);
             sprite.Color = new Color(48, 255, 48, 128);
@@ -191,7 +191,7 @@ namespace Content.Client.Construction
         {
             foreach (var ghost in _ghosts)
             {
-                if (ghost.Value.Owner.Transform.Coordinates.Equals(loc)) return true;
+                if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(ghost.Value.Owner.Uid).Coordinates.Equals(loc)) return true;
             }
 
             return false;
@@ -206,7 +206,7 @@ namespace Content.Client.Construction
                 throw new ArgumentException($"Can't start construction for a ghost with no prototype. Ghost id: {ghostId}");
             }
 
-            var transform = ghost.Owner.Transform;
+            var transform = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(ghost.Owner.Uid);
             var msg = new TryStartStructureConstructionMessage(transform.Coordinates, ghost.Prototype.ID, transform.LocalRotation, ghostId);
             RaiseNetworkEvent(msg);
         }

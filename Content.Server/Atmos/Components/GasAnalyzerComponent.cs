@@ -123,7 +123,7 @@ namespace Content.Server.Atmos.Components
         {
             // Already get the pressure before Dirty(), because we can't get the EntitySystem in that thread or smth
             var pressure = 0f;
-            var tile = EntitySystem.Get<AtmosphereSystem>().GetTileMixture(Owner.Transform.Coordinates);
+            var tile = EntitySystem.Get<AtmosphereSystem>().GetTileMixture(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
             if (tile != null)
             {
                 pressure = tile.Pressure;
@@ -171,7 +171,7 @@ namespace Content.Server.Atmos.Components
                 }
             }
 
-            var pos = Owner.Transform.Coordinates;
+            var pos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates;
             if (!_checkPlayer && _position.HasValue)
             {
                 // Check if position is out of range => don't update

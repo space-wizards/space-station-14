@@ -142,15 +142,15 @@ namespace Content.Server.Chat.Managers
 
             // We'll try to avoid using MapPosition as EntityCoordinates can early-out and potentially be faster for common use cases
             // Downside is it may potentially convert to MapPosition unnecessarily.
-            var sourceMapId = source.Transform.MapID;
-            var sourceCoords = source.Transform.Coordinates;
+            var sourceMapId = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(source.Uid).MapID;
+            var sourceCoords = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(source.Uid).Coordinates;
 
             var clients = new List<INetChannel>();
 
             foreach (var player in _playerManager.Sessions)
             {
                 if (player.AttachedEntity == null) continue;
-                var transform = player.AttachedEntity.Transform;
+                var transform = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.AttachedEntity.Uid);
 
                 if (transform.MapID != sourceMapId ||
                     !IoCManager.Resolve<IEntityManager>().HasComponent<GhostComponent>(player.AttachedEntity.Uid) &&
@@ -223,7 +223,7 @@ namespace Content.Server.Chat.Managers
             action = FormattedMessage.EscapeText(action);
 
             var clients = Filter.Empty()
-                .AddInRange(source.Transform.MapPosition, VoiceRange)
+                .AddInRange(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(source.Uid).MapPosition, VoiceRange)
                 .Recipients
                 .Select(p => p.ConnectedClient)
                 .ToList();

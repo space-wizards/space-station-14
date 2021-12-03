@@ -79,7 +79,7 @@ namespace Content.Server.Chemistry.Components
             {
                 if (!string.IsNullOrEmpty(_foamedMetalPrototype))
                 {
-                    IoCManager.Resolve<IEntityManager>().SpawnEntity(_foamedMetalPrototype, Owner.Transform.Coordinates);
+                    IoCManager.Resolve<IEntityManager>().SpawnEntity(_foamedMetalPrototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
                 }
 
                 IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(Owner.Uid);

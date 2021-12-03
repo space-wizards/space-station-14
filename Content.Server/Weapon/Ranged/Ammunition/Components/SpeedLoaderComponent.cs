@@ -130,7 +130,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
             if (_unspawnedCount > 0)
             {
-                entity = IoCManager.Resolve<IEntityManager>().SpawnEntity(_fillPrototype, Owner.Transform.Coordinates);
+                entity = IoCManager.Resolve<IEntityManager>().SpawnEntity(_fillPrototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
                 _unspawnedCount--;
             }
 

@@ -45,7 +45,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 return;
             }
 
-            var environment = _atmosphereSystem.GetTileMixture(vent.Owner.Transform.Coordinates, true);
+            var environment = _atmosphereSystem.GetTileMixture(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(vent.Owner.Uid).Coordinates, true);
 
             // We're in an air-blocked tile... Do nothing.
             if (environment == null)

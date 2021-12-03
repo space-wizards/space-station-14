@@ -154,7 +154,7 @@ namespace Content.Server.Ghost
 
             if (FindLocation(msg.Name) is { } warp)
             {
-                ghost.Owner.Transform.Coordinates = warp.Owner.Transform.Coordinates;
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(ghost.Owner.Uid).Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(warp.Owner.Uid).Coordinates;
             }
 
             Logger.Warning($"User {args.SenderSession.Name} tried to warp to an invalid warp: {msg.Name}");
@@ -175,7 +175,7 @@ namespace Content.Server.Ghost
                 return;
             }
 
-            ghost.Owner.Transform.Coordinates = entity.Transform.Coordinates;
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(ghost.Owner.Uid).Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates;
         }
 
         private void DeleteEntity(EntityUid uid)

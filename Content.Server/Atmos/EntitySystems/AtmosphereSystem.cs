@@ -75,9 +75,9 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 foreach (var exposed in EntityManager.EntityQuery<AtmosExposedComponent>())
                 {
-                    var tile = GetTileMixture(exposed.Owner.Transform.Coordinates);
+                    var tile = GetTileMixture(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(exposed.Owner.Uid).Coordinates);
                     if (tile == null) continue;
-                    var updateEvent = new AtmosExposedUpdateEvent(exposed.Owner.Transform.Coordinates, tile);
+                    var updateEvent = new AtmosExposedUpdateEvent(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(exposed.Owner.Uid).Coordinates, tile);
                     RaiseLocalEvent(exposed.Owner.Uid, ref updateEvent);
                 }
 

@@ -137,7 +137,7 @@ namespace Content.Server.Interaction
             }
 
             // client sanitization
-            if (!ValidateClientInput(args.SenderSession, item.Transform.Coordinates, msg.ItemUid, out var userEntity))
+            if (!ValidateClientInput(args.SenderSession, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(item.Uid).Coordinates, msg.ItemUid, out var userEntity))
             {
                 Logger.InfoS("system.interaction", $"Inventory interaction validation failed.  Session={args.SenderSession}");
                 return;
@@ -145,7 +145,7 @@ namespace Content.Server.Interaction
 
             if (msg.AltInteract)
                 // Use 'UserInteraction' function - behaves as if the user alt-clicked the item in the world.
-                UserInteraction(userEntity, item.Transform.Coordinates, msg.ItemUid, msg.AltInteract);
+                UserInteraction(userEntity, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(item.Uid).Coordinates, msg.ItemUid, msg.AltInteract);
             else
                 // User used 'E'. We want to activate it, not simulate clicking on the item
                 InteractionActivate(userEntity, item);
@@ -374,7 +374,7 @@ namespace Content.Server.Interaction
         private bool ValidateInteractAndFace(IEntity user, EntityCoordinates coordinates)
         {
             // Verify user is on the same map as the entity they clicked on
-            if (coordinates.GetMapId(_entityManager) != user.Transform.MapID)
+            if (coordinates.GetMapId(_entityManager) != IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user.Uid).MapID)
             {
                 Logger.WarningS("system.interaction",
                     $"User entity named {user.Name} clicked on a map they aren't located on");

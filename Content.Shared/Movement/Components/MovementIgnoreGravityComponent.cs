@@ -22,7 +22,7 @@ namespace Content.Shared.Movement.Components
             if (IoCManager.Resolve<IEntityManager>().HasComponent<MovementIgnoreGravityComponent>(entity.Uid) ||
                 (body?.BodyType & (BodyType.Static | BodyType.Kinematic)) != 0) return false;
 
-            var transform = entity.Transform;
+            var transform = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid);
             var gridId = transform.GridID;
 
             if (!gridId.IsValid())

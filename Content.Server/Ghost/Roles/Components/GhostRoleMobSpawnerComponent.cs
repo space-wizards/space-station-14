@@ -42,7 +42,7 @@ namespace Content.Server.Ghost.Roles.Components
             if (string.IsNullOrEmpty(Prototype))
                 throw new NullReferenceException("Prototype string cannot be null or empty!");
 
-            var mob = IoCManager.Resolve<IEntityManager>().SpawnEntity(Prototype, Owner.Transform.Coordinates);
+            var mob = IoCManager.Resolve<IEntityManager>().SpawnEntity(Prototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
 
             if (MakeSentient)
                 MakeSentientCommand.MakeSentient(mob.Uid, IoCManager.Resolve<IEntityManager>());

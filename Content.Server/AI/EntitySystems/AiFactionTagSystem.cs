@@ -72,9 +72,9 @@ namespace Content.Server.AI.EntitySystems
             {
                 if ((component.Factions & hostile) == 0)
                     continue;
-                if (component.Owner.Transform.MapID != entity.Transform.MapID)
+                if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner.Uid).MapID != IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).MapID)
                     continue;
-                if (!component.Owner.Transform.MapPosition.InRange(entity.Transform.MapPosition, range))
+                if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner.Uid).MapPosition.InRange(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).MapPosition, range))
                     continue;
 
                 yield return component.Owner;

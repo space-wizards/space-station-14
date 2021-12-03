@@ -79,7 +79,7 @@ namespace Content.Server.Buckle.Systems
                 return;
             }
 
-            var strapPosition = strap.Owner.Transform.Coordinates.Offset(buckle.BuckleOffset);
+            var strapPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(strap.Owner.Uid).Coordinates.Offset(buckle.BuckleOffset);
 
             if (ev.NewPosition.InRange(EntityManager, strapPosition, 0.2f))
             {

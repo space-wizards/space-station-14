@@ -81,7 +81,7 @@ namespace Content.Server.Weapon.Melee
             var owner = EntityManager.GetEntity(uid);
             var target = args.TargetEntity;
 
-            var location = args.User.Transform.Coordinates;
+            var location = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.User.Uid).Coordinates;
             var diff = args.ClickLocation.ToMapPos(IoCManager.Resolve<IEntityManager>()) - location.ToMapPos(IoCManager.Resolve<IEntityManager>());
             var angle = Angle.FromWorldVec(diff);
 
@@ -138,12 +138,12 @@ namespace Content.Server.Weapon.Melee
 
             var owner = EntityManager.GetEntity(uid);
 
-            var location = args.User.Transform.Coordinates;
+            var location = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.User.Uid).Coordinates;
             var diff = args.ClickLocation.ToMapPos(IoCManager.Resolve<IEntityManager>()) - location.ToMapPos(IoCManager.Resolve<IEntityManager>());
             var angle = Angle.FromWorldVec(diff);
 
             // This should really be improved. GetEntitiesInArc uses pos instead of bounding boxes.
-            var entities = ArcRayCast(args.User.Transform.WorldPosition, angle, comp.ArcWidth, comp.Range, owner.Transform.MapID, args.User);
+            var entities = ArcRayCast(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.User.Uid).WorldPosition, angle, comp.ArcWidth, comp.Range, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(owner.Uid).MapID, args.User);
 
             var hitEntities = new List<IEntity>();
             foreach (var entity in entities)
@@ -166,11 +166,11 @@ namespace Content.Server.Weapon.Melee
             {
                 if (entities.Count != 0)
                 {
-                    SoundSystem.Play(Filter.Pvs(owner), comp.HitSound.GetSound(), entities.First().Transform.Coordinates);
+                    SoundSystem.Play(Filter.Pvs(owner), comp.HitSound.GetSound(), IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entities.First().Uid).Coordinates);
                 }
                 else
                 {
-                    SoundSystem.Play(Filter.Pvs(owner), comp.MissSound.GetSound(), args.User.Transform.Coordinates);
+                    SoundSystem.Play(Filter.Pvs(owner), comp.MissSound.GetSound(), IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.User.Uid).Coordinates);
                 }
 
                 foreach (var entity in hitEntities)
@@ -219,7 +219,7 @@ namespace Content.Server.Weapon.Melee
             if (args.Target == null)
                 return;
 
-            var location = args.User.Transform.Coordinates;
+            var location = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.User.Uid).Coordinates;
             var diff = args.ClickLocation.ToMapPos(IoCManager.Resolve<IEntityManager>()) - location.ToMapPos(IoCManager.Resolve<IEntityManager>());
             var angle = Angle.FromWorldVec(diff);
 

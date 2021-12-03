@@ -31,7 +31,7 @@ namespace Content.Client.Weapons.Melee.Components
             _sprite?.AddLayer(new RSI.StateId(prototype.State));
             _baseAngle = baseAngle;
             if(followAttacker)
-                Owner.Transform.AttachParent(attacker);
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).AttachParent(attacker);
         }
 
         internal void Update(float frameTime)
@@ -55,12 +55,12 @@ namespace Content.Client.Weapons.Melee.Components
             {
                 case WeaponArcType.Slash:
                     var angle = Angle.FromDegrees(_meleeWeaponAnimation.Width)/2;
-                    Owner.Transform.WorldRotation =
+                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).WorldRotation =
                         _baseAngle + Angle.Lerp(-angle, angle, (float) (_timer / _meleeWeaponAnimation.Length.TotalSeconds));
                     break;
 
                 case WeaponArcType.Poke:
-                    Owner.Transform.WorldRotation = _baseAngle;
+                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).WorldRotation = _baseAngle;
 
                     if (_sprite != null)
                     {

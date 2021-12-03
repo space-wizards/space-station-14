@@ -325,7 +325,7 @@ namespace Content.Server.Storage.Components
 
         public virtual Vector2 ContentsDumpPosition()
         {
-            return Owner.Transform.WorldPosition;
+            return IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).WorldPosition;
         }
 
         private void EmptyContents()
@@ -334,7 +334,7 @@ namespace Content.Server.Storage.Components
             {
                 if (Contents.Remove(contained))
                 {
-                    contained.Transform.WorldPosition = ContentsDumpPosition();
+                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(contained.Uid).WorldPosition = ContentsDumpPosition();
                     if (IoCManager.Resolve<IEntityManager>().TryGetComponent<IPhysBody?>(contained.Uid, out var physics))
                     {
                         physics.CanCollide = true;
@@ -369,13 +369,13 @@ namespace Content.Server.Storage.Components
             // Trying to add while open just dumps it on the ground below us.
             if (Open)
             {
-                entity.Transform.WorldPosition = Owner.Transform.WorldPosition;
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).WorldPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).WorldPosition;
                 return true;
             }
 
             if (!Contents.Insert(entity)) return false;
 
-            entity.Transform.LocalPosition = Vector2.Zero;
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).LocalPosition = Vector2.Zero;
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out IPhysBody? body))
             {
                 body.CanCollide = false;

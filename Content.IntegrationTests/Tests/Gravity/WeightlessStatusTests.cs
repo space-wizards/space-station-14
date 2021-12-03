@@ -64,7 +64,7 @@ namespace Content.IntegrationTests.Tests.Gravity
                 // No gravity without a gravity generator
                 Assert.True(alerts.IsShowingAlert(AlertType.Weightless));
 
-                entityManager.SpawnEntity("GravityGeneratorDummy", human.Transform.Coordinates);
+                entityManager.SpawnEntity("GravityGeneratorDummy", IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(human.Uid).Coordinates);
             });
 
             // Let WeightlessSystem and GravitySystem tick

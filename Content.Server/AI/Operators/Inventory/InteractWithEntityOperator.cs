@@ -23,7 +23,7 @@ namespace Content.Server.AI.Operators.Inventory
 
         public override Outcome Execute(float frameTime)
         {
-            if (_useTarget.Transform.GridID != _owner.Transform.GridID)
+            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_useTarget.Uid).GridID != IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_owner.Uid).GridID)
             {
                 return Outcome.Failed;
             }
@@ -40,7 +40,7 @@ namespace Content.Server.AI.Operators.Inventory
 
             // Click on da thing
             var interactionSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InteractionSystem>();
-            interactionSystem.AiUseInteraction(_owner, _useTarget.Transform.Coordinates, _useTarget.Uid);
+            interactionSystem.AiUseInteraction(_owner, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_useTarget.Uid).Coordinates, _useTarget.Uid);
 
             return Outcome.Success;
         }

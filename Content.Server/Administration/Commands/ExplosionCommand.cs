@@ -3,6 +3,7 @@ using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
 namespace Content.Server.Administration.Commands
@@ -32,7 +33,7 @@ namespace Content.Server.Administration.Commands
             var lgh = int.Parse(args[4]);
             var fla = int.Parse(args[5]);
 
-            var mapTransform = player.AttachedEntity.Transform.GetMapTransform();
+            var mapTransform = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.AttachedEntity.Uid).GetMapTransform();
             var coords = new EntityCoordinates(mapTransform.Owner.Uid, x, y);
 
             EntitySystem.Get<ExplosionSystem>().SpawnExplosion(coords, dev, hvy, lgh, fla);

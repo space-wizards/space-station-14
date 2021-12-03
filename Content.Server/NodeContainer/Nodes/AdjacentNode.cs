@@ -14,12 +14,12 @@ namespace Content.Server.NodeContainer.Nodes
     {
         public override IEnumerable<Node> GetReachableNodes()
         {
-            if (!Owner.Transform.Anchored)
+            if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Anchored)
                 yield break;
 
             var entMan = IoCManager.Resolve<IEntityManager>();
-            var grid = IoCManager.Resolve<IMapManager>().GetGrid(Owner.Transform.GridID);
-            var gridIndex = grid.TileIndicesFor(Owner.Transform.Coordinates);
+            var grid = IoCManager.Resolve<IMapManager>().GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).GridID);
+            var gridIndex = grid.TileIndicesFor(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
 
             foreach (var (_, node) in NodeHelpers.GetCardinalNeighborNodes(entMan, grid, gridIndex))
             {

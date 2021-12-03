@@ -46,13 +46,13 @@ namespace Content.Client.AI
                     continue;
                 }
 
-                if (!_eyeManager.GetWorldViewport().Contains(entity.Transform.WorldPosition))
+                if (!_eyeManager.GetWorldViewport().Contains(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).WorldPosition))
                 {
                     panel.Visible = false;
                     continue;
                 }
 
-                var (x, y) = _eyeManager.CoordinatesToScreen(entity.Transform.Coordinates).Position;
+                var (x, y) = _eyeManager.CoordinatesToScreen(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates).Position;
                 var offsetPosition = new Vector2(x - panel.Width / 2, y - panel.Height - 50f);
                 panel.Visible = true;
 

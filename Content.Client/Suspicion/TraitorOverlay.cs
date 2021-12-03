@@ -59,14 +59,14 @@ namespace Content.Client.Suspicion
                     continue;
                 }
 
-                if (!ExamineSystemShared.InRangeUnOccluded(ent.Transform.MapPosition, ally.Transform.MapPosition, 15,
+                if (!ExamineSystemShared.InRangeUnOccluded(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(ent.Uid).MapPosition, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(ally.Uid).MapPosition, 15,
                     entity => entity == ent || entity == ally))
                 {
                     continue;
                 }
 
                 // if not on the same map, continue
-                if (physics.Owner.Transform.MapID != _eyeManager.CurrentMap || physics.Owner.IsInContainer())
+                if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(physics.Owner.Uid).MapID != _eyeManager.CurrentMap || physics.Owner.IsInContainer())
                 {
                     continue;
                 }

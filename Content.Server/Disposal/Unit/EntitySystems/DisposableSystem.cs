@@ -54,17 +54,17 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
                 holder.Container.ForceRemove(entity);
 
-                if (entity.Transform.Parent == holderTransform)
+                if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Parent == holderTransform)
                 {
                     if (duc != null)
                     {
                         // Insert into disposal unit
-                        entity.Transform.Coordinates = new EntityCoordinates(duc.OwnerUid, Vector2.Zero);
+                        IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates = new EntityCoordinates(duc.OwnerUid, Vector2.Zero);
                         duc.Container.Insert(entity);
                     }
                     else
                     {
-                        entity.Transform.AttachParentToContainerOrGrid();
+                        IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).AttachParentToContainerOrGrid();
                     }
                 }
             }
@@ -161,11 +161,11 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 if (holder.TimeLeft > 0)
                 {
                     var progress = 1 - holder.TimeLeft / holder.StartingTime;
-                    var origin = currentTube.Owner.Transform.Coordinates;
+                    var origin = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(currentTube.Owner.Uid).Coordinates;
                     var destination = holder.CurrentDirection.ToVec();
                     var newPosition = destination * progress;
 
-                    holder.Owner.Transform.Coordinates = origin.Offset(newPosition);
+                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(holder.Owner.Uid).Coordinates = origin.Offset(newPosition);
 
                     continue;
                 }

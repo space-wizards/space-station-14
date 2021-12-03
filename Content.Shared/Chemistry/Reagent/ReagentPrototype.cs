@@ -125,7 +125,7 @@ namespace Content.Shared.Chemistry.Reagent
                 {
                     var entity = entMan.GetEntity(args.SolutionEntity);
                     EntitySystem.Get<SharedAdminLogSystem>().Add(LogType.ReagentEffect, plantMetabolizable.LogImpact,
-                        $"Plant metabolism effect {plantMetabolizable.GetType().Name:effect} of reagent {ID} applied on entity {entity} at {entity.Transform.Coordinates}");
+                        $"Plant metabolism effect {plantMetabolizable.GetType().Name:effect} of reagent {ID} applied on entity {entity} at {IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates}");
                     plantMetabolizable.Effect(args);
                 }
             }

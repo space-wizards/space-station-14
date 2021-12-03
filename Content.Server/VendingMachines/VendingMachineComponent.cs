@@ -185,7 +185,7 @@ namespace Content.Server.VendingMachines
             {
                 _ejecting = false;
                 TrySetVisualState(VendingMachineVisualState.Normal);
-                IoCManager.Resolve<IEntityManager>().SpawnEntity(id, Owner.Transform.Coordinates);
+                IoCManager.Resolve<IEntityManager>().SpawnEntity(id, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
             });
 
             SoundSystem.Play(Filter.Pvs(Owner), _soundVend.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));

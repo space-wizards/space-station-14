@@ -135,7 +135,7 @@ namespace Content.Server.Explosion.Components
             if (_unspawnedCount > 0)
             {
                 _unspawnedCount--;
-                grenade = IoCManager.Resolve<IEntityManager>().SpawnEntity(_fillPrototype, Owner.Transform.MapPosition);
+                grenade = IoCManager.Resolve<IEntityManager>().SpawnEntity(_fillPrototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).MapPosition);
                 return true;
             }
 

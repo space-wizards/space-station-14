@@ -342,14 +342,14 @@ namespace Content.Server.Body.Surgery
 
             if (!IoCManager.Resolve<IEntityManager>().HasComponent<DoAfterComponent>(performer.Uid))
             {
-                Parent.RemoveMechanism(target, performer.Transform.Coordinates);
+                Parent.RemoveMechanism(target, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(performer.Uid).Coordinates);
                 RemoveDisconnectedOrgan(target);
                 return;
             }
 
             if (await SurgeryDoAfter(performer))
             {
-                Parent.RemoveMechanism(target, performer.Transform.Coordinates);
+                Parent.RemoveMechanism(target, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(performer.Uid).Coordinates);
                 RemoveDisconnectedOrgan(target);
             }
         }

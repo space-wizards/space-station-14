@@ -80,7 +80,7 @@ namespace Content.Client.Singularity
 
                 if (!_singularities.Keys.Contains(singuloEntity.Uid) && SinguloQualifies(singuloEntity, currentEyeLoc))
                 {
-                    _singularities.Add(singuloEntity.Uid, new SingularityShaderInstance(singuloEntity.Transform.MapPosition.Position, distortion.Intensity, distortion.Falloff));
+                    _singularities.Add(singuloEntity.Uid, new SingularityShaderInstance(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(singuloEntity.Uid).MapPosition.Position, distortion.Intensity, distortion.Falloff));
                 }
             }
 
@@ -102,7 +102,7 @@ namespace Content.Client.Singularity
                         else
                         {
                             var shaderInstance = _singularities[activeSinguloUid];
-                            shaderInstance.CurrentMapCoords = singuloEntity.Transform.MapPosition.Position;
+                            shaderInstance.CurrentMapCoords = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(singuloEntity.Uid).MapPosition.Position;
                             shaderInstance.Intensity = distortion.Intensity;
                             shaderInstance.Falloff = distortion.Falloff;
                         }
@@ -119,7 +119,7 @@ namespace Content.Client.Singularity
 
         private bool SinguloQualifies(IEntity singuloEntity, MapCoordinates currentEyeLoc)
         {
-            return singuloEntity.Transform.MapID == currentEyeLoc.MapId && singuloEntity.Transform.Coordinates.InRange(_entityManager, EntityCoordinates.FromMap(_entityManager, singuloEntity.Transform.ParentUid, currentEyeLoc), MaxDist);
+            return IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(singuloEntity.Uid).MapID == currentEyeLoc.MapId && IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(singuloEntity.Uid).Coordinates.InRange(_entityManager, EntityCoordinates.FromMap(_entityManager, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(singuloEntity.Uid).ParentUid, currentEyeLoc), MaxDist);
         }
 
         private sealed class SingularityShaderInstance

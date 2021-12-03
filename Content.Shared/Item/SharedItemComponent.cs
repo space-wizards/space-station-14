@@ -115,7 +115,7 @@ namespace Content.Shared.Item
             if (!EntitySystem.Get<ActionBlockerSystem>().CanPickup(user.Uid))
                 return false;
 
-            if (user.Transform.MapID != Owner.Transform.MapID)
+            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user.Uid).MapID != IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).MapID)
                 return false;
 
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out IPhysBody? physics) || physics.BodyType == BodyType.Static)

@@ -32,7 +32,7 @@ namespace Content.Server.Security.Systems
 
         private void ToggleBarrierDeploy(DeployableBarrierComponent component, bool isDeployed)
         {
-            component.Owner.Transform.Anchored = isDeployed;
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner.Uid).Anchored = isDeployed;
 
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out AppearanceComponent? appearanceComponent))
                 return;

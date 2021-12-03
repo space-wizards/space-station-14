@@ -71,7 +71,7 @@ namespace Content.Server.ParticleAccelerator.Components
             physicsComponent
                 .LinearVelocity = angle.ToWorldVec() * 20f;
 
-            Owner.Transform.LocalRotation = angle;
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).LocalRotation = angle;
             Timer.Spawn(3000, () => IoCManager.Resolve<IEntityManager>().DeleteEntity(Owner.Uid));
         }
     }

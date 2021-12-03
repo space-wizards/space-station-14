@@ -135,7 +135,7 @@ namespace Content.Server.Cloning.Components
                         return; // If we can't track down the client, we can't offer transfer. That'd be quite bad.
                     }
 
-                    var mob = IoCManager.Resolve<IEntityManager>().SpawnEntity("MobHuman", Owner.Transform.MapPosition);
+                    var mob = IoCManager.Resolve<IEntityManager>().SpawnEntity("MobHuman", IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).MapPosition);
 
 
                     EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(mob.Uid, dna.Profile);

@@ -22,7 +22,7 @@ namespace Content.Server.Singularity.Components
                 if (_power > 15)
                 {
                     var entityManager = IoCManager.Resolve<IEntityManager>();
-                    entityManager.SpawnEntity("Singularity", Owner.Transform.Coordinates);
+                    entityManager.SpawnEntity("Singularity", IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
                     //dont delete ourselves, just wait to get eaten
                 }
             }

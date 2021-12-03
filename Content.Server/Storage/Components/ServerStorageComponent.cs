@@ -160,7 +160,7 @@ namespace Content.Server.Storage.Components
                 return false;
             }
 
-            if (entity.Transform.Anchored)
+            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Anchored)
             {
                 return false;
             }
@@ -219,7 +219,7 @@ namespace Content.Server.Storage.Components
 
             if (!_sizeCache.TryGetValue(message.Entity, out var size))
             {
-                Logger.WarningS(LoggerName, $"Removed entity {message.Entity} without a cached size from storage {Owner} at {Owner.Transform.MapPosition}");
+                Logger.WarningS(LoggerName, $"Removed entity {message.Entity} without a cached size from storage {Owner} at {IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).MapPosition}");
 
                 RecalculateStorageUsed();
                 return;
@@ -459,8 +459,8 @@ namespace Content.Server.Storage.Components
                         break;
                     }
 
-                    var ownerTransform = Owner.Transform;
-                    var playerTransform = player.Transform;
+                    var ownerTransform = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid);
+                    var playerTransform = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.Uid);
 
                     if (!playerTransform.Coordinates.InRange(IoCManager.Resolve<IEntityManager>(), ownerTransform.Coordinates, 2) ||
                         Owner.IsInContainer() && !playerTransform.ContainsEntity(ownerTransform))
@@ -607,7 +607,7 @@ namespace Content.Server.Storage.Components
                         || entity == eventArgs.User
                         || !IoCManager.Resolve<IEntityManager>().HasComponent<SharedItemComponent>(entity.Uid))
                         continue;
-                    var position = EntityCoordinates.FromMap(Owner.Transform.Parent?.Owner ?? Owner, entity.Transform.MapPosition);
+                    var position = EntityCoordinates.FromMap(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Parent?.Owner ?? Owner, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).MapPosition);
                     if (PlayerInsertEntityInWorld(eventArgs.User, entity))
                     {
                         successfullyInserted.Add(entity.Uid);
@@ -638,7 +638,7 @@ namespace Content.Server.Storage.Components
                     || eventArgs.Target == eventArgs.User
                     || !IoCManager.Resolve<IEntityManager>().HasComponent<SharedItemComponent>(eventArgs.Target.Uid))
                     return false;
-                var position = EntityCoordinates.FromMap(Owner.Transform.Parent?.Owner ?? Owner, eventArgs.Target.Transform.MapPosition);
+                var position = EntityCoordinates.FromMap(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Parent?.Owner ?? Owner, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(eventArgs.Target.Uid).MapPosition);
                 if (PlayerInsertEntityInWorld(eventArgs.User, eventArgs.Target))
                 {
 #pragma warning disable 618

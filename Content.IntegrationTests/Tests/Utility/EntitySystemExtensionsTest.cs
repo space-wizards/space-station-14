@@ -4,6 +4,7 @@ using Content.Shared.Physics;
 using Content.Shared.Spawning;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 
@@ -46,7 +47,7 @@ namespace Content.IntegrationTests.Tests.Utility
             {
                 var grid = GetMainGrid(sMapManager);
                 var gridEnt = sEntityManager.GetEntity(grid.GridEntityId);
-                var gridPos = gridEnt.Transform.WorldPosition;
+                var gridPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(gridEnt.Uid).WorldPosition;
                 var entityCoordinates = GetMainEntityCoordinates(sMapManager);
 
                 // Nothing blocking it, only entity is the grid

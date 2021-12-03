@@ -235,7 +235,7 @@ namespace Content.Server.Construction
                 return null;
             }
 
-            var newEntity = EntityManager.SpawnEntity(graph.Nodes[edge.Target].Entity, user.Transform.Coordinates);
+            var newEntity = EntityManager.SpawnEntity(graph.Nodes[edge.Target].Entity, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user.Uid).Coordinates);
 
             // Yes, this should throw if it's missing the component.
             var construction = IoCManager.Resolve<IEntityManager>().GetComponent<ConstructionComponent>(newEntity.Uid);
@@ -457,13 +457,13 @@ namespace Content.Server.Construction
 
             // We do this to be able to move the construction to its proper position in case it's anchored...
             // Oh wow transform anchoring is amazing wow I love it!!!!
-            var wasAnchored = structure.Transform.Anchored;
-            structure.Transform.Anchored = false;
+            var wasAnchored = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(structure.Uid).Anchored;
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(structure.Uid).Anchored = false;
 
-            structure.Transform.Coordinates = ev.Location;
-            structure.Transform.LocalRotation = constructionPrototype.CanRotate ? ev.Angle : Angle.Zero;
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(structure.Uid).Coordinates = ev.Location;
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(structure.Uid).LocalRotation = constructionPrototype.CanRotate ? ev.Angle : Angle.Zero;
 
-            structure.Transform.Anchored = wasAnchored;
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(structure.Uid).Anchored = wasAnchored;
 
             RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack));
 

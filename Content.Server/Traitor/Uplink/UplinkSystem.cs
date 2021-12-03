@@ -118,7 +118,7 @@ namespace Content.Server.Traitor.Uplink
             if (uplink.UplinkAccount == null) return;
 
             if (!_accounts.TryPurchaseItem(uplink.UplinkAccount, message.ItemId,
-                player.Transform.Coordinates, out var entity))
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.Uid).Coordinates, out var entity))
             {
                 SoundSystem.Play(Filter.SinglePlayer(message.Session), uplink.InsufficientFundsSound.GetSound(),
                     uplink.Owner, AudioParams.Default);
@@ -146,7 +146,7 @@ namespace Content.Server.Traitor.Uplink
 
             var player = args.Session.AttachedEntity;
             if (player == null) return;
-            var cords = player.Transform.Coordinates;
+            var cords = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.Uid).Coordinates;
 
             // try to withdraw TCs from account
             if (!_accounts.TryWithdrawTC(acc, args.TC, cords, out var tcUid))

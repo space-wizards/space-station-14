@@ -56,8 +56,8 @@ namespace Content.Client.Weapons.Melee
                 var lunge = attacker.EnsureComponent<MeleeLungeComponent>();
                 lunge.SetData(msg.Angle);
 
-                var entity = EntityManager.SpawnEntity(weaponArc.Prototype, attacker.Transform.Coordinates);
-                entity.Transform.LocalRotation = msg.Angle;
+                var entity = EntityManager.SpawnEntity(weaponArc.Prototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(attacker.Uid).Coordinates);
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).LocalRotation = msg.Angle;
 
                 var weaponArcAnimation = IoCManager.Resolve<IEntityManager>().GetComponent<MeleeWeaponArcAnimationComponent>(entity.Uid);
                 weaponArcAnimation.SetData(weaponArc, msg.Angle, attacker, msg.ArcFollowAttacker);
@@ -73,7 +73,7 @@ namespace Content.Client.Weapons.Melee
                     {
                         EffectSprite = sourceSprite.BaseRSI.Path.ToString(),
                         RsiState = sourceSprite.LayerGetState(0).Name,
-                        Coordinates = attacker.Transform.Coordinates,
+                        Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(attacker.Uid).Coordinates,
                         Color = Vector4.Multiply(new Vector4(255, 255, 255, 125), 1.0f),
                         ColorDelta = Vector4.Multiply(new Vector4(0, 0, 0, -10), 1.0f),
                         Velocity = msg.Angle.ToWorldVec(),

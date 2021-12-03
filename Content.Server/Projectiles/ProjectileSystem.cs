@@ -36,7 +36,7 @@ namespace Content.Server.Projectiles
 
             var otherEntity = args.OtherFixture.Body.Owner;
 
-            var coordinates = args.OtherFixture.Body.Owner.Transform.Coordinates;
+            var coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.OtherFixture.Body.Owner.Uid).Coordinates;
             var playerFilter = Filter.Pvs(coordinates);
 
             if (!((!IoCManager.Resolve<IEntityManager>().EntityExists(otherEntity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(otherEntity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted) && component.SoundHitSpecies != null &&

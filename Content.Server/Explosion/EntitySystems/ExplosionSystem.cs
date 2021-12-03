@@ -87,7 +87,7 @@ namespace Content.Server.Explosion.EntitySystems
                     continue;
                 }
 
-                var playerPos = player.AttachedEntity.Transform.WorldPosition;
+                var playerPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.AttachedEntity.Uid).WorldPosition;
                 var delta = epicenter.ToMapPos(EntityManager) - playerPos;
 
                 //Change if zero. Will result in a NaN later breaking camera shake if not changed
@@ -135,7 +135,7 @@ namespace Content.Server.Explosion.EntitySystems
                     continue;
                 }
 
-                if (!entity.Transform.Coordinates.TryDistance(EntityManager, epicenter, out var distance) ||
+                if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates.TryDistance(EntityManager, epicenter, out var distance) ||
                     distance > maxRange)
                 {
                     continue;

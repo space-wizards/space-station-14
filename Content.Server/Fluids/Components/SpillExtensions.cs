@@ -31,7 +31,7 @@ namespace Content.Server.Fluids.Components
         public static PuddleComponent? SpillAt(this Solution solution, IEntity entity, string prototype,
             bool sound = true, bool combine = true)
         {
-            return solution.SpillAt(entity.Transform.Coordinates, prototype, sound, combine: combine);
+            return solution.SpillAt(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates, prototype, sound, combine: combine);
         }
 
         /// <summary>

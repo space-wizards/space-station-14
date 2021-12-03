@@ -302,7 +302,7 @@ namespace Content.Server.Chemistry.Components
                 var actualVolume = FixedPoint2.Min(individualVolume, FixedPoint2.New(30));
                 for (int i = 0; i < bottleAmount; i++)
                 {
-                    var bottle = IoCManager.Resolve<IEntityManager>().SpawnEntity("ChemistryEmptyBottle01", Owner.Transform.Coordinates);
+                    var bottle = IoCManager.Resolve<IEntityManager>().SpawnEntity("ChemistryEmptyBottle01", IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
 
                     //Adding label
                     LabelComponent labelComponent = bottle.EnsureComponent<LabelComponent>();
@@ -327,7 +327,7 @@ namespace Content.Server.Chemistry.Components
                     }
 
                     //Put it on the floor
-                    bottle.Transform.Coordinates = user.Transform.Coordinates;
+                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(bottle.Uid).Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user.Uid).Coordinates;
                     //Give it an offset
                     bottle.RandomOffset(0.2f);
                 }
@@ -344,7 +344,7 @@ namespace Content.Server.Chemistry.Components
                 var actualVolume = FixedPoint2.Min(individualVolume, FixedPoint2.New(50));
                 for (int i = 0; i < pillAmount; i++)
                 {
-                    var pill = IoCManager.Resolve<IEntityManager>().SpawnEntity("pill", Owner.Transform.Coordinates);
+                    var pill = IoCManager.Resolve<IEntityManager>().SpawnEntity("pill", IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
 
                     //Adding label
                     LabelComponent labelComponent = pill.EnsureComponent<LabelComponent>();
@@ -375,7 +375,7 @@ namespace Content.Server.Chemistry.Components
                     }
 
                     //Put it on the floor
-                    pill.Transform.Coordinates = user.Transform.Coordinates;
+                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pill.Uid).Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user.Uid).Coordinates;
                     //Give it an offset
                     pill.RandomOffset(0.2f);
                 }

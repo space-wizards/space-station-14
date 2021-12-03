@@ -36,7 +36,7 @@ namespace Content.Server.Construction.Commands
                         return;
                     }
 
-                    gridId = player.AttachedEntity.Transform.GridID;
+                    gridId = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.AttachedEntity.Uid).GridID;
                     break;
                 case 1:
                     if (!int.TryParse(args[0], out var id))
@@ -67,7 +67,7 @@ namespace Content.Server.Construction.Commands
             }
 
             var changed = 0;
-            foreach (var childUid in gridEntity.Transform.ChildEntityUids)
+            foreach (var childUid in IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(gridEntity.Uid).ChildEntityUids)
             {
                 if (!entityManager.TryGetEntity(childUid, out var childEntity))
                 {
@@ -96,9 +96,9 @@ namespace Content.Server.Construction.Commands
                     continue;
                 }
 
-                if (childEntity.Transform.LocalRotation != Angle.Zero)
+                if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(childEntity.Uid).LocalRotation != Angle.Zero)
                 {
-                    childEntity.Transform.LocalRotation = Angle.Zero;
+                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(childEntity.Uid).LocalRotation = Angle.Zero;
                     changed++;
                 }
             }

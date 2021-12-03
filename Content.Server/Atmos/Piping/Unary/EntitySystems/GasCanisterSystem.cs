@@ -211,7 +211,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 }
                 else
                 {
-                    var environment = _atmosphereSystem.GetTileMixture(canister.Owner.Transform.Coordinates, true);
+                    var environment = _atmosphereSystem.GetTileMixture(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(canister.Owner.Uid).Coordinates, true);
                     _atmosphereSystem.ReleaseGasTo(canister.Air, environment, canister.ReleasePressure);
                 }
             }

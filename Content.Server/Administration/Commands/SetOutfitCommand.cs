@@ -98,7 +98,7 @@ namespace Content.Server.Administration.Commands
                 {
                     continue;
                 }
-                var equipmentEntity = entityManager.SpawnEntity(gearStr, target.Transform.Coordinates);
+                var equipmentEntity = entityManager.SpawnEntity(gearStr, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(target.Uid).Coordinates);
                 if (slot == EquipmentSlotDefines.Slots.IDCARD &&
                     IoCManager.Resolve<IEntityManager>().TryGetComponent<PDAComponent?>(equipmentEntity.Uid, out var pdaComponent) &&
                     pdaComponent.ContainedID != null)

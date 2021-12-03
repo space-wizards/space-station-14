@@ -162,7 +162,7 @@ namespace Content.Client.Popups
 
                 var position = Entity == null
                     ? InitialPos
-                    : (_eyeManager.CoordinatesToScreen(Entity.Transform.Coordinates).Position / UIScale) - DesiredSize / 2;
+                    : (_eyeManager.CoordinatesToScreen(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Entity.Uid).Coordinates).Position / UIScale) - DesiredSize / 2;
 
                 LayoutContainer.SetPosition(this, position - (0, 20 * (TimeLeft * TimeLeft + TimeLeft)));
 

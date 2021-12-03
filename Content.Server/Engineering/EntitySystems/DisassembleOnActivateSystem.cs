@@ -44,7 +44,7 @@ namespace Content.Server.Engineering.EntitySystems
             if (component.Deleted || (!IoCManager.Resolve<IEntityManager>().EntityExists(component.Owner.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(component.Owner.Uid).EntityLifeStage) >= EntityLifeStage.Deleted)
                 return;
 
-            var entity = EntityManager.SpawnEntity(component.Prototype, component.Owner.Transform.Coordinates);
+            var entity = EntityManager.SpawnEntity(component.Prototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner.Uid).Coordinates);
 
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent<HandsComponent?>(args.User.Uid, out var hands)
                 && IoCManager.Resolve<IEntityManager>().TryGetComponent<ItemComponent?>(entity.Uid, out var item))

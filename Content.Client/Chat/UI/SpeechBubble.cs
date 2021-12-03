@@ -99,7 +99,7 @@ namespace Content.Client.Chat.UI
                 _verticalOffsetAchieved = MathHelper.Lerp(_verticalOffsetAchieved, VerticalOffset, 10 * args.DeltaSeconds);
             }
 
-            if (!_senderEntity.Transform.Coordinates.IsValid(IoCManager.Resolve<IEntityManager>()))
+            if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_senderEntity.Uid).Coordinates.IsValid(IoCManager.Resolve<IEntityManager>()))
             {
                 Modulate = Color.White.WithAlpha(0);
                 return;
@@ -123,7 +123,7 @@ namespace Content.Client.Chat.UI
                 return;
             }
 
-            var worldPos = _senderEntity.Transform.WorldPosition;
+            var worldPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_senderEntity.Uid).WorldPosition;
             var scale = _eyeManager.MainViewport.GetRenderScale();
             var offset = new Vector2(0, EntityVerticalOffset * EyeManager.PixelsPerMeter * scale);
             var lowerCenter = (_eyeManager.WorldToScreen(worldPos) - offset) / UIScale;

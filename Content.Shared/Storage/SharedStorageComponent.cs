@@ -52,7 +52,7 @@ namespace Content.Shared.Storage
             {
                 if (Remove(storedEntity))
                 {
-                    storedEntity.Transform.WorldPosition = eventArgs.DropLocation.Position;
+                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(storedEntity.Uid).WorldPosition = eventArgs.DropLocation.Position;
                 }
             }
 

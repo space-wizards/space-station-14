@@ -28,7 +28,7 @@ namespace Content.Server.Inventory
                 return false;
 
             // Let's spawn this first...
-            var item = entityManager.SpawnEntity(prototype, user.Transform.MapPosition);
+            var item = entityManager.SpawnEntity(prototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user.Uid).MapPosition);
 
             // Helper method that deletes the item and returns false.
             bool DeleteItem()

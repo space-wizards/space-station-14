@@ -117,7 +117,7 @@ namespace Content.Server.Actions
                             targetEntityMsg.Target);
                         return;
                     }
-                    if (!CheckRangeAndSetFacing(entity.Transform.Coordinates, player)) return;
+                    if (!CheckRangeAndSetFacing(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates, player)) return;
 
                     attempt.DoTargetEntityAction(player, entity);
                     break;
@@ -198,7 +198,7 @@ namespace Content.Server.Actions
         {
             // ensure it's within their clickable range
             var targetWorldPos = target.ToMapPos(EntityManager);
-            var rangeBox = new Box2(player.Transform.WorldPosition, player.Transform.WorldPosition)
+            var rangeBox = new Box2(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.Uid).WorldPosition, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.Uid).WorldPosition)
                 .Enlarged(MaxUpdateRange);
             if (!rangeBox.Contains(targetWorldPos))
             {

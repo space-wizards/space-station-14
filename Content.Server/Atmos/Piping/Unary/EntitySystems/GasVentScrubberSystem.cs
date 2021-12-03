@@ -44,14 +44,14 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return;
             }
 
-            var environment = _atmosphereSystem.GetTileMixture(scrubber.Owner.Transform.Coordinates, true);
+            var environment = _atmosphereSystem.GetTileMixture(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(scrubber.Owner.Uid).Coordinates, true);
 
             Scrub(_atmosphereSystem, scrubber, appearance, environment, outlet);
 
             if (!scrubber.WideNet) return;
 
             // Scrub adjacent tiles too.
-            foreach (var adjacent in _atmosphereSystem.GetAdjacentTileMixtures(scrubber.Owner.Transform.Coordinates, false, true))
+            foreach (var adjacent in _atmosphereSystem.GetAdjacentTileMixtures(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(scrubber.Owner.Uid).Coordinates, false, true))
             {
                 Scrub(_atmosphereSystem, scrubber, null, adjacent, outlet);
             }

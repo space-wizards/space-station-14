@@ -251,7 +251,7 @@ namespace Content.Server.AI.Steering
             if ((!IoCManager.Resolve<IEntityManager>().EntityExists(entity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted ||
                 !IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out AiControllerComponent? controller) ||
                 !EntitySystem.Get<ActionBlockerSystem>().CanMove(entity.Uid) ||
-                !entity.Transform.GridID.IsValid())
+                !IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).GridID.IsValid())
             {
                 return SteeringStatus.NoPath;
             }
@@ -264,7 +264,7 @@ namespace Content.Server.AI.Steering
                 return SteeringStatus.NoPath;
             }
 
-            if (_pauseManager.IsGridPaused(entity.Transform.GridID))
+            if (_pauseManager.IsGridPaused(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).GridID))
             {
                 controller.VelocityDir = Vector2.Zero;
                 return SteeringStatus.Pending;
@@ -272,14 +272,14 @@ namespace Content.Server.AI.Steering
 
             // Validation
             // Check if we can even arrive -> Currently only samegrid movement supported
-            if (entity.Transform.GridID != steeringRequest.TargetGrid.GetGridId(EntityManager))
+            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).GridID != steeringRequest.TargetGrid.GetGridId(EntityManager))
             {
                 controller.VelocityDir = Vector2.Zero;
                 return SteeringStatus.NoPath;
             }
 
             // Check if we have arrived
-            var targetDistance = (entity.Transform.MapPosition.Position - steeringRequest.TargetMap.Position).Length;
+            var targetDistance = (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).MapPosition.Position - steeringRequest.TargetMap.Position).Length;
             steeringRequest.TimeUntilInteractionCheck -= frameTime;
 
             if (targetDistance <= steeringRequest.ArrivalDistance && steeringRequest.TimeUntilInteractionCheck <= 0.0f)
@@ -416,8 +416,8 @@ namespace Content.Server.AI.Steering
             }
 
             var cancelToken = new CancellationTokenSource();
-            var gridManager = _mapManager.GetGrid(entity.Transform.GridID);
-            var startTile = gridManager.GetTileRef(entity.Transform.Coordinates);
+            var gridManager = _mapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).GridID);
+            var startTile = gridManager.GetTileRef(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates);
             var endTile = gridManager.GetTileRef(steeringRequest.TargetGrid);
             var collisionMask = 0;
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out IPhysBody? physics))
@@ -447,7 +447,7 @@ namespace Content.Server.AI.Steering
         {
             _pathfindingRequests.Remove(entity);
 
-            var entityTile = _mapManager.GetGrid(entity.Transform.GridID).GetTileRef(entity.Transform.Coordinates);
+            var entityTile = _mapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).GridID).GetTileRef(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates);
             var tile = path.Dequeue();
             var closestDistance = PathfindingHelpers.OctileDistance(entityTile, tile);
 
@@ -485,7 +485,7 @@ namespace Content.Server.AI.Steering
             // If no tiles left just move towards the target (if we're close)
             if (!_paths.ContainsKey(entity) || _paths[entity].Count == 0)
             {
-                if ((steeringRequest.TargetGrid.Position - entity.Transform.Coordinates.Position).Length <= 2.0f)
+                if ((steeringRequest.TargetGrid.Position - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates.Position).Length <= 2.0f)
                 {
                     return steeringRequest.TargetGrid;
                 }
@@ -495,7 +495,7 @@ namespace Content.Server.AI.Steering
             }
 
             if (!_nextGrid.TryGetValue(entity, out var nextGrid) ||
-                (nextGrid.Position - entity.Transform.Coordinates.Position).Length <= TileTolerance)
+                (nextGrid.Position - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates.Position).Length <= TileTolerance)
             {
                 UpdateGridCache(entity);
                 nextGrid = _nextGrid[entity];
@@ -514,7 +514,7 @@ namespace Content.Server.AI.Steering
         {
             if (_paths[entity].Count == 0) return;
             var nextTile = dequeue ? _paths[entity].Dequeue() : _paths[entity].Peek();
-            var nextGrid = _mapManager.GetGrid(entity.Transform.GridID).GridTileToLocal(nextTile.GridIndices);
+            var nextGrid = _mapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).GridID).GridTileToLocal(nextTile.GridIndices);
             _nextGrid[entity] = nextGrid;
         }
 
@@ -526,12 +526,12 @@ namespace Content.Server.AI.Steering
         {
             if (!_stuckPositions.TryGetValue(entity, out var stuckPosition))
             {
-                _stuckPositions[entity] = entity.Transform.Coordinates;
+                _stuckPositions[entity] = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates;
                 _stuckCounter[entity] = 0;
                 return;
             }
 
-            if ((entity.Transform.Coordinates.Position - stuckPosition.Position).Length <= 1.0f)
+            if ((IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates.Position - stuckPosition.Position).Length <= 1.0f)
             {
                 _stuckCounter.TryGetValue(entity, out var stuckCount);
                 _stuckCounter[entity] = stuckCount + 1;
@@ -539,7 +539,7 @@ namespace Content.Server.AI.Steering
             else
             {
                 // No longer stuck
-                _stuckPositions[entity] = entity.Transform.Coordinates;
+                _stuckPositions[entity] = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates;
                 _stuckCounter[entity] = 0;
                 return;
             }
@@ -565,7 +565,7 @@ namespace Content.Server.AI.Steering
         private Vector2 Seek(IEntity entity, EntityCoordinates grid)
         {
             // is-even much
-            var entityPos = entity.Transform.Coordinates;
+            var entityPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates;
             return entityPos == grid
                 ? Vector2.Zero
                 : (grid.Position - entityPos.Position).Normalized;
@@ -580,7 +580,7 @@ namespace Content.Server.AI.Steering
         /// <returns></returns>
         private Vector2 Arrival(IEntity entity, EntityCoordinates grid, float slowingDistance = 1.0f)
         {
-            var entityPos = entity.Transform.Coordinates;
+            var entityPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates;
             DebugTools.Assert(slowingDistance > 0.0f);
             if (entityPos == grid)
             {
@@ -599,8 +599,8 @@ namespace Content.Server.AI.Steering
         /// <returns></returns>
         private Vector2 Pursuit(IEntity entity, IEntity target)
         {
-            var entityPos = entity.Transform.Coordinates;
-            var targetPos = target.Transform.Coordinates;
+            var entityPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates;
+            var targetPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(target.Uid).Coordinates;
             if (entityPos == targetPos)
             {
                 return Vector2.Zero;
@@ -636,8 +636,8 @@ namespace Content.Server.AI.Steering
             var avoidanceVector = Vector2.Zero;
             var checkTiles = new HashSet<TileRef>();
             var avoidTiles = new HashSet<TileRef>();
-            var entityGridCoords = entity.Transform.Coordinates;
-            var grid = _mapManager.GetGrid(entity.Transform.GridID);
+            var entityGridCoords = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates;
+            var grid = _mapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).GridID);
             var currentTile = grid.GetTileRef(entityGridCoords);
             var halfwayTile = grid.GetTileRef(entityGridCoords.Offset(direction / 2));
             var nextTile = grid.GetTileRef(entityGridCoords.Offset(direction));
@@ -671,7 +671,7 @@ namespace Content.Server.AI.Steering
                         continue;
                     }
 
-                    var centerGrid = physicsEntity.Transform.Coordinates;
+                    var centerGrid = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(physicsEntity.Uid).Coordinates;
                     // Check how close we are to center of tile and get the inverse; if we're closer this is stronger
                     var additionalVector = (centerGrid.Position - entityGridCoords.Position);
                     var distance = additionalVector.Length;

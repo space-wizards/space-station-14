@@ -300,7 +300,7 @@ namespace Content.Server.Botany
             }
 
             user.PopupMessageCursor(Loc.GetString("botany-harvest-success-message", ("name", DisplayName)));
-            return GenerateProduct(user.Transform.Coordinates, yieldMod);
+            return GenerateProduct(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user.Uid).Coordinates, yieldMod);
         }
 
         public IEnumerable<IEntity> GenerateProduct(EntityCoordinates position, int yieldMod = 1)

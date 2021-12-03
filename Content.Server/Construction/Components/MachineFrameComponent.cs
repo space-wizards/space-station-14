@@ -314,7 +314,7 @@ namespace Content.Server.Construction.Components
                         return true;
                     }
 
-                    var splitStack = EntitySystem.Get<StackSystem>().Split(eventArgs.Using.Uid, needed, Owner.Transform.Coordinates, stack);
+                    var splitStack = EntitySystem.Get<StackSystem>().Split(eventArgs.Using.Uid, needed, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates, stack);
 
                     if (splitStack == null)
                         return false;

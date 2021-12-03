@@ -260,8 +260,8 @@ namespace Content.Server.Cuffs.Components
                 SoundSystem.Play(Filter.Pvs(Owner), cuff.EndUncuffSound.GetSound(), Owner);
 
                 Container.ForceRemove(cuffsToRemove);
-                cuffsToRemove.Transform.AttachToGridOrMap();
-                cuffsToRemove.Transform.WorldPosition = Owner.Transform.WorldPosition;
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(cuffsToRemove.Uid).AttachToGridOrMap();
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(cuffsToRemove.Uid).WorldPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).WorldPosition;
 
                 if (cuff.BreakOnRemove)
                 {

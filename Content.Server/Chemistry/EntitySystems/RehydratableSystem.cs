@@ -41,8 +41,8 @@ namespace Content.Server.Chemistry.EntitySystems
             if (!string.IsNullOrEmpty(component.TargetPrototype))
             {
                 var ent = IoCManager.Resolve<IEntityManager>().SpawnEntity(component.TargetPrototype,
-                    owner.Transform.Coordinates);
-                ent.Transform.AttachToGridOrMap();
+                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(owner.Uid).Coordinates);
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(ent.Uid).AttachToGridOrMap();
             }
 
             IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(owner.Uid);

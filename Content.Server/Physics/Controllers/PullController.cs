@@ -74,7 +74,7 @@ namespace Content.Server.Physics.Controllers
 
                 // Now that's over with...
 
-                var pullerPosition = puller.Transform.MapPosition;
+                var pullerPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(puller.Uid).MapPosition;
                 var movingTo = pullable.MovingTo.Value.ToMap(IoCManager.Resolve<IEntityManager>());
                 if (movingTo.MapId != pullerPosition.MapId)
                 {
@@ -84,14 +84,14 @@ namespace Content.Server.Physics.Controllers
 
                 if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<PhysicsComponent?>(pullable.Owner.Uid, out var physics) ||
                     physics.BodyType == BodyType.Static ||
-                    movingTo.MapId != pullable.Owner.Transform.MapID)
+                    movingTo.MapId != IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pullable.Owner.Uid).MapID)
                 {
                     _pullableSystem.StopMoveTo(pullable);
                     continue;
                 }
 
                 var movingPosition = movingTo.Position;
-                var ownerPosition = pullable.Owner.Transform.MapPosition.Position;
+                var ownerPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pullable.Owner.Uid).MapPosition.Position;
 
                 var diff = movingPosition - ownerPosition;
                 var diffLength = diff.Length;

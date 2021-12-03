@@ -22,9 +22,10 @@ public class StandingStateSystem : EntitySystem
             {
                 if (hands.Drop(heldItem.Owner))
                 {
+                    IEntity tempQualifier = EntityManager.GetEntity(uid);
                     Throwing.ThrowHelper.TryThrow(heldItem.Owner,
                         _random.NextAngle().RotateVec(direction / dropAngle +
-                                                      EntityManager.GetEntity(uid).Transform.WorldRotation.ToVec() / 50),
+                                                      IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(tempQualifier.Uid).WorldRotation.ToVec() / 50),
                         0.5f * dropAngle * _random.NextFloat(-0.9f, 1.1f),
                         EntityManager.GetEntity(uid), 0);
                 }

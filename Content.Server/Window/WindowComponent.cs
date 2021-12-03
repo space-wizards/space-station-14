@@ -105,7 +105,7 @@ namespace Content.Server.Window
 
             SoundSystem.Play(
                 Filter.Pvs(eventArgs.Target), _knockSound.GetSound(),
-                eventArgs.Target.Transform.Coordinates, AudioHelpers.WithVariation(0.05f));
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(eventArgs.Target.Uid).Coordinates, AudioHelpers.WithVariation(0.05f));
             eventArgs.Target.PopupMessageEveryone(Loc.GetString("comp-window-knock"));
 
             _lastKnockTime = _gameTiming.CurTime;

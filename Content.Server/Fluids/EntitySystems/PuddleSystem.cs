@@ -106,7 +106,7 @@ namespace Content.Server.Fluids.EntitySystems
             verb.Text = Loc.GetString("spill-target-verb-get-data-text");
             // TODO VERB ICONS spill icon? pouring out a glass/beaker?
             verb.Act = () => _solutionContainerSystem.SplitSolution(args.Target.Uid,
-                solution, solution.DrainAvailable).SpillAt(args.Target.Transform.Coordinates, "PuddleSmear");
+                solution, solution.DrainAvailable).SpillAt(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.Target.Uid).Coordinates, "PuddleSmear");
             verb.Impact = LogImpact.Medium; // dangerous reagent reaction are logged separately.
             args.Verbs.Add(verb);
         }
@@ -121,7 +121,7 @@ namespace Content.Server.Fluids.EntitySystems
 
         private void OnUnanchored(EntityUid uid, PuddleComponent puddle, UnanchoredEvent unanchoredEvent)
         {
-            if (!puddle.Owner.Transform.Anchored)
+            if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(puddle.Owner.Uid).Anchored)
                 return;
 
             IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(puddle.Owner.Uid);
@@ -288,11 +288,11 @@ namespace Content.Server.Fluids.EntitySystems
             puddle = default;
 
             // We're most likely in space, do nothing.
-            if (!puddleComponent.Owner.Transform.GridID.IsValid())
+            if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(puddleComponent.Owner.Uid).GridID.IsValid())
                 return false;
 
-            var mapGrid = _mapManager.GetGrid(puddleComponent.Owner.Transform.GridID);
-            var coords = puddleComponent.Owner.Transform.Coordinates;
+            var mapGrid = _mapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(puddleComponent.Owner.Uid).GridID);
+            var coords = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(puddleComponent.Owner.Uid).Coordinates;
 
             if (!coords.Offset(direction).TryGetTileRef(out var tile))
             {
@@ -305,7 +305,7 @@ namespace Content.Server.Fluids.EntitySystems
                 return false;
             }
 
-            if (!puddleComponent.Owner.Transform.Anchored)
+            if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(puddleComponent.Owner.Uid).Anchored)
                 return false;
 
             foreach (var entity in mapGrid.GetInDir(coords, direction))

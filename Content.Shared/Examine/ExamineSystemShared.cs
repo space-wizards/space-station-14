@@ -64,7 +64,7 @@ namespace Content.Shared.Examine
         [Pure]
         public bool CanExamine(IEntity examiner, IEntity examined)
         {
-            return CanExamine(examiner, examined.Transform.MapPosition,
+            return CanExamine(examiner, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(examined.Uid).MapPosition,
                 entity => entity == examiner || entity == examined);
         }
 
@@ -77,11 +77,11 @@ namespace Content.Shared.Examine
             if (!examinerComponent.DoRangeCheck)
                 return true;
 
-            if (examiner.Transform.MapID != target.MapId)
+            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(examiner.Uid).MapID != target.MapId)
                 return false;
 
             return InRangeUnOccluded(
-                examiner.Transform.MapPosition,
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(examiner.Uid).MapPosition,
                 target,
                 GetExaminerRange(examiner.Uid),
                 predicate: predicate,
@@ -133,7 +133,7 @@ namespace Content.Shared.Examine
                     continue;
                 }
 
-                var bBox = o.BoundingBox.Translated(o.Owner.Transform.WorldPosition);
+                var bBox = o.BoundingBox.Translated(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(o.Owner.Uid).WorldPosition);
 
                 if (bBox.Contains(origin.Position) || bBox.Contains(other.Position))
                 {
@@ -148,23 +148,23 @@ namespace Content.Shared.Examine
 
         public static bool InRangeUnOccluded(IEntity origin, IEntity other, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
         {
-            var originPos = origin.Transform.MapPosition;
-            var otherPos = other.Transform.MapPosition;
+            var originPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(origin.Uid).MapPosition;
+            var otherPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other.Uid).MapPosition;
 
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
 
         public static bool InRangeUnOccluded(IEntity origin, IComponent other, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
         {
-            var originPos = origin.Transform.MapPosition;
-            var otherPos = other.Owner.Transform.MapPosition;
+            var originPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(origin.Uid).MapPosition;
+            var otherPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other.Owner.Uid).MapPosition;
 
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
 
         public static bool InRangeUnOccluded(IEntity origin, EntityCoordinates other, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
         {
-            var originPos = origin.Transform.MapPosition;
+            var originPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(origin.Uid).MapPosition;
             var otherPos = other.ToMap(IoCManager.Resolve<IEntityManager>());
 
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
@@ -172,22 +172,22 @@ namespace Content.Shared.Examine
 
         public static bool InRangeUnOccluded(IEntity origin, MapCoordinates other, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
         {
-            var originPos = origin.Transform.MapPosition;
+            var originPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(origin.Uid).MapPosition;
 
             return InRangeUnOccluded(originPos, other, range, predicate, ignoreInsideBlocker);
         }
 
         public static bool InRangeUnOccluded(ITargetedInteractEventArgs args, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
         {
-            var originPos = args.User.Transform.MapPosition;
-            var otherPos = args.Target.Transform.MapPosition;
+            var originPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.User.Uid).MapPosition;
+            var otherPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.Target.Uid).MapPosition;
 
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
 
         public static bool InRangeUnOccluded(DragDropEvent args, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
         {
-            var originPos = args.User.Transform.MapPosition;
+            var originPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.User.Uid).MapPosition;
             var otherPos = args.DropLocation.ToMap(IoCManager.Resolve<IEntityManager>());
 
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
@@ -195,8 +195,9 @@ namespace Content.Shared.Examine
 
         public static bool InRangeUnOccluded(AfterInteractEventArgs args, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
         {
-            var originPos = args.User.Transform.MapPosition;
-            var otherPos = args.Target?.Transform.MapPosition ?? args.ClickLocation.ToMap(IoCManager.Resolve<IEntityManager>());
+            var originPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.User.Uid).MapPosition;
+            IEntity? tempQualifier = args.Target;
+            var otherPos = (tempQualifier != null ? IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(tempQualifier.Uid) : null).MapPosition ?? args.ClickLocation.ToMap(IoCManager.Resolve<IEntityManager>());
 
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }

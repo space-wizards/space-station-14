@@ -120,7 +120,7 @@ namespace Content.Server.Morgue.Components
                         IoCManager.Resolve<IEntityManager>().DeleteEntity(item.Uid);
                     }
 
-                    var ash = IoCManager.Resolve<IEntityManager>().SpawnEntity("Ash", Owner.Transform.Coordinates);
+                    var ash = IoCManager.Resolve<IEntityManager>().SpawnEntity("Ash", IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
                     Contents.Insert(ash);
                 }
 

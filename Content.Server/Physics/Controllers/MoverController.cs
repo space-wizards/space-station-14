@@ -271,7 +271,7 @@ namespace Content.Server.Physics.Controllers
         {
             if (!mover.Owner.HasTag("FootstepSound")) return;
 
-            var transform = mover.Owner.Transform;
+            var transform = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(mover.Owner.Uid);
             var coordinates = transform.Coordinates;
             var gridId = coordinates.GetGridId(EntityManager);
             var distanceNeeded = mover.Sprinting ? StepSoundMoveDistanceRunning : StepSoundMoveDistanceWalking;
@@ -352,7 +352,7 @@ namespace Content.Server.Physics.Controllers
             SoundSystem.Play(
                 Filter.Pvs(coordinates),
                 soundToPlay,
-                mover.Transform.Coordinates,
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(mover.Uid).Coordinates,
                 sprinting ? AudioParams.Default.WithVolume(0.75f) : null);
         }
     }

@@ -7,6 +7,7 @@ using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 
 namespace Content.Server.Administration.Commands
 {
@@ -41,9 +42,9 @@ namespace Content.Server.Administration.Commands
             }
 
             var canReturn = mind.CurrentEntity != null;
-            var ghost = IoCManager.Resolve<IEntityManager>()
-                .SpawnEntity("AdminObserver", player.AttachedEntity?.Transform.Coordinates
-                                              ?? EntitySystem.Get<GameTicker>().GetObserverSpawnPoint());
+            IEntity? tempQualifier = player.AttachedEntity;
+            var ghost = IoCManager.Resolve<IEntityManager>().SpawnEntity((string?) "AdminObserver", (EntityCoordinates) ((tempQualifier != null ? IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(tempQualifier.Uid) : null).Coordinates
+                ?? EntitySystem.Get<GameTicker>().GetObserverSpawnPoint()));
 
             if (canReturn)
             {

@@ -115,7 +115,7 @@ namespace Content.Server.Cuffs
                 var entity = container.ContainedEntities[^1];
 
                 container.Remove(entity);
-                entity.Transform.WorldPosition = owner.Transform.WorldPosition;
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).WorldPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(owner.Uid).WorldPosition;
             }
 
             if (dirty)

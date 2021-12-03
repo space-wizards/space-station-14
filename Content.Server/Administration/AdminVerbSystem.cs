@@ -125,7 +125,7 @@ namespace Content.Server.Administration
                 verb.Category = VerbCategory.Debug;
                 verb.Act = () =>
                 {
-                    var coords = args.Target.Transform.Coordinates;
+                    var coords = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.Target.Uid).Coordinates;
                     Timer.Spawn(_gameTiming.TickPeriod, () => _explosions.SpawnExplosion(coords, 0, 1, 2, 1), CancellationToken.None);
                     if (IoCManager.Resolve<IEntityManager>().TryGetComponent(args.Target.Uid, out SharedBodyComponent? body))
                     {

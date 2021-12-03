@@ -248,7 +248,7 @@ namespace Content.Server.Botany.Components
                     _updateSpriteAfterUpdate = true;
             }
 
-            var environment = EntitySystem.Get<AtmosphereSystem>().GetTileMixture(Owner.Transform.Coordinates, true) ??
+            var environment = EntitySystem.Get<AtmosphereSystem>().GetTileMixture(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates, true) ??
                               GasMixture.SpaceGas;
 
             if (Seed.ConsumeGasses.Count > 0)
@@ -361,7 +361,7 @@ namespace Content.Server.Botany.Components
             }
             else if (Age < 0) // Revert back to seed packet!
             {
-                Seed.SpawnSeedPacket(Owner.Transform.Coordinates);
+                Seed.SpawnSeedPacket(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
                 RemovePlant();
                 ForceUpdate = true;
                 Update();
@@ -453,7 +453,7 @@ namespace Content.Server.Botany.Components
             if (Seed == null || !Harvest)
                 return;
 
-            Seed.AutoHarvest(Owner.Transform.Coordinates);
+            Seed.AutoHarvest(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
             AfterHarvest();
         }
 
@@ -783,7 +783,7 @@ namespace Content.Server.Botany.Components
                     return false;
                 }
 
-                var seed = Seed.SpawnSeedPacket(user.Transform.Coordinates);
+                var seed = Seed.SpawnSeedPacket(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user.Uid).Coordinates);
                 seed.RandomOffset(0.25f);
                 user.PopupMessageCursor(Loc.GetString("plant-holder-component-take-sample-message",
                     ("seedName", Seed.DisplayName)));

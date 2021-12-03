@@ -166,7 +166,7 @@ namespace Content.Server.Singularity.EntitySystems
 
         private void Fire(EmitterComponent component)
         {
-            var projectile = IoCManager.Resolve<IEntityManager>().SpawnEntity(component.BoltType, component.Owner.Transform.Coordinates);
+            var projectile = IoCManager.Resolve<IEntityManager>().SpawnEntity(component.BoltType, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner.Uid).Coordinates);
 
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<PhysicsComponent?>(projectile.Uid, out var physicsComponent))
             {
@@ -185,8 +185,8 @@ namespace Content.Server.Singularity.EntitySystems
             projectileComponent.IgnoreEntity(component.Owner);
 
             physicsComponent
-                .LinearVelocity = component.Owner.Transform.WorldRotation.ToWorldVec() * 20f;
-            projectile.Transform.WorldRotation = component.Owner.Transform.WorldRotation;
+                .LinearVelocity = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner.Uid).WorldRotation.ToWorldVec() * 20f;
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(projectile.Uid).WorldRotation = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner.Uid).WorldRotation;
 
             // TODO: Move to projectile's code.
             Timer.Spawn(3000, () => IoCManager.Resolve<IEntityManager>().DeleteEntity(projectile.Uid));

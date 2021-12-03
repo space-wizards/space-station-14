@@ -139,7 +139,7 @@ namespace Content.Client.HealthOverlay.UI
             MoreFrameUpdate(args);
 
             if ((!IoCManager.Resolve<IEntityManager>().EntityExists(Entity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Entity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted ||
-                _eyeManager.CurrentMap != Entity.Transform.MapID)
+                _eyeManager.CurrentMap != IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Entity.Uid).MapID)
             {
                 Visible = false;
                 return;
@@ -147,7 +147,7 @@ namespace Content.Client.HealthOverlay.UI
 
             Visible = true;
 
-            var screenCoordinates = _eyeManager.CoordinatesToScreen(Entity.Transform.Coordinates);
+            var screenCoordinates = _eyeManager.CoordinatesToScreen(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Entity.Uid).Coordinates);
             var playerPosition = UserInterfaceManager.ScreenToUIPosition(screenCoordinates);
             LayoutContainer.SetPosition(this, new Vector2(playerPosition.X - Width / 2, playerPosition.Y - Height - 30.0f));
         }

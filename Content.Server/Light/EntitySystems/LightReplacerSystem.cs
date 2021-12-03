@@ -125,7 +125,7 @@ namespace Content.Server.Light.EntitySystems
                 // found right bulb, let's spawn it
                 if (bulbEnt != null)
                 {
-                    bulb = EntityManager.SpawnEntity(bulbEnt.PrototypeName, replacer.Owner.Transform.Coordinates);
+                    bulb = EntityManager.SpawnEntity(bulbEnt.PrototypeName, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(replacer.Owner.Uid).Coordinates);
                     bulbEnt.Amount--;
                 }
                 // not found any light bulbs

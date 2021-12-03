@@ -60,12 +60,12 @@ namespace Content.Server.Administration.Commands
                 }
 
                 var mapManager = IoCManager.Resolve<IMapManager>();
-                var currentMap = player.AttachedEntity.Transform.MapID;
-                var currentGrid = player.AttachedEntity.Transform.GridID;
+                var currentMap = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.AttachedEntity.Uid).MapID;
+                var currentGrid = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.AttachedEntity.Uid).GridID;
 
                 var found = entMan.EntityQuery<WarpPointComponent>(true)
                     .Where(p => p.Location == location)
-                    .Select(p => p.Owner.Transform.Coordinates)
+                    .Select(p => IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(p.Owner.Uid).Coordinates)
                     .OrderBy(p => p, Comparer<EntityCoordinates>.Create((a, b) =>
                     {
                         // Sort so that warp points on the same grid/map are first.
@@ -113,7 +113,7 @@ namespace Content.Server.Administration.Commands
 
                 if (found.GetGridId(entMan) != GridId.Invalid)
                 {
-                    player.AttachedEntity.Transform.Coordinates = found;
+                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.AttachedEntity.Uid).Coordinates = found;
                     if (IoCManager.Resolve<IEntityManager>().TryGetComponent(player.AttachedEntity.Uid, out IPhysBody? physics))
                     {
                         physics.LinearVelocity = Vector2.Zero;

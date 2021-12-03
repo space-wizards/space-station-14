@@ -26,7 +26,7 @@ namespace Content.Server.AI.WorldState.States.Mobs
             }
 
             var nearbyPlayers = Filter.Empty()
-                .AddInRange(Owner.Transform.MapPosition, controller.VisionRadius)
+                .AddInRange(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).MapPosition, controller.VisionRadius)
                 .Recipients;
 
             foreach (var player in nearbyPlayers)

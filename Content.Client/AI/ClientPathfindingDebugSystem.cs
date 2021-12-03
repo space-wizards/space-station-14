@@ -287,7 +287,7 @@ namespace Content.Client.AI
         private void DrawCachedRegions(DrawingHandleScreen screenHandle, Box2 viewport)
         {
             var attachedEntity = _playerManager.LocalPlayer?.ControlledEntity;
-            if (attachedEntity == null || !CachedRegions.TryGetValue(attachedEntity.Transform.GridID, out var entityRegions))
+            if (attachedEntity == null || !CachedRegions.TryGetValue(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(attachedEntity.Uid).GridID, out var entityRegions))
             {
                 return;
             }
@@ -305,7 +305,7 @@ namespace Content.Client.AI
                         screenTile.X + 15.0f,
                         screenTile.Y + 15.0f);
 
-                    screenHandle.DrawRect(box, _cachedRegionColors[attachedEntity.Transform.GridID][region]);
+                    screenHandle.DrawRect(box, _cachedRegionColors[IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(attachedEntity.Uid).GridID][region]);
                 }
             }
         }
@@ -336,7 +336,7 @@ namespace Content.Client.AI
         private void DrawRegions(DrawingHandleScreen screenHandle, Box2 viewport)
         {
             var attachedEntity = _playerManager.LocalPlayer?.ControlledEntity;
-            if (attachedEntity == null || !Regions.TryGetValue(attachedEntity.Transform.GridID, out var entityRegions))
+            if (attachedEntity == null || !Regions.TryGetValue(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(attachedEntity.Uid).GridID, out var entityRegions))
             {
                 return;
             }
@@ -356,7 +356,7 @@ namespace Content.Client.AI
                             screenTile.X + 15.0f,
                             screenTile.Y + 15.0f);
 
-                        screenHandle.DrawRect(box, _regionColors[attachedEntity.Transform.GridID][chunk][region]);
+                        screenHandle.DrawRect(box, _regionColors[IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(attachedEntity.Uid).GridID][chunk][region]);
                     }
                 }
             }

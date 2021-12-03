@@ -143,8 +143,8 @@ namespace Content.Server.Storage.EntitySystems
             if (_sessionCache.Count == 0)
                 return;
 
-            var storagePos = storageComp.Owner.Transform.WorldPosition;
-            var storageMap = storageComp.Owner.Transform.MapID;
+            var storagePos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(storageComp.Owner.Uid).WorldPosition;
+            var storageMap = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(storageComp.Owner.Uid).MapID;
 
             foreach (var session in _sessionCache)
             {
@@ -154,10 +154,10 @@ namespace Content.Server.Storage.EntitySystems
                 if (attachedEntity == null || !IoCManager.Resolve<IEntityManager>().EntityExists(attachedEntity.Uid))
                     continue;
 
-                if (storageMap != attachedEntity.Transform.MapID)
+                if (storageMap != IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(attachedEntity.Uid).MapID)
                     continue;
 
-                var distanceSquared = (storagePos - attachedEntity.Transform.WorldPosition).LengthSquared;
+                var distanceSquared = (storagePos - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(attachedEntity.Uid).WorldPosition).LengthSquared;
                 if (distanceSquared > InteractionSystem.InteractionRangeSquared)
                 {
                     storageComp.UnsubscribeSession(session);

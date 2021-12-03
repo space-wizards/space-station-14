@@ -230,7 +230,7 @@ namespace Content.Server.Hands.Systems
 
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent(throwEnt.Uid, out StackComponent? stack) && stack.Count > 1 && stack.ThrowIndividually)
             {
-                var splitStack = _stackSystem.Split(throwEnt.Uid, 1, playerEnt.Transform.Coordinates, stack);
+                var splitStack = _stackSystem.Split(throwEnt.Uid, 1, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(playerEnt.Uid).Coordinates, stack);
 
                 if (splitStack == null)
                     return false;
@@ -240,7 +240,7 @@ namespace Content.Server.Hands.Systems
             else if (!hands.Drop(throwEnt))
                 return false;
 
-            var direction = coords.ToMapPos(EntityManager) - playerEnt.Transform.WorldPosition;
+            var direction = coords.ToMapPos(EntityManager) - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(playerEnt.Uid).WorldPosition;
             if (direction == Vector2.Zero)
                 return true;
 
@@ -299,7 +299,7 @@ namespace Content.Server.Hands.Systems
                     if (storageComponent.Remove(lastStoredEntity))
                     {
                         if (!hands.TryPickupEntityToActiveHand(lastStoredEntity))
-                            lastStoredEntity.Transform.Coordinates = plyEnt.Transform.Coordinates;
+                            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(lastStoredEntity.Uid).Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(plyEnt.Uid).Coordinates;
                     }
                 }
             }

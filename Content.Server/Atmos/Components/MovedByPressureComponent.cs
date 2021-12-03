@@ -47,7 +47,7 @@ namespace Content.Server.Atmos.Components
 
             // TODO ATMOS stuns?
 
-            var transform = physics.Owner.Transform;
+            var transform = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(physics.Owner.Uid);
             var maxForce = MathF.Sqrt(pressureDifference) * 2.25f;
             var moveProb = 100f;
 

@@ -366,13 +366,13 @@ namespace Content.Server.Kitchen.Components
                     if (recipeToCook != null)
                     {
                         SubtractContents(recipeToCook);
-                        IoCManager.Resolve<IEntityManager>().SpawnEntity(recipeToCook.Result, Owner.Transform.Coordinates);
+                        IoCManager.Resolve<IEntityManager>().SpawnEntity(recipeToCook.Result, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
                     }
                     else
                     {
                         VaporizeReagents();
                         VaporizeSolids();
-                        IoCManager.Resolve<IEntityManager>().SpawnEntity(_badRecipeName, Owner.Transform.Coordinates);
+                        IoCManager.Resolve<IEntityManager>().SpawnEntity(_badRecipeName, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
                     }
                 }
 

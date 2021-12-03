@@ -268,7 +268,7 @@ namespace Content.Shared.Body.Components
         {
             if (RemoveMechanism(mechanism))
             {
-                mechanism.Owner.Transform.Coordinates = coordinates;
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(mechanism.Owner.Uid).Coordinates = coordinates;
                 return true;
             }
 
@@ -299,8 +299,8 @@ namespace Content.Shared.Body.Components
 
         private void AddedToBody(SharedBodyComponent body)
         {
-            Owner.Transform.LocalRotation = 0;
-            Owner.Transform.AttachParent(body.Owner);
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).LocalRotation = 0;
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).AttachParent(body.Owner);
             OnAddedToBody(body);
 
             foreach (var mechanism in _mechanisms)
@@ -311,9 +311,9 @@ namespace Content.Shared.Body.Components
 
         private void RemovedFromBody(SharedBodyComponent old)
         {
-            if (!Owner.Transform.Deleted)
+            if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Deleted)
             {
-                Owner.Transform.AttachToGridOrMap();
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).AttachToGridOrMap();
             }
 
             OnRemovedFromBody(old);

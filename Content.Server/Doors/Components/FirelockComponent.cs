@@ -47,7 +47,7 @@ namespace Content.Server.Doors.Components
             var minMoles = float.MaxValue;
             var maxMoles = 0f;
 
-            foreach (var adjacent in atmosphereSystem.GetAdjacentTileMixtures(Owner.Transform.Coordinates))
+            foreach (var adjacent in atmosphereSystem.GetAdjacentTileMixtures(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates))
             {
                 var moles = adjacent.TotalMoles;
                 if (moles < minMoles)
@@ -63,7 +63,7 @@ namespace Content.Server.Doors.Components
         {
             var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
 
-            if (!atmosphereSystem.TryGetGridAndTile(Owner.Transform.Coordinates, out var tuple))
+            if (!atmosphereSystem.TryGetGridAndTile(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates, out var tuple))
                 return false;
 
             if (atmosphereSystem.GetTileMixture(tuple.Value.Grid, tuple.Value.Tile) == null)
@@ -72,7 +72,7 @@ namespace Content.Server.Doors.Components
             if (atmosphereSystem.IsHotspotActive(tuple.Value.Grid, tuple.Value.Tile))
                 return true;
 
-            foreach (var adjacent in atmosphereSystem.GetAdjacentTiles(Owner.Transform.Coordinates))
+            foreach (var adjacent in atmosphereSystem.GetAdjacentTiles(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates))
             {
                 if (atmosphereSystem.IsHotspotActive(tuple.Value.Grid, adjacent))
                     return true;

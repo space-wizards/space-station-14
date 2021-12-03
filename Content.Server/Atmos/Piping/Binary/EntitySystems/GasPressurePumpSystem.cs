@@ -38,7 +38,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
         private void OnExamined(EntityUid uid, GasPressurePumpComponent pump, ExaminedEvent args)
         {
-            if (!pump.Owner.Transform.Anchored || !args.IsInDetailsRange) // Not anchored? Out of range? No status.
+            if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pump.Owner.Uid).Anchored || !args.IsInDetailsRange) // Not anchored? Out of range? No status.
                 return;
 
             if (Loc.TryGetString("gas-pressure-pump-system-examined", out var str,
@@ -95,7 +95,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User.Uid, out ActorComponent? actor))
                 return;
 
-            if (component.Owner.Transform.Anchored)
+            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner.Uid).Anchored)
             {
                 _userInterfaceSystem.TryOpen(uid, GasPressurePumpUiKey.Key, actor.PlayerSession);
                 DirtyUI(uid, component);

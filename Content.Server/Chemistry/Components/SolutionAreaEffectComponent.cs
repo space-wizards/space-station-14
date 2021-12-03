@@ -70,8 +70,8 @@ namespace Content.Server.Chemistry.Components
 
             void SpreadToDir(Direction dir)
             {
-                var grid = MapManager.GetGrid(Owner.Transform.GridID);
-                var coords = Owner.Transform.Coordinates;
+                var grid = MapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).GridID);
+                var coords = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates;
                 foreach (var neighbor in grid.GetInDir(coords, dir))
                 {
                     if (IoCManager.Resolve<IEntityManager>().TryGetComponent(neighbor,
@@ -132,8 +132,8 @@ namespace Content.Server.Chemistry.Components
                 return;
 
             var chemistry = EntitySystem.Get<ReactiveSystem>();
-            var mapGrid = MapManager.GetGrid(Owner.Transform.GridID);
-            var tile = mapGrid.GetTileRef(Owner.Transform.Coordinates.ToVector2i(IoCManager.Resolve<IEntityManager>(), MapManager));
+            var mapGrid = MapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).GridID);
+            var tile = mapGrid.GetTileRef(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates.ToVector2i(IoCManager.Resolve<IEntityManager>(), MapManager));
 
             var solutionFraction = 1 / Math.Floor(averageExposures);
 

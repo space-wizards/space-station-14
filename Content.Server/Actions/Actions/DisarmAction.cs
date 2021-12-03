@@ -59,7 +59,7 @@ namespace Content.Server.Actions.Actions
                 {
                     // Fall back to a normal interaction with the entity
                     var player = actor.PlayerSession;
-                    var coordinates = args.Target.Transform.Coordinates;
+                    var coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.Target.Uid).Coordinates;
                     var target = args.Target.Uid;
                     EntitySystem.Get<InteractionSystem>().HandleUseInteraction(player, coordinates, target);
                     return;
@@ -74,7 +74,7 @@ namespace Content.Server.Actions.Actions
             var random = IoCManager.Resolve<IRobustRandom>();
             var system = EntitySystem.Get<MeleeWeaponSystem>();
 
-            var diff = args.Target.Transform.MapPosition.Position - args.Performer.Transform.MapPosition.Position;
+            var diff = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.Target.Uid).MapPosition.Position - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.Performer.Uid).MapPosition.Position;
             var angle = Angle.FromWorldVec(diff);
 
             actions.Cooldown(ActionType.Disarm, Cooldowns.SecondsFromNow(_cooldown));
@@ -114,7 +114,7 @@ namespace Content.Server.Actions.Actions
                     return;
             }
 
-            SoundSystem.Play(Filter.Pvs(args.Performer), DisarmSuccessSound.GetSound(), args.Performer.Transform.Coordinates, AudioHelpers.WithVariation(0.025f));
+            SoundSystem.Play(Filter.Pvs(args.Performer), DisarmSuccessSound.GetSound(), IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.Performer.Uid).Coordinates, AudioHelpers.WithVariation(0.025f));
         }
     }
 }

@@ -58,13 +58,13 @@ namespace Content.Shared.Placeable
             if (!args.ClickLocation.IsValid(IoCManager.Resolve<IEntityManager>()))
                 return;
 
-            if(!handComponent.TryDropEntity(args.Used, surface.Owner.Transform.Coordinates))
+            if(!handComponent.TryDropEntity(args.Used, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(surface.Owner.Uid).Coordinates))
                 return;
 
             if (surface.PlaceCentered)
-                args.Used.Transform.LocalPosition = args.Target.Transform.LocalPosition + surface.PositionOffset;
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.Used.Uid).LocalPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.Target.Uid).LocalPosition + surface.PositionOffset;
             else
-                args.Used.Transform.Coordinates = args.ClickLocation;
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.Used.Uid).Coordinates = args.ClickLocation;
 
             args.Handled = true;
         }

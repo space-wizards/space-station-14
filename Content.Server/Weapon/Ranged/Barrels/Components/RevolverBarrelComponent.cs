@@ -114,7 +114,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
             for (var i = 0; i < _unspawnedCount; i++)
             {
-                var entity = IoCManager.Resolve<IEntityManager>().SpawnEntity(_fillPrototype, Owner.Transform.Coordinates);
+                var entity = IoCManager.Resolve<IEntityManager>().SpawnEntity(_fillPrototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
                 _ammoSlots[idx] = entity;
                 _ammoContainer.Insert(entity);
                 idx++;

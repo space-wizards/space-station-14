@@ -97,7 +97,7 @@ namespace Content.Server.Singularity.Components
         protected override void Shutdown()
         {
             base.Shutdown();
-            SoundSystem.Play(Filter.Pvs(Owner), _singularityCollapsingSound.GetSound(), Owner.Transform.Coordinates);
+            SoundSystem.Play(Filter.Pvs(Owner), _singularityCollapsingSound.GetSound(), IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
         }
     }
 }

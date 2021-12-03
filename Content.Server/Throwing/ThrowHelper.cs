@@ -63,7 +63,7 @@ namespace Content.Server.Throwing
                 }
                 else if(direction != Vector2.Zero)
                 {
-                    entity.Transform.LocalRotation = direction.ToWorldAngle() - Math.PI;
+                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).LocalRotation = direction.ToWorldAngle() - Math.PI;
                 }
 
                 if (user != null)

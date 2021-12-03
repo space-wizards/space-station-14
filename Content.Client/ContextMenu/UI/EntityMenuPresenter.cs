@@ -135,7 +135,7 @@ namespace Content.Client.ContextMenu.UI
                 var funcId = _inputManager.NetworkBindMap.KeyFunctionID(func);
 
                 var message = new FullInputCmdMessage(_gameTiming.CurTick, _gameTiming.TickFraction, funcId,
-                    BoundKeyState.Down, entity.Transform.Coordinates, args.PointerLocation, entity.Uid);
+                    BoundKeyState.Down, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates, args.PointerLocation, entity.Uid);
 
                 var session = _playerManager.LocalPlayer?.Session;
                 if (session != null)
@@ -190,7 +190,7 @@ namespace Content.Client.ContextMenu.UI
         }
 
         /// <summary>
-        ///     Add menu elements for a list of grouped entities; 
+        ///     Add menu elements for a list of grouped entities;
         /// </summary>
         /// <param name="entityGroups"> A list of entity groups. Entities are grouped together based on prototype.</param>
         private void AddToUI(List<List<IEntity>> entityGroups)
@@ -220,7 +220,7 @@ namespace Content.Client.ContextMenu.UI
                 AddElement(RootMenu, element);
                 Elements.TryAdd(group[0], element);
             }
-            
+
         }
 
         /// <summary>

@@ -58,7 +58,7 @@ namespace Content.Shared.Movement.EntitySystems
                      mobState.IsAlive()))
                 {
                     var relayMoveEvent = new RelayMovementEntityEvent(owner);
-                    IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(owner.Transform.ParentUid, relayMoveEvent);
+                    IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(owner.Uid).ParentUid, relayMoveEvent);
                 }
             }
 

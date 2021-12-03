@@ -119,12 +119,12 @@ namespace Content.Server.Cargo.Components
             if (!_prototypeManager.TryIndex(data.ProductId, out CargoProductPrototype? prototype))
                 return;
 
-            var product = IoCManager.Resolve<IEntityManager>().SpawnEntity(prototype.Product, Owner.Transform.Coordinates);
+            var product = IoCManager.Resolve<IEntityManager>().SpawnEntity(prototype.Product, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
 
-            product.Transform.Anchored = false;
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(product.Uid).Anchored = false;
 
             // spawn a piece of paper.
-            var printed = IoCManager.Resolve<IEntityManager>().SpawnEntity(PrinterOutput, Owner.Transform.Coordinates);
+            var printed = IoCManager.Resolve<IEntityManager>().SpawnEntity(PrinterOutput, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(printed.Uid, out PaperComponent paper))
                 return;
 

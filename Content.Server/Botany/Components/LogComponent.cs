@@ -23,7 +23,7 @@ namespace Content.Server.Botany.Components
             {
                 for (var i = 0; i < 2; i++)
                 {
-                    var plank = IoCManager.Resolve<IEntityManager>().SpawnEntity("MaterialWoodPlank1", Owner.Transform.Coordinates);
+                    var plank = IoCManager.Resolve<IEntityManager>().SpawnEntity("MaterialWoodPlank1", IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
                     plank.RandomOffset(0.25f);
                 }
 

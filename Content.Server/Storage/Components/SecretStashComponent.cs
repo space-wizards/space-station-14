@@ -91,7 +91,7 @@ namespace Content.Server.Storage.Components
             }
             else if (_itemContainer.Remove(_itemContainer.ContainedEntity))
             {
-                _itemContainer.ContainedEntity.Transform.Coordinates = Owner.Transform.Coordinates;
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_itemContainer.ContainedEntity.Uid).Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates;
             }
 
             return true;
@@ -111,7 +111,7 @@ namespace Content.Server.Storage.Components
             // drop item inside
             if (_itemContainer.ContainedEntity != null)
             {
-                _itemContainer.ContainedEntity.Transform.Coordinates = Owner.Transform.Coordinates;
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_itemContainer.ContainedEntity.Uid).Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates;
             }
         }
     }

@@ -179,11 +179,11 @@ namespace Content.Server.Weapon.Ranged
                 // Apply salt to the wound ("Honk!")
                 SoundSystem.Play(
                     Filter.Pvs(Owner), _clumsyWeaponHandlingSound.GetSound(),
-                    Owner.Transform.Coordinates, AudioParams.Default.WithMaxDistance(5));
+                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates, AudioParams.Default.WithMaxDistance(5));
 
                 SoundSystem.Play(
                     Filter.Pvs(Owner), _clumsyWeaponShotSound.GetSound(),
-                    Owner.Transform.Coordinates, AudioParams.Default.WithMaxDistance(5));
+                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates, AudioParams.Default.WithMaxDistance(5));
 
                 user.PopupMessage(Loc.GetString("server-ranged-weapon-component-try-fire-clumsy"));
 
@@ -193,7 +193,7 @@ namespace Content.Server.Weapon.Ranged
 
             if (_canHotspot)
             {
-                EntitySystem.Get<AtmosphereSystem>().HotspotExpose(user.Transform.Coordinates, 700, 50);
+                EntitySystem.Get<AtmosphereSystem>().HotspotExpose(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user.Uid).Coordinates, 700, 50);
             }
             FireHandler?.Invoke(user, targetPos);
         }

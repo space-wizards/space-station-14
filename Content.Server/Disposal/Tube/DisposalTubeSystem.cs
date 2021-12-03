@@ -87,8 +87,8 @@ namespace Content.Server.Disposal.Tube
                 return null;
             var oppositeDirection = nextDirection.GetOpposite();
 
-            var grid = _mapManager.GetGrid(targetTube.Owner.Transform.GridID);
-            var position = targetTube.Owner.Transform.Coordinates;
+            var grid = _mapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(targetTube.Owner.Uid).GridID);
+            var position = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(targetTube.Owner.Uid).Coordinates;
             foreach (var entity in grid.GetInDir(position, nextDirection))
             {
                 if (!EntityManager.TryGetComponent(entity, out IDisposalTubeComponent? tube))

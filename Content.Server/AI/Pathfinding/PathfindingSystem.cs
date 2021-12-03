@@ -184,7 +184,7 @@ namespace Content.Server.AI.Pathfinding
         /// <returns></returns>
         public PathfindingNode GetNode(IEntity entity)
         {
-            var tile = _mapManager.GetGrid(entity.Transform.GridID).GetTileRef(entity.Transform.Coordinates);
+            var tile = _mapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).GridID).GetTileRef(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates);
             return GetNode(tile);
         }
 
@@ -273,8 +273,8 @@ namespace Content.Server.AI.Pathfinding
                 return;
             }
 
-            var grid = _mapManager.GetGrid(entity.Transform.GridID);
-            var tileRef = grid.GetTileRef(entity.Transform.Coordinates);
+            var grid = _mapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).GridID);
+            var tileRef = grid.GetTileRef(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates);
 
             var chunk = GetChunk(tileRef);
             var node = chunk.GetNode(tileRef);
@@ -315,9 +315,9 @@ namespace Content.Server.AI.Pathfinding
             }
 
             // Memory leak protection until grid parenting confirmed fix / you REALLY need the performance
-            var gridBounds = _mapManager.GetGrid(moveEvent.Sender.Transform.GridID).WorldBounds;
+            var gridBounds = _mapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(moveEvent.Sender.Uid).GridID).WorldBounds;
 
-            if (!gridBounds.Contains(moveEvent.Sender.Transform.WorldPosition))
+            if (!gridBounds.Contains(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(moveEvent.Sender.Uid).WorldPosition))
             {
                 HandleEntityRemove(moveEvent.Sender);
                 return;

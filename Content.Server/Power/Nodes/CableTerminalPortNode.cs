@@ -12,12 +12,12 @@ namespace Content.Server.Power.Nodes
     {
         public override IEnumerable<Node> GetReachableNodes()
         {
-            if (Owner.Transform.GridID == GridId.Invalid)
+            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).GridID == GridId.Invalid)
                 yield break; // No funny nodes in spess.
 
             var entMan = IoCManager.Resolve<IEntityManager>();
-            var grid = IoCManager.Resolve<IMapManager>().GetGrid(Owner.Transform.GridID);
-            var gridIndex = grid.TileIndicesFor(Owner.Transform.Coordinates);
+            var grid = IoCManager.Resolve<IMapManager>().GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).GridID);
+            var gridIndex = grid.TileIndicesFor(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
 
             var nodes = NodeHelpers.GetCardinalNeighborNodes(entMan, grid, gridIndex, includeSameTile: false);
             foreach (var (_, node) in nodes)

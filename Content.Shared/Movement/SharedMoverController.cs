@@ -67,7 +67,7 @@ namespace Content.Shared.Movement
         {
             var (walkDir, sprintDir) = mover.VelocityDir;
 
-            var transform = mover.Owner.Transform;
+            var transform = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(mover.Owner.Uid);
             var parentRotation = transform.Parent!.WorldRotation;
 
             // Regular movement.
@@ -105,7 +105,7 @@ namespace Content.Shared.Movement
             }
 
             UsedMobMovement[mover.OwnerUid] = true;
-            var transform = mover.Owner.Transform;
+            var transform = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(mover.Owner.Uid);
             var weightless = mover.Owner.IsWeightless(physicsComponent, mapManager: _mapManager, entityManager: _entityManager);
             var (walkDir, sprintDir) = mover.VelocityDir;
 

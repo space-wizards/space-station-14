@@ -44,7 +44,7 @@ namespace Content.Server.Rotatable
                 return;
 
             Verb resetRotation = new();
-            resetRotation.Act = () => component.Owner.Transform.LocalRotation = Angle.Zero;
+            resetRotation.Act = () => IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner.Uid).LocalRotation = Angle.Zero;
             resetRotation.Category = VerbCategory.Rotate;
             resetRotation.IconTexture = "/Textures/Interface/VerbIcons/refresh.svg.192dpi.png";
             resetRotation.Text = "Reset";
@@ -54,7 +54,7 @@ namespace Content.Server.Rotatable
 
             // rotate clockwise
             Verb rotateCW = new();
-            rotateCW.Act = () => component.Owner.Transform.LocalRotation += Angle.FromDegrees(-90);
+            rotateCW.Act = () => IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner.Uid).LocalRotation += Angle.FromDegrees(-90);
             rotateCW.Category = VerbCategory.Rotate;
             rotateCW.IconTexture =  "/Textures/Interface/VerbIcons/rotate_cw.svg.192dpi.png";
             rotateCW.Priority = -1;
@@ -63,7 +63,7 @@ namespace Content.Server.Rotatable
 
             // rotate counter-clockwise
             Verb rotateCCW = new();
-            rotateCCW.Act = () => component.Owner.Transform.LocalRotation += Angle.FromDegrees(90);
+            rotateCCW.Act = () => IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner.Uid).LocalRotation += Angle.FromDegrees(90);
             rotateCCW.Category = VerbCategory.Rotate;
             rotateCCW.IconTexture = "/Textures/Interface/VerbIcons/rotate_ccw.svg.192dpi.png";
             rotateCCW.Priority = 0;
@@ -83,9 +83,9 @@ namespace Content.Server.Rotatable
                 return;
             }
 
-            var oldTransform = component.Owner.Transform;
+            var oldTransform = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner.Uid);
             var entity = IoCManager.Resolve<IEntityManager>().SpawnEntity(component.MirrorEntity, oldTransform.Coordinates);
-            var newTransform = entity.Transform;
+            var newTransform = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid);
             newTransform.LocalRotation = oldTransform.LocalRotation;
             newTransform.Anchored = false;
             IoCManager.Resolve<IEntityManager>().DeleteEntity(component.Owner.Uid);

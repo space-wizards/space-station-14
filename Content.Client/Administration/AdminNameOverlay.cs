@@ -4,6 +4,7 @@ using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
 namespace Content.Client.Administration
@@ -41,7 +42,7 @@ namespace Content.Client.Administration
                 }
 
                 // if not on the same map, continue
-                if (entity.Transform.MapID != _eyeManager.CurrentMap)
+                if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).MapID != _eyeManager.CurrentMap)
                 {
                     continue;
                 }

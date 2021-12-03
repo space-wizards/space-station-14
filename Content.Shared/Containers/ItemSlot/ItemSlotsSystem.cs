@@ -56,7 +56,7 @@ namespace Content.Shared.Containers.ItemSlots
                 if (slot.HasItem || string.IsNullOrEmpty(slot.StartingItem))
                     continue;
 
-                var item = EntityManager.SpawnEntity(slot.StartingItem, itemSlots.Owner.Transform.Coordinates);
+                var item = EntityManager.SpawnEntity(slot.StartingItem, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(itemSlots.Owner.Uid).Coordinates);
                 slot.ContainerSlot.Insert(item);
             }
         }

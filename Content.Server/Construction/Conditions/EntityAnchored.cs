@@ -4,6 +4,7 @@ using Content.Shared.Construction;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -29,10 +30,10 @@ namespace Content.Server.Construction.Conditions
 
             switch (Anchored)
             {
-                case true when !entity.Transform.Anchored:
+                case true when !IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Anchored:
                     args.PushMarkup(Loc.GetString("construction-examine-condition-entity-anchored"));
                     return true;
-                case false when entity.Transform.Anchored:
+                case false when IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Anchored:
                     args.PushMarkup(Loc.GetString("construction-examine-condition-entity-unanchored"));
                     return true;
             }

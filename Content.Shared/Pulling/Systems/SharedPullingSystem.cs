@@ -259,10 +259,10 @@ namespace Content.Shared.Pulling
             if (!rotatable.RotateWhilePulling)
                 return;
 
-            var dir = puller.Transform.WorldPosition - pulled.Transform.WorldPosition;
+            var dir = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(puller.Uid).WorldPosition - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pulled.Uid).WorldPosition;
             if (dir.LengthSquared > ThresholdRotDistance * ThresholdRotDistance)
             {
-                var oldAngle = pulled.Transform.WorldRotation;
+                var oldAngle = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pulled.Uid).WorldRotation;
                 var newAngle = Angle.FromWorldVec(dir);
 
                 var diff = newAngle - oldAngle;
@@ -272,10 +272,10 @@ namespace Content.Shared.Pulling
                     // Otherwise PIANO DOOR STUCK! happens.
                     // But it also needs to work with station rotation / align to the local parent.
                     // So...
-                    var baseRotation = pulled.Transform.Parent?.WorldRotation ?? 0f;
+                    var baseRotation = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pulled.Uid).Parent?.WorldRotation ?? 0f;
                     var localRotation = newAngle - baseRotation;
                     var localRotationSnapped = Angle.FromDegrees(Math.Floor((localRotation.Degrees / ThresholdRotAngle) + 0.5f) * ThresholdRotAngle);
-                    pulled.Transform.LocalRotation = localRotationSnapped;
+                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pulled.Uid).LocalRotation = localRotationSnapped;
                 }
             }
         }

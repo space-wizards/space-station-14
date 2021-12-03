@@ -384,10 +384,10 @@ namespace Content.Server.ParticleAccelerator.Components
             _partEmitterRight = null;
 
             // Find fuel chamber first by scanning cardinals.
-            if (Owner.Transform.Anchored)
+            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Anchored)
             {
-                var grid = _mapManager.GetGrid(Owner.Transform.GridID);
-                var coords = Owner.Transform.Coordinates;
+                var grid = _mapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).GridID);
+                var coords = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates;
                 foreach (var maybeFuel in grid.GetCardinalNeighborCells(coords))
                 {
                     if (IoCManager.Resolve<IEntityManager>().TryGetComponent(maybeFuel, out _partFuelChamber))
@@ -406,7 +406,7 @@ namespace Content.Server.ParticleAccelerator.Components
             // Align ourselves to match fuel chamber orientation.
             // This means that if you mess up the orientation of the control box it's not a big deal,
             // because the sprite is far from obvious about the orientation.
-            Owner.Transform.LocalRotation = _partFuelChamber.Owner.Transform.LocalRotation;
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).LocalRotation = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_partFuelChamber.Owner.Uid).LocalRotation;
 
             var offsetEndCap = RotateOffset((1, 1));
             var offsetPowerBox = RotateOffset((1, -1));
@@ -452,7 +452,7 @@ namespace Content.Server.ParticleAccelerator.Components
 
             Vector2i RotateOffset(in Vector2i vec)
             {
-                var rot = new Angle(Owner.Transform.LocalRotation);
+                var rot = new Angle(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).LocalRotation);
                 return (Vector2i) rot.RotateVec(vec);
             }
         }
@@ -460,8 +460,8 @@ namespace Content.Server.ParticleAccelerator.Components
         private bool ScanPart<T>(Vector2i offset, [NotNullWhen(true)] out T? part)
             where T : ParticleAcceleratorPartComponent
         {
-            var grid = _mapManager.GetGrid(Owner.Transform.GridID);
-            var coords = Owner.Transform.Coordinates;
+            var grid = _mapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).GridID);
+            var coords = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates;
             foreach (var ent in grid.GetOffset(coords, offset))
             {
                 if (IoCManager.Resolve<IEntityManager>().TryGetComponent(ent, out part) && !part.Deleted)

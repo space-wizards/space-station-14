@@ -475,7 +475,7 @@ namespace Content.Client.Chat.Managers
         private void EnqueueSpeechBubble(IEntity entity, string contents, SpeechBubble.SpeechType speechType)
         {
             // Don't enqueue speech bubbles for other maps. TODO: Support multiple viewports/maps?
-            if (entity.Transform.MapID != _eyeManager.CurrentMap)
+            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).MapID != _eyeManager.CurrentMap)
                 return;
 
             if (!_queuedSpeechBubbles.TryGetValue(entity.Uid, out var queueData))

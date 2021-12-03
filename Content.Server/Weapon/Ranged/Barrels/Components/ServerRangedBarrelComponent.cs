@@ -204,7 +204,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             }
 
             var ammo = PeekAmmo();
-            var projectile = TakeProjectile(shooter.Transform.Coordinates);
+            var projectile = TakeProjectile(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(shooter.Uid).Coordinates);
             if (projectile == null)
             {
                 SoundSystem.Play(Filter.Broadcast(), SoundEmpty.GetSound(), Owner);
@@ -212,7 +212,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             }
 
             // At this point firing is confirmed
-            var direction = (targetPos - shooter.Transform.WorldPosition).ToAngle();
+            var direction = (targetPos - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(shooter.Uid).WorldPosition).ToAngle();
             var angle = GetRecoilAngle(direction);
             // This should really be client-side but for now we'll just leave it here
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent(shooter.Uid, out CameraRecoilComponent? recoilComponent))
@@ -275,10 +275,10 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             const float ejectOffset = 1.8f;
             var ammo = IoCManager.Resolve<IEntityManager>().GetComponent<AmmoComponent>(entity.Uid);
             var offsetPos = ((robustRandom.NextFloat() - 0.5f) * ejectOffset, (robustRandom.NextFloat() - 0.5f) * ejectOffset);
-            entity.Transform.Coordinates = entity.Transform.Coordinates.Offset(offsetPos);
-            entity.Transform.LocalRotation = robustRandom.Pick(ejectDirections).ToAngle();
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates.Offset(offsetPos);
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).LocalRotation = robustRandom.Pick(ejectDirections).ToAngle();
 
-            SoundSystem.Play(Filter.Broadcast(), ammo.SoundCollectionEject.GetSound(), entity.Transform.Coordinates, AudioParams.Default.WithVolume(-1));
+            SoundSystem.Play(Filter.Broadcast(), ammo.SoundCollectionEject.GetSound(), IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates, AudioParams.Default.WithVolume(-1));
         }
 
         /// <summary>
@@ -330,7 +330,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 else
                 {
                     projectile =
-                        IoCManager.Resolve<IEntityManager>().SpawnEntity(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(baseProjectile.Uid).EntityPrototype?.ID, baseProjectile.Transform.Coordinates);
+                        IoCManager.Resolve<IEntityManager>().SpawnEntity(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(baseProjectile.Uid).EntityPrototype?.ID, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(baseProjectile.Uid).Coordinates);
                 }
 
                 firedProjectiles[i] = projectile.Uid;
@@ -362,7 +362,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 });
 
 
-                projectile.Transform.WorldRotation = projectileAngle + MathHelper.PiOver2;
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(projectile.Uid).WorldRotation = projectileAngle + MathHelper.PiOver2;
             }
 
             IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(OwnerUid, new GunShotEvent(firedProjectiles));
@@ -390,9 +390,9 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         /// </summary>
         private void FireHitscan(IEntity shooter, HitscanComponent hitscan, Angle angle)
         {
-            var ray = new CollisionRay(Owner.Transform.Coordinates.ToMapPos(IoCManager.Resolve<IEntityManager>()), angle.ToVec(), (int) hitscan.CollisionMask);
+            var ray = new CollisionRay(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates.ToMapPos(IoCManager.Resolve<IEntityManager>()), angle.ToVec(), (int) hitscan.CollisionMask);
             var physicsManager = EntitySystem.Get<SharedPhysicsSystem>();
-            var rayCastResults = physicsManager.IntersectRay(Owner.Transform.MapID, ray, hitscan.MaxLength, shooter, false).ToList();
+            var rayCastResults = physicsManager.IntersectRay(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).MapID, ray, hitscan.MaxLength, shooter, false).ToList();
 
             if (rayCastResults.Count >= 1)
             {

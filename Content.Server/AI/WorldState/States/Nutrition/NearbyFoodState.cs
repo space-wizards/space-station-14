@@ -25,7 +25,7 @@ namespace Content.Server.AI.WorldState.States.Nutrition
             }
 
             foreach (var entity in Visibility
-                .GetNearestEntities(Owner.Transform.Coordinates, typeof(FoodComponent), controller.VisionRadius))
+                .GetNearestEntities(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates, typeof(FoodComponent), controller.VisionRadius))
             {
                 if (entity.TryGetContainer(out var container))
                 {

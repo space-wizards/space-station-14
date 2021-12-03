@@ -5,6 +5,7 @@ using Content.Shared.Interaction.Helpers;
 using NUnit.Framework;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 
@@ -51,9 +52,9 @@ namespace Content.IntegrationTests.Tests.Interaction
                 origin = entityManager.SpawnEntity(HumanId, coordinates);
                 other = entityManager.SpawnEntity(HumanId, coordinates);
                 container = ContainerHelpers.EnsureContainer<Container>(other, "InRangeUnobstructedTestOtherContainer");
-                component = other.Transform;
-                entityCoordinates = other.Transform.Coordinates;
-                mapCoordinates = other.Transform.MapPosition;
+                component = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other.Uid);
+                entityCoordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other.Uid).Coordinates;
+                mapCoordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other.Uid).MapPosition;
             });
 
             await server.WaitIdleAsync();
@@ -82,7 +83,7 @@ namespace Content.IntegrationTests.Tests.Interaction
 
 
                 // Move them slightly apart
-                origin.Transform.LocalPosition += _interactionRangeDivided15X;
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(origin.Uid).LocalPosition += _interactionRangeDivided15X;
 
                 // Entity <-> Entity
                 Assert.True(origin.InRangeUnobstructed(other));
@@ -106,7 +107,7 @@ namespace Content.IntegrationTests.Tests.Interaction
 
 
                 // Move them out of range
-                origin.Transform.LocalPosition += _interactionRangeDivided15X;
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(origin.Uid).LocalPosition += _interactionRangeDivided15X;
 
                 // Entity <-> Entity
                 Assert.False(origin.InRangeUnobstructed(other));

@@ -123,7 +123,7 @@ namespace Content.IntegrationTests.Tests
 
         private static bool IsDescendant(IEntity descendant, IEntity parent)
         {
-            var tmpParent = descendant.Transform.Parent;
+            var tmpParent = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(descendant.Uid).Parent;
             while (tmpParent != null)
             {
                 if (tmpParent.Owner == parent)

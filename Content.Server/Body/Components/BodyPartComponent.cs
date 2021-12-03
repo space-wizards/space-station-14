@@ -64,7 +64,7 @@ namespace Content.Server.Body.Components
             // identical on it
             foreach (var mechanismId in MechanismIds)
             {
-                var entity = IoCManager.Resolve<IEntityManager>().SpawnEntity(mechanismId, Owner.Transform.MapPosition);
+                var entity = IoCManager.Resolve<IEntityManager>().SpawnEntity(mechanismId, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).MapPosition);
 
                 if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out SharedMechanismComponent? mechanism))
                 {

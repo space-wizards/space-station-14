@@ -335,7 +335,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             {
                 // drop the item, and the item actions should go away
                 IoCManager.Resolve<IEntityManager>().GetComponent<HandsComponent>(serverPlayerEnt.Uid)
-                    .TryDropEntity(serverFlashlight, serverPlayerEnt.Transform.Coordinates, false);
+                    .TryDropEntity(serverFlashlight, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(serverPlayerEnt.Uid).Coordinates, false);
                 Assert.That(serverActionsComponent.ItemActionStates().ContainsKey(serverFlashlight.Uid), Is.False);
             });
 

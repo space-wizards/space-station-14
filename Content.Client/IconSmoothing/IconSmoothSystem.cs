@@ -52,11 +52,11 @@ namespace Content.Client.IconSmoothing
             // This is simpler to implement. If you want to optimize it be my guest.
             var senderEnt = ev.Sender;
             if (IoCManager.Resolve<IEntityManager>().EntityExists(senderEnt.Uid) &&
-                _mapManager.TryGetGrid(senderEnt.Transform.GridID, out var grid1) &&
+                _mapManager.TryGetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(senderEnt.Uid).GridID, out var grid1) &&
                 IoCManager.Resolve<IEntityManager>().TryGetComponent(senderEnt.Uid, out IconSmoothComponent? iconSmooth)
                 && iconSmooth.Running)
             {
-                var coords = senderEnt.Transform.Coordinates;
+                var coords = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(senderEnt.Uid).Coordinates;
 
                 _dirtyEntities.Enqueue(senderEnt.Uid);
                 AddValidEntities(grid1.GetInDir(coords, Direction.North));

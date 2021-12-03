@@ -33,7 +33,7 @@ namespace Content.Client.Spawners
         {
             foreach (var proto in _prototypes)
             {
-                var entity = IoCManager.Resolve<IEntityManager>().SpawnEntity(proto, Owner.Transform.Coordinates);
+                var entity = IoCManager.Resolve<IEntityManager>().SpawnEntity(proto, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
                 _entity.Add(entity);
             }
         }

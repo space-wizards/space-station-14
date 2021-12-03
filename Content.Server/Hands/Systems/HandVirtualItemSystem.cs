@@ -32,7 +32,7 @@ namespace Content.Server.Hands.Systems
                     if (!hand.IsEmpty)
                         continue;
 
-                    var pos = hands.Owner.Transform.Coordinates;
+                    var pos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(hands.Owner.Uid).Coordinates;
                     var virtualItem = EntityManager.SpawnEntity("HandVirtualItem", pos);
                     var virtualItemComp = IoCManager.Resolve<IEntityManager>().GetComponent<HandVirtualItemComponent>(virtualItem.Uid);
                     virtualItemComp.BlockingEntity = blockingEnt;

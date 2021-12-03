@@ -96,11 +96,11 @@ namespace Content.Client.Audio
                 return;
             }
 
-            var coordinates = player.Transform.Coordinates;
+            var coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.Uid).Coordinates;
 
             foreach (var (comp, (stream, _)) in _playingSounds.ToArray())
             {
-                if (!comp.Deleted && comp.Enabled && comp.Owner.Transform.Coordinates.TryDistance(EntityManager, coordinates, out var range) &&
+                if (!comp.Deleted && comp.Enabled && IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(comp.Owner.Uid).Coordinates.TryDistance(EntityManager, coordinates, out var range) &&
                     range <= comp.Range)
                 {
                     continue;
@@ -140,7 +140,7 @@ namespace Content.Client.Audio
                     _playingSounds.ContainsKey(ambientComp) ||
                     !ambientComp.Enabled ||
                     // We'll also do this crude distance check because it's what we're doing in the active loop above.
-                    !entity.Transform.Coordinates.TryDistance(EntityManager, coordinates, out var range) ||
+                    !IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates.TryDistance(EntityManager, coordinates, out var range) ||
                     range > ambientComp.Range - RangeBuffer)
                 {
                     continue;

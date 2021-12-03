@@ -32,7 +32,7 @@ namespace Content.Server.Construction.Commands
                         return;
                     }
 
-                    gridId = player.AttachedEntity.Transform.GridID;
+                    gridId = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.AttachedEntity.Uid).GridID;
                     break;
                 case 1:
                     if (!int.TryParse(args[0], out var id))
@@ -67,7 +67,7 @@ namespace Content.Server.Construction.Commands
             var underplating = tileDefinitionManager["underplating"];
             var underplatingTile = new Robust.Shared.Map.Tile(underplating.TileId);
             var changed = 0;
-            foreach (var childUid in gridEntity.Transform.ChildEntityUids)
+            foreach (var childUid in IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(gridEntity.Uid).ChildEntityUids)
             {
                 if (!entityManager.TryGetEntity(childUid, out var childEntity))
                 {
@@ -90,12 +90,12 @@ namespace Content.Server.Construction.Commands
                     continue;
                 }
 
-                if (!childEntity.Transform.Anchored)
+                if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(childEntity.Uid).Anchored)
                 {
                     continue;
                 }
 
-                var tile = grid.GetTileRef(childEntity.Transform.Coordinates);
+                var tile = grid.GetTileRef(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(childEntity.Uid).Coordinates);
                 var tileDef = (ContentTileDefinition) tileDefinitionManager[tile.Tile.TypeId];
 
                 if (tileDef.Name == "underplating")
@@ -103,7 +103,7 @@ namespace Content.Server.Construction.Commands
                     continue;
                 }
 
-                grid.SetTile(childEntity.Transform.Coordinates, underplatingTile);
+                grid.SetTile(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(childEntity.Uid).Coordinates, underplatingTile);
                 changed++;
             }
 

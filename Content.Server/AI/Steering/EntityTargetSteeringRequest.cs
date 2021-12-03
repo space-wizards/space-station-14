@@ -1,4 +1,5 @@
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
 namespace Content.Server.AI.Steering
@@ -6,8 +7,8 @@ namespace Content.Server.AI.Steering
     public sealed class EntityTargetSteeringRequest : IAiSteeringRequest
     {
         public SteeringStatus Status { get; set; } = SteeringStatus.Pending;
-        public MapCoordinates TargetMap => _target.Transform.MapPosition;
-        public EntityCoordinates TargetGrid => _target.Transform.Coordinates;
+        public MapCoordinates TargetMap => IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_target.Uid).MapPosition;
+        public EntityCoordinates TargetGrid => IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_target.Uid).Coordinates;
         public IEntity Target => _target;
         private readonly IEntity _target;
 

@@ -284,8 +284,8 @@ namespace Content.Server.MachineLinking.System
                 return true;
             }
 
-            return transmitterComponent.Owner.Transform.MapPosition.InRange(
-                receiverComponent.Owner.Transform.MapPosition, 30f);
+            return IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(transmitterComponent.Owner.Uid).MapPosition.InRange(
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(receiverComponent.Owner.Uid).MapPosition, 30f);
         }
     }
 }

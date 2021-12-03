@@ -97,7 +97,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             _powerCellContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-powercell-container", out var existing);
             if (!existing && _powerCellPrototype != null)
             {
-                var powerCellEntity = IoCManager.Resolve<IEntityManager>().SpawnEntity(_powerCellPrototype, Owner.Transform.Coordinates);
+                var powerCellEntity = IoCManager.Resolve<IEntityManager>().SpawnEntity(_powerCellPrototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
                 _powerCellContainer.Insert(powerCellEntity);
             }
 
@@ -134,7 +134,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             var ammo = _ammoContainer.ContainedEntity;
             if (ammo == null)
             {
-                ammo = IoCManager.Resolve<IEntityManager>().SpawnEntity(_ammoPrototype, Owner.Transform.Coordinates);
+                ammo = IoCManager.Resolve<IEntityManager>().SpawnEntity(_ammoPrototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
                 _ammoContainer.Insert(ammo);
             }
 
@@ -171,7 +171,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             {
                 entity = _ammoContainer.ContainedEntity;
                 _ammoContainer.Remove(entity);
-                entity.Transform.Coordinates = spawnAt;
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates = spawnAt;
             }
             else
             {
@@ -258,7 +258,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
             if (!hands.PutInHand(IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(cell.Owner.Uid)))
             {
-                cell.Owner.Transform.Coordinates = user.Transform.Coordinates;
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(cell.Owner.Uid).Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user.Uid).Coordinates;
             }
 
             SoundSystem.Play(Filter.Pvs(Owner), _soundPowerCellEject.GetSound(), Owner, AudioParams.Default.WithVolume(-2));

@@ -3,6 +3,7 @@ using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Content.Shared.Containers.ItemSlots;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Containers
 {
@@ -34,7 +35,7 @@ namespace Content.Server.Containers
         {
             if (!EntityManager.TryGetComponent<IContainerManager>(uid, out var mComp))
                 return;
-            var baseCoords = component.Owner.Transform.Coordinates;
+            var baseCoords = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner.Uid).Coordinates;
             foreach (var v in component.Containers)
             {
                 if (mComp.TryGetContainer(v, out var container))

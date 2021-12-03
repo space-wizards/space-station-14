@@ -279,11 +279,11 @@ namespace Content.Server.Atmos.Components
             {
                 if (_integrity <= 0)
                 {
-                    var environment = atmosphereSystem.GetTileMixture(Owner.Transform.Coordinates, true);
+                    var environment = atmosphereSystem.GetTileMixture(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates, true);
                     if(environment != null)
                         atmosphereSystem.Merge(environment, Air);
 
-                    SoundSystem.Play(Filter.Pvs(Owner), _ruptureSound.GetSound(), Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.125f));
+                    SoundSystem.Play(Filter.Pvs(Owner), _ruptureSound.GetSound(), IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates, AudioHelpers.WithVariation(0.125f));
 
                     IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(Owner.Uid);
                     return;
@@ -297,7 +297,7 @@ namespace Content.Server.Atmos.Components
             {
                 if (_integrity <= 0)
                 {
-                    var environment = atmosphereSystem.GetTileMixture(Owner.Transform.Coordinates, true);
+                    var environment = atmosphereSystem.GetTileMixture(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates, true);
                     if (environment == null)
                         return;
 
