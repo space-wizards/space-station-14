@@ -153,7 +153,7 @@ namespace Content.Client.Entry
         {
             if (!((!IoCManager.Resolve<IEntityManager>().EntityExists(eventArgs.OldEntity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(eventArgs.OldEntity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted))
             {
-                eventArgs.OldEntity.RemoveComponent<CharacterInterfaceComponent>();
+                IoCManager.Resolve<IEntityManager>().RemoveComponent<CharacterInterfaceComponent>(eventArgs.OldEntity.Uid);
             }
         }
 

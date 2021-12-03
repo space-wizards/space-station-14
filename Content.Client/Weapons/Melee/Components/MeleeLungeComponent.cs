@@ -1,5 +1,6 @@
 ﻿using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
 namespace Content.Client.Weapons.Melee.Components
@@ -45,7 +46,7 @@ namespace Content.Client.Weapons.Melee.Components
 
             if (deleteSelf)
             {
-                Owner.RemoveComponent<MeleeLungeComponent>();
+                IoCManager.Resolve<IEntityManager>().RemoveComponent<MeleeLungeComponent>(Owner.Uid);
             }
         }
     }

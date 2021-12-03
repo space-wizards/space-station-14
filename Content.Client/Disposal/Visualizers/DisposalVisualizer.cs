@@ -4,6 +4,7 @@ using Content.Shared.SubFloor;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.Disposal.Visualizers
@@ -48,7 +49,7 @@ namespace Content.Client.Disposal.Visualizers
             }
             else if (appearance.Owner.HasComponent<SubFloorHideComponent>())
             {
-                appearance.Owner.RemoveComponent<SubFloorHideComponent>();
+                IoCManager.Resolve<IEntityManager>().RemoveComponent<SubFloorHideComponent>(appearance.Owner.Uid);
             }
         }
 

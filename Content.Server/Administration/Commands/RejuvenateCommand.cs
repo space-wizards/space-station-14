@@ -76,7 +76,7 @@ namespace Content.Server.Administration.Commands
 
             if (target.HasComponent<JitteringComponent>())
             {
-                target.RemoveComponent<JitteringComponent>();
+                IoCManager.Resolve<IEntityManager>().RemoveComponent<JitteringComponent>(target.Uid);
             }
         }
     }

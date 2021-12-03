@@ -171,7 +171,7 @@ namespace Content.Server.Cloning.Components
             if (entity == null || CloningProgress < CloningTime)
                 return;
 
-            entity.RemoveComponent<BeingClonedComponent>();
+            IoCManager.Resolve<IEntityManager>().RemoveComponent<BeingClonedComponent>(entity.Uid);
             BodyContainer.Remove(entity!);
             CapturedMind = null;
             CloningProgress = 0f;

@@ -63,7 +63,7 @@ namespace Content.Server.Cloning
                 !parent.TryGetComponent<CloningPodComponent>(out var cloningPodComponent) ||
                 component.Owner != cloningPodComponent.BodyContainer?.ContainedEntity)
             {
-                component.Owner.RemoveComponent<BeingClonedComponent>();
+                IoCManager.Resolve<IEntityManager>().RemoveComponent<BeingClonedComponent>(component.Owner.Uid);
                 return;
             }
 

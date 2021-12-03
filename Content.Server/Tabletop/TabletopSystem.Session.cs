@@ -3,6 +3,7 @@ using Content.Shared.Tabletop.Events;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
@@ -116,7 +117,7 @@ namespace Content.Server.Tabletop
                 gamer.Tabletop = EntityUid.Invalid;
 
                 // You stop being a gamer.......
-                attachedEntity.RemoveComponent<TabletopGamerComponent>();
+                IoCManager.Resolve<IEntityManager>().RemoveComponent<TabletopGamerComponent>(attachedEntity.Uid);
             }
 
             session.Players.Remove(player);

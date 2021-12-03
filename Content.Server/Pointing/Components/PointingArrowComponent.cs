@@ -76,7 +76,7 @@ namespace Content.Server.Pointing.Components
             {
                 if (_rogue)
                 {
-                    Owner.RemoveComponent<PointingArrowComponent>();
+                    IoCManager.Resolve<IEntityManager>().RemoveComponent<PointingArrowComponent>(Owner.Uid);
                     IoCManager.Resolve<IEntityManager>().AddComponent<RoguePointingArrowComponent>(Owner);
                     return;
                 }

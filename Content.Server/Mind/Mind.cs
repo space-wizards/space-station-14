@@ -379,7 +379,7 @@ namespace Content.Server.Mind
 
             if (oldVisitingEnt!.HasComponent<VisitingMindComponent>())
             {
-                oldVisitingEnt.RemoveComponent<VisitingMindComponent>();
+                IoCManager.Resolve<IEntityManager>().RemoveComponent<VisitingMindComponent>(oldVisitingEnt.Uid);
             }
 
             IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(oldVisitingEnt.Uid, new MindUnvisitedMessage());

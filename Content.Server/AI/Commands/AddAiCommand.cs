@@ -44,7 +44,7 @@ namespace Content.Server.AI.Commands
             // TODO: IMover refffaaccctttooorrr
             if (ent.HasComponent<IMoverComponent>())
             {
-                ent.RemoveComponent<IMoverComponent>();
+                IoCManager.Resolve<IEntityManager>().RemoveComponent<IMoverComponent>(ent.Uid);
             }
 
             var comp = IoCManager.Resolve<IEntityManager>().AddComponent<UtilityAi>(ent);

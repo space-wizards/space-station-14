@@ -99,7 +99,7 @@ namespace Content.Server.Tabletop
 
                 if (!gamer.Owner.TryGetComponent(out ActorComponent? actor))
                 {
-                    gamer.Owner.RemoveComponent<TabletopGamerComponent>();
+                    IoCManager.Resolve<IEntityManager>().RemoveComponent<TabletopGamerComponent>(gamer.Owner.Uid);
                     return;
                 };
 
