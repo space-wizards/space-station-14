@@ -55,6 +55,7 @@ namespace Content.Server.IoC
             IoCManager.Register<IPlayerLocator, PlayerLocator>();
             IoCManager.Register<IAfkManager, AfkManager>();
             IoCManager.Register<IGameMapManager, GameMapManager>();
+            IoCManager.Register<IGamePrototypeLoadManager, GamePrototypeLoadManager>();
         }
     }
 }

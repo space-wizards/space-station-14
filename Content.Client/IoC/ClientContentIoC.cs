@@ -1,4 +1,5 @@
-﻿using Content.Client.Administration.Managers;
+﻿using Content.Client.Administration;
+using Content.Client.Administration.Managers;
 using Content.Client.Changelog;
 using Content.Client.Chat.Managers;
 using Content.Client.Clickable;
@@ -45,6 +46,7 @@ namespace Content.Client.IoC
             IoCManager.Register<IVoteManager, VoteManager>();
             IoCManager.Register<ChangelogManager, ChangelogManager>();
             IoCManager.Register<ViewportManager, ViewportManager>();
+            IoCManager.Register<IGamePrototypeLoadManager, GamePrototypeLoadManager>();
         }
     }
 }

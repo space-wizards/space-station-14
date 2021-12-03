@@ -1,3 +1,4 @@
+using Content.Server.Administration;
 using Content.Server.Administration.Managers;
 using Content.Server.Afk;
 using Content.Server.AI.Utility;
@@ -75,6 +76,7 @@ namespace Content.Server.Entry
             IoCManager.Resolve<IServerDbManager>().Init();
             IoCManager.Resolve<IServerPreferencesManager>().Init();
             IoCManager.Resolve<INodeGroupFactory>().Initialize();
+            IoCManager.Resolve<IGamePrototypeLoadManager>().Initialize();
             _voteManager.Initialize();
         }
 

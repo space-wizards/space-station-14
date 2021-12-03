@@ -1,4 +1,5 @@
 using System;
+using Content.Client.Administration;
 using Content.Client.Administration.Managers;
 using Content.Client.Changelog;
 using Content.Client.CharacterInterface;
@@ -183,6 +184,7 @@ namespace Content.Client.Entry
             IoCManager.Resolve<AlertManager>().Initialize();
             IoCManager.Resolve<ActionManager>().Initialize();
             IoCManager.Resolve<IVoteManager>().Initialize();
+            IoCManager.Resolve<IGamePrototypeLoadManager>().Initialize();
 
             _baseClient.RunLevelChanged += (_, args) =>
             {
