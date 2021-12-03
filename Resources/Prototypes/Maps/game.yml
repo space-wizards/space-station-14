@@ -88,23 +88,6 @@
     Botanist: [ 1, 1 ]
 
 - type: gameMap
-  id: vesmirnaya
-  mapName: 'Vesmirnaya'
-  mapNameTemplate: '{0} Vesmirnaya {1}'
-  nameGenerator:
-    !type:NanotrasenNameGenerator
-    prefixCreator: 'VC'
-  mapPath: Maps/vesmirnaya.yml
-  minPlayers: 0
-  maxPlayers: 30
-  overflowJobs:
-    - Assistant
-  availableJobs:
-    Assistant: [ -1, -1 ]
-    Bartender: [ 1, 2 ]
-    Chef: [ 1, 2 ]
-
-- type: gameMap
   id: ssreach
   mapName: 'Reach'
   mapNameTemplate: '{0} Reach {1}'
