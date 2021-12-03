@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Interaction;
-using Content.Shared.Inventory.New.Events;
+using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Movement.EntitySystems;
 using Content.Shared.Popups;
@@ -12,12 +11,11 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 
-namespace Content.Shared.Inventory.New;
+namespace Content.Shared.Inventory;
 
 public partial class InventorySystem
 {
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeed = default!;
 
     public void InitializeEquip()

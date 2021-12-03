@@ -1,7 +1,7 @@
 ﻿using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Inventory.New;
+namespace Content.Shared.Inventory;
 
 /// <summary>
 ///     Defines what slot types an item can fit into.

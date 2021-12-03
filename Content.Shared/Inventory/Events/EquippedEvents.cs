@@ -1,6 +1,6 @@
 ﻿using Robust.Shared.GameObjects;
 
-namespace Content.Shared.Inventory.New.Events;
+namespace Content.Shared.Inventory.Events;
 
 public class EquippedEventBase : EntityEventArgs
 {
