@@ -18,19 +18,19 @@ namespace Content.Server.Construction.Conditions
 
         public bool Condition(EntityUid uid, IEntityManager entityManager)
         {
-            if (!entityManager.TryGetComponent(uid, out EntityStorageComponent? EntityStorageComponent))
+            if (!entityManager.TryGetComponent(uid, out EntityStorageComponent? entityStorageComponent))
                 return false;
 
-            return EntityStorageComponent.IsWeldedShut == Welded;
+            return entityStorageComponent.IsWeldedShut == Welded;
         }
 
         public bool DoExamine(ExaminedEvent args)
         {
             var entity = args.Examined;
 
-            if (!entity.TryGetComponent(out EntityStorageComponent? EntityStorage)) return false;
+            if (!entity.TryGetComponent(out EntityStorageComponent? entityStorage)) return false;
 
-            if (EntityStorage.IsWeldedShut != Welded)
+            if (entityStorage.IsWeldedShut != Welded)
             {
                 if (Welded == true)
                     args.PushMarkup(Loc.GetString("construction-examine-condition-door-weld", ("entityName", entity.Name)) + "\n");
