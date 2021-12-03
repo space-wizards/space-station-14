@@ -6,9 +6,10 @@
   components:
   - type: Sprite
     layers:
-      - sprite: Markers/arrow.rsi
-        state: mono
-        shader: unshaded
+      - sprite: Structures/Machines/salvage.rsi
+        state: salvage-magnet
+        rotation: 3.1415926535898 rad
+        # Ideally, there'd be lights indicating power usage and a big red lamp indicating loss
   - type: Rotatable
   - type: SalvageMagnet
     offset: 0, -32
