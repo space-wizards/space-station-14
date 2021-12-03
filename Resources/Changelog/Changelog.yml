@@ -1,9 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: Fixed dropping being offset on a translated grid, type: Fix}
-  id: 194
-  time: '2021-05-19T17:26:02.0000000+00:00'
 - author: scrato
   changes:
   - {message: ID card computer will now stop working when there is no power, type: Fix}
@@ -2858,3 +2853,9 @@ Entries:
       own music., type: Add}
   id: 695
   time: '2021-12-02T18:49:18.0000000+00:00'
+- author: moony
+  changes:
+  - {message: 'In-game chat now has a sanitizer that removes smilies. You can now
+      put :) or similar at the end of your message to emote automatically.', type: Add}
+  id: 696
+  time: '2021-12-03T00:49:19.0000000+00:00'
