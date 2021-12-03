@@ -88,7 +88,7 @@ namespace Content.Server.Rotatable
             var newTransform = entity.Transform;
             newTransform.LocalRotation = oldTransform.LocalRotation;
             newTransform.Anchored = false;
-            component.Owner.Delete();
+            IoCManager.Resolve<IEntityManager>().DeleteEntity(component.Owner.Uid);
         }
     }
 }

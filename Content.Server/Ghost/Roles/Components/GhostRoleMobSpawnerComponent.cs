@@ -58,7 +58,7 @@ namespace Content.Server.Ghost.Roles.Components
             Taken = true;
 
             if (_deleteOnSpawn)
-                Owner.Delete();
+                IoCManager.Resolve<IEntityManager>().DeleteEntity(Owner.Uid);
 
             return true;
         }

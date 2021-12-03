@@ -2,6 +2,7 @@ using Content.Shared.Weapons.Melee;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
 namespace Content.Client.Weapons.Melee.Components
@@ -71,7 +72,7 @@ namespace Content.Client.Weapons.Melee.Components
 
             if (_meleeWeaponAnimation.Length.TotalSeconds <= _timer)
             {
-                Owner.Delete();
+                IoCManager.Resolve<IEntityManager>().DeleteEntity(Owner.Uid);
             }
         }
     }

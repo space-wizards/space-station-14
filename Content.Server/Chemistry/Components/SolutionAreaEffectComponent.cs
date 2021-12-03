@@ -87,7 +87,7 @@ namespace Content.Server.Chemistry.Components
 
                 if (!newEffect.TryGetComponent(out SolutionAreaEffectComponent? effectComponent))
                 {
-                    newEffect.Delete();
+                    IoCManager.Resolve<IEntityManager>().DeleteEntity(newEffect.Uid);
                     return;
                 }
 

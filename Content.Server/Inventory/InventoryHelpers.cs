@@ -33,7 +33,7 @@ namespace Content.Server.Inventory
             // Helper method that deletes the item and returns false.
             bool DeleteItem()
             {
-                item.Delete();
+                IoCManager.Resolve<IEntityManager>().DeleteEntity(item.Uid);
                 return false;
             }
 

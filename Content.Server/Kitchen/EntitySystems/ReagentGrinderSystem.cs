@@ -319,7 +319,7 @@ namespace Content.Server.Kitchen.EntitySystems
                             solution.ScaleSolution(juiceEvent.Scalar);
                             _solutionsSystem.TryAddSolution(beakerEntity.Uid, component.HeldBeaker, solution);
                             _solutionsSystem.RemoveAllSolution(beakerEntity.Uid, solution);
-                            item.Delete();
+                            IoCManager.Resolve<IEntityManager>().DeleteEntity(item.Uid);
                         }
 
                         component.Busy = false;
@@ -351,7 +351,7 @@ namespace Content.Server.Kitchen.EntitySystems
                                 component.HeldBeaker.MaxVolume) continue;
                             juiceMe.JuiceSolution.ScaleSolution(juiceEvent.Scalar);
                             _solutionsSystem.TryAddSolution(beakerEntity.Uid, component.HeldBeaker, juiceMe.JuiceSolution);
-                            item.Delete();
+                            IoCManager.Resolve<IEntityManager>().DeleteEntity(item.Uid);
                         }
 
                         bui?.SendMessage(new SharedReagentGrinderComponent.ReagentGrinderWorkCompleteMessage());

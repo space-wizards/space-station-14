@@ -63,7 +63,11 @@ namespace Content.Client.Wall.Components
         {
             base.Shutdown();
 
-            _overlayEntity?.Delete();
+            IEntity? tempQualifier = _overlayEntity;
+            if (tempQualifier != null)
+            {
+                IoCManager.Resolve<IEntityManager>().DeleteEntity(tempQualifier.Uid);
+            }
         }
 
         internal override void CalculateNewSprite()

@@ -363,7 +363,7 @@ namespace Content.Server.GameTicking
             {
                 // TODO: Maybe something less naive here?
                 // FIXME: Actually, definitely.
-                entity.Delete();
+                IoCManager.Resolve<IEntityManager>().DeleteEntity(entity.Uid);
             }
 
             _mapManager.Restart();

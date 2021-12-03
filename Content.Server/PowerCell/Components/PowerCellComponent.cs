@@ -5,6 +5,7 @@ using Content.Shared.Examine;
 using Content.Shared.PowerCell;
 using Content.Shared.Rounding;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
@@ -73,7 +74,7 @@ namespace Content.Server.PowerCell.Components
 
             CurrentCharge = 0;
             EntitySystem.Get<ExplosionSystem>().SpawnExplosion(OwnerUid, 0, heavy, light, light*2);
-            Owner.Delete();
+            IoCManager.Resolve<IEntityManager>().DeleteEntity(Owner.Uid);
         }
 
         private void UpdateVisuals()

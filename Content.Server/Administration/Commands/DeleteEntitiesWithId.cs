@@ -29,7 +29,7 @@ namespace Content.Server.Administration.Commands
 
             foreach (var entity in entities)
             {
-                entity.Delete();
+                IoCManager.Resolve<IEntityManager>().DeleteEntity(entity.Uid);
                 i++;
             }
 

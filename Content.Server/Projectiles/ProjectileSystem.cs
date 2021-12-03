@@ -83,7 +83,7 @@ namespace Content.Server.Projectiles
 
                 if (component.TimeLeft <= 0)
                 {
-                    component.Owner.Delete();
+                    IoCManager.Resolve<IEntityManager>().DeleteEntity(component.Owner.Uid);
                 }
             }
         }

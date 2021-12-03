@@ -86,7 +86,7 @@ namespace Content.Server.GameTicking.Presets
                 foreach (var slot in victimSlots)
                 {
                     if (inventory.TryGetSlotItem(slot, out ItemComponent? vItem))
-                        vItem.Owner.Delete();
+                        IoCManager.Resolve<IEntityManager>().DeleteEntity(vItem.Owner.Uid);
                 }
 
                 // Replace their items:

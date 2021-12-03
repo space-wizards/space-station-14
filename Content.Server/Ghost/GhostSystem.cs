@@ -187,7 +187,7 @@ namespace Content.Server.Ghost
 
             if (entity.TryGetComponent<MindComponent>(out var mind))
                 mind.GhostOnShutdown = false;
-            entity.Delete();
+            IoCManager.Resolve<IEntityManager>().DeleteEntity(entity.Uid);
         }
 
         private IEnumerable<string> GetLocationNames()

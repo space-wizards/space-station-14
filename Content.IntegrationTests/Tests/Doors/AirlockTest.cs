@@ -4,6 +4,7 @@ using Content.Server.Doors.Components;
 using Content.Shared.Doors;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 
@@ -96,7 +97,7 @@ namespace Content.IntegrationTests.Tests.Doors
             {
                 Assert.DoesNotThrow(() =>
                 {
-                    airlock.Delete();
+                    IoCManager.Resolve<IEntityManager>().DeleteEntity(airlock.Uid);
                 });
             });
 

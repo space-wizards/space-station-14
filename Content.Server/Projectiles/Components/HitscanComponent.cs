@@ -98,7 +98,7 @@ namespace Content.Server.Projectiles.Components
             {
                 if (!((!IoCManager.Resolve<IEntityManager>().EntityExists(Owner.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityLifeStage) >= EntityLifeStage.Deleted))
                 {
-                    Owner.Delete();
+                    IoCManager.Resolve<IEntityManager>().DeleteEntity(Owner.Uid);
                 }
             });
         }

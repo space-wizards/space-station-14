@@ -61,7 +61,7 @@ namespace Content.Server.Construction.Components
 
             // get last owner coordinates and delete it
             var resultPosition = Owner.Transform.Coordinates;
-            Owner.Delete();
+            IoCManager.Resolve<IEntityManager>().DeleteEntity(Owner.Uid);
 
             // spawn each result after refine
             foreach (var result in _refineResult!)

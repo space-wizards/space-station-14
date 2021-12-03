@@ -69,7 +69,7 @@ namespace Content.Server.Inventory.Components
             {
                 if (TryGetSlotItem(slot, out ItemComponent? item))
                 {
-                    item.Owner.Delete();
+                    IoCManager.Resolve<IEntityManager>().DeleteEntity(item.Owner.Uid);
                 }
 
                 RemoveSlot(slot);

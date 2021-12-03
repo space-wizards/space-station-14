@@ -238,7 +238,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
                 if (ammoComponent.Caseless)
                 {
-                    ammo.Delete();
+                    IoCManager.Resolve<IEntityManager>().DeleteEntity(ammo.Uid);
                 }
             }
             else

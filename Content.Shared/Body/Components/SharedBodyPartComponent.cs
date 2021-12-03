@@ -293,7 +293,7 @@ namespace Content.Shared.Body.Components
                 return false;
             }
 
-            mechanism.Owner.Delete();
+            IoCManager.Resolve<IEntityManager>().DeleteEntity(mechanism.Owner.Uid);
             return true;
         }
 

@@ -118,7 +118,11 @@ namespace Content.Server.RCD.Systems
                     }
                     else //Delete what the user targeted
                     {
-                        args.Target?.Delete();
+                        IEntity? tempQualifier = args.Target;
+                        if (tempQualifier != null)
+                        {
+                            IoCManager.Resolve<IEntityManager>().DeleteEntity(tempQualifier.Uid);
+                        }
                     }
                     break;
                 //Walls are a special behaviour, and require us to build a new object with a transform rather than setting a grid tile,

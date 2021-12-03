@@ -187,7 +187,7 @@ namespace Content.Server.Weapon.Ranged
 
                 user.PopupMessage(Loc.GetString("server-ranged-weapon-component-try-fire-clumsy"));
 
-                Owner.Delete();
+                IoCManager.Resolve<IEntityManager>().DeleteEntity(Owner.Uid);
                 return;
             }
 

@@ -6,6 +6,7 @@ using JetBrains.Annotations;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -58,7 +59,7 @@ namespace Content.Server.Construction.Completions
             foreach (var ent in computerContainer.ContainedEntities.ToArray())
             {
                 computerContainer.ForceRemove(ent);
-                ent.Delete();
+                IoCManager.Resolve<IEntityManager>().DeleteEntity(ent.Uid);
             }
 
             computerContainer.Insert(board);

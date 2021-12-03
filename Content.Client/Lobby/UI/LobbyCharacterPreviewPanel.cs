@@ -98,7 +98,7 @@ namespace Content.Client.Lobby.UI
             _preferencesManager.OnServerDataLoaded -= UpdateUI;
 
             if (!disposing) return;
-            _previewDummy.Delete();
+            IoCManager.Resolve<IEntityManager>().DeleteEntity(_previewDummy.Uid);
             _previewDummy = null!;
         }
 
@@ -160,7 +160,7 @@ namespace Content.Client.Lobby.UI
                     {
                         var item = entityMan.SpawnEntity(itemType, MapCoordinates.Nullspace);
                         inventory.SetSlotVisuals(slot, item);
-                        item.Delete();
+                        IoCManager.Resolve<IEntityManager>().DeleteEntity(item.Uid);
                     }
                 }
             }

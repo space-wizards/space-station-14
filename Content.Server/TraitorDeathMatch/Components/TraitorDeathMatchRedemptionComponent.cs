@@ -111,7 +111,7 @@ namespace Content.Server.TraitorDeathMatch.Components
             accounts.SetBalance(victimAccount, 0);
             accounts.AddToBalance(userAccount, transferAmount);
 
-            victimUplink.Owner.Delete();
+            IoCManager.Resolve<IEntityManager>().DeleteEntity(victimUplink.Owner.Uid);
 
             Owner.PopupMessage(eventArgs.User, Loc.GetString("traitor-death-match-redemption-component-interact-using-success-message", ("tcAmount", transferAmount)));
             return true;

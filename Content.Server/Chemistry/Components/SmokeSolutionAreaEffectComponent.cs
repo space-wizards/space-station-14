@@ -58,7 +58,7 @@ namespace Content.Server.Chemistry.Components
         {
             if ((!IoCManager.Resolve<IEntityManager>().EntityExists(Owner.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityLifeStage) >= EntityLifeStage.Deleted)
                 return;
-            Owner.Delete();
+            IoCManager.Resolve<IEntityManager>().DeleteEntity(Owner.Uid);
         }
     }
 }

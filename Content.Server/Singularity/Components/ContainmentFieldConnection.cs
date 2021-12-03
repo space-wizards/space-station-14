@@ -57,7 +57,7 @@ namespace Content.Server.Singularity.Components
                 if (!newEnt.TryGetComponent<ContainmentFieldComponent>(out var containmentFieldComponent))
                 {
                     Logger.Error("While creating Fields in ContainmentFieldConnection, a ContainmentField without a ContainmentFieldComponent was created. Deleting newly spawned ContainmentField...");
-                    newEnt.Delete();
+                    IoCManager.Resolve<IEntityManager>().DeleteEntity(newEnt.Uid);
                     continue;
                 }
 
@@ -88,7 +88,7 @@ namespace Content.Server.Singularity.Components
             _powerDecreaseCancellationTokenSource.Cancel();
             foreach (var field in _fields)
             {
-                field.Delete();
+                IoCManager.Resolve<IEntityManager>().DeleteEntity(field.Uid);
             }
             _fields.Clear();
 

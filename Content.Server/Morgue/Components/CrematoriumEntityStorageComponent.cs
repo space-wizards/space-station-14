@@ -117,7 +117,7 @@ namespace Content.Server.Morgue.Components
                     {
                         var item = Contents.ContainedEntities[i];
                         Contents.Remove(item);
-                        item.Delete();
+                        IoCManager.Resolve<IEntityManager>().DeleteEntity(item.Uid);
                     }
 
                     var ash = IoCManager.Resolve<IEntityManager>().SpawnEntity("Ash", Owner.Transform.Coordinates);
@@ -148,7 +148,7 @@ namespace Content.Server.Morgue.Components
             }
             else
             {
-                victim.Delete();
+                IoCManager.Resolve<IEntityManager>().DeleteEntity(victim.Uid);
             }
 
             Cremate();

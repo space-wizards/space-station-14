@@ -49,12 +49,12 @@ namespace Content.IntegrationTests.Tests
 
             server.Assert(() =>
             {
-                visitEnt.Delete();
+                IoCManager.Resolve<IEntityManager>().DeleteEntity(visitEnt.Uid);
 
                 Assert.That(mind.VisitingEntity, Is.Null);
 
                 // This used to throw so make sure it doesn't.
-                playerEnt.Delete();
+                IoCManager.Resolve<IEntityManager>().DeleteEntity(playerEnt.Uid);
             });
 
             await server.WaitIdleAsync();
@@ -91,7 +91,7 @@ namespace Content.IntegrationTests.Tests
 
             server.Post(() =>
             {
-                playerEnt.Delete();
+                IoCManager.Resolve<IEntityManager>().DeleteEntity(playerEnt.Uid);
             });
 
             server.RunTicks(1);

@@ -218,7 +218,7 @@ namespace Content.Client.Preferences.UI
                 if (!disposing)
                     return;
 
-                _previewDummy.Delete();
+                IoCManager.Resolve<IEntityManager>().DeleteEntity(_previewDummy.Uid);
                 _previewDummy = null!;
             }
         }

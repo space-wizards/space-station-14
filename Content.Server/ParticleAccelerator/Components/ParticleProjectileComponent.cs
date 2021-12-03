@@ -3,6 +3,7 @@ using Content.Server.Singularity.Components;
 using Content.Shared.Singularity.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics.Collision;
@@ -71,7 +72,7 @@ namespace Content.Server.ParticleAccelerator.Components
                 .LinearVelocity = angle.ToWorldVec() * 20f;
 
             Owner.Transform.LocalRotation = angle;
-            Timer.Spawn(3000, () => Owner.Delete());
+            Timer.Spawn(3000, () => IoCManager.Resolve<IEntityManager>().DeleteEntity(Owner.Uid));
         }
     }
 }

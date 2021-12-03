@@ -154,7 +154,7 @@ namespace Content.Server.Kitchen.Components
 
             Owner.PopupMessageEveryone(Loc.GetString("comp-kitchen-spike-kill", ("user", user), ("victim", victim)));
             // TODO: Need to be able to leave them on the spike to do DoT, see ss13.
-            victim.Delete();
+            IoCManager.Resolve<IEntityManager>().DeleteEntity(victim.Uid);
 
             SoundSystem.Play(Filter.Pvs(Owner), SpikeSound.GetSound(), Owner);
         }

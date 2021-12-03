@@ -89,7 +89,7 @@ namespace Content.Server.Hands.Systems
                     || virtualItem.BlockingEntity != args.Pulled.Owner.Uid)
                     continue;
 
-                hand.HeldEntity.Delete();
+                IoCManager.Resolve<IEntityManager>().DeleteEntity(hand.HeldEntity.Uid);
                 break;
             }
         }

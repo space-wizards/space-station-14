@@ -47,7 +47,7 @@ namespace Content.Server.Power.Components
 
             if (EntitySystem.Get<ElectrocutionSystem>().TryDoElectrifiedAct(Owner.Uid, eventArgs.User.Uid)) return false;
 
-            Owner.Delete();
+            IoCManager.Resolve<IEntityManager>().DeleteEntity(Owner.Uid);
             var droppedEnt = IoCManager.Resolve<IEntityManager>().SpawnEntity(_cableDroppedOnCutPrototype, eventArgs.ClickLocation);
 
             // TODO: Literally just use a prototype that has a single thing in the stack, it's not that complicated...

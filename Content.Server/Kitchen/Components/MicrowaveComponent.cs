@@ -411,7 +411,7 @@ namespace Content.Server.Kitchen.Components
             {
                 var item = _storage.ContainedEntities.ElementAt(i);
                 _storage.Remove(item);
-                item.Delete();
+                IoCManager.Resolve<IEntityManager>().DeleteEntity(item.Uid);
             }
         }
 
@@ -459,7 +459,7 @@ namespace Content.Server.Kitchen.Components
                         if (IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(item.Uid).EntityPrototype.ID == recipeSolid.Key)
                         {
                             _storage.Remove(item);
-                            item.Delete();
+                            IoCManager.Resolve<IEntityManager>().DeleteEntity(item.Uid);
                             break;
                         }
                     }

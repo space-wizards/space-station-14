@@ -68,7 +68,7 @@ namespace Content.Server.Administration
                 verb.Text = Loc.GetString("delete-verb-get-data-text");
                 verb.Category = VerbCategory.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png";
-                verb.Act = () => args.Target.Delete();
+                verb.Act = () => IoCManager.Resolve<IEntityManager>().DeleteEntity(args.Target.Uid);
                 verb.Impact = LogImpact.Medium;
                 args.Verbs.Add(verb);
             }

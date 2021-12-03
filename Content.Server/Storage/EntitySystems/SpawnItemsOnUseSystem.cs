@@ -55,7 +55,7 @@ namespace Content.Server.Storage.EntitySystems
             if (component.Uses == 0)
             {
                 args.Handled = true;
-                owner.Delete();
+                IoCManager.Resolve<IEntityManager>().DeleteEntity(owner.Uid);
             }
 
             if (entityToPlaceInHands != null

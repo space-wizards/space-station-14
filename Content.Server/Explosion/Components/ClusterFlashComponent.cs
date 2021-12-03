@@ -123,7 +123,7 @@ namespace Content.Server.Explosion.Components
                     });
                 }
 
-                Owner.Delete();
+                IoCManager.Resolve<IEntityManager>().DeleteEntity(Owner.Uid);
             });
             return true;
         }

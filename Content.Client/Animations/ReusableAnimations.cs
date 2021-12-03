@@ -27,7 +27,7 @@ namespace Content.Client.Animations
 
             var animations = animatableClone.GetComponent<AnimationPlayerComponent>();
             animations.AnimationCompleted += (_) => {
-                animatableClone.Delete();
+                IoCManager.Resolve<IEntityManager>().DeleteEntity(animatableClone.Uid);
             };
 
             animations.Play(new Animation
