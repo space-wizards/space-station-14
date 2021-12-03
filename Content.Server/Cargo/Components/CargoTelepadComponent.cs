@@ -119,13 +119,13 @@ namespace Content.Server.Cargo.Components
             if (!_prototypeManager.TryIndex(data.ProductId, out CargoProductPrototype? prototype))
                 return;
 
-            var product = Owner.EntityManager.SpawnEntity(prototype.Product, Owner.Transform.Coordinates);
+            var product = IoCManager.Resolve<IEntityManager>().SpawnEntity(prototype.Product, Owner.Transform.Coordinates);
 
             product.Transform.Anchored = false;
 
             // spawn a piece of paper.
-            var printed = Owner.EntityManager.SpawnEntity(PrinterOutput, Owner.Transform.Coordinates);
-            if (!Owner.EntityManager.TryGetComponent(printed.Uid, out PaperComponent paper))
+            var printed = IoCManager.Resolve<IEntityManager>().SpawnEntity(PrinterOutput, Owner.Transform.Coordinates);
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(printed.Uid, out PaperComponent paper))
                 return;
 
             // fill in the order data
@@ -138,7 +138,7 @@ namespace Content.Server.Cargo.Components
                 ("approver", data.Approver)));
 
             // attempt to attach the label
-            if (Owner.EntityManager.TryGetComponent(product.Uid, out PaperLabelComponent label))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(product.Uid, out PaperLabelComponent label))
             {
                 EntitySystem.Get<ItemSlotsSystem>().TryInsert(OwnerUid, label.LabelSlot, printed);
             }

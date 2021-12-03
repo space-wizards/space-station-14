@@ -51,7 +51,7 @@ namespace Content.Server.Storage.Components
                 for (var i = 0; i < storageItem.Amount; i++)
                 {
                     storage.Insert(
-                        Owner.EntityManager.SpawnEntity(storageItem.PrototypeId, Owner.Transform.Coordinates));
+                        IoCManager.Resolve<IEntityManager>().SpawnEntity(storageItem.PrototypeId, Owner.Transform.Coordinates));
                 }
 
                 if (!string.IsNullOrEmpty(storageItem.GroupId)) alreadySpawnedGroups.Add(storageItem.GroupId);

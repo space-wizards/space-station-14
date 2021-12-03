@@ -100,7 +100,7 @@ namespace Content.Server.Morgue.Components
 
             if (_tray == null)
             {
-                _tray = Owner.EntityManager.SpawnEntity(_trayPrototypeId, Owner.Transform.Coordinates);
+                _tray = IoCManager.Resolve<IEntityManager>().SpawnEntity(_trayPrototypeId, Owner.Transform.Coordinates);
                 var trayComp = _tray.EnsureComponent<MorgueTrayComponent>();
                 trayComp.Morgue = Owner;
             }

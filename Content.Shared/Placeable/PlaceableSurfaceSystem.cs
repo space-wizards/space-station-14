@@ -2,6 +2,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
 namespace Content.Shared.Placeable
@@ -54,7 +55,7 @@ namespace Content.Shared.Placeable
             if(!args.User.TryGetComponent<SharedHandsComponent>(out var handComponent))
                 return;
 
-            if (!args.ClickLocation.IsValid(args.User.EntityManager))
+            if (!args.ClickLocation.IsValid(IoCManager.Resolve<IEntityManager>()))
                 return;
 
             if(!handComponent.TryDropEntity(args.Used, surface.Owner.Transform.Coordinates))

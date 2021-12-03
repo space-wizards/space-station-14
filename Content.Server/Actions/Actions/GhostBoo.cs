@@ -32,7 +32,7 @@ namespace Content.Server.Actions.Actions
             foreach (var ent in ents)
             {
                 var ghostBoo = new GhostBooEvent();
-                ent.EntityManager.EventBus.RaiseLocalEvent(ent.Uid, ghostBoo);
+                IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(ent.Uid, ghostBoo);
 
                 if (ghostBoo.Handled)
                     booCounter++;

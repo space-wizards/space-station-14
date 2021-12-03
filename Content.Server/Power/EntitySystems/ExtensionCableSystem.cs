@@ -87,7 +87,7 @@ namespace Content.Server.Power.EntitySystems
                 if (EntityManager.TryGetComponent<ExtensionCableReceiverComponent>(entity.Uid, out var receiver) &&
                     receiver.Connectable &&
                     receiver.Provider == null &&
-                    entity.Transform.Coordinates.TryDistance(owner.EntityManager, owner.Transform.Coordinates, out var distance) &&
+                    entity.Transform.Coordinates.TryDistance(IoCManager.Resolve<IEntityManager>(), owner.Transform.Coordinates, out var distance) &&
                     distance < Math.Min(range, receiver.ReceptionRange))
                 {
                     yield return receiver;
@@ -185,7 +185,7 @@ namespace Content.Server.Power.EntitySystems
 
                 if (!provider.Connectable) continue;
 
-                if (!entity.Transform.Coordinates.TryDistance(owner.EntityManager, owner.Transform.Coordinates, out var distance)) continue;
+                if (!entity.Transform.Coordinates.TryDistance(IoCManager.Resolve<IEntityManager>(), owner.Transform.Coordinates, out var distance)) continue;
 
                 if (!(distance < Math.Min(range, provider.TransferRange))) continue;
 

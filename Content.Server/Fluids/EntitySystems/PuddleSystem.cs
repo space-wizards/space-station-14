@@ -328,7 +328,7 @@ namespace Content.Server.Fluids.EntitySystems
             }
 
             puddle ??= () =>
-                puddleComponent.Owner.EntityManager.SpawnEntity(puddleComponent.Owner.Prototype?.ID,
+                IoCManager.Resolve<IEntityManager>().SpawnEntity(puddleComponent.Owner.Prototype?.ID,
                         mapGrid.DirectionToGrid(coords, direction))
                     .GetComponent<PuddleComponent>();
 

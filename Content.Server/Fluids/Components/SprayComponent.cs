@@ -100,7 +100,7 @@ namespace Content.Server.Fluids.Components
                 return true;
 
             var playerPos = eventArgs.User.Transform.Coordinates;
-            var entManager = Owner.EntityManager;
+            var entManager = IoCManager.Resolve<IEntityManager>();
 
             if (eventArgs.ClickLocation.GetGridId(entManager) != playerPos.GetGridId(entManager))
                 return true;
@@ -126,7 +126,7 @@ namespace Content.Server.Fluids.Components
 
                 var target = eventArgs.User.Transform.Coordinates.Offset((diffNorm + rotation.ToVec()).Normalized * diffLength + quarter);
 
-                if (target.TryDistance(Owner.EntityManager, playerPos, out var distance) && distance > SprayDistance)
+                if (target.TryDistance(IoCManager.Resolve<IEntityManager>(), playerPos, out var distance) && distance > SprayDistance)
                     target = eventArgs.User.Transform.Coordinates.Offset(diffNorm * SprayDistance);
 
                 var solution = EntitySystem.Get<SolutionContainerSystem>().SplitSolution(Owner.Uid, contents, _transferAmount);

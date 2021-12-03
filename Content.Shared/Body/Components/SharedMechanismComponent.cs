@@ -2,6 +2,7 @@
 using Content.Shared.Body.Events;
 using Content.Shared.Body.Part;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -36,11 +37,11 @@ namespace Content.Shared.Body.Components
                 {
                     if (old.Body == null)
                     {
-                        Owner.EntityManager.EventBus.RaiseLocalEvent(OwnerUid, new RemovedFromPartEvent(old));
+                        IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(OwnerUid, new RemovedFromPartEvent(old));
                     }
                     else
                     {
-                        Owner.EntityManager.EventBus.RaiseLocalEvent(OwnerUid, new RemovedFromPartInBodyEvent(old.Body, old));
+                        IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(OwnerUid, new RemovedFromPartInBodyEvent(old.Body, old));
                     }
                 }
 
@@ -48,11 +49,11 @@ namespace Content.Shared.Body.Components
                 {
                     if (value.Body == null)
                     {
-                        Owner.EntityManager.EventBus.RaiseLocalEvent(OwnerUid, new AddedToPartEvent(value));
+                        IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(OwnerUid, new AddedToPartEvent(value));
                     }
                     else
                     {
-                        Owner.EntityManager.EventBus.RaiseLocalEvent(OwnerUid, new AddedToPartInBodyEvent(value.Body, value));
+                        IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(OwnerUid, new AddedToPartInBodyEvent(value.Body, value));
                     }
                 }
             }

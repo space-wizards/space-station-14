@@ -59,7 +59,7 @@ namespace Content.Server.Mind.Components
         public void InternalEjectMind()
         {
             if (!Deleted)
-                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new MindRemovedMessage());
+                IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner.Uid, new MindRemovedMessage());
             Mind = null;
         }
 
@@ -71,7 +71,7 @@ namespace Content.Server.Mind.Components
         public void InternalAssignMind(Mind value)
         {
             Mind = value;
-            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new MindAddedMessage());
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner.Uid, new MindAddedMessage());
         }
 
         protected override void Shutdown()
@@ -103,13 +103,13 @@ namespace Content.Server.Mind.Components
                         // Async this so that we don't throw if the grid we're on is being deleted.
                         var mapMan = IoCManager.Resolve<IMapManager>();
 
-                        var gridId = spawnPosition.GetGridId(Owner.EntityManager);
+                        var gridId = spawnPosition.GetGridId(IoCManager.Resolve<IEntityManager>());
                         if (gridId == GridId.Invalid || !mapMan.GridExists(gridId))
                         {
                             spawnPosition = EntitySystem.Get<GameTicker>().GetObserverSpawnPoint();
                         }
 
-                        var ghost = Owner.EntityManager.SpawnEntity("MobObserver", spawnPosition);
+                        var ghost = IoCManager.Resolve<IEntityManager>().SpawnEntity("MobObserver", spawnPosition);
                         var ghostComponent = ghost.GetComponent<GhostComponent>();
                         EntitySystem.Get<SharedGhostSystem>().SetCanReturnToBody(ghostComponent, false);
 

@@ -2,6 +2,7 @@ using Content.Shared.Popups;
 using Content.Shared.Rotatable;
 using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
@@ -83,7 +84,7 @@ namespace Content.Server.Rotatable
             }
 
             var oldTransform = component.Owner.Transform;
-            var entity = component.Owner.EntityManager.SpawnEntity(component.MirrorEntity, oldTransform.Coordinates);
+            var entity = IoCManager.Resolve<IEntityManager>().SpawnEntity(component.MirrorEntity, oldTransform.Coordinates);
             var newTransform = entity.Transform;
             newTransform.LocalRotation = oldTransform.LocalRotation;
             newTransform.Anchored = false;

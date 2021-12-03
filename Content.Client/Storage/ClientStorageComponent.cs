@@ -67,7 +67,7 @@ namespace Content.Client.Storage
             }
 
             _storedEntities = state.StoredEntities
-                .Select(id => Owner.EntityManager.GetEntity(id))
+                .Select(id => IoCManager.Resolve<IEntityManager>().GetEntity(id))
                 .ToList();
         }
 
@@ -101,7 +101,7 @@ namespace Content.Client.Storage
         /// <param name="storageState"></param>
         private void HandleStorageMessage(StorageHeldItemsMessage storageState)
         {
-            _storedEntities = storageState.StoredEntities.Select(id => Owner.EntityManager.GetEntity(id)).ToList();
+            _storedEntities = storageState.StoredEntities.Select(id => IoCManager.Resolve<IEntityManager>().GetEntity(id)).ToList();
             StorageSizeUsed = storageState.StorageSizeUsed;
             StorageCapacityMax = storageState.StorageSizeMax;
             _window?.BuildEntityList(storageState.StoredEntities.ToList());
@@ -118,7 +118,7 @@ namespace Content.Client.Storage
                 var entityId = msg.StoredEntities[i];
                 var initialPosition = msg.EntityPositions[i];
 
-                if (Owner.EntityManager.TryGetEntity(entityId, out var entity))
+                if (IoCManager.Resolve<IEntityManager>().TryGetEntity(entityId, out var entity))
                 {
                     ReusableAnimations.AnimateEntityPickup(entity, initialPosition, Owner.Transform.LocalPosition);
                 }
@@ -156,7 +156,7 @@ namespace Content.Client.Storage
 #pragma warning restore 618
                 buttonEventArgs.Event.Handle();
             }
-            else if (Owner.EntityManager.TryGetEntity(entityUid, out var entity))
+            else if (IoCManager.Resolve<IEntityManager>().TryGetEntity(entityUid, out var entity))
             {
                 _itemSlotManager.OnButtonPressed(buttonEventArgs.Event, entity);
             }
@@ -178,7 +178,7 @@ namespace Content.Client.Storage
         /// </summary>
         private void GenerateButton(EntityUid entityUid, EntityContainerButton button)
         {
-            if (!Owner.EntityManager.TryGetEntity(entityUid, out var entity))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetEntity(entityUid, out var entity))
                 return;
 
             entity.TryGetComponent(out ISpriteComponent? sprite);

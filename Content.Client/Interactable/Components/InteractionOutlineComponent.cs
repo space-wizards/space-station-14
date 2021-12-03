@@ -28,7 +28,7 @@ namespace Content.Client.Interactable.Components
             if (Owner.TryGetComponent(out ISpriteComponent? sprite))
             {
                 sprite.PostShader = MakeNewShader(inInteractionRange, renderScale);
-                sprite.RenderOrder = Owner.EntityManager.CurrentTick.Value;
+                sprite.RenderOrder = IoCManager.Resolve<IEntityManager>().CurrentTick.Value;
             }
         }
 

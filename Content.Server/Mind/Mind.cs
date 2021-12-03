@@ -184,7 +184,8 @@ namespace Content.Server.Mind
             role.Greet();
 
             var message = new RoleAddedEvent(role);
-            OwnedEntity?.EntityManager.EventBus.RaiseLocalEvent(OwnedEntity.Uid, message);
+            IEntity? tempQualifier = OwnedEntity;
+            (tempQualifier != null ? IoCManager.Resolve<IEntityManager>() : null).EventBus.RaiseLocalEvent(OwnedEntity.Uid, message);
 
             return role;
         }
@@ -206,7 +207,8 @@ namespace Content.Server.Mind
             _roles.Remove(role);
 
             var message = new RoleRemovedEvent(role);
-            OwnedEntity?.EntityManager.EventBus.RaiseLocalEvent(OwnedEntity.Uid, message);
+            IEntity? tempQualifier = OwnedEntity;
+            (tempQualifier != null ? IoCManager.Resolve<IEntityManager>() : null).EventBus.RaiseLocalEvent(OwnedEntity.Uid, message);
         }
 
         public bool HasRole<T>() where T : Role
@@ -380,7 +382,7 @@ namespace Content.Server.Mind
                 oldVisitingEnt.RemoveComponent<VisitingMindComponent>();
             }
 
-            oldVisitingEnt.EntityManager.EventBus.RaiseLocalEvent(oldVisitingEnt.Uid, new MindUnvisitedMessage());
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(oldVisitingEnt.Uid, new MindUnvisitedMessage());
         }
 
         public bool TryGetSession([NotNullWhen(true)] out IPlayerSession? session)

@@ -49,7 +49,7 @@ namespace Content.Server.Storage.Components
         private const string LoggerName = "Storage";
 
         public Container? Storage;
-        
+
         private readonly Dictionary<IEntity, int> _sizeCache = new();
 
         [DataField("occludesLight")]
@@ -462,13 +462,13 @@ namespace Content.Server.Storage.Components
                     var ownerTransform = Owner.Transform;
                     var playerTransform = player.Transform;
 
-                    if (!playerTransform.Coordinates.InRange(Owner.EntityManager, ownerTransform.Coordinates, 2) ||
+                    if (!playerTransform.Coordinates.InRange(IoCManager.Resolve<IEntityManager>(), ownerTransform.Coordinates, 2) ||
                         Owner.IsInContainer() && !playerTransform.ContainsEntity(ownerTransform))
                     {
                         break;
                     }
 
-                    if (!Owner.EntityManager.TryGetEntity(remove.EntityUid, out var entity) || Storage?.Contains(entity) == false)
+                    if (!IoCManager.Resolve<IEntityManager>().TryGetEntity(remove.EntityUid, out var entity) || Storage?.Contains(entity) == false)
                     {
                         break;
                     }

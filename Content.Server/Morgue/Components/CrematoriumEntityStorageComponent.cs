@@ -15,6 +15,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -119,7 +120,7 @@ namespace Content.Server.Morgue.Components
                         item.Delete();
                     }
 
-                    var ash = Owner.EntityManager.SpawnEntity("Ash", Owner.Transform.Coordinates);
+                    var ash = IoCManager.Resolve<IEntityManager>().SpawnEntity("Ash", Owner.Transform.Coordinates);
                     Contents.Insert(ash);
                 }
 

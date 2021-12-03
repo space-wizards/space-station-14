@@ -14,6 +14,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
@@ -179,7 +180,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
             if (!existing && _magFillPrototype != null)
             {
-                var magEntity = Owner.EntityManager.SpawnEntity(_magFillPrototype, Owner.Transform.Coordinates);
+                var magEntity = IoCManager.Resolve<IEntityManager>().SpawnEntity(_magFillPrototype, Owner.Transform.Coordinates);
                 MagazineContainer.Insert(magEntity);
             }
             Dirty();

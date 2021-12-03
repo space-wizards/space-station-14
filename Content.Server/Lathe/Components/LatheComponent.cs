@@ -14,6 +14,7 @@ using Content.Shared.Research.Prototypes;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Lathe.Components
@@ -122,7 +123,7 @@ namespace Content.Server.Lathe.Components
             {
                 Producing = false;
                 _producingRecipe = null;
-                Owner.EntityManager.SpawnEntity(recipe.Result, Owner.Transform.Coordinates);
+                IoCManager.Resolve<IEntityManager>().SpawnEntity(recipe.Result, Owner.Transform.Coordinates);
                 UserInterface?.SendMessage(new LatheStoppedProducingRecipeMessage());
                 State = LatheState.Base;
                 SetAppearance(LatheVisualState.Idle);

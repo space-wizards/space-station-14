@@ -10,6 +10,7 @@ using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
@@ -174,7 +175,7 @@ namespace Content.Server.Atmos.Components
             if (!_checkPlayer && _position.HasValue)
             {
                 // Check if position is out of range => don't update
-                if (!_position.Value.InRange(Owner.EntityManager, pos, SharedInteractionSystem.InteractionRange))
+                if (!_position.Value.InRange(IoCManager.Resolve<IEntityManager>(), pos, SharedInteractionSystem.InteractionRange))
                     return;
 
                 pos = _position.Value;

@@ -12,6 +12,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -303,7 +304,7 @@ namespace Content.Server.Chemistry.Components
 
         public override ComponentState GetComponentState()
         {
-            Owner.EntityManager.EntitySysManager.GetEntitySystem<SolutionContainerSystem>()
+            IoCManager.Resolve<IEntityManager>().EntitySysManager.GetEntitySystem<SolutionContainerSystem>()
                 .TryGetSolution(Owner.Uid, SolutionName, out var solution);
 
             var currentVolume = solution?.CurrentVolume ?? FixedPoint2.Zero;

@@ -37,7 +37,7 @@ namespace Content.Server.Tools.Components
             if (!Owner.TryGetComponent<ToolComponent>(out var tool) && _toolComponentNeeded)
                 return;
 
-            if (!_mapManager.TryGetGrid(clickLocation.GetGridId(Owner.EntityManager), out var mapGrid))
+            if (!_mapManager.TryGetGrid(clickLocation.GetGridId(IoCManager.Resolve<IEntityManager>()), out var mapGrid))
                 return;
 
             var tile = mapGrid.GetTileRef(clickLocation);
@@ -55,7 +55,7 @@ namespace Content.Server.Tools.Components
             if (_toolComponentNeeded && !await EntitySystem.Get<ToolSystem>().UseTool(Owner.Uid, user.Uid, null, 0f, 0f, _qualityNeeded, toolComponent:tool))
                 return;
 
-            coordinates.PryTile(Owner.EntityManager, _mapManager);
+            coordinates.PryTile(IoCManager.Resolve<IEntityManager>(), _mapManager);
         }
     }
 }

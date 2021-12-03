@@ -76,7 +76,7 @@ namespace Content.Client.IconSmoothing
                 // ensures lastposition initial value is populated on spawn. Just calling
                 // the hook here would cause a dirty event to fire needlessly
                 UpdateLastPosition();
-                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new IconSmoothDirtyEvent(Owner, null, Mode));
+                IoCManager.Resolve<IEntityManager>().EventBus.RaiseEvent(EventSource.Local, new IconSmoothDirtyEvent(Owner, null, Mode));
             }
 
             if (Sprite != null && Mode == IconSmoothingMode.Corners)
@@ -260,7 +260,7 @@ namespace Content.Client.IconSmoothing
 
             if (Owner.Transform.Anchored)
             {
-                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new IconSmoothDirtyEvent(Owner, _lastPosition, Mode));
+                IoCManager.Resolve<IEntityManager>().EventBus.RaiseEvent(EventSource.Local, new IconSmoothDirtyEvent(Owner, _lastPosition, Mode));
             }
         }
 
@@ -268,7 +268,7 @@ namespace Content.Client.IconSmoothing
         {
             if (Owner.Transform.Anchored)
             {
-                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new IconSmoothDirtyEvent(Owner, _lastPosition, Mode));
+                IoCManager.Resolve<IEntityManager>().EventBus.RaiseEvent(EventSource.Local, new IconSmoothDirtyEvent(Owner, _lastPosition, Mode));
                 UpdateLastPosition();
             }
         }
@@ -278,7 +278,7 @@ namespace Content.Client.IconSmoothing
         {
             foreach (var entity in candidates)
             {
-                if (!Owner.EntityManager.TryGetComponent(entity, out IconSmoothComponent? other))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out IconSmoothComponent? other))
                 {
                     continue;
                 }

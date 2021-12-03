@@ -218,14 +218,14 @@ namespace Content.Server.Storage.Components
                 // 5. if this is NOT AN ITEM, then mobs can always be eaten unless unless a previous law prevents it
 
                 // Let's not insert admin ghosts, yeah? This is really a a hack and should be replaced by attempt events
-                if (Owner.EntityManager.HasComponent<GhostComponent>(entity.Uid))
+                if (IoCManager.Resolve<IEntityManager>().HasComponent<GhostComponent>(entity.Uid))
                     continue;
 
                 // checks
 
-                var targetIsItem = Owner.EntityManager.HasComponent<SharedItemComponent>(entity.Uid);
-                var targetIsMob = Owner.EntityManager.HasComponent<SharedBodyComponent>(entity.Uid);
-                var storageIsItem = Owner.EntityManager.HasComponent<SharedItemComponent>(OwnerUid);
+                var targetIsItem = IoCManager.Resolve<IEntityManager>().HasComponent<SharedItemComponent>(entity.Uid);
+                var targetIsMob = IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(entity.Uid);
+                var storageIsItem = IoCManager.Resolve<IEntityManager>().HasComponent<SharedItemComponent>(OwnerUid);
 
                 var allowedToEat = false;
 

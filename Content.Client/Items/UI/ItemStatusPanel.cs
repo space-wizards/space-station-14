@@ -194,7 +194,7 @@ namespace Content.Client.Items.UI
             }
 
             var collectMsg = new ItemStatusCollectMessage();
-            _entity.EntityManager.EventBus.RaiseLocalEvent(_entity.Uid, collectMsg);
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(_entity.Uid, collectMsg);
 
             foreach (var control in collectMsg.Controls)
             {

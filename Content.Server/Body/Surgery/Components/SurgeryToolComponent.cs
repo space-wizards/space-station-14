@@ -12,6 +12,7 @@ using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -159,7 +160,7 @@ namespace Content.Server.Body.Surgery.Components
 #pragma warning disable 618
             SendMessage(message);
 #pragma warning restore 618
-            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, message);
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseEvent(EventSource.Local, message);
         }
 
         private void UpdateSurgeryUIBodyPartRequest(IPlayerSession session, Dictionary<string, int> options)

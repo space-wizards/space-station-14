@@ -64,10 +64,10 @@ namespace Content.Server.Tiles
             var mapManager = IoCManager.Resolve<IMapManager>();
 
             var location = eventArgs.ClickLocation.AlignWithClosestGridTile();
-            var locationMap = location.ToMap(Owner.EntityManager);
+            var locationMap = location.ToMap(IoCManager.Resolve<IEntityManager>());
             if (locationMap.MapId == MapId.Nullspace)
                 return true;
-            mapManager.TryGetGrid(location.GetGridId(Owner.EntityManager), out var mapGrid);
+            mapManager.TryGetGrid(location.GetGridId(IoCManager.Resolve<IEntityManager>()), out var mapGrid);
 
             if (_outputTiles == null)
                 return true;

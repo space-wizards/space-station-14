@@ -1,6 +1,7 @@
 using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
@@ -37,7 +38,7 @@ namespace Content.Shared.Shuttles.Components
                 return;
             }
 
-            if (!Owner.EntityManager.TryGetEntity(state.Console.Value, out var consoleEnt) ||
+            if (!IoCManager.Resolve<IEntityManager>().TryGetEntity(state.Console.Value, out var consoleEnt) ||
                 !consoleEnt.TryGetComponent(out SharedShuttleConsoleComponent? shuttleConsoleComponent))
             {
                 Logger.Warning($"Unable to set Helmsman console to {state.Console.Value}");

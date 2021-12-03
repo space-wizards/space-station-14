@@ -7,6 +7,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Foam;
 using Content.Shared.Inventory;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Chemistry.Components
@@ -78,7 +79,7 @@ namespace Content.Server.Chemistry.Components
             {
                 if (!string.IsNullOrEmpty(_foamedMetalPrototype))
                 {
-                    Owner.EntityManager.SpawnEntity(_foamedMetalPrototype, Owner.Transform.Coordinates);
+                    IoCManager.Resolve<IEntityManager>().SpawnEntity(_foamedMetalPrototype, Owner.Transform.Coordinates);
                 }
 
                 Owner.QueueDelete();

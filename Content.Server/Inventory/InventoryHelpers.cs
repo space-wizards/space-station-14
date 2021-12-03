@@ -1,5 +1,6 @@
 ﻿using Content.Server.Inventory.Components;
 using Content.Server.Items;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using static Content.Shared.Inventory.EquipmentSlotDefines;
@@ -10,7 +11,7 @@ namespace Content.Server.Inventory
     {
         public static bool SpawnItemInSlot(this InventoryComponent inventory, Slots slot, string prototype, bool mobCheck = false)
         {
-            var entityManager = inventory.Owner.EntityManager;
+            var entityManager = IoCManager.Resolve<IEntityManager>();
             var protoManager = IoCManager.Resolve<IPrototypeManager>();
             var user = inventory.Owner;
 

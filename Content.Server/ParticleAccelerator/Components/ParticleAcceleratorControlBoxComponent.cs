@@ -390,7 +390,7 @@ namespace Content.Server.ParticleAccelerator.Components
                 var coords = Owner.Transform.Coordinates;
                 foreach (var maybeFuel in grid.GetCardinalNeighborCells(coords))
                 {
-                    if (Owner.EntityManager.TryGetComponent(maybeFuel, out _partFuelChamber))
+                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent(maybeFuel, out _partFuelChamber))
                     {
                         break;
                     }
@@ -464,7 +464,7 @@ namespace Content.Server.ParticleAccelerator.Components
             var coords = Owner.Transform.Coordinates;
             foreach (var ent in grid.GetOffset(coords, offset))
             {
-                if (Owner.EntityManager.TryGetComponent(ent, out part) && !part.Deleted)
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(ent, out part) && !part.Deleted)
                 {
                     return true;
                 }

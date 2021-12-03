@@ -37,7 +37,7 @@ namespace Content.Server.Botany.Components
 
                 for (var i = 0; i < random; i++)
                 {
-                    produce.Seed.SpawnSeedPacket(Owner.Transform.Coordinates, Owner.EntityManager);
+                    produce.Seed.SpawnSeedPacket(Owner.Transform.Coordinates, IoCManager.Resolve<IEntityManager>());
                 }
 
                 return true;

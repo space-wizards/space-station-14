@@ -82,7 +82,7 @@ namespace Content.Server.Weapon.Melee
             var target = args.TargetEntity;
 
             var location = args.User.Transform.Coordinates;
-            var diff = args.ClickLocation.ToMapPos(owner.EntityManager) - location.ToMapPos(owner.EntityManager);
+            var diff = args.ClickLocation.ToMapPos(IoCManager.Resolve<IEntityManager>()) - location.ToMapPos(IoCManager.Resolve<IEntityManager>());
             var angle = Angle.FromWorldVec(diff);
 
             if (target != null)
@@ -139,7 +139,7 @@ namespace Content.Server.Weapon.Melee
             var owner = EntityManager.GetEntity(uid);
 
             var location = args.User.Transform.Coordinates;
-            var diff = args.ClickLocation.ToMapPos(owner.EntityManager) - location.ToMapPos(owner.EntityManager);
+            var diff = args.ClickLocation.ToMapPos(IoCManager.Resolve<IEntityManager>()) - location.ToMapPos(IoCManager.Resolve<IEntityManager>());
             var angle = Angle.FromWorldVec(diff);
 
             // This should really be improved. GetEntitiesInArc uses pos instead of bounding boxes.
@@ -220,7 +220,7 @@ namespace Content.Server.Weapon.Melee
                 return;
 
             var location = args.User.Transform.Coordinates;
-            var diff = args.ClickLocation.ToMapPos(owner.EntityManager) - location.ToMapPos(owner.EntityManager);
+            var diff = args.ClickLocation.ToMapPos(IoCManager.Resolve<IEntityManager>()) - location.ToMapPos(IoCManager.Resolve<IEntityManager>());
             var angle = Angle.FromWorldVec(diff);
 
             var hitEvent = new MeleeInteractEvent(args.Target, args.User);

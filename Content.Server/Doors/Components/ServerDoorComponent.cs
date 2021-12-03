@@ -21,6 +21,7 @@ using Content.Shared.Tools;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
@@ -77,7 +78,7 @@ namespace Content.Server.Doors.Components
                     _ => throw new ArgumentOutOfRangeException(),
                 };
 
-                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new DoorStateChangedEvent(State), false);
+                IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner.Uid, new DoorStateChangedEvent(State), false);
                 _autoCloseCancelTokenSource?.Cancel();
 
                 Dirty();
@@ -257,7 +258,7 @@ namespace Content.Server.Doors.Components
                 return;
 
             DoorClickShouldActivateEvent ev = new DoorClickShouldActivateEvent(eventArgs);
-            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, ev, false);
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner.Uid, ev, false);
             if (ev.Handled)
                 return;
 
@@ -276,7 +277,7 @@ namespace Content.Server.Doors.Components
         public void TryOpen(IEntity? user=null)
         {
             var msg = new DoorOpenAttemptEvent();
-            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, msg);
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner.Uid, msg);
 
             if (msg.Cancelled) return;
 
@@ -354,7 +355,7 @@ namespace Content.Server.Doors.Components
             }
 
             var ev = new BeforeDoorOpenedEvent();
-            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, ev, false);
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner.Uid, ev, false);
             return !ev.Cancelled;
         }
 
@@ -402,7 +403,7 @@ namespace Content.Server.Doors.Components
                 EntitySystem.Get<AirtightSystem>().SetAirblocked(airtight, false);
             }
 
-            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new AccessReaderChangeMessage(Owner, false));
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseEvent(EventSource.Local, new AccessReaderChangeMessage(Owner, false));
         }
 
         private void QuickOpen(bool refresh)
@@ -424,7 +425,7 @@ namespace Content.Server.Doors.Components
         public void TryClose(IEntity? user=null)
         {
             var msg = new DoorCloseAttemptEvent();
-            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, msg);
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner.Uid, msg);
 
             if (msg.Cancelled) return;
 
@@ -460,7 +461,7 @@ namespace Content.Server.Doors.Components
         public bool CanCloseGeneric()
         {
             var ev = new BeforeDoorClosedEvent();
-            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, ev, false);
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner.Uid, ev, false);
             if (ev.Cancelled)
                 return false;
 
@@ -470,7 +471,7 @@ namespace Content.Server.Doors.Components
         private bool SafetyCheck()
         {
             var ev = new DoorSafetyEnabledEvent();
-            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, ev, false);
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner.Uid, ev, false);
             return ev.Safety || _inhibitCrush;
         }
 
@@ -547,7 +548,7 @@ namespace Content.Server.Doors.Components
                 EntitySystem.Get<AirtightSystem>().SetAirblocked(airtight, true);
             }
 
-            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new AccessReaderChangeMessage(Owner, true));
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseEvent(EventSource.Local, new AccessReaderChangeMessage(Owner, true));
         }
 
         /// <summary>
@@ -603,7 +604,7 @@ namespace Content.Server.Doors.Components
         public void Deny()
         {
             var ev = new BeforeDoorDeniedEvent();
-            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, ev, false);
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner.Uid, ev, false);
             if (ev.Cancelled)
                 return;
 
@@ -650,14 +651,14 @@ namespace Content.Server.Doors.Components
                 return;
 
             var autoev = new BeforeDoorAutoCloseEvent();
-            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, autoev, false);
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner.Uid, autoev, false);
             if (autoev.Cancelled)
                 return;
 
             _autoCloseCancelTokenSource = new();
 
             var ev = new DoorGetCloseTimeModifierEvent();
-            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, ev, false);
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner.Uid, ev, false);
             var realCloseTime = AutoCloseDelay * ev.CloseTimeModifier;
 
             Owner.SpawnRepeatingTimer(realCloseTime, async () =>
@@ -683,10 +684,10 @@ namespace Content.Server.Doors.Components
             if (tool.Qualities.Contains(_pryingQuality) && !IsWeldedShut)
             {
                 var ev = new DoorGetPryTimeModifierEvent();
-                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, ev, false);
+                IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner.Uid, ev, false);
 
                 var canEv = new BeforeDoorPryEvent(eventArgs);
-                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, canEv, false);
+                IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner.Uid, canEv, false);
 
                 if (canEv.Cancelled) return false;
 
@@ -695,7 +696,7 @@ namespace Content.Server.Doors.Components
 
                 if (successfulPry && !IsWeldedShut)
                 {
-                    Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new OnDoorPryEvent(eventArgs), false);
+                    IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner.Uid, new OnDoorPryEvent(eventArgs), false);
                     if (State == DoorState.Closed)
                     {
                         Open();

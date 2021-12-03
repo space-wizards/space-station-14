@@ -10,6 +10,7 @@ using Content.Shared.Popups;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
@@ -90,7 +91,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
             if (_unspawnedCount > 0)
             {
-                ammo = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.Coordinates);
+                ammo = IoCManager.Resolve<IEntityManager>().SpawnEntity(_fillPrototype, Owner.Transform.Coordinates);
 
                 // when dumping from held ammo box, this detaches the spawned ammo from the player.
                 ammo.Transform.AttachParentToContainerOrGrid();

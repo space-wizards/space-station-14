@@ -72,7 +72,7 @@ namespace Content.Client.Suspicion
             }
 
             _overlayActive = true;
-            var overlay = new TraitorOverlay(Owner.EntityManager, _resourceCache, _eyeManager);
+            var overlay = new TraitorOverlay(IoCManager.Resolve<IEntityManager>(), _resourceCache, _eyeManager);
             _overlayManager.AddOverlay(overlay);
         }
 

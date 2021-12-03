@@ -5,6 +5,7 @@ using Content.Shared.Examine;
 using Content.Shared.Light.Component;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
@@ -30,7 +31,7 @@ namespace Content.Server.Light.Components
                     return;
 
                 _state = value;
-                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new EmergencyLightMessage(this, _state));
+                IoCManager.Resolve<IEntityManager>().EventBus.RaiseEvent(EventSource.Local, new EmergencyLightMessage(this, _state));
             }
         }
 

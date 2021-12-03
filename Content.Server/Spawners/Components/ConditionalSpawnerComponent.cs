@@ -62,7 +62,7 @@ namespace Content.Server.Spawners.Components
             }
 
             if(!Owner.Deleted)
-                Owner.EntityManager.SpawnEntity(_robustRandom.Pick(Prototypes), Owner.Transform.Coordinates);
+                IoCManager.Resolve<IEntityManager>().SpawnEntity(_robustRandom.Pick(Prototypes), Owner.Transform.Coordinates);
         }
 
         public virtual void MapInit()

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Content.Shared.Pulling;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Maths;
@@ -74,7 +75,7 @@ namespace Content.Server.Physics.Controllers
                 // Now that's over with...
 
                 var pullerPosition = puller.Transform.MapPosition;
-                var movingTo = pullable.MovingTo.Value.ToMap(pullable.Owner.EntityManager);
+                var movingTo = pullable.MovingTo.Value.ToMap(IoCManager.Resolve<IEntityManager>());
                 if (movingTo.MapId != pullerPosition.MapId)
                 {
                     _pullableSystem.StopMoveTo(pullable);

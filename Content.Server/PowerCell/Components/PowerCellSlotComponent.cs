@@ -7,6 +7,7 @@ using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -148,7 +149,7 @@ namespace Content.Server.PowerCell.Components
                 SoundSystem.Play(Filter.Pvs(Owner), CellRemoveSound.GetSound(), Owner, AudioHelpers.WithVariation(0.125f));
             }
 
-            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new PowerCellChangedEvent(true), false);
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner.Uid, new PowerCellChangedEvent(true), false);
             return cell;
         }
 
@@ -171,7 +172,7 @@ namespace Content.Server.PowerCell.Components
                 SoundSystem.Play(Filter.Pvs(Owner), CellInsertSound.GetSound(), Owner, AudioHelpers.WithVariation(0.125f));
             }
 
-            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new PowerCellChangedEvent(false), false);
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner.Uid, new PowerCellChangedEvent(false), false);
             return true;
         }
 
@@ -198,7 +199,7 @@ namespace Content.Server.PowerCell.Components
                 };
             }
 
-            var cell = Owner.EntityManager.SpawnEntity(type, Owner.Transform.Coordinates);
+            var cell = IoCManager.Resolve<IEntityManager>().SpawnEntity(type, Owner.Transform.Coordinates);
             _cellContainer.Insert(cell);
         }
     }

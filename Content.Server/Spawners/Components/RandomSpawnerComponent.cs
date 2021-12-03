@@ -32,7 +32,7 @@ namespace Content.Server.Spawners.Components
         {
             if (RarePrototypes.Count > 0 && (RareChance == 1.0f || _robustRandom.Prob(RareChance)))
             {
-                Owner.EntityManager.SpawnEntity(_robustRandom.Pick(RarePrototypes), Owner.Transform.Coordinates);
+                IoCManager.Resolve<IEntityManager>().SpawnEntity(_robustRandom.Pick(RarePrototypes), Owner.Transform.Coordinates);
                 return;
             }
 
@@ -54,7 +54,7 @@ namespace Content.Server.Spawners.Components
                 var x_negative = random.Prob(0.5f) ? -1 : 1;
                 var y_negative = random.Prob(0.5f) ? -1 : 1;
 
-                var entity = Owner.EntityManager.SpawnEntity(_robustRandom.Pick(Prototypes), Owner.Transform.Coordinates);
+                var entity = IoCManager.Resolve<IEntityManager>().SpawnEntity(_robustRandom.Pick(Prototypes), Owner.Transform.Coordinates);
                 entity.Transform.LocalPosition += new Vector2(random.NextFloat() * Offset * x_negative, random.NextFloat() * Offset * y_negative);
             }
 

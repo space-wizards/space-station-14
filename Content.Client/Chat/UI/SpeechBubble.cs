@@ -5,6 +5,7 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 
@@ -98,7 +99,7 @@ namespace Content.Client.Chat.UI
                 _verticalOffsetAchieved = MathHelper.Lerp(_verticalOffsetAchieved, VerticalOffset, 10 * args.DeltaSeconds);
             }
 
-            if (!_senderEntity.Transform.Coordinates.IsValid(_senderEntity.EntityManager))
+            if (!_senderEntity.Transform.Coordinates.IsValid(IoCManager.Resolve<IEntityManager>()))
             {
                 Modulate = Color.White.WithAlpha(0);
                 return;

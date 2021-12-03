@@ -10,6 +10,7 @@ using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
@@ -124,7 +125,7 @@ namespace Content.Server.Chemistry.Components
 
         public override ComponentState GetComponentState()
         {
-            var solutionSys = Owner.EntityManager.EntitySysManager.GetEntitySystem<SolutionContainerSystem>();
+            var solutionSys = IoCManager.Resolve<IEntityManager>().EntitySysManager.GetEntitySystem<SolutionContainerSystem>();
             return solutionSys.TryGetSolution(Owner.Uid, SolutionName, out var solution)
                 ? new HyposprayComponentState(solution.CurrentVolume, solution.MaxVolume)
                 : new HyposprayComponentState(FixedPoint2.Zero, FixedPoint2.Zero);

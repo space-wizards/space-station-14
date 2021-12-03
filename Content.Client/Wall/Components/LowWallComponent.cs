@@ -42,7 +42,7 @@ namespace Content.Client.Wall.Components
         {
             base.Startup();
 
-            _overlayEntity = Owner.EntityManager.SpawnEntity("LowWallOverlay", Owner.Transform.Coordinates);
+            _overlayEntity = IoCManager.Resolve<IEntityManager>().SpawnEntity("LowWallOverlay", Owner.Transform.Coordinates);
             _overlayEntity.Transform.AttachParent(Owner);
             _overlayEntity.Transform.LocalPosition = Vector2.Zero;
 
@@ -204,7 +204,7 @@ namespace Content.Client.Wall.Components
 
             foreach (var entity in grid.GetLocal(coords))
             {
-                if (Owner.EntityManager.TryGetComponent(entity, out WindowComponent? window))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out WindowComponent? window))
                 {
                     //window.UpdateSprite();
                 }
@@ -216,7 +216,7 @@ namespace Content.Client.Wall.Components
         {
             foreach (var entity in candidates)
             {
-                if (!Owner.EntityManager.TryGetComponent(entity, out IconSmoothComponent? other))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out IconSmoothComponent? other))
                 {
                     continue;
                 }

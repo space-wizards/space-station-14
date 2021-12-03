@@ -203,7 +203,7 @@ namespace Content.Shared.Interaction.Helpers
             Ignored? predicate = null,
             bool ignoreInsideBlocker = true)
         {
-            var originPosition = origin.ToMap(other.EntityManager);
+            var originPosition = origin.ToMap(IoCManager.Resolve<IEntityManager>());
             var otherPosition = other.Transform.MapPosition;
 
             return ExamineSystemShared.InRangeUnOccluded(originPosition, otherPosition, range,
@@ -217,7 +217,7 @@ namespace Content.Shared.Interaction.Helpers
             Ignored? predicate = null,
             bool ignoreInsideBlocker = true)
         {
-            var originPosition = origin.ToMap(other.Owner.EntityManager);
+            var originPosition = origin.ToMap(IoCManager.Resolve<IEntityManager>());
             var otherPosition = other.Owner.Transform.MapPosition;
 
             return ExamineSystemShared.InRangeUnOccluded(originPosition, otherPosition, range,
@@ -231,7 +231,7 @@ namespace Content.Shared.Interaction.Helpers
             Ignored? predicate = null,
             bool ignoreInsideBlocker = true)
         {
-            var originPosition = origin.ToMap(other.Owner.EntityManager);
+            var originPosition = origin.ToMap(IoCManager.Resolve<IEntityManager>());
             var otherPosition = other.Owner.Transform.MapPosition;
 
             return ExamineSystemShared.InRangeUnOccluded(originPosition, otherPosition, range,

@@ -365,13 +365,13 @@ namespace Content.Server.Kitchen.Components
                     if (recipeToCook != null)
                     {
                         SubtractContents(recipeToCook);
-                        Owner.EntityManager.SpawnEntity(recipeToCook.Result, Owner.Transform.Coordinates);
+                        IoCManager.Resolve<IEntityManager>().SpawnEntity(recipeToCook.Result, Owner.Transform.Coordinates);
                     }
                     else
                     {
                         VaporizeReagents();
                         VaporizeSolids();
-                        Owner.EntityManager.SpawnEntity(_badRecipeName, Owner.Transform.Coordinates);
+                        IoCManager.Resolve<IEntityManager>().SpawnEntity(_badRecipeName, Owner.Transform.Coordinates);
                     }
                 }
 
@@ -424,9 +424,9 @@ namespace Content.Server.Kitchen.Components
 
         private void EjectSolid(EntityUid entityId)
         {
-            if (Owner.EntityManager.EntityExists(entityId))
+            if (IoCManager.Resolve<IEntityManager>().EntityExists(entityId))
             {
-                _storage.Remove(Owner.EntityManager.GetEntity(entityId));
+                _storage.Remove(IoCManager.Resolve<IEntityManager>().GetEntity(entityId));
             }
         }
 

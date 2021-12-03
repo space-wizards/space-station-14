@@ -5,6 +5,7 @@ using Content.Server.Power.Components;
 using Content.Shared.Computer;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -78,7 +79,7 @@ namespace Content.Server.Computer
                     return;
             }
 
-            var board = Owner.EntityManager.SpawnEntity(_boardPrototype, Owner.Transform.Coordinates);
+            var board = IoCManager.Resolve<IEntityManager>().SpawnEntity(_boardPrototype, Owner.Transform.Coordinates);
 
             if(!container.Insert(board))
                 Logger.Warning($"Couldn't insert board {board} to computer {Owner}!");

@@ -17,6 +17,7 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
@@ -71,7 +72,7 @@ namespace Content.Server.Light.Components
         protected override void OnRemove()
         {
             base.OnRemove();
-            Owner.EntityManager.EventBus.QueueEvent(EventSource.Local, new DeactivateHandheldLightMessage(this));
+            IoCManager.Resolve<IEntityManager>().EventBus.QueueEvent(EventSource.Local, new DeactivateHandheldLightMessage(this));
         }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
@@ -119,7 +120,7 @@ namespace Content.Server.Light.Components
             SetState(false);
             Activated = false;
             UpdateLightAction();
-            Owner.EntityManager.EventBus.QueueEvent(EventSource.Local, new DeactivateHandheldLightMessage(this));
+            IoCManager.Resolve<IEntityManager>().EventBus.QueueEvent(EventSource.Local, new DeactivateHandheldLightMessage(this));
 
             if (makeNoise)
             {
@@ -158,7 +159,7 @@ namespace Content.Server.Light.Components
             Activated = true;
             UpdateLightAction();
             SetState(true);
-            Owner.EntityManager.EventBus.QueueEvent(EventSource.Local, new ActivateHandheldLightMessage(this));
+            IoCManager.Resolve<IEntityManager>().EventBus.QueueEvent(EventSource.Local, new ActivateHandheldLightMessage(this));
 
             SoundSystem.Play(Filter.Pvs(Owner), TurnOnSound.GetSound(), Owner);
             return true;

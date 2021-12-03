@@ -8,6 +8,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.MobState.State;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
+using Robust.Shared.IoC;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -290,7 +291,7 @@ namespace Content.Shared.MobState.Components
         {
             if (!current.HasValue)
             {
-                old?.ExitState(OwnerUid, Owner.EntityManager);
+                old?.ExitState(OwnerUid, IoCManager.Resolve<IEntityManager>());
                 return;
             }
 
@@ -300,22 +301,22 @@ namespace Content.Shared.MobState.Components
 
             if (state == old)
             {
-                state.UpdateState(OwnerUid, threshold, Owner.EntityManager);
+                state.UpdateState(OwnerUid, threshold, IoCManager.Resolve<IEntityManager>());
                 return;
             }
 
-            old?.ExitState(OwnerUid, Owner.EntityManager);
+            old?.ExitState(OwnerUid, IoCManager.Resolve<IEntityManager>());
 
             CurrentState = state;
 
-            state.EnterState(OwnerUid, Owner.EntityManager);
-            state.UpdateState(OwnerUid, threshold, Owner.EntityManager);
+            state.EnterState(OwnerUid, IoCManager.Resolve<IEntityManager>());
+            state.UpdateState(OwnerUid, threshold, IoCManager.Resolve<IEntityManager>());
 
             var message = new MobStateChangedMessage(this, old, state);
 #pragma warning disable 618
             SendMessage(message);
 #pragma warning restore 618
-            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, message);
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseEvent(EventSource.Local, message);
 
             Dirty();
         }

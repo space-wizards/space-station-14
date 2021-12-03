@@ -122,7 +122,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
                 appearanceComponent.SetData(AmmoVisuals.Spent, true);
             }
 
-            var entity = Owner.EntityManager.SpawnEntity(_projectileId, spawnAt);
+            var entity = IoCManager.Resolve<IEntityManager>().SpawnEntity(_projectileId, spawnAt);
 
             return entity;
         }

@@ -330,7 +330,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 else
                 {
                     projectile =
-                        Owner.EntityManager.SpawnEntity(baseProjectile.Prototype?.ID, baseProjectile.Transform.Coordinates);
+                        IoCManager.Resolve<IEntityManager>().SpawnEntity(baseProjectile.Prototype?.ID, baseProjectile.Transform.Coordinates);
                 }
 
                 firedProjectiles[i] = projectile.Uid;
@@ -366,8 +366,8 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 projectile.Transform.WorldRotation = projectileAngle + MathHelper.PiOver2;
             }
 
-            Owner.EntityManager.EventBus.RaiseLocalEvent(OwnerUid, new GunShotEvent(firedProjectiles));
-            Owner.EntityManager.EventBus.RaiseLocalEvent(ammo.Uid, new AmmoShotEvent(firedProjectiles));
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(OwnerUid, new GunShotEvent(firedProjectiles));
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(ammo.Uid, new AmmoShotEvent(firedProjectiles));
         }
 
         /// <summary>
@@ -391,7 +391,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         /// </summary>
         private void FireHitscan(IEntity shooter, HitscanComponent hitscan, Angle angle)
         {
-            var ray = new CollisionRay(Owner.Transform.Coordinates.ToMapPos(Owner.EntityManager), angle.ToVec(), (int) hitscan.CollisionMask);
+            var ray = new CollisionRay(Owner.Transform.Coordinates.ToMapPos(IoCManager.Resolve<IEntityManager>()), angle.ToVec(), (int) hitscan.CollisionMask);
             var physicsManager = EntitySystem.Get<SharedPhysicsSystem>();
             var rayCastResults = physicsManager.IntersectRay(Owner.Transform.MapID, ray, hitscan.MaxLength, shooter, false).ToList();
 

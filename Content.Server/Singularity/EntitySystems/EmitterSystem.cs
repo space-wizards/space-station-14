@@ -166,7 +166,7 @@ namespace Content.Server.Singularity.EntitySystems
 
         private void Fire(EmitterComponent component)
         {
-            var projectile = component.Owner.EntityManager.SpawnEntity(component.BoltType, component.Owner.Transform.Coordinates);
+            var projectile = IoCManager.Resolve<IEntityManager>().SpawnEntity(component.BoltType, component.Owner.Transform.Coordinates);
 
             if (!projectile.TryGetComponent<PhysicsComponent>(out var physicsComponent))
             {

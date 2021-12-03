@@ -125,13 +125,13 @@ namespace Content.Server.Crayon
                 return true;
             }
 
-            if (!eventArgs.ClickLocation.IsValid(Owner.EntityManager))
+            if (!eventArgs.ClickLocation.IsValid(IoCManager.Resolve<IEntityManager>()))
             {
                 eventArgs.User.PopupMessage(Loc.GetString("crayon-interact-invalid-location"));
                 return true;
             }
 
-            var entity = Owner.EntityManager.SpawnEntity("CrayonDecal", eventArgs.ClickLocation);
+            var entity = IoCManager.Resolve<IEntityManager>().SpawnEntity("CrayonDecal", eventArgs.ClickLocation);
             if (entity.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(CrayonVisuals.State, SelectedState);

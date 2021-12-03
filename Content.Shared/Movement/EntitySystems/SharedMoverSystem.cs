@@ -5,6 +5,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
 
@@ -57,7 +58,7 @@ namespace Content.Shared.Movement.EntitySystems
                      mobState.IsAlive()))
                 {
                     var relayMoveEvent = new RelayMovementEntityEvent(owner);
-                    owner.EntityManager.EventBus.RaiseLocalEvent(owner.Transform.ParentUid, relayMoveEvent);
+                    IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(owner.Transform.ParentUid, relayMoveEvent);
                 }
             }
 

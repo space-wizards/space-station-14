@@ -7,6 +7,7 @@ using Content.Shared.MobState.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
@@ -163,7 +164,7 @@ namespace Content.Shared.Examine
         public static bool InRangeUnOccluded(IEntity origin, EntityCoordinates other, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
         {
             var originPos = origin.Transform.MapPosition;
-            var otherPos = other.ToMap(origin.EntityManager);
+            var otherPos = other.ToMap(IoCManager.Resolve<IEntityManager>());
 
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
@@ -186,7 +187,7 @@ namespace Content.Shared.Examine
         public static bool InRangeUnOccluded(DragDropEvent args, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
         {
             var originPos = args.User.Transform.MapPosition;
-            var otherPos = args.DropLocation.ToMap(args.User.EntityManager);
+            var otherPos = args.DropLocation.ToMap(IoCManager.Resolve<IEntityManager>());
 
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
@@ -194,7 +195,7 @@ namespace Content.Shared.Examine
         public static bool InRangeUnOccluded(AfterInteractEventArgs args, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
         {
             var originPos = args.User.Transform.MapPosition;
-            var otherPos = args.Target?.Transform.MapPosition ?? args.ClickLocation.ToMap(args.User.EntityManager);
+            var otherPos = args.Target?.Transform.MapPosition ?? args.ClickLocation.ToMap(IoCManager.Resolve<IEntityManager>());
 
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }

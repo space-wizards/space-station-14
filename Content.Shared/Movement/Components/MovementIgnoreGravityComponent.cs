@@ -45,7 +45,7 @@ namespace Content.Shared.Movement.Components
 
             coords ??= transform.Coordinates;
 
-            if (!coords.Value.IsValid(entity.EntityManager))
+            if (!coords.Value.IsValid(IoCManager.Resolve<IEntityManager>()))
             {
                 return true;
             }

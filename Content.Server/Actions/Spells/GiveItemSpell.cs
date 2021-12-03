@@ -52,7 +52,7 @@ namespace Content.Server.Actions.Spells
             }
 
             // TODO: Look this is shitty and ideally a test would do it
-            var spawnedProto = caster.EntityManager.SpawnEntity(ItemProto, caster.Transform.MapPosition);
+            var spawnedProto = IoCManager.Resolve<IEntityManager>().SpawnEntity(ItemProto, caster.Transform.MapPosition);
 
             if (!spawnedProto.TryGetComponent(out ItemComponent? itemComponent))
             {

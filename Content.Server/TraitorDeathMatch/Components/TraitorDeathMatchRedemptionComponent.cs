@@ -106,7 +106,7 @@ namespace Content.Server.TraitorDeathMatch.Components
             }
 
             // 4 is the per-PDA bonus amount.
-            var accounts = Owner.EntityManager.EntitySysManager.GetEntitySystem<UplinkAccountsSystem>();
+            var accounts = IoCManager.Resolve<IEntityManager>().EntitySysManager.GetEntitySystem<UplinkAccountsSystem>();
             var transferAmount = victimAccount.Balance + 4;
             accounts.SetBalance(victimAccount, 0);
             accounts.AddToBalance(userAccount, transferAmount);

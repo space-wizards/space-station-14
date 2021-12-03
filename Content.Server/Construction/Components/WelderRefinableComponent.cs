@@ -8,6 +8,7 @@ using Content.Shared.Stacks;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
@@ -65,7 +66,7 @@ namespace Content.Server.Construction.Components
             // spawn each result after refine
             foreach (var result in _refineResult!)
             {
-                var droppedEnt = Owner.EntityManager.SpawnEntity(result, resultPosition);
+                var droppedEnt = IoCManager.Resolve<IEntityManager>().SpawnEntity(result, resultPosition);
 
                 // TODO: If something has a stack... Just use a prototype with a single thing in the stack.
                 // This is not a good way to do it.

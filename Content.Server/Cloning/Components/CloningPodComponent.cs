@@ -107,7 +107,7 @@ namespace Content.Server.Cloning.Components
 
                     if (cloningSystem.ClonesWaitingForMind.TryGetValue(mind, out var cloneUid))
                     {
-                        if (Owner.EntityManager.TryGetEntity(cloneUid, out var clone) &&
+                        if (IoCManager.Resolve<IEntityManager>().TryGetEntity(cloneUid, out var clone) &&
                             clone.TryGetComponent<MobStateComponent>(out var cloneState) &&
                             !cloneState.IsDead() &&
                             clone.TryGetComponent(out MindComponent? cloneMindComp) &&
@@ -135,7 +135,7 @@ namespace Content.Server.Cloning.Components
                         return; // If we can't track down the client, we can't offer transfer. That'd be quite bad.
                     }
 
-                    var mob = Owner.EntityManager.SpawnEntity("MobHuman", Owner.Transform.MapPosition);
+                    var mob = IoCManager.Resolve<IEntityManager>().SpawnEntity("MobHuman", Owner.Transform.MapPosition);
 
 
                     EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(mob.Uid, dna.Profile);

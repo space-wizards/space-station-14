@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Singularity.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -15,7 +16,7 @@ namespace Content.Server.ParticleAccelerator.Components
 
         public void Fire(ParticleAcceleratorPowerState strength)
         {
-            var projectile = Owner.EntityManager.SpawnEntity("ParticlesProjectile", Owner.Transform.Coordinates);
+            var projectile = IoCManager.Resolve<IEntityManager>().SpawnEntity("ParticlesProjectile", Owner.Transform.Coordinates);
 
             if (!projectile.TryGetComponent<ParticleProjectileComponent>(out var particleProjectileComponent))
             {

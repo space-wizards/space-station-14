@@ -97,7 +97,7 @@ namespace Content.Shared.Hands.Components
             UpdateHandVisualizer();
             Dirty();
 
-            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new HandsModifiedMessage { Hands = this });
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseEvent(EventSource.Local, new HandsModifiedMessage { Hands = this });
         }
 
         public void UpdateHandVisualizer()
@@ -491,7 +491,7 @@ namespace Content.Shared.Hands.Components
         private Vector2 GetFinalDropCoordinates(EntityCoordinates targetCoords)
         {
             var origin = Owner.Transform.MapPosition;
-            var target = targetCoords.ToMap(Owner.EntityManager);
+            var target = targetCoords.ToMap(IoCManager.Resolve<IEntityManager>());
 
             var dropVector = target.Position - origin.Position;
             var requestedDropDistance = dropVector.Length;
@@ -771,7 +771,7 @@ namespace Content.Shared.Hands.Components
 
         private void HandCountChanged()
         {
-            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new HandCountChangedEvent(Owner));
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseEvent(EventSource.Local, new HandCountChangedEvent(Owner));
         }
 
         /// <summary>

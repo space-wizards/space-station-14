@@ -197,7 +197,7 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             //We're empty. Become trash.
             var position = component.Owner.Transform.Coordinates;
-            var finisher = component.Owner.EntityManager.SpawnEntity(component.TrashPrototype, position);
+            var finisher = IoCManager.Resolve<IEntityManager>().SpawnEntity(component.TrashPrototype, position);
 
             // If the user is holding the item
             if (userUid != null &&

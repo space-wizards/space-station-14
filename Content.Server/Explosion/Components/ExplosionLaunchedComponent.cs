@@ -1,6 +1,7 @@
 using Content.Server.Throwing;
 using Content.Shared.Acts;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
 namespace Content.Server.Explosion.Components
@@ -16,11 +17,11 @@ namespace Content.Server.Explosion.Components
                 return;
 
             var sourceLocation = eventArgs.Source;
-            var targetLocation = Owner.EntityManager.GetComponent<TransformComponent>(eventArgs.Target).Coordinates;
+            var targetLocation = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(eventArgs.Target).Coordinates;
 
             if (sourceLocation.Equals(targetLocation)) return;
 
-            var offset = (targetLocation.ToMapPos(Owner.EntityManager) - sourceLocation.ToMapPos(Owner.EntityManager));
+            var offset = (targetLocation.ToMapPos(IoCManager.Resolve<IEntityManager>()) - sourceLocation.ToMapPos(IoCManager.Resolve<IEntityManager>()));
 
             //Don't throw if the direction is center (0,0)
             if (offset == Vector2.Zero) return;

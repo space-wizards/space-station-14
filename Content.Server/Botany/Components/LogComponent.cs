@@ -5,6 +5,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Tag;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Botany.Components
 {
@@ -22,7 +23,7 @@ namespace Content.Server.Botany.Components
             {
                 for (var i = 0; i < 2; i++)
                 {
-                    var plank = Owner.EntityManager.SpawnEntity("MaterialWoodPlank1", Owner.Transform.Coordinates);
+                    var plank = IoCManager.Resolve<IEntityManager>().SpawnEntity("MaterialWoodPlank1", Owner.Transform.Coordinates);
                     plank.RandomOffset(0.25f);
                 }
 

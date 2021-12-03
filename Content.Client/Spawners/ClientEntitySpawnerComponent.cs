@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.Spawners
@@ -32,7 +33,7 @@ namespace Content.Client.Spawners
         {
             foreach (var proto in _prototypes)
             {
-                var entity = Owner.EntityManager.SpawnEntity(proto, Owner.Transform.Coordinates);
+                var entity = IoCManager.Resolve<IEntityManager>().SpawnEntity(proto, Owner.Transform.Coordinates);
                 _entity.Add(entity);
             }
         }
@@ -41,7 +42,7 @@ namespace Content.Client.Spawners
         {
             foreach (var entity in _entity)
             {
-                Owner.EntityManager.DeleteEntity(entity);
+                IoCManager.Resolve<IEntityManager>().DeleteEntity(entity);
             }
         }
     }

@@ -85,7 +85,7 @@ namespace Content.Server.AI.Utility.AiLogic
             {
                 var behaviorManager = IoCManager.Resolve<INpcBehaviorManager>();
                 behaviorManager.RebuildActions(this);
-                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new SleepAiMessage(this, false));
+                IoCManager.Resolve<IEntityManager>().EventBus.RaiseEvent(EventSource.Local, new SleepAiMessage(this, false));
             }
 
             base.Initialize();

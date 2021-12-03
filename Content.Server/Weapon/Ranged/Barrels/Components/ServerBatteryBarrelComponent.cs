@@ -11,6 +11,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
@@ -96,7 +97,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             _powerCellContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-powercell-container", out var existing);
             if (!existing && _powerCellPrototype != null)
             {
-                var powerCellEntity = Owner.EntityManager.SpawnEntity(_powerCellPrototype, Owner.Transform.Coordinates);
+                var powerCellEntity = IoCManager.Resolve<IEntityManager>().SpawnEntity(_powerCellPrototype, Owner.Transform.Coordinates);
                 _powerCellContainer.Insert(powerCellEntity);
             }
 
@@ -133,7 +134,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             var ammo = _ammoContainer.ContainedEntity;
             if (ammo == null)
             {
-                ammo = Owner.EntityManager.SpawnEntity(_ammoPrototype, Owner.Transform.Coordinates);
+                ammo = IoCManager.Resolve<IEntityManager>().SpawnEntity(_ammoPrototype, Owner.Transform.Coordinates);
                 _ammoContainer.Insert(ammo);
             }
 
@@ -174,7 +175,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             }
             else
             {
-                entity = Owner.EntityManager.SpawnEntity(_ammoPrototype, spawnAt);
+                entity = IoCManager.Resolve<IEntityManager>().SpawnEntity(_ammoPrototype, spawnAt);
             }
 
             if (entity.TryGetComponent(out ProjectileComponent? projectileComponent))

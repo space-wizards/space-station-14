@@ -40,7 +40,7 @@ namespace Content.Server.Chemistry.EntitySystems
             owner.PopupMessageEveryone(Loc.GetString("rehydratable-component-expands-message", ("owner", owner)));
             if (!string.IsNullOrEmpty(component.TargetPrototype))
             {
-                var ent = component.Owner.EntityManager.SpawnEntity(component.TargetPrototype,
+                var ent = IoCManager.Resolve<IEntityManager>().SpawnEntity(component.TargetPrototype,
                     owner.Transform.Coordinates);
                 ent.Transform.AttachToGridOrMap();
             }

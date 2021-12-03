@@ -4,6 +4,7 @@ using Robust.Shared.Analyzers;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -58,7 +59,7 @@ namespace Content.Shared.Pulling.Components
                 return;
             }
 
-            if (!Owner.EntityManager.TryGetEntity(state.Puller.Value, out var entity))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetEntity(state.Puller.Value, out var entity))
             {
                 Logger.Error($"Invalid entity {state.Puller.Value} for pulling");
                 return;

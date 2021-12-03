@@ -14,6 +14,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
@@ -207,7 +208,7 @@ namespace Content.Server.Cuffs.Components
             }
 
             var attempt = new UncuffAttemptEvent(user.Uid, Owner.Uid);
-            Owner.EntityManager.EventBus.RaiseLocalEvent(user.Uid, attempt);
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(user.Uid, attempt);
 
             if (attempt.Cancelled)
             {

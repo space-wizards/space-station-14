@@ -94,7 +94,7 @@ namespace Content.Client.Inventory
 
             foreach (var (slot, entityUid) in state.Entities)
             {
-                if (!Owner.EntityManager.TryGetEntity(entityUid, out var entity))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetEntity(entityUid, out var entity))
                 {
                     continue;
                 }
@@ -109,7 +109,7 @@ namespace Content.Client.Inventory
             if (state.HoverEntity != null)
             {
                 var (slot, (entityUid, fits)) = state.HoverEntity.Value;
-                var entity = Owner.EntityManager.GetEntity(entityUid);
+                var entity = IoCManager.Resolve<IEntityManager>().GetEntity(entityUid);
 
                 InterfaceController?.HoverInSlot(slot, entity, fits);
             }

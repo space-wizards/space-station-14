@@ -45,7 +45,7 @@ namespace Content.Server.Hands.Components
             }
             if (heldEntity.TryGetComponent(out SpriteComponent? sprite))
             {
-                sprite.RenderOrder = heldEntity.EntityManager.CurrentTick.Value;
+                sprite.RenderOrder = IoCManager.Resolve<IEntityManager>().CurrentTick.Value;
             }
         }
 
@@ -58,7 +58,7 @@ namespace Content.Server.Hands.Components
             if (finalPosition.EqualsApprox(initialPosition.Position))
                 return;
 
-            Owner.EntityManager.EntityNetManager!.SendSystemNetworkMessage(
+            IoCManager.Resolve<IEntityManager>().EntityNetManager!.SendSystemNetworkMessage(
                 new PickupAnimationMessage(entity.Uid, finalPosition, initialPosition));
         }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Content.Server.Stack;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Construction.Components
@@ -52,7 +53,7 @@ namespace Content.Server.Construction.Components
             if (string.IsNullOrEmpty(BoardPrototype))
                 return;
 
-            var entityManager = Owner.EntityManager;
+            var entityManager = IoCManager.Resolve<IEntityManager>();
 
             if (existedBoard || existedParts)
             {
@@ -88,7 +89,7 @@ namespace Content.Server.Construction.Components
             {
                 var stack = EntitySystem.Get<StackSystem>().Spawn(amount, stackType, Owner.Transform.Coordinates);
 
-                if (!partContainer.Insert(Owner.EntityManager.GetEntity(stack)))
+                if (!partContainer.Insert(IoCManager.Resolve<IEntityManager>().GetEntity(stack)))
                     throw new Exception($"Couldn't insert machine material of type {stackType} to machine with prototype {Owner.Prototype?.ID ?? "N/A"}");
             }
 

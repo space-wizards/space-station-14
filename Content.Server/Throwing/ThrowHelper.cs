@@ -5,6 +5,7 @@ using Content.Shared.MobState.Components;
 using Content.Shared.Tag;
 using Content.Shared.Throwing;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
@@ -96,7 +97,7 @@ namespace Content.Server.Throwing
             if (user != null && pushbackRatio > 0.0f && user.TryGetComponent(out IPhysBody? body))
             {
                 var msg = new ThrowPushbackAttemptEvent();
-                body.Owner.EntityManager.EventBus.RaiseLocalEvent(body.Owner.Uid, msg);
+                IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(body.Owner.Uid, msg);
 
                 if (!msg.Cancelled)
                 {

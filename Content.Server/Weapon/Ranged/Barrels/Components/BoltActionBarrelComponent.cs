@@ -10,6 +10,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
@@ -110,7 +111,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 if (_unspawnedCount > 0)
                 {
                     _unspawnedCount--;
-                    var chamberEntity = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.Coordinates);
+                    var chamberEntity = IoCManager.Resolve<IEntityManager>().SpawnEntity(_fillPrototype, Owner.Transform.Coordinates);
                     _chamberContainer.Insert(chamberEntity);
                 }
             }
@@ -319,7 +320,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             else if (_unspawnedCount > 0)
             {
                 _unspawnedCount--;
-                var ammoEntity = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.Coordinates);
+                var ammoEntity = IoCManager.Resolve<IEntityManager>().SpawnEntity(_fillPrototype, Owner.Transform.Coordinates);
                 _chamberContainer.Insert(ammoEntity);
                 return true;
             }

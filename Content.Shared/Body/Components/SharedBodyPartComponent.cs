@@ -304,7 +304,7 @@ namespace Content.Shared.Body.Components
 
             foreach (var mechanism in _mechanisms)
             {
-                Owner.EntityManager.EventBus.RaiseLocalEvent(mechanism.OwnerUid, new AddedToBodyEvent(body));
+                IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(mechanism.OwnerUid, new AddedToBodyEvent(body));
             }
         }
 
@@ -319,7 +319,7 @@ namespace Content.Shared.Body.Components
 
             foreach (var mechanism in _mechanisms)
             {
-                Owner.EntityManager.EventBus.RaiseLocalEvent(mechanism.OwnerUid, new RemovedFromBodyEvent(old));
+                IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(mechanism.OwnerUid, new RemovedFromBodyEvent(old));
             }
         }
 

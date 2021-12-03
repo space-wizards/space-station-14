@@ -26,6 +26,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 using Robust.Shared.Log;
 using Content.Server.Labels.Components;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Chemistry.Components
 {
@@ -71,7 +72,7 @@ namespace Content.Server.Chemistry.Components
         protected override void Initialize()
         {
             base.Initialize();
-            
+
             if (UserInterface != null)
             {
                 UserInterface.OnReceiveMessage += OnUiReceiveMessage;
@@ -257,7 +258,7 @@ namespace Content.Server.Chemistry.Components
                         {
                             actualAmount = FixedPoint2.Min(reagent.Quantity, amount);
                         }
-                        
+
                         EntitySystem.Get<SolutionContainerSystem>().TryRemoveReagent(beaker.Uid, beakerSolution, id, actualAmount);
                         BufferSolution.AddReagent(id, actualAmount);
                         break;
@@ -301,7 +302,7 @@ namespace Content.Server.Chemistry.Components
                 var actualVolume = FixedPoint2.Min(individualVolume, FixedPoint2.New(30));
                 for (int i = 0; i < bottleAmount; i++)
                 {
-                    var bottle = Owner.EntityManager.SpawnEntity("ChemistryEmptyBottle01", Owner.Transform.Coordinates);
+                    var bottle = IoCManager.Resolve<IEntityManager>().SpawnEntity("ChemistryEmptyBottle01", Owner.Transform.Coordinates);
 
                     //Adding label
                     LabelComponent labelComponent = bottle.EnsureComponent<LabelComponent>();
@@ -343,7 +344,7 @@ namespace Content.Server.Chemistry.Components
                 var actualVolume = FixedPoint2.Min(individualVolume, FixedPoint2.New(50));
                 for (int i = 0; i < pillAmount; i++)
                 {
-                    var pill = Owner.EntityManager.SpawnEntity("pill", Owner.Transform.Coordinates);
+                    var pill = IoCManager.Resolve<IEntityManager>().SpawnEntity("pill", Owner.Transform.Coordinates);
 
                     //Adding label
                     LabelComponent labelComponent = pill.EnsureComponent<LabelComponent>();

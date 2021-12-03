@@ -74,16 +74,16 @@ namespace Content.Server.Chemistry.Components
                 var coords = Owner.Transform.Coordinates;
                 foreach (var neighbor in grid.GetInDir(coords, dir))
                 {
-                    if (Owner.EntityManager.TryGetComponent(neighbor,
+                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent(neighbor,
                         out SolutionAreaEffectComponent? comp) && comp.Inception == Inception)
                         return;
 
-                    if (Owner.EntityManager.TryGetComponent(neighbor,
+                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent(neighbor,
                         out AirtightComponent? airtight) && airtight.AirBlocked)
                         return;
                 }
 
-                var newEffect = Owner.EntityManager.SpawnEntity(Owner.Prototype.ID, grid.DirectionToGrid(coords, dir));
+                var newEffect = IoCManager.Resolve<IEntityManager>().SpawnEntity(Owner.Prototype.ID, grid.DirectionToGrid(coords, dir));
 
                 if (!newEffect.TryGetComponent(out SolutionAreaEffectComponent? effectComponent))
                 {
@@ -133,7 +133,7 @@ namespace Content.Server.Chemistry.Components
 
             var chemistry = EntitySystem.Get<ReactiveSystem>();
             var mapGrid = MapManager.GetGrid(Owner.Transform.GridID);
-            var tile = mapGrid.GetTileRef(Owner.Transform.Coordinates.ToVector2i(Owner.EntityManager, MapManager));
+            var tile = mapGrid.GetTileRef(Owner.Transform.Coordinates.ToVector2i(IoCManager.Resolve<IEntityManager>(), MapManager));
 
             var solutionFraction = 1 / Math.Floor(averageExposures);
 

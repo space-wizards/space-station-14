@@ -59,7 +59,7 @@ namespace Content.Server.Projectiles.Components
             var gridOrMap = user.Transform.GridID == GridId.Invalid ? mapManager.GetMapEntityId(user.Transform.MapID) :
                 mapManager.GetGrid(user.Transform.GridID).GridEntityId;
 
-            var parentXform = Owner.EntityManager.GetComponent<TransformComponent>(gridOrMap);
+            var parentXform = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(gridOrMap);
 
             var localCoordinates = new EntityCoordinates(gridOrMap, parentXform.InvWorldMatrix.Transform(user.Transform.WorldPosition));
             var localAngle = angle - parentXform.WorldRotation;

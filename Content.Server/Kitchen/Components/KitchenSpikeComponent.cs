@@ -12,6 +12,7 @@ using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 
@@ -39,7 +40,7 @@ namespace Content.Server.Kitchen.Components
 
             if (!string.IsNullOrEmpty(_meatPrototype))
             {
-                var meat = Owner.EntityManager.SpawnEntity(_meatPrototype, Owner.Transform.Coordinates);
+                var meat = IoCManager.Resolve<IEntityManager>().SpawnEntity(_meatPrototype, Owner.Transform.Coordinates);
                 meat.Name = _meatName;
             }
 
