@@ -1,0 +1,10 @@
+uniform sampler2D Scr;
+uniform highp vec2 ScrSz;
+
+uniform sampler2D Map;
+uniform highp vec2 MapSz;
+
+void fragment() {
+	highp vec2 warp = zTextureSpec(Map, UV.xy).rg;
+	COLOR = zTextureSpec(Scr, UV.xy + warp);
+}

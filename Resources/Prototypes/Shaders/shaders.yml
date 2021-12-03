@@ -1,4 +1,9 @@
 - type: shader
+  id: Distortion
+  kind: source
+  path: "/Textures/Shaders/distortion.swsl"
+
+- type: shader
   id: CircleMask
   kind: source
   path: "/Textures/Shaders/circle_mask.swsl"
