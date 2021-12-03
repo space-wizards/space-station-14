@@ -80,7 +80,7 @@ namespace Content.Server.Light.Components
 
         public void OnUpdate(float frameTime)
         {
-            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(Owner.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityLifeStage) >= EntityLifeStage.Deleted || !Owner.TryGetComponent(out BatteryComponent? battery) || Owner.Paused)
+            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(Owner.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityLifeStage) >= EntityLifeStage.Deleted || !Owner.TryGetComponent(out BatteryComponent? battery) || ((!IoCManager.Resolve<IEntityManager>().EntityExists(Owner.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityLifeStage) >= EntityLifeStage.Deleted || IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityPaused))
             {
                 return;
             }
