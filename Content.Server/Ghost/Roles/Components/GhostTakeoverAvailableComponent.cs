@@ -1,4 +1,5 @@
 using System;
+using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Robust.Server.Player;
@@ -26,6 +27,9 @@ namespace Content.Server.Ghost.Roles.Components
 
             if (mind.HasMind)
                 return false;
+
+            if (MakeSentient)
+                MakeSentientCommand.MakeSentient(OwnerUid, Owner.EntityManager);
 
             var ghostRoleSystem = EntitySystem.Get<GhostRoleSystem>();
             ghostRoleSystem.GhostRoleInternalCreateMindAndTransfer(session, OwnerUid, OwnerUid, this);

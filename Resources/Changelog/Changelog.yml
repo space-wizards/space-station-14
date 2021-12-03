@@ -1,46 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: Fixed clicking a locker when the player is inside of said locker., type: Fix}
-  id: 191
-  time: '2021-05-17T09:31:10.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: You feel as if the essence of things that are erased lingers for an
-      extra moment before disappearing. Creepy., type: Fix}
-  id: 192
-  time: '2021-05-17T11:14:29.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fixes bug where reconnecting wouldn't let you interact with anything.,
-    type: Fix}
-  id: 193
-  time: '2021-05-18T16:00:48.095633+00:00'
-- author: 20kdc
-  changes:
-  - {message: Fixed dropping being offset on a translated grid, type: Fix}
-  id: 194
-  time: '2021-05-19T17:26:02.0000000+00:00'
-- author: scrato
-  changes:
-  - {message: ID card computer will now stop working when there is no power, type: Fix}
-  id: 195
-  time: '2021-05-20T12:58:29.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Add jumpskirt for Captain, type: Add}
-  id: 196
-  time: '2021-05-20T16:23:06.352127+00:00'
-- author: Swept
-  changes:
-  - {message: Fix holes in Captain's jumpsuit, type: Fix}
-  id: 197
-  time: '2021-05-20T16:23:06.352876+00:00'
-- author: Swept
-  changes:
-  - {message: You can splat bags of flour and tomatoes., type: Add}
-  id: 198
-  time: '2021-05-21T00:19:18.0000000+00:00'
 - author: Hardly
   changes:
   - {message: Reduced Syndicate minibomb's radius, type: Tweak}
@@ -2859,3 +2817,51 @@ Entries:
   - {message: Electrocution now stuns you for a much shorter duration., type: Tweak}
   id: 692
   time: '2021-12-02T03:03:38.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Donk pockets now fit into their boxes again., type: Fix}
+  id: 693
+  time: '2021-12-02T14:37:40.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Masks & some headwear now blocks eating & drinking, type: Tweak}
+  id: 694
+  time: '2021-12-02T14:51:05.0000000+00:00'
+- author: hubismal
+  changes:
+  - {message: pAIs have been outfitted with cheap ringtone synthesizers to play their
+      own music., type: Add}
+  id: 695
+  time: '2021-12-02T18:49:18.0000000+00:00'
+- author: moony
+  changes:
+  - {message: 'In-game chat now has a sanitizer that removes smilies. You can now
+      put :) or similar at the end of your message to emote automatically.', type: Add}
+  id: 696
+  time: '2021-12-03T00:49:19.0000000+00:00'
+- author: Mith-randalf
+  changes:
+  - {message: 'Following numerous lawsuits relating to so-called ''shitcurity'', Nanotrasen
+      is now actively hiring brig Wardens for its deep-space stations.', type: Add}
+  id: 697
+  time: '2021-12-03T02:01:18.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Balance pass on thrusters to make them usable for ships large and small,
+    type: Tweak}
+  - {message: Multiple pilots now supported properly, type: Tweak}
+  - {message: Thruster visualizer no longer gets stuck on in some situations, type: Fix}
+  - {message: Thrusters now work in the direction your console is facing instead of
+      shuttle-North, type: Tweak}
+  id: 698
+  time: '2021-12-03T02:03:06.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix ghost role takeovers of monke, type: Fix}
+  id: 699
+  time: '2021-12-03T09:31:14.0000000+00:00'
+- author: shaeone
+  changes:
+  - {message: Modified gyroscope sprite., type: Tweak}
+  id: 700
+  time: '2021-12-03T09:39:18.0000000+00:00'
