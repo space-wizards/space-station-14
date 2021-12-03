@@ -39,7 +39,11 @@ namespace Content.Server.AI.EntitySystems
             SubscribeLocalEvent<AiControllerComponent, ComponentInit>(OnNPCInit);
             SubscribeLocalEvent<AiControllerComponent, ComponentShutdown>(OnNPCShutdown);
             _configurationManager.OnValueChanged(CCVars.NPCEnabled, SetEnabled, true);
-            _awakeNPCs.EnsureCapacity(_configurationManager.GetCVar(CCVars.NPCMaxUpdates));
+
+            var maxUpdates = _configurationManager.GetCVar(CCVars.NPCMaxUpdates);
+
+            if (maxUpdates < 1024)
+                _awakeNPCs.EnsureCapacity(maxUpdates);
         }
 
         private void SetEnabled(bool value) => Enabled = value;
