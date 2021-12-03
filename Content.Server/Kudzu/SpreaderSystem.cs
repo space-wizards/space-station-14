@@ -35,8 +35,6 @@ public class SpreaderSystem : EntitySystem
 
     private void OnAirtightChanged(AirtightChanged e)
     {
-
-
         UpdateNearbySpreaders(e.Airtight.OwnerUid, e.Airtight);
     }
 
