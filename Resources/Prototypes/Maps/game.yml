@@ -87,18 +87,27 @@
     Botanist: [ 1, 1 ]
 
 - type: gameMap
-  id: vesmirnaya
-  mapName: 'Vesmirnaya'
-  mapNameTemplate: '{0} Vesmirnaya {1}'
+  id: ssreach
+  mapName: 'Reach'
+  mapNameTemplate: '{0} Reach {1}'
   nameGenerator:
     !type:NanotrasenNameGenerator
-    prefixCreator: '14'
-  mapPath: Maps/vesmirnaya.yml
+    prefixCreator: 'SS'
+  mapPath: Maps/ssreach.yml
   minPlayers: 0
-  maxPlayers: 5
-  overflowJobs:
-    - Assistant
+  maxPlayers: 14
+  overflowJobs: []
   availableJobs:
-    Assistant: [ -1, -1 ]
-    Bartender: [ 1, 2 ]
-    Chef: [ 1, 2 ]
+    CargoTechnician: [ 1, 1 ]
+    Bartender: [ 1, 1 ]
+    Botanist: [ 1, 1 ]
+    Chef: [ 1, 1 ]
+    Captain: [ 1, 1 ]
+    ChiefEngineer: [ 1, 1 ]
+    StationEngineer: [ 2, 1 ]
+    ChiefMedicalOfficer: [ 1, 1 ]
+    MedicalDoctor: [ 1, 1 ]
+    Chemist: [ 1, 1 ]
+    HeadOfSecurity: [ 1, 1 ]
+    SecurityOfficer: [ 2, 1 ]
+    
