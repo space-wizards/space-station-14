@@ -36,7 +36,7 @@ namespace Content.Server.Cloning
         {
             if (!ClonesWaitingForMind.TryGetValue(mind, out var entityUid) ||
                 !EntityManager.TryGetEntity(entityUid, out var entity) ||
-                !entity.TryGetComponent(out MindComponent? mindComp) ||
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out MindComponent? mindComp) ||
                 mindComp.Mind != null)
                 return;
 
@@ -48,7 +48,7 @@ namespace Content.Server.Cloning
         private void HandleActivate(EntityUid uid, CloningPodComponent component, ActivateInWorldEvent args)
         {
             if (!component.Powered ||
-                !args.User.TryGetComponent(out ActorComponent? actor))
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User.Uid, out ActorComponent? actor))
             {
                 return;
             }
@@ -60,7 +60,7 @@ namespace Content.Server.Cloning
         {
             if (component.Parent == EntityUid.Invalid ||
                 !EntityManager.TryGetEntity(component.Parent, out var parent) ||
-                !parent.TryGetComponent<CloningPodComponent>(out var cloningPodComponent) ||
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent<CloningPodComponent?>(parent.Uid, out var cloningPodComponent) ||
                 component.Owner != cloningPodComponent.BodyContainer?.ContainedEntity)
             {
                 IoCManager.Resolve<IEntityManager>().RemoveComponent<BeingClonedComponent>(component.Owner.Uid);

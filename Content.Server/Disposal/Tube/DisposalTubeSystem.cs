@@ -28,13 +28,13 @@ namespace Content.Server.Disposal.Tube
             SubscribeLocalEvent<DisposalTaggerComponent, GetInteractionVerbsEvent>(AddOpenUIVerbs);
             SubscribeLocalEvent<DisposalRouterComponent, GetInteractionVerbsEvent>(AddOpenUIVerbs);
         }
-        
+
         private void AddOpenUIVerbs(EntityUid uid, DisposalTaggerComponent component, GetInteractionVerbsEvent args)
         {
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            if (!args.User.TryGetComponent<ActorComponent>(out var actor))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ActorComponent?>(args.User.Uid, out var actor))
                 return;
             var player = actor.PlayerSession;
 
@@ -42,7 +42,7 @@ namespace Content.Server.Disposal.Tube
             verb.Text = Loc.GetString("configure-verb-get-data-text");
             verb.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png";
             verb.Act = () => component.OpenUserInterface(actor);
-            args.Verbs.Add(verb);            
+            args.Verbs.Add(verb);
         }
 
         private void AddOpenUIVerbs(EntityUid uid, DisposalRouterComponent component, GetInteractionVerbsEvent args)
@@ -50,7 +50,7 @@ namespace Content.Server.Disposal.Tube
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            if (!args.User.TryGetComponent<ActorComponent>(out var actor))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ActorComponent?>(args.User.Uid, out var actor))
                 return;
             var player = actor.PlayerSession;
 

@@ -111,7 +111,7 @@ namespace Content.Server.Fluids.Components
                 return true;
             }
 
-            if (!eventArgs.Target.TryGetComponent(out PuddleComponent? puddleComponent) ||
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Target.Uid, out PuddleComponent? puddleComponent) ||
                 !solutionSystem.TryGetSolution(puddleComponent.OwnerUid, puddleComponent.SolutionName, out var puddleSolution))
                 return false;
 
@@ -141,7 +141,7 @@ namespace Content.Server.Fluids.Components
                 transferAmount = FixedPoint2.Min(PickupAmount, puddleSolution.TotalVolume, CurrentVolume);
 
             // is the puddle cleaned?
-            if (puddleSolution.TotalVolume - transferAmount <= 0) 
+            if (puddleSolution.TotalVolume - transferAmount <= 0)
             {
                 IoCManager.Resolve<IEntityManager>().DeleteEntity(puddleComponent.Owner.Uid);
 

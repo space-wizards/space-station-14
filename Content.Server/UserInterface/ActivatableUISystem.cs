@@ -67,7 +67,7 @@ namespace Content.Server.UserInterface
 
         private bool InteractUI(IEntity user, ActivatableUIComponent aui)
         {
-            if (!user.TryGetComponent(out ActorComponent? actor)) return false;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out ActorComponent? actor)) return false;
 
             if (aui.AdminOnly && !_adminManager.IsAdmin(actor.PlayerSession)) return false;
 

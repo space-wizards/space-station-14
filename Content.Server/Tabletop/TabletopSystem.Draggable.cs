@@ -4,6 +4,7 @@ using Content.Shared.Tabletop.Events;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
@@ -60,11 +61,11 @@ namespace Content.Server.Tabletop
         {
             var draggedEntity = EntityManager.GetEntity(msg.DraggedEntityUid);
 
-            if (!draggedEntity.TryGetComponent<TabletopDraggableComponent>(out var draggableComponent)) return;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<TabletopDraggableComponent?>(draggedEntity.Uid, out var draggableComponent)) return;
 
             draggableComponent.DraggingPlayer = msg.DraggingPlayer;
 
-            if (!draggedEntity.TryGetComponent<AppearanceComponent>(out var appearance)) return;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<AppearanceComponent?>(draggedEntity.Uid, out var appearance)) return;
 
             if (draggableComponent.DraggingPlayer != null)
             {

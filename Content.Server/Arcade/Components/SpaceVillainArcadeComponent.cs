@@ -74,7 +74,7 @@ namespace Content.Server.Arcade.Components
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!Powered || !eventArgs.User.TryGetComponent(out ActorComponent? actor))
+            if (!Powered || !IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User.Uid, out ActorComponent? actor))
                 return;
 
             if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User.Uid))

@@ -17,6 +17,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 
@@ -209,7 +210,7 @@ namespace Content.Server.Tools
 
             // TODO: Clean up this inherited oldcode.
 
-            if (args.Target.TryGetComponent(out ReagentTankComponent? tank)
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(args.Target.Uid, out ReagentTankComponent? tank)
                 && tank.TankType == ReagentTankType.Fuel
                 && _solutionContainerSystem.TryGetDrainableSolution(args.Target.Uid, out var targetSolution)
                 && _solutionContainerSystem.TryGetSolution(uid, welder.FuelSolution, out var welderSolution))

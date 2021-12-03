@@ -3,6 +3,7 @@ using Content.Shared.Body.Components;
 using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Body.Components
@@ -16,7 +17,7 @@ namespace Content.Server.Body.Components
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User.Uid, out ActorComponent? actor))
             {
                 return;
             }
@@ -28,7 +29,7 @@ namespace Content.Server.Body.Components
                 return;
             }
 
-            if (session.AttachedEntity.TryGetComponent(out SharedBodyComponent? body))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(session.AttachedEntity.Uid, out SharedBodyComponent? body))
             {
                 var state = InterfaceState(body);
                 UserInterface?.SetState(state);

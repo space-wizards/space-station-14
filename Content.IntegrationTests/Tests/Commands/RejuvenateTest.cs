@@ -48,8 +48,8 @@ namespace Content.IntegrationTests.Tests.Commands
                 var human = entityManager.SpawnEntity("DamageableDummy", MapCoordinates.Nullspace);
 
                 // Sanity check
-                Assert.True(human.TryGetComponent(out DamageableComponent damageable));
-                Assert.True(human.TryGetComponent(out MobStateComponent mobState));
+                Assert.True(IoCManager.Resolve<IEntityManager>().TryGetComponent(human.Uid, out DamageableComponent damageable));
+                Assert.True(IoCManager.Resolve<IEntityManager>().TryGetComponent(human.Uid, out MobStateComponent mobState));
                 mobState.UpdateState(0);
                 Assert.That(mobState.IsAlive, Is.True);
                 Assert.That(mobState.IsCritical, Is.False);

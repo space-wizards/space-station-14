@@ -66,7 +66,7 @@ namespace Content.Server.Cuffs
             if (args.User == args.Target)
             {
                 // This UncuffAttemptEvent check should probably be In MobStateSystem, not here?
-                if (userEntity.TryGetComponent<MobStateComponent>(out var state))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<MobStateComponent?>(userEntity.Uid, out var state))
                 {
                     // Manually check this.
                     if (state.IsIncapacitated())
@@ -101,7 +101,7 @@ namespace Content.Server.Cuffs
         {
             var owner = message.Sender;
 
-            if (!owner.TryGetComponent(out CuffableComponent? cuffable) ||
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(owner.Uid, out CuffableComponent? cuffable) ||
                 !cuffable.Initialized) return;
 
             var dirty = false;

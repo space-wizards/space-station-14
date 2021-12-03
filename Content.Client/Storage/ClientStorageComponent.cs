@@ -181,8 +181,8 @@ namespace Content.Client.Storage
             if (!IoCManager.Resolve<IEntityManager>().TryGetEntity(entityUid, out var entity))
                 return;
 
-            entity.TryGetComponent(out ISpriteComponent? sprite);
-            entity.TryGetComponent(out ItemComponent? item);
+            IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out ISpriteComponent? sprite);
+            IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out ItemComponent? item);
 
             button.AddChild(new BoxContainer
             {
@@ -252,7 +252,7 @@ namespace Content.Client.Storage
                 {
                     var controlledEntity = IoCManager.Resolve<IPlayerManager>().LocalPlayer?.ControlledEntity;
 
-                    if (controlledEntity != null && controlledEntity.TryGetComponent(out HandsComponent? hands))
+                    if (controlledEntity != null && IoCManager.Resolve<IEntityManager>().TryGetComponent(controlledEntity.Uid, out HandsComponent? hands))
                     {
 #pragma warning disable 618
                         StorageEntity.SendNetworkMessage(new InsertEntityMessage());

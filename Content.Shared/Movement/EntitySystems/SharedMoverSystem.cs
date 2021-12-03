@@ -54,7 +54,7 @@ namespace Content.Shared.Movement.EntitySystems
 
                 // For stuff like "Moving out of locker" or the likes
                 if (owner.IsInContainer() &&
-                    (!owner.TryGetComponent(out MobStateComponent? mobState) ||
+                    (!IoCManager.Resolve<IEntityManager>().TryGetComponent(owner.Uid, out MobStateComponent? mobState) ||
                      mobState.IsAlive()))
                 {
                     var relayMoveEvent = new RelayMovementEntityEvent(owner);
@@ -85,7 +85,7 @@ namespace Content.Shared.Movement.EntitySystems
             if (ent == null || !IoCManager.Resolve<IEntityManager>().EntityExists(ent.Uid))
                 return false;
 
-            if (!ent.TryGetComponent(out T? comp))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(ent.Uid, out T? comp))
                 return false;
 
             component = comp;

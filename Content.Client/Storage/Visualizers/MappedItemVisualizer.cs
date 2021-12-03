@@ -4,6 +4,7 @@ using Content.Shared.Storage.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
@@ -19,7 +20,7 @@ namespace Content.Client.Storage.Visualizers
         {
             base.InitializeEntity(entity);
 
-            if (entity.TryGetComponent<ISpriteComponent>(out var spriteComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<ISpriteComponent?>(entity.Uid, out var spriteComponent))
             {
                 _rsiPath ??= spriteComponent.BaseRSI!.Path!;
             }

@@ -78,7 +78,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 chair = entityManager.SpawnEntity(StrapDummyId, coordinates);
 
                 // Default state, unbuckled
-                Assert.True(human.TryGetComponent(out buckle));
+                Assert.True(IoCManager.Resolve<IEntityManager>().TryGetComponent(human.Uid, out buckle));
                 Assert.NotNull(buckle);
                 Assert.Null(buckle.BuckledTo);
                 Assert.False(buckle.Buckled);
@@ -88,7 +88,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.True(standingState.Stand(human.Uid));
 
                 // Default state, no buckled entities, strap
-                Assert.True(chair.TryGetComponent(out strap));
+                Assert.True(IoCManager.Resolve<IEntityManager>().TryGetComponent(chair.Uid, out strap));
                 Assert.NotNull(strap);
                 Assert.IsEmpty(strap.BuckledEntities);
                 Assert.Zero(strap.OccupiedSize);
@@ -239,10 +239,10 @@ namespace Content.IntegrationTests.Tests.Buckle
                 IEntity chair = entityManager.SpawnEntity(StrapDummyId, coordinates);
 
                 // Component sanity check
-                Assert.True(human.TryGetComponent(out buckle));
+                Assert.True(IoCManager.Resolve<IEntityManager>().TryGetComponent(human.Uid, out buckle));
                 Assert.True(IoCManager.Resolve<IEntityManager>().HasComponent<StrapComponent>(chair.Uid));
-                Assert.True(human.TryGetComponent(out hands));
-                Assert.True(human.TryGetComponent(out body));
+                Assert.True(IoCManager.Resolve<IEntityManager>().TryGetComponent(human.Uid, out hands));
+                Assert.True(IoCManager.Resolve<IEntityManager>().TryGetComponent(human.Uid, out body));
 
                 // Buckle
                 Assert.True(buckle.TryBuckle(human, chair));
@@ -255,7 +255,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                     var akms = entityManager.SpawnEntity(ItemDummyId, coordinates);
 
                     // Equip items
-                    Assert.True(akms.TryGetComponent(out ItemComponent item));
+                    Assert.True(IoCManager.Resolve<IEntityManager>().TryGetComponent(akms.Uid, out ItemComponent item));
                     Assert.True(hands.PutInHand(item));
                 }
             });
@@ -324,7 +324,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 chair = entityManager.SpawnEntity(StrapDummyId, coordinates);
 
                 // Component sanity check
-                Assert.True(human.TryGetComponent(out buckle));
+                Assert.True(IoCManager.Resolve<IEntityManager>().TryGetComponent(human.Uid, out buckle));
                 Assert.True(IoCManager.Resolve<IEntityManager>().HasComponent<StrapComponent>(chair.Uid));
 
                 // Buckle

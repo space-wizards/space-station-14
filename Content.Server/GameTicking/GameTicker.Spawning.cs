@@ -230,7 +230,7 @@ namespace Content.Server.GameTicking
         #region Equip Helpers
         public void EquipStartingGear(IEntity entity, StartingGearPrototype startingGear, HumanoidCharacterProfile? profile)
         {
-            if (entity.TryGetComponent(out InventoryComponent? inventory))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out InventoryComponent? inventory))
             {
                 foreach (var slot in EquipmentSlotDefines.AllSlots)
                 {
@@ -243,7 +243,7 @@ namespace Content.Server.GameTicking
                 }
             }
 
-            if (entity.TryGetComponent(out HandsComponent? handsComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out HandsComponent? handsComponent))
             {
                 var inhand = startingGear.Inhand;
                 foreach (var (hand, prototype) in inhand)
@@ -256,7 +256,7 @@ namespace Content.Server.GameTicking
 
         public void EquipIdCard(IEntity entity, string characterName, JobPrototype jobPrototype)
         {
-            if (!entity.TryGetComponent(out InventoryComponent? inventory))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out InventoryComponent? inventory))
                 return;
 
             if (!inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.IDCARD, out ItemComponent? item))
@@ -266,7 +266,7 @@ namespace Content.Server.GameTicking
 
             var itemEntity = item.Owner;
 
-            if (!itemEntity.TryGetComponent(out PDAComponent? pdaComponent) || pdaComponent.ContainedID == null)
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(itemEntity.Uid, out PDAComponent? pdaComponent) || pdaComponent.ContainedID == null)
                 return;
 
             var card = pdaComponent.ContainedID;

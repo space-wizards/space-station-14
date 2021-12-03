@@ -35,7 +35,7 @@ namespace Content.Server.Lock
 
         private void OnStartup(EntityUid uid, LockComponent lockComp, ComponentStartup args)
         {
-            if (lockComp.Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(lockComp.Owner.Uid, out AppearanceComponent? appearance))
             {
                 appearance.SetData(StorageVisuals.CanLock, true);
             }
@@ -71,22 +71,22 @@ namespace Content.Server.Lock
         {
             if (!Resolve(uid, ref lockComp))
                 return false;
-            
+
             if (!CanToggleLock(uid, user, quiet: false))
                 return false;
-            
+
             if (!HasUserAccess(uid, user, quiet: false))
                 return false;
 
             lockComp.Owner.PopupMessage(user, Loc.GetString("lock-comp-do-lock-success", ("entityName",lockComp.Owner.Name)));
             lockComp.Locked = true;
-            
+
             if(lockComp.LockSound != null)
             {
                 SoundSystem.Play(Filter.Pvs(lockComp.Owner), lockComp.LockSound.GetSound(), lockComp.Owner, AudioParams.Default.WithVolume(-5));
             }
 
-            if (lockComp.Owner.TryGetComponent(out AppearanceComponent? appearanceComp))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(lockComp.Owner.Uid, out AppearanceComponent? appearanceComp))
             {
                 appearanceComp.SetData(StorageVisuals.Locked, true);
             }
@@ -100,22 +100,22 @@ namespace Content.Server.Lock
         {
             if (!Resolve(uid, ref lockComp))
                 return false;
-            
+
             if (!CanToggleLock(uid, user, quiet: false))
                 return false;
-            
+
             if (!HasUserAccess(uid, user, quiet: false))
                 return false;
 
             lockComp.Owner.PopupMessage(user, Loc.GetString("lock-comp-do-unlock-success", ("entityName", lockComp.Owner.Name)));
             lockComp.Locked = false;
-            
+
             if(lockComp.UnlockSound != null)
             {
                 SoundSystem.Play(Filter.Pvs(lockComp.Owner), lockComp.UnlockSound.GetSound(), lockComp.Owner, AudioParams.Default.WithVolume(-5));
             }
 
-            if (lockComp.Owner.TryGetComponent(out AppearanceComponent? appearanceComp))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(lockComp.Owner.Uid, out AppearanceComponent? appearanceComp))
             {
                 appearanceComp.SetData(StorageVisuals.Locked, false);
             }

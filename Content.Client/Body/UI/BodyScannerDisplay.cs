@@ -146,7 +146,7 @@ namespace Content.Client.Body.UI
             BodyPartLabel.Text = $"{Loc.GetString(slotName)}: {Loc.GetString(part.Owner.Name)}";
 
             // TODO BODY Part damage
-            if (part.Owner.TryGetComponent(out DamageableComponent? damageable))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(part.Owner.Uid, out DamageableComponent? damageable))
             {
                 BodyPartHealth.Text = Loc.GetString("body-scanner-display-body-part-damage-text",("damage", damageable.TotalDamage));
             }

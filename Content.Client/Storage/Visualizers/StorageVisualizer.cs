@@ -2,6 +2,7 @@ using Content.Shared.Storage;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.Storage.Visualizers
@@ -18,7 +19,7 @@ namespace Content.Client.Storage.Visualizers
 
         public override void InitializeEntity(IEntity entity)
         {
-            if (!entity.TryGetComponent(out ISpriteComponent? sprite))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out ISpriteComponent? sprite))
             {
                 return;
             }

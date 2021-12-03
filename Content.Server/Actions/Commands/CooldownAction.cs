@@ -5,6 +5,7 @@ using Content.Shared.Actions;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Timing;
 
@@ -29,7 +30,7 @@ namespace Content.Server.Actions.Commands
             }
 
             if (attachedEntity == null) return;
-            if (!attachedEntity.TryGetComponent(out ServerActionsComponent? actionsComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(attachedEntity.Uid, out ServerActionsComponent? actionsComponent))
             {
                 shell.WriteLine("user has no actions component");
                 return;

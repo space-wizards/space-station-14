@@ -2,6 +2,7 @@ using Content.Server.AI.Components;
 using Content.Server.AI.Utility.AiLogic;
 using Content.Server.AI.WorldState;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Utility
 {
@@ -9,7 +10,7 @@ namespace Content.Server.AI.Utility
     {
         public static Blackboard? GetBlackboard(IEntity entity)
         {
-            if (!entity.TryGetComponent(out AiControllerComponent? aiControllerComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out AiControllerComponent? aiControllerComponent))
             {
                 return null;
             }
