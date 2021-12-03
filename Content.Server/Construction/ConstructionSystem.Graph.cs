@@ -166,7 +166,8 @@ namespace Content.Server.Construction
             Resolve(uid, ref containerManager, false);
 
             // We create the new entity.
-            var newUid = EntityManager.SpawnEntity(newEntity, transform.Coordinates).Uid;
+            IEntity tempQualifier = EntityManager.SpawnEntity(newEntity, transform.Coordinates);
+            var newUid = (EntityUid) tempQualifier;
 
             // Construction transferring.
             var newConstruction = EntityManager.EnsureComponent<ConstructionComponent>(newUid);

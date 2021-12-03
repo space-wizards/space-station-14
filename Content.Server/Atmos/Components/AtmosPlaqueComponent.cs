@@ -68,7 +68,7 @@ namespace Content.Server.Atmos.Components
                 PlaqueType.Unset => "Uhm",
                 _ => "Uhm",
             };
-            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityDescription = val;
+            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityDescription = val;
 
             var val1 = _type switch
             {
@@ -83,9 +83,9 @@ namespace Content.Server.Atmos.Components
                 PlaqueType.Unset => "Uhm",
                 _ => "Uhm",
             };
-            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityName = val1;
+            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityName = val1;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
                 var state = _type == PlaqueType.Zumos ? "zumosplaque" : "atmosplaque";
 

@@ -50,7 +50,7 @@ namespace Content.Client.Lathe.Visualizers
 
         public override void InitializeEntity(IEntity entity)
         {
-            if (!IoCManager.Resolve<IEntityManager>().HasComponent<AnimationPlayerComponent>(entity.Uid))
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<AnimationPlayerComponent>(entity))
             {
                 IoCManager.Resolve<IEntityManager>().AddComponent<AnimationPlayerComponent>(entity);
             }
@@ -60,8 +60,8 @@ namespace Content.Client.Lathe.Visualizers
         {
             base.OnChangeData(component);
 
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner.Uid);
-            var animPlayer = IoCManager.Resolve<IEntityManager>().GetComponent<AnimationPlayerComponent>(component.Owner.Uid);
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
+            var animPlayer = IoCManager.Resolve<IEntityManager>().GetComponent<AnimationPlayerComponent>(component.Owner);
             if (!component.TryGetData(PowerDeviceVisuals.VisualState, out LatheVisualState state))
             {
                 state = LatheVisualState.Idle;

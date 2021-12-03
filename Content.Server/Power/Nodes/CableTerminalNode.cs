@@ -12,15 +12,15 @@ namespace Content.Server.Power.Nodes
     {
         public override IEnumerable<Node> GetReachableNodes()
         {
-            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).GridID == GridId.Invalid)
+            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).GridID == GridId.Invalid)
                 yield break; // No funny nodes in spess.
 
 
             var entMan = IoCManager.Resolve<IEntityManager>();
-            var grid = IoCManager.Resolve<IMapManager>().GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).GridID);
-            var gridIndex = grid.TileIndicesFor(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
+            var grid = IoCManager.Resolve<IMapManager>().GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).GridID);
+            var gridIndex = grid.TileIndicesFor(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
 
-            var dir = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).LocalRotation.GetDir();
+            var dir = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).LocalRotation.GetDir();
             var targetIdx = gridIndex + NodeHelpers.TileOffsetForDir(dir);
 
             foreach (var node in NodeHelpers.GetNodesInTile(entMan, grid, targetIdx))

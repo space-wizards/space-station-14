@@ -114,7 +114,7 @@ namespace Content.Shared.Slippery
             if (component.Deleted || !component.Slippery || component.Colliding.Count == 0)
                 return true;
 
-            if (!EntityManager.TryGetComponent(component.Owner.Uid, out PhysicsComponent? body))
+            if (!EntityManager.TryGetComponent(component.Owner, out PhysicsComponent? body))
             {
                 component.Colliding.Clear();
                 return true;
@@ -130,7 +130,7 @@ namespace Content.Shared.Slippery
                     continue;
                 }
 
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out PhysicsComponent? otherPhysics) ||
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out PhysicsComponent? otherPhysics) ||
                     !body.GetWorldAABB().Intersects(otherPhysics.GetWorldAABB()))
                 {
                     component.Colliding.Remove(uid);

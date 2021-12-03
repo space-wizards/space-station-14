@@ -41,9 +41,9 @@ namespace Content.Server.Actions.Actions
 
         public void DoInstantAction(InstantActionEventArgs args)
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanSpeak(args.Performer.Uid)) return;
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<HumanoidAppearanceComponent?>(args.Performer.Uid, out var humanoid)) return;
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedActionsComponent?>(args.Performer.Uid, out var actions)) return;
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanSpeak(args.Performer)) return;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<HumanoidAppearanceComponent?>(args.Performer, out var humanoid)) return;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedActionsComponent?>(args.Performer, out var actions)) return;
 
             if (_random.Prob(.01f))
             {

@@ -53,7 +53,7 @@ namespace Content.Client.Disposal.UI
             Window?.UpdateState(cast);
 
             // Kinda icky but we just want client to handle its own lerping and not flood bandwidth for it.
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Owner.Uid, out DisposalUnitComponent? component)) return;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Owner, out DisposalUnitComponent? component)) return;
 
             component.UiState = cast;
             EntitySystem.Get<DisposalUnitSystem>().UpdateActive(component, true);

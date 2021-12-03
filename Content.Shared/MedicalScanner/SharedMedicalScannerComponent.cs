@@ -81,7 +81,7 @@ namespace Content.Shared.MedicalScanner
 
         public bool CanInsert(IEntity entity)
         {
-            return IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(entity.Uid);
+            return IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(entity);
         }
 
         bool IDragDropOn.CanDragDropOn(DragDropEvent eventArgs)

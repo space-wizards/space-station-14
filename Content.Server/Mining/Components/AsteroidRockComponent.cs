@@ -25,7 +25,7 @@ namespace Content.Server.Mining.Components
         protected override void Initialize()
         {
             base.Initialize();
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
                 appearance.SetData(AsteroidRockVisuals.State, _random.Pick(SpriteStates));
             }
@@ -34,12 +34,12 @@ namespace Content.Server.Mining.Components
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             var item = eventArgs.Using;
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(item.Uid, out MeleeWeaponComponent? meleeWeaponComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(item, out MeleeWeaponComponent? meleeWeaponComponent))
                 return false;
 
-            EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner.Uid, meleeWeaponComponent.Damage);
+            EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner, meleeWeaponComponent.Damage);
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(item.Uid, out PickaxeComponent? pickaxeComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(item, out PickaxeComponent? pickaxeComponent))
                 return true;
 
             SoundSystem.Play(Filter.Pvs(Owner), pickaxeComponent.MiningSound.GetSound(), Owner, AudioParams.Default);

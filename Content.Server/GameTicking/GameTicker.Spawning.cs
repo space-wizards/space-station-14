@@ -119,7 +119,7 @@ namespace Content.Server.GameTicking
             }
 
             var mob = SpawnPlayerMob(job, character, station, lateJoin);
-            newMind.TransferTo(mob.Uid);
+            newMind.TransferTo(mob);
 
             if (player.UserId == new Guid("{e887eb93-f503-4b65-95b6-2f282c014192}"))
             {
@@ -190,10 +190,10 @@ namespace Content.Server.GameTicking
             newMind.AddRole(new ObserverRole(newMind));
 
             var mob = SpawnObserverMob();
-            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(mob.Uid).EntityName = name;
-            var ghost = IoCManager.Resolve<IEntityManager>().GetComponent<GhostComponent>(mob.Uid);
+            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(mob).EntityName = name;
+            var ghost = IoCManager.Resolve<IEntityManager>().GetComponent<GhostComponent>(mob);
             EntitySystem.Get<SharedGhostSystem>().SetCanReturnToBody(ghost, false);
-            newMind.TransferTo(mob.Uid);
+            newMind.TransferTo(mob);
 
             _playersInLobby[player] = LobbyPlayerStatus.Observer;
             RaiseNetworkEvent(GetStatusSingle(player, LobbyPlayerStatus.Observer));
@@ -213,8 +213,8 @@ namespace Content.Server.GameTicking
 
             if (profile != null)
             {
-                EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(entity.Uid, profile);
-                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityName = profile.Name;
+                EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(entity, profile);
+                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityName = profile.Name;
             }
 
             return entity;
@@ -230,25 +230,25 @@ namespace Content.Server.GameTicking
         #region Equip Helpers
         public void EquipStartingGear(IEntity entity, StartingGearPrototype startingGear, HumanoidCharacterProfile? profile)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out InventoryComponent? inventory))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out InventoryComponent? inventory))
             {
                 foreach (var slot in EquipmentSlotDefines.AllSlots)
                 {
                     var equipmentStr = startingGear.GetGear(slot, profile);
                     if (!string.IsNullOrEmpty(equipmentStr))
                     {
-                        var equipmentEntity = EntityManager.SpawnEntity(equipmentStr, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates);
-                        inventory.Equip(slot, IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(equipmentEntity.Uid));
+                        var equipmentEntity = EntityManager.SpawnEntity(equipmentStr, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates);
+                        inventory.Equip(slot, IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(equipmentEntity));
                     }
                 }
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out HandsComponent? handsComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out HandsComponent? handsComponent))
             {
                 var inhand = startingGear.Inhand;
                 foreach (var (hand, prototype) in inhand)
                 {
-                    var inhandEntity = EntityManager.SpawnEntity(prototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates);
+                    var inhandEntity = EntityManager.SpawnEntity(prototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates);
                     handsComponent.TryPickupEntity(hand, inhandEntity, checkActionBlocker: false);
                 }
             }
@@ -256,7 +256,7 @@ namespace Content.Server.GameTicking
 
         public void EquipIdCard(IEntity entity, string characterName, JobPrototype jobPrototype)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out InventoryComponent? inventory))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out InventoryComponent? inventory))
                 return;
 
             if (!inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.IDCARD, out ItemComponent? item))
@@ -266,14 +266,14 @@ namespace Content.Server.GameTicking
 
             var itemEntity = item.Owner;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(itemEntity.Uid, out PDAComponent? pdaComponent) || pdaComponent.ContainedID == null)
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(itemEntity, out PDAComponent? pdaComponent) || pdaComponent.ContainedID == null)
                 return;
 
             var card = pdaComponent.ContainedID;
-            _cardSystem.TryChangeFullName(card.Owner.Uid, characterName, card);
-            _cardSystem.TryChangeJobTitle(card.Owner.Uid, jobPrototype.Name, card);
+            _cardSystem.TryChangeFullName(card.Owner, characterName, card);
+            _cardSystem.TryChangeJobTitle(card.Owner, jobPrototype.Name, card);
 
-            var access = IoCManager.Resolve<IEntityManager>().GetComponent<AccessComponent>(card.Owner.Uid);
+            var access = IoCManager.Resolve<IEntityManager>().GetComponent<AccessComponent>(card.Owner);
             var accessTags = access.Tags;
             accessTags.UnionWith(jobPrototype.Access);
             EntityManager.EntitySysManager.GetEntitySystem<PDASystem>()

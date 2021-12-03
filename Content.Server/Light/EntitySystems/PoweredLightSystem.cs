@@ -75,7 +75,7 @@ namespace Content.Server.Light.EntitySystems
                     _ => throw new ArgumentOutOfRangeException()
                 };
 
-                var entity = EntityManager.SpawnEntity(prototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(light.Owner.Uid).Coordinates);
+                var entity = EntityManager.SpawnEntity(prototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(light.Owner).Coordinates);
                 light.LightBulbContainer.Insert(entity);
             }
 
@@ -88,7 +88,7 @@ namespace Content.Server.Light.EntitySystems
             if (args.Handled)
                 return;
 
-            args.Handled = InsertBulb(uid, args.Used.Uid, component);
+            args.Handled = InsertBulb(uid, args.Used, component);
         }
 
         private void OnInteractHand(EntityUid uid, PoweredLightComponent light, InteractHandEvent args)
@@ -102,7 +102,7 @@ namespace Content.Server.Light.EntitySystems
                 return;
 
             // check if it's possible to apply burn damage to user
-            var userUid = args.User.Uid;
+            var userUid = (EntityUid) args.User;
             if (EntityManager.TryGetComponent(userUid, out HeatResistanceComponent? heatResist) &&
                 EntityManager.TryGetComponent(bulbUid.Value, out LightBulbComponent? lightBulb))
             {
@@ -213,7 +213,7 @@ namespace Content.Server.Light.EntitySystems
             if (!Resolve(uid, ref light))
                 return null;
 
-            return light.LightBulbContainer.ContainedEntity?.Uid;
+            return light.LightBulbContainer.ContainedEntity;
         }
 
         /// <summary>
@@ -340,7 +340,7 @@ namespace Content.Server.Light.EntitySystems
 
             light.IsBlinking = isNowBlinking;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(light.Owner.Uid, out AppearanceComponent? appearance))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(light.Owner, out AppearanceComponent? appearance))
                 return;
             appearance.SetData(PoweredLightVisuals.Blinking, isNowBlinking);
         }

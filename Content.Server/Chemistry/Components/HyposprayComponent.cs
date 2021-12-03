@@ -59,7 +59,7 @@ namespace Content.Server.Chemistry.Components
             }
 
             var solutionsSys = EntitySystem.Get<SolutionContainerSystem>();
-            solutionsSys.TryGetSolution(Owner.Uid, SolutionName, out var hypoSpraySolution);
+            solutionsSys.TryGetSolution(Owner, SolutionName, out var hypoSpraySolution);
 
             if (hypoSpraySolution == null || hypoSpraySolution.CurrentVolume == 0)
             {
@@ -67,7 +67,7 @@ namespace Content.Server.Chemistry.Components
                 return true;
             }
 
-            if (!solutionsSys.TryGetInjectableSolution(target.Uid, out var targetSolution))
+            if (!solutionsSys.TryGetInjectableSolution(target, out var targetSolution))
             {
                 user.PopupMessage(user,
                     Loc.GetString("hypospray-cant-inject", ("target", target)));
@@ -80,7 +80,7 @@ namespace Content.Server.Chemistry.Components
             {
                 target.PopupMessage(Loc.GetString("hypospray-component-feel-prick-message"));
                 var meleeSys = EntitySystem.Get<MeleeWeaponSystem>();
-                var angle = Angle.FromWorldVec(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(target.Uid).WorldPosition - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user.Uid).WorldPosition);
+                var angle = Angle.FromWorldVec(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(target).WorldPosition - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user).WorldPosition);
                 meleeSys.SendLunge(angle, user);
             }
 
@@ -100,24 +100,24 @@ namespace Content.Server.Chemistry.Components
             // Move units from attackSolution to targetSolution
             var removedSolution =
                 EntitySystem.Get<SolutionContainerSystem>()
-                    .SplitSolution(Owner.Uid, hypoSpraySolution, realTransferAmount);
+                    .SplitSolution(Owner, hypoSpraySolution, realTransferAmount);
 
             if (!targetSolution.CanAddSolution(removedSolution))
             {
                 return true;
             }
 
-            removedSolution.DoEntityReaction(target.Uid, ReactionMethod.Injection);
+            removedSolution.DoEntityReaction(target, ReactionMethod.Injection);
 
-            EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(target.Uid, targetSolution, removedSolution);
+            EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(target, targetSolution, removedSolution);
 
             static bool EligibleEntity(IEntity entity)
             {
                 // TODO: Does checking for BodyComponent make sense as a "can be hypospray'd" tag?
                 // In SS13 the hypospray ONLY works on mobs, NOT beakers or anything else.
 
-                return IoCManager.Resolve<IEntityManager>().HasComponent<SolutionContainerManagerComponent>(entity.Uid)
-                       && IoCManager.Resolve<IEntityManager>().HasComponent<MobStateComponent>(entity.Uid);
+                return IoCManager.Resolve<IEntityManager>().HasComponent<SolutionContainerManagerComponent>(entity)
+                       && IoCManager.Resolve<IEntityManager>().HasComponent<MobStateComponent>(entity);
             }
 
             return true;
@@ -126,7 +126,7 @@ namespace Content.Server.Chemistry.Components
         public override ComponentState GetComponentState()
         {
             var solutionSys = IoCManager.Resolve<IEntityManager>().EntitySysManager.GetEntitySystem<SolutionContainerSystem>();
-            return solutionSys.TryGetSolution(Owner.Uid, SolutionName, out var solution)
+            return solutionSys.TryGetSolution(Owner, SolutionName, out var solution)
                 ? new HyposprayComponentState(solution.CurrentVolume, solution.MaxVolume)
                 : new HyposprayComponentState(FixedPoint2.Zero, FixedPoint2.Zero);
         }

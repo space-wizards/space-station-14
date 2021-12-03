@@ -54,7 +54,7 @@ namespace Content.Client.Chemistry.Visualizers
         {
             if (!state) return;
 
-            var animPlayer = IoCManager.Resolve<IEntityManager>().GetComponent<AnimationPlayerComponent>(component.Owner.Uid);
+            var animPlayer = IoCManager.Resolve<IEntityManager>().GetComponent<AnimationPlayerComponent>(component.Owner);
 
             if(!animPlayer.HasRunningAnimation(AnimationKey))
                 animPlayer.Play(VaporFlick, AnimationKey);
@@ -62,7 +62,7 @@ namespace Content.Client.Chemistry.Visualizers
 
         private void SetColor(AppearanceComponent component, Color color)
         {
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner.Uid);
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
 
             sprite.Color = color;
         }

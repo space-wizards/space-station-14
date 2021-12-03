@@ -57,13 +57,13 @@ namespace Content.Server.Chemistry.Components
         {
             get
             {
-                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution);
+                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution);
                 return solution;
             }
         }
 
         [ViewVariables]
-        private bool Powered => !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
+        private bool Powered => !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ReagentDispenserUiKey.Key);
 
@@ -209,7 +209,7 @@ namespace Content.Server.Chemistry.Components
             var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
 
             //Check if player can interact in their current state
-            if (!actionBlocker.CanInteract(playerEntity.Uid) || !actionBlocker.CanUse(playerEntity.Uid))
+            if (!actionBlocker.CanInteract(playerEntity) || !actionBlocker.CanUse(playerEntity))
                 return false;
             //Check if device is powered
             if (needsPower && !Powered)
@@ -225,17 +225,17 @@ namespace Content.Server.Chemistry.Components
         private ReagentDispenserBoundUserInterfaceState GetUserInterfaceState()
         {
             var beaker = BeakerSlot.Item;
-            if (beaker == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(beaker.Uid, out FitsInDispenserComponent? fits) ||
-                !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(beaker.Uid, fits.Solution, out var solution))
+            if (beaker == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(beaker, out FitsInDispenserComponent? fits) ||
+                !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(beaker, fits.Solution, out var solution))
             {
                 return new ReagentDispenserBoundUserInterfaceState(Powered, false, FixedPoint2.New(0),
                     FixedPoint2.New(0),
-                    string.Empty, Inventory, IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityName, null, _dispenseAmount);
+                    string.Empty, Inventory, IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityName, null, _dispenseAmount);
             }
 
             return new ReagentDispenserBoundUserInterfaceState(Powered, true, solution.CurrentVolume,
                 solution.MaxVolume,
-                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(beaker.Uid).EntityName, Inventory, IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityName, solution.Contents.ToList(), _dispenseAmount);
+                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(beaker).EntityName, Inventory, IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityName, solution.Contents.ToList(), _dispenseAmount);
         }
 
         public void UpdateUserInterface()
@@ -251,12 +251,12 @@ namespace Content.Server.Chemistry.Components
         {
             var beaker = BeakerSlot.Item;
 
-            if (beaker == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(beaker.Uid, out FitsInDispenserComponent? fits) ||
+            if (beaker == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(beaker, out FitsInDispenserComponent? fits) ||
                 !EntitySystem.Get<SolutionContainerSystem>()
-                    .TryGetSolution(beaker.Uid, fits.Solution, out var solution))
+                    .TryGetSolution(beaker, fits.Solution, out var solution))
                 return;
 
-            EntitySystem.Get<SolutionContainerSystem>().RemoveAllSolution(beaker.Uid, solution);
+            EntitySystem.Get<SolutionContainerSystem>().RemoveAllSolution(beaker, solution);
 
             UpdateUserInterface();
         }
@@ -269,12 +269,12 @@ namespace Content.Server.Chemistry.Components
         {
             var beaker = BeakerSlot.Item;
 
-            if (beaker is null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(beaker.Uid, out FitsInDispenserComponent? fits)
+            if (beaker is null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(beaker, out FitsInDispenserComponent? fits)
                 || !EntitySystem.Get<SolutionContainerSystem>()
-                .TryGetSolution(beaker.Uid, fits.Solution, out var solution)) return;
+                .TryGetSolution(beaker, fits.Solution, out var solution)) return;
 
             EntitySystem.Get<SolutionContainerSystem>()
-                .TryAddReagent(beaker.Uid, solution, Inventory[dispenseIndex].ID, _dispenseAmount, out _);
+                .TryAddReagent(beaker, solution, Inventory[dispenseIndex].ID, _dispenseAmount, out _);
 
             UpdateUserInterface();
         }
@@ -285,12 +285,12 @@ namespace Content.Server.Chemistry.Components
         /// <param name="args">Data relevant to the event such as the actor which triggered it.</param>
         void IActivate.Activate(ActivateEventArgs args)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User.Uid, out ActorComponent? actor))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User, out ActorComponent? actor))
             {
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User.Uid, out HandsComponent? hands))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User, out HandsComponent? hands))
             {
                 Owner.PopupMessage(args.User, Loc.GetString("reagent-dispenser-component-activate-no-hands"));
                 return;

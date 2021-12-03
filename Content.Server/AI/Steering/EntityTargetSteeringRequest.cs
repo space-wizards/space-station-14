@@ -7,8 +7,8 @@ namespace Content.Server.AI.Steering
     public sealed class EntityTargetSteeringRequest : IAiSteeringRequest
     {
         public SteeringStatus Status { get; set; } = SteeringStatus.Pending;
-        public MapCoordinates TargetMap => IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_target.Uid).MapPosition;
-        public EntityCoordinates TargetGrid => IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_target.Uid).Coordinates;
+        public MapCoordinates TargetMap => IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_target).MapPosition;
+        public EntityCoordinates TargetGrid => IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_target).Coordinates;
         public IEntity Target => _target;
         private readonly IEntity _target;
 

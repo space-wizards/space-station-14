@@ -47,7 +47,7 @@ namespace Content.Server.Atmos.Commands
                 return;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().HasComponent<IAtmosphereComponent>(grid.Uid))
+            if (IoCManager.Resolve<IEntityManager>().HasComponent<IAtmosphereComponent>(grid))
             {
                 shell.WriteLine("Grid already has an atmosphere.");
                 return;

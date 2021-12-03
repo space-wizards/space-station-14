@@ -27,11 +27,11 @@ namespace Content.Server.Repairable
         public async void Repair(EntityUid uid, RepairableComponent component, InteractUsingEvent args)
         {
             // Only try repair the target if it is damaged
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out DamageableComponent? damageable) || damageable.TotalDamage == 0)
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner, out DamageableComponent? damageable) || damageable.TotalDamage == 0)
                 return;
 
             // Can the tool actually repair this, does it have enough fuel?
-            if (!await _toolSystem.UseTool(args.Used.Uid, args.User.Uid, uid, component.FuelCost, component.DoAfterDelay, component.QualityNeeded))
+            if (!await _toolSystem.UseTool(args.Used, args.User, uid, component.FuelCost, component.DoAfterDelay, component.QualityNeeded))
                 return;
 
             // Repair all damage

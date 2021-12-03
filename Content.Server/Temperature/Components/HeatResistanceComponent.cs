@@ -15,7 +15,7 @@ namespace Content.Server.Temperature.Components
         {
             // TODO: When making into system: Any animal that touches bulb that has no
             // InventoryComponent but still would have default heat resistance in the future (maybe)
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<InventoryComponent?>(Owner.Uid, out var inventoryComp))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<InventoryComponent?>(Owner, out var inventoryComp))
             {
                 // Magical number just copied from below
                 return int.MinValue;

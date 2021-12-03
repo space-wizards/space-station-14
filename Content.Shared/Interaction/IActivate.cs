@@ -48,7 +48,7 @@ namespace Content.Shared.Interaction
         /// <summary>
         ///     Entity that activated the target world entity.
         /// </summary>
-        public EntityUid UserUid => User.Uid;
+        public EntityUid UserUid => User;
 
         /// <summary>
         ///     Entity that was activated in the world.
@@ -58,7 +58,7 @@ namespace Content.Shared.Interaction
         /// <summary>
         ///     Entity that was activated in the world.
         /// </summary>
-        public EntityUid TargetUid => Target.Uid;
+        public EntityUid TargetUid => Target;
 
         public ActivateInWorldEvent(IEntity user, IEntity target)
         {

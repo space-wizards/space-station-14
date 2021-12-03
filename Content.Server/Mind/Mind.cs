@@ -155,7 +155,7 @@ namespace Content.Server.Mind
                 // This can be null if they're deleted (spike / brain nom)
                 if (OwnedEntity == null)
                     return true;
-                var targetMobState = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<MobStateComponent>(OwnedEntity.Uid);
+                var targetMobState = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<MobStateComponent>(OwnedEntity);
                 // This can be null if it's a brain (this happens very often)
                 // Brains are the result of gibbing so should definitely count as dead
                 if (targetMobState == null)
@@ -185,7 +185,7 @@ namespace Content.Server.Mind
 
             var message = new RoleAddedEvent(role);
             IEntity? tempQualifier = OwnedEntity;
-            (tempQualifier != null ? IoCManager.Resolve<IEntityManager>() : null).EventBus.RaiseLocalEvent(OwnedEntity.Uid, message);
+            (tempQualifier != null ? IoCManager.Resolve<IEntityManager>() : null).EventBus.RaiseLocalEvent(OwnedEntity, message);
 
             return role;
         }
@@ -208,7 +208,7 @@ namespace Content.Server.Mind
 
             var message = new RoleRemovedEvent(role);
             IEntity? tempQualifier = OwnedEntity;
-            (tempQualifier != null ? IoCManager.Resolve<IEntityManager>() : null).EventBus.RaiseLocalEvent(OwnedEntity.Uid, message);
+            (tempQualifier != null ? IoCManager.Resolve<IEntityManager>() : null).EventBus.RaiseLocalEvent(OwnedEntity, message);
         }
 
         public bool HasRole<T>() where T : Role
@@ -296,7 +296,7 @@ namespace Content.Server.Mind
 
             if (IsVisitingEntity
                 && (ghostCheckOverride // to force mind transfer, for example from ControlMobVerb
-                || !IoCManager.Resolve<IEntityManager>().TryGetComponent(VisitingEntity!.Uid, out GhostComponent? ghostComponent) // visiting entity is not a Ghost
+                || !IoCManager.Resolve<IEntityManager>().TryGetComponent(VisitingEntity!, out GhostComponent? ghostComponent) // visiting entity is not a Ghost
                 || !ghostComponent.CanReturnToBody))  // it is a ghost, but cannot return to body anyway, so it's okay
             {
                 VisitingEntity = null;
@@ -377,12 +377,12 @@ namespace Content.Server.Mind
 
             DebugTools.AssertNotNull(oldVisitingEnt);
 
-            if (IoCManager.Resolve<IEntityManager>().HasComponent<VisitingMindComponent>(oldVisitingEnt!.Uid))
+            if (IoCManager.Resolve<IEntityManager>().HasComponent<VisitingMindComponent>(oldVisitingEnt!))
             {
-                IoCManager.Resolve<IEntityManager>().RemoveComponent<VisitingMindComponent>(oldVisitingEnt.Uid);
+                IoCManager.Resolve<IEntityManager>().RemoveComponent<VisitingMindComponent>(oldVisitingEnt);
             }
 
-            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(oldVisitingEnt.Uid, new MindUnvisitedMessage());
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(oldVisitingEnt, new MindUnvisitedMessage());
         }
 
         public bool TryGetSession([NotNullWhen(true)] out IPlayerSession? session)

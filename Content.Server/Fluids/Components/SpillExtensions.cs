@@ -31,7 +31,7 @@ namespace Content.Server.Fluids.Components
         public static PuddleComponent? SpillAt(this Solution solution, IEntity entity, string prototype,
             bool sound = true, bool combine = true)
         {
-            return solution.SpillAt(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates, prototype, sound, combine: combine);
+            return solution.SpillAt(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates, prototype, sound, combine: combine);
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace Content.Server.Fluids.Components
         {
             foreach (var entity in tileRef.GetEntitiesInTileFast(gridTileLookupSystem))
             {
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out PuddleComponent? p))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out PuddleComponent? p))
                 {
                     puddle = p;
                     return true;
@@ -167,9 +167,9 @@ namespace Content.Server.Fluids.Components
             foreach (var spillEntity in spillEntities)
             {
                 if (EntitySystem.Get<SolutionContainerSystem>()
-                    .TryGetRefillableSolution(spillEntity.Uid, out var solutionContainerComponent))
+                    .TryGetRefillableSolution(spillEntity, out var solutionContainerComponent))
                 {
-                    EntitySystem.Get<SolutionContainerSystem>().Refill(spillEntity.Uid, solutionContainerComponent,
+                    EntitySystem.Get<SolutionContainerSystem>().Refill(spillEntity, solutionContainerComponent,
                         solution.SplitSolution(FixedPoint2.Min(
                             solutionContainerComponent.AvailableVolume,
                             solutionContainerComponent.MaxSpillRefill))
@@ -183,20 +183,20 @@ namespace Content.Server.Fluids.Components
             {
                 foreach (var spillEntity in spillEntities)
                 {
-                    if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(spillEntity.Uid, out PuddleComponent? puddleComponent)) continue;
+                    if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(spillEntity, out PuddleComponent? puddleComponent)) continue;
 
-                    if (!overflow && puddleSystem.WouldOverflow(puddleComponent.Owner.Uid, solution, puddleComponent)) return null;
+                    if (!overflow && puddleSystem.WouldOverflow(puddleComponent.Owner, solution, puddleComponent)) return null;
 
-                    if (!puddleSystem.TryAddSolution(puddleComponent.Owner.Uid, solution, sound)) continue;
+                    if (!puddleSystem.TryAddSolution(puddleComponent.Owner, solution, sound)) continue;
 
                     return puddleComponent;
                 }
             }
 
             var puddleEnt = serverEntityManager.SpawnEntity(prototype, spillGridCoords);
-            var newPuddleComponent = IoCManager.Resolve<IEntityManager>().GetComponent<PuddleComponent>(puddleEnt.Uid);
+            var newPuddleComponent = IoCManager.Resolve<IEntityManager>().GetComponent<PuddleComponent>(puddleEnt);
 
-            puddleSystem.TryAddSolution(newPuddleComponent.Owner.Uid, solution, sound);
+            puddleSystem.TryAddSolution(newPuddleComponent.Owner, solution, sound);
 
             return newPuddleComponent;
         }

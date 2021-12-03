@@ -17,12 +17,12 @@ namespace Content.Server.PowerCell.Components
 
         public override bool IsEntityCompatible(IEntity entity)
         {
-            return IoCManager.Resolve<IEntityManager>().HasComponent<BatteryComponent>(entity.Uid);
+            return IoCManager.Resolve<IEntityManager>().HasComponent<BatteryComponent>(entity);
         }
 
         protected override BatteryComponent GetBatteryFrom(IEntity entity)
         {
-            return IoCManager.Resolve<IEntityManager>().GetComponent<BatteryComponent>(entity.Uid);
+            return IoCManager.Resolve<IEntityManager>().GetComponent<BatteryComponent>(entity);
         }
     }
 }

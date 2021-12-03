@@ -54,7 +54,7 @@ namespace Content.Server.Construction.Completions
 
             var board = entBoardContainer.ContainedEntities[0];
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(board.Uid, out MachineBoardComponent? boardComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(board, out MachineBoardComponent? boardComponent))
             {
                 Logger.Warning($"Machine frame entity {uid} had an invalid entity in container \"{MachineFrameComponent.BoardContainer}\"! Aborting build machine action.");
                 return;
@@ -64,7 +64,7 @@ namespace Content.Server.Construction.Completions
 
             var transform = entityManager.GetComponent<TransformComponent>(uid);
             var machine = entityManager.SpawnEntity(boardComponent.Prototype, transform.Coordinates);
-            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(machine.Uid).LocalRotation = transform.LocalRotation;
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(machine).LocalRotation = transform.LocalRotation;
 
             var boardContainer = machine.EnsureContainer<Container>(MachineFrameComponent.BoardContainer, out var existed);
 
@@ -92,14 +92,14 @@ namespace Content.Server.Construction.Completions
             }
 
             var constructionSystem = entityManager.EntitySysManager.GetEntitySystem<ConstructionSystem>();
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(machine.Uid, out ConstructionComponent? construction))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(machine, out ConstructionComponent? construction))
             {
                 // We only add these two container. If some construction needs to take other containers into account, fix this.
-                constructionSystem.AddContainer(machine.Uid, MachineFrameComponent.BoardContainer, construction);
-                constructionSystem.AddContainer(machine.Uid, MachineFrameComponent.PartContainer, construction);
+                constructionSystem.AddContainer(machine, MachineFrameComponent.BoardContainer, construction);
+                constructionSystem.AddContainer(machine, MachineFrameComponent.PartContainer, construction);
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(machine.Uid, out MachineComponent? machineComp))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(machine, out MachineComponent? machineComp))
             {
                 machineComp.RefreshParts();
             }

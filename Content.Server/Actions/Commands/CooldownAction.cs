@@ -30,7 +30,7 @@ namespace Content.Server.Actions.Commands
             }
 
             if (attachedEntity == null) return;
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(attachedEntity.Uid, out ServerActionsComponent? actionsComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(attachedEntity, out ServerActionsComponent? actionsComponent))
             {
                 shell.WriteLine("user has no actions component");
                 return;

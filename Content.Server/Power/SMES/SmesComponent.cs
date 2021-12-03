@@ -47,7 +47,7 @@ namespace Content.Server.Power.SMES
                 _lastChargeLevel = newLevel;
                 _lastChargeLevelChange = _gameTiming.CurTime;
 
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearance))
                 {
                     appearance.SetData(SmesVisuals.LastChargeLevel, newLevel);
                 }
@@ -59,7 +59,7 @@ namespace Content.Server.Power.SMES
                 _lastChargeState = newChargeState;
                 _lastChargeStateChange = _gameTiming.CurTime;
 
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearance))
                 {
                     appearance.SetData(SmesVisuals.LastChargeState, newChargeState);
                 }
@@ -68,7 +68,7 @@ namespace Content.Server.Power.SMES
 
         private int GetNewChargeLevel()
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out BatteryComponent? battery))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out BatteryComponent? battery))
             {
                 return 0;
             }
@@ -78,7 +78,7 @@ namespace Content.Server.Power.SMES
 
         private ChargeState GetNewChargeState()
         {
-            var battery = IoCManager.Resolve<IEntityManager>().GetComponent<PowerNetworkBatteryComponent>(Owner.Uid);
+            var battery = IoCManager.Resolve<IEntityManager>().GetComponent<PowerNetworkBatteryComponent>(Owner);
             return (battery.CurrentSupply - battery.CurrentReceiving) switch
             {
                 > 0 => ChargeState.Discharging,

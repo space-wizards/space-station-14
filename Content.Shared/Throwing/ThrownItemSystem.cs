@@ -39,7 +39,7 @@ namespace Content.Shared.Throwing
 
         private void OnGetState(EntityUid uid, ThrownItemComponent component, ref ComponentGetState args)
         {
-            args.State = new ThrownItemComponentState(component.Thrower?.Uid);
+            args.State = new ThrownItemComponentState(component.Thrower);
         }
 
         private void OnHandleState(EntityUid uid, ThrownItemComponent component, ref ComponentHandleState args)
@@ -53,7 +53,7 @@ namespace Content.Shared.Throwing
 
         private void ThrowItem(EntityUid uid, ThrownItemComponent component, ThrownEvent args)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out PhysicsComponent? physicsComponent) ||
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner, out PhysicsComponent? physicsComponent) ||
                 physicsComponent.Fixtures.Count != 1) return;
 
             if (_fixtures.GetFixtureOrNull(physicsComponent, ThrowingFixture) != null)
@@ -91,8 +91,8 @@ namespace Content.Shared.Throwing
         private void HandlePullStarted(PullStartedMessage message)
         {
             // TODO: this isn't directed so things have to be done the bad way
-            if (EntityManager.TryGetComponent(message.Pulled.Owner.Uid, out ThrownItemComponent? thrownItemComponent))
-                StopThrow(message.Pulled.Owner.Uid, thrownItemComponent);
+            if (EntityManager.TryGetComponent(message.Pulled.Owner, out ThrownItemComponent? thrownItemComponent))
+                StopThrow(message.Pulled.Owner, thrownItemComponent);
         }
 
         private void StopThrow(EntityUid uid, ThrownItemComponent thrownItemComponent)
@@ -107,21 +107,21 @@ namespace Content.Shared.Throwing
                 }
             }
 
-            EntityManager.EventBus.RaiseLocalEvent(uid, new StopThrowEvent {User = thrownItemComponent.Thrower?.Uid});
+            EntityManager.EventBus.RaiseLocalEvent(uid, new StopThrowEvent {User = thrownItemComponent.Thrower});
             EntityManager.RemoveComponent<ThrownItemComponent>(uid);
         }
 
         public void LandComponent(ThrownItemComponent thrownItem)
         {
-            if (thrownItem.Deleted || (!IoCManager.Resolve<IEntityManager>().EntityExists(thrownItem.Owner.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(thrownItem.Owner.Uid).EntityLifeStage) >= EntityLifeStage.Deleted || _containerSystem.IsEntityInContainer(thrownItem.Owner.Uid)) return;
+            if (thrownItem.Deleted || (!IoCManager.Resolve<IEntityManager>().EntityExists(thrownItem.Owner) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(thrownItem.Owner).EntityLifeStage) >= EntityLifeStage.Deleted || _containerSystem.IsEntityInContainer(thrownItem.Owner)) return;
 
             var landing = thrownItem.Owner;
 
             // Unfortunately we can't check for hands containers as they have specific names.
             if (thrownItem.Owner.TryGetContainerMan(out var containerManager) &&
-                IoCManager.Resolve<IEntityManager>().HasComponent<SharedHandsComponent>(containerManager.Owner.Uid))
+                IoCManager.Resolve<IEntityManager>().HasComponent<SharedHandsComponent>(containerManager.Owner))
             {
-                EntityManager.RemoveComponent(landing.Uid, thrownItem);
+                EntityManager.RemoveComponent(landing, thrownItem);
                 return;
             }
 
@@ -129,8 +129,8 @@ namespace Content.Shared.Throwing
             if (thrownItem.Thrower is not null)
                 _adminLogSystem.Add(LogType.Landed, LogImpact.Low, $"{landing} thrown by {thrownItem.Thrower:thrower} landed.");
 
-            var landMsg = new LandEvent {User = thrownItem.Thrower?.Uid};
-            RaiseLocalEvent(landing.Uid, landMsg, false);
+            var landMsg = new LandEvent {User = thrownItem.Thrower};
+            RaiseLocalEvent(landing, landMsg, false);
         }
 
         /// <summary>
@@ -142,8 +142,8 @@ namespace Content.Shared.Throwing
                 _adminLogSystem.Add(LogType.ThrowHit, LogImpact.Low,
                     $"{thrown.Owner:thrown} thrown by {user:thrower} hit {target.Owner:target}.");
             // TODO: Just pass in the bodies directly
-            RaiseLocalEvent(target.Owner.Uid, new ThrowHitByEvent(user, thrown.Owner, target.Owner));
-            RaiseLocalEvent(thrown.Owner.Uid, new ThrowDoHitEvent(user, thrown.Owner, target.Owner));
+            RaiseLocalEvent(target.Owner, new ThrowHitByEvent(user, thrown.Owner, target.Owner));
+            RaiseLocalEvent(thrown.Owner, new ThrowDoHitEvent(user, thrown.Owner, target.Owner));
         }
     }
 }

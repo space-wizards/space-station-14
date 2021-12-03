@@ -42,7 +42,7 @@ namespace Content.Server.Animals.Systems
                     continue;
 
                 // Actually there is food digestion so no problem with instant reagent generation "OnFeed"
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<HungerComponent?>(udder.Owner.Uid, out var hunger))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<HungerComponent?>(udder.Owner, out var hunger))
                 {
                     hunger.HungerThresholds.TryGetValue(HungerThreshold.Peckish, out var targetThreshold);
 
@@ -123,13 +123,13 @@ namespace Content.Server.Animals.Systems
         {
             if (args.Using == null ||
                  !args.CanInteract ||
-                 !IoCManager.Resolve<IEntityManager>().HasComponent<RefillableSolutionComponent>(args.Using.Uid))
+                 !IoCManager.Resolve<IEntityManager>().HasComponent<RefillableSolutionComponent>(args.Using))
                 return;
 
             Verb verb = new();
             verb.Act = () =>
             {
-                AttemptMilk(uid, args.User.Uid, args.Using.Uid, component);
+                AttemptMilk(uid, args.User, args.Using, component);
             };
             verb.Text = Loc.GetString("udder-system-verb-milk");
             verb.Priority = 2;

@@ -31,19 +31,19 @@ namespace Content.Server.Fluids.Components
         public FixedPoint2 MaxVolume
         {
             get =>
-                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution)
+                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution)
                     ? solution.MaxVolume
                     : FixedPoint2.Zero;
             set
             {
-                if (EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution))
+                if (EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
                 {
                     solution.MaxVolume = value;
                 }
             }
         }
 
-        public FixedPoint2 CurrentVolume => EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution)
+        public FixedPoint2 CurrentVolume => EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution)
             ? solution.CurrentVolume
             : FixedPoint2.Zero;
 
@@ -54,9 +54,9 @@ namespace Content.Server.Fluids.Components
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             var solutionsSys = EntitySystem.Get<SolutionContainerSystem>();
-            if (!solutionsSys.TryGetSolution(Owner.Uid, SolutionName, out var contents) ||
-                _currentlyUsing.Contains(eventArgs.Using.Uid) ||
-                !IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Using.Uid, out MopComponent? mopComponent) ||
+            if (!solutionsSys.TryGetSolution(Owner, SolutionName, out var contents) ||
+                _currentlyUsing.Contains(eventArgs.Using) ||
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Using, out MopComponent? mopComponent) ||
                 mopComponent.Mopping)
             {
                 return false;
@@ -74,7 +74,7 @@ namespace Content.Server.Fluids.Components
                 return false;
             }
 
-            _currentlyUsing.Add(eventArgs.Using.Uid);
+            _currentlyUsing.Add(eventArgs.Using);
 
             // IMO let em move while doing it.
             var doAfterArgs = new DoAfterEventArgs(eventArgs.User, 1.0f, target: eventArgs.Target)
@@ -84,10 +84,10 @@ namespace Content.Server.Fluids.Components
             };
             var result = await EntitySystem.Get<DoAfterSystem>().WaitDoAfter(doAfterArgs);
 
-            _currentlyUsing.Remove(eventArgs.Using.Uid);
+            _currentlyUsing.Remove(eventArgs.Using);
 
             if (result == DoAfterStatus.Cancelled ||
-                (!IoCManager.Resolve<IEntityManager>().EntityExists(Owner.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityLifeStage) >= EntityLifeStage.Deleted ||
+                (!IoCManager.Resolve<IEntityManager>().EntityExists(Owner) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityLifeStage) >= EntityLifeStage.Deleted ||
                 mopComponent.Deleted ||
                 CurrentVolume <= 0 ||
                 !Owner.InRangeUnobstructed(mopComponent.Owner))
@@ -108,8 +108,8 @@ namespace Content.Server.Fluids.Components
                 return false;
             }
 
-            var solution = solutionsSys.SplitSolution(Owner.Uid, contents, transferAmount);
-            if (!solutionsSys.TryAddSolution(mopComponent.Owner.Uid, mopContents, solution))
+            var solution = solutionsSys.SplitSolution(Owner, contents, transferAmount);
+            if (!solutionsSys.TryAddSolution(mopComponent.Owner, mopContents, solution))
             {
                 return false;
             }

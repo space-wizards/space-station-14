@@ -22,8 +22,8 @@ namespace Content.Server.AME.Components
         protected override void Initialize()
         {
             base.Initialize();
-            IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out _appearance);
-            IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out _pointLight);
+            IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out _appearance);
+            IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out _pointLight);
         }
 
         public void SetCore()

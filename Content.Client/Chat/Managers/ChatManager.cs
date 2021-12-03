@@ -475,13 +475,13 @@ namespace Content.Client.Chat.Managers
         private void EnqueueSpeechBubble(IEntity entity, string contents, SpeechBubble.SpeechType speechType)
         {
             // Don't enqueue speech bubbles for other maps. TODO: Support multiple viewports/maps?
-            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).MapID != _eyeManager.CurrentMap)
+            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).MapID != _eyeManager.CurrentMap)
                 return;
 
-            if (!_queuedSpeechBubbles.TryGetValue(entity.Uid, out var queueData))
+            if (!_queuedSpeechBubbles.TryGetValue(entity, out var queueData))
             {
                 queueData = new SpeechBubbleQueueData();
-                _queuedSpeechBubbles.Add(entity.Uid, queueData);
+                _queuedSpeechBubbles.Add(entity, queueData);
             }
 
             queueData.MessageQueue.Enqueue(new SpeechBubbleData
@@ -496,7 +496,7 @@ namespace Content.Client.Chat.Managers
             var bubble =
                 SpeechBubble.CreateSpeechBubble(speechData.Type, speechData.Message, entity, _eyeManager, this);
 
-            if (_activeSpeechBubbles.TryGetValue(entity.Uid, out var existing))
+            if (_activeSpeechBubbles.TryGetValue(entity, out var existing))
             {
                 // Push up existing bubbles above the mob's head.
                 foreach (var existingBubble in existing)
@@ -507,7 +507,7 @@ namespace Content.Client.Chat.Managers
             else
             {
                 existing = new List<SpeechBubble>();
-                _activeSpeechBubbles.Add(entity.Uid, existing);
+                _activeSpeechBubbles.Add(entity, existing);
             }
 
             existing.Add(bubble);

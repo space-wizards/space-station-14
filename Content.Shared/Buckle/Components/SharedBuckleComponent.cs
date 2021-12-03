@@ -37,7 +37,7 @@ namespace Content.Shared.Buckle.Components
 
         bool IDraggable.CanDrop(CanDropEvent args)
         {
-            return IoCManager.Resolve<IEntityManager>().HasComponent<SharedStrapComponent>(args.Target.Uid);
+            return IoCManager.Resolve<IEntityManager>().HasComponent<SharedStrapComponent>(args.Target);
         }
 
         bool IDraggable.Drop(DragDropEvent args)

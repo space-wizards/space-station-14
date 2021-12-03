@@ -98,7 +98,7 @@ namespace Content.Client.Lobby.UI
             _preferencesManager.OnServerDataLoaded -= UpdateUI;
 
             if (!disposing) return;
-            IoCManager.Resolve<IEntityManager>().DeleteEntity(_previewDummy.Uid);
+            IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) _previewDummy);
             _previewDummy = null!;
         }
 
@@ -106,7 +106,7 @@ namespace Content.Client.Lobby.UI
         {
             return new()
             {
-                Sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(entity.Uid),
+                Sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(entity),
                 OverrideDirection = direction,
                 Scale = (2, 2)
             };
@@ -130,7 +130,7 @@ namespace Content.Client.Lobby.UI
                 else
                 {
                     _summaryLabel.Text = selectedCharacter.Summary;
-                    EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(_previewDummy.Uid, selectedCharacter);
+                    EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(_previewDummy, selectedCharacter);
                     GiveDummyJobClothes(_previewDummy, selectedCharacter);
                 }
             }
@@ -140,7 +140,7 @@ namespace Content.Client.Lobby.UI
         {
             var protoMan = IoCManager.Resolve<IPrototypeManager>();
 
-            var inventory = IoCManager.Resolve<IEntityManager>().GetComponent<ClientInventoryComponent>(dummy.Uid);
+            var inventory = IoCManager.Resolve<IEntityManager>().GetComponent<ClientInventoryComponent>(dummy);
 
             var highPriorityJob = profile.JobPriorities.FirstOrDefault(p => p.Value == JobPriority.High).Key;
 
@@ -160,7 +160,7 @@ namespace Content.Client.Lobby.UI
                     {
                         var item = entityMan.SpawnEntity(itemType, MapCoordinates.Nullspace);
                         inventory.SetSlotVisuals(slot, item);
-                        IoCManager.Resolve<IEntityManager>().DeleteEntity(item.Uid);
+                        IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) item);
                     }
                 }
             }

@@ -18,7 +18,7 @@ namespace Content.Shared.Interaction
         /// <summary>
         ///     Entity that triggered the interaction.
         /// </summary>
-        public EntityUid UserUid => User.Uid;
+        public EntityUid UserUid => User;
 
         /// <summary>
         ///     Entity that the user used to interact.
@@ -28,7 +28,7 @@ namespace Content.Shared.Interaction
         /// <summary>
         ///     Entity that the user used to interact.
         /// </summary>
-        public EntityUid UsedUid => Used.Uid;
+        public EntityUid UsedUid => Used;
 
         /// <summary>
         ///     Entity that was interacted on. This can be null if the attack did not click on an entity.
@@ -38,7 +38,7 @@ namespace Content.Shared.Interaction
         /// <summary>
         ///     Entity that was interacted on. This can be null if the attack did not click on an entity.
         /// </summary>
-        public EntityUid? TargetUid => Target?.Uid;
+        public EntityUid? TargetUid => Target;
 
         /// <summary>
         ///     Location that the user clicked outside of their interaction range.

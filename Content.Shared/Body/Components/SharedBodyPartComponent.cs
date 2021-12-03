@@ -110,11 +110,11 @@ namespace Content.Shared.Body.Components
         public BodyPartSymmetry Symmetry { get; private set; } = BodyPartSymmetry.None;
 
         [ViewVariables]
-        public ISurgeryData? SurgeryDataComponent => IoCManager.Resolve<IEntityManager>().GetComponentOrNull<ISurgeryData>(Owner.Uid);
+        public ISurgeryData? SurgeryDataComponent => IoCManager.Resolve<IEntityManager>().GetComponentOrNull<ISurgeryData>(Owner);
 
         protected virtual void OnAddMechanism(SharedMechanismComponent mechanism)
         {
-            var prototypeId = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(mechanism.Owner.Uid).EntityPrototype!.ID;
+            var prototypeId = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(mechanism.Owner).EntityPrototype!.ID;
 
             if (!_mechanismIds.Contains(prototypeId))
             {
@@ -129,7 +129,7 @@ namespace Content.Shared.Body.Components
 
         protected virtual void OnRemoveMechanism(SharedMechanismComponent mechanism)
         {
-            _mechanismIds.Remove(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(mechanism.Owner.Uid).EntityPrototype!.ID);
+            _mechanismIds.Remove(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(mechanism.Owner).EntityPrototype!.ID);
             mechanism.Part = null;
             SizeUsed -= mechanism.Size;
 
@@ -268,7 +268,7 @@ namespace Content.Shared.Body.Components
         {
             if (RemoveMechanism(mechanism))
             {
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(mechanism.Owner.Uid).Coordinates = coordinates;
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(mechanism.Owner).Coordinates = coordinates;
                 return true;
             }
 
@@ -293,14 +293,14 @@ namespace Content.Shared.Body.Components
                 return false;
             }
 
-            IoCManager.Resolve<IEntityManager>().DeleteEntity(mechanism.Owner.Uid);
+            IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) mechanism.Owner);
             return true;
         }
 
         private void AddedToBody(SharedBodyComponent body)
         {
-            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).LocalRotation = 0;
-            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).AttachParent(body.Owner);
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).LocalRotation = 0;
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).AttachParent(body.Owner);
             OnAddedToBody(body);
 
             foreach (var mechanism in _mechanisms)
@@ -311,9 +311,9 @@ namespace Content.Shared.Body.Components
 
         private void RemovedFromBody(SharedBodyComponent old)
         {
-            if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Deleted)
+            if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Deleted)
             {
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).AttachToGridOrMap();
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).AttachToGridOrMap();
             }
 
             OnRemovedFromBody(old);
@@ -370,7 +370,7 @@ namespace Content.Shared.Body.Components
                     continue;
                 }
 
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out SharedMechanismComponent? mechanism))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out SharedMechanismComponent? mechanism))
                 {
                     continue;
                 }

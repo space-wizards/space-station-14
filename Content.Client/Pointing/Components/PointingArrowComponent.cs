@@ -13,7 +13,7 @@ namespace Content.Client.Pointing.Components
         {
             base.Startup();
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out SpriteComponent? sprite))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out SpriteComponent? sprite))
             {
                 sprite.DrawDepth = (int) DrawDepth.Overlays;
             }

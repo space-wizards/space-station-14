@@ -62,7 +62,7 @@ namespace Content.IntegrationTests.Tests
                 var entityMan = IoCManager.Resolve<IEntityManager>();
 
                 human = entityMan.SpawnEntity("InventoryStunnableDummy", MapCoordinates.Nullspace);
-                inventory = IoCManager.Resolve<IEntityManager>().GetComponent<InventoryComponent>(human.Uid);
+                inventory = IoCManager.Resolve<IEntityManager>().GetComponent<InventoryComponent>(human);
 
                 // Can't do the test if this human doesn't have the slots for it.
                 Assert.That(inventory.HasSlot(Slots.INNERCLOTHING));
@@ -72,9 +72,9 @@ namespace Content.IntegrationTests.Tests
 
                 // Do we actually have the uniform equipped?
                 Assert.That(inventory.TryGetSlotItem(Slots.INNERCLOTHING, out ItemComponent uniform));
-                Assert.That(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(uniform.Owner.Uid).EntityPrototype != null && IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(uniform.Owner.Uid).EntityPrototype.ID == "InventoryJumpsuitJanitorDummy");
+                Assert.That(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(uniform.Owner).EntityPrototype != null && IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(uniform.Owner).EntityPrototype.ID == "InventoryJumpsuitJanitorDummy");
 
-                EntitySystem.Get<StunSystem>().TryStun(human.Uid, TimeSpan.FromSeconds(1f));
+                EntitySystem.Get<StunSystem>().TryStun(human, TimeSpan.FromSeconds(1f));
 
                 // Since the mob is stunned, they can't equip this.
                 Assert.That(inventory.SpawnItemInSlot(Slots.IDCARD, "InventoryIDCardDummy", true), Is.False);
@@ -85,7 +85,7 @@ namespace Content.IntegrationTests.Tests
                 // Let's try skipping the interaction check and see if it equips it!
                 Assert.That(inventory.SpawnItemInSlot(Slots.IDCARD, "InventoryIDCardDummy"));
                 Assert.That(inventory.TryGetSlotItem(Slots.IDCARD, out ItemComponent id));
-                Assert.That(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(id.Owner.Uid).EntityPrototype != null && IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(id.Owner.Uid).EntityPrototype.ID == "InventoryIDCardDummy");
+                Assert.That(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(id.Owner).EntityPrototype != null && IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(id.Owner).EntityPrototype.ID == "InventoryIDCardDummy");
             });
 
             await server.WaitIdleAsync();

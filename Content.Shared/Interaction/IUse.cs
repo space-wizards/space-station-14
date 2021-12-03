@@ -44,7 +44,7 @@ namespace Content.Shared.Interaction
         /// <summary>
         ///     Entity holding the item in their hand.
         /// </summary>
-        public EntityUid UserUid => User.Uid;
+        public EntityUid UserUid => User;
 
         /// <summary>
         ///     Item that was used.
@@ -54,7 +54,7 @@ namespace Content.Shared.Interaction
         /// <summary>
         ///     Item that was used.
         /// </summary>
-        public EntityUid UsedUid => Used.Uid;
+        public EntityUid UsedUid => Used;
 
         public UseInHandEvent(IEntity user, IEntity used)
         {

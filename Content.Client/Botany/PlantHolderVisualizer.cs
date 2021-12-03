@@ -14,7 +14,7 @@ namespace Content.Client.Botany
         {
             base.InitializeEntity(entity);
 
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(entity.Uid);
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(entity);
 
             sprite.LayerMapReserveBlank(PlantHolderLayers.Plant);
             sprite.LayerMapReserveBlank(PlantHolderLayers.HealthLight);
@@ -56,7 +56,7 @@ namespace Content.Client.Botany
         {
             base.OnChangeData(component);
 
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner.Uid);
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
 
             if (component.TryGetData<SpriteSpecifier>(PlantHolderVisuals.Plant, out var specifier))
             {

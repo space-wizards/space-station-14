@@ -61,7 +61,7 @@ namespace Content.IntegrationTests.Tests.Tag
             {
                 sMapManager.CreateNewMapEntity(MapId.Nullspace);
                 sTagDummy = sEntityManager.SpawnEntity(TagEntityId, MapCoordinates.Nullspace);
-                sTagComponent = IoCManager.Resolve<IEntityManager>().GetComponent<TagComponent>(sTagDummy.Uid);
+                sTagComponent = IoCManager.Resolve<IEntityManager>().GetComponent<TagComponent>(sTagDummy);
             });
 
             await server.WaitAssertion(() =>

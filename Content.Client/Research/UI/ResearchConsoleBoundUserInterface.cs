@@ -24,7 +24,7 @@ namespace Content.Client.Research.UI
         {
             base.Open();
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Owner.Uid, out _technologyDatabase)) return;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Owner, out _technologyDatabase)) return;
 
             _consoleMenu = new ResearchConsoleMenu(this);
 

@@ -15,7 +15,7 @@ namespace Content.Server.AI.Operators.Inventory
 
         public override Outcome Execute(float frameTime)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(_owner.Uid, out HandsComponent? handsComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(_owner, out HandsComponent? handsComponent))
             {
                 return Outcome.Failed;
             }

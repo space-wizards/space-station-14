@@ -29,14 +29,14 @@ namespace Content.Client.Clickable
         /// <returns>True if the click worked, false otherwise.</returns>
         public bool CheckClick(Vector2 worldPos, out int drawDepth, out uint renderOrder)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ISpriteComponent? sprite) || !sprite.Visible)
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ISpriteComponent? sprite) || !sprite.Visible)
             {
                 drawDepth = default;
                 renderOrder = default;
                 return false;
             }
 
-            var transform = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid);
+            var transform = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner);
             var localPos = transform.InvWorldMatrix.Transform(worldPos);
             var spriteMatrix = Matrix3.Invert(sprite.GetLocalMatrix());
 

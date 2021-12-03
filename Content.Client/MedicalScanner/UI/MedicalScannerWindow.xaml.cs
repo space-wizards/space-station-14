@@ -37,7 +37,7 @@ namespace Content.Client.MedicalScanner.UI
             }
             else
             {
-                text.Append($"{Loc.GetString("medical-scanner-window-entity-health-text", ("entityName", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityName))}\n");
+                text.Append($"{Loc.GetString("medical-scanner-window-entity-health-text", ("entityName", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityName))}\n");
 
                 var totalDamage = state.DamagePerType.Values.Sum();
 

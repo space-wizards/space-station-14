@@ -200,7 +200,7 @@ namespace Content.Server.StationEvents.Events
                 .Where(x => x.Station == t).ToArray();
             targetGrid = robustRandom.Pick(possibleTargets).Owner;
 
-            if (!entityManager.TryGetComponent<IMapGridComponent>(targetGrid!.Uid, out var gridComp))
+            if (!entityManager.TryGetComponent<IMapGridComponent>(targetGrid!, out var gridComp))
                 return false;
             var grid = gridComp.Grid;
 

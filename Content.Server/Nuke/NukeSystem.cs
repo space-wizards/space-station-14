@@ -116,10 +116,10 @@ namespace Content.Server.Nuke
             // standard interactions check
             if (!args.InRangeUnobstructed())
                 return;
-            if (!_actionBlocker.CanInteract(args.User.Uid) || !_actionBlocker.CanUse(args.User.Uid))
+            if (!_actionBlocker.CanInteract(args.User) || !_actionBlocker.CanUse(args.User))
                 return;
 
-            if (!EntityManager.TryGetComponent(args.User.Uid, out ActorComponent? actor))
+            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
             ShowUI(uid, actor.PlayerSession, component);
@@ -413,7 +413,7 @@ namespace Content.Server.Nuke
             var ents = _lookup.GetEntitiesInRange(pos, component.BlastRadius);
             foreach (var ent in ents)
             {
-                var entUid = ent.Uid;
+                var entUid = (EntityUid) ent;
                 if (!EntityManager.EntityExists(entUid))
                     continue;;
 

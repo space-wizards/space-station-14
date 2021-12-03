@@ -66,7 +66,7 @@ namespace Content.Server.Cuffs
             if (args.User == args.Target)
             {
                 // This UncuffAttemptEvent check should probably be In MobStateSystem, not here?
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<MobStateComponent?>(userEntity.Uid, out var state))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<MobStateComponent?>(userEntity, out var state))
                 {
                     // Manually check this.
                     if (state.IsIncapacitated())
@@ -83,14 +83,14 @@ namespace Content.Server.Cuffs
             else
             {
                 // Check if the user can interact.
-                if (!_actionBlockerSystem.CanInteract(userEntity.Uid))
+                if (!_actionBlockerSystem.CanInteract(userEntity))
                 {
                     args.Cancel();
                 }
             }
             if (args.Cancelled)
             {
-                _popupSystem.PopupEntity(Loc.GetString("cuffable-component-cannot-interact-message"), args.Target, Filter.Entities(userEntity.Uid));
+                _popupSystem.PopupEntity(Loc.GetString("cuffable-component-cannot-interact-message"), args.Target, Filter.Entities(userEntity));
             }
         }
 
@@ -101,11 +101,11 @@ namespace Content.Server.Cuffs
         {
             var owner = message.Sender;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(owner.Uid, out CuffableComponent? cuffable) ||
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(owner, out CuffableComponent? cuffable) ||
                 !cuffable.Initialized) return;
 
             var dirty = false;
-            var handCount = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<HandsComponent>(owner.Uid)?.Count ?? 0;
+            var handCount = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<HandsComponent>(owner)?.Count ?? 0;
 
             while (cuffable.CuffedHandCount > handCount && cuffable.CuffedHandCount > 0)
             {
@@ -115,7 +115,7 @@ namespace Content.Server.Cuffs
                 var entity = container.ContainedEntities[^1];
 
                 container.Remove(entity);
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).WorldPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(owner.Uid).WorldPosition;
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).WorldPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(owner).WorldPosition;
             }
 
             if (dirty)

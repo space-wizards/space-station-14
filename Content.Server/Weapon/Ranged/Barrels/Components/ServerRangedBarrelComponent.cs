@@ -149,7 +149,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         protected override void OnRemove()
         {
             base.OnRemove();
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ServerRangedWeaponComponent? rangedWeaponComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ServerRangedWeaponComponent? rangedWeaponComponent))
             {
                 rangedWeaponComponent.Barrel = null;
                 rangedWeaponComponent.FireHandler -= Fire;
@@ -204,7 +204,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             }
 
             var ammo = PeekAmmo();
-            var projectile = TakeProjectile(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(shooter.Uid).Coordinates);
+            var projectile = TakeProjectile(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(shooter).Coordinates);
             if (projectile == null)
             {
                 SoundSystem.Play(Filter.Broadcast(), SoundEmpty.GetSound(), Owner);
@@ -212,22 +212,22 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             }
 
             // At this point firing is confirmed
-            var direction = (targetPos - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(shooter.Uid).WorldPosition).ToAngle();
+            var direction = (targetPos - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(shooter).WorldPosition).ToAngle();
             var angle = GetRecoilAngle(direction);
             // This should really be client-side but for now we'll just leave it here
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(shooter.Uid, out CameraRecoilComponent? recoilComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(shooter, out CameraRecoilComponent? recoilComponent))
             {
                 recoilComponent.Kick(-angle.ToVec() * 0.15f);
             }
 
             // This section probably needs tweaking so there can be caseless hitscan etc.
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(projectile.Uid, out HitscanComponent? hitscan))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(projectile, out HitscanComponent? hitscan))
             {
                 FireHitscan(shooter, hitscan, angle);
             }
-            else if (IoCManager.Resolve<IEntityManager>().HasComponent<ProjectileComponent>(projectile.Uid) &&
+            else if (IoCManager.Resolve<IEntityManager>().HasComponent<ProjectileComponent>(projectile) &&
                      ammo != null &&
-                     IoCManager.Resolve<IEntityManager>().TryGetComponent(ammo.Uid, out AmmoComponent? ammoComponent))
+                     IoCManager.Resolve<IEntityManager>().TryGetComponent(ammo, out AmmoComponent? ammoComponent))
             {
                 FireProjectiles(shooter, projectile, ammoComponent.ProjectilesFired, ammoComponent.EvenSpreadAngle, angle, ammoComponent.Velocity, ammo);
 
@@ -238,7 +238,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
                 if (ammoComponent.Caseless)
                 {
-                    IoCManager.Resolve<IEntityManager>().DeleteEntity(ammo.Uid);
+                    IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) ammo);
                 }
             }
             else
@@ -273,12 +273,12 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 {Direction.East, Direction.North, Direction.NorthWest, Direction.South, Direction.SouthEast, Direction.West};
 
             const float ejectOffset = 1.8f;
-            var ammo = IoCManager.Resolve<IEntityManager>().GetComponent<AmmoComponent>(entity.Uid);
+            var ammo = IoCManager.Resolve<IEntityManager>().GetComponent<AmmoComponent>(entity);
             var offsetPos = ((robustRandom.NextFloat() - 0.5f) * ejectOffset, (robustRandom.NextFloat() - 0.5f) * ejectOffset);
-            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates.Offset(offsetPos);
-            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).LocalRotation = robustRandom.Pick(ejectDirections).ToAngle();
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates.Offset(offsetPos);
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).LocalRotation = robustRandom.Pick(ejectDirections).ToAngle();
 
-            SoundSystem.Play(Filter.Broadcast(), ammo.SoundCollectionEject.GetSound(), IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates, AudioParams.Default.WithVolume(-1));
+            SoundSystem.Play(Filter.Broadcast(), ammo.SoundCollectionEject.GetSound(), IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates, AudioParams.Default.WithVolume(-1));
         }
 
         /// <summary>
@@ -330,10 +330,10 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 else
                 {
                     projectile =
-                        IoCManager.Resolve<IEntityManager>().SpawnEntity(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(baseProjectile.Uid).EntityPrototype?.ID, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(baseProjectile.Uid).Coordinates);
+                        IoCManager.Resolve<IEntityManager>().SpawnEntity(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(baseProjectile).EntityPrototype?.ID, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(baseProjectile).Coordinates);
                 }
 
-                firedProjectiles[i] = projectile.Uid;
+                firedProjectiles[i] = projectile;
 
                 Angle projectileAngle;
 
@@ -346,10 +346,10 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                     projectileAngle = angle;
                 }
 
-                var physics = IoCManager.Resolve<IEntityManager>().GetComponent<IPhysBody>(projectile.Uid);
+                var physics = IoCManager.Resolve<IEntityManager>().GetComponent<IPhysBody>(projectile);
                 physics.BodyStatus = BodyStatus.InAir;
 
-                var projectileComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ProjectileComponent>(projectile.Uid);
+                var projectileComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ProjectileComponent>(projectile);
                 projectileComponent.IgnoreEntity(shooter);
 
                 // FIXME: Work around issue where inserting and removing an entity from a container,
@@ -357,16 +357,16 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 // See SharedBroadphaseSystem.HandleContainerInsert()... It sets Awake to false, which causes this.
                 projectile.SpawnTimer(TimeSpan.FromMilliseconds(25), () =>
                 {
-                    IoCManager.Resolve<IEntityManager>().GetComponent<IPhysBody>(projectile.Uid)
+                    IoCManager.Resolve<IEntityManager>().GetComponent<IPhysBody>(projectile)
                         .LinearVelocity = projectileAngle.ToVec() * velocity;
                 });
 
 
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(projectile.Uid).WorldRotation = projectileAngle + MathHelper.PiOver2;
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(projectile).WorldRotation = projectileAngle + MathHelper.PiOver2;
             }
 
             IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(OwnerUid, new GunShotEvent(firedProjectiles));
-            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(ammo.Uid, new AmmoShotEvent(firedProjectiles));
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(ammo, new AmmoShotEvent(firedProjectiles));
         }
 
         /// <summary>
@@ -390,16 +390,16 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         /// </summary>
         private void FireHitscan(IEntity shooter, HitscanComponent hitscan, Angle angle)
         {
-            var ray = new CollisionRay(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates.ToMapPos(IoCManager.Resolve<IEntityManager>()), angle.ToVec(), (int) hitscan.CollisionMask);
+            var ray = new CollisionRay(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates.ToMapPos(IoCManager.Resolve<IEntityManager>()), angle.ToVec(), (int) hitscan.CollisionMask);
             var physicsManager = EntitySystem.Get<SharedPhysicsSystem>();
-            var rayCastResults = physicsManager.IntersectRay(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).MapID, ray, hitscan.MaxLength, shooter, false).ToList();
+            var rayCastResults = physicsManager.IntersectRay(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).MapID, ray, hitscan.MaxLength, shooter, false).ToList();
 
             if (rayCastResults.Count >= 1)
             {
                 var result = rayCastResults[0];
                 var distance = result.Distance;
                 hitscan.FireEffects(shooter, distance, angle, result.HitEntity);
-                var dmg = EntitySystem.Get<DamageableSystem>().TryChangeDamage(result.HitEntity.Uid, hitscan.Damage);
+                var dmg = EntitySystem.Get<DamageableSystem>().TryChangeDamage(result.HitEntity, hitscan.Damage);
                 if (dmg != null)
                     EntitySystem.Get<AdminLogSystem>().Add(LogType.HitScanHit,
                         $"{shooter} hit {result.HitEntity} using {hitscan.Owner} and dealt {dmg.Total} damage");

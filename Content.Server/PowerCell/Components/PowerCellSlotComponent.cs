@@ -81,7 +81,7 @@ namespace Content.Server.PowerCell.Components
             get
             {
                 if (_cellContainer.ContainedEntity == null) return null;
-                return IoCManager.Resolve<IEntityManager>().TryGetComponent(_cellContainer.ContainedEntity.Uid, out PowerCellComponent? cell) ? cell : null;
+                return IoCManager.Resolve<IEntityManager>().TryGetComponent(_cellContainer.ContainedEntity, out PowerCellComponent? cell) ? cell : null;
             }
         }
 
@@ -134,14 +134,14 @@ namespace Content.Server.PowerCell.Components
             //Dirty();
             if (user != null)
             {
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out HandsComponent? hands) || !hands.PutInHand(IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(cell.Owner.Uid)))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out HandsComponent? hands) || !hands.PutInHand(IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(cell.Owner)))
                 {
-                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(cell.Owner.Uid).Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user.Uid).Coordinates;
+                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(cell.Owner).Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user).Coordinates;
                 }
             }
             else
             {
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(cell.Owner.Uid).Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates;
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(cell.Owner).Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates;
             }
 
             if (playSound)
@@ -149,7 +149,7 @@ namespace Content.Server.PowerCell.Components
                 SoundSystem.Play(Filter.Pvs(Owner), CellRemoveSound.GetSound(), Owner, AudioHelpers.WithVariation(0.125f));
             }
 
-            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner.Uid, new PowerCellChangedEvent(true), false);
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, new PowerCellChangedEvent(true), false);
             return cell;
         }
 
@@ -162,8 +162,8 @@ namespace Content.Server.PowerCell.Components
         public bool InsertCell(IEntity cell, bool playSound = true)
         {
             if (Cell != null) return false;
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(cell.Uid, out (ItemComponent?) var _)) return false;
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<PowerCellComponent?>(cell.Uid, out var cellComponent)) return false;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent((EntityUid) cell, out (ItemComponent?) var _)) return false;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<PowerCellComponent?>(cell, out var cellComponent)) return false;
             if (cellComponent.CellSize != SlotSize) return false;
             if (!_cellContainer.Insert(cell)) return false;
             //Dirty();
@@ -172,7 +172,7 @@ namespace Content.Server.PowerCell.Components
                 SoundSystem.Play(Filter.Pvs(Owner), CellInsertSound.GetSound(), Owner, AudioHelpers.WithVariation(0.125f));
             }
 
-            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner.Uid, new PowerCellChangedEvent(false), false);
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, new PowerCellChangedEvent(false), false);
             return true;
         }
 
@@ -199,7 +199,7 @@ namespace Content.Server.PowerCell.Components
                 };
             }
 
-            var cell = IoCManager.Resolve<IEntityManager>().SpawnEntity(type, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
+            var cell = IoCManager.Resolve<IEntityManager>().SpawnEntity(type, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
             _cellContainer.Insert(cell);
         }
     }

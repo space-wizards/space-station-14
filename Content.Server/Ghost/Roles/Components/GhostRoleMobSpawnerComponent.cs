@@ -42,15 +42,15 @@ namespace Content.Server.Ghost.Roles.Components
             if (string.IsNullOrEmpty(Prototype))
                 throw new NullReferenceException("Prototype string cannot be null or empty!");
 
-            var mob = IoCManager.Resolve<IEntityManager>().SpawnEntity(Prototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
+            var mob = IoCManager.Resolve<IEntityManager>().SpawnEntity(Prototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
 
             if (MakeSentient)
-                MakeSentientCommand.MakeSentient(mob.Uid, IoCManager.Resolve<IEntityManager>());
+                MakeSentientCommand.MakeSentient(mob, IoCManager.Resolve<IEntityManager>());
 
             mob.EnsureComponent<MindComponent>();
 
             var ghostRoleSystem = EntitySystem.Get<GhostRoleSystem>();
-            ghostRoleSystem.GhostRoleInternalCreateMindAndTransfer(session, OwnerUid, mob.Uid, this);
+            ghostRoleSystem.GhostRoleInternalCreateMindAndTransfer(session, OwnerUid, mob, this);
 
             if (++_currentTakeovers < _availableTakeovers)
                 return true;
@@ -58,7 +58,7 @@ namespace Content.Server.Ghost.Roles.Components
             Taken = true;
 
             if (_deleteOnSpawn)
-                IoCManager.Resolve<IEntityManager>().DeleteEntity(Owner.Uid);
+                IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) Owner);
 
             return true;
         }

@@ -108,11 +108,11 @@ namespace Content.Server.Radiation
 
         public void Update(float frameTime)
         {
-            if (!Decay || (!IoCManager.Resolve<IEntityManager>().EntityExists(Owner.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityLifeStage) >= EntityLifeStage.Deleted)
+            if (!Decay || (!IoCManager.Resolve<IEntityManager>().EntityExists(Owner) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityLifeStage) >= EntityLifeStage.Deleted)
                 return;
 
             if (_duration <= 0f)
-                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(Owner.Uid);
+                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity((EntityUid) Owner);
 
             _duration -= frameTime;
         }

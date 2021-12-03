@@ -60,12 +60,12 @@ namespace Content.Server.Administration.Commands
                 }
 
                 var mapManager = IoCManager.Resolve<IMapManager>();
-                var currentMap = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.AttachedEntity.Uid).MapID;
-                var currentGrid = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.AttachedEntity.Uid).GridID;
+                var currentMap = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.AttachedEntity).MapID;
+                var currentGrid = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.AttachedEntity).GridID;
 
                 var found = entMan.EntityQuery<WarpPointComponent>(true)
                     .Where(p => p.Location == location)
-                    .Select(p => IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(p.Owner.Uid).Coordinates)
+                    .Select(p => IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(p.Owner).Coordinates)
                     .OrderBy(p => p, Comparer<EntityCoordinates>.Create((a, b) =>
                     {
                         // Sort so that warp points on the same grid/map are first.
@@ -113,8 +113,8 @@ namespace Content.Server.Administration.Commands
 
                 if (found.GetGridId(entMan) != GridId.Invalid)
                 {
-                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.AttachedEntity.Uid).Coordinates = found;
-                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent(player.AttachedEntity.Uid, out IPhysBody? physics))
+                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.AttachedEntity).Coordinates = found;
+                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent(player.AttachedEntity, out IPhysBody? physics))
                     {
                         physics.LinearVelocity = Vector2.Zero;
                     }

@@ -26,7 +26,7 @@ namespace Content.Server.DeviceNetwork.Systems
             IEntity sender = EntityManager.GetEntity(args.Sender);
             IEntity receiver = EntityManager.GetEntity(uid);
 
-            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(receiver.Uid).GridID != IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(sender.Uid).GridID)
+            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(receiver).GridID != IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(sender).GridID)
             {
                 args.Cancel();
             }

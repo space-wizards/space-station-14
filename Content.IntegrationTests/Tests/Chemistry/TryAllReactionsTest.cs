@@ -50,11 +50,11 @@ namespace Content.IntegrationTests.Tests.Chemistry
                 {
                     beaker = entityManager.SpawnEntity("TestSolutionContainer", coordinates);
                     Assert.That(EntitySystem.Get<SolutionContainerSystem>()
-                        .TryGetSolution(beaker.Uid, "beaker", out component));
+                        .TryGetSolution(beaker, "beaker", out component));
                     foreach (var (id, reactant) in reactionPrototype.Reactants)
                     {
                         Assert.That(EntitySystem.Get<SolutionContainerSystem>()
-                            .TryAddReagent(beaker.Uid, component, id, reactant.Amount, out var quantity));
+                            .TryAddReagent(beaker, component, id, reactant.Amount, out var quantity));
                         Assert.That(reactant.Amount, Is.EqualTo(quantity));
                     }
                 });

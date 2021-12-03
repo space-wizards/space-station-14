@@ -112,8 +112,8 @@ namespace Content.IntegrationTests.Tests.Networking
 
             await client.WaitPost(() =>
             {
-                IEntity tempQualifier = cEntityManager.GetEntity(serverEnt.Uid);
-                clientComponent = IoCManager.Resolve<IEntityManager>().GetComponent<PredictionTestComponent>(tempQualifier.Uid);
+                IEntity tempQualifier = cEntityManager.GetEntity(serverEnt);
+                clientComponent = IoCManager.Resolve<IEntityManager>().GetComponent<PredictionTestComponent>(tempQualifier);
             });
 
             Assert.That(clientComponent.Foo, Is.False);
@@ -137,7 +137,7 @@ namespace Content.IntegrationTests.Tests.Networking
             {
                 await client.WaitPost(() =>
                 {
-                    cEntityManager.RaisePredictiveEvent(new SetFooMessage(serverEnt.Uid, true));
+                    cEntityManager.RaisePredictiveEvent(new SetFooMessage(serverEnt, true));
 
                     Assert.That(clientComponent.Foo, Is.True);
                 });
@@ -209,7 +209,7 @@ namespace Content.IntegrationTests.Tests.Networking
                 // Send event to server to change flag again, this time to disable it..
                 await client.WaitPost(() =>
                 {
-                    cEntityManager.RaisePredictiveEvent(new SetFooMessage(serverEnt.Uid, false));
+                    cEntityManager.RaisePredictiveEvent(new SetFooMessage(serverEnt, false));
 
                     Assert.That(clientComponent.Foo, Is.False);
                 });
@@ -280,7 +280,7 @@ namespace Content.IntegrationTests.Tests.Networking
                 // Send first event to disable the flag (reminder: it never got accepted by the server).
                 await client.WaitPost(() =>
                 {
-                    cEntityManager.RaisePredictiveEvent(new SetFooMessage(serverEnt.Uid, false));
+                    cEntityManager.RaisePredictiveEvent(new SetFooMessage(serverEnt, false));
 
                     Assert.That(clientComponent.Foo, Is.False);
                 });
@@ -308,7 +308,7 @@ namespace Content.IntegrationTests.Tests.Networking
                 // Send another event, to re-enable it.
                 await client.WaitPost(() =>
                 {
-                    cEntityManager.RaisePredictiveEvent(new SetFooMessage(serverEnt.Uid, true));
+                    cEntityManager.RaisePredictiveEvent(new SetFooMessage(serverEnt, true));
 
                     Assert.That(clientComponent.Foo, Is.True);
                 });
@@ -457,7 +457,7 @@ namespace Content.IntegrationTests.Tests.Networking
             private void HandleMessage(SetFooMessage message, EntitySessionEventArgs args)
             {
                 var entity = EntityManager.GetEntity(message.Uid);
-                var component = IoCManager.Resolve<IEntityManager>().GetComponent<PredictionTestComponent>(entity.Uid);
+                var component = IoCManager.Resolve<IEntityManager>().GetComponent<PredictionTestComponent>(entity);
                 var old = component.Foo;
                 if (Allow)
                 {

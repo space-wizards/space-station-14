@@ -47,8 +47,8 @@ namespace Content.Server.Wieldable
             // TODO VERBS ICON + localization
             verb.Text = component.Wielded ? "Unwield" : "Wield";
             verb.Act = component.Wielded
-                ? () => AttemptUnwield(component.Owner.Uid, component, args.User)
-                : () => AttemptWield(component.Owner.Uid, component, args.User);
+                ? () => AttemptUnwield(component.Owner, component, args.User)
+                : () => AttemptWield(component.Owner, component, args.User);
 
             args.Verbs.Add(verb);
         }
@@ -66,7 +66,7 @@ namespace Content.Server.Wieldable
         public bool CanWield(EntityUid uid, WieldableComponent component, IEntity user, bool quiet=false)
         {
             // Do they have enough hands free?
-            if (!EntityManager.TryGetComponent<HandsComponent>(user.Uid, out var hands))
+            if (!EntityManager.TryGetComponent<HandsComponent>(user, out var hands))
             {
                 if(!quiet)
                     user.PopupMessage(Loc.GetString("wieldable-component-no-hands"));
@@ -148,7 +148,7 @@ namespace Content.Server.Wieldable
             var userEv = new UnwieldedItemEvent(used);
 
             RaiseLocalEvent(uid, targEv, false);
-            RaiseLocalEvent(user.Uid, userEv, false);
+            RaiseLocalEvent(user, userEv, false);
         }
 
         private void OnItemWielded(EntityUid uid, WieldableComponent component, ItemWieldedEvent args)
@@ -173,7 +173,7 @@ namespace Content.Server.Wieldable
 
             for (var i = 0; i < component.FreeHandsRequired; i++)
             {
-                _virtualItemSystem.TrySpawnVirtualItemInHand(uid, args.User.Uid);
+                _virtualItemSystem.TrySpawnVirtualItemInHand(uid, args.User);
             }
 
             args.User.PopupMessage(Loc.GetString("wieldable-component-successful-wield",
@@ -206,12 +206,12 @@ namespace Content.Server.Wieldable
                     ("item", EntityManager.GetEntity(uid))));
             }
 
-            _virtualItemSystem.DeleteInHandsMatching(args.User.Uid, uid);
+            _virtualItemSystem.DeleteInHandsMatching(args.User, uid);
         }
 
         private void OnItemLeaveHand(EntityUid uid, WieldableComponent component, UnequippedHandEvent args)
         {
-            if (!component.Wielded || component.Owner.Uid != args.Unequipped.Uid)
+            if (!component.Wielded || component.Owner != args.Unequipped)
                 return;
             RaiseLocalEvent(uid, new ItemUnwieldedEvent(args.User, force: true));
         }

@@ -67,7 +67,7 @@ namespace Content.Server.Power.NodeGroups
 
         public void AddApc(ApcComponent apc)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(apc.Owner.Uid, out PowerNetworkBatteryComponent? netBattery))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(apc.Owner, out PowerNetworkBatteryComponent? netBattery))
                 netBattery.NetworkBattery.LinkedNetworkDischarging = default;
 
             QueueNetworkReconnect();
@@ -76,7 +76,7 @@ namespace Content.Server.Power.NodeGroups
 
         public void RemoveApc(ApcComponent apc)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(apc.Owner.Uid, out PowerNetworkBatteryComponent? netBattery))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(apc.Owner, out PowerNetworkBatteryComponent? netBattery))
                 netBattery.NetworkBattery.LinkedNetworkDischarging = default;
 
             QueueNetworkReconnect();

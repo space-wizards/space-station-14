@@ -57,7 +57,7 @@ namespace Content.Server.Sandbox.Commands
             }
 
             var target = entityManager.GetEntity(eUid);
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(target.Uid, out NodeContainerComponent? nodeContainerComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(target, out NodeContainerComponent? nodeContainerComponent))
             {
                 shell.WriteLine(Loc.GetString("shell-entity-is-not-node-container"));
                 return;
@@ -87,9 +87,9 @@ namespace Content.Server.Sandbox.Commands
 
             foreach (var x in group.Nodes)
             {
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<AtmosPipeColorComponent?>(x.Owner.Uid, out var atmosPipeColorComponent)) continue;
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<AtmosPipeColorComponent?>(x.Owner, out var atmosPipeColorComponent)) continue;
 
-                EntitySystem.Get<AtmosPipeColorSystem>().SetColor(x.Owner.Uid, atmosPipeColorComponent, color);
+                EntitySystem.Get<AtmosPipeColorSystem>().SetColor(x.Owner, atmosPipeColorComponent, color);
             }
         }
     }

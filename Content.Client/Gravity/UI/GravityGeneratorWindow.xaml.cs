@@ -34,7 +34,7 @@ namespace Content.Client.Gravity.UI
             OnButton.OnPressed += _ => _owner.SetPowerSwitch(true);
             OffButton.OnPressed += _ => _owner.SetPowerSwitch(false);
 
-            EntityView.Sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(component.Owner.Uid);
+            EntityView.Sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(component.Owner);
         }
 
         public void UpdateState(SharedGravityGeneratorComponent.GeneratorState state)

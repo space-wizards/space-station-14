@@ -45,7 +45,7 @@ namespace Content.Shared.Interaction
         /// <summary>
         ///     Entity that triggered the interaction.
         /// </summary>
-        public EntityUid UserUid => User.Uid;
+        public EntityUid UserUid => User;
 
         /// <summary>
         ///     Entity that was interacted on.
@@ -55,7 +55,7 @@ namespace Content.Shared.Interaction
         /// <summary>
         ///     Entity that was interacted on.
         /// </summary>
-        public EntityUid TargetUid => Target.Uid;
+        public EntityUid TargetUid => Target;
 
         public InteractHandEvent(IEntity user, IEntity target)
         {

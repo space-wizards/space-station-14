@@ -14,7 +14,7 @@ namespace Content.Server.AI.WorldState.States.Nutrition
 
         public override bool GetValue()
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out HungerComponent? hungerComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out HungerComponent? hungerComponent))
             {
                 return false;
             }

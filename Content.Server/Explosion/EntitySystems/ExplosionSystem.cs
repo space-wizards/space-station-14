@@ -82,12 +82,12 @@ namespace Content.Server.Explosion.EntitySystems
 
             foreach (var player in players)
             {
-                if (player.AttachedEntity == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(player.AttachedEntity.Uid, out CameraRecoilComponent? recoil))
+                if (player.AttachedEntity == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(player.AttachedEntity, out CameraRecoilComponent? recoil))
                 {
                     continue;
                 }
 
-                var playerPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.AttachedEntity.Uid).WorldPosition;
+                var playerPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.AttachedEntity).WorldPosition;
                 var delta = epicenter.ToMapPos(EntityManager) - playerPos;
 
                 //Change if zero. Will result in a NaN later breaking camera shake if not changed
@@ -130,18 +130,18 @@ namespace Content.Server.Explosion.EntitySystems
             // and splitted into two lists based on if they are Impassable or not
             foreach (var entity in entitiesInRange)
             {
-                if ((!IoCManager.Resolve<IEntityManager>().EntityExists(entity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted || entity.IsInContainer())
+                if ((!IoCManager.Resolve<IEntityManager>().EntityExists(entity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityLifeStage) >= EntityLifeStage.Deleted || entity.IsInContainer())
                 {
                     continue;
                 }
 
-                if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates.TryDistance(EntityManager, epicenter, out var distance) ||
+                if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates.TryDistance(EntityManager, epicenter, out var distance) ||
                     distance > maxRange)
                 {
                     continue;
                 }
 
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out PhysicsComponent? body) || body.Fixtures.Count < 1)
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out PhysicsComponent? body) || body.Fixtures.Count < 1)
                 {
                     continue;
                 }
@@ -171,7 +171,7 @@ namespace Content.Server.Explosion.EntitySystems
                     continue;
                 }
 
-                _acts.HandleExplosion(epicenter, entity.Uid, CalculateSeverity(distance, devastationRange, heavyRange));
+                _acts.HandleExplosion(epicenter, entity, CalculateSeverity(distance, devastationRange, heavyRange));
             }
 
             // Impassable entities were handled first so NonImpassable entities have a bigger chance to get hit. As now
@@ -183,7 +183,7 @@ namespace Content.Server.Explosion.EntitySystems
                     continue;
                 }
 
-                _acts.HandleExplosion(epicenter, entity.Uid, CalculateSeverity(distance, devastationRange, heavyRange));
+                _acts.HandleExplosion(epicenter, entity, CalculateSeverity(distance, devastationRange, heavyRange));
             }
         }
 
@@ -312,7 +312,7 @@ namespace Content.Server.Explosion.EntitySystems
             {
                 while (EntityManager.TryGetEntity(entity, out var e) && e.TryGetContainer(out var container))
                 {
-                    entity = container.Owner.Uid;
+                    entity = container.Owner;
                 }
 
                 if (!EntityManager.TryGetComponent(entity, out transform))

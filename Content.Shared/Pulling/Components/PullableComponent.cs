@@ -41,7 +41,7 @@ namespace Content.Shared.Pulling.Components
 
         public override ComponentState GetComponentState()
         {
-            return new PullableComponentState(Puller?.Uid);
+            return new PullableComponentState(Puller);
         }
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
@@ -71,7 +71,7 @@ namespace Content.Shared.Pulling.Components
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedPullerComponent?>(entity.Uid, out var comp))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedPullerComponent?>(entity, out var comp))
             {
                 Logger.Error($"Entity {state.Puller.Value} for pulling had no Puller component");
                 // ensure it disconnects from any different puller, still

@@ -52,7 +52,7 @@ namespace Content.Server.Flash
             args.Handled = true;
             foreach (IEntity e in args.HitEntities)
             {
-                Flash(e.Uid, args.User.Uid, uid, comp.FlashDuration, comp.SlowTo);
+                Flash(e, args.User, uid, comp.FlashDuration, comp.SlowTo);
             }
         }
 
@@ -63,10 +63,10 @@ namespace Content.Server.Flash
                 return;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().HasComponent<FlashableComponent>(args.Entity.Uid))
+            if (IoCManager.Resolve<IEntityManager>().HasComponent<FlashableComponent>(args.Entity))
             {
                 args.CanInteract = true;
-                Flash(args.Entity.Uid, args.User.Uid, uid, comp.FlashDuration, comp.SlowTo);
+                Flash(args.Entity, args.User, uid, comp.FlashDuration, comp.SlowTo);
             }
         }
 
@@ -77,9 +77,9 @@ namespace Content.Server.Flash
                 return;
             }
 
-            foreach (var entity in _entityLookup.GetEntitiesInRange(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(comp.Owner.Uid).Coordinates, comp.Range))
+            foreach (var entity in _entityLookup.GetEntitiesInRange(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(comp.Owner).Coordinates, comp.Range))
             {
-                Flash(entity.Uid, args.User.Uid, uid, comp.AoeFlashDuration, comp.SlowTo);
+                Flash(entity, args.User, uid, comp.AoeFlashDuration, comp.SlowTo);
             }
         }
 
@@ -88,7 +88,7 @@ namespace Content.Server.Flash
             if (comp.HasUses)
             {
                 // TODO flash visualizer
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(comp.Owner.Uid, out var sprite))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(comp.Owner, out var sprite))
                     return false;
 
                 if (--comp.Uses == 0)
@@ -155,10 +155,10 @@ namespace Content.Server.Flash
 
             foreach (var entity in _entityLookup.GetEntitiesInRange(transform.Coordinates, range))
             {
-                if (!IoCManager.Resolve<IEntityManager>().HasComponent<FlashableComponent>(entity.Uid) ||
+                if (!IoCManager.Resolve<IEntityManager>().HasComponent<FlashableComponent>(entity) ||
                     !transform.InRangeUnobstructed(entity, range, CollisionGroup.Opaque)) continue;
 
-                Flash(entity.Uid, user, source, duration, slowTo, displayPopup);
+                Flash(entity, user, source, duration, slowTo, displayPopup);
             }
 
             if (sound != null)
@@ -191,7 +191,7 @@ namespace Content.Server.Flash
         {
             // Forward the event to the glasses, if any.
             if(component.TryGetSlotItem(EquipmentSlotDefines.Slots.EYES, out ItemComponent? glasses))
-                RaiseLocalEvent(glasses.Owner.Uid, args);
+                RaiseLocalEvent(glasses.Owner, args);
         }
 
         private void OnFlashImmunityFlashAttempt(EntityUid uid, FlashImmunityComponent component, FlashAttemptEvent args)

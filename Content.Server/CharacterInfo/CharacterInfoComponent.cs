@@ -24,7 +24,7 @@ namespace Content.Server.CharacterInfo
                 case RequestCharacterInfoMessage _:
                     var conditions = new Dictionary<string, List<ConditionInfo>>();
                     var jobTitle = "No Profession";
-                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out MindComponent? mindComponent))
+                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out MindComponent? mindComponent))
                     {
                         var mind = mindComponent.Mind;
 

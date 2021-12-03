@@ -20,13 +20,13 @@ namespace Content.Server.AI.WorldState.States.Mobs
         {
             var result = new List<IEntity>();
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AiControllerComponent? controller))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AiControllerComponent? controller))
             {
                 return result;
             }
 
             var nearbyPlayers = Filter.Empty()
-                .AddInRange(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).MapPosition, controller.VisionRadius)
+                .AddInRange(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).MapPosition, controller.VisionRadius)
                 .Recipients;
 
             foreach (var player in nearbyPlayers)
@@ -36,7 +36,7 @@ namespace Content.Server.AI.WorldState.States.Mobs
                     continue;
                 }
 
-                if (player.AttachedEntity != Owner && IoCManager.Resolve<IEntityManager>().HasComponent<DamageableComponent>(player.AttachedEntity.Uid))
+                if (player.AttachedEntity != Owner && IoCManager.Resolve<IEntityManager>().HasComponent<DamageableComponent>(player.AttachedEntity))
                 {
                     result.Add(player.AttachedEntity);
                 }

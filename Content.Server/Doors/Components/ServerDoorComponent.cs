@@ -78,7 +78,7 @@ namespace Content.Server.Doors.Components
                     _ => throw new ArgumentOutOfRangeException(),
                 };
 
-                IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner.Uid, new DoorStateChangedEvent(State), false);
+                IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, new DoorStateChangedEvent(State), false);
                 _autoCloseCancelTokenSource?.Cancel();
 
                 Dirty();
@@ -220,7 +220,7 @@ namespace Content.Server.Doors.Components
             {
                 if (!CanWeldShut)
                 {
-                    Logger.Warning("{0} prototype loaded with incompatible flags: 'welded' is true, but door cannot be welded.", IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityName);
+                    Logger.Warning("{0} prototype loaded with incompatible flags: 'welded' is true, but door cannot be welded.", IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityName);
                     return;
                 }
                 SetAppearance(DoorVisualState.Welded);
@@ -243,7 +243,7 @@ namespace Content.Server.Doors.Components
             {
                 if (IsWeldedShut)
                 {
-                    Logger.Warning("{0} prototype loaded with incompatible flags: 'welded' and 'startOpen' are both true.", IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityName);
+                    Logger.Warning("{0} prototype loaded with incompatible flags: 'welded' and 'startOpen' are both true.", IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityName);
                     return;
                 }
                 QuickOpen(false);
@@ -258,7 +258,7 @@ namespace Content.Server.Doors.Components
                 return;
 
             DoorClickShouldActivateEvent ev = new DoorClickShouldActivateEvent(eventArgs);
-            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner.Uid, ev, false);
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, ev, false);
             if (ev.Handled)
                 return;
 
@@ -277,7 +277,7 @@ namespace Content.Server.Doors.Components
         public void TryOpen(IEntity? user=null)
         {
             var msg = new DoorOpenAttemptEvent();
-            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner.Uid, msg);
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, msg);
 
             if (msg.Cancelled) return;
 
@@ -291,7 +291,7 @@ namespace Content.Server.Doors.Components
             {
                 Open();
 
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out HandsComponent? hands) && hands.Count == 0)
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out HandsComponent? hands) && hands.Count == 0)
                 {
                     SoundSystem.Play(Filter.Pvs(Owner), _tryOpenDoorSound.GetSound(), Owner,
                         AudioParams.Default.WithVolume(-2));
@@ -310,7 +310,7 @@ namespace Content.Server.Doors.Components
                 return false;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AccessReader? access))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AccessReader? access))
             {
                 return true;
             }
@@ -322,9 +322,9 @@ namespace Content.Server.Doors.Components
             return doorSystem.AccessType switch
             {
                 DoorSystem.AccessTypes.AllowAll => true,
-                DoorSystem.AccessTypes.AllowAllIdExternal => isAirlockExternal || accessSystem.IsAllowed(access, user.Uid),
+                DoorSystem.AccessTypes.AllowAllIdExternal => isAirlockExternal || accessSystem.IsAllowed(access, user),
                 DoorSystem.AccessTypes.AllowAllNoExternal => !isAirlockExternal,
-                _ => accessSystem.IsAllowed(access, user.Uid)
+                _ => accessSystem.IsAllowed(access, user)
             };
         }
 
@@ -334,7 +334,7 @@ namespace Content.Server.Doors.Components
         /// </summary>
         private bool HasAccessType(string accessType)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AccessReader? access))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AccessReader? access))
             {
                 return access.AccessLists.Any(list => list.Contains(accessType));
             }
@@ -355,7 +355,7 @@ namespace Content.Server.Doors.Components
             }
 
             var ev = new BeforeDoorOpenedEvent();
-            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner.Uid, ev, false);
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, ev, false);
             return !ev.Cancelled;
         }
 
@@ -365,12 +365,12 @@ namespace Content.Server.Doors.Components
         public void Open()
         {
             State = DoorState.Opening;
-            if (Occludes && IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out OccluderComponent? occluder))
+            if (Occludes && IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out OccluderComponent? occluder))
             {
                 occluder.Enabled = false;
             }
 
-            if (ChangeAirtight && IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AirtightComponent? airtight))
+            if (ChangeAirtight && IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AirtightComponent? airtight))
             {
                 EntitySystem.Get<AirtightSystem>().SetAirblocked(airtight, false);
             }
@@ -398,7 +398,7 @@ namespace Content.Server.Doors.Components
         {
             base.OnPartialOpen();
 
-            if (ChangeAirtight && IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AirtightComponent? airtight))
+            if (ChangeAirtight && IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AirtightComponent? airtight))
             {
                 EntitySystem.Get<AirtightSystem>().SetAirblocked(airtight, false);
             }
@@ -408,7 +408,7 @@ namespace Content.Server.Doors.Components
 
         private void QuickOpen(bool refresh)
         {
-            if (Occludes && IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out OccluderComponent? occluder))
+            if (Occludes && IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out OccluderComponent? occluder))
             {
                 occluder.Enabled = false;
             }
@@ -425,7 +425,7 @@ namespace Content.Server.Doors.Components
         public void TryClose(IEntity? user=null)
         {
             var msg = new DoorCloseAttemptEvent();
-            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner.Uid, msg);
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, msg);
 
             if (msg.Cancelled) return;
 
@@ -445,13 +445,13 @@ namespace Content.Server.Doors.Components
                 return false;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AccessReader? access))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AccessReader? access))
             {
                 return true;
             }
 
             var accessSystem = EntitySystem.Get<AccessReaderSystem>();
-            return accessSystem.IsAllowed(access, user.Uid);
+            return accessSystem.IsAllowed(access, user);
         }
 
         /// <summary>
@@ -461,7 +461,7 @@ namespace Content.Server.Doors.Components
         public bool CanCloseGeneric()
         {
             var ev = new BeforeDoorClosedEvent();
-            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner.Uid, ev, false);
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, ev, false);
             if (ev.Cancelled)
                 return false;
 
@@ -471,7 +471,7 @@ namespace Content.Server.Doors.Components
         private bool SafetyCheck()
         {
             var ev = new DoorSafetyEnabledEvent();
-            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner.Uid, ev, false);
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, ev, false);
             return ev.Safety || _inhibitCrush;
         }
 
@@ -483,7 +483,7 @@ namespace Content.Server.Doors.Components
         {
             var safety = SafetyCheck();
 
-            if (safety && IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out PhysicsComponent? physicsComponent))
+            if (safety && IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out PhysicsComponent? physicsComponent))
             {
                 var broadPhaseSystem = EntitySystem.Get<SharedPhysicsSystem>();
 
@@ -527,7 +527,7 @@ namespace Content.Server.Doors.Components
                 OnPartialClose();
                 await Timer.Delay(CloseTimeTwo, _stateChangeCancelTokenSource.Token);
 
-                if (Occludes && IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out OccluderComponent? occluder))
+                if (Occludes && IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out OccluderComponent? occluder))
                 {
                     occluder.Enabled = true;
                 }
@@ -543,7 +543,7 @@ namespace Content.Server.Doors.Components
             // if safety is off, crushes people inside of the door, temporarily turning off collisions with them while doing so.
             var becomeairtight = ChangeAirtight && (SafetyCheck() || !TryCrush());
 
-            if (becomeairtight && IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AirtightComponent? airtight))
+            if (becomeairtight && IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AirtightComponent? airtight))
             {
                 EntitySystem.Get<AirtightSystem>().SetAirblocked(airtight, true);
             }
@@ -581,12 +581,12 @@ namespace Content.Server.Doors.Components
                     continue;
 
                 hitsomebody = true;
-                CurrentlyCrushing.Add(e.Owner.Uid);
+                CurrentlyCrushing.Add(e.Owner);
 
-                if (IoCManager.Resolve<IEntityManager>().HasComponent<DamageableComponent>(e.Owner.Uid))
-                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(e.Owner.Uid, CrushDamage);
+                if (IoCManager.Resolve<IEntityManager>().HasComponent<DamageableComponent>(e.Owner))
+                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(e.Owner, CrushDamage);
 
-                EntitySystem.Get<StunSystem>().TryParalyze(e.Owner.Uid, TimeSpan.FromSeconds(DoorStunTime));
+                EntitySystem.Get<StunSystem>().TryParalyze(e.Owner, TimeSpan.FromSeconds(DoorStunTime));
             }
 
             // If we hit someone, open up after stun (opens right when stun ends)
@@ -604,7 +604,7 @@ namespace Content.Server.Doors.Components
         public void Deny()
         {
             var ev = new BeforeDoorDeniedEvent();
-            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner.Uid, ev, false);
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, ev, false);
             if (ev.Cancelled)
                 return;
 
@@ -651,14 +651,14 @@ namespace Content.Server.Doors.Components
                 return;
 
             var autoev = new BeforeDoorAutoCloseEvent();
-            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner.Uid, autoev, false);
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, autoev, false);
             if (autoev.Cancelled)
                 return;
 
             _autoCloseCancelTokenSource = new();
 
             var ev = new DoorGetCloseTimeModifierEvent();
-            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner.Uid, ev, false);
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, ev, false);
             var realCloseTime = AutoCloseDelay * ev.CloseTimeModifier;
 
             Owner.SpawnRepeatingTimer(realCloseTime, async () =>
@@ -673,7 +673,7 @@ namespace Content.Server.Doors.Components
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if(!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Using.Uid, out ToolComponent? tool))
+            if(!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Using, out ToolComponent? tool))
             {
                 return false;
             }
@@ -684,19 +684,19 @@ namespace Content.Server.Doors.Components
             if (tool.Qualities.Contains(_pryingQuality) && !IsWeldedShut)
             {
                 var ev = new DoorGetPryTimeModifierEvent();
-                IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner.Uid, ev, false);
+                IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, ev, false);
 
                 var canEv = new BeforeDoorPryEvent(eventArgs);
-                IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner.Uid, canEv, false);
+                IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, canEv, false);
 
                 if (canEv.Cancelled) return false;
 
-                var successfulPry = await toolSystem.UseTool(eventArgs.Using.Uid, eventArgs.User.Uid, Owner.Uid,
+                var successfulPry = await toolSystem.UseTool(eventArgs.Using, eventArgs.User, Owner,
                         0f, ev.PryTimeModifier * PryTime, _pryingQuality);
 
                 if (successfulPry && !IsWeldedShut)
                 {
-                    IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner.Uid, new OnDoorPryEvent(eventArgs), false);
+                    IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, new OnDoorPryEvent(eventArgs), false);
                     if (State == DoorState.Closed)
                     {
                         Open();
@@ -710,12 +710,12 @@ namespace Content.Server.Doors.Components
             }
 
             // for welding doors
-            if (CanWeldShut && IoCManager.Resolve<IEntityManager>().TryGetComponent(tool.Owner.Uid, out WelderComponent? welder) && welder.Lit)
+            if (CanWeldShut && IoCManager.Resolve<IEntityManager>().TryGetComponent(tool.Owner, out WelderComponent? welder) && welder.Lit)
             {
                 if(!_beingWelded)
                 {
                     _beingWelded = true;
-                    if(await toolSystem.UseTool(eventArgs.Using.Uid, eventArgs.User.Uid, Owner.Uid, 3f, 3f, _weldingQuality, () => CanWeldShut))
+                    if(await toolSystem.UseTool(eventArgs.Using, eventArgs.User, Owner, 3f, 3f, _weldingQuality, () => CanWeldShut))
                     {
                         // just in case
                         if (!CanWeldShut)
@@ -745,8 +745,8 @@ namespace Content.Server.Doors.Components
         private void CreateDoorElectronicsBoard()
         {
             // Ensure that the construction component is aware of the board container.
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ConstructionComponent? construction))
-                EntitySystem.Get<ConstructionSystem>().AddContainer(Owner.Uid, "board", construction);
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ConstructionComponent? construction))
+                EntitySystem.Get<ConstructionSystem>().AddContainer(Owner, "board", construction);
 
             // We don't do anything if this is null or empty.
             if (string.IsNullOrEmpty(_boardPrototype))

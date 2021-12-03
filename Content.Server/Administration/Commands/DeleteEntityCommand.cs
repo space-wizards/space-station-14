@@ -34,7 +34,7 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            IoCManager.Resolve<IEntityManager>().DeleteEntity(entity.Uid);
+            IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) entity);
             shell.WriteLine($"Deleted entity with id {id}.");
         }
     }

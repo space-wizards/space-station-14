@@ -58,7 +58,7 @@ namespace Content.Shared.Interaction
         /// <summary>
         ///     Entity that triggered the interaction.
         /// </summary>
-        public EntityUid UserUid => User.Uid;
+        public EntityUid UserUid => User;
 
         /// <summary>
         ///     Entity that the user used to interact.
@@ -68,7 +68,7 @@ namespace Content.Shared.Interaction
         /// <summary>
         ///     Entity that the user used to interact.
         /// </summary>
-        public EntityUid UsedUid => Used.Uid;
+        public EntityUid UsedUid => Used;
 
         /// <summary>
         ///     Entity that was interacted on.
@@ -78,7 +78,7 @@ namespace Content.Shared.Interaction
         /// <summary>
         ///     Entity that was interacted on.
         /// </summary>
-        public EntityUid TargetUid => Target.Uid;
+        public EntityUid TargetUid => Target;
 
         /// <summary>
         ///     The original location that was clicked by the user.

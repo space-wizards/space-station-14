@@ -72,7 +72,7 @@ namespace Content.Client.HealthOverlay
                 return;
             }
 
-            if (_attachedEntity == null || (!IoCManager.Resolve<IEntityManager>().EntityExists(_attachedEntity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_attachedEntity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted)
+            if (_attachedEntity == null || (!IoCManager.Resolve<IEntityManager>().EntityExists(_attachedEntity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_attachedEntity).EntityLifeStage) >= EntityLifeStage.Deleted)
             {
                 return;
             }
@@ -83,25 +83,25 @@ namespace Content.Client.HealthOverlay
             {
                 var entity = mobState.Owner;
 
-                if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_attachedEntity.Uid).MapID != IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).MapID ||
-                    !viewBox.Contains(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).WorldPosition))
+                if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_attachedEntity).MapID != IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).MapID ||
+                    !viewBox.Contains(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).WorldPosition))
                 {
-                    if (_guis.TryGetValue(entity.Uid, out var oldGui))
+                    if (_guis.TryGetValue(entity, out var oldGui))
                     {
-                        _guis.Remove(entity.Uid);
+                        _guis.Remove(entity);
                         oldGui.Dispose();
                     }
 
                     continue;
                 }
 
-                if (_guis.ContainsKey(entity.Uid))
+                if (_guis.ContainsKey(entity))
                 {
                     continue;
                 }
 
                 var gui = new HealthOverlayGui(entity);
-                _guis.Add(entity.Uid, gui);
+                _guis.Add(entity, gui);
             }
         }
     }

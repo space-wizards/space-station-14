@@ -85,7 +85,7 @@ namespace Content.Client.ContextMenu.UI
 
             var entitySpriteStates = GroupEntities(entities);
             var orderedStates = entitySpriteStates.ToList();
-            orderedStates.Sort((x, y) => string.CompareOrdinal(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(x.First().Uid).EntityPrototype?.Name, IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(y.First().Uid).EntityPrototype?.Name));
+            orderedStates.Sort((x, y) => string.CompareOrdinal(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(x.First()).EntityPrototype?.Name, IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(y.First()).EntityPrototype?.Name));
             Elements.Clear();
             AddToUI(orderedStates);
 
@@ -135,7 +135,7 @@ namespace Content.Client.ContextMenu.UI
                 var funcId = _inputManager.NetworkBindMap.KeyFunctionID(func);
 
                 var message = new FullInputCmdMessage(_gameTiming.CurTick, _gameTiming.TickFraction, funcId,
-                    BoundKeyState.Down, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates, args.PointerLocation, entity.Uid);
+                    BoundKeyState.Down, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates, args.PointerLocation, entity);
 
                 var session = _playerManager.LocalPlayer?.Session;
                 if (session != null)
@@ -184,7 +184,7 @@ namespace Content.Client.ContextMenu.UI
 
             foreach (var entity in Elements.Keys.ToList())
             {
-                if ((!IoCManager.Resolve<IEntityManager>().EntityExists(entity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted || !ignoreFov && !_examineSystem.CanExamine(player, entity))
+                if ((!IoCManager.Resolve<IEntityManager>().EntityExists(entity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityLifeStage) >= EntityLifeStage.Deleted || !ignoreFov && !_examineSystem.CanExamine(player, entity))
                     RemoveEntity(entity);
             }
         }
@@ -250,7 +250,7 @@ namespace Content.Client.ContextMenu.UI
             // find the element associated with this entity
             if (!Elements.TryGetValue(entity, out var element))
             {
-                Logger.Error($"Attempted to remove unknown entity from the entity menu: {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityName} ({entity.Uid})");
+                Logger.Error($"Attempted to remove unknown entity from the entity menu: {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityName} ({entity})");
                 return;
             }
 
@@ -264,7 +264,7 @@ namespace Content.Client.ContextMenu.UI
                 UpdateElement(e);
 
             // if the verb menu is open and targeting this entity, close it.
-            if (_verbSystem.VerbMenu.CurrentTarget == entity.Uid)
+            if (_verbSystem.VerbMenu.CurrentTarget == entity)
                 _verbSystem.VerbMenu.Close();
 
             // If this was the last entity, close the entity menu
@@ -335,7 +335,7 @@ namespace Content.Client.ContextMenu.UI
 
                 if (entityElement.Entity != null)
                 {
-                    if (!((!IoCManager.Resolve<IEntityManager>().EntityExists(entityElement.Entity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entityElement.Entity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted))
+                    if (!((!IoCManager.Resolve<IEntityManager>().EntityExists(entityElement.Entity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entityElement.Entity).EntityLifeStage) >= EntityLifeStage.Deleted))
                         return entityElement.Entity;
                     continue;
                 }

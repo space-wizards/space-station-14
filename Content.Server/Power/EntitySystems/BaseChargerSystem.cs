@@ -39,11 +39,11 @@ namespace Content.Server.Power.EntitySystems
                 !args.CanAccess ||
                 !args.CanInteract ||
                 !component.HasCell ||
-                !_actionBlockerSystem.CanPickup(args.User.Uid))
+                !_actionBlockerSystem.CanPickup(args.User))
                 return;
 
             Verb verb = new();
-            verb.Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(component.Container.ContainedEntity!.Uid).EntityName;
+            verb.Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(component.Container.ContainedEntity!).EntityName;
             verb.Category = VerbCategory.Eject;
             verb.Act = () => component.RemoveItem(args.User);
             args.Verbs.Add(verb);
@@ -56,11 +56,11 @@ namespace Content.Server.Power.EntitySystems
                 !args.CanInteract ||
                 component.HasCell ||
                 !component.IsEntityCompatible(args.Using) ||
-                !_actionBlockerSystem.CanDrop(args.User.Uid))
+                !_actionBlockerSystem.CanDrop(args.User))
                 return;
 
             Verb verb = new();
-            verb.Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(args.Using.Uid).EntityName;
+            verb.Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(args.Using).EntityName;
             verb.Category = VerbCategory.Insert;
             verb.Act = () => component.TryInsertItem(args.Using);
             args.Verbs.Add(verb);

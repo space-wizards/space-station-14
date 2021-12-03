@@ -50,14 +50,15 @@ namespace Content.Server.Stack
             // Get a prototype ID to spawn the new entity. Null is also valid, although it should rarely be picked...
             var prototype = _prototypeManager.TryIndex<StackPrototype>(stack.StackTypeId, out var stackType)
                 ? stackType.Spawn
-                : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(stack.Owner.Uid).EntityPrototype?.ID;
+                : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(stack.Owner).EntityPrototype?.ID;
 
             // Try to remove the amount of things we want to split from the original stack...
             if (!Use(uid, amount, stack))
                 return null;
 
             // Set the output parameter in the event instance to the newly split stack.
-            var entity = EntityManager.SpawnEntity(prototype, spawnPosition).Uid;
+            IEntity tempQualifier = EntityManager.SpawnEntity(prototype, spawnPosition);
+            var entity = (EntityUid) tempQualifier;
 
             if (EntityManager.TryGetComponent(entity, out SharedStackComponent? stackComp))
             {
@@ -76,7 +77,8 @@ namespace Content.Server.Stack
         public EntityUid Spawn(int amount, StackPrototype prototype, EntityCoordinates spawnPosition)
         {
             // Set the output result parameter to the new stack entity...
-            var entity = EntityManager.SpawnEntity(prototype.Spawn, spawnPosition).Uid;
+            IEntity tempQualifier = EntityManager.SpawnEntity(prototype.Spawn, spawnPosition);
+            var entity = (EntityUid) tempQualifier;
             var stack = EntityManager.GetComponent<StackComponent>(entity);
 
             // And finally, set the correct amount!
@@ -89,7 +91,7 @@ namespace Content.Server.Stack
             if (args.Handled)
                 return;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<StackComponent?>(args.Used.Uid, out var otherStack))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<StackComponent?>(args.Used, out var otherStack))
                 return;
 
             if (!otherStack.StackTypeId.Equals(stack.StackTypeId))
@@ -97,16 +99,16 @@ namespace Content.Server.Stack
 
             var toTransfer = Math.Min(stack.Count, otherStack.AvailableSpace);
             SetCount(uid, stack.Count - toTransfer, stack);
-            SetCount(args.Used.Uid, otherStack.Count + toTransfer, otherStack);
+            SetCount(args.Used, otherStack.Count + toTransfer, otherStack);
 
             var popupPos = args.ClickLocation;
 
             if (!popupPos.IsValid(EntityManager))
             {
-                popupPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.User.Uid).Coordinates;
+                popupPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.User).Coordinates;
             }
 
-            var filter = Filter.Entities(args.User.Uid);
+            var filter = Filter.Entities(args.User);
 
             switch (toTransfer)
             {
@@ -137,7 +139,7 @@ namespace Content.Server.Stack
             Verb halve = new();
             halve.Text = Loc.GetString("comp-stack-split-halve");
             halve.Category = VerbCategory.Split;
-            halve.Act = () => UserSplit(uid, args.User.Uid, stack.Count / 2, stack);
+            halve.Act = () => UserSplit(uid, args.User, stack.Count / 2, stack);
             halve.Priority = 1;
             args.Verbs.Add(halve);
 
@@ -150,7 +152,7 @@ namespace Content.Server.Stack
                 Verb verb = new();
                 verb.Text = amount.ToString();
                 verb.Category = VerbCategory.Split;
-                verb.Act = () => UserSplit(uid, args.User.Uid, amount, stack);
+                verb.Act = () => UserSplit(uid, args.User, amount, stack);
 
                 // we want to sort by size, not alphabetically by the verb text.
                 verb.Priority = priority;

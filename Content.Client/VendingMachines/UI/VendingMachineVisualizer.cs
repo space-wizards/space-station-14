@@ -121,7 +121,7 @@ namespace Content.Client.VendingMachines.UI
         {
             base.InitializeEntity(entity);
 
-            if (!IoCManager.Resolve<IEntityManager>().HasComponent<AnimationPlayerComponent>(entity.Uid))
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<AnimationPlayerComponent>(entity))
             {
                 IoCManager.Resolve<IEntityManager>().AddComponent<AnimationPlayerComponent>(entity);
             }
@@ -141,8 +141,8 @@ namespace Content.Client.VendingMachines.UI
         {
             base.OnChangeData(component);
 
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner.Uid);
-            var animPlayer = IoCManager.Resolve<IEntityManager>().GetComponent<AnimationPlayerComponent>(component.Owner.Uid);
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
+            var animPlayer = IoCManager.Resolve<IEntityManager>().GetComponent<AnimationPlayerComponent>(component.Owner);
             if (!component.TryGetData(VendingMachineVisuals.VisualState, out VendingMachineVisualState state))
             {
                 state = VendingMachineVisualState.Normal;

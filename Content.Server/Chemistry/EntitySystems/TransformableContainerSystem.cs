@@ -51,14 +51,14 @@ namespace Content.Server.Chemistry.EntitySystems
                     new SpriteSpecifier.Rsi(
                         new ResourcePath("Objects/Consumable/Drinks/" + proto.SpriteReplacementPath), "icon");
                 var ownerEntity = EntityManager.GetEntity(uid);
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(ownerEntity.Uid, out SpriteComponent? sprite))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(ownerEntity, out SpriteComponent? sprite))
                 {
                     sprite?.LayerSetSprite(0, spriteSpec);
                 }
 
                 string val = proto.Name + " glass";
-                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(ownerEntity.Uid).EntityName = val;
-                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(ownerEntity.Uid).EntityDescription = proto.Description;
+                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(ownerEntity).EntityName = val;
+                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(ownerEntity).EntityDescription = proto.Description;
                 component.CurrentReagent = proto;
                 component.Transformed = true;
             }
@@ -69,14 +69,14 @@ namespace Content.Server.Chemistry.EntitySystems
             component.CurrentReagent = null;
             component.Transformed = false;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out SpriteComponent? sprite) &&
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner, out SpriteComponent? sprite) &&
                 component.InitialSprite != null)
             {
                 sprite.LayerSetSprite(0, component.InitialSprite);
             }
 
-            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(component.Owner.Uid).EntityName = component.InitialName;
-            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(component.Owner.Uid).EntityDescription = component.InitialDescription;
+            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(component.Owner).EntityName = component.InitialName;
+            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(component.Owner).EntityDescription = component.InitialDescription;
         }
     }
 }

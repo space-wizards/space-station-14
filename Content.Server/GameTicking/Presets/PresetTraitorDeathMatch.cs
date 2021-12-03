@@ -80,50 +80,50 @@ namespace Content.Server.GameTicking.Presets
 
             // Delete anything that may contain "dangerous" role-specific items.
             // (This includes the PDA, as everybody gets the captain PDA in this mode for true-all-access reasons.)
-            if (mind.OwnedEntity != null && IoCManager.Resolve<IEntityManager>().TryGetComponent(mind.OwnedEntity.Uid, out InventoryComponent? inventory))
+            if (mind.OwnedEntity != null && IoCManager.Resolve<IEntityManager>().TryGetComponent(mind.OwnedEntity, out InventoryComponent? inventory))
             {
                 var victimSlots = new[] {EquipmentSlotDefines.Slots.IDCARD, EquipmentSlotDefines.Slots.BELT, EquipmentSlotDefines.Slots.BACKPACK};
                 foreach (var slot in victimSlots)
                 {
                     if (inventory.TryGetSlotItem(slot, out ItemComponent? vItem))
-                        IoCManager.Resolve<IEntityManager>().DeleteEntity(vItem.Owner.Uid);
+                        IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) vItem.Owner);
                 }
 
                 // Replace their items:
 
                 //  pda
-                var newPDA = _entityManager.SpawnEntity(PDAPrototypeName, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(mind.OwnedEntity.Uid).Coordinates);
-                inventory.Equip(EquipmentSlotDefines.Slots.IDCARD, IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(newPDA.Uid));
+                var newPDA = _entityManager.SpawnEntity(PDAPrototypeName, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(mind.OwnedEntity).Coordinates);
+                inventory.Equip(EquipmentSlotDefines.Slots.IDCARD, IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(newPDA));
 
                 //  belt
-                var newTmp = _entityManager.SpawnEntity(BeltPrototypeName, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(mind.OwnedEntity.Uid).Coordinates);
-                inventory.Equip(EquipmentSlotDefines.Slots.BELT, IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(newTmp.Uid));
+                var newTmp = _entityManager.SpawnEntity(BeltPrototypeName, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(mind.OwnedEntity).Coordinates);
+                inventory.Equip(EquipmentSlotDefines.Slots.BELT, IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(newTmp));
 
                 //  backpack
-                newTmp = _entityManager.SpawnEntity(BackpackPrototypeName, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(mind.OwnedEntity.Uid).Coordinates);
-                inventory.Equip(EquipmentSlotDefines.Slots.BACKPACK, IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(newTmp.Uid));
+                newTmp = _entityManager.SpawnEntity(BackpackPrototypeName, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(mind.OwnedEntity).Coordinates);
+                inventory.Equip(EquipmentSlotDefines.Slots.BACKPACK, IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(newTmp));
 
                 // Like normal traitors, they need access to a traitor account.
-                var uplinkAccount = new UplinkAccount(startingBalance, mind.OwnedEntity.Uid);
+                var uplinkAccount = new UplinkAccount(startingBalance, mind.OwnedEntity);
                 var accounts = _entityManager.EntitySysManager.GetEntitySystem<UplinkAccountsSystem>();
                 accounts.AddNewAccount(uplinkAccount);
 
                 _entityManager.EntitySysManager.GetEntitySystem<UplinkSystem>()
                     .AddUplink(mind.OwnedEntity, uplinkAccount, newPDA);
 
-                _allOriginalNames[uplinkAccount] = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(mind.OwnedEntity.Uid).EntityName;
+                _allOriginalNames[uplinkAccount] = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(mind.OwnedEntity).EntityName;
 
                 // The PDA needs to be marked with the correct owner.
-                var pda = IoCManager.Resolve<IEntityManager>().GetComponent<PDAComponent>(newPDA.Uid);
+                var pda = IoCManager.Resolve<IEntityManager>().GetComponent<PDAComponent>(newPDA);
                 _entityManager.EntitySysManager.GetEntitySystem<PDASystem>()
-                    .SetOwner(pda, IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(mind.OwnedEntity.Uid).EntityName);
+                    .SetOwner(pda, IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(mind.OwnedEntity).EntityName);
                 IoCManager.Resolve<IEntityManager>().AddComponent<TraitorDeathMatchReliableOwnerTagComponent>(newPDA).UserId = mind.UserId;
             }
 
             // Finally, it would be preferrable if they spawned as far away from other players as reasonably possible.
             if (mind.OwnedEntity != null && FindAnyIsolatedSpawnLocation(mind, out var bestTarget))
             {
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(mind.OwnedEntity.Uid).Coordinates = bestTarget;
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(mind.OwnedEntity).Coordinates = bestTarget;
             }
             else
             {
@@ -151,7 +151,7 @@ namespace Content.Server.GameTicking.Presets
                 var avoidMeEntity = avoidMeMind.OwnedEntity;
                 if (avoidMeEntity == null)
                     continue;
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(avoidMeEntity.Uid, out MobStateComponent? mobState))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(avoidMeEntity, out MobStateComponent? mobState))
                 {
                     // Does have mob state component; if critical or dead, they don't really matter for spawn checks
                     if (mobState.IsCritical() || mobState.IsDead())
@@ -162,7 +162,7 @@ namespace Content.Server.GameTicking.Presets
                     // Doesn't have mob state component. Assume something interesting is going on and don't count this as someone to avoid.
                     continue;
                 }
-                existingPlayerPoints.Add(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(avoidMeEntity.Uid).Coordinates);
+                existingPlayerPoints.Add(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(avoidMeEntity).Coordinates);
             }
 
             // Iterate over each possible spawn point, comparing to the existing player points.
@@ -176,18 +176,18 @@ namespace Content.Server.GameTicking.Presets
             var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
             foreach (var entity in ents)
             {
-                if (!atmosphereSystem.IsTileMixtureProbablySafe(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates))
+                if (!atmosphereSystem.IsTileMixtureProbablySafe(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates))
                     continue;
 
                 var distanceFromNearest = float.PositiveInfinity;
                 foreach (var existing in existingPlayerPoints)
                 {
-                    if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates.TryDistance(_entityManager, existing, out var dist))
+                    if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates.TryDistance(_entityManager, existing, out var dist))
                         distanceFromNearest = Math.Min(distanceFromNearest, dist);
                 }
                 if (bestTargetDistanceFromNearest < distanceFromNearest)
                 {
-                    bestTarget = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates;
+                    bestTarget = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates;
                     bestTargetDistanceFromNearest = distanceFromNearest;
                     foundATarget = true;
                 }
@@ -198,17 +198,17 @@ namespace Content.Server.GameTicking.Presets
         public override bool OnGhostAttempt(Mind.Mind mind, bool canReturnGlobal)
         {
             var entity = mind.OwnedEntity;
-            if ((entity != null) && IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out MobStateComponent? mobState))
+            if ((entity != null) && IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out MobStateComponent? mobState))
             {
                 if (mobState.IsCritical())
                 {
                     // TODO BODY SYSTEM KILL
                     var damage = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Asphyxiation"), 100);
-                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(entity.Uid, damage, true);
+                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(entity, damage, true);
                 }
                 else if (!mobState.IsDead())
                 {
-                    if (IoCManager.Resolve<IEntityManager>().HasComponent<HandsComponent>(entity.Uid))
+                    if (IoCManager.Resolve<IEntityManager>().HasComponent<HandsComponent>(entity))
                     {
                         return false;
                     }

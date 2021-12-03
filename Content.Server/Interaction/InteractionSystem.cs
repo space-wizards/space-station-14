@@ -91,7 +91,7 @@ namespace Content.Server.Interaction
 
             userEntity = ((IPlayerSession?) session)?.AttachedEntity;
 
-            if (userEntity == null || !IoCManager.Resolve<IEntityManager>().EntityExists(userEntity.Uid))
+            if (userEntity == null || !IoCManager.Resolve<IEntityManager>().EntityExists(userEntity))
             {
                 Logger.WarningS("system.interaction",
                     $"Client sent interaction with no attached entity. Session={session}");
@@ -109,7 +109,7 @@ namespace Content.Server.Interaction
             if (!entity.TryGetContainer(out var container))
                 return false;
 
-            if (!EntityManager.TryGetComponent(container.Owner.Uid, out ServerStorageComponent storage))
+            if (!EntityManager.TryGetComponent(container.Owner, out ServerStorageComponent storage))
                 return false;
 
             if (storage.Storage?.ID != container.ID)
@@ -137,7 +137,7 @@ namespace Content.Server.Interaction
             }
 
             // client sanitization
-            if (!ValidateClientInput(args.SenderSession, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(item.Uid).Coordinates, msg.ItemUid, out var userEntity))
+            if (!ValidateClientInput(args.SenderSession, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(item).Coordinates, msg.ItemUid, out var userEntity))
             {
                 Logger.InfoS("system.interaction", $"Inventory interaction validation failed.  Session={args.SenderSession}");
                 return;
@@ -145,7 +145,7 @@ namespace Content.Server.Interaction
 
             if (msg.AltInteract)
                 // Use 'UserInteraction' function - behaves as if the user alt-clicked the item in the world.
-                UserInteraction(userEntity, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(item.Uid).Coordinates, msg.ItemUid, msg.AltInteract);
+                UserInteraction(userEntity, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(item).Coordinates, msg.ItemUid, msg.AltInteract);
             else
                 // User used 'E'. We want to activate it, not simulate clicking on the item
                 InteractionActivate(userEntity, item);
@@ -160,7 +160,7 @@ namespace Content.Server.Interaction
                 return;
             }
 
-            if (!_actionBlockerSystem.CanInteract(userEntity.Uid))
+            if (!_actionBlockerSystem.CanInteract(userEntity))
                 return;
 
             if (!EntityManager.TryGetEntity(msg.Dropped, out var dropped))
@@ -176,8 +176,8 @@ namespace Content.Server.Interaction
                 return;
 
             // trigger dragdrops on the dropped entity
-            RaiseLocalEvent(dropped.Uid, interactionArgs);
-            foreach (var dragDrop in IoCManager.Resolve<IEntityManager>().GetComponents<IDraggable>(dropped.Uid))
+            RaiseLocalEvent(dropped, interactionArgs);
+            foreach (var dragDrop in IoCManager.Resolve<IEntityManager>().GetComponents<IDraggable>(dropped))
             {
                 if (dragDrop.CanDrop(interactionArgs) &&
                     dragDrop.Drop(interactionArgs))
@@ -187,8 +187,8 @@ namespace Content.Server.Interaction
             }
 
             // trigger dragdropons on the targeted entity
-            RaiseLocalEvent(target.Uid, interactionArgs, false);
-            foreach (var dragDropOn in IoCManager.Resolve<IEntityManager>().GetComponents<IDragDropOn>(target.Uid))
+            RaiseLocalEvent(target, interactionArgs, false);
+            foreach (var dragDropOn in IoCManager.Resolve<IEntityManager>().GetComponents<IDragDropOn>(target))
             {
                 if (dragDropOn.CanDragDropOn(interactionArgs) &&
                     dragDropOn.DragDropOn(interactionArgs))
@@ -225,7 +225,7 @@ namespace Content.Server.Interaction
                 return true;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(userEntity.Uid, out CombatModeComponent? combatMode) && combatMode.IsInCombatMode)
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(userEntity, out CombatModeComponent? combatMode) && combatMode.IsInCombatMode)
                 DoAttack(userEntity, coords, true);
 
             return true;
@@ -240,7 +240,7 @@ namespace Content.Server.Interaction
         /// <param name="uid"></param>
         internal void AiUseInteraction(IEntity entity, EntityCoordinates coords, EntityUid uid)
         {
-            if (IoCManager.Resolve<IEntityManager>().HasComponent<ActorComponent>(entity.Uid))
+            if (IoCManager.Resolve<IEntityManager>().HasComponent<ActorComponent>(entity))
                 throw new InvalidOperationException();
 
             UserInteraction(entity, coords, uid);
@@ -282,7 +282,7 @@ namespace Content.Server.Interaction
                 return true;
             }
 
-            if (userEntity.Uid == uid)
+            if (userEntity == uid)
                 return false;
 
             if (!EntityManager.TryGetEntity(uid, out var pulledObject))
@@ -291,7 +291,7 @@ namespace Content.Server.Interaction
             if (!InRangeUnobstructed(userEntity, pulledObject, popup: true))
                 return false;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(pulledObject.Uid, out SharedPullableComponent? pull))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(pulledObject, out SharedPullableComponent? pull))
                 return false;
 
             return _pullSystem.TogglePull(userEntity, pull);
@@ -309,7 +309,7 @@ namespace Content.Server.Interaction
         public async void UserInteraction(IEntity user, EntityCoordinates coordinates, EntityUid clickedUid, bool altInteract = false)
         {
             // TODO COMBAT Consider using alt-interact for advanced combat? maybe alt-interact disarms?
-            if (!altInteract && IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out CombatModeComponent? combatMode) && combatMode.IsInCombatMode)
+            if (!altInteract && IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out CombatModeComponent? combatMode) && combatMode.IsInCombatMode)
             {
                 DoAttack(user, coordinates, false, clickedUid);
                 return;
@@ -318,7 +318,7 @@ namespace Content.Server.Interaction
             if (!ValidateInteractAndFace(user, coordinates))
                 return;
 
-            if (!_actionBlockerSystem.CanInteract(user.Uid))
+            if (!_actionBlockerSystem.CanInteract(user))
                 return;
 
             // Get entity clicked upon from UID if valid UID, if not assume no entity clicked upon and null
@@ -326,15 +326,15 @@ namespace Content.Server.Interaction
 
             // Check if interacted entity is in the same container, the direct child, or direct parent of the user.
             // This is bypassed IF the interaction happened through an item slot (e.g., backpack UI)
-            if (target != null && !user.IsInSameOrParentContainer(target) && !CanAccessViaStorage(user.Uid, target.Uid))
+            if (target != null && !user.IsInSameOrParentContainer(target) && !CanAccessViaStorage(user, target))
             {
                 Logger.WarningS("system.interaction",
-                    $"User entity named {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(user.Uid).EntityName} clicked on object {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(target.Uid).EntityName} that isn't the parent, child, or in the same container");
+                    $"User entity named {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(user).EntityName} clicked on object {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(target).EntityName} that isn't the parent, child, or in the same container");
                 return;
             }
 
             // Verify user has a hand, and find what object they are currently holding in their active hand
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<HandsComponent?>(user.Uid, out var hands))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<HandsComponent?>(user, out var hands))
                 return;
 
             var item = hands.GetActiveHand?.Owner;
@@ -374,10 +374,10 @@ namespace Content.Server.Interaction
         private bool ValidateInteractAndFace(IEntity user, EntityCoordinates coordinates)
         {
             // Verify user is on the same map as the entity they clicked on
-            if (coordinates.GetMapId(_entityManager) != IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user.Uid).MapID)
+            if (coordinates.GetMapId(_entityManager) != IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user).MapID)
             {
                 Logger.WarningS("system.interaction",
-                    $"User entity named {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(user.Uid).EntityName} clicked on a map they aren't located on");
+                    $"User entity named {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(user).EntityName} clicked on a map they aren't located on");
                 return false;
             }
 
@@ -393,19 +393,19 @@ namespace Content.Server.Interaction
         /// </summary>
         public void InteractHand(IEntity user, IEntity target)
         {
-            if (!_actionBlockerSystem.CanInteract(user.Uid))
+            if (!_actionBlockerSystem.CanInteract(user))
                 return;
 
             // all interactions should only happen when in range / unobstructed, so no range check is needed
             var message = new InteractHandEvent(user, target);
-            RaiseLocalEvent(target.Uid, message);
+            RaiseLocalEvent(target, message);
             _adminLogSystem.Add(LogType.InteractHand, LogImpact.Low, $"{user} interacted with {target}");
             if (message.Handled)
                 return;
 
             var interactHandEventArgs = new InteractHandEventArgs(user, target);
 
-            var interactHandComps = IoCManager.Resolve<IEntityManager>().GetComponents<IInteractHand>(target.Uid).ToList();
+            var interactHandComps = IoCManager.Resolve<IEntityManager>().GetComponents<IInteractHand>(target).ToList();
             foreach (var interactHandComp in interactHandComps)
             {
                 // If an InteractHand returns a status completion we finish our interaction
@@ -430,12 +430,12 @@ namespace Content.Server.Interaction
 
             if (target != null)
             {
-                var rangedMsg = new RangedInteractEvent(user.Uid, used.Uid, target.Uid, clickLocation);
-                RaiseLocalEvent(target.Uid, rangedMsg);
+                var rangedMsg = new RangedInteractEvent(user, used, target, clickLocation);
+                RaiseLocalEvent(target, rangedMsg);
                 if (rangedMsg.Handled)
                     return true;
 
-                var rangedInteractions = IoCManager.Resolve<IEntityManager>().GetComponents<IRangedInteract>(target.Uid).ToList();
+                var rangedInteractions = IoCManager.Resolve<IEntityManager>().GetComponents<IRangedInteract>(target).ToList();
                 var rangedInteractionEventArgs = new RangedInteractEventArgs(user, used, clickLocation);
 
                 // See if we have a ranged interaction
@@ -457,7 +457,7 @@ namespace Content.Server.Interaction
             if (!ValidateInteractAndFace(user, coordinates))
                 return;
 
-            if (!_actionBlockerSystem.CanAttack(user.Uid))
+            if (!_actionBlockerSystem.CanAttack(user))
                 return;
 
             IEntity? targetEnt = null;
@@ -468,10 +468,10 @@ namespace Content.Server.Interaction
                 EntityManager.TryGetEntity(targetUid, out targetEnt);
 
                 // Check if interacted entity is in the same container, the direct child, or direct parent of the user.
-                if (targetEnt != null && !user.IsInSameOrParentContainer(targetEnt) && !CanAccessViaStorage(user.Uid, targetEnt.Uid))
+                if (targetEnt != null && !user.IsInSameOrParentContainer(targetEnt) && !CanAccessViaStorage(user, targetEnt))
                 {
                     Logger.WarningS("system.interaction",
-                        $"User entity named {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(user.Uid).EntityName} clicked on object {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(targetEnt.Uid).EntityName} that isn't the parent, child, or in the same container");
+                        $"User entity named {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(user).EntityName} clicked on object {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(targetEnt).EntityName} that isn't the parent, child, or in the same container");
                     return;
                 }
 
@@ -481,7 +481,7 @@ namespace Content.Server.Interaction
             }
 
             // Verify user has a hand, and find what object they are currently holding in their active hand
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<HandsComponent?>(user.Uid, out var hands))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<HandsComponent?>(user, out var hands))
             {
                 var item = hands.GetActiveHand?.Owner;
 
@@ -490,7 +490,7 @@ namespace Content.Server.Interaction
                     if (wideAttack)
                     {
                         var ev = new WideAttackEvent(item, user, coordinates);
-                        RaiseLocalEvent(item.Uid, ev, false);
+                        RaiseLocalEvent(item, ev, false);
 
                         if (ev.Handled)
                         {
@@ -501,7 +501,7 @@ namespace Content.Server.Interaction
                     else
                     {
                         var ev = new ClickAttackEvent(item, user, coordinates, targetUid);
-                        RaiseLocalEvent(item.Uid, ev, false);
+                        RaiseLocalEvent(item, ev, false);
 
                         if (ev.Handled)
                         {
@@ -522,7 +522,7 @@ namespace Content.Server.Interaction
                 }
                 else if (!wideAttack &&
                     (targetEnt != null || EntityManager.TryGetEntity(targetUid, out targetEnt)) &&
-                    IoCManager.Resolve<IEntityManager>().HasComponent<ItemComponent>(targetEnt.Uid))
+                    IoCManager.Resolve<IEntityManager>().HasComponent<ItemComponent>(targetEnt))
                 {
                     // We pick up items if our hand is empty, even if we're in combat mode.
                     InteractHand(user, targetEnt);
@@ -535,14 +535,14 @@ namespace Content.Server.Interaction
             if (wideAttack)
             {
                 var ev = new WideAttackEvent(user, user, coordinates);
-                RaiseLocalEvent(user.Uid, ev, false);
+                RaiseLocalEvent(user, ev, false);
                 if (ev.Handled)
                     _adminLogSystem.Add(LogType.AttackUnarmedWide, $"{user} wide attacked at {coordinates}");
             }
             else
             {
                 var ev = new ClickAttackEvent(user, user, coordinates, targetUid);
-                RaiseLocalEvent(user.Uid, ev, false);
+                RaiseLocalEvent(user, ev, false);
                 if (ev.Handled)
                 {
                     if (targetEnt != null)

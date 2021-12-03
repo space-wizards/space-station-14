@@ -15,7 +15,7 @@ namespace Content.Client.Interactable
             if (!entity.TryGetContainer(out var container))
                 return false;
 
-            if (!EntityManager.TryGetComponent(container.Owner.Uid, out ClientStorageComponent storage))
+            if (!EntityManager.TryGetComponent(container.Owner, out ClientStorageComponent storage))
                 return false;
 
             // we don't check if the user can access the storage entity itself. This should be handed by the UI system.

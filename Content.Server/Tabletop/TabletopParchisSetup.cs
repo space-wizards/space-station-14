@@ -35,28 +35,44 @@ namespace Content.Server.Tabletop
             var center = session.Position;
 
             // Red pieces.
-            session.Entities.Add(entityManager.SpawnEntity(RedPiecePrototype, center.Offset(-x1, -y1)).Uid);
-            session.Entities.Add(entityManager.SpawnEntity(RedPiecePrototype, center.Offset(-x1, -y2)).Uid);
-            session.Entities.Add(entityManager.SpawnEntity(RedPiecePrototype, center.Offset(-x2, -y1)).Uid);
-            session.Entities.Add(entityManager.SpawnEntity(RedPiecePrototype, center.Offset(-x2, -y2)).Uid);
+            IEntity tempQualifier = entityManager.SpawnEntity(RedPiecePrototype, center.Offset(-x1, -y1));
+            session.Entities.Add(tempQualifier);
+            IEntity tempQualifier1 = entityManager.SpawnEntity(RedPiecePrototype, center.Offset(-x1, -y2));
+            session.Entities.Add(tempQualifier1);
+            IEntity tempQualifier2 = entityManager.SpawnEntity(RedPiecePrototype, center.Offset(-x2, -y1));
+            session.Entities.Add(tempQualifier2);
+            IEntity tempQualifier3 = entityManager.SpawnEntity(RedPiecePrototype, center.Offset(-x2, -y2));
+            session.Entities.Add(tempQualifier3);
 
             // Green pieces.
-            session.Entities.Add(entityManager.SpawnEntity(GreenPiecePrototype, center.Offset(x1, -y1)).Uid);
-            session.Entities.Add(entityManager.SpawnEntity(GreenPiecePrototype, center.Offset(x1, -y2)).Uid);
-            session.Entities.Add(entityManager.SpawnEntity(GreenPiecePrototype, center.Offset(x2, -y1)).Uid);
-            session.Entities.Add(entityManager.SpawnEntity(GreenPiecePrototype, center.Offset(x2, -y2)).Uid);
+            IEntity tempQualifier4 = entityManager.SpawnEntity(GreenPiecePrototype, center.Offset(x1, -y1));
+            session.Entities.Add(tempQualifier4);
+            IEntity tempQualifier5 = entityManager.SpawnEntity(GreenPiecePrototype, center.Offset(x1, -y2));
+            session.Entities.Add(tempQualifier5);
+            IEntity tempQualifier6 = entityManager.SpawnEntity(GreenPiecePrototype, center.Offset(x2, -y1));
+            session.Entities.Add(tempQualifier6);
+            IEntity tempQualifier7 = entityManager.SpawnEntity(GreenPiecePrototype, center.Offset(x2, -y2));
+            session.Entities.Add(tempQualifier7);
 
             // Yellow pieces.
-            session.Entities.Add(entityManager.SpawnEntity(YellowPiecePrototype, center.Offset(x1, y1)).Uid);
-            session.Entities.Add(entityManager.SpawnEntity(YellowPiecePrototype, center.Offset(x1, y2)).Uid);
-            session.Entities.Add(entityManager.SpawnEntity(YellowPiecePrototype, center.Offset(x2, y1)).Uid);
-            session.Entities.Add(entityManager.SpawnEntity(YellowPiecePrototype, center.Offset(x2, y2)).Uid);
+            IEntity tempQualifier8 = entityManager.SpawnEntity(YellowPiecePrototype, center.Offset(x1, y1));
+            session.Entities.Add(tempQualifier8);
+            IEntity tempQualifier9 = entityManager.SpawnEntity(YellowPiecePrototype, center.Offset(x1, y2));
+            session.Entities.Add(tempQualifier9);
+            IEntity tempQualifier10 = entityManager.SpawnEntity(YellowPiecePrototype, center.Offset(x2, y1));
+            session.Entities.Add(tempQualifier10);
+            IEntity tempQualifier11 = entityManager.SpawnEntity(YellowPiecePrototype, center.Offset(x2, y2));
+            session.Entities.Add(tempQualifier11);
 
             // Blue pieces.
-            session.Entities.Add(entityManager.SpawnEntity(BluePiecePrototype, center.Offset(-x1, y1)).Uid);
-            session.Entities.Add(entityManager.SpawnEntity(BluePiecePrototype, center.Offset(-x1, y2)).Uid);
-            session.Entities.Add(entityManager.SpawnEntity(BluePiecePrototype, center.Offset(-x2, y1)).Uid);
-            session.Entities.Add(entityManager.SpawnEntity(BluePiecePrototype, center.Offset(-x2, y2)).Uid);
+            IEntity tempQualifier12 = entityManager.SpawnEntity(BluePiecePrototype, center.Offset(-x1, y1));
+            session.Entities.Add(tempQualifier12);
+            IEntity tempQualifier13 = entityManager.SpawnEntity(BluePiecePrototype, center.Offset(-x1, y2));
+            session.Entities.Add(tempQualifier13);
+            IEntity tempQualifier14 = entityManager.SpawnEntity(BluePiecePrototype, center.Offset(-x2, y1));
+            session.Entities.Add(tempQualifier14);
+            IEntity tempQualifier15 = entityManager.SpawnEntity(BluePiecePrototype, center.Offset(-x2, y2));
+            session.Entities.Add(tempQualifier15);
         }
     }
 }

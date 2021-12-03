@@ -27,7 +27,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnGasVentPumpUpdated(EntityUid uid, GasVentPumpComponent vent, AtmosDeviceUpdateEvent args)
         {
-            var appearance = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<AppearanceComponent>(vent.Owner.Uid);
+            var appearance = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<AppearanceComponent>(vent.Owner);
 
             if (vent.Welded)
             {
@@ -43,7 +43,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return;
             }
 
-            var environment = _atmosphereSystem.GetTileMixture(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(vent.Owner.Uid).Coordinates, true);
+            var environment = _atmosphereSystem.GetTileMixture(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(vent.Owner).Coordinates, true);
 
             // We're in an air-blocked tile... Do nothing.
             if (environment == null)

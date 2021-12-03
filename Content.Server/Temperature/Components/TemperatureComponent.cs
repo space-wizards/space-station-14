@@ -46,7 +46,7 @@ namespace Content.Server.Temperature.Components
         {
             get
             {
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<IPhysBody?>(Owner.Uid, out var physics) && physics.Mass != 0)
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<IPhysBody?>(Owner, out var physics) && physics.Mass != 0)
                 {
                     return SpecificHeat * physics.Mass;
                 }

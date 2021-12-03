@@ -291,9 +291,9 @@ namespace Content.Client.Damage
 
         private void InitializeVisualizer(IEntity entity, DamageVisualizerDataComponent damageData)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out SpriteComponent? spriteComponent)
-                || !IoCManager.Resolve<IEntityManager>().TryGetComponent<DamageableComponent?>(entity.Uid, out var damageComponent)
-                || !IoCManager.Resolve<IEntityManager>().HasComponent<AppearanceComponent>(entity.Uid))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out SpriteComponent? spriteComponent)
+                || !IoCManager.Resolve<IEntityManager>().TryGetComponent<DamageableComponent?>(entity, out var damageComponent)
+                || !IoCManager.Resolve<IEntityManager>().HasComponent<AppearanceComponent>(entity))
                 return;
 
             _thresholds.Add(FixedPoint2.Zero);

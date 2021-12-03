@@ -36,7 +36,7 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         public bool TryFaceCoordinates(IEntity user, Vector2 coordinates)
         {
-            var diff = coordinates - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user.Uid).MapPosition.Position;
+            var diff = coordinates - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user).MapPosition.Position;
             if (diff.LengthSquared <= 0.01f)
                 return true;
             var diffAngle = Angle.FromWorldVec(diff);
@@ -45,14 +45,14 @@ namespace Content.Shared.Interaction
 
         public bool TryFaceAngle(IEntity user, Angle diffAngle)
         {
-            if (_actionBlockerSystem.CanChangeDirection(user.Uid))
+            if (_actionBlockerSystem.CanChangeDirection(user))
             {
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user.Uid).WorldRotation = diffAngle;
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user).WorldRotation = diffAngle;
                 return true;
             }
             else
             {
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out SharedBuckleComponent? buckle) && buckle.Buckled)
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out SharedBuckleComponent? buckle) && buckle.Buckled)
                 {
                     var suid = buckle.LastEntityBuckledTo;
                     if (suid != null)
@@ -64,7 +64,7 @@ namespace Content.Shared.Interaction
                             // (Since the user being buckled to it holds it down with their weight.)
                             // This is logically equivalent to RotateWhileAnchored.
                             // Barstools and office chairs have independent wheels, while regular chairs don't.
-                            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(rotatable.Owner.Uid).WorldRotation = diffAngle;
+                            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(rotatable.Owner).WorldRotation = diffAngle;
                             return true;
                         }
                     }

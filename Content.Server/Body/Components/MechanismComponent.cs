@@ -44,11 +44,11 @@ namespace Content.Server.Body.Components
             PerformerCache = null;
             BodyCache = null;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Target.Uid, out SharedBodyComponent? body))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Target, out SharedBodyComponent? body))
             {
                 SendBodyPartListToUser(eventArgs, body);
             }
-            else if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedBodyPartComponent?>(eventArgs.Target.Uid, out var part))
+            else if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedBodyPartComponent?>(eventArgs.Target, out var part))
             {
                 DebugTools.AssertNotNull(part);
 
@@ -77,7 +77,7 @@ namespace Content.Server.Body.Components
             }
 
             if (OptionsCache.Count > 0 &&
-                IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User.Uid, out ActorComponent? actor))
+                IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User, out ActorComponent? actor))
             {
                 OpenSurgeryUI(actor.PlayerSession);
                 UpdateSurgeryUIBodyPartRequest(actor.PlayerSession, toSend);
@@ -87,7 +87,7 @@ namespace Content.Server.Body.Components
             else // If surgery cannot be performed, show message saying so.
             {
                 eventArgs.Target?.PopupMessage(eventArgs.User,
-                    Loc.GetString("mechanism-component-no-way-to-install-message", ("partName", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityName)));
+                    Loc.GetString("mechanism-component-no-way-to-install-message", ("partName", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityName)));
             }
         }
 
@@ -97,7 +97,7 @@ namespace Content.Server.Body.Components
         private void HandleReceiveBodyPart(int key)
         {
             if (PerformerCache == null ||
-                !IoCManager.Resolve<IEntityManager>().TryGetComponent(PerformerCache.Uid, out ActorComponent? actor))
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(PerformerCache, out ActorComponent? actor))
             {
                 return;
             }
@@ -113,7 +113,7 @@ namespace Content.Server.Body.Components
             if (!OptionsCache.TryGetValue(key, out var targetObject))
             {
                 BodyCache.Owner.PopupMessage(PerformerCache,
-                    Loc.GetString("mechanism-component-no-useful-way-to-use-message",("partName", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityName)));
+                    Loc.GetString("mechanism-component-no-useful-way-to-use-message",("partName", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityName)));
                 return;
             }
 

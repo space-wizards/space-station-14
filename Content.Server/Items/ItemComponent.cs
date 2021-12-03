@@ -12,7 +12,7 @@ namespace Content.Server.Items
     {
         public override void RemovedFromSlot()
         {
-            foreach (var component in IoCManager.Resolve<IEntityManager>().GetComponents<ISpriteRenderableComponent>(Owner.Uid))
+            foreach (var component in IoCManager.Resolve<IEntityManager>().GetComponents<ISpriteRenderableComponent>(Owner))
             {
                 component.Visible = true;
             }
@@ -20,7 +20,7 @@ namespace Content.Server.Items
 
         public override void EquippedToSlot()
         {
-            foreach (var component in IoCManager.Resolve<IEntityManager>().GetComponents<ISpriteRenderableComponent>(Owner.Uid))
+            foreach (var component in IoCManager.Resolve<IEntityManager>().GetComponents<ISpriteRenderableComponent>(Owner))
             {
                 component.Visible = false;
             }

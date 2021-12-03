@@ -42,7 +42,7 @@ namespace Content.Server.Power.EntitySystems
                 receiver.Provider?.LinkedReceivers.Remove(receiver);
                 receiver.Provider = provider;
                 provider.LinkedReceivers.Add(receiver);
-                RaiseLocalEvent(receiver.Owner.Uid, new ProviderConnectedEvent(provider), broadcast: false);
+                RaiseLocalEvent(receiver.Owner, new ProviderConnectedEvent(provider), broadcast: false);
                 RaiseLocalEvent(uid, new ReceiverConnectedEvent(receiver), broadcast: false);
             }
         }
@@ -60,8 +60,8 @@ namespace Content.Server.Power.EntitySystems
             foreach (var receiver in receivers)
             {
                 receiver.Provider = null;
-                RaiseLocalEvent(receiver.Owner.Uid, new ProviderDisconnectedEvent(provider), broadcast: false);
-                RaiseLocalEvent(provider.Owner.Uid, new ReceiverDisconnectedEvent(receiver), broadcast: false);
+                RaiseLocalEvent(receiver.Owner, new ProviderDisconnectedEvent(provider), broadcast: false);
+                RaiseLocalEvent(provider.Owner, new ReceiverDisconnectedEvent(receiver), broadcast: false);
             }
 
             foreach (var receiver in receivers)
@@ -84,10 +84,10 @@ namespace Content.Server.Power.EntitySystems
 
             foreach (var entity in nearbyEntities)
             {
-                if (EntityManager.TryGetComponent<ExtensionCableReceiverComponent>(entity.Uid, out var receiver) &&
+                if (EntityManager.TryGetComponent<ExtensionCableReceiverComponent>(entity, out var receiver) &&
                     receiver.Connectable &&
                     receiver.Provider == null &&
-                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates.TryDistance(IoCManager.Resolve<IEntityManager>(), IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(owner.Uid).Coordinates, out var distance) &&
+                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates.TryDistance(IoCManager.Resolve<IEntityManager>(), IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(owner).Coordinates, out var distance) &&
                     distance < Math.Min(range, receiver.ReceptionRange))
                 {
                     yield return receiver;
@@ -110,7 +110,7 @@ namespace Content.Server.Power.EntitySystems
 
             if (provider != null)
             {
-                RaiseLocalEvent(provider.Owner.Uid, new ReceiverDisconnectedEvent(receiver), broadcast: false);
+                RaiseLocalEvent(provider.Owner, new ReceiverDisconnectedEvent(receiver), broadcast: false);
                 provider.LinkedReceivers.Remove(receiver);
             }
 
@@ -120,7 +120,7 @@ namespace Content.Server.Power.EntitySystems
 
         private void OnReceiverStarted(EntityUid uid, ExtensionCableReceiverComponent receiver, ComponentStartup args)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(receiver.Owner.Uid, out PhysicsComponent? physicsComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(receiver.Owner, out PhysicsComponent? physicsComponent))
             {
                 receiver.Connectable = physicsComponent.BodyType == BodyType.Static;
             }
@@ -137,7 +137,7 @@ namespace Content.Server.Power.EntitySystems
 
             receiver.Provider.LinkedReceivers.Remove(receiver);
             RaiseLocalEvent(uid, new ProviderDisconnectedEvent(receiver.Provider), broadcast: false);
-            RaiseLocalEvent(receiver.Provider.Owner.Uid, new ReceiverDisconnectedEvent(receiver), broadcast: false);
+            RaiseLocalEvent(receiver.Provider.Owner, new ReceiverDisconnectedEvent(receiver), broadcast: false);
         }
 
         private void AnchorStateChanged(EntityUid uid, ExtensionCableReceiverComponent receiver, ref AnchorStateChangedEvent args)
@@ -156,7 +156,7 @@ namespace Content.Server.Power.EntitySystems
                 RaiseLocalEvent(uid, new ProviderDisconnectedEvent(receiver.Provider), broadcast: false);
                 if (receiver.Provider != null)
                 {
-                    RaiseLocalEvent(receiver.Provider.Owner.Uid, new ReceiverDisconnectedEvent(receiver), broadcast: false);
+                    RaiseLocalEvent(receiver.Provider.Owner, new ReceiverDisconnectedEvent(receiver), broadcast: false);
                     receiver.Provider.LinkedReceivers.Remove(receiver);
                 }
 
@@ -170,8 +170,8 @@ namespace Content.Server.Power.EntitySystems
 
             receiver.Provider = provider;
             provider.LinkedReceivers.Add(receiver);
-            RaiseLocalEvent(receiver.Owner.Uid, new ProviderConnectedEvent(provider), broadcast: false);
-            RaiseLocalEvent(provider.Owner.Uid, new ReceiverConnectedEvent(receiver), broadcast: false);
+            RaiseLocalEvent(receiver.Owner, new ProviderConnectedEvent(provider), broadcast: false);
+            RaiseLocalEvent(provider.Owner, new ReceiverConnectedEvent(receiver), broadcast: false);
         }
 
         private static bool TryFindAvailableProvider(IEntity owner, float range, [NotNullWhen(true)] out ExtensionCableProviderComponent? foundProvider)
@@ -181,11 +181,11 @@ namespace Content.Server.Power.EntitySystems
 
             foreach (var entity in nearbyEntities)
             {
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ExtensionCableProviderComponent?>(entity.Uid, out var provider)) continue;
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ExtensionCableProviderComponent?>(entity, out var provider)) continue;
 
                 if (!provider.Connectable) continue;
 
-                if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates.TryDistance(IoCManager.Resolve<IEntityManager>(), IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(owner.Uid).Coordinates, out var distance)) continue;
+                if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates.TryDistance(IoCManager.Resolve<IEntityManager>(), IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(owner).Coordinates, out var distance)) continue;
 
                 if (!(distance < Math.Min(range, provider.TransferRange))) continue;
 

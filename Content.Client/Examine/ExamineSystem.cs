@@ -136,14 +136,14 @@ namespace Content.Client.Examine
             };
             vBox.AddChild(hBox);
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out ISpriteComponent? sprite))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ISpriteComponent? sprite))
             {
                 hBox.AddChild(new SpriteView { Sprite = sprite, OverrideDirection = Direction.South });
             }
 
             hBox.AddChild(new Label
             {
-                Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityName,
+                Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityName,
                 HorizontalExpand = true,
             });
 
@@ -153,14 +153,14 @@ namespace Content.Client.Examine
             _examineTooltipOpen.Open(UIBox2.FromDimensions(popupPos.Position, size));
 
             FormattedMessage message;
-            if (entity.Uid.IsClientSide())
+            if (entity.IsClientSide())
             {
                 message = GetExamineText(entity, _playerManager.LocalPlayer?.ControlledEntity);
             }
             else
             {
                 // Ask server for extra examine info.
-                RaiseNetworkEvent(new ExamineSystemMessages.RequestExamineInfoMessage(entity.Uid));
+                RaiseNetworkEvent(new ExamineSystemMessages.RequestExamineInfoMessage(entity));
 
                 ExamineSystemMessages.ExamineInfoResponseMessage response;
                 try

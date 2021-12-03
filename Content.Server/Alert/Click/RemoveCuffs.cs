@@ -16,7 +16,7 @@ namespace Content.Server.Alert.Click
     {
         public void AlertClicked(ClickAlertEventArgs args)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(args.Player.Uid, out CuffableComponent? cuffableComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(args.Player, out CuffableComponent? cuffableComponent))
             {
                 cuffableComponent.TryUncuff(args.Player);
             }

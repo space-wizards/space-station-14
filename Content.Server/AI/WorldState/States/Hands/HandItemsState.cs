@@ -13,7 +13,7 @@ namespace Content.Server.AI.WorldState.States.Hands
         public override List<IEntity> GetValue()
         {
             var result = new List<IEntity>();
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out HandsComponent? handsComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out HandsComponent? handsComponent))
             {
                 return result;
             }

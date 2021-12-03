@@ -41,7 +41,7 @@ namespace Content.Server.VendingMachines
         private string _packPrototypeId = string.Empty;
         private string _spriteName = "";
 
-        private bool Powered => !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
+        private bool Powered => !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
         private bool _broken;
 
         [DataField("soundVend")]
@@ -57,14 +57,14 @@ namespace Content.Server.VendingMachines
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if(!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User.Uid, out ActorComponent? actor))
+            if(!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User, out ActorComponent? actor))
             {
                 return;
             }
             if (!Powered)
                 return;
 
-            var wires = IoCManager.Resolve<IEntityManager>().GetComponent<WiresComponent>(Owner.Uid);
+            var wires = IoCManager.Resolve<IEntityManager>().GetComponent<WiresComponent>(Owner);
             if (wires.IsPanelOpen)
             {
                 wires.OpenInterface(actor.PlayerSession);
@@ -82,12 +82,12 @@ namespace Content.Server.VendingMachines
                 return;
             }
 
-            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityName = packPrototype.Name;
+            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityName = packPrototype.Name;
             _animationDuration = TimeSpan.FromSeconds(packPrototype.AnimationDuration);
             _spriteName = packPrototype.SpriteName;
             if (!string.IsNullOrEmpty(_spriteName))
             {
-                var spriteComponent = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(Owner.Uid);
+                var spriteComponent = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(Owner);
                 const string vendingMachineRSIPath = "Structures/Machines/VendingMachines/{0}.rsi";
                 spriteComponent.BaseRSIPath = string.Format(vendingMachineRSIPath, _spriteName);
             }
@@ -109,7 +109,7 @@ namespace Content.Server.VendingMachines
                 UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ApcPowerReceiverComponent? receiver))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver))
             {
                 TrySetVisualState(receiver.Powered ? VendingMachineVisualState.Normal : VendingMachineVisualState.Off);
             }
@@ -185,7 +185,7 @@ namespace Content.Server.VendingMachines
             {
                 _ejecting = false;
                 TrySetVisualState(VendingMachineVisualState.Normal);
-                IoCManager.Resolve<IEntityManager>().SpawnEntity(id, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
+                IoCManager.Resolve<IEntityManager>().SpawnEntity(id, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
             });
 
             SoundSystem.Play(Filter.Pvs(Owner), _soundVend.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
@@ -193,10 +193,10 @@ namespace Content.Server.VendingMachines
 
         private void TryEject(string id, IEntity? sender)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<AccessReader?>(Owner.Uid, out var accessReader))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<AccessReader?>(Owner, out var accessReader))
             {
                 var accessSystem = EntitySystem.Get<AccessReaderSystem>();
-                if (sender == null || !accessSystem.IsAllowed(accessReader, sender.Uid))
+                if (sender == null || !accessSystem.IsAllowed(accessReader, sender))
                 {
                     Owner.PopupMessageEveryone(Loc.GetString("vending-machine-component-try-eject-access-denied"));
                     Deny();
@@ -235,7 +235,7 @@ namespace Content.Server.VendingMachines
                 finalState = VendingMachineVisualState.Off;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
                 appearance.SetData(VendingMachineVisuals.VisualState, finalState);
             }

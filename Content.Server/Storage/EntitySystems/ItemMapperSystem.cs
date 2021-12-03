@@ -17,7 +17,7 @@ namespace Content.Server.Storage.EntitySystems
             ItemMapperComponent itemMapper,
             out IReadOnlyList<string> showLayers)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(msg.Container.Owner.Uid, out ServerStorageComponent? component))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(msg.Container.Owner, out ServerStorageComponent? component))
             {
                 var containedLayers = component.StoredEntities ?? new List<IEntity>();
                 var list = new List<string>();
@@ -25,7 +25,7 @@ namespace Content.Server.Storage.EntitySystems
                 {
                     foreach (var entity in containedLayers)
                     {
-                        if (mapLayerData.Whitelist.IsValid(entity.Uid))
+                        if (mapLayerData.Whitelist.IsValid(entity))
                         {
                             list.Add(mapLayerData.Layer);
                             break;

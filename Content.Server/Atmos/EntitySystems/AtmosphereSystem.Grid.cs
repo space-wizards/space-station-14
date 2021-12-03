@@ -1315,7 +1315,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         public bool AddAtmosDevice(AtmosDeviceComponent atmosDevice)
         {
-            var grid = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(atmosDevice.Owner.Uid).GridID;
+            var grid = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(atmosDevice.Owner).GridID;
 
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return false;
@@ -1526,7 +1526,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         public bool TryGetMapGrid(GridAtmosphereComponent gridAtmosphere, [NotNullWhen(true)] out IMapGrid? mapGrid)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(gridAtmosphere.Owner.Uid, out IMapGridComponent? mapGridComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(gridAtmosphere.Owner, out IMapGridComponent? mapGridComponent))
             {
                 mapGrid = mapGridComponent.Grid;
                 return true;

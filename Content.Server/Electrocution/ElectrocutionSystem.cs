@@ -99,7 +99,7 @@ namespace Content.Server.Electrocution
 
             foreach (var finished in finishedElectrocutionsQueue)
             {
-                var uid = finished.Owner.Uid;
+                var uid = (EntityUid) finished.Owner;
                 if (EntityManager.EntityExists(finished.Electrocuting))
                 {
                     // TODO: damage should be scaled by shock damage multiplier
@@ -123,7 +123,7 @@ namespace Content.Server.Electrocution
             if (!electrified.OnBump)
                 return;
 
-            TryDoElectrifiedAct(uid, args.OtherFixture.Body.Owner.Uid, electrified);
+            TryDoElectrifiedAct(uid, args.OtherFixture.Body.Owner, electrified);
         }
 
         private void OnElectrifiedAttacked(EntityUid uid, ElectrifiedComponent electrified, AttackedEvent args)
@@ -131,7 +131,7 @@ namespace Content.Server.Electrocution
             if (!electrified.OnAttacked)
                 return;
 
-            TryDoElectrifiedAct(uid, args.User.Uid, electrified);
+            TryDoElectrifiedAct(uid, args.User, electrified);
         }
 
         private void OnElectrifiedHandInteract(EntityUid uid, ElectrifiedComponent electrified, InteractHandEvent args)
@@ -139,7 +139,7 @@ namespace Content.Server.Electrocution
             if (!electrified.OnHandInteract)
                 return;
 
-            TryDoElectrifiedAct(uid, args.User.Uid, electrified);
+            TryDoElectrifiedAct(uid, args.User, electrified);
         }
 
         public bool TryDoElectrifiedAct(EntityUid uid, EntityUid targetUid,
@@ -158,7 +158,7 @@ namespace Content.Server.Electrocution
                 foreach (var entity in transform.Coordinates.GetEntitiesInTile(
                     LookupFlags.Approximate | LookupFlags.IncludeAnchored, _entityLookup))
                 {
-                    if (IoCManager.Resolve<IEntityManager>().HasComponent<WindowComponent>(entity.Uid))
+                    if (IoCManager.Resolve<IEntityManager>().HasComponent<WindowComponent>(entity))
                         return false;
                 }
             }
@@ -277,10 +277,10 @@ namespace Content.Server.Electrocution
             var electrocutionEntity = EntityManager.SpawnEntity(
                 $"VirtualElectrocutionLoad{node.NodeGroupID}", sourceTransform.Coordinates);
 
-            var electrocutionNode = IoCManager.Resolve<IEntityManager>().GetComponent<NodeContainerComponent>(electrocutionEntity.Uid)
+            var electrocutionNode = IoCManager.Resolve<IEntityManager>().GetComponent<NodeContainerComponent>(electrocutionEntity)
                 .GetNode<ElectrocutionNode>("electrocution");
 
-            var electrocutionComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ElectrocutionComponent>(electrocutionEntity.Uid);
+            var electrocutionComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ElectrocutionComponent>(electrocutionEntity);
 
             electrocutionNode.CableEntity = sourceUid;
             electrocutionNode.NodeName = node.Name;
@@ -396,16 +396,16 @@ namespace Content.Server.Electrocution
 
             if (EntityManager.TryGetComponent(entity, out SharedPullableComponent? pullable)
                 && pullable.Puller != null
-                && !visited.Contains(pullable.Puller.Uid))
+                && !visited.Contains(pullable.Puller))
             {
-                GetChainedElectrocutionTargetsRecurse(pullable.Puller.Uid, depth + 1, visited, all);
+                GetChainedElectrocutionTargetsRecurse(pullable.Puller, depth + 1, visited, all);
             }
 
             if (EntityManager.TryGetComponent(entity, out SharedPullerComponent? puller)
                 && puller.Pulling != null
-                && !visited.Contains(puller.Pulling.Uid))
+                && !visited.Contains(puller.Pulling))
             {
-                GetChainedElectrocutionTargetsRecurse(puller.Pulling.Uid, depth + 1, visited, all);
+                GetChainedElectrocutionTargetsRecurse(puller.Pulling, depth + 1, visited, all);
             }
         }
 

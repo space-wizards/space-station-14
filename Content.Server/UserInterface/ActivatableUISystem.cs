@@ -67,11 +67,11 @@ namespace Content.Server.UserInterface
 
         private bool InteractUI(IEntity user, ActivatableUIComponent aui)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out ActorComponent? actor)) return false;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out ActorComponent? actor)) return false;
 
             if (aui.AdminOnly && !_adminManager.IsAdmin(actor.PlayerSession)) return false;
 
-            if (!_actionBlockerSystem.CanInteract(user.Uid))
+            if (!_actionBlockerSystem.CanInteract(user))
             {
                 user.PopupMessageCursor(Loc.GetString("base-computer-ui-component-cannot-interact"));
                 return true;

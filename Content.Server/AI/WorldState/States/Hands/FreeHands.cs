@@ -15,7 +15,7 @@ namespace Content.Server.AI.WorldState.States.Hands
         {
             var result = new List<string>();
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out HandsComponent? handsComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out HandsComponent? handsComponent))
             {
                 return result;
             }

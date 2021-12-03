@@ -16,7 +16,7 @@ namespace Content.Server.Inventory
             var user = inventory.Owner;
 
             // Let's do nothing if the owner of the inventory has been deleted.
-            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(user.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(user.Uid).EntityLifeStage) >= EntityLifeStage.Deleted)
+            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(user) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(user).EntityLifeStage) >= EntityLifeStage.Deleted)
                 return false;
 
             // If we don't have that slot or there's already an item there, we do nothing.
@@ -28,17 +28,17 @@ namespace Content.Server.Inventory
                 return false;
 
             // Let's spawn this first...
-            var item = entityManager.SpawnEntity(prototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user.Uid).MapPosition);
+            var item = entityManager.SpawnEntity(prototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user).MapPosition);
 
             // Helper method that deletes the item and returns false.
             bool DeleteItem()
             {
-                IoCManager.Resolve<IEntityManager>().DeleteEntity(item.Uid);
+                IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) item);
                 return false;
             }
 
             // If this doesn't have an item component, then we can't do anything with it.
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(item.Uid, out ItemComponent? itemComp))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(item, out ItemComponent? itemComp))
                 return DeleteItem();
 
             // We finally try to equip the item, otherwise we delete it.

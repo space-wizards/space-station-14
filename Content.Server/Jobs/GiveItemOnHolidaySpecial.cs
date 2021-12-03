@@ -30,9 +30,9 @@ namespace Content.Server.Jobs
             if (!EntitySystem.Get<HolidaySystem>().IsCurrentlyHoliday(Holiday))
                 return;
 
-            var entity = IoCManager.Resolve<IEntityManager>().SpawnEntity(Prototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(mob.Uid).Coordinates);
+            var entity = IoCManager.Resolve<IEntityManager>().SpawnEntity(Prototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(mob).Coordinates);
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out ItemComponent? item) || !IoCManager.Resolve<IEntityManager>().TryGetComponent(mob.Uid, out HandsComponent? hands))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ItemComponent? item) || !IoCManager.Resolve<IEntityManager>().TryGetComponent(mob, out HandsComponent? hands))
                 return;
 
             hands.PutInHand(item, false);

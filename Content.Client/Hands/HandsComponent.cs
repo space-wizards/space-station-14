@@ -38,7 +38,7 @@ namespace Content.Client.Hands
 
         public void UpdateHandContainers()
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ContainerManagerComponent?>(Owner.Uid, out var containerMan))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ContainerManagerComponent?>(Owner, out var containerMan))
                 return;
 
             foreach (var hand in Hands)

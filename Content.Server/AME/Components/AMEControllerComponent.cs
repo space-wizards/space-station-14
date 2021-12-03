@@ -38,7 +38,7 @@ namespace Content.Server.AME.Components
         [DataField("clickSound")] private SoundSpecifier _clickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
         [DataField("injectSound")] private SoundSpecifier _injectSound = new SoundPathSpecifier("/Audio/Effects/bang.ogg");
 
-        private bool Powered => !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
+        private bool Powered => !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         [ViewVariables]
         private int _stability = 100;
@@ -55,9 +55,9 @@ namespace Content.Server.AME.Components
                 UserInterface.OnReceiveMessage += OnUiReceiveMessage;
             }
 
-            IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out _appearance);
+            IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out _appearance);
 
-            IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out _powerSupplier);
+            IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out _powerSupplier);
 
             _injecting = false;
             InjectionAmount = 2;
@@ -96,7 +96,7 @@ namespace Content.Server.AME.Components
             if (jar is null)
                 return;
 
-            IoCManager.Resolve<IEntityManager>().TryGetComponent<AMEFuelContainerComponent?>(jar.Uid, out var fuelJar);
+            IoCManager.Resolve<IEntityManager>().TryGetComponent<AMEFuelContainerComponent?>(jar, out var fuelJar);
             if (fuelJar != null && _powerSupplier != null)
             {
                 var availableInject = fuelJar.FuelAmount >= InjectionAmount ? InjectionAmount : fuelJar.FuelAmount;
@@ -120,12 +120,12 @@ namespace Content.Server.AME.Components
         /// <param name="args">Data relevant to the event such as the actor which triggered it.</param>
         void IActivate.Activate(ActivateEventArgs args)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User.Uid, out ActorComponent? actor))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User, out ActorComponent? actor))
             {
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User.Uid, out HandsComponent? hands))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User, out HandsComponent? hands))
             {
                 Owner.PopupMessage(args.User, Loc.GetString("ame-controller-component-interact-no-hands-text"));
                 return;
@@ -157,7 +157,7 @@ namespace Content.Server.AME.Components
                 return new AMEControllerBoundUserInterfaceState(Powered, IsMasterController(), false, HasJar, 0, InjectionAmount, GetCoreCount());
             }
 
-            var jarcomponent = IoCManager.Resolve<IEntityManager>().GetComponent<AMEFuelContainerComponent>(jar.Uid);
+            var jarcomponent = IoCManager.Resolve<IEntityManager>().GetComponent<AMEFuelContainerComponent>(jar);
             return new AMEControllerBoundUserInterfaceState(Powered, IsMasterController(), _injecting, HasJar, jarcomponent.FuelAmount, InjectionAmount, GetCoreCount());
         }
 
@@ -175,7 +175,7 @@ namespace Content.Server.AME.Components
             var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
 
             //Check if player can interact in their current state
-            if (!actionBlocker.CanInteract(playerEntity.Uid) || !actionBlocker.CanUse(playerEntity.Uid))
+            if (!actionBlocker.CanInteract(playerEntity) || !actionBlocker.CanUse(playerEntity))
                 return false;
             //Check if device is powered
             if (needsPower && !Powered)
@@ -246,7 +246,7 @@ namespace Content.Server.AME.Components
             _jarSlot.Remove(jar);
             UpdateUserInterface();
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<HandsComponent?>(user.Uid, out var hands) || !IoCManager.Resolve<IEntityManager>().TryGetComponent<ItemComponent?>(jar.Uid, out var item))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<HandsComponent?>(user, out var hands) || !IoCManager.Resolve<IEntityManager>().TryGetComponent<ItemComponent?>(jar, out var item))
                 return;
             if (hands.CanPutInHand(item))
                 hands.PutInHand(item);
@@ -290,7 +290,7 @@ namespace Content.Server.AME.Components
 
         private AMENodeGroup? GetAMENodeGroup()
         {
-            IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out NodeContainerComponent? nodeContainer);
+            IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out NodeContainerComponent? nodeContainer);
 
             var engineNodeGroup = nodeContainer?.Nodes.Values
             .Select(node => node.NodeGroup)
@@ -336,7 +336,7 @@ namespace Content.Server.AME.Components
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs args)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User.Uid, out HandsComponent? hands))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User, out HandsComponent? hands))
             {
                 Owner.PopupMessage(args.User, Loc.GetString("ame-controller-component-interact-using-no-hands-text"));
                 return true;
@@ -349,7 +349,7 @@ namespace Content.Server.AME.Components
             }
 
             var activeHandEntity = hands.GetActiveHand.Owner;
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<AMEFuelContainerComponent?>(activeHandEntity.Uid, out var fuelContainer))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<AMEFuelContainerComponent?>(activeHandEntity, out var fuelContainer))
             {
                 if (HasJar)
                 {

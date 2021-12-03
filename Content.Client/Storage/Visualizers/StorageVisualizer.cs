@@ -19,7 +19,7 @@ namespace Content.Client.Storage.Visualizers
 
         public override void InitializeEntity(IEntity entity)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out ISpriteComponent? sprite))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ISpriteComponent? sprite))
             {
                 return;
             }

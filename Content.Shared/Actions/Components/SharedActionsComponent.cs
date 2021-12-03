@@ -123,7 +123,7 @@ namespace Content.Shared.Actions.Components
         public bool TryGetItemActionStates(IEntity item,
             [NotNullWhen((true))] out IReadOnlyDictionary<ItemActionType, ActionState>? itemActionStates)
         {
-            return TryGetItemActionStates(item.Uid, out itemActionStates);
+            return TryGetItemActionStates((EntityUid) item, out itemActionStates);
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace Content.Shared.Actions.Components
         /// <seealso cref="TryGetItemActionState(Content.Shared.Actions.ItemActionType,Robust.Shared.GameObjects.EntityUid,out Content.Shared.Actions.Components.ActionState)"/>
         public bool TryGetItemActionState(ItemActionType actionType, IEntity item, out ActionState actionState)
         {
-            return TryGetItemActionState(actionType, item.Uid, out actionState);
+            return TryGetItemActionState(actionType, (EntityUid) item, out actionState);
         }
 
         /// <summary>

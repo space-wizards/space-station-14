@@ -42,22 +42,22 @@ namespace Content.Client.Items.Managers
             else
             {
                 ISpriteComponent? sprite;
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out HandVirtualItemComponent? virtPull)
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out HandVirtualItemComponent? virtPull)
                     && _entityManager.TryGetComponent(virtPull.BlockingEntity, out ISpriteComponent pulledSprite))
                 {
                     sprite = pulledSprite;
                 }
-                else if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out sprite))
+                else if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out sprite))
                 {
                     return false;
                 }
 
                 button.ClearHover();
                 button.SpriteView.Sprite = sprite;
-                button.StorageButton.Visible = IoCManager.Resolve<IEntityManager>().HasComponent<ClientStorageComponent>(entity.Uid);
+                button.StorageButton.Visible = IoCManager.Resolve<IEntityManager>().HasComponent<ClientStorageComponent>(entity);
             }
 
-            button.Entity = entity?.Uid ?? default;
+            button.Entity = entity ?? default;
 
             // im lazy
             button.UpdateSlotHighlighted();
@@ -80,11 +80,11 @@ namespace Content.Client.Items.Managers
             }
             else if (args.Function == ContentKeyFunctions.ActivateItemInWorld)
             {
-                _entityManager.EntityNetManager?.SendSystemNetworkMessage(new InteractInventorySlotEvent(item.Uid, altInteract: false));
+                _entityManager.EntityNetManager?.SendSystemNetworkMessage(new InteractInventorySlotEvent(item, altInteract: false));
             }
             else if (args.Function == ContentKeyFunctions.AltActivateItemInWorld)
             {
-                _entityManager.EntityNetManager?.SendSystemNetworkMessage(new InteractInventorySlotEvent(item.Uid, altInteract: true));
+                _entityManager.EntityNetManager?.SendSystemNetworkMessage(new InteractInventorySlotEvent(item, altInteract: true));
             }
             else
             {
@@ -104,8 +104,8 @@ namespace Content.Client.Items.Managers
             }
 
             if (entity == null ||
-                (!IoCManager.Resolve<IEntityManager>().EntityExists(entity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted ||
-                !IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out ItemCooldownComponent? cooldown) ||
+                (!IoCManager.Resolve<IEntityManager>().EntityExists(entity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityLifeStage) >= EntityLifeStage.Deleted ||
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ItemCooldownComponent? cooldown) ||
                 !cooldown.CooldownStart.HasValue ||
                 !cooldown.CooldownEnd.HasValue)
             {
@@ -132,15 +132,15 @@ namespace Content.Client.Items.Managers
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().HasComponent<SpriteComponent>(entity.Uid))
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<SpriteComponent>(entity))
             {
                 return;
             }
 
             // Set green / red overlay at 50% transparency
             var hoverEntity = _entityManager.SpawnEntity("hoverentity", MapCoordinates.Nullspace);
-            var hoverSprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(hoverEntity.Uid);
-            hoverSprite.CopyFrom(IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(entity.Uid));
+            var hoverSprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(hoverEntity);
+            hoverSprite.CopyFrom(IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(entity));
             hoverSprite.Color = fits ? new Color(0, 255, 0, 127) : new Color(255, 0, 0, 127);
 
             button.HoverSpriteView.Sprite = hoverSprite;

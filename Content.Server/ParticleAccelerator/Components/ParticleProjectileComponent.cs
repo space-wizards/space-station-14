@@ -22,21 +22,21 @@ namespace Content.Server.ParticleAccelerator.Components
         {
             State = state;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<PhysicsComponent?>(Owner.Uid, out var physicsComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<PhysicsComponent?>(Owner, out var physicsComponent))
             {
                 Logger.Error("ParticleProjectile tried firing, but it was spawned without a CollidableComponent");
                 return;
             }
             physicsComponent.BodyStatus = BodyStatus.InAir;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ProjectileComponent?>(Owner.Uid, out var projectileComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ProjectileComponent?>(Owner, out var projectileComponent))
             {
                 Logger.Error("ParticleProjectile tried firing, but it was spawned without a ProjectileComponent");
                 return;
             }
             projectileComponent.IgnoreEntity(firer);
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SinguloFoodComponent?>(Owner.Uid, out var singuloFoodComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SinguloFoodComponent?>(Owner, out var singuloFoodComponent))
             {
                 Logger.Error("ParticleProjectile tried firing, but it was spawned without a SinguloFoodComponent");
                 return;
@@ -61,7 +61,7 @@ namespace Content.Server.ParticleAccelerator.Components
                 _ => "0"
             };
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(Owner.Uid, out var spriteComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(Owner, out var spriteComponent))
             {
                 Logger.Error("ParticleProjectile tried firing, but it was spawned without a SpriteComponent");
                 return;
@@ -71,8 +71,8 @@ namespace Content.Server.ParticleAccelerator.Components
             physicsComponent
                 .LinearVelocity = angle.ToWorldVec() * 20f;
 
-            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).LocalRotation = angle;
-            Timer.Spawn(3000, () => IoCManager.Resolve<IEntityManager>().DeleteEntity(Owner.Uid));
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).LocalRotation = angle;
+            Timer.Spawn(3000, () => IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) Owner));
         }
     }
 }

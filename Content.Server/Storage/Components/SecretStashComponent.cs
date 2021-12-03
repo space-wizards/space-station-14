@@ -28,7 +28,7 @@ namespace Content.Server.Storage.Components
 
         [ViewVariables] private ContainerSlot _itemContainer = default!;
 
-        public string SecretPartName => _secretPartNameOverride ?? Loc.GetString("comp-secret-stash-secret-part-name", ("name", IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityName));
+        public string SecretPartName => _secretPartNameOverride ?? Loc.GetString("comp-secret-stash-secret-part-name", ("name", IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityName));
 
         protected override void Initialize()
         {
@@ -50,7 +50,7 @@ namespace Content.Server.Storage.Components
                 return false;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(itemToHide.Uid, out ItemComponent? item))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(itemToHide, out ItemComponent? item))
                 return false;
 
             if (item.Size > _maxItemSize)
@@ -60,7 +60,7 @@ namespace Content.Server.Storage.Components
                 return false;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out HandsComponent? hands))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out HandsComponent? hands))
                 return false;
 
             if (!hands.Drop(itemToHide, _itemContainer))
@@ -83,15 +83,15 @@ namespace Content.Server.Storage.Components
 
             Owner.PopupMessage(user, Loc.GetString("comp-secret-stash-action-get-item-found-something", ("stash", SecretPartName)));
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out HandsComponent? hands))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out HandsComponent? hands))
             {
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(_itemContainer.ContainedEntity.Uid, out ItemComponent? item))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(_itemContainer.ContainedEntity, out ItemComponent? item))
                     return false;
                 hands.PutInHandOrDrop(item);
             }
             else if (_itemContainer.Remove(_itemContainer.ContainedEntity))
             {
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_itemContainer.ContainedEntity.Uid).Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates;
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_itemContainer.ContainedEntity).Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates;
             }
 
             return true;
@@ -111,7 +111,7 @@ namespace Content.Server.Storage.Components
             // drop item inside
             if (_itemContainer.ContainedEntity != null)
             {
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_itemContainer.ContainedEntity.Uid).Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates;
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_itemContainer.ContainedEntity).Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates;
             }
         }
     }

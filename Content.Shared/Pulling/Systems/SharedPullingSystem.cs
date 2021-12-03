@@ -105,7 +105,7 @@ namespace Content.Shared.Pulling
             if (args.Pulled.OwnerUid != uid)
                 return;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out SharedAlertsComponent? alerts))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner, out SharedAlertsComponent? alerts))
                 alerts.ShowAlert(AlertType.Pulled);
         }
 
@@ -114,7 +114,7 @@ namespace Content.Shared.Pulling
             if (args.Pulled.OwnerUid != uid)
                 return;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out SharedAlertsComponent? alerts))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner, out SharedAlertsComponent? alerts))
                 alerts.ClearAlert(AlertType.Pulled);
         }
 
@@ -165,12 +165,12 @@ namespace Content.Shared.Pulling
             // The pulled object may have already been deleted.
             // TODO: Work out why. Monkey + meat spike is a good test for this,
             //  assuming you're still pulling the monkey when it gets gibbed.
-            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(pulled.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(pulled.Uid).EntityLifeStage) >= EntityLifeStage.Deleted)
+            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(pulled) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(pulled).EntityLifeStage) >= EntityLifeStage.Deleted)
             {
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(pulled.Uid, out IPhysBody? physics))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(pulled, out IPhysBody? physics))
             {
                 return;
             }
@@ -183,16 +183,16 @@ namespace Content.Shared.Pulling
         // TODO: When Joint networking is less shitcodey fix this to use a dedicated joints message.
         private void HandleContainerInsert(EntInsertedIntoContainerMessage message)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(message.Entity.Uid, out SharedPullableComponent? pullable))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(message.Entity, out SharedPullableComponent? pullable))
             {
                 TryStopPull(pullable);
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(message.Entity.Uid, out SharedPullerComponent? puller))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(message.Entity, out SharedPullerComponent? puller))
             {
                 if (puller.Pulling == null) return;
 
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(puller.Pulling.Uid, out SharedPullableComponent? pulling))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(puller.Pulling, out SharedPullableComponent? pulling))
                 {
                     return;
                 }
@@ -215,7 +215,7 @@ namespace Content.Shared.Pulling
                 return false;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(pulled.Uid, out SharedPullableComponent? pullable))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(pulled, out SharedPullableComponent? pullable))
             {
                 return false;
             }
@@ -253,16 +253,16 @@ namespace Content.Shared.Pulling
         private void UpdatePulledRotation(IEntity puller, IEntity pulled)
         {
             // TODO: update once ComponentReference works with directed event bus.
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(pulled.Uid, out RotatableComponent? rotatable))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(pulled, out RotatableComponent? rotatable))
                 return;
 
             if (!rotatable.RotateWhilePulling)
                 return;
 
-            var dir = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(puller.Uid).WorldPosition - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pulled.Uid).WorldPosition;
+            var dir = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(puller).WorldPosition - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pulled).WorldPosition;
             if (dir.LengthSquared > ThresholdRotDistance * ThresholdRotDistance)
             {
-                var oldAngle = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pulled.Uid).WorldRotation;
+                var oldAngle = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pulled).WorldRotation;
                 var newAngle = Angle.FromWorldVec(dir);
 
                 var diff = newAngle - oldAngle;
@@ -272,10 +272,10 @@ namespace Content.Shared.Pulling
                     // Otherwise PIANO DOOR STUCK! happens.
                     // But it also needs to work with station rotation / align to the local parent.
                     // So...
-                    var baseRotation = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pulled.Uid).Parent?.WorldRotation ?? 0f;
+                    var baseRotation = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pulled).Parent?.WorldRotation ?? 0f;
                     var localRotation = newAngle - baseRotation;
                     var localRotationSnapped = Angle.FromDegrees(Math.Floor((localRotation.Degrees / ThresholdRotAngle) + 0.5f) * ThresholdRotAngle);
-                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pulled.Uid).LocalRotation = localRotationSnapped;
+                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pulled).LocalRotation = localRotationSnapped;
                 }
             }
         }

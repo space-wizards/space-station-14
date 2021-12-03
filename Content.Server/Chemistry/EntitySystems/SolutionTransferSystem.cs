@@ -32,7 +32,7 @@ namespace Content.Server.Chemistry.EntitySystems
             if (!args.CanAccess || !args.CanInteract || !component.CanChangeTransferAmount)
                 return;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ActorComponent?>(args.User.Uid, out var actor))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ActorComponent?>(args.User, out var actor))
                 return;
 
             // Custom transfer verb

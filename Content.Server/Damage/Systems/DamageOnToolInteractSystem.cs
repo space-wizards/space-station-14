@@ -28,10 +28,10 @@ namespace Content.Server.Damage.Systems
                 return;
 
             if (component.WeldingDamage is {} weldingDamage
-                && IoCManager.Resolve<IEntityManager>().TryGetComponent<WelderComponent?>(args.Used.Uid, out var welder)
+                && IoCManager.Resolve<IEntityManager>().TryGetComponent<WelderComponent?>(args.Used, out var welder)
                 && welder.Lit)
             {
-                var dmg = _damageableSystem.TryChangeDamage(args.Target.Uid, weldingDamage);
+                var dmg = _damageableSystem.TryChangeDamage(args.Target, weldingDamage);
 
                 if (dmg != null)
                     _logSystem.Add(LogType.Damaged,
@@ -40,10 +40,10 @@ namespace Content.Server.Damage.Systems
                 args.Handled = true;
             }
             else if (component.DefaultDamage is {} damage
-                && IoCManager.Resolve<IEntityManager>().TryGetComponent<ToolComponent?>(args.Used.Uid, out var tool)
+                && IoCManager.Resolve<IEntityManager>().TryGetComponent<ToolComponent?>(args.Used, out var tool)
                 && tool.Qualities.ContainsAny(component.Tools))
             {
-                var dmg = _damageableSystem.TryChangeDamage(args.Target.Uid, damage);
+                var dmg = _damageableSystem.TryChangeDamage(args.Target, damage);
 
                 if (dmg != null)
                     _logSystem.Add(LogType.Damaged,

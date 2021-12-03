@@ -91,7 +91,7 @@ namespace Content.Server.Power.NodeGroups
 
         public void AddDischarger(BatteryDischargerComponent discharger)
         {
-            var battery = IoCManager.Resolve<IEntityManager>().GetComponent<PowerNetworkBatteryComponent>(discharger.Owner.Uid);
+            var battery = IoCManager.Resolve<IEntityManager>().GetComponent<PowerNetworkBatteryComponent>(discharger.Owner);
             battery.NetworkBattery.LinkedNetworkCharging = default;
             Dischargers.Add(discharger);
             _powerNetSystem.QueueReconnectPowerNet(this);
@@ -100,7 +100,7 @@ namespace Content.Server.Power.NodeGroups
         public void RemoveDischarger(BatteryDischargerComponent discharger)
         {
             // Can be missing if the entity is being deleted, not a big deal.
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(discharger.Owner.Uid, out PowerNetworkBatteryComponent? battery))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(discharger.Owner, out PowerNetworkBatteryComponent? battery))
                 battery.NetworkBattery.LinkedNetworkCharging = default;
 
             Dischargers.Remove(discharger);
@@ -109,7 +109,7 @@ namespace Content.Server.Power.NodeGroups
 
         public void AddCharger(BatteryChargerComponent charger)
         {
-            var battery = IoCManager.Resolve<IEntityManager>().GetComponent<PowerNetworkBatteryComponent>(charger.Owner.Uid);
+            var battery = IoCManager.Resolve<IEntityManager>().GetComponent<PowerNetworkBatteryComponent>(charger.Owner);
             battery.NetworkBattery.LinkedNetworkCharging = default;
             Chargers.Add(charger);
             _powerNetSystem.QueueReconnectPowerNet(this);
@@ -118,7 +118,7 @@ namespace Content.Server.Power.NodeGroups
         public void RemoveCharger(BatteryChargerComponent charger)
         {
             // Can be missing if the entity is being deleted, not a big deal.
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(charger.Owner.Uid, out PowerNetworkBatteryComponent? battery))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(charger.Owner, out PowerNetworkBatteryComponent? battery))
                 battery.NetworkBattery.LinkedNetworkCharging = default;
 
             Chargers.Remove(charger);

@@ -29,13 +29,13 @@ namespace Content.Shared.Storage
 
         bool IDraggable.CanDrop(CanDropEvent args)
         {
-            return IoCManager.Resolve<IEntityManager>().TryGetComponent(args.Target.Uid, out PlaceableSurfaceComponent? placeable) &&
+            return IoCManager.Resolve<IEntityManager>().TryGetComponent(args.Target, out PlaceableSurfaceComponent? placeable) &&
                    placeable.IsPlaceable;
         }
 
         bool IDraggable.Drop(DragDropEvent eventArgs)
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User.Uid))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
             {
                 return false;
             }
@@ -52,7 +52,7 @@ namespace Content.Shared.Storage
             {
                 if (Remove(storedEntity))
                 {
-                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(storedEntity.Uid).WorldPosition = eventArgs.DropLocation.Position;
+                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(storedEntity).WorldPosition = eventArgs.DropLocation.Position;
                 }
             }
 

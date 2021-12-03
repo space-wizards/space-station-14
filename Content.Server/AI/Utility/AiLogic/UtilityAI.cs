@@ -185,7 +185,7 @@ namespace Content.Server.AI.Utility.AiLogic
             {
                 _planCooldownRemaining = PlanCooldown;
                 _actionCancellation = new CancellationTokenSource();
-                _actionRequest = _planner.RequestAction(new AiActionRequest(Owner.Uid, _blackboard, AvailableActions), _actionCancellation);
+                _actionRequest = _planner.RequestAction(new AiActionRequest(Owner, _blackboard, AvailableActions), _actionCancellation);
 
                 return;
             }

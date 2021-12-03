@@ -257,14 +257,14 @@ namespace Content.Server.Botany
             var seedComp = seed.EnsureComponent<SeedComponent>();
             seedComp.Seed = this;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(seed.Uid, out SpriteComponent? sprite))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(seed, out SpriteComponent? sprite))
             {
                 // Seed state will always be seed. Blame the spriter if that's not the case!
                 sprite.LayerSetSprite(0, new SpriteSpecifier.Rsi(PlantRsi, "seed"));
             }
 
             string val = Loc.GetString("botany-seed-packet-name", ("seedName", SeedName), ("seedNoun", SeedNoun));
-            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(seed.Uid).EntityName = val;
+            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(seed).EntityName = val;
 
             return seed;
         }
@@ -301,7 +301,7 @@ namespace Content.Server.Botany
             }
 
             user.PopupMessageCursor(Loc.GetString("botany-harvest-success-message", ("name", DisplayName)));
-            return GenerateProduct(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user.Uid).Coordinates, yieldMod);
+            return GenerateProduct(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user).Coordinates, yieldMod);
         }
 
         public IEnumerable<IEntity> GenerateProduct(EntityCoordinates position, int yieldMod = 1)
@@ -342,10 +342,10 @@ namespace Content.Server.Botany
 
                 if (Mysterious)
                 {
-                    string val1 = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityName + "?";
-                    IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityName = val1;
-                    string val = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityDescription + (" " + Loc.GetString("botany-mysterious-description-addon"));
-                    IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityDescription = val;
+                    string val1 = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityName + "?";
+                    IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityName = val1;
+                    string val = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityDescription + (" " + Loc.GetString("botany-mysterious-description-addon"));
+                    IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityDescription = val;
                 }
             }
 

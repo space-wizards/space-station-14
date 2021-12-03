@@ -33,12 +33,12 @@ namespace Content.Server.Recycling.Components
             {
                 for (var i = 0; i < Math.Max(_amount * efficiency, 1); i++)
                 {
-                    IoCManager.Resolve<IEntityManager>().SpawnEntity(_prototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
+                    IoCManager.Resolve<IEntityManager>().SpawnEntity(_prototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
                 }
 
             }
 
-            IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(Owner.Uid);
+            IoCManager.Resolve<IEntityManager>().QueueDeleteEntity((EntityUid) Owner);
         }
     }
 }

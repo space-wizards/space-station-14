@@ -81,7 +81,7 @@ namespace Content.Server.AI.Utility.Actions.Idle
 
             var targetNode = robustRandom.Pick(reachableNodes);
             var mapManager = IoCManager.Resolve<IMapManager>();
-            var grid = mapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).GridID);
+            var grid = mapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).GridID);
             var targetGrid = grid.GridTileToLocal(targetNode.TileRef.GridIndices);
 
             return targetGrid;

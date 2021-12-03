@@ -59,7 +59,7 @@ namespace Content.Server.AI.Operators.Inventory
                 return Outcome.Failed;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(_target.Uid, out EntityStorageComponent? storageComponent) ||
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(_target, out EntityStorageComponent? storageComponent) ||
                 storageComponent.IsWeldedShut)
             {
                 return Outcome.Failed;

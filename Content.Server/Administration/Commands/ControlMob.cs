@@ -50,7 +50,7 @@ namespace Content.Server.Administration.Commands
             }
 
             var target = entityManager.GetEntity(eUid);
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(target.Uid, out MindComponent? mindComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(target, out MindComponent? mindComponent))
             {
                 shell.WriteLine(Loc.GetString("shell-entity-is-not-mob"));
                 return;
@@ -60,7 +60,7 @@ namespace Content.Server.Administration.Commands
 
             DebugTools.AssertNotNull(mind);
 
-            mind!.TransferTo(target.Uid);
+            mind!.TransferTo(target);
         }
     }
 }

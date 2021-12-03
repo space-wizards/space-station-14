@@ -38,7 +38,7 @@ namespace Content.IntegrationTests.Tests
                 mind = new Mind(player.UserId);
                 mind.ChangeOwningPlayer(player.UserId);
 
-                mind.TransferTo(playerEnt.Uid);
+                mind.TransferTo(playerEnt);
                 mind.Visit(visitEnt);
 
                 Assert.That(player.AttachedEntity, Is.EqualTo(visitEnt));
@@ -49,12 +49,12 @@ namespace Content.IntegrationTests.Tests
 
             server.Assert(() =>
             {
-                IoCManager.Resolve<IEntityManager>().DeleteEntity(visitEnt.Uid);
+                IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) visitEnt);
 
                 Assert.That(mind.VisitingEntity, Is.Null);
 
                 // This used to throw so make sure it doesn't.
-                IoCManager.Resolve<IEntityManager>().DeleteEntity(playerEnt.Uid);
+                IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) playerEnt);
             });
 
             await server.WaitIdleAsync();
@@ -82,7 +82,7 @@ namespace Content.IntegrationTests.Tests
                 mind = new Mind(player.UserId);
                 mind.ChangeOwningPlayer(player.UserId);
 
-                mind.TransferTo(playerEnt.Uid);
+                mind.TransferTo(playerEnt);
 
                 Assert.That(mind.CurrentEntity, Is.EqualTo(playerEnt));
             });
@@ -91,14 +91,14 @@ namespace Content.IntegrationTests.Tests
 
             server.Post(() =>
             {
-                IoCManager.Resolve<IEntityManager>().DeleteEntity(playerEnt.Uid);
+                IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) playerEnt);
             });
 
             server.RunTicks(1);
 
             server.Assert(() =>
             {
-                Assert.That(IoCManager.Resolve<IEntityManager>().EntityExists(mind.CurrentEntity.Uid), Is.True);
+                Assert.That(IoCManager.Resolve<IEntityManager>().EntityExists(mind.CurrentEntity), Is.True);
             });
 
             await server.WaitIdleAsync();
@@ -131,7 +131,7 @@ namespace Content.IntegrationTests.Tests
                 mind = new Mind(player.UserId);
                 mind.ChangeOwningPlayer(player.UserId);
 
-                mind.TransferTo(playerEnt.Uid);
+                mind.TransferTo(playerEnt);
 
                 Assert.That(mind.CurrentEntity, Is.EqualTo(playerEnt));
             });
@@ -149,7 +149,7 @@ namespace Content.IntegrationTests.Tests
 
             server.Assert(() =>
             {
-                Assert.That(IoCManager.Resolve<IEntityManager>().EntityExists(mind.CurrentEntity.Uid), Is.True);
+                Assert.That(IoCManager.Resolve<IEntityManager>().EntityExists(mind.CurrentEntity), Is.True);
                 Assert.That(mind.CurrentEntity, Is.Not.EqualTo(playerEnt));
             });
 

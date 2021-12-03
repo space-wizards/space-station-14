@@ -76,7 +76,7 @@ namespace Content.Server.Spawners.Components
             for (int i = 0; i < number; i++)
             {
                 var entity = _robustRandom.Pick(Prototypes);
-                IoCManager.Resolve<IEntityManager>().SpawnEntity(entity, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
+                IoCManager.Resolve<IEntityManager>().SpawnEntity(entity, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
             }
         }
     }

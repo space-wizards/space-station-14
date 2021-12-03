@@ -39,7 +39,7 @@ namespace Content.Server.Atmos.Commands
                         return;
                     }
 
-                    gridId = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.AttachedEntity.Uid).GridID;
+                    gridId = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.AttachedEntity).GridID;
 
                     if (gridId == GridId.Invalid)
                     {
@@ -65,7 +65,7 @@ namespace Content.Server.Atmos.Commands
                             return;
                         }
 
-                        gridId = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.AttachedEntity.Uid).GridID;
+                        gridId = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.AttachedEntity).GridID;
 
                         if (gridId == GridId.Invalid)
                         {

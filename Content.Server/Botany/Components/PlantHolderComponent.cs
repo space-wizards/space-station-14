@@ -248,7 +248,7 @@ namespace Content.Server.Botany.Components
                     _updateSpriteAfterUpdate = true;
             }
 
-            var environment = EntitySystem.Get<AtmosphereSystem>().GetTileMixture(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates, true) ??
+            var environment = EntitySystem.Get<AtmosphereSystem>().GetTileMixture(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates, true) ??
                               GasMixture.SpaceGas;
 
             if (Seed.ConsumeGasses.Count > 0)
@@ -361,7 +361,7 @@ namespace Content.Server.Botany.Components
             }
             else if (Age < 0) // Revert back to seed packet!
             {
-                Seed.SpawnSeedPacket(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
+                Seed.SpawnSeedPacket(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
                 RemovePlant();
                 ForceUpdate = true;
                 Update();
@@ -421,12 +421,12 @@ namespace Content.Server.Botany.Components
 
         public bool DoHarvest(IEntity user)
         {
-            if (Seed == null || (!IoCManager.Resolve<IEntityManager>().EntityExists(user.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(user.Uid).EntityLifeStage) >= EntityLifeStage.Deleted || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user.Uid))
+            if (Seed == null || (!IoCManager.Resolve<IEntityManager>().EntityExists(user) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(user).EntityLifeStage) >= EntityLifeStage.Deleted || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 return false;
 
             if (Harvest && !Dead)
             {
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out HandsComponent? hands))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out HandsComponent? hands))
                 {
                     if (!Seed.CheckHarvest(user, hands.GetActiveHand?.Owner))
                         return false;
@@ -453,7 +453,7 @@ namespace Content.Server.Botany.Components
             if (Seed == null || !Harvest)
                 return;
 
-            Seed.AutoHarvest(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
+            Seed.AutoHarvest(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
             AfterHarvest();
         }
 
@@ -549,7 +549,7 @@ namespace Content.Server.Botany.Components
         public void UpdateReagents()
         {
             var solutionSystem = EntitySystem.Get<SolutionContainerSystem>();
-            if (!solutionSystem.TryGetSolution(Owner.Uid, SoilSolutionName, out var solution))
+            if (!solutionSystem.TryGetSolution(Owner, SoilSolutionName, out var solution))
                 return;
 
             if (solution.TotalVolume <= 0 || MutationLevel >= 25)
@@ -651,17 +651,17 @@ namespace Content.Server.Botany.Components
             var user = eventArgs.User;
             var usingItem = eventArgs.Using;
 
-            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(usingItem.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(usingItem.Uid).EntityLifeStage) >= EntityLifeStage.Deleted || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user.Uid))
+            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(usingItem) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(usingItem).EntityLifeStage) >= EntityLifeStage.Deleted || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 return false;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(usingItem.Uid, out SeedComponent? seeds))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(usingItem, out SeedComponent? seeds))
             {
                 if (Seed == null)
                 {
                     if (seeds.Seed == null)
                     {
                         user.PopupMessageCursor(Loc.GetString("plant-holder-component-empty-seed-packet-message"));
-                        IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(usingItem.Uid);
+                        IoCManager.Resolve<IEntityManager>().QueueDeleteEntity((EntityUid) usingItem);
                         return false;
                     }
 
@@ -675,7 +675,7 @@ namespace Content.Server.Botany.Components
                     Health = Seed.Endurance;
                     _lastCycle = _gameTiming.CurTime;
 
-                    IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(usingItem.Uid);
+                    IoCManager.Resolve<IEntityManager>().QueueDeleteEntity((EntityUid) usingItem);
 
                     CheckLevelSanity();
                     UpdateSprite();
@@ -684,7 +684,7 @@ namespace Content.Server.Botany.Components
                 }
 
                 user.PopupMessageCursor(Loc.GetString("plant-holder-component-already-seeded-message",
-                    ("name", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityName)));
+                    ("name", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityName)));
                 return false;
             }
 
@@ -693,9 +693,9 @@ namespace Content.Server.Botany.Components
                 if (WeedLevel > 0)
                 {
                     user.PopupMessageCursor(Loc.GetString("plant-holder-component-remove-weeds-message",
-                        ("name", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityName)));
+                        ("name", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityName)));
                     user.PopupMessageOtherClients(Loc.GetString("plant-holder-component-remove-weeds-others-message",
-                        ("otherName", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(user.Uid).EntityName)));
+                        ("otherName", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(user).EntityName)));
                     WeedLevel = 0;
                     UpdateSprite();
                 }
@@ -712,9 +712,9 @@ namespace Content.Server.Botany.Components
                 if (Seed != null)
                 {
                     user.PopupMessageCursor(Loc.GetString("plant-holder-component-remove-plant-message",
-                        ("name", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityName)));
+                        ("name", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityName)));
                     user.PopupMessageOtherClients(Loc.GetString("plant-holder-component-remove-plant-others-message",
-                        ("name", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(user.Uid).EntityName)));
+                        ("name", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(user).EntityName)));
                     RemovePlant();
                 }
                 else
@@ -726,15 +726,15 @@ namespace Content.Server.Botany.Components
             }
 
             var solutionSystem = EntitySystem.Get<SolutionContainerSystem>();
-            if (solutionSystem.TryGetDrainableSolution(usingItem.Uid, out var solution)
-                && solutionSystem.TryGetSolution(Owner.Uid, SoilSolutionName, out var targetSolution))
+            if (solutionSystem.TryGetDrainableSolution(usingItem, out var solution)
+                && solutionSystem.TryGetSolution(Owner, SoilSolutionName, out var targetSolution))
             {
                 var amount = FixedPoint2.New(5);
                 var sprayed = false;
-                var targetEntity = Owner.Uid;
-                var solutionEntity = usingItem.Uid;
+                var targetEntity = (EntityUid) Owner;
+                var solutionEntity = (EntityUid) usingItem;
 
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(usingItem.Uid, out SprayComponent? spray))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(usingItem, out SprayComponent? spray))
                 {
                     sprayed = true;
                     amount = FixedPoint2.New(1);
@@ -783,7 +783,7 @@ namespace Content.Server.Botany.Components
                     return false;
                 }
 
-                var seed = Seed.SpawnSeedPacket(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user.Uid).Coordinates);
+                var seed = Seed.SpawnSeedPacket(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user).Coordinates);
                 seed.RandomOffset(0.25f);
                 user.PopupMessageCursor(Loc.GetString("plant-holder-component-take-sample-message",
                     ("seedName", Seed.DisplayName)));
@@ -804,7 +804,7 @@ namespace Content.Server.Botany.Components
                 return DoHarvest(user);
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<ProduceComponent?>(usingItem.Uid, out var produce))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<ProduceComponent?>(usingItem, out var produce))
             {
                 user.PopupMessageCursor(Loc.GetString("plant-holder-component-compost-message",
                     ("owner", Owner),
@@ -814,16 +814,16 @@ namespace Content.Server.Botany.Components
                     ("usingItem", usingItem),
                     ("owner", Owner)));
 
-                if (solutionSystem.TryGetSolution(usingItem.Uid, produce.SolutionName, out var solution2))
+                if (solutionSystem.TryGetSolution(usingItem, produce.SolutionName, out var solution2))
                 {
                     // This deliberately discards overfill.
-                    solutionSystem.TryAddSolution(usingItem.Uid, solution2,
-                        solutionSystem.SplitSolution(usingItem.Uid, solution2, solution2.TotalVolume));
+                    solutionSystem.TryAddSolution(usingItem, solution2,
+                        solutionSystem.SplitSolution(usingItem, solution2, solution2.TotalVolume));
 
                     ForceUpdateByExternalCause();
                 }
 
-                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(usingItem.Uid);
+                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity((EntityUid) usingItem);
 
                 return true;
             }

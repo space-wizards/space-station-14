@@ -73,7 +73,7 @@ namespace Content.Server.Access.Systems
             if (EntityManager.TryGetComponent(uid, out SharedHandsComponent? hands))
             {
                 if (hands.TryGetActiveHeldEntity(out var heldItem) &&
-                    FindAccessTagsItem(heldItem.Uid, out tags))
+                    FindAccessTagsItem(heldItem, out tags))
                 {
                     return tags;
                 }
@@ -84,7 +84,7 @@ namespace Content.Server.Access.Systems
             {
                 if (inventoryComponent.HasSlot(EquipmentSlotDefines.Slots.IDCARD) &&
                     inventoryComponent.TryGetSlotItem(EquipmentSlotDefines.Slots.IDCARD, out ItemComponent? item) &&
-                    FindAccessTagsItem(item.Owner.Uid, out tags)
+                    FindAccessTagsItem(item.Owner, out tags)
                 )
                 {
                     return tags;
@@ -111,7 +111,7 @@ namespace Content.Server.Access.Systems
                 IEntity tempQualifier = pda?.ContainedID?.Owner;
                 if (tempQualifier != null)
                 {
-                    IoCManager.Resolve<IEntityManager>().GetComponent<AccessComponent>(tempQualifier.Uid);
+                    IoCManager.Resolve<IEntityManager>().GetComponent<AccessComponent>(tempQualifier);
                 }
 
                 tags = RETURNED_VALUE?.Tags;

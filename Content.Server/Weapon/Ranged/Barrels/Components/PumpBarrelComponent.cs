@@ -86,7 +86,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             // (Is one chambered?, is the bullet spend)
             var chamber = (chamberedExists, false);
 
-            if (chamberedExists && IoCManager.Resolve<IEntityManager>().TryGetComponent<AmmoComponent?>(_chamberContainer.ContainedEntity!.Uid, out var ammo))
+            if (chamberedExists && IoCManager.Resolve<IEntityManager>().TryGetComponent<AmmoComponent?>(_chamberContainer.ContainedEntity!, out var ammo))
             {
                 chamber.Item2 = ammo.Spent;
             }
@@ -125,7 +125,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 _unspawnedCount--;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearanceComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearanceComponent))
             {
                 _appearanceComponent = appearanceComponent;
             }
@@ -162,7 +162,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             if (chamberEntity == null)
                 return null;
 
-            return IoCManager.Resolve<IEntityManager>().GetComponentOrNull<AmmoComponent>(chamberEntity.Uid)?.TakeBullet(spawnAt);
+            return IoCManager.Resolve<IEntityManager>().GetComponentOrNull<AmmoComponent>(chamberEntity)?.TakeBullet(spawnAt);
         }
 
         private void Cycle(bool manual = false)
@@ -171,7 +171,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             if (chamberedEntity != null)
             {
                 _chamberContainer.Remove(chamberedEntity);
-                var ammoComponent = IoCManager.Resolve<IEntityManager>().GetComponent<AmmoComponent>(chamberedEntity.Uid);
+                var ammoComponent = IoCManager.Resolve<IEntityManager>().GetComponent<AmmoComponent>(chamberedEntity);
                 if (!ammoComponent.Caseless)
                 {
                     EjectCasing(chamberedEntity);
@@ -187,7 +187,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             if (_unspawnedCount > 0)
             {
                 _unspawnedCount--;
-                var ammoEntity = IoCManager.Resolve<IEntityManager>().SpawnEntity(_fillPrototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
+                var ammoEntity = IoCManager.Resolve<IEntityManager>().SpawnEntity(_fillPrototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
                 _chamberContainer.Insert(ammoEntity);
             }
 
@@ -202,7 +202,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         public bool TryInsertBullet(InteractUsingEventArgs eventArgs)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Using.Uid, out AmmoComponent? ammoComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Using, out AmmoComponent? ammoComponent))
             {
                 return false;
             }

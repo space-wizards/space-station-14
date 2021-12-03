@@ -13,7 +13,7 @@ namespace Content.Client.PowerCell
         {
             base.InitializeEntity(entity);
 
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(entity.Uid);
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(entity);
 
             // Base item
             sprite.LayerMapSet(Layers.Base, sprite.AddLayerState("empty"));
@@ -27,7 +27,7 @@ namespace Content.Client.PowerCell
         {
             base.OnChangeData(component);
 
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner.Uid);
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
 
             // Update base item
             if (component.TryGetData(CellVisual.Occupied, out bool occupied))

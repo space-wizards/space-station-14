@@ -36,14 +36,14 @@ namespace Content.Shared.Pulling
         // They do not expect to be cancellable.
         private void ForceDisconnect(SharedPullerComponent puller, SharedPullableComponent pullable)
         {
-            var pullerPhysics = IoCManager.Resolve<IEntityManager>().GetComponent<PhysicsComponent>(puller.Owner.Uid);
-            var pullablePhysics = IoCManager.Resolve<IEntityManager>().GetComponent<PhysicsComponent>(pullable.Owner.Uid);
+            var pullerPhysics = IoCManager.Resolve<IEntityManager>().GetComponent<PhysicsComponent>(puller.Owner);
+            var pullablePhysics = IoCManager.Resolve<IEntityManager>().GetComponent<PhysicsComponent>(pullable.Owner);
 
             // MovingTo shutdown
             ForceSetMovingTo(pullable, null);
 
             // Joint shutdown
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<JointComponent?>(puller.Owner.Uid, out var jointComp))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<JointComponent?>(puller.Owner, out var jointComp))
             {
                 if (jointComp.GetJoints.Contains(pullable.PullJoint!))
                 {
@@ -61,7 +61,7 @@ namespace Content.Shared.Pulling
 
             RaiseLocalEvent(puller.OwnerUid, message, broadcast: false);
 
-            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(pullable.Owner.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(pullable.Owner.Uid).EntityLifeStage) <= EntityLifeStage.MapInitialized)
+            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(pullable.Owner) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(pullable.Owner).EntityLifeStage) <= EntityLifeStage.MapInitialized)
                 RaiseLocalEvent(pullable.OwnerUid, message);
 
             // Networking
@@ -81,22 +81,22 @@ namespace Content.Shared.Pulling
             var pullableOldPullerE = pullable?.Puller;
             if (pullableOldPullerE != null)
             {
-                ForceDisconnect(IoCManager.Resolve<IEntityManager>().GetComponent<SharedPullerComponent>(pullableOldPullerE.Uid), pullable!);
+                ForceDisconnect(IoCManager.Resolve<IEntityManager>().GetComponent<SharedPullerComponent>(pullableOldPullerE), pullable!);
             }
 
             // Continue with the puller.
             var pullerOldPullableE = puller?.Pulling;
             if (pullerOldPullableE != null)
             {
-                ForceDisconnect(puller!, IoCManager.Resolve<IEntityManager>().GetComponent<SharedPullableComponent>(pullerOldPullableE.Uid));
+                ForceDisconnect(puller!, IoCManager.Resolve<IEntityManager>().GetComponent<SharedPullableComponent>(pullerOldPullableE));
             }
 
             // And now for the actual connection (if any).
 
             if ((puller != null) && (pullable != null))
             {
-                var pullerPhysics = IoCManager.Resolve<IEntityManager>().GetComponent<PhysicsComponent>(puller.Owner.Uid);
-                var pullablePhysics = IoCManager.Resolve<IEntityManager>().GetComponent<PhysicsComponent>(pullable.Owner.Uid);
+                var pullerPhysics = IoCManager.Resolve<IEntityManager>().GetComponent<PhysicsComponent>(puller.Owner);
+                var pullablePhysics = IoCManager.Resolve<IEntityManager>().GetComponent<PhysicsComponent>(pullable.Owner);
 
                 // State startup
                 puller.Pulling = pullable.Owner;
@@ -106,7 +106,7 @@ namespace Content.Shared.Pulling
                 var union = pullerPhysics.GetWorldAABB().Union(pullablePhysics.GetWorldAABB());
                 var length = Math.Max(union.Size.X, union.Size.Y) * 0.75f;
 
-                pullable.PullJoint = _jointSystem.CreateDistanceJoint(pullablePhysics.OwnerUid, pullerPhysics.Owner.Uid, id:$"pull-joint-{pullablePhysics.Owner.Uid}");
+                pullable.PullJoint = _jointSystem.CreateDistanceJoint(pullablePhysics.OwnerUid, pullerPhysics.Owner, id:$"pull-joint-{pullablePhysics.Owner}");
                 pullable.PullJoint.CollideConnected = false;
                 // This maximum has to be there because if the object is constrained too closely, the clamping goes backwards and asserts.
                 pullable.PullJoint.MaxLength = Math.Max(1.0f, length);
@@ -158,11 +158,11 @@ namespace Content.Shared.Pulling
 
             if (movingTo == null)
             {
-                RaiseLocalEvent(pullable.Owner.Uid, new PullableStopMovingMessage());
+                RaiseLocalEvent(pullable.Owner, new PullableStopMovingMessage());
             }
             else
             {
-                RaiseLocalEvent(pullable.Owner.Uid, new PullableMoveMessage());
+                RaiseLocalEvent(pullable.Owner, new PullableMoveMessage());
             }
         }
     }

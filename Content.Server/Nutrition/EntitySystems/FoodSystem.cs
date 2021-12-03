@@ -196,7 +196,7 @@ namespace Content.Server.Nutrition.EntitySystems
         private void DeleteAndSpawnTrash(FoodComponent component, EntityUid? userUid = null)
         {
             //We're empty. Become trash.
-            var position = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner.Uid).Coordinates;
+            var position = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner).Coordinates;
             var finisher = IoCManager.Resolve<IEntityManager>().SpawnEntity(component.TrashPrototype, position);
 
             // If the user is holding the item
@@ -207,7 +207,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 EntityManager.DeleteEntity(component.OwnerUid);
 
                 // Put the trash in the user's hand
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(finisher.Uid, out ItemComponent? item) &&
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(finisher, out ItemComponent? item) &&
                     handsComponent.CanPutInHand(item))
                 {
                     handsComponent.PutInHand(item);
@@ -420,7 +420,7 @@ namespace Content.Server.Nutrition.EntitySystems
             foreach (var item in hands.GetAllHeldItems())
             {
                 // Is utensil?
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(item.Owner.Uid, out UtensilComponent? utensil))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(item.Owner, out UtensilComponent? utensil))
                     continue;
 
                 if ((utensil.Types & component.Utensil) != 0 && // Acceptable type?

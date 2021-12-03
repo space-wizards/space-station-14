@@ -65,7 +65,7 @@ namespace Content.Server.Pointing.EntitySystems
         {
             foreach (var (component, transform) in EntityManager.EntityQuery<RoguePointingArrowComponent, TransformComponent>())
             {
-                var uid = component.Owner.Uid;
+                var uid = (EntityUid) component.Owner;
                 component.Chasing ??= RandomNearbyPlayer(uid, component, transform);
 
                 if (component.Chasing == null)
@@ -78,7 +78,7 @@ namespace Content.Server.Pointing.EntitySystems
 
                 if (component.TurningDelay > 0)
                 {
-                    var difference = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Chasing.Uid).WorldPosition - transform.WorldPosition;
+                    var difference = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Chasing).WorldPosition - transform.WorldPosition;
                     var angle = difference.ToAngle();
                     var adjusted = angle.Degrees + 90;
                     var newAngle = Angle.FromDegrees(adjusted);
@@ -93,7 +93,7 @@ namespace Content.Server.Pointing.EntitySystems
 
                 UpdateAppearance(uid, component, transform);
 
-                var toChased = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Chasing.Uid).WorldPosition - transform.WorldPosition;
+                var toChased = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Chasing).WorldPosition - transform.WorldPosition;
 
                 transform.WorldPosition += toChased * frameTime * component.ChasingSpeed;
 

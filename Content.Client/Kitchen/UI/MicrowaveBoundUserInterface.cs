@@ -115,17 +115,17 @@ namespace Content.Client.Kitchen.UI
                     return;
                 }
 
-                if ((!IoCManager.Resolve<IEntityManager>().EntityExists(entity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted)
+                if ((!IoCManager.Resolve<IEntityManager>().EntityExists(entity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityLifeStage) >= EntityLifeStage.Deleted)
                 {
                     continue;
                 }
 
                 Texture? texture;
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out IconComponent? iconComponent))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out IconComponent? iconComponent))
                 {
                     texture = iconComponent.Icon?.Default;
                 }
-                else if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out SpriteComponent? spriteComponent))
+                else if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out SpriteComponent? spriteComponent))
                 {
                     texture = spriteComponent.Icon?.Default;
                 }
@@ -134,7 +134,7 @@ namespace Content.Client.Kitchen.UI
                     continue;
                 }
 
-                var solidItem = _menu.IngredientsList.AddItem(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityName, texture);
+                var solidItem = _menu.IngredientsList.AddItem(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityName, texture);
                 var solidIndex = _menu.IngredientsList.IndexOf(solidItem);
                 _solids.Add(solidIndex, t);
             }

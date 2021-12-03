@@ -104,9 +104,9 @@ namespace Content.Server.Damage.Commands
                 func = (entity, ignoreResistances) =>
                 {
                     var damage = new DamageSpecifier(damageGroup, amount);
-                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(entity.Uid, damage, ignoreResistances);
+                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(entity, damage, ignoreResistances);
 
-                    shell.WriteLine($"Damaged entity {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityName} with id {entity.Uid} for {amount} {damageGroup} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
+                    shell.WriteLine($"Damaged entity {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityName} with id {entity} for {amount} {damageGroup} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
                 };
 
                 return true;
@@ -117,9 +117,9 @@ namespace Content.Server.Damage.Commands
                 func = (entity, ignoreResistances) =>
                 {
                     var damage = new DamageSpecifier(damageType, amount);
-                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(entity.Uid, damage, ignoreResistances);
+                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(entity, damage, ignoreResistances);
 
-                    shell.WriteLine($"Damaged entity {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityName} with id {entity.Uid} for {amount} {damageType} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
+                    shell.WriteLine($"Damaged entity {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityName} with id {entity} for {amount} {damageType} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
 
                 };
                 return true;
@@ -197,9 +197,9 @@ namespace Content.Server.Damage.Commands
                     return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out DamageableComponent? damageable))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out DamageableComponent? damageable))
             {
-                shell.WriteLine($"Entity {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityName} with id {entity.Uid} does not have a {nameof(DamageableComponent)}.");
+                shell.WriteLine($"Entity {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityName} with id {entity} does not have a {nameof(DamageableComponent)}.");
                 return;
             }
 

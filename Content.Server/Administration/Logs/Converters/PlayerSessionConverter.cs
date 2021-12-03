@@ -14,8 +14,8 @@ public class PlayerSessionConverter : AdminLogConverter<SerializablePlayer>
 
         if (value.Player.AttachedEntity != null)
         {
-            writer.WriteNumber("id", (int) value.Player.AttachedEntity.Uid);
-            writer.WriteString("name", IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(value.Player.AttachedEntity.Uid).EntityName);
+            writer.WriteNumber("id", (int) (EntityUid) value.Player.AttachedEntity);
+            writer.WriteString("name", IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(value.Player.AttachedEntity).EntityName);
         }
 
         writer.WriteString("player", value.Player.UserId.UserId);

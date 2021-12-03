@@ -16,14 +16,14 @@ namespace Content.Server.ParticleAccelerator.Components
 
         public void Fire(ParticleAcceleratorPowerState strength)
         {
-            var projectile = IoCManager.Resolve<IEntityManager>().SpawnEntity("ParticlesProjectile", IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
+            var projectile = IoCManager.Resolve<IEntityManager>().SpawnEntity("ParticlesProjectile", IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ParticleProjectileComponent?>(projectile.Uid, out var particleProjectileComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ParticleProjectileComponent?>(projectile, out var particleProjectileComponent))
             {
                 Logger.Error("ParticleAcceleratorEmitter tried firing particles, but they was spawned without a ParticleProjectileComponent");
                 return;
             }
-            particleProjectileComponent.Fire(strength, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).WorldRotation, Owner);
+            particleProjectileComponent.Fire(strength, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).WorldRotation, Owner);
         }
 
         public override string ToString()

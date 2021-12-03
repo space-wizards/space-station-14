@@ -67,9 +67,9 @@ namespace Content.Server.BarSign.Systems
                 return;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out SpriteComponent? sprite))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner, out SpriteComponent? sprite))
             {
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out ApcPowerReceiverComponent? receiver) || !receiver.Powered)
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner, out ApcPowerReceiverComponent? receiver) || !receiver.Powered)
                 {
                     sprite.LayerSetState(0, "empty");
                     sprite.LayerSetShader(0, "shaded");
@@ -83,15 +83,15 @@ namespace Content.Server.BarSign.Systems
 
             if (!string.IsNullOrEmpty(prototype.Name))
             {
-                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(component.Owner.Uid).EntityName = prototype.Name;
+                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(component.Owner).EntityName = prototype.Name;
             }
             else
             {
                 string val = Loc.GetString("barsign-component-name");
-                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(component.Owner.Uid).EntityName = val;
+                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(component.Owner).EntityName = val;
             }
 
-            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(component.Owner.Uid).EntityDescription = prototype.Description;
+            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(component.Owner).EntityDescription = prototype.Description;
         }
     }
 }

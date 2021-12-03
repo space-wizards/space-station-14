@@ -23,7 +23,7 @@ namespace Content.Server.AI.Operators.Inventory
 
         public override Outcome Execute(float frameTime)
         {
-            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_useTarget.Uid).GridID != IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_owner.Uid).GridID)
+            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_useTarget).GridID != IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_owner).GridID)
             {
                 return Outcome.Failed;
             }
@@ -33,14 +33,14 @@ namespace Content.Server.AI.Operators.Inventory
                 return Outcome.Failed;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(_owner.Uid, out CombatModeComponent? combatModeComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(_owner, out CombatModeComponent? combatModeComponent))
             {
                 combatModeComponent.IsInCombatMode = false;
             }
 
             // Click on da thing
             var interactionSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InteractionSystem>();
-            interactionSystem.AiUseInteraction(_owner, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_useTarget.Uid).Coordinates, _useTarget.Uid);
+            interactionSystem.AiUseInteraction(_owner, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_useTarget).Coordinates, _useTarget);
 
             return Outcome.Success;
         }

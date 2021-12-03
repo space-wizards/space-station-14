@@ -35,7 +35,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (ev.Target == null)
                 return;
 
-            if (TryUseUtensil(ev.UserUid, ev.Target.Uid, component))
+            if (TryUseUtensil(ev.UserUid, ev.Target, component))
                 ev.Handled = true;
         }
 
@@ -61,7 +61,7 @@ namespace Content.Server.Nutrition.EntitySystems
         /// Attempt to break the utensil after interaction.
         /// </summary>
         /// <param name="uid">Utensil.</param>
-        /// <param name="userUid">User of the utensil.</param> 
+        /// <param name="userUid">User of the utensil.</param>
         public void TryBreak(EntityUid uid, EntityUid userUid, UtensilComponent? component = null)
         {
             if (!Resolve(uid, ref component))
@@ -70,7 +70,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (_robustRandom.Prob(component.BreakChance))
             {
                 SoundSystem.Play(Filter.Pvs(userUid), component.BreakSound.GetSound(), userUid, AudioParams.Default.WithVolume(-2f));
-                IoCManager.Resolve<IEntityManager>().DeleteEntity(component.Owner.Uid);
+                IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) component.Owner);
             }
         }
     }

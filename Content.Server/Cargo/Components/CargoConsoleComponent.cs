@@ -58,7 +58,7 @@ namespace Content.Server.Cargo.Components
         [DataField("errorSound")]
         private SoundSpecifier _errorSound = new SoundPathSpecifier("/Audio/Effects/error.ogg");
 
-        private bool Powered => !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
+        private bool Powered => !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
         private CargoConsoleSystem _cargoConsoleSystem = default!;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(CargoConsoleUiKey.Key);
@@ -91,7 +91,7 @@ namespace Content.Server.Cargo.Components
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out CargoOrderDatabaseComponent? orders))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out CargoOrderDatabaseComponent? orders))
             {
                 return;
             }
@@ -143,7 +143,7 @@ namespace Content.Server.Cargo.Components
                         (capacity.CurrentCapacity == capacity.MaxCapacity
                         || capacity.CurrentCapacity + order.Amount > capacity.MaxCapacity
                         || !_cargoConsoleSystem.CheckBalance(_bankAccount.Id, (-product.PointCost) * order.Amount)
-                        || !_cargoConsoleSystem.ApproveOrder(Owner.Uid, uid.Value, orders.Database.Id, msg.OrderNumber)
+                        || !_cargoConsoleSystem.ApproveOrder(Owner, uid.Value, orders.Database.Id, msg.OrderNumber)
                         || !_cargoConsoleSystem.ChangeBalance(_bankAccount.Id, (-product.PointCost) * order.Amount))
                         )
                     {
@@ -162,20 +162,20 @@ namespace Content.Server.Cargo.Components
                     // TODO replace with shuttle code
                     // TEMPORARY loop for spawning stuff on telepad (looks for a telepad adjacent to the console)
                     IEntity? cargoTelepad = null;
-                    var indices = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates.ToVector2i(IoCManager.Resolve<IEntityManager>(), _mapManager);
+                    var indices = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates.ToVector2i(IoCManager.Resolve<IEntityManager>(), _mapManager);
                     var offsets = new Vector2i[] { new Vector2i(0, 1), new Vector2i(1, 1), new Vector2i(1, 0), new Vector2i(1, -1),
                                                    new Vector2i(0, -1), new Vector2i(-1, -1), new Vector2i(-1, 0), new Vector2i(-1, 1), };
                     var adjacentEntities = new List<IEnumerable<IEntity>>(); //Probably better than IEnumerable.concat
                     foreach (var offset in offsets)
                     {
-                        adjacentEntities.Add((indices+offset).GetEntitiesInTileFast(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).GridID));
+                        adjacentEntities.Add((indices+offset).GetEntitiesInTileFast(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).GridID));
                     }
 
                     foreach (var enumerator in adjacentEntities)
                     {
                         foreach (IEntity entity in enumerator)
                         {
-                            if (IoCManager.Resolve<IEntityManager>().HasComponent<CargoTelepadComponent>(entity.Uid) && IoCManager.Resolve<IEntityManager>().TryGetComponent<ApcPowerReceiverComponent?>(entity.Uid, out var powerReceiver) && powerReceiver.Powered)
+                            if (IoCManager.Resolve<IEntityManager>().HasComponent<CargoTelepadComponent>(entity) && IoCManager.Resolve<IEntityManager>().TryGetComponent<ApcPowerReceiverComponent?>(entity, out var powerReceiver) && powerReceiver.Powered)
                             {
                                 cargoTelepad = entity;
                                 break;
@@ -184,7 +184,7 @@ namespace Content.Server.Cargo.Components
                     }
                     if (cargoTelepad != null)
                     {
-                        if (IoCManager.Resolve<IEntityManager>().TryGetComponent<CargoTelepadComponent?>(cargoTelepad.Uid, out var telepadComponent))
+                        if (IoCManager.Resolve<IEntityManager>().TryGetComponent<CargoTelepadComponent?>(cargoTelepad, out var telepadComponent))
                         {
                             var approvedOrders = _cargoConsoleSystem.RemoveAndGetApprovedOrders(orders.Database.Id);
                             orders.Database.ClearOrderCapacity();
@@ -201,7 +201,7 @@ namespace Content.Server.Cargo.Components
 
         private void UpdateUIState()
         {
-            if (_bankAccount == null || !IoCManager.Resolve<IEntityManager>().EntityExists(Owner.Uid))
+            if (_bankAccount == null || !IoCManager.Resolve<IEntityManager>().EntityExists(Owner))
             {
                 return;
             }

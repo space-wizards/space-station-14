@@ -74,7 +74,7 @@ namespace Content.Server.Physics.Controllers
 
                 // Now that's over with...
 
-                var pullerPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(puller.Uid).MapPosition;
+                var pullerPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(puller).MapPosition;
                 var movingTo = pullable.MovingTo.Value.ToMap(IoCManager.Resolve<IEntityManager>());
                 if (movingTo.MapId != pullerPosition.MapId)
                 {
@@ -82,16 +82,16 @@ namespace Content.Server.Physics.Controllers
                     continue;
                 }
 
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<PhysicsComponent?>(pullable.Owner.Uid, out var physics) ||
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<PhysicsComponent?>(pullable.Owner, out var physics) ||
                     physics.BodyType == BodyType.Static ||
-                    movingTo.MapId != IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pullable.Owner.Uid).MapID)
+                    movingTo.MapId != IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pullable.Owner).MapID)
                 {
                     _pullableSystem.StopMoveTo(pullable);
                     continue;
                 }
 
                 var movingPosition = movingTo.Position;
-                var ownerPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pullable.Owner.Uid).MapPosition.Position;
+                var ownerPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pullable.Owner).MapPosition.Position;
 
                 var diff = movingPosition - ownerPosition;
                 var diffLength = diff.Length;
@@ -119,7 +119,7 @@ namespace Content.Server.Physics.Controllers
                 var impulse = accel * physics.Mass * frameTime;
                 physics.ApplyLinearImpulse(impulse);
 
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<PhysicsComponent?>(puller.Uid, out var pullerPhysics))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<PhysicsComponent?>(puller, out var pullerPhysics))
                 {
                     pullerPhysics.WakeBody();
                     pullerPhysics.ApplyLinearImpulse(-impulse);

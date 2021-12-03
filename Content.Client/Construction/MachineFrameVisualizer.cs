@@ -15,7 +15,7 @@ namespace Content.Client.Construction
 
             if (component.TryGetData<int>(MachineFrameVisuals.State, out var data))
             {
-                var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner.Uid);
+                var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
 
                 sprite.LayerSetState(0, $"box_{data}");
             }

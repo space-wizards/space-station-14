@@ -105,7 +105,7 @@ namespace Content.Server.Morgue.Components
             _cremateCancelToken = new CancellationTokenSource();
             Owner.SpawnTimer(_burnMilis, () =>
             {
-                if ((!IoCManager.Resolve<IEntityManager>().EntityExists(Owner.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityLifeStage) >= EntityLifeStage.Deleted)
+                if ((!IoCManager.Resolve<IEntityManager>().EntityExists(Owner) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityLifeStage) >= EntityLifeStage.Deleted)
                     return;
 
                 Appearance?.SetData(CrematoriumVisuals.Burning, false);
@@ -117,10 +117,10 @@ namespace Content.Server.Morgue.Components
                     {
                         var item = Contents.ContainedEntities[i];
                         Contents.Remove(item);
-                        IoCManager.Resolve<IEntityManager>().DeleteEntity(item.Uid);
+                        IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) item);
                     }
 
-                    var ash = IoCManager.Resolve<IEntityManager>().SpawnEntity("Ash", IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
+                    var ash = IoCManager.Resolve<IEntityManager>().SpawnEntity("Ash", IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
                     Contents.Insert(ash);
                 }
 
@@ -133,7 +133,7 @@ namespace Content.Server.Morgue.Components
 
         SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(victim.Uid, out ActorComponent? actor) && actor.PlayerSession.ContentData()?.Mind is {} mind)
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(victim, out ActorComponent? actor) && actor.PlayerSession.ContentData()?.Mind is {} mind)
             {
                 EntitySystem.Get<GameTicker>().OnGhostAttempt(mind, false);
                 mind.OwnedEntity?.PopupMessage(Loc.GetString("crematorium-entity-storage-component-suicide-message"));
@@ -144,11 +144,11 @@ namespace Content.Server.Morgue.Components
             if (CanInsert(victim))
             {
                 Insert(victim);
-                EntitySystem.Get<StandingStateSystem>().Down(victim.Uid, false);
+                EntitySystem.Get<StandingStateSystem>().Down((EntityUid) victim, false);
             }
             else
             {
-                IoCManager.Resolve<IEntityManager>().DeleteEntity(victim.Uid);
+                IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) victim);
             }
 
             Cremate();

@@ -31,7 +31,7 @@ namespace Content.Server.Nutrition
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(player.AttachedEntity.Uid, out HungerComponent? hunger))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(player.AttachedEntity, out HungerComponent? hunger))
             {
                 shell.WriteLine($"Your entity does not have a {nameof(HungerComponent)} component.");
                 return;

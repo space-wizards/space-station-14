@@ -126,7 +126,7 @@ namespace Content.Server.GameTicking.Presets
                 // initiate uplink account.
                 DebugTools.AssertNotNull(mind.OwnedEntity);
 
-                var uplinkAccount = new UplinkAccount(StartingBalance, mind.OwnedEntity!.Uid);
+                var uplinkAccount = new UplinkAccount(StartingBalance, mind.OwnedEntity!);
                 var accounts = EntityManager.EntitySysManager.GetEntitySystem<UplinkAccountsSystem>();
                 accounts.AddNewAccount(uplinkAccount);
 

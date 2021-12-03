@@ -174,19 +174,19 @@ namespace Content.Server.AI.Pathfinding.Accessible
         public bool CanAccess(IEntity entity, IEntity target, float range = 0.0f)
         {
             // TODO: Handle this gracefully instead of just failing.
-            if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(target.Uid).GridID.IsValid())
+            if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(target).GridID.IsValid())
                 return false;
 
-            var targetTile = _mapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(target.Uid).GridID).GetTileRef(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(target.Uid).Coordinates);
+            var targetTile = _mapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(target).GridID).GetTileRef(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(target).Coordinates);
             var targetNode = _pathfindingSystem.GetNode(targetTile);
 
             var collisionMask = 0;
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out IPhysBody? physics))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out IPhysBody? physics))
             {
                 collisionMask = physics.CollisionMask;
             }
 
-            var access = _accessReader.FindAccessTags(entity.Uid);
+            var access = _accessReader.FindAccessTags(entity);
 
             // We'll do a quick traversable check before going through regions
             // If we can't access it we'll try to get a valid node in range (this is essentially an early-out)
@@ -198,7 +198,7 @@ namespace Content.Server.AI.Pathfinding.Accessible
                     return false;
                 }
 
-                var pathfindingArgs = new PathfindingArgs(entity.Uid, access, collisionMask, default, targetTile, range);
+                var pathfindingArgs = new PathfindingArgs(entity, access, collisionMask, default, targetTile, range);
                 foreach (var node in BFSPathfinder.GetNodesInRange(pathfindingArgs, false))
                 {
                     targetNode = node;
@@ -210,12 +210,12 @@ namespace Content.Server.AI.Pathfinding.Accessible
 
         public bool CanAccess(IEntity entity, PathfindingNode targetNode)
         {
-            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).GridID != targetNode.TileRef.GridIndex)
+            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).GridID != targetNode.TileRef.GridIndex)
             {
                 return false;
             }
 
-            var entityTile = _mapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).GridID).GetTileRef(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates);
+            var entityTile = _mapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).GridID).GetTileRef(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates);
             var entityNode = _pathfindingSystem.GetNode(entityTile);
             var entityRegion = GetRegion(entityNode);
             var targetRegion = GetRegion(targetNode);
@@ -425,12 +425,12 @@ namespace Content.Server.AI.Pathfinding.Accessible
         /// <returns></returns>
         public PathfindingRegion? GetRegion(IEntity entity)
         {
-            if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).GridID.IsValid())
+            if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).GridID.IsValid())
             {
                 return null;
             }
 
-            var entityTile = _mapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).GridID).GetTileRef(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates);
+            var entityTile = _mapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).GridID).GetTileRef(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates);
             var entityNode = _pathfindingSystem.GetNode(entityTile);
             return GetRegion(entityNode);
         }

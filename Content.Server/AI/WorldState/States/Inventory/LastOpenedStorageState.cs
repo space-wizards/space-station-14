@@ -18,7 +18,7 @@ namespace Content.Server.AI.WorldState.States.Inventory
         public override void SetValue(IEntity? value)
         {
             base.SetValue(value);
-            if (value != null && !IoCManager.Resolve<IEntityManager>().HasComponent<EntityStorageComponent>(value.Uid))
+            if (value != null && !IoCManager.Resolve<IEntityManager>().HasComponent<EntityStorageComponent>(value))
             {
                 Logger.Warning("Set LastOpenedStorageState for an entity that doesn't have a storage component");
             }

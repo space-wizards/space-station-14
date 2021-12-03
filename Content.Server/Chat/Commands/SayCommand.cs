@@ -46,7 +46,7 @@ namespace Content.Server.Chat.Commands
                 return;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().HasComponent<GhostComponent>(playerEntity.Uid))
+            if (IoCManager.Resolve<IEntityManager>().HasComponent<GhostComponent>(playerEntity))
                 chat.SendDeadChat(player, message);
             else
             {

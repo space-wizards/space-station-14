@@ -19,13 +19,13 @@ namespace Content.Server.Weapon
 
         public override bool IsEntityCompatible(IEntity entity)
         {
-            return IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out ServerBatteryBarrelComponent? battery) && battery.PowerCell != null ||
-                   IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out PowerCellSlotComponent? slot) && slot.HasCell;
+            return IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ServerBatteryBarrelComponent? battery) && battery.PowerCell != null ||
+                   IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out PowerCellSlotComponent? slot) && slot.HasCell;
         }
 
         protected override BatteryComponent? GetBatteryFrom(IEntity entity)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out PowerCellSlotComponent? slot))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out PowerCellSlotComponent? slot))
             {
                 if (slot.Cell != null)
                 {
@@ -33,7 +33,7 @@ namespace Content.Server.Weapon
                 }
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out ServerBatteryBarrelComponent? battery))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ServerBatteryBarrelComponent? battery))
             {
                 if (battery.PowerCell != null)
                 {

@@ -65,13 +65,13 @@ namespace Content.Server.Morgue.Components
         public override Vector2 ContentsDumpPosition()
         {
             if (_tray != null)
-                return IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_tray.Uid).WorldPosition;
+                return IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_tray).WorldPosition;
             return base.ContentsDumpPosition();
         }
 
         protected override bool AddToContents(IEntity entity)
         {
-            if (IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(entity.Uid) && !EntitySystem.Get<StandingStateSystem>().IsDown(entity.Uid))
+            if (IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(entity) && !EntitySystem.Get<StandingStateSystem>().IsDown((EntityUid) entity))
                 return false;
             return base.AddToContents(entity);
         }
@@ -79,7 +79,7 @@ namespace Content.Server.Morgue.Components
         public override bool CanOpen(IEntity user, bool silent = false)
         {
             if (!Owner.InRangeUnobstructed(
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates.Offset(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).LocalRotation.GetCardinalDir()),
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates.Offset(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).LocalRotation.GetCardinalDir()),
                 collisionMask: CollisionGroup.Impassable | CollisionGroup.VaultImpassable
             ))
             {
@@ -100,7 +100,7 @@ namespace Content.Server.Morgue.Components
 
             if (_tray == null)
             {
-                _tray = IoCManager.Resolve<IEntityManager>().SpawnEntity(_trayPrototypeId, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
+                _tray = IoCManager.Resolve<IEntityManager>().SpawnEntity(_trayPrototypeId, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
                 var trayComp = _tray.EnsureComponent<MorgueTrayComponent>();
                 trayComp.Morgue = Owner;
             }
@@ -109,7 +109,7 @@ namespace Content.Server.Morgue.Components
                 TrayContainer?.Remove(_tray);
             }
 
-            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_tray.Uid).Coordinates = new EntityCoordinates(Owner.Uid, 0, -1);
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_tray).Coordinates = new EntityCoordinates(Owner, 0, -1);
 
             base.OpenStorage();
         }
@@ -122,9 +122,9 @@ namespace Content.Server.Morgue.Components
             foreach (var entity in Contents.ContainedEntities)
             {
                 count++;
-                if (!hasMob && IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(entity.Uid))
+                if (!hasMob && IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(entity))
                     hasMob = true;
-                if (!hasSoul && IoCManager.Resolve<IEntityManager>().TryGetComponent<ActorComponent?>(entity.Uid, out var actor) && actor.PlayerSession != null)
+                if (!hasSoul && IoCManager.Resolve<IEntityManager>().TryGetComponent<ActorComponent?>(entity, out var actor) && actor.PlayerSession != null)
                     hasSoul = true;
             }
             Appearance?.SetData(MorgueVisuals.HasContents, count > 0);

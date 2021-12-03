@@ -115,7 +115,7 @@ namespace Content.Server.Solar.EntitySystems
                 foreach (var panel in EntityManager.EntityQuery<SolarPanelComponent>())
                 {
                     TotalPanelPower += panel.MaxSupply * panel.Coverage;
-                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(panel.Owner.Uid).WorldRotation = TargetPanelRotation;
+                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(panel.Owner).WorldRotation = TargetPanelRotation;
                     _updateQueue.Enqueue(panel);
                 }
             }
@@ -136,7 +136,7 @@ namespace Content.Server.Solar.EntitySystems
             // directly downwards (abs(theta) = pi) = coverage -1
             // as TowardsSun + = CCW,
             // panelRelativeToSun should - = CW
-            var panelRelativeToSun = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).WorldRotation - TowardsSun;
+            var panelRelativeToSun = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).WorldRotation - TowardsSun;
             // essentially, given cos = X & sin = Y & Y is 'downwards',
             // then for the first 90 degrees of rotation in either direction,
             // this plots the lower-right quadrant of a circle.
@@ -154,12 +154,12 @@ namespace Content.Server.Solar.EntitySystems
             if (coverage > 0)
             {
                 // Determine if the solar panel is occluded, and zero out coverage if so.
-                var ray = new CollisionRay(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).WorldPosition, TowardsSun.ToWorldVec(), (int) CollisionGroup.Opaque);
+                var ray = new CollisionRay(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).WorldPosition, TowardsSun.ToWorldVec(), (int) CollisionGroup.Opaque);
                 var rayCastResults = _physicsSystem.IntersectRayWithPredicate(
-                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).MapID,
+                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).MapID,
                     ray,
                     SunOcclusionCheckDistance,
-                    e => !IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(e.Uid).Anchored || e == entity);
+                    e => !IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(e).Anchored || e == entity);
                 if (rayCastResults.Any())
                     coverage = 0;
             }

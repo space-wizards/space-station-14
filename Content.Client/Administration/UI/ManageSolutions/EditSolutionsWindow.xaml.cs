@@ -47,7 +47,7 @@ namespace Content.Client.Administration.UI.ManageSolutions
             _target = target;
 
             var targetName = _entityManager.TryGetEntity(target, out var entity)
-                ? IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityName
+                ? IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityName
                 : string.Empty;
 
             Title = Loc.GetString("admin-solutions-window-title", ("targetName", targetName));

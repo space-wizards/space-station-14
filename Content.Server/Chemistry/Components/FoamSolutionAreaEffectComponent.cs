@@ -23,8 +23,8 @@ namespace Content.Server.Chemistry.Components
 
         protected override void UpdateVisuals()
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance) &&
-                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearance) &&
+                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
             {
                 appearance.SetData(FoamVisuals.Color, solution.Color.WithAlpha(0.80f));
             }
@@ -32,16 +32,16 @@ namespace Content.Server.Chemistry.Components
 
         protected override void ReactWithEntity(IEntity entity, double solutionFraction)
         {
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution))
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
                 return;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out BloodstreamComponent? bloodstream))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out BloodstreamComponent? bloodstream))
                 return;
 
             // TODO: Add a permeability property to clothing
             // For now it just adds to protection for each clothing equipped
             var protection = 0f;
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out InventoryComponent? inventory))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out InventoryComponent? inventory))
             {
                 foreach (var slot in inventory.Slots)
                 {
@@ -63,14 +63,14 @@ namespace Content.Server.Chemistry.Components
                 bloodstream.Solution.AvailableVolume);
             var transferSolution = cloneSolution.SplitSolution(transferAmount);
 
-            bloodstreamSys.TryAddToBloodstream(entity.Uid, transferSolution, bloodstream);
+            bloodstreamSys.TryAddToBloodstream(entity, transferSolution, bloodstream);
         }
 
         protected override void OnKill()
         {
-            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(Owner.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityLifeStage) >= EntityLifeStage.Deleted)
+            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(Owner) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityLifeStage) >= EntityLifeStage.Deleted)
                 return;
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
                 appearance.SetData(FoamVisuals.State, true);
             }
@@ -79,10 +79,10 @@ namespace Content.Server.Chemistry.Components
             {
                 if (!string.IsNullOrEmpty(_foamedMetalPrototype))
                 {
-                    IoCManager.Resolve<IEntityManager>().SpawnEntity(_foamedMetalPrototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
+                    IoCManager.Resolve<IEntityManager>().SpawnEntity(_foamedMetalPrototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
                 }
 
-                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(Owner.Uid);
+                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity((EntityUid) Owner);
             });
         }
     }

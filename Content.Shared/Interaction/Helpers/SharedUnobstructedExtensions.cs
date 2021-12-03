@@ -263,7 +263,7 @@ namespace Content.Shared.Interaction.Helpers
             bool ignoreInsideBlocker = false)
         {
             var originPosition = origin.ToMap(IoCManager.Resolve<IEntityManager>());
-            var otherPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other.Uid).MapPosition;
+            var otherPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other).MapPosition;
 
             return SharedInteractionSystem.InRangeUnobstructed(originPosition, otherPosition, range, collisionMask,
                 predicate, ignoreInsideBlocker);
@@ -278,7 +278,7 @@ namespace Content.Shared.Interaction.Helpers
             bool ignoreInsideBlocker = false)
         {
             var originPosition = origin.ToMap(IoCManager.Resolve<IEntityManager>());
-            var otherPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other.Owner.Uid).MapPosition;
+            var otherPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other.Owner).MapPosition;
 
             return SharedInteractionSystem.InRangeUnobstructed(originPosition, otherPosition, range, collisionMask,
                 predicate, ignoreInsideBlocker);
@@ -293,7 +293,7 @@ namespace Content.Shared.Interaction.Helpers
             bool ignoreInsideBlocker = false)
         {
             var originPosition = origin.ToMap(IoCManager.Resolve<IEntityManager>());
-            var otherPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other.Owner.Uid).MapPosition;
+            var otherPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other.Owner).MapPosition;
 
             return SharedInteractionSystem.InRangeUnobstructed(originPosition, otherPosition, range, collisionMask,
                 predicate, ignoreInsideBlocker);
@@ -344,7 +344,7 @@ namespace Content.Shared.Interaction.Helpers
             Ignored? predicate = null,
             bool ignoreInsideBlocker = false)
         {
-            var otherPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other.Uid).MapPosition;
+            var otherPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other).MapPosition;
 
             return SharedInteractionSystem.InRangeUnobstructed(origin, otherPosition, range, collisionMask, predicate,
                 ignoreInsideBlocker);
@@ -358,7 +358,7 @@ namespace Content.Shared.Interaction.Helpers
             Ignored? predicate = null,
             bool ignoreInsideBlocker = false)
         {
-            var otherPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other.Owner.Uid).MapPosition;
+            var otherPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other.Owner).MapPosition;
 
             return SharedInteractionSystem.InRangeUnobstructed(origin, otherPosition, range, collisionMask, predicate,
                 ignoreInsideBlocker);
@@ -372,7 +372,7 @@ namespace Content.Shared.Interaction.Helpers
             Ignored? predicate = null,
             bool ignoreInsideBlocker = false)
         {
-            var otherPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other.Owner.Uid).MapPosition;
+            var otherPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other.Owner).MapPosition;
 
             return SharedInteractionSystem.InRangeUnobstructed(origin, otherPosition, range, collisionMask, predicate,
                 ignoreInsideBlocker);

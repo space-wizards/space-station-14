@@ -34,22 +34,22 @@ namespace Content.Shared.Verbs
                     canAccess = true;
                 else
                     // the item might be in a backpack that the user has open
-                    canAccess = _interactionSystem.CanAccessViaStorage(user.Uid, target.Uid);
+                    canAccess = _interactionSystem.CanAccessViaStorage(user, target);
             }
 
             // A large number of verbs need to check action blockers. Instead of repeatedly having each system individually
             // call ActionBlocker checks, just cache it for the verb request.
-            var canInteract = force || _actionBlockerSystem.CanInteract(user.Uid);
+            var canInteract = force || _actionBlockerSystem.CanInteract(user);
 
             IEntity? @using = null;
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out SharedHandsComponent? hands) && (force || _actionBlockerSystem.CanUse(user.Uid)))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out SharedHandsComponent? hands) && (force || _actionBlockerSystem.CanUse(user)))
             {
                 hands.TryGetActiveHeldEntity(out @using);
 
                 // Check whether the "Held" entity is a virtual pull entity. If yes, set that as the entity being "Used".
                 // This allows you to do things like buckle a dragged person onto a surgery table, without click-dragging
                 // their sprite.
-                if (@using != null && IoCManager.Resolve<IEntityManager>().TryGetComponent<HandVirtualItemComponent?>(@using.Uid, out var pull))
+                if (@using != null && IoCManager.Resolve<IEntityManager>().TryGetComponent<HandVirtualItemComponent?>(@using, out var pull))
                 {
                     @using = IoCManager.Resolve<IEntityManager>().GetEntity(pull.BlockingEntity);
                 }
@@ -58,28 +58,28 @@ namespace Content.Shared.Verbs
             if ((verbTypes & VerbType.Interaction) == VerbType.Interaction)
             {
                 GetInteractionVerbsEvent getVerbEvent = new(user, target, @using, hands, canInteract, canAccess);
-                RaiseLocalEvent(target.Uid, getVerbEvent);
+                RaiseLocalEvent(target, getVerbEvent);
                 verbs.Add(VerbType.Interaction, getVerbEvent.Verbs);
             }
 
             if ((verbTypes & VerbType.Activation) == VerbType.Activation)
             {
                 GetActivationVerbsEvent getVerbEvent = new(user, target, @using, hands, canInteract, canAccess);
-                RaiseLocalEvent(target.Uid, getVerbEvent);
+                RaiseLocalEvent(target, getVerbEvent);
                 verbs.Add(VerbType.Activation, getVerbEvent.Verbs);
             }
 
             if ((verbTypes & VerbType.Alternative) == VerbType.Alternative)
             {
                 GetAlternativeVerbsEvent getVerbEvent = new(user, target, @using, hands, canInteract, canAccess);
-                RaiseLocalEvent(target.Uid, getVerbEvent);
+                RaiseLocalEvent(target, getVerbEvent);
                 verbs.Add(VerbType.Alternative, getVerbEvent.Verbs);
             }
 
             if ((verbTypes & VerbType.Other) == VerbType.Other)
             {
                 GetOtherVerbsEvent getVerbEvent = new(user, target, @using, hands, canInteract, canAccess);
-                RaiseLocalEvent(target.Uid, getVerbEvent);
+                RaiseLocalEvent(target, getVerbEvent);
                 verbs.Add(VerbType.Other, getVerbEvent.Verbs);
             }
 
@@ -117,7 +117,7 @@ namespace Content.Shared.Verbs
             if (EntityManager.TryGetComponent(userUid, out SharedHandsComponent? hands))
             {
                 hands.TryGetActiveHeldEntity(out var useEntityd);
-                usedUid = useEntityd?.Uid;
+                usedUid = useEntityd;
                 if (usedUid != null && EntityManager.TryGetComponent(usedUid.Value, out HandVirtualItemComponent? pull))
                     usedUid = pull.BlockingEntity;
             }

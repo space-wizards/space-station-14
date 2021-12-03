@@ -37,7 +37,7 @@ namespace Content.Server.Fluids.Components
         {
             get
             {
-                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution);
+                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution);
                 return solution;
             }
         }
@@ -90,7 +90,7 @@ namespace Content.Server.Fluids.Components
              */
             var solutionSystem = EntitySystem.Get<SolutionContainerSystem>();
 
-            if (!solutionSystem.TryGetSolution(Owner.Uid, SolutionName, out var contents ) ||
+            if (!solutionSystem.TryGetSolution(Owner, SolutionName, out var contents ) ||
                 Mopping ||
                 !eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
             {
@@ -106,12 +106,12 @@ namespace Content.Server.Fluids.Components
             if (eventArgs.Target == null)
             {
                 // Drop the liquid on the mop on to the ground
-                solutionSystem.SplitSolution(Owner.Uid, contents, FixedPoint2.Min(ResidueAmount, CurrentVolume))
+                solutionSystem.SplitSolution(Owner, contents, FixedPoint2.Min(ResidueAmount, CurrentVolume))
                     .SpillAt(eventArgs.ClickLocation, "PuddleSmear");
                 return true;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Target.Uid, out PuddleComponent? puddleComponent) ||
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Target, out PuddleComponent? puddleComponent) ||
                 !solutionSystem.TryGetSolution(puddleComponent.OwnerUid, puddleComponent.SolutionName, out var puddleSolution))
                 return false;
 
@@ -128,7 +128,7 @@ namespace Content.Server.Fluids.Components
             Mopping = false;
 
             if (result == DoAfterStatus.Cancelled ||
-                (!IoCManager.Resolve<IEntityManager>().EntityExists(Owner.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityLifeStage) >= EntityLifeStage.Deleted ||
+                (!IoCManager.Resolve<IEntityManager>().EntityExists(Owner) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityLifeStage) >= EntityLifeStage.Deleted ||
                 puddleComponent.Deleted)
                 return false;
 
@@ -143,21 +143,21 @@ namespace Content.Server.Fluids.Components
             // is the puddle cleaned?
             if (puddleSolution.TotalVolume - transferAmount <= 0)
             {
-                IoCManager.Resolve<IEntityManager>().DeleteEntity(puddleComponent.Owner.Uid);
+                IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) puddleComponent.Owner);
 
                 // After cleaning the puddle, make a new puddle with solution from the mop as a "wet floor". Then evaporate it slowly.
                 // we do this WITHOUT adding to the existing puddle. Otherwise we have might have water puddles with the vomit sprite.
-                solutionSystem.SplitSolution(Owner.Uid, contents, transferAmount)
+                solutionSystem.SplitSolution(Owner, contents, transferAmount)
                     .SplitSolution(ResidueAmount)
                     .SpillAt(eventArgs.ClickLocation, "PuddleSmear", combine: false);
             }
             else
             {
                 // remove solution from the puddle
-                solutionSystem.SplitSolution(eventArgs.Target.Uid, puddleSolution, transferAmount);
+                solutionSystem.SplitSolution(eventArgs.Target, puddleSolution, transferAmount);
 
                 // and from the mop
-                solutionSystem.SplitSolution(Owner.Uid, contents, transferAmount);
+                solutionSystem.SplitSolution(Owner, contents, transferAmount);
             }
 
             SoundSystem.Play(Filter.Pvs(Owner), _pickupSound.GetSound(), Owner);

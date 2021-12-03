@@ -12,6 +12,6 @@ public class EntityConverter : AdminLogConverter<IEntity>
 
     public override void Write(Utf8JsonWriter writer, IEntity value, JsonSerializerOptions options)
     {
-        EntityUidConverter.Write(writer, value.Uid, options, _entities);
+        EntityUidConverter.Write(writer, value, options, _entities);
     }
 }

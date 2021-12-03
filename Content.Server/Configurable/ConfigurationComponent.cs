@@ -81,10 +81,10 @@ namespace Content.Server.Configurable
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (UserInterface == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User.Uid, out ActorComponent? actor))
+            if (UserInterface == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User, out ActorComponent? actor))
                 return false;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ToolComponent?>(eventArgs.Using.Uid, out var tool) || !tool.Qualities.Contains(_qualityNeeded))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ToolComponent?>(eventArgs.Using, out var tool) || !tool.Qualities.Contains(_qualityNeeded))
                 return false;
 
             OpenUserInterface(actor);

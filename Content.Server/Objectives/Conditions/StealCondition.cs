@@ -58,7 +58,7 @@ namespace Content.Server.Objectives.Conditions
             get
             {
                 if (_mind?.OwnedEntity == null) return 0f;
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ContainerManagerComponent?>(_mind.OwnedEntity.Uid, out var containerManagerComponent)) return 0f;
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ContainerManagerComponent?>(_mind.OwnedEntity, out var containerManagerComponent)) return 0f;
 
                 float count = containerManagerComponent.CountPrototypeOccurencesRecursive(_prototypeId);
                 return count/_amount;

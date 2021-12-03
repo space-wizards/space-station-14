@@ -20,7 +20,7 @@ namespace Content.Shared.Climbing
 
         public virtual bool CanDragDropOn(DragDropEvent eventArgs)
         {
-            return IoCManager.Resolve<IEntityManager>().HasComponent<SharedClimbingComponent>(eventArgs.Dragged.Uid);
+            return IoCManager.Resolve<IEntityManager>().HasComponent<SharedClimbingComponent>(eventArgs.Dragged);
         }
 
         public abstract bool DragDropOn(DragDropEvent eventArgs);

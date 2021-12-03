@@ -84,7 +84,7 @@ namespace Content.Client.Stack
 
             if (_isComposite
                 && _spriteLayers.Count > 0
-                && IoCManager.Resolve<IEntityManager>().TryGetComponent<ISpriteComponent?>(entity.Uid, out var spriteComponent))
+                && IoCManager.Resolve<IEntityManager>().TryGetComponent<ISpriteComponent?>(entity, out var spriteComponent))
             {
                 var spritePath = _spritePath ?? spriteComponent.BaseRSI!.Path!;
 

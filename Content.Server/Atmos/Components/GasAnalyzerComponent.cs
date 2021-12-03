@@ -40,7 +40,7 @@ namespace Content.Server.Atmos.Components
                 UserInterface.OnClosed += UserInterfaceOnClose;
             }
 
-            IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out _appearance);
+            IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out _appearance);
         }
 
         public override ComponentState GetComponentState()
@@ -123,7 +123,7 @@ namespace Content.Server.Atmos.Components
         {
             // Already get the pressure before Dirty(), because we can't get the EntitySystem in that thread or smth
             var pressure = 0f;
-            var tile = EntitySystem.Get<AtmosphereSystem>().GetTileMixture(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
+            var tile = EntitySystem.Get<AtmosphereSystem>().GetTileMixture(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
             if (tile != null)
             {
                 pressure = tile.Pressure;
@@ -161,17 +161,17 @@ namespace Content.Server.Atmos.Components
                 if (session.AttachedEntity == null)
                     return;
 
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(session.AttachedEntity.Uid, out HandsComponent? handsComponent))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(session.AttachedEntity, out HandsComponent? handsComponent))
                     return;
 
                 var activeHandEntity = handsComponent?.GetActiveHand?.Owner;
-                if (activeHandEntity == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(activeHandEntity.Uid, out GasAnalyzerComponent? gasAnalyzer))
+                if (activeHandEntity == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(activeHandEntity, out GasAnalyzerComponent? gasAnalyzer))
                 {
                     return;
                 }
             }
 
-            var pos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates;
+            var pos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates;
             if (!_checkPlayer && _position.HasValue)
             {
                 // Check if position is out of range => don't update
@@ -226,14 +226,14 @@ namespace Content.Server.Atmos.Components
                         return;
                     }
 
-                    if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(player.Uid, out HandsComponent? handsComponent))
+                    if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(player, out HandsComponent? handsComponent))
                     {
                         Owner.PopupMessage(player, Loc.GetString("gas-analyzer-component-player-has-no-hands-message"));
                         return;
                     }
 
                     var activeHandEntity = handsComponent.GetActiveHand?.Owner;
-                    if (activeHandEntity == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(activeHandEntity.Uid, out GasAnalyzerComponent? gasAnalyzer))
+                    if (activeHandEntity == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(activeHandEntity, out GasAnalyzerComponent? gasAnalyzer))
                     {
                         serverMsg.Session.AttachedEntity?.PopupMessage(Loc.GetString("gas-analyzer-component-need-gas-analyzer-in-hand-message"));
                         return;
@@ -253,7 +253,7 @@ namespace Content.Server.Atmos.Components
                 return true;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User.Uid, out ActorComponent? actor))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User, out ActorComponent? actor))
             {
                 OpenInterface(actor.PlayerSession, eventArgs.ClickLocation);
             }
@@ -265,7 +265,7 @@ namespace Content.Server.Atmos.Components
 
         void IDropped.Dropped(DroppedEventArgs eventArgs)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User.Uid, out ActorComponent? actor))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User, out ActorComponent? actor))
             {
                 CloseInterface(actor.PlayerSession);
             }
@@ -273,7 +273,7 @@ namespace Content.Server.Atmos.Components
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User.Uid, out ActorComponent? actor))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User, out ActorComponent? actor))
             {
                 ToggleInterface(actor.PlayerSession);
                 return true;

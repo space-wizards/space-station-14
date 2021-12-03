@@ -27,7 +27,7 @@ namespace Content.Server.Lathe.Components
         /// </summary>
         public void Sync()
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out TechnologyDatabaseComponent? database)) return;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out TechnologyDatabaseComponent? database)) return;
 
             foreach (var technology in database.Technologies)
             {

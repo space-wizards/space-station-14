@@ -31,7 +31,7 @@ namespace Content.Server.Doors.Components
             if (DoorComponent != null && DoorComponent.State == SharedDoorComponent.DoorState.Open && DoorComponent.CanCloseGeneric())
             {
                 DoorComponent.Close();
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AirtightComponent? airtight))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AirtightComponent? airtight))
                 {
                     EntitySystem.Get<AirtightSystem>().SetAirblocked(airtight, true);
                 }
@@ -47,7 +47,7 @@ namespace Content.Server.Doors.Components
             var minMoles = float.MaxValue;
             var maxMoles = 0f;
 
-            foreach (var adjacent in atmosphereSystem.GetAdjacentTileMixtures(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates))
+            foreach (var adjacent in atmosphereSystem.GetAdjacentTileMixtures(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates))
             {
                 var moles = adjacent.TotalMoles;
                 if (moles < minMoles)
@@ -63,7 +63,7 @@ namespace Content.Server.Doors.Components
         {
             var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
 
-            if (!atmosphereSystem.TryGetGridAndTile(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates, out var tuple))
+            if (!atmosphereSystem.TryGetGridAndTile(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates, out var tuple))
                 return false;
 
             if (atmosphereSystem.GetTileMixture(tuple.Value.Grid, tuple.Value.Tile) == null)
@@ -72,7 +72,7 @@ namespace Content.Server.Doors.Components
             if (atmosphereSystem.IsHotspotActive(tuple.Value.Grid, tuple.Value.Tile))
                 return true;
 
-            foreach (var adjacent in atmosphereSystem.GetAdjacentTiles(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates))
+            foreach (var adjacent in atmosphereSystem.GetAdjacentTiles(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates))
             {
                 if (atmosphereSystem.IsHotspotActive(tuple.Value.Grid, adjacent))
                     return true;

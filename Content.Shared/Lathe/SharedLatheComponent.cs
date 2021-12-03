@@ -18,8 +18,8 @@ namespace Content.Shared.Lathe
 
         public bool CanProduce(LatheRecipePrototype recipe, int quantity = 1)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out SharedMaterialStorageComponent? storage)
-            ||  !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out SharedLatheDatabaseComponent? database)) return false;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out SharedMaterialStorageComponent? storage)
+            ||  !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out SharedLatheDatabaseComponent? database)) return false;
 
             if (!database.Contains(recipe)) return false;
 

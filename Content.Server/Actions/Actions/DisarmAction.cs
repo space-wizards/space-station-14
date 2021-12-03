@@ -49,18 +49,18 @@ namespace Content.Server.Actions.Actions
 
         public void DoTargetEntityAction(TargetEntityActionEventArgs args)
         {
-            var disarmedActs = IoCManager.Resolve<IEntityManager>().GetComponents<IDisarmedAct>(args.Target.Uid).ToArray();
+            var disarmedActs = IoCManager.Resolve<IEntityManager>().GetComponents<IDisarmedAct>(args.Target).ToArray();
 
             if (!args.Performer.InRangeUnobstructed(args.Target)) return;
 
             if (disarmedActs.Length == 0)
             {
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(args.Performer.Uid, out ActorComponent? actor))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(args.Performer, out ActorComponent? actor))
                 {
                     // Fall back to a normal interaction with the entity
                     var player = actor.PlayerSession;
-                    var coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.Target.Uid).Coordinates;
-                    var target = args.Target.Uid;
+                    var coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.Target).Coordinates;
+                    var target = (EntityUid) args.Target;
                     EntitySystem.Get<InteractionSystem>().HandleUseInteraction(player, coordinates, target);
                     return;
                 }
@@ -68,13 +68,13 @@ namespace Content.Server.Actions.Actions
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedActionsComponent?>(args.Performer.Uid, out var actions)) return;
-            if (args.Target == args.Performer || !EntitySystem.Get<ActionBlockerSystem>().CanAttack(args.Performer.Uid)) return;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedActionsComponent?>(args.Performer, out var actions)) return;
+            if (args.Target == args.Performer || !EntitySystem.Get<ActionBlockerSystem>().CanAttack(args.Performer)) return;
 
             var random = IoCManager.Resolve<IRobustRandom>();
             var system = EntitySystem.Get<MeleeWeaponSystem>();
 
-            var diff = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.Target.Uid).MapPosition.Position - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.Performer.Uid).MapPosition.Position;
+            var diff = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.Target).MapPosition.Position - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.Performer).MapPosition.Position;
             var angle = Angle.FromWorldVec(diff);
 
             actions.Cooldown(ActionType.Disarm, Cooldowns.SecondsFromNow(_cooldown));
@@ -84,10 +84,10 @@ namespace Content.Server.Actions.Actions
                 SoundSystem.Play(Filter.Pvs(args.Performer), PunchMissSound.GetSound(), args.Performer, AudioHelpers.WithVariation(0.025f));
 
                 args.Performer.PopupMessageOtherClients(Loc.GetString("disarm-action-popup-message-other-clients",
-                                                                      ("performerName", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(args.Performer.Uid).EntityName),
-                                                                      ("targetName", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(args.Target.Uid).EntityName)));
+                                                                      ("performerName", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(args.Performer).EntityName),
+                                                                      ("targetName", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(args.Target).EntityName)));
                 args.Performer.PopupMessageCursor(Loc.GetString("disarm-action-popup-message-cursor",
-                                                                ("targetName", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(args.Target.Uid).EntityName)));
+                                                                ("targetName", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(args.Target).EntityName)));
                 system.SendLunge(angle, args.Performer);
                 return;
             }
@@ -96,7 +96,7 @@ namespace Content.Server.Actions.Actions
 
             var eventArgs = new DisarmedActEvent() { Target = args.Target, Source = args.Performer, PushProbability = _pushProb };
 
-            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(args.Target.Uid, eventArgs);
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(args.Target, eventArgs);
 
             EntitySystem.Get<AdminLogSystem>().Add(LogType.DisarmedAction, LogImpact.Low, $"{args.Performer:performer} used disarm on {args.Target:target}");
 
@@ -114,7 +114,7 @@ namespace Content.Server.Actions.Actions
                     return;
             }
 
-            SoundSystem.Play(Filter.Pvs(args.Performer), DisarmSuccessSound.GetSound(), IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.Performer.Uid).Coordinates, AudioHelpers.WithVariation(0.025f));
+            SoundSystem.Play(Filter.Pvs(args.Performer), DisarmSuccessSound.GetSound(), IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.Performer).Coordinates, AudioHelpers.WithVariation(0.025f));
         }
     }
 }

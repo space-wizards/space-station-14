@@ -32,7 +32,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Nutrition
 
             foreach (var entity in context.GetState<EnumerableInventoryState>().GetValue())
             {
-                if (!IoCManager.Resolve<IEntityManager>().HasComponent<FoodComponent>(entity.Uid))
+                if (!IoCManager.Resolve<IEntityManager>().HasComponent<FoodComponent>(entity))
                 {
                     continue;
                 }

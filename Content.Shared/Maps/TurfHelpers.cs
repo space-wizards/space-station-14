@@ -148,7 +148,7 @@ namespace Content.Shared.Maps
 
             //Actually spawn the relevant tile item at the right position and give it some random offset.
             var tileItem = entityManager.SpawnEntity(tileDef.ItemDropPrototypeName, indices.ToEntityCoordinates(tileRef.GridIndex, mapManager).Offset(new Vector2(x, y)));
-            entityManager.GetComponent<TransformComponent>(tileItem.Uid).LocalRotation = robustRandom.NextDouble() * Math.Tau;
+            entityManager.GetComponent<TransformComponent>(tileItem).LocalRotation = robustRandom.NextDouble() * Math.Tau;
 
             return true;
         }

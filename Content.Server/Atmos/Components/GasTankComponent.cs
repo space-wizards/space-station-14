@@ -155,14 +155,14 @@ namespace Content.Server.Atmos.Components
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User.Uid, out ActorComponent? actor)) return false;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User, out ActorComponent? actor)) return false;
             OpenInterface(actor.PlayerSession);
             return true;
         }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User.Uid, out ActorComponent? actor)) return;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User, out ActorComponent? actor)) return;
             OpenInterface(actor.PlayerSession);
         }
 
@@ -216,7 +216,7 @@ namespace Content.Server.Atmos.Components
         {
             var user = GetInternalsComponent()?.Owner;
 
-            if (user == null || !EntitySystem.Get<ActionBlockerSystem>().CanUse(user.Uid))
+            if (user == null || !EntitySystem.Get<ActionBlockerSystem>().CanUse(user))
                 return;
 
             if (IsConnected)
@@ -230,10 +230,10 @@ namespace Content.Server.Atmos.Components
 
         private InternalsComponent? GetInternalsComponent(IEntity? owner = null)
         {
-            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(Owner.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityLifeStage) >= EntityLifeStage.Deleted) return null;
-            if (owner != null) return IoCManager.Resolve<IEntityManager>().GetComponentOrNull<InternalsComponent>(owner.Uid);
+            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(Owner) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityLifeStage) >= EntityLifeStage.Deleted) return null;
+            if (owner != null) return IoCManager.Resolve<IEntityManager>().GetComponentOrNull<InternalsComponent>(owner);
             return Owner.TryGetContainer(out var container)
-                ? IoCManager.Resolve<IEntityManager>().GetComponentOrNull<InternalsComponent>(container.Owner.Uid)
+                ? IoCManager.Resolve<IEntityManager>().GetComponentOrNull<InternalsComponent>(container.Owner)
                 : null;
         }
 
@@ -271,7 +271,7 @@ namespace Content.Server.Atmos.Components
 
                 EntitySystem.Get<ExplosionSystem>().SpawnExplosion(OwnerUid, (int) (range * 0.25f), (int) (range * 0.5f), (int) (range * 1.5f), 1);
 
-                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(Owner.Uid);
+                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity((EntityUid) Owner);
                 return;
             }
 
@@ -279,13 +279,13 @@ namespace Content.Server.Atmos.Components
             {
                 if (_integrity <= 0)
                 {
-                    var environment = atmosphereSystem.GetTileMixture(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates, true);
+                    var environment = atmosphereSystem.GetTileMixture(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates, true);
                     if(environment != null)
                         atmosphereSystem.Merge(environment, Air);
 
-                    SoundSystem.Play(Filter.Pvs(Owner), _ruptureSound.GetSound(), IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates, AudioHelpers.WithVariation(0.125f));
+                    SoundSystem.Play(Filter.Pvs(Owner), _ruptureSound.GetSound(), IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates, AudioHelpers.WithVariation(0.125f));
 
-                    IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(Owner.Uid);
+                    IoCManager.Resolve<IEntityManager>().QueueDeleteEntity((EntityUid) Owner);
                     return;
                 }
 
@@ -297,7 +297,7 @@ namespace Content.Server.Atmos.Components
             {
                 if (_integrity <= 0)
                 {
-                    var environment = atmosphereSystem.GetTileMixture(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates, true);
+                    var environment = atmosphereSystem.GetTileMixture(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates, true);
                     if (environment == null)
                         return;
 
@@ -328,7 +328,7 @@ namespace Content.Server.Atmos.Components
     {
         public bool DoToggleAction(ToggleItemActionEventArgs args)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<GasTankComponent?>(args.Item.Uid, out var gasTankComponent)) return false;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<GasTankComponent?>(args.Item, out var gasTankComponent)) return false;
             // no change
             if (gasTankComponent.IsConnected == args.ToggledOn) return false;
             gasTankComponent.ToggleInternals();

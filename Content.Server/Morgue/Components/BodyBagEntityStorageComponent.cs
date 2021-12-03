@@ -29,7 +29,7 @@ namespace Content.Server.Morgue.Components
 
         protected override bool AddToContents(IEntity entity)
         {
-            if (IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(entity.Uid) && !EntitySystem.Get<StandingStateSystem>().IsDown(entity.Uid)) return false;
+            if (IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(entity) && !EntitySystem.Get<StandingStateSystem>().IsDown((EntityUid) entity)) return false;
             return base.AddToContents(entity);
         }
     }

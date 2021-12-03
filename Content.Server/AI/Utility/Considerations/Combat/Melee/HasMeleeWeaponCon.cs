@@ -12,7 +12,7 @@ namespace Content.Server.AI.Utility.Considerations.Combat.Melee
         {
             foreach (var item in context.GetState<EnumerableInventoryState>().GetValue())
             {
-                if (IoCManager.Resolve<IEntityManager>().HasComponent<MeleeWeaponComponent>(item.Uid))
+                if (IoCManager.Resolve<IEntityManager>().HasComponent<MeleeWeaponComponent>(item))
                 {
                     return 1.0f;
                 }

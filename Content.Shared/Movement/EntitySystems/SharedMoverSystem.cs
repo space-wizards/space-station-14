@@ -50,15 +50,15 @@ namespace Content.Shared.Movement.EntitySystems
 
             if (owner != null && session != null)
             {
-                EntityManager.EventBus.RaiseLocalEvent(owner.Uid, new RelayMoveInputEvent(session));
+                EntityManager.EventBus.RaiseLocalEvent(owner, new RelayMoveInputEvent(session));
 
                 // For stuff like "Moving out of locker" or the likes
                 if (owner.IsInContainer() &&
-                    (!IoCManager.Resolve<IEntityManager>().TryGetComponent(owner.Uid, out MobStateComponent? mobState) ||
+                    (!IoCManager.Resolve<IEntityManager>().TryGetComponent(owner, out MobStateComponent? mobState) ||
                      mobState.IsAlive()))
                 {
                     var relayMoveEvent = new RelayMovementEntityEvent(owner);
-                    IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(owner.Uid).ParentUid, relayMoveEvent);
+                    IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(owner).ParentUid, relayMoveEvent);
                 }
             }
 
@@ -82,10 +82,10 @@ namespace Content.Shared.Movement.EntitySystems
 
             var ent = session?.AttachedEntity;
 
-            if (ent == null || !IoCManager.Resolve<IEntityManager>().EntityExists(ent.Uid))
+            if (ent == null || !IoCManager.Resolve<IEntityManager>().EntityExists(ent))
                 return false;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(ent.Uid, out T? comp))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(ent, out T? comp))
                 return false;
 
             component = comp;

@@ -42,7 +42,7 @@ namespace Content.Server.Storage.EntitySystems
 
                 for (var i = 0; i < storageItem.Amount; i++)
                 {
-                    entityToPlaceInHands = EntityManager.SpawnEntity(storageItem.PrototypeId, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.User.Uid).Coordinates);
+                    entityToPlaceInHands = EntityManager.SpawnEntity(storageItem.PrototypeId, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.User).Coordinates);
                 }
 
                 if (!string.IsNullOrEmpty(storageItem.GroupId)) alreadySpawnedGroups.Add(storageItem.GroupId);
@@ -55,11 +55,11 @@ namespace Content.Server.Storage.EntitySystems
             if (component.Uses == 0)
             {
                 args.Handled = true;
-                IoCManager.Resolve<IEntityManager>().DeleteEntity(owner.Uid);
+                IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) owner);
             }
 
             if (entityToPlaceInHands != null
-                && IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedHandsComponent?>(args.User.Uid, out var hands))
+                && IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedHandsComponent?>(args.User, out var hands))
             {
                 hands.TryPutInAnyHand(entityToPlaceInHands);
             }

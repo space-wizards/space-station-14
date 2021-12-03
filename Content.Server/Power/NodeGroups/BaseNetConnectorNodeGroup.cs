@@ -16,7 +16,7 @@ namespace Content.Server.Power.NodeGroups
 
             foreach (var node in groupNodes)
             {
-                var newNetConnectorComponents = IoCManager.Resolve<IEntityManager>().GetComponents<IBaseNetConnectorComponent<TNetType>>(node.Owner.Uid)
+                var newNetConnectorComponents = IoCManager.Resolve<IEntityManager>().GetComponents<IBaseNetConnectorComponent<TNetType>>(node.Owner)
                     .Where(powerComp => (powerComp.NodeId == null || powerComp.NodeId == node.Name) &&
                                         (NodeGroupID) powerComp.Voltage == node.NodeGroupID)
                     .ToList();

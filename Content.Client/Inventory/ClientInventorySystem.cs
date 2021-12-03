@@ -38,7 +38,7 @@ namespace Content.Client.Inventory
         {
             if (component.TryGetSlot(EquipmentSlotDefines.Slots.SHOES, out IEntity? shoes))
             {
-                RaiseLocalEvent(shoes.Uid, args, false);
+                RaiseLocalEvent(shoes, args, false);
             }
         }
 
@@ -48,7 +48,7 @@ namespace Content.Client.Inventory
             {
                 if (ent != null)
                 {
-                    RaiseLocalEvent(ent.Uid, args, false);
+                    RaiseLocalEvent(ent, args, false);
                 }
             }
         }

@@ -70,16 +70,16 @@ namespace Content.IntegrationTests.Tests.PDA
                 Assert.NotNull(id);
 
                 // Put PDA in hand
-                var dummyPda = sEntityManager.SpawnEntity(PdaDummy, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.Uid).MapPosition);
-                var pdaItemComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(dummyPda.Uid);
-                IoCManager.Resolve<IEntityManager>().GetComponent<HandsComponent>(player.Uid).PutInHand(pdaItemComponent);
+                var dummyPda = sEntityManager.SpawnEntity(PdaDummy, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player).MapPosition);
+                var pdaItemComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(dummyPda);
+                IoCManager.Resolve<IEntityManager>().GetComponent<HandsComponent>(player).PutInHand(pdaItemComponent);
 
-                var pdaComponent = IoCManager.Resolve<IEntityManager>().GetComponent<PDAComponent>(dummyPda.Uid);
-                var pdaIdCard = sEntityManager.SpawnEntity(IdCardDummy, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.Uid).MapPosition);
+                var pdaComponent = IoCManager.Resolve<IEntityManager>().GetComponent<PDAComponent>(dummyPda);
+                var pdaIdCard = sEntityManager.SpawnEntity(IdCardDummy, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player).MapPosition);
 
-                var itemSlots = IoCManager.Resolve<IEntityManager>().GetComponent<ItemSlotsComponent>(dummyPda.Uid);
+                var itemSlots = IoCManager.Resolve<IEntityManager>().GetComponent<ItemSlotsComponent>(dummyPda);
                 sEntityManager.EntitySysManager.GetEntitySystem<ItemSlotsSystem>()
-                    .TryInsert(dummyPda.Uid, pdaComponent.IdSlot, pdaIdCard);
+                    .TryInsert(dummyPda, pdaComponent.IdSlot, pdaIdCard);
                 var pdaContainedId = pdaComponent.ContainedID;
 
                 // The PDA in the hand should be found first
@@ -90,11 +90,11 @@ namespace Content.IntegrationTests.Tests.PDA
                 Assert.That(id, Is.EqualTo(pdaContainedId));
 
                 // Put ID card in hand
-                var idDummy = sEntityManager.SpawnEntity(IdCardDummy, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.Uid).MapPosition);
-                var idItemComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(idDummy.Uid);
-                IoCManager.Resolve<IEntityManager>().GetComponent<HandsComponent>(player.Uid).PutInHand(idItemComponent);
+                var idDummy = sEntityManager.SpawnEntity(IdCardDummy, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player).MapPosition);
+                var idItemComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(idDummy);
+                IoCManager.Resolve<IEntityManager>().GetComponent<HandsComponent>(player).PutInHand(idItemComponent);
 
-                var idCardComponent = IoCManager.Resolve<IEntityManager>().GetComponent<IdCardComponent>(idDummy.Uid);
+                var idCardComponent = IoCManager.Resolve<IEntityManager>().GetComponent<IdCardComponent>(idDummy);
 
                 // The ID in the hand should be found first
                 Assert.NotNull(player.GetHeldId());
@@ -103,7 +103,7 @@ namespace Content.IntegrationTests.Tests.PDA
                 Assert.That(id, Is.EqualTo(idCardComponent));
 
                 // Remove all IDs and PDAs
-                var inventory = IoCManager.Resolve<IEntityManager>().GetComponent<InventoryComponent>(player.Uid);
+                var inventory = IoCManager.Resolve<IEntityManager>().GetComponent<InventoryComponent>(player);
 
                 foreach (var slot in inventory.Slots)
                 {
@@ -114,13 +114,13 @@ namespace Content.IntegrationTests.Tests.PDA
                         continue;
                     }
 
-                    if (IoCManager.Resolve<IEntityManager>().HasComponent<PDAComponent>(item.Owner.Uid))
+                    if (IoCManager.Resolve<IEntityManager>().HasComponent<PDAComponent>(item.Owner))
                     {
                         inventory.ForceUnequip(slot);
                     }
                 }
 
-                var hands = IoCManager.Resolve<IEntityManager>().GetComponent<HandsComponent>(player.Uid);
+                var hands = IoCManager.Resolve<IEntityManager>().GetComponent<HandsComponent>(player);
 
                 hands.Drop(dummyPda, false);
                 hands.Drop(idDummy, false);

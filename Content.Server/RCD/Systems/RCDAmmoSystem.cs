@@ -29,7 +29,7 @@ namespace Content.Server.RCD.Systems
             if (args.Handled || !args.CanReach)
                 return;
 
-            if (args.Target == null || !EntityManager.TryGetComponent(args.Target.Uid, out RCDComponent? rcdComponent))
+            if (args.Target == null || !EntityManager.TryGetComponent(args.Target, out RCDComponent? rcdComponent))
                 return;
 
             if (rcdComponent.MaxAmmo - rcdComponent.CurrentAmmo < component.RefillAmmo)

@@ -117,7 +117,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             }
 
             _spent = true;
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearanceComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearanceComponent))
             {
                 appearanceComponent.SetData(AmmoVisuals.Spent, true);
             }
@@ -144,7 +144,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
                 EffectSprite = _muzzleFlashSprite,
                 Born = time,
                 DeathTime = deathTime,
-                AttachedEntityUid = entity.Uid,
+                AttachedEntityUid = entity,
                 AttachedOffset = offset,
                 //Rotated from east facing
                 Rotation = (float) angle.Theta,

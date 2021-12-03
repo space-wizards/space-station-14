@@ -22,7 +22,7 @@ namespace Content.Client.Interactable
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
-            var otherPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other.Uid).MapPosition;
+            var otherPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other).MapPosition;
 
             return origin.InRangeUnobstructed(otherPosition, range, collisionMask, predicate, ignoreInsideBlocker,
                 popup);

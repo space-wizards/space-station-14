@@ -23,7 +23,7 @@ namespace Content.Server.Objectives.Conditions
                 if(Target.CharacterName != null)
                     targetName = Target.CharacterName;
                 else if (Target.OwnedEntity != null)
-                    targetName = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Target.OwnedEntity.Uid).EntityName;
+                    targetName = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Target.OwnedEntity).EntityName;
 
                 return Loc.GetString("objective-condition-kill-person-title", ("targetName", targetName));
             }

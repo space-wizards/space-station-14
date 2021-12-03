@@ -13,7 +13,7 @@ namespace Content.Client.Power.APC
         {
             base.InitializeEntity(entity);
 
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(entity.Uid);
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(entity);
 
             sprite.LayerMapSet(Layers.ChargeState, sprite.AddLayerState("apco3-0"));
             sprite.LayerSetShader(Layers.ChargeState, "unshaded");
@@ -35,7 +35,7 @@ namespace Content.Client.Power.APC
         {
             base.OnChangeData(component);
 
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner.Uid);
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
             if (component.TryGetData<ApcChargeState>(ApcVisuals.ChargeState, out var state))
             {
                 switch (state)

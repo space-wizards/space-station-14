@@ -30,7 +30,7 @@ namespace Content.Server.Construction.Conditions
         {
             var entity = args.Examined;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out WiresComponent? wires)) return false;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out WiresComponent? wires)) return false;
 
             switch (Open)
             {

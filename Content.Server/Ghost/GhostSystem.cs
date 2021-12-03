@@ -64,7 +64,7 @@ namespace Content.Server.Ghost
             visibility.Layer |= (int) VisibilityFlags.Ghost;
             visibility.Layer &= ~(int) VisibilityFlags.Normal;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out EyeComponent? eye))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner, out EyeComponent? eye))
             {
                 eye.VisibilityMask |= (uint) VisibilityFlags.Ghost;
             }
@@ -75,17 +75,17 @@ namespace Content.Server.Ghost
         private void OnGhostShutdown(EntityUid uid, GhostComponent component, ComponentShutdown args)
         {
             // Perf: If the entity is deleting itself, no reason to change these back.
-            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(component.Owner.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(component.Owner.Uid).EntityLifeStage) < EntityLifeStage.Terminating)
+            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(component.Owner) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(component.Owner).EntityLifeStage) < EntityLifeStage.Terminating)
             {
                 // Entity can't be seen by ghosts anymore.
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out VisibilityComponent? visibility))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner, out VisibilityComponent? visibility))
                 {
                     visibility.Layer &= ~(int) VisibilityFlags.Ghost;
                     visibility.Layer |= (int) VisibilityFlags.Normal;
                 }
 
                 // Entity can't see ghosts anymore.
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out EyeComponent? eye))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner, out EyeComponent? eye))
                 {
                     eye.VisibilityMask &= ~(uint) VisibilityFlags.Ghost;
                 }
@@ -117,13 +117,13 @@ namespace Content.Server.Ghost
             var entity = args.SenderSession.AttachedEntity;
 
             if (entity == null ||
-                !IoCManager.Resolve<IEntityManager>().HasComponent<GhostComponent>(entity.Uid))
+                !IoCManager.Resolve<IEntityManager>().HasComponent<GhostComponent>(entity))
             {
                 Logger.Warning($"User {args.SenderSession.Name} sent a {nameof(GhostWarpsRequestEvent)} without being a ghost.");
                 return;
             }
 
-            var response = new GhostWarpsResponseEvent(GetLocationNames().ToList(), GetPlayerWarps(entity.Uid));
+            var response = new GhostWarpsResponseEvent(GetLocationNames().ToList(), GetPlayerWarps(entity));
             RaiseNetworkEvent(response, args.SenderSession.ConnectedClient);
         }
 
@@ -132,9 +132,9 @@ namespace Content.Server.Ghost
             var entity = args.SenderSession.AttachedEntity;
 
             if (entity == null ||
-                !IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out GhostComponent? ghost) ||
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out GhostComponent? ghost) ||
                 !ghost.CanReturnToBody ||
-                !IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out ActorComponent? actor))
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ActorComponent? actor))
             {
                 Logger.Warning($"User {args.SenderSession.Name} sent an invalid {nameof(GhostReturnToBodyRequest)}");
                 return;
@@ -146,7 +146,7 @@ namespace Content.Server.Ghost
         private void OnGhostWarpToLocationRequest(GhostWarpToLocationRequestEvent msg, EntitySessionEventArgs args)
         {
             if (args.SenderSession.AttachedEntity == null ||
-                !IoCManager.Resolve<IEntityManager>().TryGetComponent(args.SenderSession.AttachedEntity.Uid, out GhostComponent? ghost))
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(args.SenderSession.AttachedEntity, out GhostComponent? ghost))
             {
                 Logger.Warning($"User {args.SenderSession.Name} tried to warp to {msg.Name} without being a ghost.");
                 return;
@@ -154,7 +154,7 @@ namespace Content.Server.Ghost
 
             if (FindLocation(msg.Name) is { } warp)
             {
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(ghost.Owner.Uid).Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(warp.Owner.Uid).Coordinates;
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(ghost.Owner).Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(warp.Owner).Coordinates;
             }
 
             Logger.Warning($"User {args.SenderSession.Name} tried to warp to an invalid warp: {msg.Name}");
@@ -163,7 +163,7 @@ namespace Content.Server.Ghost
         private void OnGhostWarpToTargetRequest(GhostWarpToTargetRequestEvent msg, EntitySessionEventArgs args)
         {
             if (args.SenderSession.AttachedEntity == null ||
-                !IoCManager.Resolve<IEntityManager>().TryGetComponent(args.SenderSession.AttachedEntity.Uid, out GhostComponent? ghost))
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(args.SenderSession.AttachedEntity, out GhostComponent? ghost))
             {
                 Logger.Warning($"User {args.SenderSession.Name} tried to warp to {msg.Target} without being a ghost.");
                 return;
@@ -175,19 +175,19 @@ namespace Content.Server.Ghost
                 return;
             }
 
-            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(ghost.Owner.Uid).Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates;
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(ghost.Owner).Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates;
         }
 
         private void DeleteEntity(EntityUid uid)
         {
             if (!EntityManager.TryGetEntity(uid, out var entity)
-                || (!IoCManager.Resolve<IEntityManager>().EntityExists(entity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted
-                || (!IoCManager.Resolve<IEntityManager>().EntityExists(entity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityLifeStage) == EntityLifeStage.Terminating)
+                || (!IoCManager.Resolve<IEntityManager>().EntityExists(entity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityLifeStage) >= EntityLifeStage.Deleted
+                || (!IoCManager.Resolve<IEntityManager>().EntityExists(entity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityLifeStage) == EntityLifeStage.Terminating)
                 return;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<MindComponent?>(entity.Uid, out var mind))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<MindComponent?>(entity, out var mind))
                 mind.GhostOnShutdown = false;
-            IoCManager.Resolve<IEntityManager>().DeleteEntity(entity.Uid);
+            IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) entity);
         }
 
         private IEnumerable<string> GetLocationNames()
@@ -222,7 +222,7 @@ namespace Content.Server.Ghost
             {
                 if (player.AttachedEntity != null)
                 {
-                    players.Add(player.AttachedEntity.Uid, IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(player.AttachedEntity.Uid).EntityName);
+                    players.Add(player.AttachedEntity, IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(player.AttachedEntity).EntityName);
                 }
             }
 

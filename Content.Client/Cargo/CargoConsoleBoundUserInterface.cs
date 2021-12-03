@@ -50,8 +50,8 @@ namespace Content.Client.Cargo
         {
             base.Open();
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Owner.Uid, out GalacticMarketComponent? market) ||
-                !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Owner.Uid, out CargoOrderDatabaseComponent? orders)) return;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Owner, out GalacticMarketComponent? market) ||
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Owner, out CargoOrderDatabaseComponent? orders)) return;
 
             Market = market;
             Orders = orders;

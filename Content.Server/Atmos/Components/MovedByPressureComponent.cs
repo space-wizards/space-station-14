@@ -42,12 +42,12 @@ namespace Content.Server.Atmos.Components
         public void ExperiencePressureDifference(int cycle, float pressureDifference, AtmosDirection direction,
             float pressureResistanceProbDelta, EntityCoordinates throwTarget)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out PhysicsComponent? physics))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out PhysicsComponent? physics))
                 return;
 
             // TODO ATMOS stuns?
 
-            var transform = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(physics.Owner.Uid);
+            var transform = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(physics.Owner);
             var maxForce = MathF.Sqrt(pressureDifference) * 2.25f;
             var moveProb = 100f;
 
@@ -61,7 +61,7 @@ namespace Content.Server.Atmos.Components
                                                  && (maxForce >= (MoveResist * MoveForcePushRatio)))
                 || (physics.BodyType == BodyType.Static && (maxForce >= (MoveResist * MoveForceForcePushRatio))))
             {
-                if (IoCManager.Resolve<IEntityManager>().HasComponent<MobStateComponent>(physics.Owner.Uid))
+                if (IoCManager.Resolve<IEntityManager>().HasComponent<MobStateComponent>(physics.Owner))
                 {
                     physics.BodyStatus = BodyStatus.InAir;
 
@@ -72,10 +72,10 @@ namespace Content.Server.Atmos.Components
 
                     Owner.SpawnTimer(2000, () =>
                     {
-                        if (Deleted || !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out PhysicsComponent? physicsComponent)) return;
+                        if (Deleted || !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out PhysicsComponent? physicsComponent)) return;
 
                         // Uhh if you get race conditions good luck buddy.
-                        if (IoCManager.Resolve<IEntityManager>().HasComponent<MobStateComponent>(physicsComponent.Owner.Uid))
+                        if (IoCManager.Resolve<IEntityManager>().HasComponent<MobStateComponent>(physicsComponent.Owner))
                         {
                             physicsComponent.BodyStatus = BodyStatus.OnGround;
                         }
@@ -118,7 +118,7 @@ namespace Content.Server.Atmos.Components
 
         public static bool IsMovedByPressure(this IEntity entity, [NotNullWhen(true)] out MovedByPressureComponent? moved)
         {
-            return IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out moved) &&
+            return IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out moved) &&
                    moved.Enabled;
         }
     }

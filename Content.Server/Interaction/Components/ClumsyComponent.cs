@@ -30,7 +30,7 @@ namespace Content.Server.Interaction.Components
         /// <returns>True if a "bad action" happened, false if the normal action should happen.</returns>
         public static bool TryRollClumsy(IEntity entity, float chance)
         {
-            return IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out ClumsyComponent? clumsy)
+            return IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ClumsyComponent? clumsy)
                    && clumsy.RollClumsy(chance);
         }
     }

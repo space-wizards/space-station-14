@@ -25,7 +25,7 @@ namespace Content.Server.Movement.Components
 
         public void PlayFootstep()
         {
-            SoundSystem.Play(Filter.Pvs(Owner), SoundCollection.GetSound(), IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates, AudioHelpers.WithVariation(Variation).WithVolume(-2f));
+            SoundSystem.Play(Filter.Pvs(Owner), SoundCollection.GetSound(), IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates, AudioHelpers.WithVariation(Variation).WithVolume(-2f));
         }
     }
 }

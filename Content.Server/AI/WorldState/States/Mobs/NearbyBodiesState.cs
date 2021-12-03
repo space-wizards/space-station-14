@@ -17,12 +17,12 @@ namespace Content.Server.AI.WorldState.States.Mobs
         {
             var result = new List<IEntity>();
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AiControllerComponent? controller))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AiControllerComponent? controller))
             {
                 return result;
             }
 
-            foreach (var entity in Visibility.GetEntitiesInRange(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates, typeof(SharedBodyComponent), controller.VisionRadius))
+            foreach (var entity in Visibility.GetEntitiesInRange(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates, typeof(SharedBodyComponent), controller.VisionRadius))
             {
                 if (entity == Owner) continue;
                 result.Add(entity);

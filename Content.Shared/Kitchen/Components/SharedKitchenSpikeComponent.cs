@@ -24,7 +24,7 @@ namespace Content.Shared.Kitchen.Components
 
         bool IDragDropOn.CanDragDropOn(DragDropEvent eventArgs)
         {
-            if (!IoCManager.Resolve<IEntityManager>().HasComponent<SharedButcherableComponent>(eventArgs.Dragged.Uid))
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<SharedButcherableComponent>(eventArgs.Dragged))
             {
                 return false;
             }

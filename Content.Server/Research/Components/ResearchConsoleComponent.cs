@@ -27,7 +27,7 @@ namespace Content.Server.Research.Components
         [DataField("sound")]
         private SoundSpecifier _soundCollectionName = new SoundCollectionSpecifier("keyboard");
 
-        [ViewVariables] private bool Powered => !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
+        [ViewVariables] private bool Powered => !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ResearchConsoleUiKey.Key);
 
@@ -47,9 +47,9 @@ namespace Content.Server.Research.Components
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage message)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out TechnologyDatabaseComponent? database))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out TechnologyDatabaseComponent? database))
                 return;
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ResearchClientComponent? client))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ResearchClientComponent? client))
                 return;
             if (!Powered)
                 return;
@@ -90,7 +90,7 @@ namespace Content.Server.Research.Components
 
         private ResearchConsoleBoundInterfaceState GetNewUiState()
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ResearchClientComponent? client) ||
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ResearchClientComponent? client) ||
                 client.Server == null)
                 return new ResearchConsoleBoundInterfaceState(default, default);
 
@@ -111,7 +111,7 @@ namespace Content.Server.Research.Components
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User.Uid, out ActorComponent? actor))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User, out ActorComponent? actor))
                 return;
             if (!Powered)
             {

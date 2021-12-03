@@ -36,7 +36,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Clothing.Head
 
             foreach (var entity in context.GetState<NearbyClothingState>().GetValue())
             {
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out ClothingComponent? clothing) &&
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ClothingComponent? clothing) &&
                     (clothing.SlotFlags & EquipmentSlotDefines.SlotFlags.HEAD) != 0)
                 {
                     yield return new PickUpHead {Owner = owner, Target = entity, Bonus = Bonus};

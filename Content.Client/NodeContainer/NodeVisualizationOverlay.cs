@@ -81,9 +81,9 @@ namespace Content.Client.NodeContainer
 
             var entity = _entityManager.GetEntity(node.Entity);
 
-            var gridId = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).GridID;
+            var gridId = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).GridID;
             var grid = _mapManager.GetGrid(gridId);
-            var gridTile = grid.TileIndicesFor(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates);
+            var gridTile = grid.TileIndicesFor(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates);
 
             var sb = new StringBuilder();
             sb.Append($"entity: {entity}\n");
@@ -117,13 +117,13 @@ namespace Content.Client.NodeContainer
             var worldAABB = overlayDrawArgs.WorldAABB;
             _lookup.FastEntitiesIntersecting(map, ref worldAABB, entity =>
             {
-                if (!_system.Entities.TryGetValue(entity.Uid, out var nodeData))
+                if (!_system.Entities.TryGetValue(entity, out var nodeData))
                     return;
 
-                var gridId = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).GridID;
+                var gridId = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).GridID;
                 var grid = _mapManager.GetGrid(gridId);
                 var gridDict = _gridIndex.GetOrNew(gridId);
-                var coords = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates;
+                var coords = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates;
 
                 // TODO: This probably shouldn't be capable of returning NaN...
                 if (float.IsNaN(coords.Position.X) || float.IsNaN(coords.Position.Y))

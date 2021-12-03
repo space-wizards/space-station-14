@@ -140,7 +140,7 @@ namespace Content.Client.Inventory
                 return;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out ClothingComponent? clothing))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ClothingComponent? clothing))
             {
                 var flag = SlotMasks[slot];
                 var data = clothing.GetEquippedStateInfo(flag, SpeciesId);

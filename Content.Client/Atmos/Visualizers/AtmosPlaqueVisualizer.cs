@@ -17,7 +17,7 @@ namespace Content.Client.Atmos.Visualizers
         {
             base.InitializeEntity(entity);
 
-            IoCManager.Resolve<IEntityManager>().GetComponentOrNull<SpriteComponent>(entity.Uid);
+            IoCManager.Resolve<IEntityManager>().GetComponentOrNull<SpriteComponent>(entity);
         }
 
         public override void OnChangeData(AppearanceComponent component)

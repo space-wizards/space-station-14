@@ -17,7 +17,7 @@ namespace Content.Client.MachineLinking
         {
             base.InitializeEntity(entity);
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out SpriteComponent? sprite))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out SpriteComponent? sprite))
             {
                 sprite.LayerMapReserveBlank(Layer);
             }

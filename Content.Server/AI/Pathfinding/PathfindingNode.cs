@@ -44,7 +44,7 @@ namespace Content.Server.AI.Pathfinding
 
         public static bool IsRelevant(IEntity entity, IPhysBody physicsComponent)
         {
-            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).GridID == GridId.Invalid ||
+            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).GridID == GridId.Invalid ||
                 (PathfindingSystem.TrackedCollisionLayers & physicsComponent.CollisionLayer) == 0)
             {
                 return false;
@@ -261,13 +261,13 @@ namespace Content.Server.AI.Pathfinding
         public void AddEntity(IEntity entity, IPhysBody physicsComponent)
         {
             // If we're a door
-            if (IoCManager.Resolve<IEntityManager>().HasComponent<AirlockComponent>(entity.Uid) || IoCManager.Resolve<IEntityManager>().HasComponent<ServerDoorComponent>(entity.Uid))
+            if (IoCManager.Resolve<IEntityManager>().HasComponent<AirlockComponent>(entity) || IoCManager.Resolve<IEntityManager>().HasComponent<ServerDoorComponent>(entity))
             {
                 // If we need access to traverse this then add to readers, otherwise no point adding it (except for maybe tile costs in future)
                 // TODO: Check for powered I think (also need an event for when it's depowered
                 // AccessReader calls this whenever opening / closing but it can seem to get called multiple times
                 // Which may or may not be intended?
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out AccessReader? accessReader) && !_accessReaders.ContainsKey(entity))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out AccessReader? accessReader) && !_accessReaders.ContainsKey(entity))
                 {
                     _accessReaders.Add(entity, accessReader);
                     ParentChunk.Dirty();

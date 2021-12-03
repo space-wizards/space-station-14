@@ -47,24 +47,24 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             foreach (var entity in holder.Container.ContainedEntities.ToArray())
             {
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out IPhysBody? physics))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out IPhysBody? physics))
                 {
                     physics.CanCollide = true;
                 }
 
                 holder.Container.ForceRemove(entity);
 
-                if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Parent == holderTransform)
+                if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Parent == holderTransform)
                 {
                     if (duc != null)
                     {
                         // Insert into disposal unit
-                        IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates = new EntityCoordinates(duc.OwnerUid, Vector2.Zero);
+                        IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates = new EntityCoordinates(duc.OwnerUid, Vector2.Zero);
                         duc.Container.Insert(entity);
                     }
                     else
                     {
-                        IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).AttachParentToContainerOrGrid();
+                        IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).AttachParentToContainerOrGrid();
                     }
                 }
             }
@@ -161,11 +161,11 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 if (holder.TimeLeft > 0)
                 {
                     var progress = 1 - holder.TimeLeft / holder.StartingTime;
-                    var origin = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(currentTube.Owner.Uid).Coordinates;
+                    var origin = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(currentTube.Owner).Coordinates;
                     var destination = holder.CurrentDirection.ToVec();
                     var newPosition = destination * progress;
 
-                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(holder.Owner.Uid).Coordinates = origin.Offset(newPosition);
+                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(holder.Owner).Coordinates = origin.Offset(newPosition);
 
                     continue;
                 }

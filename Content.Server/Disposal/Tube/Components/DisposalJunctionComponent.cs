@@ -27,14 +27,14 @@ namespace Content.Server.Disposal.Tube.Components
 
         protected override Direction[] ConnectableDirections()
         {
-            var direction = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).LocalRotation;
+            var direction = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).LocalRotation;
 
             return _degrees.Select(degree => new Angle(degree.Theta + direction.Theta).GetDir()).ToArray();
         }
 
         public override Direction NextDirection(DisposalHolderComponent holder)
         {
-            var next = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).LocalRotation.GetDir();
+            var next = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).LocalRotation.GetDir();
             var directions = ConnectableDirections().Skip(1).ToArray();
 
             if (holder.PreviousDirectionFrom == Direction.Invalid ||

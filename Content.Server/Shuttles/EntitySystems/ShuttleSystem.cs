@@ -57,12 +57,12 @@ namespace Content.Server.Shuttles.EntitySystems
 
         private void OnShuttleStartup(EntityUid uid, ShuttleComponent component, ComponentStartup args)
         {
-            if (!IoCManager.Resolve<IEntityManager>().HasComponent<IMapGridComponent>(component.Owner.Uid))
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<IMapGridComponent>(component.Owner))
             {
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out PhysicsComponent? physicsComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner, out PhysicsComponent? physicsComponent))
             {
                 return;
             }
@@ -75,7 +75,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
         public void Toggle(ShuttleComponent component)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out PhysicsComponent? physicsComponent)) return;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner, out PhysicsComponent? physicsComponent)) return;
 
             component.Enabled = !component.Enabled;
 
@@ -111,7 +111,7 @@ namespace Content.Server.Shuttles.EntitySystems
             // None of the below is necessary for any cleanup if we're just deleting.
             if (EntityManager.GetComponent<MetaDataComponent>(uid).EntityLifeStage >= EntityLifeStage.Terminating) return;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out PhysicsComponent? physicsComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner, out PhysicsComponent? physicsComponent))
             {
                 return;
             }

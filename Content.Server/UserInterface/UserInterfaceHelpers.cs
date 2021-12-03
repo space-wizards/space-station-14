@@ -8,7 +8,7 @@ namespace Content.Server.UserInterface
     {
         public static BoundUserInterface? GetUIOrNull(this IEntity entity, object uiKey)
         {
-            return IoCManager.Resolve<IEntityManager>().GetComponentOrNull<ServerUserInterfaceComponent>(entity.Uid)?.GetBoundUserInterfaceOrNull(uiKey);
+            return IoCManager.Resolve<IEntityManager>().GetComponentOrNull<ServerUserInterfaceComponent>(entity)?.GetBoundUserInterfaceOrNull(uiKey);
         }
     }
 }

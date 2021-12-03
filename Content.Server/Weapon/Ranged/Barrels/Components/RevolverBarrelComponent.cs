@@ -82,7 +82,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             {
                 slotsSpent[i] = null;
                 var ammoEntity = _ammoSlots[i];
-                if (ammoEntity != null && IoCManager.Resolve<IEntityManager>().TryGetComponent(ammoEntity.Uid, out AmmoComponent? ammo))
+                if (ammoEntity != null && IoCManager.Resolve<IEntityManager>().TryGetComponent(ammoEntity, out AmmoComponent? ammo))
                 {
                     slotsSpent[i] = ammo.Spent;
                 }
@@ -114,7 +114,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
             for (var i = 0; i < _unspawnedCount; i++)
             {
-                var entity = IoCManager.Resolve<IEntityManager>().SpawnEntity(_fillPrototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
+                var entity = IoCManager.Resolve<IEntityManager>().SpawnEntity(_fillPrototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
                 _ammoSlots[idx] = entity;
                 _ammoContainer.Insert(entity);
                 idx++;
@@ -126,7 +126,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         private void UpdateAppearance()
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
                 return;
             }
@@ -139,7 +139,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         public bool TryInsertBullet(IEntity user, IEntity entity)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out AmmoComponent? ammoComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out AmmoComponent? ammoComponent))
             {
                 return false;
             }
@@ -209,7 +209,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             IEntity? bullet = null;
             if (ammo != null)
             {
-                var ammoComponent = IoCManager.Resolve<IEntityManager>().GetComponent<AmmoComponent>(ammo.Uid);
+                var ammoComponent = IoCManager.Resolve<IEntityManager>().GetComponent<AmmoComponent>(ammo);
                 bullet = ammoComponent.TakeBullet(spawnAt);
                 if (ammoComponent.Caseless)
                 {

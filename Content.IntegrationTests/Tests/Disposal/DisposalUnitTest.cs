@@ -44,7 +44,7 @@ namespace Content.IntegrationTests.Tests.Disposal
             foreach (var entity in entities)
             {
                 Assert.That(system.CanInsert(unit, entity), Is.EqualTo(result));
-                system.TryInsert(unit.Owner.Uid, entity.Uid, entity.Uid);
+                system.TryInsert(unit.Owner, entity, entity);
             }
         }
 
@@ -143,22 +143,22 @@ namespace Content.IntegrationTests.Tests.Disposal
                 human = entityManager.SpawnEntity("HumanDummy", coordinates);
                 wrench = entityManager.SpawnEntity("WrenchDummy", coordinates);
                 disposalUnit = entityManager.SpawnEntity("DisposalUnitDummy", coordinates);
-                disposalTrunk = entityManager.SpawnEntity("DisposalTrunkDummy", IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(disposalUnit.Uid).MapPosition);
+                disposalTrunk = entityManager.SpawnEntity("DisposalTrunkDummy", IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(disposalUnit).MapPosition);
 
                 // Test for components existing
                 ref DisposalUnitComponent? comp = ref unit!;
-                Assert.True(IoCManager.Resolve<IEntityManager>().TryGetComponent(disposalUnit.Uid, out comp));
-                Assert.True(IoCManager.Resolve<IEntityManager>().HasComponent<DisposalEntryComponent>(disposalTrunk.Uid));
+                Assert.True(IoCManager.Resolve<IEntityManager>().TryGetComponent(disposalUnit, out comp));
+                Assert.True(IoCManager.Resolve<IEntityManager>().HasComponent<DisposalEntryComponent>(disposalTrunk));
 
                 // Can't insert, unanchored and unpowered
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(unit.Owner.Uid).Anchored = false;
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(unit.Owner).Anchored = false;
                 UnitInsertContains(unit, false, human, wrench, disposalUnit, disposalTrunk);
             });
 
             await server.WaitAssertion(() =>
             {
                 // Anchor the disposal unit
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(unit.Owner.Uid).Anchored = true;
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(unit.Owner).Anchored = true;
 
                 // No power
                 Assert.False(unit.Powered);
@@ -173,7 +173,7 @@ namespace Content.IntegrationTests.Tests.Disposal
             await server.WaitAssertion(() =>
             {
                 // Move the disposal trunk away
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(disposalTrunk.Uid).WorldPosition += (1, 0);
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(disposalTrunk).WorldPosition += (1, 0);
 
                 // Fail to flush with a mob and an item
                 Flush(unit, false, human, wrench);
@@ -182,7 +182,7 @@ namespace Content.IntegrationTests.Tests.Disposal
             await server.WaitAssertion(() =>
             {
                 // Move the disposal trunk back
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(disposalTrunk.Uid).WorldPosition -= (1, 0);
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(disposalTrunk).WorldPosition -= (1, 0);
 
                 // Fail to flush with a mob and an item, no power
                 Flush(unit, false, human, wrench);
@@ -191,7 +191,7 @@ namespace Content.IntegrationTests.Tests.Disposal
             await server.WaitAssertion(() =>
             {
                 // Remove power need
-                Assert.True(IoCManager.Resolve<IEntityManager>().TryGetComponent(disposalUnit.Uid, out ApcPowerReceiverComponent power));
+                Assert.True(IoCManager.Resolve<IEntityManager>().TryGetComponent(disposalUnit, out ApcPowerReceiverComponent power));
                 power!.NeedsPower = false;
                 Assert.True(unit.Powered);
 

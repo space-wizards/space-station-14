@@ -50,7 +50,7 @@ namespace Content.Client.CharacterAppearance.Systems
             {
                 foreach (var (part, _) in body.Parts)
                 {
-                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent(part.Owner.Uid, out SpriteComponent? partSprite))
+                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent(part.Owner, out SpriteComponent? partSprite))
                     {
                         partSprite!.Color = component.Appearance.SkinColor;
                     }
@@ -108,12 +108,12 @@ namespace Content.Client.CharacterAppearance.Systems
         private void BodyPartAdded(HumanoidAppearanceBodyPartAddedEvent args)
         {
             if(!EntityManager.TryGetEntity(args.Uid, out var owner)) return;
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(owner.Uid, out SpriteComponent? sprite))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(owner, out SpriteComponent? sprite))
             {
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().HasComponent<SpriteComponent>(args.Args.Part.Owner.Uid))
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<SpriteComponent>(args.Args.Part.Owner))
             {
                 return;
             }
@@ -132,12 +132,12 @@ namespace Content.Client.CharacterAppearance.Systems
         private void BodyPartRemoved(HumanoidAppearanceBodyPartRemovedEvent args)
         {
             if(!EntityManager.TryGetEntity(args.Uid, out var owner)) return;
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(owner.Uid, out SpriteComponent? sprite))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(owner, out SpriteComponent? sprite))
             {
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().HasComponent<SpriteComponent>(args.Args.Part.Owner.Uid))
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<SpriteComponent>(args.Args.Part.Owner))
             {
                 return;
             }

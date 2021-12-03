@@ -43,7 +43,7 @@ namespace Content.Server.Research.Components
         protected override void Initialize()
         {
             base.Initialize();
-            IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out _powerReceiver);
+            IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out _powerReceiver);
         }
     }
 }

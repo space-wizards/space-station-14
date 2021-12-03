@@ -13,7 +13,7 @@ namespace Content.Server.Actions.Actions
     {
         public void DoTargetPointAction(TargetPointItemActionEventArgs args)
         {
-            args.Performer.PopupMessageEveryone(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(args.Item.Uid).EntityName + ": Clicked local position " +
+            args.Performer.PopupMessageEveryone(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(args.Item).EntityName + ": Clicked local position " +
                                                 args.Target);
         }
 

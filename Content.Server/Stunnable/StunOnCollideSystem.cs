@@ -26,7 +26,7 @@ namespace Content.Server.Stunnable
 
         private void HandleCollide(EntityUid uid, StunOnCollideComponent component, StartCollideEvent args)
         {
-            var otherUid = args.OtherFixture.Body.Owner.Uid;
+            var otherUid = (EntityUid) args.OtherFixture.Body.Owner;
 
             if (EntityManager.TryGetComponent<StatusEffectsComponent>(otherUid, out var status))
             {

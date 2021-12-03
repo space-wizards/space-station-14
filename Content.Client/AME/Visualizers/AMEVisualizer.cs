@@ -12,7 +12,7 @@ namespace Content.Client.AME.Visualizers
         public override void InitializeEntity(IEntity entity)
         {
             base.InitializeEntity(entity);
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(entity.Uid);
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(entity);
             sprite.LayerMapSet(Layers.Core, sprite.AddLayerState("core"));
             sprite.LayerSetVisible(Layers.Core, false);
             sprite.LayerMapSet(Layers.CoreState, sprite.AddLayerState("core_weak"));
@@ -22,7 +22,7 @@ namespace Content.Client.AME.Visualizers
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner.Uid);
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
             if (component.TryGetData<string>(AMEShieldVisuals.Core, out var core))
             {
                 if (core == "isCore")

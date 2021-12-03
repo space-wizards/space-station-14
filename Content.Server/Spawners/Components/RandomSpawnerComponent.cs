@@ -32,7 +32,7 @@ namespace Content.Server.Spawners.Components
         {
             if (RarePrototypes.Count > 0 && (RareChance == 1.0f || _robustRandom.Prob(RareChance)))
             {
-                IoCManager.Resolve<IEntityManager>().SpawnEntity(_robustRandom.Pick(RarePrototypes), IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
+                IoCManager.Resolve<IEntityManager>().SpawnEntity(_robustRandom.Pick(RarePrototypes), IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
                 return;
             }
 
@@ -47,15 +47,15 @@ namespace Content.Server.Spawners.Components
                 return;
             }
 
-            if(!((!IoCManager.Resolve<IEntityManager>().EntityExists(Owner.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityLifeStage) >= EntityLifeStage.Deleted))
+            if(!((!IoCManager.Resolve<IEntityManager>().EntityExists(Owner) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityLifeStage) >= EntityLifeStage.Deleted))
             {
                 var random = IoCManager.Resolve<IRobustRandom>();
 
                 var x_negative = random.Prob(0.5f) ? -1 : 1;
                 var y_negative = random.Prob(0.5f) ? -1 : 1;
 
-                var entity = IoCManager.Resolve<IEntityManager>().SpawnEntity(_robustRandom.Pick(Prototypes), IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).LocalPosition += new Vector2(random.NextFloat() * Offset * x_negative, random.NextFloat() * Offset * y_negative);
+                var entity = IoCManager.Resolve<IEntityManager>().SpawnEntity(_robustRandom.Pick(Prototypes), IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).LocalPosition += new Vector2(random.NextFloat() * Offset * x_negative, random.NextFloat() * Offset * y_negative);
             }
 
         }
@@ -63,7 +63,7 @@ namespace Content.Server.Spawners.Components
         public override void MapInit()
         {
             Spawn();
-            IoCManager.Resolve<IEntityManager>().DeleteEntity(Owner.Uid);
+            IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) Owner);
         }
     }
 }

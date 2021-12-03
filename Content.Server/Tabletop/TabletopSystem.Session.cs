@@ -82,7 +82,7 @@ namespace Content.Server.Tabletop
             if (session.Players.ContainsKey(player))
                 return;
 
-            if(IoCManager.Resolve<IEntityManager>().TryGetComponent<TabletopGamerComponent?>(attachedEntity.Uid, out var gamer))
+            if(IoCManager.Resolve<IEntityManager>().TryGetComponent<TabletopGamerComponent?>(attachedEntity, out var gamer))
                 CloseSessionFor(player, gamer.Tabletop, false);
 
             // Set the entity as an absolute GAMER.
@@ -111,13 +111,13 @@ namespace Content.Server.Tabletop
             if (!session.Players.TryGetValue(player, out var data))
                 return;
 
-            if(removeGamerComponent && player.AttachedEntity is {} attachedEntity && IoCManager.Resolve<IEntityManager>().TryGetComponent(attachedEntity.Uid, out TabletopGamerComponent? gamer))
+            if(removeGamerComponent && player.AttachedEntity is {} attachedEntity && IoCManager.Resolve<IEntityManager>().TryGetComponent(attachedEntity, out TabletopGamerComponent? gamer))
             {
                 // We invalidate this to prevent an infinite feedback from removing the component.
                 gamer.Tabletop = EntityUid.Invalid;
 
                 // You stop being a gamer.......
-                IoCManager.Resolve<IEntityManager>().RemoveComponent<TabletopGamerComponent>(attachedEntity.Uid);
+                IoCManager.Resolve<IEntityManager>().RemoveComponent<TabletopGamerComponent>(attachedEntity);
             }
 
             session.Players.Remove(player);
@@ -149,9 +149,9 @@ namespace Content.Server.Tabletop
             eyeComponent.Zoom = tabletop.CameraZoom;
 
             // Add the user to the view subscribers. If there is no player session, just skip this step
-            _viewSubscriberSystem.AddViewSubscriber(camera.Uid, player);
+            _viewSubscriberSystem.AddViewSubscriber(camera, player);
 
-            return camera.Uid;
+            return camera;
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Content.Server.Chemistry.ReactionEffects
     {
         protected override SolutionAreaEffectComponent? GetAreaEffectComponent(IEntity entity)
         {
-            return IoCManager.Resolve<IEntityManager>().GetComponentOrNull<FoamSolutionAreaEffectComponent>(entity.Uid);
+            return IoCManager.Resolve<IEntityManager>().GetComponentOrNull<FoamSolutionAreaEffectComponent>(entity);
         }
     }
 }

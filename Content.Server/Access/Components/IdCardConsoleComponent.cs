@@ -23,7 +23,7 @@ namespace Content.Server.Access.Components
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(IdCardConsoleUiKey.Key);
-        [ViewVariables] private bool Powered => !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
+        [ViewVariables] private bool Powered => !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         protected override void Initialize()
         {
@@ -70,14 +70,14 @@ namespace Content.Server.Access.Components
         /// </summary>
         private bool PrivilegedIdIsAuthorized()
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AccessReader? reader))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AccessReader? reader))
             {
                 return true;
             }
 
             var privilegedIdEntity = PrivilegedIdSlot.Item;
             var accessSystem = EntitySystem.Get<AccessReaderSystem>();
-            return privilegedIdEntity != null && accessSystem.IsAllowed(reader, privilegedIdEntity.Uid);
+            return privilegedIdEntity != null && accessSystem.IsAllowed(reader, privilegedIdEntity);
         }
 
         /// <summary>
@@ -91,8 +91,8 @@ namespace Content.Server.Access.Components
                 return;
 
             var cardSystem = EntitySystem.Get<IdCardSystem>();
-            cardSystem.TryChangeFullName(targetIdEntity.Uid, newFullName);
-            cardSystem.TryChangeJobTitle(targetIdEntity.Uid, newJobTitle);
+            cardSystem.TryChangeFullName(targetIdEntity, newFullName);
+            cardSystem.TryChangeJobTitle(targetIdEntity, newJobTitle);
 
             if (!newAccessList.TrueForAll(x => _prototypeManager.HasIndex<AccessLevelPrototype>(x)))
             {
@@ -101,7 +101,7 @@ namespace Content.Server.Access.Components
             }
 
             var accessSystem = EntitySystem.Get<AccessSystem>();
-            accessSystem.TrySetTags(targetIdEntity.Uid, newAccessList);
+            accessSystem.TrySetTags(targetIdEntity, newAccessList);
         }
 
         /// <summary>
@@ -110,9 +110,9 @@ namespace Content.Server.Access.Components
         private void HandleIdButton(IEntity user, ItemSlot slot)
         {
             if (slot.HasItem)
-                EntitySystem.Get<ItemSlotsSystem>().TryEjectToHands(OwnerUid, slot, user.Uid);
+                EntitySystem.Get<ItemSlotsSystem>().TryEjectToHands(OwnerUid, slot, user);
             else
-                EntitySystem.Get<ItemSlotsSystem>().TryInsertFromHand(OwnerUid, slot, user.Uid);
+                EntitySystem.Get<ItemSlotsSystem>().TryInsertFromHand(OwnerUid, slot, user);
         }
 
         public void UpdateUserInterface()
@@ -130,16 +130,16 @@ namespace Content.Server.Access.Components
                     null,
                     null,
                     null,
-                    (tempQualifier != null ? IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(tempQualifier.Uid).EntityName : null) ?? string.Empty,
+                    (tempQualifier != null ? IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(tempQualifier).EntityName : null) ?? string.Empty,
                     string.Empty);
             }
             else
             {
-                var targetIdComponent = IoCManager.Resolve<IEntityManager>().GetComponent<IdCardComponent>(targetIdEntity.Uid);
-                var targetAccessComponent = IoCManager.Resolve<IEntityManager>().GetComponent<AccessComponent>(targetIdEntity.Uid);
+                var targetIdComponent = IoCManager.Resolve<IEntityManager>().GetComponent<IdCardComponent>(targetIdEntity);
+                var targetAccessComponent = IoCManager.Resolve<IEntityManager>().GetComponent<AccessComponent>(targetIdEntity);
                 var name = string.Empty;
                 if(PrivilegedIdSlot.Item != null)
-                    name = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(PrivilegedIdSlot.Item.Uid).EntityName;
+                    name = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(PrivilegedIdSlot.Item).EntityName;
                 newState = new IdCardConsoleBoundUserInterfaceState(
                     PrivilegedIdSlot.HasItem,
                     PrivilegedIdIsAuthorized(),
@@ -148,7 +148,7 @@ namespace Content.Server.Access.Components
                     targetIdComponent.JobTitle,
                     targetAccessComponent.Tags.ToArray(),
                     name,
-                    IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(targetIdEntity.Uid).EntityName);
+                    IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(targetIdEntity).EntityName);
             }
             UserInterface?.SetState(newState);
         }

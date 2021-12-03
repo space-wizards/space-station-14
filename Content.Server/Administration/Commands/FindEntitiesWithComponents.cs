@@ -53,12 +53,12 @@ namespace Content.Server.Administration.Commands
 
             foreach (var entity in entitiesWithAllComponents)
             {
-                if (IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityPrototype == null)
+                if (IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityPrototype == null)
                 {
                     continue;
                 }
 
-                entityIds.Add(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityPrototype.ID);
+                entityIds.Add(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityPrototype.ID);
             }
 
             if (entityIds.Count == 0)

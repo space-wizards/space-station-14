@@ -51,7 +51,7 @@ namespace Content.Client.Tabletop
         public override void Update(float frameTime)
         {
             // If there is no player entity, return
-            if (_playerManager.LocalPlayer is not { ControlledEntity: { Uid: var playerEntity } }) return;
+            if (_playerManager.LocalPlayer is not { ControlledEntity: { (EntityUid) this: var playerEntity } }) return;
 
             if (StunnedOrNoHands(playerEntity))
             {
@@ -166,7 +166,7 @@ namespace Content.Client.Tabletop
         private bool OnMouseDown(in PointerInputCmdHandler.PointerInputCmdArgs args)
         {
             // Return if no player entity
-            if (_playerManager.LocalPlayer is not { ControlledEntity: { Uid : var playerEntityUid } }) return false;
+            if (_playerManager.LocalPlayer is not { ControlledEntity: { (EntityUid) this : var playerEntityUid } }) return false;
 
             // Return if can not see table or stunned/no hands
             if (!CanSeeTable(playerEntityUid, _table) || StunnedOrNoHands(playerEntityUid))

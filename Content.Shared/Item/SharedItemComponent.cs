@@ -112,13 +112,13 @@ namespace Content.Shared.Item
         /// </summary>
         public bool CanPickup(IEntity user, bool popup = true)
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanPickup(user.Uid))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanPickup(user))
                 return false;
 
-            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user.Uid).MapID != IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).MapID)
+            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user).MapID != IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).MapID)
                 return false;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out IPhysBody? physics) || physics.BodyType == BodyType.Static)
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out IPhysBody? physics) || physics.BodyType == BodyType.Static)
                 return false;
 
             return user.InRangeUnobstructed(Owner, ignoreInsideBlocker: true, popup: popup);
@@ -141,7 +141,7 @@ namespace Content.Shared.Item
             if (!CanPickup(user))
                 return false;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out SharedHandsComponent? hands))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out SharedHandsComponent? hands))
                 return false;
 
             var activeHand = hands.ActiveHand;

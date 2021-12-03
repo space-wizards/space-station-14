@@ -60,14 +60,14 @@ namespace Content.Shared.SubFloor
         {
             subFloor.Enabled = enabled;
             subFloor.Dirty();
-            UpdateEntity(subFloor.Owner.Uid);
+            UpdateEntity(subFloor.Owner);
         }
 
         public void SetRequireAnchoring(SubFloorHideComponent subFloor, bool requireAnchored)
         {
             subFloor.RequireAnchored = requireAnchored;
             subFloor.Dirty();
-            UpdateEntity(subFloor.Owner.Uid);
+            UpdateEntity(subFloor.Owner);
         }
 
         private void OnSubFloorStarted(EntityUid uid, SubFloorHideComponent component, ComponentStartup _)
@@ -80,7 +80,7 @@ namespace Content.Shared.SubFloor
         {
             // If component is being deleted don't need to worry about updating any component stuff because it won't matter very shortly.
             IEntity tempQualifier = EntityManager.GetEntity(uid);
-            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(tempQualifier.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(tempQualifier.Uid).EntityLifeStage) >= EntityLifeStage.Terminating) return;
+            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(tempQualifier) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(tempQualifier).EntityLifeStage) >= EntityLifeStage.Terminating) return;
 
             // Regardless of whether we're on a subfloor or not, unhide.
             UpdateEntity(uid, true);
@@ -126,7 +126,7 @@ namespace Content.Shared.SubFloor
         {
             foreach (var comp in EntityManager.EntityQuery<SubFloorHideComponent>(true))
             {
-                UpdateEntity(comp.Owner.Uid);
+                UpdateEntity(comp.Owner);
             }
         }
 

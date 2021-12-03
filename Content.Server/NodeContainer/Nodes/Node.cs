@@ -38,7 +38,7 @@ namespace Content.Server.NodeContainer.Nodes
         /// </summary>
         public bool Connectable => !Deleting && Anchored;
 
-        protected bool Anchored => !NeedAnchored || IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Anchored;
+        protected bool Anchored => !NeedAnchored || IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Anchored;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("needAnchored")]

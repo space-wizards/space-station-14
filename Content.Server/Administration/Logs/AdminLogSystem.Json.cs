@@ -57,7 +57,7 @@ public partial class AdminLogSystem
             EntityUid? entityId = properties[key] switch
             {
                 EntityUid id => id,
-                IEntity entity => entity.Uid,
+                IEntity entity => entity,
                 IPlayerSession {AttachedEntityUid: { }} session => session.AttachedEntityUid.Value,
                 IComponent component => component.OwnerUid,
                 _ => null

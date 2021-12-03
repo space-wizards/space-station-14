@@ -151,9 +151,9 @@ namespace Content.Client.Entry
         /// </summary>
         public static void DetachPlayerFromEntity(EntityDetachedEventArgs eventArgs)
         {
-            if (!((!IoCManager.Resolve<IEntityManager>().EntityExists(eventArgs.OldEntity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(eventArgs.OldEntity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted))
+            if (!((!IoCManager.Resolve<IEntityManager>().EntityExists(eventArgs.OldEntity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(eventArgs.OldEntity).EntityLifeStage) >= EntityLifeStage.Deleted))
             {
-                IoCManager.Resolve<IEntityManager>().RemoveComponent<CharacterInterfaceComponent>(eventArgs.OldEntity.Uid);
+                IoCManager.Resolve<IEntityManager>().RemoveComponent<CharacterInterfaceComponent>(eventArgs.OldEntity);
             }
         }
 

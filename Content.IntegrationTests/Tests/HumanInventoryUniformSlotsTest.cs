@@ -81,7 +81,7 @@ namespace Content.IntegrationTests.Tests
                 pocketItem = entityMan.SpawnEntity("FlashlightDummy", MapCoordinates.Nullspace);
                 var tooBigItem = entityMan.SpawnEntity("ToolboxDummy", MapCoordinates.Nullspace);
 
-                inventory = IoCManager.Resolve<IEntityManager>().GetComponent<InventoryComponent>(human.Uid);
+                inventory = IoCManager.Resolve<IEntityManager>().GetComponent<InventoryComponent>(human);
 
                 Assert.That(inventory.CanEquip(Slots.INNERCLOTHING, uniform));
 
@@ -123,7 +123,7 @@ namespace Content.IntegrationTests.Tests
 
         private static bool IsDescendant(IEntity descendant, IEntity parent)
         {
-            var tmpParent = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(descendant.Uid).Parent;
+            var tmpParent = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(descendant).Parent;
             while (tmpParent != null)
             {
                 if (tmpParent.Owner == parent)

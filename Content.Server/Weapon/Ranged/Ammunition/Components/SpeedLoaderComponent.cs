@@ -59,7 +59,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
         private void UpdateAppearance()
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearanceComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearanceComponent))
             {
                 appearanceComponent?.SetData(MagazineBarrelVisuals.MagLoaded, true);
                 appearanceComponent?.SetData(AmmoVisuals.AmmoCount, AmmoLeft);
@@ -69,7 +69,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
         public bool TryInsertAmmo(IEntity user, IEntity entity)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out AmmoComponent? ammoComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out AmmoComponent? ammoComponent))
             {
                 return false;
             }
@@ -95,7 +95,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
         private bool UseEntity(IEntity user)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out HandsComponent? handsComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out HandsComponent? handsComponent))
             {
                 return false;
             }
@@ -106,7 +106,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
                 return false;
             }
 
-            var itemComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(ammo.Uid);
+            var itemComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(ammo);
             if (!handsComponent.CanPutInHand(itemComponent))
             {
                 ServerRangedBarrelComponent.EjectCasing(ammo);
@@ -130,7 +130,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
             if (_unspawnedCount > 0)
             {
-                entity = IoCManager.Resolve<IEntityManager>().SpawnEntity(_fillPrototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
+                entity = IoCManager.Resolve<IEntityManager>().SpawnEntity(_fillPrototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
                 _unspawnedCount--;
             }
 
@@ -147,7 +147,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             // This area is dirty but not sure of an easier way to do it besides add an interface or somethin
             var changed = false;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Target.Uid, out RevolverBarrelComponent? revolverBarrel))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Target, out RevolverBarrelComponent? revolverBarrel))
             {
                 for (var i = 0; i < Capacity; i++)
                 {
@@ -167,7 +167,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
                     TryInsertAmmo(eventArgs.User, ammo);
                     break;
                 }
-            } else if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Target.Uid, out BoltActionBarrelComponent? boltActionBarrel))
+            } else if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Target, out BoltActionBarrelComponent? boltActionBarrel))
             {
                 for (var i = 0; i < Capacity; i++)
                 {

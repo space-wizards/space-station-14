@@ -80,9 +80,9 @@ namespace Content.Server.Pointing.EntitySystems
 
         public bool InRange(IEntity pointer, EntityCoordinates coordinates)
         {
-            if (IoCManager.Resolve<IEntityManager>().HasComponent<GhostComponent>(pointer.Uid))
+            if (IoCManager.Resolve<IEntityManager>().HasComponent<GhostComponent>(pointer))
             {
-                return IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pointer.Uid).Coordinates.InRange(EntityManager, coordinates, 15);
+                return IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pointer).Coordinates.InRange(EntityManager, coordinates, 15);
             }
             else
             {
@@ -105,7 +105,7 @@ namespace Content.Server.Pointing.EntitySystems
                 return false;
             }
 
-            if (EntityManager.TryGetEntity(uid, out var entity) && IoCManager.Resolve<IEntityManager>().HasComponent<PointingArrowComponent>(entity.Uid))
+            if (EntityManager.TryGetEntity(uid, out var entity) && IoCManager.Resolve<IEntityManager>().HasComponent<PointingArrowComponent>(entity))
             {
                 // this is a pointing arrow. no pointing here...
                 return false;
@@ -122,7 +122,7 @@ namespace Content.Server.Pointing.EntitySystems
             var arrow = EntityManager.SpawnEntity("pointingarrow", mapCoords);
 
             var layer = (int) VisibilityFlags.Normal;
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(player.Uid, out VisibilityComponent? playerVisibility))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(player, out VisibilityComponent? playerVisibility))
             {
                 var arrowVisibility = arrow.EnsureComponent<VisibilityComponent>();
                 layer = arrowVisibility.Layer = playerVisibility.Layer;
@@ -133,9 +133,9 @@ namespace Content.Server.Pointing.EntitySystems
             {
                 var ent = playerSession.ContentData()?.Mind?.CurrentEntity;
 
-                if (ent is null || (!IoCManager.Resolve<IEntityManager>().TryGetComponent<EyeComponent?>(ent.Uid, out var eyeComp) || (eyeComp.VisibilityMask & layer) == 0)) return false;
+                if (ent is null || (!IoCManager.Resolve<IEntityManager>().TryGetComponent<EyeComponent?>(ent, out var eyeComp) || (eyeComp.VisibilityMask & layer) == 0)) return false;
 
-                return IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(ent.Uid).MapPosition.InRange(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.Uid).MapPosition, PointingRange);
+                return IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(ent).MapPosition.InRange(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player).MapPosition, PointingRange);
             }
 
             var viewers = Filter.Empty()
@@ -153,10 +153,10 @@ namespace Content.Server.Pointing.EntitySystems
                     : Loc.GetString("pointing-system-point-at-other", ("other", pointed));
 
                 viewerMessage = player == pointed
-                    ? Loc.GetString("pointing-system-point-at-self-others", ("otherName", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(player.Uid).EntityName), ("other", player))
-                    : Loc.GetString("pointing-system-point-at-other-others", ("otherName", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(player.Uid).EntityName), ("other", pointed));
+                    ? Loc.GetString("pointing-system-point-at-self-others", ("otherName", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(player).EntityName), ("other", player))
+                    : Loc.GetString("pointing-system-point-at-other-others", ("otherName", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(player).EntityName), ("other", pointed));
 
-                viewerPointedAtMessage = Loc.GetString("pointing-system-point-at-you-other", ("otherName", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(player.Uid).EntityName));
+                viewerPointedAtMessage = Loc.GetString("pointing-system-point-at-you-other", ("otherName", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(player).EntityName));
             }
             else
             {
@@ -171,7 +171,7 @@ namespace Content.Server.Pointing.EntitySystems
 
                 selfMessage = Loc.GetString("pointing-system-point-at-tile", ("tileName", tileDef.DisplayName));
 
-                viewerMessage = Loc.GetString("pointing-system-other-point-at-tile", ("otherName", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(player.Uid).EntityName), ("tileName", tileDef.DisplayName));
+                viewerMessage = Loc.GetString("pointing-system-other-point-at-tile", ("otherName", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(player).EntityName), ("tileName", tileDef.DisplayName));
             }
 
             _pointers[session!] = _gameTiming.CurTime;
@@ -200,17 +200,17 @@ namespace Content.Server.Pointing.EntitySystems
                 return;
 
             //Check if the object is already being pointed at
-            if (IoCManager.Resolve<IEntityManager>().HasComponent<PointingArrowComponent>(args.Target.Uid))
+            if (IoCManager.Resolve<IEntityManager>().HasComponent<PointingArrowComponent>(args.Target))
                 return;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ActorComponent?>(args.User.Uid, out var actor)  ||
-                !InRange(args.User, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.Target.Uid).Coordinates))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ActorComponent?>(args.User, out var actor)  ||
+                !InRange(args.User, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.Target).Coordinates))
                 return;
 
             Verb verb = new();
             verb.Text = Loc.GetString("pointing-verb-get-data-text");
             verb.IconTexture = "/Textures/Interface/VerbIcons/point.svg.192dpi.png";
-            verb.Act = () => TryPoint(actor.PlayerSession, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.Target.Uid).Coordinates, args.Target.Uid); ;
+            verb.Act = () => TryPoint(actor.PlayerSession, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.Target).Coordinates, args.Target); ;
             args.Verbs.Add(verb);
         }
 

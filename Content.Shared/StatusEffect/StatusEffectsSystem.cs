@@ -37,7 +37,7 @@ namespace Content.Shared.StatusEffect
                     // if we're past the end point of the effect
                     if (_gameTiming.CurTime > state.Value.Cooldown.Item2)
                     {
-                        TryRemoveStatusEffect(status.Owner.Uid, state.Key, status);
+                        TryRemoveStatusEffect(status.Owner, state.Key, status);
                     }
                 }
             }

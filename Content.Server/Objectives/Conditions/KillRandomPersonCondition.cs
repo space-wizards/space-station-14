@@ -24,7 +24,7 @@ namespace Content.Server.Objectives.Conditions
                 if (entity == null)
                     return false;
 
-                return (IoCManager.Resolve<IEntityManager>().GetComponentOrNull<MobStateComponent>(entity.Uid)?.IsAlive() ?? false) && mc.Mind != mind;
+                return (IoCManager.Resolve<IEntityManager>().GetComponentOrNull<MobStateComponent>(entity)?.IsAlive() ?? false) && mc.Mind != mind;
             }).Select(mc => mc.Mind).ToList();
             return new KillRandomPersonCondition {Target = IoCManager.Resolve<IRobustRandom>().Pick(allHumans)};
         }

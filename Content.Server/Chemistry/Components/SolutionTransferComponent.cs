@@ -116,19 +116,19 @@ namespace Content.Server.Chemistry.Components
             if (!eventArgs.InRangeUnobstructed() || eventArgs.Target == null)
                 return false;
 
-            if (!IoCManager.Resolve<IEntityManager>().HasComponent<SolutionContainerManagerComponent>(Owner.Uid))
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<SolutionContainerManagerComponent>(Owner))
                 return false;
 
             var target = eventArgs.Target!;
-            if (!IoCManager.Resolve<IEntityManager>().HasComponent<SolutionContainerManagerComponent>(target.Uid))
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<SolutionContainerManagerComponent>(target))
             {
                 return false;
             }
 
 
-            if (CanReceive && IoCManager.Resolve<IEntityManager>().TryGetComponent(target.Uid, out ReagentTankComponent? tank)
-                           && solutionsSys.TryGetRefillableSolution(Owner.Uid, out var ownerRefill)
-                           && solutionsSys.TryGetDrainableSolution(eventArgs.Target.Uid, out var targetDrain))
+            if (CanReceive && IoCManager.Resolve<IEntityManager>().TryGetComponent(target, out ReagentTankComponent? tank)
+                           && solutionsSys.TryGetRefillableSolution(Owner, out var ownerRefill)
+                           && solutionsSys.TryGetDrainableSolution(eventArgs.Target, out var targetDrain))
             {
                 var transferred = DoTransfer(eventArgs.User, eventArgs.Target, targetDrain, Owner, ownerRefill, tank.TransferAmount);
                 if (transferred > 0)
@@ -144,8 +144,8 @@ namespace Content.Server.Chemistry.Components
                 }
             }
 
-            if (CanSend && solutionsSys.TryGetRefillableSolution(eventArgs.Target.Uid, out var targetRefill)
-                        && solutionsSys.TryGetDrainableSolution(Owner.Uid, out var ownerDrain))
+            if (CanSend && solutionsSys.TryGetRefillableSolution(eventArgs.Target, out var targetRefill)
+                        && solutionsSys.TryGetDrainableSolution(Owner, out var ownerDrain))
             {
                 var transferred = DoTransfer(eventArgs.User, Owner, ownerDrain, target, targetRefill, TransferAmount);
 
@@ -189,8 +189,8 @@ namespace Content.Server.Chemistry.Components
             var actualAmount =
                 FixedPoint2.Min(amount, FixedPoint2.Min(source.DrainAvailable, target.AvailableVolume));
 
-            var solution = EntitySystem.Get<SolutionContainerSystem>().Drain(sourceEntity.Uid, source, actualAmount);
-            EntitySystem.Get<SolutionContainerSystem>().Refill(targetEntity.Uid, target, solution);
+            var solution = EntitySystem.Get<SolutionContainerSystem>().Drain(sourceEntity, source, actualAmount);
+            EntitySystem.Get<SolutionContainerSystem>().Refill(targetEntity, target, solution);
 
             return actualAmount;
         }

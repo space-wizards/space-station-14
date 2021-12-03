@@ -72,7 +72,7 @@ namespace Content.Server.Hands.Systems
 
         private void HandlePullStarted(EntityUid uid, HandsComponent component, PullStartedMessage args)
         {
-            if (!_virtualItemSystem.TrySpawnVirtualItemInHand(args.Pulled.Owner.Uid, uid))
+            if (!_virtualItemSystem.TrySpawnVirtualItemInHand(args.Pulled.Owner, uid))
             {
                 DebugTools.Assert("Unable to find available hand when starting pulling??");
             }
@@ -85,11 +85,11 @@ namespace Content.Server.Hands.Systems
             foreach (var hand in component.Hands)
             {
                 if (hand.HeldEntity == null
-                    || !IoCManager.Resolve<IEntityManager>().TryGetComponent(hand.HeldEntity.Uid, out HandVirtualItemComponent? virtualItem)
-                    || virtualItem.BlockingEntity != args.Pulled.Owner.Uid)
+                    || !IoCManager.Resolve<IEntityManager>().TryGetComponent(hand.HeldEntity, out HandVirtualItemComponent? virtualItem)
+                    || virtualItem.BlockingEntity != args.Pulled.Owner)
                     continue;
 
-                IoCManager.Resolve<IEntityManager>().DeleteEntity(hand.HeldEntity.Uid);
+                IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) hand.HeldEntity);
                 break;
             }
         }
@@ -101,7 +101,7 @@ namespace Content.Server.Hands.Systems
             if (player == null)
                 return;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(player.Uid, out SharedHandsComponent? hands))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(player, out SharedHandsComponent? hands))
                 return;
 
             if (!hands.TryGetSwapHandsResult(out var nextHand))
@@ -117,7 +117,7 @@ namespace Content.Server.Hands.Systems
             if (player == null)
                 return false;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(player.Uid, out SharedHandsComponent? hands))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(player, out SharedHandsComponent? hands))
                 return false;
 
             var activeHand = hands.ActiveHand;
@@ -173,7 +173,7 @@ namespace Content.Server.Hands.Systems
         {
             foreach (var inhand in component.GetAllHeldItems())
             {
-                if (IoCManager.Resolve<IEntityManager>().HasComponent<HandVirtualItemComponent>(inhand.Owner.Uid))
+                if (IoCManager.Resolve<IEntityManager>().HasComponent<HandVirtualItemComponent>(inhand.Owner))
                     continue;
 
                 args.PushText(Loc.GetString("comp-hands-examine", ("user", component.Owner), ("item", inhand.Owner)));
@@ -191,10 +191,10 @@ namespace Content.Server.Hands.Systems
 
             var playerEnt = playerSession.AttachedEntity;
 
-            if (playerEnt == null || !IoCManager.Resolve<IEntityManager>().EntityExists(playerEnt.Uid))
+            if (playerEnt == null || !IoCManager.Resolve<IEntityManager>().EntityExists(playerEnt))
                 return false;
 
-            return IoCManager.Resolve<IEntityManager>().TryGetComponent(playerEnt.Uid, out hands);
+            return IoCManager.Resolve<IEntityManager>().TryGetComponent(playerEnt, out hands);
         }
 
         private void HandleActivateItem(ICommonSession? session)
@@ -221,16 +221,16 @@ namespace Content.Server.Hands.Systems
             var playerEnt = playerSession.AttachedEntity;
 
             if (playerEnt == null ||
-                !IoCManager.Resolve<IEntityManager>().EntityExists(playerEnt.Uid) ||
+                !IoCManager.Resolve<IEntityManager>().EntityExists(playerEnt) ||
                 playerEnt.IsInContainer() ||
-                !IoCManager.Resolve<IEntityManager>().TryGetComponent(playerEnt.Uid, out SharedHandsComponent? hands) ||
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(playerEnt, out SharedHandsComponent? hands) ||
                 !hands.TryGetActiveHeldEntity(out var throwEnt) ||
-                !_actionBlockerSystem.CanThrow(playerEnt.Uid))
+                !_actionBlockerSystem.CanThrow(playerEnt))
                 return false;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(throwEnt.Uid, out StackComponent? stack) && stack.Count > 1 && stack.ThrowIndividually)
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(throwEnt, out StackComponent? stack) && stack.Count > 1 && stack.ThrowIndividually)
             {
-                var splitStack = _stackSystem.Split(throwEnt.Uid, 1, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(playerEnt.Uid).Coordinates, stack);
+                var splitStack = _stackSystem.Split(throwEnt, 1, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(playerEnt).Coordinates, stack);
 
                 if (splitStack == null)
                     return false;
@@ -240,7 +240,7 @@ namespace Content.Server.Hands.Systems
             else if (!hands.Drop(throwEnt))
                 return false;
 
-            var direction = coords.ToMapPos(EntityManager) - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(playerEnt.Uid).WorldPosition;
+            var direction = coords.ToMapPos(EntityManager) - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(playerEnt).WorldPosition;
             if (direction == Vector2.Zero)
                 return true;
 
@@ -269,15 +269,15 @@ namespace Content.Server.Hands.Systems
 
             var plyEnt = playerSession.AttachedEntity;
 
-            if (plyEnt == null || !IoCManager.Resolve<IEntityManager>().EntityExists(plyEnt.Uid))
+            if (plyEnt == null || !IoCManager.Resolve<IEntityManager>().EntityExists(plyEnt))
                 return;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(plyEnt.Uid, out SharedHandsComponent? hands) ||
-                !IoCManager.Resolve<IEntityManager>().TryGetComponent(plyEnt.Uid, out InventoryComponent? inventory))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(plyEnt, out SharedHandsComponent? hands) ||
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(plyEnt, out InventoryComponent? inventory))
                 return;
 
             if (!inventory.TryGetSlotItem(equipmentSlot, out ItemComponent? equipmentItem) ||
-                !IoCManager.Resolve<IEntityManager>().TryGetComponent(equipmentItem.Owner.Uid, out ServerStorageComponent? storageComponent))
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(equipmentItem.Owner, out ServerStorageComponent? storageComponent))
             {
                 plyEnt.PopupMessage(Loc.GetString("hands-system-missing-equipment-slot", ("slotName", SlotNames[equipmentSlot].ToLower())));
                 return;
@@ -299,7 +299,7 @@ namespace Content.Server.Hands.Systems
                     if (storageComponent.Remove(lastStoredEntity))
                     {
                         if (!hands.TryPickupEntityToActiveHand(lastStoredEntity))
-                            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(lastStoredEntity.Uid).Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(plyEnt.Uid).Coordinates;
+                            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(lastStoredEntity).Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(plyEnt).Coordinates;
                     }
                 }
             }

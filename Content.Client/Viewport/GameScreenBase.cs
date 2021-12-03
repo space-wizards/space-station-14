@@ -115,7 +115,7 @@ namespace Content.Client.Viewport
             InteractionOutlineComponent? outline;
             if(!_outlineEnabled || !ConfigurationManager.GetCVar(CCVars.OutlineEnabled))
             {
-                if(entityToClick != null && IoCManager.Resolve<IEntityManager>().TryGetComponent(entityToClick.Uid, out outline))
+                if(entityToClick != null && IoCManager.Resolve<IEntityManager>().TryGetComponent(entityToClick, out outline))
                 {
                     outline.OnMouseLeave(); //Prevent outline remains from persisting post command.
                 }
@@ -124,7 +124,7 @@ namespace Content.Client.Viewport
 
             if (entityToClick == _lastHoveredEntity)
             {
-                if (entityToClick != null && IoCManager.Resolve<IEntityManager>().TryGetComponent(entityToClick.Uid, out outline))
+                if (entityToClick != null && IoCManager.Resolve<IEntityManager>().TryGetComponent(entityToClick, out outline))
                 {
                     outline.UpdateInRange(inRange, renderScale);
                 }
@@ -132,15 +132,15 @@ namespace Content.Client.Viewport
                 return;
             }
 
-            if (_lastHoveredEntity != null && !((!IoCManager.Resolve<IEntityManager>().EntityExists(_lastHoveredEntity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_lastHoveredEntity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted) &&
-                IoCManager.Resolve<IEntityManager>().TryGetComponent(_lastHoveredEntity.Uid, out outline))
+            if (_lastHoveredEntity != null && !((!IoCManager.Resolve<IEntityManager>().EntityExists(_lastHoveredEntity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_lastHoveredEntity).EntityLifeStage) >= EntityLifeStage.Deleted) &&
+                IoCManager.Resolve<IEntityManager>().TryGetComponent(_lastHoveredEntity, out outline))
             {
                 outline.OnMouseLeave();
             }
 
             _lastHoveredEntity = entityToClick;
 
-            if (_lastHoveredEntity != null && IoCManager.Resolve<IEntityManager>().TryGetComponent(_lastHoveredEntity.Uid, out outline))
+            if (_lastHoveredEntity != null && IoCManager.Resolve<IEntityManager>().TryGetComponent(_lastHoveredEntity, out outline))
             {
                 outline.OnMouseEnter(inRange, renderScale);
             }
@@ -167,7 +167,7 @@ namespace Content.Client.Viewport
             var foundEntities = new List<(IEntity clicked, int drawDepth, uint renderOrder)>();
             foreach (var entity in entities)
             {
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<ClickableComponent?>(entity.Uid, out var component)
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<ClickableComponent?>(entity, out var component)
                     && !entity.IsInContainer()
                     && component.CheckClick(coordinates.Position, out var drawDepthClicked, out var renderOrder))
                 {
@@ -223,15 +223,15 @@ namespace Content.Client.Viewport
                 }
                 */
 
-                var transX = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(x.clicked.Uid);
-                var transY = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(y.clicked.Uid);
+                var transX = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(x.clicked);
+                var transY = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(y.clicked);
                 val = transX.Coordinates.Y.CompareTo(transY.Coordinates.Y);
                 if (val != 0)
                 {
                     return val;
                 }
 
-                return x.clicked.Uid.CompareTo(y.clicked.Uid);
+                return x.clicked.CompareTo(y.clicked);
             }
         }
 
@@ -254,7 +254,7 @@ namespace Content.Client.Viewport
             if (args.Viewport is IViewportControl vp)
             {
                 var mousePosWorld = vp.ScreenToMap(kArgs.PointerLocation.Position);
-                entityToClick = GetEntityUnderPosition(mousePosWorld)?.Uid ?? EntityUid.Invalid;
+                entityToClick = GetEntityUnderPosition(mousePosWorld) ?? EntityUid.Invalid;
 
                 coordinates = MapManager.TryFindGridAt(mousePosWorld, out var grid) ? grid.MapToGrid(mousePosWorld) :
                     EntityCoordinates.FromMap(MapManager, mousePosWorld);

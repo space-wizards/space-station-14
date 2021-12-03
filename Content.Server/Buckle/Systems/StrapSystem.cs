@@ -39,7 +39,7 @@ namespace Content.Server.Buckle.Systems
             // Add unstrap verbs for every strapped entity.
             foreach (var entity in component.BuckledEntities)
             {
-                var buckledComp = IoCManager.Resolve<IEntityManager>().GetComponent<BuckleComponent>(entity.Uid);
+                var buckledComp = IoCManager.Resolve<IEntityManager>().GetComponent<BuckleComponent>(entity);
 
                 if (!_interactionSystem.InRangeUnobstructed(args.User, args.Target, range: buckledComp.Range))
                     continue;
@@ -50,7 +50,7 @@ namespace Content.Server.Buckle.Systems
                 if (entity == args.User)
                     verb.Text = Loc.GetString("verb-self-target-pronoun");
                 else
-                    verb.Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityName;
+                    verb.Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityName;
 
                 // In the event that you have more than once entity with the same name strapped to the same object,
                 // these two verbs will be identical according to Verb.CompareTo, and only one with actually be added to
@@ -61,7 +61,7 @@ namespace Content.Server.Buckle.Systems
             }
 
             // Add a verb to buckle the user.
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<BuckleComponent?>(args.User.Uid, out var buckle) &&
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<BuckleComponent?>(args.User, out var buckle) &&
                 buckle.BuckledTo != component &&
                 args.User != component.Owner &&
                 component.HasSpace(buckle) &&
@@ -76,7 +76,7 @@ namespace Content.Server.Buckle.Systems
 
             // If the user is currently holding/pulling an entity that can be buckled, add a verb for that.
             if (args.Using != null &&
-                IoCManager.Resolve<IEntityManager>().TryGetComponent<BuckleComponent?>(args.Using.Uid, out var usingBuckle) &&
+                IoCManager.Resolve<IEntityManager>().TryGetComponent<BuckleComponent?>(args.Using, out var usingBuckle) &&
                 component.HasSpace(usingBuckle) &&
                 _interactionSystem.InRangeUnobstructed(args.Using, args.Target, range: usingBuckle.Range))
             {
@@ -88,11 +88,11 @@ namespace Content.Server.Buckle.Systems
                 Verb verb = new();
                 verb.Act = () => usingBuckle.TryBuckle(args.User, args.Target);
                 verb.Category = VerbCategory.Buckle;
-                verb.Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(args.Using.Uid).EntityName;
+                verb.Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(args.Using).EntityName;
 
                 // If the used entity is a person being pulled, prioritize this verb. Conversely, if it is
                 // just a held object, the user is probably just trying to sit down.
-                verb.Priority = IoCManager.Resolve<IEntityManager>().HasComponent<ActorComponent>(args.Using.Uid) ? 1 : -1;
+                verb.Priority = IoCManager.Resolve<IEntityManager>().HasComponent<ActorComponent>(args.Using) ? 1 : -1;
 
                 args.Verbs.Add(verb);
             }

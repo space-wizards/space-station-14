@@ -19,11 +19,11 @@ namespace Content.Server.Actions.Actions
         {
             if (args.ToggledOn)
             {
-                args.Performer.PopupMessageEveryone(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(args.Item.Uid).EntityName + ": " + MessageOn);
+                args.Performer.PopupMessageEveryone(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(args.Item).EntityName + ": " + MessageOn);
             }
             else
             {
-                args.Performer.PopupMessageEveryone(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(args.Item.Uid).EntityName + ": " +MessageOff);
+                args.Performer.PopupMessageEveryone(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(args.Item).EntityName + ": " +MessageOff);
             }
 
             return true;

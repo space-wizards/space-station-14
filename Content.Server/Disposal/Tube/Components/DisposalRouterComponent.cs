@@ -36,7 +36,7 @@ namespace Content.Server.Disposal.Tube.Components
 
         [ViewVariables]
         public bool Anchored =>
-            !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out IPhysBody? physics) ||
+            !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out IPhysBody? physics) ||
             physics.BodyType == BodyType.Static;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(DisposalRouterUiKey.Key);
@@ -52,7 +52,7 @@ namespace Content.Server.Disposal.Tube.Components
                 return directions[1];
             }
 
-            return IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).LocalRotation.GetDir();
+            return IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).LocalRotation.GetDir();
         }
 
         protected override void Initialize()
@@ -160,12 +160,12 @@ namespace Content.Server.Disposal.Tube.Components
         /// <param name="args">Data relevant to the event such as the actor which triggered it.</param>
         void IActivate.Activate(ActivateEventArgs args)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User.Uid, out ActorComponent? actor))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User, out ActorComponent? actor))
             {
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User.Uid, out HandsComponent? hands))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User, out HandsComponent? hands))
             {
                 Owner.PopupMessage(args.User, Loc.GetString("disposal-router-window-tag-input-activate-no-hands"));
                 return;

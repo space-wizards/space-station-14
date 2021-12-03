@@ -21,7 +21,7 @@ namespace Content.Server.Physics.Controllers
 
             foreach (var (singularity, physics) in EntityManager.EntityQuery<ServerSingularityComponent, PhysicsComponent>())
             {
-                if (IoCManager.Resolve<IEntityManager>().HasComponent<ActorComponent>(singularity.Owner.Uid) ||
+                if (IoCManager.Resolve<IEntityManager>().HasComponent<ActorComponent>(singularity.Owner) ||
                     singularity.BeingDeletedByAnotherSingularity) continue;
 
                 singularity.MoveAccumulator -= frameTime;

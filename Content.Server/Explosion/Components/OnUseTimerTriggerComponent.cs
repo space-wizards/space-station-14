@@ -19,7 +19,7 @@ namespace Content.Server.Explosion.Components
         // TODO: Need to split this out so it's a generic "OnUseTimerTrigger" component.
         public void Trigger(IEntity user)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearance))
                 appearance.SetData(TriggerVisuals.VisualState, TriggerVisualState.Primed);
 
             EntitySystem.Get<TriggerSystem>().HandleTimerTrigger(TimeSpan.FromSeconds(_delay), Owner, user);

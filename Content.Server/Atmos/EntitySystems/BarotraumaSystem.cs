@@ -86,9 +86,9 @@ namespace Content.Server.Atmos.EntitySystems
                 if (totalDamage >= barotrauma.MaxDamage)
                     continue;
 
-                var uid = barotrauma.Owner.Uid;
+                var uid = (EntityUid) barotrauma.Owner;
 
-                var status = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<ServerAlertsComponent>(barotrauma.Owner.Uid);
+                var status = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<ServerAlertsComponent>(barotrauma.Owner);
 
                 var pressure = 1f;
 

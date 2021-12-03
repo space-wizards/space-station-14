@@ -57,7 +57,8 @@ namespace Content.Server.Nutrition.EntitySystems
                 return false;
             }
 
-            var sliceUid = EntityManager.SpawnEntity(component.Slice, transform.Coordinates).Uid;
+            IEntity tempQualifier = EntityManager.SpawnEntity(component.Slice, transform.Coordinates);
+            var sliceUid = (EntityUid) tempQualifier;
 
             var lostSolution = _solutionContainerSystem.SplitSolution(uid, solution,
                 solution.CurrentVolume / FixedPoint2.New(component.Count));
@@ -86,7 +87,8 @@ namespace Content.Server.Nutrition.EntitySystems
 
             // Split last slice
             if (component.Count == 1) {
-                var lastSlice = EntityManager.SpawnEntity(component.Slice, transform.Coordinates).Uid;
+                IEntity tempQualifier1 = EntityManager.SpawnEntity(component.Slice, transform.Coordinates);
+                var lastSlice = (EntityUid) tempQualifier1;
 
                 // Fill last slice with the rest of the solution
                 FillSlice(lastSlice, solution);

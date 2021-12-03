@@ -47,7 +47,7 @@ namespace Content.IntegrationTests.Tests.Utility
             {
                 var grid = GetMainGrid(sMapManager);
                 var gridEnt = sEntityManager.GetEntity(grid.GridEntityId);
-                var gridPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(gridEnt.Uid).WorldPosition;
+                var gridPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(gridEnt).WorldPosition;
                 var entityCoordinates = GetMainEntityCoordinates(sMapManager);
 
                 // Nothing blocking it, only entity is the grid

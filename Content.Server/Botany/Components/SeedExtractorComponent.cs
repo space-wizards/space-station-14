@@ -27,17 +27,17 @@ namespace Content.Server.Botany.Components
             if (!_powerReceiver?.Powered ?? false)
                 return false;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Using.Uid, out ProduceComponent? produce) && produce.Seed != null)
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Using, out ProduceComponent? produce) && produce.Seed != null)
             {
-                eventArgs.User.PopupMessageCursor(Loc.GetString("seed-extractor-component-interact-message",("name", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(eventArgs.Using.Uid).EntityName)));
+                eventArgs.User.PopupMessageCursor(Loc.GetString("seed-extractor-component-interact-message",("name", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(eventArgs.Using).EntityName)));
 
-                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(eventArgs.Using.Uid);
+                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity((EntityUid) eventArgs.Using);
 
                 var random = _random.Next(_minSeeds, _maxSeeds);
 
                 for (var i = 0; i < random; i++)
                 {
-                    produce.Seed.SpawnSeedPacket(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates, IoCManager.Resolve<IEntityManager>());
+                    produce.Seed.SpawnSeedPacket(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates, IoCManager.Resolve<IEntityManager>());
                 }
 
                 return true;

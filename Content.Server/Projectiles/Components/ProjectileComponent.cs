@@ -34,7 +34,7 @@ namespace Content.Server.Projectiles.Components
         /// <param name="shooter"></param>
         public void IgnoreEntity(IEntity shooter)
         {
-            Shooter = shooter.Uid;
+            Shooter = shooter;
             Dirty();
         }
 

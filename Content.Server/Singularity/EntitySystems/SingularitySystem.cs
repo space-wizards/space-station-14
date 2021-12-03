@@ -82,7 +82,7 @@ namespace Content.Server.Singularity.EntitySystems
         {
             if (component.BeingDeletedByAnotherSingularity) return;
 
-            var worldPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner.Uid).WorldPosition;
+            var worldPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner).WorldPosition;
             DestroyEntities(component, worldPos);
             DestroyTiles(component, worldPos);
             PullEntities(component, worldPos);
@@ -102,10 +102,10 @@ namespace Content.Server.Singularity.EntitySystems
         private bool CanDestroy(SharedSingularityComponent component, IEntity entity)
         {
             return entity == component.Owner ||
-                   IoCManager.Resolve<IEntityManager>().HasComponent<IMapGridComponent>(entity.Uid) ||
-                   IoCManager.Resolve<IEntityManager>().HasComponent<GhostComponent>(entity.Uid) ||
-                   IoCManager.Resolve<IEntityManager>().HasComponent<ContainmentFieldComponent>(entity.Uid) ||
-                   IoCManager.Resolve<IEntityManager>().HasComponent<ContainmentFieldGeneratorComponent>(entity.Uid);
+                   IoCManager.Resolve<IEntityManager>().HasComponent<IMapGridComponent>(entity) ||
+                   IoCManager.Resolve<IEntityManager>().HasComponent<GhostComponent>(entity) ||
+                   IoCManager.Resolve<IEntityManager>().HasComponent<ContainmentFieldComponent>(entity) ||
+                   IoCManager.Resolve<IEntityManager>().HasComponent<ContainmentFieldGeneratorComponent>(entity);
         }
 
         private void HandleDestroy(ServerSingularityComponent component, IEntity entity)
@@ -114,7 +114,7 @@ namespace Content.Server.Singularity.EntitySystems
             if (CanDestroy(component, entity)) return;
 
             // Singularity priority management / etc.
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<ServerSingularityComponent?>(entity.Uid, out var otherSingulo))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<ServerSingularityComponent?>(entity, out var otherSingulo))
             {
                 // MERGE
                 if (!otherSingulo.BeingDeletedByAnotherSingularity)
@@ -125,9 +125,9 @@ namespace Content.Server.Singularity.EntitySystems
                 otherSingulo.BeingDeletedByAnotherSingularity = true;
             }
 
-            IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(entity.Uid);
+            IoCManager.Resolve<IEntityManager>().QueueDeleteEntity((EntityUid) entity);
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SinguloFoodComponent?>(entity.Uid, out var singuloFood))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SinguloFoodComponent?>(entity, out var singuloFood))
                 component.Energy += singuloFood.Energy;
             else
                 component.Energy++;
@@ -141,7 +141,7 @@ namespace Content.Server.Singularity.EntitySystems
             // The reason we don't /just/ use collision is because we'll be deleting stuff that may not necessarily have physics (e.g. carpets).
             var destroyRange = DestroyTileRange(component);
 
-            foreach (var entity in _lookup.GetEntitiesInRange(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner.Uid).MapID, worldPos, destroyRange))
+            foreach (var entity in _lookup.GetEntitiesInRange(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner).MapID, worldPos, destroyRange))
             {
                 HandleDestroy(component, entity);
             }
@@ -149,9 +149,9 @@ namespace Content.Server.Singularity.EntitySystems
 
         private bool CanPull(IEntity entity)
         {
-            return !(IoCManager.Resolve<IEntityManager>().HasComponent<GhostComponent>(entity.Uid) ||
-                   IoCManager.Resolve<IEntityManager>().HasComponent<IMapGridComponent>(entity.Uid) ||
-                   IoCManager.Resolve<IEntityManager>().HasComponent<MapComponent>(entity.Uid) ||
+            return !(IoCManager.Resolve<IEntityManager>().HasComponent<GhostComponent>(entity) ||
+                   IoCManager.Resolve<IEntityManager>().HasComponent<IMapGridComponent>(entity) ||
+                   IoCManager.Resolve<IEntityManager>().HasComponent<MapComponent>(entity) ||
                    entity.IsInContainer());
         }
 
@@ -162,16 +162,16 @@ namespace Content.Server.Singularity.EntitySystems
             var pullRange = PullRange(component);
             var destroyRange = DestroyTileRange(component);
 
-            foreach (var entity in _lookup.GetEntitiesInRange(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner.Uid).MapID, worldPos, pullRange))
+            foreach (var entity in _lookup.GetEntitiesInRange(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner).MapID, worldPos, pullRange))
             {
                 // I tried having it so level 6 can de-anchor. BAD IDEA, MASSIVE LAG.
                 if (entity == component.Owner ||
-                    !IoCManager.Resolve<IEntityManager>().TryGetComponent<PhysicsComponent?>(entity.Uid, out var collidableComponent) ||
+                    !IoCManager.Resolve<IEntityManager>().TryGetComponent<PhysicsComponent?>(entity, out var collidableComponent) ||
                     collidableComponent.BodyType == BodyType.Static) continue;
 
                 if (!CanPull(entity)) continue;
 
-                var vec = worldPos - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).WorldPosition;
+                var vec = worldPos - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).WorldPosition;
 
                 if (vec.Length < destroyRange - 0.01f) continue;
 
@@ -192,7 +192,7 @@ namespace Content.Server.Singularity.EntitySystems
             var circle = new Circle(worldPos, radius);
             var box = new Box2(worldPos - radius, worldPos + radius);
 
-            foreach (var grid in _mapManager.FindGridsIntersecting(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner.Uid).MapID, box))
+            foreach (var grid in _mapManager.FindGridsIntersecting(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner).MapID, box))
             {
                 foreach (var tile in grid.GetTilesIntersecting(circle))
                 {

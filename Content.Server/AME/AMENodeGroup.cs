@@ -46,11 +46,11 @@ namespace Content.Server.AME
             foreach (var node in groupNodes)
             {
                 var nodeOwner = node.Owner;
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(nodeOwner.Uid, out AMEShieldComponent? shield))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(nodeOwner, out AMEShieldComponent? shield))
                 {
-                    var nodeNeighbors = grid.GetCellsInSquareArea(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(nodeOwner.Uid).Coordinates, 1)
+                    var nodeNeighbors = grid.GetCellsInSquareArea(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(nodeOwner).Coordinates, 1)
                         .Select(sgc => IoCManager.Resolve<IEntityManager>().GetEntity(sgc))
-                        .Where(entity => entity != nodeOwner && IoCManager.Resolve<IEntityManager>().HasComponent<AMEShieldComponent>(entity.Uid));
+                        .Where(entity => entity != nodeOwner && IoCManager.Resolve<IEntityManager>().HasComponent<AMEShieldComponent>(entity));
 
                     if (nodeNeighbors.Count() >= 8)
                     {
@@ -69,7 +69,7 @@ namespace Content.Server.AME
             foreach (var node in groupNodes)
             {
                 var nodeOwner = node.Owner;
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(nodeOwner.Uid, out AMEControllerComponent? controller))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(nodeOwner, out AMEControllerComponent? controller))
                 {
                     if (_masterController == null)
                     {
@@ -177,7 +177,7 @@ namespace Content.Server.AME
 
             intensity = Math.Min(intensity, 8);
 
-            EntitySystem.Get<ExplosionSystem>().SpawnExplosion(epicenter.Owner.Uid, intensity / 2, intensity, intensity * 2, intensity * 3);
+            EntitySystem.Get<ExplosionSystem>().SpawnExplosion(epicenter.Owner, intensity / 2, intensity, intensity * 2, intensity * 3);
         }
     }
 }

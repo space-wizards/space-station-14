@@ -32,9 +32,9 @@ namespace Content.Server.Hands.Systems
                     if (!hand.IsEmpty)
                         continue;
 
-                    var pos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(hands.Owner.Uid).Coordinates;
+                    var pos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(hands.Owner).Coordinates;
                     var virtualItem = EntityManager.SpawnEntity("HandVirtualItem", pos);
-                    var virtualItemComp = IoCManager.Resolve<IEntityManager>().GetComponent<HandVirtualItemComponent>(virtualItem.Uid);
+                    var virtualItemComp = IoCManager.Resolve<IEntityManager>().GetComponent<HandVirtualItemComponent>(virtualItem);
                     virtualItemComp.BlockingEntity = blockingEnt;
                     hands.PutEntityIntoHand(hand, virtualItem);
                     return true;
@@ -56,7 +56,7 @@ namespace Content.Server.Hands.Systems
         // If the virtual item gets removed from the hands for any reason, cancel the pull and delete it.
         private void HandleItemUnequipped(EntityUid uid, HandVirtualItemComponent component, UnequippedHandEvent args)
         {
-            Delete(component, args.User.Uid);
+            Delete(component, args.User);
         }
 
         private void HandleItemDropped(EntityUid uid, HandVirtualItemComponent component, DroppedEvent args)
@@ -74,7 +74,7 @@ namespace Content.Server.Hands.Systems
             var targEv = new VirtualItemDeletedEvent(comp.BlockingEntity, user);
             RaiseLocalEvent(comp.BlockingEntity, targEv, false);
 
-            IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(comp.Owner.Uid);
+            IoCManager.Resolve<IEntityManager>().QueueDeleteEntity((EntityUid) comp.Owner);
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Content.Server.Hands.Systems
 
                     if (hand.HeldEntity != null)
                     {
-                        if (EntityManager.TryGetComponent<HandVirtualItemComponent>(hand.HeldEntity.Uid,
+                        if (EntityManager.TryGetComponent<HandVirtualItemComponent>(hand.HeldEntity,
                                 out var virt)
                             && virt.BlockingEntity == matching)
                         {

@@ -52,9 +52,9 @@ namespace Content.IntegrationTests.Tests.Interaction
                 origin = entityManager.SpawnEntity(HumanId, coordinates);
                 other = entityManager.SpawnEntity(HumanId, coordinates);
                 container = ContainerHelpers.EnsureContainer<Container>(other, "InRangeUnobstructedTestOtherContainer");
-                component = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other.Uid);
-                entityCoordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other.Uid).Coordinates;
-                mapCoordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other.Uid).MapPosition;
+                component = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other);
+                entityCoordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other).Coordinates;
+                mapCoordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other).MapPosition;
             });
 
             await server.WaitIdleAsync();
@@ -83,7 +83,7 @@ namespace Content.IntegrationTests.Tests.Interaction
 
 
                 // Move them slightly apart
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(origin.Uid).LocalPosition += _interactionRangeDivided15X;
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(origin).LocalPosition += _interactionRangeDivided15X;
 
                 // Entity <-> Entity
                 Assert.True(origin.InRangeUnobstructed(other));
@@ -107,7 +107,7 @@ namespace Content.IntegrationTests.Tests.Interaction
 
 
                 // Move them out of range
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(origin.Uid).LocalPosition += _interactionRangeDivided15X;
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(origin).LocalPosition += _interactionRangeDivided15X;
 
                 // Entity <-> Entity
                 Assert.False(origin.InRangeUnobstructed(other));

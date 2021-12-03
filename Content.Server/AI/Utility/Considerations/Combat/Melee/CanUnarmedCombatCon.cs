@@ -13,7 +13,7 @@ namespace Content.Server.AI.Utility.Considerations.Combat.Melee
             IEntity tempQualifier = context.GetState<SelfState>().GetValue();
             if (tempQualifier != null)
             {
-                IoCManager.Resolve<IEntityManager>().HasComponent<UnarmedCombatComponent>(tempQualifier.Uid);
+                IoCManager.Resolve<IEntityManager>().HasComponent<UnarmedCombatComponent>(tempQualifier);
             }
 
             return RETURNED_VALUE ?? false ? 1.0f : 0.0f;

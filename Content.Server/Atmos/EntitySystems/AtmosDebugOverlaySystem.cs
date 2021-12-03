@@ -136,16 +136,16 @@ namespace Content.Server.Atmos.EntitySystems
 
                 var entity = session.AttachedEntity;
 
-                var worldBounds = Box2.CenteredAround(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).WorldPosition,
+                var worldBounds = Box2.CenteredAround(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).WorldPosition,
                     new Vector2(LocalViewRange, LocalViewRange));
 
-                foreach (var grid in _mapManager.FindGridsIntersecting(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).MapID, worldBounds))
+                foreach (var grid in _mapManager.FindGridsIntersecting(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).MapID, worldBounds))
                 {
                     if (!EntityManager.TryGetEntity(grid.GridEntityId, out var gridEnt)) continue;
 
-                    if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<GridAtmosphereComponent?>(gridEnt.Uid, out var gam)) continue;
+                    if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<GridAtmosphereComponent?>(gridEnt, out var gam)) continue;
 
-                    var entityTile = grid.GetTileRef(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates).GridIndices;
+                    var entityTile = grid.GetTileRef(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates).GridIndices;
                     var baseTile = new Vector2i(entityTile.X - (LocalViewRange / 2), entityTile.Y - (LocalViewRange / 2));
                     var debugOverlayContent = new AtmosDebugOverlayData[LocalViewRange * LocalViewRange];
 

@@ -17,7 +17,7 @@ namespace Content.Client.Animations
         {
             base.Initialize();
 
-            var animations = IoCManager.Resolve<IEntityManager>().GetComponent<AnimationPlayerComponent>(Owner.Uid);
+            var animations = IoCManager.Resolve<IEntityManager>().GetComponent<AnimationPlayerComponent>(Owner);
             animations.Play(new Animation
             {
                 Length = TimeSpan.FromSeconds(20),

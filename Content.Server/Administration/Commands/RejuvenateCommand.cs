@@ -53,32 +53,32 @@ namespace Content.Server.Administration.Commands
 
         public static void PerformRejuvenate(IEntity target)
         {
-            var targetUid = target.Uid;
+            var targetUid = (EntityUid) target;
             var entMan = IoCManager.Resolve<IEntityManager>();
             entMan.GetComponentOrNull<MobStateComponent>(targetUid)?.UpdateState(0);
             entMan.GetComponentOrNull<HungerComponent>(targetUid)?.ResetFood();
             entMan.GetComponentOrNull<ThirstComponent>(targetUid)?.ResetThirst();
 
-            EntitySystem.Get<StatusEffectsSystem>().TryRemoveAllStatusEffects(target.Uid);
+            EntitySystem.Get<StatusEffectsSystem>().TryRemoveAllStatusEffects(target);
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(target.Uid, out FlammableComponent? flammable))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(target, out FlammableComponent? flammable))
             {
-                EntitySystem.Get<FlammableSystem>().Extinguish(target.Uid, flammable);
+                EntitySystem.Get<FlammableSystem>().Extinguish(target, flammable);
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(target.Uid, out DamageableComponent? damageable))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(target, out DamageableComponent? damageable))
             {
                 EntitySystem.Get<DamageableSystem>().SetAllDamage(damageable, 0);
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(target.Uid, out CreamPiedComponent? creamPied))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(target, out CreamPiedComponent? creamPied))
             {
-                EntitySystem.Get<CreamPieSystem>().SetCreamPied(target.Uid, creamPied, false);
+                EntitySystem.Get<CreamPieSystem>().SetCreamPied(target, creamPied, false);
             }
 
-            if (IoCManager.Resolve<IEntityManager>().HasComponent<JitteringComponent>(target.Uid))
+            if (IoCManager.Resolve<IEntityManager>().HasComponent<JitteringComponent>(target))
             {
-                IoCManager.Resolve<IEntityManager>().RemoveComponent<JitteringComponent>(target.Uid);
+                IoCManager.Resolve<IEntityManager>().RemoveComponent<JitteringComponent>(target);
             }
         }
     }

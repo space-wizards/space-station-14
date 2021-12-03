@@ -44,7 +44,7 @@ namespace Content.Server.Administration.Commands
 
             var target = entityManager.GetEntity(eUid);
 
-            if (!IoCManager.Resolve<IEntityManager>().HasComponent<MindComponent>(target.Uid))
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<MindComponent>(target))
             {
                 shell.WriteLine(Loc.GetString("set-mind-command-target-has-no-mind-message"));
                 return;
@@ -69,11 +69,11 @@ namespace Content.Server.Administration.Commands
             {
                 mind = new Mind.Mind(session.UserId)
                 {
-                    CharacterName = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(target.Uid).EntityName
+                    CharacterName = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(target).EntityName
                 };
                 mind.ChangeOwningPlayer(session.UserId);
             }
-            mind.TransferTo(target.Uid);
+            mind.TransferTo(target);
         }
     }
 }

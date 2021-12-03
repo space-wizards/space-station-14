@@ -51,8 +51,8 @@ namespace Content.Server.AI.EntitySystems
             foreach (var message in _queuedMobStateMessages)
             {
                 // TODO: Need to generecise this but that will be part of a larger cleanup later anyway.
-                if ((!IoCManager.Resolve<IEntityManager>().EntityExists(message.Entity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(message.Entity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted ||
-                    !IoCManager.Resolve<IEntityManager>().TryGetComponent(message.Entity.Uid, out UtilityAi? controller))
+                if ((!IoCManager.Resolve<IEntityManager>().EntityExists(message.Entity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(message.Entity).EntityLifeStage) >= EntityLifeStage.Deleted ||
+                    !IoCManager.Resolve<IEntityManager>().TryGetComponent(message.Entity, out UtilityAi? controller))
                 {
                     continue;
                 }
@@ -122,7 +122,7 @@ namespace Content.Server.AI.EntitySystems
 
         private void MobStateChanged(MobStateChangedMessage message)
         {
-            if (!IoCManager.Resolve<IEntityManager>().HasComponent<AiControllerComponent>(message.Entity.Uid))
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<AiControllerComponent>(message.Entity))
             {
                 return;
             }

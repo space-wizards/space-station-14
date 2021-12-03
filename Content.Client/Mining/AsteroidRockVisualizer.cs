@@ -17,7 +17,7 @@ namespace Content.Client.Mining
         {
             base.InitializeEntity(entity);
 
-            IoCManager.Resolve<IEntityManager>().GetComponentOrNull<SpriteComponent>(entity.Uid)?.LayerMapReserveBlank(Layer);
+            IoCManager.Resolve<IEntityManager>().GetComponentOrNull<SpriteComponent>(entity)?.LayerMapReserveBlank(Layer);
         }
 
         public override void OnChangeData(AppearanceComponent component)

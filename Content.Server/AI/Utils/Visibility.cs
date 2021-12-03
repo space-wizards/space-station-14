@@ -18,7 +18,7 @@ namespace Content.Server.AI.Utils
         public static IEnumerable<IEntity> GetNearestEntities(EntityCoordinates grid, Type component, float range)
         {
             var inRange = GetEntitiesInRange(grid, component, range).ToList();
-            var sortedInRange = inRange.OrderBy(o => (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(o.Uid).Coordinates.Position - grid.Position).Length);
+            var sortedInRange = inRange.OrderBy(o => (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(o).Coordinates.Position - grid.Position).Length);
 
             return sortedInRange;
         }
@@ -28,12 +28,12 @@ namespace Content.Server.AI.Utils
             var entityManager = IoCManager.Resolve<IEntityManager>();
             foreach (var entity in entityManager.GetAllComponents(component).Select(c => c.Owner))
             {
-                if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates.GetGridId(entityManager) != grid.GetGridId(entityManager))
+                if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates.GetGridId(entityManager) != grid.GetGridId(entityManager))
                 {
                     continue;
                 }
 
-                if ((IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates.Position - grid.Position).Length <= range)
+                if ((IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates.Position - grid.Position).Length <= range)
                 {
                     yield return entity;
                 }

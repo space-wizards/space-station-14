@@ -73,7 +73,7 @@ namespace Content.Server.PDA
         private void OnItemInserted(EntityUid uid, PDAComponent pda, EntInsertedIntoContainerMessage args)
         {
             if (args.Container.ID == pda.IdSlot.ID)
-                pda.ContainedID = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<IdCardComponent>(args.Entity.Uid);
+                pda.ContainedID = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<IdCardComponent>(args.Entity);
 
             UpdatePDAAppearance(pda);
             UpdatePDAUserInterface(pda);
@@ -112,7 +112,7 @@ namespace Content.Server.PDA
 
         private bool OpenUI(PDAComponent pda, IEntity user)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out ActorComponent? actor))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out ActorComponent? actor))
                 return false;
 
             var ui = pda.Owner.GetUIOrNull(PDAUiKey.Key);
@@ -123,7 +123,7 @@ namespace Content.Server.PDA
 
         private void UpdatePDAAppearance(PDAComponent pda)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(pda.Owner.Uid, out AppearanceComponent? appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(pda.Owner, out AppearanceComponent? appearance))
                 appearance.SetData(PDAVisuals.IDCardInserted, pda.ContainedID != null);
         }
 
@@ -136,7 +136,7 @@ namespace Content.Server.PDA
                 JobTitle = pda.ContainedID?.JobTitle
             };
 
-            var hasUplink = IoCManager.Resolve<IEntityManager>().HasComponent<UplinkComponent>(pda.Owner.Uid);
+            var hasUplink = IoCManager.Resolve<IEntityManager>().HasComponent<UplinkComponent>(pda.Owner);
 
             var ui = pda.Owner.GetUIOrNull(PDAUiKey.Key);
             ui?.SetState(new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, hasUplink));
@@ -155,24 +155,24 @@ namespace Content.Server.PDA
                     break;
                 case PDAToggleFlashlightMessage _:
                     {
-                        if (IoCManager.Resolve<IEntityManager>().TryGetComponent(pda.Owner.Uid, out UnpoweredFlashlightComponent? flashlight))
+                        if (IoCManager.Resolve<IEntityManager>().TryGetComponent(pda.Owner, out UnpoweredFlashlightComponent? flashlight))
                             _unpoweredFlashlight.ToggleLight(flashlight);
                         break;
                     }
 
                 case PDAEjectIDMessage _:
                     {
-                        _itemSlotsSystem.TryEjectToHands(pda.Owner.Uid, pda.IdSlot, playerUid);
+                        _itemSlotsSystem.TryEjectToHands(pda.Owner, pda.IdSlot, playerUid);
                         break;
                     }
                 case PDAEjectPenMessage _:
                     {
-                        _itemSlotsSystem.TryEjectToHands(pda.Owner.Uid, pda.PenSlot, playerUid);
+                        _itemSlotsSystem.TryEjectToHands(pda.Owner, pda.PenSlot, playerUid);
                         break;
                     }
                 case PDAShowUplinkMessage _:
                     {
-                        if (IoCManager.Resolve<IEntityManager>().TryGetComponent(pda.Owner.Uid, out UplinkComponent? uplink))
+                        if (IoCManager.Resolve<IEntityManager>().TryGetComponent(pda.Owner, out UplinkComponent? uplink))
                             _uplinkSystem.ToggleUplinkUI(uplink, msg.Session);
                         break;
                     }

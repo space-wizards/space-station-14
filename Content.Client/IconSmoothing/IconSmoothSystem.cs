@@ -51,14 +51,14 @@ namespace Content.Client.IconSmoothing
             // Yes, we updates ALL smoothing entities surrounding us even if they would never smooth with us.
             // This is simpler to implement. If you want to optimize it be my guest.
             var senderEnt = ev.Sender;
-            if (IoCManager.Resolve<IEntityManager>().EntityExists(senderEnt.Uid) &&
-                _mapManager.TryGetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(senderEnt.Uid).GridID, out var grid1) &&
-                IoCManager.Resolve<IEntityManager>().TryGetComponent(senderEnt.Uid, out IconSmoothComponent? iconSmooth)
+            if (IoCManager.Resolve<IEntityManager>().EntityExists(senderEnt) &&
+                _mapManager.TryGetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(senderEnt).GridID, out var grid1) &&
+                IoCManager.Resolve<IEntityManager>().TryGetComponent(senderEnt, out IconSmoothComponent? iconSmooth)
                 && iconSmooth.Running)
             {
-                var coords = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(senderEnt.Uid).Coordinates;
+                var coords = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(senderEnt).Coordinates;
 
-                _dirtyEntities.Enqueue(senderEnt.Uid);
+                _dirtyEntities.Enqueue(senderEnt);
                 AddValidEntities(grid1.GetInDir(coords, Direction.North));
                 AddValidEntities(grid1.GetInDir(coords, Direction.South));
                 AddValidEntities(grid1.GetInDir(coords, Direction.East));

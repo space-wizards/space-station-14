@@ -29,12 +29,12 @@ namespace Content.Server.Recycling
             // TODO: Prevent collision with recycled items
 
             // Can only recycle things that are recyclable... And also check the safety of the thing to recycle.
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out RecyclableComponent? recyclable) || !recyclable.Safe && component.Safe) return;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out RecyclableComponent? recyclable) || !recyclable.Safe && component.Safe) return;
 
             // Mobs are a special case!
             if (CanGib(component, entity))
             {
-                IoCManager.Resolve<IEntityManager>().GetComponent<SharedBodyComponent>(entity.Uid).Gib(true);
+                IoCManager.Resolve<IEntityManager>().GetComponent<SharedBodyComponent>(entity).Gib(true);
                 Bloodstain(component);
                 return;
             }
@@ -45,13 +45,13 @@ namespace Content.Server.Recycling
         private bool CanGib(RecyclerComponent component, IEntity entity)
         {
             // We suppose this entity has a Recyclable component.
-            return IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(entity.Uid) && !component.Safe &&
-                   IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out ApcPowerReceiverComponent? receiver) && receiver.Powered;
+            return IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(entity) && !component.Safe &&
+                   IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner, out ApcPowerReceiverComponent? receiver) && receiver.Powered;
         }
 
         public void Bloodstain(RecyclerComponent component)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out AppearanceComponent? appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner, out AppearanceComponent? appearance))
             {
                 appearance.SetData(RecyclerVisuals.Bloody, true);
             }

@@ -24,8 +24,8 @@ public sealed class InstrumentComponent : SharedInstrumentComponent
     public int MidiEventCount = 0;
 
     public IPlayerSession? InstrumentPlayer =>
-        IoCManager.Resolve<IEntityManager>().GetComponentOrNull<ActivatableUIComponent>(Owner.Uid)?.CurrentSingleUser
-        ?? IoCManager.Resolve<IEntityManager>().GetComponentOrNull<ActorComponent>(Owner.Uid)?.PlayerSession;
+        IoCManager.Resolve<IEntityManager>().GetComponentOrNull<ActivatableUIComponent>(Owner)?.CurrentSingleUser
+        ?? IoCManager.Resolve<IEntityManager>().GetComponentOrNull<ActorComponent>(Owner)?.PlayerSession;
 
     [ViewVariables] public BoundUserInterface? UserInterface => Owner.GetUIOrNull(InstrumentUiKey.Key);
 }

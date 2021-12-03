@@ -63,7 +63,7 @@ namespace Content.Client.IconSmoothing
         {
             base.Initialize();
 
-            Sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(Owner.Uid);
+            Sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(Owner);
         }
 
         /// <inheritdoc />
@@ -71,7 +71,7 @@ namespace Content.Client.IconSmoothing
         {
             base.Startup();
 
-            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Anchored)
+            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Anchored)
             {
                 // ensures lastposition initial value is populated on spawn. Just calling
                 // the hook here would cause a dirty event to fire needlessly
@@ -95,9 +95,9 @@ namespace Content.Client.IconSmoothing
 
         private void UpdateLastPosition()
         {
-            if (_mapManager.TryGetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).GridID, out var grid))
+            if (_mapManager.TryGetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).GridID, out var grid))
             {
-                _lastPosition = (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).GridID, grid.TileIndicesFor(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates));
+                _lastPosition = (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).GridID, grid.TileIndicesFor(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates));
             }
             else
             {
@@ -109,9 +109,9 @@ namespace Content.Client.IconSmoothing
 
         internal virtual void CalculateNewSprite()
         {
-            if (!_mapManager.TryGetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).GridID, out var grid))
+            if (!_mapManager.TryGetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).GridID, out var grid))
             {
-                Logger.Error($"Failed to calculate IconSmoothComponent sprite in {Owner} because grid {IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).GridID} was missing.");
+                Logger.Error($"Failed to calculate IconSmoothComponent sprite in {Owner} because grid {IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).GridID} was missing.");
                 return;
             }
             CalculateNewSprite(grid);
@@ -136,14 +136,14 @@ namespace Content.Client.IconSmoothing
 
         private void CalculateNewSpriteCardinal(IMapGrid grid)
         {
-            if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Anchored || Sprite == null)
+            if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Anchored || Sprite == null)
             {
                 return;
             }
 
             var dirs = CardinalConnectDirs.None;
 
-            var position = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates;
+            var position = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates;
             if (MatchingEntity(grid.GetInDir(position, Direction.North)))
                 dirs |= CardinalConnectDirs.North;
             if (MatchingEntity(grid.GetInDir(position, Direction.South)))
@@ -173,12 +173,12 @@ namespace Content.Client.IconSmoothing
 
         protected (CornerFill ne, CornerFill nw, CornerFill sw, CornerFill se) CalculateCornerFill(IMapGrid grid)
         {
-            if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Anchored)
+            if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Anchored)
             {
                 return (CornerFill.None, CornerFill.None, CornerFill.None, CornerFill.None);
             }
 
-            var position = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates;
+            var position = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates;
             var n = MatchingEntity(grid.GetInDir(position, Direction.North));
             var ne = MatchingEntity(grid.GetInDir(position, Direction.NorthEast));
             var e = MatchingEntity(grid.GetInDir(position, Direction.East));
@@ -240,7 +240,7 @@ namespace Content.Client.IconSmoothing
             }
 
             // Local is fine as we already know it's parented to the grid (due to the way anchoring works).
-            switch (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).LocalRotation.GetCardinalDir())
+            switch (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).LocalRotation.GetCardinalDir())
             {
                 case Direction.North:
                     return (cornerSW, cornerSE, cornerNE, cornerNW);
@@ -258,7 +258,7 @@ namespace Content.Client.IconSmoothing
         {
             base.Shutdown();
 
-            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Anchored)
+            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Anchored)
             {
                 IoCManager.Resolve<IEntityManager>().EventBus.RaiseEvent(EventSource.Local, new IconSmoothDirtyEvent(Owner, _lastPosition, Mode));
             }
@@ -266,7 +266,7 @@ namespace Content.Client.IconSmoothing
 
         public void AnchorStateChanged()
         {
-            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Anchored)
+            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Anchored)
             {
                 IoCManager.Resolve<IEntityManager>().EventBus.RaiseEvent(EventSource.Local, new IconSmoothDirtyEvent(Owner, _lastPosition, Mode));
                 UpdateLastPosition();

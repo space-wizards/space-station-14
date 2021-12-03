@@ -438,7 +438,7 @@ namespace Content.Client.Preferences.UI
             #region Preview
 
             _previewDummy = entityManager.SpawnEntity("MobHumanDummy", MapCoordinates.Nullspace);
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(_previewDummy.Uid);
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(_previewDummy);
 
             // Front
             _previewSprite = new SpriteView
@@ -482,7 +482,7 @@ namespace Content.Client.Preferences.UI
             if (!disposing)
                 return;
 
-            IoCManager.Resolve<IEntityManager>().DeleteEntity(_previewDummy.Uid);
+            IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) _previewDummy);
             _preferencesManager.OnServerDataLoaded -= LoadServerData;
         }
 
@@ -660,7 +660,7 @@ namespace Content.Client.Preferences.UI
             if (Profile is null)
                 return;
 
-            EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(_previewDummy.Uid, Profile);
+            EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(_previewDummy, Profile);
             LobbyCharacterPreviewPanel.GiveDummyJobClothes(_previewDummy, Profile);
         }
 

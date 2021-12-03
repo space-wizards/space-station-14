@@ -17,7 +17,7 @@ namespace Content.Shared.Construction.Conditions
         {
             foreach (var entity in location.GetEntitiesInTile(LookupFlags.Approximate | LookupFlags.IncludeAnchored))
             {
-                if (IoCManager.Resolve<IEntityManager>().HasComponent<SharedWindowComponent>(entity.Uid))
+                if (IoCManager.Resolve<IEntityManager>().HasComponent<SharedWindowComponent>(entity))
                     return false;
             }
 

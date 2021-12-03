@@ -52,7 +52,7 @@ namespace Content.Server.Body.Commands
                     }
 
                     entity = player.AttachedEntityUid.Value;
-                    hand = entityManager.SpawnEntity(DefaultHandPrototype, entityManager.GetComponent<TransformComponent>(entity).Coordinates).Uid;
+                    hand = entityManager.SpawnEntity(DefaultHandPrototype, entityManager.GetComponent<TransformComponent>(entity).Coordinates);
                     break;
                 }
                 case 1:
@@ -66,7 +66,7 @@ namespace Content.Server.Body.Commands
                         }
 
                         entity = uid;
-                        hand = entityManager.SpawnEntity(DefaultHandPrototype, entityManager.GetComponent<TransformComponent>(entity).Coordinates).Uid;
+                        hand = entityManager.SpawnEntity(DefaultHandPrototype, entityManager.GetComponent<TransformComponent>(entity).Coordinates);
                     }
                     else
                     {
@@ -83,7 +83,7 @@ namespace Content.Server.Body.Commands
                         }
 
                         entity = player.AttachedEntityUid.Value;
-                        hand = entityManager.SpawnEntity(args[0], entityManager.GetComponent<TransformComponent>(entity).Coordinates).Uid;
+                        hand = entityManager.SpawnEntity(args[0], entityManager.GetComponent<TransformComponent>(entity).Coordinates);
                     }
 
                     break;
@@ -110,7 +110,7 @@ namespace Content.Server.Body.Commands
                         return;
                     }
 
-                    hand = entityManager.SpawnEntity(args[1], entityManager.GetComponent<TransformComponent>(entity).Coordinates).Uid;
+                    hand = entityManager.SpawnEntity(args[1], entityManager.GetComponent<TransformComponent>(entity).Coordinates);
 
                     break;
                 }

@@ -147,7 +147,7 @@ namespace Content.Shared.Body.Components
             var argsAdded = new BodyPartAddedEventArgs(slot.Id, part);
 
             EntitySystem.Get<SharedHumanoidAppearanceSystem>().BodyPartAdded(OwnerUid, argsAdded);
-            foreach (var component in IoCManager.Resolve<IEntityManager>().GetComponents<IBodyPartAdded>(Owner.Uid).ToArray())
+            foreach (var component in IoCManager.Resolve<IEntityManager>().GetComponents<IBodyPartAdded>(Owner).ToArray())
             {
                 component.BodyPartAdded(argsAdded);
             }
@@ -175,7 +175,7 @@ namespace Content.Shared.Body.Components
 
 
             EntitySystem.Get<SharedHumanoidAppearanceSystem>().BodyPartRemoved(OwnerUid, args);
-            foreach (var component in IoCManager.Resolve<IEntityManager>().GetComponents<IBodyPartRemoved>(Owner.Uid))
+            foreach (var component in IoCManager.Resolve<IEntityManager>().GetComponents<IBodyPartRemoved>(Owner))
             {
                 component.BodyPartRemoved(args);
             }
@@ -547,7 +547,7 @@ namespace Content.Shared.Body.Components
                     continue;
                 }
 
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out SharedBodyPartComponent? part))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out SharedBodyPartComponent? part))
                 {
                     continue;
                 }

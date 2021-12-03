@@ -14,8 +14,8 @@ namespace Content.Server.Containers
             {
                 foreach (var entity in container.ContainedEntities)
                 {
-                    if (IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityPrototype?.ID == prototypeId) total++;
-                    if(!IoCManager.Resolve<IEntityManager>().TryGetComponent<ContainerManagerComponent?>(entity.Uid, out var component)) continue;
+                    if (IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityPrototype?.ID == prototypeId) total++;
+                    if(!IoCManager.Resolve<IEntityManager>().TryGetComponent<ContainerManagerComponent?>(entity, out var component)) continue;
                     total += component.CountPrototypeOccurencesRecursive(prototypeId);
                 }
             }

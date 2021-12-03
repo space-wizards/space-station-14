@@ -151,7 +151,7 @@ namespace Content.Client.Preferences.UI
                 Group = group;
 
                 _previewDummy = entityManager.SpawnEntity("MobHumanDummy", MapCoordinates.Nullspace);
-                EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(_previewDummy.Uid, profile);
+                EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(_previewDummy, profile);
                 var humanoid = profile as HumanoidCharacterProfile;
                 if (humanoid != null)
                 {
@@ -165,7 +165,7 @@ namespace Content.Client.Preferences.UI
 
                 var view = new SpriteView
                 {
-                    Sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(_previewDummy.Uid),
+                    Sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(_previewDummy),
                     Scale = (2, 2),
                     OverrideDirection = Direction.South
                 };
@@ -218,7 +218,7 @@ namespace Content.Client.Preferences.UI
                 if (!disposing)
                     return;
 
-                IoCManager.Resolve<IEntityManager>().DeleteEntity(_previewDummy.Uid);
+                IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) _previewDummy);
                 _previewDummy = null!;
             }
         }

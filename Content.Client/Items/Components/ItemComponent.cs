@@ -15,7 +15,7 @@ namespace Content.Client.Items.Components
             if (!Owner.TryGetContainer(out var container))
                 return;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(container.Owner.Uid, out HandsComponent? hands))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(container.Owner, out HandsComponent? hands))
                 hands.UpdateHandVisualizer();
         }
     }

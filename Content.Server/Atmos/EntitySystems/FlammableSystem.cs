@@ -58,7 +58,7 @@ namespace Content.Server.Atmos.EntitySystems
                 return;
 
             var isHotEvent = new IsHotEvent();
-            RaiseLocalEvent(args.Used.Uid, isHotEvent, false);
+            RaiseLocalEvent(args.Used, isHotEvent, false);
 
             if (!isHotEvent.IsHot)
                 return;
@@ -69,7 +69,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void OnCollideEvent(EntityUid uid, FlammableComponent flammable, StartCollideEvent args)
         {
-            var otherUid = args.OtherFixture.Body.Owner.Uid;
+            var otherUid = (EntityUid) args.OtherFixture.Body.Owner;
             if (!EntityManager.TryGetComponent(otherUid, out FlammableComponent? otherFlammable))
                 return;
 
@@ -174,7 +174,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!Resolve(uid, ref flammable, ref alerts))
                 return;
 
-            if (!flammable.OnFire || !_actionBlockerSystem.CanInteract(flammable.Owner.Uid) || flammable.Resisting)
+            if (!flammable.OnFire || !_actionBlockerSystem.CanInteract(flammable.Owner) || flammable.Resisting)
                 return;
 
             flammable.Resisting = true;
@@ -217,7 +217,7 @@ namespace Content.Server.Atmos.EntitySystems
             // TODO: This needs cleanup to take off the crust from TemperatureComponent and shit.
             foreach (var (flammable, physics, transform) in EntityManager.EntityQuery<FlammableComponent, IPhysBody, TransformComponent>())
             {
-                var uid = flammable.Owner.Uid;
+                var uid = (EntityUid) flammable.Owner;
 
                 // Slowly dry ourselves off if wet.
                 if (flammable.FireStacks < 0)
@@ -225,7 +225,7 @@ namespace Content.Server.Atmos.EntitySystems
                     flammable.FireStacks = MathF.Min(0, flammable.FireStacks + 1);
                 }
 
-                IoCManager.Resolve<IEntityManager>().TryGetComponent(flammable.Owner.Uid, out ServerAlertsComponent? status);
+                IoCManager.Resolve<IEntityManager>().TryGetComponent(flammable.Owner, out ServerAlertsComponent? status);
 
                 if (!flammable.OnFire)
                 {

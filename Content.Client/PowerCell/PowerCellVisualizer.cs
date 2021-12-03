@@ -17,7 +17,7 @@ namespace Content.Client.PowerCell
         {
             base.InitializeEntity(entity);
 
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(entity.Uid);
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(entity);
 
             if (_prefix != null)
             {
@@ -30,7 +30,7 @@ namespace Content.Client.PowerCell
         {
             base.OnChangeData(component);
 
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner.Uid);
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
             if (component.TryGetData(PowerCellVisuals.ChargeLevel, out byte level))
             {
                 var adjustedLevel = level * 25;

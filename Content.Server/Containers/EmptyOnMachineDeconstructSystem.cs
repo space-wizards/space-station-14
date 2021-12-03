@@ -35,7 +35,7 @@ namespace Content.Server.Containers
         {
             if (!EntityManager.TryGetComponent<IContainerManager>(uid, out var mComp))
                 return;
-            var baseCoords = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner.Uid).Coordinates;
+            var baseCoords = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner).Coordinates;
             foreach (var v in component.Containers)
             {
                 if (mComp.TryGetContainer(v, out var container))

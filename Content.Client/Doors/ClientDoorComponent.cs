@@ -39,7 +39,7 @@ namespace Content.Client.Doors
 
                 base.State = value;
 
-                IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner.Uid, new DoorStateChangedEvent(State), false);
+                IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, new DoorStateChangedEvent(State), false);
             }
         }
 

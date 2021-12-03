@@ -30,8 +30,8 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void HandleInjection(EntityUid uid, SolutionInjectOnCollideComponent component, StartCollideEvent args)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<BloodstreamComponent?>(args.OtherFixture.Body.Owner.Uid, out var bloodstream) ||
-                !_solutionsSystem.TryGetInjectableSolution(component.Owner.Uid, out var solution)) return;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<BloodstreamComponent?>(args.OtherFixture.Body.Owner, out var bloodstream) ||
+                !_solutionsSystem.TryGetInjectableSolution(component.Owner, out var solution)) return;
 
             var solRemoved = solution.SplitSolution(component.TransferAmount);
             var solRemovedVol = solRemoved.TotalVolume;

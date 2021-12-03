@@ -68,10 +68,10 @@ namespace Content.Server.Kitchen.Components
         /// </summary>
         [ViewVariables] private uint _currentCookTimerTime = 1;
 
-        private bool Powered => !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
+        private bool Powered => !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         private bool HasContents => EntitySystem.Get<SolutionContainerSystem>()
-                                        .TryGetSolution(Owner.Uid, SolutionName, out var solution) &&
+                                        .TryGetSolution(Owner, SolutionName, out var solution) &&
                                     (solution.Contents.Count > 0 || _storage.ContainedEntities.Count > 0);
 
         private bool _uiDirty = true;
@@ -94,7 +94,7 @@ namespace Content.Server.Kitchen.Components
 
             _currentCookTimerTime = _cookTimeDefault;
 
-            EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner.Uid, SolutionName);
+            EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, SolutionName);
 
             _storage = ContainerHelpers.EnsureContainer<Container>(Owner, "microwave_entity_container",
                 out _);
@@ -184,12 +184,12 @@ namespace Content.Server.Kitchen.Components
             }
 
             if (_uiDirty && EntitySystem.Get<SolutionContainerSystem>()
-                .TryGetSolution(Owner.Uid, SolutionName, out var solution))
+                .TryGetSolution(Owner, SolutionName, out var solution))
             {
                 UserInterface?.SetState(new MicrowaveUpdateUserInterfaceState
                 (
                     solution.Contents.ToArray(),
-                    _storage.ContainedEntities.Select(item => item.Uid).ToArray(),
+                    _storage.ContainedEntities.Select(item => (EntityUid) item).ToArray(),
                     _busy,
                     _currentCookTimeButtonIndex,
                     _currentCookTimerTime
@@ -206,7 +206,7 @@ namespace Content.Server.Kitchen.Components
                 finalState = MicrowaveVisualState.Broken;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
                 appearance.SetData(PowerDeviceVisuals.VisualState, finalState);
             }
@@ -220,7 +220,7 @@ namespace Content.Server.Kitchen.Components
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User.Uid, out ActorComponent? actor) || !Powered)
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User, out ActorComponent? actor) || !Powered)
             {
                 return;
             }
@@ -243,7 +243,7 @@ namespace Content.Server.Kitchen.Components
                 return false;
             }
 
-            var itemEntity = IoCManager.Resolve<IEntityManager>().GetComponent<HandsComponent>(eventArgs.User.Uid).GetActiveHand?.Owner;
+            var itemEntity = IoCManager.Resolve<IEntityManager>().GetComponent<HandsComponent>(eventArgs.User).GetActiveHand?.Owner;
 
             if (itemEntity == null)
             {
@@ -251,15 +251,15 @@ namespace Content.Server.Kitchen.Components
                 return false;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SolutionTransferComponent?>(itemEntity.Uid, out var attackPourable))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SolutionTransferComponent?>(itemEntity, out var attackPourable))
             {
                 var solutionsSystem = EntitySystem.Get<SolutionContainerSystem>();
-                if (!solutionsSystem.TryGetDrainableSolution(itemEntity.Uid, out var attackSolution))
+                if (!solutionsSystem.TryGetDrainableSolution(itemEntity, out var attackSolution))
                 {
                     return false;
                 }
 
-                if (!solutionsSystem.TryGetSolution(Owner.Uid, SolutionName, out var solution))
+                if (!solutionsSystem.TryGetSolution(Owner, SolutionName, out var solution))
                 {
                     return false;
                 }
@@ -275,8 +275,8 @@ namespace Content.Server.Kitchen.Components
 
                 //Move units from attackSolution to targetSolution
                 var removedSolution = EntitySystem.Get<SolutionContainerSystem>()
-                    .Drain(itemEntity.Uid, attackSolution, realTransferAmount);
-                if (!EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(Owner.Uid, solution, removedSolution))
+                    .Drain(itemEntity, attackSolution, realTransferAmount);
+                if (!EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(Owner, solution, removedSolution))
                 {
                     return false;
                 }
@@ -286,7 +286,7 @@ namespace Content.Server.Kitchen.Components
                 return true;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(itemEntity.Uid, typeof(ItemComponent), out var food))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(itemEntity, typeof(ItemComponent), out var food))
             {
                 Owner.PopupMessage(eventArgs.User, "microwave-component-interact-using-transfer-fail");
                 return false;
@@ -312,18 +312,18 @@ namespace Content.Server.Kitchen.Components
             var solidsDict = new Dictionary<string, int>();
             foreach (var item in _storage.ContainedEntities)
             {
-                if (IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(item.Uid).EntityPrototype == null)
+                if (IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(item).EntityPrototype == null)
                 {
                     continue;
                 }
 
-                if (solidsDict.ContainsKey(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(item.Uid).EntityPrototype.ID))
+                if (solidsDict.ContainsKey(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(item).EntityPrototype.ID))
                 {
-                    solidsDict[IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(item.Uid).EntityPrototype.ID]++;
+                    solidsDict[IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(item).EntityPrototype.ID]++;
                 }
                 else
                 {
-                    solidsDict.Add(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(item.Uid).EntityPrototype.ID, 1);
+                    solidsDict.Add(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(item).EntityPrototype.ID, 1);
                 }
             }
 
@@ -366,13 +366,13 @@ namespace Content.Server.Kitchen.Components
                     if (recipeToCook != null)
                     {
                         SubtractContents(recipeToCook);
-                        IoCManager.Resolve<IEntityManager>().SpawnEntity(recipeToCook.Result, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
+                        IoCManager.Resolve<IEntityManager>().SpawnEntity(recipeToCook.Result, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
                     }
                     else
                     {
                         VaporizeReagents();
                         VaporizeSolids();
-                        IoCManager.Resolve<IEntityManager>().SpawnEntity(_badRecipeName, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
+                        IoCManager.Resolve<IEntityManager>().SpawnEntity(_badRecipeName, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
                     }
                 }
 
@@ -390,18 +390,18 @@ namespace Content.Server.Kitchen.Components
 
         private void VaporizeReagents()
         {
-            if (EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution))
+            if (EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
             {
-                EntitySystem.Get<SolutionContainerSystem>().RemoveAllSolution(Owner.Uid, solution);
+                EntitySystem.Get<SolutionContainerSystem>().RemoveAllSolution(Owner, solution);
             }
         }
 
         private void VaporizeReagentQuantity(Solution.ReagentQuantity reagentQuantity)
         {
-            if (EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution))
+            if (EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
             {
                 EntitySystem.Get<SolutionContainerSystem>()
-                    .TryRemoveReagent(Owner.Uid, solution, reagentQuantity.ReagentId, reagentQuantity.Quantity);
+                    .TryRemoveReagent(Owner, solution, reagentQuantity.ReagentId, reagentQuantity.Quantity);
             }
         }
 
@@ -411,7 +411,7 @@ namespace Content.Server.Kitchen.Components
             {
                 var item = _storage.ContainedEntities.ElementAt(i);
                 _storage.Remove(item);
-                IoCManager.Resolve<IEntityManager>().DeleteEntity(item.Uid);
+                IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) item);
             }
         }
 
@@ -433,8 +433,8 @@ namespace Content.Server.Kitchen.Components
 
         private void SubtractContents(FoodRecipePrototype recipe)
         {
-            var solutionUid = Owner.Uid;
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution))
+            var solutionUid = (EntityUid) Owner;
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
             {
                 return;
             }
@@ -451,15 +451,15 @@ namespace Content.Server.Kitchen.Components
                 {
                     foreach (var item in _storage.ContainedEntities)
                     {
-                        if (IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(item.Uid).EntityPrototype == null)
+                        if (IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(item).EntityPrototype == null)
                         {
                             continue;
                         }
 
-                        if (IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(item.Uid).EntityPrototype.ID == recipeSolid.Key)
+                        if (IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(item).EntityPrototype.ID == recipeSolid.Key)
                         {
                             _storage.Remove(item);
-                            IoCManager.Resolve<IEntityManager>().DeleteEntity(item.Uid);
+                            IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) item);
                             break;
                         }
                     }
@@ -474,7 +474,7 @@ namespace Content.Server.Kitchen.Components
                 return MicrowaveSuccessState.RecipeFail;
             }
 
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution))
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
             {
                 return MicrowaveSuccessState.RecipeFail;
             }
@@ -517,7 +517,7 @@ namespace Content.Server.Kitchen.Components
         {
             var headCount = 0;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedBodyComponent?>(victim.Uid, out var body))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedBodyComponent?>(victim, out var body))
             {
                 var headSlots = body.GetSlotsOfType(BodyPartType.Head);
 

@@ -11,7 +11,7 @@ namespace Content.Server.AI.WorldState.States.Hands
         public override string Name => "AnyFreeHand";
         public override bool GetValue()
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out HandsComponent? handsComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out HandsComponent? handsComponent))
             {
                 return false;
             }

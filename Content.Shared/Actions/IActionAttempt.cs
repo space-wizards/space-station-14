@@ -190,7 +190,7 @@ namespace Content.Shared.Actions
         public ComponentMessage PerformInstantActionMessage()
 #pragma warning restore 618
         {
-            return new PerformInstantItemActionMessage(_action.ActionType, _item.Uid);
+            return new PerformInstantItemActionMessage(_action.ActionType, _item);
         }
 
 #pragma warning disable 618
@@ -199,23 +199,23 @@ namespace Content.Shared.Actions
         {
             if (toggleOn)
             {
-                return new PerformToggleOnItemActionMessage(_action.ActionType, _item.Uid);
+                return new PerformToggleOnItemActionMessage(_action.ActionType, _item);
             }
-            return new PerformToggleOffItemActionMessage(_action.ActionType, _item.Uid);
+            return new PerformToggleOffItemActionMessage(_action.ActionType, _item);
         }
 
 #pragma warning disable 618
         public ComponentMessage PerformTargetPointActionMessage(PointerInputCmdHandler.PointerInputCmdArgs args)
 #pragma warning restore 618
         {
-            return new PerformTargetPointItemActionMessage(_action.ActionType, _item.Uid, args.Coordinates);
+            return new PerformTargetPointItemActionMessage(_action.ActionType, _item, args.Coordinates);
         }
 
 #pragma warning disable 618
         public ComponentMessage PerformTargetEntityActionMessage(PointerInputCmdHandler.PointerInputCmdArgs args)
 #pragma warning restore 618
         {
-            return new PerformTargetEntityItemActionMessage(_action.ActionType, _item.Uid, args.EntityUid);
+            return new PerformTargetEntityItemActionMessage(_action.ActionType, _item, args.EntityUid);
         }
 
         public override string ToString()

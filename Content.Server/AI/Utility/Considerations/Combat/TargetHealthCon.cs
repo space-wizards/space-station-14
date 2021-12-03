@@ -12,7 +12,7 @@ namespace Content.Server.AI.Utility.Considerations.Combat
         {
             var target = context.GetState<TargetEntityState>().GetValue();
 
-            if (target == null || !IoCManager.Resolve<IEntityManager>().EntityExists(target.Uid) || !IoCManager.Resolve<IEntityManager>().TryGetComponent(target.Uid, out DamageableComponent? damageableComponent))
+            if (target == null || !IoCManager.Resolve<IEntityManager>().EntityExists(target) || !IoCManager.Resolve<IEntityManager>().TryGetComponent(target, out DamageableComponent? damageableComponent))
             {
                 return 0.0f;
             }

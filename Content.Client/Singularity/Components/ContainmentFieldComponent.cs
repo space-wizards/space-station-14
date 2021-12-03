@@ -18,7 +18,7 @@ namespace Content.Client.Singularity.Components
         {
             base.Initialize();
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out _spriteComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out _spriteComponent))
             {
                 Logger.Error($"{nameof(ContainmentFieldComponent)} created without {nameof(SpriteComponent)}");
             }

@@ -58,7 +58,7 @@ namespace Content.Client.ContextMenu.UI
         /// </summary>
         public void UpdateEntity(IEntity? entity = null)
         {
-            if (Entity != null && IoCManager.Resolve<IEntityManager>().EntityExists(Entity.Uid))
+            if (Entity != null && IoCManager.Resolve<IEntityManager>().EntityExists(Entity))
                 entity ??= Entity;
 
             if (entity == null)
@@ -67,12 +67,12 @@ namespace Content.Client.ContextMenu.UI
                 return;
             }
 
-            EntityIcon.Sprite = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<ISpriteComponent>(entity.Uid);
+            EntityIcon.Sprite = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<ISpriteComponent>(entity);
 
             if (UserInterfaceManager.DebugMonitors.Visible)
-                Text = $"{IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity!.Uid).EntityName} ({entity.Uid})";
+                Text = $"{IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity!).EntityName} ({entity})";
             else
-                Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity!.Uid).EntityName;
+                Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity!).EntityName;
         }
     }
 }

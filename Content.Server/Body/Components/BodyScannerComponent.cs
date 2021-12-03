@@ -17,7 +17,7 @@ namespace Content.Server.Body.Components
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User.Uid, out ActorComponent? actor))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User, out ActorComponent? actor))
             {
                 return;
             }
@@ -29,7 +29,7 @@ namespace Content.Server.Body.Components
                 return;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(session.AttachedEntity.Uid, out SharedBodyComponent? body))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(session.AttachedEntity, out SharedBodyComponent? body))
             {
                 var state = InterfaceState(body);
                 UserInterface?.SetState(state);
@@ -57,7 +57,7 @@ namespace Content.Server.Body.Components
         /// </summary>
         private BodyScannerUIState InterfaceState(SharedBodyComponent body)
         {
-            return new(body.Owner.Uid);
+            return new(body.Owner);
         }
     }
 }

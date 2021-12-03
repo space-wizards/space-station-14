@@ -29,7 +29,7 @@ namespace Content.Server.AI.Operators.Combat.Melee
                 return true;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(_owner.Uid, out CombatModeComponent? combatModeComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(_owner, out CombatModeComponent? combatModeComponent))
             {
                 return false;
             }
@@ -39,7 +39,7 @@ namespace Content.Server.AI.Operators.Combat.Melee
                 combatModeComponent.IsInCombatMode = true;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(_owner.Uid, out UnarmedCombatComponent? unarmedCombatComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(_owner, out UnarmedCombatComponent? unarmedCombatComponent))
             {
                 _unarmedCombat = unarmedCombatComponent;
             }
@@ -56,7 +56,7 @@ namespace Content.Server.AI.Operators.Combat.Melee
             if (!base.Shutdown(outcome))
                 return false;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(_owner.Uid, out CombatModeComponent? combatModeComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(_owner, out CombatModeComponent? combatModeComponent))
             {
                 combatModeComponent.IsInCombatMode = false;
             }
@@ -76,14 +76,14 @@ namespace Content.Server.AI.Operators.Combat.Melee
                 return Outcome.Failed;
             }
 
-            if ((IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_target.Uid).Coordinates.Position - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_owner.Uid).Coordinates.Position).Length >
+            if ((IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_target).Coordinates.Position - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_owner).Coordinates.Position).Length >
                 _unarmedCombat.Range)
             {
                 return Outcome.Failed;
             }
 
             var interactionSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InteractionSystem>();
-            interactionSystem.AiUseInteraction(_owner, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_target.Uid).Coordinates, _target.Uid);
+            interactionSystem.AiUseInteraction(_owner, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_target).Coordinates, _target);
             _elapsedTime += frameTime;
             return Outcome.Continuing;
         }

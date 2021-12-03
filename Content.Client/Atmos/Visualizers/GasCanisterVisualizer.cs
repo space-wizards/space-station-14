@@ -20,7 +20,7 @@ namespace Content.Client.Atmos.Visualizers
         {
             base.InitializeEntity(entity);
 
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(entity.Uid);
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(entity);
 
             sprite.LayerMapSet(Layers.PressureLight, sprite.AddLayerState(_statePressure[0]));
             sprite.LayerSetShader(Layers.PressureLight, "unshaded");

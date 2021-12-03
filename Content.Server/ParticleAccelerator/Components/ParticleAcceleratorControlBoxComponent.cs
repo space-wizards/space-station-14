@@ -222,12 +222,12 @@ namespace Content.Server.ParticleAccelerator.Components
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User.Uid, out ActorComponent? actor))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User, out ActorComponent? actor))
             {
                 return;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<WiresComponent?>(Owner.Uid, out var wires) && wires.IsPanelOpen)
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<WiresComponent?>(Owner, out var wires) && wires.IsPanelOpen)
             {
                 wires.OpenInterface(actor.PlayerSession);
             }
@@ -334,7 +334,7 @@ namespace Content.Server.ParticleAccelerator.Components
 
         private void UpdateWireStatus()
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out WiresComponent? wires))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out WiresComponent? wires))
             {
                 return;
             }
@@ -384,10 +384,10 @@ namespace Content.Server.ParticleAccelerator.Components
             _partEmitterRight = null;
 
             // Find fuel chamber first by scanning cardinals.
-            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Anchored)
+            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Anchored)
             {
-                var grid = _mapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).GridID);
-                var coords = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates;
+                var grid = _mapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).GridID);
+                var coords = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates;
                 foreach (var maybeFuel in grid.GetCardinalNeighborCells(coords))
                 {
                     if (IoCManager.Resolve<IEntityManager>().TryGetComponent(maybeFuel, out _partFuelChamber))
@@ -406,7 +406,7 @@ namespace Content.Server.ParticleAccelerator.Components
             // Align ourselves to match fuel chamber orientation.
             // This means that if you mess up the orientation of the control box it's not a big deal,
             // because the sprite is far from obvious about the orientation.
-            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).LocalRotation = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_partFuelChamber.Owner.Uid).LocalRotation;
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).LocalRotation = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_partFuelChamber.Owner).LocalRotation;
 
             var offsetEndCap = RotateOffset((1, 1));
             var offsetPowerBox = RotateOffset((1, -1));
@@ -452,7 +452,7 @@ namespace Content.Server.ParticleAccelerator.Components
 
             Vector2i RotateOffset(in Vector2i vec)
             {
-                var rot = new Angle(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).LocalRotation);
+                var rot = new Angle(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).LocalRotation);
                 return (Vector2i) rot.RotateVec(vec);
             }
         }
@@ -460,8 +460,8 @@ namespace Content.Server.ParticleAccelerator.Components
         private bool ScanPart<T>(Vector2i offset, [NotNullWhen(true)] out T? part)
             where T : ParticleAcceleratorPartComponent
         {
-            var grid = _mapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).GridID);
-            var coords = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates;
+            var grid = _mapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).GridID);
+            var coords = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates;
             foreach (var ent in grid.GetOffset(coords, offset))
             {
                 if (IoCManager.Resolve<IEntityManager>().TryGetComponent(ent, out part) && !part.Deleted)
@@ -577,7 +577,7 @@ namespace Content.Server.ParticleAccelerator.Components
 
         private void UpdateAppearance()
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
                 appearance.SetData(ParticleAcceleratorVisuals.VisualState,
                     _apcPowerReceiverComponent!.Powered
@@ -683,7 +683,7 @@ namespace Content.Server.ParticleAccelerator.Components
 
         private void UpdatePartVisualState(ParticleAcceleratorPartComponent? component)
         {
-            if (component == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent<AppearanceComponent?>(component.Owner.Uid, out var appearanceComponent))
+            if (component == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent<AppearanceComponent?>(component.Owner, out var appearanceComponent))
             {
                 return;
             }

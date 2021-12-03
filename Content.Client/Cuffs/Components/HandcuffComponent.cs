@@ -22,7 +22,7 @@ namespace Content.Client.Cuffs.Components
                 return;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(Owner.Uid, out var sprite))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(Owner, out var sprite))
             {
                 sprite.LayerSetState(0, new RSI.StateId(state.IconState)); // TODO: safety check to see if RSI contains the state?
             }

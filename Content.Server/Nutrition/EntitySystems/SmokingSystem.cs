@@ -96,7 +96,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 // This is awful. I hate this so much.
                 // TODO: Please, someone refactor containers and free me from this bullshit.
                 if (!smokable.Owner.TryGetContainerMan(out var containerManager) ||
-                    !IoCManager.Resolve<IEntityManager>().TryGetComponent(containerManager.Owner.Uid, out BloodstreamComponent? bloodstream))
+                    !IoCManager.Resolve<IEntityManager>().TryGetComponent(containerManager.Owner, out BloodstreamComponent? bloodstream))
                     continue;
 
                 _reactiveSystem.ReactionEntity(containerManager.OwnerUid, ReactionMethod.Ingestion, inhaledSolution);

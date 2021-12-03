@@ -280,7 +280,7 @@ namespace Content.Server.GameTicking
                     if (mind.CharacterName != null)
                         playerIcName = mind.CharacterName;
                     else if (mind.CurrentEntity != null)
-                        playerIcName = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(mind.CurrentEntity.Uid).EntityName;
+                        playerIcName = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(mind.CurrentEntity).EntityName;
 
                     var playerEndRoundInfo = new RoundEndMessageEvent.RoundEndPlayerInfo()
                     {
@@ -371,7 +371,7 @@ namespace Content.Server.GameTicking
             {
                 // TODO: Maybe something less naive here?
                 // FIXME: Actually, definitely.
-                IoCManager.Resolve<IEntityManager>().DeleteEntity(entity.Uid);
+                IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) entity);
             }
 
             _mapManager.Restart();

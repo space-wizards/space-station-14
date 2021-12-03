@@ -31,10 +31,10 @@ namespace Content.IntegrationTests.Tests
                 var grid = mapMan.CreateGrid(mapId);
                 gridEnt = entMan.GetEntity(grid.GridEntityId);
 
-                Assert.That(IoCManager.Resolve<IEntityManager>().TryGetComponent(gridEnt.Uid, out ShuttleComponent? shuttleComponent));
-                Assert.That(IoCManager.Resolve<IEntityManager>().TryGetComponent(gridEnt.Uid, out PhysicsComponent? physicsComponent));
+                Assert.That(IoCManager.Resolve<IEntityManager>().TryGetComponent(gridEnt, out ShuttleComponent? shuttleComponent));
+                Assert.That(IoCManager.Resolve<IEntityManager>().TryGetComponent(gridEnt, out PhysicsComponent? physicsComponent));
                 Assert.That(physicsComponent!.BodyType, Is.EqualTo(BodyType.Dynamic));
-                Assert.That(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(gridEnt.Uid).LocalPosition, Is.EqualTo(Vector2.Zero));
+                Assert.That(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(gridEnt).LocalPosition, Is.EqualTo(Vector2.Zero));
                 physicsComponent.ApplyLinearImpulse(Vector2.One);
             });
 
@@ -44,7 +44,7 @@ namespace Content.IntegrationTests.Tests
 
             await server.WaitAssertion(() =>
             {
-                Assert.That<Vector2?>((gridEnt != null ? IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(gridEnt.Uid) : null).LocalPosition, Is.Not.EqualTo(Vector2.Zero));
+                Assert.That<Vector2?>((gridEnt != null ? IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(gridEnt) : null).LocalPosition, Is.Not.EqualTo(Vector2.Zero));
             });
         }
     }

@@ -35,13 +35,13 @@ namespace Content.Server.AME.Components
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs args)
         {
-            if (!IoCManager.Resolve<IEntityManager>().HasComponent<HandsComponent>(args.User.Uid))
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<HandsComponent>(args.User))
             {
                 Owner.PopupMessage(args.User, Loc.GetString("ame-part-component-interact-using-no-hands"));
                 return false;
             }
 
-            if (!EntitySystem.Get<ToolSystem>().HasQuality(args.Using.Uid, _qualityNeeded))
+            if (!EntitySystem.Get<ToolSystem>().HasQuality(args.Using, _qualityNeeded))
                 return false;
 
             if (!_mapManager.TryGetGrid(args.ClickLocation.GetGridId(_serverEntityManager), out var mapGrid))
@@ -58,7 +58,7 @@ namespace Content.Server.AME.Components
 
             SoundSystem.Play(Filter.Pvs(Owner), _unwrapSound.GetSound(), Owner);
 
-            IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(Owner.Uid);
+            IoCManager.Resolve<IEntityManager>().QueueDeleteEntity((EntityUid) Owner);
 
             return true;
         }

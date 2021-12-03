@@ -117,7 +117,7 @@ namespace Content.Server.Advertise
                 if (advertise.NextAdvertisementTime > curTime)
                     continue;
 
-                SayAdvertisement(advertise.Owner.Uid, true, advertise);
+                SayAdvertisement(advertise.Owner, true, advertise);
             }
         }
     }

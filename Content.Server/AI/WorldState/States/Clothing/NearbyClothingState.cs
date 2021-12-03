@@ -19,17 +19,17 @@ namespace Content.Server.AI.WorldState.States.Clothing
         {
             var result = new List<IEntity>();
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AiControllerComponent? controller))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AiControllerComponent? controller))
             {
                 return result;
             }
 
             foreach (var entity in Visibility
-                .GetNearestEntities(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates, typeof(ClothingComponent), controller.VisionRadius))
+                .GetNearestEntities(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates, typeof(ClothingComponent), controller.VisionRadius))
             {
                 if (entity.TryGetContainer(out var container))
                 {
-                    if (!IoCManager.Resolve<IEntityManager>().HasComponent<EntityStorageComponent>(container.Owner.Uid))
+                    if (!IoCManager.Resolve<IEntityManager>().HasComponent<EntityStorageComponent>(container.Owner))
                     {
                         continue;
                     }

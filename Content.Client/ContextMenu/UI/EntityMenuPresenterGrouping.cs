@@ -22,7 +22,7 @@ namespace Content.Client.ContextMenu.UI
         {
             if (GroupingContextMenuType == 0)
             {
-                var newEntities = entities.GroupBy(e => IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(e.Uid).EntityName + (IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(e.Uid).EntityPrototype?.ID ?? string.Empty)).ToList();
+                var newEntities = entities.GroupBy(e => IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(e).EntityName + (IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(e).EntityPrototype?.ID ?? string.Empty)).ToList();
                 return newEntities.Select(grp => grp.ToList()).ToList();
             }
             else
@@ -36,11 +36,11 @@ namespace Content.Client.ContextMenu.UI
         {
             private static readonly List<Func<IEntity, IEntity, bool>> EqualsList = new()
             {
-                (a, b) => IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(a.Uid).EntityPrototype!.ID == IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(b.Uid).EntityPrototype!.ID,
+                (a, b) => IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(a).EntityPrototype!.ID == IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(b).EntityPrototype!.ID,
                 (a, b) =>
                 {
-                    IoCManager.Resolve<IEntityManager>().TryGetComponent<ISpriteComponent?>(a.Uid, out var spriteA);
-                    IoCManager.Resolve<IEntityManager>().TryGetComponent<ISpriteComponent?>(b.Uid, out var spriteB);
+                    IoCManager.Resolve<IEntityManager>().TryGetComponent<ISpriteComponent?>(a, out var spriteA);
+                    IoCManager.Resolve<IEntityManager>().TryGetComponent<ISpriteComponent?>(b, out var spriteB);
 
                     if (spriteA == null || spriteB == null)
                         return spriteA == spriteB;
@@ -53,11 +53,11 @@ namespace Content.Client.ContextMenu.UI
             };
             private static readonly List<Func<IEntity, int>> GetHashCodeList = new()
             {
-                e => EqualityComparer<string>.Default.GetHashCode(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(e.Uid).EntityPrototype!.ID),
+                e => EqualityComparer<string>.Default.GetHashCode(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(e).EntityPrototype!.ID),
                 e =>
                 {
                     var hash = 0;
-                    foreach (var element in IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(e.Uid).AllLayers.Where(obj => obj.Visible).Select(s => s.RsiState.Name))
+                    foreach (var element in IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(e).AllLayers.Where(obj => obj.Visible).Select(s => s.RsiState.Name))
                     {
                         hash ^= EqualityComparer<string>.Default.GetHashCode(element!);
                     }

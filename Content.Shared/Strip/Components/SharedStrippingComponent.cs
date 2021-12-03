@@ -14,7 +14,7 @@ namespace Content.Shared.Strip.Components
 
         bool IDragDropOn.CanDragDropOn(DragDropEvent eventArgs)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Dragged.Uid, out SharedStrippableComponent? strippable)) return false;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Dragged, out SharedStrippableComponent? strippable)) return false;
             return strippable.CanBeStripped(Owner);
         }
 

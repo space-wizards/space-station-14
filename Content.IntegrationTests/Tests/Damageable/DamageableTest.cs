@@ -119,7 +119,7 @@ namespace Content.IntegrationTests.Tests.Damageable
                 sMapManager.CreateMap(mapId);
 
                 sDamageableEntity = sEntityManager.SpawnEntity("TestDamageableEntityId", coordinates);
-                sDamageableComponent = IoCManager.Resolve<IEntityManager>().GetComponent<DamageableComponent>(sDamageableEntity.Uid);
+                sDamageableComponent = IoCManager.Resolve<IEntityManager>().GetComponent<DamageableComponent>(sDamageableEntity);
                 sDamageableSystem = sEntitySystemManager.GetEntitySystem<DamageableSystem>();
 
                 group1 = sPrototypeManager.Index<DamageGroupPrototype>("TestGroup1");
@@ -138,7 +138,7 @@ namespace Content.IntegrationTests.Tests.Damageable
 
             await server.WaitAssertion(() =>
             {
-                var uid = sDamageableEntity.Uid;
+                var uid = (EntityUid) sDamageableEntity;
 
                 // Check that the correct types are supported.
                 Assert.That(sDamageableComponent.Damage.DamageDict.ContainsKey(type1.ID), Is.False);

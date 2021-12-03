@@ -23,7 +23,7 @@ namespace Content.Shared.Hands
         {
             var entity = eventArgs.SenderSession.AttachedEntity;
 
-            if (entity == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out SharedHandsComponent? hands))
+            if (entity == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out SharedHandsComponent? hands))
                 return;
 
             hands.ActiveHand = msg.HandName;

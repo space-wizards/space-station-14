@@ -152,9 +152,9 @@ namespace Content.Server.Storage.Components
             Contents.ShowContents = _showContents;
             Contents.OccludesLight = _occludesLight;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<PlaceableSurfaceComponent?>(Owner.Uid, out var surface))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<PlaceableSurfaceComponent?>(Owner, out var surface))
             {
-                EntitySystem.Get<PlaceableSurfaceSystem>().SetPlaceable(Owner.Uid, Open, surface);
+                EntitySystem.Get<PlaceableSurfaceSystem>().SetPlaceable(Owner, Open, surface);
             }
 
             UpdateAppearance();
@@ -173,7 +173,7 @@ namespace Content.Server.Storage.Components
                 return false;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<LockComponent?>(Owner.Uid, out var @lock) && @lock.Locked)
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<LockComponent?>(Owner, out var @lock) && @lock.Locked)
             {
                 if (!silent) Owner.PopupMessage(user, Loc.GetString("entity-storage-component-locked-message"));
                 return false;
@@ -218,13 +218,13 @@ namespace Content.Server.Storage.Components
                 // 5. if this is NOT AN ITEM, then mobs can always be eaten unless unless a previous law prevents it
 
                 // Let's not insert admin ghosts, yeah? This is really a a hack and should be replaced by attempt events
-                if (IoCManager.Resolve<IEntityManager>().HasComponent<GhostComponent>(entity.Uid))
+                if (IoCManager.Resolve<IEntityManager>().HasComponent<GhostComponent>(entity))
                     continue;
 
                 // checks
 
-                var targetIsItem = IoCManager.Resolve<IEntityManager>().HasComponent<SharedItemComponent>(entity.Uid);
-                var targetIsMob = IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(entity.Uid);
+                var targetIsItem = IoCManager.Resolve<IEntityManager>().HasComponent<SharedItemComponent>(entity);
+                var targetIsMob = IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(entity);
                 var storageIsItem = IoCManager.Resolve<IEntityManager>().HasComponent<SharedItemComponent>(OwnerUid);
 
                 var allowedToEat = false;
@@ -270,7 +270,7 @@ namespace Content.Server.Storage.Components
 
         private void UpdateAppearance()
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
                 appearance.SetData(StorageVisuals.CanWeld, _canWeldShut);
                 appearance.SetData(StorageVisuals.Welded, _isWeldedShut);
@@ -279,7 +279,7 @@ namespace Content.Server.Storage.Components
 
         private void ModifyComponents()
         {
-            if (!_isCollidableWhenOpen && IoCManager.Resolve<IEntityManager>().TryGetComponent<FixturesComponent?>(Owner.Uid, out var manager))
+            if (!_isCollidableWhenOpen && IoCManager.Resolve<IEntityManager>().TryGetComponent<FixturesComponent?>(Owner, out var manager))
             {
                 if (Open)
                 {
@@ -297,12 +297,12 @@ namespace Content.Server.Storage.Components
                 }
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<PlaceableSurfaceComponent?>(Owner.Uid, out var surface))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<PlaceableSurfaceComponent?>(Owner, out var surface))
             {
-                EntitySystem.Get<PlaceableSurfaceSystem>().SetPlaceable(Owner.Uid, Open, surface);
+                EntitySystem.Get<PlaceableSurfaceSystem>().SetPlaceable(Owner, Open, surface);
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
                 appearance.SetData(StorageVisuals.Open, Open);
             }
@@ -311,7 +311,7 @@ namespace Content.Server.Storage.Components
         protected virtual bool AddToContents(IEntity entity)
         {
             if (entity == Owner) return false;
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out IPhysBody? entityPhysicsComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out IPhysBody? entityPhysicsComponent))
             {
                 if (MaxSize < entityPhysicsComponent.GetWorldAABB().Size.X
                     || MaxSize < entityPhysicsComponent.GetWorldAABB().Size.Y)
@@ -325,7 +325,7 @@ namespace Content.Server.Storage.Components
 
         public virtual Vector2 ContentsDumpPosition()
         {
-            return IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).WorldPosition;
+            return IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).WorldPosition;
         }
 
         private void EmptyContents()
@@ -334,8 +334,8 @@ namespace Content.Server.Storage.Components
             {
                 if (Contents.Remove(contained))
                 {
-                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(contained.Uid).WorldPosition = ContentsDumpPosition();
-                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent<IPhysBody?>(contained.Uid, out var physics))
+                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(contained).WorldPosition = ContentsDumpPosition();
+                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent<IPhysBody?>(contained, out var physics))
                     {
                         physics.CanCollide = true;
                     }
@@ -369,14 +369,14 @@ namespace Content.Server.Storage.Components
             // Trying to add while open just dumps it on the ground below us.
             if (Open)
             {
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).WorldPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).WorldPosition;
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).WorldPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).WorldPosition;
                 return true;
             }
 
             if (!Contents.Insert(entity)) return false;
 
-            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).LocalPosition = Vector2.Zero;
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out IPhysBody? body))
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).LocalPosition = Vector2.Zero;
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out IPhysBody? body))
             {
                 body.CanCollide = false;
             }
@@ -430,7 +430,7 @@ namespace Content.Server.Storage.Components
 
             var toolSystem = EntitySystem.Get<ToolSystem>();
 
-            if (!await toolSystem.UseTool(eventArgs.Using.Uid, eventArgs.User.Uid, Owner.Uid, 1f, 1f, _weldingQuality))
+            if (!await toolSystem.UseTool(eventArgs.Using, eventArgs.User, Owner, 1f, 1f, _weldingQuality))
             {
                 _beingWelded = false;
                 return false;
@@ -463,7 +463,7 @@ namespace Content.Server.Storage.Components
             var containedEntities = Contents.ContainedEntities.ToList();
             foreach (var entity in containedEntities)
             {
-                var exActs = IoCManager.Resolve<IEntityManager>().GetComponents<IExAct>(entity.Uid).ToArray();
+                var exActs = IoCManager.Resolve<IEntityManager>().GetComponents<IExAct>(entity).ToArray();
                 foreach (var exAct in exActs)
                 {
                     exAct.OnExplosion(eventArgs);

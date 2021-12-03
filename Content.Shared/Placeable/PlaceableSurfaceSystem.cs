@@ -52,19 +52,19 @@ namespace Content.Shared.Placeable
             if (!surface.IsPlaceable)
                 return;
 
-            if(!IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedHandsComponent?>(args.User.Uid, out var handComponent))
+            if(!IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedHandsComponent?>(args.User, out var handComponent))
                 return;
 
             if (!args.ClickLocation.IsValid(IoCManager.Resolve<IEntityManager>()))
                 return;
 
-            if(!handComponent.TryDropEntity(args.Used, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(surface.Owner.Uid).Coordinates))
+            if(!handComponent.TryDropEntity(args.Used, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(surface.Owner).Coordinates))
                 return;
 
             if (surface.PlaceCentered)
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.Used.Uid).LocalPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.Target.Uid).LocalPosition + surface.PositionOffset;
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.Used).LocalPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.Target).LocalPosition + surface.PositionOffset;
             else
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.Used.Uid).Coordinates = args.ClickLocation;
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.Used).Coordinates = args.ClickLocation;
 
             args.Handled = true;
         }

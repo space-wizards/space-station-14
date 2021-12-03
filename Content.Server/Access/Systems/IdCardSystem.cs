@@ -22,7 +22,7 @@ namespace Content.Server.Access.Systems
 
         private void OnInit(EntityUid uid, IdCardComponent id, ComponentInit args)
         {
-            id.OriginalOwnerName ??= IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(id.Owner.Uid).EntityName;
+            id.OriginalOwnerName ??= IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(id.Owner).EntityName;
             UpdateEntityName(uid, id);
         }
 
@@ -67,7 +67,7 @@ namespace Content.Server.Access.Systems
 
             if (string.IsNullOrWhiteSpace(id.FullName) && string.IsNullOrWhiteSpace(id.JobTitle))
             {
-                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(id.Owner.Uid).EntityName = id.OriginalOwnerName;
+                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(id.Owner).EntityName = id.OriginalOwnerName;
                 return;
             }
 
@@ -80,7 +80,7 @@ namespace Content.Server.Access.Systems
                 : Loc.GetString("access-id-card-component-owner-full-name-job-title-text",
                     ("fullName", id.FullName),
                     ("jobSuffix", jobSuffix));
-            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(id.Owner.Uid).EntityName = val;
+            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(id.Owner).EntityName = val;
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace Content.Server.Access.Systems
             // check held item?
             if (EntityManager.TryGetComponent(uid, out SharedHandsComponent? hands) &&
                 hands.TryGetActiveHeldEntity(out var heldItem) &&
-                TryGetIdCard(heldItem.Uid, out idCard))
+                TryGetIdCard(heldItem, out idCard))
             {
                 return true;
             }
@@ -105,7 +105,7 @@ namespace Content.Server.Access.Systems
             if (EntityManager.TryGetComponent(uid, out InventoryComponent? inventoryComponent) &&
                 inventoryComponent.HasSlot(EquipmentSlotDefines.Slots.IDCARD) &&
                 inventoryComponent.TryGetSlotItem(EquipmentSlotDefines.Slots.IDCARD, out ItemComponent? item) &&
-                TryGetIdCard(item.Owner.Uid, out idCard))
+                TryGetIdCard(item.Owner, out idCard))
             {
                 return true;
             }

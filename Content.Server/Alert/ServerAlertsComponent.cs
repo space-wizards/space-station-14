@@ -67,7 +67,7 @@ namespace Content.Server.Alert
                     {
                         Logger.DebugS("alert", "user {0} attempted to" +
                                               " click alert {1} which is not currently showing for them",
-                            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(player.Uid).EntityName, msg.Type);
+                            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(player).EntityName, msg.Type);
                         break;
                     }
 

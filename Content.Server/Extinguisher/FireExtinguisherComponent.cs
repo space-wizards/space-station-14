@@ -60,15 +60,15 @@ namespace Content.Server.Extinguisher
             }
 
             var targetEntity = eventArgs.Target;
-            if (IoCManager.Resolve<IEntityManager>().HasComponent<ReagentTankComponent>(eventArgs.Target.Uid)
-                && solutionContainerSystem.TryGetDrainableSolution(targetEntity.Uid, out var targetSolution)
-                && solutionContainerSystem.TryGetDrainableSolution(Owner.Uid, out var container))
+            if (IoCManager.Resolve<IEntityManager>().HasComponent<ReagentTankComponent>(eventArgs.Target)
+                && solutionContainerSystem.TryGetDrainableSolution(targetEntity, out var targetSolution)
+                && solutionContainerSystem.TryGetDrainableSolution(Owner, out var container))
             {
                 var transfer = FixedPoint2.Min(container.AvailableVolume, targetSolution.DrainAvailable);
                 if (transfer > 0)
                 {
-                    var drained = solutionContainerSystem.Drain(targetEntity.Uid, targetSolution, transfer);
-                    solutionContainerSystem.TryAddSolution(Owner.Uid, container, drained);
+                    var drained = solutionContainerSystem.Drain(targetEntity, targetSolution, transfer);
+                    solutionContainerSystem.TryAddSolution(Owner, container, drained);
 
                     SoundSystem.Play(Filter.Pvs(Owner), _refillSound.GetSound(), Owner);
                     eventArgs.Target.PopupMessage(eventArgs.User,
@@ -99,18 +99,18 @@ namespace Content.Server.Extinguisher
 
         private void SetSafety(IEntity user, bool state)
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user.Uid) || !_hasSafety)
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || !_hasSafety)
                 return;
 
             _safety = state;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearance))
                 appearance.SetData(FireExtinguisherVisuals.Safety, _safety);
         }
 
         void IDropped.Dropped(DroppedEventArgs eventArgs)
         {
-            if (_hasSafety && IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance))
+            if (_hasSafety && IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearance))
                 appearance.SetData(FireExtinguisherVisuals.Safety, _safety);
         }
     }

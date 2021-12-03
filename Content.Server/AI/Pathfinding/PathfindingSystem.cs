@@ -184,7 +184,7 @@ namespace Content.Server.AI.Pathfinding
         /// <returns></returns>
         public PathfindingNode GetNode(IEntity entity)
         {
-            var tile = _mapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).GridID).GetTileRef(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates);
+            var tile = _mapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).GridID).GetTileRef(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates);
             return GetNode(tile);
         }
 
@@ -265,16 +265,16 @@ namespace Content.Server.AI.Pathfinding
         /// <param name="entity"></param>
         private void HandleEntityAdd(IEntity entity)
         {
-            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(entity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted ||
+            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(entity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityLifeStage) >= EntityLifeStage.Deleted ||
                 _lastKnownPositions.ContainsKey(entity) ||
-                !IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out IPhysBody? physics) ||
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out IPhysBody? physics) ||
                 !PathfindingNode.IsRelevant(entity, physics))
             {
                 return;
             }
 
-            var grid = _mapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).GridID);
-            var tileRef = grid.GetTileRef(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates);
+            var grid = _mapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).GridID);
+            var tileRef = grid.GetTileRef(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates);
 
             var chunk = GetChunk(tileRef);
             var node = chunk.GetNode(tileRef);
@@ -305,8 +305,8 @@ namespace Content.Server.AI.Pathfinding
         private void HandleEntityMove(MoveEvent moveEvent)
         {
             // If we've moved to space or the likes then remove us.
-            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(moveEvent.Sender.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(moveEvent.Sender.Uid).EntityLifeStage) >= EntityLifeStage.Deleted ||
-                !IoCManager.Resolve<IEntityManager>().TryGetComponent(moveEvent.Sender.Uid, out IPhysBody? physics) ||
+            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(moveEvent.Sender) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(moveEvent.Sender).EntityLifeStage) >= EntityLifeStage.Deleted ||
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(moveEvent.Sender, out IPhysBody? physics) ||
                 !PathfindingNode.IsRelevant(moveEvent.Sender, physics) ||
                 moveEvent.NewPosition.GetGridId(EntityManager) == GridId.Invalid)
             {
@@ -315,9 +315,9 @@ namespace Content.Server.AI.Pathfinding
             }
 
             // Memory leak protection until grid parenting confirmed fix / you REALLY need the performance
-            var gridBounds = _mapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(moveEvent.Sender.Uid).GridID).WorldBounds;
+            var gridBounds = _mapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(moveEvent.Sender).GridID).WorldBounds;
 
-            if (!gridBounds.Contains(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(moveEvent.Sender.Uid).WorldPosition))
+            if (!gridBounds.Contains(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(moveEvent.Sender).WorldPosition))
             {
                 HandleEntityRemove(moveEvent.Sender);
                 return;
@@ -371,13 +371,13 @@ namespace Content.Server.AI.Pathfinding
 
         public bool CanTraverse(IEntity entity, PathfindingNode node)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out IPhysBody? physics) &&
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out IPhysBody? physics) &&
                 (physics.CollisionMask & node.BlockedCollisionMask) != 0)
             {
                 return false;
             }
 
-            var access = _accessReader.FindAccessTags(entity.Uid);
+            var access = _accessReader.FindAccessTags(entity);
             foreach (var reader in node.AccessReaders)
             {
                 if (!_accessReader.IsAllowed(reader, access))

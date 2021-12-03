@@ -21,7 +21,7 @@ namespace Content.Client.Paper.UI
             base.Open();
             _window = new PaperWindow
             {
-                Title = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Owner.Uid).EntityName,
+                Title = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Owner).EntityName,
             };
             _window.OnClose += Close;
             _window.Input.OnTextEntered += Input_OnTextEntered;

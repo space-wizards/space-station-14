@@ -73,9 +73,9 @@ namespace Content.Server.Body.Commands
                     return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out SharedBodyComponent? body))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out SharedBodyComponent? body))
             {
-                shell.WriteLine($"Entity {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityName} with uid {entity.Uid} does not have a {nameof(SharedBodyComponent)} component.");
+                shell.WriteLine($"Entity {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityName} with uid {entity} does not have a {nameof(SharedBodyComponent)} component.");
                 return;
             }
 
@@ -85,19 +85,19 @@ namespace Content.Server.Body.Commands
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(partEntity.Uid, out SharedBodyPartComponent? part))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(partEntity, out SharedBodyPartComponent? part))
             {
-                shell.WriteLine($"Entity {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(partEntity.Uid).EntityName} with uid {args[0]} does not have a {nameof(SharedBodyPartComponent)} component.");
+                shell.WriteLine($"Entity {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(partEntity).EntityName} with uid {args[0]} does not have a {nameof(SharedBodyPartComponent)} component.");
                 return;
             }
 
             if (body.HasPart(part))
             {
-                shell.WriteLine($"Body part {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(partEntity.Uid).EntityName} with uid {partEntity.Uid} is already attached to entity {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityName} with uid {entity.Uid}");
+                shell.WriteLine($"Body part {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(partEntity).EntityName} with uid {partEntity} is already attached to entity {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityName} with uid {entity}");
                 return;
             }
 
-            body.SetPart($"AttachBodyPartVerb-{partEntity.Uid}", part);
+            body.SetPart($"AttachBodyPartVerb-{partEntity}", part);
         }
     }
 }

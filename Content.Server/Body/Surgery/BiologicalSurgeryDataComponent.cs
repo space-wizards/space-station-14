@@ -31,7 +31,7 @@ namespace Content.Server.Body.Surgery
 
         private bool VesselsClamped { get; set; }
 
-        public SharedBodyPartComponent? Parent => IoCManager.Resolve<IEntityManager>().GetComponentOrNull<SharedBodyPartComponent>(Owner.Uid);
+        public SharedBodyPartComponent? Parent => IoCManager.Resolve<IEntityManager>().GetComponentOrNull<SharedBodyPartComponent>(Owner);
 
         public BodyPartType? ParentType => Parent?.PartType;
 
@@ -53,7 +53,7 @@ namespace Content.Server.Body.Surgery
 
         private async Task<bool> SurgeryDoAfter(IEntity performer)
         {
-            if (!IoCManager.Resolve<IEntityManager>().HasComponent<DoAfterComponent>(performer.Uid))
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<DoAfterComponent>(performer))
             {
                 return true;
             }
@@ -299,7 +299,7 @@ namespace Content.Server.Body.Surgery
 
             performer.PopupMessage(Loc.GetString("biological-surgery-data-component-loosen-organ-message"));
 
-            if (!IoCManager.Resolve<IEntityManager>().HasComponent<DoAfterComponent>(performer.Uid))
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<DoAfterComponent>(performer))
             {
                 AddDisconnectedOrgan(target);
                 return;
@@ -340,16 +340,16 @@ namespace Content.Server.Body.Surgery
 
             performer.PopupMessage(Loc.GetString("biological-surgery-data-component-remove-organ-message"));
 
-            if (!IoCManager.Resolve<IEntityManager>().HasComponent<DoAfterComponent>(performer.Uid))
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<DoAfterComponent>(performer))
             {
-                Parent.RemoveMechanism(target, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(performer.Uid).Coordinates);
+                Parent.RemoveMechanism(target, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(performer).Coordinates);
                 RemoveDisconnectedOrgan(target);
                 return;
             }
 
             if (await SurgeryDoAfter(performer))
             {
-                Parent.RemoveMechanism(target, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(performer.Uid).Coordinates);
+                Parent.RemoveMechanism(target, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(performer).Coordinates);
                 RemoveDisconnectedOrgan(target);
             }
         }

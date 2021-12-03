@@ -13,7 +13,7 @@ namespace Content.Server.Storage.EntitySystems
     {
         protected override int? GetCount(ContainerModifiedMessage msg, ItemCounterComponent itemCounter)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(msg.Container.Owner.Uid, out ServerStorageComponent? component)
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(msg.Container.Owner, out ServerStorageComponent? component)
                 || component.StoredEntities == null)
             {
                 return null;
@@ -22,7 +22,7 @@ namespace Content.Server.Storage.EntitySystems
             var count = 0;
             foreach (var entity in component.StoredEntities)
             {
-                if (itemCounter.Count.IsValid(entity.Uid)) count++;
+                if (itemCounter.Count.IsValid(entity)) count++;
             }
 
             return count;

@@ -349,13 +349,13 @@ namespace Content.Server.Construction
 
                     // TODO: Sanity checks.
 
-                    user = interactUsing.User.Uid;
+                    user = interactUsing.User;
 
                     // If we're validating whether this event handles the step...
                     if (doAfterState == DoAfterState.Validation)
                     {
                         // Then we only really need to check whether the tool entity has that quality or not.
-                        return _toolSystem.HasQuality(interactUsing.Used.Uid, toolInsertStep.Tool)
+                        return _toolSystem.HasQuality(interactUsing.Used, toolInsertStep.Tool)
                             ? HandleResult.Validated : HandleResult.False;
                     }
 
@@ -363,7 +363,7 @@ namespace Content.Server.Construction
                     if (doAfterState != DoAfterState.None)
                         return doAfterState == DoAfterState.Completed ? HandleResult.True : HandleResult.False;
 
-                    if (!_toolSystem.UseTool(interactUsing.Used.Uid, interactUsing.User.Uid,
+                    if (!_toolSystem.UseTool(interactUsing.Used, interactUsing.User,
                         uid, toolInsertStep.Fuel, toolInsertStep.DoAfter, toolInsertStep.Tool,
                         new ConstructionDoAfterComplete(uid, ev), new ConstructionDoAfterCancelled(uid, ev)))
                         return HandleResult.False;

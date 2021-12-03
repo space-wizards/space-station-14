@@ -56,7 +56,7 @@ namespace Content.Server.Administration
 
         private void AddDebugVerbs(GetOtherVerbsEvent args)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ActorComponent?>(args.User.Uid, out var actor))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ActorComponent?>(args.User, out var actor))
                 return;
 
             var player = actor.PlayerSession;
@@ -68,7 +68,7 @@ namespace Content.Server.Administration
                 verb.Text = Loc.GetString("delete-verb-get-data-text");
                 verb.Category = VerbCategory.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png";
-                verb.Act = () => IoCManager.Resolve<IEntityManager>().DeleteEntity(args.Target.Uid);
+                verb.Act = () => IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) args.Target);
                 verb.Impact = LogImpact.Medium;
                 args.Verbs.Add(verb);
             }
@@ -88,8 +88,8 @@ namespace Content.Server.Administration
             // Control mob verb
             if (_groupController.CanCommand(player, "controlmob") &&
                 args.User != args.Target &&
-                IoCManager.Resolve<IEntityManager>().HasComponent<MindComponent>(args.User.Uid) &&
-                IoCManager.Resolve<IEntityManager>().TryGetComponent<MindComponent?>(args.Target.Uid, out var targetMind))
+                IoCManager.Resolve<IEntityManager>().HasComponent<MindComponent>(args.User) &&
+                IoCManager.Resolve<IEntityManager>().TryGetComponent<MindComponent?>(args.Target, out var targetMind))
             {
                 Verb verb = new();
                 verb.Text = Loc.GetString("control-mob-verb-get-data-text");
@@ -97,7 +97,7 @@ namespace Content.Server.Administration
                 // TODO VERB ICON control mob icon
                 verb.Act = () =>
                 {
-                    player.ContentData()?.Mind?.TransferTo(args.Target.Uid, ghostCheckOverride: true);
+                    player.ContentData()?.Mind?.TransferTo(args.Target, ghostCheckOverride: true);
                 };
                 verb.Impact = LogImpact.High;
                 args.Verbs.Add(verb);
@@ -106,13 +106,13 @@ namespace Content.Server.Administration
             // Make Sentient verb
             if (_groupController.CanCommand(player, "makesentient") &&
                 args.User != args.Target &&
-                !IoCManager.Resolve<IEntityManager>().HasComponent<MindComponent>(args.Target.Uid))
+                !IoCManager.Resolve<IEntityManager>().HasComponent<MindComponent>(args.Target))
             {
                 Verb verb = new();
                 verb.Text = Loc.GetString("make-sentient-verb-get-data-text");
                 verb.Category = VerbCategory.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/sentient.svg.192dpi.png";
-                verb.Act = () => MakeSentientCommand.MakeSentient(args.Target.Uid, EntityManager);
+                verb.Act = () => MakeSentientCommand.MakeSentient(args.Target, EntityManager);
                 verb.Impact = LogImpact.Medium;
                 args.Verbs.Add(verb);
             }
@@ -125,9 +125,9 @@ namespace Content.Server.Administration
                 verb.Category = VerbCategory.Debug;
                 verb.Act = () =>
                 {
-                    var coords = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.Target.Uid).Coordinates;
+                    var coords = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.Target).Coordinates;
                     Timer.Spawn(_gameTiming.TickPeriod, () => _explosions.SpawnExplosion(coords, 0, 1, 2, 1), CancellationToken.None);
-                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent(args.Target.Uid, out SharedBodyComponent? body))
+                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent(args.Target, out SharedBodyComponent? body))
                     {
                         body.Gib();
                     }
@@ -138,7 +138,7 @@ namespace Content.Server.Administration
 
             // Set clothing verb
             if (_groupController.CanCommand(player, "setoutfit") &&
-                IoCManager.Resolve<IEntityManager>().HasComponent<InventoryComponent>(args.Target.Uid))
+                IoCManager.Resolve<IEntityManager>().HasComponent<InventoryComponent>(args.Target))
             {
                 Verb verb = new();
                 verb.Text = Loc.GetString("set-outfit-verb-get-data-text");
@@ -168,7 +168,7 @@ namespace Content.Server.Administration
 
             // Get Disposal tube direction verb
             if (_groupController.CanCommand(player, "tubeconnections") &&
-                IoCManager.Resolve<IEntityManager>().TryGetComponent<IDisposalTubeComponent?>(args.Target.Uid, out var tube))
+                IoCManager.Resolve<IEntityManager>().TryGetComponent<IDisposalTubeComponent?>(args.Target, out var tube))
             {
                 Verb verb = new();
                 verb.Text = Loc.GetString("tube-direction-verb-get-data-text");
@@ -187,7 +187,7 @@ namespace Content.Server.Administration
                 verb.Category = VerbCategory.Debug;
                 // TODO VERB ICON add ghost icon
                 // Where is the national park service icon for haunted forests?
-                verb.Act = () => _ghostRoleSystem.OpenMakeGhostRoleEui(player, args.Target.Uid);
+                verb.Act = () => _ghostRoleSystem.OpenMakeGhostRoleEui(player, args.Target);
                 verb.Impact = LogImpact.Medium;
                 args.Verbs.Add(verb);
             }
@@ -206,13 +206,13 @@ namespace Content.Server.Administration
 
             // Add verb to open Solution Editor
             if (_groupController.CanCommand(player, "addreagent") &&
-                IoCManager.Resolve<IEntityManager>().HasComponent<SolutionContainerManagerComponent>(args.Target.Uid))
+                IoCManager.Resolve<IEntityManager>().HasComponent<SolutionContainerManagerComponent>(args.Target))
             {
                 Verb verb = new();
                 verb.Text = Loc.GetString("edit-solutions-verb-get-data-text");
                 verb.Category = VerbCategory.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/spill.svg.192dpi.png";
-                verb.Act = () => OpenEditSolutionsEui(player, args.Target.Uid);
+                verb.Act = () => OpenEditSolutionsEui(player, args.Target);
                 verb.Impact = LogImpact.Medium; // maybe high depending on WHAT reagents they add...
                 args.Verbs.Add(verb);
             }

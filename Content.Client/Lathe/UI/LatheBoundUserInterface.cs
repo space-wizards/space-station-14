@@ -37,9 +37,9 @@ namespace Content.Client.Lathe.UI
         {
             base.Open();
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Owner.Uid, out MaterialStorageComponent? storage)
-            ||  !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Owner.Uid, out SharedLatheComponent? lathe)
-            ||  !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Owner.Uid, out SharedLatheDatabaseComponent? database)) return;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Owner, out MaterialStorageComponent? storage)
+            ||  !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Owner, out SharedLatheComponent? lathe)
+            ||  !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Owner, out SharedLatheDatabaseComponent? database)) return;
 
             Storage = storage;
             Lathe = lathe;

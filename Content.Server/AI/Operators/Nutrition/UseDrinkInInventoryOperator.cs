@@ -30,9 +30,9 @@ namespace Content.Server.AI.Operators.Nutrition
             }
 
             // TODO: Also have this check storage a la backpack etc.
-            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(_target.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_target.Uid).EntityLifeStage) >= EntityLifeStage.Deleted ||
-                !IoCManager.Resolve<IEntityManager>().TryGetComponent(_owner.Uid, out HandsComponent? handsComponent) ||
-                !IoCManager.Resolve<IEntityManager>().TryGetComponent(_target.Uid, out ItemComponent? itemComponent))
+            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(_target) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_target).EntityLifeStage) >= EntityLifeStage.Deleted ||
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(_owner, out HandsComponent? handsComponent) ||
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(_target, out ItemComponent? itemComponent))
             {
                 return Outcome.Failed;
             }
@@ -43,7 +43,7 @@ namespace Content.Server.AI.Operators.Nutrition
             {
                 if (handsComponent.GetItem(slot) != itemComponent) continue;
                 handsComponent.ActiveHand = slot;
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(_target.Uid, out drinkComponent))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(_target, out drinkComponent))
                 {
                     return Outcome.Failed;
                 }
@@ -58,8 +58,8 @@ namespace Content.Server.AI.Operators.Nutrition
                 return Outcome.Failed;
             }
 
-            if (drinkComponent.Deleted || EntitySystem.Get<DrinkSystem>().IsEmpty(drinkComponent.Owner.Uid, drinkComponent)
-                                       || IoCManager.Resolve<IEntityManager>().TryGetComponent(_owner.Uid, out ThirstComponent? thirstComponent) &&
+            if (drinkComponent.Deleted || EntitySystem.Get<DrinkSystem>().IsEmpty(drinkComponent.Owner, drinkComponent)
+                                       || IoCManager.Resolve<IEntityManager>().TryGetComponent(_owner, out ThirstComponent? thirstComponent) &&
                 thirstComponent.CurrentThirst >= thirstComponent.ThirstThresholds[ThirstThreshold.Okay])
             {
                 return Outcome.Success;

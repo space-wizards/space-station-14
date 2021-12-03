@@ -50,12 +50,12 @@ namespace Content.Client.CharacterInfo.Components
             {
                 case CharacterInfoMessage characterInfoMessage:
                     _control.UpdateUI(characterInfoMessage);
-                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ISpriteComponent? spriteComponent))
+                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ISpriteComponent? spriteComponent))
                     {
                         _control.SpriteView.Sprite = spriteComponent;
                     }
 
-                    _control.NameLabel.Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityName;
+                    _control.NameLabel.Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityName;
                     break;
             }
         }

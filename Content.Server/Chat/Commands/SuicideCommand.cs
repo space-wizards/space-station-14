@@ -55,7 +55,7 @@ namespace Content.Server.Chat.Commands
                         _ => prototypeManager.Index<DamageTypePrototype>("Blunt")
                     },
                 200);
-                EntitySystem.Get<DamageableSystem>().TryChangeDamage(target.Uid, damage, true);
+                EntitySystem.Get<DamageableSystem>().TryChangeDamage(target, damage, true);
             }
         }
 
@@ -88,11 +88,11 @@ namespace Content.Server.Chat.Commands
             EntitySystem.Get<AdminLogSystem>().Add(LogType.Suicide, $"{player.AttachedEntity} is committing suicide");
 
             // Held item suicide
-            var handsComponent = IoCManager.Resolve<IEntityManager>().GetComponent<HandsComponent>(owner.Uid);
+            var handsComponent = IoCManager.Resolve<IEntityManager>().GetComponent<HandsComponent>(owner);
             var itemComponent = handsComponent.GetActiveHand;
             if (itemComponent != null)
             {
-                var suicide = IoCManager.Resolve<IEntityManager>().GetComponents<ISuicideAct>(itemComponent.Owner.Uid).FirstOrDefault();
+                var suicide = IoCManager.Resolve<IEntityManager>().GetComponents<ISuicideAct>(itemComponent.Owner).FirstOrDefault();
 
                 if (suicide != null)
                 {
@@ -107,9 +107,9 @@ namespace Content.Server.Chat.Commands
             {
                 foreach (var entity in entities)
                 {
-                    if (IoCManager.Resolve<IEntityManager>().HasComponent<ItemComponent>(entity.Uid))
+                    if (IoCManager.Resolve<IEntityManager>().HasComponent<ItemComponent>(entity))
                         continue;
-                    var suicide = IoCManager.Resolve<IEntityManager>().GetComponents<ISuicideAct>(entity.Uid).FirstOrDefault();
+                    var suicide = IoCManager.Resolve<IEntityManager>().GetComponents<ISuicideAct>(entity).FirstOrDefault();
                     if (suicide != null)
                     {
                         DealDamage(suicide, chat, owner);
@@ -126,7 +126,7 @@ namespace Content.Server.Chat.Commands
             owner.PopupMessage(selfMessage);
 
             DamageSpecifier damage = new(IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>("Bloodloss"), 200);
-            EntitySystem.Get<DamageableSystem>().TryChangeDamage(owner.Uid, damage, true);
+            EntitySystem.Get<DamageableSystem>().TryChangeDamage(owner, damage, true);
 
             // Prevent the player from returning to the body.
             // Note that mind cannot be null because otherwise owner would be null.

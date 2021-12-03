@@ -60,7 +60,7 @@ namespace Content.Server.Suspicion
 
         public bool IsDead()
         {
-            return IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out MobStateComponent? state) &&
+            return IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out MobStateComponent? state) &&
                    state.IsDead();
         }
 
@@ -76,7 +76,7 @@ namespace Content.Server.Suspicion
 
         public void SyncRoles()
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out MindComponent? mind) ||
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out MindComponent? mind) ||
                 !mind.HasMind)
             {
                 return;
@@ -159,7 +159,7 @@ namespace Content.Server.Suspicion
                     continue;
                 }
 
-                allies.Add((role.Role!.Mind.CharacterName, role.Owner.Uid));
+                allies.Add((role.Role!.Mind.CharacterName, Uid: role.Owner));
             }
 
             return new SuspicionRoleComponentState(Role?.Name, Role?.Antagonist, allies.ToArray());

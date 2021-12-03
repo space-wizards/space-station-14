@@ -16,18 +16,18 @@ namespace Content.Server.Botany.Components
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User.Uid))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
                 return false;
 
             if (eventArgs.Using.HasTag("BotanySharp"))
             {
                 for (var i = 0; i < 2; i++)
                 {
-                    var plank = IoCManager.Resolve<IEntityManager>().SpawnEntity("MaterialWoodPlank1", IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
+                    var plank = IoCManager.Resolve<IEntityManager>().SpawnEntity("MaterialWoodPlank1", IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
                     plank.RandomOffset(0.25f);
                 }
 
-                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(Owner.Uid);
+                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity((EntityUid) Owner);
 
                 return true;
             }

@@ -230,8 +230,8 @@ namespace Content.Client.Actions
         {
             StopHighlightingItemSlots();
 
-            _highlightedEntity = item.Uid;
-            _itemSlotManager.HighlightEntity(item.Uid);
+            _highlightedEntity = item;
+            _itemSlotManager.HighlightEntity(item);
         }
 
         /// <summary>

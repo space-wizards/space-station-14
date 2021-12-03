@@ -126,10 +126,10 @@ namespace Content.Server.Administration
             var username = string.Empty;
 
             if(session.AttachedEntity != null)
-                username = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(session.AttachedEntity.Uid).EntityName;
+                username = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(session.AttachedEntity).EntityName;
 
             var antag = session.ContentData()?.Mind?.AllRoles.Any(r => r.Antagonist) ?? false;
-            var uid = session.AttachedEntity?.Uid ?? EntityUid.Invalid;
+            var uid = session.AttachedEntity ?? EntityUid.Invalid;
 
             return new PlayerInfo(name, username, antag, uid, session.UserId);
         }

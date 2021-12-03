@@ -156,14 +156,14 @@ namespace Content.Client.Items.UI
             if (_entity == null)
                 return;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(_entity.Uid, out HandVirtualItemComponent? virtualItem)
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(_entity, out HandVirtualItemComponent? virtualItem)
                 && _entityManager.TryGetEntity(virtualItem.BlockingEntity, out var blockEnt))
             {
-                _itemNameLabel.Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(blockEnt.Uid).EntityName;
+                _itemNameLabel.Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(blockEnt).EntityName;
             }
             else
             {
-                _itemNameLabel.Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_entity.Uid).EntityName;
+                _itemNameLabel.Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_entity).EntityName;
             }
         }
 
@@ -185,7 +185,7 @@ namespace Content.Client.Items.UI
 
             ClearOldStatus();
 
-            foreach (var statusComponent in IoCManager.Resolve<IEntityManager>().GetComponents<IItemStatus>(_entity!.Uid))
+            foreach (var statusComponent in IoCManager.Resolve<IEntityManager>().GetComponents<IItemStatus>(_entity!))
             {
                 var control = statusComponent.MakeControl();
                 _statusContents.AddChild(control);
@@ -194,7 +194,7 @@ namespace Content.Client.Items.UI
             }
 
             var collectMsg = new ItemStatusCollectMessage();
-            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(_entity.Uid, collectMsg);
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(_entity, collectMsg);
 
             foreach (var control in collectMsg.Controls)
             {

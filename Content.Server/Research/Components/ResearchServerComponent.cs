@@ -74,7 +74,7 @@ namespace Content.Server.Research.Components
             Id = ServerCount++;
             EntitySystem.Get<ResearchSystem>()?.RegisterServer(this);
             Database = Owner.EnsureComponent<TechnologyDatabaseComponent>();
-            IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out _powerReceiver);
+            IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out _powerReceiver);
         }
 
         /// <inheritdoc />

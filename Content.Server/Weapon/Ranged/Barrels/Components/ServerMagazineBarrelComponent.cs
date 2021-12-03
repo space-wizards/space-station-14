@@ -58,7 +58,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 var magazine = MagazineContainer.ContainedEntity;
                 if (magazine != null)
                 {
-                    count += IoCManager.Resolve<IEntityManager>().GetComponent<RangedMagazineComponent>(magazine.Uid).ShotsLeft;
+                    count += IoCManager.Resolve<IEntityManager>().GetComponent<RangedMagazineComponent>(magazine).ShotsLeft;
                 }
 
                 return count;
@@ -74,7 +74,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 var magazine = MagazineContainer.ContainedEntity;
                 if (magazine != null)
                 {
-                    count += IoCManager.Resolve<IEntityManager>().GetComponent<RangedMagazineComponent>(magazine.Uid).Capacity;
+                    count += IoCManager.Resolve<IEntityManager>().GetComponent<RangedMagazineComponent>(magazine).Capacity;
                 }
 
                 return count;
@@ -154,7 +154,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         {
             (int, int)? count = null;
             var magazine = MagazineContainer.ContainedEntity;
-            if (magazine != null && IoCManager.Resolve<IEntityManager>().TryGetComponent(magazine.Uid, out RangedMagazineComponent? rangedMagazineComponent))
+            if (magazine != null && IoCManager.Resolve<IEntityManager>().TryGetComponent(magazine, out RangedMagazineComponent? rangedMagazineComponent))
             {
                 count = (rangedMagazineComponent.ShotsLeft, rangedMagazineComponent.Capacity);
             }
@@ -170,7 +170,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         {
             base.Initialize();
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearanceComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearanceComponent))
             {
                 _appearanceComponent = appearanceComponent;
             }
@@ -180,7 +180,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
             if (!existing && _magFillPrototype != null)
             {
-                var magEntity = IoCManager.Resolve<IEntityManager>().SpawnEntity(_magFillPrototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
+                var magEntity = IoCManager.Resolve<IEntityManager>().SpawnEntity(_magFillPrototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
                 MagazineContainer.Insert(magEntity);
             }
             Dirty();
@@ -206,7 +206,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             var entity = _chamberContainer.ContainedEntity;
 
             Cycle();
-            return (entity != null ? IoCManager.Resolve<IEntityManager>().GetComponent<AmmoComponent>(entity.Uid) : null).TakeBullet(spawnAt);
+            return (entity != null ? IoCManager.Resolve<IEntityManager>().GetComponent<AmmoComponent>(entity) : null).TakeBullet(spawnAt);
         }
 
         private void Cycle(bool manual = false)
@@ -280,7 +280,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 {
                     return false;
                 }
-                var ammoComponent = IoCManager.Resolve<IEntityManager>().GetComponent<AmmoComponent>(chamberEntity.Uid);
+                var ammoComponent = IoCManager.Resolve<IEntityManager>().GetComponent<AmmoComponent>(chamberEntity);
                 if (!ammoComponent.Caseless)
                 {
                     EjectCasing(chamberEntity);
@@ -299,7 +299,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
             // Try and pull a round from the magazine to replace the chamber if possible
             var magazine = MagazineContainer.ContainedEntity;
-            var nextRound = (magazine != null ? IoCManager.Resolve<IEntityManager>().GetComponent<RangedMagazineComponent>(magazine.Uid) : null).TakeAmmo();
+            var nextRound = (magazine != null ? IoCManager.Resolve<IEntityManager>().GetComponent<RangedMagazineComponent>(magazine) : null).TakeAmmo();
 
             if (nextRound == null)
             {
@@ -308,7 +308,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
             _chamberContainer.Insert(nextRound);
 
-            if (_autoEjectMag && magazine != null && IoCManager.Resolve<IEntityManager>().GetComponent<RangedMagazineComponent>(magazine.Uid).ShotsLeft == 0)
+            if (_autoEjectMag && magazine != null && IoCManager.Resolve<IEntityManager>().GetComponent<RangedMagazineComponent>(magazine).ShotsLeft == 0)
             {
                 SoundSystem.Play(Filter.Pvs(Owner), _soundAutoEject.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
 
@@ -338,9 +338,9 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             MagazineContainer.Remove(mag);
             SoundSystem.Play(Filter.Pvs(Owner), _soundMagEject.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out HandsComponent? handsComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out HandsComponent? handsComponent))
             {
-                handsComponent.PutInHandOrDrop(IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(mag.Uid));
+                handsComponent.PutInHandOrDrop(IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(mag));
             }
 
             Dirty();
@@ -349,7 +349,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         public bool CanInsertMagazine(IEntity user, IEntity magazine, bool quiet = true)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(magazine.Uid, out RangedMagazineComponent? magazineComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(magazine, out RangedMagazineComponent? magazineComponent))
             {
                 return false;
             }
@@ -403,7 +403,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             }
 
             // Insert 1 ammo
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Using.Uid, out AmmoComponent? ammoComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Using, out AmmoComponent? ammoComponent))
             {
                 if (!BoltOpen)
                 {

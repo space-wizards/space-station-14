@@ -34,7 +34,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             foreach (var entity in _gridtileLookupSystem.GetEntitiesIntersecting(tile.GridIndex, tile.GridIndices))
             {
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out IPhysBody? physics)
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out IPhysBody? physics)
                     || !entity.IsMovedByPressure(out var pressure)
                     || entity.IsInContainer())
                     continue;

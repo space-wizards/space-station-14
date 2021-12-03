@@ -17,7 +17,7 @@ namespace Content.Server.Disposal.Tube.Components
 
         protected override Direction[] ConnectableDirections()
         {
-            var direction = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).LocalRotation;
+            var direction = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).LocalRotation;
             var side = new Angle(MathHelper.DegreesToRadians(direction.Degrees + _sideDegrees));
 
             return new[] {direction.GetDir(), side.GetDir()};

@@ -73,7 +73,7 @@ namespace Content.Server.Stunnable
 
         private void OnUseInHand(EntityUid uid, StunbatonComponent comp, UseInHandEvent args)
         {
-            if (!Get<ActionBlockerSystem>().CanUse(args.User.Uid))
+            if (!Get<ActionBlockerSystem>().CanUse(args.User))
                 return;
 
             if (comp.Activated)
@@ -104,7 +104,7 @@ namespace Content.Server.Stunnable
 
         private void OnInteractUsing(EntityUid uid, StunbatonComponent comp, InteractUsingEvent args)
         {
-            if (!Get<ActionBlockerSystem>().CanInteract(args.User.Uid))
+            if (!Get<ActionBlockerSystem>().CanInteract(args.User))
                 return;
 
             if (EntityManager.TryGetComponent<PowerCellSlotComponent>(uid, out var cellslot))
@@ -121,31 +121,31 @@ namespace Content.Server.Stunnable
 
         private void StunEntity(IEntity entity, StunbatonComponent comp)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out StatusEffectsComponent? status) || !comp.Activated) return;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out StatusEffectsComponent? status) || !comp.Activated) return;
 
             // TODO: Make slowdown inflicted customizable.
 
             SoundSystem.Play(Filter.Pvs(comp.Owner), comp.StunSound.GetSound(), comp.Owner, AudioHelpers.WithVariation(0.25f));
-            if (!EntityManager.HasComponent<SlowedDownComponent>(entity.Uid))
+            if (!EntityManager.HasComponent<SlowedDownComponent>(entity))
             {
                 if (_robustRandom.Prob(comp.ParalyzeChanceNoSlowdown))
-                    _stunSystem.TryParalyze(entity.Uid, TimeSpan.FromSeconds(comp.ParalyzeTime), status);
+                    _stunSystem.TryParalyze(entity, TimeSpan.FromSeconds(comp.ParalyzeTime), status);
                 else
-                    _stunSystem.TrySlowdown(entity.Uid, TimeSpan.FromSeconds(comp.SlowdownTime), 0.5f, 0.5f, status);
+                    _stunSystem.TrySlowdown(entity, TimeSpan.FromSeconds(comp.SlowdownTime), 0.5f, 0.5f, status);
             }
             else
             {
                 if (_robustRandom.Prob(comp.ParalyzeChanceWithSlowdown))
-                    _stunSystem.TryParalyze(entity.Uid, TimeSpan.FromSeconds(comp.ParalyzeTime), status);
+                    _stunSystem.TryParalyze(entity, TimeSpan.FromSeconds(comp.ParalyzeTime), status);
                 else
-                    _stunSystem.TrySlowdown(entity.Uid, TimeSpan.FromSeconds(comp.SlowdownTime), 0.5f, 0.5f, status);
+                    _stunSystem.TrySlowdown(entity, TimeSpan.FromSeconds(comp.SlowdownTime), 0.5f, 0.5f, status);
             }
 
             var slowdownTime = TimeSpan.FromSeconds(comp.SlowdownTime);
-            _jitterSystem.DoJitter(entity.Uid, slowdownTime, status:status);
-            _stutteringSystem.DoStutter(entity.Uid, slowdownTime, status);
+            _jitterSystem.DoJitter(entity, slowdownTime, status:status);
+            _stutteringSystem.DoStutter(entity, slowdownTime, status);
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<PowerCellSlotComponent?>(comp.Owner.Uid, out var slot) || slot.Cell == null || !(slot.Cell.CurrentCharge < comp.EnergyPerUse))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<PowerCellSlotComponent?>(comp.Owner, out var slot) || slot.Cell == null || !(slot.Cell.CurrentCharge < comp.EnergyPerUse))
                 return;
 
             SoundSystem.Play(Filter.Pvs(comp.Owner), comp.SparksSound.GetSound(), comp.Owner, AudioHelpers.WithVariation(0.25f));
@@ -159,8 +159,8 @@ namespace Content.Server.Stunnable
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(comp.Owner.Uid, out var sprite) ||
-                !IoCManager.Resolve<IEntityManager>().TryGetComponent<ItemComponent?>(comp.Owner.Uid, out var item)) return;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(comp.Owner, out var sprite) ||
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent<ItemComponent?>(comp.Owner, out var item)) return;
 
             SoundSystem.Play(Filter.Pvs(comp.Owner), comp.SparksSound.GetSound(), comp.Owner, AudioHelpers.WithVariation(0.25f));
             item.EquippedPrefix = "off";
@@ -176,12 +176,12 @@ namespace Content.Server.Stunnable
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(comp.Owner.Uid, out var sprite) ||
-                !IoCManager.Resolve<IEntityManager>().TryGetComponent<ItemComponent?>(comp.Owner.Uid, out var item))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(comp.Owner, out var sprite) ||
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent<ItemComponent?>(comp.Owner, out var item))
                 return;
 
             var playerFilter = Filter.Pvs(comp.Owner);
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<PowerCellSlotComponent?>(comp.Owner.Uid, out var slot))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<PowerCellSlotComponent?>(comp.Owner, out var slot))
                 return;
 
             if (slot.Cell == null)

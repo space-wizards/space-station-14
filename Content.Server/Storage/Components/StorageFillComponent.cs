@@ -28,7 +28,7 @@ namespace Content.Server.Storage.Components
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out IStorageComponent? storage))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out IStorageComponent? storage))
             {
                 Logger.Error($"StorageFillComponent couldn't find any StorageComponent ({Owner})");
                 return;
@@ -51,7 +51,7 @@ namespace Content.Server.Storage.Components
                 for (var i = 0; i < storageItem.Amount; i++)
                 {
                     storage.Insert(
-                        IoCManager.Resolve<IEntityManager>().SpawnEntity(storageItem.PrototypeId, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates));
+                        IoCManager.Resolve<IEntityManager>().SpawnEntity(storageItem.PrototypeId, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates));
                 }
 
                 if (!string.IsNullOrEmpty(storageItem.GroupId)) alreadySpawnedGroups.Add(storageItem.GroupId);

@@ -32,7 +32,7 @@ namespace Content.Server.Construction.Commands
                         return;
                     }
 
-                    gridId = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.AttachedEntity.Uid).GridID;
+                    gridId = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.AttachedEntity).GridID;
                     break;
                 case 1:
                     if (!int.TryParse(args[0], out var id))
@@ -67,14 +67,14 @@ namespace Content.Server.Construction.Commands
             var underplating = tileDefinitionManager["underplating"];
             var underplatingTile = new Robust.Shared.Map.Tile(underplating.TileId);
             var changed = 0;
-            foreach (var childUid in IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(gridEntity.Uid).ChildEntityUids)
+            foreach (var childUid in IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(gridEntity).ChildEntityUids)
             {
                 if (!entityManager.TryGetEntity(childUid, out var childEntity))
                 {
                     continue;
                 }
 
-                var prototype = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(childEntity.Uid).EntityPrototype;
+                var prototype = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(childEntity).EntityPrototype;
                 while (true)
                 {
                     if (prototype?.Parent == null)
@@ -90,12 +90,12 @@ namespace Content.Server.Construction.Commands
                     continue;
                 }
 
-                if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(childEntity.Uid).Anchored)
+                if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(childEntity).Anchored)
                 {
                     continue;
                 }
 
-                var tile = grid.GetTileRef(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(childEntity.Uid).Coordinates);
+                var tile = grid.GetTileRef(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(childEntity).Coordinates);
                 var tileDef = (ContentTileDefinition) tileDefinitionManager[tile.Tile.TypeId];
 
                 if (tileDef.Name == "underplating")
@@ -103,7 +103,7 @@ namespace Content.Server.Construction.Commands
                     continue;
                 }
 
-                grid.SetTile(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(childEntity.Uid).Coordinates, underplatingTile);
+                grid.SetTile(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(childEntity).Coordinates, underplatingTile);
                 changed++;
             }
 

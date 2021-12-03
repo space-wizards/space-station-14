@@ -91,8 +91,8 @@ namespace Content.Server.GameTicking.Rules
             foreach (var playerSession in _playerManager.ServerSessions)
             {
                 if (playerSession.AttachedEntity == null
-                    || !IoCManager.Resolve<IEntityManager>().TryGetComponent(playerSession.AttachedEntity.Uid, out MobStateComponent? mobState)
-                    || !IoCManager.Resolve<IEntityManager>().HasComponent<SuspicionRoleComponent>(playerSession.AttachedEntity.Uid))
+                    || !IoCManager.Resolve<IEntityManager>().TryGetComponent(playerSession.AttachedEntity, out MobStateComponent? mobState)
+                    || !IoCManager.Resolve<IEntityManager>().HasComponent<SuspicionRoleComponent>(playerSession.AttachedEntity))
                 {
                     continue;
                 }

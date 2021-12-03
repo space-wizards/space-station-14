@@ -20,7 +20,7 @@ namespace Content.Client.Markers
         {
             var system = EntitySystem.Get<MarkerSystem>();
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ISpriteComponent? sprite))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ISpriteComponent? sprite))
             {
                 sprite.Visible = system.MarkersVisible;
             }

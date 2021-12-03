@@ -41,7 +41,7 @@ namespace Content.Client.Suspicion
             var viewport = _eyeManager.GetWorldViewport();
 
             var ent = _playerManager.LocalPlayer?.ControlledEntity;
-            if (ent == null || IoCManager.Resolve<IEntityManager>().TryGetComponent(ent.Uid, out SuspicionRoleComponent? sus) != true)
+            if (ent == null || IoCManager.Resolve<IEntityManager>().TryGetComponent(ent, out SuspicionRoleComponent? sus) != true)
             {
                 return;
             }
@@ -54,19 +54,19 @@ namespace Content.Client.Suspicion
                     continue;
                 }
 
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(ally.Uid, out IPhysBody? physics))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(ally, out IPhysBody? physics))
                 {
                     continue;
                 }
 
-                if (!ExamineSystemShared.InRangeUnOccluded(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(ent.Uid).MapPosition, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(ally.Uid).MapPosition, 15,
+                if (!ExamineSystemShared.InRangeUnOccluded(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(ent).MapPosition, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(ally).MapPosition, 15,
                     entity => entity == ent || entity == ally))
                 {
                     continue;
                 }
 
                 // if not on the same map, continue
-                if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(physics.Owner.Uid).MapID != _eyeManager.CurrentMap || physics.Owner.IsInContainer())
+                if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(physics.Owner).MapID != _eyeManager.CurrentMap || physics.Owner.IsInContainer())
                 {
                     continue;
                 }

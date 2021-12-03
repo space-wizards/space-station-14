@@ -38,7 +38,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
         private void OnExamined(EntityUid uid, GasPressurePumpComponent pump, ExaminedEvent args)
         {
-            if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pump.Owner.Uid).Anchored || !args.IsInDetailsRange) // Not anchored? Out of range? No status.
+            if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pump.Owner).Anchored || !args.IsInDetailsRange) // Not anchored? Out of range? No status.
                 return;
 
             if (Loc.TryGetString("gas-pressure-pump-system-examined", out var str,
@@ -50,7 +50,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
         private void OnPumpUpdated(EntityUid uid, GasPressurePumpComponent pump, AtmosDeviceUpdateEvent args)
         {
-            var appearance = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<AppearanceComponent>(pump.Owner.Uid);
+            var appearance = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<AppearanceComponent>(pump.Owner);
 
             if (!pump.Enabled
                 || !EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
@@ -92,10 +92,10 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
         private void OnPumpInteractHand(EntityUid uid, GasPressurePumpComponent component, InteractHandEvent args)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User.Uid, out ActorComponent? actor))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
-            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner.Uid).Anchored)
+            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner).Anchored)
             {
                 _userInterfaceSystem.TryOpen(uid, GasPressurePumpUiKey.Key, actor.PlayerSession);
                 DirtyUI(uid, component);
@@ -127,7 +127,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 return;
 
             _userInterfaceSystem.TrySetUiState(uid, GasPressurePumpUiKey.Key,
-                new GasPressurePumpBoundUserInterfaceState(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(pump.Owner.Uid).EntityName, pump.TargetPressure, pump.Enabled));
+                new GasPressurePumpBoundUserInterfaceState(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(pump.Owner).EntityName, pump.TargetPressure, pump.Enabled));
         }
     }
 }

@@ -63,7 +63,7 @@ namespace Content.Server.Actions
             if (!attempt.TryGetActionState(this, out var actionState) || !actionState.Enabled)
             {
                 Logger.DebugS("action", "user {0} attempted to use" +
-                                        " action {1} which is not granted to them", IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(player.Uid).EntityName,
+                                        " action {1} which is not granted to them", IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(player).EntityName,
                     attempt);
                 return;
             }
@@ -71,7 +71,7 @@ namespace Content.Server.Actions
             if (actionState.IsOnCooldown(GameTiming))
             {
                 Logger.DebugS("action", "user {0} attempted to use" +
-                                        " action {1} which is on cooldown", IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(player.Uid).EntityName,
+                                        " action {1} which is on cooldown", IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(player).EntityName,
                     attempt);
                 return;
             }
@@ -86,7 +86,7 @@ namespace Content.Server.Actions
                     if (toggleMsg.ToggleOn == actionState.ToggledOn)
                     {
                         Logger.DebugS("action", "user {0} attempted to" +
-                                                " toggle action {1} to {2}, but it is already toggled {2}", IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(player.Uid).EntityName,
+                                                " toggle action {1} to {2}, but it is already toggled {2}", IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(player).EntityName,
                             attempt.Action.Name, toggleMsg.ToggleOn);
                         return;
                     }
@@ -113,11 +113,11 @@ namespace Content.Server.Actions
                     {
                         Logger.DebugS("action", "user {0} attempted to" +
                                                 " perform target entity action {1} but could not find entity with " +
-                                                "provided uid {2}", IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(player.Uid).EntityName, attempt.Action.Name,
+                                                "provided uid {2}", IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(player).EntityName, attempt.Action.Name,
                             targetEntityMsg.Target);
                         return;
                     }
-                    if (!CheckRangeAndSetFacing(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates, player)) return;
+                    if (!CheckRangeAndSetFacing(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates, player)) return;
 
                     attempt.DoTargetEntityAction(player, entity);
                     break;
@@ -160,7 +160,7 @@ namespace Content.Server.Actions
                         return null;
                     }
 
-                    if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ItemActionsComponent?>(item.Uid, out var actionsComponent))
+                    if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ItemActionsComponent?>(item, out var actionsComponent))
                     {
                         Logger.DebugS("action", "user {0} attempted to perform" +
                                                 " item action {1} for item {2} which has no ItemActionsComponent",
@@ -198,13 +198,13 @@ namespace Content.Server.Actions
         {
             // ensure it's within their clickable range
             var targetWorldPos = target.ToMapPos(EntityManager);
-            var rangeBox = new Box2(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.Uid).WorldPosition, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.Uid).WorldPosition)
+            var rangeBox = new Box2(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player).WorldPosition, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player).WorldPosition)
                 .Enlarged(MaxUpdateRange);
             if (!rangeBox.Contains(targetWorldPos))
             {
                 Logger.DebugS("action", "user {0} attempted to" +
                                         " perform target action further than allowed range",
-                    IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(player.Uid).EntityName);
+                    IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(player).EntityName);
                 return false;
             }
 

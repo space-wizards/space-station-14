@@ -22,7 +22,7 @@ namespace Content.Client.Weapons.Ranged.Barrels.Visualizers
         public override void InitializeEntity(IEntity entity)
         {
             base.InitializeEntity(entity);
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(entity.Uid);
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(entity);
 
             if (sprite.LayerMapTryGet(RangedBarrelVisualLayers.Mag, out _))
             {
@@ -45,7 +45,7 @@ namespace Content.Client.Weapons.Ranged.Barrels.Visualizers
             // 1.If no mag then hide it OR
             // 2. If step 0 isn't visible then hide it (mag or unshaded)
             // 3. Otherwise just do mag / unshaded as is
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner.Uid);
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
 
             component.TryGetData(MagazineBarrelVisuals.MagLoaded, out _magLoaded);
 

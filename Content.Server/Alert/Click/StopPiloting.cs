@@ -19,7 +19,7 @@ namespace Content.Server.Alert.Click
     {
         public void AlertClicked(ClickAlertEventArgs args)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(args.Player.Uid, out PilotComponent? pilotComponent) &&
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(args.Player, out PilotComponent? pilotComponent) &&
                 pilotComponent.Console != null)
             {
                 EntitySystem.Get<ShuttleConsoleSystem>().RemovePilot(pilotComponent);

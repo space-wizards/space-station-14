@@ -41,7 +41,7 @@ namespace Content.Server.Construction.Completions
 
             var board = container.ContainedEntities[0];
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(board.Uid, out ComputerBoardComponent? boardComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(board, out ComputerBoardComponent? boardComponent))
             {
                 Logger.Warning($"Computer entity {uid} had an invalid entity in container \"{Container}\"! Aborting build computer action.");
                 return;
@@ -51,21 +51,21 @@ namespace Content.Server.Construction.Completions
 
             var transform = entityManager.GetComponent<TransformComponent>(uid);
             var computer = entityManager.SpawnEntity(boardComponent.Prototype, transform.Coordinates);
-            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(computer.Uid).LocalRotation = transform.LocalRotation;
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(computer).LocalRotation = transform.LocalRotation;
 
-            var computerContainer = containerSystem.EnsureContainer<Container>(computer.Uid, Container);
+            var computerContainer = containerSystem.EnsureContainer<Container>(computer, Container);
 
             // In case it already existed and there are any entities inside the container, delete them.
             foreach (var ent in computerContainer.ContainedEntities.ToArray())
             {
                 computerContainer.ForceRemove(ent);
-                IoCManager.Resolve<IEntityManager>().DeleteEntity(ent.Uid);
+                IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) ent);
             }
 
             computerContainer.Insert(board);
 
             // We only add this container. If some construction needs to take other containers into account, fix this.
-            entityManager.EntitySysManager.GetEntitySystem<ConstructionSystem>().AddContainer(computer.Uid, Container);
+            entityManager.EntitySysManager.GetEntitySystem<ConstructionSystem>().AddContainer(computer, Container);
 
             // Delete the original entity.
             entityManager.DeleteEntity(uid);

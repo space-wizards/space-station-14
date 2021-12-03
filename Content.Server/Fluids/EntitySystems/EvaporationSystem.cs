@@ -20,7 +20,7 @@ namespace Content.Server.Fluids.EntitySystems
             var queueDelete = new RemQueue<EvaporationComponent>();
             foreach (var evaporationComponent in EntityManager.EntityQuery<EvaporationComponent>())
             {
-                var uid = evaporationComponent.Owner.Uid;
+                var uid = (EntityUid) evaporationComponent.Owner;
                 evaporationComponent.Accumulator += frameTime;
 
                 if (!_solutionContainerSystem.TryGetSolution(uid, evaporationComponent.SolutionName, out var solution))
@@ -52,7 +52,7 @@ namespace Content.Server.Fluids.EntitySystems
 
             foreach (var evaporationComponent in queueDelete)
             {
-                EntityManager.RemoveComponent(evaporationComponent.Owner.Uid, evaporationComponent);
+                EntityManager.RemoveComponent(evaporationComponent.Owner, evaporationComponent);
             }
         }
     }

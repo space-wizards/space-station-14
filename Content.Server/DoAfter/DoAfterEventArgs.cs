@@ -102,7 +102,7 @@ namespace Content.Server.DoAfter
             IEntity user,
             float delay,
             CancellationToken cancelToken = default,
-            IEntity? target = null) : this(user.Uid, delay, cancelToken, target?.Uid ?? null)
+            IEntity? target = null) : this((EntityUid) user, delay, cancelToken, target ?? null)
         {
         }
 

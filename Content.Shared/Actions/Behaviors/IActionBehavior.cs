@@ -35,9 +35,9 @@ namespace Content.Shared.Actions.Behaviors
         {
             Performer = performer;
             ActionType = actionType;
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Performer.Uid, out PerformerActions))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Performer, out PerformerActions))
             {
-                throw new InvalidOperationException($"performer {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(performer.Uid).EntityName} tried to perform action {actionType} " +
+                throw new InvalidOperationException($"performer {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(performer).EntityName} tried to perform action {actionType} " +
                                                     $" but the performer had no actions component," +
                                                     " which should never occur");
             }

@@ -78,9 +78,9 @@ namespace Content.Client.Singularity
             {
                 var singuloEntity = distortion.Owner;
 
-                if (!_singularities.Keys.Contains(singuloEntity.Uid) && SinguloQualifies(singuloEntity, currentEyeLoc))
+                if (!_singularities.Keys.Contains(singuloEntity) && SinguloQualifies(singuloEntity, currentEyeLoc))
                 {
-                    _singularities.Add(singuloEntity.Uid, new SingularityShaderInstance(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(singuloEntity.Uid).MapPosition.Position, distortion.Intensity, distortion.Falloff));
+                    _singularities.Add(singuloEntity, new SingularityShaderInstance(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(singuloEntity).MapPosition.Position, distortion.Intensity, distortion.Falloff));
                 }
             }
 
@@ -95,14 +95,14 @@ namespace Content.Client.Singularity
                     }
                     else
                     {
-                        if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SingularityDistortionComponent?>(singuloEntity.Uid, out var distortion))
+                        if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SingularityDistortionComponent?>(singuloEntity, out var distortion))
                         {
                             _singularities.Remove(activeSinguloUid);
                         }
                         else
                         {
                             var shaderInstance = _singularities[activeSinguloUid];
-                            shaderInstance.CurrentMapCoords = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(singuloEntity.Uid).MapPosition.Position;
+                            shaderInstance.CurrentMapCoords = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(singuloEntity).MapPosition.Position;
                             shaderInstance.Intensity = distortion.Intensity;
                             shaderInstance.Falloff = distortion.Falloff;
                         }
@@ -119,7 +119,7 @@ namespace Content.Client.Singularity
 
         private bool SinguloQualifies(IEntity singuloEntity, MapCoordinates currentEyeLoc)
         {
-            return IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(singuloEntity.Uid).MapID == currentEyeLoc.MapId && IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(singuloEntity.Uid).Coordinates.InRange(_entityManager, EntityCoordinates.FromMap(_entityManager, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(singuloEntity.Uid).ParentUid, currentEyeLoc), MaxDist);
+            return IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(singuloEntity).MapID == currentEyeLoc.MapId && IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(singuloEntity).Coordinates.InRange(_entityManager, EntityCoordinates.FromMap(_entityManager, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(singuloEntity).ParentUid, currentEyeLoc), MaxDist);
         }
 
         private sealed class SingularityShaderInstance

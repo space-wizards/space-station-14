@@ -111,7 +111,7 @@ namespace Content.Client.Body.UI
             _currentEntity = entity;
             BodyPartList.Clear();
 
-            var body = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<SharedBodyComponent>(_currentEntity.Uid);
+            var body = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<SharedBodyComponent>(_currentEntity);
 
             if (body == null)
             {
@@ -129,7 +129,7 @@ namespace Content.Client.Body.UI
             if (_currentEntity == null)
                 return;
 
-            var body = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<SharedBodyComponent>(_currentEntity.Uid);
+            var body = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<SharedBodyComponent>(_currentEntity);
 
             if (body == null)
             {
@@ -147,10 +147,10 @@ namespace Content.Client.Body.UI
 
         private void UpdateBodyPartBox(SharedBodyPartComponent part, string slotName)
         {
-            BodyPartLabel.Text = $"{Loc.GetString(slotName)}: {Loc.GetString(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(part.Owner.Uid).EntityName)}";
+            BodyPartLabel.Text = $"{Loc.GetString(slotName)}: {Loc.GetString(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(part.Owner).EntityName)}";
 
             // TODO BODY Part damage
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(part.Owner.Uid, out DamageableComponent? damageable))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(part.Owner, out DamageableComponent? damageable))
             {
                 BodyPartHealth.Text = Loc.GetString("body-scanner-display-body-part-damage-text",("damage", damageable.TotalDamage));
             }

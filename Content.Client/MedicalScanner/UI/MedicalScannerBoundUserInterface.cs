@@ -20,7 +20,7 @@ namespace Content.Client.MedicalScanner.UI
             base.Open();
             _window = new MedicalScannerWindow
             {
-                Title = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Owner.Uid).EntityName,
+                Title = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Owner).EntityName,
             };
             _window.OnClose += Close;
             _window.ScanButton.OnPressed += _ => SendMessage(new UiButtonPressedMessage(UiButton.ScanDNA));

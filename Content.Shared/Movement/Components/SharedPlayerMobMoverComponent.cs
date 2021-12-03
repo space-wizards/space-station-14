@@ -86,7 +86,7 @@ namespace Content.Shared.Movement.Components
         protected override void Initialize()
         {
             base.Initialize();
-            if (!IoCManager.Resolve<IEntityManager>().HasComponent<IMoverComponent>(Owner.Uid))
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<IMoverComponent>(Owner))
             {
                 Owner.EnsureComponentWarn<SharedPlayerInputMoverComponent>();
             }

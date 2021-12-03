@@ -101,7 +101,7 @@ namespace Content.IntegrationTests.Tests.Fluids
                 sGrid = sMapManager.CreateGrid(sMapId);
                 sGridId = sGrid.Index;
                 sGridEntity = sEntityManager.GetEntity(sGrid.GridEntityId);
-                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(sGridEntity.Uid).EntityPaused = true; // See https://github.com/space-wizards/RobustToolbox/issues/1444
+                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(sGridEntity).EntityPaused = true; // See https://github.com/space-wizards/RobustToolbox/issues/1444
 
                 var tileDefinition = sTileDefinitionManager["underplating"];
                 var tile = new Tile(tileDefinition.TileId);
@@ -115,7 +115,7 @@ namespace Content.IntegrationTests.Tests.Fluids
             {
                 Assert.True(sPauseManager.IsGridPaused(sGridId));
                 Assert.True(sPauseManager.IsMapPaused(sMapId));
-                Assert.True((!IoCManager.Resolve<IEntityManager>().EntityExists(sGridEntity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(sGridEntity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted || IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(sGridEntity.Uid).EntityPaused);
+                Assert.True((!IoCManager.Resolve<IEntityManager>().EntityExists(sGridEntity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(sGridEntity).EntityLifeStage) >= EntityLifeStage.Deleted || IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(sGridEntity).EntityPaused);
             });
 
             float evaporateTime = default;
@@ -132,11 +132,11 @@ namespace Content.IntegrationTests.Tests.Fluids
                 // Check that the puddle was created
                 Assert.NotNull(puddle);
 
-                evaporation = IoCManager.Resolve<IEntityManager>().GetComponent<EvaporationComponent>(puddle.Owner.Uid);
+                evaporation = IoCManager.Resolve<IEntityManager>().GetComponent<EvaporationComponent>(puddle.Owner);
 
-                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(puddle.Owner.Uid).EntityPaused = true; // See https://github.com/space-wizards/RobustToolbox/issues/1445
+                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(puddle.Owner).EntityPaused = true; // See https://github.com/space-wizards/RobustToolbox/issues/1445
 
-                Assert.True((!IoCManager.Resolve<IEntityManager>().EntityExists(puddle.Owner.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(puddle.Owner.Uid).EntityLifeStage) >= EntityLifeStage.Deleted || IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(puddle.Owner.Uid).EntityPaused);
+                Assert.True((!IoCManager.Resolve<IEntityManager>().EntityExists(puddle.Owner) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(puddle.Owner).EntityLifeStage) >= EntityLifeStage.Deleted || IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(puddle.Owner).EntityPaused);
 
                 // Check that the puddle is going to evaporate
                 Assert.Positive(evaporation.EvaporateTime);
@@ -154,10 +154,10 @@ namespace Content.IntegrationTests.Tests.Fluids
             // No evaporation due to being paused
             await server.WaitAssertion(() =>
             {
-                Assert.True((!IoCManager.Resolve<IEntityManager>().EntityExists(puddle.Owner.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(puddle.Owner.Uid).EntityLifeStage) >= EntityLifeStage.Deleted || IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(puddle.Owner.Uid).EntityPaused);
+                Assert.True((!IoCManager.Resolve<IEntityManager>().EntityExists(puddle.Owner) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(puddle.Owner).EntityLifeStage) >= EntityLifeStage.Deleted || IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(puddle.Owner).EntityPaused);
 
                 // Check that the puddle still exists
-                Assert.False((!IoCManager.Resolve<IEntityManager>().EntityExists(puddle.Owner.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(puddle.Owner.Uid).EntityLifeStage) >= EntityLifeStage.Deleted);
+                Assert.False((!IoCManager.Resolve<IEntityManager>().EntityExists(puddle.Owner) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(puddle.Owner).EntityLifeStage) >= EntityLifeStage.Deleted);
             });
 
             // Unpause the map
@@ -168,10 +168,10 @@ namespace Content.IntegrationTests.Tests.Fluids
             {
                 Assert.False(sPauseManager.IsMapPaused(sMapId));
                 Assert.False(sPauseManager.IsGridPaused(sGridId));
-                Assert.False((!IoCManager.Resolve<IEntityManager>().EntityExists(puddle.Owner.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(puddle.Owner.Uid).EntityLifeStage) >= EntityLifeStage.Deleted || IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(puddle.Owner.Uid).EntityPaused);
+                Assert.False((!IoCManager.Resolve<IEntityManager>().EntityExists(puddle.Owner) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(puddle.Owner).EntityLifeStage) >= EntityLifeStage.Deleted || IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(puddle.Owner).EntityPaused);
 
                 // Check that the puddle still exists
-                Assert.False((!IoCManager.Resolve<IEntityManager>().EntityExists(puddle.Owner.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(puddle.Owner.Uid).EntityLifeStage) >= EntityLifeStage.Deleted);
+                Assert.False((!IoCManager.Resolve<IEntityManager>().EntityExists(puddle.Owner) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(puddle.Owner).EntityLifeStage) >= EntityLifeStage.Deleted);
             });
 
             // Wait enough time for it to evaporate

@@ -36,7 +36,7 @@ namespace Content.Client.Instruments.UI
             if (_owner.Instrument != null)
             {
                 _owner.Instrument.OnMidiPlaybackEnded += InstrumentOnMidiPlaybackEnded;
-                Title = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_owner.Instrument.Owner.Uid).EntityName;
+                Title = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_owner.Instrument.Owner).EntityName;
                 LoopButton.Disabled = !_owner.Instrument.IsMidiOpen;
                 LoopButton.Pressed = _owner.Instrument.LoopMidi;
                 StopButton.Disabled = !_owner.Instrument.IsMidiOpen;

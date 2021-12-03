@@ -60,12 +60,12 @@ namespace Content.Server.Clothing.Components
         {
             if (On && eventArgs.Slot == Slots.SHOES)
             {
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User.Uid, out MovedByPressureComponent? movedByPressure))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User, out MovedByPressureComponent? movedByPressure))
                 {
                     movedByPressure.Enabled = true;
                 }
 
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User.Uid, out ServerAlertsComponent? alerts))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User, out ServerAlertsComponent? alerts))
                 {
                     alerts.ClearAlert(AlertType.Magboots);
                 }
@@ -82,15 +82,15 @@ namespace Content.Server.Clothing.Components
             if (!Owner.TryGetContainer(out var container))
                 return;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(container.Owner.Uid, out InventoryComponent? inventoryComponent)
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(container.Owner, out InventoryComponent? inventoryComponent)
                 && inventoryComponent.GetSlotItem(Slots.SHOES)?.Owner == Owner)
             {
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(container.Owner.Uid, out MovedByPressureComponent? movedByPressure))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(container.Owner, out MovedByPressureComponent? movedByPressure))
                 {
                     movedByPressure.Enabled = false;
                 }
 
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(container.Owner.Uid, out ServerAlertsComponent? alerts))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(container.Owner, out ServerAlertsComponent? alerts))
                 {
                     if (On)
                     {
@@ -127,7 +127,7 @@ namespace Content.Server.Clothing.Components
     {
         public bool DoToggleAction(ToggleItemActionEventArgs args)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<MagbootsComponent?>(args.Item.Uid, out var magboots))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<MagbootsComponent?>(args.Item, out var magboots))
                 return false;
 
             magboots.Toggle(args.Performer);

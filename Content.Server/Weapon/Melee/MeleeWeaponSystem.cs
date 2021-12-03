@@ -81,7 +81,7 @@ namespace Content.Server.Weapon.Melee
             var owner = EntityManager.GetEntity(uid);
             var target = args.TargetEntity;
 
-            var location = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.User.Uid).Coordinates;
+            var location = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.User).Coordinates;
             var diff = args.ClickLocation.ToMapPos(IoCManager.Resolve<IEntityManager>()) - location.ToMapPos(IoCManager.Resolve<IEntityManager>());
             var angle = Angle.FromWorldVec(diff);
 
@@ -96,9 +96,9 @@ namespace Content.Server.Weapon.Melee
                     var targets = new[] { target };
                     SendAnimation(comp.ClickArc, angle, args.User, owner, targets, comp.ClickAttackEffect, false);
 
-                    RaiseLocalEvent(target.Uid, new AttackedEvent(args.Used, args.User, args.ClickLocation));
+                    RaiseLocalEvent(target, new AttackedEvent(args.Used, args.User, args.ClickLocation));
 
-                    var damage = _damageableSystem.TryChangeDamage(target.Uid,
+                    var damage = _damageableSystem.TryChangeDamage(target,
                         DamageSpecifier.ApplyModifierSets(comp.Damage, hitEvent.ModifiersList));
 
                     if (damage != null)
@@ -138,12 +138,12 @@ namespace Content.Server.Weapon.Melee
 
             var owner = EntityManager.GetEntity(uid);
 
-            var location = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.User.Uid).Coordinates;
+            var location = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.User).Coordinates;
             var diff = args.ClickLocation.ToMapPos(IoCManager.Resolve<IEntityManager>()) - location.ToMapPos(IoCManager.Resolve<IEntityManager>());
             var angle = Angle.FromWorldVec(diff);
 
             // This should really be improved. GetEntitiesInArc uses pos instead of bounding boxes.
-            var entities = ArcRayCast(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.User.Uid).WorldPosition, angle, comp.ArcWidth, comp.Range, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(owner.Uid).MapID, args.User);
+            var entities = ArcRayCast(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.User).WorldPosition, angle, comp.ArcWidth, comp.Range, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(owner).MapID, args.User);
 
             var hitEntities = new List<IEntity>();
             foreach (var entity in entities)
@@ -151,7 +151,7 @@ namespace Content.Server.Weapon.Melee
                 if (entity.IsInContainer() || entity == args.User)
                     continue;
 
-                if (EntityManager.HasComponent<DamageableComponent>(entity.Uid))
+                if (EntityManager.HasComponent<DamageableComponent>(entity))
                 {
                     hitEntities.Add(entity);
                 }
@@ -166,18 +166,18 @@ namespace Content.Server.Weapon.Melee
             {
                 if (entities.Count != 0)
                 {
-                    SoundSystem.Play(Filter.Pvs(owner), comp.HitSound.GetSound(), IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entities.First().Uid).Coordinates);
+                    SoundSystem.Play(Filter.Pvs(owner), comp.HitSound.GetSound(), IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entities.First()).Coordinates);
                 }
                 else
                 {
-                    SoundSystem.Play(Filter.Pvs(owner), comp.MissSound.GetSound(), IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.User.Uid).Coordinates);
+                    SoundSystem.Play(Filter.Pvs(owner), comp.MissSound.GetSound(), IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.User).Coordinates);
                 }
 
                 foreach (var entity in hitEntities)
                 {
-                    RaiseLocalEvent(entity.Uid, new AttackedEvent(args.Used, args.User, args.ClickLocation));
+                    RaiseLocalEvent(entity, new AttackedEvent(args.Used, args.User, args.ClickLocation));
 
-                    var damage = _damageableSystem.TryChangeDamage(entity.Uid,
+                    var damage = _damageableSystem.TryChangeDamage(entity,
                         DamageSpecifier.ApplyModifierSets(comp.Damage, hitEvent.ModifiersList));
 
                     if (damage != null)
@@ -219,7 +219,7 @@ namespace Content.Server.Weapon.Melee
             if (args.Target == null)
                 return;
 
-            var location = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.User.Uid).Coordinates;
+            var location = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.User).Coordinates;
             var diff = args.ClickLocation.ToMapPos(IoCManager.Resolve<IEntityManager>()) - location.ToMapPos(IoCManager.Resolve<IEntityManager>());
             var angle = Angle.FromWorldVec(diff);
 
@@ -263,16 +263,16 @@ namespace Content.Server.Weapon.Melee
         private void OnChemicalInjectorHit(EntityUid uid, MeleeChemicalInjectorComponent comp, MeleeHitEvent args)
         {
             IEntity owner = EntityManager.GetEntity(uid);
-            if (!_solutionsSystem.TryGetInjectableSolution(owner.Uid, out var solutionContainer))
+            if (!_solutionsSystem.TryGetInjectableSolution(owner, out var solutionContainer))
                 return;
 
             var hitBloodstreams = new List<BloodstreamComponent>();
             foreach (var entity in args.HitEntities)
             {
-                if ((!IoCManager.Resolve<IEntityManager>().EntityExists(entity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted)
+                if ((!IoCManager.Resolve<IEntityManager>().EntityExists(entity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityLifeStage) >= EntityLifeStage.Deleted)
                     continue;
 
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<BloodstreamComponent?>(entity.Uid, out var bloodstream))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<BloodstreamComponent?>(entity, out var bloodstream))
                     hitBloodstreams.Add(bloodstream);
             }
 
@@ -293,13 +293,13 @@ namespace Content.Server.Weapon.Melee
 
         public void SendAnimation(string arc, Angle angle, IEntity attacker, IEntity source, IEnumerable<IEntity> hits, bool textureEffect = false, bool arcFollowAttacker = true)
         {
-            RaiseNetworkEvent(new MeleeWeaponSystemMessages.PlayMeleeWeaponAnimationMessage(arc, angle, attacker.Uid, source.Uid,
-                hits.Select(e => e.Uid).ToList(), textureEffect, arcFollowAttacker), Filter.Pvs(source, 1f));
+            RaiseNetworkEvent(new MeleeWeaponSystemMessages.PlayMeleeWeaponAnimationMessage(arc, angle, attacker, source,
+                hits.Select(e => (EntityUid) e).ToList(), textureEffect, arcFollowAttacker), Filter.Pvs(source, 1f));
         }
 
         public void SendLunge(Angle angle, IEntity source)
         {
-            RaiseNetworkEvent(new MeleeWeaponSystemMessages.PlayLungeAnimationMessage(angle, source.Uid), Filter.Pvs(source, 1f));
+            RaiseNetworkEvent(new MeleeWeaponSystemMessages.PlayLungeAnimationMessage(angle, source), Filter.Pvs(source, 1f));
         }
     }
 

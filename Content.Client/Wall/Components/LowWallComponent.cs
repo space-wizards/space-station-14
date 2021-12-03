@@ -42,11 +42,11 @@ namespace Content.Client.Wall.Components
         {
             base.Startup();
 
-            _overlayEntity = IoCManager.Resolve<IEntityManager>().SpawnEntity("LowWallOverlay", IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
-            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_overlayEntity.Uid).AttachParent(Owner);
-            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_overlayEntity.Uid).LocalPosition = Vector2.Zero;
+            _overlayEntity = IoCManager.Resolve<IEntityManager>().SpawnEntity("LowWallOverlay", IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_overlayEntity).AttachParent(Owner);
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_overlayEntity).LocalPosition = Vector2.Zero;
 
-            _overlaySprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(_overlayEntity.Uid);
+            _overlaySprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(_overlayEntity);
 
             var overState0 = $"{StateBase}over_0";
             _overlaySprite.LayerMapSet(OverCornerLayers.SE, _overlaySprite.AddLayerState(overState0));
@@ -66,7 +66,7 @@ namespace Content.Client.Wall.Components
             IEntity? tempQualifier = _overlayEntity;
             if (tempQualifier != null)
             {
-                IoCManager.Resolve<IEntityManager>().DeleteEntity(tempQualifier.Uid);
+                IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) tempQualifier);
             }
         }
 
@@ -74,13 +74,13 @@ namespace Content.Client.Wall.Components
         {
             base.CalculateNewSprite();
 
-            if (Sprite == null || !IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Anchored || _overlaySprite == null)
+            if (Sprite == null || !IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Anchored || _overlaySprite == null)
             {
                 return;
             }
 
-            var grid = _mapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).GridID);
-            var coords = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates;
+            var grid = _mapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).GridID);
+            var coords = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates;
 
             var (n, nl) = MatchingWall(grid.GetInDir(coords, Direction.North));
             var (ne, nel) = MatchingWall(grid.GetInDir(coords, Direction.NorthEast));

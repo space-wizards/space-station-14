@@ -34,15 +34,15 @@ namespace Content.Server.Gravity.EntitySystems
 
         public void AddAlert(ServerAlertsComponent status)
         {
-            var gridId = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(status.Owner.Uid).GridID;
+            var gridId = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(status.Owner).GridID;
             var alerts = _alerts.GetOrNew(gridId);
 
             alerts.Add(status);
 
-            if (_mapManager.TryGetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(status.Owner.Uid).GridID, out var grid))
+            if (_mapManager.TryGetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(status.Owner).GridID, out var grid))
             {
                 var gridEntity = EntityManager.GetEntity(grid.GridEntityId);
-                if (IoCManager.Resolve<IEntityManager>().GetComponent<GravityComponent>(gridEntity.Uid).Enabled)
+                if (IoCManager.Resolve<IEntityManager>().GetComponent<GravityComponent>(gridEntity).Enabled)
                 {
                     RemoveWeightless(status);
                 }
@@ -55,7 +55,7 @@ namespace Content.Server.Gravity.EntitySystems
 
         public void RemoveAlert(ServerAlertsComponent status)
         {
-            var grid = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(status.Owner.Uid).GridID;
+            var grid = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(status.Owner).GridID;
             if (!_alerts.TryGetValue(grid, out var statuses))
             {
                 return;
@@ -99,13 +99,13 @@ namespace Content.Server.Gravity.EntitySystems
 
         private void EntParentChanged(ref EntParentChangedMessage ev)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(ev.Entity.Uid, out ServerAlertsComponent? status))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(ev.Entity, out ServerAlertsComponent? status))
             {
                 return;
             }
 
             if (ev.OldParent != null &&
-                IoCManager.Resolve<IEntityManager>().TryGetComponent(ev.OldParent.Uid, out IMapGridComponent? mapGrid))
+                IoCManager.Resolve<IEntityManager>().TryGetComponent(ev.OldParent, out IMapGridComponent? mapGrid))
             {
                 var oldGrid = mapGrid.GridIndex;
 
@@ -115,7 +115,7 @@ namespace Content.Server.Gravity.EntitySystems
                 }
             }
 
-            var newGrid = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(ev.Entity.Uid).GridID;
+            var newGrid = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(ev.Entity).GridID;
             var newStatuses = _alerts.GetOrNew(newGrid);
 
             newStatuses.Add(status);

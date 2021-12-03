@@ -55,7 +55,7 @@ namespace Content.Client.Commands
 
             foreach (var component in components)
             {
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out ISpriteComponent? sprite))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner, out ISpriteComponent? sprite))
                 {
                     sprite.DrawDepth = (int) DrawDepth.Overlays;
                 }

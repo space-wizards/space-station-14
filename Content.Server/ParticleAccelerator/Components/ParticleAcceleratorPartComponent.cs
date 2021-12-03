@@ -13,7 +13,7 @@ namespace Content.Server.ParticleAccelerator.Components
             base.Initialize();
             // FIXME: this has to be an entity system, full stop.
 
-            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Anchored = true;
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Anchored = true;
         }
 
         public void OnAnchorChanged()

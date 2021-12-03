@@ -74,12 +74,12 @@ namespace Content.Server.PowerCell.Components
 
             CurrentCharge = 0;
             EntitySystem.Get<ExplosionSystem>().SpawnExplosion(OwnerUid, 0, heavy, light, light*2);
-            IoCManager.Resolve<IEntityManager>().DeleteEntity(Owner.Uid);
+            IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) Owner);
         }
 
         private void UpdateVisuals()
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
                 appearance.SetData(PowerCellVisuals.ChargeLevel, GetLevel(CurrentCharge / MaxCharge));
             }

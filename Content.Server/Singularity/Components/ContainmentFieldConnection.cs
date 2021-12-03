@@ -36,8 +36,8 @@ namespace Content.Server.Singularity.Components
             Generator2 = generator2;
 
             //generateFields
-            var pos1 = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(generator1.Owner.Uid).Coordinates;
-            var pos2 = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(generator2.Owner.Uid).Coordinates;
+            var pos1 = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(generator1.Owner).Coordinates;
+            var pos2 = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(generator2.Owner).Coordinates;
             if (pos1 == pos2)
             {
                 Dispose();
@@ -54,15 +54,15 @@ namespace Content.Server.Singularity.Components
             {
                 var currentCoords = pos1.Offset(currentOffset);
                 var newEnt = entityManager.SpawnEntity("ContainmentField", currentCoords);
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ContainmentFieldComponent?>(newEnt.Uid, out var containmentFieldComponent))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ContainmentFieldComponent?>(newEnt, out var containmentFieldComponent))
                 {
                     Logger.Error("While creating Fields in ContainmentFieldConnection, a ContainmentField without a ContainmentFieldComponent was created. Deleting newly spawned ContainmentField...");
-                    IoCManager.Resolve<IEntityManager>().DeleteEntity(newEnt.Uid);
+                    IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) newEnt);
                     continue;
                 }
 
                 containmentFieldComponent.Parent = this;
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(newEnt.Uid).WorldRotation = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(generator1.Owner.Uid).WorldRotation + dirVec.ToWorldAngle();
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(newEnt).WorldRotation = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(generator1.Owner).WorldRotation + dirVec.ToWorldAngle();
 
                 _fields.Add(newEnt);
                 currentOffset += dirVec;
@@ -75,7 +75,7 @@ namespace Content.Server.Singularity.Components
         public bool CanRepell(IEntity toRepell)
         {
             var powerNeeded = 1;
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<ServerSingularityComponent?>(toRepell.Uid, out var singularityComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<ServerSingularityComponent?>(toRepell, out var singularityComponent))
             {
                 powerNeeded += 2*singularityComponent.Level;
             }
@@ -88,7 +88,7 @@ namespace Content.Server.Singularity.Components
             _powerDecreaseCancellationTokenSource.Cancel();
             foreach (var field in _fields)
             {
-                IoCManager.Resolve<IEntityManager>().DeleteEntity(field.Uid);
+                IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) field);
             }
             _fields.Clear();
 

@@ -45,11 +45,11 @@ namespace Content.Server.Construction
         // LEGACY CODE. See warning at the top of the file!
         private IEnumerable<IEntity> EnumerateNearby(IEntity user)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out HandsComponent? hands))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out HandsComponent? hands))
             {
                 foreach (var itemComponent in hands?.GetAllHeldItems()!)
                 {
-                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent(itemComponent.Owner.Uid, out ServerStorageComponent? storage))
+                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent(itemComponent.Owner, out ServerStorageComponent? storage))
                     {
                         foreach (var storedEntity in storage.StoredEntities!)
                         {
@@ -61,11 +61,11 @@ namespace Content.Server.Construction
                 }
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(user!.Uid, out InventoryComponent? inventory))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(user!, out InventoryComponent? inventory))
             {
                 foreach (var held in inventory.GetAllHeldItems())
                 {
-                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent(held.Uid, out ServerStorageComponent? storage))
+                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent(held, out ServerStorageComponent? storage))
                     {
                         foreach (var storedEntity in storage.StoredEntities!)
                         {
@@ -164,7 +164,7 @@ namespace Content.Server.Construction
                             if (!materialStep.EntityValid(entity, out var stack))
                                 continue;
 
-                            var splitStack = _stackSystem.Split(entity.Uid, materialStep.Amount, user.ToCoordinates(), stack);
+                            var splitStack = _stackSystem.Split(entity, materialStep.Amount, user.ToCoordinates(), stack);
 
                             if (splitStack == null)
                                 continue;
@@ -186,7 +186,7 @@ namespace Content.Server.Construction
                     case ArbitraryInsertConstructionGraphStep arbitraryStep:
                         foreach (var entity in EnumerateNearby(user))
                         {
-                            if (!arbitraryStep.EntityValid(entity.Uid, EntityManager))
+                            if (!arbitraryStep.EntityValid(entity, EntityManager))
                                 continue;
 
                             if (string.IsNullOrEmpty(arbitraryStep.Store))
@@ -235,13 +235,13 @@ namespace Content.Server.Construction
                 return null;
             }
 
-            var newEntity = EntityManager.SpawnEntity(graph.Nodes[edge.Target].Entity, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user.Uid).Coordinates);
+            var newEntity = EntityManager.SpawnEntity(graph.Nodes[edge.Target].Entity, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user).Coordinates);
 
             // Yes, this should throw if it's missing the component.
-            var construction = IoCManager.Resolve<IEntityManager>().GetComponent<ConstructionComponent>(newEntity.Uid);
+            var construction = IoCManager.Resolve<IEntityManager>().GetComponent<ConstructionComponent>(newEntity);
 
             // We attempt to set the pathfinding target.
-            SetPathfindingTarget(newEntity.Uid, targetNode.Name, construction);
+            SetPathfindingTarget(newEntity, targetNode.Name, construction);
 
             // We preserve the containers...
             foreach (var (name, cont) in containers)
@@ -263,14 +263,14 @@ namespace Content.Server.Construction
             {
                 foreach (var completed in step.Completed)
                 {
-                    completed.PerformAction(newEntity.Uid, user.Uid, EntityManager);
+                    completed.PerformAction(newEntity, user, EntityManager);
                 }
             }
 
             // And we also have edge completed effects!
             foreach (var completed in edge.Completed)
             {
-                completed.PerformAction(newEntity.Uid, user.Uid, EntityManager);
+                completed.PerformAction(newEntity, user, EntityManager);
             }
 
             return newEntity;
@@ -297,9 +297,9 @@ namespace Content.Server.Construction
 
             var user = args.SenderSession.AttachedEntity;
 
-            if (user == null || !Get<ActionBlockerSystem>().CanInteract(user.Uid)) return;
+            if (user == null || !Get<ActionBlockerSystem>().CanInteract(user)) return;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out HandsComponent? hands)) return;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out HandsComponent? hands)) return;
 
             foreach (var condition in constructionPrototype.Conditions)
             {
@@ -328,7 +328,7 @@ namespace Content.Server.Construction
 
             var item = await Construct(user, "item_construction", constructionGraph, edge, targetNode);
 
-            if(item != null && IoCManager.Resolve<IEntityManager>().TryGetComponent(item.Uid, out ItemComponent? itemComp))
+            if(item != null && IoCManager.Resolve<IEntityManager>().TryGetComponent(item, out ItemComponent? itemComp))
                 hands.PutInHandOrDrop(itemComp);
         }
 
@@ -398,8 +398,8 @@ namespace Content.Server.Construction
             }
 
             if (user == null
-                || !Get<ActionBlockerSystem>().CanInteract(user.Uid)
-                || !IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out HandsComponent? hands) || hands.GetActiveHand == null
+                || !Get<ActionBlockerSystem>().CanInteract(user)
+                || !IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out HandsComponent? hands) || hands.GetActiveHand == null
                 || !user.InRangeUnobstructed(ev.Location, ignoreInsideBlocker:constructionPrototype.CanBuildInImpassable))
             {
                 Cleanup();
@@ -430,7 +430,7 @@ namespace Content.Server.Construction
                 switch (step)
                 {
                     case EntityInsertConstructionGraphStep entityInsert:
-                        if (entityInsert.EntityValid(holding.Uid, EntityManager))
+                        if (entityInsert.EntityValid(holding, EntityManager))
                             valid = true;
                         break;
                     case ToolConstructionGraphStep _:
@@ -457,13 +457,13 @@ namespace Content.Server.Construction
 
             // We do this to be able to move the construction to its proper position in case it's anchored...
             // Oh wow transform anchoring is amazing wow I love it!!!!
-            var wasAnchored = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(structure.Uid).Anchored;
-            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(structure.Uid).Anchored = false;
+            var wasAnchored = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(structure).Anchored;
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(structure).Anchored = false;
 
-            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(structure.Uid).Coordinates = ev.Location;
-            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(structure.Uid).LocalRotation = constructionPrototype.CanRotate ? ev.Angle : Angle.Zero;
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(structure).Coordinates = ev.Location;
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(structure).LocalRotation = constructionPrototype.CanRotate ? ev.Angle : Angle.Zero;
 
-            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(structure.Uid).Anchored = wasAnchored;
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(structure).Anchored = wasAnchored;
 
             RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack));
 

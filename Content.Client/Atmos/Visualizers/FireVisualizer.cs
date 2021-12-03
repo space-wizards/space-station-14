@@ -27,7 +27,7 @@ namespace Content.Client.Atmos.Visualizers
         {
             base.InitializeEntity(entity);
 
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(entity.Uid);
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(entity);
 
             sprite.LayerMapReserveBlank(FireVisualLayers.Fire);
             sprite.LayerSetVisible(FireVisualLayers.Fire, false);
@@ -50,7 +50,7 @@ namespace Content.Client.Atmos.Visualizers
 
         private void SetOnFire(AppearanceComponent component, bool onFire, float fireStacks)
         {
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner.Uid);
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
 
             if (_sprite != null)
             {

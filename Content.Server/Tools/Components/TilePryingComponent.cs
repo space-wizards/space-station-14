@@ -34,7 +34,7 @@ namespace Content.Server.Tools.Components
 
         public async void TryPryTile(IEntity user, EntityCoordinates clickLocation)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ToolComponent?>(Owner.Uid, out var tool) && _toolComponentNeeded)
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ToolComponent?>(Owner, out var tool) && _toolComponentNeeded)
                 return;
 
             if (!_mapManager.TryGetGrid(clickLocation.GetGridId(IoCManager.Resolve<IEntityManager>()), out var mapGrid))
@@ -52,7 +52,7 @@ namespace Content.Server.Tools.Components
             if (!tileDef.CanCrowbar)
                 return;
 
-            if (_toolComponentNeeded && !await EntitySystem.Get<ToolSystem>().UseTool(Owner.Uid, user.Uid, null, 0f, 0f, _qualityNeeded, toolComponent:tool))
+            if (_toolComponentNeeded && !await EntitySystem.Get<ToolSystem>().UseTool(Owner, user, null, 0f, 0f, _qualityNeeded, toolComponent:tool))
                 return;
 
             coordinates.PryTile(IoCManager.Resolve<IEntityManager>(), _mapManager);

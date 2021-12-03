@@ -59,7 +59,7 @@ namespace Content.Server.Headset
         {
             if (Owner.TryGetContainer(out var container))
             {
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(container.Owner.Uid, out ActorComponent? actor))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(container.Owner, out ActorComponent? actor))
                     return;
 
                 var playerChannel = actor.PlayerSession.ConnectedClient;
@@ -69,7 +69,7 @@ namespace Content.Server.Headset
                 msg.Channel = ChatChannel.Radio;
                 msg.Message = message;
                 //Square brackets are added here to avoid issues with escaping
-                msg.MessageWrap = Loc.GetString("chat-radio-message-wrap", ("channel", $"\\[{channel}\\]"), ("name", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(source.Uid).EntityName));
+                msg.MessageWrap = Loc.GetString("chat-radio-message-wrap", ("channel", $"\\[{channel}\\]"), ("name", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(source).EntityName));
                 _netManager.ServerSendMessage(msg, playerChannel);
             }
         }

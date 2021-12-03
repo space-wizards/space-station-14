@@ -80,8 +80,8 @@ namespace Content.Server.Gravity.EntitySystems
             foreach (var player in _playerManager.Sessions)
             {
                 if (player.AttachedEntity == null
-                    || IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.AttachedEntity.Uid).GridID != gridId
-                    || !IoCManager.Resolve<IEntityManager>().TryGetComponent(player.AttachedEntity.Uid, out CameraRecoilComponent? recoil))
+                    || IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.AttachedEntity).GridID != gridId
+                    || !IoCManager.Resolve<IEntityManager>().TryGetComponent(player.AttachedEntity, out CameraRecoilComponent? recoil))
                 {
                     continue;
                 }

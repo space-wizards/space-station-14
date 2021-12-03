@@ -122,7 +122,7 @@ namespace Content.Server.Chemistry.ReactionEffects
             if (areaEffectComponent == null)
             {
                 Logger.Error("Couldn't get AreaEffectComponent from " + _prototypeId);
-                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(ent.Uid);
+                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity((EntityUid) ent);
                 return;
             }
 

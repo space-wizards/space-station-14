@@ -87,13 +87,13 @@ namespace Content.Server.Nutrition.Components
             {
                 // Revert slow speed if required
                 if (_lastThirstThreshold == ThirstThreshold.Parched && _currentThirstThreshold != ThirstThreshold.Dead &&
-                    IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out MovementSpeedModifierComponent? movementSlowdownComponent))
+                    IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out MovementSpeedModifierComponent? movementSlowdownComponent))
                 {
                     EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(OwnerUid);
                 }
 
                 // Update UI
-                IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ServerAlertsComponent? alertsComponent);
+                IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ServerAlertsComponent? alertsComponent);
 
                 if (ThirstThresholdAlertTypes.TryGetValue(_currentThirstThreshold, out var alertId))
                 {
@@ -182,7 +182,7 @@ namespace Content.Server.Nutrition.Components
                 return;
             // --> Current Hunger is below dead threshold
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out MobStateComponent? mobState))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out MobStateComponent? mobState))
                 return;
 
             if (!mobState.IsDead())
@@ -191,7 +191,7 @@ namespace Content.Server.Nutrition.Components
                 _accumulatedFrameTime += frametime;
                 if (_accumulatedFrameTime >= 1)
                 {
-                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner.Uid, Damage * (int) _accumulatedFrameTime, true);
+                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner, Damage * (int) _accumulatedFrameTime, true);
                     _accumulatedFrameTime -= (int) _accumulatedFrameTime;
                 }
             }

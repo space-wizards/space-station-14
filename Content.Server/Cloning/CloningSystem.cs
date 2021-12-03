@@ -36,11 +36,11 @@ namespace Content.Server.Cloning
         {
             if (!ClonesWaitingForMind.TryGetValue(mind, out var entityUid) ||
                 !EntityManager.TryGetEntity(entityUid, out var entity) ||
-                !IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out MindComponent? mindComp) ||
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out MindComponent? mindComp) ||
                 mindComp.Mind != null)
                 return;
 
-            mind.TransferTo(entity.Uid, ghostCheckOverride: true);
+            mind.TransferTo(entity, ghostCheckOverride: true);
             mind.UnVisit();
             ClonesWaitingForMind.Remove(mind);
         }
@@ -48,7 +48,7 @@ namespace Content.Server.Cloning
         private void HandleActivate(EntityUid uid, CloningPodComponent component, ActivateInWorldEvent args)
         {
             if (!component.Powered ||
-                !IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User.Uid, out ActorComponent? actor))
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User, out ActorComponent? actor))
             {
                 return;
             }
@@ -60,10 +60,10 @@ namespace Content.Server.Cloning
         {
             if (component.Parent == EntityUid.Invalid ||
                 !EntityManager.TryGetEntity(component.Parent, out var parent) ||
-                !IoCManager.Resolve<IEntityManager>().TryGetComponent<CloningPodComponent?>(parent.Uid, out var cloningPodComponent) ||
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent<CloningPodComponent?>(parent, out var cloningPodComponent) ||
                 component.Owner != cloningPodComponent.BodyContainer?.ContainedEntity)
             {
-                IoCManager.Resolve<IEntityManager>().RemoveComponent<BeingClonedComponent>(component.Owner.Uid);
+                IoCManager.Resolve<IEntityManager>().RemoveComponent<BeingClonedComponent>(component.Owner);
                 return;
             }
 

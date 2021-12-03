@@ -96,11 +96,11 @@ namespace Content.Client.Audio
                 return;
             }
 
-            var coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.Uid).Coordinates;
+            var coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player).Coordinates;
 
             foreach (var (comp, (stream, _)) in _playingSounds.ToArray())
             {
-                if (!comp.Deleted && comp.Enabled && IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(comp.Owner.Uid).Coordinates.TryDistance(EntityManager, coordinates, out var range) &&
+                if (!comp.Deleted && comp.Enabled && IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(comp.Owner).Coordinates.TryDistance(EntityManager, coordinates, out var range) &&
                     range <= comp.Range)
                 {
                     continue;
@@ -136,11 +136,11 @@ namespace Content.Client.Audio
             foreach (var entity in _lookup.GetEntitiesInRange(coordinates, _maxAmbientRange,
                 LookupFlags.Approximate | LookupFlags.IncludeAnchored))
             {
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out AmbientSoundComponent? ambientComp) ||
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out AmbientSoundComponent? ambientComp) ||
                     _playingSounds.ContainsKey(ambientComp) ||
                     !ambientComp.Enabled ||
                     // We'll also do this crude distance check because it's what we're doing in the active loop above.
-                    !IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates.TryDistance(EntityManager, coordinates, out var range) ||
+                    !IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates.TryDistance(EntityManager, coordinates, out var range) ||
                     range > ambientComp.Range - RangeBuffer)
                 {
                     continue;

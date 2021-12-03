@@ -33,7 +33,7 @@ namespace Content.Server.Atmos.Components
             if ((EquipmentSlotDefines.SlotMasks[eventArgs.Slot] & _allowedSlots) != _allowedSlots) return;
             IsFunctional = true;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User.Uid, out InternalsComponent? internals))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User, out InternalsComponent? internals))
             {
                 ConnectedInternalsEntity = eventArgs.User;
                 internals.ConnectBreathTool(Owner);
@@ -50,7 +50,7 @@ namespace Content.Server.Atmos.Components
             var old = ConnectedInternalsEntity;
             ConnectedInternalsEntity = null;
 
-            if (old != null && IoCManager.Resolve<IEntityManager>().TryGetComponent<InternalsComponent?>(old.Uid, out var internalsComponent))
+            if (old != null && IoCManager.Resolve<IEntityManager>().TryGetComponent<InternalsComponent?>(old, out var internalsComponent))
             {
                 internalsComponent.DisconnectBreathTool();
             }

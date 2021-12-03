@@ -142,7 +142,7 @@ namespace Content.Client.DragDrop
             }
 
             var canDrag = false;
-            foreach (var draggable in IoCManager.Resolve<IEntityManager>().GetComponents<IDraggable>(entity.Uid))
+            foreach (var draggable in IoCManager.Resolve<IEntityManager>().GetComponents<IDraggable>(entity))
             {
                 var dragEventArgs = new StartDragDropEvent(dragger, entity);
 
@@ -176,19 +176,19 @@ namespace Content.Client.DragDrop
 
         private bool OnBeginDrag()
         {
-            if (_dragDropHelper.Dragged == null || (!IoCManager.Resolve<IEntityManager>().EntityExists(_dragDropHelper.Dragged.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_dragDropHelper.Dragged.Uid).EntityLifeStage) >= EntityLifeStage.Deleted)
+            if (_dragDropHelper.Dragged == null || (!IoCManager.Resolve<IEntityManager>().EntityExists(_dragDropHelper.Dragged) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_dragDropHelper.Dragged).EntityLifeStage) >= EntityLifeStage.Deleted)
             {
                 // something happened to the clicked entity or we moved the mouse off the target so
                 // we shouldn't replay the original click
                 return false;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(_dragDropHelper.Dragged.Uid, out var draggedSprite))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(_dragDropHelper.Dragged, out var draggedSprite))
             {
                 // pop up drag shadow under mouse
                 var mousePos = _eyeManager.ScreenToMap(_dragDropHelper.MouseScreenPosition);
                 _dragShadow = EntityManager.SpawnEntity("dragshadow", mousePos);
-                var dragSprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(_dragShadow.Uid);
+                var dragSprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(_dragShadow);
                 dragSprite.CopyFrom(draggedSprite);
                 dragSprite.RenderOrder = EntityManager.CurrentTick.Value;
                 dragSprite.Color = dragSprite.Color.WithAlpha(0.7f);
@@ -196,7 +196,7 @@ namespace Content.Client.DragDrop
                 dragSprite.DrawDepth = (int) DrawDepth.Overlays;
                 if (!dragSprite.NoRotation)
                 {
-                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_dragShadow.Uid).WorldRotation = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_dragDropHelper.Dragged.Uid).WorldRotation;
+                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_dragShadow).WorldRotation = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_dragDropHelper.Dragged).WorldRotation;
                 }
 
                 HighlightTargets();
@@ -207,13 +207,13 @@ namespace Content.Client.DragDrop
             }
 
             Logger.Warning("Unable to display drag shadow for {0} because it" +
-                           " has no sprite component.", IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_dragDropHelper.Dragged.Uid).EntityName);
+                           " has no sprite component.", IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_dragDropHelper.Dragged).EntityName);
             return false;
         }
 
         private bool OnContinueDrag(float frameTime)
         {
-            if (_dragDropHelper.Dragged == null || (!IoCManager.Resolve<IEntityManager>().EntityExists(_dragDropHelper.Dragged.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_dragDropHelper.Dragged.Uid).EntityLifeStage) >= EntityLifeStage.Deleted)
+            if (_dragDropHelper.Dragged == null || (!IoCManager.Resolve<IEntityManager>().EntityExists(_dragDropHelper.Dragged) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_dragDropHelper.Dragged).EntityLifeStage) >= EntityLifeStage.Deleted)
             {
                 return false;
             }
@@ -233,7 +233,7 @@ namespace Content.Client.DragDrop
             if (_dragShadow == null)
                 return false;
 
-            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_dragShadow.Uid).WorldPosition = mousePos.Position;
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_dragShadow).WorldPosition = mousePos.Position;
 
             _targetRecheckTime += frameTime;
             if (_targetRecheckTime > TargetRecheckInterval)
@@ -295,7 +295,7 @@ namespace Content.Client.DragDrop
 
             // now when ending the drag, we will not replay the click because
             // by this time we've determined the input was actually a drag attempt
-            var range = (args.Coordinates.ToMapPos(EntityManager) - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_dragger.Uid).MapPosition.Position).Length + 0.01f;
+            var range = (args.Coordinates.ToMapPos(EntityManager) - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_dragger).MapPosition.Position).Length + 0.01f;
             // tell the server we are dropping if we are over a valid drop target in range.
             // We don't use args.EntityUid here because drag interactions generally should
             // work even if there's something "on top" of the drop target
@@ -330,8 +330,8 @@ namespace Content.Client.DragDrop
                     if (!draggable.CanDrop(dropArgs)) continue;
 
                     // tell the server about the drop attempt
-                    RaiseNetworkEvent(new DragDropRequestEvent(args.Coordinates, _dragDropHelper.Dragged!.Uid,
-                        entity.Uid));
+                    RaiseNetworkEvent(new DragDropRequestEvent(args.Coordinates, _dragDropHelper.Dragged!,
+                        entity));
 
                     draggable.Drop(dropArgs);
 
@@ -352,9 +352,9 @@ namespace Content.Client.DragDrop
         private void HighlightTargets()
         {
             if (_dragDropHelper.Dragged == null ||
-                (!IoCManager.Resolve<IEntityManager>().EntityExists(_dragDropHelper.Dragged.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_dragDropHelper.Dragged.Uid).EntityLifeStage) >= EntityLifeStage.Deleted ||
+                (!IoCManager.Resolve<IEntityManager>().EntityExists(_dragDropHelper.Dragged) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_dragDropHelper.Dragged).EntityLifeStage) >= EntityLifeStage.Deleted ||
                 _dragShadow == null ||
-                (!IoCManager.Resolve<IEntityManager>().EntityExists(_dragShadow.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_dragShadow.Uid).EntityLifeStage) >= EntityLifeStage.Deleted)
+                (!IoCManager.Resolve<IEntityManager>().EntityExists(_dragShadow) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_dragShadow).EntityLifeStage) >= EntityLifeStage.Deleted)
             {
                 Logger.Warning("Programming error. Can't highlight drag and drop targets, not currently " +
                                "dragging anything or dragged entity / shadow was deleted.");
@@ -374,12 +374,12 @@ namespace Content.Client.DragDrop
             var pvsEntities = IoCManager.Resolve<IEntityLookup>().GetEntitiesIntersecting(_eyeManager.CurrentMap, bounds, LookupFlags.Approximate | LookupFlags.IncludeAnchored);
             foreach (var pvsEntity in pvsEntities)
             {
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(pvsEntity.Uid, out ISpriteComponent? inRangeSprite) ||
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(pvsEntity, out ISpriteComponent? inRangeSprite) ||
                     !inRangeSprite.Visible ||
                     pvsEntity == _dragDropHelper.Dragged) continue;
 
                 // check if it's able to be dropped on by current dragged entity
-                var dropArgs = new DragDropEvent(_dragger!, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pvsEntity.Uid).Coordinates, _dragDropHelper.Dragged, pvsEntity);
+                var dropArgs = new DragDropEvent(_dragger!, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pvsEntity).Coordinates, _dragDropHelper.Dragged, pvsEntity);
 
                 var valid = ValidDragDrop(dropArgs);
                 if (valid == null) continue;
@@ -415,14 +415,14 @@ namespace Content.Client.DragDrop
         /// <returns>null if the target doesn't support IDragDropOn</returns>
         private bool? ValidDragDrop(DragDropEvent eventArgs)
         {
-            if (!_actionBlockerSystem.CanInteract(eventArgs.User.Uid))
+            if (!_actionBlockerSystem.CanInteract(eventArgs.User))
             {
                 return false;
             }
 
             bool? valid = null;
 
-            foreach (var comp in IoCManager.Resolve<IEntityManager>().GetComponents<IDragDropOn>(eventArgs.Target.Uid))
+            foreach (var comp in IoCManager.Resolve<IEntityManager>().GetComponents<IDragDropOn>(eventArgs.Target))
             {
                 if (!comp.CanDragDropOn(eventArgs))
                 {
@@ -440,7 +440,7 @@ namespace Content.Client.DragDrop
             // Need at least one IDraggable to return true or else we can't do shit
             valid = false;
 
-            foreach (var comp in IoCManager.Resolve<IEntityManager>().GetComponents<IDraggable>(eventArgs.User.Uid))
+            foreach (var comp in IoCManager.Resolve<IEntityManager>().GetComponents<IDraggable>(eventArgs.User))
             {
                 if (!comp.CanDrop(eventArgs)) continue;
                 valid = true;

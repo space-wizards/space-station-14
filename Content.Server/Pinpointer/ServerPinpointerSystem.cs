@@ -60,10 +60,10 @@ namespace Content.Server.Pinpointer
             var l = new SortedList<float, EntityUid>();
             foreach (var e in ents)
             {
-                if (whitelist.IsValid(e.Uid))
+                if (whitelist.IsValid(e))
                 {
-                    var dist = (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(e.Uid).WorldPosition - transform.WorldPosition).LengthSquared;
-                    l.TryAdd(dist, e.Uid);
+                    var dist = (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(e).WorldPosition - transform.WorldPosition).LengthSquared;
+                    l.TryAdd(dist, e);
                 }
             }
 

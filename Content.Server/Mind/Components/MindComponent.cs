@@ -59,7 +59,7 @@ namespace Content.Server.Mind.Components
         public void InternalEjectMind()
         {
             if (!Deleted)
-                IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner.Uid, new MindRemovedMessage());
+                IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, new MindRemovedMessage());
             Mind = null;
         }
 
@@ -71,7 +71,7 @@ namespace Content.Server.Mind.Components
         public void InternalAssignMind(Mind value)
         {
             Mind = value;
-            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner.Uid, new MindAddedMessage());
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, new MindAddedMessage());
         }
 
         protected override void Shutdown()
@@ -87,16 +87,16 @@ namespace Content.Server.Mind.Components
                 var visiting = Mind?.VisitingEntity;
                 if (visiting != null)
                 {
-                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent(visiting.Uid, out GhostComponent? ghost))
+                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent(visiting, out GhostComponent? ghost))
                     {
                         EntitySystem.Get<SharedGhostSystem>().SetCanReturnToBody(ghost, false);
                     }
 
-                    Mind!.TransferTo(visiting.Uid);
+                    Mind!.TransferTo(visiting);
                 }
                 else if (GhostOnShutdown)
                 {
-                    var spawnPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates;
+                    var spawnPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates;
                     // Use a regular timer here because the entity has probably been deleted.
                     Timer.Spawn(0, () =>
                     {
@@ -110,14 +110,14 @@ namespace Content.Server.Mind.Components
                         }
 
                         var ghost = IoCManager.Resolve<IEntityManager>().SpawnEntity("MobObserver", spawnPosition);
-                        var ghostComponent = IoCManager.Resolve<IEntityManager>().GetComponent<GhostComponent>(ghost.Uid);
+                        var ghostComponent = IoCManager.Resolve<IEntityManager>().GetComponent<GhostComponent>(ghost);
                         EntitySystem.Get<SharedGhostSystem>().SetCanReturnToBody(ghostComponent, false);
 
                         if (Mind != null)
                         {
                             string? val = Mind.CharacterName ?? string.Empty;
-                            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(ghost.Uid).EntityName = val;
-                            Mind.TransferTo(ghost.Uid);
+                            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(ghost).EntityName = val;
+                            Mind.TransferTo(ghost);
                         }
                     });
                 }
@@ -132,7 +132,7 @@ namespace Content.Server.Mind.Components
             }
 
             var dead =
-                IoCManager.Resolve<IEntityManager>().TryGetComponent<MobStateComponent?>(Owner.Uid, out var state) &&
+                IoCManager.Resolve<IEntityManager>().TryGetComponent<MobStateComponent?>(Owner, out var state) &&
                 state.IsDead();
 
             if (!HasMind)

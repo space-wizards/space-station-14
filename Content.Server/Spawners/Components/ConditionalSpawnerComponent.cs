@@ -61,8 +61,8 @@ namespace Content.Server.Spawners.Components
                 return;
             }
 
-            if(!((!IoCManager.Resolve<IEntityManager>().EntityExists(Owner.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityLifeStage) >= EntityLifeStage.Deleted))
-                IoCManager.Resolve<IEntityManager>().SpawnEntity(_robustRandom.Pick(Prototypes), IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
+            if(!((!IoCManager.Resolve<IEntityManager>().EntityExists(Owner) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityLifeStage) >= EntityLifeStage.Deleted))
+                IoCManager.Resolve<IEntityManager>().SpawnEntity(_robustRandom.Pick(Prototypes), IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
         }
 
         public virtual void MapInit()

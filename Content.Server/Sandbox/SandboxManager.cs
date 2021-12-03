@@ -124,22 +124,22 @@ namespace Content.Server.Sandbox
                 .EnumeratePrototypes<AccessLevelPrototype>()
                 .Select(p => p.ID).ToArray();
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(player.AttachedEntity.Uid, out InventoryComponent? inv)
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(player.AttachedEntity, out InventoryComponent? inv)
                 && inv.TryGetSlotItem(Slots.IDCARD, out ItemComponent? wornItem))
             {
-                if (IoCManager.Resolve<IEntityManager>().HasComponent<AccessComponent>(wornItem.Owner.Uid))
+                if (IoCManager.Resolve<IEntityManager>().HasComponent<AccessComponent>(wornItem.Owner))
                 {
                     UpgradeId(wornItem.Owner);
                 }
-                else if (IoCManager.Resolve<IEntityManager>().TryGetComponent(wornItem.Owner.Uid, out PDAComponent? pda))
+                else if (IoCManager.Resolve<IEntityManager>().TryGetComponent(wornItem.Owner, out PDAComponent? pda))
                 {
                     if (pda.ContainedID == null)
                     {
                         var newID = CreateFreshId();
-                        if (IoCManager.Resolve<IEntityManager>().TryGetComponent(pda.Owner.Uid, out ItemSlotsComponent? itemSlots))
+                        if (IoCManager.Resolve<IEntityManager>().TryGetComponent(pda.Owner, out ItemSlotsComponent? itemSlots))
                         {
                             _entityManager.EntitySysManager.GetEntitySystem<ItemSlotsSystem>().
-                                TryInsert(wornItem.Owner.Uid, pda.IdSlot, newID);
+                                TryInsert(wornItem.Owner, pda.IdSlot, newID);
                         }
                     }
                     else
@@ -148,21 +148,21 @@ namespace Content.Server.Sandbox
                     }
                 }
             }
-            else if (IoCManager.Resolve<IEntityManager>().TryGetComponent<HandsComponent?>(player.AttachedEntity.Uid, out var hands))
+            else if (IoCManager.Resolve<IEntityManager>().TryGetComponent<HandsComponent?>(player.AttachedEntity, out var hands))
             {
                 var card = CreateFreshId();
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(player.AttachedEntity.Uid, out inv) || !inv.Equip(Slots.IDCARD, card))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(player.AttachedEntity, out inv) || !inv.Equip(Slots.IDCARD, card))
                 {
-                    hands.PutInHandOrDrop(IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(card.Uid));
+                    hands.PutInHandOrDrop(IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(card));
                 }
             }
 
             void UpgradeId(IEntity id)
             {
                 var accessSystem = EntitySystem.Get<AccessSystem>();
-                accessSystem.TrySetTags(id.Uid, allAccess);
+                accessSystem.TrySetTags(id, allAccess);
 
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(id.Uid, out SpriteComponent? sprite))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(id, out SpriteComponent? sprite))
                 {
                     sprite.LayerSetState(0, "gold");
                 }
@@ -170,10 +170,10 @@ namespace Content.Server.Sandbox
 
             IEntity CreateFreshId()
             {
-                var card = _entityManager.SpawnEntity("CaptainIDCard", IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.AttachedEntity.Uid).Coordinates);
+                var card = _entityManager.SpawnEntity("CaptainIDCard", IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.AttachedEntity).Coordinates);
                 UpgradeId(card);
 
-                IoCManager.Resolve<IEntityManager>().GetComponent<IdCardComponent>(card.Uid).FullName = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(player.AttachedEntity.Uid).EntityName;
+                IoCManager.Resolve<IEntityManager>().GetComponent<IdCardComponent>(card).FullName = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(player.AttachedEntity).EntityName;
                 return card;
             }
         }

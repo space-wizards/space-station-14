@@ -41,7 +41,7 @@ namespace Content.Server.Pulling
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(pulled.Uid, out SharedPullableComponent? pullable))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(pulled, out SharedPullableComponent? pullable))
             {
                 return;
             }

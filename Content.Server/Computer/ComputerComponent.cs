@@ -26,8 +26,8 @@ namespace Content.Server.Computer
             // Let's ensure the container manager and container are here.
             Owner.EnsureContainer<Container>("board", out var _);
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ApcPowerReceiverComponent? powerReceiver) &&
-                IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ApcPowerReceiverComponent? powerReceiver) &&
+                IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
                 appearance.SetData(ComputerVisuals.Powered, powerReceiver.Powered);
             }
@@ -49,7 +49,7 @@ namespace Content.Server.Computer
 
         private void PowerReceiverOnOnPowerStateChanged(PowerChangedMessage e)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
                 appearance.SetData(ComputerVisuals.Powered, e.Powered);
             }
@@ -63,8 +63,8 @@ namespace Content.Server.Computer
         private void CreateComputerBoard()
         {
             // Ensure that the construction component is aware of the board container.
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ConstructionComponent? construction))
-                EntitySystem.Get<ConstructionSystem>().AddContainer(Owner.Uid, "board", construction);
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ConstructionComponent? construction))
+                EntitySystem.Get<ConstructionSystem>().AddContainer(Owner, "board", construction);
 
             // We don't do anything if this is null or empty.
             if (string.IsNullOrEmpty(_boardPrototype))
@@ -79,7 +79,7 @@ namespace Content.Server.Computer
                     return;
             }
 
-            var board = IoCManager.Resolve<IEntityManager>().SpawnEntity(_boardPrototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
+            var board = IoCManager.Resolve<IEntityManager>().SpawnEntity(_boardPrototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
 
             if(!container.Insert(board))
                 Logger.Warning($"Couldn't insert board {board} to computer {Owner}!");

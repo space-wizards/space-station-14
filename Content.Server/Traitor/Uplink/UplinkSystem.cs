@@ -84,7 +84,7 @@ namespace Content.Server.Traitor.Uplink
             if (component.UplinkAccount == null)
                 return;
 
-            if (!EntityManager.TryGetComponent(args.User.Uid, out ActorComponent? actor))
+            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
             var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
@@ -118,7 +118,7 @@ namespace Content.Server.Traitor.Uplink
             if (uplink.UplinkAccount == null) return;
 
             if (!_accounts.TryPurchaseItem(uplink.UplinkAccount, message.ItemId,
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.Uid).Coordinates, out var entity))
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player).Coordinates, out var entity))
             {
                 SoundSystem.Play(Filter.SinglePlayer(message.Session), uplink.InsufficientFundsSound.GetSound(),
                     uplink.Owner, AudioParams.Default);
@@ -126,8 +126,8 @@ namespace Content.Server.Traitor.Uplink
                 return;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(player.Uid, out HandsComponent? hands) &&
-                IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out ItemComponent? item))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(player, out HandsComponent? hands) &&
+                IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ItemComponent? item))
             {
                 hands.PutInHandOrDrop(item);
             }
@@ -146,14 +146,14 @@ namespace Content.Server.Traitor.Uplink
 
             var player = args.Session.AttachedEntity;
             if (player == null) return;
-            var cords = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.Uid).Coordinates;
+            var cords = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player).Coordinates;
 
             // try to withdraw TCs from account
             if (!_accounts.TryWithdrawTC(acc, args.TC, cords, out var tcUid))
                 return;
 
             // try to put it into players hands
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(player.Uid, out SharedHandsComponent? hands))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(player, out SharedHandsComponent? hands))
                 hands.TryPutInAnyHand(EntityManager.GetEntity(tcUid.Value));
 
             // play buying sound
@@ -208,7 +208,7 @@ namespace Content.Server.Traitor.Uplink
         private IEntity? FindUplinkTarget(IEntity user)
         {
             // Try to find PDA in inventory
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out InventoryComponent? inventory))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out InventoryComponent? inventory))
             {
                 var foundPDA = inventory.LookupItems<PDAComponent>().FirstOrDefault();
                 if (foundPDA != null)
@@ -216,12 +216,12 @@ namespace Content.Server.Traitor.Uplink
             }
 
             // Also check hands
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out HandsComponent? hands))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out HandsComponent? hands))
             {
                 var heldItems = hands.GetAllHeldItems();
                 foreach (var item in heldItems)
                 {
-                    if (IoCManager.Resolve<IEntityManager>().HasComponent<PDAComponent>(item.Owner.Uid))
+                    if (IoCManager.Resolve<IEntityManager>().HasComponent<PDAComponent>(item.Owner))
                         return item.Owner;
                 }
             }

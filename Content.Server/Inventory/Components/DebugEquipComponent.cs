@@ -17,22 +17,22 @@ namespace Content.Server.Inventory.Components
 
         void IEquipped.Equipped(EquippedEventArgs eventArgs)
         {
-            eventArgs.User.PopupMessage("equipped " + IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityName);
+            eventArgs.User.PopupMessage("equipped " + IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityName);
         }
 
         void IEquippedHand.EquippedHand(EquippedHandEventArgs eventArgs)
         {
-            eventArgs.User.PopupMessage("equipped hand " + IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityName);
+            eventArgs.User.PopupMessage("equipped hand " + IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityName);
         }
 
         void IUnequipped.Unequipped(UnequippedEventArgs eventArgs)
         {
-            eventArgs.User.PopupMessage("unequipped " + IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityName);
+            eventArgs.User.PopupMessage("unequipped " + IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityName);
         }
 
         void IUnequippedHand.UnequippedHand(UnequippedHandEventArgs eventArgs)
         {
-            eventArgs.User.PopupMessage("unequipped hand" + IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityName);
+            eventArgs.User.PopupMessage("unequipped hand" + IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityName);
         }
     }
 }

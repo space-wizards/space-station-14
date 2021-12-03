@@ -27,7 +27,7 @@ namespace Content.Client.Extinguisher
 
         private void SetSafety(AppearanceComponent component, bool safety)
         {
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner.Uid);
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
 
             sprite.LayerSetState(FireExtinguisherVisualLayers.Base, safety ? _safetyOnState : _safetyOffState);
         }

@@ -184,7 +184,7 @@ namespace Content.Shared.Actions.Components
         void IEquippedHand.EquippedHand(EquippedHandEventArgs eventArgs)
         {
             // this entity cannot be granted actions if no actions component
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedActionsComponent?>(eventArgs.User.Uid, out var actionsComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedActionsComponent?>(eventArgs.User, out var actionsComponent))
                 return;
             Holder = eventArgs.User;
             _holderActionsComponent = actionsComponent;
@@ -196,7 +196,7 @@ namespace Content.Shared.Actions.Components
         void IEquipped.Equipped(EquippedEventArgs eventArgs)
         {
             // this entity cannot be granted actions if no actions component
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedActionsComponent?>(eventArgs.User.Uid, out var actionsComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedActionsComponent?>(eventArgs.User, out var actionsComponent))
                 return;
             Holder = eventArgs.User;
             _holderActionsComponent = actionsComponent;

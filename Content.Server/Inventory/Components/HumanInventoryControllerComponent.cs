@@ -43,7 +43,7 @@ namespace Content.Server.Inventory.Components
 
                 if (slotMask == SlotFlags.POCKET)
                 {
-                    var itemComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(entity.Uid);
+                    var itemComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(entity);
 
                     // If this item is small enough then it always fits in pockets.
                     if (itemComponent.Size <= (int) ReferenceSizes.Pocket)

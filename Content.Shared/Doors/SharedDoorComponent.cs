@@ -99,7 +99,7 @@ namespace Content.Shared.Doors
 
         public bool IsCrushing(IEntity entity)
         {
-            return CurrentlyCrushing.Contains(entity.Uid);
+            return CurrentlyCrushing.Contains(entity);
         }
 
         protected void SetAppearance(DoorVisualState state)

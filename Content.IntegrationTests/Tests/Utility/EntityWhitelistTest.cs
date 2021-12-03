@@ -73,11 +73,15 @@ namespace Content.IntegrationTests.Tests.Utility
                 var mapId = GetMainMapId(mapManager);
                 var mapCoordinates = new MapCoordinates(0, 0, mapId);
 
-                var validComponent = entityManager.SpawnEntity("ValidComponentDummy", mapCoordinates).Uid;
-                var validTag = entityManager.SpawnEntity("ValidTagDummy", mapCoordinates).Uid;
+                IEntity tempQualifier = entityManager.SpawnEntity("ValidComponentDummy", mapCoordinates);
+                var validComponent = (EntityUid) tempQualifier;
+                IEntity tempQualifier1 = entityManager.SpawnEntity("ValidTagDummy", mapCoordinates);
+                var validTag = (EntityUid) tempQualifier1;
 
-                var invalidComponent = entityManager.SpawnEntity("InvalidComponentDummy", mapCoordinates).Uid;
-                var invalidTag = entityManager.SpawnEntity("InvalidTagDummy", mapCoordinates).Uid;
+                IEntity tempQualifier2 = entityManager.SpawnEntity("InvalidComponentDummy", mapCoordinates);
+                var invalidComponent = (EntityUid) tempQualifier2;
+                IEntity tempQualifier3 = entityManager.SpawnEntity("InvalidTagDummy", mapCoordinates);
+                var invalidTag = (EntityUid) tempQualifier3;
 
                 // Test instantiated on its own
                 var whitelistInst = new EntityWhitelist
@@ -99,7 +103,7 @@ namespace Content.IntegrationTests.Tests.Utility
 
                 // Test from serialized
                 var dummy = entityManager.SpawnEntity("WhitelistDummy", mapCoordinates);
-                var whitelistSer = IoCManager.Resolve<IEntityManager>().GetComponent<ItemSlotsComponent>(dummy.Uid).Slots.Values.First().Whitelist;
+                var whitelistSer = IoCManager.Resolve<IEntityManager>().GetComponent<ItemSlotsComponent>(dummy).Slots.Values.First().Whitelist;
                 Assert.That(whitelistSer, Is.Not.Null);
 
                 Assert.That(whitelistSer.Components, Is.Not.Null);

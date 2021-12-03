@@ -46,13 +46,13 @@ namespace Content.Server.Tabletop
             if (!EntityManager.TryGetEntity(msg.MovedEntityUid, out var movedEntity))
                 return;
 
-            if (!EntityManager.HasComponent<TabletopDraggableComponent>(movedEntity.Uid))
+            if (!EntityManager.HasComponent<TabletopDraggableComponent>(movedEntity))
                 return;
 
             // TODO: some permission system, disallow movement if you're not permitted to move the item
 
             // Move the entity and dirty it (we use the map ID from the entity so noone can try to be funny and move the item to another map)
-            var transform = EntityManager.GetComponent<TransformComponent>(movedEntity.Uid);
+            var transform = EntityManager.GetComponent<TransformComponent>(movedEntity);
             var entityCoordinates = new EntityCoordinates(_mapManager.GetMapEntityId(transform.MapID), msg.Coordinates.Position);
             transform.Coordinates = entityCoordinates;
         }
@@ -61,11 +61,11 @@ namespace Content.Server.Tabletop
         {
             var draggedEntity = EntityManager.GetEntity(msg.DraggedEntityUid);
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<TabletopDraggableComponent?>(draggedEntity.Uid, out var draggableComponent)) return;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<TabletopDraggableComponent?>(draggedEntity, out var draggableComponent)) return;
 
             draggableComponent.DraggingPlayer = msg.DraggingPlayer;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<AppearanceComponent?>(draggedEntity.Uid, out var appearance)) return;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<AppearanceComponent?>(draggedEntity, out var appearance)) return;
 
             if (draggableComponent.DraggingPlayer != null)
             {

@@ -29,7 +29,7 @@ namespace Content.Server.AI.Operators.Combat.Melee
                 return true;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(_owner.Uid, out CombatModeComponent? combatModeComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(_owner, out CombatModeComponent? combatModeComponent))
             {
                 return false;
             }
@@ -47,7 +47,7 @@ namespace Content.Server.AI.Operators.Combat.Melee
             if (!base.Shutdown(outcome))
                 return false;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(_owner.Uid, out CombatModeComponent? combatModeComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(_owner, out CombatModeComponent? combatModeComponent))
             {
                 combatModeComponent.IsInCombatMode = false;
             }
@@ -62,15 +62,15 @@ namespace Content.Server.AI.Operators.Combat.Melee
                 return Outcome.Success;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(_owner.Uid, out HandsComponent? hands) || hands.GetActiveHand == null)
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(_owner, out HandsComponent? hands) || hands.GetActiveHand == null)
             {
                 return Outcome.Failed;
             }
 
             var meleeWeapon = hands.GetActiveHand.Owner;
-            IoCManager.Resolve<IEntityManager>().TryGetComponent(meleeWeapon.Uid, out MeleeWeaponComponent? meleeWeaponComponent);
+            IoCManager.Resolve<IEntityManager>().TryGetComponent(meleeWeapon, out MeleeWeaponComponent? meleeWeaponComponent);
 
-            if ((IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_target.Uid).Coordinates.Position - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_owner.Uid).Coordinates.Position).Length >
+            if ((IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_target).Coordinates.Position - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_owner).Coordinates.Position).Length >
                 meleeWeaponComponent?.Range)
             {
                 return Outcome.Failed;
@@ -78,7 +78,7 @@ namespace Content.Server.AI.Operators.Combat.Melee
 
             var interactionSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InteractionSystem>();
 
-            interactionSystem.AiUseInteraction(_owner, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_target.Uid).Coordinates, _target.Uid);
+            interactionSystem.AiUseInteraction(_owner, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_target).Coordinates, _target);
             _elapsedTime += frameTime;
             return Outcome.Continuing;
         }

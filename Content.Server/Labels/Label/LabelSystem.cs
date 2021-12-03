@@ -71,7 +71,7 @@ namespace Content.Server.Labels
                 return;
             }
 
-            if (!EntityManager.TryGetComponent(comp.LabelSlot.Item.Uid, out PaperComponent paper))
+            if (!EntityManager.TryGetComponent(comp.LabelSlot.Item, out PaperComponent paper))
                 // Assuming yaml has the correct entity whitelist, this should not happen.
                 return;
 

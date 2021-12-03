@@ -19,8 +19,8 @@ namespace Content.Server.Chemistry.Components
 
         protected override void UpdateVisuals()
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance) &&
-                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearance) &&
+                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
             {
                 appearance.SetData(SmokeVisuals.Color, solution.Color);
             }
@@ -28,13 +28,13 @@ namespace Content.Server.Chemistry.Components
 
         protected override void ReactWithEntity(IEntity entity, double solutionFraction)
         {
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution))
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
                 return;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out BloodstreamComponent? bloodstream))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out BloodstreamComponent? bloodstream))
                 return;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out InternalsComponent? internals) &&
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out InternalsComponent? internals) &&
                 internals.AreInternalsWorking())
                 return;
 
@@ -46,19 +46,19 @@ namespace Content.Server.Chemistry.Components
             foreach (var reagentQuantity in transferSolution.Contents.ToArray())
             {
                 if (reagentQuantity.Quantity == FixedPoint2.Zero) continue;
-                chemistry.ReactionEntity(entity.Uid, ReactionMethod.Ingestion, reagentQuantity.ReagentId, reagentQuantity.Quantity, transferSolution);
+                chemistry.ReactionEntity(entity, ReactionMethod.Ingestion, reagentQuantity.ReagentId, reagentQuantity.Quantity, transferSolution);
             }
 
             var bloodstreamSys = EntitySystem.Get<BloodstreamSystem>();
-            bloodstreamSys.TryAddToBloodstream(entity.Uid, transferSolution, bloodstream);
+            bloodstreamSys.TryAddToBloodstream(entity, transferSolution, bloodstream);
         }
 
 
         protected override void OnKill()
         {
-            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(Owner.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityLifeStage) >= EntityLifeStage.Deleted)
+            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(Owner) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityLifeStage) >= EntityLifeStage.Deleted)
                 return;
-            IoCManager.Resolve<IEntityManager>().DeleteEntity(Owner.Uid);
+            IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) Owner);
         }
     }
 }

@@ -53,7 +53,7 @@ namespace Content.Server.Administration.Commands
 
             var target = entityManager.GetEntity(eUid);
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<InventoryComponent?>(target.Uid, out var inventoryComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<InventoryComponent?>(target, out var inventoryComponent))
             {
                 shell.WriteLine(Loc.GetString("shell-target-entity-does-not-have-message",("missing", "inventory")));
                 return;
@@ -82,7 +82,7 @@ namespace Content.Server.Administration.Commands
 
             HumanoidCharacterProfile? profile = null;
             // Check if we are setting the outfit of a player to respect the preferences
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<ActorComponent?>(target.Uid, out var actorComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<ActorComponent?>(target, out var actorComponent))
             {
                 var userId = actorComponent.PlayerSession.UserId;
                 var preferencesManager = IoCManager.Resolve<IServerPreferencesManager>();
@@ -98,15 +98,15 @@ namespace Content.Server.Administration.Commands
                 {
                     continue;
                 }
-                var equipmentEntity = entityManager.SpawnEntity(gearStr, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(target.Uid).Coordinates);
+                var equipmentEntity = entityManager.SpawnEntity(gearStr, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(target).Coordinates);
                 if (slot == EquipmentSlotDefines.Slots.IDCARD &&
-                    IoCManager.Resolve<IEntityManager>().TryGetComponent<PDAComponent?>(equipmentEntity.Uid, out var pdaComponent) &&
+                    IoCManager.Resolve<IEntityManager>().TryGetComponent<PDAComponent?>(equipmentEntity, out var pdaComponent) &&
                     pdaComponent.ContainedID != null)
                 {
-                    pdaComponent.ContainedID.FullName = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(target.Uid).EntityName;
+                    pdaComponent.ContainedID.FullName = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(target).EntityName;
                 }
 
-                inventoryComponent.Equip(slot, IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(equipmentEntity.Uid), false);
+                inventoryComponent.Equip(slot, IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(equipmentEntity), false);
             }
         }
     }

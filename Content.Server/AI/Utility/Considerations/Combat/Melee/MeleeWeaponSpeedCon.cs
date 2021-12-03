@@ -12,7 +12,7 @@ namespace Content.Server.AI.Utility.Considerations.Combat.Melee
         {
             var target = context.GetState<WeaponEntityState>().GetValue();
 
-            if (target == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(target.Uid, out MeleeWeaponComponent? meleeWeaponComponent))
+            if (target == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(target, out MeleeWeaponComponent? meleeWeaponComponent))
             {
                 return 0.0f;
             }

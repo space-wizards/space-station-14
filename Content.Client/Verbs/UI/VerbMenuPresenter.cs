@@ -49,10 +49,10 @@ namespace Content.Client.Verbs.UI
 
             Close();
 
-            CurrentTarget = target.Uid;
+            CurrentTarget = target;
             CurrentVerbs = _verbSystem.GetVerbs(target, user, VerbType.All);
-            
-            if (!target.Uid.IsClientSide())
+
+            if (!target.IsClientSide())
             {
                 AddElement(RootMenu, new ContextMenuElement(Loc.GetString("verb-system-waiting-on-server-text")));
             }

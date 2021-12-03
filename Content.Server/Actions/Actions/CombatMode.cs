@@ -15,7 +15,7 @@ namespace Content.Server.Actions.Actions
     {
         public bool DoToggleAction(ToggleActionEventArgs args)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.Performer.Uid, out CombatModeComponent? combatMode))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.Performer, out CombatModeComponent? combatMode))
             {
                 return false;
             }

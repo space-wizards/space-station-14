@@ -34,7 +34,7 @@ namespace Content.Server.Disposal.Tube
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ActorComponent?>(args.User.Uid, out var actor))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ActorComponent?>(args.User, out var actor))
                 return;
             var player = actor.PlayerSession;
 
@@ -50,7 +50,7 @@ namespace Content.Server.Disposal.Tube
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ActorComponent?>(args.User.Uid, out var actor))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ActorComponent?>(args.User, out var actor))
                 return;
             var player = actor.PlayerSession;
 
@@ -87,8 +87,8 @@ namespace Content.Server.Disposal.Tube
                 return null;
             var oppositeDirection = nextDirection.GetOpposite();
 
-            var grid = _mapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(targetTube.Owner.Uid).GridID);
-            var position = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(targetTube.Owner.Uid).Coordinates;
+            var grid = _mapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(targetTube.Owner).GridID);
+            var position = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(targetTube.Owner).Coordinates;
             foreach (var entity in grid.GetInDir(position, nextDirection))
             {
                 if (!EntityManager.TryGetComponent(entity, out IDisposalTubeComponent? tube))

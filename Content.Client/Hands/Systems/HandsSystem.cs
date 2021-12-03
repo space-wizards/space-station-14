@@ -50,7 +50,7 @@ namespace Content.Client.Hands
 
         protected override void HandleContainerModified(EntityUid uid, SharedHandsComponent component, ContainerModifiedMessage args)
         {
-            if (uid == _playerManager.LocalPlayer?.ControlledEntity?.Uid)
+            if (uid == _playerManager.LocalPlayer?.ControlledEntity)
                 GuiStateUpdated?.Invoke();
         }
 
@@ -89,7 +89,7 @@ namespace Content.Client.Hands
         {
             var player = _playerManager.LocalPlayer?.ControlledEntity;
 
-            if (player == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(player.Uid, out HandsComponent? hands))
+            if (player == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(player, out HandsComponent? hands))
                 return null;
 
             return hands;

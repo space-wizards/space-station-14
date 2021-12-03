@@ -53,7 +53,7 @@ namespace Content.Server.Physics.Controllers
 
             foreach (var (mobMover, mover, physics) in EntityManager.EntityQuery<IMobMoverComponent, IMoverComponent, PhysicsComponent>())
             {
-                _excludedMobs.Add(mover.Owner.Uid);
+                _excludedMobs.Add(mover.Owner);
                 HandleMobMovement(mover, physics, mobMover);
             }
 
@@ -61,7 +61,7 @@ namespace Content.Server.Physics.Controllers
 
             foreach (var (mover, physics) in EntityManager.EntityQuery<IMoverComponent, PhysicsComponent>(true))
             {
-                if (_excludedMobs.Contains(mover.Owner.Uid)) continue;
+                if (_excludedMobs.Contains(mover.Owner)) continue;
 
                 HandleKinematicMovement(mover, physics);
             }
@@ -75,7 +75,7 @@ namespace Content.Server.Physics.Controllers
             foreach (var (pilot, mover, xform) in EntityManager.EntityQuery<PilotComponent, SharedPlayerInputMoverComponent, TransformComponent>())
             {
                 if (pilot.Console == null) continue;
-                _excludedMobs.Add(mover.Owner.Uid);
+                _excludedMobs.Add(mover.Owner);
 
                 var gridId = xform.GridID;
 
@@ -271,7 +271,7 @@ namespace Content.Server.Physics.Controllers
         {
             if (!mover.Owner.HasTag("FootstepSound")) return;
 
-            var transform = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(mover.Owner.Uid);
+            var transform = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(mover.Owner);
             var coordinates = transform.Coordinates;
             var gridId = coordinates.GetGridId(EntityManager);
             var distanceNeeded = mover.Sprinting ? StepSoundMoveDistanceRunning : StepSoundMoveDistanceWalking;
@@ -303,9 +303,9 @@ namespace Content.Server.Physics.Controllers
 
             mobMover.StepSoundDistance -= distanceNeeded;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<InventoryComponent?>(mover.Owner.Uid, out var inventory)
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<InventoryComponent?>(mover.Owner, out var inventory)
                 && inventory.TryGetSlotItem<ItemComponent>(EquipmentSlotDefines.Slots.SHOES, out var item)
-                && IoCManager.Resolve<IEntityManager>().TryGetComponent<FootstepModifierComponent?>(item.Owner.Uid, out var modifier))
+                && IoCManager.Resolve<IEntityManager>().TryGetComponent<FootstepModifierComponent?>(item.Owner, out var modifier))
             {
                 modifier.PlayFootstep();
             }
@@ -352,7 +352,7 @@ namespace Content.Server.Physics.Controllers
             SoundSystem.Play(
                 Filter.Pvs(coordinates),
                 soundToPlay,
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(mover.Uid).Coordinates,
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(mover).Coordinates,
                 sprinting ? AudioParams.Default.WithVolume(0.75f) : null);
         }
     }

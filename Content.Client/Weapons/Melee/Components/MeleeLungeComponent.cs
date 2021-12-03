@@ -39,14 +39,14 @@ namespace Content.Client.Weapons.Melee.Components
                 offset *= (ResetTime - _time) / ResetTime;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ISpriteComponent? spriteComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ISpriteComponent? spriteComponent))
             {
                 spriteComponent.Offset = offset;
             }
 
             if (deleteSelf)
             {
-                IoCManager.Resolve<IEntityManager>().RemoveComponent<MeleeLungeComponent>(Owner.Uid);
+                IoCManager.Resolve<IEntityManager>().RemoveComponent<MeleeLungeComponent>(Owner);
             }
         }
     }

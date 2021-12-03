@@ -60,7 +60,7 @@ namespace Content.Server.Explosion.Components
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs args)
         {
             if (_grenadesContainer.ContainedEntities.Count >= _maxGrenades ||
-                !IoCManager.Resolve<IEntityManager>().HasComponent<FlashOnTriggerComponent>(args.Using.Uid))
+                !IoCManager.Resolve<IEntityManager>().HasComponent<FlashOnTriggerComponent>(args.Using))
                 return false;
 
             _grenadesContainer.Insert(args.Using);
@@ -93,7 +93,7 @@ namespace Content.Server.Explosion.Components
                 return false;
             Owner.SpawnTimer((int) (_delay * 1000), () =>
             {
-                if ((!IoCManager.Resolve<IEntityManager>().EntityExists(Owner.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityLifeStage) >= EntityLifeStage.Deleted)
+                if ((!IoCManager.Resolve<IEntityManager>().EntityExists(Owner) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityLifeStage) >= EntityLifeStage.Deleted)
                     return;
                 _countDown = true;
                 var random = IoCManager.Resolve<IRobustRandom>();
@@ -116,14 +116,14 @@ namespace Content.Server.Explosion.Components
 
                     grenade.SpawnTimer(delay, () =>
                     {
-                        if ((!IoCManager.Resolve<IEntityManager>().EntityExists(grenade.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(grenade.Uid).EntityLifeStage) >= EntityLifeStage.Deleted)
+                        if ((!IoCManager.Resolve<IEntityManager>().EntityExists(grenade) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(grenade).EntityLifeStage) >= EntityLifeStage.Deleted)
                             return;
 
                         EntitySystem.Get<TriggerSystem>().Trigger(grenade, eventArgs.User);
                     });
                 }
 
-                IoCManager.Resolve<IEntityManager>().DeleteEntity(Owner.Uid);
+                IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) Owner);
             });
             return true;
         }
@@ -135,7 +135,7 @@ namespace Content.Server.Explosion.Components
             if (_unspawnedCount > 0)
             {
                 _unspawnedCount--;
-                grenade = IoCManager.Resolve<IEntityManager>().SpawnEntity(_fillPrototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).MapPosition);
+                grenade = IoCManager.Resolve<IEntityManager>().SpawnEntity(_fillPrototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).MapPosition);
                 return true;
             }
 
@@ -155,7 +155,7 @@ namespace Content.Server.Explosion.Components
 
         private void UpdateAppearance()
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance)) return;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearance)) return;
 
             appearance.SetData(ClusterFlashVisuals.GrenadesCounter, _grenadesContainer.ContainedEntities.Count + _unspawnedCount);
         }

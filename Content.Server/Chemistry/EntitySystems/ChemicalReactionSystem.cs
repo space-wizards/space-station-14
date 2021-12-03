@@ -19,7 +19,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
             var entity = EntityManager.GetEntity(ownerUid);
             _logSystem.Add(LogType.ChemicalReaction, reaction.Impact,
-                $"Chemical reaction {reaction.ID} occurred with strength {unitReactions:strength} on entity {entity} at {IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).Coordinates}");
+                $"Chemical reaction {reaction.ID} occurred with strength {unitReactions:strength} on entity {entity} at {IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates}");
 
             SoundSystem.Play(Filter.Pvs(ownerUid, entityManager:EntityManager), reaction.Sound.GetSound(), ownerUid);
         }

@@ -17,8 +17,8 @@ namespace Content.Shared.Strip.Components
         public bool CanBeStripped(IEntity by)
         {
             return by != Owner
-                   && IoCManager.Resolve<IEntityManager>().HasComponent<SharedHandsComponent>(@by.Uid)
-                   && EntitySystem.Get<ActionBlockerSystem>().CanInteract(by.Uid);
+                   && IoCManager.Resolve<IEntityManager>().HasComponent<SharedHandsComponent>(@by)
+                   && EntitySystem.Get<ActionBlockerSystem>().CanInteract(@by);
         }
 
         bool IDraggable.CanDrop(CanDropEvent args)

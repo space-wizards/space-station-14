@@ -38,7 +38,7 @@ namespace Content.Server.Medical
             Verb verb = new();
             verb.Act = () => component.InsertBody(args.Using);
             verb.Category = VerbCategory.Insert;
-            verb.Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(args.Using.Uid).EntityName;
+            verb.Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(args.Using).EntityName;
             args.Verbs.Add(verb);
         }
 
@@ -60,7 +60,7 @@ namespace Content.Server.Medical
             // Self-insert verb
             if (!component.IsOccupied &&
                 component.CanInsert(args.User) &&
-                _actionBlockerSystem.CanMove(args.User.Uid))
+                _actionBlockerSystem.CanMove(args.User))
             {
                 Verb verb = new();
                 verb.Act = () => component.InsertBody(args.User);
@@ -75,7 +75,7 @@ namespace Content.Server.Medical
 
         private void OnRelayMovement(EntityUid uid, MedicalScannerComponent component, RelayMovementEntityEvent args)
         {
-            if (_blocker.CanInteract(args.Entity.Uid))
+            if (_blocker.CanInteract(args.Entity))
             {
                 if (_gameTiming.CurTime <
                     component.LastInternalOpenAttempt + MedicalScannerComponent.InternalOpenAttemptDelay)

@@ -42,7 +42,7 @@ namespace Content.Client.Administration
                 }
 
                 // if not on the same map, continue
-                if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).MapID != _eyeManager.CurrentMap)
+                if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).MapID != _eyeManager.CurrentMap)
                 {
                     continue;
                 }

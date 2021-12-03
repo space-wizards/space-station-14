@@ -16,7 +16,7 @@ namespace Content.Server.Alert.Click
     {
         public void AlertClicked(ClickAlertEventArgs args)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(args.Player.Uid, out BuckleComponent? buckle))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(args.Player, out BuckleComponent? buckle))
             {
                 buckle.TryUnbuckle(args.Player);
             }

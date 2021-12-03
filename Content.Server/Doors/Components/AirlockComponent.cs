@@ -176,7 +176,7 @@ namespace Content.Server.Doors.Components
                 _boltLightsWirePulsed ? StatusLightState.On : StatusLightState.Off, "BLTL");
 
             var ev = new DoorGetCloseTimeModifierEvent();
-            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner.Uid, ev, false);
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, ev, false);
 
             var timingStatus =
                 new StatusLightData(Color.Orange, !AutoClose ? StatusLightState.Off :

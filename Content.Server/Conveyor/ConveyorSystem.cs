@@ -42,9 +42,9 @@ namespace Content.Server.Conveyor
 
         private void UpdateAppearance(ConveyorComponent component)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<AppearanceComponent?>(component.Owner.Uid, out var appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<AppearanceComponent?>(component.Owner, out var appearance))
             {
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<ApcPowerReceiverComponent?>(component.Owner.Uid, out var receiver) && receiver.Powered)
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<ApcPowerReceiverComponent?>(component.Owner, out var receiver) && receiver.Powered)
                 {
                     appearance.SetData(ConveyorVisuals.State, component.State);
                 }
@@ -100,13 +100,13 @@ namespace Content.Server.Conveyor
                 return false;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out ApcPowerReceiverComponent? receiver) &&
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner, out ApcPowerReceiverComponent? receiver) &&
                 !receiver.Powered)
             {
                 return false;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().HasComponent<ItemComponent>(component.Owner.Uid))
+            if (IoCManager.Resolve<IEntityManager>().HasComponent<ItemComponent>(component.Owner))
             {
                 return false;
             }
@@ -126,7 +126,7 @@ namespace Content.Server.Conveyor
             var adjustment = component.State == ConveyorState.Reversed ? MathHelper.Pi/2 : -MathHelper.Pi/2;
             var radians = MathHelper.DegreesToRadians(component.Angle);
 
-            return new Angle(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner.Uid).LocalRotation.Theta + radians + adjustment);
+            return new Angle(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner).LocalRotation.Theta + radians + adjustment);
         }
 
         public IEnumerable<(IEntity, IPhysBody)> GetEntitiesToMove(ConveyorComponent comp)
@@ -134,7 +134,7 @@ namespace Content.Server.Conveyor
             //todo uuuhhh cache this
             foreach (var entity in _entityLookup.GetEntitiesIntersecting(comp.Owner, flags: LookupFlags.Approximate))
             {
-                if ((!IoCManager.Resolve<IEntityManager>().EntityExists(entity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted)
+                if ((!IoCManager.Resolve<IEntityManager>().EntityExists(entity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityLifeStage) >= EntityLifeStage.Deleted)
                 {
                     continue;
                 }
@@ -144,13 +144,13 @@ namespace Content.Server.Conveyor
                     continue;
                 }
 
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out IPhysBody? physics) ||
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out IPhysBody? physics) ||
                     physics.BodyType == BodyType.Static || physics.BodyStatus == BodyStatus.InAir || entity.IsWeightless())
                 {
                     continue;
                 }
 
-                if (IoCManager.Resolve<IEntityManager>().HasComponent<IMapGridComponent>(entity.Uid))
+                if (IoCManager.Resolve<IEntityManager>().HasComponent<IMapGridComponent>(entity))
                 {
                     continue;
                 }

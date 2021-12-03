@@ -100,7 +100,7 @@ namespace Content.Client.Hands
 
                 // Show blocked overlay if hand is blocked.
                 newButton.Blocked.Visible =
-                    hand.HeldItem != null && IoCManager.Resolve<IEntityManager>().HasComponent<HandVirtualItemComponent>(hand.HeldItem.Uid);
+                    hand.HeldItem != null && IoCManager.Resolve<IEntityManager>().HasComponent<HandVirtualItemComponent>(hand.HeldItem);
             }
 
             if (TryGetActiveHand(out var activeHand))

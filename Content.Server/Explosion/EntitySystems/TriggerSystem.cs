@@ -76,7 +76,7 @@ namespace Content.Server.Explosion.EntitySystems
             if (component.Flashed) return;
 
             // TODO Make flash durations sane ffs.
-            _flashSystem.FlashArea(uid, args.User?.Uid, component.Range, component.Duration * 1000f);
+            _flashSystem.FlashArea(uid, args.User, component.Range, component.Duration * 1000f);
             component.Flashed = true;
         }
         #endregion
@@ -119,7 +119,7 @@ namespace Content.Server.Explosion.EntitySystems
         public void Trigger(IEntity trigger, IEntity? user = null)
         {
             var triggerEvent = new TriggerEvent(trigger, user);
-            EntityManager.EventBus.RaiseLocalEvent(trigger.Uid, triggerEvent);
+            EntityManager.EventBus.RaiseLocalEvent(trigger, triggerEvent);
         }
 
         public void HandleTimerTrigger(TimeSpan delay, IEntity triggered, IEntity? user = null)
@@ -132,7 +132,7 @@ namespace Content.Server.Explosion.EntitySystems
 
             Timer.Spawn(delay, () =>
             {
-                if ((!IoCManager.Resolve<IEntityManager>().EntityExists(triggered.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(triggered.Uid).EntityLifeStage) >= EntityLifeStage.Deleted) return;
+                if ((!IoCManager.Resolve<IEntityManager>().EntityExists(triggered) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(triggered).EntityLifeStage) >= EntityLifeStage.Deleted) return;
                 Trigger(triggered, user);
             });
         }

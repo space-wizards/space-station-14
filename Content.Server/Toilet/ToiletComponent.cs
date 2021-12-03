@@ -68,7 +68,7 @@ namespace Content.Server.Toilet
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             // are player trying place or lift of cistern lid?
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Using.Uid, out ToolComponent? tool)
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Using, out ToolComponent? tool)
                 && tool.Qualities.Contains(_pryingQuality))
             {
                 // check if someone is already prying this toilet
@@ -76,7 +76,7 @@ namespace Content.Server.Toilet
                     return false;
                 _isPrying = true;
 
-                if (!await EntitySystem.Get<ToolSystem>().UseTool(eventArgs.Using.Uid, eventArgs.User.Uid, Owner.Uid, 0f, PryLidTime, _pryingQuality))
+                if (!await EntitySystem.Get<ToolSystem>().UseTool(eventArgs.Using, eventArgs.User, Owner, 0f, PryLidTime, _pryingQuality))
                 {
                     _isPrying = false;
                     return false;
@@ -112,7 +112,7 @@ namespace Content.Server.Toilet
 
             // just want to up/down seat?
             // check that nobody seats on seat right now
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out StrapComponent? strap))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out StrapComponent? strap))
             {
                 if (strap.BuckledEntities.Count != 0)
                     return false;
@@ -143,7 +143,7 @@ namespace Content.Server.Toilet
 
         private void UpdateSprite()
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
                 appearance.SetData(ToiletVisuals.LidOpen, LidOpen);
                 appearance.SetData(ToiletVisuals.SeatUp, IsSeatUp);
@@ -153,23 +153,23 @@ namespace Content.Server.Toilet
         SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)
         {
             // check that victim even have head
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedBodyComponent?>(victim.Uid, out var body) &&
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedBodyComponent?>(victim, out var body) &&
                 body.HasPartOfType(BodyPartType.Head))
             {
-                var othersMessage = Loc.GetString("toilet-component-suicide-head-message-others", ("victim",Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(victim.Uid).EntityName),("owner", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityName));
+                var othersMessage = Loc.GetString("toilet-component-suicide-head-message-others", ("victim",Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(victim).EntityName),("owner", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityName));
                 victim.PopupMessageOtherClients(othersMessage);
 
-                var selfMessage = Loc.GetString("toilet-component-suicide-head-message", ("owner", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityName));
+                var selfMessage = Loc.GetString("toilet-component-suicide-head-message", ("owner", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityName));
                 victim.PopupMessage(selfMessage);
 
                 return SuicideKind.Asphyxiation;
             }
             else
             {
-                var othersMessage = Loc.GetString("toilet-component-suicide-message-others",("victim", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(victim.Uid).EntityName),("owner", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityName));
+                var othersMessage = Loc.GetString("toilet-component-suicide-message-others",("victim", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(victim).EntityName),("owner", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityName));
                 victim.PopupMessageOtherClients(othersMessage);
 
-                var selfMessage = Loc.GetString("toilet-component-suicide-message", ("owner",Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityName));
+                var selfMessage = Loc.GetString("toilet-component-suicide-message", ("owner",Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityName));
                 victim.PopupMessage(selfMessage);
 
                 return SuicideKind.Blunt;

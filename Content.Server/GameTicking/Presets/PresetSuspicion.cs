@@ -115,7 +115,7 @@ namespace Content.Server.GameTicking.Presets
                 // creadth: we need to create uplink for the antag.
                 // PDA should be in place already, so we just need to
                 // initiate uplink account.
-                var uplinkAccount = new UplinkAccount(TraitorStartingBalance, mind.OwnedEntity!.Uid);
+                var uplinkAccount = new UplinkAccount(TraitorStartingBalance, mind.OwnedEntity!);
                 var accounts = EntityManager.EntitySysManager.GetEntitySystem<UplinkAccountsSystem>();
                 accounts.AddNewAccount(uplinkAccount);
 

@@ -57,7 +57,7 @@ namespace Content.Server.Body.Surgery.Components
                     continue;
                 }
 
-                if (!_actionBlockerSystem.CanInteract(tool.PerformerCache.Uid) ||
+                if (!_actionBlockerSystem.CanInteract(tool.PerformerCache) ||
                     !tool.PerformerCache.InRangeUnobstructed(tool.BodyCache))
                 {
                     tool.CloseAllSurgeryUIs();

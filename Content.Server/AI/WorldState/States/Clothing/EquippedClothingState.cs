@@ -16,7 +16,7 @@ namespace Content.Server.AI.WorldState.States.Clothing
         {
             var result = new Dictionary<EquipmentSlotDefines.Slots, IEntity>();
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out InventoryComponent? inventoryComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out InventoryComponent? inventoryComponent))
             {
                 return result;
             }

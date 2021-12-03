@@ -40,13 +40,13 @@ namespace Content.IntegrationTests.Tests
                 {
                     var mapGrid = mapManager.CreateGrid(mapId);
                     var mapGridEnt = entityManager.GetEntity(mapGrid.GridEntityId);
-                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(mapGridEnt.Uid).WorldPosition = new Vector2(10, 10);
+                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(mapGridEnt).WorldPosition = new Vector2(10, 10);
                     mapGrid.SetTile(new Vector2i(0,0), new Tile(1, 512));
                 }
                 {
                     var mapGrid = mapManager.CreateGrid(mapId);
                     var mapGridEnt = entityManager.GetEntity(mapGrid.GridEntityId);
-                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(mapGridEnt.Uid).WorldPosition = new Vector2(-8, -8);
+                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(mapGridEnt).WorldPosition = new Vector2(-8, -8);
                     mapGrid.SetTile(new Vector2i(0, 0), new Tile(2, 511));
                 }
 

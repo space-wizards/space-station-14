@@ -88,8 +88,8 @@ namespace Content.IntegrationTests.Tests
                                 Logger.LogS(LogLevel.Debug, "EntityTest", $"Testing: {prototype.ID}");
                                 testEntity = entityMan.SpawnEntity(prototype.ID, testLocation);
                                 server.RunTicks(2);
-                                Assert.That((!IoCManager.Resolve<IEntityManager>().EntityExists(testEntity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(testEntity.Uid).EntityLifeStage) >= EntityLifeStage.Initialized);
-                                entityMan.DeleteEntity(testEntity.Uid);
+                                Assert.That((!IoCManager.Resolve<IEntityManager>().EntityExists(testEntity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(testEntity).EntityLifeStage) >= EntityLifeStage.Initialized);
+                                entityMan.DeleteEntity((EntityUid) testEntity);
                             }, "Entity '{0}' threw an exception.",
                             prototype.ID);
                     }
@@ -173,11 +173,11 @@ namespace Content.IntegrationTests.Tests
 
                         var entity = entityManager.SpawnEntity("AllComponentsOneToOneDeleteTestEntity", testLocation);
 
-                        Assert.That((!IoCManager.Resolve<IEntityManager>().EntityExists(entity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityLifeStage) >= EntityLifeStage.Initialized);
+                        Assert.That((!IoCManager.Resolve<IEntityManager>().EntityExists(entity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityLifeStage) >= EntityLifeStage.Initialized);
 
                         // The component may already exist if it is a mandatory component
                         // such as MetaData or Transform
-                        if (IoCManager.Resolve<IEntityManager>().HasComponent(entity.Uid, type))
+                        if (IoCManager.Resolve<IEntityManager>().HasComponent(entity, type))
                         {
                             continue;
                         }
@@ -194,7 +194,7 @@ namespace Content.IntegrationTests.Tests
 
                         server.RunTicks(2);
 
-                        entityManager.DeleteEntity(entity.Uid);
+                        entityManager.DeleteEntity((EntityUid) entity);
                     }
                 });
             });
@@ -302,14 +302,14 @@ namespace Content.IntegrationTests.Tests
                         var testLocation = grid.ToCoordinates();
                         var entity = entityManager.SpawnEntity("AllComponentsOneEntityDeleteTestEntity", testLocation);
 
-                        Assert.That((!IoCManager.Resolve<IEntityManager>().EntityExists(entity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityLifeStage) >= EntityLifeStage.Initialized);
+                        Assert.That((!IoCManager.Resolve<IEntityManager>().EntityExists(entity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityLifeStage) >= EntityLifeStage.Initialized);
 
                         foreach (var type in distinct.components)
                         {
                             var component = (Component) componentFactory.GetComponent(type);
 
                             // If the entity already has this component, if it was ensured or added by another
-                            if (IoCManager.Resolve<IEntityManager>().HasComponent(entity.Uid, component.GetType()))
+                            if (IoCManager.Resolve<IEntityManager>().HasComponent(entity, component.GetType()))
                             {
                                 continue;
                             }
@@ -336,7 +336,7 @@ namespace Content.IntegrationTests.Tests
                         }
 
                         server.RunTicks(2);
-                        entityManager.DeleteEntity(entity.Uid);
+                        entityManager.DeleteEntity((EntityUid) entity);
                     }
                 });
             });

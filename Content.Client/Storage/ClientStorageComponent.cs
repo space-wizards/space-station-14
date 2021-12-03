@@ -46,7 +46,7 @@ namespace Content.Client.Storage
         {
             base.OnAdd();
 
-            _window = new StorageWindow(this) {Title = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityName};
+            _window = new StorageWindow(this) {Title = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityName};
             _window.EntityList.GenerateItem += GenerateButton;
             _window.EntityList.ItemPressed += Interact;
         }
@@ -120,7 +120,7 @@ namespace Content.Client.Storage
 
                 if (IoCManager.Resolve<IEntityManager>().TryGetEntity(entityId, out var entity))
                 {
-                    ReusableAnimations.AnimateEntityPickup(entity, initialPosition, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).LocalPosition);
+                    ReusableAnimations.AnimateEntityPickup(entity, initialPosition, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).LocalPosition);
                 }
             }
         }
@@ -181,8 +181,8 @@ namespace Content.Client.Storage
             if (!IoCManager.Resolve<IEntityManager>().TryGetEntity(entityUid, out var entity))
                 return;
 
-            IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out ISpriteComponent? sprite);
-            IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out ItemComponent? item);
+            IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ISpriteComponent? sprite);
+            IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ItemComponent? item);
 
             button.AddChild(new BoxContainer
             {
@@ -202,7 +202,7 @@ namespace Content.Client.Storage
                     {
                         HorizontalExpand = true,
                         ClipText = true,
-                        Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityName
+                        Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityName
                     },
                     new Label
                     {
@@ -252,7 +252,7 @@ namespace Content.Client.Storage
                 {
                     var controlledEntity = IoCManager.Resolve<IPlayerManager>().LocalPlayer?.ControlledEntity;
 
-                    if (controlledEntity != null && IoCManager.Resolve<IEntityManager>().TryGetComponent(controlledEntity.Uid, out HandsComponent? hands))
+                    if (controlledEntity != null && IoCManager.Resolve<IEntityManager>().TryGetComponent(controlledEntity, out HandsComponent? hands))
                     {
 #pragma warning disable 618
                         StorageEntity.SendNetworkMessage(new InsertEntityMessage());

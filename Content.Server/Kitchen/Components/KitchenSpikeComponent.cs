@@ -40,8 +40,8 @@ namespace Content.Server.Kitchen.Components
 
             if (!string.IsNullOrEmpty(_meatPrototype))
             {
-                var meat = IoCManager.Resolve<IEntityManager>().SpawnEntity(_meatPrototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
-                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(meat.Uid).EntityName = _meatName;
+                var meat = IoCManager.Resolve<IEntityManager>().SpawnEntity(_meatPrototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
+                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(meat).EntityName = _meatName;
             }
 
             if (_meatParts != 0)
@@ -67,7 +67,7 @@ namespace Content.Server.Kitchen.Components
 
         private void UpdateAppearance()
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out AppearanceComponent? appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
                 appearance.SetData(KitchenSpikeVisuals.Status, (_meatParts > 0) ? KitchenSpikeStatus.Bloody : KitchenSpikeStatus.Empty);
             }
@@ -83,7 +83,7 @@ namespace Content.Server.Kitchen.Components
                 return false;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(victim.Uid, out butcherable))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(victim, out butcherable))
             {
                 Owner.PopupMessage(user, Loc.GetString("comp-kitchen-spike-deny-butcher", ("victim", victim), ("this", Owner)));
                 return false;
@@ -97,7 +97,7 @@ namespace Content.Server.Kitchen.Components
 
         public async void TrySpike(IEntity victim, IEntity user)
         {
-            var victimUid = victim.Uid;
+            var victimUid = (EntityUid) victim;
             if (_beingButchered.Contains(victimUid)) return;
 
             SharedButcherableComponent? butcherable;
@@ -106,7 +106,7 @@ namespace Content.Server.Kitchen.Components
                 return;
 
             // Prevent dead from being spiked TODO: Maybe remove when rounds can be played and DOT is implemented
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<MobStateComponent?>(victim.Uid, out var state) &&
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<MobStateComponent?>(victim, out var state) &&
                 !state.IsDead())
             {
                 Owner.PopupMessage(user, Loc.GetString("comp-kitchen-spike-deny-not-dead", ("victim", victim)));
@@ -154,7 +154,7 @@ namespace Content.Server.Kitchen.Components
 
             Owner.PopupMessageEveryone(Loc.GetString("comp-kitchen-spike-kill", ("user", user), ("victim", victim)));
             // TODO: Need to be able to leave them on the spike to do DoT, see ss13.
-            IoCManager.Resolve<IEntityManager>().DeleteEntity(victim.Uid);
+            IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) victim);
 
             SoundSystem.Play(Filter.Pvs(Owner), SpikeSound.GetSound(), Owner);
         }

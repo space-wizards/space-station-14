@@ -44,7 +44,7 @@ namespace Content.Server.Singularity.EntitySystems
                 return;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out PhysicsComponent? phys) && phys.BodyType == BodyType.Static)
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner, out PhysicsComponent? phys) && phys.BodyType == BodyType.Static)
             {
                 if (!component.IsOn)
                 {
@@ -166,9 +166,9 @@ namespace Content.Server.Singularity.EntitySystems
 
         private void Fire(EmitterComponent component)
         {
-            var projectile = IoCManager.Resolve<IEntityManager>().SpawnEntity(component.BoltType, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner.Uid).Coordinates);
+            var projectile = IoCManager.Resolve<IEntityManager>().SpawnEntity(component.BoltType, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner).Coordinates);
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<PhysicsComponent?>(projectile.Uid, out var physicsComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<PhysicsComponent?>(projectile, out var physicsComponent))
             {
                 Logger.Error("Emitter tried firing a bolt, but it was spawned without a PhysicsComponent");
                 return;
@@ -176,7 +176,7 @@ namespace Content.Server.Singularity.EntitySystems
 
             physicsComponent.BodyStatus = BodyStatus.InAir;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ProjectileComponent?>(projectile.Uid, out var projectileComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ProjectileComponent?>(projectile, out var projectileComponent))
             {
                 Logger.Error("Emitter tried firing a bolt, but it was spawned without a ProjectileComponent");
                 return;
@@ -185,11 +185,11 @@ namespace Content.Server.Singularity.EntitySystems
             projectileComponent.IgnoreEntity(component.Owner);
 
             physicsComponent
-                .LinearVelocity = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner.Uid).WorldRotation.ToWorldVec() * 20f;
-            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(projectile.Uid).WorldRotation = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner.Uid).WorldRotation;
+                .LinearVelocity = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner).WorldRotation.ToWorldVec() * 20f;
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(projectile).WorldRotation = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner).WorldRotation;
 
             // TODO: Move to projectile's code.
-            Timer.Spawn(3000, () => IoCManager.Resolve<IEntityManager>().DeleteEntity(projectile.Uid));
+            Timer.Spawn(3000, () => IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) projectile));
 
             SoundSystem.Play(Filter.Pvs(component.Owner), component.FireSound.GetSound(), component.Owner,
                 AudioHelpers.WithVariation(EmitterComponent.Variation).WithVolume(EmitterComponent.Volume).WithMaxDistance(EmitterComponent.Distance));

@@ -148,7 +148,7 @@ namespace Content.Server.Cuffs.Components
         {
             if (_cuffing) return true;
 
-            if (eventArgs.Target == null || !EntitySystem.Get<ActionBlockerSystem>().CanUse(eventArgs.User.Uid) || !IoCManager.Resolve<IEntityManager>().TryGetComponent<CuffableComponent?>(eventArgs.Target.Uid, out var cuffed))
+            if (eventArgs.Target == null || !EntitySystem.Get<ActionBlockerSystem>().CanUse(eventArgs.User) || !IoCManager.Resolve<IEntityManager>().TryGetComponent<CuffableComponent?>(eventArgs.Target, out var cuffed))
             {
                 return false;
             }
@@ -165,7 +165,7 @@ namespace Content.Server.Cuffs.Components
                 return true;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<HandsComponent?>(eventArgs.Target.Uid, out var hands))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<HandsComponent?>(eventArgs.Target, out var hands))
             {
                 eventArgs.User.PopupMessage(Loc.GetString("handcuff-component-target-has-no-hands-error",("targetName", eventArgs.Target)));
                 return true;
@@ -199,7 +199,7 @@ namespace Content.Server.Cuffs.Components
         {
             var cuffTime = CuffTime;
 
-            if (IoCManager.Resolve<IEntityManager>().HasComponent<StunnedComponent>(target.Uid))
+            if (IoCManager.Resolve<IEntityManager>().HasComponent<StunnedComponent>(target))
             {
                 cuffTime = MathF.Max(0.1f, cuffTime - StunBonus);
             }

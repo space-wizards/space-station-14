@@ -41,7 +41,7 @@ namespace Content.Server.Construction.Components
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             // check if object is welder
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Using.Uid, out ToolComponent? tool))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Using, out ToolComponent? tool))
                 return false;
 
             // check if someone is already welding object
@@ -52,7 +52,7 @@ namespace Content.Server.Construction.Components
 
             var toolSystem = EntitySystem.Get<ToolSystem>();
 
-            if (!await toolSystem.UseTool(eventArgs.Using.Uid, eventArgs.User.Uid, Owner.Uid, _refineFuel, _refineTime, _qualityNeeded))
+            if (!await toolSystem.UseTool(eventArgs.Using, eventArgs.User, Owner, _refineFuel, _refineTime, _qualityNeeded))
             {
                 // failed to veld - abort refine
                 _beingWelded = false;
@@ -60,8 +60,8 @@ namespace Content.Server.Construction.Components
             }
 
             // get last owner coordinates and delete it
-            var resultPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates;
-            IoCManager.Resolve<IEntityManager>().DeleteEntity(Owner.Uid);
+            var resultPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates;
+            IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) Owner);
 
             // spawn each result after refine
             foreach (var result in _refineResult!)
@@ -70,8 +70,8 @@ namespace Content.Server.Construction.Components
 
                 // TODO: If something has a stack... Just use a prototype with a single thing in the stack.
                 // This is not a good way to do it.
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<StackComponent?>(droppedEnt.Uid, out var stack))
-                    EntitySystem.Get<StackSystem>().SetCount(droppedEnt.Uid,1, stack);
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<StackComponent?>(droppedEnt, out var stack))
+                    EntitySystem.Get<StackSystem>().SetCount(droppedEnt,1, stack);
             }
 
             return true;

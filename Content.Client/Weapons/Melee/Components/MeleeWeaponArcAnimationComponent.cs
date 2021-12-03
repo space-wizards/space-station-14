@@ -22,7 +22,7 @@ namespace Content.Client.Weapons.Melee.Components
         {
             base.Initialize();
 
-            _sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(Owner.Uid);
+            _sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(Owner);
         }
 
         public void SetData(MeleeWeaponAnimationPrototype prototype, Angle baseAngle, IEntity attacker, bool followAttacker = true)
@@ -31,7 +31,7 @@ namespace Content.Client.Weapons.Melee.Components
             _sprite?.AddLayer(new RSI.StateId(prototype.State));
             _baseAngle = baseAngle;
             if(followAttacker)
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).AttachParent(attacker);
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).AttachParent(attacker);
         }
 
         internal void Update(float frameTime)
@@ -55,12 +55,12 @@ namespace Content.Client.Weapons.Melee.Components
             {
                 case WeaponArcType.Slash:
                     var angle = Angle.FromDegrees(_meleeWeaponAnimation.Width)/2;
-                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).WorldRotation =
+                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).WorldRotation =
                         _baseAngle + Angle.Lerp(-angle, angle, (float) (_timer / _meleeWeaponAnimation.Length.TotalSeconds));
                     break;
 
                 case WeaponArcType.Poke:
-                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).WorldRotation = _baseAngle;
+                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).WorldRotation = _baseAngle;
 
                     if (_sprite != null)
                     {
@@ -72,7 +72,7 @@ namespace Content.Client.Weapons.Melee.Components
 
             if (_meleeWeaponAnimation.Length.TotalSeconds <= _timer)
             {
-                IoCManager.Resolve<IEntityManager>().DeleteEntity(Owner.Uid);
+                IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) Owner);
             }
         }
     }

@@ -36,7 +36,7 @@ namespace Content.Client.ParticleAccelerator
         public override void InitializeEntity(IEntity entity)
         {
             base.InitializeEntity(entity);
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ISpriteComponent?>(entity.Uid, out var sprite))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ISpriteComponent?>(entity, out var sprite))
             {
                 throw new EntityCreationException("No sprite component found in entity that has ParticleAcceleratorPartVisualizer");
             }

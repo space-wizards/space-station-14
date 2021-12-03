@@ -40,7 +40,7 @@ namespace Content.Server.Storage.Components
 
             if (lockerEnt == null) return; // No valid lockers anywhere.
 
-            var locker = IoCManager.Resolve<IEntityManager>().GetComponent<EntityStorageComponent>(lockerEnt.Uid);
+            var locker = IoCManager.Resolve<IEntityManager>().GetComponent<EntityStorageComponent>(lockerEnt);
 
             if (locker.Open)
                 locker.TryCloseStorage(Owner);

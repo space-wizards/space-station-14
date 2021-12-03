@@ -23,14 +23,14 @@ namespace Content.Server.Chemistry.Components
         {
             base.Initialize();
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out SpriteComponent? sprite) &&
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out SpriteComponent? sprite) &&
                 sprite.BaseRSIPath != null)
             {
                 InitialSprite = new SpriteSpecifier.Rsi(new ResourcePath(sprite.BaseRSIPath), "icon");
             }
 
-            InitialName = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityName;
-            InitialDescription = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityDescription;
+            InitialName = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityName;
+            InitialDescription = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityDescription;
         }
 
         protected override void Startup()

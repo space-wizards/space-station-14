@@ -39,7 +39,7 @@ namespace Content.Server.GameTicking.Presets
         {
             var playerEntity = mind.OwnedEntity;
 
-            if (playerEntity != null && IoCManager.Resolve<IEntityManager>().HasComponent<GhostComponent>(playerEntity.Uid))
+            if (playerEntity != null && IoCManager.Resolve<IEntityManager>().HasComponent<GhostComponent>(playerEntity))
                 return false;
 
             if (mind.VisitingEntity != null)
@@ -47,7 +47,7 @@ namespace Content.Server.GameTicking.Presets
                 mind.UnVisit();
             }
 
-            var position = (playerEntity != null ? IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(playerEntity.Uid) : null).Coordinates ?? EntitySystem.Get<GameTicker>().GetObserverSpawnPoint();
+            var position = (playerEntity != null ? IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(playerEntity) : null).Coordinates ?? EntitySystem.Get<GameTicker>().GetObserverSpawnPoint();
             // Ok, so, this is the master place for the logic for if ghosting is "too cheaty" to allow returning.
             // There's no reason at this time to move it to any other place, especially given that the 'side effects required' situations would also have to be moved.
             // + If CharacterDeadPhysically applies, we're physically dead. Therefore, ghosting OK, and we can return (this is critical for gibbing)
@@ -58,7 +58,7 @@ namespace Content.Server.GameTicking.Presets
             //   (If the mob survives, that's a bug. Ghosting is kept regardless.)
             var canReturn = canReturnGlobal && mind.CharacterDeadPhysically;
 
-            if (playerEntity != null && canReturnGlobal && IoCManager.Resolve<IEntityManager>().TryGetComponent(playerEntity.Uid, out MobStateComponent? mobState))
+            if (playerEntity != null && canReturnGlobal && IoCManager.Resolve<IEntityManager>().TryGetComponent(playerEntity, out MobStateComponent? mobState))
             {
                 if (mobState.IsCritical())
                 {
@@ -67,7 +67,7 @@ namespace Content.Server.GameTicking.Presets
                     //todo: what if they dont breathe lol
                     //cry deeply
                     DamageSpecifier damage = new(IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>("Asphyxiation"), 200);
-                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(playerEntity.Uid, damage, true);
+                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(playerEntity, damage, true);
                 }
             }
 
@@ -78,11 +78,11 @@ namespace Content.Server.GameTicking.Presets
             // If all else fails, it'll default to the default entity prototype name, "observer".
             // However, that should rarely happen.
             if(!string.IsNullOrWhiteSpace(mind.CharacterName))
-                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(ghost.Uid).EntityName = mind.CharacterName;
+                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(ghost).EntityName = mind.CharacterName;
             else if (!string.IsNullOrWhiteSpace(mind.Session?.Name))
-                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(ghost.Uid).EntityName = mind.Session.Name;
+                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(ghost).EntityName = mind.Session.Name;
 
-            var ghostComponent = IoCManager.Resolve<IEntityManager>().GetComponent<GhostComponent>(ghost.Uid);
+            var ghostComponent = IoCManager.Resolve<IEntityManager>().GetComponent<GhostComponent>(ghost);
 
             if (mind.TimeOfDeath.HasValue)
             {
@@ -94,7 +94,7 @@ namespace Content.Server.GameTicking.Presets
             if (canReturn)
                 mind.Visit(ghost);
             else
-                mind.TransferTo(ghost.Uid);
+                mind.TransferTo(ghost);
             return true;
         }
 

@@ -25,7 +25,7 @@ namespace Content.Server.AI.Utility.Considerations.Containers
 
             if (target.TryGetContainer(out var container))
             {
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(container.Owner.Uid, out EntityStorageComponent? storageComponent))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(container.Owner, out EntityStorageComponent? storageComponent))
                 {
                     if (storageComponent.IsWeldedShut && !storageComponent.Open)
                     {

@@ -23,14 +23,14 @@ namespace Content.Client.VendingMachines
         {
             base.Open();
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Owner.Uid, out SharedVendingMachineComponent? vendingMachine))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Owner, out SharedVendingMachineComponent? vendingMachine))
             {
                 return;
             }
 
             VendingMachine = vendingMachine;
 
-            _menu = new VendingMachineMenu(this) {Title = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Owner.Uid).EntityName};
+            _menu = new VendingMachineMenu(this) {Title = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Owner).EntityName};
             _menu.Populate(VendingMachine.Inventory);
 
             _menu.OnClose += Close;

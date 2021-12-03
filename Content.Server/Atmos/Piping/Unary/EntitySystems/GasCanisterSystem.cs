@@ -110,14 +110,14 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (containerManager.TryGetContainer(canister.ContainerName, out var tankContainer)
                 && tankContainer.ContainedEntities.Count > 0)
             {
-                var tank = tankContainer.ContainedEntities[0].Uid;
+                var tank = (EntityUid) tankContainer.ContainedEntities[0];
                 var tankComponent = EntityManager.GetComponent<GasTankComponent>(tank);
                 tankLabel = EntityManager.GetComponent<MetaDataComponent>(tank).EntityName;
                 tankPressure = tankComponent.Air.Pressure;
             }
 
             _userInterfaceSystem.TrySetUiState(uid, GasCanisterUiKey.Key,
-                new GasCanisterBoundUserInterfaceState(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(canister.Owner.Uid).EntityName,
+                new GasCanisterBoundUserInterfaceState(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(canister.Owner).EntityName,
                     canister.Air.Pressure, portStatus, tankLabel, tankPressure, canister.ReleasePressure,
                     canister.ReleaseValve, canister.MinReleasePressure, canister.MaxReleasePressure));
         }
@@ -206,12 +206,12 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 if (container.ContainedEntities.Count > 0)
                 {
                     IEntity tempQualifier = container.ContainedEntities[0];
-                    var gasTank = IoCManager.Resolve<IEntityManager>().GetComponent<GasTankComponent>(tempQualifier.Uid);
+                    var gasTank = IoCManager.Resolve<IEntityManager>().GetComponent<GasTankComponent>(tempQualifier);
                     _atmosphereSystem.ReleaseGasTo(canister.Air, gasTank.Air, canister.ReleasePressure);
                 }
                 else
                 {
-                    var environment = _atmosphereSystem.GetTileMixture(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(canister.Owner.Uid).Coordinates, true);
+                    var environment = _atmosphereSystem.GetTileMixture(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(canister.Owner).Coordinates, true);
                     _atmosphereSystem.ReleaseGasTo(canister.Air, environment, canister.ReleasePressure);
                 }
             }
@@ -244,7 +244,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnCanisterActivate(EntityUid uid, GasCanisterComponent component, ActivateInWorldEvent args)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User.Uid, out ActorComponent? actor))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
             _userInterfaceSystem.GetUiOrNull(uid, GasCanisterUiKey.Key)?.Open(actor.PlayerSession);
@@ -254,7 +254,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnCanisterInteractHand(EntityUid uid, GasCanisterComponent component, InteractHandEvent args)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User.Uid, out ActorComponent? actor))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
             _userInterfaceSystem.GetUiOrNull(uid, GasCanisterUiKey.Key)?.Open(actor.PlayerSession);
@@ -271,11 +271,11 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return;
 
             // Check the used item is valid...
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.Used.Uid, out GasTankComponent? _))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.Used, out GasTankComponent? _))
                 return;
 
             // Check the user has hands.
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User.Uid, out HandsComponent? hands))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User, out HandsComponent? hands))
                 return;
 
             if (!args.User.InRangeUnobstructed(canister, SharedInteractionSystem.InteractionRange, popup: true))

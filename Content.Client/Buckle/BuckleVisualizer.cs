@@ -31,9 +31,9 @@ namespace Content.Client.Buckle
 
         private void SetRotation(AppearanceComponent component, Angle rotation)
         {
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner.Uid);
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(sprite.Owner.Uid, out AnimationPlayerComponent? animation))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(sprite.Owner, out AnimationPlayerComponent? animation))
             {
                 sprite.Rotation = rotation;
                 return;

@@ -35,7 +35,7 @@ namespace Content.Client.CombatMode
         public bool IsInCombatMode()
         {
             var entity = _playerManager.LocalPlayer?.ControlledEntity;
-            if (entity == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out CombatModeComponent? combatMode))
+            if (entity == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out CombatModeComponent? combatMode))
             {
                 return false;
             }

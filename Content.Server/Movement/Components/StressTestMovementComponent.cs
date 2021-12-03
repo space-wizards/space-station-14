@@ -16,7 +16,7 @@ namespace Content.Server.Movement.Components
         {
             base.Startup();
 
-            Origin = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).WorldPosition;
+            Origin = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).WorldPosition;
         }
     }
 }

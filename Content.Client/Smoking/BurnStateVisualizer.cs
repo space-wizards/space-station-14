@@ -39,7 +39,7 @@ namespace Content.Client.Smoking
 
         private void SetState(AppearanceComponent component, SmokableState burnState)
         {
-            var clothing = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<ClothingComponent>(component.Owner.Uid);
+            var clothing = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<ClothingComponent>(component.Owner);
 
             if (component.Owner.TryGetComponent<ISpriteComponent>(out var sprite))
             {

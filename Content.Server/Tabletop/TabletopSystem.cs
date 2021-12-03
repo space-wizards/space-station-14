@@ -42,7 +42,7 @@ namespace Content.Server.Tabletop
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ActorComponent?>(args.User.Uid, out var actor))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ActorComponent?>(args.User, out var actor))
                 return;
 
             Verb verb = new();
@@ -55,11 +55,11 @@ namespace Content.Server.Tabletop
         private void OnTabletopActivate(EntityUid uid, TabletopGameComponent component, ActivateInWorldEvent args)
         {
             // Check that a player is attached to the entity.
-            if (!EntityManager.TryGetComponent(args.User.Uid, out ActorComponent? actor))
+            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
             // Check that the entity can interact with the game board.
-            if(_actionBlockerSystem.CanInteract(args.User.Uid))
+            if(_actionBlockerSystem.CanInteract(args.User))
                 OpenSessionFor(actor.PlayerSession, uid);
         }
 
@@ -97,9 +97,9 @@ namespace Content.Server.Tabletop
                 if (!EntityManager.EntityExists(gamer.Tabletop))
                     continue;
 
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(gamer.Owner.Uid, out ActorComponent? actor))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(gamer.Owner, out ActorComponent? actor))
                 {
-                    IoCManager.Resolve<IEntityManager>().RemoveComponent<TabletopGamerComponent>(gamer.Owner.Uid);
+                    IoCManager.Resolve<IEntityManager>().RemoveComponent<TabletopGamerComponent>(gamer.Owner);
                     return;
                 };
 

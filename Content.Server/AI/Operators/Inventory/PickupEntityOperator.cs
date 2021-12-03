@@ -22,15 +22,15 @@ namespace Content.Server.AI.Operators.Inventory
 
         public override Outcome Execute(float frameTime)
         {
-            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(_target.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_target.Uid).EntityLifeStage) >= EntityLifeStage.Deleted ||
-                !IoCManager.Resolve<IEntityManager>().HasComponent<ItemComponent>(_target.Uid) ||
+            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(_target) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_target).EntityLifeStage) >= EntityLifeStage.Deleted ||
+                !IoCManager.Resolve<IEntityManager>().HasComponent<ItemComponent>(_target) ||
                 _target.IsInContainer() ||
                 !_owner.InRangeUnobstructed(_target, popup: true))
             {
                 return Outcome.Failed;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(_owner.Uid, out HandsComponent? handsComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(_owner, out HandsComponent? handsComponent))
             {
                 return Outcome.Failed;
             }

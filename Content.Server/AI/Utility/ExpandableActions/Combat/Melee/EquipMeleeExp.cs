@@ -34,7 +34,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Combat.Melee
 
             foreach (var entity in context.GetState<EnumerableInventoryState>().GetValue())
             {
-                if (!IoCManager.Resolve<IEntityManager>().HasComponent<MeleeWeaponComponent>(entity.Uid))
+                if (!IoCManager.Resolve<IEntityManager>().HasComponent<MeleeWeaponComponent>(entity))
                 {
                     continue;
                 }

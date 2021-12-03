@@ -52,7 +52,7 @@ namespace Content.Client.MobState
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner.Uid);
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
             if (!component.TryGetData(DamageStateVisuals.State, out DamageState data))
             {
                 return;

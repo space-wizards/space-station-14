@@ -33,9 +33,9 @@ namespace Content.Server.Throwing
         /// <param name="pushbackRatio">The ratio of impulse applied to the thrower</param>
         internal static void TryThrow(this IEntity entity, Vector2 direction, float strength = 1.0f, IEntity? user = null, float pushbackRatio = 1.0f)
         {
-            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(entity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted ||
+            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(entity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityLifeStage) >= EntityLifeStage.Deleted ||
                 strength <= 0f ||
-                !IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out PhysicsComponent? physicsComponent))
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out PhysicsComponent? physicsComponent))
             {
                 return;
             }
@@ -46,14 +46,14 @@ namespace Content.Server.Throwing
                 return;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().HasComponent<MobStateComponent>(entity.Uid))
+            if (IoCManager.Resolve<IEntityManager>().HasComponent<MobStateComponent>(entity))
             {
                 Logger.Warning("Throwing not supported for mobs!");
                 return;
             }
 
             var comp = entity.EnsureComponent<ThrownItemComponent>();
-            if (IoCManager.Resolve<IEntityManager>().HasComponent<ItemComponent>(entity.Uid))
+            if (IoCManager.Resolve<IEntityManager>().HasComponent<ItemComponent>(entity))
             {
                 comp.Thrower = user;
                 // Give it a l'il spin.
@@ -63,7 +63,7 @@ namespace Content.Server.Throwing
                 }
                 else if(direction != Vector2.Zero)
                 {
-                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).LocalRotation = direction.ToWorldAngle() - Math.PI;
+                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).LocalRotation = direction.ToWorldAngle() - Math.PI;
                 }
 
                 if (user != null)
@@ -94,10 +94,10 @@ namespace Content.Server.Throwing
             }
 
             // Give thrower an impulse in the other direction
-            if (user != null && pushbackRatio > 0.0f && IoCManager.Resolve<IEntityManager>().TryGetComponent(user.Uid, out IPhysBody? body))
+            if (user != null && pushbackRatio > 0.0f && IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out IPhysBody? body))
             {
                 var msg = new ThrowPushbackAttemptEvent();
-                IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(body.Owner.Uid, msg);
+                IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(body.Owner, msg);
 
                 if (!msg.Cancelled)
                 {

@@ -18,7 +18,7 @@ namespace Content.Client.Instruments.UI
 
         protected override void Open()
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<InstrumentComponent?>(Owner.Owner.Uid, out var instrument)) return;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<InstrumentComponent?>(Owner.Owner, out var instrument)) return;
 
             Instrument = instrument;
             _instrumentMenu = new InstrumentMenu(this);

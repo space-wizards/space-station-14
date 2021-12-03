@@ -38,7 +38,7 @@ namespace Content.Client.Body.UI
 
             if (!IoCManager.Resolve<IEntityManager>().TryGetEntity(scannerState.Uid, out _entity))
             {
-                throw new ArgumentException($"Received an invalid entity with id {scannerState.Uid} for body scanner with id {Owner.Owner.Uid} at {IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Owner.Uid).MapPosition}");
+                throw new ArgumentException($"Received an invalid entity with id {scannerState.Uid} for body scanner with id {Owner.Owner} at {IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Owner).MapPosition}");
             }
 
             _display?.UpdateDisplay(_entity);

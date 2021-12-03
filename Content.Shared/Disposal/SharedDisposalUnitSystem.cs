@@ -49,21 +49,21 @@ namespace Content.Shared.Disposal
 
         public virtual bool CanInsert(SharedDisposalUnitComponent component, IEntity entity)
         {
-            if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner.Uid).Anchored)
+            if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner).Anchored)
                 return false;
 
             // TODO: Probably just need a disposable tag.
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out SharedItemComponent? storable) &&
-                !IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(entity.Uid))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out SharedItemComponent? storable) &&
+                !IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(entity))
             {
                 return false;
             }
 
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out IPhysBody? physics) ||
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out IPhysBody? physics) ||
                 !physics.CanCollide && storable == null)
             {
-                if (!(IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out MobStateComponent? damageState) && damageState.IsDead()))
+                if (!(IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out MobStateComponent? damageState) && damageState.IsDead()))
                 {
                     return false;
                 }

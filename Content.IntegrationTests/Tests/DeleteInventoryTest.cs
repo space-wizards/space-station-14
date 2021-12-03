@@ -38,7 +38,7 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(inv.Equip(Slots.HEAD, item, false), Is.True);
 
                 // Delete parent.
-                IoCManager.Resolve<IEntityManager>().DeleteEntity(container.Uid);
+                IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) container);
 
                 // Assert that child item was also deleted.
                 Assert.That(item.Deleted, Is.True);

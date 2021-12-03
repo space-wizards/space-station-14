@@ -14,8 +14,8 @@ namespace Content.Server.AI.Utility.Considerations.Nutrition.Drink
             var target = context.GetState<TargetEntityState>().GetValue();
 
             if (target == null
-                || (!IoCManager.Resolve<IEntityManager>().EntityExists(target.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(target.Uid).EntityLifeStage) >= EntityLifeStage.Deleted
-                || !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(target.Uid, DrinkComponent.DefaultSolutionName, out var drink))
+                || (!IoCManager.Resolve<IEntityManager>().EntityExists(target) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(target).EntityLifeStage) >= EntityLifeStage.Deleted
+                || !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(target, DrinkComponent.DefaultSolutionName, out var drink))
             {
                 return 0.0f;
             }

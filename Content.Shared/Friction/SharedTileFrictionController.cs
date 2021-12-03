@@ -59,7 +59,7 @@ namespace Content.Shared.Friction
                     Mover.UseMobMovement(body.OwnerUid)) continue;
 
                 var surfaceFriction = GetTileFriction(body);
-                var bodyModifier = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<SharedTileFrictionModifier>(body.Owner.Uid)?.Modifier ?? 1.0f;
+                var bodyModifier = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<SharedTileFrictionModifier>(body.Owner)?.Modifier ?? 1.0f;
                 var friction = _frictionModifier * surfaceFriction * bodyModifier;
 
                 ReduceLinearVelocity(prediction, body, friction, frameTime);
@@ -132,7 +132,7 @@ namespace Content.Shared.Friction
         [Pure]
         private float GetTileFriction(PhysicsComponent body)
         {
-            var transform = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(body.Owner.Uid);
+            var transform = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(body.Owner);
             var coords = transform.Coordinates;
 
             // TODO: Make IsWeightless event-based; we already have grid traversals tracked so just raise events

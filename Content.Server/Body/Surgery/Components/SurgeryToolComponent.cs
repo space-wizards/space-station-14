@@ -54,7 +54,7 @@ namespace Content.Server.Body.Surgery.Components
                 return false;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User.Uid, out ActorComponent? actor))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User, out ActorComponent? actor))
             {
                 return false;
             }
@@ -62,7 +62,7 @@ namespace Content.Server.Body.Surgery.Components
             CloseAllSurgeryUIs();
 
             // Attempt surgery on a body by sending a list of operable parts for the client to choose from
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Target.Uid, out SharedBodyComponent? body))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Target, out SharedBodyComponent? body))
             {
                 // Create dictionary to send to client (text to be shown : data sent back if selected)
                 var toSend = new Dictionary<string, int>();
@@ -89,7 +89,7 @@ namespace Content.Server.Body.Surgery.Components
                     NotUsefulPopup();
                 }
             }
-            else if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedBodyPartComponent?>(eventArgs.Target.Uid, out var part))
+            else if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedBodyPartComponent?>(eventArgs.Target, out var part))
             {
                 // Attempt surgery on a DroppedBodyPart - there's only one possible target so no need for selection UI
                 PerformerCache = eventArgs.User;
@@ -109,7 +109,7 @@ namespace Content.Server.Body.Surgery.Components
                 }
 
                 // Log error if the surgery fails somehow.
-                Logger.Debug($"Error when trying to perform surgery on ${nameof(SharedBodyPartComponent)} {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(eventArgs.User.Uid).EntityName}");
+                Logger.Debug($"Error when trying to perform surgery on ${nameof(SharedBodyPartComponent)} {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(eventArgs.User).EntityName}");
                 throw new InvalidOperationException();
             }
 
@@ -129,8 +129,8 @@ namespace Content.Server.Body.Surgery.Components
 
             if (_optionsCache.Count > 0 && PerformerCache != null)
             {
-                OpenSurgeryUI(IoCManager.Resolve<IEntityManager>().GetComponent<ActorComponent>(PerformerCache.Uid).PlayerSession);
-                UpdateSurgeryUIMechanismRequest(IoCManager.Resolve<IEntityManager>().GetComponent<ActorComponent>(PerformerCache.Uid).PlayerSession,
+                OpenSurgeryUI(IoCManager.Resolve<IEntityManager>().GetComponent<ActorComponent>(PerformerCache).PlayerSession);
+                UpdateSurgeryUIMechanismRequest(IoCManager.Resolve<IEntityManager>().GetComponent<ActorComponent>(PerformerCache).PlayerSession,
                     toSend);
                 _callbackCache = callback;
             }
@@ -214,7 +214,7 @@ namespace Content.Server.Body.Surgery.Components
         private void HandleReceiveBodyPart(int key)
         {
             if (PerformerCache == null ||
-                !IoCManager.Resolve<IEntityManager>().TryGetComponent(PerformerCache.Uid, out ActorComponent? actor))
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(PerformerCache, out ActorComponent? actor))
             {
                 return;
             }
@@ -248,7 +248,7 @@ namespace Content.Server.Body.Surgery.Components
                 !_optionsCache.TryGetValue(key, out var targetObject) ||
                 targetObject is not MechanismComponent target ||
                 PerformerCache == null ||
-                !IoCManager.Resolve<IEntityManager>().TryGetComponent(PerformerCache.Uid, out ActorComponent? actor))
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(PerformerCache, out ActorComponent? actor))
             {
                 NotUsefulAnymorePopup();
                 return;

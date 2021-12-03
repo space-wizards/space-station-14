@@ -204,7 +204,7 @@ namespace Content.Shared.Interaction.Helpers
             bool ignoreInsideBlocker = true)
         {
             var originPosition = origin.ToMap(IoCManager.Resolve<IEntityManager>());
-            var otherPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other.Uid).MapPosition;
+            var otherPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other).MapPosition;
 
             return ExamineSystemShared.InRangeUnOccluded(originPosition, otherPosition, range,
                 predicate, ignoreInsideBlocker);
@@ -218,7 +218,7 @@ namespace Content.Shared.Interaction.Helpers
             bool ignoreInsideBlocker = true)
         {
             var originPosition = origin.ToMap(IoCManager.Resolve<IEntityManager>());
-            var otherPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other.Owner.Uid).MapPosition;
+            var otherPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other.Owner).MapPosition;
 
             return ExamineSystemShared.InRangeUnOccluded(originPosition, otherPosition, range,
                 predicate, ignoreInsideBlocker);
@@ -232,7 +232,7 @@ namespace Content.Shared.Interaction.Helpers
             bool ignoreInsideBlocker = true)
         {
             var originPosition = origin.ToMap(IoCManager.Resolve<IEntityManager>());
-            var otherPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other.Owner.Uid).MapPosition;
+            var otherPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other.Owner).MapPosition;
 
             return ExamineSystemShared.InRangeUnOccluded(originPosition, otherPosition, range,
                 predicate, ignoreInsideBlocker);
@@ -280,7 +280,7 @@ namespace Content.Shared.Interaction.Helpers
             Ignored? predicate = null,
             bool ignoreInsideBlocker = true)
         {
-            var otherPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other.Uid).MapPosition;
+            var otherPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other).MapPosition;
 
             return ExamineSystemShared.InRangeUnOccluded(origin, otherPosition, range, predicate,
                 ignoreInsideBlocker);
@@ -293,7 +293,7 @@ namespace Content.Shared.Interaction.Helpers
             Ignored? predicate = null,
             bool ignoreInsideBlocker = true)
         {
-            var otherPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other.Owner.Uid).MapPosition;
+            var otherPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other.Owner).MapPosition;
 
             return ExamineSystemShared.InRangeUnOccluded(origin, otherPosition, range, predicate,
                 ignoreInsideBlocker);
@@ -306,7 +306,7 @@ namespace Content.Shared.Interaction.Helpers
             Ignored? predicate = null,
             bool ignoreInsideBlocker = true)
         {
-            var otherPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other.Owner.Uid).MapPosition;
+            var otherPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other.Owner).MapPosition;
 
             return ExamineSystemShared.InRangeUnOccluded(origin, otherPosition, range, predicate,
                 ignoreInsideBlocker);

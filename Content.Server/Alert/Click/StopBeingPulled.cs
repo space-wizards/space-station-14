@@ -18,10 +18,10 @@ namespace Content.Server.Alert.Click
     {
         public void AlertClicked(ClickAlertEventArgs args)
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(args.Player.Uid))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(args.Player))
                 return;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedPullableComponent?>(args.Player.Uid, out var playerPullable))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedPullableComponent?>(args.Player, out var playerPullable))
             {
                 EntitySystem.Get<SharedPullingSystem>().TryStopPull(playerPullable);
             }

@@ -20,7 +20,7 @@ namespace Content.Client.Storage.Visualizers
         {
             base.InitializeEntity(entity);
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<ISpriteComponent?>(entity.Uid, out var spriteComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<ISpriteComponent?>(entity, out var spriteComponent))
             {
                 _rsiPath ??= spriteComponent.BaseRSI!.Path!;
             }

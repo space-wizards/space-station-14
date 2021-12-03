@@ -79,7 +79,7 @@ namespace Content.Server.Buckle.Systems
                 return;
             }
 
-            var strapPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(strap.Owner.Uid).Coordinates.Offset(buckle.BuckleOffset);
+            var strapPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(strap.Owner).Coordinates.Offset(buckle.BuckleOffset);
 
             if (ev.NewPosition.InRange(EntityManager, strapPosition, 0.2f))
             {
@@ -95,7 +95,7 @@ namespace Content.Server.Buckle.Systems
             // This fixes buckle offsets and draw depths.
             foreach (var buckledEntity in strap.BuckledEntities)
             {
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(buckledEntity.Uid, out BuckleComponent? buckled))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(buckledEntity, out BuckleComponent? buckled))
                 {
                     continue;
                 }
@@ -112,7 +112,7 @@ namespace Content.Server.Buckle.Systems
         {
             foreach (var buckledEntity in strap.BuckledEntities)
             {
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(buckledEntity.Uid, out BuckleComponent? buckled))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(buckledEntity, out BuckleComponent? buckled))
                 {
                     continue;
                 }

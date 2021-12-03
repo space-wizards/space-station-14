@@ -121,7 +121,7 @@ namespace Content.Server.RCD.Systems
                         IEntity? tempQualifier = args.Target;
                         if (tempQualifier != null)
                         {
-                            IoCManager.Resolve<IEntityManager>().DeleteEntity(tempQualifier.Uid);
+                            IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) tempQualifier);
                         }
                     }
                     break;
@@ -129,11 +129,11 @@ namespace Content.Server.RCD.Systems
                 // thus we early return to avoid the tile set code.
                 case RcdMode.Walls:
                     var ent = EntityManager.SpawnEntity("WallSolid", mapGrid.GridTileToLocal(snapPos));
-                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(ent.Uid).LocalRotation = Angle.Zero; // Walls always need to point south.
+                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(ent).LocalRotation = Angle.Zero; // Walls always need to point south.
                     break;
                 case RcdMode.Airlock:
                     var airlock = EntityManager.SpawnEntity("Airlock", mapGrid.GridTileToLocal(snapPos));
-                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(airlock.Uid).LocalRotation = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(rcd.Owner.Uid).LocalRotation; //Now apply icon smoothing.
+                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(airlock).LocalRotation = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(rcd.Owner).LocalRotation; //Now apply icon smoothing.
                     break;
                 default:
                     args.Handled = true;

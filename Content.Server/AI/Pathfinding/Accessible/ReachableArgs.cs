@@ -29,14 +29,14 @@ namespace Content.Server.AI.Pathfinding.Accessible
         public static ReachableArgs GetArgs(IEntity entity)
         {
             var collisionMask = 0;
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out IPhysBody? physics))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out IPhysBody? physics))
             {
                 collisionMask = physics.CollisionMask;
             }
 
             var accessSystem = EntitySystem.Get<AccessReaderSystem>();
-            var access = accessSystem.FindAccessTags(entity.Uid);
-            var visionRadius = IoCManager.Resolve<IEntityManager>().GetComponent<AiControllerComponent>(entity.Uid).VisionRadius;
+            var access = accessSystem.FindAccessTags(entity);
+            var visionRadius = IoCManager.Resolve<IEntityManager>().GetComponent<AiControllerComponent>(entity).VisionRadius;
 
             return new ReachableArgs(visionRadius, access, collisionMask);
         }

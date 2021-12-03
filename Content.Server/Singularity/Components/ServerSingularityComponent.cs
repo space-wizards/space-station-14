@@ -32,7 +32,7 @@ namespace Content.Server.Singularity.Components
                 _energy = value;
                 if (_energy <= 0)
                 {
-                    IoCManager.Resolve<IEntityManager>().DeleteEntity(Owner.Uid);
+                    IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) Owner);
                     return;
                 }
 
@@ -97,7 +97,7 @@ namespace Content.Server.Singularity.Components
         protected override void Shutdown()
         {
             base.Shutdown();
-            SoundSystem.Play(Filter.Pvs(Owner), _singularityCollapsingSound.GetSound(), IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Coordinates);
+            SoundSystem.Play(Filter.Pvs(Owner), _singularityCollapsingSound.GetSound(), IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
         }
     }
 }

@@ -31,7 +31,7 @@ namespace Content.Server.Administration.UI
         {
             return new SetOutfitEuiState
             {
-                TargetEntityId = _target.Uid
+                TargetEntityId = _target
             };
         }
 

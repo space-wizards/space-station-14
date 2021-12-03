@@ -61,8 +61,8 @@ namespace Content.Server.Clothing.Components
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             if (!_quickEquipEnabled) return false;
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User.Uid, out InventoryComponent? inv)
-            ||  !IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User.Uid, out HandsComponent? hands)) return false;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User, out InventoryComponent? inv)
+            ||  !IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User, out HandsComponent? hands)) return false;
 
             foreach (var (slot, flag) in SlotMasks)
             {
@@ -80,14 +80,14 @@ namespace Content.Server.Clothing.Components
                     {
                         hands.Drop(item.Owner);
                         inv.Equip(slot, item);
-                        hands.PutInHand(IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(Owner.Uid));
+                        hands.PutInHand(IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(Owner));
                     }
                 }
                 else
                 {
                     hands.Drop(Owner);
                     if (!TryEquip(inv, slot, eventArgs.User))
-                        hands.PutInHand(IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(Owner.Uid));
+                        hands.PutInHand(IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(Owner));
                 }
 
                 return true;

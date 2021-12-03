@@ -17,9 +17,9 @@ namespace Content.Server.Alert.Click
     {
         public void AlertClicked(ClickAlertEventArgs args)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(args.Player.Uid, out FlammableComponent? flammable))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(args.Player, out FlammableComponent? flammable))
             {
-                EntitySystem.Get<FlammableSystem>().Resist(args.Player.Uid, flammable);
+                EntitySystem.Get<FlammableSystem>().Resist(args.Player, flammable);
             }
         }
     }

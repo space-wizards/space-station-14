@@ -84,8 +84,8 @@ namespace Content.Server.Disposal.Unit.Components
                 return false;
             }
 
-            return IoCManager.Resolve<IEntityManager>().HasComponent<ItemComponent>(entity.Uid) ||
-                   IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(entity.Uid);
+            return IoCManager.Resolve<IEntityManager>().HasComponent<ItemComponent>(entity) ||
+                   IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(entity);
         }
 
         public bool TryInsert(IEntity entity)
@@ -95,7 +95,7 @@ namespace Content.Server.Disposal.Unit.Components
                 return false;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out IPhysBody? physics))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out IPhysBody? physics))
             {
                 physics.CanCollide = false;
             }

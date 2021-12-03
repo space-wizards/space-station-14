@@ -29,17 +29,17 @@ namespace Content.Shared.Pulling
 
         public bool CanPull(IEntity puller, IEntity pulled)
         {
-            if (!IoCManager.Resolve<IEntityManager>().HasComponent<SharedPullerComponent>(puller.Uid))
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<SharedPullerComponent>(puller))
             {
                 return false;
             }
 
-            if (!_blocker.CanInteract(puller.Uid))
+            if (!_blocker.CanInteract(puller))
             {
                 return false;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<IPhysBody?>(pulled.Uid, out var _physics))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<IPhysBody?>(pulled, out var _physics))
             {
                 return false;
             }
@@ -59,17 +59,17 @@ namespace Content.Shared.Pulling
                 return false;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedBuckleComponent?>(puller.Uid, out var buckle))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedBuckleComponent?>(puller, out var buckle))
             {
                 // Prevent people pulling the chair they're on, etc.
-                if (buckle.Buckled && (buckle.LastEntityBuckledTo == pulled.Uid))
+                if (buckle.Buckled && (buckle.LastEntityBuckledTo == pulled))
                 {
                     return false;
                 }
             }
 
             var startPull = new StartPullAttemptEvent(puller, pulled);
-            RaiseLocalEvent(puller.Uid, startPull);
+            RaiseLocalEvent(puller, startPull);
             return !startPull.Cancelled;
         }
 
@@ -91,7 +91,7 @@ namespace Content.Shared.Pulling
                 return false;
             }
 
-            var msg = new StopPullingEvent(user?.Uid);
+            var msg = new StopPullingEvent(user);
             RaiseLocalEvent(pullable.OwnerUid, msg);
 
             if (msg.Cancelled) return false;
@@ -102,11 +102,11 @@ namespace Content.Shared.Pulling
 
         public bool TryStartPull(IEntity puller, IEntity pullable)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedPullerComponent?>(puller.Uid, out var pullerComp))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedPullerComponent?>(puller, out var pullerComp))
             {
                 return false;
             }
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedPullableComponent?>(pullable.Uid, out var pullableComp))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedPullableComponent?>(pullable, out var pullableComp))
             {
                 return false;
             }
@@ -126,12 +126,12 @@ namespace Content.Shared.Pulling
                 return false;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<PhysicsComponent?>(puller.Owner.Uid, out var pullerPhysics))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<PhysicsComponent?>(puller.Owner, out var pullerPhysics))
             {
                 return false;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<PhysicsComponent?>(pullable.Owner.Uid, out var pullablePhysics))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<PhysicsComponent?>(pullable.Owner, out var pullablePhysics))
             {
                 return false;
             }
@@ -143,7 +143,7 @@ namespace Content.Shared.Pulling
             var oldPullable = puller.Pulling;
             if (oldPullable != null)
             {
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedPullableComponent?>(oldPullable.Uid, out var oldPullableComp))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedPullableComponent?>(oldPullable, out var oldPullableComp))
                 {
                     if (!TryStopPull(oldPullableComp))
                     {
@@ -198,7 +198,7 @@ namespace Content.Shared.Pulling
                 return false;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().HasComponent<PhysicsComponent>(pullable.Owner.Uid))
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<PhysicsComponent>(pullable.Owner))
             {
                 return false;
             }

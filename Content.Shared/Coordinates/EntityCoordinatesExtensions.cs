@@ -23,17 +23,17 @@ namespace Content.Shared.Coordinates
 
         public static EntityCoordinates ToCoordinates(this IEntity entity, Vector2 offset)
         {
-            return ToCoordinates(entity.Uid, offset);
+            return ToCoordinates((EntityUid) entity, offset);
         }
 
         public static EntityCoordinates ToCoordinates(this IEntity entity, float x, float y)
         {
-            return new(entity.Uid, x, y);
+            return new(entity, x, y);
         }
 
         public static EntityCoordinates ToCoordinates(this IEntity entity)
         {
-            return ToCoordinates(entity.Uid, Vector2.Zero);
+            return ToCoordinates((EntityUid) entity, Vector2.Zero);
         }
 
         public static EntityCoordinates ToCoordinates(this IMapGrid grid, Vector2 offset)

@@ -33,19 +33,19 @@ namespace Content.Server.Administration.Commands
 
             foreach (var entity in entityManager.GetEntities())
             {
-                if (checkPrototype && IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityPrototype != prototype || IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityPrototype == null)
+                if (checkPrototype && IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityPrototype != prototype || IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityPrototype == null)
                 {
                     continue;
                 }
 
                 var modified = false;
 
-                foreach (var component in IoCManager.Resolve<IEntityManager>().GetComponents(entity.Uid))
+                foreach (var component in IoCManager.Resolve<IEntityManager>().GetComponents(entity))
                 {
-                    if (IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityPrototype.Components.ContainsKey(component.Name))
+                    if (IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityPrototype.Components.ContainsKey(component.Name))
                         continue;
 
-                    entityManager.RemoveComponent(entity.Uid, component);
+                    entityManager.RemoveComponent(entity, component);
                     components++;
 
                     modified = true;

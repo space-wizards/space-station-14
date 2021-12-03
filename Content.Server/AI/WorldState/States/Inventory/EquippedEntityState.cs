@@ -15,7 +15,7 @@ namespace Content.Server.AI.WorldState.States.Inventory
 
         public override IEntity? GetValue()
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out HandsComponent? handsComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out HandsComponent? handsComponent))
             {
                 return null;
             }

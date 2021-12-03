@@ -42,7 +42,7 @@ namespace Content.Server.Research.Components
         /// <returns>Whether it could sync or not</returns>
         public bool SyncWithServer()
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ResearchClientComponent? client)) return false;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ResearchClientComponent? client)) return false;
             if (client.Server?.Database == null) return false;
 
             Sync(client.Server.Database);

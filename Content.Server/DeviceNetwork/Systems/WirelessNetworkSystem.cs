@@ -21,11 +21,11 @@ namespace Content.Server.DeviceNetwork.Systems
         {
             var sender = EntityManager.GetEntity(args.Sender);
 
-            var ownPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner.Uid).WorldPosition;
-            var position = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(sender.Uid).WorldPosition;
+            var ownPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner).WorldPosition;
+            var position = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(sender).WorldPosition;
             var distance = (ownPosition - position).Length;
 
-            if(IoCManager.Resolve<IEntityManager>().TryGetComponent<WirelessNetworkComponent?>(sender.Uid, out var sendingComponent) && distance > sendingComponent.Range)
+            if(IoCManager.Resolve<IEntityManager>().TryGetComponent<WirelessNetworkComponent?>(sender, out var sendingComponent) && distance > sendingComponent.Range)
             {
                 args.Cancel();
             }

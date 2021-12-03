@@ -51,21 +51,21 @@ namespace Content.Client.Weapons.Melee
                 return;
             }
 
-            if (!((!IoCManager.Resolve<IEntityManager>().EntityExists(attacker.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(attacker.Uid).EntityLifeStage) >= EntityLifeStage.Deleted))
+            if (!((!IoCManager.Resolve<IEntityManager>().EntityExists(attacker) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(attacker).EntityLifeStage) >= EntityLifeStage.Deleted))
             {
                 var lunge = attacker.EnsureComponent<MeleeLungeComponent>();
                 lunge.SetData(msg.Angle);
 
-                var entity = EntityManager.SpawnEntity(weaponArc.Prototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(attacker.Uid).Coordinates);
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).LocalRotation = msg.Angle;
+                var entity = EntityManager.SpawnEntity(weaponArc.Prototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(attacker).Coordinates);
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).LocalRotation = msg.Angle;
 
-                var weaponArcAnimation = IoCManager.Resolve<IEntityManager>().GetComponent<MeleeWeaponArcAnimationComponent>(entity.Uid);
+                var weaponArcAnimation = IoCManager.Resolve<IEntityManager>().GetComponent<MeleeWeaponArcAnimationComponent>(entity);
                 weaponArcAnimation.SetData(weaponArc, msg.Angle, attacker, msg.ArcFollowAttacker);
 
                 // Due to ISpriteComponent limitations, weapons that don't use an RSI won't have this effect.
                 if (EntityManager.TryGetEntity(msg.Source, out var source) &&
                     msg.TextureEffect &&
-                    IoCManager.Resolve<IEntityManager>().TryGetComponent(source.Uid, out ISpriteComponent? sourceSprite) &&
+                    IoCManager.Resolve<IEntityManager>().TryGetComponent(source, out ISpriteComponent? sourceSprite) &&
                     sourceSprite.BaseRSI?.Path != null)
                 {
                     var curTime = _gameTiming.CurTime;
@@ -73,7 +73,7 @@ namespace Content.Client.Weapons.Melee
                     {
                         EffectSprite = sourceSprite.BaseRSI.Path.ToString(),
                         RsiState = sourceSprite.LayerGetState(0).Name,
-                        Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(attacker.Uid).Coordinates,
+                        Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(attacker).Coordinates,
                         Color = Vector4.Multiply(new Vector4(255, 255, 255, 125), 1.0f),
                         ColorDelta = Vector4.Multiply(new Vector4(0, 0, 0, -10), 1.0f),
                         Velocity = msg.Angle.ToWorldVec(),
@@ -88,12 +88,12 @@ namespace Content.Client.Weapons.Melee
 
             foreach (var uid in msg.Hits)
             {
-                if (!EntityManager.TryGetEntity(uid, out var hitEntity) || (!IoCManager.Resolve<IEntityManager>().EntityExists(hitEntity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(hitEntity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted)
+                if (!EntityManager.TryGetEntity(uid, out var hitEntity) || (!IoCManager.Resolve<IEntityManager>().EntityExists(hitEntity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(hitEntity).EntityLifeStage) >= EntityLifeStage.Deleted)
                 {
                     continue;
                 }
 
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(hitEntity.Uid, out ISpriteComponent? sprite))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(hitEntity, out ISpriteComponent? sprite))
                 {
                     continue;
                 }

@@ -25,8 +25,8 @@ namespace Content.Server.Construction.Completions
             foreach (var contained in container.ContainedEntities.ToArray())
             {
                 container.ForceRemove(contained);
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(contained.Uid).Coordinates = transform.Coordinates;
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(contained.Uid).AttachToGridOrMap();
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(contained).Coordinates = transform.Coordinates;
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(contained).AttachToGridOrMap();
             }
         }
     }

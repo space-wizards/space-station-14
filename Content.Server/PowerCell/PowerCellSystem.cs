@@ -31,7 +31,7 @@ namespace Content.Server.PowerCell
                 !args.CanInteract ||
                 !component.ShowVerb ||
                 !component.HasCell ||
-                !_actionBlockerSystem.CanPickup(args.User.Uid))
+                !_actionBlockerSystem.CanPickup(args.User))
                 return;
 
             Verb verb = new();
@@ -47,12 +47,12 @@ namespace Content.Server.PowerCell
                 !args.CanAccess ||
                 !args.CanInteract ||
                 component.HasCell ||
-                !IoCManager.Resolve<IEntityManager>().HasComponent<PowerCellComponent>(args.Using.Uid) ||
-                !_actionBlockerSystem.CanDrop(args.User.Uid))
+                !IoCManager.Resolve<IEntityManager>().HasComponent<PowerCellComponent>(args.Using) ||
+                !_actionBlockerSystem.CanDrop(args.User))
                 return;
 
             Verb verb = new();
-            verb.Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(args.Using.Uid).EntityName;
+            verb.Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(args.Using).EntityName;
             verb.Category = VerbCategory.Insert;
             verb.Act = () => component.InsertCell(args.Using);
             args.Verbs.Add(verb);

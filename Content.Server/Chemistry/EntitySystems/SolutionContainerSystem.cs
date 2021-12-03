@@ -67,7 +67,7 @@ namespace Content.Server.Chemistry.EntitySystems
             ExaminedEvent args)
         {
             SolutionContainerManagerComponent? solutionsManager = null;
-            if (!Resolve(args.Examined.Uid, ref solutionsManager)
+            if (!Resolve(args.Examined, ref solutionsManager)
                 || !solutionsManager.Solutions.TryGetValue(examinableComponent.Solution, out var solutionHolder))
                 return;
 
@@ -294,7 +294,7 @@ namespace Content.Server.Chemistry.EntitySystems
         {
             var reagentQuantity = FixedPoint2.New(0);
             if (EntityManager.TryGetEntity(ownerUid, out var owner)
-                && IoCManager.Resolve<IEntityManager>().TryGetComponent(owner.Uid, out SolutionContainerManagerComponent? managerComponent))
+                && IoCManager.Resolve<IEntityManager>().TryGetComponent(owner, out SolutionContainerManagerComponent? managerComponent))
             {
                 foreach (var solution in managerComponent.Solutions.Values)
                 {

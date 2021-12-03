@@ -75,7 +75,7 @@ namespace Content.Server.Disposal.Unit.Components
 
         [ViewVariables]
         public bool Powered =>
-            !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out ApcPowerReceiverComponent? receiver) ||
+            !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) ||
             receiver.Powered;
 
         [ViewVariables] public PressureState State => Pressure >= 1 ? PressureState.Ready : PressureState.Pressurizing;
@@ -97,8 +97,8 @@ namespace Content.Server.Disposal.Unit.Components
 
             var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
 
-            if (!actionBlocker.CanInteract(player.Uid) ||
-                !actionBlocker.CanUse(player.Uid))
+            if (!actionBlocker.CanInteract(player) ||
+                !actionBlocker.CanUse(player))
             {
                 return false;
             }
@@ -149,7 +149,7 @@ namespace Content.Server.Disposal.Unit.Components
 
         public override bool DragDropOn(DragDropEvent eventArgs)
         {
-            EntitySystem.Get<DisposalUnitSystem>().TryInsert(Owner.Uid, eventArgs.Dragged.Uid, eventArgs.User.Uid);
+            EntitySystem.Get<DisposalUnitSystem>().TryInsert(Owner, eventArgs.Dragged, eventArgs.User);
             return true;
         }
 

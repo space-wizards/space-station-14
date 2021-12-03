@@ -38,12 +38,12 @@ namespace Content.Server.Hands.Components
 
         protected override void OnHeldEntityRemovedFromHand(IEntity heldEntity, HandState handState)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(heldEntity.Uid, out ItemComponent? item))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(heldEntity, out ItemComponent? item))
             {
                 item.RemovedFromSlot();
                 _entitySystemManager.GetEntitySystem<InteractionSystem>().UnequippedHandInteraction(Owner, heldEntity, handState);
             }
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(heldEntity.Uid, out SpriteComponent? sprite))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(heldEntity, out SpriteComponent? sprite))
             {
                 sprite.RenderOrder = IoCManager.Resolve<IEntityManager>().CurrentTick.Value;
             }
@@ -51,15 +51,15 @@ namespace Content.Server.Hands.Components
 
         protected override void HandlePickupAnimation(IEntity entity)
         {
-            var initialPosition = EntityCoordinates.FromMap(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).Parent?.Owner ?? Owner, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).MapPosition);
+            var initialPosition = EntityCoordinates.FromMap(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Parent?.Owner ?? Owner, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).MapPosition);
 
-            var finalPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).LocalPosition;
+            var finalPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).LocalPosition;
 
             if (finalPosition.EqualsApprox(initialPosition.Position))
                 return;
 
             IoCManager.Resolve<IEntityManager>().EntityNetManager!.SendSystemNetworkMessage(
-                new PickupAnimationMessage(entity.Uid, finalPosition, initialPosition));
+                new PickupAnimationMessage(entity, finalPosition, initialPosition));
         }
 
         #region Pull/Disarm
@@ -106,13 +106,13 @@ namespace Content.Server.Hands.Components
                 {
                     if (ActiveHand != null && Drop(ActiveHand, false))
                     {
-                        source.PopupMessageOtherClients(Loc.GetString("hands-component-disarm-success-others-message", ("disarmer", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(source.Uid).EntityName), ("disarmed", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(target.Uid).EntityName)));
-                        source.PopupMessageCursor(Loc.GetString("hands-component-disarm-success-message", ("disarmed", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(target.Uid).EntityName)));
+                        source.PopupMessageOtherClients(Loc.GetString("hands-component-disarm-success-others-message", ("disarmer", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(source).EntityName), ("disarmed", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(target).EntityName)));
+                        source.PopupMessageCursor(Loc.GetString("hands-component-disarm-success-message", ("disarmed", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(target).EntityName)));
                     }
                     else
                     {
-                        source.PopupMessageOtherClients(Loc.GetString("hands-component-shove-success-others-message", ("shover", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(source.Uid).EntityName), ("shoved", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(target.Uid).EntityName)));
-                        source.PopupMessageCursor(Loc.GetString("hands-component-shove-success-message", ("shoved", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(target.Uid).EntityName)));
+                        source.PopupMessageOtherClients(Loc.GetString("hands-component-shove-success-others-message", ("shover", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(source).EntityName), ("shoved", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(target).EntityName)));
+                        source.PopupMessageCursor(Loc.GetString("hands-component-shove-success-message", ("shoved", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(target).EntityName)));
                     }
                 }
             }
@@ -123,8 +123,8 @@ namespace Content.Server.Hands.Components
         private bool BreakPulls()
         {
             // What is this API??
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out SharedPullerComponent? puller)
-                || puller.Pulling == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(puller.Pulling.Uid, out SharedPullableComponent? pullable))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out SharedPullerComponent? puller)
+                || puller.Pulling == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(puller.Pulling, out SharedPullableComponent? pullable))
                 return false;
 
             return _entitySystemManager.GetEntitySystem<PullingSystem>().TryStopPull(pullable);
@@ -163,7 +163,7 @@ namespace Content.Server.Hands.Components
             if (!TryGetHeldEntity(handName, out var heldEntity))
                 return null;
 
-            IoCManager.Resolve<IEntityManager>().TryGetComponent(heldEntity.Uid, out ItemComponent? item);
+            IoCManager.Resolve<IEntityManager>().TryGetComponent(heldEntity, out ItemComponent? item);
             return item;
         }
 
@@ -177,7 +177,7 @@ namespace Content.Server.Hands.Components
             if (!TryGetHeldEntity(handName, out var heldEntity))
                 return false;
 
-            return IoCManager.Resolve<IEntityManager>().TryGetComponent(heldEntity.Uid, out item);
+            return IoCManager.Resolve<IEntityManager>().TryGetComponent(heldEntity, out item);
         }
 
         /// <summary>
@@ -190,7 +190,7 @@ namespace Content.Server.Hands.Components
                 if (!TryGetActiveHeldEntity(out var heldEntity))
                     return null;
 
-                IoCManager.Resolve<IEntityManager>().TryGetComponent(heldEntity.Uid, out ItemComponent? item);
+                IoCManager.Resolve<IEntityManager>().TryGetComponent(heldEntity, out ItemComponent? item);
                 return item;
             }
         }
@@ -199,7 +199,7 @@ namespace Content.Server.Hands.Components
         {
             foreach (var entity in GetAllHeldEntities())
             {
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out ItemComponent? item))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ItemComponent? item))
                     yield return item;
             }
         }

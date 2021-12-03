@@ -78,12 +78,12 @@ namespace Content.IntegrationTests.Tests
             {
                 var gridEnt = mapManager.GetAllGrids().First().GridEntityId;
                 IEntity tempQualifier = serverEntManager.GetEntity(gridEnt);
-                worldPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(tempQualifier.Uid).WorldPosition;
+                worldPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(tempQualifier).WorldPosition;
 
                 var ent = serverEntManager.SpawnEntity(prototype, new EntityCoordinates(gridEnt, 0f, 0f));
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(ent.Uid).LocalRotation = angle;
-                IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(ent.Uid).Scale = (scale, scale);
-                entity = ent.Uid;
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(ent).LocalRotation = angle;
+                IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(ent).Scale = (scale, scale);
+                entity = ent;
             });
 
             // Let client sync up.
@@ -94,7 +94,7 @@ namespace Content.IntegrationTests.Tests
             await _client.WaitPost(() =>
             {
                 var ent = clientEntManager.GetEntity(entity);
-                var clickable = IoCManager.Resolve<IEntityManager>().GetComponent<ClickableComponent>(ent.Uid);
+                var clickable = IoCManager.Resolve<IEntityManager>().GetComponent<ClickableComponent>(ent);
 
                 hit = clickable.CheckClick((clickPosX, clickPosY) + worldPos!.Value, out _, out _);
             });

@@ -14,7 +14,7 @@ namespace Content.Client.Crayon
         {
             base.OnChangeData(component);
 
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(component.Owner.Uid);
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(component.Owner);
 
             if (component.TryGetData(CrayonVisuals.State, out string state))
             {

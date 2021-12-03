@@ -66,11 +66,11 @@ namespace Content.IntegrationTests.Tests.Body
                 var bodySys = EntitySystem.Get<BodySystem>();
                 var lungSys = EntitySystem.Get<LungSystem>();
 
-                Assert.That(IoCManager.Resolve<IEntityManager>().TryGetComponent(human.Uid, out SharedBodyComponent body));
+                Assert.That(IoCManager.Resolve<IEntityManager>().TryGetComponent(human, out SharedBodyComponent body));
 
-                var lungs = bodySys.GetComponentsOnMechanisms<LungComponent>(human.Uid, body).ToArray();
+                var lungs = bodySys.GetComponentsOnMechanisms<LungComponent>(human, body).ToArray();
                 Assert.That(lungs.Count, Is.EqualTo(1));
-                Assert.That(IoCManager.Resolve<IEntityManager>().TryGetComponent(human.Uid, out BloodstreamComponent bloodstream));
+                Assert.That(IoCManager.Resolve<IEntityManager>().TryGetComponent(human, out BloodstreamComponent bloodstream));
 
                 var gas = new GasMixture(1);
 
@@ -171,8 +171,8 @@ namespace Content.IntegrationTests.Tests.Body
                 var coordinates = new EntityCoordinates(grid.GridEntityId, center);
                 human = entityManager.SpawnEntity("HumanBodyAndBloodstreamDummy", coordinates);
 
-                Assert.True(IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(human.Uid));
-                Assert.True(IoCManager.Resolve<IEntityManager>().TryGetComponent(human.Uid, out respirator));
+                Assert.True(IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(human));
+                Assert.True(IoCManager.Resolve<IEntityManager>().TryGetComponent(human, out respirator));
                 Assert.False(respirator.Suffocating);
             });
 
@@ -184,7 +184,7 @@ namespace Content.IntegrationTests.Tests.Body
                 await server.WaitRunTicks(increment);
                 await server.WaitAssertion(() =>
                 {
-                    Assert.False(respirator.Suffocating, $"Entity {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(human.Uid).EntityName} is suffocating on tick {tick}");
+                    Assert.False(respirator.Suffocating, $"Entity {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(human).EntityName} is suffocating on tick {tick}");
                 });
             }
 

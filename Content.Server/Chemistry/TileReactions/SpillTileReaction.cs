@@ -30,7 +30,7 @@ namespace Content.Server.Chemistry.TileReactions
 
             if (puddle != null)
             {
-                var slippery = IoCManager.Resolve<IEntityManager>().GetComponent<SlipperyComponent>(puddle.Owner.Uid);
+                var slippery = IoCManager.Resolve<IEntityManager>().GetComponent<SlipperyComponent>(puddle.Owner);
                 slippery.LaunchForwardsMultiplier = _launchForwardsMultiplier;
                 slippery.RequiredSlipSpeed = _requiredSlipSpeed;
                 slippery.ParalyzeTime = _paralyzeTime;

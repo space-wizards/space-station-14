@@ -41,7 +41,7 @@ namespace Content.Server.Medical.Components
                 return false;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Target.Uid, out DamageableComponent? targetDamage))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Target, out DamageableComponent? targetDamage))
             {
                 return true;
             }
@@ -50,7 +50,7 @@ namespace Content.Server.Medical.Components
                 return true;
             }
 
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User.Uid))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
             {
                 return true;
             }
@@ -61,12 +61,12 @@ namespace Content.Server.Medical.Components
                 return true;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedStackComponent?>(Owner.Uid, out var stack) && !EntitySystem.Get<StackSystem>().Use(Owner.Uid, 1, stack))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedStackComponent?>(Owner, out var stack) && !EntitySystem.Get<StackSystem>().Use(Owner, 1, stack))
             {
                 return true;
             }
 
-            var healed = EntitySystem.Get<DamageableSystem>().TryChangeDamage(eventArgs.Target.Uid, Damage, true);
+            var healed = EntitySystem.Get<DamageableSystem>().TryChangeDamage(eventArgs.Target, Damage, true);
 
             if (healed == null)
                 return true;

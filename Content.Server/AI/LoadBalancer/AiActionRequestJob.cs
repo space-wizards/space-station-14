@@ -39,7 +39,7 @@ namespace Content.Server.AI.LoadBalancer
 
             var entity = _request.Context.GetState<SelfState>().GetValue();
 
-            if (entity == null || !IoCManager.Resolve<IEntityManager>().HasComponent<AiControllerComponent>(entity.Uid))
+            if (entity == null || !IoCManager.Resolve<IEntityManager>().HasComponent<AiControllerComponent>(entity))
             {
                 return null;
             }
@@ -124,7 +124,7 @@ namespace Content.Server.AI.LoadBalancer
                 DebugTools.AssertNotNull(selfState);
 
                 FoundAction?.Invoke(new SharedAiDebug.UtilityAiDebugMessage(
-                    selfState!.Uid,
+                    selfState!,
                     DebugTime,
                     cutoff,
                     foundAction.GetType().Name,

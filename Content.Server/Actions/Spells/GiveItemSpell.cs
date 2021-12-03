@@ -36,13 +36,13 @@ namespace Content.Server.Actions.Spells
         {
             var caster = args.Performer;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(caster.Uid, out HandsComponent? handsComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(caster, out HandsComponent? handsComponent))
             {
                 caster.PopupMessage(Loc.GetString("spell-fail-no-hands"));
                 return;
             }
 
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(caster.Uid)) return;
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(caster)) return;
 
             // TODO: Nix when we get EntityPrototype serializers
             if (!IoCManager.Resolve<IPrototypeManager>().HasIndex<EntityPrototype>(ItemProto))
@@ -52,12 +52,12 @@ namespace Content.Server.Actions.Spells
             }
 
             // TODO: Look this is shitty and ideally a test would do it
-            var spawnedProto = IoCManager.Resolve<IEntityManager>().SpawnEntity(ItemProto, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(caster.Uid).MapPosition);
+            var spawnedProto = IoCManager.Resolve<IEntityManager>().SpawnEntity(ItemProto, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(caster).MapPosition);
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(spawnedProto.Uid, out ItemComponent? itemComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(spawnedProto, out ItemComponent? itemComponent))
             {
                 Logger.Error($"Tried to use {nameof(GiveItemSpell)} but prototype has no {nameof(ItemComponent)}?");
-                IoCManager.Resolve<IEntityManager>().DeleteEntity(spawnedProto.Uid);
+                IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) spawnedProto);
                 return;
             }
 

@@ -25,9 +25,9 @@ namespace Content.Client.Fluids
         {
             base.InitializeEntity(entity);
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out SpriteComponent? spriteComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out SpriteComponent? spriteComponent))
             {
-                Logger.Warning($"Missing SpriteComponent for PuddleVisualizer on entityUid = {entity.Uid}");
+                Logger.Warning($"Missing SpriteComponent for PuddleVisualizer on entityUid = {entity}");
                 return;
             }
 

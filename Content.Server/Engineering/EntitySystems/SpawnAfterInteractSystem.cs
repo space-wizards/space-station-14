@@ -57,10 +57,10 @@ namespace Content.Server.Engineering.EntitySystems
                     return;
             }
 
-            if (component.Deleted || (!IoCManager.Resolve<IEntityManager>().EntityExists(component.Owner.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(component.Owner.Uid).EntityLifeStage) >= EntityLifeStage.Deleted)
+            if (component.Deleted || (!IoCManager.Resolve<IEntityManager>().EntityExists(component.Owner) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(component.Owner).EntityLifeStage) >= EntityLifeStage.Deleted)
                 return;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedStackComponent?>(component.Owner.Uid, out var stackComp)
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedStackComponent?>(component.Owner, out var stackComp)
                 && component.RemoveOnInteract && !_stackSystem.Use(uid, 1, stackComp))
             {
                 return;
@@ -68,8 +68,8 @@ namespace Content.Server.Engineering.EntitySystems
 
             EntityManager.SpawnEntity(component.Prototype, args.ClickLocation.SnapToGrid(grid));
 
-            if (component.RemoveOnInteract && stackComp == null && !((!IoCManager.Resolve<IEntityManager>().EntityExists(component.Owner.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(component.Owner.Uid).EntityLifeStage) >= EntityLifeStage.Deleted))
-                IoCManager.Resolve<IEntityManager>().DeleteEntity(component.Owner.Uid);
+            if (component.RemoveOnInteract && stackComp == null && !((!IoCManager.Resolve<IEntityManager>().EntityExists(component.Owner) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(component.Owner).EntityLifeStage) >= EntityLifeStage.Deleted))
+                IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) component.Owner);
         }
     }
 }

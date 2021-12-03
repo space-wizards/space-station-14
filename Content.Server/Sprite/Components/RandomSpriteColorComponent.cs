@@ -36,7 +36,7 @@ namespace Content.Server.Sprite.Components
 
         private void UpdateColor()
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out SpriteComponent? spriteComponent) && _selectedColor != null)
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out SpriteComponent? spriteComponent) && _selectedColor != null)
             {
                 spriteComponent.LayerSetState(0, _baseState);
                 spriteComponent.LayerSetColor(0, _colors[_selectedColor]);

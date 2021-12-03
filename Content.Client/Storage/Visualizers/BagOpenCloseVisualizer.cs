@@ -32,7 +32,7 @@ namespace Content.Client.Storage.Visualizers
             base.InitializeEntity(entity);
 
             if (_openIcon != null &&
-                IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(entity.Uid, out var spriteComponent) &&
+                IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(entity, out var spriteComponent) &&
                 spriteComponent.BaseRSI?.Path != null)
             {
                 spriteComponent.LayerMapReserveBlank(OpenIcon);

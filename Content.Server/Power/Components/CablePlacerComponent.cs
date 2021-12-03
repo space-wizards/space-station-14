@@ -31,7 +31,7 @@ namespace Content.Server.Power.Components
         /// <inheritdoc />
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User.Uid))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
                 return false;
 
             if (_cablePrototypeID == null)
@@ -57,8 +57,8 @@ namespace Content.Server.Power.Components
                 }
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<StackComponent?>(Owner.Uid, out var stack)
-                && !EntitySystem.Get<StackSystem>().Use(Owner.Uid, 1, stack))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<StackComponent?>(Owner, out var stack)
+                && !EntitySystem.Get<StackSystem>().Use(Owner, 1, stack))
                 return false;
 
             IoCManager.Resolve<IEntityManager>().SpawnEntity(_cablePrototypeID, grid.GridTileToLocal(snapPos));

@@ -44,8 +44,8 @@ namespace Content.Server.Window
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out DamageableComponent? damageable) ||
-                !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out DestructibleComponent? destructible))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out DamageableComponent? damageable) ||
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out DestructibleComponent? destructible))
             {
                 return;
             }
@@ -105,7 +105,7 @@ namespace Content.Server.Window
 
             SoundSystem.Play(
                 Filter.Pvs(eventArgs.Target), _knockSound.GetSound(),
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(eventArgs.Target.Uid).Coordinates, AudioHelpers.WithVariation(0.05f));
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(eventArgs.Target).Coordinates, AudioHelpers.WithVariation(0.05f));
             eventArgs.Target.PopupMessageEveryone(Loc.GetString("comp-window-knock"));
 
             _lastKnockTime = _gameTiming.CurTime;

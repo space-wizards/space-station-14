@@ -123,14 +123,14 @@ namespace Content.Server.StationEvents.Events
 
             if (!_foundTile ||
                 _targetGrid == null ||
-                (!IoCManager.Resolve<IEntityManager>().EntityExists(_targetGrid.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_targetGrid.Uid).EntityLifeStage) >= EntityLifeStage.Deleted ||
-                !atmosphereSystem.IsSimulatedGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_targetGrid.Uid).GridID))
+                (!IoCManager.Resolve<IEntityManager>().EntityExists(_targetGrid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_targetGrid).EntityLifeStage) >= EntityLifeStage.Deleted ||
+                !atmosphereSystem.IsSimulatedGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_targetGrid).GridID))
             {
                 Running = false;
                 return;
             }
 
-            var environment = atmosphereSystem.GetTileMixture(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_targetGrid.Uid).GridID, _targetTile, true);
+            var environment = atmosphereSystem.GetTileMixture(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_targetGrid).GridID, _targetTile, true);
 
             environment?.AdjustMoles(_leakGas, LeakCooldown * _molesPerSecond);
         }
@@ -156,15 +156,15 @@ namespace Content.Server.StationEvents.Events
             {
                 if (!_foundTile ||
                     _targetGrid == null ||
-                    (!IoCManager.Resolve<IEntityManager>().EntityExists(_targetGrid.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_targetGrid.Uid).EntityLifeStage) >= EntityLifeStage.Deleted ||
-                    !atmosphereSystem.IsSimulatedGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_targetGrid.Uid).GridID))
+                    (!IoCManager.Resolve<IEntityManager>().EntityExists(_targetGrid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_targetGrid).EntityLifeStage) >= EntityLifeStage.Deleted ||
+                    !atmosphereSystem.IsSimulatedGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_targetGrid).GridID))
                 {
                     return;
                 }
 
                 // Don't want it to be so obnoxious as to instantly murder anyone in the area but enough that
                 // it COULD start potentially start a bigger fire.
-                atmosphereSystem.HotspotExpose(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_targetGrid.Uid).GridID, _targetTile, 700f, 50f, true);
+                atmosphereSystem.HotspotExpose(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_targetGrid).GridID, _targetTile, 700f, 50f, true);
                 SoundSystem.Play(Filter.Pvs(_targetCoords), "/Audio/Effects/sparks4.ogg", _targetCoords);
             }
         }

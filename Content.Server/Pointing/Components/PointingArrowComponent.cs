@@ -58,7 +58,7 @@ namespace Content.Server.Pointing.Components
         {
             base.Startup();
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out SpriteComponent? sprite))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out SpriteComponent? sprite))
             {
                 sprite.DrawDepth = (int) DrawDepth.Overlays;
             }
@@ -67,7 +67,7 @@ namespace Content.Server.Pointing.Components
         public void Update(float frameTime)
         {
             var movement = _speed * frameTime * (_up ? 1 : -1);
-            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Uid).LocalPosition += (0, movement);
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).LocalPosition += (0, movement);
 
             _duration -= frameTime;
             _currentStep -= frameTime;
@@ -76,12 +76,12 @@ namespace Content.Server.Pointing.Components
             {
                 if (_rogue)
                 {
-                    IoCManager.Resolve<IEntityManager>().RemoveComponent<PointingArrowComponent>(Owner.Uid);
+                    IoCManager.Resolve<IEntityManager>().RemoveComponent<PointingArrowComponent>(Owner);
                     IoCManager.Resolve<IEntityManager>().AddComponent<RoguePointingArrowComponent>(Owner);
                     return;
                 }
 
-                IoCManager.Resolve<IEntityManager>().DeleteEntity(Owner.Uid);
+                IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) Owner);
                 return;
             }
 

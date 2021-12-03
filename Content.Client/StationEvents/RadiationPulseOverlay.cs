@@ -86,14 +86,14 @@ namespace Content.Client.StationEvents
             {
                 var pulseEntity = pulse.Owner;
 
-                if (!_pulses.Keys.Contains(pulseEntity.Uid) && PulseQualifies(pulseEntity, currentEyeLoc))
+                if (!_pulses.Keys.Contains(pulseEntity) && PulseQualifies(pulseEntity, currentEyeLoc))
                 {
                     _pulses.Add(
-                            pulseEntity.Uid,
+                            pulseEntity,
                             (
                                 _baseShader.Duplicate(),
                                 new RadiationShaderInstance(
-                                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pulseEntity.Uid).MapPosition.Position,
+                                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pulseEntity).MapPosition.Position,
                                     pulse.Range,
                                     pulse.StartTime,
                                     pulse.EndTime
@@ -108,10 +108,10 @@ namespace Content.Client.StationEvents
             {
                 if (_entityManager.TryGetEntity(activePulseUid, out var pulseEntity) &&
                     PulseQualifies(pulseEntity, currentEyeLoc) &&
-                    IoCManager.Resolve<IEntityManager>().TryGetComponent<RadiationPulseComponent?>(pulseEntity.Uid, out var pulse))
+                    IoCManager.Resolve<IEntityManager>().TryGetComponent<RadiationPulseComponent?>(pulseEntity, out var pulse))
                 {
                     var shaderInstance = _pulses[activePulseUid];
-                    shaderInstance.instance.CurrentMapCoords = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pulseEntity.Uid).MapPosition.Position;
+                    shaderInstance.instance.CurrentMapCoords = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pulseEntity).MapPosition.Position;
                     shaderInstance.instance.Range = pulse.Range;
                 } else {
                     _pulses[activePulseUid].shd.Dispose();
@@ -123,7 +123,7 @@ namespace Content.Client.StationEvents
 
         private bool PulseQualifies(IEntity pulseEntity, MapCoordinates currentEyeLoc)
         {
-            return IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pulseEntity.Uid).MapID == currentEyeLoc.MapId && IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pulseEntity.Uid).Coordinates.InRange(_entityManager, EntityCoordinates.FromMap(_entityManager, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pulseEntity.Uid).ParentUid, currentEyeLoc), MaxDist);
+            return IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pulseEntity).MapID == currentEyeLoc.MapId && IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pulseEntity).Coordinates.InRange(_entityManager, EntityCoordinates.FromMap(_entityManager, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pulseEntity).ParentUid, currentEyeLoc), MaxDist);
         }
 
         private sealed record RadiationShaderInstance(Vector2 CurrentMapCoords, float Range, TimeSpan Start, TimeSpan End)

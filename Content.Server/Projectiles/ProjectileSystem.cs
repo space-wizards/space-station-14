@@ -36,11 +36,11 @@ namespace Content.Server.Projectiles
 
             var otherEntity = args.OtherFixture.Body.Owner;
 
-            var coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.OtherFixture.Body.Owner.Uid).Coordinates;
+            var coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.OtherFixture.Body.Owner).Coordinates;
             var playerFilter = Filter.Pvs(coordinates);
 
-            if (!((!IoCManager.Resolve<IEntityManager>().EntityExists(otherEntity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(otherEntity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted) && component.SoundHitSpecies != null &&
-                IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(otherEntity.Uid))
+            if (!((!IoCManager.Resolve<IEntityManager>().EntityExists(otherEntity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(otherEntity).EntityLifeStage) >= EntityLifeStage.Deleted) && component.SoundHitSpecies != null &&
+                IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(otherEntity))
             {
                 SoundSystem.Play(playerFilter, component.SoundHitSpecies.GetSound(), coordinates);
             }
@@ -52,9 +52,9 @@ namespace Content.Server.Projectiles
                     SoundSystem.Play(playerFilter, soundHit, coordinates);
             }
 
-            if (!((!IoCManager.Resolve<IEntityManager>().EntityExists(otherEntity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(otherEntity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted))
+            if (!((!IoCManager.Resolve<IEntityManager>().EntityExists(otherEntity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(otherEntity).EntityLifeStage) >= EntityLifeStage.Deleted))
             {
-                var dmg = _damageableSystem.TryChangeDamage(otherEntity.Uid, component.Damage);
+                var dmg = _damageableSystem.TryChangeDamage(otherEntity, component.Damage);
                 component.DamagedEntity = true;
 
                 if (dmg is not null && EntityManager.TryGetEntity(component.Shooter, out var shooter))
@@ -63,7 +63,7 @@ namespace Content.Server.Projectiles
             }
 
             // Damaging it can delete it
-            if (!((!IoCManager.Resolve<IEntityManager>().EntityExists(otherEntity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(otherEntity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted) && IoCManager.Resolve<IEntityManager>().TryGetComponent(otherEntity.Uid, out CameraRecoilComponent? recoilComponent))
+            if (!((!IoCManager.Resolve<IEntityManager>().EntityExists(otherEntity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(otherEntity).EntityLifeStage) >= EntityLifeStage.Deleted) && IoCManager.Resolve<IEntityManager>().TryGetComponent(otherEntity, out CameraRecoilComponent? recoilComponent))
             {
                 var direction = args.OurFixture.Body.LinearVelocity.Normalized;
                 recoilComponent.Kick(direction);
@@ -83,7 +83,7 @@ namespace Content.Server.Projectiles
 
                 if (component.TimeLeft <= 0)
                 {
-                    IoCManager.Resolve<IEntityManager>().DeleteEntity(component.Owner.Uid);
+                    IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) component.Owner);
                 }
             }
         }

@@ -43,16 +43,16 @@ namespace Content.Server.Power.Components
             if (_cableDroppedOnCutPrototype == null)
                 return false;
 
-            if (!await EntitySystem.Get<ToolSystem>().UseTool(eventArgs.Using.Uid, eventArgs.User.Uid, Owner.Uid, 0f, 0.25f, _cuttingQuality)) return false;
+            if (!await EntitySystem.Get<ToolSystem>().UseTool(eventArgs.Using, eventArgs.User, Owner, 0f, 0.25f, _cuttingQuality)) return false;
 
-            if (EntitySystem.Get<ElectrocutionSystem>().TryDoElectrifiedAct(Owner.Uid, eventArgs.User.Uid)) return false;
+            if (EntitySystem.Get<ElectrocutionSystem>().TryDoElectrifiedAct(Owner, eventArgs.User)) return false;
 
-            IoCManager.Resolve<IEntityManager>().DeleteEntity(Owner.Uid);
+            IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) Owner);
             var droppedEnt = IoCManager.Resolve<IEntityManager>().SpawnEntity(_cableDroppedOnCutPrototype, eventArgs.ClickLocation);
 
             // TODO: Literally just use a prototype that has a single thing in the stack, it's not that complicated...
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<StackComponent?>(droppedEnt.Uid, out var stack))
-                EntitySystem.Get<StackSystem>().SetCount(droppedEnt.Uid, 1, stack);
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<StackComponent?>(droppedEnt, out var stack))
+                EntitySystem.Get<StackSystem>().SetCount(droppedEnt, 1, stack);
 
             return true;
         }

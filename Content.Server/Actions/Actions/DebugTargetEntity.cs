@@ -13,14 +13,14 @@ namespace Content.Server.Actions.Actions
     {
         public void DoTargetEntityAction(TargetEntityItemActionEventArgs args)
         {
-            args.Performer.PopupMessageEveryone(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(args.Item.Uid).EntityName + ": Clicked " +
-                                                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(args.Target.Uid).EntityName);
+            args.Performer.PopupMessageEveryone(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(args.Item).EntityName + ": Clicked " +
+                                                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(args.Target).EntityName);
         }
 
         public void DoTargetEntityAction(TargetEntityActionEventArgs args)
         {
             args.Performer.PopupMessageEveryone("Clicked " +
-                                                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(args.Target.Uid).EntityName);
+                                                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(args.Target).EntityName);
         }
     }
 }

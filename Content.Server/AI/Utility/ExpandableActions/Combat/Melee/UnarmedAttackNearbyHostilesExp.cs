@@ -31,7 +31,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Combat.Melee
         public override IEnumerable<UtilityAction> GetActions(Blackboard context)
         {
             var owner = context.GetState<SelfState>().GetValue();
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(owner.Uid, out AiControllerComponent? controller))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(owner, out AiControllerComponent? controller))
             {
                 throw new InvalidOperationException();
             }

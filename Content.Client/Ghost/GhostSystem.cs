@@ -36,7 +36,7 @@ namespace Content.Client.Ghost
 
                 foreach (var ghost in EntityManager.GetAllComponents(typeof(GhostComponent), true))
                 {
-                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent(ghost.Owner.Uid, out SpriteComponent? sprite))
+                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent(ghost.Owner, out SpriteComponent? sprite))
                     {
                         sprite.Visible = value;
                     }
@@ -60,7 +60,7 @@ namespace Content.Client.Ghost
 
         private void OnGhostInit(EntityUid uid, GhostComponent component, ComponentInit args)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out SpriteComponent? sprite))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner, out SpriteComponent? sprite))
             {
                 sprite.Visible = GhostVisibility;
             }
@@ -104,7 +104,7 @@ namespace Content.Client.Ghost
             var entity = _playerManager.LocalPlayer?.ControlledEntity;
 
             if (entity == null ||
-                !IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out GhostComponent? ghost))
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out GhostComponent? ghost))
             {
                 return;
             }

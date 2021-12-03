@@ -32,7 +32,7 @@ namespace Content.Client.MobState.Overlays
                 return false;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<MobStateComponent?>(playerEntity.Uid, out var mobState))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<MobStateComponent?>(playerEntity, out var mobState))
             {
                 if (critical)
                     if (mobState.IsCritical())

@@ -58,7 +58,7 @@ namespace Content.Server.Tiles
             if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
                 return true;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Uid, out StackComponent? stack))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out StackComponent? stack))
                 return true;
 
             var mapManager = IoCManager.Resolve<IMapManager>();
@@ -83,7 +83,7 @@ namespace Content.Server.Tiles
 
                     if (HasBaseTurf(currentTileDefinition, baseTurf.Name))
                     {
-                        if (!EntitySystem.Get<StackSystem>().Use(Owner.Uid, 1, stack))
+                        if (!EntitySystem.Get<StackSystem>().Use(Owner, 1, stack))
                             continue;
 
                         PlaceAt(mapGrid, location, currentTileDefinition.TileId);

@@ -15,20 +15,20 @@ namespace Content.Client.Animations
         public static void AnimateEntityPickup(IEntity entity, EntityCoordinates initialPosition, Vector2 finalPosition)
         {
             var animatableClone = IoCManager.Resolve<IEntityManager>().SpawnEntity("clientsideclone", initialPosition);
-            string val = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityName;
-            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(animatableClone.Uid).EntityName = val;
+            string val = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityName;
+            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(animatableClone).EntityName = val;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Uid, out SpriteComponent? sprite0))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out SpriteComponent? sprite0))
             {
-                Logger.Error("Entity ({0}) couldn't be animated for pickup since it doesn't have a {1}!", IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityName, nameof(SpriteComponent));
+                Logger.Error("Entity ({0}) couldn't be animated for pickup since it doesn't have a {1}!", IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityName, nameof(SpriteComponent));
                 return;
             }
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(animatableClone.Uid);
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(animatableClone);
             sprite.CopyFrom(sprite0);
 
-            var animations = IoCManager.Resolve<IEntityManager>().GetComponent<AnimationPlayerComponent>(animatableClone.Uid);
+            var animations = IoCManager.Resolve<IEntityManager>().GetComponent<AnimationPlayerComponent>(animatableClone);
             animations.AnimationCompleted += (_) => {
-                IoCManager.Resolve<IEntityManager>().DeleteEntity(animatableClone.Uid);
+                IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) animatableClone);
             };
 
             animations.Play(new Animation

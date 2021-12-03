@@ -140,7 +140,7 @@ namespace Content.Client.Verbs
             {
                 foreach (var entity in entities.ToList())
                 {
-                    if (!EntityManager.TryGetComponent(entity.Uid, out ISpriteComponent? spriteComponent) ||
+                    if (!EntityManager.TryGetComponent(entity, out ISpriteComponent? spriteComponent) ||
                     !spriteComponent.Visible)
                     {
                         entities.Remove(entity);
@@ -155,12 +155,12 @@ namespace Content.Client.Verbs
             // Remove any entities that do not have LOS
             if ((visibility & MenuVisibility.NoFov) == 0)
             {
-                var playerPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.Uid).MapPosition;
+                var playerPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player).MapPosition;
                 foreach (var entity in entities.ToList())
                 {
                     if (!ExamineSystemShared.InRangeUnOccluded(
                         playerPos,
-                        IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity.Uid).MapPosition,
+                        IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).MapPosition,
                         ExamineSystemShared.ExamineRange,
                         null))
                     {
@@ -182,9 +182,9 @@ namespace Content.Client.Verbs
         /// </summary>
         public Dictionary<VerbType, SortedSet<Verb>> GetVerbs(IEntity target, IEntity user, VerbType verbTypes)
         {
-            if (!target.Uid.IsClientSide())
+            if (!target.IsClientSide())
             {
-                RaiseNetworkEvent(new RequestServerVerbsEvent(target.Uid, verbTypes));
+                RaiseNetworkEvent(new RequestServerVerbsEvent(target, verbTypes));
             }
 
             return GetLocalVerbs(target, user, verbTypes);

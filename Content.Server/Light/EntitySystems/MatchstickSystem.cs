@@ -34,7 +34,7 @@ namespace Content.Server.Light.EntitySystems
                 if (match.CurrentState != SmokableState.Lit)
                     continue;
 
-                _atmosphereSystem.HotspotExpose(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(match.Owner.Uid).Coordinates, 400, 50, true);
+                _atmosphereSystem.HotspotExpose(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(match.Owner).Coordinates, 400, 50, true);
             }
         }
 
@@ -44,7 +44,7 @@ namespace Content.Server.Light.EntitySystems
                 return;
 
             var isHotEvent = new IsHotEvent();
-            RaiseLocalEvent(args.Used.Uid, isHotEvent, false);
+            RaiseLocalEvent(args.Used, isHotEvent, false);
 
             if (!isHotEvent.IsHot)
                 return;
@@ -84,7 +84,7 @@ namespace Content.Server.Light.EntitySystems
                 component.PointLightComponent.Enabled = component.CurrentState == SmokableState.Lit;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out ItemComponent? item))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner, out ItemComponent? item))
             {
                 switch (component.CurrentState)
                 {
@@ -97,7 +97,7 @@ namespace Content.Server.Light.EntitySystems
                 }
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner.Uid, out AppearanceComponent? appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner, out AppearanceComponent? appearance))
             {
                 appearance.SetData(SmokingVisuals.Smoking, component.CurrentState);
             }

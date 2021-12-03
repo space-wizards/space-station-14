@@ -19,18 +19,18 @@ namespace Content.Server.PDA
         {
             IdCardComponent? firstIdInPda = null;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(player.Uid, out HandsComponent? hands))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(player, out HandsComponent? hands))
             {
                 foreach (var item in hands.GetAllHeldItems())
                 {
                     if (firstIdInPda == null &&
-                        IoCManager.Resolve<IEntityManager>().TryGetComponent(item.Owner.Uid, out PDAComponent? pda) &&
+                        IoCManager.Resolve<IEntityManager>().TryGetComponent(item.Owner, out PDAComponent? pda) &&
                         pda.ContainedID != null)
                     {
                         firstIdInPda = pda.ContainedID;
                     }
 
-                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent(item.Owner.Uid, out IdCardComponent? card))
+                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent(item.Owner, out IdCardComponent? card))
                     {
                         return card;
                     }
@@ -44,18 +44,18 @@ namespace Content.Server.PDA
 
             IdCardComponent? firstIdInInventory = null;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(player.Uid, out InventoryComponent? inventory))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(player, out InventoryComponent? inventory))
             {
                 foreach (var item in inventory.GetAllHeldItems())
                 {
                     if (firstIdInInventory == null &&
-                        IoCManager.Resolve<IEntityManager>().TryGetComponent(item.Uid, out PDAComponent? pda) &&
+                        IoCManager.Resolve<IEntityManager>().TryGetComponent(item, out PDAComponent? pda) &&
                         pda.ContainedID != null)
                     {
                         firstIdInInventory = pda.ContainedID;
                     }
 
-                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent(item.Uid, out IdCardComponent? card))
+                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent(item, out IdCardComponent? card))
                     {
                         return card;
                     }

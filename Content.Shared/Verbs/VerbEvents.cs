@@ -184,9 +184,9 @@ namespace Content.Shared.Verbs
         public readonly IEntity? Using;
 
         // for eventual removal of IEntity.
-        public EntityUid UserUid => User.Uid;
-        public EntityUid TargetUid => Target.Uid;
-        public EntityUid? UsingUid => Using?.Uid;
+        public EntityUid UserUid => User;
+        public EntityUid TargetUid => Target;
+        public EntityUid? UsingUid => Using;
 
         public GetVerbsEvent(IEntity user, IEntity target, IEntity? @using, SharedHandsComponent? hands, bool canInteract, bool canAccess)
         {
