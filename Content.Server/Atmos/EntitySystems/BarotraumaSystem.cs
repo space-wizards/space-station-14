@@ -88,7 +88,7 @@ namespace Content.Server.Atmos.EntitySystems
 
                 var uid = barotrauma.Owner.Uid;
 
-                var status = barotrauma.Owner.GetComponentOrNull<ServerAlertsComponent>();
+                var status = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<ServerAlertsComponent>(barotrauma.Owner.Uid);
 
                 var pressure = 1f;
 

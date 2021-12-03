@@ -91,7 +91,7 @@ namespace Content.Server.Storage.EntitySystems
                 return;
 
             // Get the session for the user
-            var session = args.User.GetComponentOrNull<ActorComponent>()?.PlayerSession;
+            var session = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<ActorComponent>(args.User.Uid)?.PlayerSession;
             if (session == null)
                 return;
 

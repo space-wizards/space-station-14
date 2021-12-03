@@ -231,9 +231,9 @@ namespace Content.Server.Atmos.Components
         private InternalsComponent? GetInternalsComponent(IEntity? owner = null)
         {
             if ((!IoCManager.Resolve<IEntityManager>().EntityExists(Owner.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityLifeStage) >= EntityLifeStage.Deleted) return null;
-            if (owner != null) return owner.GetComponentOrNull<InternalsComponent>();
+            if (owner != null) return IoCManager.Resolve<IEntityManager>().GetComponentOrNull<InternalsComponent>(owner.Uid);
             return Owner.TryGetContainer(out var container)
-                ? container.Owner.GetComponentOrNull<InternalsComponent>()
+                ? IoCManager.Resolve<IEntityManager>().GetComponentOrNull<InternalsComponent>(container.Owner.Uid)
                 : null;
         }
 

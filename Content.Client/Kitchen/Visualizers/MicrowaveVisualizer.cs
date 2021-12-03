@@ -18,7 +18,7 @@ namespace Content.Client.Kitchen.Visualizers
             base.OnChangeData(component);
             var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner.Uid);
 
-            var microwaveComponent = component.Owner.GetComponentOrNull<MicrowaveComponent>();
+            var microwaveComponent = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<MicrowaveComponent>(component.Owner.Uid);
 
             if (!component.TryGetData(PowerDeviceVisuals.VisualState, out MicrowaveVisualState state))
             {

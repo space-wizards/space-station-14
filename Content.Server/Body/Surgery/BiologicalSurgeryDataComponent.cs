@@ -31,7 +31,7 @@ namespace Content.Server.Body.Surgery
 
         private bool VesselsClamped { get; set; }
 
-        public SharedBodyPartComponent? Parent => Owner.GetComponentOrNull<SharedBodyPartComponent>();
+        public SharedBodyPartComponent? Parent => IoCManager.Resolve<IEntityManager>().GetComponentOrNull<SharedBodyPartComponent>(Owner.Uid);
 
         public BodyPartType? ParentType => Parent?.PartType;
 

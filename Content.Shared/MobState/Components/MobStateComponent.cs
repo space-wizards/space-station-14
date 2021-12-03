@@ -60,7 +60,7 @@ namespace Content.Shared.MobState.Components
             else
             {
                 // Initialize with some amount of damage, defaulting to 0.
-                UpdateState(Owner.GetComponentOrNull<DamageableComponent>()?.TotalDamage ?? FixedPoint2.Zero);
+                UpdateState(IoCManager.Resolve<IEntityManager>().GetComponentOrNull<DamageableComponent>(Owner.Uid)?.TotalDamage ?? FixedPoint2.Zero);
             }
         }
 

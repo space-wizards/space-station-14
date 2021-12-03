@@ -155,7 +155,7 @@ namespace Content.Server.Mind
                 // This can be null if they're deleted (spike / brain nom)
                 if (OwnedEntity == null)
                     return true;
-                var targetMobState = OwnedEntity.GetComponentOrNull<MobStateComponent>();
+                var targetMobState = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<MobStateComponent>(OwnedEntity.Uid);
                 // This can be null if it's a brain (this happens very often)
                 // Brains are the result of gibbing so should definitely count as dead
                 if (targetMobState == null)

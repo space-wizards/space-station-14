@@ -73,7 +73,7 @@ namespace Content.Server.PDA
         private void OnItemInserted(EntityUid uid, PDAComponent pda, EntInsertedIntoContainerMessage args)
         {
             if (args.Container.ID == pda.IdSlot.ID)
-                pda.ContainedID = args.Entity.GetComponentOrNull<IdCardComponent>();
+                pda.ContainedID = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<IdCardComponent>(args.Entity.Uid);
 
             UpdatePDAAppearance(pda);
             UpdatePDAUserInterface(pda);

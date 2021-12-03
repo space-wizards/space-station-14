@@ -105,7 +105,7 @@ namespace Content.Server.Cuffs
                 !cuffable.Initialized) return;
 
             var dirty = false;
-            var handCount = owner.GetComponentOrNull<HandsComponent>()?.Count ?? 0;
+            var handCount = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<HandsComponent>(owner.Uid)?.Count ?? 0;
 
             while (cuffable.CuffedHandCount > handCount && cuffable.CuffedHandCount > 0)
             {

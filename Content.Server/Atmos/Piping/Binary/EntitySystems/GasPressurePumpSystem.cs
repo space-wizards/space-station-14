@@ -50,7 +50,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
         private void OnPumpUpdated(EntityUid uid, GasPressurePumpComponent pump, AtmosDeviceUpdateEvent args)
         {
-            var appearance = pump.Owner.GetComponentOrNull<AppearanceComponent>();
+            var appearance = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<AppearanceComponent>(pump.Owner.Uid);
 
             if (!pump.Enabled
                 || !EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)

@@ -36,7 +36,17 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         [ViewVariables] private string? _ammoPrototype;
 
         [ViewVariables] public IEntity? PowerCellEntity => _powerCellContainer.ContainedEntity;
-        public BatteryComponent? PowerCell => _powerCellContainer.ContainedEntity?.GetComponentOrNull<BatteryComponent>();
+        public BatteryComponent? PowerCell
+        {
+            get
+            {
+                if (_powerCellContainer.ContainedEntity == null)
+                    return null;
+
+                return _powerCellContainer.ContainedEntity.GetComponentOrNull<BatteryComponent>();
+            }
+        }
+
         private ContainerSlot _powerCellContainer = default!;
         private ContainerSlot _ammoContainer = default!;
         [DataField("powerCellPrototype")]

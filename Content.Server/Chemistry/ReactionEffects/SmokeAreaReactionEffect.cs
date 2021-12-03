@@ -1,6 +1,7 @@
 ﻿using Content.Server.Chemistry.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Chemistry.ReactionEffects
@@ -11,7 +12,7 @@ namespace Content.Server.Chemistry.ReactionEffects
     {
         protected override SolutionAreaEffectComponent? GetAreaEffectComponent(IEntity entity)
         {
-            return entity.GetComponentOrNull<SmokeSolutionAreaEffectComponent>();
+            return IoCManager.Resolve<IEntityManager>().GetComponentOrNull<SmokeSolutionAreaEffectComponent>(entity.Uid);
         }
     }
 }

@@ -149,6 +149,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         public override IEntity? TakeProjectile(EntityCoordinates spawnAt)
         {
             var chamberEntity = _chamberContainer.ContainedEntity;
+
             if (!_manualCycle)
             {
                 Cycle();
@@ -158,7 +159,10 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 Dirty();
             }
 
-            return chamberEntity?.GetComponentOrNull<AmmoComponent>()?.TakeBullet(spawnAt);
+            if (chamberEntity == null)
+                return null;
+
+            return IoCManager.Resolve<IEntityManager>().GetComponentOrNull<AmmoComponent>(chamberEntity.Uid)?.TakeBullet(spawnAt);
         }
 
         private void Cycle(bool manual = false)

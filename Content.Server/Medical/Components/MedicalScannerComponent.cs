@@ -137,7 +137,7 @@ namespace Content.Server.Medical.Components
                 if (body == null)
                     return MedicalScannerStatus.Open;
 
-                var state = body.GetComponentOrNull<MobStateComponent>();
+                var state = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<MobStateComponent>(body.Uid);
 
                 return state == null ? MedicalScannerStatus.Open : GetStatusFromDamageState(state);
             }

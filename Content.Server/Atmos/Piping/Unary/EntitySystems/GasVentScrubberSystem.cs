@@ -28,7 +28,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnVentScrubberUpdated(EntityUid uid, GasVentScrubberComponent scrubber, AtmosDeviceUpdateEvent args)
         {
-            var appearance = scrubber.Owner.GetComponentOrNull<AppearanceComponent>();
+            var appearance = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<AppearanceComponent>(scrubber.Owner.Uid);
 
             if (scrubber.Welded)
             {

@@ -110,7 +110,7 @@ namespace Content.Shared.Body.Components
         public BodyPartSymmetry Symmetry { get; private set; } = BodyPartSymmetry.None;
 
         [ViewVariables]
-        public ISurgeryData? SurgeryDataComponent => Owner.GetComponentOrNull<ISurgeryData>();
+        public ISurgeryData? SurgeryDataComponent => IoCManager.Resolve<IEntityManager>().GetComponentOrNull<ISurgeryData>(Owner.Uid);
 
         protected virtual void OnAddMechanism(SharedMechanismComponent mechanism)
         {

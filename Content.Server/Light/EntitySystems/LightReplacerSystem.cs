@@ -107,7 +107,7 @@ namespace Content.Server.Light.EntitySystems
 
             // try get first inserted bulb of the same type as targeted light fixtutre
             var bulb = replacer.InsertedBulbs.ContainedEntities.FirstOrDefault(
-                (e) => e.GetComponentOrNull<LightBulbComponent>()?.Type == fixture.BulbType);
+                (e) => IoCManager.Resolve<IEntityManager>().GetComponentOrNull<LightBulbComponent>(e.Uid)?.Type == fixture.BulbType);
 
             // found bulb in inserted storage
             if (bulb != null)

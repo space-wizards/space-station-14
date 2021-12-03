@@ -55,7 +55,7 @@ namespace Content.Shared.Singularity
 
             value = Math.Clamp(value, 0, 6);
 
-            var physics = singularity.Owner.GetComponentOrNull<PhysicsComponent>();
+            var physics = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<PhysicsComponent>(singularity.Owner.Uid);
 
             if (singularity.Level > 1 && value <= 1)
             {

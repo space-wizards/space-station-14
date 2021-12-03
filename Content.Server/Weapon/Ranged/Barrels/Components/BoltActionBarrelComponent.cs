@@ -192,7 +192,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             if (chamberEntity == null)
                 return null;
 
-            return chamberEntity.GetComponentOrNull<AmmoComponent>()?.TakeBullet(spawnAt);
+            return IoCManager.Resolve<IEntityManager>().GetComponentOrNull<AmmoComponent>(chamberEntity.Uid)?.TakeBullet(spawnAt);
         }
 
         protected override bool WeaponCanFire()

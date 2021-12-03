@@ -28,7 +28,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
         private void OnGasDualPortVentPumpUpdated(EntityUid uid, GasDualPortVentPumpComponent vent, AtmosDeviceUpdateEvent args)
         {
-            var appearance = vent.Owner.GetComponentOrNull<AppearanceComponent>();
+            var appearance = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<AppearanceComponent>(vent.Owner.Uid);
 
             if (vent.Welded)
             {

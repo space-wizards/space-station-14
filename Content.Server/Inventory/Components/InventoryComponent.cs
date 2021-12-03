@@ -112,7 +112,7 @@ namespace Content.Server.Inventory.Components
         public IEnumerable<T?> LookupItems<T>() where T : Component
         {
             return _slotContainers.Values
-                .SelectMany(x => x.ContainedEntities.Select(e => e.GetComponentOrNull<T>()))
+                .SelectMany(x => x.ContainedEntities.Select(e => IoCManager.Resolve<IEntityManager>().GetComponentOrNull<T>(e.Uid)))
                 .Where(x => x != null);
         }
 
