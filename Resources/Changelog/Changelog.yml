@@ -1,9 +1,4 @@
 Entries:
-- author: scrato
-  changes:
-  - {message: ID card computer will now stop working when there is no power, type: Fix}
-  id: 195
-  time: '2021-05-20T12:58:29.0000000+00:00'
 - author: Swept
   changes:
   - {message: Add jumpskirt for Captain, type: Add}
@@ -2859,3 +2854,9 @@ Entries:
       put :) or similar at the end of your message to emote automatically.', type: Add}
   id: 696
   time: '2021-12-03T00:49:19.0000000+00:00'
+- author: Mith-randalf
+  changes:
+  - {message: 'Following numerous lawsuits relating to so-called ''shitcurity'', Nanotrasen
+      is now actively hiring brig Wardens for its deep-space stations.', type: Add}
+  id: 697
+  time: '2021-12-03T02:01:18.0000000+00:00'
