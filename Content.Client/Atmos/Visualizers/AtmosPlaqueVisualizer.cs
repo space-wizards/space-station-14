@@ -2,6 +2,7 @@
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.Atmos.Visualizers
@@ -16,14 +17,14 @@ namespace Content.Client.Atmos.Visualizers
         {
             base.InitializeEntity(entity);
 
-            entity.GetComponentOrNull<SpriteComponent>()?.LayerMapReserveBlank(Layer);
+            IoCManager.Resolve<IEntityManager>().GetComponentOrNull<SpriteComponent>(entity.Uid);
         }
 
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
 
-            if (!component.Owner.TryGetComponent(out SpriteComponent? sprite))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(component.OwnerUid, out SpriteComponent? sprite))
             {
                 return;
             }

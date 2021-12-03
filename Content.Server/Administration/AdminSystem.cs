@@ -123,7 +123,11 @@ namespace Content.Server.Administration
         private PlayerInfo GetPlayerInfo(IPlayerSession session)
         {
             var name = session.Name;
-            var username = session.AttachedEntity?.Name ?? string.Empty;
+            var username = string.Empty;
+
+            if(session.AttachedEntity != null)
+                username = session.AttachedEntity.Name;
+
             var antag = session.ContentData()?.Mind?.AllRoles.Any(r => r.Antagonist) ?? false;
             var uid = session.AttachedEntity?.Uid ?? EntityUid.Invalid;
 

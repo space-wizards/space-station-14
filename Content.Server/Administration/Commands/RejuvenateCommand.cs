@@ -53,9 +53,11 @@ namespace Content.Server.Administration.Commands
 
         public static void PerformRejuvenate(IEntity target)
         {
-            target.GetComponentOrNull<MobStateComponent>()?.UpdateState(0);
-            target.GetComponentOrNull<HungerComponent>()?.ResetFood();
-            target.GetComponentOrNull<ThirstComponent>()?.ResetThirst();
+            var targetUid = target.Uid;
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            entMan.GetComponentOrNull<MobStateComponent>(targetUid)?.UpdateState(0);
+            entMan.GetComponentOrNull<HungerComponent>(targetUid)?.ResetFood();
+            entMan.GetComponentOrNull<ThirstComponent>(targetUid)?.ResetThirst();
 
             EntitySystem.Get<StatusEffectsSystem>().TryRemoveAllStatusEffects(target.Uid);
 

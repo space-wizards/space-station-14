@@ -17,8 +17,6 @@ namespace Content.Client.Body.UI
         private IEntity? _currentEntity;
         private SharedBodyPartComponent? _currentBodyPart;
 
-        private SharedBodyComponent? CurrentBody => _currentEntity?.GetComponentOrNull<SharedBodyComponent>();
-
         public BodyScannerDisplay(BodyScannerBoundUserInterface owner)
         {
             IoCManager.InjectDependencies(this);
@@ -107,10 +105,13 @@ namespace Content.Client.Body.UI
 
         public void UpdateDisplay(IEntity entity)
         {
+            if(entity == null)
+                return;
+
             _currentEntity = entity;
             BodyPartList.Clear();
 
-            var body = CurrentBody;
+            var body = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<SharedBodyComponent>(_currentEntity.Uid);
 
             if (body == null)
             {
@@ -125,7 +126,10 @@ namespace Content.Client.Body.UI
 
         public void BodyPartOnItemSelected(ItemListSelectedEventArgs args)
         {
-            var body = CurrentBody;
+            if (_currentEntity == null)
+                return;
+
+            var body = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<SharedBodyComponent>(_currentEntity.Uid);
 
             if (body == null)
             {

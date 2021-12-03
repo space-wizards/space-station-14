@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Access.Systems;
@@ -135,6 +136,9 @@ namespace Content.Server.Access.Components
             {
                 var targetIdComponent = IoCManager.Resolve<IEntityManager>().GetComponent<IdCardComponent>(targetIdEntity.Uid);
                 var targetAccessComponent = IoCManager.Resolve<IEntityManager>().GetComponent<AccessComponent>(targetIdEntity.Uid);
+                var name = string.Empty;
+                if(PrivilegedIdSlot.Item != null)
+                    name = PrivilegedIdSlot.Item.Name;
                 newState = new IdCardConsoleBoundUserInterfaceState(
                     PrivilegedIdSlot.HasItem,
                     PrivilegedIdIsAuthorized(),
@@ -142,7 +146,7 @@ namespace Content.Server.Access.Components
                     targetIdComponent.FullName,
                     targetIdComponent.JobTitle,
                     targetAccessComponent.Tags.ToArray(),
-                    PrivilegedIdSlot.Item?.Name ?? string.Empty,
+                    name,
                     targetIdEntity.Name);
             }
             UserInterface?.SetState(newState);

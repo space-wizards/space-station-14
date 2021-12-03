@@ -180,7 +180,7 @@ namespace Content.Server.Administration
 
             // Make ghost role verb
             if (_groupController.CanCommand(player, "makeghostrole") &&
-                !(args.Target.GetComponentOrNull<MindComponent>()?.HasMind ?? false))
+                !(IoCManager.Resolve<IEntityManager>().GetComponentOrNull<MindComponent>(args.TargetUid)?.HasMind ?? false))
             {
                 Verb verb = new();
                 verb.Text = Loc.GetString("make-ghost-role-verb-get-data-text");
@@ -194,7 +194,7 @@ namespace Content.Server.Administration
 
             // Configuration verb. Is this even used for anything!?
             if (_groupController.CanAdminMenu(player) &&
-                IoCManager.Resolve<IEntityManager>().TryGetComponent<ConfigurationComponent?>(args.Target.Uid, out var config))
+                IoCManager.Resolve<IEntityManager>().TryGetComponent<ConfigurationComponent?>(args.TargetUid, out var config))
             {
                 Verb verb = new();
                 verb.Text = Loc.GetString("configure-verb-get-data-text");

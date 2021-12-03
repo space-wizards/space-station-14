@@ -58,15 +58,21 @@ namespace Content.Client.ContextMenu.UI
         /// </summary>
         public void UpdateEntity(IEntity? entity = null)
         {
-            if (Entity != null && !((!IoCManager.Resolve<IEntityManager>().EntityExists(Entity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Entity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted))
+            if (Entity != null && IoCManager.Resolve<IEntityManager>().EntityExists(Entity.Uid))
                 entity ??= Entity;
 
-            EntityIcon.Sprite = entity?.GetComponentOrNull<ISpriteComponent>();
+            if (entity == null)
+            {
+                Text = string.Empty;
+                return;
+            }
+
+            EntityIcon.Sprite = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<ISpriteComponent>(entity.Uid);
 
             if (UserInterfaceManager.DebugMonitors.Visible)
-                Text = $"{entity?.Name} ({entity?.Uid})";
+                Text = $"{entity!.Name} ({entity.Uid})";
             else
-                Text = entity?.Name ?? string.Empty;
+                Text = entity!.Name;
         }
     }
 }
