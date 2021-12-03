@@ -8,6 +8,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
@@ -113,7 +114,7 @@ namespace Content.Shared.Body.Components
 
         protected virtual void OnAddMechanism(SharedMechanismComponent mechanism)
         {
-            var prototypeId = mechanism.Owner.Prototype!.ID;
+            var prototypeId = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(mechanism.Owner.Uid).EntityPrototype!.ID;
 
             if (!_mechanismIds.Contains(prototypeId))
             {
@@ -128,7 +129,7 @@ namespace Content.Shared.Body.Components
 
         protected virtual void OnRemoveMechanism(SharedMechanismComponent mechanism)
         {
-            _mechanismIds.Remove(mechanism.Owner.Prototype!.ID);
+            _mechanismIds.Remove(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(mechanism.Owner.Uid).EntityPrototype!.ID);
             mechanism.Part = null;
             SizeUsed -= mechanism.Size;
 

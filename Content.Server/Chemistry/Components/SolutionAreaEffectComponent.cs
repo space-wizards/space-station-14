@@ -62,7 +62,7 @@ namespace Content.Server.Chemistry.Components
         /// </summary>
         public void Spread()
         {
-            if (Owner.Prototype == null)
+            if (IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityPrototype == null)
             {
                 Logger.Error("AreaEffectComponent needs its owner to be spawned by a prototype.");
                 return;
@@ -83,7 +83,7 @@ namespace Content.Server.Chemistry.Components
                         return;
                 }
 
-                var newEffect = IoCManager.Resolve<IEntityManager>().SpawnEntity(Owner.Prototype.ID, grid.DirectionToGrid(coords, dir));
+                var newEffect = IoCManager.Resolve<IEntityManager>().SpawnEntity(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Uid).EntityPrototype.ID, grid.DirectionToGrid(coords, dir));
 
                 if (!newEffect.TryGetComponent(out SolutionAreaEffectComponent? effectComponent))
                 {

@@ -18,6 +18,7 @@ using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 namespace Content.Client.ContextMenu.UI
 {
@@ -84,7 +85,7 @@ namespace Content.Client.ContextMenu.UI
 
             var entitySpriteStates = GroupEntities(entities);
             var orderedStates = entitySpriteStates.ToList();
-            orderedStates.Sort((x, y) => string.CompareOrdinal(x.First().Prototype?.Name, y.First().Prototype?.Name));
+            orderedStates.Sort((x, y) => string.CompareOrdinal(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(x.First().Uid).EntityPrototype?.Name, IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(y.First().Uid).EntityPrototype?.Name));
             Elements.Clear();
             AddToUI(orderedStates);
 

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.ContextMenu.UI
 {
@@ -20,7 +22,7 @@ namespace Content.Client.ContextMenu.UI
         {
             if (GroupingContextMenuType == 0)
             {
-                var newEntities = entities.GroupBy(e => e.Name + (e.Prototype?.ID ?? string.Empty)).ToList();
+                var newEntities = entities.GroupBy(e => e.Name + (IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(e.Uid).EntityPrototype?.ID ?? string.Empty)).ToList();
                 return newEntities.Select(grp => grp.ToList()).ToList();
             }
             else
@@ -34,7 +36,7 @@ namespace Content.Client.ContextMenu.UI
         {
             private static readonly List<Func<IEntity, IEntity, bool>> EqualsList = new()
             {
-                (a, b) => a.Prototype!.ID == b.Prototype!.ID,
+                (a, b) => IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(a.Uid).EntityPrototype!.ID == IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(b.Uid).EntityPrototype!.ID,
                 (a, b) =>
                 {
                     a.TryGetComponent<ISpriteComponent>(out var spriteA);
@@ -51,7 +53,7 @@ namespace Content.Client.ContextMenu.UI
             };
             private static readonly List<Func<IEntity, int>> GetHashCodeList = new()
             {
-                e => EqualityComparer<string>.Default.GetHashCode(e.Prototype!.ID),
+                e => EqualityComparer<string>.Default.GetHashCode(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(e.Uid).EntityPrototype!.ID),
                 e =>
                 {
                     var hash = 0;

@@ -32,7 +32,7 @@ namespace Content.Server.Administration.Commands
 
             foreach (var entity in entityManager.GetEntities())
             {
-                if (checkPrototype && entity.Prototype != prototype || entity.Prototype == null)
+                if (checkPrototype && IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityPrototype != prototype || IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityPrototype == null)
                 {
                     continue;
                 }
@@ -41,7 +41,7 @@ namespace Content.Server.Administration.Commands
 
                 foreach (var component in entity.GetAllComponents())
                 {
-                    if (entity.Prototype.Components.ContainsKey(component.Name))
+                    if (IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityPrototype.Components.ContainsKey(component.Name))
                         continue;
 
                     entityManager.RemoveComponent(entity.Uid, component);

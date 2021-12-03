@@ -74,7 +74,7 @@ namespace Content.Server.Construction.Commands
                     continue;
                 }
 
-                var prototype = childEntity.Prototype;
+                var prototype = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(childEntity.Uid).EntityPrototype;
                 while (true)
                 {
                     if (prototype?.Parent == null)

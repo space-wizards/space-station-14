@@ -5,6 +5,7 @@ using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Administration.Commands
 {
@@ -52,12 +53,12 @@ namespace Content.Server.Administration.Commands
 
             foreach (var entity in entitiesWithAllComponents)
             {
-                if (entity.Prototype == null)
+                if (IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityPrototype == null)
                 {
                     continue;
                 }
 
-                entityIds.Add(entity.Prototype.ID);
+                entityIds.Add(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityPrototype.ID);
             }
 
             if (entityIds.Count == 0)

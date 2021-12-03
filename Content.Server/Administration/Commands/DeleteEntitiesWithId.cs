@@ -3,6 +3,7 @@ using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using System.Linq;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Administration.Commands
 {
@@ -23,7 +24,7 @@ namespace Content.Server.Administration.Commands
 
             var id = args[0].ToLower();
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            var entities = entityManager.GetEntities().Where(e => e.Prototype?.ID.ToLower() == id);
+            var entities = entityManager.GetEntities().Where(e => IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(e.Uid).EntityPrototype?.ID.ToLower() == id);
             var i = 0;
 
             foreach (var entity in entities)

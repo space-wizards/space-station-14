@@ -26,6 +26,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Fluids.EntitySystems
 {
@@ -328,7 +329,7 @@ namespace Content.Server.Fluids.EntitySystems
             }
 
             puddle ??= () =>
-                IoCManager.Resolve<IEntityManager>().SpawnEntity(puddleComponent.Owner.Prototype?.ID,
+                IoCManager.Resolve<IEntityManager>().SpawnEntity(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(puddleComponent.Owner.Uid).EntityPrototype?.ID,
                         mapGrid.DirectionToGrid(coords, direction))
                     .GetComponent<PuddleComponent>();
 

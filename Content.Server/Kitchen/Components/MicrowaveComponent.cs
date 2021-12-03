@@ -29,6 +29,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -311,18 +312,18 @@ namespace Content.Server.Kitchen.Components
             var solidsDict = new Dictionary<string, int>();
             foreach (var item in _storage.ContainedEntities)
             {
-                if (item.Prototype == null)
+                if (IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(item.Uid).EntityPrototype == null)
                 {
                     continue;
                 }
 
-                if (solidsDict.ContainsKey(item.Prototype.ID))
+                if (solidsDict.ContainsKey(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(item.Uid).EntityPrototype.ID))
                 {
-                    solidsDict[item.Prototype.ID]++;
+                    solidsDict[IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(item.Uid).EntityPrototype.ID]++;
                 }
                 else
                 {
-                    solidsDict.Add(item.Prototype.ID, 1);
+                    solidsDict.Add(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(item.Uid).EntityPrototype.ID, 1);
                 }
             }
 
@@ -450,12 +451,12 @@ namespace Content.Server.Kitchen.Components
                 {
                     foreach (var item in _storage.ContainedEntities)
                     {
-                        if (item.Prototype == null)
+                        if (IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(item.Uid).EntityPrototype == null)
                         {
                             continue;
                         }
 
-                        if (item.Prototype.ID == recipeSolid.Key)
+                        if (IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(item.Uid).EntityPrototype.ID == recipeSolid.Key)
                         {
                             _storage.Remove(item);
                             item.Delete();

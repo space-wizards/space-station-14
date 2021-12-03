@@ -8,6 +8,7 @@ using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using static Content.Shared.Inventory.EquipmentSlotDefines;
 
 namespace Content.IntegrationTests.Tests
@@ -71,7 +72,7 @@ namespace Content.IntegrationTests.Tests
 
                 // Do we actually have the uniform equipped?
                 Assert.That(inventory.TryGetSlotItem(Slots.INNERCLOTHING, out ItemComponent uniform));
-                Assert.That(uniform.Owner.Prototype != null && uniform.Owner.Prototype.ID == "InventoryJumpsuitJanitorDummy");
+                Assert.That(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(uniform.Owner.Uid).EntityPrototype != null && IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(uniform.Owner.Uid).EntityPrototype.ID == "InventoryJumpsuitJanitorDummy");
 
                 EntitySystem.Get<StunSystem>().TryStun(human.Uid, TimeSpan.FromSeconds(1f));
 
@@ -84,7 +85,7 @@ namespace Content.IntegrationTests.Tests
                 // Let's try skipping the interaction check and see if it equips it!
                 Assert.That(inventory.SpawnItemInSlot(Slots.IDCARD, "InventoryIDCardDummy"));
                 Assert.That(inventory.TryGetSlotItem(Slots.IDCARD, out ItemComponent id));
-                Assert.That(id.Owner.Prototype != null && id.Owner.Prototype.ID == "InventoryIDCardDummy");
+                Assert.That(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(id.Owner.Uid).EntityPrototype != null && IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(id.Owner.Uid).EntityPrototype.ID == "InventoryIDCardDummy");
             });
 
             await server.WaitIdleAsync();

@@ -73,12 +73,12 @@ namespace Content.IntegrationTests.Tests.Destructible
 
                 foreach (var entity in entitiesInRange)
                 {
-                    if (entity.Prototype == null)
+                    if (IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityPrototype == null)
                     {
                         continue;
                     }
 
-                    if (entity.Prototype.Name != SpawnedEntityId)
+                    if (IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityPrototype.Name != SpawnedEntityId)
                     {
                         continue;
                     }

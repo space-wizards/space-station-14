@@ -1,4 +1,7 @@
 using Robust.Shared.Containers;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Containers
 {
@@ -11,7 +14,7 @@ namespace Content.Server.Containers
             {
                 foreach (var entity in container.ContainedEntities)
                 {
-                    if (entity.Prototype?.ID == prototypeId) total++;
+                    if (IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityPrototype?.ID == prototypeId) total++;
                     if(!entity.TryGetComponent<ContainerManagerComponent>(out var component)) continue;
                     total += component.CountPrototypeOccurencesRecursive(prototypeId);
                 }

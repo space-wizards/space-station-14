@@ -330,7 +330,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 else
                 {
                     projectile =
-                        IoCManager.Resolve<IEntityManager>().SpawnEntity(baseProjectile.Prototype?.ID, baseProjectile.Transform.Coordinates);
+                        IoCManager.Resolve<IEntityManager>().SpawnEntity(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(baseProjectile.Uid).EntityPrototype?.ID, baseProjectile.Transform.Coordinates);
                 }
 
                 firedProjectiles[i] = projectile.Uid;
