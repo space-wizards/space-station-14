@@ -28,6 +28,9 @@ namespace Content.Server.AI.EntitySystems
         /// </summary>
         private readonly HashSet<AiControllerComponent> _awakeNPCs = new();
 
+        /// <summary>
+        /// Whether any NPCs are allowed to run at all.
+        /// </summary>
         public bool Enabled { get; set; } = true;
 
         /// <inheritdoc />
