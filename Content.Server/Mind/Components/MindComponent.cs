@@ -53,7 +53,7 @@ namespace Content.Server.Mind.Components
 
         /// <summary>
         ///     Don't call this unless you know what the hell you're doing.
-        ///     Use <see cref="Mind.TransferTo(IEntity)"/> instead.
+        ///     Use <see cref="Mind.TransferTo(Robust.Shared.GameObjects.EntityUid)"/> instead.
         ///     If that doesn't cover it, make something to cover it.
         /// </summary>
         public void InternalEjectMind()
@@ -65,7 +65,7 @@ namespace Content.Server.Mind.Components
 
         /// <summary>
         ///     Don't call this unless you know what the hell you're doing.
-        ///     Use <see cref="Mind.TransferTo(IEntity)"/> instead.
+        ///     Use <see cref="Mind.TransferTo(Robust.Shared.GameObjects.EntityUid)"/> instead.
         ///     If that doesn't cover it, make something to cover it.
         /// </summary>
         public void InternalAssignMind(Mind value)

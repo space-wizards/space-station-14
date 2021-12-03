@@ -265,7 +265,7 @@ namespace Content.Server.Storage.Components
 
         /// <summary>
         ///     Inserts an Entity (<paramref name="toInsert"/>) in the world into storage, informing <paramref name="player"/> if it fails.
-        ///     <paramref name="toInsert"/> is *NOT* held, see <see cref="PlayerInsertHeldEntity(IEntity)"/>.
+        ///     <paramref name="toInsert"/> is *NOT* held, see <see cref="PlayerInsertHeldEntity(Robust.Shared.GameObjects.EntityUid)"/>.
         /// </summary>
         /// <param name="player">The player to insert an entity with</param>
         /// <returns>true if inserted, false otherwise</returns>

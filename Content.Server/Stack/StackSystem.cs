@@ -40,7 +40,7 @@ namespace Content.Server.Stack
         }
 
         /// <summary>
-        ///     Try to split this stack into two. Returns a non-null <see cref="IEntity"/> if successful.
+        ///     Try to split this stack into two. Returns a non-null <see cref="Robust.Shared.GameObjects.EntityUid"/> if successful.
         /// </summary>
         public EntityUid? Split(EntityUid uid, int amount, EntityCoordinates spawnPosition, SharedStackComponent? stack = null)
         {

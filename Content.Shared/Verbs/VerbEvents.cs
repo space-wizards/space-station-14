@@ -178,7 +178,7 @@ namespace Content.Shared.Verbs
         ///     The entity currently being held by the active hand.
         /// </summary>
         /// <remarks>
-        ///     This is only ever not null when <see cref="ActionBlockerSystem.CanUse(EntityUid)"/> is true and the user
+        ///     This is only ever not null when <see cref="ActionBlockerSystem.CanUse(Robust.Shared.GameObjects.EntityUid)"/> is true and the user
         ///     has hands.
         /// </remarks>
         public readonly IEntity? Using;
