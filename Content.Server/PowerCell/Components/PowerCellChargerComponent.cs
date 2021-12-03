@@ -17,7 +17,7 @@ namespace Content.Server.PowerCell.Components
 
         public override bool IsEntityCompatible(IEntity entity)
         {
-            return entity.HasComponent<BatteryComponent>();
+            return IoCManager.Resolve<IEntityManager>().HasComponent<BatteryComponent>(entity.Uid);
         }
 
         protected override BatteryComponent GetBatteryFrom(IEntity entity)

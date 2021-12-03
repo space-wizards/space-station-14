@@ -54,7 +54,7 @@ namespace Content.Server.Kitchen.EntitySystems
         {
             if (args.Handled) return;
 
-            if (!args.User.HasComponent<HandsComponent>())
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<HandsComponent>(args.User.Uid))
             {
                 component.Owner.PopupMessage(args.User,
                     Loc.GetString("reagent-grinder-component-interact-using-no-hands"));
@@ -341,7 +341,7 @@ namespace Content.Server.Kitchen.EntitySystems
                                 continue;
                             }
                             var juiceEvent = new ExtractableScalingEvent(); // default of scalar is always 1.0
-                            if (item.HasComponent<StackComponent>())
+                            if (IoCManager.Resolve<IEntityManager>().HasComponent<StackComponent>(item.Uid))
                             {
                                 RaiseLocalEvent(item.Uid, juiceEvent);
                             }

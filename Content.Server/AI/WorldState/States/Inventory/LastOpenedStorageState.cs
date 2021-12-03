@@ -1,5 +1,6 @@
 using Content.Server.Storage.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 
 namespace Content.Server.AI.WorldState.States.Inventory
@@ -17,7 +18,7 @@ namespace Content.Server.AI.WorldState.States.Inventory
         public override void SetValue(IEntity? value)
         {
             base.SetValue(value);
-            if (value != null && !value.HasComponent<EntityStorageComponent>())
+            if (value != null && !IoCManager.Resolve<IEntityManager>().HasComponent<EntityStorageComponent>(value.Uid))
             {
                 Logger.Warning("Set LastOpenedStorageState for an entity that doesn't have a storage component");
             }

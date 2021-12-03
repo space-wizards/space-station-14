@@ -19,7 +19,7 @@ namespace Content.Shared.Movement.Components
             if (body == null)
                 entity.TryGetComponent(out body);
 
-            if (entity.HasComponent<MovementIgnoreGravityComponent>() ||
+            if (IoCManager.Resolve<IEntityManager>().HasComponent<MovementIgnoreGravityComponent>(entity.Uid) ||
                 (body?.BodyType & (BodyType.Static | BodyType.Kinematic)) != 0) return false;
 
             var transform = entity.Transform;

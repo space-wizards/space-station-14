@@ -114,7 +114,7 @@ namespace Content.IntegrationTests.Tests.PDA
                         continue;
                     }
 
-                    if (item.Owner.HasComponent<PDAComponent>())
+                    if (IoCManager.Resolve<IEntityManager>().HasComponent<PDAComponent>(item.Owner.Uid))
                     {
                         inventory.ForceUnequip(slot);
                     }

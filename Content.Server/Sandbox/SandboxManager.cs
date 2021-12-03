@@ -127,7 +127,7 @@ namespace Content.Server.Sandbox
             if (player.AttachedEntity.TryGetComponent(out InventoryComponent? inv)
                 && inv.TryGetSlotItem(Slots.IDCARD, out ItemComponent? wornItem))
             {
-                if (wornItem.Owner.HasComponent<AccessComponent>())
+                if (IoCManager.Resolve<IEntityManager>().HasComponent<AccessComponent>(wornItem.Owner.Uid))
                 {
                     UpgradeId(wornItem.Owner);
                 }

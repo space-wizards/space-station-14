@@ -50,8 +50,8 @@ namespace Content.IntegrationTests.Tests
                 var entityMan = IoCManager.Resolve<IEntityManager>();
 
                 generator = entityMan.SpawnEntity("GravityGeneratorDummy", grid2.ToCoordinates());
-                Assert.That(generator.HasComponent<GravityGeneratorComponent>());
-                Assert.That(generator.HasComponent<ApcPowerReceiverComponent>());
+                Assert.That(IoCManager.Resolve<IEntityManager>().HasComponent<GravityGeneratorComponent>(generator.Uid));
+                Assert.That(IoCManager.Resolve<IEntityManager>().HasComponent<ApcPowerReceiverComponent>(generator.Uid));
 
                 var powerComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ApcPowerReceiverComponent>(generator.Uid);
                 powerComponent.NeedsPower = false;

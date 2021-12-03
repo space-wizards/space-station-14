@@ -8,6 +8,7 @@ using Content.Shared.Body.Part;
 using Content.Shared.Body.Surgery;
 using Content.Shared.Popups;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using static Content.Shared.Body.Surgery.ISurgeryData;
 
@@ -52,7 +53,7 @@ namespace Content.Server.Body.Surgery
 
         private async Task<bool> SurgeryDoAfter(IEntity performer)
         {
-            if (!performer.HasComponent<DoAfterComponent>())
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<DoAfterComponent>(performer.Uid))
             {
                 return true;
             }
@@ -298,7 +299,7 @@ namespace Content.Server.Body.Surgery
 
             performer.PopupMessage(Loc.GetString("biological-surgery-data-component-loosen-organ-message"));
 
-            if (!performer.HasComponent<DoAfterComponent>())
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<DoAfterComponent>(performer.Uid))
             {
                 AddDisconnectedOrgan(target);
                 return;
@@ -339,7 +340,7 @@ namespace Content.Server.Body.Surgery
 
             performer.PopupMessage(Loc.GetString("biological-surgery-data-component-remove-organ-message"));
 
-            if (!performer.HasComponent<DoAfterComponent>())
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<DoAfterComponent>(performer.Uid))
             {
                 Parent.RemoveMechanism(target, performer.Transform.Coordinates);
                 RemoveDisconnectedOrgan(target);

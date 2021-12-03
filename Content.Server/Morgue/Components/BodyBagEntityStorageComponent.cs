@@ -12,6 +12,7 @@ using Content.Shared.Standing;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -28,7 +29,7 @@ namespace Content.Server.Morgue.Components
 
         protected override bool AddToContents(IEntity entity)
         {
-            if (entity.HasComponent<SharedBodyComponent>() && !EntitySystem.Get<StandingStateSystem>().IsDown(entity.Uid)) return false;
+            if (IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(entity.Uid) && !EntitySystem.Get<StandingStateSystem>().IsDown(entity.Uid)) return false;
             return base.AddToContents(entity);
         }
     }

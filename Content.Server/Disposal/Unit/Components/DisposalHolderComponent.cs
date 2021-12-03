@@ -84,8 +84,8 @@ namespace Content.Server.Disposal.Unit.Components
                 return false;
             }
 
-            return entity.HasComponent<ItemComponent>() ||
-                   entity.HasComponent<SharedBodyComponent>();
+            return IoCManager.Resolve<IEntityManager>().HasComponent<ItemComponent>(entity.Uid) ||
+                   IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(entity.Uid);
         }
 
         public bool TryInsert(IEntity entity)

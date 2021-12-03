@@ -75,7 +75,7 @@ namespace Content.Server.Lathe.Components
                         }
                     break;
                 case LatheSyncRequestMessage _:
-                    if (!Owner.HasComponent<MaterialStorageComponent>()) return;
+                    if (!IoCManager.Resolve<IEntityManager>().HasComponent<MaterialStorageComponent>(Owner.Uid)) return;
                     UserInterface?.SendMessage(new LatheFullQueueMessage(GetIdQueue()));
                     if (_producingRecipe != null)
                         UserInterface?.SendMessage(new LatheProducingRecipeMessage(_producingRecipe.ID));

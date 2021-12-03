@@ -102,10 +102,10 @@ namespace Content.Server.Singularity.EntitySystems
         private bool CanDestroy(SharedSingularityComponent component, IEntity entity)
         {
             return entity == component.Owner ||
-                   entity.HasComponent<IMapGridComponent>() ||
-                   entity.HasComponent<GhostComponent>() ||
-                   entity.HasComponent<ContainmentFieldComponent>() ||
-                   entity.HasComponent<ContainmentFieldGeneratorComponent>();
+                   IoCManager.Resolve<IEntityManager>().HasComponent<IMapGridComponent>(entity.Uid) ||
+                   IoCManager.Resolve<IEntityManager>().HasComponent<GhostComponent>(entity.Uid) ||
+                   IoCManager.Resolve<IEntityManager>().HasComponent<ContainmentFieldComponent>(entity.Uid) ||
+                   IoCManager.Resolve<IEntityManager>().HasComponent<ContainmentFieldGeneratorComponent>(entity.Uid);
         }
 
         private void HandleDestroy(ServerSingularityComponent component, IEntity entity)
@@ -149,9 +149,9 @@ namespace Content.Server.Singularity.EntitySystems
 
         private bool CanPull(IEntity entity)
         {
-            return !(entity.HasComponent<GhostComponent>() ||
-                   entity.HasComponent<IMapGridComponent>() ||
-                   entity.HasComponent<MapComponent>() ||
+            return !(IoCManager.Resolve<IEntityManager>().HasComponent<GhostComponent>(entity.Uid) ||
+                   IoCManager.Resolve<IEntityManager>().HasComponent<IMapGridComponent>(entity.Uid) ||
+                   IoCManager.Resolve<IEntityManager>().HasComponent<MapComponent>(entity.Uid) ||
                    entity.IsInContainer());
         }
 

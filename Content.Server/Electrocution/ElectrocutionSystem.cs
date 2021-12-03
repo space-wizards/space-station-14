@@ -158,7 +158,7 @@ namespace Content.Server.Electrocution
                 foreach (var entity in transform.Coordinates.GetEntitiesInTile(
                     LookupFlags.Approximate | LookupFlags.IncludeAnchored, _entityLookup))
                 {
-                    if (entity.HasComponent<WindowComponent>())
+                    if (IoCManager.Resolve<IEntityManager>().HasComponent<WindowComponent>(entity.Uid))
                         return false;
                 }
             }

@@ -54,7 +54,7 @@ namespace Content.Client.Items.Managers
 
                 button.ClearHover();
                 button.SpriteView.Sprite = sprite;
-                button.StorageButton.Visible = entity.HasComponent<ClientStorageComponent>();
+                button.StorageButton.Visible = IoCManager.Resolve<IEntityManager>().HasComponent<ClientStorageComponent>(entity.Uid);
             }
 
             button.Entity = entity?.Uid ?? default;
@@ -132,7 +132,7 @@ namespace Content.Client.Items.Managers
                 return;
             }
 
-            if (!entity.HasComponent<SpriteComponent>())
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<SpriteComponent>(entity.Uid))
             {
                 return;
             }

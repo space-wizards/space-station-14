@@ -7,6 +7,7 @@ using Content.Server.Power.Components;
 using Content.Shared.Disposal;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Reflection;
 
@@ -146,7 +147,7 @@ namespace Content.IntegrationTests.Tests.Disposal
 
                 // Test for components existing
                 Assert.True(disposalUnit.TryGetComponent(out unit!));
-                Assert.True(disposalTrunk.HasComponent<DisposalEntryComponent>());
+                Assert.True(IoCManager.Resolve<IEntityManager>().HasComponent<DisposalEntryComponent>(disposalTrunk.Uid));
 
                 // Can't insert, unanchored and unpowered
                 unit.Owner.Transform.Anchored = false;

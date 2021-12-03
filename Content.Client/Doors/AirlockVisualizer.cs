@@ -112,7 +112,7 @@ namespace Content.Client.Doors
 
         public override void InitializeEntity(IEntity entity)
         {
-            if (!entity.HasComponent<AnimationPlayerComponent>())
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<AnimationPlayerComponent>(entity.Uid))
             {
                 IoCManager.Resolve<IEntityManager>().AddComponent<AnimationPlayerComponent>(entity);
             }

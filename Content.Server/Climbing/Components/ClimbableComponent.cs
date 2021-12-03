@@ -74,7 +74,7 @@ namespace Content.Server.Climbing.Components
                 return false;
             }
 
-            if (!user.HasComponent<ClimbingComponent>() ||
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<ClimbingComponent>(user.Uid) ||
                 !user.TryGetComponent(out SharedBodyComponent? body))
             {
                 reason = Loc.GetString("comp-climbable-cant-climb");
@@ -114,7 +114,7 @@ namespace Content.Server.Climbing.Components
                 return false;
             }
 
-            if (target == null || !dragged.HasComponent<ClimbingComponent>())
+            if (target == null || !IoCManager.Resolve<IEntityManager>().HasComponent<ClimbingComponent>(dragged.Uid))
             {
                 reason = Loc.GetString("comp-climbable-cant-climb");
                 return false;

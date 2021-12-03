@@ -531,7 +531,7 @@ namespace Content.Server.Storage.Components
                 return false;
             Logger.DebugS(LoggerName, $"Storage (UID {Owner.Uid}) attacked by user (UID {eventArgs.User.Uid}) with entity (UID {eventArgs.Using.Uid}).");
 
-            if (Owner.HasComponent<PlaceableSurfaceComponent>())
+            if (IoCManager.Resolve<IEntityManager>().HasComponent<PlaceableSurfaceComponent>(Owner.Uid))
             {
                 return false;
             }
@@ -570,14 +570,14 @@ namespace Content.Server.Storage.Components
 
             // Pick up all entities in a radius around the clicked location.
             // The last half of the if is because carpets exist and this is terrible
-            if (_areaInsert && (eventArgs.Target == null || !eventArgs.Target.HasComponent<SharedItemComponent>()))
+            if (_areaInsert && (eventArgs.Target == null || !IoCManager.Resolve<IEntityManager>().HasComponent<SharedItemComponent>(eventArgs.Target.Uid)))
             {
                 var validStorables = new List<IEntity>();
                 foreach (var entity in IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(eventArgs.ClickLocation, _areaInsertRadius, LookupFlags.None))
                 {
                     if (entity.IsInContainer()
                         || entity == eventArgs.User
-                        || !entity.HasComponent<SharedItemComponent>()
+                        || !IoCManager.Resolve<IEntityManager>().HasComponent<SharedItemComponent>(entity.Uid)
                         || !EntitySystem.Get<InteractionSystem>().InRangeUnobstructed(eventArgs.User, entity))
                         continue;
                     validStorables.Add(entity);
@@ -605,7 +605,7 @@ namespace Content.Server.Storage.Components
                     // Check again, situation may have changed for some entities, but we'll still pick up any that are valid
                     if (entity.IsInContainer()
                         || entity == eventArgs.User
-                        || !entity.HasComponent<SharedItemComponent>())
+                        || !IoCManager.Resolve<IEntityManager>().HasComponent<SharedItemComponent>(entity.Uid))
                         continue;
                     var position = EntityCoordinates.FromMap(Owner.Transform.Parent?.Owner ?? Owner, entity.Transform.MapPosition);
                     if (PlayerInsertEntityInWorld(eventArgs.User, entity))
@@ -636,7 +636,7 @@ namespace Content.Server.Storage.Components
                 if (eventArgs.Target == null
                     || eventArgs.Target.IsInContainer()
                     || eventArgs.Target == eventArgs.User
-                    || !eventArgs.Target.HasComponent<SharedItemComponent>())
+                    || !IoCManager.Resolve<IEntityManager>().HasComponent<SharedItemComponent>(eventArgs.Target.Uid))
                     return false;
                 var position = EntityCoordinates.FromMap(Owner.Transform.Parent?.Owner ?? Owner, eventArgs.Target.Transform.MapPosition);
                 if (PlayerInsertEntityInWorld(eventArgs.User, eventArgs.Target))

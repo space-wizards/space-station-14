@@ -117,7 +117,7 @@ namespace Content.Server.Ghost
             var entity = args.SenderSession.AttachedEntity;
 
             if (entity == null ||
-                !entity.HasComponent<GhostComponent>())
+                !IoCManager.Resolve<IEntityManager>().HasComponent<GhostComponent>(entity.Uid))
             {
                 Logger.Warning($"User {args.SenderSession.Name} sent a {nameof(GhostWarpsRequestEvent)} without being a ghost.");
                 return;

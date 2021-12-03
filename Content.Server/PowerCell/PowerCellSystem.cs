@@ -47,7 +47,7 @@ namespace Content.Server.PowerCell
                 !args.CanAccess ||
                 !args.CanInteract ||
                 component.HasCell ||
-                !args.Using.HasComponent<PowerCellComponent>() ||
+                !IoCManager.Resolve<IEntityManager>().HasComponent<PowerCellComponent>(args.Using.Uid) ||
                 !_actionBlockerSystem.CanDrop(args.User.Uid))
                 return;
 

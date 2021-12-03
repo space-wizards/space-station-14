@@ -129,7 +129,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (eventArgs.Using.HasComponent<AmmoComponent>())
+            if (IoCManager.Resolve<IEntityManager>().HasComponent<AmmoComponent>(eventArgs.Using.Uid))
             {
                 return TryInsertAmmo(eventArgs.User, eventArgs.Using);
             }

@@ -36,7 +36,7 @@ namespace Content.Server.AI.WorldState.States.Mobs
                     continue;
                 }
 
-                if (player.AttachedEntity != Owner && player.AttachedEntity.HasComponent<DamageableComponent>())
+                if (player.AttachedEntity != Owner && IoCManager.Resolve<IEntityManager>().HasComponent<DamageableComponent>(player.AttachedEntity.Uid))
                 {
                     result.Add(player.AttachedEntity);
                 }

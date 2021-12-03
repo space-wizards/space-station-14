@@ -45,7 +45,7 @@ namespace Content.Server.Recycling
         private bool CanGib(RecyclerComponent component, IEntity entity)
         {
             // We suppose this entity has a Recyclable component.
-            return entity.HasComponent<SharedBodyComponent>() && !component.Safe &&
+            return IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(entity.Uid) && !component.Safe &&
                    component.Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) && receiver.Powered;
         }
 

@@ -92,7 +92,7 @@ namespace Content.Server.Cuffs.Components
         /// <param name="prototype"></param>
         public bool TryAddNewCuffs(IEntity user, IEntity handcuff)
         {
-            if (!handcuff.HasComponent<HandcuffComponent>())
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<HandcuffComponent>(handcuff.Uid))
             {
                 Logger.Warning($"Handcuffs being applied to player are missing a {nameof(HandcuffComponent)}!");
                 return false;

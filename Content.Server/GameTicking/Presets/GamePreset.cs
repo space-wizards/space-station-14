@@ -39,7 +39,7 @@ namespace Content.Server.GameTicking.Presets
         {
             var playerEntity = mind.OwnedEntity;
 
-            if (playerEntity != null && playerEntity.HasComponent<GhostComponent>())
+            if (playerEntity != null && IoCManager.Resolve<IEntityManager>().HasComponent<GhostComponent>(playerEntity.Uid))
                 return false;
 
             if (mind.VisitingEntity != null)

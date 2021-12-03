@@ -173,7 +173,7 @@ namespace Content.Server.Hands.Systems
         {
             foreach (var inhand in component.GetAllHeldItems())
             {
-                if (inhand.Owner.HasComponent<HandVirtualItemComponent>())
+                if (IoCManager.Resolve<IEntityManager>().HasComponent<HandVirtualItemComponent>(inhand.Owner.Uid))
                     continue;
 
                 args.PushText(Loc.GetString("comp-hands-examine", ("user", component.Owner), ("item", inhand.Owner)));

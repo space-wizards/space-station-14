@@ -240,7 +240,7 @@ namespace Content.IntegrationTests.Tests.Buckle
 
                 // Component sanity check
                 Assert.True(human.TryGetComponent(out buckle));
-                Assert.True(chair.HasComponent<StrapComponent>());
+                Assert.True(IoCManager.Resolve<IEntityManager>().HasComponent<StrapComponent>(chair.Uid));
                 Assert.True(human.TryGetComponent(out hands));
                 Assert.True(human.TryGetComponent(out body));
 
@@ -325,7 +325,7 @@ namespace Content.IntegrationTests.Tests.Buckle
 
                 // Component sanity check
                 Assert.True(human.TryGetComponent(out buckle));
-                Assert.True(chair.HasComponent<StrapComponent>());
+                Assert.True(IoCManager.Resolve<IEntityManager>().HasComponent<StrapComponent>(chair.Uid));
 
                 // Buckle
                 Assert.True(buckle.TryBuckle(human, chair));

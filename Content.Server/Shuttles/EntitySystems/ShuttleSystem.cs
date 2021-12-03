@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Content.Server.Shuttles.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Physics;
 
 namespace Content.Server.Shuttles.EntitySystems
@@ -56,7 +57,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
         private void OnShuttleStartup(EntityUid uid, ShuttleComponent component, ComponentStartup args)
         {
-            if (!component.Owner.HasComponent<IMapGridComponent>())
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<IMapGridComponent>(component.Owner.Uid))
             {
                 return;
             }

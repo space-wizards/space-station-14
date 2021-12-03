@@ -12,6 +12,7 @@ using Content.Shared.Extinguisher;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -59,7 +60,7 @@ namespace Content.Server.Extinguisher
             }
 
             var targetEntity = eventArgs.Target;
-            if (eventArgs.Target.HasComponent<ReagentTankComponent>()
+            if (IoCManager.Resolve<IEntityManager>().HasComponent<ReagentTankComponent>(eventArgs.Target.Uid)
                 && solutionContainerSystem.TryGetDrainableSolution(targetEntity.Uid, out var targetSolution)
                 && solutionContainerSystem.TryGetDrainableSolution(Owner.Uid, out var container))
             {

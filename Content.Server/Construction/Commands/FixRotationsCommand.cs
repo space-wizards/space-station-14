@@ -83,9 +83,9 @@ namespace Content.Server.Construction.Commands
                     valid |= occluder.Enabled;
                 }
                 // low walls & grilles
-                valid |= childEntity.HasComponent<SharedCanBuildWindowOnTopComponent>();
+                valid |= IoCManager.Resolve<IEntityManager>().HasComponent<SharedCanBuildWindowOnTopComponent>(childEntity.Uid);
                 // cables
-                valid |= childEntity.HasComponent<CableComponent>();
+                valid |= IoCManager.Resolve<IEntityManager>().HasComponent<CableComponent>(childEntity.Uid);
                 // anything else that might need this forced
                 valid |= childEntity.HasTag("ForceFixRotations");
                 // override

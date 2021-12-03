@@ -240,7 +240,7 @@ namespace Content.Server.Interaction
         /// <param name="uid"></param>
         internal void AiUseInteraction(IEntity entity, EntityCoordinates coords, EntityUid uid)
         {
-            if (entity.HasComponent<ActorComponent>())
+            if (IoCManager.Resolve<IEntityManager>().HasComponent<ActorComponent>(entity.Uid))
                 throw new InvalidOperationException();
 
             UserInteraction(entity, coords, uid);
@@ -522,7 +522,7 @@ namespace Content.Server.Interaction
                 }
                 else if (!wideAttack &&
                     (targetEnt != null || EntityManager.TryGetEntity(targetUid, out targetEnt)) &&
-                    targetEnt.HasComponent<ItemComponent>())
+                    IoCManager.Resolve<IEntityManager>().HasComponent<ItemComponent>(targetEnt.Uid))
                 {
                     // We pick up items if our hand is empty, even if we're in combat mode.
                     InteractHand(user, targetEnt);

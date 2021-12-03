@@ -1,6 +1,7 @@
 using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
@@ -85,7 +86,7 @@ namespace Content.Shared.Movement.Components
         protected override void Initialize()
         {
             base.Initialize();
-            if (!Owner.HasComponent<IMoverComponent>())
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<IMoverComponent>(Owner.Uid))
             {
                 Owner.EnsureComponentWarn<SharedPlayerInputMoverComponent>();
             }

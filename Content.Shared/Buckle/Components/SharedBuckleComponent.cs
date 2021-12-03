@@ -3,6 +3,7 @@ using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -36,7 +37,7 @@ namespace Content.Shared.Buckle.Components
 
         bool IDraggable.CanDrop(CanDropEvent args)
         {
-            return args.Target.HasComponent<SharedStrapComponent>();
+            return IoCManager.Resolve<IEntityManager>().HasComponent<SharedStrapComponent>(args.Target.Uid);
         }
 
         bool IDraggable.Drop(DragDropEvent args)

@@ -1,6 +1,8 @@
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
 using Content.Server.Weapon.Melee.Components;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Utility.Considerations.Combat.Melee
 {
@@ -8,7 +10,13 @@ namespace Content.Server.AI.Utility.Considerations.Combat.Melee
     {
         protected override float GetScore(Blackboard context)
         {
-            return context.GetState<SelfState>().GetValue()?.HasComponent<UnarmedCombatComponent>() ?? false ? 1.0f : 0.0f;
+            IEntity tempQualifier = context.GetState<SelfState>().GetValue();
+            if (tempQualifier != null)
+            {
+                IoCManager.Resolve<IEntityManager>().HasComponent<UnarmedCombatComponent>(tempQualifier.Uid);
+            }
+
+            return RETURNED_VALUE ?? false ? 1.0f : 0.0f;
         }
     }
 }

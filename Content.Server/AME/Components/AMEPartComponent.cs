@@ -35,7 +35,7 @@ namespace Content.Server.AME.Components
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs args)
         {
-            if (!args.User.HasComponent<HandsComponent>())
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<HandsComponent>(args.User.Uid))
             {
                 Owner.PopupMessage(args.User, Loc.GetString("ame-part-component-interact-using-no-hands"));
                 return false;

@@ -50,7 +50,7 @@ namespace Content.Server.AME
                 {
                     var nodeNeighbors = grid.GetCellsInSquareArea(nodeOwner.Transform.Coordinates, 1)
                         .Select(sgc => IoCManager.Resolve<IEntityManager>().GetEntity(sgc))
-                        .Where(entity => entity != nodeOwner && entity.HasComponent<AMEShieldComponent>());
+                        .Where(entity => entity != nodeOwner && IoCManager.Resolve<IEntityManager>().HasComponent<AMEShieldComponent>(entity.Uid));
 
                     if (nodeNeighbors.Count() >= 8)
                     {

@@ -164,7 +164,7 @@ namespace Content.Shared.Movement
         protected bool UseMobMovement(PhysicsComponent body)
         {
             return body.BodyStatus == BodyStatus.OnGround &&
-                   body.Owner.HasComponent<MobStateComponent>() &&
+                   IoCManager.Resolve<IEntityManager>().HasComponent<MobStateComponent>(body.Owner.Uid) &&
                    // If we're being pulled then don't mess with our velocity.
                    (!body.Owner.TryGetComponent(out SharedPullableComponent? pullable) || !pullable.BeingPulled) &&
                    _blocker.CanMove(body.OwnerUid);

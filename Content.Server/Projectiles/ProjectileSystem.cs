@@ -40,7 +40,7 @@ namespace Content.Server.Projectiles
             var playerFilter = Filter.Pvs(coordinates);
 
             if (!((!IoCManager.Resolve<IEntityManager>().EntityExists(otherEntity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(otherEntity.Uid).EntityLifeStage) >= EntityLifeStage.Deleted) && component.SoundHitSpecies != null &&
-                otherEntity.HasComponent<SharedBodyComponent>())
+                IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(otherEntity.Uid))
             {
                 SoundSystem.Play(playerFilter, component.SoundHitSpecies.GetSound(), coordinates);
             }

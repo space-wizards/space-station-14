@@ -92,7 +92,7 @@ namespace Content.Server.Buckle.Systems
 
                 // If the used entity is a person being pulled, prioritize this verb. Conversely, if it is
                 // just a held object, the user is probably just trying to sit down.
-                verb.Priority = args.Using.HasComponent<ActorComponent>() ? 1 : -1;
+                verb.Priority = IoCManager.Resolve<IEntityManager>().HasComponent<ActorComponent>(args.Using.Uid) ? 1 : -1;
 
                 args.Verbs.Add(verb);
             }

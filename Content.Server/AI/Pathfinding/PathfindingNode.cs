@@ -4,6 +4,7 @@ using System.Linq;
 using Content.Server.Access.Components;
 using Content.Server.Doors.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
@@ -260,7 +261,7 @@ namespace Content.Server.AI.Pathfinding
         public void AddEntity(IEntity entity, IPhysBody physicsComponent)
         {
             // If we're a door
-            if (entity.HasComponent<AirlockComponent>() || entity.HasComponent<ServerDoorComponent>())
+            if (IoCManager.Resolve<IEntityManager>().HasComponent<AirlockComponent>(entity.Uid) || IoCManager.Resolve<IEntityManager>().HasComponent<ServerDoorComponent>(entity.Uid))
             {
                 // If we need access to traverse this then add to readers, otherwise no point adding it (except for maybe tile costs in future)
                 // TODO: Check for powered I think (also need an event for when it's depowered

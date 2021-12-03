@@ -225,7 +225,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             {
                 FireHitscan(shooter, hitscan, angle);
             }
-            else if (projectile.HasComponent<ProjectileComponent>() &&
+            else if (IoCManager.Resolve<IEntityManager>().HasComponent<ProjectileComponent>(projectile.Uid) &&
                      ammo != null &&
                      ammo.TryGetComponent(out AmmoComponent? ammoComponent))
             {

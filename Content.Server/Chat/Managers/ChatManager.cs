@@ -153,7 +153,7 @@ namespace Content.Server.Chat.Managers
                 var transform = player.AttachedEntity.Transform;
 
                 if (transform.MapID != sourceMapId ||
-                    !player.AttachedEntity.HasComponent<GhostComponent>() &&
+                    !IoCManager.Resolve<IEntityManager>().HasComponent<GhostComponent>(player.AttachedEntity.Uid) &&
                     !sourceCoords.InRange(_entManager, transform.Coordinates, VoiceRange)) continue;
 
                 clients.Add(player.ConnectedClient);

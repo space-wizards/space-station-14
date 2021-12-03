@@ -117,7 +117,7 @@ namespace Content.Server.Chemistry.Components
 
             var solutionsSys = EntitySystem.Get<SolutionContainerSystem>();
             //Make sure we have the attacking entity
-            if (eventArgs.Target == null || !Owner.HasComponent<SolutionContainerManagerComponent>())
+            if (eventArgs.Target == null || !IoCManager.Resolve<IEntityManager>().HasComponent<SolutionContainerManagerComponent>(Owner.Uid))
             {
                 return false;
             }

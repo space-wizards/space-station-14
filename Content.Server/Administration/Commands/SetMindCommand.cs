@@ -44,7 +44,7 @@ namespace Content.Server.Administration.Commands
 
             var target = entityManager.GetEntity(eUid);
 
-            if (!target.HasComponent<MindComponent>())
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<MindComponent>(target.Uid))
             {
                 shell.WriteLine(Loc.GetString("set-mind-command-target-has-no-mind-message"));
                 return;

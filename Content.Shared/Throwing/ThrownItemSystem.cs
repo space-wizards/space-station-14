@@ -119,7 +119,7 @@ namespace Content.Shared.Throwing
 
             // Unfortunately we can't check for hands containers as they have specific names.
             if (thrownItem.Owner.TryGetContainerMan(out var containerManager) &&
-                containerManager.Owner.HasComponent<SharedHandsComponent>())
+                IoCManager.Resolve<IEntityManager>().HasComponent<SharedHandsComponent>(containerManager.Owner.Uid))
             {
                 EntityManager.RemoveComponent(landing.Uid, thrownItem);
                 return;

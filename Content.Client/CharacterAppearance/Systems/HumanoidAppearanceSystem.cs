@@ -113,7 +113,7 @@ namespace Content.Client.CharacterAppearance.Systems
                 return;
             }
 
-            if (!args.Args.Part.Owner.HasComponent<SpriteComponent>())
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<SpriteComponent>(args.Args.Part.Owner.Uid))
             {
                 return;
             }
@@ -137,7 +137,7 @@ namespace Content.Client.CharacterAppearance.Systems
                 return;
             }
 
-            if (!args.Args.Part.Owner.HasComponent<SpriteComponent>())
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<SpriteComponent>(args.Args.Part.Owner.Uid))
             {
                 return;
             }

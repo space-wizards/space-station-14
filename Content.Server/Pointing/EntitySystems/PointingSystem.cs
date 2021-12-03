@@ -80,7 +80,7 @@ namespace Content.Server.Pointing.EntitySystems
 
         public bool InRange(IEntity pointer, EntityCoordinates coordinates)
         {
-            if (pointer.HasComponent<GhostComponent>())
+            if (IoCManager.Resolve<IEntityManager>().HasComponent<GhostComponent>(pointer.Uid))
             {
                 return pointer.Transform.Coordinates.InRange(EntityManager, coordinates, 15);
             }
@@ -105,7 +105,7 @@ namespace Content.Server.Pointing.EntitySystems
                 return false;
             }
 
-            if (EntityManager.TryGetEntity(uid, out var entity) && entity.HasComponent<PointingArrowComponent>())
+            if (EntityManager.TryGetEntity(uid, out var entity) && IoCManager.Resolve<IEntityManager>().HasComponent<PointingArrowComponent>(entity.Uid))
             {
                 // this is a pointing arrow. no pointing here...
                 return false;
@@ -200,7 +200,7 @@ namespace Content.Server.Pointing.EntitySystems
                 return;
 
             //Check if the object is already being pointed at
-            if (args.Target.HasComponent<PointingArrowComponent>())
+            if (IoCManager.Resolve<IEntityManager>().HasComponent<PointingArrowComponent>(args.Target.Uid))
                 return;
 
             if (!args.User.TryGetComponent<ActorComponent>(out var actor)  ||

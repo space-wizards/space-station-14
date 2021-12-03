@@ -123,7 +123,7 @@ namespace Content.Server.Animals.Systems
         {
             if (args.Using == null ||
                  !args.CanInteract ||
-                 !args.Using.HasComponent<RefillableSolutionComponent>())
+                 !IoCManager.Resolve<IEntityManager>().HasComponent<RefillableSolutionComponent>(args.Using.Uid))
                 return;
 
             Verb verb = new();

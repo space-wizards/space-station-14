@@ -221,7 +221,7 @@ namespace Content.Server.Traitor.Uplink
                 var heldItems = hands.GetAllHeldItems();
                 foreach (var item in heldItems)
                 {
-                    if (item.Owner.HasComponent<PDAComponent>())
+                    if (IoCManager.Resolve<IEntityManager>().HasComponent<PDAComponent>(item.Owner.Uid))
                         return item.Owner;
                 }
             }

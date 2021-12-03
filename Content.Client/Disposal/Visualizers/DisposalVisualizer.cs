@@ -47,7 +47,7 @@ namespace Content.Client.Disposal.Visualizers
             {
                 appearance.Owner.EnsureComponent<SubFloorHideComponent>();
             }
-            else if (appearance.Owner.HasComponent<SubFloorHideComponent>())
+            else if (IoCManager.Resolve<IEntityManager>().HasComponent<SubFloorHideComponent>(appearance.Owner.Uid))
             {
                 IoCManager.Resolve<IEntityManager>().RemoveComponent<SubFloorHideComponent>(appearance.Owner.Uid);
             }

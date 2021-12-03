@@ -46,14 +46,14 @@ namespace Content.Server.Throwing
                 return;
             }
 
-            if (entity.HasComponent<MobStateComponent>())
+            if (IoCManager.Resolve<IEntityManager>().HasComponent<MobStateComponent>(entity.Uid))
             {
                 Logger.Warning("Throwing not supported for mobs!");
                 return;
             }
 
             var comp = entity.EnsureComponent<ThrownItemComponent>();
-            if (entity.HasComponent<ItemComponent>())
+            if (IoCManager.Resolve<IEntityManager>().HasComponent<ItemComponent>(entity.Uid))
             {
                 comp.Thrower = user;
                 // Give it a l'il spin.

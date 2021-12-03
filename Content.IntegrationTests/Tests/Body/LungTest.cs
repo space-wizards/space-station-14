@@ -171,7 +171,7 @@ namespace Content.IntegrationTests.Tests.Body
                 var coordinates = new EntityCoordinates(grid.GridEntityId, center);
                 human = entityManager.SpawnEntity("HumanBodyAndBloodstreamDummy", coordinates);
 
-                Assert.True(human.HasComponent<SharedBodyComponent>());
+                Assert.True(IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(human.Uid));
                 Assert.True(human.TryGetComponent(out respirator));
                 Assert.False(respirator.Suffocating);
             });

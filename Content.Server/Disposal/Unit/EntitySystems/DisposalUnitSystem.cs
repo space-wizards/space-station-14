@@ -238,7 +238,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             UpdateInterface(component, component.Powered);
 
-            if (!component.Owner.HasComponent<AnchorableComponent>())
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<AnchorableComponent>(component.Owner.Uid))
             {
                 Logger.WarningS("VitalComponentMissing", $"Disposal unit {uid} is missing an {nameof(AnchorableComponent)}");
             }
@@ -395,7 +395,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             }
             // This popup message doesn't appear on clicks, even when code was seperate. Unsure why.
 
-            if (!eventArgs.User.HasComponent<HandsComponent>())
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<HandsComponent>(eventArgs.User.Uid))
             {
                 eventArgs.Target.PopupMessage(eventArgs.User, Loc.GetString("ui-disposal-unit-is-valid-interaction-no-hands"));
                 return false;

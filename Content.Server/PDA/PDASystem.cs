@@ -136,7 +136,7 @@ namespace Content.Server.PDA
                 JobTitle = pda.ContainedID?.JobTitle
             };
 
-            var hasUplink = pda.Owner.HasComponent<UplinkComponent>();
+            var hasUplink = IoCManager.Resolve<IEntityManager>().HasComponent<UplinkComponent>(pda.Owner.Uid);
 
             var ui = pda.Owner.GetUIOrNull(PDAUiKey.Key);
             ui?.SetState(new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, hasUplink));

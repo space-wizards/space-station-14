@@ -583,7 +583,7 @@ namespace Content.Server.Doors.Components
                 hitsomebody = true;
                 CurrentlyCrushing.Add(e.Owner.Uid);
 
-                if (e.Owner.HasComponent<DamageableComponent>())
+                if (IoCManager.Resolve<IEntityManager>().HasComponent<DamageableComponent>(e.Owner.Uid))
                     EntitySystem.Get<DamageableSystem>().TryChangeDamage(e.Owner.Uid, CrushDamage);
 
                 EntitySystem.Get<StunSystem>().TryParalyze(e.Owner.Uid, TimeSpan.FromSeconds(DoorStunTime));

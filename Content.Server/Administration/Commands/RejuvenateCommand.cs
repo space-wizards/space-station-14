@@ -74,7 +74,7 @@ namespace Content.Server.Administration.Commands
                 EntitySystem.Get<CreamPieSystem>().SetCreamPied(target.Uid, creamPied, false);
             }
 
-            if (target.HasComponent<JitteringComponent>())
+            if (IoCManager.Resolve<IEntityManager>().HasComponent<JitteringComponent>(target.Uid))
             {
                 IoCManager.Resolve<IEntityManager>().RemoveComponent<JitteringComponent>(target.Uid);
             }

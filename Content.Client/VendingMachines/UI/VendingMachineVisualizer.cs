@@ -121,7 +121,7 @@ namespace Content.Client.VendingMachines.UI
         {
             base.InitializeEntity(entity);
 
-            if (!entity.HasComponent<AnimationPlayerComponent>())
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<AnimationPlayerComponent>(entity.Uid))
             {
                 IoCManager.Resolve<IEntityManager>().AddComponent<AnimationPlayerComponent>(entity);
             }

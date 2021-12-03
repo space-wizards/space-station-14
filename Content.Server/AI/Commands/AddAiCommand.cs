@@ -35,14 +35,14 @@ namespace Content.Server.AI.Commands
                 return;
             }
 
-            if (ent.HasComponent<AiControllerComponent>())
+            if (IoCManager.Resolve<IEntityManager>().HasComponent<AiControllerComponent>(ent.Uid))
             {
                 shell.WriteLine("Entity already has an AI component.");
                 return;
             }
 
             // TODO: IMover refffaaccctttooorrr
-            if (ent.HasComponent<IMoverComponent>())
+            if (IoCManager.Resolve<IEntityManager>().HasComponent<IMoverComponent>(ent.Uid))
             {
                 IoCManager.Resolve<IEntityManager>().RemoveComponent<IMoverComponent>(ent.Uid);
             }

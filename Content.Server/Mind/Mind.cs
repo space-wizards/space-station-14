@@ -377,7 +377,7 @@ namespace Content.Server.Mind
 
             DebugTools.AssertNotNull(oldVisitingEnt);
 
-            if (oldVisitingEnt!.HasComponent<VisitingMindComponent>())
+            if (IoCManager.Resolve<IEntityManager>().HasComponent<VisitingMindComponent>(oldVisitingEnt!.Uid))
             {
                 IoCManager.Resolve<IEntityManager>().RemoveComponent<VisitingMindComponent>(oldVisitingEnt.Uid);
             }

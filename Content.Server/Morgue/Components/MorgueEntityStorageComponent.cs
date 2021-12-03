@@ -71,7 +71,7 @@ namespace Content.Server.Morgue.Components
 
         protected override bool AddToContents(IEntity entity)
         {
-            if (entity.HasComponent<SharedBodyComponent>() && !EntitySystem.Get<StandingStateSystem>().IsDown(entity.Uid))
+            if (IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(entity.Uid) && !EntitySystem.Get<StandingStateSystem>().IsDown(entity.Uid))
                 return false;
             return base.AddToContents(entity);
         }
@@ -122,7 +122,7 @@ namespace Content.Server.Morgue.Components
             foreach (var entity in Contents.ContainedEntities)
             {
                 count++;
-                if (!hasMob && entity.HasComponent<SharedBodyComponent>())
+                if (!hasMob && IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(entity.Uid))
                     hasMob = true;
                 if (!hasSoul && entity.TryGetComponent<ActorComponent>(out var actor) && actor.PlayerSession != null)
                     hasSoul = true;

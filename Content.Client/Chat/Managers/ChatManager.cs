@@ -231,7 +231,7 @@ namespace Content.Client.Chat.Managers
             ChatPermissionsUpdated?.Invoke(new ChatPermissionsUpdatedEventArgs {OldSelectableChannels = oldSelectable});
         }
 
-        public bool IsGhost => _playerManager.LocalPlayer?.ControlledEntity?.HasComponent<GhostComponent>() ?? false;
+        public bool IsGhost => _playerManager.LocalPlayer?.ControlledEntityUid is {} uid && _entityManager.HasComponent<GhostComponent>(uid);
 
         public void FrameUpdate(FrameEventArgs delta)
         {

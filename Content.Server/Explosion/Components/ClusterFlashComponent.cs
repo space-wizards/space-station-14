@@ -60,7 +60,7 @@ namespace Content.Server.Explosion.Components
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs args)
         {
             if (_grenadesContainer.ContainedEntities.Count >= _maxGrenades ||
-                !args.Using.HasComponent<FlashOnTriggerComponent>())
+                !IoCManager.Resolve<IEntityManager>().HasComponent<FlashOnTriggerComponent>(args.Using.Uid))
                 return false;
 
             _grenadesContainer.Insert(args.Using);

@@ -59,7 +59,7 @@ namespace Content.Server.Ghost.Roles
 
         public void OpenEui(IPlayerSession session)
         {
-            if (session.AttachedEntity == null || !session.AttachedEntity.HasComponent<GhostComponent>())
+            if (session.AttachedEntity == null || !IoCManager.Resolve<IEntityManager>().HasComponent<GhostComponent>(session.AttachedEntity.Uid))
                 return;
 
             if(_openUis.ContainsKey(session))
@@ -194,7 +194,7 @@ namespace Content.Server.Ghost.Roles
         {
             // Close the session of any player that has a ghost roles window open and isn't a ghost anymore.
             if (!_openUis.ContainsKey(message.Player)) return;
-            if (message.Entity.HasComponent<GhostComponent>()) return;
+            if (IoCManager.Resolve<IEntityManager>().HasComponent<GhostComponent>(message.Entity.Uid)) return;
             CloseEui(message.Player);
         }
 

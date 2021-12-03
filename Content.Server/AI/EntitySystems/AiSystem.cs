@@ -122,7 +122,7 @@ namespace Content.Server.AI.EntitySystems
 
         private void MobStateChanged(MobStateChangedMessage message)
         {
-            if (!message.Entity.HasComponent<AiControllerComponent>())
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<AiControllerComponent>(message.Entity.Uid))
             {
                 return;
             }

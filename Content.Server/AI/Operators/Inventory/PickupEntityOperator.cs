@@ -23,7 +23,7 @@ namespace Content.Server.AI.Operators.Inventory
         public override Outcome Execute(float frameTime)
         {
             if ((!IoCManager.Resolve<IEntityManager>().EntityExists(_target.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_target.Uid).EntityLifeStage) >= EntityLifeStage.Deleted ||
-                !_target.HasComponent<ItemComponent>() ||
+                !IoCManager.Resolve<IEntityManager>().HasComponent<ItemComponent>(_target.Uid) ||
                 _target.IsInContainer() ||
                 !_owner.InRangeUnobstructed(_target, popup: true))
             {

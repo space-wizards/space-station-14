@@ -46,7 +46,7 @@ namespace Content.Server.Chemistry.Components
             if (Inception != null)
                 return;
 
-            if (Owner.HasComponent<SolutionAreaEffectInceptionComponent>())
+            if (IoCManager.Resolve<IEntityManager>().HasComponent<SolutionAreaEffectInceptionComponent>(Owner.Uid))
                 return;
 
             Amount = amount;

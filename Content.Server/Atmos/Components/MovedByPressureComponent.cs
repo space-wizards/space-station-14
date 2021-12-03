@@ -61,7 +61,7 @@ namespace Content.Server.Atmos.Components
                                                  && (maxForce >= (MoveResist * MoveForcePushRatio)))
                 || (physics.BodyType == BodyType.Static && (maxForce >= (MoveResist * MoveForceForcePushRatio))))
             {
-                if (physics.Owner.HasComponent<MobStateComponent>())
+                if (IoCManager.Resolve<IEntityManager>().HasComponent<MobStateComponent>(physics.Owner.Uid))
                 {
                     physics.BodyStatus = BodyStatus.InAir;
 
@@ -75,7 +75,7 @@ namespace Content.Server.Atmos.Components
                         if (Deleted || !Owner.TryGetComponent(out PhysicsComponent? physicsComponent)) return;
 
                         // Uhh if you get race conditions good luck buddy.
-                        if (physicsComponent.Owner.HasComponent<MobStateComponent>())
+                        if (IoCManager.Resolve<IEntityManager>().HasComponent<MobStateComponent>(physicsComponent.Owner.Uid))
                         {
                             physicsComponent.BodyStatus = BodyStatus.OnGround;
                         }

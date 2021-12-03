@@ -3,6 +3,7 @@ using Content.Shared.Maps;
 using Content.Shared.Window;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -22,7 +23,7 @@ namespace Content.Shared.Construction.Conditions
 
             foreach (var entity in location.GetEntitiesInTile(LookupFlags.Approximate | LookupFlags.IncludeAnchored))
             {
-                if (entity.HasComponent<SharedCanBuildWindowOnTopComponent>())
+                if (IoCManager.Resolve<IEntityManager>().HasComponent<SharedCanBuildWindowOnTopComponent>(entity.Uid))
                     result = true;
             }
 

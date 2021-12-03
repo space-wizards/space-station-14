@@ -12,6 +12,7 @@ using Content.Shared.Sound;
 using Content.Shared.Stunnable;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
@@ -198,7 +199,7 @@ namespace Content.Server.Cuffs.Components
         {
             var cuffTime = CuffTime;
 
-            if (target.HasComponent<StunnedComponent>())
+            if (IoCManager.Resolve<IEntityManager>().HasComponent<StunnedComponent>(target.Uid))
             {
                 cuffTime = MathF.Max(0.1f, cuffTime - StunBonus);
             }

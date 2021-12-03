@@ -133,7 +133,7 @@ namespace Content.Server.Strip
             {
                 var owner = hands.GetItem(hand)?.Owner;
 
-                if (owner?.HasComponent<HandVirtualItemComponent>() ?? true)
+                if ((owner != null ? IoCManager.Resolve<IEntityManager>().HasComponent<HandVirtualItemComponent>(owner.Uid) : (bool?) null) ?? true)
                 {
                     dictionary[hand] = "None";
                     continue;
@@ -359,7 +359,7 @@ namespace Content.Server.Strip
                     return false;
                 }
 
-                if (heldItem.Owner.HasComponent<HandVirtualItemComponent>())
+                if (IoCManager.Resolve<IEntityManager>().HasComponent<HandVirtualItemComponent>(heldItem.Owner.Uid))
                     return false;
 
                 if (!hands.CanDrop(hand, false))

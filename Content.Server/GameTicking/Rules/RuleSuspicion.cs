@@ -92,7 +92,7 @@ namespace Content.Server.GameTicking.Rules
             {
                 if (playerSession.AttachedEntity == null
                     || !playerSession.AttachedEntity.TryGetComponent(out MobStateComponent? mobState)
-                    || !playerSession.AttachedEntity.HasComponent<SuspicionRoleComponent>())
+                    || !IoCManager.Resolve<IEntityManager>().HasComponent<SuspicionRoleComponent>(playerSession.AttachedEntity.Uid))
                 {
                     continue;
                 }

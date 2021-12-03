@@ -34,7 +34,7 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            if (mind.VisitingEntity != null && mind.VisitingEntity.HasComponent<GhostComponent>())
+            if (mind.VisitingEntity != null && IoCManager.Resolve<IEntityManager>().HasComponent<GhostComponent>(mind.VisitingEntity.Uid))
             {
                 player.ContentData()!.Mind?.UnVisit();
                 return;

@@ -12,6 +12,7 @@ using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -115,11 +116,11 @@ namespace Content.Server.Chemistry.Components
             if (!eventArgs.InRangeUnobstructed() || eventArgs.Target == null)
                 return false;
 
-            if (!Owner.HasComponent<SolutionContainerManagerComponent>())
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<SolutionContainerManagerComponent>(Owner.Uid))
                 return false;
 
             var target = eventArgs.Target!;
-            if (!target.HasComponent<SolutionContainerManagerComponent>())
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<SolutionContainerManagerComponent>(target.Uid))
             {
                 return false;
             }

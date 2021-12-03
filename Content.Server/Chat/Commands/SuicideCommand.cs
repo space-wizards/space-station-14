@@ -107,7 +107,7 @@ namespace Content.Server.Chat.Commands
             {
                 foreach (var entity in entities)
                 {
-                    if (entity.HasComponent<ItemComponent>())
+                    if (IoCManager.Resolve<IEntityManager>().HasComponent<ItemComponent>(entity.Uid))
                         continue;
                     var suicide = IoCManager.Resolve<IEntityManager>().GetComponents<ISuicideAct>(entity.Uid).FirstOrDefault();
                     if (suicide != null)

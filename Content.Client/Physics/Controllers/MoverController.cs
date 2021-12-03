@@ -56,7 +56,7 @@ namespace Content.Client.Physics.Controllers
                 var pulling = pullerComp.Pulling;
 
                 if (pulling != null &&
-                    pulling.HasComponent<MobStateComponent>() &&
+                    IoCManager.Resolve<IEntityManager>().HasComponent<MobStateComponent>(pulling.Uid) &&
                     pulling.TryGetComponent(out PhysicsComponent? pullingBody))
                 {
                     pullingBody.Predict = false;

@@ -208,7 +208,7 @@ namespace Content.Server.GameTicking.Presets
                 }
                 else if (!mobState.IsDead())
                 {
-                    if (entity.HasComponent<HandsComponent>())
+                    if (IoCManager.Resolve<IEntityManager>().HasComponent<HandsComponent>(entity.Uid))
                     {
                         return false;
                     }

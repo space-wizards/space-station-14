@@ -5,6 +5,7 @@ using Content.Shared.Damage;
 using Content.Shared.DragDrop;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.MedicalScanner
@@ -80,7 +81,7 @@ namespace Content.Shared.MedicalScanner
 
         public bool CanInsert(IEntity entity)
         {
-            return entity.HasComponent<SharedBodyComponent>();
+            return IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(entity.Uid);
         }
 
         bool IDragDropOn.CanDragDropOn(DragDropEvent eventArgs)

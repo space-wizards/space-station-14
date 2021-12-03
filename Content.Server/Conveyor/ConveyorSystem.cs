@@ -106,7 +106,7 @@ namespace Content.Server.Conveyor
                 return false;
             }
 
-            if (component.Owner.HasComponent<ItemComponent>())
+            if (IoCManager.Resolve<IEntityManager>().HasComponent<ItemComponent>(component.Owner.Uid))
             {
                 return false;
             }
@@ -150,7 +150,7 @@ namespace Content.Server.Conveyor
                     continue;
                 }
 
-                if (entity.HasComponent<IMapGridComponent>())
+                if (IoCManager.Resolve<IEntityManager>().HasComponent<IMapGridComponent>(entity.Uid))
                 {
                     continue;
                 }

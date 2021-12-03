@@ -88,7 +88,7 @@ namespace Content.Server.Administration
             // Control mob verb
             if (_groupController.CanCommand(player, "controlmob") &&
                 args.User != args.Target &&
-                args.User.HasComponent<MindComponent>() &&
+                IoCManager.Resolve<IEntityManager>().HasComponent<MindComponent>(args.User.Uid) &&
                 args.Target.TryGetComponent<MindComponent>(out var targetMind))
             {
                 Verb verb = new();
@@ -106,7 +106,7 @@ namespace Content.Server.Administration
             // Make Sentient verb
             if (_groupController.CanCommand(player, "makesentient") &&
                 args.User != args.Target &&
-                !args.Target.HasComponent<MindComponent>())
+                !IoCManager.Resolve<IEntityManager>().HasComponent<MindComponent>(args.Target.Uid))
             {
                 Verb verb = new();
                 verb.Text = Loc.GetString("make-sentient-verb-get-data-text");
@@ -138,7 +138,7 @@ namespace Content.Server.Administration
 
             // Set clothing verb
             if (_groupController.CanCommand(player, "setoutfit") &&
-                args.Target.HasComponent<InventoryComponent>())
+                IoCManager.Resolve<IEntityManager>().HasComponent<InventoryComponent>(args.Target.Uid))
             {
                 Verb verb = new();
                 verb.Text = Loc.GetString("set-outfit-verb-get-data-text");
@@ -206,7 +206,7 @@ namespace Content.Server.Administration
 
             // Add verb to open Solution Editor
             if (_groupController.CanCommand(player, "addreagent") &&
-                args.Target.HasComponent<SolutionContainerManagerComponent>())
+                IoCManager.Resolve<IEntityManager>().HasComponent<SolutionContainerManagerComponent>(args.Target.Uid))
             {
                 Verb verb = new();
                 verb.Text = Loc.GetString("edit-solutions-verb-get-data-text");

@@ -175,7 +175,7 @@ namespace Content.Server.Cargo.Components
                     {
                         foreach (IEntity entity in enumerator)
                         {
-                            if (entity.HasComponent<CargoTelepadComponent>() && entity.TryGetComponent<ApcPowerReceiverComponent>(out var powerReceiver) && powerReceiver.Powered)
+                            if (IoCManager.Resolve<IEntityManager>().HasComponent<CargoTelepadComponent>(entity.Uid) && entity.TryGetComponent<ApcPowerReceiverComponent>(out var powerReceiver) && powerReceiver.Powered)
                             {
                                 cargoTelepad = entity;
                                 break;

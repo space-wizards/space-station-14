@@ -5,6 +5,7 @@ using Content.Server.Players;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Chat.Commands
@@ -45,7 +46,7 @@ namespace Content.Server.Chat.Commands
                 return;
             }
 
-            if (playerEntity.HasComponent<GhostComponent>())
+            if (IoCManager.Resolve<IEntityManager>().HasComponent<GhostComponent>(playerEntity.Uid))
                 chat.SendDeadChat(player, message);
             else
             {

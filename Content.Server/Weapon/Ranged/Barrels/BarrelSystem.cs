@@ -87,7 +87,7 @@ namespace Content.Server.Weapon.Ranged.Barrels
                 !args.CanAccess ||
                 !args.CanInteract ||
                 component.PowerCell != null ||
-                !args.Using.HasComponent<BatteryComponent>() ||
+                !IoCManager.Resolve<IEntityManager>().HasComponent<BatteryComponent>(args.Using.Uid) ||
                 !_actionBlockerSystem.CanDrop(args.User.Uid))
                 return;
 

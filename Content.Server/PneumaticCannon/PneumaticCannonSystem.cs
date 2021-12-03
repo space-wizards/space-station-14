@@ -98,7 +98,7 @@ namespace Content.Server.PneumaticCannon
         private void OnInteractUsing(EntityUid uid, PneumaticCannonComponent component, InteractUsingEvent args)
         {
             args.Handled = true;
-            if (args.Used.HasComponent<GasTankComponent>()
+            if (IoCManager.Resolve<IEntityManager>().HasComponent<GasTankComponent>(args.Used.Uid)
                 && component.GasTankSlot.CanInsert(args.Used)
                 && component.GasTankRequired)
             {

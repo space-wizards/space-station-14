@@ -4,6 +4,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;
 using Content.Shared.Hands.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using static Content.Shared.Inventory.EquipmentSlotDefines;
 
@@ -16,7 +17,7 @@ namespace Content.Shared.Strip.Components
         public bool CanBeStripped(IEntity by)
         {
             return by != Owner
-                   && by.HasComponent<SharedHandsComponent>()
+                   && IoCManager.Resolve<IEntityManager>().HasComponent<SharedHandsComponent>(@by.Uid)
                    && EntitySystem.Get<ActionBlockerSystem>().CanInteract(by.Uid);
         }
 

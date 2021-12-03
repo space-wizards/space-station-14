@@ -102,8 +102,8 @@ namespace Content.Shared.Singularity
         {
             var other = args.BodyB.Owner;
 
-            if ((!other.HasComponent<SharedContainmentFieldComponent>() &&
-                !other.HasComponent<SharedContainmentFieldGeneratorComponent>()) ||
+            if ((!IoCManager.Resolve<IEntityManager>().HasComponent<SharedContainmentFieldComponent>(other.Uid) &&
+                !IoCManager.Resolve<IEntityManager>().HasComponent<SharedContainmentFieldGeneratorComponent>(other.Uid)) ||
                 component.Level >= 4)
             {
                 args.Cancel();

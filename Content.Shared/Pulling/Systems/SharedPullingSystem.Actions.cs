@@ -29,7 +29,7 @@ namespace Content.Shared.Pulling
 
         public bool CanPull(IEntity puller, IEntity pulled)
         {
-            if (!puller.HasComponent<SharedPullerComponent>())
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<SharedPullerComponent>(puller.Uid))
             {
                 return false;
             }
@@ -198,7 +198,7 @@ namespace Content.Shared.Pulling
                 return false;
             }
 
-            if (!pullable.Owner.HasComponent<PhysicsComponent>())
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<PhysicsComponent>(pullable.Owner.Uid))
             {
                 return false;
             }

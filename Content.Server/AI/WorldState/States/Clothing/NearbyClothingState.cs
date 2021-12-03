@@ -6,6 +6,7 @@ using Content.Server.Storage.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.AI.WorldState.States.Clothing
 {
@@ -28,7 +29,7 @@ namespace Content.Server.AI.WorldState.States.Clothing
             {
                 if (entity.TryGetContainer(out var container))
                 {
-                    if (!container.Owner.HasComponent<EntityStorageComponent>())
+                    if (!IoCManager.Resolve<IEntityManager>().HasComponent<EntityStorageComponent>(container.Owner.Uid))
                     {
                         continue;
                     }

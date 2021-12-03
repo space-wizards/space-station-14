@@ -178,7 +178,7 @@ namespace Content.Server.Buckle.Components
                 }
             }
 
-            if (!user.HasComponent<HandsComponent>())
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<HandsComponent>(user.Uid))
             {
                 user.PopupMessage(Loc.GetString("buckle-component-no-hands-message "));
                 return false;
@@ -325,7 +325,7 @@ namespace Content.Server.Buckle.Components
 
             Appearance?.SetData(BuckleVisuals.Buckled, false);
 
-            if (Owner.HasComponent<KnockedDownComponent>()
+            if (IoCManager.Resolve<IEntityManager>().HasComponent<KnockedDownComponent>(Owner.Uid)
                 || (_mobState?.IsIncapacitated() ?? false))
             {
                 EntitySystem.Get<StandingStateSystem>().Down(Owner.Uid);

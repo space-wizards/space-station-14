@@ -206,7 +206,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 return false;
             }
 
-            if (!entity.HasComponent<BatteryComponent>())
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<BatteryComponent>(entity.Uid))
             {
                 return false;
             }
@@ -267,7 +267,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         public override async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.Using.HasComponent<BatteryComponent>())
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<BatteryComponent>(eventArgs.Using.Uid))
             {
                 return false;
             }

@@ -54,7 +54,7 @@ namespace Content.Shared.Disposal
 
             // TODO: Probably just need a disposable tag.
             if (!entity.TryGetComponent(out SharedItemComponent? storable) &&
-                !entity.HasComponent<SharedBodyComponent>())
+                !IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(entity.Uid))
             {
                 return false;
             }

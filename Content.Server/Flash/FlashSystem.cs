@@ -63,7 +63,7 @@ namespace Content.Server.Flash
                 return;
             }
 
-            if (args.Entity.HasComponent<FlashableComponent>())
+            if (IoCManager.Resolve<IEntityManager>().HasComponent<FlashableComponent>(args.Entity.Uid))
             {
                 args.CanInteract = true;
                 Flash(args.Entity.Uid, args.User.Uid, uid, comp.FlashDuration, comp.SlowTo);
@@ -155,7 +155,7 @@ namespace Content.Server.Flash
 
             foreach (var entity in _entityLookup.GetEntitiesInRange(transform.Coordinates, range))
             {
-                if (!entity.HasComponent<FlashableComponent>() ||
+                if (!IoCManager.Resolve<IEntityManager>().HasComponent<FlashableComponent>(entity.Uid) ||
                     !transform.InRangeUnobstructed(entity, range, CollisionGroup.Opaque)) continue;
 
                 Flash(entity.Uid, user, source, duration, slowTo, displayPopup);
