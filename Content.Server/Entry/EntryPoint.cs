@@ -63,6 +63,7 @@ namespace Content.Server.Entry
             _voteManager = IoCManager.Resolve<IVoteManager>();
 
             IoCManager.Resolve<IChatManager>().Initialize();
+            IoCManager.Resolve<IChatSanitizationManager>().Initialize();
 
             var playerManager = IoCManager.Resolve<IPlayerManager>();
 

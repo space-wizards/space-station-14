@@ -62,9 +62,16 @@ public class ChatSanitizationManager : IChatSanitizationManager
         { ":\\", "chatsan-uncertain" },
     };
 
+    private bool doSanitize = false;
+
+    public void Initialize()
+    {
+        _configurationManager.OnValueChanged(CCVars.ChatSanitizerEnabled, x => doSanitize = x, true);
+    }
+
     public bool TrySanitizeOutSmilies(string input, IEntity speaker, out string sanitized, [NotNullWhen(true)] out string? emote)
     {
-        if (!_configurationManager.GetCVar(CCVars.ChatSanitizerEnabled))
+        if (!doSanitize)
         {
             sanitized = input;
             emote = null;
@@ -73,12 +80,12 @@ public class ChatSanitizationManager : IChatSanitizationManager
 
         input = input.TrimEnd();
 
-        foreach (var smiley in SmileyToEmote.Keys)
+        foreach (var (smiley, replacement) in SmileyToEmote)
         {
             if (input.EndsWith(smiley, true, CultureInfo.InvariantCulture))
             {
                 sanitized = input.Remove(input.Length - smiley.Length).TrimEnd();
-                emote = Loc.GetString(SmileyToEmote[smiley], ("ent", speaker));
+                emote = Loc.GetString(replacement, ("ent", speaker));
                 return true;
             }
         }
