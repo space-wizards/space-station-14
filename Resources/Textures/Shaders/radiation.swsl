@@ -41,7 +41,7 @@ highp float fbm(highp vec2 uv) {
 void fragment() {
 	highp vec2 finalCoords = (FRAGCOORD.xy - positionInput) / (renderScale * 32.0);
 	highp float distanceToCenter = length(finalCoords);
-	highp float nlife = pow(sin(life * 3.141592), 0.5);
+	highp float nlife = pow(sin(clamp(life, 0.0, 1.0) * 3.141592), 0.5);
 	highp float on = ((range - distanceToCenter) / range);
 	highp float n = on;
 	highp vec2 fcOffset = vec2(fbm(finalCoords.xy + life / 2.0),fbm(finalCoords.yx + life / 2.0));

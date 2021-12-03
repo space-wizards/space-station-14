@@ -6,6 +6,15 @@
   name: personal ai device
   description: Your electronic pal who's fun to be with!
   components:
+  - type: Instrument
+    allowPercussion: false
+    handheld: false
+    bank: 1
+    program: 2
+  - type: UserInterface
+    interfaces:
+    - key: enum.InstrumentUiKey.Key
+      type: InstrumentBoundUserInterface
   - type: Sprite
     netsync: false
     sprite: Objects/Devices/pda.rsi
@@ -20,6 +29,8 @@
   - type: GhostRadio
   - type: DoAfter
   - type: Actions
+    innateActions:
+      - PAIMidi
     # This has to be installed because otherwise they're not "alive",
     #  so they can ghost and come back.
     # Note that the personal AI never "dies".

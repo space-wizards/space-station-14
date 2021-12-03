@@ -64,6 +64,7 @@
       - MiniHoe
       - Shovel
       - Spade
+      - CableStack
   - type: Appearance
     visuals:
     - type: AutolatheVisualizer
