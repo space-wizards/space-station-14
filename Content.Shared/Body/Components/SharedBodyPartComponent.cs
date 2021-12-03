@@ -1,16 +1,13 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Shared.Body.Behavior;
+using Content.Shared.Body.Events;
 using Content.Shared.Body.Part;
-using Content.Shared.Body.Part.Property;
 using Content.Shared.Body.Surgery;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
@@ -138,7 +135,7 @@ namespace Content.Shared.Body.Components
             Dirty();
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             var mechanismIds = new EntityUid[_mechanisms.Count];
 
@@ -307,7 +304,7 @@ namespace Content.Shared.Body.Components
 
             foreach (var mechanism in _mechanisms)
             {
-                mechanism.AddedToBody(body);
+                Owner.EntityManager.EventBus.RaiseLocalEvent(mechanism.OwnerUid, new AddedToBodyEvent(body));
             }
         }
 
@@ -322,7 +319,7 @@ namespace Content.Shared.Body.Components
 
             foreach (var mechanism in _mechanisms)
             {
-                mechanism.RemovedFromBody(old);
+                Owner.EntityManager.EventBus.RaiseLocalEvent(mechanism.OwnerUid, new RemovedFromBodyEvent(old));
             }
         }
 
@@ -339,38 +336,6 @@ namespace Content.Shared.Body.Components
             {
                 RemoveMechanism(mechanism);
             }
-        }
-
-        public bool HasProperty(Type type)
-        {
-            return Owner.HasComponent(type);
-        }
-
-        public bool HasProperty<T>() where T : class, IBodyPartProperty
-        {
-            return HasProperty(typeof(T));
-        }
-
-        public bool TryGetProperty(Type type,
-            [NotNullWhen(true)] out IBodyPartProperty? property)
-        {
-            if (!Owner.TryGetComponent(type, out var component))
-            {
-                property = null;
-                return false;
-            }
-
-            return (property = component as IBodyPartProperty) != null;
-        }
-
-        public bool TryGetProperty<T>([NotNullWhen(true)] out T? property) where T : class, IBodyPartProperty
-        {
-            return Owner.TryGetComponent(out property);
-        }
-
-        public bool HasMechanismBehavior<T>() where T : SharedMechanismBehavior
-        {
-            return Mechanisms.Any(m => m.HasBehavior<T>());
         }
     }
 

@@ -198,7 +198,7 @@ namespace Content.Shared.Movement.Components
             }
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new MoverComponentState(_heldMoveButtons);
         }

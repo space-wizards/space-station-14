@@ -5,6 +5,7 @@
   description: A large crushing machine used to recycle small items inefficiently. There are lights on the side.
   components:
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb

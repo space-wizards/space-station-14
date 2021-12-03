@@ -418,7 +418,7 @@ namespace Content.IntegrationTests.Tests.Networking
                 Foo = pred.Foo;
             }
 
-            public override ComponentState GetComponentState(ICommonSession player)
+            public override ComponentState GetComponentState()
             {
                 return new PredictionComponentState(Foo);
             }

@@ -43,7 +43,8 @@ CLIENT_IGNORED_RESOURCES = {
 
 CLIENT_CONTENT_ASSEMBLIES = [
     "Content.Client",
-    "Content.Shared"
+    "Content.Shared",
+    "Content.Shared.Database"
 ]
 
 def main() -> None:

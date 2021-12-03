@@ -1,4 +1,5 @@
 ﻿using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
@@ -38,7 +39,7 @@ namespace Content.Server.Chemistry.Components
 
             var chemistry = EntitySystem.Get<ReactiveSystem>();
             var cloneSolution = solution.Clone();
-            var transferAmount = FixedPoint2.Min(cloneSolution.TotalVolume * solutionFraction, bloodstream.EmptyVolume);
+            var transferAmount = FixedPoint2.Min(cloneSolution.TotalVolume * solutionFraction, bloodstream.Solution.AvailableVolume);
             var transferSolution = cloneSolution.SplitSolution(transferAmount);
 
             foreach (var reagentQuantity in transferSolution.Contents.ToArray())
@@ -47,7 +48,8 @@ namespace Content.Server.Chemistry.Components
                 chemistry.ReactionEntity(entity.Uid, ReactionMethod.Ingestion, reagentQuantity.ReagentId, reagentQuantity.Quantity, transferSolution);
             }
 
-            bloodstream.TryTransferSolution(transferSolution);
+            var bloodstreamSys = EntitySystem.Get<BloodstreamSystem>();
+            bloodstreamSys.TryAddToBloodstream(entity.Uid, transferSolution, bloodstream);
         }
 
 

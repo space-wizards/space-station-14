@@ -47,7 +47,7 @@ namespace Content.Shared.Ghost
         [DataField("canReturnToBody")]
         private bool _canReturnToBody;
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new GhostComponentState(CanReturnToBody, CanGhostInteract);
         }

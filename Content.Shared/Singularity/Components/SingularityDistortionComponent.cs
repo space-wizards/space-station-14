@@ -34,7 +34,7 @@ namespace Content.Shared.Singularity.Components
             set => this.SetAndDirtyIfChanged(ref _falloff, value);
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new SingularityDistortionComponentState(Intensity, Falloff);
         }

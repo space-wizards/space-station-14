@@ -5,6 +5,7 @@ using Content.Server.UserInterface;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
 using Content.Shared.Crayon;
+using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
@@ -88,7 +89,7 @@ namespace Content.Server.Crayon
             }
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new CrayonComponentState(_color, SelectedState, Charges, Capacity);
         }

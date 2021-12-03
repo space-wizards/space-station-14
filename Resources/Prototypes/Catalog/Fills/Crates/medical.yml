@@ -21,6 +21,22 @@
         amount: 2
 
 - type: entity
+  id: CrateChemistrySupplies
+  name: chemistry supplies crate
+  parent: CrateMedical
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSyringe
+        amount: 1
+      - id: BoxBeaker
+        amount: 1
+      - id: BoxPillCanister
+        amount: 1
+      - id: Dropper
+        amount: 2
+
+- type: entity
   id: CrateMedicalSurgery
   name: surgical supplies crate
   parent: CrateSurgery

@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Robust.Shared.Containers;
@@ -77,7 +78,7 @@ namespace Content.Shared.Hands.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public float ThrowRange { get; set; } = 8f;
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             var hands = new HandState[Hands.Count];
 

@@ -28,7 +28,7 @@
         maxVol: 8
         reagents:
         - ReagentId: Nutriment
-          Quantity: 7
+          Quantity: 4
 
 # Custom Bread Example
 

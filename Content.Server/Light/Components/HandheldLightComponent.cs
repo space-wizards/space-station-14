@@ -241,7 +241,7 @@ namespace Content.Server.Light.Components
             return (byte?) ContentHelpers.RoundToNearestLevels(currentCharge / Cell.MaxCharge * 255, 255, StatusLevels);
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new HandheldLightComponentState(GetLevel());
         }

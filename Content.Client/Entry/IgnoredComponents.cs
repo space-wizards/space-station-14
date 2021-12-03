@@ -50,6 +50,7 @@ namespace Content.Client.Entry
             "AccessReader",
             "IdCardConsole",
             "Airlock",
+            "ThermalRegulator",
             "AtmosFixMarker",
             "CablePlacer",
             "Drink",
@@ -115,6 +116,7 @@ namespace Content.Client.Entry
             "PowerSupplier",
             "PowerConsumer",
             "Battery",
+            "Lung",
             "BatteryDischarger",
             "Apc",
             "PowerProvider",
@@ -316,8 +318,8 @@ namespace Content.Client.Entry
             "Armor",
             "Udder",
             "PneumaticCannon",
-            "Supermatter",
-            "SupermatterFood"
+            "Spreader",
+            "GrowingKudzu"
         };
     }
 }

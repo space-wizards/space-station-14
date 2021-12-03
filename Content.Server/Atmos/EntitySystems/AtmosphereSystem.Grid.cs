@@ -770,6 +770,65 @@ namespace Content.Server.Atmos.EntitySystems
 
         #endregion
 
+        #region Tile Get Heat Capacity
+
+        /// <summary>
+        ///     Get a tile's heat capacity, based on the tile type, tile contents and tile gas mixture.
+        /// </summary>
+        public float GetTileHeatCapacity(EntityCoordinates coordinates)
+        {
+            if (TryGetGridAndTile(coordinates, out var tuple))
+                return GetTileHeatCapacity(tuple.Value.Grid, tuple.Value.Tile);
+
+            return Atmospherics.MinimumHeatCapacity;
+        }
+
+        /// <summary>
+        ///     Get a tile's heat capacity, based on the tile type, tile contents and tile gas mixture.
+        /// </summary>
+        public float GetTileHeatCapacity(GridId grid, Vector2i tile)
+        {
+            // Always return space gas mixtures for invalid grids (grid 0)
+            if (!grid.IsValid())
+                return Atmospherics.MinimumHeatCapacity;
+
+            if (!_mapManager.TryGetGrid(grid, out var mapGrid))
+                return Atmospherics.MinimumHeatCapacity;
+
+            if (EntityManager.TryGetComponent(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
+            {
+                return GetTileHeatCapacity(gridAtmosphere, tile);
+            }
+
+            if (EntityManager.TryGetComponent(mapGrid.GridEntityId, out SpaceAtmosphereComponent? _))
+            {
+                return Atmospherics.SpaceHeatCapacity;
+            }
+
+            return Atmospherics.MinimumHeatCapacity;
+        }
+
+        /// <summary>
+        ///     Get a tile's heat capacity, based on the tile type, tile contents and tile gas mixture.
+        /// </summary>
+        public float GetTileHeatCapacity(GridAtmosphereComponent gridAtmosphere, Vector2i tile)
+        {
+            if (!gridAtmosphere.Tiles.TryGetValue(tile, out var tileAtmosphere))
+                return Atmospherics.MinimumHeatCapacity;
+
+            return GetTileHeatCapacity(tileAtmosphere);
+        }
+
+        /// <summary>
+        ///     Get a tile's heat capacity, based on the tile type, tile contents and tile gas mixture.
+        /// </summary>
+        public float GetTileHeatCapacity(TileAtmosphere tile)
+        {
+            return tile.HeatCapacity + (tile.Air == null ? 0 : GetHeatCapacity(tile.Air));
+        }
+
+        #endregion
+
         #region Adjacent Get Positions
 
         /// <summary>

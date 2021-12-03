@@ -138,6 +138,11 @@ namespace Content.Shared.Atmos
         /// </summary>
         public const float MinimumHeatCapacity = 0.0003f;
 
+        /// <summary>
+        ///     For the purposes of making space "colder"
+        /// </summary>
+        public const float SpaceHeatCapacity = 7000f;
+
         #region Excited Groups
 
         /// <summary>

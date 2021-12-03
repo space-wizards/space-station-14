@@ -88,7 +88,7 @@ namespace Content.Shared.Item
         [DataField("sprite")]
         private string? _rsiPath;
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new ItemComponentState(Size, EquippedPrefix, Color, RsiPath);
         }

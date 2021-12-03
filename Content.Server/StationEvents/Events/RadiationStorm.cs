@@ -92,6 +92,13 @@ namespace Content.Server.StationEvents.Events
             ResetTimeUntilPulse();
         }
 
+        public static void SpawnPulseAt(EntityCoordinates at)
+        {
+            var pulse = IoCManager.Resolve<IEntityManager>()
+                .SpawnEntity("RadiationPulse", at);
+            pulse.GetComponent<RadiationPulseComponent>().DoPulse();
+        }
+
         private bool TryFindRandomGrid(IMapGrid mapGrid, out EntityCoordinates coordinates)
         {
             if (!mapGrid.Index.IsValid())

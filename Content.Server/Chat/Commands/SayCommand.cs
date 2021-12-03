@@ -36,6 +36,7 @@ namespace Content.Server.Chat.Commands
                 return;
 
             var chat = IoCManager.Resolve<IChatManager>();
+            var chatSanitizer = IoCManager.Resolve<IChatSanitizationManager>();
             var playerEntity = player.AttachedEntity;
 
             if (playerEntity == null)
@@ -62,7 +63,11 @@ namespace Content.Server.Chat.Commands
                     return;
                 }
 
-                chat.EntitySay(mindComponent.OwnedEntity, message);
+                var emote = chatSanitizer.TrySanitizeOutSmilies(message, mindComponent.OwnedEntity, out var sanitized, out var emoteStr);
+                if (sanitized.Length != 0)
+                    chat.EntitySay(mindComponent.OwnedEntity, sanitized);
+                if (emote)
+                    chat.EntityMe(mindComponent.OwnedEntity, emoteStr!);
             }
 
         }

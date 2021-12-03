@@ -152,6 +152,7 @@
     - map: [ "enum.Slots.POCKET2" ]
   - type: Physics
     bodyType: KinematicController
+  - type: Fixtures
     fixtures: # TODO: This needs a second fixture just for mob collisions.
     - shape:
         !type:PhysShapeCircle
@@ -189,7 +190,7 @@
     preset: HumanPreset
   - type: Damageable
     damageContainer: Biological
-  - type: Respirator
+  - type: ThermalRegulator
     metabolismHeat: 800
     radiatedHeat: 100
     implicitHeatRegulation: 500
@@ -197,6 +198,7 @@
     shiveringHeatRegulation: 2000
     normalBodyTemperature: 310.15
     thermalRegulationTemperatureThreshold: 25
+  - type: Respirator
     needsGases:
       Oxygen: 0.00060763888
     producesGases:
@@ -290,9 +292,6 @@
       proper: true
   - type: StandingState
   - type: DoorBumpOpener
-  - type: SupermatterFood
-    energy: 10
-
 - type: entity
   save: false
   name: Urist McHands
@@ -391,6 +390,7 @@
       - map: ["hand-right"]
     - type: Physics
       bodyType: Dynamic
+    - type: Fixtures
       fixtures:
       - shape:
           !type:PhysShapeAabb
