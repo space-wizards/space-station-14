@@ -50,8 +50,12 @@ namespace Content.Server.Storage.Components
 
                 for (var i = 0; i < storageItem.Amount; i++)
                 {
-                    storage.Insert(
-                        Owner.EntityManager.SpawnEntity(storageItem.PrototypeId, Owner.Transform.Coordinates));
+                    var ent = Owner.EntityManager.SpawnEntity(storageItem.PrototypeId, Owner.Transform.Coordinates);
+
+                    if (storage.Insert(ent)) continue;
+
+                    Logger.ErrorS("storage", $"Tried to StorageFill {storageItem.PrototypeId} inside {Owner} but can't.");
+                    Owner.EntityManager.DeleteEntity(ent);
                 }
 
                 if (!string.IsNullOrEmpty(storageItem.GroupId)) alreadySpawnedGroups.Add(storageItem.GroupId);

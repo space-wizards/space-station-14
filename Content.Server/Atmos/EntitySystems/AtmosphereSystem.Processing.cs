@@ -347,7 +347,7 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 var atmosphere = _currentRunAtmosphere[_currentRunAtmosphereIndex];
 
-                if (atmosphere.Paused || !atmosphere.Simulated || atmosphere.LifeStage >= ComponentLifeStage.Stopping)
+                if (atmosphere.LifeStage >= ComponentLifeStage.Stopping || atmosphere.Paused || !atmosphere.Simulated)
                     continue;
 
                 atmosphere.Timer += frameTime;
