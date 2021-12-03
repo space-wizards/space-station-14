@@ -90,7 +90,7 @@ namespace Content.IntegrationTests.Tests.Fluids
             MapId sMapId = default;
             IMapGrid sGrid;
             GridId sGridId = default;
-            IEntity sGridEntity = null;
+            EntityUid sGridEntity = null;
             EntityCoordinates sCoordinates = default;
 
             // Spawn a paused map with one tile to spawn puddles on

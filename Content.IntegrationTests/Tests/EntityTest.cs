@@ -37,7 +37,7 @@ namespace Content.IntegrationTests.Tests
 
             var prototypes = new List<EntityPrototype>();
             IMapGrid grid = default;
-            IEntity testEntity;
+            EntityUid testEntity;
 
             //Build up test environment
             server.Post(() =>

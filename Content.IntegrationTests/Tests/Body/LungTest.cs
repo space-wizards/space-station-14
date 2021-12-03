@@ -153,7 +153,7 @@ namespace Content.IntegrationTests.Tests.Body
             MapId mapId;
             IMapGrid grid = null;
             RespiratorComponent respirator = null;
-            IEntity human = null;
+            EntityUid human = null;
 
             var testMapName = "Maps/Test/Breathing/3by3-20oxy-80nit.yml";
 

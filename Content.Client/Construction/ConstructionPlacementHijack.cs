@@ -36,7 +36,7 @@ namespace Content.Client.Construction
         }
 
         /// <inheritdoc />
-        public override bool HijackDeletion(IEntity entity)
+        public override bool HijackDeletion(EntityUid entity)
         {
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ConstructionGhostComponent? ghost))
             {

@@ -56,7 +56,7 @@ namespace Content.IntegrationTests.Tests.Doors
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
 
-            IEntity airlock = null;
+            EntityUid airlock = null;
             ServerDoorComponent doorComponent = null;
 
             server.Assert(() =>
@@ -121,8 +121,8 @@ namespace Content.IntegrationTests.Tests.Doors
             var entityManager = server.ResolveDependency<IEntityManager>();
 
             IPhysBody physBody = null;
-            IEntity physicsDummy = null;
-            IEntity airlock = null;
+            EntityUid physicsDummy = null;
+            EntityUid airlock = null;
             ServerDoorComponent doorComponent = null;
 
             var physicsDummyStartingX = -1;
