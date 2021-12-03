@@ -10,7 +10,7 @@ public class EquippedEventBase : EntityEventArgs
     public readonly EntityUid Equipee;
 
     /// <summary>
-    /// The entity to be equipped.
+    /// The entity which got equipped.
     /// </summary>
     public readonly EntityUid Equipment;
 

@@ -57,15 +57,16 @@ public partial class InventorySystem
         if(item.EquipSound != null)
             SoundSystem.Play(Filter.Pvs(uid), item.EquipSound.GetSound(), uid, AudioParams.Default.WithVolume(-2f));
 
+        inventory.Dirty();
+
+        _movementSpeed.RefreshMovementSpeedModifiers(uid);
+
         var equippedEvent = new DidEquipEvent(uid, itemUid);
         RaiseLocalEvent(uid, equippedEvent);
 
         var gotEquippedEvent = new GotEquippedEvent(uid, itemUid);
         RaiseLocalEvent(itemUid, gotEquippedEvent);
 
-        inventory.Dirty();
-
-        _movementSpeed.RefreshMovementSpeedModifiers(uid);
         return true;
     }
 
@@ -146,6 +147,13 @@ public partial class InventorySystem
         inventory.Dirty();
 
         _movementSpeed.RefreshMovementSpeedModifiers(uid);
+
+        var unequippedEvent = new DidUnequipEvent(uid, entity.Uid);
+        RaiseLocalEvent(uid, unequippedEvent);
+
+        var gotUnequippedEvent = new GotUnequippedEvent(uid, entity.Uid);
+        RaiseLocalEvent(entity.Uid, gotUnequippedEvent);
+
 
         return true;
     }

@@ -5,12 +5,12 @@ namespace Content.Shared.Inventory.Events;
 public class UnequipAttemptEventBase : CancellableEntityEventArgs
 {
     /// <summary>
-    /// The entity equipping.
+    /// The entity unequipping.
     /// </summary>
     public readonly EntityUid Equipee;
 
     /// <summary>
-    /// The entity to be equipped.
+    /// The entity to be unequipped.
     /// </summary>
     public readonly EntityUid Equipment;
 
