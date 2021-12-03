@@ -1,9 +1,4 @@
 Entries:
-- author: Hardly
-  changes:
-  - {message: Reduced Syndicate minibomb's radius, type: Tweak}
-  id: 199
-  time: '2021-05-21T11:26:10.0000000+00:00'
 - author: Swept
   changes:
   - {message: Removed solution transfer verbs., type: Remove}
@@ -2865,3 +2860,9 @@ Entries:
   - {message: Modified gyroscope sprite., type: Tweak}
   id: 700
   time: '2021-12-03T09:39:18.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'The metaphysical department has finally learned what a monkey is, and
+      has adjusted soul binding to monkeys accordingly.', type: Fix}
+  id: 701
+  time: '2021-12-03T17:11:51.0000000+00:00'
