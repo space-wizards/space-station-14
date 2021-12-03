@@ -8,6 +8,7 @@ using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
+using Robust.Shared.IoC;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -79,14 +80,14 @@ namespace Content.Server.Clothing.Components
                     {
                         hands.Drop(item.Owner);
                         inv.Equip(slot, item);
-                        hands.PutInHand(Owner.GetComponent<ItemComponent>());
+                        hands.PutInHand(IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(Owner.Uid));
                     }
                 }
                 else
                 {
                     hands.Drop(Owner);
                     if (!TryEquip(inv, slot, eventArgs.User))
-                        hands.PutInHand(Owner.GetComponent<ItemComponent>());
+                        hands.PutInHand(IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(Owner.Uid));
                 }
 
                 return true;

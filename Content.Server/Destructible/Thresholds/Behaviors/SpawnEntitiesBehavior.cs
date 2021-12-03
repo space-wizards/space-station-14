@@ -4,6 +4,7 @@ using Content.Server.Stack;
 using Content.Shared.Prototypes;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors
@@ -33,7 +34,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                 if (EntityPrototypeHelpers.HasComponent<StackComponent>(entityId))
                 {
                     var spawned = system.EntityManager.SpawnEntity(entityId, position);
-                    var stack = spawned.GetComponent<StackComponent>();
+                    var stack = IoCManager.Resolve<IEntityManager>().GetComponent<StackComponent>(spawned.Uid);
                     EntitySystem.Get<StackSystem>().SetCount(spawned.Uid, count, stack);
                     spawned.RandomOffset(0.5f);
                 }

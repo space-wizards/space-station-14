@@ -131,7 +131,7 @@ namespace Content.Server.Inventory.Components
                 Dirty();
             }
 
-            return containedEntity?.GetComponent<T>();
+            return (containedEntity != null ? IoCManager.Resolve<IEntityManager>().GetComponent<T>(containedEntity.Uid) : null);
         }
 
         public bool TryGetSlotItem<T>(Slots slot, [NotNullWhen(true)] out T? itemComponent) where T : ItemComponent
@@ -193,7 +193,7 @@ namespace Content.Server.Inventory.Components
             Equip(slot, item, mobCheck, out var _);
 
         public bool Equip(Slots slot, IEntity entity, bool mobCheck = true) =>
-            Equip(slot, entity.GetComponent<ItemComponent>(), mobCheck);
+            Equip(slot, IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(entity.Uid), mobCheck);
 
         /// <summary>
         ///     Checks whether an item can be put in the specified slot.
@@ -251,7 +251,7 @@ namespace Content.Server.Inventory.Components
             CanEquip(slot, item, mobCheck, out var _);
 
         public bool CanEquip(Slots slot, IEntity entity, bool mobCheck = true) =>
-            CanEquip(slot, entity.GetComponent<ItemComponent>(), mobCheck);
+            CanEquip(slot, IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(entity.Uid), mobCheck);
 
         /// <summary>
         ///     Drops the item in a slot.
@@ -307,7 +307,7 @@ namespace Content.Server.Inventory.Components
                 return;
             }
 
-            var item = entity.GetComponent<ItemComponent>();
+            var item = IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(entity.Uid);
             inventorySlot.ForceRemove(entity);
 
             var itemTransform = entity.Transform;
@@ -431,7 +431,7 @@ namespace Content.Server.Inventory.Components
             {
                 case ClientInventoryUpdate.Equip:
                 {
-                    var hands = Owner.GetComponent<HandsComponent>();
+                    var hands = IoCManager.Resolve<IEntityManager>().GetComponent<HandsComponent>(Owner.Uid);
                     var activeHand = hands.ActiveHand;
                     var activeItem = hands.GetActiveHand;
                     if (activeHand != null && activeItem != null && activeItem.Owner.TryGetComponent(out ItemComponent? item))
@@ -449,7 +449,7 @@ namespace Content.Server.Inventory.Components
                 case ClientInventoryUpdate.Use:
                 {
                     var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
-                    var hands = Owner.GetComponent<HandsComponent>();
+                    var hands = IoCManager.Resolve<IEntityManager>().GetComponent<HandsComponent>(Owner.Uid);
                     var activeHand = hands.GetActiveHand;
                     var itemContainedInSlot = GetSlotItem(msg.Inventoryslot);
                     if (itemContainedInSlot != null)
@@ -469,7 +469,7 @@ namespace Content.Server.Inventory.Components
                 }
                 case ClientInventoryUpdate.Hover:
                 {
-                    var hands = Owner.GetComponent<HandsComponent>();
+                    var hands = IoCManager.Resolve<IEntityManager>().GetComponent<HandsComponent>(Owner.Uid);
                     var activeHand = hands.GetActiveHand;
                     if (activeHand != null && GetSlotItem(msg.Inventoryslot) == null)
                     {

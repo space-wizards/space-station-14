@@ -22,10 +22,10 @@ namespace Content.Client.Animations
                 Logger.Error("Entity ({0}) couldn't be animated for pickup since it doesn't have a {1}!", entity.Name, nameof(SpriteComponent));
                 return;
             }
-            var sprite = animatableClone.GetComponent<SpriteComponent>();
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(animatableClone.Uid);
             sprite.CopyFrom(sprite0);
 
-            var animations = animatableClone.GetComponent<AnimationPlayerComponent>();
+            var animations = IoCManager.Resolve<IEntityManager>().GetComponent<AnimationPlayerComponent>(animatableClone.Uid);
             animations.AnimationCompleted += (_) => {
                 IoCManager.Resolve<IEntityManager>().DeleteEntity(animatableClone.Uid);
             };

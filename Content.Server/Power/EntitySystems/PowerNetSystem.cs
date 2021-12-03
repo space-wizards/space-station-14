@@ -6,6 +6,7 @@ using Content.Server.Power.NodeGroups;
 using Content.Server.Power.Pow3r;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
 namespace Content.Server.Power.EntitySystems
@@ -342,7 +343,7 @@ namespace Content.Server.Power.EntitySystems
 
             foreach (var apc in net.Apcs)
             {
-                var netBattery = apc.Owner.GetComponent<PowerNetworkBatteryComponent>();
+                var netBattery = IoCManager.Resolve<IEntityManager>().GetComponent<PowerNetworkBatteryComponent>(apc.Owner.Uid);
                 netNode.BatteriesDischarging.Add(netBattery.NetworkBattery.Id);
                 netBattery.NetworkBattery.LinkedNetworkDischarging = netNode.Id;
             }
@@ -371,14 +372,14 @@ namespace Content.Server.Power.EntitySystems
 
             foreach (var charger in net.Chargers)
             {
-                var battery = charger.Owner.GetComponent<PowerNetworkBatteryComponent>();
+                var battery = IoCManager.Resolve<IEntityManager>().GetComponent<PowerNetworkBatteryComponent>(charger.Owner.Uid);
                 netNode.BatteriesCharging.Add(battery.NetworkBattery.Id);
                 battery.NetworkBattery.LinkedNetworkCharging = netNode.Id;
             }
 
             foreach (var discharger in net.Dischargers)
             {
-                var battery = discharger.Owner.GetComponent<PowerNetworkBatteryComponent>();
+                var battery = IoCManager.Resolve<IEntityManager>().GetComponent<PowerNetworkBatteryComponent>(discharger.Owner.Uid);
                 netNode.BatteriesDischarging.Add(battery.NetworkBattery.Id);
                 battery.NetworkBattery.LinkedNetworkDischarging = netNode.Id;
             }

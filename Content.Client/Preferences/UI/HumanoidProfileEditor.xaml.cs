@@ -438,7 +438,7 @@ namespace Content.Client.Preferences.UI
             #region Preview
 
             _previewDummy = entityManager.SpawnEntity("MobHumanDummy", MapCoordinates.Nullspace);
-            var sprite = _previewDummy.GetComponent<SpriteComponent>();
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(_previewDummy.Uid);
 
             // Front
             _previewSprite = new SpriteView

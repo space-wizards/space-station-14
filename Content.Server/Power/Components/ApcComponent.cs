@@ -96,7 +96,7 @@ namespace Content.Server.Power.Components
                 if (_accessReader == null || accessSystem.IsAllowed(_accessReader, user.Uid))
                 {
                     MainBreakerEnabled = !MainBreakerEnabled;
-                    Owner.GetComponent<PowerNetworkBatteryComponent>().CanDischarge = MainBreakerEnabled;
+                    IoCManager.Resolve<IEntityManager>().GetComponent<PowerNetworkBatteryComponent>(Owner.Uid).CanDischarge = MainBreakerEnabled;
 
                     _uiDirty = true;
                     SoundSystem.Play(Filter.Pvs(Owner), _onReceiveMessageSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
@@ -174,7 +174,7 @@ namespace Content.Server.Power.Components
                 return ApcChargeState.Full;
             }
 
-            var netBattery = Owner.GetComponent<PowerNetworkBatteryComponent>();
+            var netBattery = IoCManager.Resolve<IEntityManager>().GetComponent<PowerNetworkBatteryComponent>(Owner.Uid);
             var delta = netBattery.CurrentSupply - netBattery.CurrentReceiving;
 
             return delta < 0 ? ApcChargeState.Charging : ApcChargeState.Lack;
@@ -186,7 +186,7 @@ namespace Content.Server.Power.Components
             if (bat == null)
                 return ApcExternalPowerState.None;
 
-            var netBat = Owner.GetComponent<PowerNetworkBatteryComponent>();
+            var netBat = IoCManager.Resolve<IEntityManager>().GetComponent<PowerNetworkBatteryComponent>(Owner.Uid);
             if (netBat.CurrentReceiving == 0 && netBat.LoadingNetworkDemand != 0)
             {
                 return ApcExternalPowerState.None;

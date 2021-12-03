@@ -15,6 +15,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -156,7 +157,7 @@ namespace Content.Server.AME.Components
                 return new AMEControllerBoundUserInterfaceState(Powered, IsMasterController(), false, HasJar, 0, InjectionAmount, GetCoreCount());
             }
 
-            var jarcomponent = jar.GetComponent<AMEFuelContainerComponent>();
+            var jarcomponent = IoCManager.Resolve<IEntityManager>().GetComponent<AMEFuelContainerComponent>(jar.Uid);
             return new AMEControllerBoundUserInterfaceState(Powered, IsMasterController(), _injecting, HasJar, jarcomponent.FuelAmount, InjectionAmount, GetCoreCount());
         }
 

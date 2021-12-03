@@ -209,7 +209,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             IEntity? bullet = null;
             if (ammo != null)
             {
-                var ammoComponent = ammo.GetComponent<AmmoComponent>();
+                var ammoComponent = IoCManager.Resolve<IEntityManager>().GetComponent<AmmoComponent>(ammo.Uid);
                 bullet = ammoComponent.TakeBullet(spawnAt);
                 if (ammoComponent.Caseless)
                 {

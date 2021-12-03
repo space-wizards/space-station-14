@@ -96,7 +96,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 Assert.That(interactHand);
 
                 Assert.That(user.TryGetComponent<HandsComponent>(out var hands));
-                Assert.That(hands.PutInHand(item.GetComponent<ItemComponent>()));
+                Assert.That(hands.PutInHand(IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(item.Uid)));
 
                 interactionSystem.UserInteraction(user, target.Transform.Coordinates, target.Uid);
                 Assert.That(interactUsing);
@@ -168,7 +168,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 Assert.That(interactHand, Is.False);
 
                 Assert.That(user.TryGetComponent<HandsComponent>(out var hands));
-                Assert.That(hands.PutInHand(item.GetComponent<ItemComponent>()));
+                Assert.That(hands.PutInHand(IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(item.Uid)));
 
                 interactionSystem.UserInteraction(user, target.Transform.Coordinates, target.Uid);
                 Assert.That(interactUsing, Is.False);
@@ -237,7 +237,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 Assert.That(interactHand);
 
                 Assert.That(user.TryGetComponent<HandsComponent>(out var hands));
-                Assert.That(hands.PutInHand(item.GetComponent<ItemComponent>()));
+                Assert.That(hands.PutInHand(IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(item.Uid)));
 
                 interactionSystem.UserInteraction(user, target.Transform.Coordinates, target.Uid);
                 Assert.That(interactUsing);
@@ -307,7 +307,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 Assert.That(interactHand, Is.False);
 
                 Assert.That(user.TryGetComponent<HandsComponent>(out var hands));
-                Assert.That(hands.PutInHand(item.GetComponent<ItemComponent>()));
+                Assert.That(hands.PutInHand(IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(item.Uid)));
 
                 interactionSystem.UserInteraction(user, target.Transform.Coordinates, target.Uid);
                 Assert.That(interactUsing, Is.False);
@@ -392,7 +392,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 Assert.That(interactHand);
 
                 Assert.That(user.TryGetComponent<HandsComponent>(out var hands));
-                Assert.That(hands.PutInHand(item.GetComponent<ItemComponent>()));
+                Assert.That(hands.PutInHand(IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(item.Uid)));
 
                 interactionSystem.UserInteraction(user, target.Transform.Coordinates, target.Uid);
                 Assert.That(interactUsing, Is.False);

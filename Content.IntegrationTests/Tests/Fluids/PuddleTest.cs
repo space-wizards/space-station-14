@@ -132,7 +132,7 @@ namespace Content.IntegrationTests.Tests.Fluids
                 // Check that the puddle was created
                 Assert.NotNull(puddle);
 
-                evaporation = puddle.Owner.GetComponent<EvaporationComponent>();
+                evaporation = IoCManager.Resolve<IEntityManager>().GetComponent<EvaporationComponent>(puddle.Owner.Uid);
 
                 IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(puddle.Owner.Uid).EntityPaused = true; // See https://github.com/space-wizards/RobustToolbox/issues/1445
 

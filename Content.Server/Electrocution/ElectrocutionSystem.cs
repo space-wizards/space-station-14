@@ -277,11 +277,10 @@ namespace Content.Server.Electrocution
             var electrocutionEntity = EntityManager.SpawnEntity(
                 $"VirtualElectrocutionLoad{node.NodeGroupID}", sourceTransform.Coordinates);
 
-            var electrocutionNode = electrocutionEntity
-                .GetComponent<NodeContainerComponent>()
+            var electrocutionNode = IoCManager.Resolve<IEntityManager>().GetComponent<NodeContainerComponent>(electrocutionEntity.Uid)
                 .GetNode<ElectrocutionNode>("electrocution");
 
-            var electrocutionComponent = electrocutionEntity.GetComponent<ElectrocutionComponent>();
+            var electrocutionComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ElectrocutionComponent>(electrocutionEntity.Uid);
 
             electrocutionNode.CableEntity = sourceUid;
             electrocutionNode.NodeName = node.Name;

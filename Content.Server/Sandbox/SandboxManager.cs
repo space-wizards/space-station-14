@@ -153,7 +153,7 @@ namespace Content.Server.Sandbox
                 var card = CreateFreshId();
                 if (!player.AttachedEntity.TryGetComponent(out inv) || !inv.Equip(Slots.IDCARD, card))
                 {
-                    hands.PutInHandOrDrop(card.GetComponent<ItemComponent>());
+                    hands.PutInHandOrDrop(IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(card.Uid));
                 }
             }
 
@@ -173,7 +173,7 @@ namespace Content.Server.Sandbox
                 var card = _entityManager.SpawnEntity("CaptainIDCard", player.AttachedEntity.Transform.Coordinates);
                 UpgradeId(card);
 
-                card.GetComponent<IdCardComponent>().FullName = player.AttachedEntity.Name;
+                IoCManager.Resolve<IEntityManager>().GetComponent<IdCardComponent>(card.Uid).FullName = player.AttachedEntity.Name;
                 return card;
             }
         }

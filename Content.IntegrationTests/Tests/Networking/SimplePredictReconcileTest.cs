@@ -112,8 +112,8 @@ namespace Content.IntegrationTests.Tests.Networking
 
             await client.WaitPost(() =>
             {
-                clientComponent = cEntityManager.GetEntity(serverEnt.Uid)
-                    .GetComponent<PredictionTestComponent>();
+                IEntity tempQualifier = cEntityManager.GetEntity(serverEnt.Uid);
+                clientComponent = IoCManager.Resolve<IEntityManager>().GetComponent<PredictionTestComponent>(tempQualifier.Uid);
             });
 
             Assert.That(clientComponent.Foo, Is.False);
@@ -457,7 +457,7 @@ namespace Content.IntegrationTests.Tests.Networking
             private void HandleMessage(SetFooMessage message, EntitySessionEventArgs args)
             {
                 var entity = EntityManager.GetEntity(message.Uid);
-                var component = entity.GetComponent<PredictionTestComponent>();
+                var component = IoCManager.Resolve<IEntityManager>().GetComponent<PredictionTestComponent>(entity.Uid);
                 var old = component.Foo;
                 if (Allow)
                 {

@@ -78,7 +78,7 @@ namespace Content.Server.Power.SMES
 
         private ChargeState GetNewChargeState()
         {
-            var battery = Owner.GetComponent<PowerNetworkBatteryComponent>();
+            var battery = IoCManager.Resolve<IEntityManager>().GetComponent<PowerNetworkBatteryComponent>(Owner.Uid);
             return (battery.CurrentSupply - battery.CurrentReceiving) switch
             {
                 > 0 => ChargeState.Discharging,

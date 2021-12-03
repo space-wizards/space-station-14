@@ -15,6 +15,7 @@ using Robust.Client.UserInterface;
 using Robust.Server.Player;
 using Robust.Shared;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -71,7 +72,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             await server.WaitAssertion(() =>
             {
                 var playerEnt = serverPlayerManager.Sessions.Single().AttachedEntity;
-                var actionsComponent = playerEnt!.GetComponent<ServerActionsComponent>();
+                var actionsComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ServerActionsComponent>(playerEnt!.Uid);
 
                 // player should begin with their innate actions granted
                 innateActions.AddRange(actionsComponent.InnateActions);
@@ -98,7 +99,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             {
                 var local = clientPlayerMgr.LocalPlayer;
                 var controlled = local!.ControlledEntity;
-                var actionsComponent = controlled!.GetComponent<ClientActionsComponent>();
+                var actionsComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ClientActionsComponent>(controlled!.Uid);
 
                 // we should have our innate actions and debug1.
                 foreach (var innateAction in innateActions)
@@ -153,7 +154,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             await server.WaitAssertion(() =>
             {
                 var playerEnt = serverPlayerManager.Sessions.Single().AttachedEntity;
-                var actionsComponent = playerEnt!.GetComponent<ServerActionsComponent>();
+                var actionsComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ServerActionsComponent>(playerEnt!.Uid);
                 actionsComponent.Revoke(ActionType.DebugInstant);
             });
 
@@ -164,7 +165,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             {
                 var local = clientPlayerMgr.LocalPlayer;
                 var controlled = local!.ControlledEntity;
-                var actionsComponent = controlled!.GetComponent<ClientActionsComponent>();
+                var actionsComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ClientActionsComponent>(controlled!.Uid);
 
                 // we should have our innate actions, but debug1 should be revoked
                 foreach (var innateAction in innateActions)
@@ -245,7 +246,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             await server.WaitAssertion(() =>
             {
                 serverPlayerEnt = serverPlayerManager.Sessions.Single().AttachedEntity;
-                serverActionsComponent = serverPlayerEnt!.GetComponent<ServerActionsComponent>();
+                serverActionsComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ServerActionsComponent>(serverPlayerEnt!.Uid);
 
                 // spawn and give them an item that has actions
                 serverFlashlight = serverEntManager.SpawnEntity("TestFlashlight",
@@ -259,7 +260,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
 
                 // grant an extra item action, before pickup, initially disabled
                 itemActions.GrantOrUpdate(ItemActionType.DebugToggle, false);
-                serverPlayerEnt.GetComponent<HandsComponent>().PutInHand(serverFlashlight.GetComponent<ItemComponent>(), false);
+                IoCManager.Resolve<IEntityManager>().GetComponent<HandsComponent>(serverPlayerEnt.Uid).PutInHand(IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(serverFlashlight.Uid), false);
                 // grant an extra item action, after pickup, with a cooldown
                 itemActions.GrantOrUpdate(ItemActionType.DebugInstant, cooldown: cooldown);
 
@@ -285,7 +286,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             {
                 var local = clientPlayerMgr.LocalPlayer;
                 var controlled = local!.ControlledEntity;
-                clientActionsComponent = controlled!.GetComponent<ClientActionsComponent>();
+                clientActionsComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ClientActionsComponent>(controlled!.Uid);
 
                 var lightEntry = clientActionsComponent.ItemActionStates()
                     .Where(entry => entry.Value.ContainsKey(ItemActionType.ToggleLight))
@@ -333,7 +334,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             await server.WaitAssertion(() =>
             {
                 // drop the item, and the item actions should go away
-                serverPlayerEnt.GetComponent<HandsComponent>()
+                IoCManager.Resolve<IEntityManager>().GetComponent<HandsComponent>(serverPlayerEnt.Uid)
                     .TryDropEntity(serverFlashlight, serverPlayerEnt.Transform.Coordinates, false);
                 Assert.That(serverActionsComponent.ItemActionStates().ContainsKey(serverFlashlight.Uid), Is.False);
             });
@@ -351,7 +352,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             {
                 // pick the item up again, the states should be back to what they were when dropped,
                 // as the states "stick" with the item
-                serverPlayerEnt.GetComponent<HandsComponent>().PutInHand(serverFlashlight.GetComponent<ItemComponent>(), false);
+                IoCManager.Resolve<IEntityManager>().GetComponent<HandsComponent>(serverPlayerEnt.Uid).PutInHand(IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(serverFlashlight.Uid), false);
                 Assert.That(serverActionsComponent.ItemActionStates().TryGetValue(serverFlashlight.Uid, out var lightStates));
                 Assert.That(lightStates.TryGetValue(ItemActionType.ToggleLight, out var lightState));
                 Assert.That(lightState.Equals(new ActionState(true, toggledOn: true)));

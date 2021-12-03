@@ -46,7 +46,7 @@ namespace Content.Client.Wall.Components
             _overlayEntity.Transform.AttachParent(Owner);
             _overlayEntity.Transform.LocalPosition = Vector2.Zero;
 
-            _overlaySprite = _overlayEntity.GetComponent<ISpriteComponent>();
+            _overlaySprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(_overlayEntity.Uid);
 
             var overState0 = $"{StateBase}over_0";
             _overlaySprite.LayerMapSet(OverCornerLayers.SE, _overlaySprite.AddLayerState(overState0));

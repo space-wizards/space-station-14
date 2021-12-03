@@ -134,7 +134,7 @@ namespace Content.Server.PowerCell.Components
             //Dirty();
             if (user != null)
             {
-                if (!user.TryGetComponent(out HandsComponent? hands) || !hands.PutInHand(cell.Owner.GetComponent<ItemComponent>()))
+                if (!user.TryGetComponent(out HandsComponent? hands) || !hands.PutInHand(IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(cell.Owner.Uid)))
                 {
                     cell.Owner.Transform.Coordinates = user.Transform.Coordinates;
                 }

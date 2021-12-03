@@ -3,6 +3,7 @@ using Content.Shared.SMES;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Client.Power.SMES
 {
@@ -13,7 +14,7 @@ namespace Content.Client.Power.SMES
         {
             base.InitializeEntity(entity);
 
-            var sprite = entity.GetComponent<ISpriteComponent>();
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(entity.Uid);
 
             sprite.LayerMapSet(Layers.Input, sprite.AddLayerState("smes-oc0"));
             sprite.LayerSetShader(Layers.Input, "unshaded");
@@ -28,7 +29,7 @@ namespace Content.Client.Power.SMES
         {
             base.OnChangeData(component);
 
-            var sprite = component.Owner.GetComponent<ISpriteComponent>();
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner.Uid);
             if (!component.TryGetData<int>(SmesVisuals.LastChargeLevel, out var level) || level == 0)
             {
                 sprite.LayerSetVisible(Layers.Charge, false);

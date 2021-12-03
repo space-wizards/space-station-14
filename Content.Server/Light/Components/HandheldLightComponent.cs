@@ -201,7 +201,7 @@ namespace Content.Server.Light.Components
                 return;
             }
 
-            var appearanceComponent = Owner.GetComponent<AppearanceComponent>();
+            var appearanceComponent = IoCManager.Resolve<IEntityManager>().GetComponent<AppearanceComponent>(Owner.Uid);
 
             if (Cell.MaxCharge - Cell.CurrentCharge < Cell.MaxCharge * 0.70)
             {

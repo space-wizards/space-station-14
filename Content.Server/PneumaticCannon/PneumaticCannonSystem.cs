@@ -255,7 +255,7 @@ namespace Content.Server.PneumaticCannon
             if (comp.GasTankSlot.ContainedEntity != null && comp.GasTankRequired)
             {
                 // we checked for this earlier in HasGas so a GetComp is okay
-                var gas = comp.GasTankSlot.ContainedEntity.GetComponent<GasTankComponent>();
+                var gas = IoCManager.Resolve<IEntityManager>().GetComponent<GasTankComponent>(comp.GasTankSlot.ContainedEntity.Uid);
                 var environment = _atmos.GetTileMixture(comp.Owner.Transform.Coordinates, true);
                 var removed = gas.RemoveAir(GetMoleUsageFromPower(comp.Power));
                 if (environment != null && removed != null)

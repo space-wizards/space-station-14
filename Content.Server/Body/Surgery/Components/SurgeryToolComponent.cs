@@ -129,8 +129,8 @@ namespace Content.Server.Body.Surgery.Components
 
             if (_optionsCache.Count > 0 && PerformerCache != null)
             {
-                OpenSurgeryUI(PerformerCache.GetComponent<ActorComponent>().PlayerSession);
-                UpdateSurgeryUIMechanismRequest(PerformerCache.GetComponent<ActorComponent>().PlayerSession,
+                OpenSurgeryUI(IoCManager.Resolve<IEntityManager>().GetComponent<ActorComponent>(PerformerCache.Uid).PlayerSession);
+                UpdateSurgeryUIMechanismRequest(IoCManager.Resolve<IEntityManager>().GetComponent<ActorComponent>(PerformerCache.Uid).PlayerSession,
                     toSend);
                 _callbackCache = callback;
             }

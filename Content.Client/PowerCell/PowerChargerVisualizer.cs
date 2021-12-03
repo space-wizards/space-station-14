@@ -2,6 +2,7 @@ using Content.Shared.Power;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Client.PowerCell
 {
@@ -12,7 +13,7 @@ namespace Content.Client.PowerCell
         {
             base.InitializeEntity(entity);
 
-            var sprite = entity.GetComponent<ISpriteComponent>();
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(entity.Uid);
 
             // Base item
             sprite.LayerMapSet(Layers.Base, sprite.AddLayerState("empty"));
@@ -26,7 +27,7 @@ namespace Content.Client.PowerCell
         {
             base.OnChangeData(component);
 
-            var sprite = component.Owner.GetComponent<ISpriteComponent>();
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner.Uid);
 
             // Update base item
             if (component.TryGetData(CellVisual.Occupied, out bool occupied))

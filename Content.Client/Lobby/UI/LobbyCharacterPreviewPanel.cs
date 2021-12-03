@@ -106,7 +106,7 @@ namespace Content.Client.Lobby.UI
         {
             return new()
             {
-                Sprite = entity.GetComponent<ISpriteComponent>(),
+                Sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(entity.Uid),
                 OverrideDirection = direction,
                 Scale = (2, 2)
             };
@@ -140,7 +140,7 @@ namespace Content.Client.Lobby.UI
         {
             var protoMan = IoCManager.Resolve<IPrototypeManager>();
 
-            var inventory = dummy.GetComponent<ClientInventoryComponent>();
+            var inventory = IoCManager.Resolve<IEntityManager>().GetComponent<ClientInventoryComponent>(dummy.Uid);
 
             var highPriorityJob = profile.JobPriorities.FirstOrDefault(p => p.Value == JobPriority.High).Key;
 

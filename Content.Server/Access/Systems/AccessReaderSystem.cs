@@ -108,7 +108,13 @@ namespace Content.Server.Access.Systems
 
             if (EntityManager.TryGetComponent(uid, out PDAComponent? pda))
             {
-                tags = pda?.ContainedID?.Owner?.GetComponent<AccessComponent>()?.Tags;
+                IEntity tempQualifier = pda?.ContainedID?.Owner;
+                if (tempQualifier != null)
+                {
+                    IoCManager.Resolve<IEntityManager>().GetComponent<AccessComponent>(tempQualifier.Uid);
+                }
+
+                tags = RETURNED_VALUE?.Tags;
                 return tags != null;
             }
 

@@ -191,7 +191,7 @@ namespace Content.Server.GameTicking
 
             var mob = SpawnObserverMob();
             mob.Name = name;
-            var ghost = mob.GetComponent<GhostComponent>();
+            var ghost = IoCManager.Resolve<IEntityManager>().GetComponent<GhostComponent>(mob.Uid);
             EntitySystem.Get<SharedGhostSystem>().SetCanReturnToBody(ghost, false);
             newMind.TransferTo(mob.Uid);
 
@@ -238,7 +238,7 @@ namespace Content.Server.GameTicking
                     if (!string.IsNullOrEmpty(equipmentStr))
                     {
                         var equipmentEntity = EntityManager.SpawnEntity(equipmentStr, entity.Transform.Coordinates);
-                        inventory.Equip(slot, equipmentEntity.GetComponent<ItemComponent>());
+                        inventory.Equip(slot, IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(equipmentEntity.Uid));
                     }
                 }
             }
@@ -273,7 +273,7 @@ namespace Content.Server.GameTicking
             _cardSystem.TryChangeFullName(card.Owner.Uid, characterName, card);
             _cardSystem.TryChangeJobTitle(card.Owner.Uid, jobPrototype.Name, card);
 
-            var access = card.Owner.GetComponent<AccessComponent>();
+            var access = IoCManager.Resolve<IEntityManager>().GetComponent<AccessComponent>(card.Owner.Uid);
             var accessTags = access.Tags;
             accessTags.UnionWith(jobPrototype.Access);
             EntityManager.EntitySysManager.GetEntitySystem<PDASystem>()

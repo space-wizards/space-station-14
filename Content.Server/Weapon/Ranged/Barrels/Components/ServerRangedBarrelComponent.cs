@@ -273,7 +273,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 {Direction.East, Direction.North, Direction.NorthWest, Direction.South, Direction.SouthEast, Direction.West};
 
             const float ejectOffset = 1.8f;
-            var ammo = entity.GetComponent<AmmoComponent>();
+            var ammo = IoCManager.Resolve<IEntityManager>().GetComponent<AmmoComponent>(entity.Uid);
             var offsetPos = ((robustRandom.NextFloat() - 0.5f) * ejectOffset, (robustRandom.NextFloat() - 0.5f) * ejectOffset);
             entity.Transform.Coordinates = entity.Transform.Coordinates.Offset(offsetPos);
             entity.Transform.LocalRotation = robustRandom.Pick(ejectDirections).ToAngle();
@@ -346,10 +346,10 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                     projectileAngle = angle;
                 }
 
-                var physics = projectile.GetComponent<IPhysBody>();
+                var physics = IoCManager.Resolve<IEntityManager>().GetComponent<IPhysBody>(projectile.Uid);
                 physics.BodyStatus = BodyStatus.InAir;
 
-                var projectileComponent = projectile.GetComponent<ProjectileComponent>();
+                var projectileComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ProjectileComponent>(projectile.Uid);
                 projectileComponent.IgnoreEntity(shooter);
 
                 // FIXME: Work around issue where inserting and removing an entity from a container,
@@ -357,8 +357,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 // See SharedBroadphaseSystem.HandleContainerInsert()... It sets Awake to false, which causes this.
                 projectile.SpawnTimer(TimeSpan.FromMilliseconds(25), () =>
                 {
-                    projectile
-                        .GetComponent<IPhysBody>()
+                    IoCManager.Resolve<IEntityManager>().GetComponent<IPhysBody>(projectile.Uid)
                         .LinearVelocity = projectileAngle.ToVec() * velocity;
                 });
 

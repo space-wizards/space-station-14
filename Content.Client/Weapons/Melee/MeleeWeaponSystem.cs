@@ -59,7 +59,7 @@ namespace Content.Client.Weapons.Melee
                 var entity = EntityManager.SpawnEntity(weaponArc.Prototype, attacker.Transform.Coordinates);
                 entity.Transform.LocalRotation = msg.Angle;
 
-                var weaponArcAnimation = entity.GetComponent<MeleeWeaponArcAnimationComponent>();
+                var weaponArcAnimation = IoCManager.Resolve<IEntityManager>().GetComponent<MeleeWeaponArcAnimationComponent>(entity.Uid);
                 weaponArcAnimation.SetData(weaponArc, msg.Angle, attacker, msg.ArcFollowAttacker);
 
                 // Due to ISpriteComponent limitations, weapons that don't use an RSI won't have this effect.

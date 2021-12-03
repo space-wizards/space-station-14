@@ -8,6 +8,7 @@ using Content.Shared.Popups;
 using Content.Shared.Power;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -99,7 +100,7 @@ namespace Content.Server.Power.Components
             _heldBattery = null;
             if (user.TryGetComponent(out HandsComponent? handsComponent))
             {
-                handsComponent.PutInHandOrDrop(heldItem.GetComponent<ItemComponent>());
+                handsComponent.PutInHandOrDrop(IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(heldItem.Uid));
             }
 
             if (heldItem.TryGetComponent(out ServerBatteryBarrelComponent? batteryBarrelComponent))

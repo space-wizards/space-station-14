@@ -7,6 +7,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Power.Pow3r;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
 
@@ -90,7 +91,7 @@ namespace Content.Server.Power.NodeGroups
 
         public void AddDischarger(BatteryDischargerComponent discharger)
         {
-            var battery = discharger.Owner.GetComponent<PowerNetworkBatteryComponent>();
+            var battery = IoCManager.Resolve<IEntityManager>().GetComponent<PowerNetworkBatteryComponent>(discharger.Owner.Uid);
             battery.NetworkBattery.LinkedNetworkCharging = default;
             Dischargers.Add(discharger);
             _powerNetSystem.QueueReconnectPowerNet(this);
@@ -108,7 +109,7 @@ namespace Content.Server.Power.NodeGroups
 
         public void AddCharger(BatteryChargerComponent charger)
         {
-            var battery = charger.Owner.GetComponent<PowerNetworkBatteryComponent>();
+            var battery = IoCManager.Resolve<IEntityManager>().GetComponent<PowerNetworkBatteryComponent>(charger.Owner.Uid);
             battery.NetworkBattery.LinkedNetworkCharging = default;
             Chargers.Add(charger);
             _powerNetSystem.QueueReconnectPowerNet(this);

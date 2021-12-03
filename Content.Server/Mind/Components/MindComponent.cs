@@ -110,7 +110,7 @@ namespace Content.Server.Mind.Components
                         }
 
                         var ghost = IoCManager.Resolve<IEntityManager>().SpawnEntity("MobObserver", spawnPosition);
-                        var ghostComponent = ghost.GetComponent<GhostComponent>();
+                        var ghostComponent = IoCManager.Resolve<IEntityManager>().GetComponent<GhostComponent>(ghost.Uid);
                         EntitySystem.Get<SharedGhostSystem>().SetCanReturnToBody(ghostComponent, false);
 
                         if (Mind != null)

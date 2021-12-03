@@ -64,7 +64,7 @@ namespace Content.Server.VendingMachines
             if (!Powered)
                 return;
 
-            var wires = Owner.GetComponent<WiresComponent>();
+            var wires = IoCManager.Resolve<IEntityManager>().GetComponent<WiresComponent>(Owner.Uid);
             if (wires.IsPanelOpen)
             {
                 wires.OpenInterface(actor.PlayerSession);
@@ -87,7 +87,7 @@ namespace Content.Server.VendingMachines
             _spriteName = packPrototype.SpriteName;
             if (!string.IsNullOrEmpty(_spriteName))
             {
-                var spriteComponent = Owner.GetComponent<SpriteComponent>();
+                var spriteComponent = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(Owner.Uid);
                 const string vendingMachineRSIPath = "Structures/Machines/VendingMachines/{0}.rsi";
                 spriteComponent.BaseRSIPath = string.Format(vendingMachineRSIPath, _spriteName);
             }

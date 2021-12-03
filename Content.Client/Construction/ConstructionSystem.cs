@@ -171,12 +171,12 @@ namespace Content.Client.Construction
             }
 
             var ghost = EntityManager.SpawnEntity("constructionghost", loc);
-            var comp = ghost.GetComponent<ConstructionGhostComponent>();
+            var comp = IoCManager.Resolve<IEntityManager>().GetComponent<ConstructionGhostComponent>(ghost.Uid);
             comp.Prototype = prototype;
             comp.GhostId = _nextId++;
             ghost.Transform.LocalRotation = dir.ToAngle();
             _ghosts.Add(comp.GhostId, comp);
-            var sprite = ghost.GetComponent<SpriteComponent>();
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(ghost.Uid);
             sprite.Color = new Color(48, 255, 48, 128);
             sprite.AddBlankLayer(0); // There is no way to actually check if this already exists, so we blindly insert a new one
             sprite.LayerSetSprite(0, prototype.Icon);

@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -53,7 +54,7 @@ namespace Content.Client.Chemistry.Visualizers
         {
             if (!state) return;
 
-            var animPlayer = component.Owner.GetComponent<AnimationPlayerComponent>();
+            var animPlayer = IoCManager.Resolve<IEntityManager>().GetComponent<AnimationPlayerComponent>(component.Owner.Uid);
 
             if(!animPlayer.HasRunningAnimation(AnimationKey))
                 animPlayer.Play(VaporFlick, AnimationKey);
@@ -61,7 +62,7 @@ namespace Content.Client.Chemistry.Visualizers
 
         private void SetColor(AppearanceComponent component, Color color)
         {
-            var sprite = component.Owner.GetComponent<ISpriteComponent>();
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner.Uid);
 
             sprite.Color = color;
         }

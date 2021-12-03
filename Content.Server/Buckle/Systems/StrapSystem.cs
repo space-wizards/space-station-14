@@ -39,7 +39,7 @@ namespace Content.Server.Buckle.Systems
             // Add unstrap verbs for every strapped entity.
             foreach (var entity in component.BuckledEntities)
             {
-                var buckledComp = entity.GetComponent<BuckleComponent>();
+                var buckledComp = IoCManager.Resolve<IEntityManager>().GetComponent<BuckleComponent>(entity.Uid);
 
                 if (!_interactionSystem.InRangeUnobstructed(args.User, args.Target, range: buckledComp.Range))
                     continue;

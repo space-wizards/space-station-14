@@ -141,8 +141,8 @@ namespace Content.Server.Body.Components
 
             if (_optionsCache.Count > 0)
             {
-                OpenSurgeryUI(eventArgs.User.GetComponent<ActorComponent>().PlayerSession);
-                BodyPartSlotRequest(eventArgs.User.GetComponent<ActorComponent>().PlayerSession,
+                OpenSurgeryUI(IoCManager.Resolve<IEntityManager>().GetComponent<ActorComponent>(eventArgs.User.Uid).PlayerSession);
+                BodyPartSlotRequest(IoCManager.Resolve<IEntityManager>().GetComponent<ActorComponent>(eventArgs.User.Uid).PlayerSession,
                     toSend);
                 _surgeonCache = eventArgs.User;
                 _owningBodyCache = body;

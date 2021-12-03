@@ -22,7 +22,7 @@ namespace Content.Client.Weapons.Melee.Components
         {
             base.Initialize();
 
-            _sprite = Owner.GetComponent<SpriteComponent>();
+            _sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(Owner.Uid);
         }
 
         public void SetData(MeleeWeaponAnimationPrototype prototype, Angle baseAngle, IEntity attacker, bool followAttacker = true)

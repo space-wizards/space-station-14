@@ -36,8 +36,8 @@ namespace Content.Shared.Pulling
         // They do not expect to be cancellable.
         private void ForceDisconnect(SharedPullerComponent puller, SharedPullableComponent pullable)
         {
-            var pullerPhysics = puller.Owner.GetComponent<PhysicsComponent>();
-            var pullablePhysics = pullable.Owner.GetComponent<PhysicsComponent>();
+            var pullerPhysics = IoCManager.Resolve<IEntityManager>().GetComponent<PhysicsComponent>(puller.Owner.Uid);
+            var pullablePhysics = IoCManager.Resolve<IEntityManager>().GetComponent<PhysicsComponent>(pullable.Owner.Uid);
 
             // MovingTo shutdown
             ForceSetMovingTo(pullable, null);
@@ -81,22 +81,22 @@ namespace Content.Shared.Pulling
             var pullableOldPullerE = pullable?.Puller;
             if (pullableOldPullerE != null)
             {
-                ForceDisconnect(pullableOldPullerE.GetComponent<SharedPullerComponent>(), pullable!);
+                ForceDisconnect(IoCManager.Resolve<IEntityManager>().GetComponent<SharedPullerComponent>(pullableOldPullerE.Uid), pullable!);
             }
 
             // Continue with the puller.
             var pullerOldPullableE = puller?.Pulling;
             if (pullerOldPullableE != null)
             {
-                ForceDisconnect(puller!, pullerOldPullableE.GetComponent<SharedPullableComponent>());
+                ForceDisconnect(puller!, IoCManager.Resolve<IEntityManager>().GetComponent<SharedPullableComponent>(pullerOldPullableE.Uid));
             }
 
             // And now for the actual connection (if any).
 
             if ((puller != null) && (pullable != null))
             {
-                var pullerPhysics = puller.Owner.GetComponent<PhysicsComponent>();
-                var pullablePhysics = pullable.Owner.GetComponent<PhysicsComponent>();
+                var pullerPhysics = IoCManager.Resolve<IEntityManager>().GetComponent<PhysicsComponent>(puller.Owner.Uid);
+                var pullablePhysics = IoCManager.Resolve<IEntityManager>().GetComponent<PhysicsComponent>(pullable.Owner.Uid);
 
                 // State startup
                 puller.Pulling = pullable.Owner;

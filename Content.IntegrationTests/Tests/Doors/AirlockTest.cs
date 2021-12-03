@@ -151,7 +151,7 @@ namespace Content.IntegrationTests.Tests.Doors
             for (var i = 0; i < 240; i += 10)
             {
                 // Keep the airlock awake so they collide
-                server.Post(() => airlock.GetComponent<IPhysBody>().WakeBody());
+                server.Post(() => IoCManager.Resolve<IEntityManager>().GetComponent<IPhysBody>(airlock.Uid).WakeBody());
 
                 await server.WaitRunTicks(10);
                 await server.WaitIdleAsync();

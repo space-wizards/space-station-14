@@ -34,7 +34,7 @@ namespace Content.Server.Hands.Systems
 
                     var pos = hands.Owner.Transform.Coordinates;
                     var virtualItem = EntityManager.SpawnEntity("HandVirtualItem", pos);
-                    var virtualItemComp = virtualItem.GetComponent<HandVirtualItemComponent>();
+                    var virtualItemComp = IoCManager.Resolve<IEntityManager>().GetComponent<HandVirtualItemComponent>(virtualItem.Uid);
                     virtualItemComp.BlockingEntity = blockingEnt;
                     hands.PutEntityIntoHand(hand, virtualItem);
                     return true;

@@ -194,7 +194,7 @@ namespace Content.Server.Fluids.Components
             }
 
             var puddleEnt = serverEntityManager.SpawnEntity(prototype, spillGridCoords);
-            var newPuddleComponent = puddleEnt.GetComponent<PuddleComponent>();
+            var newPuddleComponent = IoCManager.Resolve<IEntityManager>().GetComponent<PuddleComponent>(puddleEnt.Uid);
 
             puddleSystem.TryAddSolution(newPuddleComponent.Owner.Uid, solution, sound);
 

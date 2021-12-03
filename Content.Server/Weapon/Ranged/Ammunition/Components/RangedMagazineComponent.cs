@@ -153,7 +153,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
                 return false;
             }
 
-            var itemComponent = ammo.GetComponent<ItemComponent>();
+            var itemComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(ammo.Uid);
             if (!handsComponent.CanPutInHand(itemComponent))
             {
                 ammo.Transform.Coordinates = eventArgs.User.Transform.Coordinates;

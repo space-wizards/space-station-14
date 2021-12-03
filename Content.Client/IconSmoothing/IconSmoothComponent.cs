@@ -63,7 +63,7 @@ namespace Content.Client.IconSmoothing
         {
             base.Initialize();
 
-            Sprite = Owner.GetComponent<ISpriteComponent>();
+            Sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(Owner.Uid);
         }
 
         /// <inheritdoc />

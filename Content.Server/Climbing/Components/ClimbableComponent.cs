@@ -10,6 +10,7 @@ using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
@@ -165,7 +166,7 @@ namespace Content.Server.Climbing.Components
                 var direction = (Owner.Transform.WorldPosition - entityPos).Normalized;
                 var endPoint = Owner.Transform.WorldPosition;
 
-                var climbMode = entityToMove.GetComponent<ClimbingComponent>();
+                var climbMode = IoCManager.Resolve<IEntityManager>().GetComponent<ClimbingComponent>(entityToMove.Uid);
                 climbMode.IsClimbing = true;
 
                 if (MathF.Abs(direction.X) < 0.6f) // user climbed mostly vertically so lets make it a clean straight line
@@ -213,7 +214,7 @@ namespace Content.Server.Climbing.Components
                 var direction = (Owner.Transform.WorldPosition - userPos).Normalized;
                 var endPoint = Owner.Transform.WorldPosition;
 
-                var climbMode = user.GetComponent<ClimbingComponent>();
+                var climbMode = IoCManager.Resolve<IEntityManager>().GetComponent<ClimbingComponent>(user.Uid);
                 climbMode.IsClimbing = true;
 
                 if (MathF.Abs(direction.X) < 0.6f) // user climbed mostly vertically so lets make it a clean straight line

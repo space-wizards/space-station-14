@@ -238,7 +238,7 @@ namespace Content.Server.Construction
             var newEntity = EntityManager.SpawnEntity(graph.Nodes[edge.Target].Entity, user.Transform.Coordinates);
 
             // Yes, this should throw if it's missing the component.
-            var construction = newEntity.GetComponent<ConstructionComponent>();
+            var construction = IoCManager.Resolve<IEntityManager>().GetComponent<ConstructionComponent>(newEntity.Uid);
 
             // We attempt to set the pathfinding target.
             SetPathfindingTarget(newEntity.Uid, targetNode.Name, construction);

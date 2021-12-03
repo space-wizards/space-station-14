@@ -34,7 +34,7 @@ namespace Content.Server.Recycling
             // Mobs are a special case!
             if (CanGib(component, entity))
             {
-                entity.GetComponent<SharedBodyComponent>().Gib(true);
+                IoCManager.Resolve<IEntityManager>().GetComponent<SharedBodyComponent>(entity.Uid).Gib(true);
                 Bloodstain(component);
                 return;
             }

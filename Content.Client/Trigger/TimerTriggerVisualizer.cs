@@ -46,8 +46,8 @@ namespace Content.Client.Trigger
 
         public override void OnChangeData(AppearanceComponent component)
         {
-            var sprite = component.Owner.GetComponent<ISpriteComponent>();
-            var animPlayer = component.Owner.GetComponent<AnimationPlayerComponent>();
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner.Uid);
+            var animPlayer = IoCManager.Resolve<IEntityManager>().GetComponent<AnimationPlayerComponent>(component.Owner.Uid);
             if (!component.TryGetData(TriggerVisuals.VisualState, out TriggerVisualState state))
             {
                 state = TriggerVisualState.Unprimed;

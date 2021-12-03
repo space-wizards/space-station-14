@@ -22,7 +22,7 @@ namespace Content.Server.Disposal.Tube.Components
         public bool TryInsert(DisposalUnitComponent from)
         {
             var holder = IoCManager.Resolve<IEntityManager>().SpawnEntity(HolderPrototypeId, Owner.Transform.MapPosition);
-            var holderComponent = holder.GetComponent<DisposalHolderComponent>();
+            var holderComponent = IoCManager.Resolve<IEntityManager>().GetComponent<DisposalHolderComponent>(holder.Uid);
 
             foreach (var entity in from.ContainedEntities.ToArray())
             {

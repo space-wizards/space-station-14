@@ -88,7 +88,7 @@ namespace Content.Server.StationEvents.Events
                 return;
 
             var pulse = _entityManager.SpawnEntity("RadiationPulse", coordinates);
-            pulse.GetComponent<RadiationPulseComponent>().DoPulse();
+            IoCManager.Resolve<IEntityManager>().GetComponent<RadiationPulseComponent>(pulse.Uid).DoPulse();
             ResetTimeUntilPulse();
         }
 
@@ -96,7 +96,7 @@ namespace Content.Server.StationEvents.Events
         {
             var pulse = IoCManager.Resolve<IEntityManager>()
                 .SpawnEntity("RadiationPulse", at);
-            pulse.GetComponent<RadiationPulseComponent>().DoPulse();
+            IoCManager.Resolve<IEntityManager>().GetComponent<RadiationPulseComponent>(pulse.Uid).DoPulse();
         }
 
         private bool TryFindRandomGrid(IMapGrid mapGrid, out EntityCoordinates coordinates)

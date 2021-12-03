@@ -205,7 +205,8 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
                 if (container.ContainedEntities.Count > 0)
                 {
-                    var gasTank = container.ContainedEntities[0].GetComponent<GasTankComponent>();
+                    IEntity tempQualifier = container.ContainedEntities[0];
+                    var gasTank = IoCManager.Resolve<IEntityManager>().GetComponent<GasTankComponent>(tempQualifier.Uid);
                     _atmosphereSystem.ReleaseGasTo(canister.Air, gasTank.Air, canister.ReleasePressure);
                 }
                 else

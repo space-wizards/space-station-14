@@ -165,7 +165,7 @@ namespace Content.Client.Preferences.UI
 
                 var view = new SpriteView
                 {
-                    Sprite = _previewDummy.GetComponent<SpriteComponent>(),
+                    Sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(_previewDummy.Uid),
                     Scale = (2, 2),
                     OverrideDirection = Direction.South
                 };

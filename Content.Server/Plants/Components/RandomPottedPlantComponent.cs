@@ -61,7 +61,7 @@ namespace Content.Server.Plants.Components
 
             if (_selectedState != null)
             {
-                Owner.GetComponent<SpriteComponent>().LayerSetState(0, _selectedState);
+                IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(Owner.Uid).LayerSetState(0, _selectedState);
             }
         }
 
@@ -72,7 +72,7 @@ namespace Content.Server.Plants.Components
             var list = _plastic ? PlasticPlantStates : RegularPlantStates;
             _selectedState = random.Pick(list);
 
-            Owner.GetComponent<SpriteComponent>().LayerSetState(0, _selectedState);
+            IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(Owner.Uid).LayerSetState(0, _selectedState);
         }
     }
 }

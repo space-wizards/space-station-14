@@ -93,15 +93,15 @@ namespace Content.Server.GameTicking.Presets
 
                 //  pda
                 var newPDA = _entityManager.SpawnEntity(PDAPrototypeName, mind.OwnedEntity.Transform.Coordinates);
-                inventory.Equip(EquipmentSlotDefines.Slots.IDCARD, newPDA.GetComponent<ItemComponent>());
+                inventory.Equip(EquipmentSlotDefines.Slots.IDCARD, IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(newPDA.Uid));
 
                 //  belt
                 var newTmp = _entityManager.SpawnEntity(BeltPrototypeName, mind.OwnedEntity.Transform.Coordinates);
-                inventory.Equip(EquipmentSlotDefines.Slots.BELT, newTmp.GetComponent<ItemComponent>());
+                inventory.Equip(EquipmentSlotDefines.Slots.BELT, IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(newTmp.Uid));
 
                 //  backpack
                 newTmp = _entityManager.SpawnEntity(BackpackPrototypeName, mind.OwnedEntity.Transform.Coordinates);
-                inventory.Equip(EquipmentSlotDefines.Slots.BACKPACK, newTmp.GetComponent<ItemComponent>());
+                inventory.Equip(EquipmentSlotDefines.Slots.BACKPACK, IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(newTmp.Uid));
 
                 // Like normal traitors, they need access to a traitor account.
                 var uplinkAccount = new UplinkAccount(startingBalance, mind.OwnedEntity.Uid);
@@ -114,7 +114,7 @@ namespace Content.Server.GameTicking.Presets
                 _allOriginalNames[uplinkAccount] = mind.OwnedEntity.Name;
 
                 // The PDA needs to be marked with the correct owner.
-                var pda = newPDA.GetComponent<PDAComponent>();
+                var pda = IoCManager.Resolve<IEntityManager>().GetComponent<PDAComponent>(newPDA.Uid);
                 _entityManager.EntitySysManager.GetEntitySystem<PDASystem>()
                     .SetOwner(pda, mind.OwnedEntity.Name);
                 IoCManager.Resolve<IEntityManager>().AddComponent<TraitorDeathMatchReliableOwnerTagComponent>(newPDA).UserId = mind.UserId;

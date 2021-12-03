@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Content.Shared.Tag;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
@@ -60,7 +61,7 @@ namespace Content.IntegrationTests.Tests.Tag
             {
                 sMapManager.CreateNewMapEntity(MapId.Nullspace);
                 sTagDummy = sEntityManager.SpawnEntity(TagEntityId, MapCoordinates.Nullspace);
-                sTagComponent = sTagDummy.GetComponent<TagComponent>();
+                sTagComponent = IoCManager.Resolve<IEntityManager>().GetComponent<TagComponent>(sTagDummy.Uid);
             });
 
             await server.WaitAssertion(() =>

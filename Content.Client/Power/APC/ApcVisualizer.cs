@@ -2,6 +2,7 @@ using Content.Shared.APC;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Client.Power.APC
 {
@@ -12,7 +13,7 @@ namespace Content.Client.Power.APC
         {
             base.InitializeEntity(entity);
 
-            var sprite = entity.GetComponent<ISpriteComponent>();
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(entity.Uid);
 
             sprite.LayerMapSet(Layers.ChargeState, sprite.AddLayerState("apco3-0"));
             sprite.LayerSetShader(Layers.ChargeState, "unshaded");
@@ -34,7 +35,7 @@ namespace Content.Client.Power.APC
         {
             base.OnChangeData(component);
 
-            var sprite = component.Owner.GetComponent<ISpriteComponent>();
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner.Uid);
             if (component.TryGetData<ApcChargeState>(ApcVisuals.ChargeState, out var state))
             {
                 switch (state)

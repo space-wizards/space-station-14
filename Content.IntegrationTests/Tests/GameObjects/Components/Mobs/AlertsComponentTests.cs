@@ -7,6 +7,8 @@ using Content.Shared.Alert;
 using NUnit.Framework;
 using Robust.Client.UserInterface;
 using Robust.Server.Player;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
 {
@@ -29,7 +31,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             {
                 var playerEnt = serverPlayerManager.Sessions.Single().AttachedEntity;
                 Assert.NotNull(playerEnt);
-                var alertsComponent = playerEnt.GetComponent<ServerAlertsComponent>();
+                var alertsComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ServerAlertsComponent>(playerEnt.Uid);
                 Assert.NotNull(alertsComponent);
 
                 // show 2 alerts
@@ -49,7 +51,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                 Assert.NotNull(local);
                 var controlled = local.ControlledEntity;
                 Assert.NotNull(controlled);
-                var alertsComponent = controlled.GetComponent<ClientAlertsComponent>();
+                var alertsComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ClientAlertsComponent>(controlled.Uid);
                 Assert.NotNull(alertsComponent);
 
                 // find the alertsui
@@ -69,7 +71,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             {
                 var playerEnt = serverPlayerManager.Sessions.Single().AttachedEntity;
                 Assert.NotNull(playerEnt);
-                var alertsComponent = playerEnt.GetComponent<ServerAlertsComponent>();
+                var alertsComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ServerAlertsComponent>(playerEnt.Uid);
                 Assert.NotNull(alertsComponent);
 
                 alertsComponent.ClearAlert(AlertType.Debug1);
@@ -84,7 +86,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                 Assert.NotNull(local);
                 var controlled = local.ControlledEntity;
                 Assert.NotNull(controlled);
-                var alertsComponent = controlled.GetComponent<ClientAlertsComponent>();
+                var alertsComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ClientAlertsComponent>(controlled.Uid);
                 Assert.NotNull(alertsComponent);
 
                 // find the alertsui

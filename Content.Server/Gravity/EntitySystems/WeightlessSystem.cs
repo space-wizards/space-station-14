@@ -42,7 +42,7 @@ namespace Content.Server.Gravity.EntitySystems
             if (_mapManager.TryGetGrid(status.Owner.Transform.GridID, out var grid))
             {
                 var gridEntity = EntityManager.GetEntity(grid.GridEntityId);
-                if (gridEntity.GetComponent<GravityComponent>().Enabled)
+                if (IoCManager.Resolve<IEntityManager>().GetComponent<GravityComponent>(gridEntity.Uid).Enabled)
                 {
                     RemoveWeightless(status);
                 }

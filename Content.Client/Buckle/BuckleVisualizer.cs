@@ -5,6 +5,7 @@ using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
 namespace Content.Client.Buckle
@@ -30,7 +31,7 @@ namespace Content.Client.Buckle
 
         private void SetRotation(AppearanceComponent component, Angle rotation)
         {
-            var sprite = component.Owner.GetComponent<ISpriteComponent>();
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner.Uid);
 
             if (!sprite.Owner.TryGetComponent(out AnimationPlayerComponent? animation))
             {

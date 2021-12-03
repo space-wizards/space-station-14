@@ -144,7 +144,7 @@ namespace Content.Server.Fluids.Components
                 }
 
                 // Add the solution to the vapor and actually send the thing
-                var vaporComponent = vapor.GetComponent<VaporComponent>();
+                var vaporComponent = IoCManager.Resolve<IEntityManager>().GetComponent<VaporComponent>(vapor.Uid);
                 var vaporSystem = EntitySystem.Get<VaporSystem>();
                 vaporSystem.TryAddSolution(vaporComponent, solution);
 

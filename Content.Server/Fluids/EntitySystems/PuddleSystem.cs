@@ -329,9 +329,10 @@ namespace Content.Server.Fluids.EntitySystems
             }
 
             puddle ??= () =>
-                IoCManager.Resolve<IEntityManager>().SpawnEntity(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(puddleComponent.Owner.Uid).EntityPrototype?.ID,
-                        mapGrid.DirectionToGrid(coords, direction))
-                    .GetComponent<PuddleComponent>();
+            {
+                return IoCManager.Resolve<IEntityManager>().GetComponent<PuddleComponent>(IoCManager.Resolve<IEntityManager>().SpawnEntity(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(puddleComponent.Owner.Uid).EntityPrototype?.ID,
+                    mapGrid.DirectionToGrid(coords, direction)).Uid);
+            };
 
             return true;
         }

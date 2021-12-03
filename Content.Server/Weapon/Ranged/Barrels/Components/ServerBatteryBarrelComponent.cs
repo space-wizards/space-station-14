@@ -55,7 +55,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                     return 0;
                 }
 
-                return (int) Math.Ceiling(powerCell.GetComponent<BatteryComponent>().CurrentCharge / _baseFireCost);
+                return (int) Math.Ceiling(IoCManager.Resolve<IEntityManager>().GetComponent<BatteryComponent>(powerCell.Uid).CurrentCharge / _baseFireCost);
             }
         }
 
@@ -70,7 +70,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                     return 0;
                 }
 
-                return (int) Math.Ceiling((float) (powerCell.GetComponent<BatteryComponent>().MaxCharge / _baseFireCost));
+                return (int) Math.Ceiling((float) (IoCManager.Resolve<IEntityManager>().GetComponent<BatteryComponent>(powerCell.Uid).MaxCharge / _baseFireCost));
             }
         }
 
@@ -150,7 +150,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 return null;
             }
 
-            var capacitor = powerCellEntity.GetComponent<BatteryComponent>();
+            var capacitor = IoCManager.Resolve<IEntityManager>().GetComponent<BatteryComponent>(powerCellEntity.Uid);
             if (capacitor.CurrentCharge < _lowerChargeLimit)
             {
                 return null;
@@ -256,7 +256,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             Dirty();
             UpdateAppearance();
 
-            if (!hands.PutInHand(cell.Owner.GetComponent<ItemComponent>()))
+            if (!hands.PutInHand(IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(cell.Owner.Uid)))
             {
                 cell.Owner.Transform.Coordinates = user.Transform.Coordinates;
             }

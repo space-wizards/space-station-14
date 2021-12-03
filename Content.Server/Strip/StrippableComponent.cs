@@ -14,6 +14,7 @@ using Content.Shared.Strip.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.Inventory.EquipmentSlotDefines;
@@ -154,8 +155,8 @@ namespace Content.Server.Strip
         /// </summary>
         private async void PlaceActiveHandItemInInventory(IEntity user, Slots slot)
         {
-            var inventory = Owner.GetComponent<InventoryComponent>();
-            var userHands = user.GetComponent<HandsComponent>();
+            var inventory = IoCManager.Resolve<IEntityManager>().GetComponent<InventoryComponent>(Owner.Uid);
+            var userHands = IoCManager.Resolve<IEntityManager>().GetComponent<HandsComponent>(user.Uid);
             var item = userHands.GetActiveHand;
 
             bool Check()
@@ -219,8 +220,8 @@ namespace Content.Server.Strip
         /// </summary>
         private async void PlaceActiveHandItemInHands(IEntity user, string hand)
         {
-            var hands = Owner.GetComponent<HandsComponent>();
-            var userHands = user.GetComponent<HandsComponent>();
+            var hands = IoCManager.Resolve<IEntityManager>().GetComponent<HandsComponent>(Owner.Uid);
+            var userHands = IoCManager.Resolve<IEntityManager>().GetComponent<HandsComponent>(user.Uid);
             var item = userHands.GetActiveHand;
 
             bool Check()
@@ -285,8 +286,8 @@ namespace Content.Server.Strip
         /// </summary>
         private async void TakeItemFromInventory(IEntity user, Slots slot)
         {
-            var inventory = Owner.GetComponent<InventoryComponent>();
-            var userHands = user.GetComponent<HandsComponent>();
+            var inventory = IoCManager.Resolve<IEntityManager>().GetComponent<InventoryComponent>(Owner.Uid);
+            var userHands = IoCManager.Resolve<IEntityManager>().GetComponent<HandsComponent>(user.Uid);
 
             bool Check()
             {
@@ -341,8 +342,8 @@ namespace Content.Server.Strip
         /// </summary>
         private async void TakeItemFromHands(IEntity user, string hand)
         {
-            var hands = Owner.GetComponent<HandsComponent>();
-            var userHands = user.GetComponent<HandsComponent>();
+            var hands = IoCManager.Resolve<IEntityManager>().GetComponent<HandsComponent>(Owner.Uid);
+            var userHands = IoCManager.Resolve<IEntityManager>().GetComponent<HandsComponent>(user.Uid);
 
             bool Check()
             {

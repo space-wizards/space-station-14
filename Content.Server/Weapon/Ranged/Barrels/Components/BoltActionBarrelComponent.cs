@@ -296,7 +296,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 {
                     return false;
                 }
-                if (!chamberedEntity.GetComponent<AmmoComponent>().Caseless)
+                if (!IoCManager.Resolve<IEntityManager>().GetComponent<AmmoComponent>(chamberedEntity.Uid).Caseless)
                 {
                     EjectCasing(chamberedEntity);
                 }

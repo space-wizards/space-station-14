@@ -141,8 +141,8 @@ namespace Content.Client.VendingMachines.UI
         {
             base.OnChangeData(component);
 
-            var sprite = component.Owner.GetComponent<ISpriteComponent>();
-            var animPlayer = component.Owner.GetComponent<AnimationPlayerComponent>();
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner.Uid);
+            var animPlayer = IoCManager.Resolve<IEntityManager>().GetComponent<AnimationPlayerComponent>(component.Owner.Uid);
             if (!component.TryGetData(VendingMachineVisuals.VisualState, out VendingMachineVisualState state))
             {
                 state = VendingMachineVisualState.Normal;

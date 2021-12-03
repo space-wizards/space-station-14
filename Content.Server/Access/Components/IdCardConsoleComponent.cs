@@ -133,8 +133,8 @@ namespace Content.Server.Access.Components
             }
             else
             {
-                var targetIdComponent = targetIdEntity.GetComponent<IdCardComponent>();
-                var targetAccessComponent = targetIdEntity.GetComponent<AccessComponent>();
+                var targetIdComponent = IoCManager.Resolve<IEntityManager>().GetComponent<IdCardComponent>(targetIdEntity.Uid);
+                var targetAccessComponent = IoCManager.Resolve<IEntityManager>().GetComponent<AccessComponent>(targetIdEntity.Uid);
                 newState = new IdCardConsoleBoundUserInterfaceState(
                     PrivilegedIdSlot.HasItem,
                     PrivilegedIdIsAuthorized(),

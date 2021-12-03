@@ -88,7 +88,7 @@ namespace Content.Server.Chat.Commands
             EntitySystem.Get<AdminLogSystem>().Add(LogType.Suicide, $"{player.AttachedEntity} is committing suicide");
 
             // Held item suicide
-            var handsComponent = owner.GetComponent<HandsComponent>();
+            var handsComponent = IoCManager.Resolve<IEntityManager>().GetComponent<HandsComponent>(owner.Uid);
             var itemComponent = handsComponent.GetActiveHand;
             if (itemComponent != null)
             {

@@ -106,7 +106,7 @@ namespace Content.Server.Administration.Commands
                     pdaComponent.ContainedID.FullName = target.Name;
                 }
 
-                inventoryComponent.Equip(slot, equipmentEntity.GetComponent<ItemComponent>(), false);
+                inventoryComponent.Equip(slot, IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(equipmentEntity.Uid), false);
             }
         }
     }

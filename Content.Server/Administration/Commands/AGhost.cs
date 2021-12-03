@@ -61,7 +61,7 @@ namespace Content.Server.Administration.Commands
                 mind.TransferTo(ghost.Uid);
             }
 
-            var comp = ghost.GetComponent<GhostComponent>();
+            var comp = IoCManager.Resolve<IEntityManager>().GetComponent<GhostComponent>(ghost.Uid);
             EntitySystem.Get<SharedGhostSystem>().SetCanReturnToBody(comp, canReturn);
         }
     }

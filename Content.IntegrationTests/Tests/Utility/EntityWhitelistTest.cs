@@ -4,6 +4,7 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Whitelist;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
 namespace Content.IntegrationTests.Tests.Utility
@@ -98,7 +99,7 @@ namespace Content.IntegrationTests.Tests.Utility
 
                 // Test from serialized
                 var dummy = entityManager.SpawnEntity("WhitelistDummy", mapCoordinates);
-                var whitelistSer = dummy.GetComponent<ItemSlotsComponent>().Slots.Values.First().Whitelist;
+                var whitelistSer = IoCManager.Resolve<IEntityManager>().GetComponent<ItemSlotsComponent>(dummy.Uid).Slots.Values.First().Whitelist;
                 Assert.That(whitelistSer, Is.Not.Null);
 
                 Assert.That(whitelistSer.Components, Is.Not.Null);

@@ -38,7 +38,7 @@ namespace Content.Shared.Movement.Components
             entityManager ??= IoCManager.Resolve<IEntityManager>();
             var gridEntity = entityManager.GetEntity(gridEntityId);
 
-            if (!gridEntity.GetComponent<GravityComponent>().Enabled)
+            if (!IoCManager.Resolve<IEntityManager>().GetComponent<GravityComponent>(gridEntity.Uid).Enabled)
             {
                 return true;
             }

@@ -129,7 +129,7 @@ namespace Content.Server.Storage.Components
 
             foreach (var entity in Storage.ContainedEntities)
             {
-                var item = entity.GetComponent<SharedItemComponent>();
+                var item = IoCManager.Resolve<IEntityManager>().GetComponent<SharedItemComponent>(entity.Uid);
                 _storageUsed += item.Size;
             }
         }
@@ -290,7 +290,7 @@ namespace Content.Server.Storage.Components
             PlaySoundCollection();
             EnsureInitialCalculated();
 
-            var userSession = entity.GetComponent<ActorComponent>().PlayerSession;
+            var userSession = IoCManager.Resolve<IEntityManager>().GetComponent<ActorComponent>(entity.Uid).PlayerSession;
 
             Logger.DebugS(LoggerName, $"Storage (UID {Owner.Uid}) \"used\" by player session (UID {userSession.AttachedEntityUid}).");
 

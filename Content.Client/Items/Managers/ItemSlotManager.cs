@@ -139,8 +139,8 @@ namespace Content.Client.Items.Managers
 
             // Set green / red overlay at 50% transparency
             var hoverEntity = _entityManager.SpawnEntity("hoverentity", MapCoordinates.Nullspace);
-            var hoverSprite = hoverEntity.GetComponent<SpriteComponent>();
-            hoverSprite.CopyFrom(entity.GetComponent<SpriteComponent>());
+            var hoverSprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(hoverEntity.Uid);
+            hoverSprite.CopyFrom(IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(entity.Uid));
             hoverSprite.Color = fits ? new Color(0, 255, 0, 127) : new Color(255, 0, 0, 127);
 
             button.HoverSpriteView.Sprite = hoverSprite;

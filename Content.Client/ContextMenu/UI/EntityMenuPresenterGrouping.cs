@@ -57,7 +57,7 @@ namespace Content.Client.ContextMenu.UI
                 e =>
                 {
                     var hash = 0;
-                    foreach (var element in e.GetComponent<ISpriteComponent>().AllLayers.Where(obj => obj.Visible).Select(s => s.RsiState.Name))
+                    foreach (var element in IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(e.Uid).AllLayers.Where(obj => obj.Visible).Select(s => s.RsiState.Name))
                     {
                         hash ^= EqualityComparer<string>.Default.GetHashCode(element!);
                     }

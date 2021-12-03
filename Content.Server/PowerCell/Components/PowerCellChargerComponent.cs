@@ -1,6 +1,7 @@
 using Content.Server.Power.Components;
 using Content.Shared.Interaction;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.PowerCell.Components
 {
@@ -21,7 +22,7 @@ namespace Content.Server.PowerCell.Components
 
         protected override BatteryComponent GetBatteryFrom(IEntity entity)
         {
-            return entity.GetComponent<BatteryComponent>();
+            return IoCManager.Resolve<IEntityManager>().GetComponent<BatteryComponent>(entity.Uid);
         }
     }
 }

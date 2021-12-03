@@ -83,7 +83,7 @@ namespace Content.IntegrationTests.Tests
                 var dummy = ent.SpawnEntity("ContainerOcclusionDummy", pos);
                 dummyUid = dummy.Uid;
 
-                container.GetComponent<EntityStorageComponent>().Insert(dummy);
+                IoCManager.Resolve<IEntityManager>().GetComponent<EntityStorageComponent>(container.Uid).Insert(dummy);
             });
 
             await RunTicksSync(c, s, 5);
@@ -91,8 +91,8 @@ namespace Content.IntegrationTests.Tests
             c.Assert(() =>
             {
                 var dummy = IoCManager.Resolve<IEntityManager>().GetEntity(dummyUid);
-                var sprite = dummy.GetComponent<SpriteComponent>();
-                var light = dummy.GetComponent<PointLightComponent>();
+                var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(dummy.Uid);
+                var light = IoCManager.Resolve<IEntityManager>().GetComponent<PointLightComponent>(dummy.Uid);
                 Assert.True(sprite.ContainerOccluded);
                 Assert.True(light.ContainerOccluded);
             });
@@ -114,7 +114,7 @@ namespace Content.IntegrationTests.Tests
                 var dummy = ent.SpawnEntity("ContainerOcclusionDummy", pos);
                 dummyUid = dummy.Uid;
 
-                container.GetComponent<EntityStorageComponent>().Insert(dummy);
+                IoCManager.Resolve<IEntityManager>().GetComponent<EntityStorageComponent>(container.Uid).Insert(dummy);
             });
 
             await RunTicksSync(c, s, 5);
@@ -122,8 +122,8 @@ namespace Content.IntegrationTests.Tests
             c.Assert(() =>
             {
                 var dummy = IoCManager.Resolve<IEntityManager>().GetEntity(dummyUid);
-                var sprite = dummy.GetComponent<SpriteComponent>();
-                var light = dummy.GetComponent<PointLightComponent>();
+                var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(dummy.Uid);
+                var light = IoCManager.Resolve<IEntityManager>().GetComponent<PointLightComponent>(dummy.Uid);
                 Assert.False(sprite.ContainerOccluded);
                 Assert.False(light.ContainerOccluded);
             });
@@ -146,8 +146,8 @@ namespace Content.IntegrationTests.Tests
                 var dummy = ent.SpawnEntity("ContainerOcclusionDummy", pos);
                 dummyUid = dummy.Uid;
 
-                containerA.GetComponent<EntityStorageComponent>().Insert(containerB);
-                containerB.GetComponent<EntityStorageComponent>().Insert(dummy);
+                IoCManager.Resolve<IEntityManager>().GetComponent<EntityStorageComponent>(containerA.Uid).Insert(containerB);
+                IoCManager.Resolve<IEntityManager>().GetComponent<EntityStorageComponent>(containerB.Uid).Insert(dummy);
             });
 
             await RunTicksSync(c, s, 5);
@@ -155,8 +155,8 @@ namespace Content.IntegrationTests.Tests
             c.Assert(() =>
             {
                 var dummy = IoCManager.Resolve<IEntityManager>().GetEntity(dummyUid);
-                var sprite = dummy.GetComponent<SpriteComponent>();
-                var light = dummy.GetComponent<PointLightComponent>();
+                var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(dummy.Uid);
+                var light = IoCManager.Resolve<IEntityManager>().GetComponent<PointLightComponent>(dummy.Uid);
                 Assert.True(sprite.ContainerOccluded);
                 Assert.True(light.ContainerOccluded);
             });

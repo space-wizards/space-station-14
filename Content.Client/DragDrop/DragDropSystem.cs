@@ -188,7 +188,7 @@ namespace Content.Client.DragDrop
                 // pop up drag shadow under mouse
                 var mousePos = _eyeManager.ScreenToMap(_dragDropHelper.MouseScreenPosition);
                 _dragShadow = EntityManager.SpawnEntity("dragshadow", mousePos);
-                var dragSprite = _dragShadow.GetComponent<SpriteComponent>();
+                var dragSprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(_dragShadow.Uid);
                 dragSprite.CopyFrom(draggedSprite);
                 dragSprite.RenderOrder = EntityManager.CurrentTick.Value;
                 dragSprite.Color = dragSprite.Color.WithAlpha(0.7f);

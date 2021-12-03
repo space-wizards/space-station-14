@@ -243,7 +243,7 @@ namespace Content.Server.Kitchen.Components
                 return false;
             }
 
-            var itemEntity = eventArgs.User.GetComponent<HandsComponent>().GetActiveHand?.Owner;
+            var itemEntity = IoCManager.Resolve<IEntityManager>().GetComponent<HandsComponent>(eventArgs.User.Uid).GetActiveHand?.Owner;
 
             if (itemEntity == null)
             {

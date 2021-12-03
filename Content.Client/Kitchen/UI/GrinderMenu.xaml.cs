@@ -8,6 +8,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
@@ -98,7 +99,7 @@ namespace Content.Client.Kitchen.UI
                 {
                     return;
                 }
-                var texture = entity.GetComponent<SpriteComponent>().Icon?.Default;
+                var texture = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(entity.Uid).Icon?.Default;
 
                 var solidItem = ChamberContentBox.BoxContents.AddItem(entity.Name, texture);
                 var solidIndex = ChamberContentBox.BoxContents.IndexOf(solidItem);

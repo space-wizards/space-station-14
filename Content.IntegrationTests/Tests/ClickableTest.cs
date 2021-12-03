@@ -7,6 +7,7 @@ using NUnit.Framework;
 using Robust.Server.GameObjects;
 using Robust.Shared;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 
@@ -80,7 +81,7 @@ namespace Content.IntegrationTests.Tests
 
                 var ent = serverEntManager.SpawnEntity(prototype, new EntityCoordinates(gridEnt, 0f, 0f));
                 ent.Transform.LocalRotation = angle;
-                ent.GetComponent<SpriteComponent>().Scale = (scale, scale);
+                IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(ent.Uid).Scale = (scale, scale);
                 entity = ent.Uid;
             });
 
@@ -92,7 +93,7 @@ namespace Content.IntegrationTests.Tests
             await _client.WaitPost(() =>
             {
                 var ent = clientEntManager.GetEntity(entity);
-                var clickable = ent.GetComponent<ClickableComponent>();
+                var clickable = IoCManager.Resolve<IEntityManager>().GetComponent<ClickableComponent>(ent.Uid);
 
                 hit = clickable.CheckClick((clickPosX, clickPosY) + worldPos!.Value, out _, out _);
             });

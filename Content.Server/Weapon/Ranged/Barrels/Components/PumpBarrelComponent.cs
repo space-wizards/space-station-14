@@ -167,7 +167,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             if (chamberedEntity != null)
             {
                 _chamberContainer.Remove(chamberedEntity);
-                var ammoComponent = chamberedEntity.GetComponent<AmmoComponent>();
+                var ammoComponent = IoCManager.Resolve<IEntityManager>().GetComponent<AmmoComponent>(chamberedEntity.Uid);
                 if (!ammoComponent.Caseless)
                 {
                     EjectCasing(chamberedEntity);

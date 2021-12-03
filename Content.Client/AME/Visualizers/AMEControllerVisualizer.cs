@@ -1,6 +1,7 @@
 ﻿using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using static Content.Shared.AME.SharedAMEControllerComponent;
 
 namespace Content.Client.AME.Visualizers
@@ -11,7 +12,7 @@ namespace Content.Client.AME.Visualizers
         public override void InitializeEntity(IEntity entity)
         {
             base.InitializeEntity(entity);
-            var sprite = entity.GetComponent<ISpriteComponent>();
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(entity.Uid);
 
             sprite.LayerMapSet(Layers.Display, sprite.AddLayerState("control_on"));
             sprite.LayerSetVisible(Layers.Display, false);
@@ -20,7 +21,7 @@ namespace Content.Client.AME.Visualizers
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
-            var sprite = component.Owner.GetComponent<ISpriteComponent>();
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner.Uid);
             if (component.TryGetData<string>(AMEControllerVisuals.DisplayState, out var state))
             {
                 switch (state)

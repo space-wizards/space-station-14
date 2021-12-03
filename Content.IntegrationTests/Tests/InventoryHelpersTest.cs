@@ -62,7 +62,7 @@ namespace Content.IntegrationTests.Tests
                 var entityMan = IoCManager.Resolve<IEntityManager>();
 
                 human = entityMan.SpawnEntity("InventoryStunnableDummy", MapCoordinates.Nullspace);
-                inventory = human.GetComponent<InventoryComponent>();
+                inventory = IoCManager.Resolve<IEntityManager>().GetComponent<InventoryComponent>(human.Uid);
 
                 // Can't do the test if this human doesn't have the slots for it.
                 Assert.That(inventory.HasSlot(Slots.INNERCLOTHING));

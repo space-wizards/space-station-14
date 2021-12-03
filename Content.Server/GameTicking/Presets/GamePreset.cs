@@ -82,7 +82,7 @@ namespace Content.Server.GameTicking.Presets
             else if (!string.IsNullOrWhiteSpace(mind.Session?.Name))
                 ghost.Name = mind.Session.Name;
 
-            var ghostComponent = ghost.GetComponent<GhostComponent>();
+            var ghostComponent = IoCManager.Resolve<IEntityManager>().GetComponent<GhostComponent>(ghost.Uid);
 
             if (mind.TimeOfDeath.HasValue)
             {

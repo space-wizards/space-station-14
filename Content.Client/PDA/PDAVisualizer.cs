@@ -3,6 +3,7 @@ using Content.Shared.PDA;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.PDA
@@ -27,7 +28,7 @@ namespace Content.Client.PDA
         public override void InitializeEntity(IEntity entity)
         {
             base.InitializeEntity(entity);
-            var sprite = entity.GetComponent<ISpriteComponent>();
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(entity.Uid);
 
             if (_state != null)
             {
@@ -45,7 +46,7 @@ namespace Content.Client.PDA
         {
             base.OnChangeData(component);
 
-            var sprite = component.Owner.GetComponent<ISpriteComponent>();
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner.Uid);
             sprite.LayerSetVisible(PDAVisualLayers.Flashlight, false);
             if (component.TryGetData(UnpoweredFlashlightVisuals.LightOn, out bool isFlashlightOn))
             {
