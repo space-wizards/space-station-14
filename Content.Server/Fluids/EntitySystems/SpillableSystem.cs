@@ -62,10 +62,10 @@ public class SpillableSystem : EntitySystem
     {
         if (!_solutionContainerSystem.TryGetSolution(uid, component.SolutionName, out var solution)) return;
 
-        if (args.User != null && EntityManager.TryGetEntity(args.User.Value, out var userEntity))
+        if (args.User != null)
         {
             _logSystem.Add(LogType.Landed,
-                $"{userEntity} spilled ${SolutionContainerSystem.ToPrettyString(solution)} on landing");
+                $"{component.Owner} spilled {SolutionContainerSystem.ToPrettyString(solution)} on landing");
         }
 
         var drainedSolution = _solutionContainerSystem.Drain(uid, solution, solution.DrainAvailable);
