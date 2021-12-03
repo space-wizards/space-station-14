@@ -12,6 +12,7 @@
       sprite: Structures/Furniture/rollerbeds.rsi
       state: rollerbed
       netsync: false
+      noRot: true
     - type: MovedByPressure
     - type: DamageOnHighSpeedImpact
       soundHit: /Audio/Effects/bang.ogg

@@ -33,7 +33,7 @@ namespace Content.Server.Foldable
             base.Initialize();
 
             SubscribeLocalEvent<FoldableComponent, InteractHandEvent>(OnInteract);
-            SubscribeLocalEvent<FoldableComponent, PickupAttemptEvent>(OnPickedUpAttempt);
+            SubscribeLocalEvent<FoldableComponent, AttemptItemPickupEvent>(OnPickedUpAttempt);
 
             SubscribeLocalEvent<FoldableComponent, GetInteractionVerbsEvent>(AddFoldVerb);
         }
@@ -113,7 +113,7 @@ namespace Content.Server.Foldable
         /// <param name="uid"></param>
         /// <param name="component"></param>
         /// <param name="args"></param>
-        private void OnPickedUpAttempt(EntityUid uid, FoldableComponent component, PickupAttemptEvent args)
+        private void OnPickedUpAttempt(EntityUid uid, FoldableComponent component, AttemptItemPickupEvent args)
         {
             if (!component.IsFolded)
                 args.Cancel();
