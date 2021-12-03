@@ -51,7 +51,7 @@ namespace Content.Client.Decals
                     foreach (var (_, decal) in decals)
                     {
                         var spriteSpecifier = GetSpriteSpecifier(decal.Id);
-                        handle.DrawTexture(spriteSpecifier.Frame0(), decal.Coordinates, decal.Color);
+                        handle.DrawTexture(spriteSpecifier.Frame0(), decal.Coordinates, decal.Angle, decal.Color);
                     }
                 }
             }
