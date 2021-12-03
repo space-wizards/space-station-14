@@ -41,7 +41,7 @@ namespace Content.Server.AI.Components
         }
 
         [DataField("awake")]
-        private bool _awake;
+        private bool _awake = true;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("startingGear")]
