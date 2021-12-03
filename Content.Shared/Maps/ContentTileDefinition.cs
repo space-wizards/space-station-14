@@ -12,10 +12,17 @@ namespace Content.Shared.Maps
 {
     [UsedImplicitly]
     [Prototype("tile")]
-    public sealed class ContentTileDefinition : IPrototype, ITileDefinition
+    public sealed class ContentTileDefinition : IPrototype, IInheritingPrototype, ITileDefinition
     {
         [ViewVariables]
         string IPrototype.ID => Name;
+
+        [DataField("parent", customTypeSerializer:typeof(PrototypeIdSerializer<ContentTileDefinition>))]
+        public string? Parent { get; private set; }
+
+        [NeverPushInheritance]
+        [DataField("abstract")]
+        public bool Abstract { get; private set; }
 
         public string Path => "/Textures/Tiles/";
 
