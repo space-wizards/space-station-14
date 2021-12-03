@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.Stack;
 using Content.Shared.Construction;
@@ -228,7 +229,7 @@ namespace Content.Server.Construction.Components
                 {
                     var registration = _componentFactory.GetRegistration(compName);
 
-                    if (!part.HasComponent(registration.Type))
+                    if (!IoCManager.Resolve<IEntityManager>().HasComponent(part.Uid, registration.Type))
                         continue;
 
                     if (!_componentProgress.ContainsKey(compName))
@@ -332,7 +333,7 @@ namespace Content.Server.Construction.Components
 
                     var registration = _componentFactory.GetRegistration(compName);
 
-                    if (!eventArgs.Using.HasComponent(registration.Type))
+                    if (!IoCManager.Resolve<IEntityManager>().HasComponent(eventArgs.Using.Uid, registration.Type))
                         continue;
 
                     if (!eventArgs.Using.TryRemoveFromContainer() || !_partContainer.Insert(eventArgs.Using)) continue;

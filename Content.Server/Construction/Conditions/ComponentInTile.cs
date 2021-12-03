@@ -56,7 +56,7 @@ namespace Content.Server.Construction.Conditions
 
             foreach (var ent in entities)
             {
-                if (ent.HasComponent(type))
+                if (IoCManager.Resolve<IEntityManager>().HasComponent(ent.Uid, type))
                     return HasEntity;
             }
 

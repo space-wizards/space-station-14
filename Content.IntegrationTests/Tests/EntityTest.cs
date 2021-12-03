@@ -177,7 +177,7 @@ namespace Content.IntegrationTests.Tests
 
                         // The component may already exist if it is a mandatory component
                         // such as MetaData or Transform
-                        if (entity.HasComponent(type))
+                        if (IoCManager.Resolve<IEntityManager>().HasComponent(entity.Uid, type))
                         {
                             continue;
                         }
@@ -309,7 +309,7 @@ namespace Content.IntegrationTests.Tests
                             var component = (Component) componentFactory.GetComponent(type);
 
                             // If the entity already has this component, if it was ensured or added by another
-                            if (entity.HasComponent(component.GetType()))
+                            if (IoCManager.Resolve<IEntityManager>().HasComponent(entity.Uid, component.GetType()))
                             {
                                 continue;
                             }
