@@ -54,7 +54,7 @@
   components:
   - type: AccessReader
     access: [["Medical"]]
-    
+
 - type: entity
   parent: AirlockChemistry
   id: AirlockChemistryLocked
@@ -150,6 +150,14 @@
   components:
   - type: AccessReader
     access: [["Security", "Command"]]
+
+- type: entity
+  parent: AirlockSecurity
+  id: AirlockArmoryLocked
+  suffix: Armory, Locked
+  components:
+  - type: AccessReader
+    access: [["Armory"]]
 
 - type: entity
   parent: AirlockCommand

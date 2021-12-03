@@ -5946,6 +5946,8 @@ entities:
       board: !type:Container
         ents: []
     type: ContainerContainer
+  - name: Head of Security's Office
+    type: MetaData
 - uid: 562
   type: AirlockExternalLocked
   components:
@@ -6088,6 +6090,8 @@ entities:
       board: !type:Container
         ents: []
     type: ContainerContainer
+  - name: Armory
+    type: MetaData
 - uid: 575
   type: AirlockArmoryLocked
   components:
@@ -6098,6 +6102,8 @@ entities:
       board: !type:Container
         ents: []
     type: ContainerContainer
+  - name: Armory
+    type: MetaData
 - uid: 576
   type: Firelock
   components:
@@ -6272,6 +6278,8 @@ entities:
       board: !type:Container
         ents: []
     type: ContainerContainer
+  - name: Research Director's Office
+    type: MetaData
 - uid: 594
   type: AirlockResearchDirectorLocked
   components:
@@ -6282,6 +6290,8 @@ entities:
       board: !type:Container
         ents: []
     type: ContainerContainer
+  - name: Server Room
+    type: MetaData
 - uid: 595
   type: AirlockChiefMedicalOfficerLocked
   components:
@@ -6292,6 +6302,8 @@ entities:
       board: !type:Container
         ents: []
     type: ContainerContainer
+  - name: Chief Medical Officer's Office
+    type: MetaData
 - uid: 596
   type: SpawnPointChemist
   components:
@@ -6560,6 +6572,8 @@ entities:
       board: !type:Container
         ents: []
     type: ContainerContainer
+  - name: Chief Engineer's Office
+    type: MetaData
 - uid: 621
   type: AirlockMaintCommonLocked
   components:
@@ -6780,6 +6794,8 @@ entities:
       board: !type:Container
         ents: []
     type: ContainerContainer
+  - name: Captain's Office
+    type: MetaData
 - uid: 640
   type: AirlockCommandGlassLocked
   components:
@@ -7357,6 +7373,11 @@ entities:
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
+  - cellInsertSound:
+      path: /Audio/Items/pistol_magout.ogg
+    cellRemoveSound:
+      path: /Audio/Items/pistol_magin.ogg
+    type: PowerCellSlot
 - uid: 708
   type: WallReinforced
   components:
@@ -23700,6 +23721,8 @@ entities:
       board: !type:Container
         ents: []
     type: ContainerContainer
+  - name: Head of Personnel's Office
+    type: MetaData
 - uid: 1870
   type: WallReinforced
   components:
@@ -72503,4 +72526,22 @@ entities:
   - pos: 14.5,-0.5
     parent: 853
     type: Transform
+- uid: 7116
+  type: SpawnPointWarden
+  components:
+  - pos: -5.5,14.5
+    parent: 853
+    type: Transform
+- uid: 7117
+  type: LockerWardenFilled
+  components:
+  - pos: -11.5,13.5
+    parent: 853
+    type: Transform
+  - isPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent:
+        ents: []
+    type: ContainerContainer
 ...

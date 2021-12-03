@@ -1,66 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: Paper can't be used to create exceptions by writing bad markup inside
-      it and then examining it., type: Fix}
-  - {message: Examining paper no longer shows the contents., type: Remove}
-  id: 186
-  time: '2021-05-15T15:43:19.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Die a glorious death succeeds when you're dead instead of when you're
-      alive., type: Fix}
-  - {message: Stay Alive / Die A Glorious Death don't treat brains as alive., type: Fix}
-  id: 187
-  time: '2021-05-15T15:46:56.0000000+00:00'
-- author: Hardly
-  changes:
-  - {message: R&D Now starts with crates of materials, type: Add}
-  id: 188
-  time: '2021-05-15T17:45:32.0000000+00:00'
-- author: Timrod
-  changes:
-  - {message: Reduced deadliness of Boda machine., type: Fix}
-  id: 189
-  time: '2021-05-17T07:39:37.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Fixed the meat spike only working on things that are alive., type: Tweak}
-  - {message: Changed the meat spike so that it works when not in combat mode., type: Tweak}
-  id: 190
-  time: '2021-05-17T09:12:17.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Fixed clicking a locker when the player is inside of said locker., type: Fix}
-  id: 191
-  time: '2021-05-17T09:31:10.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: You feel as if the essence of things that are erased lingers for an
-      extra moment before disappearing. Creepy., type: Fix}
-  id: 192
-  time: '2021-05-17T11:14:29.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fixes bug where reconnecting wouldn't let you interact with anything.,
-    type: Fix}
-  id: 193
-  time: '2021-05-18T16:00:48.095633+00:00'
-- author: 20kdc
-  changes:
-  - {message: Fixed dropping being offset on a translated grid, type: Fix}
-  id: 194
-  time: '2021-05-19T17:26:02.0000000+00:00'
-- author: scrato
-  changes:
-  - {message: ID card computer will now stop working when there is no power, type: Fix}
-  id: 195
-  time: '2021-05-20T12:58:29.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Add jumpskirt for Captain, type: Add}
-  id: 196
-  time: '2021-05-20T16:23:06.352127+00:00'
 - author: Swept
   changes:
   - {message: Fix holes in Captain's jumpsuit, type: Fix}
@@ -2862,3 +2800,68 @@ Entries:
   - {message: Shuttle movement now uses significantly less bandwidth., type: Fix}
   id: 687
   time: '2021-12-01T07:32:37.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Instruments network again, type: Fix}
+  id: 688
+  time: '2021-12-01T14:00:11.0000000+00:00'
+- author: Efruit
+  changes:
+  - {message: Radiation storms are scary., type: Tweak}
+  id: 689
+  time: '2021-12-01T20:21:18.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Corrected the names of a bunch of clothing items., type: Fix}
+  id: 690
+  time: '2021-12-01T21:19:36.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added LV cable to the autolathe., type: Add}
+  id: 691
+  time: '2021-12-02T02:49:45.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Touching insulated wires with your bare hands no longer shocks you.,
+    type: Tweak}
+  - {message: Electrocution now stuns you for a much shorter duration., type: Tweak}
+  id: 692
+  time: '2021-12-02T03:03:38.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Donk pockets now fit into their boxes again., type: Fix}
+  id: 693
+  time: '2021-12-02T14:37:40.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Masks & some headwear now blocks eating & drinking, type: Tweak}
+  id: 694
+  time: '2021-12-02T14:51:05.0000000+00:00'
+- author: hubismal
+  changes:
+  - {message: pAIs have been outfitted with cheap ringtone synthesizers to play their
+      own music., type: Add}
+  id: 695
+  time: '2021-12-02T18:49:18.0000000+00:00'
+- author: moony
+  changes:
+  - {message: 'In-game chat now has a sanitizer that removes smilies. You can now
+      put :) or similar at the end of your message to emote automatically.', type: Add}
+  id: 696
+  time: '2021-12-03T00:49:19.0000000+00:00'
+- author: Mith-randalf
+  changes:
+  - {message: 'Following numerous lawsuits relating to so-called ''shitcurity'', Nanotrasen
+      is now actively hiring brig Wardens for its deep-space stations.', type: Add}
+  id: 697
+  time: '2021-12-03T02:01:18.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Balance pass on thrusters to make them usable for ships large and small,
+    type: Tweak}
+  - {message: Multiple pilots now supported properly, type: Tweak}
+  - {message: Thruster visualizer no longer gets stuck on in some situations, type: Fix}
+  - {message: Thrusters now work in the direction your console is facing instead of
+      shuttle-North, type: Tweak}
+  id: 698
+  time: '2021-12-03T02:03:06.0000000+00:00'

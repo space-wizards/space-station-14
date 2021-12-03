@@ -16780,6 +16780,8 @@ entities:
       board: !type:Container
         ents: []
     type: ContainerContainer
+  - name: Head of Personnel's Office
+    type: MetaData
 - uid: 600
   type: ComfyChair
   components:
@@ -115003,4 +115005,46 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+- uid: 12047
+  type: AirlockArmoryLocked
+  components:
+  - name: Armory
+    type: MetaData
+  - pos: 40.5,25.5
+    parent: 0
+    type: Transform
+  - containers:
+      board:
+        ents: []
+    type: ContainerContainer
+- uid: 12048
+  type: AirlockArmoryLocked
+  components:
+  - name: Armory
+    type: MetaData
+  - pos: 39.5,25.5
+    parent: 0
+    type: Transform
+  - containers:
+      board:
+        ents: []
+    type: ContainerContainer
+- uid: 12049
+  type: LockerWardenFilled
+  components:
+  - pos: 38.5,24.5
+    parent: 0
+    type: Transform
+  - isPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent:
+        ents: []
+    type: ContainerContainer
+- uid: 12050
+  type: SpawnPointWarden
+  components:
+  - pos: 29.5,25.5
+    parent: 0
+    type: Transform
 ...

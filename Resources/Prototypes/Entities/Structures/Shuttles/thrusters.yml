@@ -47,6 +47,7 @@
   name: thruster
   description: It goes nyooooooom.
   components:
+  - type: Thruster
   - type: Sprite
     sprite: Structures/Shuttles/thruster.rsi
     layers:
@@ -68,7 +69,7 @@
   components:
   - type: Thruster
     thrusterType: Angular
-    impulse: 2
+    impulse: 200
   - type: Sprite
     # Listen I'm not the biggest fan of the sprite but it was the most appropriate thing I could find.
     sprite: Structures/Shuttles/gyroscope.rsi
