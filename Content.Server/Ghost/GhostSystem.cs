@@ -75,7 +75,7 @@ namespace Content.Server.Ghost
         private void OnGhostShutdown(EntityUid uid, GhostComponent component, ComponentShutdown args)
         {
             // Perf: If the entity is deleting itself, no reason to change these back.
-            if (component.Owner.LifeStage < EntityLifeStage.Terminating)
+            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(component.Owner.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(component.Owner.Uid).EntityLifeStage) < EntityLifeStage.Terminating)
             {
                 // Entity can't be seen by ghosts anymore.
                 if (component.Owner.TryGetComponent(out VisibilityComponent? visibility))
@@ -182,7 +182,7 @@ namespace Content.Server.Ghost
         {
             if (!EntityManager.TryGetEntity(uid, out var entity)
                 || entity.Deleted
-                || entity.LifeStage == EntityLifeStage.Terminating)
+                || (!IoCManager.Resolve<IEntityManager>().EntityExists(entity.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity.Uid).EntityLifeStage) == EntityLifeStage.Terminating)
                 return;
 
             if (entity.TryGetComponent<MindComponent>(out var mind))

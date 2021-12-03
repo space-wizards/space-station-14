@@ -61,7 +61,7 @@ namespace Content.Shared.Pulling
 
             RaiseLocalEvent(puller.OwnerUid, message, broadcast: false);
 
-            if (pullable.Owner.LifeStage <= EntityLifeStage.MapInitialized)
+            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(pullable.Owner.Uid) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(pullable.Owner.Uid).EntityLifeStage) <= EntityLifeStage.MapInitialized)
                 RaiseLocalEvent(pullable.OwnerUid, message);
 
             // Networking
