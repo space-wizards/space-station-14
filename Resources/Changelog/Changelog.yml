@@ -1,9 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: Hopefully fix power equipment disappearing., type: Fix}
-  id: 203
-  time: '2021-05-23T18:18:36.0000000+00:00'
 - author: Seth
   changes:
   - {message: Added new technologies and recipes to the lathe., type: Add}
@@ -2867,3 +2862,9 @@ Entries:
     type: Fix}
   id: 704
   time: '2021-12-04T08:11:48.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: Tools (along with many other objects) have been stripped of their insulated
+      property. Go get some real insulated gloves!, type: Fix}
+  id: 705
+  time: '2021-12-04T09:59:09.0000000+00:00'
