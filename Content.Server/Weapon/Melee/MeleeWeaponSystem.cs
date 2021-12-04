@@ -330,7 +330,7 @@ namespace Content.Server.Weapon.Melee
         public IEnumerable<IEntity> HitEntities { get; }
 
         /// <summary>
-        /// The user who attacked with the melee wepaon.
+        /// The user who attacked with the melee weapon.
         /// </summary>
         public IEntity User { get; }
 
