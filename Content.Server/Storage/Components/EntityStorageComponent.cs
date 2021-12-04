@@ -373,14 +373,7 @@ namespace Content.Server.Storage.Components
                 return true;
             }
 
-            if (!Contents.Insert(entity)) return false;
-
-            entity.Transform.LocalPosition = Vector2.Zero;
-            if (entity.TryGetComponent(out IPhysBody? body))
-            {
-                body.CanCollide = false;
-            }
-            return true;
+            return Contents.Insert(entity);
         }
 
         /// <inheritdoc />

@@ -178,10 +178,14 @@ namespace Content.IntegrationTests.Tests.Body
 
             var increment = 10;
 
+
             for (var tick = 0; tick < 600; tick += increment)
             {
                 await server.WaitRunTicks(increment);
-                Assert.False(respirator.Suffocating, $"Entity {human.Name} is suffocating on tick {tick}");
+                await server.WaitAssertion(() =>
+                {
+                    Assert.False(respirator.Suffocating, $"Entity {human.Name} is suffocating on tick {tick}");
+                });
             }
 
             await server.WaitIdleAsync();

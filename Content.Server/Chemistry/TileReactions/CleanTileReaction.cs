@@ -1,11 +1,13 @@
 ﻿using System.Linq;
 using Content.Server.Cleanable;
 using Content.Server.Coordinates.Helpers;
-using Content.Shared.Chemistry;
+using Content.Server.Decals;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Chemistry.TileReactions
@@ -33,6 +35,12 @@ namespace Content.Server.Chemistry.TileReactions
                     amount = next;
                     entity.QueueDelete();
                 }
+            }
+
+            var decalSystem = EntitySystem.Get<DecalSystem>();
+            foreach (var uid in decalSystem.GetDecalsInRange(tile.GridIndex, tile.GridIndices+new Vector2(0.5f, 0.5f), validDelegate: x => x.Cleanable))
+            {
+                decalSystem.RemoveDecal(tile.GridIndex, uid);
             }
 
             return amount;

@@ -1,29 +1,4 @@
 Entries:
-- author: Swept
-  changes:
-  - {message: Fix holes in Captain's jumpsuit, type: Fix}
-  id: 197
-  time: '2021-05-20T16:23:06.352876+00:00'
-- author: Swept
-  changes:
-  - {message: You can splat bags of flour and tomatoes., type: Add}
-  id: 198
-  time: '2021-05-21T00:19:18.0000000+00:00'
-- author: Hardly
-  changes:
-  - {message: Reduced Syndicate minibomb's radius, type: Tweak}
-  id: 199
-  time: '2021-05-21T11:26:10.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Removed solution transfer verbs., type: Remove}
-  id: 200
-  time: '2021-05-21T21:36:16.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fixes lathes not printing any recipe., type: Fix}
-  id: 201
-  time: '2021-05-22T09:31:38.140827+00:00'
 - author: Ygg01
   changes:
   - {message: StackVisualizer now correctly displays levels, type: Fix}
@@ -2865,3 +2840,29 @@ Entries:
       shuttle-North, type: Tweak}
   id: 698
   time: '2021-12-03T02:03:06.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix ghost role takeovers of monke, type: Fix}
+  id: 699
+  time: '2021-12-03T09:31:14.0000000+00:00'
+- author: shaeone
+  changes:
+  - {message: Modified gyroscope sprite., type: Tweak}
+  id: 700
+  time: '2021-12-03T09:39:18.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'The metaphysical department has finally learned what a monkey is, and
+      has adjusted soul binding to monkeys accordingly.', type: Fix}
+  id: 701
+  time: '2021-12-03T17:11:51.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: The Salvage department is now partially there., type: Add}
+  id: 702
+  time: '2021-12-03T22:24:19.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Throw pushback ratio multiplied by 10., type: Tweak}
+  id: 703
+  time: '2021-12-04T00:26:52.0000000+00:00'

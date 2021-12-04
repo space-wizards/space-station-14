@@ -16,9 +16,9 @@ public class EntityUidConverter : AdminLogConverter<EntityUid>
 
         writer.WriteNumber("id", (int) value);
 
-        if (entities.TryGetEntity(value, out var entity))
+        if (entities.TryGetComponent(value, out MetaDataComponent metaData))
         {
-            writer.WriteString("name", entity.Name);
+            writer.WriteString("name", metaData.EntityName);
         }
 
         if (entities.TryGetComponent(value, out ActorComponent? actor))

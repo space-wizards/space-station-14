@@ -72,16 +72,4 @@ namespace Content.Shared.Crayon
             Color = color;
         }
     }
-
-    [Serializable, NetSerializable, Prototype("crayonDecal")]
-    public class CrayonDecalPrototype : IPrototype
-    {
-        [ViewVariables]
-        [DataField("id", required: true)]
-        public string ID { get; } = default!;
-
-        [DataField("spritePath")] public string SpritePath { get; } = string.Empty;
-
-        [DataField("decals")] public List<string> Decals { get; } = new();
-    }
 }
