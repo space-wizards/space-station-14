@@ -263,9 +263,11 @@ namespace Content.Server.Nutrition.EntitySystems
                 return true;
             }
 
-            if (_foodSystem.IsMouthBlocked(userUid, out var blocker))
+            var attempt = new IngestionAttemptEvent();
+            RaiseLocalEvent(userUid, attempt, false);
+            if (attempt.Cancelled && attempt.Blocker != null)
             {
-                var name = EntityManager.GetComponent<MetaDataComponent>(blocker.Value).EntityName;
+                var name = EntityManager.GetComponent<MetaDataComponent>(attempt.Blocker.Value).EntityName;
                 _popupSystem.PopupEntity(Loc.GetString("food-system-remove-mask", ("entity", name)),
                     userUid, Filter.Entities(userUid));
                 return true;
@@ -336,9 +338,11 @@ namespace Content.Server.Nutrition.EntitySystems
                 return true;
             }
 
-            if (_foodSystem.IsMouthBlocked(targetUid, out var blocker))
+            var attempt = new IngestionAttemptEvent();
+            RaiseLocalEvent(targetUid, attempt, false);
+            if (attempt.Cancelled && attempt.Blocker != null)
             {
-                var name = EntityManager.GetComponent<MetaDataComponent>(blocker.Value).EntityName;
+                var name = EntityManager.GetComponent<MetaDataComponent>(attempt.Blocker.Value).EntityName;
                 _popupSystem.PopupEntity(Loc.GetString("food-system-remove-mask", ("entity", name)),
                     userUid, Filter.Entities(userUid));
                 return true;
@@ -423,30 +427,6 @@ namespace Content.Server.Nutrition.EntitySystems
         private void OnForceDrinkCancelled(ForceDrinkCancelledEvent args)
         {
             args.Drink.InUse = false;
-        }
-    }
-
-    public sealed class ForceDrinkEvent : EntityEventArgs
-    {
-        public readonly EntityUid User;
-        public readonly DrinkComponent Drink;
-        public readonly Solution DrinkSolution;
-
-        public ForceDrinkEvent(EntityUid user, DrinkComponent drink, Solution drinkSolution)
-        {
-            User = user;
-            Drink = drink;
-            DrinkSolution = drinkSolution;
-        }
-    }
-
-    public sealed class ForceDrinkCancelledEvent : EntityEventArgs
-    {
-        public readonly DrinkComponent Drink;
-
-        public ForceDrinkCancelledEvent( DrinkComponent drink)
-        {
-            Drink = drink;
         }
     }
 }

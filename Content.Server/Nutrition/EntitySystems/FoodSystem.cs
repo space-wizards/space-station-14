@@ -27,8 +27,6 @@ using System.Linq;
 using Robust.Shared.Utility;
 using Content.Server.Inventory.Components;
 using Content.Shared.Inventory;
-using System.Diagnostics.CodeAnalysis;
-using Content.Shared.Tag;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
@@ -55,6 +53,7 @@ namespace Content.Server.Nutrition.EntitySystems
             SubscribeLocalEvent<FoodComponent, GetInteractionVerbsEvent>(AddEatVerb);
             SubscribeLocalEvent<SharedBodyComponent, ForceFeedEvent>(OnForceFeed);
             SubscribeLocalEvent<ForceFeedCancelledEvent>(OnForceFeedCancelled);
+            SubscribeLocalEvent<InventoryComponent, IngestionAttemptEvent>(OnInventoryIngestAttempt);
         }
 
         /// <summary>
@@ -139,9 +138,11 @@ namespace Content.Server.Nutrition.EntitySystems
                 !_bodySystem.TryGetComponentsOnMechanisms<StomachComponent>(userUid, out var stomachs, body))
                 return false;
 
-            if (IsMouthBlocked(userUid, out var blocker))
+            var attempt = new IngestionAttemptEvent();
+            RaiseLocalEvent(userUid, attempt, false);
+            if (attempt.Cancelled && attempt.Blocker != null)
             {
-                var name = EntityManager.GetComponent<MetaDataComponent>(blocker.Value).EntityName;
+                var name = EntityManager.GetComponent<MetaDataComponent>(attempt.Blocker.Value).EntityName;
                 _popupSystem.PopupEntity(Loc.GetString("food-system-remove-mask", ("entity", name)),
                     userUid, Filter.Entities(userUid));
                 return true;
@@ -264,9 +265,11 @@ namespace Content.Server.Nutrition.EntitySystems
                 return true;
             }
 
-            if (IsMouthBlocked(targetUid, out var blocker))
+            var attempt = new IngestionAttemptEvent();
+            RaiseLocalEvent(targetUid, attempt, false);
+            if (attempt.Cancelled && attempt.Blocker != null)
             {
-                var name = EntityManager.GetComponent<MetaDataComponent>(blocker.Value).EntityName;
+                var name = EntityManager.GetComponent<MetaDataComponent>(attempt.Blocker.Value).EntityName;
                 _popupSystem.PopupEntity(Loc.GetString("food-system-remove-mask", ("entity", name)),
                     userUid, Filter.Entities(userUid));
                 return true;
@@ -364,8 +367,9 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!Resolve(uid, ref food) || !Resolve(target, ref body, false))
                 return;
 
-            if (IsMouthBlocked(target, out _))
-                return;
+            var attempt = new IngestionAttemptEvent();
+            RaiseLocalEvent(target, attempt, false);
+            if (attempt.Cancelled) return;
 
             if (!_solutionContainerSystem.TryGetSolution(uid, food.SolutionName, out var foodSolution))
                 return;
@@ -448,62 +452,31 @@ namespace Content.Server.Nutrition.EntitySystems
         }
 
         /// <summary>
-        ///     Is an entity's mouth accessible, or is it blocked by something like a mask? Does not actually check if
-        ///     the user has a mouth. Body system when?
+        ///     Block ingestion attempts based on the equipped mask or head-wear
         /// </summary>
-        public bool IsMouthBlocked(EntityUid uid, [NotNullWhen(true)] out EntityUid? blockingEntity,
-            InventoryComponent? inventory = null)
+        private void OnInventoryIngestAttempt(EntityUid uid, InventoryComponent component, IngestionAttemptEvent args)
         {
-            blockingEntity = null;
+            if (args.Cancelled)
+                return;
 
-            if (!Resolve(uid, ref inventory, false))
-                return false;
+            IngestionBlockerComponent blocker;
 
-            // check masks
-            if (inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.MASK, out ItemComponent? mask))
+            if (component.TryGetSlotItem(EquipmentSlotDefines.Slots.MASK, out ItemComponent? mask) &&
+                EntityManager.TryGetComponent(mask.OwnerUid, out blocker) &&
+                blocker.Enabled)
             {
-                // For now, lets just assume that any masks always covers the mouth
-                // TODO MASKS if the ability is added to raise/lower masks, this needs to be updated.
-                blockingEntity = mask.OwnerUid;
-                return true;
+                args.Blocker = mask.OwnerUid;
+                args.Cancel();
+                return;
             }
 
-            // check helmets. Note that not all helmets cover the face.
-            if (inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.HEAD, out ItemComponent? head) &&
-                EntityManager.TryGetComponent(head.OwnerUid, out TagComponent tag) &&
-                tag.HasTag("ConcealsFace"))
+            if (component.TryGetSlotItem(EquipmentSlotDefines.Slots.HEAD, out ItemComponent? head) &&
+                EntityManager.TryGetComponent(head.OwnerUid, out blocker) &&
+                blocker.Enabled)
             {
-                blockingEntity = head.OwnerUid;
-                return true;
+                args.Blocker = head.OwnerUid;
+                args.Cancel();
             }
-
-            return false;
-        }
-    }
-
-    public sealed class ForceFeedEvent : EntityEventArgs
-    {
-        public readonly EntityUid User;
-        public readonly FoodComponent Food;
-        public readonly Solution FoodSolution;
-        public readonly List<UtensilComponent> Utensils;
-
-        public ForceFeedEvent(EntityUid user, FoodComponent food, Solution foodSolution, List<UtensilComponent> utensils)
-        {
-            User = user;
-            Food = food;
-            FoodSolution = foodSolution;
-            Utensils = utensils;
-        }
-    }
-
-    public sealed class ForceFeedCancelledEvent : EntityEventArgs
-    {
-        public readonly FoodComponent Food;
-
-        public ForceFeedCancelledEvent(FoodComponent food)
-        {
-            Food = food;
         }
     }
 }

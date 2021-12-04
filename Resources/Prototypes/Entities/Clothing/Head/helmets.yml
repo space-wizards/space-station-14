@@ -8,9 +8,7 @@
     sprite: Clothing/Head/Helmets/bombsuit.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/bombsuit.rsi
-  - type: Tag
-    tags:
-    - ConcealsFace
+  - type: IngestionBlocker
 
 - type: entity
   parent: ClothingHeadBase
@@ -22,9 +20,7 @@
     sprite: Clothing/Head/Helmets/cosmonaut.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/cosmonaut.rsi
-  - type: Tag
-    tags:
-    - ConcealsFace
+  - type: IngestionBlocker
 
 - type: entity
   parent: ClothingHeadBase
@@ -36,9 +32,7 @@
     sprite: Clothing/Head/Helmets/cult.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/cult.rsi
-  - type: Tag
-    tags:
-    - ConcealsFace
+  - type: IngestionBlocker
 
 - type: entity
   parent: ClothingHeadBase
@@ -79,9 +73,7 @@
     sprite: Clothing/Head/Helmets/light_riot.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/light_riot.rsi
-  - type: Tag
-    tags:
-    - ConcealsFace
+  - type: IngestionBlocker
 
 - type: entity
   parent: ClothingHeadBase
@@ -93,9 +85,7 @@
     sprite: Clothing/Head/Helmets/scaf.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/scaf.rsi
-  - type: Tag
-    tags:
-    - ConcealsFace
+  - type: IngestionBlocker
 
 - type: entity
   parent: ClothingHeadBase
@@ -107,9 +97,7 @@
     sprite: Clothing/Head/Helmets/spaceninja.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/spaceninja.rsi
-  - type: Tag
-    tags:
-    - ConcealsFace # well only partially?
+  - type: IngestionBlocker
 
 - type: entity
   parent: ClothingHeadBase
@@ -121,9 +109,7 @@
     sprite: Clothing/Head/Helmets/syndicate.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/syndicate.rsi
-  - type: Tag
-    tags:
-    - ConcealsFace
+  - type: IngestionBlocker
 
 - type: entity
   parent: ClothingHeadBase
@@ -135,9 +121,7 @@
     sprite: Clothing/Head/Helmets/templar.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/templar.rsi
-  - type: Tag
-    tags:
-    - ConcealsFace
+  - type: IngestionBlocker
 
 - type: entity
   parent: ClothingHeadBase
@@ -160,6 +144,4 @@
     sprite: Clothing/Head/Helmets/wizardhelm.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/wizardhelm.rsi
-  - type: Tag
-    tags:
-    - ConcealsFace
+  - type: IngestionBlocker
