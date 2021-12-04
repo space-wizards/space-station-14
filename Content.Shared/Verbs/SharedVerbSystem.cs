@@ -20,7 +20,7 @@ namespace Content.Shared.Verbs
         ///     Raises a number of events in order to get all verbs of the given type(s) defined in local systems. This
         ///     does not request verbs from the server.
         /// </summary>
-        public virtual Dictionary<VerbType, SortedSet<Verb>> GetLocalVerbs(IEntity target, IEntity user, VerbType verbTypes, bool force = false)
+        public virtual Dictionary<VerbType, SortedSet<Verb>> GetLocalVerbs(EntityUid target, EntityUid user, VerbType verbTypes, bool force = false)
         {
             Dictionary<VerbType, SortedSet<Verb>> verbs = new();
 
@@ -41,17 +41,17 @@ namespace Content.Shared.Verbs
             // call ActionBlocker checks, just cache it for the verb request.
             var canInteract = force || _actionBlockerSystem.CanInteract(user);
 
-            IEntity? @using = null;
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out SharedHandsComponent? hands) && (force || _actionBlockerSystem.CanUse(user)))
+            EntityUid? @using = null;
+            if (EntityManager.TryGetComponent(user, out SharedHandsComponent? hands) && (force || _actionBlockerSystem.CanUse(user)))
             {
                 hands.TryGetActiveHeldEntity(out @using);
 
                 // Check whether the "Held" entity is a virtual pull entity. If yes, set that as the entity being "Used".
                 // This allows you to do things like buckle a dragged person onto a surgery table, without click-dragging
                 // their sprite.
-                if (@using != null && IoCManager.Resolve<IEntityManager>().TryGetComponent<HandVirtualItemComponent?>(@using, out var pull))
+                if (@using != null && EntityManager.TryGetComponent<HandVirtualItemComponent?>(@using.Value, out var pull))
                 {
-                    @using = IoCManager.Resolve<IEntityManager>().GetEntity(pull.BlockingEntity);
+                    @using = EntityManager.GetEntity(pull.BlockingEntity);
                 }
             }
 
@@ -127,7 +127,7 @@ namespace Content.Shared.Verbs
                 !EntityManager.TryGetEntity(targetUid, out var target))
                 return;
 
-            IEntity? used = null;
+            EntityUid? used = null;
             if (usedUid != null)
                 EntityManager.TryGetEntity(usedUid.Value, out used);
 

@@ -200,7 +200,7 @@ namespace Content.Server.GameTicking
         }
 
         #region Mob Spawning Helpers
-        private IEntity SpawnPlayerMob(Job job, HumanoidCharacterProfile? profile, StationId station, bool lateJoin = true)
+        private EntityUid SpawnPlayerMob(Job job, HumanoidCharacterProfile? profile, StationId station, bool lateJoin = true)
         {
             var coordinates = lateJoin ? GetLateJoinSpawnPoint(station) : GetJobSpawnPoint(job.Prototype.ID, station);
             var entity = EntityManager.SpawnEntity(PlayerPrototypeName, coordinates);
@@ -213,14 +213,14 @@ namespace Content.Server.GameTicking
 
             if (profile != null)
             {
-                EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(entity, profile);
-                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityName = profile.Name;
+                _humanoidAppearanceSystem.UpdateFromProfile(entity, profile);
+                EntityManager.GetComponent<MetaDataComponent>(entity).EntityName = profile.Name;
             }
 
             return entity;
         }
 
-        private IEntity SpawnObserverMob()
+        private EntityUid SpawnObserverMob()
         {
             var coordinates = GetObserverSpawnPoint();
             return EntityManager.SpawnEntity(ObserverPrototypeName, coordinates);
@@ -228,7 +228,7 @@ namespace Content.Server.GameTicking
         #endregion
 
         #region Equip Helpers
-        public void EquipStartingGear(IEntity entity, StartingGearPrototype startingGear, HumanoidCharacterProfile? profile)
+        public void EquipStartingGear(EntityUid entity, StartingGearPrototype startingGear, HumanoidCharacterProfile? profile)
         {
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out InventoryComponent? inventory))
             {
@@ -238,25 +238,25 @@ namespace Content.Server.GameTicking
                     if (!string.IsNullOrEmpty(equipmentStr))
                     {
                         var equipmentEntity = EntityManager.SpawnEntity(equipmentStr, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates);
-                        inventory.Equip(slot, IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(equipmentEntity));
+                        inventory.Equip(slot, EntityManager.GetComponent<ItemComponent>(equipmentEntity));
                     }
                 }
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out HandsComponent? handsComponent))
+            if (EntityManager.TryGetComponent(entity, out HandsComponent? handsComponent))
             {
                 var inhand = startingGear.Inhand;
                 foreach (var (hand, prototype) in inhand)
                 {
-                    var inhandEntity = EntityManager.SpawnEntity(prototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates);
+                    var inhandEntity = EntityManager.SpawnEntity(prototype, EntityManager.GetComponent<TransformComponent>(entity).Coordinates);
                     handsComponent.TryPickupEntity(hand, inhandEntity, checkActionBlocker: false);
                 }
             }
         }
 
-        public void EquipIdCard(IEntity entity, string characterName, JobPrototype jobPrototype)
+        public void EquipIdCard(EntityUid entity, string characterName, JobPrototype jobPrototype)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out InventoryComponent? inventory))
+            if (!EntityManager.TryGetComponent(entity, out InventoryComponent? inventory))
                 return;
 
             if (!inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.IDCARD, out ItemComponent? item))
@@ -276,8 +276,7 @@ namespace Content.Server.GameTicking
             var access = IoCManager.Resolve<IEntityManager>().GetComponent<AccessComponent>(card.Owner);
             var accessTags = access.Tags;
             accessTags.UnionWith(jobPrototype.Access);
-            EntityManager.EntitySysManager.GetEntitySystem<PDASystem>()
-                .SetOwner(pdaComponent, characterName);
+            _pdaSystem.SetOwner(pdaComponent, characterName);
         }
         #endregion
 

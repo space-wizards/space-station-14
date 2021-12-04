@@ -81,7 +81,7 @@ namespace Content.Shared.Verbs
     /// </remarks>
     public class GetInteractionVerbsEvent : GetVerbsEvent
     {
-        public GetInteractionVerbsEvent(IEntity user, IEntity target, IEntity? @using, SharedHandsComponent? hands,
+        public GetInteractionVerbsEvent(EntityUid user, EntityUid target, EntityUid? @using, SharedHandsComponent? hands,
             bool canInteract, bool canAccess) : base(user, target, @using, hands, canInteract, canAccess) { }
 
     }
@@ -97,7 +97,7 @@ namespace Content.Shared.Verbs
     /// </remarks>
     public class GetActivationVerbsEvent : GetVerbsEvent
     {
-        public GetActivationVerbsEvent(IEntity user, IEntity target, IEntity? @using, SharedHandsComponent? hands,
+        public GetActivationVerbsEvent(EntityUid user, EntityUid target, EntityUid? @using, SharedHandsComponent? hands,
             bool canInteract, bool canAccess) : base(user, target, @using, hands, canInteract, canAccess) { }
     }
 
@@ -110,7 +110,7 @@ namespace Content.Shared.Verbs
     /// </remarks>
     public class GetAlternativeVerbsEvent : GetVerbsEvent
     {
-        public GetAlternativeVerbsEvent(IEntity user, IEntity target, IEntity? @using, SharedHandsComponent? hands,
+        public GetAlternativeVerbsEvent(EntityUid user, EntityUid target, EntityUid? @using, SharedHandsComponent? hands,
             bool canInteract, bool canAccess) : base(user, target, @using, hands, canInteract, canAccess) { }
     }
 
@@ -123,7 +123,7 @@ namespace Content.Shared.Verbs
     /// </remarks>
     public class GetOtherVerbsEvent : GetVerbsEvent
     {
-        public GetOtherVerbsEvent(IEntity user, IEntity target, IEntity? @using, SharedHandsComponent? hands,
+        public GetOtherVerbsEvent(EntityUid user, EntityUid target, EntityUid? @using, SharedHandsComponent? hands,
             bool canInteract, bool canAccess) : base(user, target, @using, hands, canInteract, canAccess) { }
     }
 
@@ -149,12 +149,12 @@ namespace Content.Shared.Verbs
         /// <summary>
         ///     The entity being targeted for the verb.
         /// </summary>
-        public readonly IEntity Target;
+        public readonly EntityUid Target;
 
         /// <summary>
         ///     The entity that will be "performing" the verb.
         /// </summary>
-        public readonly IEntity User;
+        public readonly EntityUid User;
 
         /// <summary>
         ///     Can the user physically interact?
@@ -181,14 +181,9 @@ namespace Content.Shared.Verbs
         ///     This is only ever not null when <see cref="ActionBlockerSystem.CanUse(Robust.Shared.GameObjects.EntityUid)"/> is true and the user
         ///     has hands.
         /// </remarks>
-        public readonly IEntity? Using;
+        public readonly EntityUid? Using;
 
-        // for eventual removal of IEntity.
-        public EntityUid UserUid => User;
-        public EntityUid TargetUid => Target;
-        public EntityUid? UsingUid => Using;
-
-        public GetVerbsEvent(IEntity user, IEntity target, IEntity? @using, SharedHandsComponent? hands, bool canInteract, bool canAccess)
+        public GetVerbsEvent(EntityUid user, EntityUid target, EntityUid? @using, SharedHandsComponent? hands, bool canInteract, bool canAccess)
         {
             User = user;
             Target = target;

@@ -90,11 +90,11 @@ namespace Content.Shared.Interaction
             MapCoordinates origin,
             MapCoordinates other,
             int collisionMask = (int) CollisionGroup.Impassable,
-            IEntity? ignoredEnt = null)
+            EntityUid? ignoredEnt = null)
         {
             var predicate = ignoredEnt == null
                 ? null
-                : (Ignored) (e => e == ignoredEnt?.Uid);
+                : (Ignored) (e => e == ignoredEnt);
 
             return UnobstructedDistance(origin, other, collisionMask, predicate);
         }
@@ -204,15 +204,15 @@ namespace Content.Shared.Interaction
         ///     True if the two points are within a given range without being obstructed.
         /// </returns>
         public bool InRangeUnobstructed(
-            IEntity origin,
-            IEntity other,
+            EntityUid origin,
+            EntityUid other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
             Ignored? predicate = null,
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
-            predicate ??= e => e == origin.Uid || e == other.Uid;
+            predicate ??= e => e == origin || e == other;
             return InRangeUnobstructed(origin, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other).MapPosition, range, collisionMask, predicate, ignoreInsideBlocker, popup);
         }
 
@@ -249,7 +249,7 @@ namespace Content.Shared.Interaction
         ///     True if the two points are within a given range without being obstructed.
         /// </returns>
         public bool InRangeUnobstructed(
-            IEntity origin,
+            EntityUid origin,
             IComponent other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
@@ -293,7 +293,7 @@ namespace Content.Shared.Interaction
         ///     True if the two points are within a given range without being obstructed.
         /// </returns>
         public bool InRangeUnobstructed(
-            IEntity origin,
+            EntityUid origin,
             EntityCoordinates other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
@@ -337,7 +337,7 @@ namespace Content.Shared.Interaction
         ///     True if the two points are within a given range without being obstructed.
         /// </returns>
         public bool InRangeUnobstructed(
-            IEntity origin,
+            EntityUid origin,
             MapCoordinates other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
@@ -346,7 +346,7 @@ namespace Content.Shared.Interaction
             bool popup = false)
         {
             var originPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(origin).MapPosition;
-            predicate ??= e => e == origin.Uid;
+            predicate ??= e => e == origin;
 
             var inRange = InRangeUnobstructed(originPosition, other, range, collisionMask, predicate, ignoreInsideBlocker);
 
@@ -360,9 +360,9 @@ namespace Content.Shared.Interaction
         }
 
         public bool InteractDoBefore(
-            IEntity user,
-            IEntity used,
-            IEntity? target,
+            EntityUid user,
+            EntityUid used,
+            EntityUid? target,
             EntityCoordinates clickLocation,
             bool canReach)
         {
@@ -376,7 +376,7 @@ namespace Content.Shared.Interaction
         /// Finds components with the InteractUsing interface and calls their function
         /// NOTE: Does not have an InRangeUnobstructed check
         /// </summary>
-        public async Task InteractUsing(IEntity user, IEntity used, IEntity target, EntityCoordinates clickLocation)
+        public async Task InteractUsing(EntityUid user, EntityUid used, EntityUid target, EntityCoordinates clickLocation)
         {
             if (!_actionBlockerSystem.CanInteract(user))
                 return;
@@ -407,7 +407,7 @@ namespace Content.Shared.Interaction
         /// <summary>
         ///     We didn't click on any entity, try doing an AfterInteract on the click location
         /// </summary>
-        public async Task<bool> InteractDoAfter(IEntity user, IEntity used, IEntity? target, EntityCoordinates clickLocation, bool canReach)
+        public async Task<bool> InteractDoAfter(EntityUid user, EntityUid used, EntityUid? target, EntityCoordinates clickLocation, bool canReach)
         {
             var afterInteractEvent = new AfterInteractEvent(user, used, target, clickLocation, canReach);
             RaiseLocalEvent(used, afterInteractEvent, false);
@@ -431,15 +431,15 @@ namespace Content.Shared.Interaction
         /// Activates the IActivate behavior of an object
         /// Verifies that the user is capable of doing the use interaction first
         /// </summary>
-        public void TryInteractionActivate(IEntity? user, IEntity? used)
+        public void TryInteractionActivate(EntityUid? user, EntityUid? used)
         {
             if (user == null || used == null)
                 return;
 
-            InteractionActivate(user, used);
+            InteractionActivate(user.Value, used.Value);
         }
 
-        protected void InteractionActivate(IEntity user, IEntity used)
+        protected void InteractionActivate(EntityUid user, EntityUid used)
         {
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent<UseDelayComponent?>(used, out var delayComponent))
             {
@@ -486,7 +486,7 @@ namespace Content.Shared.Interaction
         /// </summary>
         /// <param name="user"></param>
         /// <param name="used"></param>
-        public void TryUseInteraction(IEntity user, IEntity used, bool altInteract = false)
+        public void TryUseInteraction(EntityUid user, EntityUid used, bool altInteract = false)
         {
             if (user != null && used != null && _actionBlockerSystem.CanUse(user))
             {
@@ -501,7 +501,7 @@ namespace Content.Shared.Interaction
         /// Activates the IUse behaviors of an entity without first checking
         /// if the user is capable of doing the use interaction.
         /// </summary>
-        public void UseInteraction(IEntity user, IEntity used)
+        public void UseInteraction(EntityUid user, EntityUid used)
         {
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent<UseDelayComponent?>(used, out var delayComponent))
             {
@@ -533,7 +533,7 @@ namespace Content.Shared.Interaction
         /// <remarks>
         ///     Uses the context menu verb list, and acts out the highest priority alternative interaction verb.
         /// </remarks>
-        public void AltInteract(IEntity user, IEntity target)
+        public void AltInteract(EntityUid user, EntityUid target)
         {
             // Get list of alt-interact verbs
             var verbs = _verbSystem.GetLocalVerbs(target, user, VerbType.Alternative)[VerbType.Alternative];
@@ -547,7 +547,7 @@ namespace Content.Shared.Interaction
         ///     Calls Thrown on all components that implement the IThrown interface
         ///     on an entity that has been thrown.
         /// </summary>
-        public void ThrownInteraction(IEntity user, IEntity thrown)
+        public void ThrownInteraction(EntityUid user, EntityUid thrown)
         {
             var throwMsg = new ThrownEvent(user, thrown);
             RaiseLocalEvent(thrown, throwMsg);
@@ -574,7 +574,7 @@ namespace Content.Shared.Interaction
         ///     Calls Equipped on all components that implement the IEquipped interface
         ///     on an entity that has been equipped.
         /// </summary>
-        public void EquippedInteraction(IEntity user, IEntity equipped, EquipmentSlotDefines.Slots slot)
+        public void EquippedInteraction(EntityUid user, EntityUid equipped, EquipmentSlotDefines.Slots slot)
         {
             var equipMsg = new EquippedEvent(user, equipped, slot);
             RaiseLocalEvent(equipped, equipMsg);
@@ -594,7 +594,7 @@ namespace Content.Shared.Interaction
         ///     Calls Unequipped on all components that implement the IUnequipped interface
         ///     on an entity that has been equipped.
         /// </summary>
-        public void UnequippedInteraction(IEntity user, IEntity equipped, EquipmentSlotDefines.Slots slot)
+        public void UnequippedInteraction(EntityUid user, EntityUid equipped, EquipmentSlotDefines.Slots slot)
         {
             var unequipMsg = new UnequippedEvent(user, equipped, slot);
             RaiseLocalEvent(equipped, unequipMsg);
@@ -615,7 +615,7 @@ namespace Content.Shared.Interaction
         ///     Calls EquippedHand on all components that implement the IEquippedHand interface
         ///     on an item.
         /// </summary>
-        public void EquippedHandInteraction(IEntity user, IEntity item, HandState hand)
+        public void EquippedHandInteraction(EntityUid user, EntityUid item, HandState hand)
         {
             var equippedHandMessage = new EquippedHandEvent(user, item, hand);
             RaiseLocalEvent(item, equippedHandMessage);
@@ -634,7 +634,7 @@ namespace Content.Shared.Interaction
         ///     Calls UnequippedHand on all components that implement the IUnequippedHand interface
         ///     on an item.
         /// </summary>
-        public void UnequippedHandInteraction(IEntity user, IEntity item, HandState hand)
+        public void UnequippedHandInteraction(EntityUid user, EntityUid item, HandState hand)
         {
             var unequippedHandMessage = new UnequippedHandEvent(user, item, hand);
             RaiseLocalEvent(item, unequippedHandMessage);
@@ -656,7 +656,7 @@ namespace Content.Shared.Interaction
         /// Activates the Dropped behavior of an object
         /// Verifies that the user is capable of doing the drop interaction first
         /// </summary>
-        public bool TryDroppedInteraction(IEntity user, IEntity item)
+        public bool TryDroppedInteraction(EntityUid user, EntityUid item)
         {
             if (user == null || item == null || !_actionBlockerSystem.CanDrop(user)) return false;
 
@@ -668,7 +668,7 @@ namespace Content.Shared.Interaction
         ///     Calls Dropped on all components that implement the IDropped interface
         ///     on an entity that has been dropped.
         /// </summary>
-        public void DroppedInteraction(IEntity user, IEntity item)
+        public void DroppedInteraction(EntityUid user, EntityUid item)
         {
             var dropMsg = new DroppedEvent(user, item);
             RaiseLocalEvent(item, dropMsg);
@@ -696,7 +696,7 @@ namespace Content.Shared.Interaction
         ///     Calls HandSelected on all components that implement the IHandSelected interface
         ///     on an item entity on a hand that has just been selected.
         /// </summary>
-        public void HandSelectedInteraction(IEntity user, IEntity item)
+        public void HandSelectedInteraction(EntityUid user, EntityUid item)
         {
             var handSelectedMsg = new HandSelectedEvent(user, item);
             RaiseLocalEvent(item, handSelectedMsg);
@@ -716,7 +716,7 @@ namespace Content.Shared.Interaction
         ///     Calls HandDeselected on all components that implement the IHandDeselected interface
         ///     on an item entity on a hand that has just been deselected.
         /// </summary>
-        public void HandDeselectedInteraction(IEntity user, IEntity item)
+        public void HandDeselectedInteraction(EntityUid user, EntityUid item)
         {
             var handDeselectedMsg = new HandDeselectedEvent(user, item);
             RaiseLocalEvent(item, handDeselectedMsg);
