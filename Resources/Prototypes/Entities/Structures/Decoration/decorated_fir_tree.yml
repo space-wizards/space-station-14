@@ -2,7 +2,7 @@
   id: Decorated Fir Tree
   parent: BaseStructure
   name: Decorated Fir Tree
-  description: It makes happy most of the people.
+  description: A very festive tree for a very festive holiday.
   components:
   - type: Sprite
     sprite: Structures/Decoration/decorated_fir_tree.rsi
