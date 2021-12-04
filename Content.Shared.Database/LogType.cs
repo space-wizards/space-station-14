@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.Database;
+namespace Content.Shared.Database;
 
 // DO NOT CHANGE THE NUMERIC VALUES OF THESE
 public enum LogType
@@ -40,7 +40,8 @@ public enum LogType
     Pickup = 36,
     Drop = 37,
     BulletHit = 38,
-    ForceFeed = 40,
+    ForceFeed = 40, // involuntary
+    Ingestion = 53, // voluntary
     MeleeHit = 41,
     HitScanHit = 42,
     Suicide = 43,
