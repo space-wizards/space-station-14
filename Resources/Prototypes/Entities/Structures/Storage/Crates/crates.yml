@@ -317,6 +317,9 @@
     - type: StorageVisualizer
       state_open: secgearcrate_open
       state_closed: secgearcrate_door
+  - type: Construction
+    graph: CrateSecgear
+    node: cratesecgear
 
 - type: entity
   id: CrateEngineeringSecure
@@ -346,6 +349,9 @@
     - type: StorageVisualizer
       state_open: engicratesecure_open
       state_closed: engicratesecure_door
+  - type: Construction
+    graph: CrateEngineeringSecure
+    node: crateengineeringsecure
 
 - type: entity
   id: CrateMedicalSecure
@@ -375,6 +381,9 @@
     - type: StorageVisualizer
       state_open: medicalcratesecure_open
       state_closed: medicalcratesecure_door
+  - type: Construction
+    graph: CrateMedicalSecure
+    node: cratemedicalsecure
 
 - type: entity
   id: CratePrivateSecure
@@ -403,6 +412,9 @@
     - type: StorageVisualizer
       state_open: privatecrate_open
       state_closed: privatecrate_door
+  - type: Construction
+    graph: CratePrivateSecure
+    node: crateprivatesecure
 
 - type: entity
   id: CrateScienceSecure
@@ -432,7 +444,10 @@
     - type: StorageVisualizer
       state_open: scicratesecure_open
       state_closed: scicratesecure_door
-
+  - type: Construction
+    graph: CrateScienceSecure
+    node: cratesciencesecure
+    
 - type: entity
   id: CratePlasma
   name: plasma crate
@@ -461,6 +476,9 @@
     - type: StorageVisualizer
       state_open: plasmacrate_open
       state_closed: plasmacrate_door
+  - type: Construction
+    graph: CratePlasmaSecure
+    node: crateplasmasecure
 
 - type: entity
   id: CrateSecure
@@ -489,6 +507,9 @@
     - type: StorageVisualizer
       state_open: securecrate_open
       state_closed: securecrate_door
+  - type: Construction
+    graph: CrateSecure
+    node: cratesecure
 
 - type: entity
   id: CrateHydroSecure
@@ -518,6 +539,9 @@
     - type: StorageVisualizer
       state_open: hydrocratesecure_open
       state_closed: hydrocratesecure_door
+  - type: Construction
+    graph: CrateHydroSecure
+    node: cratehydrosecure
 
 - type: entity
   id: CrateWeaponSecure
@@ -544,6 +568,9 @@
     - type: StorageVisualizer
       state_open: weaponcrate_open
       state_closed: weaponcrate_door
+  - type: Construction
+    graph: CrateWeaponSecure
+    node: crateweaponsecure
 
 - type: entity
   id: CrateLivestock
