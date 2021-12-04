@@ -234,7 +234,7 @@ namespace Content.Server.Chemistry.Components
                 if (ToggleState == InjectorToggleMode.Inject)
                 {
                     logSys.Add(LogType.ForceFeed,
-                        $"{userEntity} is attempting to injecting a solution into {targetEntity}");
+                        $"{userEntity} is attempting to inject a solution into {targetEntity}");
                     // TODO solution pretty string.
                 }
             }
@@ -246,7 +246,7 @@ namespace Content.Server.Chemistry.Components
                 // and lets log it. TODO solution pretty string.
                 if (ToggleState == InjectorToggleMode.Inject)
                     logSys.Add(LogType.Ingestion,
-                        $"{userEntity} is attempting to injecting themselves with a solution.");
+                        $"{userEntity} is attempting to inject themselves with a solution.");
             }
 
             var status = await EntitySystem.Get<DoAfterSystem>().WaitDoAfter(
