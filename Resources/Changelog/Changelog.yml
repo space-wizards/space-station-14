@@ -1,9 +1,4 @@
 Entries:
-- author: Seth
-  changes:
-  - {message: Added new technologies and recipes to the lathe., type: Add}
-  id: 204
-  time: '2021-05-24T00:38:26.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: Particle Accelerator particles actually affect singularity & singularity
@@ -2868,3 +2863,8 @@ Entries:
       property. Go get some real insulated gloves!, type: Fix}
   id: 705
   time: '2021-12-04T09:59:09.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Fixed flares so they now burn longer and burn out slower., type: Fix}
+  id: 706
+  time: '2021-12-04T18:50:25.0000000+00:00'
