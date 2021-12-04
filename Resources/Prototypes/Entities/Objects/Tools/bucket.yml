@@ -48,3 +48,6 @@
     solution: bucket
   - type: DrainableSolution
     solution: bucket
+  - type: Tag
+    tags:
+    - ConcealsFace

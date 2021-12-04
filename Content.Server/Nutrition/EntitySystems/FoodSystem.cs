@@ -460,17 +460,26 @@ namespace Content.Server.Nutrition.EntitySystems
                 return false;
 
             // check masks
+            TagComponent tag;
             if (inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.MASK, out ItemComponent? mask))
             {
-                // For now, lets just assume that any masks always covers the mouth
-                // TODO MASKS if the ability is added to raise/lower masks, this needs to be updated.
-                blockingEntity = mask.OwnerUid;
-                return true;
+                // Masks include things like cigars & clown masks. These are annoying to remove when you just want to
+                // sip a drink. So we use a BlocksMouth tag.
+
+                // TODO MASKS / MASKCOMPONENT.
+                // If the ability is added to raise/lower masks, this needs to be updated to check MaskComponent.Lowered
+                // or something. The BlocksMouth tag can probably also be removed then?
+
+                if (EntityManager.TryGetComponent(mask.OwnerUid, out tag) && tag.HasTag("BlocksMouth"))
+                {
+                    blockingEntity = mask.OwnerUid;
+                    return true;
+                }
             }
 
             // check helmets. Note that not all helmets cover the face.
             if (inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.HEAD, out ItemComponent? head) &&
-                EntityManager.TryGetComponent(head.OwnerUid, out TagComponent tag) &&
+                EntityManager.TryGetComponent(head.OwnerUid, out tag) &&
                 tag.HasTag("ConcealsFace"))
             {
                 blockingEntity = head.OwnerUid;

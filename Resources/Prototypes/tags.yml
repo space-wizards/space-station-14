@@ -6,6 +6,10 @@
 - type: Tag
   id: Bee
 
+# for masks. Unnecessary if something like a mask component  gets added
+- type: Tag
+  id: BlocksMouth 
+
 - type: Tag
   id: Brutepack
 
