@@ -48,7 +48,7 @@ namespace Content.Shared.Stacks
 
             // Queue delete stack if count reaches zero.
             if(component.Count <= 0)
-                QDel(uid);
+                QueueDel(uid);
 
             // Change appearance data.
             if (TryComp(uid, out AppearanceComponent? appearance))
