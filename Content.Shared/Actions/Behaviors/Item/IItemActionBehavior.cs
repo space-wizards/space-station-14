@@ -22,11 +22,11 @@ namespace Content.Shared.Actions.Behaviors.Item
         /// <summary>
         /// Entity performing the action.
         /// </summary>
-        public readonly IEntity Performer;
+        public readonly EntityUid Performer;
         /// <summary>
         /// Item being used to perform the action
         /// </summary>
-        public readonly IEntity Item;
+        public readonly EntityUid Item;
         /// <summary>
         /// Action being performed
         /// </summary>
@@ -36,7 +36,7 @@ namespace Content.Shared.Actions.Behaviors.Item
         /// </summary>
         public readonly ItemActionsComponent? ItemActions;
 
-        public ItemActionEventArgs(IEntity performer, IEntity item, ItemActionType actionType)
+        public ItemActionEventArgs(EntityUid performer, EntityUid item, ItemActionType actionType)
         {
             Performer = performer;
             ActionType = actionType;

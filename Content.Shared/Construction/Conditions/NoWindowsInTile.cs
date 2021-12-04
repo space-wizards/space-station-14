@@ -13,7 +13,7 @@ namespace Content.Shared.Construction.Conditions
     [DataDefinition]
     public class NoWindowsInTile : IConstructionCondition
     {
-        public bool Condition(IEntity user, EntityCoordinates location, Direction direction)
+        public bool Condition(EntityUid user, EntityCoordinates location, Direction direction)
         {
             foreach (var entity in location.GetEntitiesInTile(LookupFlags.Approximate | LookupFlags.IncludeAnchored))
             {

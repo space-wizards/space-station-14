@@ -20,7 +20,7 @@ namespace Content.Shared.Pulling.Components
         public float SprintSpeedModifier => Pulling == null ? 1.0f : 0.75f;
 
         [ViewVariables]
-        public IEntity? Pulling { get; set; }
+        public EntityUid? Pulling { get; set; }
 
         protected override void Shutdown()
         {

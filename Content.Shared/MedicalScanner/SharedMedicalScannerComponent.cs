@@ -79,7 +79,7 @@ namespace Content.Shared.MedicalScanner
             }
         }
 
-        public bool CanInsert(IEntity entity)
+        public bool CanInsert(EntityUid entity)
         {
             return IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(entity);
         }

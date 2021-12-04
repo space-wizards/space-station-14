@@ -47,7 +47,7 @@ namespace Content.Shared.Actions.Components
         /// <summary>
         /// Entity currently holding this in hand or equip slot. Null if not held.
         /// </summary>
-        public IEntity? Holder { get; private set; }
+        public EntityUid? Holder { get; private set; }
         // cached actions component of the holder, since we'll need to access it frequently
         private SharedActionsComponent? _holderActionsComponent;
 

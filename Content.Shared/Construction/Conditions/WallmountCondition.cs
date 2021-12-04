@@ -16,7 +16,7 @@ namespace Content.Shared.Construction.Conditions
     [DataDefinition]
     public class WallmountCondition : IConstructionCondition
     {
-        public bool Condition(IEntity user, EntityCoordinates location, Direction direction)
+        public bool Condition(EntityUid user, EntityCoordinates location, Direction direction)
         {
             var entManager = IoCManager.Resolve<IEntityManager>();
 

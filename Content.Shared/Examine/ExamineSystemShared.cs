@@ -48,7 +48,7 @@ namespace Content.Shared.Examine
         public const float ExamineRange = 16f;
         protected const float ExamineDetailsRange = 3f;
 
-        private bool IsInDetailsRange(IEntity examiner, IEntity entity)
+        private bool IsInDetailsRange(EntityUid examiner, EntityUid entity)
         {
             // check if the mob is in ciritcal or dead
             if (EntityManager.TryGetComponent(examiner, out MobStateComponent mobState) && mobState.IsIncapacitated())
@@ -62,14 +62,14 @@ namespace Content.Shared.Examine
         }
 
         [Pure]
-        public bool CanExamine(IEntity examiner, IEntity examined)
+        public bool CanExamine(EntityUid examiner, EntityUid examined)
         {
             return CanExamine(examiner, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(examined).MapPosition,
                 entity => entity == examiner || entity == examined);
         }
 
         [Pure]
-        public virtual bool CanExamine(IEntity examiner, MapCoordinates target, Ignored? predicate = null)
+        public virtual bool CanExamine(EntityUid examiner, MapCoordinates target, Ignored? predicate = null)
         {
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(examiner, out ExaminerComponent? examinerComponent))
                 return false;
@@ -146,7 +146,7 @@ namespace Content.Shared.Examine
             return true;
         }
 
-        public static bool InRangeUnOccluded(IEntity origin, IEntity other, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
+        public static bool InRangeUnOccluded(EntityUid origin, EntityUid other, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
         {
             var originPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(origin).MapPosition;
             var otherPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other).MapPosition;
@@ -154,7 +154,7 @@ namespace Content.Shared.Examine
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
 
-        public static bool InRangeUnOccluded(IEntity origin, IComponent other, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
+        public static bool InRangeUnOccluded(EntityUid origin, IComponent other, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
         {
             var originPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(origin).MapPosition;
             var otherPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other.Owner).MapPosition;
@@ -162,7 +162,7 @@ namespace Content.Shared.Examine
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
 
-        public static bool InRangeUnOccluded(IEntity origin, EntityCoordinates other, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
+        public static bool InRangeUnOccluded(EntityUid origin, EntityCoordinates other, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
         {
             var originPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(origin).MapPosition;
             var otherPos = other.ToMap(IoCManager.Resolve<IEntityManager>());
@@ -170,7 +170,7 @@ namespace Content.Shared.Examine
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
 
-        public static bool InRangeUnOccluded(IEntity origin, MapCoordinates other, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
+        public static bool InRangeUnOccluded(EntityUid origin, MapCoordinates other, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
         {
             var originPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(origin).MapPosition;
 
@@ -196,13 +196,13 @@ namespace Content.Shared.Examine
         public static bool InRangeUnOccluded(AfterInteractEventArgs args, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
         {
             var originPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.User).MapPosition;
-            IEntity? tempQualifier = args.Target;
+            EntityUid? tempQualifier = args.Target;
             var otherPos = (tempQualifier != null ? IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(tempQualifier) : null).MapPosition ?? args.ClickLocation.ToMap(IoCManager.Resolve<IEntityManager>());
 
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
 
-        public FormattedMessage GetExamineText(IEntity entity, IEntity? examiner)
+        public FormattedMessage GetExamineText(EntityUid entity, EntityUid? examiner)
         {
             var message = new FormattedMessage();
 
@@ -223,8 +223,8 @@ namespace Content.Shared.Examine
             message.PushColor(Color.DarkGray);
 
             // Raise the event and let things that subscribe to it change the message...
-            var isInDetailsRange = IsInDetailsRange(examiner, entity);
-            var examinedEvent = new ExaminedEvent(message, entity, examiner, isInDetailsRange, doNewline);
+            var isInDetailsRange = IsInDetailsRange(examiner.Value, entity);
+            var examinedEvent = new ExaminedEvent(message, entity, examiner.Value, isInDetailsRange, doNewline);
             RaiseLocalEvent(entity, examinedEvent);
 
             //Add component statuses from components that report one
@@ -266,12 +266,12 @@ namespace Content.Shared.Examine
         /// <summary>
         ///     The entity performing the examining.
         /// </summary>
-        public IEntity Examiner { get; }
+        public EntityUid Examiner { get; }
 
         /// <summary>
         ///     Entity being examined, for broadcast event purposes.
         /// </summary>
-        public IEntity Examined { get; }
+        public EntityUid Examined { get; }
 
         /// <summary>
         ///     Whether the examiner is in range of the entity to get some extra details.
@@ -280,7 +280,7 @@ namespace Content.Shared.Examine
 
         private bool _doNewLine;
 
-        public ExaminedEvent(FormattedMessage message, IEntity examined, IEntity examiner, bool isInDetailsRange, bool doNewLine)
+        public ExaminedEvent(FormattedMessage message, EntityUid examined, EntityUid examiner, bool isInDetailsRange, bool doNewLine)
         {
             Message = message;
             Examined = examined;

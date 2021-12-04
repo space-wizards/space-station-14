@@ -28,7 +28,7 @@ namespace Content.Shared.Pulling.Components
         /// The current entity pulling this component.
         /// SharedPullingStateManagementSystem should be writing this. This means definitely not you.
         /// </summary>
-        public IEntity? Puller { get; set; }
+        public EntityUid? Puller { get; set; }
         /// <summary>
         /// The pull joint.
         /// SharedPullingStateManagementSystem should be writing this. This means probably not you.
@@ -71,7 +71,7 @@ namespace Content.Shared.Pulling.Components
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedPullerComponent?>(entity, out var comp))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedPullerComponent?>(entity.Value, out var comp))
             {
                 Logger.Error($"Entity {state.Puller.Value} for pulling had no Puller component");
                 // ensure it disconnects from any different puller, still

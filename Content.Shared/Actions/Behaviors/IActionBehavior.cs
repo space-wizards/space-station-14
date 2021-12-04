@@ -21,7 +21,7 @@ namespace Content.Shared.Actions.Behaviors
         /// <summary>
         /// Entity performing the action.
         /// </summary>
-        public readonly IEntity Performer;
+        public readonly EntityUid Performer;
         /// <summary>
         /// Action being performed
         /// </summary>
@@ -31,7 +31,7 @@ namespace Content.Shared.Actions.Behaviors
         /// </summary>
         public readonly SharedActionsComponent? PerformerActions;
 
-        public ActionEventArgs(IEntity performer, ActionType actionType)
+        public ActionEventArgs(EntityUid performer, ActionType actionType)
         {
             Performer = performer;
             ActionType = actionType;
