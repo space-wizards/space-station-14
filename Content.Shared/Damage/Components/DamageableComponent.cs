@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Content.Shared.Acts;
 using Content.Shared.Damage.Prototypes;
-using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Radiation;
 using Robust.Shared.Analyzers;
@@ -13,8 +12,6 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.ViewVariables;
-using Content.Shared.Administration.Logs;
-using Content.Shared.Database;
 
 namespace Content.Shared.Damage
 {
