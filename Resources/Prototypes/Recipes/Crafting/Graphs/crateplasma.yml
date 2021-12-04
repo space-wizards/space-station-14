@@ -1,18 +1,18 @@
 - type: constructionGraph
-  id: CratePlasmaSecure 
+  id: CratePlasma
   start: start
   graph:
     - node: start
       edges:
-        - to: crateplasmasecure
+        - to: crateplasma
           steps:
             - material: Steel #crate looks metal so made it steel
               amount: 5
               doAfter: 5
 
               
-    - node: crateplasmasecure
-      entity: CratePlasmaSecure
+    - node: crateplasma
+      entity: CratePlasma
       edges:
         - to: start
           steps:

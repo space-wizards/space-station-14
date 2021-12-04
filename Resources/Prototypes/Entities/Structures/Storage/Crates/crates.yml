@@ -477,8 +477,8 @@
       state_open: plasmacrate_open
       state_closed: plasmacrate_door
   - type: Construction
-    graph: CratePlasmaSecure
-    node: crateplasmasecure
+    graph: CratePlasma
+    node: crateplasma
 
 - type: entity
   id: CrateSecure
