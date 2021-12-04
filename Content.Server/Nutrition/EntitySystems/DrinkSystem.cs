@@ -263,15 +263,8 @@ namespace Content.Server.Nutrition.EntitySystems
                 return true;
             }
 
-            var attempt = new IngestionAttemptEvent();
-            RaiseLocalEvent(userUid, attempt, false);
-            if (attempt.Cancelled && attempt.Blocker != null)
-            {
-                var name = EntityManager.GetComponent<MetaDataComponent>(attempt.Blocker.Value).EntityName;
-                _popupSystem.PopupEntity(Loc.GetString("food-system-remove-mask", ("entity", name)),
-                    userUid, Filter.Entities(userUid));
+            if (_foodSystem.IsMouthBlocked(userUid, userUid))
                 return true;
-            }
 
             var transferAmount = FixedPoint2.Min(drink.TransferAmount, drinkSolution.DrainAvailable);
             var drain = _solutionContainerSystem.Drain(uid, drinkSolution, transferAmount);
@@ -338,15 +331,8 @@ namespace Content.Server.Nutrition.EntitySystems
                 return true;
             }
 
-            var attempt = new IngestionAttemptEvent();
-            RaiseLocalEvent(targetUid, attempt, false);
-            if (attempt.Cancelled && attempt.Blocker != null)
-            {
-                var name = EntityManager.GetComponent<MetaDataComponent>(attempt.Blocker.Value).EntityName;
-                _popupSystem.PopupEntity(Loc.GetString("food-system-remove-mask", ("entity", name)),
-                    userUid, Filter.Entities(userUid));
+            if (_foodSystem.IsMouthBlocked(targetUid, userUid))
                 return true;
-            }
 
             EntityManager.TryGetComponent(userUid, out MetaDataComponent? meta);
             var userName = meta?.EntityName ?? string.Empty;

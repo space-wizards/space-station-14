@@ -138,15 +138,8 @@ namespace Content.Server.Nutrition.EntitySystems
                 !_bodySystem.TryGetComponentsOnMechanisms<StomachComponent>(userUid, out var stomachs, body))
                 return false;
 
-            var attempt = new IngestionAttemptEvent();
-            RaiseLocalEvent(userUid, attempt, false);
-            if (attempt.Cancelled && attempt.Blocker != null)
-            {
-                var name = EntityManager.GetComponent<MetaDataComponent>(attempt.Blocker.Value).EntityName;
-                _popupSystem.PopupEntity(Loc.GetString("food-system-remove-mask", ("entity", name)),
-                    userUid, Filter.Entities(userUid));
+            if (IsMouthBlocked(userUid, userUid))
                 return true;
-            }
 
             var usedUtensils = new List<UtensilComponent>();
 
@@ -265,15 +258,8 @@ namespace Content.Server.Nutrition.EntitySystems
                 return true;
             }
 
-            var attempt = new IngestionAttemptEvent();
-            RaiseLocalEvent(targetUid, attempt, false);
-            if (attempt.Cancelled && attempt.Blocker != null)
-            {
-                var name = EntityManager.GetComponent<MetaDataComponent>(attempt.Blocker.Value).EntityName;
-                _popupSystem.PopupEntity(Loc.GetString("food-system-remove-mask", ("entity", name)),
-                    userUid, Filter.Entities(userUid));
+            if (IsMouthBlocked(targetUid, userUid))
                 return true;
-            }
 
             if (!TryGetRequiredUtensils(userUid, food, out var utensils))
                 return true;
@@ -367,9 +353,8 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!Resolve(uid, ref food) || !Resolve(target, ref body, false))
                 return;
 
-            var attempt = new IngestionAttemptEvent();
-            RaiseLocalEvent(target, attempt, false);
-            if (attempt.Cancelled) return;
+            if (IsMouthBlocked(target))
+                return;
 
             if (!_solutionContainerSystem.TryGetSolution(uid, food.SolutionName, out var foodSolution))
                 return;
@@ -477,6 +462,28 @@ namespace Content.Server.Nutrition.EntitySystems
                 args.Blocker = head.OwnerUid;
                 args.Cancel();
             }
+        }
+
+
+        /// <summary>
+        ///     Check whether the target's mouth is blocked by equipment (masks or head-wear).
+        /// </summary>
+        /// <param name="uid">The target whose equipment is checked</param>
+        /// <param name="popupUid">Optional entity that will receive an informative pop-up identifying the blocking
+        /// piece of equipment.</param>
+        /// <returns></returns>
+        public bool IsMouthBlocked(EntityUid uid, EntityUid? popupUid = null)
+        {
+            var attempt = new IngestionAttemptEvent();
+            RaiseLocalEvent(uid, attempt, false);
+            if (attempt.Cancelled && attempt.Blocker != null && popupUid != null)
+            {
+                var name = EntityManager.GetComponent<MetaDataComponent>(attempt.Blocker.Value).EntityName;
+                _popupSystem.PopupEntity(Loc.GetString("food-system-remove-mask", ("entity", name)),
+                    uid, Filter.Entities(popupUid.Value));
+            }
+
+            return attempt.Cancelled;
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Content.Server.Nutrition;
 public sealed class IngestionAttemptEvent : CancellableEntityEventArgs
 {
     /// <summary>
-    ///     The equipment that is blocking consumption. Should be non-null if the event was canceled.
+    ///     The equipment that is blocking consumption. Should only be non-null if the event was canceled.
     /// </summary>
     public EntityUid? Blocker = null;
 }
