@@ -96,10 +96,10 @@
     prefixCreator: '14'
   mapPath: Maps/ssreach.yml
   minPlayers: 0
-  maxPlayers: 14
+  maxPlayers: 16
   overflowJobs: []
   availableJobs:
-    CargoTechnician: [ 1, 1 ]
+    CargoTechnician: [ 1, 2 ]
     Bartender: [ 1, 1 ]
     Botanist: [ 1, 1 ]
     Chef: [ 1, 1 ]
@@ -111,4 +111,5 @@
     Chemist: [ 1, 1 ]
     HeadOfSecurity: [ 1, 1 ]
     SecurityOfficer: [ 1, 2 ]
-  
+    Janitor: [ 1, 1 ]
+
