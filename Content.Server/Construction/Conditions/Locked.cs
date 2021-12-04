@@ -15,7 +15,8 @@ namespace Content.Server.Construction.Conditions
     [DataDefinition]
     public class Locked : IGraphCondition
     {
-        [DataField("locked")] public bool IsLocked { get; private set; } = true;
+        [DataField("locked")]
+        public bool IsLocked { get; private set; } = true;
 
         public bool Condition(EntityUid uid, IEntityManager entityManager)
         {
