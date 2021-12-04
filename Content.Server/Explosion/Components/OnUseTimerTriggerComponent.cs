@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Trigger;
