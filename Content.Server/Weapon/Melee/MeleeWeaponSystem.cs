@@ -98,8 +98,8 @@ namespace Content.Server.Weapon.Melee
 
                     RaiseLocalEvent(target.Uid, new AttackedEvent(args.Used, args.User, args.ClickLocation));
 
-                    var damage = _damageableSystem.TryChangeDamage(target.Uid,
-                        DamageSpecifier.ApplyModifierSets(comp.Damage, hitEvent.ModifiersList));
+                    var actualDamage = DamageSpecifier.ApplyModifierSets(comp.Damage + hitEvent.BonusDamage, hitEvent.ModifiersList);
+                    var damage = _damageableSystem.TryChangeDamage(target.Uid, actualDamage);
 
                     if (damage != null)
                     {
@@ -173,12 +173,13 @@ namespace Content.Server.Weapon.Melee
                     SoundSystem.Play(Filter.Pvs(owner), comp.MissSound.GetSound(), args.User.Transform.Coordinates);
                 }
 
+                var actualDamage = DamageSpecifier.ApplyModifierSets(comp.Damage + hitEvent.BonusDamage, hitEvent.ModifiersList);
+
                 foreach (var entity in hitEntities)
                 {
                     RaiseLocalEvent(entity.Uid, new AttackedEvent(args.Used, args.User, args.ClickLocation));
 
-                    var damage = _damageableSystem.TryChangeDamage(entity.Uid,
-                        DamageSpecifier.ApplyModifierSets(comp.Damage, hitEvent.ModifiersList));
+                    var damage = _damageableSystem.TryChangeDamage(entity.Uid, actualDamage);
 
                     if (damage != null)
                     {
@@ -316,9 +317,12 @@ namespace Content.Server.Weapon.Melee
         public List<DamageModifierSet> ModifiersList = new();
 
         /// <summary>
-        ///     A flat amount of damage to add. Same reason as above with Multiplier.
+        ///     Damage to add to the default melee weapon damage. Applied before modifiers.
         /// </summary>
-        public int FlatDamage = 0;
+        /// <remarks>
+        ///     This might be required as damage modifier sets cannot add a new damage type to a DamageSpecifier.
+        /// </remarks>
+        public DamageSpecifier BonusDamage = new();
 
         /// <summary>
         ///     A list containing every hit entity. Can be zero.

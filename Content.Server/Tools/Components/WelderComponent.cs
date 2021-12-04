@@ -1,4 +1,5 @@
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Sound;
 using Content.Shared.Tools.Components;
@@ -49,5 +50,17 @@ namespace Content.Server.Tools.Components
 
         [DataField("welderRefill")]
         public SoundSpecifier WelderRefill { get; } = new SoundPathSpecifier("/Audio/Effects/refill.ogg");
+
+        /// <summary>
+        ///     Damage modifiers to apply when used as a melee weapon while lit.
+        /// </summary>
+        [DataField("litDamageModifier")]
+        public DamageModifierSet? LitDamageModifier;
+
+        /// <summary>
+        ///     Damage bonus to add when used as a melee weapon while lit.
+        /// </summary>
+        [DataField("litDamageBonus")]
+        public DamageSpecifier LitDamageBonus = new();
     }
 }

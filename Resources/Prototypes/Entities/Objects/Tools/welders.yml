@@ -23,7 +23,6 @@
     damage:
       types:
         Blunt: 10
-        Heat: 10 # Hotfix to make kudzu die.
   - type: ItemStatus
   - type: RefillableSolution
     solution: Welder
@@ -39,6 +38,12 @@
       collection: Welder
     qualities: Welding
   - type: Welder
+    litDamageModifier:
+      coefficients:
+        Blunt: 0 # you're burning them, not bashing them.
+    litDamageBonus:
+      types:
+        Heat: 10 # add 10 heat damage.
   - type: PointLight
     enabled: false
     radius: 1.5

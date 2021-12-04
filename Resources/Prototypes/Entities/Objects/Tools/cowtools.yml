@@ -128,6 +128,13 @@
     HeldPrefix: off
   - type: Tool
     speed: 0.05
+  - type: Welder
+    litDamageModifier:
+      coefficients:
+        Blunt: 0 # you're burning them, not bashing them.
+    litDamageBonus:
+      types:
+        Heat: 0.5 # add 0.5 heat damage.
 
 - type: entity
   name: milkalyzer

@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Items;
 using Content.Server.Tools.Components;
+using Content.Server.Weapon.Melee;
 using Content.Shared.Audio;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Examine;
@@ -42,6 +44,17 @@ namespace Content.Server.Tools
             SubscribeLocalEvent<WelderComponent, ToolUseFinishAttemptEvent>(OnWelderToolUseFinishAttempt);
             SubscribeLocalEvent<WelderComponent, ComponentShutdown>(OnWelderShutdown);
             SubscribeLocalEvent<WelderComponent, ComponentGetState>(OnWelderGetState);
+            SubscribeLocalEvent<WelderComponent, MeleeHitEvent>(OnMeleeHit);
+        }
+
+        private void OnMeleeHit(EntityUid uid, WelderComponent component, MeleeHitEvent args)
+        {
+            if (args.Handled || !component.Lit)
+                return;
+
+            args.BonusDamage += component.LitDamageBonus;
+            if (component.LitDamageModifier != null)
+                args.ModifiersList.Add(component.LitDamageModifier);
         }
 
         public (FixedPoint2 fuel, FixedPoint2 capacity) GetWelderFuelAndCapacity(EntityUid uid, WelderComponent? welder = null, SolutionContainerManagerComponent? solutionContainer = null)
