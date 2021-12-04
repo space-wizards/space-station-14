@@ -8,10 +8,10 @@
   "license": "CC-BY-SA-3.0",
   "states": [
     {
-      "name": "base",
+      "name": "base"
     },
     {
-      "name": "balls",
+      "name": "balls"
     },
     {
       "name": "lights",
