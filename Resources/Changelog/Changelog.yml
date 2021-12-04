@@ -1,9 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: Attempt 2 at fixing substation/apc/generator disappearances, type: Fix}
-  id: 206
-  time: '2021-05-24T14:39:58.0000000+00:00'
 - author: scrato
   changes:
   - {message: You now won't be able to get out of handcuffs if you're dead or incapacitated,
@@ -2867,3 +2862,8 @@ Entries:
       to high potency or ground up., type: Add}
   id: 707
   time: '2021-12-04T18:55:04.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Cigars and clown/mime masks no longer block drinking & eating., type: Fix}
+  id: 708
+  time: '2021-12-04T18:56:27.0000000+00:00'
