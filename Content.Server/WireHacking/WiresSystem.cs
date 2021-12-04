@@ -153,7 +153,9 @@ public class WiresSystem : EntitySystem
 
     private void OnWiresStartup(EntityUid uid, WiresComponent component, ComponentStartup args)
     {
-        SetOrCreateWireLayout(uid, component);
+        if (component.WireActions != null)
+            SetOrCreateWireLayout(uid, component);
+
         UpdateUserInterface(uid);
     }
     #endregion
@@ -306,9 +308,9 @@ public class WiresSystem : EntitySystem
         appearance.SetData(WiresVisuals.MaintenancePanelState, wires.IsPanelOpen && wires.IsPanelVisible);
     }
 
-    private void UpdateUserInterface(EntityUid uid, WiresComponent? wires = null)
+    private void UpdateUserInterface(EntityUid uid, WiresComponent? wires = null, ServerUserInterfaceComponent? ui = null)
     {
-        if (!Resolve(uid, ref wires))
+        if (!Resolve(uid, ref wires, ref ui, false)) // logging this means that we get a bunch of errors
             return;
 
         var clientList = new List<ClientWire>();

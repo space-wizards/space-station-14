@@ -36,7 +36,7 @@ public class WiresComponent : Component
     public List<Wire> WiresList { get; } = new();
 
     [ViewVariables]
-    [DataField("wireActions", required: true)]
+    [DataField("wireActions")]
     public List<IWireAction> WireActions { get; } = new();
 
     [ViewVariables]
