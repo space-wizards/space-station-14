@@ -57,9 +57,9 @@ namespace Content.Server.Stack
                 return null;
 
             // Set the output parameter in the event instance to the newly split stack.
-            var entity = EntityManager.SpawnEntity(prototype, spawnPosition).Uid;
+            var entity = Spawn(prototype, spawnPosition);
 
-            if (EntityManager.TryGetComponent(entity, out SharedStackComponent? stackComp))
+            if (TryComp(entity, out SharedStackComponent? stackComp))
             {
                 // Set the split stack's count.
                 SetCount(entity, amount, stackComp);
@@ -76,8 +76,8 @@ namespace Content.Server.Stack
         public EntityUid Spawn(int amount, StackPrototype prototype, EntityCoordinates spawnPosition)
         {
             // Set the output result parameter to the new stack entity...
-            var entity = EntityManager.SpawnEntity(prototype.Spawn, spawnPosition).Uid;
-            var stack = EntityManager.GetComponent<StackComponent>(entity);
+            var entity = Spawn(prototype.Spawn, spawnPosition);
+            var stack = Comp<StackComponent>(entity);
 
             // And finally, set the correct amount!
             SetCount(entity, amount, stack);
@@ -89,7 +89,7 @@ namespace Content.Server.Stack
             if (args.Handled)
                 return;
 
-            if (!args.Used.TryGetComponent<StackComponent>(out var otherStack))
+            if (!TryComp<StackComponent>(args.Used.Uid, out var otherStack))
                 return;
 
             if (!otherStack.StackTypeId.Equals(stack.StackTypeId))
@@ -176,7 +176,7 @@ namespace Content.Server.Stack
                 return;
             }
 
-            if (EntityManager.TryGetComponent<HandsComponent>(userUid, out var hands))
+            if (TryComp<HandsComponent>(userUid, out var hands))
             {
                 if (hands.TryGetActiveHeldEntity(out var heldItem) && heldItem != stack.Owner)
                 {
@@ -191,7 +191,7 @@ namespace Content.Server.Stack
             if(Split(uid, amount, userTransform.Coordinates, stack) is not {} splitStack)
                 return;
 
-            if (EntityManager.TryGetComponent<ItemComponent>(splitStack, out var item))
+            if (TryComp<ItemComponent>(splitStack, out var item))
             {
                 hands.PutInHandOrDrop(item);
             }
