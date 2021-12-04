@@ -18,14 +18,14 @@ namespace Content.Shared.Storage
     {
         public override string Name => "Storage";
 
-        public abstract IReadOnlyList<IEntity>? StoredEntities { get; }
+        public abstract IReadOnlyList<EntityUid>? StoredEntities { get; }
 
         /// <summary>
         ///     Removes from the storage container and updates the stored value
         /// </summary>
         /// <param name="entity">The entity to remove</param>
         /// <returns>True if no longer in storage, false otherwise</returns>
-        public abstract bool Remove(IEntity entity);
+        public abstract bool Remove(EntityUid entity);
 
         bool IDraggable.CanDrop(CanDropEvent args)
         {

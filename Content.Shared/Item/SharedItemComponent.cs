@@ -110,7 +110,7 @@ namespace Content.Shared.Item
         /// <summary>
         ///     If a player can pick up this item.
         /// </summary>
-        public bool CanPickup(IEntity user, bool popup = true)
+        public bool CanPickup(EntityUid user, bool popup = true)
         {
             if (!EntitySystem.Get<ActionBlockerSystem>().CanPickup(user))
                 return false;

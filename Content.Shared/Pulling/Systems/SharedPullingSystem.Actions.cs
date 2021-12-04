@@ -27,7 +27,7 @@ namespace Content.Shared.Pulling
     {
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
 
-        public bool CanPull(IEntity puller, IEntity pulled)
+        public bool CanPull(EntityUid puller, EntityUid pulled)
         {
             if (!IoCManager.Resolve<IEntityManager>().HasComponent<SharedPullerComponent>(puller))
             {
@@ -73,7 +73,7 @@ namespace Content.Shared.Pulling
             return !startPull.Cancelled;
         }
 
-        public bool TogglePull(IEntity puller, SharedPullableComponent pullable)
+        public bool TogglePull(EntityUid puller, SharedPullableComponent pullable)
         {
             if (pullable.Puller == puller)
             {
@@ -84,7 +84,7 @@ namespace Content.Shared.Pulling
 
         // -- Core attempted actions --
 
-        public bool TryStopPull(SharedPullableComponent pullable, IEntity? user = null)
+        public bool TryStopPull(SharedPullableComponent pullable, EntityUid? user = null)
         {
             if (!pullable.BeingPulled)
             {
@@ -100,13 +100,13 @@ namespace Content.Shared.Pulling
             return true;
         }
 
-        public bool TryStartPull(IEntity puller, IEntity pullable)
+        public bool TryStartPull(EntityUid puller, EntityUid pullable)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedPullerComponent?>(puller, out var pullerComp))
+            if (!EntityManager.TryGetComponent<SharedPullerComponent?>(puller, out var pullerComp))
             {
                 return false;
             }
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedPullableComponent?>(pullable, out var pullableComp))
+            if (!EntityManager.TryGetComponent<SharedPullableComponent?>(pullable, out var pullableComp))
             {
                 return false;
             }
@@ -121,17 +121,17 @@ namespace Content.Shared.Pulling
 
             // Pulling a new object : Perform sanity checks.
 
-            if (!EntitySystem.Get<SharedPullingSystem>().CanPull(puller.Owner, pullable.Owner))
+            if (!CanPull(puller.Owner, pullable.Owner))
             {
                 return false;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<PhysicsComponent?>(puller.Owner, out var pullerPhysics))
+            if (!EntityManager.TryGetComponent<PhysicsComponent?>(puller.Owner, out var pullerPhysics))
             {
                 return false;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<PhysicsComponent?>(pullable.Owner, out var pullablePhysics))
+            if (!EntityManager.TryGetComponent<PhysicsComponent?>(pullable.Owner, out var pullablePhysics))
             {
                 return false;
             }
@@ -143,7 +143,7 @@ namespace Content.Shared.Pulling
             var oldPullable = puller.Pulling;
             if (oldPullable != null)
             {
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedPullableComponent?>(oldPullable, out var oldPullableComp))
+                if (EntityManager.TryGetComponent<SharedPullableComponent?>(oldPullable.Value, out var oldPullableComp))
                 {
                     if (!TryStopPull(oldPullableComp))
                     {

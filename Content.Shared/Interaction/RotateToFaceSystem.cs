@@ -34,7 +34,7 @@ namespace Content.Shared.Interaction
     public class RotateToFaceSystem : EntitySystem
     {
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-        public bool TryFaceCoordinates(IEntity user, Vector2 coordinates)
+        public bool TryFaceCoordinates(EntityUid user, Vector2 coordinates)
         {
             var diff = coordinates - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user).MapPosition.Position;
             if (diff.LengthSquared <= 0.01f)
@@ -43,7 +43,7 @@ namespace Content.Shared.Interaction
             return TryFaceAngle(user, diffAngle);
         }
 
-        public bool TryFaceAngle(IEntity user, Angle diffAngle)
+        public bool TryFaceAngle(EntityUid user, Angle diffAngle)
         {
             if (_actionBlockerSystem.CanChangeDirection(user))
             {

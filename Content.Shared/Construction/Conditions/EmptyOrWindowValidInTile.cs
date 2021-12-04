@@ -17,7 +17,7 @@ namespace Content.Shared.Construction.Conditions
         [DataField("tileNotBlocked")]
         private readonly TileNotBlocked _tileNotBlocked = new();
 
-        public bool Condition(IEntity user, EntityCoordinates location, Direction direction)
+        public bool Condition(EntityUid user, EntityCoordinates location, Direction direction)
         {
             var result = false;
 

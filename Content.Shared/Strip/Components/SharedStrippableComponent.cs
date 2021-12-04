@@ -14,7 +14,7 @@ namespace Content.Shared.Strip.Components
     {
         public override string Name => "Strippable";
 
-        public bool CanBeStripped(IEntity by)
+        public bool CanBeStripped(EntityUid by)
         {
             return by != Owner
                    && IoCManager.Resolve<IEntityManager>().HasComponent<SharedHandsComponent>(@by)

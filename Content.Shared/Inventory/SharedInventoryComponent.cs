@@ -44,7 +44,7 @@ namespace Content.Shared.Inventory
 
         /// <returns>true if the item is equipped to an equip slot (NOT inside an equipped container
         /// like inside a backpack)</returns>
-        public abstract bool IsEquipped(IEntity item);
+        public abstract bool IsEquipped(EntityUid item);
 
         [Serializable, NetSerializable]
         protected class InventoryComponentState : ComponentState

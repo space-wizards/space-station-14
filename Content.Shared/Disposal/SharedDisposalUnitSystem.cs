@@ -47,7 +47,7 @@ namespace Content.Shared.Disposal
             }
         }
 
-        public virtual bool CanInsert(SharedDisposalUnitComponent component, IEntity entity)
+        public virtual bool CanInsert(SharedDisposalUnitComponent component, EntityUid entity)
         {
             if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner).Anchored)
                 return false;
@@ -70,12 +70,6 @@ namespace Content.Shared.Disposal
             }
 
             return true;
-        }
-
-        public bool CanInsert(SharedDisposalUnitComponent component, EntityUid entityId)
-        {
-            var entity = EntityManager.GetEntity(entityId);
-            return CanInsert(component, entity);
         }
     }
 }

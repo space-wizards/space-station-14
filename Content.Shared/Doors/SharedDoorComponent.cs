@@ -97,7 +97,7 @@ namespace Content.Shared.Doors
         /// </summary>
         protected List<EntityUid> CurrentlyCrushing = new();
 
-        public bool IsCrushing(IEntity entity)
+        public bool IsCrushing(EntityUid entity)
         {
             return CurrentlyCrushing.Contains(entity);
         }

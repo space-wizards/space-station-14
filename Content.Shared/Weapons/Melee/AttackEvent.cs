@@ -12,12 +12,12 @@ namespace Content.Shared.Weapons.Melee
         /// <summary>
         ///     Entity used to attack, for broadcast purposes.
         /// </summary>
-        public IEntity Used { get; }
+        public EntityUid Used { get; }
 
         /// <summary>
         ///     Entity that triggered the attack.
         /// </summary>
-        public IEntity User { get; }
+        public EntityUid User { get; }
 
         /// <summary>
         ///     The original location that was clicked by the user.
@@ -32,9 +32,9 @@ namespace Content.Shared.Weapons.Melee
         /// <summary>
         ///     Entity that was attacked.
         /// </summary>
-        public IEntity? TargetEntity { get; }
+        public EntityUid? TargetEntity { get; }
 
-        public ClickAttackEvent(IEntity used, IEntity user, EntityCoordinates clickLocation, EntityUid target = default)
+        public ClickAttackEvent(EntityUid used, EntityUid user, EntityCoordinates clickLocation, EntityUid target = default)
         {
             Used = used;
             User = user;
@@ -54,19 +54,19 @@ namespace Content.Shared.Weapons.Melee
         /// <summary>
         ///     Entity used to attack, for broadcast purposes.
         /// </summary>
-        public IEntity Used { get; }
+        public EntityUid Used { get; }
 
         /// <summary>
         ///     Entity that triggered the attack.
         /// </summary>
-        public IEntity User { get; }
+        public EntityUid User { get; }
 
         /// <summary>
         ///     The original location that was clicked by the user.
         /// </summary>
         public EntityCoordinates ClickLocation { get; }
 
-        public WideAttackEvent(IEntity used, IEntity user, EntityCoordinates clickLocation)
+        public WideAttackEvent(EntityUid used, EntityUid user, EntityCoordinates clickLocation)
         {
             Used = used;
             User = user;
@@ -82,19 +82,19 @@ namespace Content.Shared.Weapons.Melee
         /// <summary>
         ///     Entity used to attack, for broadcast purposes.
         /// </summary>
-        public IEntity Used { get; }
+        public EntityUid Used { get; }
 
         /// <summary>
         ///     Entity that triggered the attack.
         /// </summary>
-        public IEntity User { get; }
+        public EntityUid User { get; }
 
         /// <summary>
         ///     The original location that was clicked by the user.
         /// </summary>
         public EntityCoordinates ClickLocation { get; }
 
-        public AttackedEvent(IEntity used, IEntity user, EntityCoordinates clickLocation)
+        public AttackedEvent(EntityUid used, EntityUid user, EntityCoordinates clickLocation)
         {
             Used = used;
             User = user;

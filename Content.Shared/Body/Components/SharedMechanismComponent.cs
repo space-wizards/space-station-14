@@ -15,7 +15,7 @@ namespace Content.Shared.Body.Components
         protected readonly Dictionary<int, object> OptionsCache = new();
         protected SharedBodyComponent? BodyCache;
         protected int IdHash;
-        protected IEntity? PerformerCache;
+        protected EntityUid? PerformerCache;
         private SharedBodyPartComponent? _part;
 
         public SharedBodyComponent? Body => Part?.Body;

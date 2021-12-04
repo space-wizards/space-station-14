@@ -143,7 +143,7 @@ namespace Content.Shared.Body.Components
             var i = 0;
             foreach (var mechanism in _mechanisms)
             {
-                mechanismIds[i] = mechanism.OwnerUid;
+                mechanismIds[i] = mechanism.Owner;
                 i++;
             }
 
@@ -183,7 +183,7 @@ namespace Content.Shared.Body.Components
             return SurgeryDataComponent?.CheckSurgery(surgery) ?? false;
         }
 
-        public bool AttemptSurgery(SurgeryType toolType, IBodyPartContainer target, ISurgeon surgeon, IEntity performer)
+        public bool AttemptSurgery(SurgeryType toolType, IBodyPartContainer target, ISurgeon surgeon, EntityUid performer)
         {
             DebugTools.AssertNotNull(toolType);
             DebugTools.AssertNotNull(target);
@@ -370,7 +370,7 @@ namespace Content.Shared.Body.Components
                     continue;
                 }
 
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out SharedMechanismComponent? mechanism))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Value, out SharedMechanismComponent? mechanism))
                 {
                     continue;
                 }

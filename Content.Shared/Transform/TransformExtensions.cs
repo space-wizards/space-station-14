@@ -18,7 +18,7 @@ namespace Content.Shared.Transform
             transform.AttachParent(grandParent);
         }
 
-        public static void AttachToGrandparent(this IEntity entity)
+        public static void AttachToGrandparent(this EntityUid entity)
         {
             AttachToGrandparent(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity));
         }

@@ -30,7 +30,7 @@ namespace Content.Shared.Pulling
         /// <summary>
         ///     A mapping of pullers to the entity that they are pulling.
         /// </summary>
-        private readonly Dictionary<IEntity, IEntity> _pullers =
+        private readonly Dictionary<EntityUid, EntityUid> _pullers =
             new();
 
         private readonly HashSet<SharedPullableComponent> _moving = new();
@@ -100,21 +100,21 @@ namespace Content.Shared.Pulling
         }
 
         // Raise a "you are being pulled" alert if the pulled entity has alerts.
-        private static void PullableHandlePullStarted(EntityUid uid, SharedPullableComponent component, PullStartedMessage args)
+        private void PullableHandlePullStarted(EntityUid uid, SharedPullableComponent component, PullStartedMessage args)
         {
             if (args.Pulled.Owner != uid)
                 return;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner, out SharedAlertsComponent? alerts))
+            if (EntityManager.TryGetComponent(component.Owner, out SharedAlertsComponent? alerts))
                 alerts.ShowAlert(AlertType.Pulled);
         }
 
-        private static void PullableHandlePullStopped(EntityUid uid, SharedPullableComponent component, PullStoppedMessage args)
+        private  void PullableHandlePullStopped(EntityUid uid, SharedPullableComponent component, PullStoppedMessage args)
         {
             if (args.Pulled.Owner != uid)
                 return;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner, out SharedAlertsComponent? alerts))
+            if (EntityManager.TryGetComponent(component.Owner, out SharedAlertsComponent? alerts))
                 alerts.ClearAlert(AlertType.Pulled);
         }
 
@@ -165,17 +165,17 @@ namespace Content.Shared.Pulling
             // The pulled object may have already been deleted.
             // TODO: Work out why. Monkey + meat spike is a good test for this,
             //  assuming you're still pulling the monkey when it gets gibbed.
-            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(pulled) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(pulled).EntityLifeStage) >= EntityLifeStage.Deleted)
+            if ((!EntityManager.EntityExists(pulled.Value) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(pulled.Value).EntityLifeStage) >= EntityLifeStage.Deleted)
             {
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(pulled, out IPhysBody? physics))
+            if (!EntityManager.TryGetComponent(pulled.Value, out IPhysBody? physics))
             {
                 return;
             }
 
-            UpdatePulledRotation(puller, pulled);
+            UpdatePulledRotation(puller, pulled.Value);
 
             physics.WakeBody();
         }
@@ -183,16 +183,16 @@ namespace Content.Shared.Pulling
         // TODO: When Joint networking is less shitcodey fix this to use a dedicated joints message.
         private void HandleContainerInsert(EntInsertedIntoContainerMessage message)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(message.Entity, out SharedPullableComponent? pullable))
+            if (EntityManager.TryGetComponent(message.Entity, out SharedPullableComponent? pullable))
             {
                 TryStopPull(pullable);
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(message.Entity, out SharedPullerComponent? puller))
+            if (EntityManager.TryGetComponent(message.Entity, out SharedPullerComponent? puller))
             {
                 if (puller.Pulling == null) return;
 
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(puller.Pulling, out SharedPullableComponent? pulling))
+                if (!EntityManager.TryGetComponent(puller.Pulling.Value, out SharedPullableComponent? pulling))
                 {
                     return;
                 }
@@ -203,19 +203,17 @@ namespace Content.Shared.Pulling
 
         private bool HandleMovePulledObject(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
-            var player = session?.AttachedEntity;
-
-            if (player == null)
-            {
+            if (session?.AttachedEntityUid == null)
                 return false;
-            }
+
+            var player = session.AttachedEntityUid.Value;
 
             if (!TryGetPulled(player, out var pulled))
             {
                 return false;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(pulled, out SharedPullableComponent? pullable))
+            if (!EntityManager.TryGetComponent(pulled.Value, out SharedPullableComponent? pullable))
             {
                 return false;
             }
@@ -225,32 +223,32 @@ namespace Content.Shared.Pulling
             return false;
         }
 
-        private void SetPuller(IEntity puller, IEntity pulled)
+        private void SetPuller(EntityUid puller, EntityUid pulled)
         {
             _pullers[puller] = pulled;
         }
 
-        private bool RemovePuller(IEntity puller)
+        private bool RemovePuller(EntityUid puller)
         {
             return _pullers.Remove(puller);
         }
 
-        public IEntity? GetPulled(IEntity by)
+        public EntityUid? GetPulled(EntityUid by)
         {
             return _pullers.GetValueOrDefault(by);
         }
 
-        public bool TryGetPulled(IEntity by, [NotNullWhen(true)] out IEntity? pulled)
+        public bool TryGetPulled(EntityUid by, [NotNullWhen(true)] out EntityUid? pulled)
         {
             return (pulled = GetPulled(by)) != null;
         }
 
-        public bool IsPulling(IEntity puller)
+        public bool IsPulling(EntityUid puller)
         {
             return _pullers.ContainsKey(puller);
         }
 
-        private void UpdatePulledRotation(IEntity puller, IEntity pulled)
+        private void UpdatePulledRotation(EntityUid puller, EntityUid pulled)
         {
             // TODO: update once ComponentReference works with directed event bus.
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(pulled, out RotatableComponent? rotatable))
