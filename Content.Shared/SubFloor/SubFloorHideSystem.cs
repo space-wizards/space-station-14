@@ -79,8 +79,8 @@ namespace Content.Shared.SubFloor
         private void OnSubFloorTerminating(EntityUid uid, SubFloorHideComponent component, ComponentShutdown _)
         {
             // If component is being deleted don't need to worry about updating any component stuff because it won't matter very shortly.
-            IEntity tempQualifier = EntityManager.GetEntity(uid);
-            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(tempQualifier) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(tempQualifier).EntityLifeStage) >= EntityLifeStage.Terminating) return;
+            if (EntityManager.GetComponent<MetaDataComponent>(uid).EntityLifeStage >= EntityLifeStage.Terminating)
+                return;
 
             // Regardless of whether we're on a subfloor or not, unhide.
             UpdateEntity(uid, true);

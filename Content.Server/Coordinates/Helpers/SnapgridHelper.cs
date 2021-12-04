@@ -7,7 +7,7 @@ namespace Content.Server.Coordinates.Helpers
 {
     public static class SnapgridHelper
     {
-        public static void SnapToGrid(this IEntity entity, IEntityManager? entityManager = null, IMapManager? mapManager = null)
+        public static void SnapToGrid(this EntityUid entity, IEntityManager? entityManager = null, IMapManager? mapManager = null)
         {
             IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates.SnapToGrid(entityManager, mapManager);
         }

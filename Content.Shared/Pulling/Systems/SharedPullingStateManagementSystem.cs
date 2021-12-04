@@ -81,14 +81,14 @@ namespace Content.Shared.Pulling
             var pullableOldPullerE = pullable?.Puller;
             if (pullableOldPullerE != null)
             {
-                ForceDisconnect(IoCManager.Resolve<IEntityManager>().GetComponent<SharedPullerComponent>(pullableOldPullerE), pullable!);
+                ForceDisconnect(IoCManager.Resolve<IEntityManager>().GetComponent<SharedPullerComponent>(pullableOldPullerE.Value), pullable!);
             }
 
             // Continue with the puller.
             var pullerOldPullableE = puller?.Pulling;
             if (pullerOldPullableE != null)
             {
-                ForceDisconnect(puller!, IoCManager.Resolve<IEntityManager>().GetComponent<SharedPullableComponent>(pullerOldPullableE));
+                ForceDisconnect(puller!, IoCManager.Resolve<IEntityManager>().GetComponent<SharedPullableComponent>(pullerOldPullableE.Value));
             }
 
             // And now for the actual connection (if any).

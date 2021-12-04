@@ -44,7 +44,7 @@ namespace Content.Shared.Tabletop
                 return false;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().HasComponent<MapComponent>(parent) && !IoCManager.Resolve<IEntityManager>().HasComponent<IMapGridComponent>(parent))
+            if (!EntityManager.HasComponent<MapComponent>(parent) && !EntityManager.HasComponent<IMapGridComponent>(parent))
             {
                 return false;
             }

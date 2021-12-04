@@ -195,9 +195,10 @@ namespace Content.Shared.Examine
 
         public static bool InRangeUnOccluded(AfterInteractEventArgs args, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
         {
-            var originPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.User).MapPosition;
-            EntityUid? tempQualifier = args.Target;
-            var otherPos = (tempQualifier != null ? IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(tempQualifier) : null).MapPosition ?? args.ClickLocation.ToMap(IoCManager.Resolve<IEntityManager>());
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var originPos = entityManager.GetComponent<TransformComponent>(args.User).MapPosition;
+            var target = args.Target;
+            var otherPos = (target != null ? entityManager.GetComponent<TransformComponent>(target.Value).MapPosition : args.ClickLocation.ToMap(entityManager));
 
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }

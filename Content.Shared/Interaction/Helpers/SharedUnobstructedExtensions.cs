@@ -21,19 +21,6 @@ namespace Content.Shared.Interaction.Helpers
             CollisionGroup collisionMask = CollisionGroup.Impassable,
             Ignored? predicate = null,
             bool ignoreInsideBlocker = false,
-            bool popup = false)
-        {
-            return SharedInteractionSystem.InRangeUnobstructed(origin, other, range, collisionMask, predicate,
-                ignoreInsideBlocker, popup);
-        }
-
-        public static bool InRangeUnobstructed(
-            this EntityUid origin,
-            EntityUid other,
-            float range = InteractionRange,
-            CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored? predicate = null,
-            bool ignoreInsideBlocker = false,
             bool popup = false,
             IEntityManager? entityManager = null)
         {

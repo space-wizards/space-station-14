@@ -46,19 +46,19 @@ namespace Content.Shared.Movement.EntitySystems
             if (!TryGetAttachedComponent<IMoverComponent>(session, out var moverComp))
                 return;
 
-            var owner = session?.AttachedEntity;
+            var owner = session?.AttachedEntityUid;
 
             if (owner != null && session != null)
             {
-                EntityManager.EventBus.RaiseLocalEvent(owner, new RelayMoveInputEvent(session));
+                EntityManager.EventBus.RaiseLocalEvent(owner.Value, new RelayMoveInputEvent(session));
 
                 // For stuff like "Moving out of locker" or the likes
-                if (owner.IsInContainer() &&
-                    (!IoCManager.Resolve<IEntityManager>().TryGetComponent(owner, out MobStateComponent? mobState) ||
+                if (owner.Value.IsInContainer() &&
+                    (!EntityManager.TryGetComponent(owner.Value, out MobStateComponent? mobState) ||
                      mobState.IsAlive()))
                 {
-                    var relayMoveEvent = new RelayMovementEntityEvent(owner);
-                    IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(owner).ParentUid, relayMoveEvent);
+                    var relayMoveEvent = new RelayMovementEntityEvent(owner.Value);
+                    EntityManager.EventBus.RaiseLocalEvent(EntityManager.GetComponent<TransformComponent>(owner.Value).ParentUid, relayMoveEvent);
                 }
             }
 
@@ -80,12 +80,12 @@ namespace Content.Shared.Movement.EntitySystems
         {
             component = default;
 
-            var ent = session?.AttachedEntity;
+            var ent = session?.AttachedEntityUid;
 
-            if (ent == null || !IoCManager.Resolve<IEntityManager>().EntityExists(ent))
+            if (ent == null || !IoCManager.Resolve<IEntityManager>().EntityExists(ent.Value))
                 return false;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(ent, out T? comp))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(ent.Value, out T? comp))
                 return false;
 
             component = comp;

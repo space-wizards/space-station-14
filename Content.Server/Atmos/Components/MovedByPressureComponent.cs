@@ -111,12 +111,12 @@ namespace Content.Server.Atmos.Components
 
     public static class MovedByPressureExtensions
     {
-        public static bool IsMovedByPressure(this IEntity entity)
+        public static bool IsMovedByPressure(this EntityUid entity)
         {
             return entity.IsMovedByPressure(out _);
         }
 
-        public static bool IsMovedByPressure(this IEntity entity, [NotNullWhen(true)] out MovedByPressureComponent? moved)
+        public static bool IsMovedByPressure(this EntityUid entity, [NotNullWhen(true)] out MovedByPressureComponent? moved)
         {
             return IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out moved) &&
                    moved.Enabled;

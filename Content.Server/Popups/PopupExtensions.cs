@@ -17,7 +17,7 @@ namespace Content.Server.Popups
         /// </summary>
         /// <param name="source">The entity on which to popup the message.</param>
         /// <param name="message">The message to show.</param>
-        public static void PopupMessageOtherClients(this IEntity source, string message)
+        public static void PopupMessageOtherClients(this EntityUid source, string message)
         {
             var viewers = Filter.Empty()
                 .AddPlayersByPvs(source)
@@ -49,7 +49,7 @@ namespace Content.Server.Popups
         /// <param name="range">
         ///     The range in which to search for players, defaulting to one screen.
         /// </param>
-        public static void PopupMessageEveryone(this IEntity source, string message, IPlayerManager? playerManager = null, int range = 15)
+        public static void PopupMessageEveryone(this EntityUid source, string message, IPlayerManager? playerManager = null, int range = 15)
         {
             source.PopupMessage(message);
             source.PopupMessageOtherClients(message);

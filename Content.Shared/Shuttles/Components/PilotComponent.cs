@@ -38,8 +38,10 @@ namespace Content.Shared.Shuttles.Components
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetEntity(state.Console.Value, out var consoleEnt) ||
-                !IoCManager.Resolve<IEntityManager>().TryGetComponent(consoleEnt, out SharedShuttleConsoleComponent? shuttleConsoleComponent))
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+
+            if (!entityManager.TryGetEntity(state.Console.Value, out var consoleEnt) ||
+                !entityManager.TryGetComponent(consoleEnt.Value, out SharedShuttleConsoleComponent? shuttleConsoleComponent))
             {
                 Logger.Warning($"Unable to set Helmsman console to {state.Console.Value}");
                 return;

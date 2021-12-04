@@ -31,7 +31,7 @@ namespace Content.Server.Throwing
         /// <param name="strength">How much the direction vector should be multiplied for velocity.</param>
         /// <param name="user"></param>
         /// <param name="pushbackRatio">The ratio of impulse applied to the thrower</param>
-        internal static void TryThrow(this IEntity entity, Vector2 direction, float strength = 1.0f, IEntity? user = null, float pushbackRatio = 1.0f)
+        internal static void TryThrow(this EntityUid entity, Vector2 direction, float strength = 1.0f, EntityUid? user = null, float pushbackRatio = 1.0f)
         {
             if ((!IoCManager.Resolve<IEntityManager>().EntityExists(entity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityLifeStage) >= EntityLifeStage.Deleted ||
                 strength <= 0f ||

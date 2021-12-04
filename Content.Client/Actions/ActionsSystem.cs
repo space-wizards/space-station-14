@@ -85,7 +85,7 @@ namespace Content.Client.Actions
                 {
                     var playerEntity = _playerManager.LocalPlayer?.ControlledEntity;
                     if (playerEntity == null ||
-                        !IoCManager.Resolve<IEntityManager>().TryGetComponent<ClientActionsComponent?>(playerEntity, out var actionsComponent)) return false;
+                        !EntityManager.TryGetComponent<ClientActionsComponent?>(playerEntity.Value, out var actionsComponent)) return false;
 
                     actionsComponent.HandleHotbarKeybind(slot, args);
                     return true;
@@ -99,7 +99,7 @@ namespace Content.Client.Actions
                 {
                     var playerEntity = _playerManager.LocalPlayer?.ControlledEntity;
                     if (playerEntity == null ||
-                        !IoCManager.Resolve<IEntityManager>().TryGetComponent<ClientActionsComponent?>(playerEntity, out var actionsComponent)) return false;
+                        !EntityManager.TryGetComponent<ClientActionsComponent?>(playerEntity.Value, out var actionsComponent)) return false;
 
                     actionsComponent.HandleChangeHotbarKeybind(hotbar, args);
                     return true;
@@ -111,7 +111,7 @@ namespace Content.Client.Actions
         {
             var playerEntity = _playerManager.LocalPlayer?.ControlledEntity;
             if (playerEntity == null ||
-                !IoCManager.Resolve<IEntityManager>().TryGetComponent<ClientActionsComponent?>(playerEntity, out var actionsComponent)) return false;
+                !EntityManager.TryGetComponent<ClientActionsComponent?>(playerEntity.Value, out var actionsComponent)) return false;
 
             return actionsComponent.TargetingOnUse(args);
         }
@@ -120,7 +120,7 @@ namespace Content.Client.Actions
         {
             var playerEntity = _playerManager.LocalPlayer?.ControlledEntity;
             if (playerEntity == null ||
-                !IoCManager.Resolve<IEntityManager>().TryGetComponent<ClientActionsComponent?>(playerEntity, out var actionsComponent)) return;
+                !EntityManager.TryGetComponent<ClientActionsComponent?>(playerEntity.Value, out var actionsComponent)) return;
 
             actionsComponent.ToggleActionsMenu();
         }

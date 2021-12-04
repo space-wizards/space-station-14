@@ -19,11 +19,11 @@ namespace Content.Shared.Hands
             SubscribeAllEvent<RequestSetHandEvent>(HandleSetHand);
         }
 
-        private static void HandleSetHand(RequestSetHandEvent msg, EntitySessionEventArgs eventArgs)
+        private void HandleSetHand(RequestSetHandEvent msg, EntitySessionEventArgs eventArgs)
         {
-            var entity = eventArgs.SenderSession.AttachedEntity;
+            var entity = eventArgs.SenderSession.AttachedEntityUid;
 
-            if (entity == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out SharedHandsComponent? hands))
+            if (entity == null || !EntityManager.TryGetComponent(entity.Value, out SharedHandsComponent? hands))
                 return;
 
             hands.ActiveHand = msg.HandName;

@@ -15,9 +15,9 @@ namespace Content.Shared.CombatMode
 
         private void CombatModeActiveHandler(CombatModeSystemMessages.SetCombatModeActiveMessage ev, EntitySessionEventArgs eventArgs)
         {
-            var entity = eventArgs.SenderSession?.AttachedEntity;
+            var entity = eventArgs.SenderSession.AttachedEntityUid;
 
-            if (entity == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out SharedCombatModeComponent? combatModeComponent))
+            if (entity == null || !EntityManager.TryGetComponent(entity.Value, out SharedCombatModeComponent? combatModeComponent))
             {
                 return;
             }

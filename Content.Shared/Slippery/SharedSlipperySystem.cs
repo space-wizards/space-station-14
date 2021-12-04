@@ -130,7 +130,7 @@ namespace Content.Shared.Slippery
                     continue;
                 }
 
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out PhysicsComponent? otherPhysics) ||
+                if (!EntityManager.TryGetComponent(entity.Value, out PhysicsComponent? otherPhysics) ||
                     !body.GetWorldAABB().Intersects(otherPhysics.GetWorldAABB()))
                 {
                     component.Colliding.Remove(uid);
