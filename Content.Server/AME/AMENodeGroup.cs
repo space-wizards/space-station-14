@@ -177,8 +177,7 @@ namespace Content.Server.AME
 
             intensity = Math.Min(intensity, 8);
 
-            EntitySystem.Get<ExplosionSystem>().SpawnExplosion(epicenter.OwnerUid, null,
-                intensity / 2, intensity, intensity * 2, intensity * 3);
+            EntitySystem.Get<ExplosionSystem>().SpawnExplosion(epicenter.OwnerUid, intensity / 2, intensity, intensity * 2, intensity * 3);
         }
     }
 }

@@ -4,9 +4,11 @@ using Content.Server.Doors.Components;
 using Content.Server.Explosion.Components;
 using Content.Server.Flash;
 using Content.Server.Flash.Components;
+using Content.Server.Projectiles.Components;
 using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.Doors;
+using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -23,9 +25,9 @@ namespace Content.Server.Explosion.EntitySystems
     public class TriggerEvent : HandledEntityEventArgs
     {
         public IEntity Triggered { get; }
-        public IEntity? User { get; }
+        public EntityUid? User { get; }
 
-        public TriggerEvent(IEntity triggered, IEntity? user = null)
+        public TriggerEvent(IEntity triggered, EntityUid? user = null)
         {
             Triggered = triggered;
             User = user;
@@ -56,11 +58,11 @@ namespace Content.Server.Explosion.EntitySystems
         {
             if (!EntityManager.TryGetComponent(uid, out ExplosiveComponent? explosiveComponent)) return;
 
-            Explode(uid, explosiveComponent, args.User?.Uid);
+            Explode(uid, explosiveComponent, args.User);
         }
 
         // You really shouldn't call this directly (TODO Change that when ExplosionHelper gets changed).
-        public void Explode(EntityUid uid, ExplosiveComponent component, EntityUid? user)
+        public void Explode(EntityUid uid, ExplosiveComponent component, EntityUid? user = null)
         {
             if (component.Exploding)
             {
@@ -68,11 +70,12 @@ namespace Content.Server.Explosion.EntitySystems
             }
 
             component.Exploding = true;
-            _explosions.SpawnExplosion(uid, user,
+            _explosions.SpawnExplosion(uid,
                 component.DevastationRange,
                 component.HeavyImpactRange,
                 component.LightImpactRange,
-                component.FlashRange);
+                component.FlashRange,
+                user);
             EntityManager.QueueDeleteEntity(uid);
         }
         #endregion
@@ -83,7 +86,7 @@ namespace Content.Server.Explosion.EntitySystems
             if (component.Flashed) return;
 
             // TODO Make flash durations sane ffs.
-            _flashSystem.FlashArea(uid, args.User?.Uid, component.Range, component.Duration * 1000f);
+            _flashSystem.FlashArea(uid, args.User, component.Range, component.Duration * 1000f);
             component.Flashed = true;
         }
         #endregion
@@ -120,16 +123,22 @@ namespace Content.Server.Explosion.EntitySystems
 
         private void HandleCollide(EntityUid uid, TriggerOnCollideComponent component, StartCollideEvent args)
         {
-            Trigger(component.Owner);
+            EntityUid? user = null;
+            if (EntityManager.TryGetComponent(uid, out ProjectileComponent projectile))
+                user = projectile.Shooter;
+            else if (EntityManager.TryGetComponent(uid, out ThrownItemComponent thrown))
+                user = thrown.Thrower?.Uid;
+
+            Trigger(component.Owner, user);
         }
 
-        public void Trigger(IEntity trigger, IEntity? user = null)
+        public void Trigger(IEntity trigger, EntityUid? user = null)
         {
             var triggerEvent = new TriggerEvent(trigger, user);
             EntityManager.EventBus.RaiseLocalEvent(trigger.Uid, triggerEvent);
         }
 
-        public void HandleTimerTrigger(TimeSpan delay, IEntity triggered, IEntity? user = null)
+        public void HandleTimerTrigger(TimeSpan delay, IEntity triggered, EntityUid? user = null)
         {
             if (delay.TotalSeconds <= 0)
             {

@@ -119,7 +119,7 @@ namespace Content.Server.Explosion.Components
                         if (grenade.Deleted)
                             return;
 
-                        EntitySystem.Get<TriggerSystem>().Trigger(grenade, eventArgs.User);
+                        EntitySystem.Get<TriggerSystem>().Trigger(grenade, eventArgs.User.Uid);
                     });
                 }
 

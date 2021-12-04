@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Trigger;
@@ -16,7 +16,7 @@ namespace Content.Server.Explosion.Components
         private float _delay = 0f;
 
         // TODO: Need to split this out so it's a generic "OnUseTimerTrigger" component.
-        public void Trigger(IEntity user)
+        public void Trigger(EntityUid user)
         {
             if (Owner.TryGetComponent(out AppearanceComponent? appearance))
                 appearance.SetData(TriggerVisuals.VisualState, TriggerVisualState.Primed);
@@ -26,7 +26,7 @@ namespace Content.Server.Explosion.Components
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
-            Trigger(eventArgs.User);
+            Trigger(eventArgs.User.Uid);
             return true;
         }
     }

@@ -290,11 +290,11 @@ namespace Content.Server.Explosion.EntitySystems
 
         public void SpawnExplosion(
             EntityUid entity,
-            EntityUid? user,
             int devastationRange = 0,
             int heavyImpactRange = 0,
             int lightImpactRange = 0,
             int flashRange = 0,
+            EntityUid? user = null,
             ExplosiveComponent? explosive = null,
             TransformComponent? transform = null)
         {
@@ -323,18 +323,18 @@ namespace Content.Server.Explosion.EntitySystems
 
                 var epicenter = transform.Coordinates;
 
-                SpawnExplosion(entity, user, epicenter, devastationRange, heavyImpactRange, lightImpactRange, flashRange);
+                SpawnExplosion(epicenter, devastationRange, heavyImpactRange, lightImpactRange, flashRange, entity, user);
             }
         }
 
         public void SpawnExplosion(
-            EntityUid? entity,
-            EntityUid? user,
             EntityCoordinates epicenter,
             int devastationRange = 0,
             int heavyImpactRange = 0,
             int lightImpactRange = 0,
-            int flashRange = 0)
+            int flashRange = 0,
+            EntityUid? entity = null,
+            EntityUid? user = null)
         {
             var mapId = epicenter.GetMapId(EntityManager);
             if (mapId == MapId.Nullspace)
