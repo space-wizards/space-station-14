@@ -1,9 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Fixes lathes not printing any recipe., type: Fix}
-  id: 201
-  time: '2021-05-22T09:31:38.140827+00:00'
 - author: Ygg01
   changes:
   - {message: StackVisualizer now correctly displays levels, type: Fix}
@@ -2866,3 +2861,8 @@ Entries:
   - {message: The Salvage department is now partially there., type: Add}
   id: 702
   time: '2021-12-03T22:24:19.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Throw pushback ratio multiplied by 10., type: Tweak}
+  id: 703
+  time: '2021-12-04T00:26:52.0000000+00:00'
