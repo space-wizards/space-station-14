@@ -35,7 +35,7 @@ namespace Content.Server.Administration.Commands
             var mapTransform = player.AttachedEntity.Transform.GetMapTransform();
             var coords = new EntityCoordinates(mapTransform.Owner.Uid, x, y);
 
-            EntitySystem.Get<ExplosionSystem>().SpawnExplosion(coords, dev, hvy, lgh, fla);
+            EntitySystem.Get<ExplosionSystem>().SpawnExplosion(null, null, coords, dev, hvy, lgh, fla);
         }
     }
 }

@@ -1,9 +1,11 @@
 using System;
+using Content.Server.Administration.Logs;
 using Content.Server.Doors.Components;
 using Content.Server.Explosion.Components;
 using Content.Server.Flash;
 using Content.Server.Flash.Components;
 using Content.Shared.Audio;
+using Content.Shared.Database;
 using Content.Shared.Doors;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
@@ -35,6 +37,7 @@ namespace Content.Server.Explosion.EntitySystems
     {
         [Dependency] private readonly ExplosionSystem _explosions = default!;
         [Dependency] private readonly FlashSystem _flashSystem = default!;
+        [Dependency] private readonly AdminLogSystem _logSystem = default!;
 
         public override void Initialize()
         {
@@ -53,11 +56,11 @@ namespace Content.Server.Explosion.EntitySystems
         {
             if (!EntityManager.TryGetComponent(uid, out ExplosiveComponent? explosiveComponent)) return;
 
-            Explode(uid, explosiveComponent);
+            Explode(uid, explosiveComponent, args.User?.Uid);
         }
 
         // You really shouldn't call this directly (TODO Change that when ExplosionHelper gets changed).
-        public void Explode(EntityUid uid, ExplosiveComponent component)
+        public void Explode(EntityUid uid, ExplosiveComponent component, EntityUid? user)
         {
             if (component.Exploding)
             {
@@ -65,7 +68,11 @@ namespace Content.Server.Explosion.EntitySystems
             }
 
             component.Exploding = true;
-            _explosions.SpawnExplosion(uid, component.DevastationRange, component.HeavyImpactRange, component.LightImpactRange, component.FlashRange);
+            _explosions.SpawnExplosion(uid, user,
+                component.DevastationRange,
+                component.HeavyImpactRange,
+                component.LightImpactRange,
+                component.FlashRange);
             EntityManager.QueueDeleteEntity(uid);
         }
         #endregion

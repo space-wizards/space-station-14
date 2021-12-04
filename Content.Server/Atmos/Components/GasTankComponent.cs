@@ -268,7 +268,8 @@ namespace Content.Server.Atmos.Components
                     range = MaxExplosionRange;
                 }
 
-                EntitySystem.Get<ExplosionSystem>().SpawnExplosion(OwnerUid, (int) (range * 0.25f), (int) (range * 0.5f), (int) (range * 1.5f), 1);
+                EntitySystem.Get<ExplosionSystem>().SpawnExplosion(OwnerUid, null,
+                    (int) (range * 0.25f), (int) (range * 0.5f), (int) (range * 1.5f), 1);
 
                 Owner.QueueDelete();
                 return;

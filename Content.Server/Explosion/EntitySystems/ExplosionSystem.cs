@@ -290,6 +290,7 @@ namespace Content.Server.Explosion.EntitySystems
 
         public void SpawnExplosion(
             EntityUid entity,
+            EntityUid? user,
             int devastationRange = 0,
             int heavyImpactRange = 0,
             int lightImpactRange = 0,
@@ -306,7 +307,7 @@ namespace Content.Server.Explosion.EntitySystems
 
             if (explosive is { Exploding: false })
             {
-                _triggers.Explode(entity, explosive);
+                _triggers.Explode(entity, explosive, user);
             }
             else
             {
@@ -322,11 +323,13 @@ namespace Content.Server.Explosion.EntitySystems
 
                 var epicenter = transform.Coordinates;
 
-                SpawnExplosion(epicenter, devastationRange, heavyImpactRange, lightImpactRange, flashRange);
+                SpawnExplosion(entity, user, epicenter, devastationRange, heavyImpactRange, lightImpactRange, flashRange);
             }
         }
 
         public void SpawnExplosion(
+            EntityUid? entity,
+            EntityUid? user,
             EntityCoordinates epicenter,
             int devastationRange = 0,
             int heavyImpactRange = 0,
@@ -339,8 +342,22 @@ namespace Content.Server.Explosion.EntitySystems
                 return;
             }
 
-            _logSystem.Add(LogType.Damaged, LogImpact.High ,
-                $"Spawned explosion at {epicenter} with range {devastationRange}/{heavyImpactRange}/{lightImpactRange}/{flashRange}");
+            // logging
+            var text = $"{epicenter} with range {devastationRange}/{heavyImpactRange}/{lightImpactRange}/{flashRange}";
+            if (entity == null)
+            {
+                _logSystem.Add(LogType.Explosion, LogImpact.High, $"Explosion spawned at {text}");
+            }
+            else if (user == null)
+            {
+                _logSystem.Add(LogType.Explosion, LogImpact.High,
+                    $"{EntityManager.GetEntity(entity.Value)} exploded at {text}");
+            }
+            else
+            {
+                _logSystem.Add(LogType.Explosion, LogImpact.High,
+                    $"{EntityManager.GetEntity(user.Value)} caused {EntityManager.GetEntity(entity.Value)} to explode at {text}");
+            }
 
             var maxRange = MathHelper.Max(devastationRange, heavyImpactRange, lightImpactRange, 0);
             var epicenterMapPos = epicenter.ToMapPos(EntityManager);

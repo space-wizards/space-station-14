@@ -95,11 +95,7 @@ namespace Content.Shared.Damage
                 damage.DamageDict.Add(typeID, damageValue);
             }
 
-            var actual = EntitySystem.Get<DamageableSystem>().TryChangeDamage(OwnerUid, damage);
-
-            // should logging be disabled during rad storms? a lot of entities are going to be damaged.
-            if (actual != null && !actual.Empty)
-                EntitySystem.Get<SharedAdminLogSystem>().Add(LogType.Radiation, $"{Owner} took {actual.Total} radiation damage");
+            EntitySystem.Get<DamageableSystem>().TryChangeDamage(OwnerUid, damage);
         }
 
         // TODO EXPLOSION Remove this.
@@ -120,11 +116,7 @@ namespace Content.Shared.Damage
                 damage.DamageDict.Add(typeID, damageValue);
             }
 
-            var actual = EntitySystem.Get<DamageableSystem>().TryChangeDamage(OwnerUid, damage);
-
-            // will logging handle nukes?
-            if (actual != null && !actual.Empty)
-                EntitySystem.Get<SharedAdminLogSystem>().Add(LogType.Explosion, $"{Owner} took {actual.Total} explosion damage");
+            EntitySystem.Get<DamageableSystem>().TryChangeDamage(OwnerUid, damage);
         }
     }
 
