@@ -61,7 +61,10 @@ namespace Content.Server.Power.Components
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("powerDisabled")]
-        public bool PowerDisabled { get => !NetworkLoad.Enabled; set => NetworkLoad.Enabled = !value; }
+        public bool PowerDisabled {
+            get => !NetworkLoad.Enabled;
+            set => NetworkLoad.Enabled = !value;
+        }
 
         public float LastPowerReceived = float.NaN;
 

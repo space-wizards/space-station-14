@@ -1,10 +1,17 @@
-﻿using Content.Server.Power.Components;
+﻿using System;
+using System.Threading;
+using Content.Server.Power.Components;
+using Content.Server.Wires;
+using Content.Shared.Power;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Power.EntitySystems
 {
     public sealed class PowerReceiverSystem : EntitySystem
     {
+        [Dependency] WiresSystem _wiresSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -15,6 +22,18 @@ namespace Content.Server.Power.EntitySystems
             SubscribeLocalEvent<ApcPowerProviderComponent, ComponentShutdown>(OnProviderShutdown);
             SubscribeLocalEvent<ApcPowerProviderComponent, ExtensionCableSystem.ReceiverConnectedEvent>(OnReceiverConnected);
             SubscribeLocalEvent<ApcPowerProviderComponent, ExtensionCableSystem.ReceiverDisconnectedEvent>(OnReceiverDisconnected);
+            SubscribeLocalEvent<ApcPowerProviderComponent, PowerChangedEvent>(OnPowerChanged);
+        }
+
+        private void OnPowerChanged(EntityUid uid, ApcPowerProviderComponent component, PowerChangedEvent args)
+        {
+            if (EntityManager.TryGetComponent(uid, out WiresComponent? wires)
+                && !args.Powered
+                && _wiresSystem.TryGetData(uid, PowerWireActionKey.ElectrifiedCancel, out var electrifiedObject)
+                && electrifiedObject is CancellationTokenSource electrifiedToken)
+            {
+                electrifiedToken.Cancel();
+            }
         }
 
         private void OnProviderShutdown(EntityUid uid, ApcPowerProviderComponent component, ComponentShutdown args)

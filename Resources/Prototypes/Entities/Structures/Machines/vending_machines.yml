@@ -50,7 +50,7 @@
   - type: Anchorable
   - type: DoAfter
   - type: Electrified
-    requiresPower: false
+    requirePower: false
   - type: PointLight
     enabled: false
     castShadows: false

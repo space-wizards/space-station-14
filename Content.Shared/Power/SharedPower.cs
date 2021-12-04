@@ -17,6 +17,8 @@ namespace Content.Shared.Power
         Key,
         Status,
         Pulsed,
-        PulseCancel
+        Electrified,
+        PulseCancel,
+        ElectrifiedCancel
     }
 }
