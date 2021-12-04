@@ -60,7 +60,7 @@ namespace Content.Server.Access.Systems
                 return false;
             }
 
-            return reader.AccessLists.Count == 0 || reader.AccessLists.Any(a => a.IsSubsetOf(accessTags));
+            return !reader.Enabled || reader.AccessLists.Count == 0 || reader.AccessLists.Any(a => a.IsSubsetOf(accessTags));
         }
 
         public ICollection<string> FindAccessTags(EntityUid uid)
