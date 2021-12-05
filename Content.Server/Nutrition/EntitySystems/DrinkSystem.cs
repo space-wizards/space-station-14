@@ -5,6 +5,7 @@ using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Server.Fluids.Components;
+using Content.Server.Fluids.EntitySystems;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Shared.ActionBlocker;
@@ -43,6 +44,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SharedAdminLogSystem _logSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+        [Dependency] private readonly SpillableSystem _spillableSystem = default!;
 
         public override void Initialize()
         {
@@ -188,7 +190,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 var entity = EntityManager.GetEntity(uid);
 
                 var solution = _solutionContainerSystem.Drain(uid, interactions, interactions.DrainAvailable);
-                solution.SpillAt(entity, "PuddleSmear");
+                _spillableSystem.SpillAt(entity.Uid, solution, "PuddleSmear");
 
                 SoundSystem.Play(Filter.Pvs(entity), component.BurstSound.GetSound(), entity, AudioParams.Default.WithVolume(-4));
             }
@@ -279,7 +281,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
                 if (EntityManager.HasComponent<RefillableSolutionComponent>(uid))
                 {
-                    drain.SpillAt(userUid, "PuddleSmear");
+                    _spillableSystem.SpillAt(userUid, drain, "PuddleSmear");
                     return true;
                 }
 
@@ -375,7 +377,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 _popupSystem.PopupEntity(Loc.GetString("drink-component-try-use-drink-cannot-drink-other"),
                     uid, Filter.Entities(args.User));
 
-                drained.SpillAt(uid, "PuddleSmear");
+                _spillableSystem.SpillAt(uid, drained, "PuddleSmear");
                 return;
             }
 
@@ -388,7 +390,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 _popupSystem.PopupEntity(Loc.GetString("drink-component-try-use-drink-had-enough-other"),
                     uid, Filter.Entities(args.User));
 
-                drained.SpillAt(uid, "PuddleSmear");
+                _spillableSystem.SpillAt(uid, drained, "PuddleSmear");
                 return;
             }
 

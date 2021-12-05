@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Content.Server.Fluids.Components;
+using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Coordinates;
 using Content.Shared.FixedPoint;
@@ -23,6 +24,8 @@ namespace Content.IntegrationTests.Tests.Fluids
             await server.WaitIdleAsync();
 
             var mapManager = server.ResolveDependency<IMapManager>();
+            var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
+            var spillSystem = entitySystemManager.GetEntitySystem<SpillableSystem>();
 
             server.Assert(() =>
             {
@@ -30,7 +33,7 @@ namespace Content.IntegrationTests.Tests.Fluids
                 var grid = GetMainGrid(mapManager);
                 var (x, y) = GetMainTile(grid).GridIndices;
                 var coordinates = new EntityCoordinates(grid.GridEntityId, x, y);
-                var puddle = solution.SpillAt(coordinates, "PuddleSmear");
+                var puddle = spillSystem.SpillAt(solution, coordinates, "PuddleSmear");
 
                 Assert.NotNull(puddle);
             });
@@ -46,6 +49,8 @@ namespace Content.IntegrationTests.Tests.Fluids
             await server.WaitIdleAsync();
 
             var mapManager = server.ResolveDependency<IMapManager>();
+            var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
+            var spillSystem = entitySystemManager.GetEntitySystem<SpillableSystem>();
 
             IMapGrid grid = null;
 
@@ -66,7 +71,7 @@ namespace Content.IntegrationTests.Tests.Fluids
             {
                 var coordinates = grid.ToCoordinates();
                 var solution = new Solution("Water", FixedPoint2.New(20));
-                var puddle = solution.SpillAt(coordinates, "PuddleSmear");
+                var puddle = spillSystem.SpillAt(solution, coordinates, "PuddleSmear");
                 Assert.Null(puddle);
             });
 
@@ -120,13 +125,17 @@ namespace Content.IntegrationTests.Tests.Fluids
             float evaporateTime = default;
             PuddleComponent puddle = null;
             EvaporationComponent evaporation;
+            
             var amount = 2;
+            
+            var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
+            var spillSystem = entitySystemManager.GetEntitySystem<SpillableSystem>();
 
             // Spawn a puddle
             await server.WaitAssertion(() =>
             {
                 var solution = new Solution("Water", FixedPoint2.New(amount));
-                puddle = solution.SpillAt(sCoordinates, "PuddleSmear");
+                puddle = spillSystem.SpillAt(solution, sCoordinates, "PuddleSmear");
 
                 // Check that the puddle was created
                 Assert.NotNull(puddle);
