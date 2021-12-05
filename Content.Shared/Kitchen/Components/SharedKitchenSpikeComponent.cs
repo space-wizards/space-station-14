@@ -15,11 +15,11 @@ namespace Content.Shared.Kitchen.Components
 
         [ViewVariables]
         [DataField("delay")]
-        protected float SpikeDelay = 12.0f;
+        public float SpikeDelay = 12.0f;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("sound")]
-        protected SoundSpecifier SpikeSound = new SoundPathSpecifier("/Audio/Effects/Fluids/splat.ogg");
+        public SoundSpecifier SpikeSound = new SoundPathSpecifier("/Audio/Effects/Fluids/splat.ogg");
 
         bool IDragDropOn.CanDragDropOn(DragDropEvent eventArgs)
         {

@@ -14,12 +14,16 @@ namespace Content.Shared.Nutrition.Components
         public override string Name => "Butcherable";
 
         [ViewVariables]
-        public string? MeatPrototype => _meatPrototype;
+        [DataField("meat")]
+        public string? MeatPrototype;
 
         [ViewVariables]
-        [DataField("meat")]
-        private string? _meatPrototype;
+        [DataField("pieces")]
+        public int Pieces = 5;
 
+        // TODO: ECS this out!, my guess CanDropEvent should be client side only and then "ValidDragDrop" in the DragDropSystem needs a little touch
+        // But this may lead to creating client-side systems for every Draggable component subbed to CanDrop. Actually those systems could control
+        // CanDropOn behaviors as well (IDragDropOn)
         bool IDraggable.CanDrop(CanDropEvent args)
         {
             return true;
