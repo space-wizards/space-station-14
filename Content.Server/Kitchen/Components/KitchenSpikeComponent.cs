@@ -17,12 +17,11 @@ namespace Content.Server.Kitchen.Components
     {
         public int MeatParts;
         public string? MeatPrototype;
+
+        // TODO: Spiking alive mobs? (Replace with uid) (deal damage to their limbs on spiking, kill on first butcher attempt?) 
         public string MeatSource1p = "?";
         public string MeatSource0 = "?";
         public string MeatName = "?";
-
-        // TODO: Spiking alive mobs?
-        // public List<EntityUid> BeingButchered = new();
 
         // ECS this out!, after DragDropSystem and InteractionSystem refactoring
         public override bool DragDropOn(DragDropEvent eventArgs)

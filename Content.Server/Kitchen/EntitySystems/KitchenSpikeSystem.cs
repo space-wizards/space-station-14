@@ -87,23 +87,24 @@ namespace Content.Server.Kitchen.EntitySystems
 
             component.MeatPrototype = butcherable.MeatPrototype;
             component.MeatParts = butcherable.Pieces;
-            component.MeatSource1p = Loc.GetString("comp-kitchen-spike-remove-meat", ("victim", victimUid));
-            component.MeatSource0 = Loc.GetString("comp-kitchen-spike-remove-meat-last", ("victim", victimUid));
-            // TODO: This could stand to be improved somehow, but it'd require Name to be much 'richer' in detail than it presently is.
-            // But Name is RobustToolbox-level, so presumably it'd have to be done in some other way (interface???)
-            component.MeatName = Loc.GetString("comp-kitchen-spike-meat-name", ("victim", victimUid));
+
+            // This feels not okay, but entity is getting deleted on "Spike", for now...
+            component.MeatSource1p = Loc.GetString("comp-kitchen-spike-remove-meat", ("victim", butcherable.Owner));
+            component.MeatSource0 = Loc.GetString("comp-kitchen-spike-remove-meat-last", ("victim", butcherable.Owner));
+            component.MeatName = Loc.GetString("comp-kitchen-spike-meat-name", ("victim", butcherable.Owner));
 
             UpdateAppearance(uid, null, component);
 
             // TODO: for everyone
-            _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-kill", ("user", userUid), ("victim", victimUid)), uid, Filter.Entities(userUid));
+            var user = EntityManager.GetEntity(uid);
+            _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-kill", ("user", user), ("victim", butcherable.Owner)), uid, Filter.Entities(userUid));
 
-            // THE WHAT? (again)
+            // THE WHAT?
             // TODO: Need to be able to leave them on the spike to do DoT, see ss13.
             EntityManager.QueueDeleteEntity(victimUid);
 
             // TODO: for everyone
-            SoundSystem.Play(Filter.Pvs(userUid), component.SpikeSound.GetSound(), uid);
+            SoundSystem.Play(Filter.Pvs(user), component.SpikeSound.GetSound(), uid);
         }
 
         private bool TryGetPiece(EntityUid uid, EntityUid user, EntityUid used,
@@ -145,58 +146,65 @@ namespace Content.Server.Kitchen.EntitySystems
             appearance.SetData(KitchenSpikeVisuals.Status, (component.MeatParts > 0) ? KitchenSpikeStatus.Bloody : KitchenSpikeStatus.Empty);
         }
 
-        private bool Spikeable(EntityUid uid, EntityUid user, EntityUid victim,
+        private bool Spikeable(EntityUid uid, EntityUid userUid, EntityUid victimUid,
             KitchenSpikeComponent? component = null, SharedButcherableComponent? butcherable = null)
         {
             if (!Resolve(uid, ref component))
                 return false;
 
+            var spike = EntityManager.GetEntity(uid);
+
             if (component.MeatParts > 0)
             {
-                _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-deny-collect", ("this", uid)), uid, Filter.Entities(user));
+                _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-deny-collect", ("this", spike)), uid, Filter.Entities(userUid));
                 return false;
             }
 
-            if (!Resolve(victim, ref butcherable) || butcherable.MeatPrototype == null)
+            if (!Resolve(victimUid, ref butcherable) || butcherable.MeatPrototype == null)
             {
-                _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-deny-butcher", ("victim", victim), ("this", uid)), victim, Filter.Entities(user));
+                var victim = EntityManager.GetEntity(uid);
+                _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-deny-butcher", ("victim", victim), ("this", spike)), victimUid, Filter.Entities(userUid));
                 return false;
             }
 
             return true;
         }
 
-        public void TrySpike(EntityUid uid, EntityUid user, EntityUid victim, KitchenSpikeComponent? component = null,
+        public void TrySpike(EntityUid uid, EntityUid userUid, EntityUid victimUid, KitchenSpikeComponent? component = null,
             SharedButcherableComponent? butcherable = null, MobStateComponent? mobState = null)
         {
-            if (!Resolve(uid, ref component) || !Resolve(victim, ref butcherable))
+            if (!Resolve(uid, ref component) || !Resolve(victimUid, ref butcherable))
                 return;
 
-            // THE WHAT?
+            // THE WHAT? (again)
             // Prevent dead from being spiked TODO: Maybe remove when rounds can be played and DOT is implemented
-            if (Resolve(victim, ref mobState) &&
+            if (Resolve(victimUid, ref mobState) &&
                 !mobState.IsDead())
             {
-                _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-deny-not-dead", ("victim", victim)), victim, Filter.Entities(user));
+                _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-deny-not-dead", ("victim", butcherable.Owner)),
+                    victimUid, Filter.Entities(userUid));
                 return;
             }
 
-            if (user != victim)
-                _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-begin-hook-victim", ("user", user), ("this", uid)), victim, Filter.Entities(user));
+            if (userUid != victimUid)
+            {
+                var user = EntityManager.GetEntity(userUid);
+                _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-begin-hook-victim", ("user", user), ("this", component.Owner)), victimUid, Filter.Entities(userUid));
+            }
             else
-                _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-begin-hook-self", ("this", uid)), victim, Filter.Entities(user));
+                _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-begin-hook-self", ("this", component.Owner)), victimUid, Filter.Entities(userUid));
 
             butcherable.BeingButchered = true;
 
-            var doAfterArgs = new DoAfterEventArgs(user, component.SpikeDelay, default, uid)
+            var doAfterArgs = new DoAfterEventArgs(userUid, component.SpikeDelay, default, uid)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
                 BreakOnDamage = true,
                 BreakOnStun = true,
                 NeedHand = true,
-                TargetFinishedEvent = new SpikingFinishedEvent(user, victim),
-                TargetCancelledEvent = new SpikingFailEvent(victim)
+                TargetFinishedEvent = new SpikingFinishedEvent(userUid, victimUid),
+                TargetCancelledEvent = new SpikingFailEvent(victimUid)
             };
 
             _doAfter.DoAfter(doAfterArgs);
