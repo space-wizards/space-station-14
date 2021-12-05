@@ -20,11 +20,6 @@ namespace Content.Server.Lighter
         public bool Lit = false;
 
         /// <summary>
-        /// Sound played when you ignite the lighter.
-        /// </summary>
-        [DataField("igniteSound", required: true)] public SoundSpecifier IgniteSound = default!;
-
-        /// <summary>
         /// Point light component. Gives lighter a glow in dark effect.
         /// </summary>
         [ComponentDependency]
