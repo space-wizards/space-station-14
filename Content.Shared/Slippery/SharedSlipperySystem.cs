@@ -64,7 +64,7 @@ namespace Content.Shared.Slippery
             if (!component.Slippery
                 || component.Owner.IsInContainer()
                 || component.Slipped.Contains(uid)
-                || !_statusEffectsSystem.CanApplyEffect(uid, "Stun"))
+                || !_statusEffectsSystem.CanApplyEffect(uid, "Stun")) //Should be KnockedDown instead?
             {
                 return false;
             }
@@ -95,11 +95,17 @@ namespace Content.Shared.Slippery
 
             otherBody.LinearVelocity *= component.LaunchForwardsMultiplier;
 
-            _stunSystem.TryParalyze(otherBody.OwnerUid, TimeSpan.FromSeconds(5));
+            bool playSound = !_statusEffectsSystem.HasStatusEffect(otherBody.OwnerUid, "KnockedDown");
+
+            _stunSystem.TryParalyze(otherBody.OwnerUid, TimeSpan.FromSeconds(component.ParalyzeTime), true);
             component.Slipped.Add(otherBody.OwnerUid);
             component.Dirty();
 
-            PlaySound(component);
+            //Preventing from playing the slip sound when you are already knocked down.
+            if(playSound)
+            {
+                PlaySound(component);
+            }
 
             _adminLog.Add(LogType.Slip, LogImpact.Low, $"{component.Owner} slipped on collision with {otherBody.Owner}");
 

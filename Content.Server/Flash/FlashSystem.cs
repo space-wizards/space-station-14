@@ -131,7 +131,7 @@ namespace Content.Server.Flash
                 flashable.Dirty();
             }
 
-            _stunSystem.TrySlowdown(target, TimeSpan.FromSeconds(flashDuration/1000f),
+            _stunSystem.TrySlowdown(target, TimeSpan.FromSeconds(flashDuration/1000f), true,
                 slowTo, slowTo);
 
             if (displayPopup && user != null && target != user)

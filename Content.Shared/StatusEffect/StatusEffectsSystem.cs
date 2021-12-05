@@ -64,7 +64,8 @@ namespace Content.Shared.StatusEffect
                     }
 
                     var time = effect.Value.Cooldown.Item2 - effect.Value.Cooldown.Item1;
-                    TryAddStatusEffect(uid, effect.Key, time);
+                    //TODO: Not sure how to handle refresh here.
+                    TryAddStatusEffect(uid, effect.Key, time, true);
                 }
             }
         }
@@ -75,11 +76,12 @@ namespace Content.Shared.StatusEffect
         /// <param name="uid">The entity to add the effect to.</param>
         /// <param name="key">The status effect ID to add.</param>
         /// <param name="time">How long the effect should last for.</param>
+        /// <param name="refresh">The status effect cooldown should be refreshed (true) or accumulated (false).</param>
         /// <param name="status">The status effects component to change, if you already have it.</param>
         /// <param name="alerts">The alerts component to modify, if the status effect has an alert.</param>
         /// <returns>False if the effect could not be added or the component already exists, true otherwise.</returns>
         /// <typeparam name="T">The component type to add and remove from the entity.</typeparam>
-        public bool TryAddStatusEffect<T>(EntityUid uid, string key, TimeSpan time,
+        public bool TryAddStatusEffect<T>(EntityUid uid, string key, TimeSpan time, bool refresh,
             StatusEffectsComponent? status=null,
             SharedAlertsComponent? alerts=null)
             where T: Component, new()
@@ -89,7 +91,7 @@ namespace Content.Shared.StatusEffect
 
             Resolve(uid, ref alerts, false);
 
-            if (TryAddStatusEffect(uid, key, time, status, alerts))
+            if (TryAddStatusEffect(uid, key, time, refresh, status, alerts))
             {
                 // If they already have the comp, we just won't bother updating anything.
                 if (!EntityManager.HasComponent<T>(uid))
@@ -103,7 +105,7 @@ namespace Content.Shared.StatusEffect
             return false;
         }
 
-        public bool TryAddStatusEffect(EntityUid uid, string key, TimeSpan time, string component,
+        public bool TryAddStatusEffect(EntityUid uid, string key, TimeSpan time, bool refresh, string component,
             StatusEffectsComponent? status = null,
             SharedAlertsComponent? alerts = null)
         {
@@ -112,7 +114,7 @@ namespace Content.Shared.StatusEffect
 
             Resolve(uid, ref alerts, false);
 
-            if (TryAddStatusEffect(uid, key, time, status, alerts))
+            if (TryAddStatusEffect(uid, key, time, refresh, status, alerts))
             {
                 // If they already have the comp, we just won't bother updating anything.
                 if (!EntityManager.HasComponent(uid, _componentFactory.GetRegistration(component).Type))
@@ -136,6 +138,7 @@ namespace Content.Shared.StatusEffect
         /// <param name="uid">The entity to add the effect to.</param>
         /// <param name="key">The status effect ID to add.</param>
         /// <param name="time">How long the effect should last for.</param>
+        /// <param name="refresh">The status effect cooldown should be refreshed (true) or accumulated (false).</param>
         /// <param name="status">The status effects component to change, if you already have it.</param>
         /// <param name="alerts">The alerts component to modify, if the status effect has an alert.</param>
         /// <returns>False if the effect could not be added, or if the effect already existed.</returns>
@@ -146,7 +149,7 @@ namespace Content.Shared.StatusEffect
         ///     If the effect already exists, it will simply replace the cooldown with the new one given.
         ///     If you want special 'effect merging' behavior, do it your own damn self!
         /// </remarks>
-        public bool TryAddStatusEffect(EntityUid uid, string key, TimeSpan time,
+        public bool TryAddStatusEffect(EntityUid uid, string key, TimeSpan time, bool refresh,
             StatusEffectsComponent? status=null,
             SharedAlertsComponent? alerts=null)
         {
@@ -163,14 +166,27 @@ namespace Content.Shared.StatusEffect
 
             (TimeSpan, TimeSpan) cooldown = (_gameTiming.CurTime, _gameTiming.CurTime + time);
 
-            // If they already have this status effect, add the time onto it's cooldown rather than anything else.
             if (HasStatusEffect(uid, key, status))
             {
-                status.ActiveEffects[key].Cooldown.Item2 += time;
+                status.ActiveEffects[key].CooldownRefresh = refresh;
+                if(status.ActiveEffects[key].CooldownRefresh)
+                {
+                    //Making sure we don't reset a longer cooldown by applying a shorter one.
+                    if((status.ActiveEffects[key].Cooldown.Item2 - _gameTiming.CurTime) < time)
+                    {
+                        //Refresh cooldown time.
+                        status.ActiveEffects[key].Cooldown = cooldown;
+                    }
+                }
+                else
+                {
+                    //Accumulate cooldown time.
+                    status.ActiveEffects[key].Cooldown.Item2 += time;
+                }
             }
             else
             {
-                status.ActiveEffects.Add(key, new StatusEffectState(cooldown, null));
+                status.ActiveEffects.Add(key, new StatusEffectState(cooldown, refresh, null));
             }
 
             if (proto.Alert != null && alerts != null)

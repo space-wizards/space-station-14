@@ -129,21 +129,21 @@ namespace Content.Server.Stunnable
             if (!EntityManager.HasComponent<SlowedDownComponent>(entity.Uid))
             {
                 if (_robustRandom.Prob(comp.ParalyzeChanceNoSlowdown))
-                    _stunSystem.TryParalyze(entity.Uid, TimeSpan.FromSeconds(comp.ParalyzeTime), status);
+                    _stunSystem.TryParalyze(entity.Uid, TimeSpan.FromSeconds(comp.ParalyzeTime), true, status);
                 else
-                    _stunSystem.TrySlowdown(entity.Uid, TimeSpan.FromSeconds(comp.SlowdownTime), 0.5f, 0.5f, status);
+                    _stunSystem.TrySlowdown(entity.Uid, TimeSpan.FromSeconds(comp.SlowdownTime), true,  0.5f, 0.5f, status);
             }
             else
             {
                 if (_robustRandom.Prob(comp.ParalyzeChanceWithSlowdown))
-                    _stunSystem.TryParalyze(entity.Uid, TimeSpan.FromSeconds(comp.ParalyzeTime), status);
+                    _stunSystem.TryParalyze(entity.Uid, TimeSpan.FromSeconds(comp.ParalyzeTime), true, status);
                 else
-                    _stunSystem.TrySlowdown(entity.Uid, TimeSpan.FromSeconds(comp.SlowdownTime), 0.5f, 0.5f, status);
+                    _stunSystem.TrySlowdown(entity.Uid, TimeSpan.FromSeconds(comp.SlowdownTime), true,  0.5f, 0.5f, status);
             }
 
             var slowdownTime = TimeSpan.FromSeconds(comp.SlowdownTime);
-            _jitterSystem.DoJitter(entity.Uid, slowdownTime, status:status);
-            _stutteringSystem.DoStutter(entity.Uid, slowdownTime, status);
+            _jitterSystem.DoJitter(entity.Uid, slowdownTime, true, status:status);
+            _stutteringSystem.DoStutter(entity.Uid, slowdownTime, true, status);
 
             if (!comp.Owner.TryGetComponent<PowerCellSlotComponent>(out var slot) || slot.Cell == null || !(slot.Cell.CurrentCharge < comp.EnergyPerUse))
                 return;

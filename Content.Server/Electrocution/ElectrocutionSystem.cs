@@ -188,7 +188,7 @@ namespace Content.Server.Electrocution
                         entity,
                         uid,
                         (int) (electrified.ShockDamage * MathF.Pow(RecursiveDamageMultiplier, depth)),
-                        TimeSpan.FromSeconds(electrified.ShockTime * MathF.Pow(RecursiveTimeMultiplier, depth)),
+                        TimeSpan.FromSeconds(electrified.ShockTime * MathF.Pow(RecursiveTimeMultiplier, depth)), true,
                         electrified.SiemensCoefficient);
                 }
 
@@ -224,7 +224,7 @@ namespace Content.Server.Electrocution
                         node,
                         (int) (electrified.ShockDamage * MathF.Pow(RecursiveDamageMultiplier, depth) * damageMult),
                         TimeSpan.FromSeconds(electrified.ShockTime * MathF.Pow(RecursiveTimeMultiplier, depth) *
-                                             timeMult),
+                                             timeMult), true,
                         electrified.SiemensCoefficient);
                 }
 
@@ -246,12 +246,12 @@ namespace Content.Server.Electrocution
 
         /// <returns>Whether the entity <see cref="uid"/> was stunned by the shock.</returns>
         public bool TryDoElectrocution(
-            EntityUid uid, EntityUid? sourceUid, int shockDamage, TimeSpan time, float siemensCoefficient = 1f,
+            EntityUid uid, EntityUid? sourceUid, int shockDamage, TimeSpan time, bool refresh, float siemensCoefficient = 1f,
             StatusEffectsComponent? statusEffects = null,
             SharedAlertsComponent? alerts = null)
         {
             if (!DoCommonElectrocutionAttempt(uid, sourceUid, ref siemensCoefficient)
-                || !DoCommonElectrocution(uid, sourceUid, shockDamage, time, siemensCoefficient, statusEffects, alerts))
+                || !DoCommonElectrocution(uid, sourceUid, shockDamage, time, refresh, siemensCoefficient, statusEffects, alerts))
                 return false;
 
             RaiseLocalEvent(uid, new ElectrocutedEvent(uid, sourceUid, siemensCoefficient));
@@ -265,6 +265,7 @@ namespace Content.Server.Electrocution
             Node node,
             int shockDamage,
             TimeSpan time,
+            bool refresh,
             float siemensCoefficient = 1f,
             StatusEffectsComponent? statusEffects = null,
             SharedAlertsComponent? alerts = null,
@@ -275,9 +276,9 @@ namespace Content.Server.Electrocution
 
             // Coefficient needs to be higher than this to do a powered electrocution!
             if(siemensCoefficient <= 0.5f)
-                return DoCommonElectrocution(uid, sourceUid, shockDamage, time, siemensCoefficient, statusEffects, alerts);
+                return DoCommonElectrocution(uid, sourceUid, shockDamage, time, refresh, siemensCoefficient, statusEffects, alerts);
 
-            if (!DoCommonElectrocution(uid, sourceUid, null, time, siemensCoefficient, statusEffects, alerts))
+            if (!DoCommonElectrocution(uid, sourceUid, null, time, refresh, siemensCoefficient, statusEffects, alerts))
                 return false;
 
             if (!Resolve(sourceUid, ref sourceTransform)) // This shouldn't really happen, but just in case...
@@ -319,7 +320,7 @@ namespace Content.Server.Electrocution
         }
 
         private bool DoCommonElectrocution(EntityUid uid, EntityUid? sourceUid,
-            int? shockDamage, TimeSpan time, float siemensCoefficient = 1f,
+            int? shockDamage, TimeSpan time, bool refresh, float siemensCoefficient = 1f,
             StatusEffectsComponent? statusEffects = null,
             SharedAlertsComponent? alerts = null)
         {
@@ -341,14 +342,14 @@ namespace Content.Server.Electrocution
                 !_statusEffectsSystem.CanApplyEffect(uid, StatusEffectKey, statusEffects))
                 return false;
 
-            if (!_statusEffectsSystem.TryAddStatusEffect<ElectrocutedComponent>(uid, StatusEffectKey, time,
+            if (!_statusEffectsSystem.TryAddStatusEffect<ElectrocutedComponent>(uid, StatusEffectKey, time, refresh,
                 statusEffects, alerts))
                 return false;
 
             var shouldStun = siemensCoefficient > 0.5f;
 
             if (shouldStun)
-                _stunSystem.TryParalyze(uid, time * ParalyzeTimeMultiplier, statusEffects, alerts);
+                _stunSystem.TryParalyze(uid, time * ParalyzeTimeMultiplier, refresh, statusEffects, alerts);
 
             // TODO: Sparks here.
 
@@ -362,8 +363,8 @@ namespace Content.Server.Electrocution
                         $"{statusEffects.Owner} took {actual.Total} powered electrocution damage");
             }
 
-            _stutteringSystem.DoStutter(uid, time * StutteringTimeMultiplier, statusEffects, alerts);
-            _jitteringSystem.DoJitter(uid, time * JitterTimeMultiplier, JitterAmplitude, JitterFrequency, true,
+            _stutteringSystem.DoStutter(uid, time * StutteringTimeMultiplier, refresh, statusEffects, alerts);
+            _jitteringSystem.DoJitter(uid, time * JitterTimeMultiplier, refresh, JitterAmplitude, JitterFrequency, true,
                 statusEffects, alerts);
 
             _popupSystem.PopupEntity(Loc.GetString("electrocuted-component-mob-shocked-popup-player"), uid,

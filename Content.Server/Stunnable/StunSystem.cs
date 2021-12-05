@@ -34,7 +34,7 @@ namespace Content.Server.Stunnable
             if (args.Handled || !_random.Prob(args.PushProbability))
                 return;
 
-            if (!TryParalyze(uid, TimeSpan.FromSeconds(4f), status))
+            if (!TryParalyze(uid, TimeSpan.FromSeconds(4f), true, status))
                 return;
 
             var source = args.Source;

@@ -247,7 +247,7 @@ namespace Content.Server.PneumaticCannon
             if(data.User.TryGetComponent<StatusEffectsComponent>(out var status)
                && comp.Power == PneumaticCannonPower.High)
             {
-                _stun.TryParalyze(data.User.Uid, TimeSpan.FromSeconds(comp.HighPowerStunTime), status);
+                _stun.TryParalyze(data.User.Uid, TimeSpan.FromSeconds(comp.HighPowerStunTime), true, status);
                 data.User.PopupMessage(Loc.GetString("pneumatic-cannon-component-power-stun",
                     ("cannon", comp.Owner)));
             }

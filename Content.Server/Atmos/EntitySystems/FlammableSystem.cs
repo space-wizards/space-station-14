@@ -180,7 +180,7 @@ namespace Content.Server.Atmos.EntitySystems
             flammable.Resisting = true;
 
             flammable.Owner.PopupMessage(Loc.GetString("flammable-component-resist-message"));
-            _stunSystem.TryParalyze(uid, TimeSpan.FromSeconds(2f), alerts: alerts);
+            _stunSystem.TryParalyze(uid, TimeSpan.FromSeconds(2f), true, alerts: alerts);
 
             // TODO FLAMMABLE: Make this not use TimerComponent...
             flammable.Owner.SpawnTimer(2000, () =>

@@ -61,7 +61,7 @@ namespace Content.Server.Conveyor
                 signal != TwoWayLeverSignal.Middle)
             {
                 args.Cancel();
-                _stunSystem.TryParalyze(uid, TimeSpan.FromSeconds(2f));
+                _stunSystem.TryParalyze(uid, TimeSpan.FromSeconds(2f), true);
                 component.Owner.PopupMessage(args.Attemptee, Loc.GetString("conveyor-component-failed-link"));
             }
         }

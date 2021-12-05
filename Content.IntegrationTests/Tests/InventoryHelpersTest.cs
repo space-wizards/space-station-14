@@ -73,7 +73,7 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(inventory.TryGetSlotItem(Slots.INNERCLOTHING, out ItemComponent uniform));
                 Assert.That(uniform.Owner.Prototype != null && uniform.Owner.Prototype.ID == "InventoryJumpsuitJanitorDummy");
 
-                EntitySystem.Get<StunSystem>().TryStun(human.Uid, TimeSpan.FromSeconds(1f));
+                EntitySystem.Get<StunSystem>().TryStun(human.Uid, TimeSpan.FromSeconds(1f), true);
 
                 // Since the mob is stunned, they can't equip this.
                 Assert.That(inventory.SpawnItemInSlot(Slots.IDCARD, "InventoryIDCardDummy", true), Is.False);
