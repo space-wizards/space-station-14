@@ -187,10 +187,10 @@ namespace Content.Server.Kitchen.EntitySystems
             if (userUid != victimUid)
             {
                 var user = EntityManager.GetEntity(userUid);
-                _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-begin-hook-victim", ("user", user), ("this", component.Owner)), victimUid, Filter.Entities(userUid));
+                _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-begin-hook-victim", ("user", user), ("this", component.Owner)), victimUid, Filter.Entities(victimUid));
             }
             else
-                _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-begin-hook-self", ("this", component.Owner)), victimUid, Filter.Entities(userUid));
+                _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-begin-hook-self", ("this", component.Owner)), victimUid, Filter.Pvs(uid)); // This is actually unreachable and should be in SuicideEvent
 
             butcherable.BeingButchered = true;
 
