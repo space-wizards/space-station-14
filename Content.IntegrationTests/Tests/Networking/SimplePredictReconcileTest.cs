@@ -12,7 +12,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Players;
 using Robust.Shared.Reflection;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
@@ -77,7 +76,7 @@ namespace Content.IntegrationTests.Tests.Networking
             var cGameTiming = client.ResolveDependency<IGameTiming>();
             var cGameStateManager = client.ResolveDependency<IClientGameStateManager>();
 
-            IEntity serverEnt = default!;
+            EntityUid serverEnt = default;
             PredictionTestComponent serverComponent = default!;
             PredictionTestComponent clientComponent = default!;
 
@@ -112,8 +111,7 @@ namespace Content.IntegrationTests.Tests.Networking
 
             await client.WaitPost(() =>
             {
-                IEntity tempQualifier = cEntityManager.GetEntity(serverEnt);
-                clientComponent = IoCManager.Resolve<IEntityManager>().GetComponent<PredictionTestComponent>(tempQualifier);
+                clientComponent = cEntityManager.GetComponent<PredictionTestComponent>(serverEnt);
             });
 
             Assert.That(clientComponent.Foo, Is.False);
@@ -456,8 +454,7 @@ namespace Content.IntegrationTests.Tests.Networking
 
             private void HandleMessage(SetFooMessage message, EntitySessionEventArgs args)
             {
-                var entity = EntityManager.GetEntity(message.Uid);
-                var component = IoCManager.Resolve<IEntityManager>().GetComponent<PredictionTestComponent>(entity);
+                var component = IoCManager.Resolve<IEntityManager>().GetComponent<PredictionTestComponent>(message.Uid);
                 var old = component.Foo;
                 if (Allow)
                 {

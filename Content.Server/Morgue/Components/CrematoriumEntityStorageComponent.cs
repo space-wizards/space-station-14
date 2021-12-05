@@ -12,7 +12,6 @@ using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Standing;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -69,7 +68,7 @@ namespace Content.Server.Morgue.Components
             }
         }
 
-        public override bool CanOpen(IEntity user, bool silent = false)
+        public override bool CanOpen(EntityUid user, bool silent = false)
         {
             if (Cooking)
             {
@@ -117,7 +116,7 @@ namespace Content.Server.Morgue.Components
                     {
                         var item = Contents.ContainedEntities[i];
                         Contents.Remove(item);
-                        IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) item);
+                        IoCManager.Resolve<IEntityManager>().DeleteEntity(item);
                     }
 
                     var ash = IoCManager.Resolve<IEntityManager>().SpawnEntity("Ash", IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
@@ -131,12 +130,16 @@ namespace Content.Server.Morgue.Components
             }, _cremateCancelToken.Token);
         }
 
-        SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)
+        SuicideKind ISuicideAct.Suicide(EntityUid victim, IChatManager chat)
         {
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent(victim, out ActorComponent? actor) && actor.PlayerSession.ContentData()?.Mind is {} mind)
             {
                 EntitySystem.Get<GameTicker>().OnGhostAttempt(mind, false);
-                mind.OwnedEntity?.PopupMessage(Loc.GetString("crematorium-entity-storage-component-suicide-message"));
+
+                if (mind.OwnedEntity.Valid)
+                {
+                    mind.OwnedEntity.PopupMessage(Loc.GetString("crematorium-entity-storage-component-suicide-message"));
+                }
             }
 
             victim.PopupMessageOtherClients(Loc.GetString("crematorium-entity-storage-component-suicide-message-others", ("victim", victim)));
@@ -144,11 +147,11 @@ namespace Content.Server.Morgue.Components
             if (CanInsert(victim))
             {
                 Insert(victim);
-                EntitySystem.Get<StandingStateSystem>().Down((EntityUid) victim, false);
+                EntitySystem.Get<StandingStateSystem>().Down(victim, false);
             }
             else
             {
-                IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) victim);
+                IoCManager.Resolve<IEntityManager>().DeleteEntity(victim);
             }
 
             Cremate();

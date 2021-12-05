@@ -189,7 +189,7 @@ namespace Content.Server.Singularity.EntitySystems
             IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(projectile).WorldRotation = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner).WorldRotation;
 
             // TODO: Move to projectile's code.
-            Timer.Spawn(3000, () => IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) projectile));
+            Timer.Spawn(3000, () => IoCManager.Resolve<IEntityManager>().DeleteEntity(projectile));
 
             SoundSystem.Play(Filter.Pvs(component.Owner), component.FireSound.GetSound(), component.Owner,
                 AudioHelpers.WithVariation(EmitterComponent.Variation).WithVolume(EmitterComponent.Volume).WithMaxDistance(EmitterComponent.Distance));

@@ -169,7 +169,7 @@ namespace Content.Server.Ghost
                 return;
             }
 
-            if (!EntityManager.TryGetEntity(msg.Target, out var entity))
+            if (!EntityManager.EntityExists(msg.Target)
             {
                 Logger.Warning($"User {args.SenderSession.Name} tried to warp to an invalid entity id: {msg.Target}");
                 return;
@@ -180,7 +180,7 @@ namespace Content.Server.Ghost
 
         private void DeleteEntity(EntityUid uid)
         {
-            if (!EntityManager.TryGetEntity(uid, out var entity)
+            if (!EntityManager.EntityExists(uid)
                 || (!IoCManager.Resolve<IEntityManager>().EntityExists(entity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityLifeStage) >= EntityLifeStage.Deleted
                 || (!IoCManager.Resolve<IEntityManager>().EntityExists(entity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityLifeStage) == EntityLifeStage.Terminating)
                 return;

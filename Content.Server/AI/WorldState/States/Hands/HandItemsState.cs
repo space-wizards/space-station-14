@@ -7,12 +7,12 @@ using Robust.Shared.IoC;
 namespace Content.Server.AI.WorldState.States.Hands
 {
     [UsedImplicitly]
-    public class HandItemsState : StateData<List<IEntity>>
+    public class HandItemsState : StateData<List<EntityUid>>
     {
         public override string Name => "HandItems";
-        public override List<IEntity> GetValue()
+        public override List<EntityUid> GetValue()
         {
-            var result = new List<IEntity>();
+            var result = new List<EntityUid>();
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out HandsComponent? handsComponent))
             {
                 return result;

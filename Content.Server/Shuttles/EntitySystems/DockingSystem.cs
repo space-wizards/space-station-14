@@ -1,5 +1,3 @@
-using Content.Server.Atmos.Components;
-using Content.Server.Atmos.EntitySystems;
 using Content.Server.Doors.Components;
 using Content.Server.Power.Components;
 using Content.Server.Shuttles.Components;
@@ -112,7 +110,7 @@ namespace Content.Server.Shuttles.EntitySystems
             if (dockingFixture == null)
             {
                 DebugTools.Assert(false);
-                Logger.ErrorS("docking", $"Found null fixture on {EntityManager.GetEntity(((IComponent) body).Owner)}");
+                Logger.ErrorS("docking", $"Found null fixture on {((IComponent) body).Owner)}"
                 return null;
             }
 
@@ -146,7 +144,7 @@ namespace Content.Server.Shuttles.EntitySystems
                     if (otherDockingFixture == null)
                     {
                         DebugTools.Assert(false);
-                        Logger.ErrorS("docking", $"Found null docking fixture on {EntityManager.GetEntity(ent)}");
+                        Logger.ErrorS("docking", $"Found null docking fixture on {ent)}"
                         continue;
                     }
 

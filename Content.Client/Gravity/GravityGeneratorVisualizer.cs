@@ -38,7 +38,7 @@ namespace Content.Client.Gravity
             }
         }
 
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
 

@@ -198,7 +198,7 @@ namespace Content.Server.MachineLinking.System
             args.Handled = true;
         }
 
-        private void LinkerInteraction(IEntity entity, SignalTransmitterComponent transmitter, string transmitterPort,
+        private void LinkerInteraction(EntityUid entity, SignalTransmitterComponent transmitter, string transmitterPort,
             SignalReceiverComponent receiver, string receiverPort)
         {
             if (_linkCollection.LinkExists(transmitter, transmitterPort, receiver, receiverPort))
@@ -256,7 +256,7 @@ namespace Content.Server.MachineLinking.System
             }
         }
 
-        private void LinkerSaveInteraction(IEntity entity, SignalLinkerComponent linkerComponent,
+        private void LinkerSaveInteraction(EntityUid entity, SignalLinkerComponent linkerComponent,
             SignalTransmitterComponent transmitterComponent, string transmitterPort)
         {
             if (SavePortInSignalLinker(linkerComponent, transmitterComponent, transmitterPort))

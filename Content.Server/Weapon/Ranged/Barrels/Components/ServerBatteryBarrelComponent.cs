@@ -14,7 +14,6 @@ using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -24,6 +23,8 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
     [NetworkedComponent()]
     public sealed class ServerBatteryBarrelComponent : ServerRangedBarrelComponent
     {
+        [Dependency] private readonly IEntityManager _entities = default!;
+
         public override string Name => "BatteryBarrel";
 
         // The minimum change we need before we can fire
@@ -35,37 +36,28 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         [DataField("ammoPrototype")]
         [ViewVariables] private string? _ammoPrototype;
 
-        [ViewVariables] public IEntity? PowerCellEntity => _powerCellContainer.ContainedEntity;
-        public BatteryComponent? PowerCell
-        {
-            get
-            {
-                if (_powerCellContainer.ContainedEntity == null)
-                    return null;
-
-                return _powerCellContainer.ContainedEntity.GetComponentOrNull<BatteryComponent>();
-            }
-        }
+        [ViewVariables] public EntityUid? PowerCellEntity => _powerCellContainer.ContainedEntity;
+        public BatteryComponent? PowerCell => _powerCellContainer.ContainedEntity == null
+            ? null
+            : _entities.GetComponentOrNull<BatteryComponent>(_powerCellContainer.ContainedEntity.Value);
 
         private ContainerSlot _powerCellContainer = default!;
         private ContainerSlot _ammoContainer = default!;
         [DataField("powerCellPrototype")]
-        private string? _powerCellPrototype = default;
+        private string? _powerCellPrototype;
         [DataField("powerCellRemovable")]
-        [ViewVariables] public bool PowerCellRemovable = default;
+        [ViewVariables] public bool PowerCellRemovable;
 
         public override int ShotsLeft
         {
             get
             {
-                var powerCell = _powerCellContainer.ContainedEntity;
-
-                if (powerCell == null)
+                if (_powerCellContainer.ContainedEntity is not {Valid: true} powerCell)
                 {
                     return 0;
                 }
 
-                return (int) Math.Ceiling(IoCManager.Resolve<IEntityManager>().GetComponent<BatteryComponent>(powerCell).CurrentCharge / _baseFireCost);
+                return (int) Math.Ceiling(_entities.GetComponent<BatteryComponent>(powerCell).CurrentCharge / _baseFireCost);
             }
         }
 
@@ -73,14 +65,12 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         {
             get
             {
-                var powerCell = _powerCellContainer.ContainedEntity;
-
-                if (powerCell == null)
+                if (_powerCellContainer.ContainedEntity is not {Valid: true} powerCell)
                 {
                     return 0;
                 }
 
-                return (int) Math.Ceiling((float) (IoCManager.Resolve<IEntityManager>().GetComponent<BatteryComponent>(powerCell).MaxCharge / _baseFireCost));
+                return (int) Math.Ceiling(_entities.GetComponent<BatteryComponent>(powerCell).MaxCharge / _baseFireCost);
             }
         }
 
@@ -104,19 +94,19 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         protected override void Initialize()
         {
             base.Initialize();
-            _powerCellContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-powercell-container", out var existing);
+            _powerCellContainer = Owner.EnsureContainer<ContainerSlot>($"{Name}-powercell-container", out var existing);
             if (!existing && _powerCellPrototype != null)
             {
-                var powerCellEntity = IoCManager.Resolve<IEntityManager>().SpawnEntity(_powerCellPrototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
+                var powerCellEntity = _entities.SpawnEntity(_powerCellPrototype, _entities.GetComponent<TransformComponent>(Owner).Coordinates);
                 _powerCellContainer.Insert(powerCellEntity);
             }
 
             if (_ammoPrototype != null)
             {
-                _ammoContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-ammo-container");
+                _ammoContainer = Owner.EnsureContainer<ContainerSlot>($"{Name}-ammo-container");
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearanceComponent))
+            if (_entities.TryGetComponent(Owner, out AppearanceComponent? appearanceComponent))
             {
                 _appearanceComponent = appearanceComponent;
             }
@@ -137,64 +127,64 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             Dirty();
         }
 
-        public override IEntity PeekAmmo()
+        public override EntityUid PeekAmmo()
         {
             // Spawn a dummy entity because it's easier to work with I guess
             // This will get re-used for the projectile
             var ammo = _ammoContainer.ContainedEntity;
             if (ammo == null)
             {
-                ammo = IoCManager.Resolve<IEntityManager>().SpawnEntity(_ammoPrototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
-                _ammoContainer.Insert(ammo);
+                ammo = _entities.SpawnEntity(_ammoPrototype, _entities.GetComponent<TransformComponent>(Owner).Coordinates);
+                _ammoContainer.Insert(ammo.Value);
             }
 
-            return ammo;
+            return ammo.Value;
         }
 
-        public override IEntity? TakeProjectile(EntityCoordinates spawnAt)
+        public override EntityUid TakeProjectile(EntityCoordinates spawnAt)
         {
             var powerCellEntity = _powerCellContainer.ContainedEntity;
 
             if (powerCellEntity == null)
             {
-                return null;
+                return default;
             }
 
-            var capacitor = IoCManager.Resolve<IEntityManager>().GetComponent<BatteryComponent>(powerCellEntity);
+            var capacitor = _entities.GetComponent<BatteryComponent>(powerCellEntity.Value);
             if (capacitor.CurrentCharge < _lowerChargeLimit)
             {
-                return null;
+                return default;
             }
 
             // Can fire confirmed
             // Multiply the entity's damage / whatever by the percentage of charge the shot has.
-            IEntity entity;
+            EntityUid? entity;
             var chargeChange = Math.Min(capacitor.CurrentCharge, _baseFireCost);
             if (capacitor.UseCharge(chargeChange) < _lowerChargeLimit)
             {
                 // Handling of funny exploding cells.
-                return null;
+                return default;
             }
             var energyRatio = chargeChange / _baseFireCost;
 
             if (_ammoContainer.ContainedEntity != null)
             {
                 entity = _ammoContainer.ContainedEntity;
-                _ammoContainer.Remove(entity);
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates = spawnAt;
+                _ammoContainer.Remove(entity.Value);
+                _entities.GetComponent<TransformComponent>(entity.Value).Coordinates = spawnAt;
             }
             else
             {
-                entity = IoCManager.Resolve<IEntityManager>().SpawnEntity(_ammoPrototype, spawnAt);
+                entity = _entities.SpawnEntity(_ammoPrototype, spawnAt);
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ProjectileComponent? projectileComponent))
+            if (_entities.TryGetComponent(entity.Value, out ProjectileComponent? projectileComponent))
             {
                 if (energyRatio < 1.0)
                 {
                     projectileComponent.Damage *= energyRatio;
                 }
-            } else if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out HitscanComponent? hitscanComponent))
+            } else if (_entities.TryGetComponent(entity.Value, out HitscanComponent? hitscanComponent))
             {
                 hitscanComponent.Damage *= energyRatio;
                 hitscanComponent.ColorModifier = energyRatio;
@@ -206,17 +196,17 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
             Dirty();
             UpdateAppearance();
-            return entity;
+            return entity.Value;
         }
 
-        public bool TryInsertPowerCell(IEntity entity)
+        public bool TryInsertPowerCell(EntityUid entity)
         {
             if (_powerCellContainer.ContainedEntity != null)
             {
                 return false;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().HasComponent<BatteryComponent>(entity))
+            if (!_entities.HasComponent<BatteryComponent>(entity))
             {
                 return false;
             }
@@ -237,22 +227,17 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 return false;
             }
 
-            if (PowerCellEntity == null)
-            {
-                return false;
-            }
-
-            return TryEjectCell(eventArgs.User);
+            return PowerCellEntity != default && TryEjectCell(eventArgs.User);
         }
 
-        public bool TryEjectCell(IEntity user)
+        public bool TryEjectCell(EntityUid user)
         {
             if (PowerCell == null || !PowerCellRemovable)
             {
                 return false;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out HandsComponent? hands))
+            if (!_entities.TryGetComponent(user, out HandsComponent? hands))
             {
                 return false;
             }
@@ -266,9 +251,9 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             Dirty();
             UpdateAppearance();
 
-            if (!hands.PutInHand(IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(cell.Owner)))
+            if (!hands.PutInHand(_entities.GetComponent<ItemComponent>(cell.Owner)))
             {
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(cell.Owner).Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user).Coordinates;
+                _entities.GetComponent<TransformComponent>(cell.Owner).Coordinates = _entities.GetComponent<TransformComponent>(user).Coordinates;
             }
 
             SoundSystem.Play(Filter.Pvs(Owner), _soundPowerCellEject.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
@@ -277,7 +262,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         public override async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!IoCManager.Resolve<IEntityManager>().HasComponent<BatteryComponent>(eventArgs.Using))
+            if (!_entities.HasComponent<BatteryComponent>(eventArgs.Using))
             {
                 return false;
             }

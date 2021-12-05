@@ -1,7 +1,6 @@
 using System.Threading.Tasks;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Tag;
 using Robust.Shared.GameObjects;
@@ -27,7 +26,7 @@ namespace Content.Server.Botany.Components
                     plank.RandomOffset(0.25f);
                 }
 
-                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity((EntityUid) Owner);
+                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(Owner);
 
                 return true;
             }

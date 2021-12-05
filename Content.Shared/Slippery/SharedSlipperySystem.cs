@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
@@ -122,7 +121,7 @@ namespace Content.Shared.Slippery
 
             foreach (var uid in component.Colliding.ToArray())
             {
-                if (!uid.IsValid() || !EntityManager.TryGetEntity(uid, out var entity))
+                if (!uid.IsValid())
                 {
                     component.Colliding.Remove(uid);
                     component.Slipped.Remove(uid);
@@ -130,7 +129,7 @@ namespace Content.Shared.Slippery
                     continue;
                 }
 
-                if (!EntityManager.TryGetComponent(entity.Value, out PhysicsComponent? otherPhysics) ||
+                if (!EntityManager.TryGetComponent(uid, out PhysicsComponent? otherPhysics) ||
                     !body.GetWorldAABB().Intersects(otherPhysics.GetWorldAABB()))
                 {
                     component.Colliding.Remove(uid);

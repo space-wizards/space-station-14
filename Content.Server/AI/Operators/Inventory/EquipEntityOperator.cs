@@ -6,9 +6,9 @@ namespace Content.Server.AI.Operators.Inventory
 {
     public sealed class EquipEntityOperator : AiOperator
     {
-        private readonly IEntity _owner;
-        private readonly IEntity _entity;
-        public EquipEntityOperator(IEntity owner, IEntity entity)
+        private readonly EntityUid _owner;
+        private readonly EntityUid _entity;
+        public EquipEntityOperator(EntityUid owner, EntityUid entity)
         {
             _owner = owner;
             _entity = entity;

@@ -468,7 +468,7 @@ namespace Content.Shared.Body.Components
             var i = 0;
             foreach (var (part, slot) in SlotParts)
             {
-                parts[i] = (slot.Id, OwnerUid: ((IComponent) part).Owner);
+                parts[i] = (slot.Id, Owner: ((IComponent) part).Owner);
                 i++;
             }
 
@@ -542,12 +542,12 @@ namespace Content.Shared.Body.Components
 
             foreach (var (slot, partId) in PartIds)
             {
-                if (!entityManager.TryGetEntity(partId, out var entity))
+                if (!entityManager.EntityExists(partId))
                 {
                     continue;
                 }
 
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Value, out SharedBodyPartComponent? part))
+                if (!entityManager.TryGetComponent(partId, out SharedBodyPartComponent? part))
                 {
                     continue;
                 }

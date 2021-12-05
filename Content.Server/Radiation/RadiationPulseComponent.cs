@@ -5,7 +5,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Player;
-using Robust.Shared.Players;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
@@ -112,7 +111,7 @@ namespace Content.Server.Radiation
                 return;
 
             if (_duration <= 0f)
-                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity((EntityUid) Owner);
+                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(Owner);
 
             _duration -= frameTime;
         }

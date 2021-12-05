@@ -13,7 +13,7 @@ namespace Content.Client.Mining
         [DataField("layer")]
         private int Layer { get; } = 0;
 
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
 

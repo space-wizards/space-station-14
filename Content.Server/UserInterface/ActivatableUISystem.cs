@@ -1,23 +1,15 @@
 using System.Linq;
-using Content.Shared;
-using Content.Shared.CCVar;
+using Content.Server.Administration.Managers;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Hands;
-using Content.Shared.Popups;
-using Content.Shared.Standing;
-using Content.Shared.Stunnable;
-using Content.Shared.Throwing;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
-using Content.Server.Administration.Managers;
+using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
-using Robust.Shared.Configuration;
-using Robust.Shared.Localization;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Network;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 
 namespace Content.Server.UserInterface
 {
@@ -65,7 +57,7 @@ namespace Content.Server.UserInterface
             SetCurrentSingleUser(uid, null, component);
         }
 
-        private bool InteractUI(IEntity user, ActivatableUIComponent aui)
+        private bool InteractUI(EntityUid user, ActivatableUIComponent aui)
         {
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out ActorComponent? actor)) return false;
 
@@ -124,7 +116,7 @@ namespace Content.Server.UserInterface
                 // Must ToList in order to close things safely.
                 foreach (var session in ui.SubscribedSessions.ToArray())
                 {
-                    if (session.AttachedEntityUid == null || !_actionBlockerSystem.CanInteract(session.AttachedEntityUid.Value))
+                    if (session.AttachedEntity == null || !_actionBlockerSystem.CanInteract(session.AttachedEntity.Value))
                     {
                         ui.Close(session);
                     }
@@ -141,8 +133,8 @@ namespace Content.Server.UserInterface
 
     public class ActivatableUIOpenAttemptEvent : CancellableEntityEventArgs
     {
-        public IEntity User { get; }
-        public ActivatableUIOpenAttemptEvent(IEntity who)
+        public EntityUidUser { get; }
+        public ActivatableUIOpenAttemptEvent(EntityUidwho)
         {
             User = who;
         }

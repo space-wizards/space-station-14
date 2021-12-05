@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Act;
 using Content.Server.Administration;
@@ -9,7 +8,6 @@ using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.Players;
 using Content.Server.Popups;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Database;
@@ -27,13 +25,15 @@ namespace Content.Server.Chat.Commands
     [AnyCommand]
     internal class SuicideCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _entities = default!;
+
         public string Command => "suicide";
 
         public string Description => Loc.GetString("suicide-command-description");
 
         public string Help => Loc.GetString("suicide-command-help-text");
 
-        private void DealDamage(ISuicideAct suicide, IChatManager chat, IEntity target)
+        private void DealDamage(ISuicideAct suicide, IChatManager chat, EntityUid target)
         {
             var kind = suicide.Suicide(target, chat);
             if (kind != SuicideKind.Special)
@@ -73,10 +73,9 @@ namespace Content.Server.Chat.Commands
 
             var chat = IoCManager.Resolve<IChatManager>();
             var mind = player.ContentData()?.Mind;
-            var owner = mind?.OwnedComponent?.Owner;
 
             // This check also proves mind not-null for at the end when the mob is ghosted.
-            if (owner == null)
+            if (mind?.OwnedComponent?.Owner is not {Valid: true} owner)
             {
                 shell.WriteLine("You don't have a mind!");
                 return;
@@ -88,11 +87,11 @@ namespace Content.Server.Chat.Commands
             EntitySystem.Get<AdminLogSystem>().Add(LogType.Suicide, $"{player.AttachedEntity} is committing suicide");
 
             // Held item suicide
-            var handsComponent = IoCManager.Resolve<IEntityManager>().GetComponent<HandsComponent>(owner);
+            var handsComponent = _entities.GetComponent<HandsComponent>(owner);
             var itemComponent = handsComponent.GetActiveHand;
             if (itemComponent != null)
             {
-                var suicide = IoCManager.Resolve<IEntityManager>().GetComponents<ISuicideAct>(itemComponent.Owner).FirstOrDefault();
+                var suicide = _entities.GetComponents<ISuicideAct>(itemComponent.Owner).FirstOrDefault();
 
                 if (suicide != null)
                 {
@@ -107,9 +106,9 @@ namespace Content.Server.Chat.Commands
             {
                 foreach (var entity in entities)
                 {
-                    if (IoCManager.Resolve<IEntityManager>().HasComponent<ItemComponent>(entity))
+                    if (_entities.HasComponent<ItemComponent>(entity))
                         continue;
-                    var suicide = IoCManager.Resolve<IEntityManager>().GetComponents<ISuicideAct>(entity).FirstOrDefault();
+                    var suicide = _entities.GetComponents<ISuicideAct>(entity).FirstOrDefault();
                     if (suicide != null)
                     {
                         DealDamage(suicide, chat, owner);

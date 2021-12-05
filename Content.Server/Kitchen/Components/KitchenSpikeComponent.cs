@@ -73,7 +73,7 @@ namespace Content.Server.Kitchen.Components
             }
         }
 
-        private bool Spikeable(IEntity user, IEntity victim, [NotNullWhen(true)] out SharedButcherableComponent? butcherable)
+        private bool Spikeable(EntityUid user, EntityUid victim, [NotNullWhen(true)] out SharedButcherableComponent? butcherable)
         {
             butcherable = null;
 
@@ -95,7 +95,7 @@ namespace Content.Server.Kitchen.Components
             return true;
         }
 
-        public async void TrySpike(IEntity victim, IEntity user)
+        public async void TrySpike(EntityUid victim, EntityUiduser)
         {
             var victimUid = (EntityUid) victim;
             if (_beingButchered.Contains(victimUid)) return;
@@ -159,7 +159,7 @@ namespace Content.Server.Kitchen.Components
             SoundSystem.Play(Filter.Pvs(Owner), SpikeSound.GetSound(), Owner);
         }
 
-        SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)
+        SuicideKind ISuicideAct.Suicide(EntityUid victim, IChatManager chat)
         {
             var othersMessage = Loc.GetString("comp-kitchen-spike-suicide-other", ("victim", victim));
             victim.PopupMessageOtherClients(othersMessage);

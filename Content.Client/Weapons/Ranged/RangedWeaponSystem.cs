@@ -1,6 +1,5 @@
 using System;
 using Content.Client.CombatMode;
-using Content.Client.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Weapons.Ranged.Components;
 using JetBrains.Annotations;
@@ -48,12 +47,12 @@ namespace Content.Client.Weapons.Ranged
             }
 
             var entity = _playerManager.LocalPlayer?.ControlledEntity;
-            if (entity == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out SharedHandsComponent? hands))
+            if (entity == default || !EntityManager.TryGetComponent(entity.Value, out SharedHandsComponent? hands))
             {
                 return;
             }
 
-            if (!hands.TryGetActiveHeldEntity(out var held) || !IoCManager.Resolve<IEntityManager>().TryGetComponent(held, out ClientRangedWeaponComponent? weapon))
+            if (!hands.TryGetActiveHeldEntity(out var held) || !EntityManager.TryGetComponent(held, out ClientRangedWeaponComponent? weapon))
             {
                 _blocked = true;
                 return;

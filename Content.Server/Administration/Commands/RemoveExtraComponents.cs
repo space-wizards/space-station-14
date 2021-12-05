@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Content.Shared.Administration;
+﻿using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -33,16 +32,17 @@ namespace Content.Server.Administration.Commands
 
             foreach (var entity in entityManager.GetEntities())
             {
-                if (checkPrototype && IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityPrototype != prototype || IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityPrototype == null)
+                var metaData = entityManager.GetComponent<MetaDataComponent>(entity);
+                if (checkPrototype && metaData.EntityPrototype != prototype || metaData.EntityPrototype == null)
                 {
                     continue;
                 }
 
                 var modified = false;
 
-                foreach (var component in IoCManager.Resolve<IEntityManager>().GetComponents(entity))
+                foreach (var component in entityManager.GetComponents(entity))
                 {
-                    if (IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityPrototype.Components.ContainsKey(component.Name))
+                    if (metaData.EntityPrototype.Components.ContainsKey(component.Name))
                         continue;
 
                     entityManager.RemoveComponent(entity, component);

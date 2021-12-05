@@ -15,7 +15,6 @@ using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Toilet;
 using Content.Shared.Tools;
-using Content.Shared.Tools.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -150,7 +149,7 @@ namespace Content.Server.Toilet
             }
         }
 
-        SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)
+        SuicideKind ISuicideAct.Suicide(EntityUid victim, IChatManager chat)
         {
             // check that victim even have head
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedBodyComponent?>(victim, out var body) &&

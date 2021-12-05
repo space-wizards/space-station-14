@@ -5,7 +5,6 @@ using Content.Server.Administration.Logs;
 using Content.Server.Camera;
 using Content.Server.Explosion.Components;
 using Content.Shared.Acts;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Maps;
@@ -53,7 +52,7 @@ namespace Content.Server.Explosion.EntitySystems
         [Dependency] private readonly TriggerSystem _triggers = default!;
         [Dependency] private readonly AdminLogSystem _logSystem = default!;
 
-        private bool IgnoreExplosivePassable(IEntity e)
+        private bool IgnoreExplosivePassable(EntityUid e)
         {
             return e.HasTag("ExplosivePassable");
         }
@@ -82,12 +81,12 @@ namespace Content.Server.Explosion.EntitySystems
 
             foreach (var player in players)
             {
-                if (player.AttachedEntity == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(player.AttachedEntity, out CameraRecoilComponent? recoil))
+                if (!player.AttachedEntity.Valid || !EntityManager.TryGetComponent(player.AttachedEntity, out CameraRecoilComponent? recoil))
                 {
                     continue;
                 }
 
-                var playerPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.AttachedEntity).WorldPosition;
+                var playerPos = EntityManager.GetComponent<TransformComponent>(player.AttachedEntity).WorldPosition;
                 var delta = epicenter.ToMapPos(EntityManager) - playerPos;
 
                 //Change if zero. Will result in a NaN later breaking camera shake if not changed
@@ -122,26 +121,26 @@ namespace Content.Server.Explosion.EntitySystems
         {
             var entitiesInRange = _entityLookup.GetEntitiesInRange(mapId, boundingBox, 0).ToList();
 
-            var impassableEntities = new List<(IEntity, float)>();
-            var nonImpassableEntities = new List<(IEntity, float)>();
+            var impassableEntities = new List<(EntityUid, float)>();
+            var nonImpassableEntities = new List<(EntityUid, float)>();
             // TODO: Given this seems to rely on physics it should just query directly like everything else.
 
             // The entities are paired with their distance to the epicenter
             // and splitted into two lists based on if they are Impassable or not
             foreach (var entity in entitiesInRange)
             {
-                if ((!IoCManager.Resolve<IEntityManager>().EntityExists(entity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityLifeStage) >= EntityLifeStage.Deleted || entity.IsInContainer())
+                if ((!EntityManager.EntityExists(entity) ? EntityLifeStage.Deleted : EntityManager.GetComponent<MetaDataComponent>(entity).EntityLifeStage) >= EntityLifeStage.Deleted || entity.IsInContainer())
                 {
                     continue;
                 }
 
-                if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates.TryDistance(EntityManager, epicenter, out var distance) ||
+                if (!EntityManager.GetComponent<TransformComponent>(entity).Coordinates.TryDistance(EntityManager, epicenter, out var distance) ||
                     distance > maxRange)
                 {
                     continue;
                 }
 
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out PhysicsComponent? body) || body.Fixtures.Count < 1)
+                if (!EntityManager.TryGetComponent(entity, out PhysicsComponent? body) || body.Fixtures.Count < 1)
                 {
                     continue;
                 }
@@ -310,7 +309,7 @@ namespace Content.Server.Explosion.EntitySystems
             }
             else
             {
-                while (EntityManager.TryGetEntity(entity, out var e) && e.TryGetContainer(out var container))
+                while (EntityManager.EntityExists(entity) && entity.TryGetContainer(out var container))
                 {
                     entity = container.Owner;
                 }

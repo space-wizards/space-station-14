@@ -154,7 +154,7 @@ namespace Content.Shared.Interaction
 
             foreach (var result in rayResults)
             {
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(result.HitEntity, out IPhysBody? p))
+                if (!EntityManager.TryGetComponent(result.HitEntity, out IPhysBody? p))
                 {
                     continue;
                 }
@@ -213,7 +213,7 @@ namespace Content.Shared.Interaction
             bool popup = false)
         {
             predicate ??= e => e == origin || e == other;
-            return InRangeUnobstructed(origin, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other).MapPosition, range, collisionMask, predicate, ignoreInsideBlocker, popup);
+            return InRangeUnobstructed(origin, EntityManager.GetComponent<TransformComponent>(other).MapPosition, range, collisionMask, predicate, ignoreInsideBlocker, popup);
         }
 
         /// <summary>
@@ -345,7 +345,7 @@ namespace Content.Shared.Interaction
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
-            var originPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(origin).MapPosition;
+            var originPosition = EntityManager.GetComponent<TransformComponent>(origin).MapPosition;
             predicate ??= e => e == origin;
 
             var inRange = InRangeUnobstructed(originPosition, other, range, collisionMask, predicate, ignoreInsideBlocker);
@@ -392,7 +392,7 @@ namespace Content.Shared.Interaction
 
             var interactUsingEventArgs = new InteractUsingEventArgs(user, clickLocation, used, target);
 
-            var interactUsings = IoCManager.Resolve<IEntityManager>().GetComponents<IInteractUsing>(target).OrderByDescending(x => x.Priority);
+            var interactUsings = EntityManager.GetComponents<IInteractUsing>(target).OrderByDescending(x => x.Priority);
             foreach (var interactUsing in interactUsings)
             {
                 // If an InteractUsing returns a status completion we finish our interaction
@@ -415,7 +415,7 @@ namespace Content.Shared.Interaction
                 return true;
 
             var afterInteractEventArgs = new AfterInteractEventArgs(user, clickLocation, target, canReach);
-            var afterInteracts = IoCManager.Resolve<IEntityManager>().GetComponents<IAfterInteract>(used).OrderByDescending(x => x.Priority).ToList();
+            var afterInteracts = EntityManager.GetComponents<IAfterInteract>(used).OrderByDescending(x => x.Priority).ToList();
 
             foreach (var afterInteract in afterInteracts)
             {
@@ -441,7 +441,7 @@ namespace Content.Shared.Interaction
 
         protected void InteractionActivate(EntityUid user, EntityUid used)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<UseDelayComponent?>(used, out var delayComponent))
+            if (EntityManager.TryGetComponent<UseDelayComponent?>(used, out var delayComponent))
             {
                 if (delayComponent.ActiveDelay)
                     return;
@@ -469,7 +469,7 @@ namespace Content.Shared.Interaction
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(used, out IActivate? activateComp))
+            if (!EntityManager.TryGetComponent(used, out IActivate? activateComp))
                 return;
 
             var activateEventArgs = new ActivateEventArgs(user, used);
@@ -503,7 +503,7 @@ namespace Content.Shared.Interaction
         /// </summary>
         public void UseInteraction(EntityUid user, EntityUid used)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<UseDelayComponent?>(used, out var delayComponent))
+            if (EntityManager.TryGetComponent<UseDelayComponent?>(used, out var delayComponent))
             {
                 if (delayComponent.ActiveDelay)
                     return;
@@ -516,7 +516,7 @@ namespace Content.Shared.Interaction
             if (useMsg.Handled)
                 return;
 
-            var uses = IoCManager.Resolve<IEntityManager>().GetComponents<IUse>(used).ToList();
+            var uses = EntityManager.GetComponents<IUse>(used).ToList();
 
             // Try to use item on any components which have the interface
             foreach (var use in uses)
@@ -557,7 +557,7 @@ namespace Content.Shared.Interaction
                 return;
             }
 
-            var comps = IoCManager.Resolve<IEntityManager>().GetComponents<IThrown>(thrown).ToList();
+            var comps = EntityManager.GetComponents<IThrown>(thrown).ToList();
             var args = new ThrownEventArgs(user);
 
             // Call Thrown on all components that implement the interface
@@ -581,7 +581,7 @@ namespace Content.Shared.Interaction
             if (equipMsg.Handled)
                 return;
 
-            var comps = IoCManager.Resolve<IEntityManager>().GetComponents<IEquipped>(equipped).ToList();
+            var comps = EntityManager.GetComponents<IEquipped>(equipped).ToList();
 
             // Call Thrown on all components that implement the interface
             foreach (var comp in comps)
@@ -601,7 +601,7 @@ namespace Content.Shared.Interaction
             if (unequipMsg.Handled)
                 return;
 
-            var comps = IoCManager.Resolve<IEntityManager>().GetComponents<IUnequipped>(equipped).ToList();
+            var comps = EntityManager.GetComponents<IUnequipped>(equipped).ToList();
 
             // Call Thrown on all components that implement the interface
             foreach (var comp in comps)
@@ -622,7 +622,7 @@ namespace Content.Shared.Interaction
             if (equippedHandMessage.Handled)
                 return;
 
-            var comps = IoCManager.Resolve<IEntityManager>().GetComponents<IEquippedHand>(item).ToList();
+            var comps = EntityManager.GetComponents<IEquippedHand>(item).ToList();
 
             foreach (var comp in comps)
             {
@@ -641,7 +641,7 @@ namespace Content.Shared.Interaction
             if (unequippedHandMessage.Handled)
                 return;
 
-            var comps = IoCManager.Resolve<IEntityManager>().GetComponents<IUnequippedHand>(item).ToList();
+            var comps = EntityManager.GetComponents<IUnequippedHand>(item).ToList();
 
             foreach (var comp in comps)
             {
@@ -678,9 +678,9 @@ namespace Content.Shared.Interaction
                 return;
             }
 
-            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(item).LocalRotation = Angle.Zero;
+            EntityManager.GetComponent<TransformComponent>(item).LocalRotation = Angle.Zero;
 
-            var comps = IoCManager.Resolve<IEntityManager>().GetComponents<IDropped>(item).ToList();
+            var comps = EntityManager.GetComponents<IDropped>(item).ToList();
 
             // Call Land on all components that implement the interface
             foreach (var comp in comps)
@@ -703,7 +703,7 @@ namespace Content.Shared.Interaction
             if (handSelectedMsg.Handled)
                 return;
 
-            var comps = IoCManager.Resolve<IEntityManager>().GetComponents<IHandSelected>(item).ToList();
+            var comps = EntityManager.GetComponents<IHandSelected>(item).ToList();
 
             // Call Land on all components that implement the interface
             foreach (var comp in comps)
@@ -723,7 +723,7 @@ namespace Content.Shared.Interaction
             if (handDeselectedMsg.Handled)
                 return;
 
-            var comps = IoCManager.Resolve<IEntityManager>().GetComponents<IHandDeselected>(item).ToList();
+            var comps = EntityManager.GetComponents<IHandDeselected>(item).ToList();
 
             // Call Land on all components that implement the interface
             foreach (var comp in comps)

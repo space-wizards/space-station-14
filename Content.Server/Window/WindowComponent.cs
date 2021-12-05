@@ -9,7 +9,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Rounding;
 using Content.Shared.Sound;
 using Content.Shared.Window;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -71,7 +70,7 @@ namespace Content.Server.Window
             var fraction = damage == 0 || damageThreshold == 0
                 ? 0f
                 : (float) damage / damageThreshold;
-            var level = Math.Min(ContentHelpers.RoundToLevels((double) fraction, 1, 7), 5);
+            var level = Math.Min(ContentHelpers.RoundToLevels(fraction, 1, 7), 5);
 
             switch (level)
             {

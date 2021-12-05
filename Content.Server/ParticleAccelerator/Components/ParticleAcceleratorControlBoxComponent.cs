@@ -11,7 +11,6 @@ using Content.Server.VendingMachines;
 using Content.Server.WireHacking;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Singularity.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
@@ -153,8 +152,8 @@ namespace Content.Server.ParticleAccelerator.Components
             }
 
 
-            if (obj.Session.AttachedEntityUid == null ||
-                !EntitySystem.Get<ActionBlockerSystem>().CanInteract(obj.Session.AttachedEntityUid.Value))
+            if (!obj.Session.AttachedEntity.Valid ||
+                !EntitySystem.Get<ActionBlockerSystem>().CanInteract(obj.Session.AttachedEntity))
             {
                 return;
             }

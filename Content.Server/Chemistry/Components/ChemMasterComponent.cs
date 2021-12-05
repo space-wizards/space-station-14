@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
-using Content.Server.Sprite;
+using Content.Server.Labels.Components;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
@@ -18,15 +17,12 @@ using Content.Shared.Random.Helpers;
 using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using Robust.Shared.Log;
-using Content.Server.Labels.Components;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Chemistry.Components
 {
@@ -41,6 +37,8 @@ namespace Content.Server.Chemistry.Components
     [ComponentReference(typeof(SharedChemMasterComponent))]
     public class ChemMasterComponent : SharedChemMasterComponent, IActivate
     {
+        [Dependency] private readonly IEntityManager _entities = default!;
+
         [ViewVariables]
         private uint _pillType = 1;
 
@@ -51,7 +49,7 @@ namespace Content.Server.Chemistry.Components
         private bool _bufferModeTransfer = true;
 
         [ViewVariables]
-        private bool Powered => !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
+        private bool Powered => !_entities.TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         [ViewVariables]
         private Solution BufferSolution => _bufferSolution ??= EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, SolutionName);
@@ -107,7 +105,7 @@ namespace Content.Server.Chemistry.Components
         /// <param name="obj">A user interface message from the client.</param>
         private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
-            if (obj.Session.AttachedEntity == null)
+            if (obj.Session.AttachedEntity is not {Valid: true} player)
                 return;
 
             var msg = (UiActionMessage) obj.Message;
@@ -117,13 +115,13 @@ namespace Content.Server.Chemistry.Components
                 _ => true,
             };
 
-            if (!PlayerCanUseChemMaster(obj.Session.AttachedEntity, needsPower))
+            if (!PlayerCanUseChemMaster(player, needsPower))
                 return;
 
             switch (msg.Action)
             {
                 case UiAction.Eject:
-                    EntitySystem.Get<ItemSlotsSystem>().TryEjectToHands(((IComponent) this).Owner, BeakerSlot, obj.Session.AttachedEntityUid);
+                    EntitySystem.Get<ItemSlotsSystem>().TryEjectToHands(((IComponent) this).Owner, BeakerSlot, player);
                     break;
                 case UiAction.ChemButton:
                     TransferReagent(msg.Id, msg.Amount, msg.IsBuffer);
@@ -143,7 +141,7 @@ namespace Content.Server.Chemistry.Components
                 case UiAction.CreatePills:
                 case UiAction.CreateBottles:
                     _label = msg.Label;
-                    TryCreatePackage(obj.Session.AttachedEntity, msg.Action, msg.Label, msg.PillAmount, msg.BottleAmount);
+                    TryCreatePackage(player, msg.Action, msg.Label, msg.PillAmount, msg.BottleAmount);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -158,10 +156,10 @@ namespace Content.Server.Chemistry.Components
         /// <param name="playerEntity">The player entity.</param>
         /// <param name="needsPower">whether the device requires power</param>
         /// <returns>Returns true if the entity can use the chem master, and false if it cannot.</returns>
-        private bool PlayerCanUseChemMaster(IEntity? playerEntity, bool needsPower = true)
+        private bool PlayerCanUseChemMaster(EntityUid playerEntity, bool needsPower = true)
         {
             //Need player entity to check if they are still able to use the chem master
-            if (playerEntity == null)
+            if (playerEntity == default)
                 return false;
 
             var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
@@ -182,18 +180,18 @@ namespace Content.Server.Chemistry.Components
         /// <returns>Returns a <see cref="SharedChemMasterComponent.ChemMasterBoundUserInterfaceState"/></returns>
         private ChemMasterBoundUserInterfaceState GetUserInterfaceState()
         {
-            var beaker = BeakerSlot.Item;
-            if (beaker is null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(beaker, out FitsInDispenserComponent? fits) ||
+            if (BeakerSlot.Item is not {Valid: true} beaker ||
+                !_entities.TryGetComponent(beaker, out FitsInDispenserComponent? fits) ||
                 !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(beaker, fits.Solution, out var beakerSolution))
             {
                 return new ChemMasterBoundUserInterfaceState(Powered, false, FixedPoint2.New(0), FixedPoint2.New(0),
-                    "", _label, IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityName, new List<Solution.ReagentQuantity>(), BufferSolution.Contents, _bufferModeTransfer,
+                    "", _label, _entities.GetComponent<MetaDataComponent>(Owner).EntityName, new List<Solution.ReagentQuantity>(), BufferSolution.Contents, _bufferModeTransfer,
                     BufferSolution.TotalVolume, _pillType);
             }
 
             return new ChemMasterBoundUserInterfaceState(Powered, true, beakerSolution.CurrentVolume,
                 beakerSolution.MaxVolume,
-                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(beaker).EntityName, _label, IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityName, beakerSolution.Contents, BufferSolution.Contents, _bufferModeTransfer,
+                _entities.GetComponent<MetaDataComponent>(beaker).EntityName, _label, _entities.GetComponent<MetaDataComponent>(Owner).EntityName, beakerSolution.Contents, BufferSolution.Contents, _bufferModeTransfer,
                 BufferSolution.TotalVolume, _pillType);
         }
 
@@ -205,10 +203,11 @@ namespace Content.Server.Chemistry.Components
 
         private void TransferReagent(string id, FixedPoint2 amount, bool isBuffer)
         {
-            if (!BeakerSlot.HasItem && _bufferModeTransfer) return;
-            var beaker = BeakerSlot.Item;
+            if (!BeakerSlot.HasItem && _bufferModeTransfer)
+                return;
 
-            if (beaker is null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(beaker, out FitsInDispenserComponent? fits) ||
+            if (BeakerSlot.Item is not {Valid: true} beaker ||
+                !_entities.TryGetComponent(beaker, out FitsInDispenserComponent? fits) ||
                 !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(beaker, fits.Solution, out var beakerSolution))
                 return;
 
@@ -282,7 +281,7 @@ namespace Content.Server.Chemistry.Components
             return _bufferSolution.Contents[_bufferSolution.Contents.Count - 1].ReagentId;
         }
 
-        private void TryCreatePackage(IEntity user, UiAction action, string label, int pillAmount, int bottleAmount)
+        private void TryCreatePackage(EntityUid user, UiAction action, string label, int pillAmount, int bottleAmount)
         {
             if (BufferSolution.TotalVolume == 0)
             {
@@ -302,13 +301,13 @@ namespace Content.Server.Chemistry.Components
                 var actualVolume = FixedPoint2.Min(individualVolume, FixedPoint2.New(30));
                 for (int i = 0; i < bottleAmount; i++)
                 {
-                    var bottle = IoCManager.Resolve<IEntityManager>().SpawnEntity("ChemistryEmptyBottle01", IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
+                    var bottle = _entities.SpawnEntity("ChemistryEmptyBottle01", _entities.GetComponent<TransformComponent>(Owner).Coordinates);
 
                     //Adding label
                     LabelComponent labelComponent = bottle.EnsureComponent<LabelComponent>();
-                    labelComponent.OriginalName = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(bottle).EntityName;
-                    string val = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(bottle).EntityName + $" ({label})";
-                    IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(bottle).EntityName = val;
+                    labelComponent.OriginalName = _entities.GetComponent<MetaDataComponent>(bottle).EntityName;
+                    string val = _entities.GetComponent<MetaDataComponent>(bottle).EntityName + $" ({label})";
+                    _entities.GetComponent<MetaDataComponent>(bottle).EntityName = val;
                     labelComponent.CurrentLabel = label;
 
                     var bufferSolution = BufferSolution.SplitSolution(actualVolume);
@@ -317,8 +316,8 @@ namespace Content.Server.Chemistry.Components
                     EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(bottle, bottleSolution, bufferSolution);
 
                     //Try to give them the bottle
-                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent<HandsComponent?>(user, out var hands) &&
-                        IoCManager.Resolve<IEntityManager>().TryGetComponent<ItemComponent?>(bottle, out var item))
+                    if (_entities.TryGetComponent<HandsComponent?>(user, out var hands) &&
+                        _entities.TryGetComponent<ItemComponent?>(bottle, out var item))
                     {
                         if (hands.CanPutInHand(item))
                         {
@@ -328,7 +327,7 @@ namespace Content.Server.Chemistry.Components
                     }
 
                     //Put it on the floor
-                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(bottle).Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user).Coordinates;
+                    _entities.GetComponent<TransformComponent>(bottle).Coordinates = _entities.GetComponent<TransformComponent>(user).Coordinates;
                     //Give it an offset
                     bottle.RandomOffset(0.2f);
                 }
@@ -345,13 +344,13 @@ namespace Content.Server.Chemistry.Components
                 var actualVolume = FixedPoint2.Min(individualVolume, FixedPoint2.New(50));
                 for (int i = 0; i < pillAmount; i++)
                 {
-                    var pill = IoCManager.Resolve<IEntityManager>().SpawnEntity("pill", IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
+                    var pill = _entities.SpawnEntity("pill", _entities.GetComponent<TransformComponent>(Owner).Coordinates);
 
                     //Adding label
                     LabelComponent labelComponent = pill.EnsureComponent<LabelComponent>();
-                    labelComponent.OriginalName = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(pill).EntityName;
-                    string val = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(pill).EntityName + $" ({label})";
-                    IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(pill).EntityName = val;
+                    labelComponent.OriginalName = _entities.GetComponent<MetaDataComponent>(pill).EntityName;
+                    string val = _entities.GetComponent<MetaDataComponent>(pill).EntityName + $" ({label})";
+                    _entities.GetComponent<MetaDataComponent>(pill).EntityName = val;
                     labelComponent.CurrentLabel = label;
 
                     var bufferSolution = BufferSolution.SplitSolution(actualVolume);
@@ -359,15 +358,15 @@ namespace Content.Server.Chemistry.Components
                     EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(pill, pillSolution, bufferSolution);
 
                     //Change pill Sprite component state
-                    if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(pill, out SpriteComponent? sprite))
+                    if (!_entities.TryGetComponent(pill, out SpriteComponent? sprite))
                     {
                         return;
                     }
                     sprite?.LayerSetState(0, "pill" + _pillType);
 
                     //Try to give them the bottle
-                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent<HandsComponent?>(user, out var hands) &&
-                        IoCManager.Resolve<IEntityManager>().TryGetComponent<ItemComponent?>(pill, out var item))
+                    if (_entities.TryGetComponent<HandsComponent?>(user, out var hands) &&
+                        _entities.TryGetComponent<ItemComponent?>(pill, out var item))
                     {
                         if (hands.CanPutInHand(item))
                         {
@@ -377,7 +376,7 @@ namespace Content.Server.Chemistry.Components
                     }
 
                     //Put it on the floor
-                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pill).Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user).Coordinates;
+                    _entities.GetComponent<TransformComponent>(pill).Coordinates = _entities.GetComponent<TransformComponent>(user).Coordinates;
                     //Give it an offset
                     pill.RandomOffset(0.2f);
                 }
@@ -395,12 +394,12 @@ namespace Content.Server.Chemistry.Components
         /// <param name="args">Data relevant to the event such as the actor which triggered it.</param>
         void IActivate.Activate(ActivateEventArgs args)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User, out ActorComponent? actor))
+            if (!_entities.TryGetComponent(args.User, out ActorComponent? actor))
             {
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User, out HandsComponent? hands))
+            if (!_entities.TryGetComponent(args.User, out HandsComponent? hands))
             {
                 Owner.PopupMessage(args.User, Loc.GetString("chem-master-component-activate-no-hands"));
                 return;

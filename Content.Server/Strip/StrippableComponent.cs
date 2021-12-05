@@ -95,7 +95,7 @@ namespace Content.Server.Strip
                 return dictionary;
             }
 
-            foreach (IEntity entity in cuffed.StoredEntities)
+            foreach (EntityUid entity in cuffed.StoredEntities)
             {
                 dictionary.Add(entity, entity.Name);
             }
@@ -158,7 +158,7 @@ namespace Content.Server.Strip
         /// <summary>
         ///     Places item in user's active hand to an inventory slot.
         /// </summary>
-        private async void PlaceActiveHandItemInInventory(IEntity user, Slots slot)
+        private async void PlaceActiveHandItemInInventory(EntityUid user, Slots slot)
         {
             var inventory = IoCManager.Resolve<IEntityManager>().GetComponent<InventoryComponent>(Owner);
             var userHands = IoCManager.Resolve<IEntityManager>().GetComponent<HandsComponent>(user);
@@ -223,7 +223,7 @@ namespace Content.Server.Strip
         /// <summary>
         ///     Places item in user's active hand in one of the entity's hands.
         /// </summary>
-        private async void PlaceActiveHandItemInHands(IEntity user, string hand)
+        private async void PlaceActiveHandItemInHands(EntityUid user, string hand)
         {
             var hands = IoCManager.Resolve<IEntityManager>().GetComponent<HandsComponent>(Owner);
             var userHands = IoCManager.Resolve<IEntityManager>().GetComponent<HandsComponent>(user);
@@ -289,7 +289,7 @@ namespace Content.Server.Strip
         /// <summary>
         ///     Takes an item from the inventory and places it in the user's active hand.
         /// </summary>
-        private async void TakeItemFromInventory(IEntity user, Slots slot)
+        private async void TakeItemFromInventory(EntityUid user, Slots slot)
         {
             var inventory = IoCManager.Resolve<IEntityManager>().GetComponent<InventoryComponent>(Owner);
             var userHands = IoCManager.Resolve<IEntityManager>().GetComponent<HandsComponent>(user);
@@ -345,7 +345,7 @@ namespace Content.Server.Strip
         /// <summary>
         ///     Takes an item from a hand and places it in the user's active hand.
         /// </summary>
-        private async void TakeItemFromHands(IEntity user, string hand)
+        private async void TakeItemFromHands(EntityUid user, string hand)
         {
             var hands = IoCManager.Resolve<IEntityManager>().GetComponent<HandsComponent>(Owner);
             var userHands = IoCManager.Resolve<IEntityManager>().GetComponent<HandsComponent>(user);

@@ -1,6 +1,5 @@
 ﻿using Content.Server.Chemistry.Components;
 using Content.Server.Popups;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -29,7 +28,7 @@ namespace Content.Server.Chemistry.EntitySystems
         }
 
         // Try not to make this public if you can help it.
-        private void Expand(RehydratableComponent component, IEntity owner)
+        private void Expand(RehydratableComponent component, EntityUid owner)
         {
             if (component.Expanding)
             {

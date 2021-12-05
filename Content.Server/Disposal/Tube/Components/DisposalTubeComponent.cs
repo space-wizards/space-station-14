@@ -7,13 +7,10 @@ using Content.Shared.Acts;
 using Content.Shared.Disposal.Components;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
-using Content.Shared.Verbs;
-using Robust.Server.Console;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -100,7 +97,7 @@ namespace Content.Server.Disposal.Tube.Components
             }
         }
 
-        public void PopupDirections(IEntity entity)
+        public void PopupDirections(EntityUid entity)
         {
             var directions = string.Join(", ", ConnectableDirections());
 

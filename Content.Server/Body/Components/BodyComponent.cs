@@ -1,6 +1,5 @@
 using Content.Server.Ghost;
 using Content.Shared.Audio;
-using Content.Shared.Body;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Random.Helpers;
@@ -103,7 +102,7 @@ namespace Content.Server.Body.Components
                 }
             }
 
-            IoCManager.Resolve<IEntityManager>().QueueDeleteEntity((EntityUid) Owner);
+            IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(Owner);
         }
     }
 }

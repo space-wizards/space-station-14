@@ -6,19 +6,18 @@ using Content.Shared.GameTicking;
 using Content.Shared.Input;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
-using Content.Shared.Pulling.Events;
 using Content.Shared.Rotatable;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input.Binding;
+using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Players;
-using Robust.Shared.IoC;
-using Content.Shared.Verbs;
-using Robust.Shared.Localization;
 
 namespace Content.Shared.Pulling
 {
@@ -203,10 +202,9 @@ namespace Content.Shared.Pulling
 
         private bool HandleMovePulledObject(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
-            if (session?.AttachedEntityUid == null)
+            if (session?.AttachedEntity is not { } player ||
+                !player.IsValid())
                 return false;
-
-            var player = session.AttachedEntityUid.Value;
 
             if (!TryGetPulled(player, out var pulled))
             {
@@ -233,7 +231,7 @@ namespace Content.Shared.Pulling
             return _pullers.Remove(puller);
         }
 
-        public EntityUid? GetPulled(EntityUid by)
+        public EntityUid GetPulled(EntityUid by)
         {
             return _pullers.GetValueOrDefault(by);
         }

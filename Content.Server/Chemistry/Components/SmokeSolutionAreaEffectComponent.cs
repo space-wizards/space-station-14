@@ -26,7 +26,7 @@ namespace Content.Server.Chemistry.Components
             }
         }
 
-        protected override void ReactWithEntity(IEntity entity, double solutionFraction)
+        protected override void ReactWithEntity(EntityUid entity, double solutionFraction)
         {
             if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
                 return;
@@ -58,7 +58,7 @@ namespace Content.Server.Chemistry.Components
         {
             if ((!IoCManager.Resolve<IEntityManager>().EntityExists(Owner) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityLifeStage) >= EntityLifeStage.Deleted)
                 return;
-            IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) Owner);
+            IoCManager.Resolve<IEntityManager>().DeleteEntity(Owner);
         }
     }
 }

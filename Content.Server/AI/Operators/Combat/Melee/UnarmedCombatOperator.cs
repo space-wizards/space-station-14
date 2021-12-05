@@ -11,11 +11,11 @@ namespace Content.Server.AI.Operators.Combat.Melee
         private readonly float _burstTime;
         private float _elapsedTime;
 
-        private readonly IEntity _owner;
-        private readonly IEntity _target;
+        private readonly EntityUid _owner;
+        private readonly EntityUid _target;
         private UnarmedCombatComponent? _unarmedCombat;
 
-        public UnarmedCombatOperator(IEntity owner, IEntity target, float burstTime = 1.0f)
+        public UnarmedCombatOperator(EntityUid owner, EntityUid target, float burstTime = 1.0f)
         {
             _owner = owner;
             _target = target;

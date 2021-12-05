@@ -2,10 +2,8 @@ using System.Threading.Tasks;
 using Content.Server.Electrocution;
 using Content.Server.Stack;
 using Content.Server.Tools;
-using Content.Server.Tools.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Tools;
-using Content.Shared.Tools.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -47,7 +45,7 @@ namespace Content.Server.Power.Components
 
             if (EntitySystem.Get<ElectrocutionSystem>().TryDoElectrifiedAct(Owner, eventArgs.User)) return false;
 
-            IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) Owner);
+            IoCManager.Resolve<IEntityManager>().DeleteEntity(Owner);
             var droppedEnt = IoCManager.Resolve<IEntityManager>().SpawnEntity(_cableDroppedOnCutPrototype, eventArgs.ClickLocation);
 
             // TODO: Literally just use a prototype that has a single thing in the stack, it's not that complicated...

@@ -39,7 +39,7 @@ namespace Content.Server.Commands
         /// sending a failure to the performer if unable to.
         /// </summary>
         public static bool TryGetAttachedEntityByUsernameOrId(IConsoleShell shell,
-            string usernameOrId, IPlayerSession performer, [NotNullWhen(true)]  out IEntity? attachedEntity)
+            string usernameOrId, IPlayerSession performer, [NotNullWhen(true)] out EntityUid? attachedEntity)
         {
             attachedEntity = null;
             if (!TryGetSessionByUsernameOrId(shell, usernameOrId, performer, out var session)) return false;
@@ -53,7 +53,7 @@ namespace Content.Server.Commands
             return true;
         }
 
-        public static string SubstituteEntityDetails(IConsoleShell shell, IEntity ent, string ruleString)
+        public static string SubstituteEntityDetails(IConsoleShell shell, EntityUid ent, string ruleString)
         {
             // gross, is there a better way to do this?
             ruleString = ruleString.Replace("$ID", ent.ToString());
@@ -69,9 +69,8 @@ namespace Content.Server.Commands
 
             if (shell.Player is IPlayerSession player)
             {
-                if (player.AttachedEntity != null)
+                if (player.AttachedEntity is {Valid: true} p)
                 {
-                    var p = player.AttachedEntity;
                     ruleString = ruleString.Replace("$PID", ent.ToString());
                     ruleString = ruleString.Replace("$PWX",
                         IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(p).WorldPosition.X.ToString(CultureInfo.InvariantCulture));

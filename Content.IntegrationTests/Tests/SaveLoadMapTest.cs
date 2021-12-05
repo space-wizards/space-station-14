@@ -3,7 +3,6 @@ using NUnit.Framework;
 using Robust.Server.Maps;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -26,7 +25,7 @@ namespace Content.IntegrationTests.Tests
             await server.WaitIdleAsync();
             var mapLoader = server.ResolveDependency<IMapLoader>();
             var mapManager = server.ResolveDependency<IMapManager>();
-            var entityManager = server.ResolveDependency<IEntityManager>();
+            var sEntities = server.ResolveDependency<IEntityManager>();
             var resManager = server.ResolveDependency<IResourceManager>();
 
             server.Post(() =>
@@ -39,14 +38,14 @@ namespace Content.IntegrationTests.Tests
 
                 {
                     var mapGrid = mapManager.CreateGrid(mapId);
-                    var mapGridEnt = entityManager.GetEntity(mapGrid.GridEntityId);
-                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(mapGridEnt).WorldPosition = new Vector2(10, 10);
+                    var mapGridEnt = mapGrid.GridEntityId;
+                    sEntities.GetComponent<TransformComponent>(mapGridEnt).WorldPosition = new Vector2(10, 10);
                     mapGrid.SetTile(new Vector2i(0,0), new Tile(1, 512));
                 }
                 {
                     var mapGrid = mapManager.CreateGrid(mapId);
-                    var mapGridEnt = entityManager.GetEntity(mapGrid.GridEntityId);
-                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(mapGridEnt).WorldPosition = new Vector2(-8, -8);
+                    var mapGridEnt = mapGrid.GridEntityId;
+                    sEntities.GetComponent<TransformComponent>(mapGridEnt).WorldPosition = new Vector2(-8, -8);
                     mapGrid.SetTile(new Vector2i(0, 0), new Tile(2, 511));
                 }
 

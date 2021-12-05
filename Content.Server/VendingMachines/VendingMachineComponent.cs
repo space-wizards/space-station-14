@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Access.Components;
 using Content.Server.Access.Systems;
-using Content.Server.Advertise;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Server.WireHacking;
 using Content.Shared.Acts;
-using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Sound;
 using Content.Shared.VendingMachines;
@@ -22,7 +20,6 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.Wires.SharedWiresComponent;
 
@@ -191,7 +188,7 @@ namespace Content.Server.VendingMachines
             SoundSystem.Play(Filter.Pvs(Owner), _soundVend.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
         }
 
-        private void TryEject(string id, IEntity? sender)
+        private void TryEject(string id, EntityUid sender)
         {
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent<AccessReader?>(Owner, out var accessReader))
             {

@@ -1,6 +1,5 @@
 ﻿using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Fluids.Components;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -20,7 +19,7 @@ namespace Content.Server.Fluids.EntitySystems
             var queueDelete = new RemQueue<EvaporationComponent>();
             foreach (var evaporationComponent in EntityManager.EntityQuery<EvaporationComponent>())
             {
-                var uid = (EntityUid) evaporationComponent.Owner;
+                var uid = evaporationComponent.Owner;
                 evaporationComponent.Accumulator += frameTime;
 
                 if (!_solutionContainerSystem.TryGetSolution(uid, evaporationComponent.SolutionName, out var solution))

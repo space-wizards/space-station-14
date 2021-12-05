@@ -43,7 +43,7 @@ namespace Content.Client.Singularity
             var viewportWB = _eyeManager.GetWorldViewport();
             // Has to be correctly handled because of the way intensity/falloff transform works so just do it.
             _shader?.SetParameter("renderScale", args.Viewport.RenderScale);
-            foreach (SingularityShaderInstance instance in _singularities.Values)
+            foreach (var instance in _singularities.Values)
             {
                 // To be clear, this needs to use "inside-viewport" pixels.
                 // In other words, specifically NOT IViewportControl.WorldToScreen (which uses outer coordinates).
@@ -80,29 +80,29 @@ namespace Content.Client.Singularity
 
                 if (!_singularities.Keys.Contains(singuloEntity) && SinguloQualifies(singuloEntity, currentEyeLoc))
                 {
-                    _singularities.Add(singuloEntity, new SingularityShaderInstance(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(singuloEntity).MapPosition.Position, distortion.Intensity, distortion.Falloff));
+                    _singularities.Add(singuloEntity, new SingularityShaderInstance(_entityManager.GetComponent<TransformComponent>(singuloEntity).MapPosition.Position, distortion.Intensity, distortion.Falloff));
                 }
             }
 
             var activeShaderIds = _singularities.Keys;
-            foreach (var activeSinguloUid in activeShaderIds) //Remove all singulos that are added and no longer qualify
+            foreach (var activeSingulo in activeShaderIds) //Remove all singulos that are added and no longer qualify
             {
-                if (_entityManager.TryGetEntity(activeSinguloUid, out var singuloEntity))
+                if (_entityManager.EntityExists(activeSingulo))
                 {
-                    if (!SinguloQualifies(singuloEntity, currentEyeLoc))
+                    if (!SinguloQualifies(activeSingulo, currentEyeLoc))
                     {
-                        _singularities.Remove(activeSinguloUid);
+                        _singularities.Remove(activeSingulo);
                     }
                     else
                     {
-                        if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SingularityDistortionComponent?>(singuloEntity, out var distortion))
+                        if (!_entityManager.TryGetComponent<SingularityDistortionComponent?>(activeSingulo, out var distortion))
                         {
-                            _singularities.Remove(activeSinguloUid);
+                            _singularities.Remove(activeSingulo);
                         }
                         else
                         {
-                            var shaderInstance = _singularities[activeSinguloUid];
-                            shaderInstance.CurrentMapCoords = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(singuloEntity).MapPosition.Position;
+                            var shaderInstance = _singularities[activeSingulo];
+                            shaderInstance.CurrentMapCoords = _entityManager.GetComponent<TransformComponent>(activeSingulo).MapPosition.Position;
                             shaderInstance.Intensity = distortion.Intensity;
                             shaderInstance.Falloff = distortion.Falloff;
                         }
@@ -111,15 +111,15 @@ namespace Content.Client.Singularity
                 }
                 else
                 {
-                    _singularities.Remove(activeSinguloUid);
+                    _singularities.Remove(activeSingulo);
                 }
             }
 
         }
 
-        private bool SinguloQualifies(IEntity singuloEntity, MapCoordinates currentEyeLoc)
+        private bool SinguloQualifies(EntityUid singuloEntity, MapCoordinates currentEyeLoc)
         {
-            return IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(singuloEntity).MapID == currentEyeLoc.MapId && IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(singuloEntity).Coordinates.InRange(_entityManager, EntityCoordinates.FromMap(_entityManager, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(singuloEntity).ParentUid, currentEyeLoc), MaxDist);
+            return _entityManager.GetComponent<TransformComponent>(singuloEntity).MapID == currentEyeLoc.MapId && _entityManager.GetComponent<TransformComponent>(singuloEntity).Coordinates.InRange(_entityManager, EntityCoordinates.FromMap(_entityManager, _entityManager.GetComponent<TransformComponent>(singuloEntity).ParentUid, currentEyeLoc), MaxDist);
         }
 
         private sealed class SingularityShaderInstance

@@ -51,7 +51,7 @@ namespace Content.Shared.Verbs
                 // their sprite.
                 if (@using != null && EntityManager.TryGetComponent<HandVirtualItemComponent?>(@using.Value, out var pull))
                 {
-                    @using = EntityManager.GetEntity(pull.BlockingEntity);
+                    @using = pull.BlockingEntity
                 }
             }
 
@@ -113,23 +113,22 @@ namespace Content.Shared.Verbs
         public void LogVerb(Verb verb, EntityUid userUid, EntityUid targetUid, bool forced)
         {
             // first get the held item. again.
-            EntityUid? usedUid = null;
-            if (EntityManager.TryGetComponent(userUid, out SharedHandsComponent? hands))
+            EntityUid usedUid = default;
+            if (EntityManager.TryGetComponent(userUid, out SharedHandsComponent? hands) &&
+                hands.TryGetActiveHeldEntity(out var heldEntity))
             {
-                hands.TryGetActiveHeldEntity(out var useEntityd);
-                usedUid = useEntityd;
+                usedUid = heldEntity;
                 if (usedUid != null && EntityManager.TryGetComponent(usedUid.Value, out HandVirtualItemComponent? pull))
                     usedUid = pull.BlockingEntity;
             }
 
             // get all the entities
-            if (!EntityManager.TryGetEntity(userUid, out var user) ||
-                !EntityManager.TryGetEntity(targetUid, out var target))
+            if (!userUid.IsValid() || !targetUid.IsValid())
                 return;
 
             EntityUid? used = null;
             if (usedUid != null)
-                EntityManager.TryGetEntity(usedUid.Value, out used);
+                EntityManager.EntityExists(usedUid.Value);
 
             // then prepare the basic log message body
             var verbText = $"{verb.Category?.Text} {verb.Text}".Trim();
@@ -138,7 +137,7 @@ namespace Content.Shared.Verbs
                 : $"executed '{verbText}' verb targeting ";
 
             // then log with entity information
-            if (used != null)
+            if (usedUidused != null)
                 _logSystem.Add(LogType.Verb, verb.Impact,
                        $"{user} {logText} {target} while holding {used}");
             else

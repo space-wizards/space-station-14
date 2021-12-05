@@ -1,10 +1,6 @@
 using Content.Server.DeviceNetwork.Components;
-using Content.Server.NodeContainer;
-using Content.Server.NodeContainer.NodeGroups;
-using Content.Server.Power.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
-using System.Diagnostics.CodeAnalysis;
 using Robust.Shared.IoC;
 
 namespace Content.Server.DeviceNetwork.Systems
@@ -23,8 +19,8 @@ namespace Content.Server.DeviceNetwork.Systems
         /// </summary>
         private void OnBeforePacketSent(EntityUid uid, WiredNetworkComponent component, BeforePacketSentEvent args)
         {
-            IEntity sender = EntityManager.GetEntity(args.Sender);
-            IEntity receiver = EntityManager.GetEntity(uid);
+            args.Sender
+            uid
 
             if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(receiver).GridID != IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(sender).GridID)
             {

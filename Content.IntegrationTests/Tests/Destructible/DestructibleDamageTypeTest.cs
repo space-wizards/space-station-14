@@ -30,7 +30,7 @@ namespace Content.IntegrationTests.Tests.Destructible
             var sMapManager = server.ResolveDependency<IMapManager>();
             var sEntitySystemManager = server.ResolveDependency<IEntitySystemManager>();
 
-            IEntity sDestructibleEntity = null;
+            EntityUid sDestructibleEntity = default;
             DamageableComponent sDamageableComponent = null;
             TestDestructibleListenerSystem sTestThresholdListenerSystem = null;
             DamageableSystem sDamageableSystem = null;

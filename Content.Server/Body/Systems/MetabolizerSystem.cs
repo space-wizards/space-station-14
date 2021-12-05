@@ -89,7 +89,7 @@ namespace Content.Server.Body.Systems
                         if (!Resolve(((IComponent) body).Owner, ref manager, false))
                             return;
                         _solutionContainerSystem.TryGetSolution(((IComponent) body).Owner, meta.SolutionName, out solution, manager);
-                        solutionEntityUid = body.OwnerUid;
+                        solutionEntityUid = body.Owner;
                     }
                 }
             }
@@ -163,7 +163,7 @@ namespace Content.Server.Body.Systems
 
                         if (effect.ShouldLog)
                         {
-                            var entity = EntityManager.GetEntity(args.SolutionEntity);
+                            var entity = args.SolutionEntity;
                             _logSystem.Add(LogType.ReagentEffect, effect.LogImpact,
                                 $"Metabolism effect {effect.GetType().Name} of reagent {args.Reagent.Name:reagent} applied on entity {entity} at {IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates}");
                         }

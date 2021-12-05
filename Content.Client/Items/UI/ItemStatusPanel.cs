@@ -33,7 +33,7 @@ namespace Content.Client.Items.UI
         private readonly PanelContainer _panel;
 
         [ViewVariables]
-        private IEntity? _entity;
+        private EntityUid _entity;
 
         public ItemStatusPanel(Texture texture, StyleBox.Margin cutout, StyleBox.Margin flat, Label.AlignMode textAlign)
         {
@@ -130,12 +130,12 @@ namespace Content.Client.Items.UI
             UpdateItemName();
         }
 
-        public void Update(IEntity? entity)
+        public void Update(EntityUid entity)
         {
-            if (entity == null)
+            if (entity == default)
             {
                 ClearOldStatus();
-                _entity = null;
+                _entity = default;
                 _panel.Visible = false;
                 return;
             }
@@ -153,17 +153,17 @@ namespace Content.Client.Items.UI
 
         private void UpdateItemName()
         {
-            if (_entity == null)
+            if (_entity == default)
                 return;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(_entity, out HandVirtualItemComponent? virtualItem)
-                && _entityManager.TryGetEntity(virtualItem.BlockingEntity, out var blockEnt))
+            if (_entityManager.TryGetComponent(_entity, out HandVirtualItemComponent? virtualItem)
+                && _entityManager.EntityExists(virtualItem.BlockingEntity))
             {
-                _itemNameLabel.Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(blockEnt).EntityName;
+                _itemNameLabel.Text = _entityManager.GetComponent<MetaDataComponent>(virtualItem.BlockingEntity).EntityName;
             }
             else
             {
-                _itemNameLabel.Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_entity).EntityName;
+                _itemNameLabel.Text = _entityManager.GetComponent<MetaDataComponent>(_entity).EntityName;
             }
         }
 
@@ -185,7 +185,7 @@ namespace Content.Client.Items.UI
 
             ClearOldStatus();
 
-            foreach (var statusComponent in IoCManager.Resolve<IEntityManager>().GetComponents<IItemStatus>(_entity!))
+            foreach (var statusComponent in _entityManager.GetComponents<IItemStatus>(_entity))
             {
                 var control = statusComponent.MakeControl();
                 _statusContents.AddChild(control);
@@ -194,7 +194,7 @@ namespace Content.Client.Items.UI
             }
 
             var collectMsg = new ItemStatusCollectMessage();
-            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(_entity, collectMsg);
+            _entityManager.EventBus.RaiseLocalEvent(_entity, collectMsg);
 
             foreach (var control in collectMsg.Controls)
             {

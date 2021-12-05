@@ -8,7 +8,7 @@ namespace Content.Server.AI.Utility
 {
     public static class UtilityAiHelpers
     {
-        public static Blackboard? GetBlackboard(IEntity entity)
+        public static Blackboard? GetBlackboard(EntityUid entity)
         {
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out AiControllerComponent? aiControllerComponent))
             {

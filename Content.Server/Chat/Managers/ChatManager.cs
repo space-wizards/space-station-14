@@ -114,7 +114,7 @@ namespace Content.Server.Chat.Managers
             _netManager.ServerSendMessage(msg, player.ConnectedClient);
         }
 
-        public void EntitySay(IEntity source, string message, bool hideChat=false)
+        public void EntitySay(EntityUid source, string message, bool hideChat=false)
         {
             if (!EntitySystem.Get<ActionBlockerSystem>().CanSpeak(source))
             {
@@ -122,7 +122,7 @@ namespace Content.Server.Chat.Managers
             }
 
             // Check if message exceeds the character limit if the sender is a player
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(source, out ActorComponent? actor) &&
+            if (_entManager.TryGetComponent(source, out ActorComponent? actor) &&
                 message.Length > MaxMessageLength)
             {
                 var feedback = Loc.GetString("chat-manager-max-message-length-exceeded-message", ("limit", MaxMessageLength));
@@ -142,19 +142,22 @@ namespace Content.Server.Chat.Managers
 
             // We'll try to avoid using MapPosition as EntityCoordinates can early-out and potentially be faster for common use cases
             // Downside is it may potentially convert to MapPosition unnecessarily.
-            var sourceMapId = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(source).MapID;
-            var sourceCoords = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(source).Coordinates;
+            var sourceMapId = _entManager.GetComponent<TransformComponent>(source).MapID;
+            var sourceCoords = _entManager.GetComponent<TransformComponent>(source).Coordinates;
 
             var clients = new List<INetChannel>();
 
             foreach (var player in _playerManager.Sessions)
             {
-                if (player.AttachedEntity == null) continue;
-                var transform = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.AttachedEntity);
+                if (player.AttachedEntity is not {Valid: true} playerEntity)
+                    continue;
+
+                var transform = _entManager.GetComponent<TransformComponent>(playerEntity);
 
                 if (transform.MapID != sourceMapId ||
-                    !IoCManager.Resolve<IEntityManager>().HasComponent<GhostComponent>(player.AttachedEntity) &&
-                    !sourceCoords.InRange(_entManager, transform.Coordinates, VoiceRange)) continue;
+                    !_entManager.HasComponent<GhostComponent>(playerEntity) &&
+                    !sourceCoords.InRange(_entManager, transform.Coordinates, VoiceRange))
+                    continue;
 
                 clients.Add(player.ConnectedClient);
             }
@@ -168,9 +171,9 @@ namespace Content.Server.Chat.Managers
                 message = message[0].ToString().ToUpper() +
                           message.Remove(0, 1);
 
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(source, out InventoryComponent? inventory) &&
+                if (_entManager.TryGetComponent(source, out InventoryComponent? inventory) &&
                     inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.EARS, out ItemComponent? item) &&
-                    IoCManager.Resolve<IEntityManager>().TryGetComponent(item.Owner, out HeadsetComponent? headset))
+                    _entManager.TryGetComponent(item.Owner, out HeadsetComponent? headset))
                 {
                     headset.RadioRequested = true;
                 }
@@ -194,13 +197,13 @@ namespace Content.Server.Chat.Managers
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.Local;
             msg.Message = message;
-            msg.MessageWrap = Loc.GetString("chat-manager-entity-say-wrap-message",("entityName", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(source).EntityName));
+            msg.MessageWrap = Loc.GetString("chat-manager-entity-say-wrap-message",("entityName", Name: _entManager.GetComponent<MetaDataComponent>(source).EntityName));
             msg.SenderEntity = source;
             msg.HideChat = hideChat;
             _netManager.ServerSendToMany(msg, clients);
         }
 
-        public void EntityMe(IEntity source, string action)
+        public void EntityMe(EntityUid source, string action)
         {
             if (!EntitySystem.Get<ActionBlockerSystem>().CanEmote(source))
             {
@@ -208,7 +211,7 @@ namespace Content.Server.Chat.Managers
             }
 
             // Check if entity is a player
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(source, out ActorComponent? actor))
+            if (!_entManager.TryGetComponent(source, out ActorComponent? actor))
             {
                 return;
             }
@@ -223,7 +226,7 @@ namespace Content.Server.Chat.Managers
             action = FormattedMessage.EscapeText(action);
 
             var clients = Filter.Empty()
-                .AddInRange(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(source).MapPosition, VoiceRange)
+                .AddInRange(_entManager.GetComponent<TransformComponent>(source).MapPosition, VoiceRange)
                 .Recipients
                 .Select(p => p.ConnectedClient)
                 .ToList();
@@ -231,7 +234,7 @@ namespace Content.Server.Chat.Managers
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.Emotes;
             msg.Message = action;
-            msg.MessageWrap = Loc.GetString("chat-manager-entity-me-wrap-message", ("entityName",Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(source).EntityName));
+            msg.MessageWrap = Loc.GetString("chat-manager-entity-me-wrap-message", ("entityName",Name: _entManager.GetComponent<MetaDataComponent>(source).EntityName));
             msg.SenderEntity = source;
             _netManager.ServerSendToMany(msg, clients);
         }
@@ -296,11 +299,14 @@ namespace Content.Server.Chat.Managers
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.Dead;
             msg.Message = message;
-            IEntity? tempQualifier = player.AttachedEntity;
+
+            var playerName = player.AttachedEntity is {Valid: true} playerEntity
+                ? _entManager.GetComponent<MetaDataComponent>(playerEntity).EntityName
+                : "???";
             msg.MessageWrap = Loc.GetString("chat-manager-send-dead-chat-wrap-message",
                                             ("deadChannelName", Loc.GetString("chat-manager-dead-channel-name")),
-                                            ("playerName", (tempQualifier != null ? IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(tempQualifier).EntityName : null) ?? "???"));
-            msg.SenderEntity = player.AttachedEntityUid.GetValueOrDefault();
+                                            ("playerName", (playerName)));
+            msg.SenderEntity = player.AttachedEntity.GetValueOrDefault();
             _netManager.ServerSendToMany(msg, clients.ToList());
         }
 

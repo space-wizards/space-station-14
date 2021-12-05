@@ -18,7 +18,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Tag;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -419,7 +418,7 @@ namespace Content.Server.Botany.Components
             MutationMod = MathHelper.Clamp(MutationMod, 0f, 3f);
         }
 
-        public bool DoHarvest(IEntity user)
+        public bool DoHarvest(EntityUid user)
         {
             if (Seed == null || (!IoCManager.Resolve<IEntityManager>().EntityExists(user) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(user).EntityLifeStage) >= EntityLifeStage.Deleted || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 return false;
@@ -661,7 +660,7 @@ namespace Content.Server.Botany.Components
                     if (seeds.Seed == null)
                     {
                         user.PopupMessageCursor(Loc.GetString("plant-holder-component-empty-seed-packet-message"));
-                        IoCManager.Resolve<IEntityManager>().QueueDeleteEntity((EntityUid) usingItem);
+                        IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(usingItem);
                         return false;
                     }
 
@@ -675,7 +674,7 @@ namespace Content.Server.Botany.Components
                     Health = Seed.Endurance;
                     _lastCycle = _gameTiming.CurTime;
 
-                    IoCManager.Resolve<IEntityManager>().QueueDeleteEntity((EntityUid) usingItem);
+                    IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(usingItem);
 
                     CheckLevelSanity();
                     UpdateSprite();
@@ -731,8 +730,8 @@ namespace Content.Server.Botany.Components
             {
                 var amount = FixedPoint2.New(5);
                 var sprayed = false;
-                var targetEntity = (EntityUid) Owner;
-                var solutionEntity = (EntityUid) usingItem;
+                var targetEntity = Owner;
+                var solutionEntity = usingItem;
 
                 if (IoCManager.Resolve<IEntityManager>().TryGetComponent(usingItem, out SprayComponent? spray))
                 {
@@ -823,7 +822,7 @@ namespace Content.Server.Botany.Components
                     ForceUpdateByExternalCause();
                 }
 
-                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity((EntityUid) usingItem);
+                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(usingItem);
 
                 return true;
             }

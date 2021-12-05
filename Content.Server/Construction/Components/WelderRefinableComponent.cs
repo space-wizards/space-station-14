@@ -4,14 +4,11 @@ using Content.Server.Stack;
 using Content.Server.Tools;
 using Content.Server.Tools.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Stacks;
 using Content.Shared.Tools;
-using Content.Shared.Tools.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Construction.Components
 {
@@ -61,7 +58,7 @@ namespace Content.Server.Construction.Components
 
             // get last owner coordinates and delete it
             var resultPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates;
-            IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) Owner);
+            IoCManager.Resolve<IEntityManager>().DeleteEntity(Owner);
 
             // spawn each result after refine
             foreach (var result in _refineResult!)

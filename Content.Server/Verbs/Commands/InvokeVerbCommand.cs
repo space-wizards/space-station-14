@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Net.Security;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Verbs;
@@ -30,7 +29,7 @@ namespace Content.Server.Verbs.Commands
             var verbSystem = EntitySystem.Get<SharedVerbSystem>();
 
             // get the 'player' entity (defaulting to command user, otherwise uses a uid)
-            IEntity? playerEntity = null;
+            EntityUid playerEntity = null;
             if (!int.TryParse(args[0], out var intPlayerUid))
             {
                 if (args[0] == "self" && shell.Player?.AttachedEntity != null)
@@ -45,7 +44,7 @@ namespace Content.Server.Verbs.Commands
             }
             else
             {
-                entityManager.TryGetEntity(new EntityUid(intPlayerUid), out playerEntity);
+                entityManager.EntityExists(new EntityUid(intPlayerUid));
             }
 
             // gets the target entity
@@ -62,7 +61,7 @@ namespace Content.Server.Verbs.Commands
             }
 
             var entUid = new EntityUid(intUid);
-            if (!entityManager.TryGetEntity(entUid, out var target))
+            if (!entityManager.EntityExists(entUid)
             {
                 shell.WriteError(Loc.GetString("invoke-verb-command-invalid-target-entity"));
                 return;

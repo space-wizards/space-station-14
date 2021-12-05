@@ -15,7 +15,7 @@ namespace Content.Client.Spawners
 
         [DataField("prototypes")] private List<string> _prototypes =  new() { "HVDummyWire" };
 
-        private readonly List<IEntity> _entity = new();
+        private readonly List<EntityUid> _entity = new();
 
         protected override void Initialize()
         {

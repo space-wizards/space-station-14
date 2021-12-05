@@ -6,8 +6,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
-using Robust.Shared.Physics.Collision;
-using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Timing;
 
 namespace Content.Server.ParticleAccelerator.Components
@@ -18,7 +16,7 @@ namespace Content.Server.ParticleAccelerator.Components
         public override string Name => "ParticleProjectile";
         public ParticleAcceleratorPowerState State;
 
-        public void Fire(ParticleAcceleratorPowerState state, Angle angle, IEntity firer)
+        public void Fire(ParticleAcceleratorPowerState state, Angle angle, EntityUid firer)
         {
             State = state;
 
@@ -72,7 +70,7 @@ namespace Content.Server.ParticleAccelerator.Components
                 .LinearVelocity = angle.ToWorldVec() * 20f;
 
             IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).LocalRotation = angle;
-            Timer.Spawn(3000, () => IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) Owner));
+            Timer.Spawn(3000, () => IoCManager.Resolve<IEntityManager>().DeleteEntity(Owner));
         }
     }
 }

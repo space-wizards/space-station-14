@@ -1,9 +1,7 @@
 using System;
-using System.Data;
 using Content.Server.Administration.Logs;
 using Content.Server.Alert;
 using Content.Server.Atmos.Components;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
@@ -86,7 +84,7 @@ namespace Content.Server.Atmos.EntitySystems
                 if (totalDamage >= barotrauma.MaxDamage)
                     continue;
 
-                var uid = (EntityUid) barotrauma.Owner;
+                var uid = barotrauma.Owner;
 
                 var status = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<ServerAlertsComponent>(barotrauma.Owner);
 

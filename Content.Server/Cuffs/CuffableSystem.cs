@@ -55,7 +55,7 @@ namespace Content.Server.Cuffs
             {
                 return;
             }
-            if (!EntityManager.TryGetEntity(args.User, out var userEntity))
+            if (!EntityManager.EntityExists(args.User)
             {
                 // Should this even be possible?
                 args.Cancel();

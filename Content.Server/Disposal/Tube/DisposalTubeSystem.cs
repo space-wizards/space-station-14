@@ -5,9 +5,9 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
@@ -68,7 +68,7 @@ namespace Content.Server.Disposal.Tube
                 return;
             }
 
-            var entity = EntityManager.GetEntity(uid);
+            var uid
             component.LastClang = _gameTiming.CurTime;
             SoundSystem.Play(Filter.Pvs(entity), component.ClangSound.GetSound(), entity);
         }

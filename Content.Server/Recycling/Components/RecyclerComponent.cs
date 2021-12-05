@@ -1,14 +1,12 @@
 using Content.Server.Act;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
-using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Server.Popups;
 using Content.Shared.Body.Components;
 using Content.Shared.Popups;
 using Content.Shared.Recycling;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -47,7 +45,7 @@ namespace Content.Server.Recycling.Components
             }
         }
 
-        SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)
+        SuicideKind ISuicideAct.Suicide(EntityUid victim, IChatManager chat)
         {
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent(victim, out ActorComponent? actor) && actor.PlayerSession.ContentData()?.Mind is {} mind)
             {

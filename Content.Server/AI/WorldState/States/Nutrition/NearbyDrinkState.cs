@@ -11,13 +11,13 @@ using Robust.Shared.IoC;
 namespace Content.Server.AI.WorldState.States.Nutrition
 {
     [UsedImplicitly]
-    public sealed class NearbyDrinkState: CachedStateData<List<IEntity>>
+    public sealed class NearbyDrinkState: CachedStateData<List<EntityUid>>
     {
         public override string Name => "NearbyDrink";
 
-        protected override List<IEntity> GetTrueValue()
+        protected override List<EntityUid> GetTrueValue()
         {
-            var result = new List<IEntity>();
+            var result = new List<EntityUid>();
 
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AiControllerComponent? controller))
             {

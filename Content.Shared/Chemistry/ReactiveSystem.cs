@@ -64,9 +64,9 @@ namespace Content.Shared.Chemistry
 
                         if (effect.ShouldLog)
                         {
-                            var entity = EntityManager.GetEntity(args.SolutionEntity);
+                            var entity = args.SolutionEntity;
                             _logSystem.Add(LogType.ReagentEffect, effect.LogImpact,
-                                $"Reactive effect {effect.GetType().Name} of reagent {reagent.ID:reagent} with method {method} applied on entity {entity} at {IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates}");
+                                $"Reactive effect {effect.GetType().Name} of reagent {reagent.ID:reagent} with method {method} applied on entity {entity} at {EntityManager.GetComponent<TransformComponent>(entity).Coordinates}");
                         }
 
                         effect.Effect(args);
@@ -92,9 +92,9 @@ namespace Content.Shared.Chemistry
 
                         if (effect.ShouldLog)
                         {
-                            var entity = EntityManager.GetEntity(args.SolutionEntity);
+                            var entity = args.SolutionEntity;
                             _logSystem.Add(LogType.ReagentEffect, effect.LogImpact,
-                                $"Reactive effect {effect.GetType().Name} of {entity} using reagent {reagent.ID} with method {method} at {IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates}");
+                                $"Reactive effect {effect.GetType().Name} of {entity} using reagent {reagent.ID} with method {method} at {EntityManager.GetComponent<TransformComponent>(entity).Coordinates}");
                         }
 
                         effect.Effect(args);

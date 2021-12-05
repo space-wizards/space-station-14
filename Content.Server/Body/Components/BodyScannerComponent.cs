@@ -29,7 +29,7 @@ namespace Content.Server.Body.Components
                 return;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(session.AttachedEntity, out SharedBodyComponent? body))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(session.AttachedEntity.Value, out SharedBodyComponent? body))
             {
                 var state = InterfaceState(body);
                 UserInterface?.SetState(state);

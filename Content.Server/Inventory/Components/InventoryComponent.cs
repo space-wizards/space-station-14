@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Server.Administration.Commands;
 using Content.Server.Clothing.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Interaction;
@@ -11,15 +10,9 @@ using Content.Server.Storage.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
 using Content.Shared.Inventory;
-using Content.Shared.Movement.Components;
 using Content.Shared.Movement.EntitySystems;
 using Content.Shared.Popups;
-using Content.Shared.Verbs;
-using Robust.Server.Console;
-using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Audio;
-using Robust.Shared.Console;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -69,7 +62,7 @@ namespace Content.Server.Inventory.Components
             {
                 if (TryGetSlotItem(slot, out ItemComponent? item))
                 {
-                    IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) item.Owner);
+                    IoCManager.Resolve<IEntityManager>().DeleteEntity(item.Owner);
                 }
 
                 RemoveSlot(slot);
@@ -78,7 +71,7 @@ namespace Content.Server.Inventory.Components
             base.OnRemove();
         }
 
-        public IEnumerable<IEntity> GetAllHeldItems()
+        public IEnumerable<EntityUid> GetAllHeldItems()
         {
             foreach (var (_, container) in _slotContainers)
             {
@@ -192,7 +185,7 @@ namespace Content.Server.Inventory.Components
         public bool Equip(Slots slot, ItemComponent item, bool mobCheck = true) =>
             Equip(slot, item, mobCheck, out var _);
 
-        public bool Equip(Slots slot, IEntity entity, bool mobCheck = true) =>
+        public bool Equip(Slots slot, EntityUid entity, bool mobCheck = true) =>
             Equip(slot, IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(entity), mobCheck);
 
         /// <summary>
@@ -250,7 +243,7 @@ namespace Content.Server.Inventory.Components
         public bool CanEquip(Slots slot, ItemComponent item, bool mobCheck = true) =>
             CanEquip(slot, item, mobCheck, out var _);
 
-        public bool CanEquip(Slots slot, IEntity entity, bool mobCheck = true) =>
+        public bool CanEquip(Slots slot, EntityUid entity, bool mobCheck = true) =>
             CanEquip(slot, IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(entity), mobCheck);
 
         /// <summary>
@@ -403,7 +396,7 @@ namespace Content.Server.Inventory.Components
         /// The underlying Container System just notified us that an entity was removed from it.
         /// We need to make sure we process that removed entity as being unequipped from the slot.
         /// </summary>
-        public void ForceUnequip(IContainer container, IEntity entity)
+        public void ForceUnequip(IContainer container, EntityUid entity)
         {
             // make sure this is one of our containers.
             // Technically the correct way would be to enumerate the possible slot names
@@ -554,7 +547,7 @@ namespace Content.Server.Inventory.Components
             }
         }
 
-        public override bool IsEquipped(IEntity item)
+        public override bool IsEquipped(EntityUid item)
         {
             if (item == null) return false;
             foreach (var containerSlot in _slotContainers.Values)

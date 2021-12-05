@@ -74,7 +74,7 @@ namespace Content.Server.Rotatable
         /// <summary>
         ///     Replace a flippable entity with it's flipped / mirror-symmetric entity.
         /// </summary>
-        public static void TryFlip(FlippableComponent component, IEntity user)
+        public static void TryFlip(FlippableComponent component, EntityUiduser)
         {
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner, out IPhysBody? physics) &&
                 physics.BodyType == BodyType.Static)
@@ -88,7 +88,7 @@ namespace Content.Server.Rotatable
             var newTransform = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity);
             newTransform.LocalRotation = oldTransform.LocalRotation;
             newTransform.Anchored = false;
-            IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) component.Owner);
+            IoCManager.Resolve<IEntityManager>().DeleteEntity(component.Owner);
         }
     }
 }

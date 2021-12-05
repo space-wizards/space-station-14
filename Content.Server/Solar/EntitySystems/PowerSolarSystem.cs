@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Power.Components;
 using Content.Server.Solar.Components;
-using Content.Shared.Physics;
 using Content.Shared.GameTicking;
+using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -122,7 +122,7 @@ namespace Content.Server.Solar.EntitySystems
         }
 
         private void UpdatePanelCoverage(SolarPanelComponent panel) {
-            IEntity entity = panel.Owner;
+            EntityUid entity = panel.Owner;
 
             // So apparently, and yes, I *did* only find this out later,
             // this is just a really fancy way of saying "Lambert's law of cosines".

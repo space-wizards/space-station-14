@@ -12,10 +12,10 @@ namespace Content.Server.AI.Operators.Combat.Melee
         private readonly float _burstTime;
         private float _elapsedTime;
 
-        private readonly IEntity _owner;
-        private readonly IEntity _target;
+        private readonly EntityUid _owner;
+        private readonly EntityUid _target;
 
-        public SwingMeleeWeaponOperator(IEntity owner, IEntity target, float burstTime = 1.0f)
+        public SwingMeleeWeaponOperator(EntityUid owner, EntityUid target, float burstTime = 1.0f)
         {
             _owner = owner;
             _target = target;

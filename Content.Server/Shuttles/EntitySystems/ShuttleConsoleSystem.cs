@@ -96,7 +96,7 @@ namespace Content.Server.Shuttles.EntitySystems
                 return;
             }
 
-            var pilotComponent = EntityManager.EnsureComponent<PilotComponent>((EntityUid) args.User);
+            var pilotComponent = EntityManager.EnsureComponent<PilotComponent>(args.User);
 
             if (!component.Enabled)
             {
@@ -130,7 +130,7 @@ namespace Content.Server.Shuttles.EntitySystems
             ClearPilots(component);
         }
 
-        public void AddPilot(IEntity entity, ShuttleConsoleComponent component)
+        public void AddPilot(EntityUid entity, ShuttleConsoleComponent component)
         {
             if (!_blocker.CanInteract(entity) ||
                 !IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out PilotComponent? pilotComponent) ||
@@ -174,7 +174,7 @@ namespace Content.Server.Shuttles.EntitySystems
                 EntityManager.RemoveComponent<PilotComponent>(pilotComponent.Owner);
         }
 
-        public void RemovePilot(IEntity entity)
+        public void RemovePilot(EntityUid entity)
         {
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out PilotComponent? pilotComponent)) return;
 

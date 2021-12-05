@@ -10,13 +10,9 @@ namespace Content.Server.AI.Utility.Considerations.Combat.Melee
     {
         protected override float GetScore(Blackboard context)
         {
-            IEntity tempQualifier = context.GetState<SelfState>().GetValue();
-            if (tempQualifier != null)
-            {
-                IoCManager.Resolve<IEntityManager>().HasComponent<UnarmedCombatComponent>(tempQualifier);
-            }
-
-            return RETURNED_VALUE ?? false ? 1.0f : 0.0f;
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var entity = context.GetState<SelfState>().GetValue();
+            return entityManager.HasComponent<UnarmedCombatComponent>(entity) ? 1.0f : 0.0f;
         }
     }
 }

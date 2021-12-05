@@ -7,11 +7,11 @@ using Robust.Shared.IoC;
 namespace Content.Server.AI.WorldState.States.Inventory
 {
     [UsedImplicitly]
-    public sealed class EnumerableInventoryState : StateData<IEnumerable<IEntity>>
+    public sealed class EnumerableInventoryState : StateData<IEnumerable<EntityUid>>
     {
         public override string Name => "EnumerableInventory";
 
-        public override IEnumerable<IEntity> GetValue()
+        public override IEnumerable<EntityUid> GetValue()
         {
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out HandsComponent? handsComponent))
             {

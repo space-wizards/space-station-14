@@ -110,7 +110,7 @@ namespace Content.Server.PDA
             UpdatePDAUserInterface(pda);
         }
 
-        private bool OpenUI(PDAComponent pda, IEntity user)
+        private bool OpenUI(PDAComponent pda, EntityUiduser)
         {
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out ActorComponent? actor))
                 return false;
@@ -145,7 +145,7 @@ namespace Content.Server.PDA
         private void OnUIMessage(PDAComponent pda, ServerBoundUserInterfaceMessage msg)
         {
             // cast EntityUid? to EntityUid
-            if (msg.Session.AttachedEntityUid is not EntityUid playerUid)
+            if (msg.Session.AttachedEntity is not EntityUid playerUid)
                 return;
 
             switch (msg.Message)

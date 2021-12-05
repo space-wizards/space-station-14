@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using Content.Shared.Administration.Events;
-using Robust.Client.Graphics;
+﻿using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
@@ -36,7 +34,8 @@ namespace Content.Client.Administration
             foreach (var playerInfo in _system.PlayerList)
             {
                 // Otherwise the entity can not exist yet
-                if (!_entityManager.TryGetEntity(playerInfo.EntityUid, out var entity))
+                var entity = playerInfo.EntityUid;
+                if (!_entityManager.EntityExists(entity))
                 {
                     continue;
                 }

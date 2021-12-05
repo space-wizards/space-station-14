@@ -15,7 +15,7 @@ namespace Content.Client.Interactable
 
         public static bool InRangeUnobstructed(
             this LocalPlayer origin,
-            IEntity other,
+            EntityUid other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
             Ignored? predicate = null,
@@ -78,7 +78,7 @@ namespace Content.Client.Interactable
             bool popup = false)
         {
             var originEntity = origin.ControlledEntity;
-            if (originEntity == null)
+            if (originEntity == default)
             {
                 // TODO: Take into account the player's camera position?
                 return false;

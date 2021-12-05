@@ -25,7 +25,7 @@ namespace Content.Client.Weapons.Melee.Components
             _sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(Owner);
         }
 
-        public void SetData(MeleeWeaponAnimationPrototype prototype, Angle baseAngle, IEntity attacker, bool followAttacker = true)
+        public void SetData(MeleeWeaponAnimationPrototype prototype, Angle baseAngle, EntityUid attacker, bool followAttacker = true)
         {
             _meleeWeaponAnimation = prototype;
             _sprite?.AddLayer(new RSI.StateId(prototype.State));
@@ -72,7 +72,7 @@ namespace Content.Client.Weapons.Melee.Components
 
             if (_meleeWeaponAnimation.Length.TotalSeconds <= _timer)
             {
-                IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) Owner);
+                IoCManager.Resolve<IEntityManager>().DeleteEntity(Owner);
             }
         }
     }

@@ -6,7 +6,6 @@ using Content.Server.Atmos.Components;
 using Content.Server.Stunnable;
 using Content.Server.Temperature.Systems;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
@@ -69,7 +68,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void OnCollideEvent(EntityUid uid, FlammableComponent flammable, StartCollideEvent args)
         {
-            var otherUid = (EntityUid) args.OtherFixture.Body.Owner;
+            var otherUid = args.OtherFixture.Body.Owner;
             if (!EntityManager.TryGetComponent(otherUid, out FlammableComponent? otherFlammable))
                 return;
 
@@ -217,7 +216,7 @@ namespace Content.Server.Atmos.EntitySystems
             // TODO: This needs cleanup to take off the crust from TemperatureComponent and shit.
             foreach (var (flammable, physics, transform) in EntityManager.EntityQuery<FlammableComponent, IPhysBody, TransformComponent>())
             {
-                var uid = (EntityUid) flammable.Owner;
+                var uid = flammable.Owner;
 
                 // Slowly dry ourselves off if wet.
                 if (flammable.FireStacks < 0)

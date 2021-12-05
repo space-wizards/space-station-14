@@ -35,9 +35,9 @@ namespace Content.Server.Tabletop
             SpawnPiecesRow(session, entityManager, "White", new MapCoordinates(x, y - 7 * separation, mapId), separation);
 
             // Extra queens
-            IEntity tempQualifier = entityManager.SpawnEntity("BlackQueen", new MapCoordinates(x + 9 * separation + 9f / 32, y - 3 * separation, mapId));
+            EntityUidtempQualifier = entityManager.SpawnEntity("BlackQueen", new MapCoordinates(x + 9 * separation + 9f / 32, y - 3 * separation, mapId));
             session.Entities.Add(tempQualifier);
-            IEntity tempQualifier1 = entityManager.SpawnEntity("WhiteQueen", new MapCoordinates(x + 9 * separation + 9f / 32, y - 4 * separation, mapId));
+            EntityUidtempQualifier1 = entityManager.SpawnEntity("WhiteQueen", new MapCoordinates(x + 9 * separation + 9f / 32, y - 4 * separation, mapId));
             session.Entities.Add(tempQualifier1);
         }
 
@@ -53,23 +53,23 @@ namespace Content.Server.Tabletop
                 switch (piecesRow[i])
                 {
                     case 'r':
-                        IEntity tempQualifier = entityManager.SpawnEntity(color + "Rook", new MapCoordinates(x + i * separation, y, mapId));
+                        EntityUidtempQualifier = entityManager.SpawnEntity(color + "Rook", new MapCoordinates(x + i * separation, y, mapId));
                         session.Entities.Add(tempQualifier);
                         break;
                     case 'n':
-                        IEntity tempQualifier1 = entityManager.SpawnEntity(color + "Knight", new MapCoordinates(x + i * separation, y, mapId));
+                        EntityUidtempQualifier1 = entityManager.SpawnEntity(color + "Knight", new MapCoordinates(x + i * separation, y, mapId));
                         session.Entities.Add(tempQualifier1);
                         break;
                     case 'b':
-                        IEntity tempQualifier2 = entityManager.SpawnEntity(color + "Bishop", new MapCoordinates(x + i * separation, y, mapId));
+                        EntityUidtempQualifier2 = entityManager.SpawnEntity(color + "Bishop", new MapCoordinates(x + i * separation, y, mapId));
                         session.Entities.Add(tempQualifier2);
                         break;
                     case 'q':
-                        IEntity tempQualifier3 = entityManager.SpawnEntity(color + "Queen", new MapCoordinates(x + i * separation, y, mapId));
+                        EntityUidtempQualifier3 = entityManager.SpawnEntity(color + "Queen", new MapCoordinates(x + i * separation, y, mapId));
                         session.Entities.Add(tempQualifier3);
                         break;
                     case 'k':
-                        IEntity tempQualifier4 = entityManager.SpawnEntity(color + "King", new MapCoordinates(x + i * separation, y, mapId));
+                        EntityUidtempQualifier4 = entityManager.SpawnEntity(color + "King", new MapCoordinates(x + i * separation, y, mapId));
                         session.Entities.Add(tempQualifier4);
                         break;
                 }
@@ -83,7 +83,7 @@ namespace Content.Server.Tabletop
 
             for (int i = 0; i < 8; i++)
             {
-                IEntity tempQualifier = entityManager.SpawnEntity(color + "Pawn", new MapCoordinates(x + i * separation, y, mapId));
+                EntityUidtempQualifier = entityManager.SpawnEntity(color + "Pawn", new MapCoordinates(x + i * separation, y, mapId));
                 session.Entities.Add(tempQualifier);
             }
         }

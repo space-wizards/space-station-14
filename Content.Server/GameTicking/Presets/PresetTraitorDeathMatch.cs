@@ -63,7 +63,7 @@ namespace Content.Server.GameTicking.Presets
             return true;
         }
 
-        public override void OnSpawnPlayerCompleted(IPlayerSession session, IEntity mob, bool lateJoin)
+        public override void OnSpawnPlayerCompleted(IPlayerSession session, EntityUid mob, bool lateJoin)
         {
             var startingBalance = _cfg.GetCVar(CCVars.TraitorDeathMatchStartingBalance);
 
@@ -86,7 +86,7 @@ namespace Content.Server.GameTicking.Presets
                 foreach (var slot in victimSlots)
                 {
                     if (inventory.TryGetSlotItem(slot, out ItemComponent? vItem))
-                        IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) vItem.Owner);
+                        IoCManager.Resolve<IEntityManager>().DeleteEntity(vItem.Owner);
                 }
 
                 // Replace their items:

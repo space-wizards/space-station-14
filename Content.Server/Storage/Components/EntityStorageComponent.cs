@@ -2,10 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.Tools;
 using Content.Server.Ghost.Components;
-using Content.Server.Tools.Components;
-using Content.Shared.ActionBlocker;
+using Content.Server.Tools;
 using Content.Shared.Acts;
 using Content.Shared.Body.Components;
 using Content.Shared.Interaction;
@@ -16,8 +14,6 @@ using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Storage;
 using Content.Shared.Tools;
-using Content.Shared.Tools.Components;
-using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -165,7 +161,7 @@ namespace Content.Server.Storage.Components
             ToggleOpen(eventArgs.User);
         }
 
-        public virtual bool CanOpen(IEntity user, bool silent = false)
+        public virtual bool CanOpen(EntityUid user, bool silent = false)
         {
             if (IsWeldedShut)
             {
@@ -182,12 +178,12 @@ namespace Content.Server.Storage.Components
             return true;
         }
 
-        public virtual bool CanClose(IEntity user, bool silent = false)
+        public virtual bool CanClose(EntityUid user, bool silent = false)
         {
             return true;
         }
 
-        public void ToggleOpen(IEntity user)
+        public void ToggleOpen(EntityUid user)
         {
             if (Open)
             {
@@ -308,7 +304,7 @@ namespace Content.Server.Storage.Components
             }
         }
 
-        protected virtual bool AddToContents(IEntity entity)
+        protected virtual bool AddToContents(EntityUid entity)
         {
             if (entity == Owner) return false;
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out IPhysBody? entityPhysicsComponent))
@@ -343,14 +339,14 @@ namespace Content.Server.Storage.Components
             }
         }
 
-        public virtual bool TryOpenStorage(IEntity user)
+        public virtual bool TryOpenStorage(EntityUid user)
         {
             if (!CanOpen(user)) return false;
             OpenStorage();
             return true;
         }
 
-        public virtual bool TryCloseStorage(IEntity user)
+        public virtual bool TryCloseStorage(EntityUid user)
         {
             if (!CanClose(user)) return false;
             CloseStorage();
@@ -358,13 +354,13 @@ namespace Content.Server.Storage.Components
         }
 
         /// <inheritdoc />
-        public bool Remove(IEntity entity)
+        public bool Remove(EntityUid entity)
         {
             return Contents.CanRemove(entity);
         }
 
         /// <inheritdoc />
-        public bool Insert(IEntity entity)
+        public bool Insert(EntityUid entity)
         {
             // Trying to add while open just dumps it on the ground below us.
             if (Open)
@@ -384,7 +380,7 @@ namespace Content.Server.Storage.Components
         }
 
         /// <inheritdoc />
-        public bool CanInsert(IEntity entity)
+        public bool CanInsert(EntityUid entity)
         {
             if (Open)
             {
@@ -447,7 +443,7 @@ namespace Content.Server.Storage.Components
             EmptyContents();
         }
 
-        protected virtual IEnumerable<IEntity> DetermineCollidingEntities()
+        protected virtual IEnumerable<EntityUid> DetermineCollidingEntities()
         {
             var entityLookup = IoCManager.Resolve<IEntityLookup>();
             return entityLookup.GetEntitiesIntersecting(Owner, -0.015f, LookupFlags.Approximate);

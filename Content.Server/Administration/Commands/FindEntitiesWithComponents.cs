@@ -5,7 +5,6 @@ using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Administration.Commands
 {
@@ -48,17 +47,17 @@ namespace Content.Server.Administration.Commands
             var entityManager = IoCManager.Resolve<IEntityManager>();
             var entityIds = new HashSet<string>();
 
-            var entitiesWithComponents = components.Select(c => entityManager.GetAllComponents(c).Select(x => x.Owner));
-            var entitiesWithAllComponents = entitiesWithComponents.Skip(1).Aggregate(new HashSet<IEntity>(entitiesWithComponents.First()), (h, e) => { h.IntersectWith(e); return h; });
+            var entitiesWithComponents = components.Select(c => entityManager.GetAllComponents(c).Select(x => x.Owner)).ToArray();
+            var entitiesWithAllComponents = entitiesWithComponents.Skip(1).Aggregate(new HashSet<EntityUid>(entitiesWithComponents.First()), (h, e) => { h.IntersectWith(e); return h; });
 
             foreach (var entity in entitiesWithAllComponents)
             {
-                if (IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityPrototype == null)
+                if (entityManager.GetComponent<MetaDataComponent>(entity).EntityPrototype is not { } prototypeId)
                 {
                     continue;
                 }
 
-                entityIds.Add(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityPrototype.ID);
+                entityIds.Add(prototypeId.ID);
             }
 
             if (entityIds.Count == 0)

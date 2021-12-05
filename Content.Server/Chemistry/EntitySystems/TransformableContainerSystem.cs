@@ -50,7 +50,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 var spriteSpec =
                     new SpriteSpecifier.Rsi(
                         new ResourcePath("Objects/Consumable/Drinks/" + proto.SpriteReplacementPath), "icon");
-                var ownerEntity = EntityManager.GetEntity(uid);
+                var Owner
                 if (IoCManager.Resolve<IEntityManager>().TryGetComponent(ownerEntity, out SpriteComponent? sprite))
                 {
                     sprite?.LayerSetSprite(0, spriteSpec);

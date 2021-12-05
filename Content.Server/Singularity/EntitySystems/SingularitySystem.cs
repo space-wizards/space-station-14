@@ -99,7 +99,7 @@ namespace Content.Server.Singularity.EntitySystems
             return component.Level - 0.5f;
         }
 
-        private bool CanDestroy(SharedSingularityComponent component, IEntity entity)
+        private bool CanDestroy(SharedSingularityComponent component, EntityUid entity)
         {
             return entity == component.Owner ||
                    IoCManager.Resolve<IEntityManager>().HasComponent<IMapGridComponent>(entity) ||
@@ -108,7 +108,7 @@ namespace Content.Server.Singularity.EntitySystems
                    IoCManager.Resolve<IEntityManager>().HasComponent<ContainmentFieldGeneratorComponent>(entity);
         }
 
-        private void HandleDestroy(ServerSingularityComponent component, IEntity entity)
+        private void HandleDestroy(ServerSingularityComponent component, EntityUid entity)
         {
             // TODO: Need singuloimmune tag
             if (CanDestroy(component, entity)) return;
@@ -125,7 +125,7 @@ namespace Content.Server.Singularity.EntitySystems
                 otherSingulo.BeingDeletedByAnotherSingularity = true;
             }
 
-            IoCManager.Resolve<IEntityManager>().QueueDeleteEntity((EntityUid) entity);
+            IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(entity);
 
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SinguloFoodComponent?>(entity, out var singuloFood))
                 component.Energy += singuloFood.Energy;
@@ -147,7 +147,7 @@ namespace Content.Server.Singularity.EntitySystems
             }
         }
 
-        private bool CanPull(IEntity entity)
+        private bool CanPull(EntityUid entity)
         {
             return !(IoCManager.Resolve<IEntityManager>().HasComponent<GhostComponent>(entity) ||
                    IoCManager.Resolve<IEntityManager>().HasComponent<IMapGridComponent>(entity) ||

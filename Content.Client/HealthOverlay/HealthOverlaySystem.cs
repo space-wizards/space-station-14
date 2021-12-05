@@ -17,7 +17,7 @@ namespace Content.Client.HealthOverlay
         [Dependency] private readonly IEyeManager _eyeManager = default!;
 
         private readonly Dictionary<EntityUid, HealthOverlayGui> _guis = new();
-        private IEntity? _attachedEntity;
+        private EntityUid _attachedEntity;
         private bool _enabled;
 
         public bool Enabled
@@ -55,7 +55,7 @@ namespace Content.Client.HealthOverlay
             }
 
             _guis.Clear();
-            _attachedEntity = null;
+            _attachedEntity = default;
         }
 
         private void HandlePlayerAttached(PlayerAttachSysMessage message)

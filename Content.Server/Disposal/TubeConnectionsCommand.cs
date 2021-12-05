@@ -38,7 +38,7 @@ namespace Content.Server.Disposal
             }
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            if (!entityManager.TryGetEntity(id, out var entity))
+            if (!entityManager.EntityExists(id)
             {
                 shell.WriteLine(Loc.GetString("shell-could-not-find-entity-with-uid",("uid", id)));
                 return;

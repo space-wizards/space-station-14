@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Shared.Body.Components;
-using Content.Shared.Body.Part;
 using Content.Shared.Damage;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
@@ -14,7 +13,7 @@ namespace Content.Client.Body.UI
 {
     public sealed class BodyScannerDisplay : SS14Window
     {
-        private IEntity? _currentEntity;
+        private EntityUid _currentEntity;
         private SharedBodyPartComponent? _currentBodyPart;
 
         public BodyScannerDisplay(BodyScannerBoundUserInterface owner)
@@ -103,7 +102,7 @@ namespace Content.Client.Body.UI
 
         private RichTextLabel MechanismInfoLabel { get; }
 
-        public void UpdateDisplay(IEntity entity)
+        public void UpdateDisplay(EntityUid entity)
         {
             if(entity == null)
                 return;

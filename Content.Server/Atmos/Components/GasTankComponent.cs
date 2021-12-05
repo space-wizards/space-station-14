@@ -175,7 +175,7 @@ namespace Content.Server.Atmos.Components
             UpdateUserInterface();
         }
 
-        public void DisconnectFromInternals(IEntity? owner = null)
+        public void DisconnectFromInternals(EntityUid? owner = null)
         {
             if (!IsConnected) return;
             IsConnected = false;
@@ -190,7 +190,7 @@ namespace Content.Server.Atmos.Components
                 new GasTankBoundUserInterfaceState
                 {
                     TankPressure = Air?.Pressure ?? 0,
-                    OutputPressure = initialUpdate ? OutputPressure : (float?) null,
+                    OutputPressure = initialUpdate ? OutputPressure : null,
                     InternalsConnected = IsConnected,
                     CanConnectInternals = IsFunctional && internals != null
                 });
@@ -216,7 +216,7 @@ namespace Content.Server.Atmos.Components
         {
             var user = GetInternalsComponent()?.Owner;
 
-            if (user == null || !EntitySystem.Get<ActionBlockerSystem>().CanUse(user))
+            if (user == null || !EntitySystem.Get<ActionBlockerSystem>().CanUse(user.Value))
                 return;
 
             if (IsConnected)
@@ -228,10 +228,10 @@ namespace Content.Server.Atmos.Components
             ConnectToInternals();
         }
 
-        private InternalsComponent? GetInternalsComponent(IEntity? owner = null)
+        private InternalsComponent? GetInternalsComponent(EntityUid? owner = null)
         {
             if ((!IoCManager.Resolve<IEntityManager>().EntityExists(Owner) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityLifeStage) >= EntityLifeStage.Deleted) return null;
-            if (owner != null) return IoCManager.Resolve<IEntityManager>().GetComponentOrNull<InternalsComponent>(owner);
+            if (owner != null) return IoCManager.Resolve<IEntityManager>().GetComponentOrNull<InternalsComponent>(owner.Value);
             return Owner.TryGetContainer(out var container)
                 ? IoCManager.Resolve<IEntityManager>().GetComponentOrNull<InternalsComponent>(container.Owner)
                 : null;
@@ -271,7 +271,7 @@ namespace Content.Server.Atmos.Components
 
                 EntitySystem.Get<ExplosionSystem>().SpawnExplosion(((IComponent) this).Owner, (int) (range * 0.25f), (int) (range * 0.5f), (int) (range * 1.5f), 1);
 
-                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity((EntityUid) Owner);
+                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(Owner);
                 return;
             }
 
@@ -285,7 +285,7 @@ namespace Content.Server.Atmos.Components
 
                     SoundSystem.Play(Filter.Pvs(Owner), _ruptureSound.GetSound(), IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates, AudioHelpers.WithVariation(0.125f));
 
-                    IoCManager.Resolve<IEntityManager>().QueueDeleteEntity((EntityUid) Owner);
+                    IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(Owner);
                     return;
                 }
 

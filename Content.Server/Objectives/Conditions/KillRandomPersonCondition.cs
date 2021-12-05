@@ -21,10 +21,10 @@ namespace Content.Server.Objectives.Conditions
             {
                 var entity = mc.Mind?.OwnedEntity;
 
-                if (entity == null)
+                if (entity == default)
                     return false;
 
-                return (IoCManager.Resolve<IEntityManager>().GetComponentOrNull<MobStateComponent>(entity)?.IsAlive() ?? false) && mc.Mind != mind;
+                return (IoCManager.Resolve<IEntityManager>().GetComponentOrNull<MobStateComponent>(entity.Value)?.IsAlive() ?? false) && mc.Mind != mind;
             }).Select(mc => mc.Mind).ToList();
             return new KillRandomPersonCondition {Target = IoCManager.Resolve<IRobustRandom>().Pick(allHumans)};
         }

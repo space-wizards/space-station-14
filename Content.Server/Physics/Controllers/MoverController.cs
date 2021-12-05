@@ -10,7 +10,6 @@ using Content.Shared.Inventory;
 using Content.Shared.Maps;
 using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
-using Content.Shared.Shuttles;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Tag;
 using Robust.Shared.Audio;
@@ -315,7 +314,7 @@ namespace Content.Server.Physics.Controllers
             }
         }
 
-        private void PlayFootstepSound(IEntity mover, GridId gridId, EntityCoordinates coordinates, bool sprinting)
+        private void PlayFootstepSound(EntityUid mover, GridId gridId, EntityCoordinates coordinates, bool sprinting)
         {
             var grid = _mapManager.GetGrid(gridId);
             var tile = grid.GetTileRef(coordinates);

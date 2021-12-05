@@ -51,12 +51,12 @@ namespace Content.Client.IconSmoothing
             // Yes, we updates ALL smoothing entities surrounding us even if they would never smooth with us.
             // This is simpler to implement. If you want to optimize it be my guest.
             var senderEnt = ev.Sender;
-            if (IoCManager.Resolve<IEntityManager>().EntityExists(senderEnt) &&
-                _mapManager.TryGetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(senderEnt).GridID, out var grid1) &&
-                IoCManager.Resolve<IEntityManager>().TryGetComponent(senderEnt, out IconSmoothComponent? iconSmooth)
+            if (EntityManager.EntityExists(senderEnt) &&
+                _mapManager.TryGetGrid(EntityManager.GetComponent<TransformComponent>(senderEnt).GridID, out var grid1) &&
+                EntityManager.TryGetComponent(senderEnt, out IconSmoothComponent? iconSmooth)
                 && iconSmooth.Running)
             {
-                var coords = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(senderEnt).Coordinates;
+                var coords = EntityManager.GetComponent<TransformComponent>(senderEnt).Coordinates;
 
                 _dirtyEntities.Enqueue(senderEnt);
                 AddValidEntities(grid1.GetInDir(coords, Direction.North));
@@ -130,7 +130,7 @@ namespace Content.Client.IconSmoothing
     /// </summary>
     public sealed class IconSmoothDirtyEvent : EntityEventArgs
     {
-        public IconSmoothDirtyEvent(IEntity sender, (GridId grid, Vector2i pos)? lastPosition, IconSmoothingMode mode)
+        public IconSmoothDirtyEvent(EntityUid sender, (GridId grid, Vector2i pos)? lastPosition, IconSmoothingMode mode)
         {
             LastPosition = lastPosition;
             Mode = mode;
@@ -139,6 +139,6 @@ namespace Content.Client.IconSmoothing
 
         public (GridId grid, Vector2i pos)? LastPosition { get; }
         public IconSmoothingMode Mode { get; }
-        public IEntity Sender { get; }
+        public EntityUid Sender { get; }
     }
 }

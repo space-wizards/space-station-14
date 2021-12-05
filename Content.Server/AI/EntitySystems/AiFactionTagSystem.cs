@@ -54,12 +54,12 @@ namespace Content.Server.AI.EntitySystems
 
         public Faction GetHostileFactions(Faction faction) => _hostileFactions.TryGetValue(faction, out var hostiles) ? hostiles : Faction.None;
 
-        public Faction GetFactions(IEntity entity) =>
+        public Faction GetFactions(EntityUid entity) =>
             IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out AiFactionTagComponent? factionTags)
             ? factionTags.Factions
             : Faction.None;
 
-        public IEnumerable<IEntity> GetNearbyHostiles(IEntity entity, float range)
+        public IEnumerable<EntityUid> GetNearbyHostiles(EntityUid entity, float range)
         {
             var ourFaction = GetFactions(entity);
             var hostile = GetHostileFactions(ourFaction);

@@ -9,7 +9,6 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Power.NodeGroups;
 using Content.Server.Window;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
@@ -24,7 +23,6 @@ using Content.Shared.Speech.EntitySystems;
 using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
 using Content.Shared.Weapons.Melee;
-using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -99,7 +97,7 @@ namespace Content.Server.Electrocution
 
             foreach (var finished in finishedElectrocutionsQueue)
             {
-                var uid = (EntityUid) finished.Owner;
+                var uid = finished.Owner;
                 if (EntityManager.EntityExists(finished.Electrocuting))
                 {
                     // TODO: damage should be scaled by shock damage multiplier
@@ -366,13 +364,12 @@ namespace Content.Server.Electrocution
             if (sourceUid != null)
             {
                 _popupSystem.PopupEntity(Loc.GetString("electrocuted-component-mob-shocked-by-source-popup-others",
-                        ("mob", EntityManager.GetEntity(uid)), ("source", EntityManager.GetEntity(sourceUid.Value))),
-                    uid, filter);
+                        ("mob", uid), ("source", (sourceUid.Value))), uid, filter);
             }
             else
             {
                 _popupSystem.PopupEntity(Loc.GetString("electrocuted-component-mob-shocked-popup-others",
-                    ("mob", EntityManager.GetEntity(uid))), uid, filter);
+                    ("mob", uid)), uid, filter);
             }
 
             return true;
@@ -395,14 +392,14 @@ namespace Content.Server.Electrocution
             visited.Add(entity);
 
             if (EntityManager.TryGetComponent(entity, out SharedPullableComponent? pullable)
-                && pullable.Puller != null
+                && pullable.Puller != default
                 && !visited.Contains(pullable.Puller))
             {
                 GetChainedElectrocutionTargetsRecurse(pullable.Puller, depth + 1, visited, all);
             }
 
             if (EntityManager.TryGetComponent(entity, out SharedPullerComponent? puller)
-                && puller.Pulling != null
+                && puller.Pulling != default
                 && !visited.Contains(puller.Pulling))
             {
                 GetChainedElectrocutionTargetsRecurse(puller.Pulling, depth + 1, visited, all);

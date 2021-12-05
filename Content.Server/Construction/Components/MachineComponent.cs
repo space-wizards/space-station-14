@@ -4,7 +4,6 @@ using Content.Server.Stack;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Construction.Components
@@ -90,7 +89,7 @@ namespace Content.Server.Construction.Components
             {
                 var stack = EntitySystem.Get<StackSystem>().Spawn(amount, stackType, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
 
-                if (!partContainer.Insert(IoCManager.Resolve<IEntityManager>().GetEntity(stack)))
+                if (!partContainer.Insert(stack))
                     throw new Exception($"Couldn't insert machine material of type {stackType} to machine with prototype {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityPrototype?.ID ?? "N/A"}");
             }
 

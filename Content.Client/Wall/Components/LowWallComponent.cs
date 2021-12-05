@@ -33,7 +33,7 @@ namespace Content.Client.Wall.Components
         public CornerFill LastCornerSW { get; private set; }
         public CornerFill LastCornerNW { get; private set; }
 
-        [ViewVariables] private IEntity? _overlayEntity;
+        [ViewVariables] private EntityUid _overlayEntity;
 
         [ViewVariables]
         private ISpriteComponent? _overlaySprite;
@@ -63,10 +63,10 @@ namespace Content.Client.Wall.Components
         {
             base.Shutdown();
 
-            IEntity? tempQualifier = _overlayEntity;
+            EntityUid tempQualifier = _overlayEntity;
             if (tempQualifier != null)
             {
-                IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) tempQualifier);
+                IoCManager.Resolve<IEntityManager>().DeleteEntity(tempQualifier);
             }
         }
 

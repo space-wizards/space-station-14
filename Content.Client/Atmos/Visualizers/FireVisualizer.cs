@@ -1,5 +1,4 @@
 ﻿using Content.Shared.Atmos;
-using Content.Shared.Atmos.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
@@ -23,7 +22,7 @@ namespace Content.Client.Atmos.Visualizers
         [DataField("sprite")]
         private string? _sprite;
 
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
 

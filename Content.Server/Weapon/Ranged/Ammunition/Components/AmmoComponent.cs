@@ -104,7 +104,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             }
         }
 
-        public IEntity? TakeBullet(EntityCoordinates spawnAt)
+        public EntityUid TakeBullet(EntityCoordinates spawnAt)
         {
             if (_ammoIsProjectile)
             {
@@ -127,7 +127,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             return entity;
         }
 
-        public void MuzzleFlash(IEntity entity, Angle angle)
+        public void MuzzleFlash(EntityUid entity, Angle angle)
         {
             if (_muzzleFlashSprite == null)
             {

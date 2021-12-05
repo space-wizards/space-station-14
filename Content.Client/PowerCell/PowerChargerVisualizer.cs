@@ -9,7 +9,7 @@ namespace Content.Client.PowerCell
     [UsedImplicitly]
     public class PowerChargerVisualizer : AppearanceVisualizer
     {
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
 

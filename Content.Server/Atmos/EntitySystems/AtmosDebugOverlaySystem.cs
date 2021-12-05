@@ -11,7 +11,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -132,18 +131,18 @@ namespace Content.Server.Atmos.EntitySystems
             // Afterwards we reset all the chunk data for the next time we tick.
             foreach (var session in _playerObservers)
             {
-                if (session.AttachedEntity == null) continue;
-
-                var entity = session.AttachedEntity;
+                if (session.AttachedEntity is not {Valid: true} entity)
+                    continue;
 
                 var worldBounds = Box2.CenteredAround(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).WorldPosition,
                     new Vector2(LocalViewRange, LocalViewRange));
 
                 foreach (var grid in _mapManager.FindGridsIntersecting(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).MapID, worldBounds))
                 {
-                    if (!EntityManager.TryGetEntity(grid.GridEntityId, out var gridEnt)) continue;
+                    if (!EntityManager.EntityExists(grid.GridEntityId))
+                        continue;
 
-                    if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<GridAtmosphereComponent?>(gridEnt, out var gam)) continue;
+                    if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<GridAtmosphereComponent?>(grid.GridEntityId, out var gam)) continue;
 
                     var entityTile = grid.GetTileRef(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates).GridIndices;
                     var baseTile = new Vector2i(entityTile.X - (LocalViewRange / 2), entityTile.Y - (LocalViewRange / 2));

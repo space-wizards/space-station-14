@@ -40,7 +40,7 @@ namespace Content.Server.Alert.Commands
                 if (!CommandUtils.TryGetAttachedEntityByUsernameOrId(shell, target, player, out attachedEntity)) return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(attachedEntity, out ServerAlertsComponent? alertsComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(attachedEntity.Value, out ServerAlertsComponent? alertsComponent))
             {
                 shell.WriteLine("user has no alerts component");
                 return;
@@ -59,7 +59,7 @@ namespace Content.Server.Alert.Commands
                 shell.WriteLine("invalid severity " + sevint);
                 return;
             }
-            alertsComponent.ShowAlert(alert.AlertType, sevint == -1 ? (short?) null : sevint);
+            alertsComponent.ShowAlert(alert.AlertType, sevint == -1 ? null : sevint);
         }
     }
 }

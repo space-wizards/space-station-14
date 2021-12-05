@@ -1,5 +1,4 @@
 using Content.Shared.Administration.Logs;
-using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Physics;
@@ -44,11 +43,13 @@ namespace Content.Shared.Throwing
 
         private void OnHandleState(EntityUid uid, ThrownItemComponent component, ref ComponentHandleState args)
         {
-            if (args.Current is not ThrownItemComponentState state || state.Thrower == null)
+            if (args.Current is not ThrownItemComponentState {Thrower: not null } state ||
+                !state.Thrower.Value.IsValid())
+            {
                 return;
+            }
 
-            if(EntityManager.TryGetEntity(state.Thrower.Value, out var entity))
-                component.Thrower = entity;
+            component.Thrower = state.Thrower.Value;
         }
 
         private void ThrowItem(EntityUid uid, ThrownItemComponent component, ThrownEvent args)

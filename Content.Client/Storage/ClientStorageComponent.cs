@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Client.Animations;
 using Content.Client.Hands;
-using Content.Client.Items.Managers;
 using Content.Client.Items.Components;
+using Content.Client.Items.Managers;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.DragDrop;
 using Content.Shared.Storage;
@@ -22,6 +22,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
 using static Robust.Client.UserInterface.Control;
+using static Robust.Client.UserInterface.Controls.BaseButton;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Storage
@@ -33,20 +34,25 @@ namespace Content.Client.Storage
     public class ClientStorageComponent : SharedStorageComponent, IDraggable
     {
         [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
-        private List<IEntity> _storedEntities = new();
+        private List<EntityUid> _storedEntities = new();
         private int StorageSizeUsed;
         private int StorageCapacityMax;
         private StorageWindow? _window;
         public bool UIOpen => _window?.IsOpen ?? false;
 
-        public override IReadOnlyList<IEntity> StoredEntities => _storedEntities;
+        public override IReadOnlyList<EntityUid> StoredEntities => _storedEntities;
 
         protected override void OnAdd()
         {
             base.OnAdd();
 
-            _window = new StorageWindow(this) {Title = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityName};
+            _window = new StorageWindow(this, _playerManager, _entityManager)
+            {
+                Title = _entityManager.GetComponent<MetaDataComponent>(Owner).EntityName
+            };
             _window.EntityList.GenerateItem += GenerateButton;
             _window.EntityList.ItemPressed += Interact;
         }
@@ -66,9 +72,7 @@ namespace Content.Client.Storage
                 return;
             }
 
-            _storedEntities = state.StoredEntities
-                .Select(id => IoCManager.Resolve<IEntityManager>().GetEntity(id))
-                .ToList();
+            _storedEntities = state.StoredEntities.ToList();
         }
 
         [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
@@ -101,7 +105,7 @@ namespace Content.Client.Storage
         /// <param name="storageState"></param>
         private void HandleStorageMessage(StorageHeldItemsMessage storageState)
         {
-            _storedEntities = storageState.StoredEntities.Select(id => IoCManager.Resolve<IEntityManager>().GetEntity(id)).ToList();
+            _storedEntities = storageState.StoredEntities.ToList();
             StorageSizeUsed = storageState.StorageSizeUsed;
             StorageCapacityMax = storageState.StorageSizeMax;
             _window?.BuildEntityList(storageState.StoredEntities.ToList());
@@ -115,12 +119,12 @@ namespace Content.Client.Storage
         {
             for (var i = 0; msg.StoredEntities.Count > i; i++)
             {
-                var entityId = msg.StoredEntities[i];
+                var entity = msg.StoredEntities[i];
                 var initialPosition = msg.EntityPositions[i];
 
-                if (IoCManager.Resolve<IEntityManager>().TryGetEntity(entityId, out var entity))
+                if (_entityManager.EntityExists(entity))
                 {
-                    ReusableAnimations.AnimateEntityPickup(entity, initialPosition, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).LocalPosition);
+                    ReusableAnimations.AnimateEntityPickup(entity, initialPosition, _entityManager.GetComponent<TransformComponent>(Owner).LocalPosition);
                 }
             }
         }
@@ -146,23 +150,23 @@ namespace Content.Client.Storage
         /// <summary>
         /// Function for clicking one of the stored entity buttons in the UI, tells server to remove that entity
         /// </summary>
-        /// <param name="entityUid"></param>
-        private void Interact(BaseButton.ButtonEventArgs buttonEventArgs, EntityUid entityUid)
+        /// <param name="entity"></param>
+        private void Interact(ButtonEventArgs args, EntityUid entity)
         {
-            if (buttonEventArgs.Event.Function == EngineKeyFunctions.UIClick)
+            if (args.Event.Function == EngineKeyFunctions.UIClick)
             {
 #pragma warning disable 618
-                SendNetworkMessage(new RemoveEntityMessage(entityUid));
+                SendNetworkMessage(new RemoveEntityMessage(entity));
 #pragma warning restore 618
-                buttonEventArgs.Event.Handle();
+                args.Event.Handle();
             }
-            else if (IoCManager.Resolve<IEntityManager>().TryGetEntity(entityUid, out var entity))
+            else if (_entityManager.EntityExists(entity))
             {
-                _itemSlotManager.OnButtonPressed(buttonEventArgs.Event, entity);
+                _itemSlotManager.OnButtonPressed(args.Event, entity);
             }
         }
 
-        public override bool Remove(IEntity entity)
+        public override bool Remove(EntityUid entity)
         {
             if (_storedEntities.Remove(entity))
             {
@@ -176,13 +180,13 @@ namespace Content.Client.Storage
         /// <summary>
         /// Button created for each entity that represents that item in the storage UI, with a texture, and name and size label
         /// </summary>
-        private void GenerateButton(EntityUid entityUid, EntityContainerButton button)
+        private void GenerateButton(EntityUid entity, EntityContainerButton button)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetEntity(entityUid, out var entity))
+            if (!_entityManager.EntityExists(entity))
                 return;
 
-            IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ISpriteComponent? sprite);
-            IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ItemComponent? item);
+            _entityManager.TryGetComponent(entity, out ISpriteComponent? sprite);
+            _entityManager.TryGetComponent(entity, out ItemComponent? item);
 
             button.AddChild(new BoxContainer
             {
@@ -202,7 +206,7 @@ namespace Content.Client.Storage
                     {
                         HorizontalExpand = true,
                         ClipText = true,
-                        Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityName
+                        Text = _entityManager.GetComponent<MetaDataComponent>(entity).EntityName
                     },
                     new Label
                     {
@@ -223,12 +227,12 @@ namespace Content.Client.Storage
             private Control _vBox;
             private readonly Label _information;
             public readonly EntityListDisplay EntityList;
-            public ClientStorageComponent StorageEntity;
+            public readonly ClientStorageComponent StorageEntity;
 
             private readonly StyleBoxFlat _hoveredBox = new() { BackgroundColor = Color.Black.WithAlpha(0.35f) };
             private readonly StyleBoxFlat _unHoveredBox = new() { BackgroundColor = Color.Black.WithAlpha(0.0f) };
 
-            public StorageWindow(ClientStorageComponent storageEntity)
+            public StorageWindow(ClientStorageComponent storageEntity, IPlayerManager players, IEntityManager entities)
             {
                 StorageEntity = storageEntity;
                 SetSize = (200, 320);
@@ -250,9 +254,9 @@ namespace Content.Client.Storage
                 containerButton.AddChild(innerContainerButton);
                 containerButton.OnPressed += args =>
                 {
-                    var controlledEntity = IoCManager.Resolve<IPlayerManager>().LocalPlayer?.ControlledEntity;
+                    var controlledEntity = players.LocalPlayer?.ControlledEntity;
 
-                    if (controlledEntity != null && IoCManager.Resolve<IEntityManager>().TryGetComponent(controlledEntity, out HandsComponent? hands))
+                    if (controlledEntity != default && entities.HasComponent<HandsComponent>(controlledEntity.Value))
                     {
 #pragma warning disable 618
                         StorageEntity.SendNetworkMessage(new InsertEntityMessage());
@@ -278,12 +282,12 @@ namespace Content.Client.Storage
                     Name = "EntityListContainer",
                 };
                 _vBox.AddChild(EntityList);
-                EntityList.OnMouseEntered += args =>
+                EntityList.OnMouseEntered += _ =>
                 {
                     innerContainerButton.PanelOverride = _hoveredBox;
                 };
 
-                EntityList.OnMouseExited += args =>
+                EntityList.OnMouseExited += _ =>
                 {
                     innerContainerButton.PanelOverride = _unHoveredBox;
                 };

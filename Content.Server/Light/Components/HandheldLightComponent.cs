@@ -12,7 +12,6 @@ using Content.Shared.Light.Component;
 using Content.Shared.Popups;
 using Content.Shared.Rounding;
 using Content.Shared.Sound;
-using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -21,7 +20,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -104,7 +102,7 @@ namespace Content.Server.Light.Components
         ///     Illuminates the light if it is not active, extinguishes it if it is active.
         /// </summary>
         /// <returns>True if the light's status was toggled, false otherwise.</returns>
-        public bool ToggleStatus(IEntity user)
+        public bool ToggleStatus(EntityUiduser)
         {
             if (!EntitySystem.Get<ActionBlockerSystem>().CanUse(user)) return false;
             return Activated ? TurnOff() : TurnOn(user);
@@ -130,7 +128,7 @@ namespace Content.Server.Light.Components
             return true;
         }
 
-        public bool TurnOn(IEntity user)
+        public bool TurnOn(EntityUiduser)
         {
             if (Activated)
             {

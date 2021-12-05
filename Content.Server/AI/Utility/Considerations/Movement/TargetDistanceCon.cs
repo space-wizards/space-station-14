@@ -10,14 +10,17 @@ namespace Content.Server.AI.Utility.Considerations.Movement
         protected override float GetScore(Blackboard context)
         {
             var self = context.GetState<SelfState>().GetValue();
-            var target = context.GetState<TargetEntityState>().GetValue();
-            if (target == null || (!IoCManager.Resolve<IEntityManager>().EntityExists(target) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(target).EntityLifeStage) >= EntityLifeStage.Deleted || IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(target).GridID != (self != null ? IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(self) : null).GridID)
+            var entities = IoCManager.Resolve<IEntityManager>();
+
+            if (context.GetState<TargetEntityState>().GetValue() is not {Valid: true} target ||
+                (!entities.EntityExists(target) ? EntityLifeStage.Deleted : entities.GetComponent<MetaDataComponent>(target).EntityLifeStage) >= EntityLifeStage.Deleted ||
+                entities.GetComponent<TransformComponent>(target).GridID != entities.GetComponent<TransformComponent>(self).GridID)
             {
                 return 0.0f;
             }
 
             // Anything further than 100 tiles gets clamped
-            return (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(target).Coordinates.Position - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(self).Coordinates.Position).Length / 100;
+            return (entities.GetComponent<TransformComponent>(target).Coordinates.Position - entities.GetComponent<TransformComponent>(self).Coordinates.Position).Length / 100;
         }
     }
 }

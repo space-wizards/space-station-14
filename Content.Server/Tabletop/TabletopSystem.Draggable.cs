@@ -25,7 +25,7 @@ namespace Content.Server.Tabletop
         /// </summary>
         private void OnTabletopMove(TabletopMoveEvent msg, EntitySessionEventArgs args)
         {
-            if (args.SenderSession as IPlayerSession is not { AttachedEntityUid: { } playerEntity } playerSession)
+            if (args.SenderSession as IPlayerSession is not { AttachedEntity: { } playerEntity } playerSession)
                 return;
 
             if (!EntityManager.TryGetComponent(msg.TableUid, out TabletopGameComponent? tabletop) || tabletop.Session is not {} session)
@@ -43,7 +43,7 @@ namespace Content.Server.Tabletop
                 return;
 
             // Check if moved entity exists and has tabletop draggable component
-            if (!EntityManager.TryGetEntity(msg.MovedEntityUid, out var movedEntity))
+            if (!EntityManager.EntityExists(msg.MovedEntityUid)
                 return;
 
             if (!EntityManager.HasComponent<TabletopDraggableComponent>(movedEntity))
@@ -59,7 +59,7 @@ namespace Content.Server.Tabletop
 
         private void OnDraggingPlayerChanged(TabletopDraggingPlayerChangedEvent msg)
         {
-            var draggedEntity = EntityManager.GetEntity(msg.DraggedEntityUid);
+            var draggedmsg.DraggedEntityUid
 
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<TabletopDraggableComponent?>(draggedEntity, out var draggableComponent)) return;
 

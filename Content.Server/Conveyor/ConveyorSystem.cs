@@ -5,12 +5,10 @@ using Content.Server.MachineLinking.Events;
 using Content.Server.MachineLinking.Models;
 using Content.Server.Power.Components;
 using Content.Server.Stunnable;
-using Content.Server.Stunnable.Components;
 using Content.Shared.Conveyor;
 using Content.Shared.MachineLinking;
 using Content.Shared.Movement.Components;
 using Content.Shared.Popups;
-using Content.Shared.Stunnable;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -129,7 +127,7 @@ namespace Content.Server.Conveyor
             return new Angle(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner).LocalRotation.Theta + radians + adjustment);
         }
 
-        public IEnumerable<(IEntity, IPhysBody)> GetEntitiesToMove(ConveyorComponent comp)
+        public IEnumerable<(EntityUid, IPhysBody)> GetEntitiesToMove(ConveyorComponent comp)
         {
             //todo uuuhhh cache this
             foreach (var entity in _entityLookup.GetEntitiesIntersecting(comp.Owner, flags: LookupFlags.Approximate))

@@ -95,7 +95,7 @@ namespace Content.IntegrationTests.Tests.Damageable
 
             sEntityManager.EventBus.SubscribeLocalEvent<DamageableComponent, DamageChangedEvent>(DamageChangedListener);
 
-            IEntity sDamageableEntity = null;
+            EntityUid sDamageableEntity = default;
             DamageableComponent sDamageableComponent = null;
             DamageableSystem sDamageableSystem = null;
 

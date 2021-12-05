@@ -14,7 +14,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -216,23 +215,23 @@ namespace Content.Shared.Hands.Components
             if (!TryGetActiveHand(out var hand))
                 return false;
 
-            return hand.HeldEntity != null;
+            return hand.HeldEntity != default;
         }
 
-        public bool TryGetHeldEntity(string handName, [NotNullWhen(true)] out EntityUid? heldEntity)
+        public bool TryGetHeldEntity(string handName, out EntityUid heldEntity)
         {
-            heldEntity = null;
+            heldEntity = default;
 
             if (!TryGetHand(handName, out var hand))
                 return false;
 
             heldEntity = hand.HeldEntity;
-            return heldEntity != null;
+            return heldEntity != default;
         }
 
-        public bool TryGetActiveHeldEntity([NotNullWhen(true)] out EntityUid? heldEntity)
+        public bool TryGetActiveHeldEntity(out EntityUid heldEntity)
         {
-            heldEntity = GetActiveHand()?.HeldEntity;
+            heldEntity = GetActiveHand()?.HeldEntity ?? default;
             return heldEntity != null;
         }
 
@@ -250,7 +249,7 @@ namespace Content.Shared.Hands.Components
         {
             foreach (var hand in Hands)
             {
-                if (hand.HeldEntity != null)
+                if (hand.HeldEntity != default)
                     yield return hand.HeldEntity.Value;
             }
         }
@@ -264,7 +263,7 @@ namespace Content.Shared.Hands.Components
             int acc = 0;
             foreach (var hand in Hands)
             {
-                if (hand.HeldEntity == null)
+                if (hand.HeldEntity == default)
                     acc += 1;
             }
 
@@ -892,9 +891,9 @@ namespace Content.Shared.Hands.Components
         public IContainer? Container { get; set; }
 
         [ViewVariables]
-        public EntityUid? HeldEntity => Container?.ContainedEntities?.FirstOrDefault();
+        public EntityUid HeldEntity => Container?.ContainedEntities.FirstOrDefault() ?? EntityUid.Invalid;
 
-        public bool IsEmpty => HeldEntity == null;
+        public bool IsEmpty => HeldEntity == default;
 
         public Hand(string name, HandLocation location, IContainer? container = null)
         {

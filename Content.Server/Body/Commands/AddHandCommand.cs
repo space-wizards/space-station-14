@@ -1,7 +1,6 @@
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
-using Content.Shared.Body.Part;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
@@ -45,13 +44,13 @@ namespace Content.Server.Body.Commands
                         return;
                     }
 
-                    if (player.AttachedEntityUid == null)
+                    if (player.AttachedEntity == null)
                     {
                         shell.WriteLine("You don't have an entity to add a hand to.");
                         return;
                     }
 
-                    entity = player.AttachedEntityUid.Value;
+                    entity = player.AttachedEntity.Value;
                     hand = entityManager.SpawnEntity(DefaultHandPrototype, entityManager.GetComponent<TransformComponent>(entity).Coordinates);
                     break;
                 }
@@ -76,13 +75,13 @@ namespace Content.Server.Body.Commands
                             return;
                         }
 
-                        if (player.AttachedEntityUid == null)
+                        if (player.AttachedEntity == null)
                         {
                             shell.WriteLine("You don't have an entity to add a hand to.");
                             return;
                         }
 
-                        entity = player.AttachedEntityUid.Value;
+                        entity = player.AttachedEntity.Value;
                         hand = entityManager.SpawnEntity(args[0], entityManager.GetComponent<TransformComponent>(entity).Coordinates);
                     }
 

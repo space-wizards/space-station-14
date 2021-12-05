@@ -69,7 +69,7 @@ namespace Content.Server.Engineering.EntitySystems
             EntityManager.SpawnEntity(component.Prototype, args.ClickLocation.SnapToGrid(grid));
 
             if (component.RemoveOnInteract && stackComp == null && !((!IoCManager.Resolve<IEntityManager>().EntityExists(component.Owner) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(component.Owner).EntityLifeStage) >= EntityLifeStage.Deleted))
-                IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) component.Owner);
+                IoCManager.Resolve<IEntityManager>().DeleteEntity(component.Owner);
         }
     }
 }

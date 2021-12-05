@@ -12,6 +12,8 @@ namespace Content.Server.Atmos.Components
     [RegisterComponent]
     public class BreathToolComponent : Component, IEquipped, IUnequipped
     {
+        [Dependency] private readonly IEntityManager _entities = default!;
+
         /// <summary>
         /// Tool is functional only in allowed slots
         /// </summary>
@@ -20,7 +22,7 @@ namespace Content.Server.Atmos.Components
 
         public override string Name => "BreathMask";
         public bool IsFunctional { get; private set; }
-        public IEntity? ConnectedInternalsEntity { get; private set; }
+        public EntityUid ConnectedInternalsEntity { get; private set; }
 
         protected override void Shutdown()
         {
@@ -33,7 +35,7 @@ namespace Content.Server.Atmos.Components
             if ((EquipmentSlotDefines.SlotMasks[eventArgs.Slot] & _allowedSlots) != _allowedSlots) return;
             IsFunctional = true;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User, out InternalsComponent? internals))
+            if (_entities.TryGetComponent(eventArgs.User, out InternalsComponent? internals))
             {
                 ConnectedInternalsEntity = eventArgs.User;
                 internals.ConnectBreathTool(Owner);
@@ -48,9 +50,9 @@ namespace Content.Server.Atmos.Components
         public void DisconnectInternals()
         {
             var old = ConnectedInternalsEntity;
-            ConnectedInternalsEntity = null;
+            ConnectedInternalsEntity = default;
 
-            if (old != null && IoCManager.Resolve<IEntityManager>().TryGetComponent<InternalsComponent?>(old, out var internalsComponent))
+            if (old != default && _entities.TryGetComponent<InternalsComponent?>(old, out var internalsComponent))
             {
                 internalsComponent.DisconnectBreathTool();
             }

@@ -76,7 +76,7 @@ namespace Content.Server.GameTicking.Commands
             shell.ExecuteCommand($"addmap {mapId} false");
             shell.ExecuteCommand($"loadbp {mapId} \"{CommandParsing.Escape(mapName)}\" true");
 
-            IEntity? tempQualifier = player.AttachedEntity;
+            EntityUid tempQualifier = player.AttachedEntity;
             if ((tempQualifier != null ? IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(tempQualifier).EntityPrototype : null)?.ID != "AdminObserver")
                 shell.ExecuteCommand("aghost");
 

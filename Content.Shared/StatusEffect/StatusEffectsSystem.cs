@@ -119,7 +119,7 @@ namespace Content.Shared.StatusEffect
                 {
                     // Fuck this shit I hate it
                     var newComponent = (Component) _componentFactory.GetComponent(component);
-                    newComponent.Owner = EntityManager.GetEntity(uid);
+                    newComponent.Owner = uid;
 
                     EntityManager.AddComponent(uid, newComponent);
                     status.ActiveEffects[key].RelevantComponent = component;

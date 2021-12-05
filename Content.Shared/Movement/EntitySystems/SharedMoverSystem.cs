@@ -46,7 +46,7 @@ namespace Content.Shared.Movement.EntitySystems
             if (!TryGetAttachedComponent<IMoverComponent>(session, out var moverComp))
                 return;
 
-            var owner = session?.AttachedEntityUid;
+            var owner = session?.AttachedEntity;
 
             if (owner != null && session != null)
             {
@@ -80,7 +80,7 @@ namespace Content.Shared.Movement.EntitySystems
         {
             component = default;
 
-            var ent = session?.AttachedEntityUid;
+            var ent = session?.AttachedEntity;
 
             if (ent == null || !IoCManager.Resolve<IEntityManager>().EntityExists(ent.Value))
                 return false;

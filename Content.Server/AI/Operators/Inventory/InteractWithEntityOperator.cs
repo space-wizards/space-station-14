@@ -11,10 +11,10 @@ namespace Content.Server.AI.Operators.Inventory
     /// </summary>
     public class InteractWithEntityOperator : AiOperator
     {
-        private readonly IEntity _owner;
-        private readonly IEntity _useTarget;
+        private readonly EntityUid _owner;
+        private readonly EntityUid _useTarget;
 
-        public InteractWithEntityOperator(IEntity owner, IEntity useTarget)
+        public InteractWithEntityOperator(EntityUid owner, EntityUid useTarget)
         {
             _owner = owner;
             _useTarget = useTarget;

@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.Construction.Components;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
@@ -59,7 +58,7 @@ namespace Content.Server.Construction.Completions
             foreach (var ent in computerContainer.ContainedEntities.ToArray())
             {
                 computerContainer.ForceRemove(ent);
-                IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) ent);
+                IoCManager.Resolve<IEntityManager>().DeleteEntity(ent);
             }
 
             computerContainer.Insert(board);

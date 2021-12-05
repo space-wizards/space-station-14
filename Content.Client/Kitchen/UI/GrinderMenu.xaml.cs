@@ -76,7 +76,7 @@ namespace Content.Client.Kitchen.UI
                     BeakerContentBox.EjectButton.Disabled = true;
                     ChamberContentBox.EjectButton.Disabled = true;
                     break;
-                case SharedReagentGrinderComponent.ReagentGrinderWorkCompleteMessage doneMessage:
+                case SharedReagentGrinderComponent.ReagentGrinderWorkCompleteMessage:
                     GrindButton.Disabled = false;
                     JuiceButton.Disabled = false;
                     GrindButton.Modulate = Color.White;
@@ -93,9 +93,9 @@ namespace Content.Client.Kitchen.UI
             _chamberVisualContents.Clear();
 
             ChamberContentBox.BoxContents.Clear();
-            foreach (var uid in containedSolids)
+            foreach (var entity in containedSolids)
             {
-                if (!_entityManager.TryGetEntity(uid, out var entity))
+                if (!_entityManager.EntityExists(entity))
                 {
                     return;
                 }
@@ -103,7 +103,7 @@ namespace Content.Client.Kitchen.UI
 
                 var solidItem = ChamberContentBox.BoxContents.AddItem(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityName, texture);
                 var solidIndex = ChamberContentBox.BoxContents.IndexOf(solidItem);
-                _chamberVisualContents.Add(solidIndex, uid);
+                _chamberVisualContents.Add(solidIndex, entity);
             }
 
             //Refresh beaker contents

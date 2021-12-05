@@ -17,13 +17,13 @@ namespace Content.Server.Weapon
     {
         public override string Name => "WeaponCapacitorCharger";
 
-        public override bool IsEntityCompatible(IEntity entity)
+        public override bool IsEntityCompatible(EntityUid entity)
         {
             return IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ServerBatteryBarrelComponent? battery) && battery.PowerCell != null ||
                    IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out PowerCellSlotComponent? slot) && slot.HasCell;
         }
 
-        protected override BatteryComponent? GetBatteryFrom(IEntity entity)
+        protected override BatteryComponent? GetBatteryFrom(EntityUid entity)
         {
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out PowerCellSlotComponent? slot))
             {

@@ -13,7 +13,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
@@ -45,7 +44,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         // Even a point having a chamber? I guess it makes some of the below code cleaner
         private ContainerSlot _chamberContainer = default!;
-        private Stack<IEntity> _spawnedAmmo = new(DefaultCapacity - 1);
+        private Stack<EntityUid> _spawnedAmmo = new(DefaultCapacity - 1);
         private Container _ammoContainer = default!;
 
         [ViewVariables]
@@ -99,7 +98,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         void ISerializationHooks.AfterDeserialization()
         {
-            _spawnedAmmo = new Stack<IEntity>(Capacity - 1);
+            _spawnedAmmo = new Stack<EntityUid>(Capacity - 1);
         }
 
         protected override void Initialize()
@@ -141,12 +140,12 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             _appearanceComponent?.SetData(AmmoVisuals.AmmoMax, Capacity);
         }
 
-        public override IEntity? PeekAmmo()
+        public override EntityUid PeekAmmo()
         {
             return _chamberContainer.ContainedEntity;
         }
 
-        public override IEntity? TakeProjectile(EntityCoordinates spawnAt)
+        public override EntityUid TakeProjectile(EntityCoordinates spawnAt)
         {
             var chamberEntity = _chamberContainer.ContainedEntity;
 

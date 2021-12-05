@@ -30,7 +30,7 @@ namespace Content.Server.GameTicking.Presets
         /// <summary>
         /// Called when a player is spawned in (this includes, but is not limited to, before Start)
         /// </summary>
-        public virtual void OnSpawnPlayerCompleted(IPlayerSession session, IEntity mob, bool lateJoin) { }
+        public virtual void OnSpawnPlayerCompleted(IPlayerSession session, EntityUid mob, bool lateJoin) { }
 
         /// <summary>
         /// Called when a player attempts to ghost.
@@ -39,10 +39,10 @@ namespace Content.Server.GameTicking.Presets
         {
             var playerEntity = mind.OwnedEntity;
 
-            if (playerEntity != null && IoCManager.Resolve<IEntityManager>().HasComponent<GhostComponent>(playerEntity))
+            if (playerEntity != default && IoCManager.Resolve<IEntityManager>().HasComponent<GhostComponent>(playerEntity))
                 return false;
 
-            if (mind.VisitingEntity != null)
+            if (mind.VisitingEntity != default)
             {
                 mind.UnVisit();
             }

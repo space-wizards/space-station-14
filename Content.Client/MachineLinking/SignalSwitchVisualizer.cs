@@ -13,7 +13,7 @@ namespace Content.Client.MachineLinking
         [DataField("layer")]
         private int Layer { get; }
 
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
 
@@ -27,7 +27,8 @@ namespace Content.Client.MachineLinking
         {
             base.OnChangeData(component);
 
-            if (!component.Owner.TryGetComponent(out SpriteComponent? sprite))
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (!entities.TryGetComponent(component.Owner, out SpriteComponent? sprite))
             {
                 return;
             }

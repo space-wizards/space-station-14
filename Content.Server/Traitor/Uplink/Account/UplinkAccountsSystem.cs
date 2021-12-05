@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using Content.Server.Mind.Components;
-using Content.Server.Stack;
 using Content.Shared.Stacks;
 using Content.Shared.Traitor.Uplink;
 using Robust.Shared.GameObjects;
@@ -71,7 +69,7 @@ namespace Content.Server.Traitor.Uplink.Account
 
         }
 
-        public bool TryPurchaseItem(UplinkAccount acc, string itemId, EntityCoordinates spawnCoords, [NotNullWhen(true)] out IEntity? purchasedItem)
+        public bool TryPurchaseItem(UplinkAccount acc, string itemId, EntityCoordinates spawnCoords, [NotNullWhen(true)] out EntityUid purchasedItem)
         {
             purchasedItem = null;
 

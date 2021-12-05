@@ -199,7 +199,7 @@ namespace Content.Server.Body.Systems
         private void TakeSuffocationDamage(EntityUid uid, RespiratorComponent respirator)
         {
             if (!respirator.Suffocating)
-                _logSys.Add(LogType.Asphyxiation, $"{EntityManager.GetEntity(uid)} started suffocating");
+                _logSys.Add(LogType.Asphyxiation, $"{uid:Entity} started suffocating");
 
             respirator.Suffocating = true;
 
@@ -214,7 +214,7 @@ namespace Content.Server.Body.Systems
         private void StopSuffocation(EntityUid uid, RespiratorComponent respirator)
         {
             if (respirator.Suffocating)
-                _logSys.Add(LogType.Asphyxiation, $"{EntityManager.GetEntity(uid)} stopped suffocating");
+                _logSys.Add(LogType.Asphyxiation, $"{uid:Entity} stopped suffocating");
 
             respirator.Suffocating = false;
 

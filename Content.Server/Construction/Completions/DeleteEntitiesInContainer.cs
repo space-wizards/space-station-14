@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Shared.Construction;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -23,7 +22,7 @@ namespace Content.Server.Construction.Completions
             foreach (var contained in container.ContainedEntities.ToArray())
             {
                 if(container.Remove(contained))
-                    IoCManager.Resolve<IEntityManager>().QueueDeleteEntity((EntityUid) contained);
+                    IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(contained);
             }
         }
     }

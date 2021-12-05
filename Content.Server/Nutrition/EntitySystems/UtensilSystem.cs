@@ -32,29 +32,29 @@ namespace Content.Server.Nutrition.EntitySystems
         /// </summary>
         private void OnAfterInteract(EntityUid uid, UtensilComponent component, AfterInteractEvent ev)
         {
-            if (ev.Target == null)
+            if (ev.Target == default)
                 return;
 
-            if (TryUseUtensil(ev.UserUid, ev.Target, component))
+            if (TryUseUtensil(ev.User, ev.Target.Value, component))
                 ev.Handled = true;
         }
 
-        private bool TryUseUtensil(EntityUid userUid, EntityUid targetUid, UtensilComponent component)
+        private bool TryUseUtensil(EntityUid user, EntityUid target, UtensilComponent component)
         {
-            if (!EntityManager.TryGetComponent(targetUid, out FoodComponent food))
+            if (!EntityManager.TryGetComponent(target, out FoodComponent food))
                 return false;
 
             //Prevents food usage with a wrong utensil
             if ((food.Utensil & component.Types) == 0)
             {
-                _popupSystem.PopupEntity(Loc.GetString("food-system-wrong-utensil", ("food", food.Owner), ("utensil", component.Owner)), userUid, Filter.Entities(userUid));
+                _popupSystem.PopupEntity(Loc.GetString("food-system-wrong-utensil", ("food", food.Owner), ("utensil", component.Owner)), user, Filter.Entities(user));
                 return false;
             }
 
-            if (!userUid.InRangeUnobstructed(targetUid, popup: true))
+            if (!user.InRangeUnobstructed(target, popup: true))
                 return false;
 
-            return _foodSystem.TryUseFood(targetUid, userUid);
+            return _foodSystem.TryUseFood(target, user);
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (_robustRandom.Prob(component.BreakChance))
             {
                 SoundSystem.Play(Filter.Pvs(userUid), component.BreakSound.GetSound(), userUid, AudioParams.Default.WithVolume(-2f));
-                IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) component.Owner);
+                IoCManager.Resolve<IEntityManager>().DeleteEntity(component.Owner);
             }
         }
     }

@@ -25,7 +25,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
-using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -257,7 +256,7 @@ namespace Content.Server.Doors.Components
             if (!ClickOpen)
                 return;
 
-            DoorClickShouldActivateEvent ev = new DoorClickShouldActivateEvent(eventArgs);
+            var ev = new DoorClickShouldActivateEvent(eventArgs);
             IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, ev, false);
             if (ev.Handled)
                 return;
@@ -274,18 +273,17 @@ namespace Content.Server.Doors.Components
 
         #region Opening
 
-        public void TryOpen(IEntity? user=null)
+        public void TryOpen(EntityUid user = default)
         {
             var msg = new DoorOpenAttemptEvent();
             IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, msg);
 
             if (msg.Cancelled) return;
 
-            if (user == null)
+            if (!user.Valid)
             {
                 // a machine opened it or something, idk
                 Open();
-                return;
             }
             else if (CanOpenByEntity(user))
             {
@@ -303,9 +301,9 @@ namespace Content.Server.Doors.Components
             }
         }
 
-        public bool CanOpenByEntity(IEntity user)
+        public bool CanOpenByEntity(EntityUid user)
         {
-            if(!CanOpenGeneric())
+            if (!CanOpenGeneric())
             {
                 return false;
             }
@@ -422,14 +420,14 @@ namespace Content.Server.Doors.Components
 
         #region Closing
 
-        public void TryClose(IEntity? user=null)
+        public void TryClose(EntityUid user = default)
         {
             var msg = new DoorCloseAttemptEvent();
             IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, msg);
 
             if (msg.Cancelled) return;
 
-            if (user != null && !CanCloseByEntity(user))
+            if (user != default && !CanCloseByEntity(user))
             {
                 Deny();
                 return;
@@ -438,7 +436,7 @@ namespace Content.Server.Doors.Components
             Close();
         }
 
-        public bool CanCloseByEntity(IEntity user)
+        public bool CanCloseByEntity(EntityUid user)
         {
             if (!CanCloseGeneric())
             {

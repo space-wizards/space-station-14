@@ -30,7 +30,7 @@ namespace Content.Server.Power.EntitySystems
 
         private void OnProviderConnected(EntityUid uid, ApcPowerReceiverComponent receiver, ExtensionCableSystem.ProviderConnectedEvent args)
         {
-            var providerUid = (EntityUid) args.Provider.Owner;
+            var providerUid = args.Provider.Owner;
             if (!EntityManager.TryGetComponent<ApcPowerProviderComponent>(providerUid, out var provider))
                 return;
 

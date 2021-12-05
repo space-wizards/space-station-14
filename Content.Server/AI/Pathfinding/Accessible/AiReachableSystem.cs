@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Content.Server.Access.Components;
 using Content.Server.Access.Systems;
 using Content.Server.AI.Pathfinding.Pathfinders;
 using Content.Shared.AI;
@@ -171,7 +170,7 @@ namespace Content.Server.AI.Pathfinding.Accessible
         /// <param name="target"></param>
         /// <param name="range"></param>
         /// <returns></returns>
-        public bool CanAccess(IEntity entity, IEntity target, float range = 0.0f)
+        public bool CanAccess(EntityUid entity, EntityUid target, float range = 0.0f)
         {
             // TODO: Handle this gracefully instead of just failing.
             if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(target).GridID.IsValid())
@@ -208,7 +207,7 @@ namespace Content.Server.AI.Pathfinding.Accessible
             return CanAccess(entity, targetNode);
         }
 
-        public bool CanAccess(IEntity entity, PathfindingNode targetNode)
+        public bool CanAccess(EntityUid entity, PathfindingNode targetNode)
         {
             if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).GridID != targetNode.TileRef.GridIndex)
             {
@@ -423,7 +422,7 @@ namespace Content.Server.AI.Pathfinding.Accessible
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public PathfindingRegion? GetRegion(IEntity entity)
+        public PathfindingRegion? GetRegion(EntityUid entity)
         {
             if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).GridID.IsValid())
             {

@@ -3,9 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.Clothing;
 using Content.Shared.CharacterAppearance;
-using Content.Shared.Chemistry;
 using Content.Shared.Inventory;
-using Content.Shared.Movement.Components;
 using Content.Shared.Movement.EntitySystems;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
@@ -24,9 +22,9 @@ namespace Content.Client.Inventory
     [ComponentReference(typeof(SharedInventoryComponent))]
     public class ClientInventoryComponent : SharedInventoryComponent
     {
-        private readonly Dictionary<Slots, IEntity> _slots = new();
+        private readonly Dictionary<Slots, EntityUid> _slots = new();
 
-        public IReadOnlyDictionary<Slots, IEntity> AllSlots => _slots;
+        public IReadOnlyDictionary<Slots, EntityUid> AllSlots => _slots;
 
         [ViewVariables] public InventoryInterfaceController InterfaceController { get; private set; } = default!;
 
@@ -78,9 +76,9 @@ namespace Content.Client.Inventory
             }
         }
 
-        public override bool IsEquipped(IEntity item)
+        public override bool IsEquipped(EntityUid item)
         {
-            return item != null && _slots.Values.Any(e => e == item);
+            return item != default && _slots.Values.Any(e => e == item);
         }
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
@@ -92,9 +90,9 @@ namespace Content.Client.Inventory
 
             var doneSlots = new HashSet<Slots>();
 
-            foreach (var (slot, entityUid) in state.Entities)
+            foreach (var (slot, entity) in state.Entities)
             {
-                if (!IoCManager.Resolve<IEntityManager>().TryGetEntity(entityUid, out var entity))
+                if (!IoCManager.Resolve<IEntityManager>().EntityExists(entity))
                 {
                     continue;
                 }
@@ -108,9 +106,7 @@ namespace Content.Client.Inventory
 
             if (state.HoverEntity != null)
             {
-                var (slot, (entityUid, fits)) = state.HoverEntity.Value;
-                var entity = IoCManager.Resolve<IEntityManager>().GetEntity(entityUid);
-
+                var (slot, (entity, fits)) = state.HoverEntity.Value;
                 InterfaceController?.HoverInSlot(slot, entity, fits);
             }
 
@@ -126,14 +122,14 @@ namespace Content.Client.Inventory
             EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(((IComponent) this).Owner);
         }
 
-        private void _setSlot(Slots slot, IEntity entity)
+        private void _setSlot(Slots slot, EntityUid entity)
         {
             SetSlotVisuals(slot, entity);
 
             InterfaceController?.AddToSlot(slot, entity);
         }
 
-        internal void SetSlotVisuals(Slots slot, IEntity entity)
+        internal void SetSlotVisuals(Slots slot, EntityUid entity)
         {
             if (_sprite == null)
             {
@@ -230,12 +226,12 @@ namespace Content.Client.Inventory
             _playerAttached = true;
         }
 
-        public bool TryGetSlot(Slots slot, [NotNullWhen(true)] out IEntity? item)
+        public bool TryGetSlot(Slots slot, [NotNullWhen(true)] out EntityUid item)
         {
             return _slots.TryGetValue(slot, out item);
         }
 
-        public bool TryFindItemSlots(IEntity item, [NotNullWhen(true)] out Slots? slots)
+        public bool TryFindItemSlots(EntityUid item, [NotNullWhen(true)] out Slots? slots)
         {
             slots = null;
 

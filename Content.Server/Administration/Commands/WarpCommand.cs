@@ -53,19 +53,19 @@ namespace Content.Server.Administration.Commands
             }
             else
             {
-                if (player.Status != SessionStatus.InGame || player.AttachedEntity == null)
+                if (player.Status != SessionStatus.InGame || player.AttachedEntity is not {Valid: true} playerEntity)
                 {
                     shell.WriteLine("You are not in-game!");
                     return;
                 }
 
                 var mapManager = IoCManager.Resolve<IMapManager>();
-                var currentMap = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.AttachedEntity).MapID;
-                var currentGrid = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.AttachedEntity).GridID;
+                var currentMap = entMan.GetComponent<TransformComponent>(playerEntity).MapID;
+                var currentGrid = entMan.GetComponent<TransformComponent>(playerEntity).GridID;
 
                 var found = entMan.EntityQuery<WarpPointComponent>(true)
                     .Where(p => p.Location == location)
-                    .Select(p => IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(p.Owner).Coordinates)
+                    .Select(p => entMan.GetComponent<TransformComponent>(p.Owner).Coordinates)
                     .OrderBy(p => p, Comparer<EntityCoordinates>.Create((a, b) =>
                     {
                         // Sort so that warp points on the same grid/map are first.
@@ -113,8 +113,8 @@ namespace Content.Server.Administration.Commands
 
                 if (found.GetGridId(entMan) != GridId.Invalid)
                 {
-                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.AttachedEntity).Coordinates = found;
-                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent(player.AttachedEntity, out IPhysBody? physics))
+                    entMan.GetComponent<TransformComponent>(playerEntity).Coordinates = found;
+                    if (entMan.TryGetComponent(playerEntity, out IPhysBody? physics))
                     {
                         physics.LinearVelocity = Vector2.Zero;
                     }

@@ -16,13 +16,15 @@ namespace Content.Shared.Movement.Components
     {
         public static bool IsWeightless(this EntityUid entity, PhysicsComponent? body = null, EntityCoordinates? coords = null, IMapManager? mapManager = null, IEntityManager? entityManager = null)
         {
-            if (body == null)
-                IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out body);
+            entityManager ??= IoCManager.Resolve<IEntityManager>();
 
-            if (IoCManager.Resolve<IEntityManager>().HasComponent<MovementIgnoreGravityComponent>(entity) ||
+            if (body == null)
+                entityManager.TryGetComponent(entity, out body);
+
+            if (entityManager.HasComponent<MovementIgnoreGravityComponent>(entity) ||
                 (body?.BodyType & (BodyType.Static | BodyType.Kinematic)) != 0) return false;
 
-            var transform = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity);
+            var transform = entityManager.GetComponent<TransformComponent>(entity);
             var gridId = transform.GridID;
 
             if (!gridId.IsValid())
@@ -34,18 +36,15 @@ namespace Content.Shared.Movement.Components
 
             mapManager ??= IoCManager.Resolve<IMapManager>();
             var grid = mapManager.GetGrid(gridId);
-            var gridEntityId = grid.GridEntityId;
-            entityManager ??= IoCManager.Resolve<IEntityManager>();
-            var gridEntity = entityManager.GetEntity(gridEntityId);
 
-            if (!IoCManager.Resolve<IEntityManager>().GetComponent<GravityComponent>(gridEntity).Enabled)
+            if (!entityManager.GetComponent<GravityComponent>(grid.GridEntityId).Enabled)
             {
                 return true;
             }
 
             coords ??= transform.Coordinates;
 
-            if (!coords.Value.IsValid(IoCManager.Resolve<IEntityManager>()))
+            if (!coords.Value.IsValid(entityManager))
             {
                 return true;
             }

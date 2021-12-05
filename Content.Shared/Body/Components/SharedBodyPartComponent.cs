@@ -8,7 +8,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
@@ -293,7 +292,7 @@ namespace Content.Shared.Body.Components
                 return false;
             }
 
-            IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) mechanism.Owner);
+            IoCManager.Resolve<IEntityManager>().DeleteEntity(mechanism.Owner);
             return true;
         }
 
@@ -365,12 +364,12 @@ namespace Content.Shared.Body.Components
 
             foreach (var id in MechanismIds)
             {
-                if (!entityManager.TryGetEntity(id, out var entity))
+                if (!entityManager.EntityExists(id))
                 {
                     continue;
                 }
 
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity.Value, out SharedMechanismComponent? mechanism))
+                if (!entityManager.TryGetComponent(id, out SharedMechanismComponent? mechanism))
                 {
                     continue;
                 }

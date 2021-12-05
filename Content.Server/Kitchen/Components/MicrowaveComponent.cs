@@ -14,7 +14,6 @@ using Content.Shared.Acts;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Kitchen;
@@ -29,7 +28,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -189,7 +187,7 @@ namespace Content.Server.Kitchen.Components
                 UserInterface?.SetState(new MicrowaveUpdateUserInterfaceState
                 (
                     solution.Contents.ToArray(),
-                    _storage.ContainedEntities.Select(item => (EntityUid) item).ToArray(),
+                    _storage.ContainedEntities.Select(item => item).ToArray(),
                     _busy,
                     _currentCookTimeButtonIndex,
                     _currentCookTimerTime
@@ -411,7 +409,7 @@ namespace Content.Server.Kitchen.Components
             {
                 var item = _storage.ContainedEntities.ElementAt(i);
                 _storage.Remove(item);
-                IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) item);
+                IoCManager.Resolve<IEntityManager>().DeleteEntity(item);
             }
         }
 
@@ -433,7 +431,7 @@ namespace Content.Server.Kitchen.Components
 
         private void SubtractContents(FoodRecipePrototype recipe)
         {
-            var solutionUid = (EntityUid) Owner;
+            var solutionUid = Owner;
             if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
             {
                 return;
@@ -459,7 +457,7 @@ namespace Content.Server.Kitchen.Components
                         if (IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(item).EntityPrototype.ID == recipeSolid.Key)
                         {
                             _storage.Remove(item);
-                            IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) item);
+                            IoCManager.Resolve<IEntityManager>().DeleteEntity(item);
                             break;
                         }
                     }
@@ -469,7 +467,7 @@ namespace Content.Server.Kitchen.Components
 
         private MicrowaveSuccessState CanSatisfyRecipe(FoodRecipePrototype recipe, Dictionary<string, int> solids)
         {
-            if (_currentCookTimerTime != (uint) recipe.CookTime)
+            if (_currentCookTimerTime != recipe.CookTime)
             {
                 return MicrowaveSuccessState.RecipeFail;
             }
@@ -513,7 +511,7 @@ namespace Content.Server.Kitchen.Components
             SoundSystem.Play(Filter.Pvs(Owner), _clickSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
         }
 
-        SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)
+        SuicideKind ISuicideAct.Suicide(EntityUid victim, IChatManager chat)
         {
             var headCount = 0;
 

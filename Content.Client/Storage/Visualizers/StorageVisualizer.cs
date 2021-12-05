@@ -17,7 +17,7 @@ namespace Content.Client.Storage.Visualizers
         [DataField("state_closed")]
         private string? _stateClosed;
 
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ISpriteComponent? sprite))
             {
@@ -34,7 +34,8 @@ namespace Content.Client.Storage.Visualizers
         {
             base.OnChangeData(component);
 
-            if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite))
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (!entities.TryGetComponent(component.Owner, out ISpriteComponent? sprite))
             {
                 return;
             }

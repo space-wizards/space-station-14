@@ -17,10 +17,12 @@ namespace Content.Client.Physics.Controllers
         {
             base.UpdateBeforeSolve(prediction, frameTime);
 
-            var player = _playerManager.LocalPlayer?.ControlledEntity;
-            if (player == null ||
-                !IoCManager.Resolve<IEntityManager>().TryGetComponent(player, out IMoverComponent? mover) ||
-                !IoCManager.Resolve<IEntityManager>().TryGetComponent(player, out PhysicsComponent? body)) return;
+            if (_playerManager.LocalPlayer?.ControlledEntity is not {Valid: true} player ||
+                !EntityManager.TryGetComponent(player, out IMoverComponent? mover) ||
+                !EntityManager.TryGetComponent(player, out PhysicsComponent? body))
+            {
+                return;
+            }
 
             // Essentially we only want to set our mob to predicted so every other entity we just interpolate
             // (i.e. only see what the server has sent us).
@@ -30,7 +32,7 @@ namespace Content.Client.Physics.Controllers
             // We set joints to predicted given these can affect how our mob moves.
             // I would only recommend disabling this if you make pulling not use joints anymore (someday maybe?)
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(player, out JointComponent? jointComponent))
+            if (EntityManager.TryGetComponent(player, out JointComponent? jointComponent))
             {
                 foreach (var joint in jointComponent.GetJoints)
                 {
@@ -40,10 +42,10 @@ namespace Content.Client.Physics.Controllers
             }
 
             // If we're being pulled then we won't predict anything and will receive server lerps so it looks way smoother.
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(player, out SharedPullableComponent? pullableComp))
+            if (EntityManager.TryGetComponent(player, out SharedPullableComponent? pullableComp))
             {
                 var puller = pullableComp.Puller;
-                if (puller != null && IoCManager.Resolve<IEntityManager>().TryGetComponent<PhysicsComponent?>(puller, out var pullerBody))
+                if (puller != default && EntityManager.TryGetComponent<PhysicsComponent?>(puller, out var pullerBody))
                 {
                     pullerBody.Predict = false;
                     body.Predict = false;
@@ -51,20 +53,20 @@ namespace Content.Client.Physics.Controllers
             }
 
             // If we're pulling a mob then make sure that isn't predicted so it doesn't fuck our velocity up.
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(player, out SharedPullerComponent? pullerComp))
+            if (EntityManager.TryGetComponent(player, out SharedPullerComponent? pullerComp))
             {
                 var pulling = pullerComp.Pulling;
 
-                if (pulling != null &&
-                    IoCManager.Resolve<IEntityManager>().HasComponent<MobStateComponent>(pulling) &&
-                    IoCManager.Resolve<IEntityManager>().TryGetComponent(pulling, out PhysicsComponent? pullingBody))
+                if (pulling != default &&
+                    EntityManager.HasComponent<MobStateComponent>(pulling) &&
+                    EntityManager.TryGetComponent(pulling, out PhysicsComponent? pullingBody))
                 {
                     pullingBody.Predict = false;
                 }
             }
 
             // Server-side should just be handled on its own so we'll just do this shizznit
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(player, out IMobMoverComponent? mobMover))
+            if (EntityManager.TryGetComponent(player, out IMobMoverComponent? mobMover))
             {
                 HandleMobMovement(mover, body, mobMover);
                 return;

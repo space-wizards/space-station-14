@@ -13,7 +13,7 @@ namespace Content.Client.Nutrition.Visualizers
         [DataField("state")]
         private string? _state;
 
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
 

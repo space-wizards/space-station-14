@@ -1,7 +1,6 @@
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Audio;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -63,7 +62,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (difference > tile.PressureDifference)
             {
                 tile.PressureDifference = difference;
-                tile.PressureDirection = ((Vector2i)(tile.GridIndices - other.GridIndices)).GetDir().ToAtmosDirection();
+                tile.PressureDirection = (tile.GridIndices - other.GridIndices).GetDir().ToAtmosDirection();
             }
         }
     }

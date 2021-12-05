@@ -19,7 +19,7 @@ namespace Content.Server.Administration.Commands
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
-            if (player?.AttachedEntity == null)
+            if (player?.AttachedEntity is not {Valid: true} playerEntity)
             {
                 shell.WriteLine("You must have an attached entity.");
                 return;
@@ -33,7 +33,7 @@ namespace Content.Server.Administration.Commands
             var lgh = int.Parse(args[4]);
             var fla = int.Parse(args[5]);
 
-            var mapTransform = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.AttachedEntity).GetMapTransform();
+            var mapTransform = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(playerEntity).GetMapTransform();
             var coords = new EntityCoordinates(mapTransform.Owner, x, y);
 
             EntitySystem.Get<ExplosionSystem>().SpawnExplosion(coords, dev, hvy, lgh, fla);

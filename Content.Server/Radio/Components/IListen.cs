@@ -10,8 +10,8 @@ namespace Content.Server.Radio.Components
     {
         int ListenRange { get; }
 
-        bool CanListen(string message, IEntity source);
+        bool CanListen(string message, EntityUidsource);
 
-        void Listen(string message, IEntity speaker);
+        void Listen(string message, EntityUidspeaker);
     }
 }

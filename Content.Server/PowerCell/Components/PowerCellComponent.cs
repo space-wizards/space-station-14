@@ -74,7 +74,7 @@ namespace Content.Server.PowerCell.Components
 
             CurrentCharge = 0;
             EntitySystem.Get<ExplosionSystem>().SpawnExplosion(((IComponent) this).Owner, 0, heavy, light, light*2);
-            IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) Owner);
+            IoCManager.Resolve<IEntityManager>().DeleteEntity(Owner);
         }
 
         private void UpdateVisuals()

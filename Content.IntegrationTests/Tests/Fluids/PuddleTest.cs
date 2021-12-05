@@ -85,12 +85,11 @@ namespace Content.IntegrationTests.Tests.Fluids
             var sPauseManager = server.ResolveDependency<IPauseManager>();
             var sTileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
             var sGameTiming = server.ResolveDependency<IGameTiming>();
-            var sEntityManager = server.ResolveDependency<IEntityManager>();
 
             MapId sMapId = default;
             IMapGrid sGrid;
             GridId sGridId = default;
-            EntityUid sGridEntity = null;
+            EntityUid sGridEntity = default;
             EntityCoordinates sCoordinates = default;
 
             // Spawn a paused map with one tile to spawn puddles on
@@ -100,7 +99,7 @@ namespace Content.IntegrationTests.Tests.Fluids
                 sPauseManager.SetMapPaused(sMapId, true);
                 sGrid = sMapManager.CreateGrid(sMapId);
                 sGridId = sGrid.Index;
-                sGridEntity = sEntityManager.GetEntity(sGrid.GridEntityId);
+                sGridEntity = sGrid.GridEntityId;
                 IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(sGridEntity).EntityPaused = true; // See https://github.com/space-wizards/RobustToolbox/issues/1444
 
                 var tileDefinition = sTileDefinitionManager["underplating"];

@@ -41,19 +41,19 @@ namespace Content.Server.Atmos.Commands
 
             var entMan = IoCManager.Resolve<IEntityManager>();
 
-            if (!entMan.TryGetEntity(gridComp.GridEntityId, out var grid))
+            if (!entMan.EntityExists(gridComp.GridEntityId))
             {
                 shell.WriteLine("Failed to get grid entity.");
                 return;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().HasComponent<IAtmosphereComponent>(grid))
+            if (entMan.HasComponent<IAtmosphereComponent>(gridComp.GridEntityId))
             {
                 shell.WriteLine("Grid already has an atmosphere.");
                 return;
             }
 
-            IoCManager.Resolve<IEntityManager>().AddComponent<UnsimulatedGridAtmosphereComponent>(grid);
+            entMan.AddComponent<UnsimulatedGridAtmosphereComponent>(gridComp.GridEntityId);
 
             shell.WriteLine($"Added unsimulated atmosphere to grid {id}.");
         }

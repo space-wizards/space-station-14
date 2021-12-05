@@ -3,9 +3,8 @@ using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Managers;
 using Content.Server.Station;
-using Content.Shared.Administration.Logs;
-using Content.Shared.Station;
 using Content.Shared.Database;
+using Content.Shared.Station;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -187,7 +186,7 @@ namespace Content.Server.StationEvents.Events
         }
 
 
-        public static bool TryFindRandomTile(out Vector2i tile, out StationId targetStation, out IEntity? targetGrid, out EntityCoordinates targetCoords, IRobustRandom? robustRandom = null, IEntityManager? entityManager = null)
+        public static bool TryFindRandomTile(out Vector2i tile, out StationId targetStation, out EntityUid targetGrid, out EntityCoordinates targetCoords, IRobustRandom? robustRandom = null, IEntityManager? entityManager = null)
         {
             tile = default;
             robustRandom ??= IoCManager.Resolve<IRobustRandom>();

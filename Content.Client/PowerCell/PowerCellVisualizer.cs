@@ -13,7 +13,7 @@ namespace Content.Client.PowerCell
         [DataField("prefix")]
         private string? _prefix;
 
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
 

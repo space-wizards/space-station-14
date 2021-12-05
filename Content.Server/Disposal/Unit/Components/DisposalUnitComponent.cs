@@ -71,7 +71,7 @@ namespace Content.Server.Disposal.Unit.Components
         /// </summary>
         [ViewVariables] public Container Container = default!;
 
-        [ViewVariables] public IReadOnlyList<IEntity> ContainedEntities => Container.ContainedEntities;
+        [ViewVariables] public IReadOnlyList<EntityUid> ContainedEntities => Container.ContainedEntities;
 
         [ViewVariables]
         public bool Powered =>
@@ -88,7 +88,7 @@ namespace Content.Server.Disposal.Unit.Components
         [DataField("air")]
         public GasMixture Air { get; set; } = new(Atmospherics.CellVolume);
 
-        private bool PlayerCanUse(IEntity? player)
+        private bool PlayerCanUse(EntityUid player)
         {
             if (player == null)
             {

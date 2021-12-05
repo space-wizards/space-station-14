@@ -31,7 +31,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             {
                 var playerEnt = serverPlayerManager.Sessions.Single().AttachedEntity;
                 Assert.NotNull(playerEnt);
-                var alertsComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ServerAlertsComponent>(playerEnt);
+                var alertsComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ServerAlertsComponent>(playerEnt!.Value);
                 Assert.NotNull(alertsComponent);
 
                 // show 2 alerts
@@ -71,7 +71,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             {
                 var playerEnt = serverPlayerManager.Sessions.Single().AttachedEntity;
                 Assert.NotNull(playerEnt);
-                var alertsComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ServerAlertsComponent>(playerEnt);
+                var alertsComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ServerAlertsComponent>(playerEnt!.Value);
                 Assert.NotNull(alertsComponent);
 
                 alertsComponent.ClearAlert(AlertType.Debug1);

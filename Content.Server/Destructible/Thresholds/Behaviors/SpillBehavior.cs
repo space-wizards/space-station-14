@@ -14,7 +14,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         public string? Solution;
 
         /// <summary>
-        /// If there is a SpillableComponent on IEntity owner use it to create a puddle/smear.
+        /// If there is a SpillableComponent on EntityUidowner use it to create a puddle/smear.
         /// Or whatever solution is specified in the behavior itself.
         /// If none are available do nothing.
         /// </summary>

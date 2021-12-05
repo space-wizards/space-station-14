@@ -77,8 +77,7 @@ namespace Content.IntegrationTests.Tests
             await _server.WaitPost(() =>
             {
                 var gridEnt = mapManager.GetAllGrids().First().GridEntityId;
-                IEntity tempQualifier = serverEntManager.GetEntity(gridEnt);
-                worldPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(tempQualifier).WorldPosition;
+                worldPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(gridEnt).WorldPosition;
 
                 var ent = serverEntManager.SpawnEntity(prototype, new EntityCoordinates(gridEnt, 0f, 0f));
                 IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(ent).LocalRotation = angle;
@@ -93,8 +92,7 @@ namespace Content.IntegrationTests.Tests
 
             await _client.WaitPost(() =>
             {
-                var ent = clientEntManager.GetEntity(entity);
-                var clickable = IoCManager.Resolve<IEntityManager>().GetComponent<ClickableComponent>(ent);
+                var clickable = IoCManager.Resolve<IEntityManager>().GetComponent<ClickableComponent>(entity);
 
                 hit = clickable.CheckClick((clickPosX, clickPosY) + worldPos!.Value, out _, out _);
             });

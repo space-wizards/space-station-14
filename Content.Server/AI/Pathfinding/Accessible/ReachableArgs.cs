@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Content.Server.Access.Components;
 using Content.Server.Access.Systems;
 using Content.Server.AI.Components;
 using Robust.Shared.GameObjects;
@@ -26,7 +25,7 @@ namespace Content.Server.AI.Pathfinding.Accessible
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public static ReachableArgs GetArgs(IEntity entity)
+        public static ReachableArgs GetArgs(EntityUid entity)
         {
             var collisionMask = 0;
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out IPhysBody? physics))

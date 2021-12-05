@@ -42,7 +42,7 @@ namespace Content.Server.Storage.Components
         /// <param name="user"></param>
         /// <param name="itemToHide"></param>
         /// <returns>True if item was hidden inside stash</returns>
-        public bool TryHideItem(IEntity user, IEntity itemToHide)
+        public bool TryHideItem(EntityUid user, EntityUid itemToHide)
         {
             if (_itemContainer.ContainedEntity != null)
             {
@@ -76,7 +76,7 @@ namespace Content.Server.Storage.Components
         /// </summary>
         /// <param name="user"></param>
         /// <returns>True if user recieved item</returns>
-        public bool TryGetItem(IEntity user)
+        public bool TryGetItem(EntityUiduser)
         {
             if (_itemContainer.ContainedEntity == null)
                 return false;

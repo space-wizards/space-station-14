@@ -2,7 +2,6 @@ using System;
 using System.Threading.Tasks;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
-using Content.Server.Stunnable.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Interaction;
@@ -16,7 +15,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -195,7 +193,7 @@ namespace Content.Server.Cuffs.Components
         /// <summary>
         /// Update the cuffed state of an entity
         /// </summary>
-        private async void TryUpdateCuff(IEntity user, IEntity target, CuffableComponent cuffs)
+        private async void TryUpdateCuff(EntityUid user, EntityUid target, CuffableComponent cuffs)
         {
             var cuffTime = CuffTime;
 

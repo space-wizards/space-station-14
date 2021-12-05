@@ -52,7 +52,7 @@ namespace Content.Server.Engineering.EntitySystems
                 hands.PutInHandOrDrop(item);
             }
 
-            IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) component.Owner);
+            IoCManager.Resolve<IEntityManager>().DeleteEntity(component.Owner);
 
             return;
         }

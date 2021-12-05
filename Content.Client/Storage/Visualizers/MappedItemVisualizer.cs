@@ -16,7 +16,7 @@ namespace Content.Client.Storage.Visualizers
         [DataField("sprite")] private ResourcePath? _rsiPath;
         private List<string> _spriteLayers = new();
 
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
 
@@ -30,14 +30,16 @@ namespace Content.Client.Storage.Visualizers
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
-            if (component.Owner.TryGetComponent<ISpriteComponent>(out var spriteComponent))
+
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (entities.TryGetComponent(component.Owner, out ISpriteComponent spriteComponent))
             {
                 if (_spriteLayers.Count == 0)
                 {
                     InitLayers(spriteComponent, component);
                 }
-                EnableLayers(spriteComponent, component);
 
+                EnableLayers(spriteComponent, component);
             }
         }
 

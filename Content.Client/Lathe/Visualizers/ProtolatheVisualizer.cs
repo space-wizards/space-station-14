@@ -48,7 +48,7 @@ namespace Content.Client.Lathe.Visualizers
             return animation;
         }
 
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             if (!IoCManager.Resolve<IEntityManager>().HasComponent<AnimationPlayerComponent>(entity))
             {

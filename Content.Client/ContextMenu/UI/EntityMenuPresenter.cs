@@ -18,8 +18,8 @@ using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+
 namespace Content.Client.ContextMenu.UI
 {
     /// <summary>
@@ -51,7 +51,7 @@ namespace Content.Client.ContextMenu.UI
         /// <remarks>
         ///     This is used remove GUI elements when the entities are deleted. or leave the LOS.
         /// </remarks>
-        public Dictionary<IEntity, EntityMenuElement> Elements = new();
+        public Dictionary<EntityUid, EntityMenuElement> Elements = new();
 
         public EntityMenuPresenter(VerbSystem verbSystem) : base()
         {
@@ -77,7 +77,7 @@ namespace Content.Client.ContextMenu.UI
         /// <summary>
         ///     Given a list of entities, sort them into groups and them to a new entity menu.
         /// </summary>
-        public void OpenRootMenu(List<IEntity> entities)
+        public void OpenRootMenu(List<EntityUid> entities)
         {
             // close any old menus first.
             if (RootMenu.Visible)
@@ -101,8 +101,12 @@ namespace Content.Client.ContextMenu.UI
 
             // get an entity associated with this element
             var entity = entityElement.Entity;
-            entity ??= GetFirstEntityOrNull(element.SubMenu);
-            if (entity == null)
+            if (!entity.Valid)
+            {
+                entity = GetFirstEntityOrNull(element.SubMenu);
+            }
+
+            if (!entity.Valid)
                 return;
 
             // open verb menu?
@@ -173,9 +177,8 @@ namespace Content.Client.ContextMenu.UI
             if (!RootMenu.Visible)
                 return;
 
-            var player = _playerManager.LocalPlayer?.ControlledEntity;
-
-            if (player == null)
+            if (_playerManager.LocalPlayer?.ControlledEntity is not { } player ||
+                !player.IsValid())
                 return;
 
             // Do we need to do in-range unOccluded checks?
@@ -193,7 +196,7 @@ namespace Content.Client.ContextMenu.UI
         ///     Add menu elements for a list of grouped entities;
         /// </summary>
         /// <param name="entityGroups"> A list of entity groups. Entities are grouped together based on prototype.</param>
-        private void AddToUI(List<List<IEntity>> entityGroups)
+        private void AddToUI(List<List<EntityUid>> entityGroups)
         {
             // If there is only a single group. We will just directly list individual entities
             if (entityGroups.Count == 1)
@@ -226,7 +229,7 @@ namespace Content.Client.ContextMenu.UI
         /// <summary>
         ///     Given a group of entities, add a menu element that has a pop-up sub-menu listing group members
         /// </summary>
-        private void AddGroupToUI(List<IEntity> group)
+        private void AddGroupToUI(List<EntityUid> group)
         {
             EntityMenuElement element = new();
             ContextMenuPopup subMenu = new(this, element);
@@ -245,7 +248,7 @@ namespace Content.Client.ContextMenu.UI
         /// <summary>
         ///     Remove an entity from the entity context menu.
         /// </summary>
-        private void RemoveEntity(IEntity entity)
+        private void RemoveEntity(EntityUid entity)
         {
             // find the element associated with this entity
             if (!Elements.TryGetValue(entity, out var element))
@@ -323,17 +326,17 @@ namespace Content.Client.ContextMenu.UI
         /// <summary>
         ///     Recursively look through a sub-menu and return the first entity.
         /// </summary>
-        private IEntity? GetFirstEntityOrNull(ContextMenuPopup? menu)
+        private EntityUid GetFirstEntityOrNull(ContextMenuPopup? menu)
         {
             if (menu == null)
-                return null;
+                return default;
 
             foreach (var element in menu.MenuBody.Children)
             {
                 if (element is not EntityMenuElement entityElement)
                     continue;
 
-                if (entityElement.Entity != null)
+                if (entityElement.Entity != default)
                 {
                     if (!((!IoCManager.Resolve<IEntityManager>().EntityExists(entityElement.Entity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entityElement.Entity).EntityLifeStage) >= EntityLifeStage.Deleted))
                         return entityElement.Entity;
@@ -342,11 +345,11 @@ namespace Content.Client.ContextMenu.UI
 
                 // if the element has no entity, its a group of entities with another attached sub-menu.
                 var entity = GetFirstEntityOrNull(entityElement.SubMenu);
-                if (entity != null)
+                if (entity != default)
                     return entity;
             }
 
-            return null;
+            return default;
         }
 
         public override void OpenSubMenu(ContextMenuElement element)

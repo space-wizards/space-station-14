@@ -1,3 +1,5 @@
+using System;
+using System.Threading;
 using Content.Server.DoAfter;
 using Content.Server.RCD.Components;
 using Content.Shared.Coordinates;
@@ -6,7 +8,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Maps;
 using Content.Shared.Popups;
-using Content.Shared.Tag;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -14,8 +15,6 @@ using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
-using System;
-using System.Threading;
 
 namespace Content.Server.RCD.Systems
 {
@@ -118,10 +117,10 @@ namespace Content.Server.RCD.Systems
                     }
                     else //Delete what the user targeted
                     {
-                        IEntity? tempQualifier = args.Target;
+                        EntityUid tempQualifier = args.Target;
                         if (tempQualifier != null)
                         {
-                            IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) tempQualifier);
+                            IoCManager.Resolve<IEntityManager>().DeleteEntity(tempQualifier);
                         }
                     }
                     break;
@@ -228,7 +227,7 @@ namespace Content.Server.RCD.Systems
             }
         }
 
-        private void NextMode(EntityUid uid, RCDComponent rcd, IEntity? user)
+        private void NextMode(EntityUid uid, RCDComponent rcd, EntityUid user)
         {
             SoundSystem.Play(Filter.Pvs(uid), rcd.SwapModeSound.GetSound(), uid);
 

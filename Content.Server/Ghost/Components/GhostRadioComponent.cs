@@ -2,7 +2,6 @@
 using Content.Server.Radio.Components;
 using Content.Shared.Chat;
 using Robust.Server.GameObjects;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -24,7 +23,7 @@ namespace Content.Server.Ghost.Components
 
         public IReadOnlyList<int> Channels => _channels;
 
-        public void Receive(string message, int channel, IEntity speaker)
+        public void Receive(string message, int channel, EntityUidspeaker)
         {
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ActorComponent? actor))
                 return;
@@ -40,6 +39,6 @@ namespace Content.Server.Ghost.Components
             _netManager.ServerSendMessage(msg, playerChannel);
         }
 
-        public void Broadcast(string message, IEntity speaker) { }
+        public void Broadcast(string message, EntityUidspeaker) { }
     }
 }

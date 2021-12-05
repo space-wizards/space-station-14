@@ -31,7 +31,7 @@ namespace Content.Client.DoAfter
         /// </summary>
         public const float ExcessTime = 0.5f;
 
-        private IEntity? _attachedEntity;
+        private EntityUid _attachedEntity;
 
         public override void Initialize()
         {
@@ -51,7 +51,7 @@ namespace Content.Client.DoAfter
             var currentTime = _gameTiming.CurTime;
 
             // Can't see any I guess?
-            if (_attachedEntity == null || (!IoCManager.Resolve<IEntityManager>().EntityExists(_attachedEntity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_attachedEntity).EntityLifeStage) >= EntityLifeStage.Deleted)
+            if (_attachedEntity == default || (!EntityManager.EntityExists(_attachedEntity) ? EntityLifeStage.Deleted : EntityManager.GetComponent<MetaDataComponent>(_attachedEntity).EntityLifeStage) >= EntityLifeStage.Deleted)
                 return;
 
             var viewbox = _eyeManager.GetWorldViewport().Enlarged(2.0f);
@@ -59,23 +59,23 @@ namespace Content.Client.DoAfter
             foreach (var comp in EntityManager.EntityQuery<DoAfterComponent>(true))
             {
                 var doAfters = comp.DoAfters.ToList();
-                var compPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(comp.Owner).WorldPosition;
+                var compPos = EntityManager.GetComponent<TransformComponent>(comp.Owner).WorldPosition;
 
                 if (doAfters.Count == 0 ||
-                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(comp.Owner).MapID != IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_attachedEntity).MapID ||
+                    EntityManager.GetComponent<TransformComponent>(comp.Owner).MapID != EntityManager.GetComponent<TransformComponent>(_attachedEntity).MapID ||
                     !viewbox.Contains(compPos))
                 {
                     comp.Disable();
                     continue;
                 }
 
-                var range = (compPos - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_attachedEntity).WorldPosition).Length +
+                var range = (compPos - EntityManager.GetComponent<TransformComponent>(_attachedEntity).WorldPosition).Length +
                             0.01f;
 
                 if (comp.Owner != _attachedEntity &&
                     !ExamineSystemShared.InRangeUnOccluded(
-                        IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_attachedEntity).MapPosition,
-                        IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(comp.Owner).MapPosition, range,
+                        EntityManager.GetComponent<TransformComponent>(_attachedEntity).MapPosition,
+                        EntityManager.GetComponent<TransformComponent>(comp.Owner).MapPosition, range,
                         entity => entity == comp.Owner || entity == _attachedEntity))
                 {
                     comp.Disable();
@@ -84,7 +84,7 @@ namespace Content.Client.DoAfter
 
                 comp.Enable();
 
-                var userGrid = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(comp.Owner).Coordinates;
+                var userGrid = EntityManager.GetComponent<TransformComponent>(comp.Owner).Coordinates;
 
                 // Check cancellations / finishes
                 foreach (var (id, doAfter) in doAfters)
@@ -116,8 +116,8 @@ namespace Content.Client.DoAfter
 
                     if (doAfter.BreakOnTargetMove)
                     {
-                        if (EntityManager.TryGetEntity(doAfter.TargetUid, out var targetEntity) &&
-                            !IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(targetEntity).Coordinates.InRange(EntityManager, doAfter.TargetGrid,
+                        if (EntityManager.EntityExists(doAfter.TargetUid) &&
+                            !EntityManager.GetComponent<TransformComponent>(doAfter.TargetUid).Coordinates.InRange(EntityManager, doAfter.TargetGrid,
                                 doAfter.MovementThreshold))
                         {
                             comp.Cancel(id, currentTime);

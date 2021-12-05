@@ -6,9 +6,9 @@ namespace Content.Server.AI.Operators.Inventory
 {
     public class DropHandItemsOperator : AiOperator
     {
-        private readonly IEntity _owner;
+        private readonly EntityUid _owner;
 
-        public DropHandItemsOperator(IEntity owner)
+        public DropHandItemsOperator(EntityUid owner)
         {
             _owner = owner;
         }

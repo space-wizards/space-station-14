@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Content.Server.Gravity;
 using Content.Server.Gravity.EntitySystems;
-using Content.Shared.Acts;
 using Content.Shared.Alert;
 using Content.Shared.Coordinates;
 using NUnit.Framework;
@@ -44,7 +43,7 @@ namespace Content.IntegrationTests.Tests.Gravity
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
 
-            IEntity human = null;
+            EntityUid human = default;
             SharedAlertsComponent alerts = null;
 
             await server.WaitAssertion(() =>

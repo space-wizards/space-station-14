@@ -36,7 +36,7 @@ namespace Content.IntegrationTests.Tests.Destructible
             var sPrototypeManager = server.ResolveDependency<IPrototypeManager>();
             var sEntitySystemManager = server.ResolveDependency<IEntitySystemManager>();
 
-            EntityUid sDestructibleEntity = null; ;
+            EntityUid sDestructibleEntity = default;
             DamageableComponent sDamageableComponent = null;
             DestructibleComponent sDestructibleComponent = null;
             TestDestructibleListenerSystem sTestThresholdListenerSystem = null;

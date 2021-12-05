@@ -23,17 +23,17 @@ namespace Content.Server.AI.Pathfinding
         /// Whenever there's a change in the collision layers we update the mask as the graph has more reads than writes
         /// </summary>
         public int BlockedCollisionMask { get; private set; }
-        private readonly Dictionary<IEntity, int> _blockedCollidables = new(0);
+        private readonly Dictionary<EntityUid, int> _blockedCollidables = new(0);
 
-        public IReadOnlyDictionary<IEntity, int> PhysicsLayers => _physicsLayers;
-        private readonly Dictionary<IEntity, int> _physicsLayers = new(0);
+        public IReadOnlyDictionary<EntityUid, int> PhysicsLayers => _physicsLayers;
+        private readonly Dictionary<EntityUid, int> _physicsLayers = new(0);
 
         /// <summary>
         /// The entities on this tile that require access to traverse
         /// </summary>
         /// We don't store the ICollection, at least for now, as we'd need to replicate the access code here
         public IReadOnlyCollection<AccessReader> AccessReaders => _accessReaders.Values;
-        private readonly Dictionary<IEntity, AccessReader> _accessReaders = new(0);
+        private readonly Dictionary<EntityUid, AccessReader> _accessReaders = new(0);
 
         public PathfindingNode(PathfindingChunk parent, TileRef tileRef)
         {
@@ -42,7 +42,7 @@ namespace Content.Server.AI.Pathfinding
             GenerateMask();
         }
 
-        public static bool IsRelevant(IEntity entity, IPhysBody physicsComponent)
+        public static bool IsRelevant(EntityUid entity, IPhysBody physicsComponent)
         {
             if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).GridID == GridId.Invalid ||
                 (PathfindingSystem.TrackedCollisionLayers & physicsComponent.CollisionLayer) == 0)
@@ -258,7 +258,7 @@ namespace Content.Server.AI.Pathfinding
         /// <param name="entity"></param>
         /// TODO: These 2 methods currently don't account for a bunch of changes (e.g. airlock unpowered, wrenching, etc.)
         /// TODO: Could probably optimise this slightly more.
-        public void AddEntity(IEntity entity, IPhysBody physicsComponent)
+        public void AddEntity(EntityUid entity, IPhysBody physicsComponent)
         {
             // If we're a door
             if (IoCManager.Resolve<IEntityManager>().HasComponent<AirlockComponent>(entity) || IoCManager.Resolve<IEntityManager>().HasComponent<ServerDoorComponent>(entity))
@@ -294,7 +294,7 @@ namespace Content.Server.AI.Pathfinding
         /// Will check each category and remove it from the applicable one
         /// </summary>
         /// <param name="entity"></param>
-        public void RemoveEntity(IEntity entity)
+        public void RemoveEntity(EntityUid entity)
         {
             // There's no guarantee that the entity isn't deleted
             // 90% of updates are probably entities moving around

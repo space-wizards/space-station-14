@@ -34,14 +34,14 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             set
             {
                 _capacity = value;
-                _spawnedAmmo = new Stack<IEntity>(value);
+                _spawnedAmmo = new Stack<EntityUid>(value);
             }
         }
 
         private int _capacity = 30;
 
         public int AmmoLeft => _spawnedAmmo.Count + _unspawnedCount;
-        private Stack<IEntity> _spawnedAmmo = new();
+        private Stack<EntityUid> _spawnedAmmo = new();
         private Container _ammoContainer = default!;
         private int _unspawnedCount;
 
@@ -81,7 +81,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             }
         }
 
-        public IEntity? TakeAmmo()
+        public EntityUid TakeAmmo()
         {
             if (_spawnedAmmo.TryPop(out var ammo))
             {
@@ -102,7 +102,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             return ammo;
         }
 
-        public bool TryInsertAmmo(IEntity user, IEntity entity)
+        public bool TryInsertAmmo(EntityUid user, EntityUid entity)
         {
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out AmmoComponent? ammoComponent))
             {
@@ -140,7 +140,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
                 {
                     var ammo = rangedMagazine.TakeAmmo();
 
-                    if (ammo == null)
+                    if (!ammo.Valid)
                     {
                         continue;
                     }
@@ -158,7 +158,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             return false;
         }
 
-        private bool TryUse(IEntity user)
+        private bool TryUse(EntityUiduser)
         {
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out HandsComponent? handsComponent))
             {
@@ -190,7 +190,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
         public void EjectContents(int count)
         {
             var ejectCount = Math.Min(count, Capacity);
-            var ejectAmmo = new List<IEntity>(ejectCount);
+            var ejectAmmo = new List<EntityUid>(ejectCount);
 
             for (var i = 0; i < Math.Min(count, Capacity); i++)
             {

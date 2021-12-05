@@ -4,7 +4,6 @@ using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -32,7 +31,8 @@ namespace Content.Shared.Shuttles.Components
             base.HandleComponentState(curState, nextState);
             if (curState is not PilotComponentState state) return;
 
-            if (state.Console == null)
+            var console = state.Console.GetValueOrDefault();
+            if (!console.IsValid())
             {
                 Console = null;
                 return;
@@ -40,10 +40,9 @@ namespace Content.Shared.Shuttles.Components
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
 
-            if (!entityManager.TryGetEntity(state.Console.Value, out var consoleEnt) ||
-                !entityManager.TryGetComponent(consoleEnt.Value, out SharedShuttleConsoleComponent? shuttleConsoleComponent))
+            if (!entityManager.TryGetComponent(console, out SharedShuttleConsoleComponent? shuttleConsoleComponent))
             {
-                Logger.Warning($"Unable to set Helmsman console to {state.Console.Value}");
+                Logger.Warning($"Unable to set Helmsman console to {console}");
                 return;
             }
 

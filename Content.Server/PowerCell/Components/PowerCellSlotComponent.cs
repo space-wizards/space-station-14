@@ -126,7 +126,7 @@ namespace Content.Server.PowerCell.Components
         /// <param name="user">(optional) the user to give the removed cell to.</param>
         /// <param name="playSound">Should <see cref="CellRemoveSound"/> be played upon removal?</param>
         /// <returns>The cell component of the entity that was removed, or null if removal failed.</returns>
-        public PowerCellComponent? EjectCell(IEntity? user, bool playSound = true)
+        public PowerCellComponent? EjectCell(EntityUid user, bool playSound = true)
         {
             var cell = Cell;
             if (cell == null || !CanRemoveCell) return null;
@@ -159,7 +159,7 @@ namespace Content.Server.PowerCell.Components
         /// <param name="cell">The cell to insert.</param>
         /// <param name="playSound">Should <see cref="CellInsertSound"/> be played upon insertion?</param>
         /// <returns>True if insertion succeeded; false otherwise.</returns>
-        public bool InsertCell(IEntity cell, bool playSound = true)
+        public bool InsertCell(EntityUid cell, bool playSound = true)
         {
             if (Cell != null) return false;
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent((EntityUid) cell, out (ItemComponent?) var _)) return false;

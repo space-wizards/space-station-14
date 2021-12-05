@@ -15,7 +15,7 @@ using Robust.Shared.Timing;
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    [TestOf(typeof(IEntity))]
+    [TestOf(typeof(EntityUid))]
     public class EntityTest : ContentIntegrationTest
     {
         [Test]
@@ -89,7 +89,7 @@ namespace Content.IntegrationTests.Tests
                                 testEntity = entityMan.SpawnEntity(prototype.ID, testLocation);
                                 server.RunTicks(2);
                                 Assert.That((!IoCManager.Resolve<IEntityManager>().EntityExists(testEntity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(testEntity).EntityLifeStage) >= EntityLifeStage.Initialized);
-                                entityMan.DeleteEntity((EntityUid) testEntity);
+                                entityMan.DeleteEntity(testEntity);
                             }, "Entity '{0}' threw an exception.",
                             prototype.ID);
                     }
@@ -194,7 +194,7 @@ namespace Content.IntegrationTests.Tests
 
                         server.RunTicks(2);
 
-                        entityManager.DeleteEntity((EntityUid) entity);
+                        entityManager.DeleteEntity(entity);
                     }
                 });
             });
@@ -336,7 +336,7 @@ namespace Content.IntegrationTests.Tests
                         }
 
                         server.RunTicks(2);
-                        entityManager.DeleteEntity((EntityUid) entity);
+                        entityManager.DeleteEntity(entity);
                     }
                 });
             });

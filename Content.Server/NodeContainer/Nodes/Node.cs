@@ -31,7 +31,7 @@ namespace Content.Server.NodeContainer.Nodes
         /// <summary>
         ///     The entity that owns this node via its <see cref="NodeContainerComponent"/>.
         /// </summary>
-        [ViewVariables] public IEntity Owner { get; private set; } = default!;
+        [ViewVariables] public EntityUid Owner { get; private set; } = default!;
 
         /// <summary>
         ///     If this node should be considered for connection by other nodes.
@@ -69,7 +69,7 @@ namespace Content.Server.NodeContainer.Nodes
         ///     Invoked when the owning <see cref="NodeContainerComponent"/> is initialized.
         /// </summary>
         /// <param name="owner">The owning entity.</param>
-        public virtual void Initialize(IEntity owner)
+        public virtual void Initialize(EntityUid owner)
         {
             Owner = owner;
         }

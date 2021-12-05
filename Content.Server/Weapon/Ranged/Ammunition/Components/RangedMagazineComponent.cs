@@ -24,7 +24,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
     {
         public override string Name => "RangedMagazine";
 
-        private readonly Stack<IEntity> _spawnedAmmo = new();
+        private readonly Stack<EntityUid> _spawnedAmmo = new();
         private Container _ammoContainer = default!;
 
         public int ShotsLeft => _spawnedAmmo.Count + _unspawnedCount;
@@ -91,7 +91,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             _appearanceComponent?.SetData(AmmoVisuals.AmmoMax, Capacity);
         }
 
-        public bool TryInsertAmmo(IEntity user, IEntity ammo)
+        public bool TryInsertAmmo(EntityUid user, EntityUid ammo)
         {
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(ammo, out AmmoComponent? ammoComponent))
             {
@@ -116,9 +116,9 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             return true;
         }
 
-        public IEntity? TakeAmmo()
+        public EntityUid TakeAmmo()
         {
-            IEntity? ammo = null;
+            EntityUid ammo = default;
             // If anything's spawned use that first, otherwise use the fill prototype as a fallback (if we have spawn count left)
             if (_spawnedAmmo.TryPop(out var entity))
             {

@@ -14,7 +14,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -41,9 +40,9 @@ namespace Content.Server.Chemistry.Components
             Dirty();
         }
 
-        public bool TryDoInject(IEntity? target, IEntity user)
+        public bool TryDoInject(EntityUid? target, EntityUid user)
         {
-            if (target == null || !EligibleEntity(target))
+            if (target == default || !EligibleEntity(target.Value))
                 return false;
 
             string? msgFormat = null;
@@ -67,7 +66,7 @@ namespace Content.Server.Chemistry.Components
                 return true;
             }
 
-            if (!solutionsSys.TryGetInjectableSolution(target, out var targetSolution))
+            if (!solutionsSys.TryGetInjectableSolution(target.Value, out var targetSolution))
             {
                 user.PopupMessage(user,
                     Loc.GetString("hypospray-cant-inject", ("target", target)));
@@ -78,9 +77,9 @@ namespace Content.Server.Chemistry.Components
                 ("other", target)));
             if (target != user)
             {
-                target.PopupMessage(Loc.GetString("hypospray-component-feel-prick-message"));
+                target.Value.PopupMessage(Loc.GetString("hypospray-component-feel-prick-message"));
                 var meleeSys = EntitySystem.Get<MeleeWeaponSystem>();
-                var angle = Angle.FromWorldVec(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(target).WorldPosition - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user).WorldPosition);
+                var angle = Angle.FromWorldVec(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(target.Value).WorldPosition - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user).WorldPosition);
                 meleeSys.SendLunge(angle, user);
             }
 
@@ -107,11 +106,11 @@ namespace Content.Server.Chemistry.Components
                 return true;
             }
 
-            removedSolution.DoEntityReaction(target, ReactionMethod.Injection);
+            removedSolution.DoEntityReaction(target.Value, ReactionMethod.Injection);
 
-            EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(target, targetSolution, removedSolution);
+            EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(target.Value, targetSolution, removedSolution);
 
-            static bool EligibleEntity(IEntity entity)
+            static bool EligibleEntity(EntityUid entity)
             {
                 // TODO: Does checking for BodyComponent make sense as a "can be hypospray'd" tag?
                 // In SS13 the hypospray ONLY works on mobs, NOT beakers or anything else.

@@ -74,10 +74,12 @@ namespace Content.Server.Weapon.Ranged.Barrels
                 !_actionBlockerSystem.CanPickup(args.User))
                 return;
 
-            Verb verb = new();
-            verb.Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(component.PowerCell.Owner).EntityName;
-            verb.Category = VerbCategory.Eject;
-            verb.Act = () => component.TryEjectCell(args.User);
+            Verb verb = new()
+            {
+                Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(component.PowerCell.Owner).EntityName,
+                Category = VerbCategory.Eject,
+                Act = () => component.TryEjectCell(args.User)
+            };
             args.Verbs.Add(verb);
         }
 

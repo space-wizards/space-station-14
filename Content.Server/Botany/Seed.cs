@@ -248,7 +248,7 @@ namespace Content.Server.Botany
             return newSeed;
         }
 
-        public IEntity SpawnSeedPacket(EntityCoordinates transformCoordinates, IEntityManager? entityManager = null)
+        public EntityUid SpawnSeedPacket(EntityCoordinates transformCoordinates, IEntityManager? entityManager = null)
         {
             entityManager ??= IoCManager.Resolve<IEntityManager>();
 
@@ -278,33 +278,33 @@ namespace Content.Server.Botany
             }
         }
 
-        public IEnumerable<IEntity> AutoHarvest(EntityCoordinates position, int yieldMod = 1)
+        public IEnumerable<EntityUid> AutoHarvest(EntityCoordinates position, int yieldMod = 1)
         {
             if (position.IsValid(IoCManager.Resolve<IEntityManager>()) && ProductPrototypes != null &&
                 ProductPrototypes.Count > 0)
                 return GenerateProduct(position, yieldMod);
 
-            return Enumerable.Empty<IEntity>();
+            return Enumerable.Empty<EntityUid>();
         }
 
-        public IEnumerable<IEntity> Harvest(IEntity user, int yieldMod = 1)
+        public IEnumerable<EntityUid> Harvest(EntityUid user, int yieldMod = 1)
         {
             AddToDatabase();
 
             if (user == null)
-                return Enumerable.Empty<IEntity>();
+                return Enumerable.Empty<EntityUid>();
 
             if (ProductPrototypes == null || ProductPrototypes.Count == 0 || Yield <= 0)
             {
                 user.PopupMessageCursor(Loc.GetString("botany-harvest-fail-message"));
-                return Enumerable.Empty<IEntity>();
+                return Enumerable.Empty<EntityUid>();
             }
 
             user.PopupMessageCursor(Loc.GetString("botany-harvest-success-message", ("name", DisplayName)));
             return GenerateProduct(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user).Coordinates, yieldMod);
         }
 
-        public IEnumerable<IEntity> GenerateProduct(EntityCoordinates position, int yieldMod = 1)
+        public IEnumerable<EntityUid> GenerateProduct(EntityCoordinates position, int yieldMod = 1)
         {
             var totalYield = 0;
             if (Yield > -1)
@@ -325,7 +325,7 @@ namespace Content.Server.Botany
             var random = IoCManager.Resolve<IRobustRandom>();
             var entityManager = IoCManager.Resolve<IEntityManager>();
 
-            var products = new List<IEntity>();
+            var products = new List<EntityUid>();
 
             for (var i = 0; i < totalYield; i++)
             {
@@ -357,9 +357,9 @@ namespace Content.Server.Botany
             return Clone();
         }
 
-        public bool CheckHarvest(IEntity user, IEntity? held = null)
+        public bool CheckHarvest(EntityUid user, EntityUid? held = null)
         {
-            return (!Ligneous || (Ligneous && held != null && held.HasTag("BotanySharp")));
+            return !Ligneous || (Ligneous && held != null && held.Value.HasTag("BotanySharp"));
         }
     }
 }

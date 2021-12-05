@@ -17,7 +17,7 @@ namespace Content.Server.Explosion.Components
         private float _delay = 0f;
 
         // TODO: Need to split this out so it's a generic "OnUseTimerTrigger" component.
-        public void Trigger(IEntity user)
+        public void Trigger(EntityUid user)
         {
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearance))
                 appearance.SetData(TriggerVisuals.VisualState, TriggerVisualState.Primed);

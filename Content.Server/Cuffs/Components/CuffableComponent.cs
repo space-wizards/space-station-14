@@ -4,12 +4,10 @@ using System.Linq;
 using Content.Server.Alert;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
-using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -19,7 +17,6 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
-using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Cuffs.Components
@@ -34,9 +31,9 @@ namespace Content.Server.Cuffs.Components
         [ViewVariables]
         public int CuffedHandCount => Container.ContainedEntities.Count * 2;
 
-        protected IEntity LastAddedCuffs => Container.ContainedEntities[^1];
+        protected EntityUid LastAddedCuffs => Container.ContainedEntities[^1];
 
-        public IReadOnlyList<IEntity> StoredEntities => Container.ContainedEntities;
+        public IReadOnlyList<EntityUid> StoredEntities => Container.ContainedEntities;
 
         /// <summary>
         ///     Container of various handcuffs currently applied to the entity.
@@ -90,7 +87,7 @@ namespace Content.Server.Cuffs.Components
         /// Add a set of cuffs to an existing CuffedComponent.
         /// </summary>
         /// <param name="prototype"></param>
-        public bool TryAddNewCuffs(IEntity user, IEntity handcuff)
+        public bool TryAddNewCuffs(EntityUid user, EntityUid handcuff)
         {
             if (!IoCManager.Resolve<IEntityManager>().HasComponent<HandcuffComponent>(handcuff))
             {
@@ -178,7 +175,7 @@ namespace Content.Server.Cuffs.Components
         /// </summary>
         /// <param name="user">The cuffed entity</param>
         /// <param name="cuffsToRemove">Optional param for the handcuff entity to remove from the cuffed entity. If null, uses the most recently added handcuff entity.</param>
-        public async void TryUncuff(IEntity user, IEntity? cuffsToRemove = null)
+        public async void TryUncuff(EntityUid user, EntityUid cuffsToRemove = default)
         {
             if (_uncuffing) return;
 

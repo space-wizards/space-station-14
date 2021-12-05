@@ -1,8 +1,6 @@
 using System;
 using Content.Client.Wires.Visualizers;
-using Content.Shared.Audio;
 using Content.Shared.Doors;
-using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
@@ -110,7 +108,7 @@ namespace Content.Client.Doors
             }
         }
 
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             if (!IoCManager.Resolve<IEntityManager>().HasComponent<AnimationPlayerComponent>(entity))
             {

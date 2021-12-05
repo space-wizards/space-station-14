@@ -58,7 +58,7 @@ namespace Content.Server.AME.Components
 
             SoundSystem.Play(Filter.Pvs(Owner), _unwrapSound.GetSound(), Owner);
 
-            IoCManager.Resolve<IEntityManager>().QueueDeleteEntity((EntityUid) Owner);
+            IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(Owner);
 
             return true;
         }

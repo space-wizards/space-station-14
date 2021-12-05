@@ -7,13 +7,14 @@ using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Map;
 
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
     public class AGhost : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _entities = default!;
+
         public string Command => "aghost";
         public string Description => "Makes you an admin ghost.";
         public string Help => "aghost";
@@ -35,34 +36,35 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            if (mind.VisitingEntity != null && IoCManager.Resolve<IEntityManager>().HasComponent<GhostComponent>(mind.VisitingEntity))
+            if (mind.VisitingEntity != default && _entities.HasComponent<GhostComponent>(mind.VisitingEntity))
             {
                 player.ContentData()!.Mind?.UnVisit();
                 return;
             }
 
-            var canReturn = mind.CurrentEntity != null;
-            IEntity? tempQualifier = player.AttachedEntity;
-            var ghost = IoCManager.Resolve<IEntityManager>().SpawnEntity((string?) "AdminObserver", (EntityCoordinates) ((tempQualifier != null ? IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(tempQualifier) : null).Coordinates
-                ?? EntitySystem.Get<GameTicker>().GetObserverSpawnPoint()));
+            var canReturn = mind.CurrentEntity != default;
+            var coordinates = player.AttachedEntity.HasValue
+                ? _entities.GetComponent<TransformComponent>(player.AttachedEntity.Value).Coordinates
+                : EntitySystem.Get<GameTicker>().GetObserverSpawnPoint();
+            var ghost = _entities.SpawnEntity("AdminObserver", coordinates);
 
             if (canReturn)
             {
                 // TODO: Remove duplication between all this and "GamePreset.OnGhostAttempt()"...
                 if(!string.IsNullOrWhiteSpace(mind.CharacterName))
-                    IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(ghost).EntityName = mind.CharacterName;
+                    _entities.GetComponent<MetaDataComponent>(ghost).EntityName = mind.CharacterName;
                 else if (!string.IsNullOrWhiteSpace(mind.Session?.Name))
-                    IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(ghost).EntityName = mind.Session.Name;
+                    _entities.GetComponent<MetaDataComponent>(ghost).EntityName = mind.Session.Name;
 
                 mind.Visit(ghost);
             }
             else
             {
-                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(ghost).EntityName = player.Name;
+                _entities.GetComponent<MetaDataComponent>(ghost).EntityName = player.Name;
                 mind.TransferTo(ghost);
             }
 
-            var comp = IoCManager.Resolve<IEntityManager>().GetComponent<GhostComponent>(ghost);
+            var comp = _entities.GetComponent<GhostComponent>(ghost);
             EntitySystem.Get<SharedGhostSystem>().SetCanReturnToBody(comp, canReturn);
         }
     }

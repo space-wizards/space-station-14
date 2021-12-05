@@ -56,7 +56,7 @@ namespace Content.IntegrationTests.Tests.Doors
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
 
-            EntityUid airlock = null;
+            EntityUid airlock = default;
             ServerDoorComponent doorComponent = null;
 
             server.Assert(() =>
@@ -97,7 +97,7 @@ namespace Content.IntegrationTests.Tests.Doors
             {
                 Assert.DoesNotThrow(() =>
                 {
-                    IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) airlock);
+                    IoCManager.Resolve<IEntityManager>().DeleteEntity(airlock);
                 });
             });
 
@@ -121,8 +121,8 @@ namespace Content.IntegrationTests.Tests.Doors
             var entityManager = server.ResolveDependency<IEntityManager>();
 
             IPhysBody physBody = null;
-            EntityUid physicsDummy = null;
-            EntityUid airlock = null;
+            EntityUid physicsDummy = default;
+            EntityUid airlock = default;
             ServerDoorComponent doorComponent = null;
 
             var physicsDummyStartingX = -1;

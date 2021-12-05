@@ -4,7 +4,6 @@ using System.Linq;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client.ContextMenu.UI
 {
@@ -18,7 +17,7 @@ namespace Content.Client.ContextMenu.UI
             GroupingContextMenuType = obj;
         }
 
-        private List<List<IEntity>> GroupEntities(IEnumerable<IEntity> entities, int depth = 0)
+        private List<List<EntityUid>> GroupEntities(IEnumerable<EntityUid> entities, int depth = 0)
         {
             if (GroupingContextMenuType == 0)
             {
@@ -32,9 +31,9 @@ namespace Content.Client.ContextMenu.UI
             }
         }
 
-        private sealed class PrototypeAndStatesContextMenuComparer : IEqualityComparer<IEntity>
+        private sealed class PrototypeAndStatesContextMenuComparer : IEqualityComparer<EntityUid>
         {
-            private static readonly List<Func<IEntity, IEntity, bool>> EqualsList = new()
+            private static readonly List<Func<EntityUid, EntityUid, bool>> EqualsList = new()
             {
                 (a, b) => IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(a).EntityPrototype!.ID == IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(b).EntityPrototype!.ID,
                 (a, b) =>
@@ -51,7 +50,7 @@ namespace Content.Client.ContextMenu.UI
                     return xStates.OrderBy(t => t).SequenceEqual(yStates.OrderBy(t => t));
                 },
             };
-            private static readonly List<Func<IEntity, int>> GetHashCodeList = new()
+            private static readonly List<Func<EntityUid, int>> GetHashCodeList = new()
             {
                 e => EqualityComparer<string>.Default.GetHashCode(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(e).EntityPrototype!.ID),
                 e =>
@@ -73,17 +72,17 @@ namespace Content.Client.ContextMenu.UI
                 _depth = step > Count ? Count : step;
             }
 
-            public bool Equals(IEntity? x, IEntity? y)
+            public bool Equals(EntityUid x, EntityUid y)
             {
-                if (x == null)
+                if (x == default)
                 {
-                    return y == null;
+                    return y == default;
                 }
 
-                return y != null && EqualsList[_depth](x, y);
+                return y != default && EqualsList[_depth](x, y);
             }
 
-            public int GetHashCode(IEntity e)
+            public int GetHashCode(EntityUid e)
             {
                 return GetHashCodeList[_depth](e);
             }

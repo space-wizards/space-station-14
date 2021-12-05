@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Items;
 using Content.Shared.Item;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -25,7 +24,7 @@ namespace Content.Server.Inventory.Components
             _inventory = Owner.EnsureComponent<InventoryComponent>();
         }
 
-        bool IInventoryController.CanEquip(Slots slot, IEntity entity, bool flagsCheck, [NotNullWhen(false)] out string? reason)
+        bool IInventoryController.CanEquip(Slots slot, EntityUid entity, bool flagsCheck, [NotNullWhen(false)] out string? reason)
         {
             var slotMask = SlotMasks[slot];
             reason = null;

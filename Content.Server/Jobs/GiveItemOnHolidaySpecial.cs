@@ -1,6 +1,5 @@
 using Content.Server.Hands.Components;
 using Content.Server.Holiday;
-using Content.Server.Holiday.Interfaces;
 using Content.Server.Items;
 using Content.Shared.Roles;
 using JetBrains.Annotations;
@@ -22,7 +21,7 @@ namespace Content.Server.Jobs
         [DataField("prototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string Prototype { get; } = string.Empty;
 
-        public override void AfterEquip(IEntity mob)
+        public override void AfterEquip(EntityUidmob)
         {
             if (string.IsNullOrEmpty(Holiday) || string.IsNullOrEmpty(Prototype))
                 return;

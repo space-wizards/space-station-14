@@ -19,7 +19,7 @@ namespace Content.Server.Alert.Click
         {
             var ps = EntitySystem.Get<SharedPullingSystem>();
             var playerTarget = ps.GetPulled(args.Player);
-            if (playerTarget != null && IoCManager.Resolve<IEntityManager>().TryGetComponent(playerTarget, out SharedPullableComponent playerPullable))
+            if (playerTarget != default && IoCManager.Resolve<IEntityManager>().TryGetComponent(playerTarget, out SharedPullableComponent playerPullable))
             {
                 ps.TryStopPull(playerPullable);
             }

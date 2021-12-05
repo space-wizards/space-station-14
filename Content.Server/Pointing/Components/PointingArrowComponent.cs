@@ -81,7 +81,7 @@ namespace Content.Server.Pointing.Components
                     return;
                 }
 
-                IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) Owner);
+                IoCManager.Resolve<IEntityManager>().DeleteEntity(Owner);
                 return;
             }
 

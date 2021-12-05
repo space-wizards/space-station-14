@@ -4,7 +4,6 @@ using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.Components;
-using Content.Shared.Interaction;
 using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -131,8 +130,7 @@ namespace Content.Server.Cargo.Components
                         break;
                     }
 
-                    var uid = msg.Session.AttachedEntityUid;
-                    if (uid == null)
+                    if (msg.Session.AttachedEntity is not {Valid: true} player)
                         break;
 
                     PrototypeManager.TryIndex(order.ProductId, out CargoProductPrototype? product);
@@ -143,7 +141,7 @@ namespace Content.Server.Cargo.Components
                         (capacity.CurrentCapacity == capacity.MaxCapacity
                         || capacity.CurrentCapacity + order.Amount > capacity.MaxCapacity
                         || !_cargoConsoleSystem.CheckBalance(_bankAccount.Id, (-product.PointCost) * order.Amount)
-                        || !_cargoConsoleSystem.ApproveOrder(Owner, uid.Value, orders.Database.Id, msg.OrderNumber)
+                        || !_cargoConsoleSystem.ApproveOrder(Owner, player, orders.Database.Id, msg.OrderNumber)
                         || !_cargoConsoleSystem.ChangeBalance(_bankAccount.Id, (-product.PointCost) * order.Amount))
                         )
                     {
@@ -161,11 +159,11 @@ namespace Content.Server.Cargo.Components
 
                     // TODO replace with shuttle code
                     // TEMPORARY loop for spawning stuff on telepad (looks for a telepad adjacent to the console)
-                    IEntity? cargoTelepad = null;
+                    EntityUid? cargoTelepad = null;
                     var indices = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates.ToVector2i(IoCManager.Resolve<IEntityManager>(), _mapManager);
                     var offsets = new Vector2i[] { new Vector2i(0, 1), new Vector2i(1, 1), new Vector2i(1, 0), new Vector2i(1, -1),
                                                    new Vector2i(0, -1), new Vector2i(-1, -1), new Vector2i(-1, 0), new Vector2i(-1, 1), };
-                    var adjacentEntities = new List<IEnumerable<IEntity>>(); //Probably better than IEnumerable.concat
+                    var adjacentEntities = new List<IEnumerable<EntityUid>>(); //Probably better than IEnumerable.concat
                     foreach (var offset in offsets)
                     {
                         adjacentEntities.Add((indices+offset).GetEntitiesInTileFast(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).GridID));
@@ -173,7 +171,7 @@ namespace Content.Server.Cargo.Components
 
                     foreach (var enumerator in adjacentEntities)
                     {
-                        foreach (IEntity entity in enumerator)
+                        foreach (EntityUid entity in enumerator)
                         {
                             if (IoCManager.Resolve<IEntityManager>().HasComponent<CargoTelepadComponent>(entity) && IoCManager.Resolve<IEntityManager>().TryGetComponent<ApcPowerReceiverComponent?>(entity, out var powerReceiver) && powerReceiver.Powered)
                             {
@@ -184,7 +182,7 @@ namespace Content.Server.Cargo.Components
                     }
                     if (cargoTelepad != null)
                     {
-                        if (IoCManager.Resolve<IEntityManager>().TryGetComponent<CargoTelepadComponent?>(cargoTelepad, out var telepadComponent))
+                        if (IoCManager.Resolve<IEntityManager>().TryGetComponent<CargoTelepadComponent?>(cargoTelepad.Value, out var telepadComponent))
                         {
                             var approvedOrders = _cargoConsoleSystem.RemoveAndGetApprovedOrders(orders.Database.Id);
                             orders.Database.ClearOrderCapacity();

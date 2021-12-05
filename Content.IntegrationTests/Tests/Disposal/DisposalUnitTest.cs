@@ -37,7 +37,7 @@ namespace Content.IntegrationTests.Tests.Disposal
             }
         }
 
-        private void UnitInsert(DisposalUnitComponent unit, bool result, params IEntity[] entities)
+        private void UnitInsert(DisposalUnitComponent unit, bool result, params EntityUid[] entities)
         {
             var system = EntitySystem.Get<DisposalUnitSystem>();
 
@@ -48,7 +48,7 @@ namespace Content.IntegrationTests.Tests.Disposal
             }
         }
 
-        private void UnitContains(DisposalUnitComponent unit, bool result, params IEntity[] entities)
+        private void UnitContains(DisposalUnitComponent unit, bool result, params EntityUid[] entities)
         {
             foreach (var entity in entities)
             {
@@ -56,13 +56,13 @@ namespace Content.IntegrationTests.Tests.Disposal
             }
         }
 
-        private void UnitInsertContains(DisposalUnitComponent unit, bool result, params IEntity[] entities)
+        private void UnitInsertContains(DisposalUnitComponent unit, bool result, params EntityUid[] entities)
         {
             UnitInsert(unit, result, entities);
             UnitContains(unit, result, entities);
         }
 
-        private void Flush(DisposalUnitComponent unit, bool result, params IEntity[] entities)
+        private void Flush(DisposalUnitComponent unit, bool result, params EntityUid[] entities)
         {
             Assert.That(unit.ContainedEntities, Is.SupersetOf(entities));
             Assert.That(entities.Length, Is.EqualTo(unit.ContainedEntities.Count));
@@ -127,10 +127,10 @@ namespace Content.IntegrationTests.Tests.Disposal
             var server = StartServer(options);
             await server.WaitIdleAsync();
 
-            IEntity human = default!;
-            IEntity wrench = default!;
-            IEntity disposalUnit = default!;
-            IEntity disposalTrunk = default!;
+            EntityUid human = default!;
+            EntityUid wrench = default!;
+            EntityUid disposalUnit = default!;
+            EntityUid disposalTrunk = default!;
             DisposalUnitComponent unit = default!;
 
             var mapManager = server.ResolveDependency<IMapManager>();

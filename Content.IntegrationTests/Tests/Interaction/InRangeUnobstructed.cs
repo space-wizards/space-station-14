@@ -34,11 +34,11 @@ namespace Content.IntegrationTests.Tests.Interaction
 
             await server.WaitIdleAsync();
 
-            var entityManager = server.ResolveDependency<IEntityManager>();
+            var sEntities = server.ResolveDependency<IEntityManager>();
             var mapManager = server.ResolveDependency<IMapManager>();
 
-            IEntity origin = null;
-            IEntity other = null;
+            EntityUid origin = default;
+            EntityUid other = default;
             IContainer container = null;
             IComponent component = null;
             EntityCoordinates entityCoordinates = default;
@@ -49,12 +49,12 @@ namespace Content.IntegrationTests.Tests.Interaction
                 var mapId = mapManager.CreateMap();
                 var coordinates = new MapCoordinates(Vector2.Zero, mapId);
 
-                origin = entityManager.SpawnEntity(HumanId, coordinates);
-                other = entityManager.SpawnEntity(HumanId, coordinates);
-                container = ContainerHelpers.EnsureContainer<Container>(other, "InRangeUnobstructedTestOtherContainer");
-                component = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other);
-                entityCoordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other).Coordinates;
-                mapCoordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other).MapPosition;
+                origin = sEntities.SpawnEntity(HumanId, coordinates);
+                other = sEntities.SpawnEntity(HumanId, coordinates);
+                container = other.EnsureContainer<Container>("InRangeUnobstructedTestOtherContainer");
+                component = sEntities.GetComponent<TransformComponent>(other);
+                entityCoordinates = sEntities.GetComponent<TransformComponent>(other).Coordinates;
+                mapCoordinates = sEntities.GetComponent<TransformComponent>(other).MapPosition;
             });
 
             await server.WaitIdleAsync();

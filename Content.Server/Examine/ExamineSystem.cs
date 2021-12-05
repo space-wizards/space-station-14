@@ -35,16 +35,16 @@ namespace Content.Server.Examine
             var playerEnt = session.AttachedEntity;
             var channel = player.ConnectedClient;
 
-            if (playerEnt == null
-                || !EntityManager.TryGetEntity(request.EntityUid, out var entity)
-                || !CanExamine(playerEnt, entity))
+            if (playerEnt == default
+                || !EntityManager.EntityExists(request.EntityUid)
+                || !CanExamine(playerEnt, request.EntityUid))
             {
                 RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(
                     request.EntityUid, _entityNotFoundMessage), channel);
                 return;
             }
 
-            var text = GetExamineText(entity, player.AttachedEntity);
+            var text = GetExamineText(request.EntityUid, player.AttachedEntity);
             RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(request.EntityUid, text), channel);
         }
     }

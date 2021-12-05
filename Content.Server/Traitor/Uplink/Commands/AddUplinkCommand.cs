@@ -43,7 +43,7 @@ namespace Content.Server.Traitor.Uplink.Commands
             var user = session.AttachedEntity;
 
             // Get target item
-            IEntity? uplinkEntity = null;
+            EntityUid uplinkEntity = null;
             var entityManager = IoCManager.Resolve<IEntityManager>();
             if (args.Length >= 2)
             {
@@ -60,7 +60,7 @@ namespace Content.Server.Traitor.Uplink.Commands
                     return;
                 }
 
-                uplinkEntity = entityManager.GetEntity(eUid);
+                uplinkeUid
             }
 
             // Get TC count

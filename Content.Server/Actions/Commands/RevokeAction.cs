@@ -28,7 +28,7 @@ namespace Content.Server.Actions.Commands
                 if (!CommandUtils.TryGetAttachedEntityByUsernameOrId(shell, target, player, out attachedEntity)) return;
             }
             if (attachedEntity == null) return;
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(attachedEntity, out ServerActionsComponent? actionsComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(attachedEntity.Value, out ServerActionsComponent? actionsComponent))
             {
                 shell.WriteLine("user has no actions component");
                 return;

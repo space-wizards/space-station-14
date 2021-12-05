@@ -5,9 +5,7 @@ using System.Linq;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Construction.Components;
 using Content.Server.Fluids.Components;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.Directions;
 using Content.Shared.Examine;
@@ -26,7 +24,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Fluids.EntitySystems
 {
@@ -61,7 +58,7 @@ namespace Content.Server.Fluids.EntitySystems
 
         private void UpdateVisuals(EntityUid uid, PuddleComponent puddleComponent)
         {
-            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(puddleComponent.Owner) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(puddleComponent.Owner).EntityLifeStage) >= EntityLifeStage.Deleted || EmptyHolder(uid, puddleComponent) ||
+            if ((!EntityManager.EntityExists(puddleComponent.Owner) ? EntityLifeStage.Deleted : EntityManager.GetComponent<MetaDataComponent>(puddleComponent.Owner).EntityLifeStage) >= EntityLifeStage.Deleted || EmptyHolder(uid, puddleComponent) ||
                 !EntityManager.TryGetComponent<AppearanceComponent>(uid, out var appearanceComponent))
             {
                 return;
@@ -106,7 +103,7 @@ namespace Content.Server.Fluids.EntitySystems
             verb.Text = Loc.GetString("spill-target-verb-get-data-text");
             // TODO VERB ICONS spill icon? pouring out a glass/beaker?
             verb.Act = () => _solutionContainerSystem.SplitSolution(args.Target,
-                solution, solution.DrainAvailable).SpillAt(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.Target).Coordinates, "PuddleSmear");
+                solution, solution.DrainAvailable).SpillAt(EntityManager.GetComponent<TransformComponent>(args.Target).Coordinates, "PuddleSmear");
             verb.Impact = LogImpact.Medium; // dangerous reagent reaction are logged separately.
             args.Verbs.Add(verb);
         }
@@ -121,10 +118,10 @@ namespace Content.Server.Fluids.EntitySystems
 
         private void OnUnanchored(EntityUid uid, PuddleComponent puddle, UnanchoredEvent unanchoredEvent)
         {
-            if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(puddle.Owner).Anchored)
+            if (!EntityManager.GetComponent<TransformComponent>(puddle.Owner).Anchored)
                 return;
 
-            IoCManager.Resolve<IEntityManager>().QueueDeleteEntity((EntityUid) puddle.Owner);
+            EntityManager.QueueDeleteEntity(puddle.Owner);
         }
 
         /// <summary>
@@ -288,11 +285,11 @@ namespace Content.Server.Fluids.EntitySystems
             puddle = default;
 
             // We're most likely in space, do nothing.
-            if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(puddleComponent.Owner).GridID.IsValid())
+            if (!EntityManager.GetComponent<TransformComponent>(puddleComponent.Owner).GridID.IsValid())
                 return false;
 
-            var mapGrid = _mapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(puddleComponent.Owner).GridID);
-            var coords = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(puddleComponent.Owner).Coordinates;
+            var mapGrid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(puddleComponent.Owner).GridID);
+            var coords = EntityManager.GetComponent<TransformComponent>(puddleComponent.Owner).Coordinates;
 
             if (!coords.Offset(direction).TryGetTileRef(out var tile))
             {
@@ -305,7 +302,7 @@ namespace Content.Server.Fluids.EntitySystems
                 return false;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(puddleComponent.Owner).Anchored)
+            if (!EntityManager.GetComponent<TransformComponent>(puddleComponent.Owner).Anchored)
                 return false;
 
             foreach (var entity in mapGrid.GetInDir(coords, direction))
@@ -330,9 +327,10 @@ namespace Content.Server.Fluids.EntitySystems
 
             puddle ??= () =>
             {
-                IEntity tempQualifier = IoCManager.Resolve<IEntityManager>().SpawnEntity(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(puddleComponent.Owner).EntityPrototype?.ID,
+                var id = EntityManager.SpawnEntity(
+                    EntityManager.GetComponent<MetaDataComponent>(puddleComponent.Owner).EntityPrototype?.ID,
                     mapGrid.DirectionToGrid(coords, direction));
-                return IoCManager.Resolve<IEntityManager>().GetComponent<PuddleComponent>(tempQualifier);
+                return EntityManager.GetComponent<PuddleComponent>(id);
             };
 
             return true;

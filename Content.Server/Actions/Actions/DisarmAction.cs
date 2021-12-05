@@ -1,5 +1,9 @@
+using System;
+using System.Linq;
 using Content.Server.Act;
+using Content.Server.Administration.Logs;
 using Content.Server.Interaction;
+using Content.Server.Popups;
 using Content.Server.Weapon.Melee;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
@@ -7,7 +11,9 @@ using Content.Shared.Actions.Behaviors;
 using Content.Shared.Actions.Components;
 using Content.Shared.Audio;
 using Content.Shared.Cooldown;
+using Content.Shared.Database;
 using Content.Shared.Interaction.Helpers;
+using Content.Shared.Popups;
 using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -20,14 +26,6 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Content.Server.Administration.Logs;
-using Content.Server.Popups;
-using Content.Shared.Administration.Logs;
-using Content.Shared.Database;
-using Content.Shared.Popups;
 
 namespace Content.Server.Actions.Actions
 {
@@ -60,7 +58,7 @@ namespace Content.Server.Actions.Actions
                     // Fall back to a normal interaction with the entity
                     var player = actor.PlayerSession;
                     var coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.Target).Coordinates;
-                    var target = (EntityUid) args.Target;
+                    var target = args.Target;
                     EntitySystem.Get<InteractionSystem>().HandleUseInteraction(player, coordinates, target);
                     return;
                 }

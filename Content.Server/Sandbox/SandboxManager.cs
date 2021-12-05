@@ -1,12 +1,13 @@
 using System.Linq;
 using Content.Server.Access.Components;
-using Content.Shared.Containers.ItemSlots;
+using Content.Server.Access.Systems;
 using Content.Server.GameTicking;
 using Content.Server.Hands.Components;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
 using Content.Server.PDA;
 using Content.Shared.Access;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Sandbox;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
@@ -19,7 +20,6 @@ using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.Inventory.EquipmentSlotDefines;
-using Content.Server.Access.Systems;
 
 namespace Content.Server.Sandbox
 {
@@ -157,7 +157,7 @@ namespace Content.Server.Sandbox
                 }
             }
 
-            void UpgradeId(IEntity id)
+            void UpgradeId(EntityUidid)
             {
                 var accessSystem = EntitySystem.Get<AccessSystem>();
                 accessSystem.TrySetTags(id, allAccess);
@@ -168,7 +168,7 @@ namespace Content.Server.Sandbox
                 }
             }
 
-            IEntity CreateFreshId()
+            EntityUidCreateFreshId()
             {
                 var card = _entityManager.SpawnEntity("CaptainIDCard", IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.AttachedEntity).Coordinates);
                 UpgradeId(card);

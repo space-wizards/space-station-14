@@ -9,8 +9,8 @@ namespace Content.Server.AI.Steering
         public SteeringStatus Status { get; set; } = SteeringStatus.Pending;
         public MapCoordinates TargetMap => IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_target).MapPosition;
         public EntityCoordinates TargetGrid => IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_target).Coordinates;
-        public IEntity Target => _target;
-        private readonly IEntity _target;
+        public EntityUid Target => _target;
+        private readonly EntityUid _target;
 
         /// <inheritdoc />
         public float ArrivalDistance { get; }
@@ -31,7 +31,7 @@ namespace Content.Server.AI.Steering
         /// </summary>
         public float TimeUntilInteractionCheck { get; set; }
 
-        public EntityTargetSteeringRequest(IEntity target, float arrivalDistance, float pathfindingProximity = 0.5f, bool requiresInRangeUnobstructed = false)
+        public EntityTargetSteeringRequest(EntityUid target, float arrivalDistance, float pathfindingProximity = 0.5f, bool requiresInRangeUnobstructed = false)
         {
             _target = target;
             ArrivalDistance = arrivalDistance;

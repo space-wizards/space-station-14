@@ -6,7 +6,6 @@ using Content.Server.Atmos.Piping.EntitySystems;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Shared.Administration;
-using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
@@ -56,8 +55,7 @@ namespace Content.Server.Sandbox.Commands
                 return;
             }
 
-            var target = entityManager.GetEntity(eUid);
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(target, out NodeContainerComponent? nodeContainerComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eUid, out NodeContainerComponent? nodeContainerComponent))
             {
                 shell.WriteLine(Loc.GetString("shell-entity-is-not-node-container"));
                 return;

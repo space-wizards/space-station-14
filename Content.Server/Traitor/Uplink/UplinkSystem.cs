@@ -154,7 +154,7 @@ namespace Content.Server.Traitor.Uplink
 
             // try to put it into players hands
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent(player, out SharedHandsComponent? hands))
-                hands.TryPutInAnyHand(EntityManager.GetEntity(tcUid.Value));
+                hands.TryPutInAnyHand(tcUid.Value)
 
             // play buying sound
             SoundSystem.Play(Filter.SinglePlayer(args.Session), uplink.BuySuccessSound.GetSound(),
@@ -189,7 +189,7 @@ namespace Content.Server.Traitor.Uplink
             ui.SetState(new UplinkUpdateState(accData, listings));
         }
 
-        public bool AddUplink(IEntity user, UplinkAccount account, IEntity? uplinkEntity = null)
+        public bool AddUplink(EntityUid user, UplinkAccount account, EntityUid uplinkEntity = null)
         {
             // Try to find target item
             if (uplinkEntity == null)
@@ -205,7 +205,7 @@ namespace Content.Server.Traitor.Uplink
             return true;
         }
 
-        private IEntity? FindUplinkTarget(IEntity user)
+        private EntityUid FindUplinkTarget(EntityUiduser)
         {
             // Try to find PDA in inventory
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out InventoryComponent? inventory))

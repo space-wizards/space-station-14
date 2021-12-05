@@ -116,7 +116,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
         private void DoInsertDisposalUnit(DoInsertDisposalUnitEvent ev)
         {
-            var toInsert = EntityManager.GetEntity(ev.ToInsert);
+            var toInsert = ev.ToInsert
 
             if (!EntityManager.TryGetComponent(ev.Unit, out DisposalUnitComponent? unit))
             {
@@ -547,7 +547,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 : SharedDisposalUnitComponent.LightState.Ready);
         }
 
-        public void Remove(DisposalUnitComponent component, IEntity entity)
+        public void Remove(DisposalUnitComponent component, EntityUid entity)
         {
             component.Container.Remove(entity);
 
@@ -600,7 +600,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             }
         }
 
-        public override bool CanInsert(SharedDisposalUnitComponent component, IEntity entity)
+        public override bool CanInsert(SharedDisposalUnitComponent component, EntityUid entity)
         {
             if (!base.CanInsert(component, entity) || component is not DisposalUnitComponent serverComp)
                 return false;
@@ -629,7 +629,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             }, component.AutomaticEngageToken.Token);
         }
 
-        public void AfterInsert(DisposalUnitComponent component, IEntity entity)
+        public void AfterInsert(DisposalUnitComponent component, EntityUid entity)
         {
             TryQueueEngage(component);
 

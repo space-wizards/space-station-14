@@ -30,7 +30,7 @@ namespace Content.Server.Chemistry.Components
             }
         }
 
-        protected override void ReactWithEntity(IEntity entity, double solutionFraction)
+        protected override void ReactWithEntity(EntityUid entity, double solutionFraction)
         {
             if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
                 return;
@@ -82,7 +82,7 @@ namespace Content.Server.Chemistry.Components
                     IoCManager.Resolve<IEntityManager>().SpawnEntity(_foamedMetalPrototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
                 }
 
-                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity((EntityUid) Owner);
+                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(Owner);
             });
         }
     }

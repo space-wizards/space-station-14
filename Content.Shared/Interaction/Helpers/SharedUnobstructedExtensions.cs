@@ -24,10 +24,7 @@ namespace Content.Shared.Interaction.Helpers
             bool popup = false,
             IEntityManager? entityManager = null)
         {
-            entityManager ??= IoCManager.Resolve<IEntityManager>();
-
-            return InRangeUnobstructed(entityManager.GetEntity(origin), entityManager.GetEntity(other),
-                range, collisionMask, predicate, ignoreInsideBlocker, popup);
+            return SharedInteractionSystem.InRangeUnobstructed(origin, other, range, collisionMask, predicate, ignoreInsideBlocker, popup);
         }
 
         public static bool InRangeUnobstructed(

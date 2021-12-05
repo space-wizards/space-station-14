@@ -36,7 +36,7 @@ namespace Content.Server.Hands.Components
 
         int IDisarmedAct.Priority => int.MaxValue; // We want this to be the last disarm act to run.
 
-        protected override void OnHeldEntityRemovedFromHand(IEntity heldEntity, HandState handState)
+        protected override void OnHeldEntityRemovedFromHand(EntityUid heldEntity, HandState handState)
         {
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent(heldEntity, out ItemComponent? item))
             {
@@ -49,7 +49,7 @@ namespace Content.Server.Hands.Components
             }
         }
 
-        protected override void HandlePickupAnimation(IEntity entity)
+        protected override void HandlePickupAnimation(EntityUid entity)
         {
             var initialPosition = EntityCoordinates.FromMap(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Parent?.Owner ?? Owner, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).MapPosition);
 

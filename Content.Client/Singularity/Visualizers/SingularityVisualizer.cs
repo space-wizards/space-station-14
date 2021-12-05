@@ -14,7 +14,7 @@ namespace Content.Client.Singularity.Visualizers
         [DataField("layer")]
         private int Layer { get; } = 0;
 
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
 

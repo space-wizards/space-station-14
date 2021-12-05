@@ -27,7 +27,7 @@ namespace Content.Client.DoAfter.UI
         // We'll store cancellations for a little bit just so we can flash the graphic to indicate it's cancelled
         private readonly Dictionary<byte, TimeSpan> _cancelledDoAfters = new();
 
-        public IEntity? AttachedEntity { get; set; }
+        public EntityUid AttachedEntity { get; set; }
         private ScreenCoordinates _playerPosition;
 
         public DoAfterGui()
@@ -146,14 +146,8 @@ namespace Content.Client.DoAfter.UI
         {
             base.FrameUpdate(args);
 
-            IEntity? tempQualifier = AttachedEntity;
-            if (tempQualifier != null)
-            {
-                IoCManager.Resolve<IEntityManager>().EntityExists(tempQualifier);
-            }
-
-            if (RETURNED_VALUE != true ||
-                !IoCManager.Resolve<IEntityManager>().TryGetComponent(AttachedEntity, out DoAfterComponent? doAfterComponent))
+            if (!AttachedEntity.IsValid() ||
+                !_entityManager.TryGetComponent(AttachedEntity, out DoAfterComponent? doAfterComponent))
             {
                 Visible = false;
                 return;

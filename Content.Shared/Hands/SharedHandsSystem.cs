@@ -1,9 +1,8 @@
+using System;
 using Content.Shared.Hands.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
-using System;
-using Robust.Shared.IoC;
 
 namespace Content.Shared.Hands
 {
@@ -21,9 +20,9 @@ namespace Content.Shared.Hands
 
         private void HandleSetHand(RequestSetHandEvent msg, EntitySessionEventArgs eventArgs)
         {
-            var entity = eventArgs.SenderSession.AttachedEntityUid;
+            var entity = eventArgs.SenderSession.AttachedEntity;
 
-            if (entity == null || !EntityManager.TryGetComponent(entity.Value, out SharedHandsComponent? hands))
+            if (entity == default || !EntityManager.TryGetComponent(entity, out SharedHandsComponent? hands))
                 return;
 
             hands.ActiveHand = msg.HandName;

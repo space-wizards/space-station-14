@@ -1,4 +1,3 @@
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
@@ -42,10 +41,10 @@ namespace Content.Server.Damage.Commands
             return $"Damage Types:{msg}";
         }
 
-        private delegate void Damage(IEntity entity, bool ignoreResistances);
+        private delegate void Damage(EntityUid entity, bool ignoreResistances);
 
         private bool TryParseEntity(IConsoleShell shell, IPlayerSession? player, string arg,
-            [NotNullWhen(true)] out IEntity? entity)
+            [NotNullWhen(true)] out EntityUid entity)
         {
             entity = null;
 
@@ -72,7 +71,7 @@ namespace Content.Server.Damage.Commands
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
 
-            if (!entityManager.TryGetEntity(entityUid, out var parsedEntity))
+            if (!entityManager.EntityExists(entityUid)
             {
                 shell.WriteLine($"No entity found with uid {entityUid}");
 
@@ -85,7 +84,7 @@ namespace Content.Server.Damage.Commands
 
         private bool TryParseDamageArgs(
             IConsoleShell shell,
-            IEntity target,
+            EntityUid target,
             string[] args,
             [NotNullWhen(true)] out Damage? func)
         {
@@ -141,7 +140,7 @@ namespace Content.Server.Damage.Commands
         {
             var player = shell.Player as IPlayerSession;
             bool ignoreResistances;
-            IEntity entity;
+            EntityUid entity;
             Damage? damageFunc;
 
             switch (args.Length)

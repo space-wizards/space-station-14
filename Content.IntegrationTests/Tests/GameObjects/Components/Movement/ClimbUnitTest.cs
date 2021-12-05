@@ -37,8 +37,8 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Movement
             var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
             var server = StartServer(options);
 
-            IEntity human;
-            IEntity table;
+            EntityUid human;
+            EntityUid table;
             ClimbingComponent climbing;
 
             server.Assert(() =>
@@ -54,19 +54,17 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Movement
 
                 // Test for climb components existing
                 // Players and tables should have these in their prototypes.
-                ref ClimbingComponent? comp = ref climbing!;
-                Assert.That(IoCManager.Resolve<IEntityManager>().TryGetComponent(human, out comp), "Human has no climbing");
-                Assert.That(IoCManager.Resolve<IEntityManager>().TryGetComponent(table, out ClimbableComponent? _), "Table has no climbable");
+                Assert.That(entityManager.TryGetComponent(human, out climbing), "Human has no climbing");
+                Assert.That(entityManager.TryGetComponent(table, out ClimbableComponent? _), "Table has no climbable");
 
                 // Now let's make the player enter a climbing transitioning state.
                 climbing.IsClimbing = true;
                 climbing.TryMoveTo(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(human).WorldPosition, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(table).WorldPosition);
-                var body = IoCManager.Resolve<IEntityManager>().GetComponent<IPhysBody>(human);
+                var body = entityManager.GetComponent<IPhysBody>(human);
                 // TODO: Check it's climbing
 
                 // Force the player out of climb state. It should immediately remove the ClimbController.
                 climbing.IsClimbing = false;
-
             });
 
             await server.WaitIdleAsync();

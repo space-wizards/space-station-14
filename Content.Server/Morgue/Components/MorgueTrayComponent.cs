@@ -12,7 +12,7 @@ namespace Content.Server.Morgue.Components
         public override string Name => "MorgueTray";
 
         [ViewVariables]
-        public IEntity? Morgue { get; set; }
+        public EntityUid Morgue { get; set; }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {

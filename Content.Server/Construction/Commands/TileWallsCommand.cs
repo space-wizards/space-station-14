@@ -21,18 +21,19 @@ namespace Content.Server.Construction.Commands
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
+            var entityManager = IoCManager.Resolve<IEntityManager>();
             GridId gridId;
 
             switch (args.Length)
             {
                 case 0:
-                    if (player?.AttachedEntity == null)
+                    if (player?.AttachedEntity is not {Valid: true} playerEntity)
                     {
                         shell.WriteLine("Only a player can run this command.");
                         return;
                     }
 
-                    gridId = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.AttachedEntity).GridID;
+                    gridId = entityManager.GetComponent<TransformComponent>(playerEntity).GridID;
                     break;
                 case 1:
                     if (!int.TryParse(args[0], out var id))
@@ -55,8 +56,7 @@ namespace Content.Server.Construction.Commands
                 return;
             }
 
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            if (!entityManager.TryGetEntity(grid.GridEntityId, out var gridEntity))
+            if (!entityManager.EntityExists(grid.GridEntityId))
             {
                 shell.WriteLine($"Grid {gridId} doesn't have an associated grid entity.");
                 return;
@@ -65,16 +65,16 @@ namespace Content.Server.Construction.Commands
             var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             var underplating = tileDefinitionManager["underplating"];
-            var underplatingTile = new Robust.Shared.Map.Tile(underplating.TileId);
+            var underplatingTile = new Tile(underplating.TileId);
             var changed = 0;
-            foreach (var childUid in IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(gridEntity).ChildEntityUids)
+            foreach (var child in entityManager.GetComponent<TransformComponent>(grid.GridEntityId).ChildEntities)
             {
-                if (!entityManager.TryGetEntity(childUid, out var childEntity))
+                if (!entityManager.EntityExists(child))
                 {
                     continue;
                 }
 
-                var prototype = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(childEntity).EntityPrototype;
+                var prototype = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(child).EntityPrototype;
                 while (true)
                 {
                     if (prototype?.Parent == null)
@@ -90,12 +90,12 @@ namespace Content.Server.Construction.Commands
                     continue;
                 }
 
-                if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(childEntity).Anchored)
+                if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(child).Anchored)
                 {
                     continue;
                 }
 
-                var tile = grid.GetTileRef(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(childEntity).Coordinates);
+                var tile = grid.GetTileRef(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(child).Coordinates);
                 var tileDef = (ContentTileDefinition) tileDefinitionManager[tile.Tile.TypeId];
 
                 if (tileDef.Name == "underplating")
@@ -103,7 +103,7 @@ namespace Content.Server.Construction.Commands
                     continue;
                 }
 
-                grid.SetTile(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(childEntity).Coordinates, underplatingTile);
+                grid.SetTile(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(child).Coordinates, underplatingTile);
                 changed++;
             }
 

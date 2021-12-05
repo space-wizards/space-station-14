@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Components.SolutionManager;
@@ -114,44 +113,44 @@ namespace Content.Server.Nutrition.EntitySystems
 
         private void AfterInteract(EntityUid uid, DrinkComponent component, AfterInteractEvent args)
         {
-            if (args.Handled || args.TargetUid == null)
+            if (args.Handled || args.Target == default)
                 return;
 
-            if (!_actionBlockerSystem.CanInteract(args.UserUid) || !_actionBlockerSystem.CanUse(args.UserUid))
+            if (!_actionBlockerSystem.CanInteract(args.User) || !_actionBlockerSystem.CanUse(args.User))
                 return;
 
-            if (!args.UserUid.InRangeUnobstructed(uid, popup: true))
-            {
-                args.Handled = true;
-                return;
-            }
-
-            if (args.UserUid == args.TargetUid)
-            {
-                args.Handled = TryUseDrink(uid, args.UserUid);
-                return;
-            }
-
-            if (!args.UserUid.InRangeUnobstructed(args.TargetUid.Value, popup: true))
+            if (!args.User.InRangeUnobstructed(uid, popup: true))
             {
                 args.Handled = true;
                 return;
             }
 
             if (args.User == args.Target)
-                args.Handled = TryUseDrink(uid, args.UserUid, component);
+            {
+                args.Handled = TryUseDrink(uid, args.User);
+                return;
+            }
+
+            if (!args.User.InRangeUnobstructed(args.Target.Value, popup: true))
+            {
+                args.Handled = true;
+                return;
+            }
+
+            if (args.User == args.Target)
+                args.Handled = TryUseDrink(uid, args.User, component);
             else
-                args.Handled = TryForceDrink(uid, args.UserUid, args.TargetUid.Value, component);
+                args.Handled = TryForceDrink(uid, args.User, args.Target.Value, component);
         }
 
         private void OnUse(EntityUid uid, DrinkComponent component, UseInHandEvent args)
         {
             if (args.Handled) return;
 
-            if (!_actionBlockerSystem.CanInteract(args.UserUid) || !_actionBlockerSystem.CanUse(args.UserUid))
+            if (!_actionBlockerSystem.CanInteract(args.User) || !_actionBlockerSystem.CanUse(args.User))
                 return;
 
-            if (!args.UserUid.InRangeUnobstructed(uid, popup: true))
+            if (!args.User.InRangeUnobstructed(uid, popup: true))
             {
                 args.Handled = true;
                 return;
@@ -168,11 +167,11 @@ namespace Content.Server.Nutrition.EntitySystems
 
             if (_solutionContainerSystem.DrainAvailable(uid) <= 0)
             {
-                args.User.PopupMessage(Loc.GetString("drink-component-on-use-is-empty", ("owner", EntityManager.GetEntity(uid))));
+                args.User.PopupMessage(Loc.GetString("drink-component-on-use-is-empty", ("owner", uid)));
                 return;
             }
 
-            args.Handled = TryUseDrink(uid, args.UserUid, component);
+            args.Handled = TryUseDrink(uid, args.User, component);
         }
 
         private void HandleLand(EntityUid uid, DrinkComponent component, LandEvent args)
@@ -185,12 +184,10 @@ namespace Content.Server.Nutrition.EntitySystems
                 component.Opened = true;
                 UpdateAppearance(component);
 
-                var entity = EntityManager.GetEntity(uid);
-
                 var solution = _solutionContainerSystem.Drain(uid, interactions, interactions.DrainAvailable);
-                solution.SpillAt(entity, "PuddleSmear");
+                solution.SpillAt(uid, "PuddleSmear");
 
-                SoundSystem.Play(Filter.Pvs(entity), component.BurstSound.GetSound(), entity, AudioParams.Default.WithVolume(-4));
+                SoundSystem.Play(Filter.Pvs(uid), component.BurstSound.GetSound(), uid, AudioParams.Default.WithVolume(-4));
             }
         }
 
@@ -241,7 +238,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!drink.Opened)
             {
                 _popupSystem.PopupEntity(Loc.GetString("drink-component-try-use-drink-not-open",
-                    ("owner", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(drink.Owner).EntityName)), uid, Filter.Entities(userUid));
+                    ("owner", Name: EntityManager.GetComponent<MetaDataComponent>(drink.Owner).EntityName)), uid, Filter.Entities(userUid));
                 return true;
             }
 
@@ -252,7 +249,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 drinkSolution.DrainAvailable <= 0)
             {
                 _popupSystem.PopupEntity(Loc.GetString("drink-component-try-use-drink-is-empty",
-                    ("entity", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(drink.Owner).EntityName)), uid, Filter.Entities(userUid));
+                    ("entity", Name: EntityManager.GetComponent<MetaDataComponent>(drink.Owner).EntityName)), uid, Filter.Entities(userUid));
                 return true;
             }
 
@@ -324,7 +321,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!drink.Opened)
             {
                 _popupSystem.PopupEntity(Loc.GetString("drink-component-try-use-drink-not-open",
-                    ("owner", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(drink.Owner).EntityName)), uid, Filter.Entities(userUid));
+                    ("owner", Name: EntityManager.GetComponent<MetaDataComponent>(drink.Owner).EntityName)), uid, Filter.Entities(userUid));
                 return true;
             }
 
@@ -332,7 +329,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 drinkSolution.DrainAvailable <= 0)
             {
                 _popupSystem.PopupEntity(Loc.GetString("drink-component-try-use-drink-is-empty",
-                    ("entity", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(drink.Owner).EntityName)), uid, Filter.Entities(userUid));
+                    ("entity", Name: EntityManager.GetComponent<MetaDataComponent>(drink.Owner).EntityName)), uid, Filter.Entities(userUid));
                 return true;
             }
 
@@ -362,10 +359,7 @@ namespace Content.Server.Nutrition.EntitySystems
             });
 
             // logging
-            var user = EntityManager.GetEntity(userUid);
-            var target = EntityManager.GetEntity(targetUid);
-            var drinkable = EntityManager.GetEntity(uid);
-            _logSystem.Add(LogType.ForceFeed, LogImpact.Medium, $"{user} is forcing {target} to drink {drinkable}");
+            _logSystem.Add(LogType.ForceFeed, LogImpact.Medium, $"{userUid} is forcing {targetUid} to drink {uid}");
 
             drink.InUse = true;
             return true;

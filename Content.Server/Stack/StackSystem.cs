@@ -1,11 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.Popups;
 using Content.Shared.Interaction;
-using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
@@ -45,7 +42,7 @@ namespace Content.Server.Stack
         public EntityUid? Split(EntityUid uid, int amount, EntityCoordinates spawnPosition, SharedStackComponent? stack = null)
         {
             if (!Resolve(uid, ref stack))
-                return null;
+                return default;
 
             // Get a prototype ID to spawn the new entity. Null is also valid, although it should rarely be picked...
             var prototype = _prototypeManager.TryIndex<StackPrototype>(stack.StackTypeId, out var stackType)
@@ -54,11 +51,10 @@ namespace Content.Server.Stack
 
             // Try to remove the amount of things we want to split from the original stack...
             if (!Use(uid, amount, stack))
-                return null;
+                return default;
 
             // Set the output parameter in the event instance to the newly split stack.
-            IEntity tempQualifier = EntityManager.SpawnEntity(prototype, spawnPosition);
-            var entity = (EntityUid) tempQualifier;
+            var entity = EntityManager.SpawnEntity(prototype, spawnPosition);
 
             if (EntityManager.TryGetComponent(entity, out SharedStackComponent? stackComp))
             {
@@ -77,8 +73,7 @@ namespace Content.Server.Stack
         public EntityUid Spawn(int amount, StackPrototype prototype, EntityCoordinates spawnPosition)
         {
             // Set the output result parameter to the new stack entity...
-            IEntity tempQualifier = EntityManager.SpawnEntity(prototype.Spawn, spawnPosition);
-            var entity = (EntityUid) tempQualifier;
+            var entity = EntityManager.SpawnEntity(prototype.Spawn, spawnPosition);
             var stack = EntityManager.GetComponent<StackComponent>(entity);
 
             // And finally, set the correct amount!
@@ -190,10 +185,11 @@ namespace Content.Server.Stack
                 return;
             }
 
-            if(Split(uid, amount, userTransform.Coordinates, stack) is not {} splitStack)
+            var split = Split(uid, amount, userTransform.Coordinates, stack);
+            if (!split.Valid)
                 return;
 
-            if (EntityManager.TryGetComponent<ItemComponent>(splitStack, out var item))
+            if (EntityManager.TryGetComponent<ItemComponent>(split, out var item))
             {
                 hands.PutInHandOrDrop(item);
             }

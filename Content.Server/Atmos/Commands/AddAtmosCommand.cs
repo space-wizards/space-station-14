@@ -11,6 +11,8 @@ namespace Content.Server.Atmos.Commands
     [AdminCommand(AdminFlags.Debug)]
     public class AddAtmosCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _entities = default!;
+
         public string Command => "addatmos";
         public string Description => "Adds atmos support to a grid.";
         public string Help => $"{Command} <GridId>";
@@ -39,21 +41,19 @@ namespace Content.Server.Atmos.Commands
                 return;
             }
 
-            var entMan = IoCManager.Resolve<IEntityManager>();
-
-            if (!entMan.TryGetEntity(gridComp.GridEntityId, out var grid))
+            if (!_entities.EntityExists(gridComp.GridEntityId))
             {
                 shell.WriteLine("Failed to get grid entity.");
                 return;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().HasComponent<IAtmosphereComponent>(grid))
+            if (_entities.HasComponent<IAtmosphereComponent>(gridComp.GridEntityId))
             {
                 shell.WriteLine("Grid already has an atmosphere.");
                 return;
             }
 
-            IoCManager.Resolve<IEntityManager>().AddComponent<GridAtmosphereComponent>(grid);
+            _entities.AddComponent<GridAtmosphereComponent>(gridComp.GridEntityId);
 
             shell.WriteLine($"Added atmosphere to grid {id}.");
         }

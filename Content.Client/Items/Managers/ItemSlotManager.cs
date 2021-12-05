@@ -9,12 +9,8 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Robust.Client.GameObjects;
-using Robust.Client.Graphics;
-using Robust.Client.Input;
-using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -32,9 +28,9 @@ namespace Content.Client.Items.Managers
 
         public event Action<EntitySlotHighlightedEventArgs>? EntityHighlightedUpdated;
 
-        public bool SetItemSlot(ItemSlotButton button, IEntity? entity)
+        public bool SetItemSlot(ItemSlotButton button, EntityUid entity)
         {
-            if (entity == null)
+            if (entity == default)
             {
                 button.SpriteView.Sprite = null;
                 button.StorageButton.Visible = false;
@@ -42,31 +38,31 @@ namespace Content.Client.Items.Managers
             else
             {
                 ISpriteComponent? sprite;
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out HandVirtualItemComponent? virtPull)
+                if (_entityManager.TryGetComponent(entity, out HandVirtualItemComponent? virtPull)
                     && _entityManager.TryGetComponent(virtPull.BlockingEntity, out ISpriteComponent pulledSprite))
                 {
                     sprite = pulledSprite;
                 }
-                else if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out sprite))
+                else if (!_entityManager.TryGetComponent(entity, out sprite))
                 {
                     return false;
                 }
 
                 button.ClearHover();
                 button.SpriteView.Sprite = sprite;
-                button.StorageButton.Visible = IoCManager.Resolve<IEntityManager>().HasComponent<ClientStorageComponent>(entity);
+                button.StorageButton.Visible = _entityManager.HasComponent<ClientStorageComponent>(entity);
             }
 
-            button.Entity = entity ?? default;
+            button.Entity = entity;
 
             // im lazy
             button.UpdateSlotHighlighted();
             return true;
         }
 
-        public bool OnButtonPressed(GUIBoundKeyEventArgs args, IEntity? item)
+        public bool OnButtonPressed(GUIBoundKeyEventArgs args, EntityUid item)
         {
-            if (item == null)
+            if (item == default)
                 return false;
 
             if (args.Function == ContentKeyFunctions.ExamineEntity)
@@ -94,7 +90,7 @@ namespace Content.Client.Items.Managers
             return true;
         }
 
-        public void UpdateCooldown(ItemSlotButton? button, IEntity? entity)
+        public void UpdateCooldown(ItemSlotButton? button, EntityUid entity)
         {
             var cooldownDisplay = button?.CooldownDisplay;
 
@@ -103,9 +99,9 @@ namespace Content.Client.Items.Managers
                 return;
             }
 
-            if (entity == null ||
-                (!IoCManager.Resolve<IEntityManager>().EntityExists(entity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityLifeStage) >= EntityLifeStage.Deleted ||
-                !IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ItemCooldownComponent? cooldown) ||
+            if (entity == default ||
+                (!_entityManager.EntityExists(entity) ? EntityLifeStage.Deleted : _entityManager.GetComponent<MetaDataComponent>(entity).EntityLifeStage) >= EntityLifeStage.Deleted ||
+                !_entityManager.TryGetComponent(entity, out ItemCooldownComponent? cooldown) ||
                 !cooldown.CooldownStart.HasValue ||
                 !cooldown.CooldownEnd.HasValue)
             {
@@ -124,23 +120,23 @@ namespace Content.Client.Items.Managers
             cooldownDisplay.Visible = ratio > -1f;
         }
 
-        public void HoverInSlot(ItemSlotButton button, IEntity? entity, bool fits)
+        public void HoverInSlot(ItemSlotButton button, EntityUid entity, bool fits)
         {
-            if (entity == null || !button.MouseIsHovering)
+            if (entity == default || !button.MouseIsHovering)
             {
                 button.ClearHover();
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().HasComponent<SpriteComponent>(entity))
+            if (!_entityManager.HasComponent<SpriteComponent>(entity))
             {
                 return;
             }
 
             // Set green / red overlay at 50% transparency
             var hoverEntity = _entityManager.SpawnEntity("hoverentity", MapCoordinates.Nullspace);
-            var hoverSprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(hoverEntity);
-            hoverSprite.CopyFrom(IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(entity));
+            var hoverSprite = _entityManager.GetComponent<SpriteComponent>(hoverEntity);
+            hoverSprite.CopyFrom(_entityManager.GetComponent<SpriteComponent>(entity));
             hoverSprite.Color = fits ? new Color(0, 255, 0, 127) : new Color(255, 0, 0, 127);
 
             button.HoverSpriteView.Sprite = hoverSprite;

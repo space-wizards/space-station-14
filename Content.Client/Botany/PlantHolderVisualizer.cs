@@ -10,7 +10,7 @@ namespace Content.Client.Botany
     [UsedImplicitly]
     public class PlantHolderVisualizer : AppearanceVisualizer
     {
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
 

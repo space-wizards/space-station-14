@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Content.Server.Cleanable;
 using Content.Server.Coordinates.Helpers;
-using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
@@ -33,7 +32,7 @@ namespace Content.Server.Chemistry.TileReactions
                         break;
 
                     amount = next;
-                    IoCManager.Resolve<IEntityManager>().QueueDeleteEntity((EntityUid) entity);
+                    IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(entity);
                 }
             }
 

@@ -18,7 +18,6 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.ViewVariables;
 
@@ -166,7 +165,7 @@ namespace Content.Server.Medical.Components
             UserInterface?.Open(actor.PlayerSession);
         }
 
-        public void InsertBody(IEntity user)
+        public void InsertBody(EntityUiduser)
         {
             _bodyContainer.Insert(user);
             UpdateUserInterface();

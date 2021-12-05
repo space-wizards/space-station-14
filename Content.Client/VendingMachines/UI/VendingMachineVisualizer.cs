@@ -117,7 +117,7 @@ namespace Content.Client.VendingMachines.UI
             flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame(key, 0f));
         }
 
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
 

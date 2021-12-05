@@ -9,7 +9,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Singularity.Components
@@ -63,7 +62,7 @@ namespace Content.Server.Singularity.Components
         private Tuple<Direction, ContainmentFieldConnection>? _connection1;
         private Tuple<Direction, ContainmentFieldConnection>? _connection2;
 
-        public bool CanRepell(IEntity toRepell) => _connection1?.Item2?.CanRepell(toRepell) == true ||
+        public bool CanRepell(EntityUidtoRepell) => _connection1?.Item2?.CanRepell(toRepell) == true ||
                                                    _connection2?.Item2?.CanRepell(toRepell) == true;
 
         public void OnAnchoredChanged()

@@ -41,32 +41,34 @@ namespace Content.Client.Suspicion
             var viewport = _eyeManager.GetWorldViewport();
 
             var ent = _playerManager.LocalPlayer?.ControlledEntity;
-            if (ent == null || IoCManager.Resolve<IEntityManager>().TryGetComponent(ent, out SuspicionRoleComponent? sus) != true)
+            if (ent == default || _entityManager.TryGetComponent(ent.Value, out SuspicionRoleComponent? sus) != true)
             {
                 return;
             }
 
-            foreach (var (_, uid) in sus.Allies)
+            foreach (var (_, ally) in sus.Allies)
             {
                 // Otherwise the entity can not exist yet
-                if (!_entityManager.TryGetEntity(uid, out var ally))
+                if (!_entityManager.EntityExists(ally))
                 {
                     continue;
                 }
 
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(ally, out IPhysBody? physics))
+                if (!_entityManager.TryGetComponent(ally, out IPhysBody? physics))
                 {
                     continue;
                 }
 
-                if (!ExamineSystemShared.InRangeUnOccluded(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(ent).MapPosition, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(ally).MapPosition, 15,
+                var entPosition = _entityManager.GetComponent<TransformComponent>(ent.Value).MapPosition;
+                var allyPosition = _entityManager.GetComponent<TransformComponent>(ally).MapPosition;
+                if (!ExamineSystemShared.InRangeUnOccluded(entPosition, allyPosition, 15,
                     entity => entity == ent || entity == ally))
                 {
                     continue;
                 }
 
                 // if not on the same map, continue
-                if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(physics.Owner).MapID != _eyeManager.CurrentMap || physics.Owner.IsInContainer())
+                if (_entityManager.GetComponent<TransformComponent>(physics.Owner).MapID != _eyeManager.CurrentMap || physics.Owner.IsInContainer())
                 {
                     continue;
                 }

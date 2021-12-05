@@ -142,7 +142,7 @@ namespace Content.Client.Items.UI
                 ISpriteComponent? tempQualifier = HoverSpriteView.Sprite;
                 if (tempQualifier != null)
                 {
-                    IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) tempQualifier.Owner);
+                    IoCManager.Resolve<IEntityManager>().DeleteEntity(tempQualifier.Owner);
                 }
 
                 HoverSpriteView.Sprite = null;

@@ -15,12 +15,12 @@ namespace Content.Server.PowerCell.Components
     {
         public override string Name => "PowerCellCharger";
 
-        public override bool IsEntityCompatible(IEntity entity)
+        public override bool IsEntityCompatible(EntityUid entity)
         {
             return IoCManager.Resolve<IEntityManager>().HasComponent<BatteryComponent>(entity);
         }
 
-        protected override BatteryComponent GetBatteryFrom(IEntity entity)
+        protected override BatteryComponent GetBatteryFrom(EntityUid entity)
         {
             return IoCManager.Resolve<IEntityManager>().GetComponent<BatteryComponent>(entity);
         }

@@ -4,14 +4,12 @@ using Content.Server.CombatMode;
 using Content.Server.Hands.Components;
 using Content.Server.Interaction.Components;
 using Content.Server.Stunnable;
-using Content.Server.Stunnable.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.Hands;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
-using Content.Shared.Stunnable;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -60,8 +58,8 @@ namespace Content.Server.Weapon.Ranged
         public DamageSpecifier? ClumsyDamage;
 
         public Func<bool>? WeaponCanFireHandler;
-        public Func<IEntity, bool>? UserCanFireHandler;
-        public Action<IEntity, Vector2>? FireHandler;
+        public Func<EntityUid, bool>? UserCanFireHandler;
+        public Action<EntityUid, Vector2>? FireHandler;
 
         public ServerRangedBarrelComponent? Barrel
         {
@@ -87,7 +85,7 @@ namespace Content.Server.Weapon.Ranged
             return WeaponCanFireHandler == null || WeaponCanFireHandler();
         }
 
-        private bool UserCanFire(IEntity user)
+        private bool UserCanFire(EntityUid user)
         {
             return (UserCanFireHandler == null || UserCanFireHandler(user)) && EntitySystem.Get<ActionBlockerSystem>().CanInteract(user);
         }
@@ -144,7 +142,7 @@ namespace Content.Server.Weapon.Ranged
         /// </summary>
         /// <param name="user">Entity that is operating the weapon, usually the player.</param>
         /// <param name="targetPos">Target position on the map to shoot at.</param>
-        private void TryFire(IEntity user, Vector2 targetPos)
+        private void TryFire(EntityUid user, Vector2 targetPos)
         {
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out HandsComponent? hands) || hands.GetActiveHand?.Owner != Owner)
             {
@@ -187,7 +185,7 @@ namespace Content.Server.Weapon.Ranged
 
                 user.PopupMessage(Loc.GetString("server-ranged-weapon-component-try-fire-clumsy"));
 
-                IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) Owner);
+                IoCManager.Resolve<IEntityManager>().DeleteEntity(Owner);
                 return;
             }
 

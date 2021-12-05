@@ -28,30 +28,10 @@ namespace Content.Server.Fluids.Components
         /// <param name="sound">Play the spill sound.</param>
         /// <returns>The puddle if one was created, null otherwise.</returns>
         /// <param name="combine">Whether to attempt to merge with existing puddles</param>
-        public static PuddleComponent? SpillAt(this Solution solution, IEntity entity, string prototype,
+        public static PuddleComponent? SpillAt(this Solution solution, EntityUid entity, string prototype,
             bool sound = true, bool combine = true)
         {
             return solution.SpillAt(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates, prototype, sound, combine: combine);
-        }
-
-        /// <summary>
-        ///     Spills the specified solution at the entity's location if possible.
-        /// </summary>
-        /// <param name="entity">
-        ///     The entity to use as a location to spill the solution at.
-        /// </param>
-        /// <param name="solution">Initial solution for the prototype.</param>
-        /// <param name="prototype">The prototype to use.</param>
-        /// <param name="sound">Play the spill sound.</param>
-        /// <param name="entityManager"></param>
-        /// <param name="combine">Whether to attempt to merge with existing puddles</param>
-        /// <returns>The puddle if one was created, null otherwise.</returns>
-        public static PuddleComponent? SpillAt(this Solution solution, EntityUid entity, string prototype,
-            bool sound = true, IEntityManager? entityManager = null, bool combine = true)
-        {
-            entityManager ??= IoCManager.Resolve<IEntityManager>();
-
-            return solution.SpillAt(entityManager.GetComponent<TransformComponent>(entity).Coordinates, prototype, sound, combine: combine);
         }
 
         /// <summary>
@@ -66,7 +46,7 @@ namespace Content.Server.Fluids.Components
         /// <param name="sound">Play the spill sound.</param>
         /// <param name="combine">Whether to attempt to merge with existing puddles</param>
         /// <returns>True if a puddle was created, false otherwise.</returns>
-        public static bool TrySpillAt(this Solution solution, IEntity entity, string prototype,
+        public static bool TrySpillAt(this Solution solution, EntityUid entity, string prototype,
             [NotNullWhen(true)] out PuddleComponent? puddle, bool sound = true, bool combine = true)
         {
             puddle = solution.SpillAt(entity, prototype, sound, combine: combine);

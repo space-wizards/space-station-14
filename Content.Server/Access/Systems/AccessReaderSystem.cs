@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Server.Access.Components;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
@@ -9,10 +13,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 
 namespace Content.Server.Access.Systems
 {
@@ -106,16 +106,11 @@ namespace Content.Server.Access.Systems
                 return true;
             }
 
-            if (EntityManager.TryGetComponent(uid, out PDAComponent? pda))
+            if (EntityManager.TryGetComponent(uid, out PDAComponent? pda) &&
+                pda.ContainedID?.Owner is {Valid: true} id)
             {
-                IEntity tempQualifier = pda?.ContainedID?.Owner;
-                if (tempQualifier != null)
-                {
-                    IoCManager.Resolve<IEntityManager>().GetComponent<AccessComponent>(tempQualifier);
-                }
-
-                tags = RETURNED_VALUE?.Tags;
-                return tags != null;
+                tags = EntityManager.GetComponent<AccessComponent>(id).Tags;
+                return true;
             }
 
             tags = null;

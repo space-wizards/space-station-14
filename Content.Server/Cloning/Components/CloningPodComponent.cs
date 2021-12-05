@@ -1,6 +1,6 @@
 using System;
-using Content.Server.EUI;
 using Content.Server.Climbing;
+using Content.Server.EUI;
 using Content.Server.Mind.Components;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
@@ -107,7 +107,7 @@ namespace Content.Server.Cloning.Components
 
                     if (cloningSystem.ClonesWaitingForMind.TryGetValue(mind, out var cloneUid))
                     {
-                        if (IoCManager.Resolve<IEntityManager>().TryGetEntity(cloneUid, out var clone) &&
+                        if (IoCManager.Resolve<IEntityManager>().EntityExists(cloneUid) &&
                             IoCManager.Resolve<IEntityManager>().TryGetComponent<MobStateComponent?>(clone, out var cloneState) &&
                             !cloneState.IsDead() &&
                             IoCManager.Resolve<IEntityManager>().TryGetComponent(clone, out MindComponent? cloneMindComp) &&

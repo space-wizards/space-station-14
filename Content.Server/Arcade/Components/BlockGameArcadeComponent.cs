@@ -664,11 +664,11 @@ namespace Content.Server.Arcade.Components
                 _running = false;
                 _gameOver = true;
 
-                if (_component._player?.AttachedEntity != null)
+                if (_component._player?.AttachedEntity is {Valid: true} playerEntity)
                 {
                     var blockGameSystem = EntitySystem.Get<BlockGameSystem>();
 
-                    _highScorePlacement = blockGameSystem.RegisterHighScore(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_component._player.AttachedEntity).EntityName, Points);
+                    _highScorePlacement = blockGameSystem.RegisterHighScore(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(playerEntity).EntityName, Points);
                     SendHighscoreUpdate();
                 }
                 _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameGameOverScreenMessage(Points, _highScorePlacement?.LocalPlacement, _highScorePlacement?.GlobalPlacement));

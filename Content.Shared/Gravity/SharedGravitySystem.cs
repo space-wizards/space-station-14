@@ -12,7 +12,7 @@ namespace Content.Shared.Gravity
 
         private void HandleGridInitialize(GridInitializeEvent ev)
         {
-            var gridEnt = EntityManager.GetEntity(ev.EntityUid);
+            var gridev.EntityUid
             gridEnt.EnsureComponent<GravityComponent>();
         }
     }

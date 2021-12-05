@@ -40,7 +40,7 @@ namespace Content.Server.Morgue.Components
         private string? _trayPrototypeId;
 
         [ViewVariables]
-        private IEntity? _tray;
+        private EntityUid _tray;
 
         [ViewVariables]
         public ContainerSlot? TrayContainer { get; private set; }
@@ -69,14 +69,14 @@ namespace Content.Server.Morgue.Components
             return base.ContentsDumpPosition();
         }
 
-        protected override bool AddToContents(IEntity entity)
+        protected override bool AddToContents(EntityUid entity)
         {
-            if (IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(entity) && !EntitySystem.Get<StandingStateSystem>().IsDown((EntityUid) entity))
+            if (IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(entity) && !EntitySystem.Get<StandingStateSystem>().IsDown(entity))
                 return false;
             return base.AddToContents(entity);
         }
 
-        public override bool CanOpen(IEntity user, bool silent = false)
+        public override bool CanOpen(EntityUid user, bool silent = false)
         {
             if (!Owner.InRangeUnobstructed(
                 IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates.Offset(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).LocalRotation.GetCardinalDir()),
@@ -145,7 +145,7 @@ namespace Content.Server.Morgue.Components
             }
         }
 
-        protected override IEnumerable<IEntity> DetermineCollidingEntities()
+        protected override IEnumerable<EntityUid> DetermineCollidingEntities()
         {
             if (_tray == null)
             {

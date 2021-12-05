@@ -14,7 +14,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -48,7 +47,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         private int _capacity = 6;
 
         private ContainerSlot _chamberContainer = default!;
-        private Stack<IEntity> _spawnedAmmo = default!;
+        private Stack<EntityUid> _spawnedAmmo = default!;
         private Container _ammoContainer = default!;
 
         [ViewVariables]
@@ -141,7 +140,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         {
             // TODO: Add existing ammo support on revolvers
             base.Initialize();
-            _spawnedAmmo = new Stack<IEntity>(_capacity - 1);
+            _spawnedAmmo = new Stack<EntityUid>(_capacity - 1);
             _ammoContainer = ContainerHelpers.EnsureContainer<Container>(Owner, $"{Name}-ammo-container", out var existing);
 
             if (existing)
@@ -172,12 +171,12 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             _appearanceComponent?.SetData(AmmoVisuals.AmmoMax, Capacity);
         }
 
-        public override IEntity? PeekAmmo()
+        public override EntityUid PeekAmmo()
         {
             return _chamberContainer.ContainedEntity;
         }
 
-        public override IEntity? TakeProjectile(EntityCoordinates spawnAt)
+        public override EntityUid TakeProjectile(EntityCoordinates spawnAt)
         {
             var chamberEntity = _chamberContainer.ContainedEntity;
             if (_autoCycle)
@@ -228,7 +227,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             UpdateAppearance();
         }
 
-        public bool TryInsertBullet(IEntity user, IEntity ammo)
+        public bool TryInsertBullet(EntityUid user, EntityUid ammo)
         {
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(ammo, out AmmoComponent? ammoComponent))
             {

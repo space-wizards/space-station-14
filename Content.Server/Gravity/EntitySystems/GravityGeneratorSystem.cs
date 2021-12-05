@@ -219,7 +219,7 @@ namespace Content.Server.Gravity.EntitySystems
 
         public void UpdateState(GravityGeneratorComponent grav, ApcPowerReceiverComponent powerReceiver)
         {
-            var uid = (EntityUid) grav.Owner;
+            var uid = grav.Owner;
             var appearance = EntityManager.GetComponentOrNull<AppearanceComponent>(uid);
             appearance?.SetData(GravityGeneratorVisuals.Charge, grav.Charge);
 

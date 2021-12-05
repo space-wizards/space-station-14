@@ -70,7 +70,8 @@ namespace Content.Client.Disposal.Visualizers
                 return;
             }
 
-            if (!appearance.Owner.TryGetComponent(out ISpriteComponent? sprite))
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (!entities.TryGetComponent(appearance.Owner, out ISpriteComponent? sprite))
             {
                 return;
             }
@@ -144,7 +145,7 @@ namespace Content.Client.Disposal.Visualizers
             }
         }
 
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
 

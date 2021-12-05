@@ -2,15 +2,10 @@ using Content.Shared.Singularity;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Sound;
 using Robust.Shared.Audio;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Physics.Collision;
-using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Singularity.Components
@@ -32,7 +27,7 @@ namespace Content.Server.Singularity.Components
                 _energy = value;
                 if (_energy <= 0)
                 {
-                    IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) Owner);
+                    IoCManager.Resolve<IEntityManager>().DeleteEntity(Owner);
                     return;
                 }
 

@@ -17,7 +17,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
-
 namespace Content.Client.Construction
 {
     /// <summary>
@@ -111,7 +110,7 @@ namespace Content.Client.Construction
 
         private void HandlePlayerAttached(PlayerAttachSysMessage msg)
         {
-            var available = IsCrafingAvailable(msg.AttachedEntity);
+            var available = IsCraftingAvailable(msg.AttachedEntity);
             UpdateCraftingAvailability(available);
         }
 
@@ -131,9 +130,9 @@ namespace Content.Client.Construction
             CraftingEnabled = available;
         }
 
-        private static bool IsCrafingAvailable(IEntity? entity)
+        private static bool IsCraftingAvailable(EntityUid? entity)
         {
-            if (entity == null)
+            if (entity == default)
                 return false;
 
             // TODO: Decide if entity can craft, using capabilities or something
@@ -145,9 +144,7 @@ namespace Content.Client.Construction
             if (!args.EntityUid.IsValid() || !args.EntityUid.IsClientSide())
                 return false;
 
-            var entity = EntityManager.GetEntity(args.EntityUid);
-
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ConstructionGhostComponent?>(entity, out var ghostComp))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ConstructionGhostComponent?>(args.EntityUid, out var ghostComp))
                 return false;
 
             TryStartConstruction(ghostComp.GhostId);
@@ -159,10 +156,14 @@ namespace Content.Client.Construction
         /// </summary>
         public void SpawnGhost(ConstructionPrototype prototype, EntityCoordinates loc, Direction dir)
         {
-            var user = _playerManager.LocalPlayer?.ControlledEntity;
+            if (_playerManager.LocalPlayer?.ControlledEntity is not { } user ||
+                !user.IsValid())
+            {
+                return;
+            }
 
             // This InRangeUnobstructed should probably be replaced with "is there something blocking us in that tile?"
-            if (user == null || GhostPresent(loc) || !user.InRangeUnobstructed(loc, 20f, ignoreInsideBlocker: prototype.CanBuildInImpassable)) return;
+            if (GhostPresent(loc) || !user.InRangeUnobstructed(loc, 20f, ignoreInsideBlocker: prototype.CanBuildInImpassable)) return;
 
             foreach (var condition in prototype.Conditions)
             {
@@ -226,7 +227,7 @@ namespace Content.Client.Construction
         {
             if (_ghosts.TryGetValue(ghostId, out var ghost))
             {
-                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity((EntityUid) ghost.Owner);
+                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(ghost.Owner);
                 _ghosts.Remove(ghostId);
             }
         }
@@ -238,7 +239,7 @@ namespace Content.Client.Construction
         {
             foreach (var (_, ghost) in _ghosts)
             {
-                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity((EntityUid) ghost.Owner);
+                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(ghost.Owner);
             }
 
             _ghosts.Clear();

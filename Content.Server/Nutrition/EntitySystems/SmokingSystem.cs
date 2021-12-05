@@ -99,8 +99,8 @@ namespace Content.Server.Nutrition.EntitySystems
                     !IoCManager.Resolve<IEntityManager>().TryGetComponent(containerManager.Owner, out BloodstreamComponent? bloodstream))
                     continue;
 
-                _reactiveSystem.ReactionEntity(containerManager.OwnerUid, ReactionMethod.Ingestion, inhaledSolution);
-                _bloodstreamSystem.TryAddToBloodstream(containerManager.OwnerUid, inhaledSolution, bloodstream);
+                _reactiveSystem.ReactionEntity(containerManager.Owner, ReactionMethod.Ingestion, inhaledSolution);
+                _bloodstreamSystem.TryAddToBloodstream(containerManager.Owner, inhaledSolution, bloodstream);
             }
 
             _timer -= UpdateTimer;

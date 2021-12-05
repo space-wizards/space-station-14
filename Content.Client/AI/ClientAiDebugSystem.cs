@@ -18,7 +18,7 @@ namespace Content.Client.AI
         [Dependency] private readonly IEyeManager _eyeManager = default!;
 
         private AiDebugMode _tooltips = AiDebugMode.None;
-        private readonly Dictionary<IEntity, PanelContainer> _aiBoxes = new();
+        private readonly Dictionary<EntityUid, PanelContainer> _aiBoxes = new();
 
         public override void Update(float frameTime)
         {
@@ -37,7 +37,7 @@ namespace Content.Client.AI
                 return;
             }
 
-            var deletedEntities = new List<IEntity>(0);
+            var deletedEntities = new List<EntityUid>(0);
             foreach (var (entity, panel) in _aiBoxes)
             {
                 if ((!IoCManager.Resolve<IEntityManager>().EntityExists(entity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityLifeStage) >= EntityLifeStage.Deleted)
@@ -78,8 +78,7 @@ namespace Content.Client.AI
             if ((_tooltips & AiDebugMode.Thonk) != 0)
             {
                 // I guess if it's out of range we don't know about it?
-                var entityManager = IoCManager.Resolve<IEntityManager>();
-                var entity = entityManager.GetEntity(message.EntityUid);
+                var entity = message.EntityUid;
                 TryCreatePanel(entity);
 
                 // Probably shouldn't access by index but it's a debugging tool so eh
@@ -95,8 +94,7 @@ namespace Content.Client.AI
         {
             if ((_tooltips & AiDebugMode.Paths) != 0)
             {
-                var entityManager = IoCManager.Resolve<IEntityManager>();
-                var entity = entityManager.GetEntity(message.EntityUid);
+                var entity = message.EntityUid;
                 TryCreatePanel(entity);
 
                 var label = (Label) _aiBoxes[entity].GetChild(0).GetChild(1);
@@ -110,8 +108,7 @@ namespace Content.Client.AI
         {
             if ((_tooltips & AiDebugMode.Paths) != 0)
             {
-                var entityManager = IoCManager.Resolve<IEntityManager>();
-                var entity = entityManager.GetEntity(message.EntityUid);
+                var entity = message.EntityUid;
                 TryCreatePanel(entity);
 
                 var label = (Label) _aiBoxes[entity].GetChild(0).GetChild(1);
@@ -154,7 +151,7 @@ namespace Content.Client.AI
             }
         }
 
-        private bool TryCreatePanel(IEntity entity)
+        private bool TryCreatePanel(EntityUid entity)
         {
             if (!_aiBoxes.ContainsKey(entity))
             {

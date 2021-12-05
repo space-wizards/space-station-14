@@ -15,7 +15,7 @@ namespace Content.Client.Body.UI
         private BodyScannerDisplay? _display;
 
         [ViewVariables]
-        private IEntity? _entity;
+        private EntityUid _entity;
 
         public BodyScannerBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey) { }
 
@@ -36,7 +36,7 @@ namespace Content.Client.Body.UI
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetEntity(scannerState.Uid, out _entity))
+            if (!IoCManager.Resolve<IEntityManager>().EntityExists(scannerState.Uid))
             {
                 throw new ArgumentException($"Received an invalid entity with id {scannerState.Uid} for body scanner with id {Owner.Owner} at {IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Owner).MapPosition}");
             }

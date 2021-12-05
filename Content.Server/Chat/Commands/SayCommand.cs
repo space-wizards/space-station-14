@@ -19,14 +19,13 @@ namespace Content.Server.Chat.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player as IPlayerSession;
-            if (player == null)
+            if (shell.Player is not IPlayerSession player)
             {
                 shell.WriteLine("This command cannot be run from the server.");
                 return;
             }
 
-            if (player.Status != SessionStatus.InGame || !player.AttachedEntityUid.HasValue)
+            if (player.Status != SessionStatus.InGame || !player.AttachedEntity.HasValue)
                 return;
 
             if (args.Length < 1)
@@ -38,9 +37,8 @@ namespace Content.Server.Chat.Commands
 
             var chat = IoCManager.Resolve<IChatManager>();
             var chatSanitizer = IoCManager.Resolve<IChatSanitizationManager>();
-            var playerEntity = player.AttachedEntity;
 
-            if (playerEntity == null)
+            if (player.AttachedEntity is not {Valid: true} playerEntity)
             {
                 shell.WriteLine("You don't have an entity!");
                 return;
@@ -58,7 +56,7 @@ namespace Content.Server.Chat.Commands
                     return;
                 }
 
-                if (mindComponent.OwnedEntity == null)
+                if (mindComponent.OwnedEntity == default)
                 {
                     shell.WriteError("You don't have an entity!");
                     return;

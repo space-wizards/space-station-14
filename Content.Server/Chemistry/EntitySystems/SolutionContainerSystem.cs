@@ -13,9 +13,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Chemistry.EntitySystems
@@ -290,10 +288,10 @@ namespace Content.Server.Chemistry.EntitySystems
             UpdateChemicals(uid, solution);
         }
 
-        public FixedPoint2 GetReagentQuantity(EntityUid ownerUid, string reagentId)
+        public FixedPoint2 GetReagentQuantity(EntityUid Owner, string reagentId)
         {
             var reagentQuantity = FixedPoint2.New(0);
-            if (EntityManager.TryGetEntity(ownerUid, out var owner)
+            if (EntityManager.EntityExists(Owner)
                 && IoCManager.Resolve<IEntityManager>().TryGetComponent(owner, out SolutionContainerManagerComponent? managerComponent))
             {
                 foreach (var solution in managerComponent.Solutions.Values)

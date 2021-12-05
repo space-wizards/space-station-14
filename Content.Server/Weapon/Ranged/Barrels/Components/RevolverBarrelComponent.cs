@@ -13,7 +13,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using Robust.Shared.Players;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -44,7 +43,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         private int _serializedCapacity = 6;
 
         [DataField("ammoSlots", readOnly: true)]
-        private IEntity?[] _ammoSlots = Array.Empty<IEntity?>();
+        private EntityUid[] _ammoSlots = Array.Empty<EntityUid>();
 
         public override int ShotsLeft => _ammoContainer.ContainedEntities.Count;
 
@@ -137,7 +136,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             appearance.SetData(AmmoVisuals.AmmoMax, Capacity);
         }
 
-        public bool TryInsertBullet(IEntity user, IEntity entity)
+        public bool TryInsertBullet(EntityUid user, EntityUid entity)
         {
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out AmmoComponent? ammoComponent))
             {
@@ -192,7 +191,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             Dirty();
         }
 
-        public override IEntity? PeekAmmo()
+        public override EntityUid PeekAmmo()
         {
             return _ammoSlots[_currentSlot];
         }
@@ -203,10 +202,10 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public override IEntity? TakeProjectile(EntityCoordinates spawnAt)
+        public override EntityUid TakeProjectile(EntityCoordinates spawnAt)
         {
             var ammo = _ammoSlots[_currentSlot];
-            IEntity? bullet = null;
+            EntityUid bullet = null;
             if (ammo != null)
             {
                 var ammoComponent = IoCManager.Resolve<IEntityManager>().GetComponent<AmmoComponent>(ammo);

@@ -1,9 +1,7 @@
 using System.Linq;
 using Content.Client.Info;
 using Content.Client.Lobby.UI;
-using Content.Client.Parallax;
 using Content.Client.Resources;
-using Content.Client.Stylesheets;
 using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
@@ -138,7 +136,7 @@ namespace Content.Client.Preferences.UI
 
         private class CharacterPickerButton : ContainerButton
         {
-            private IEntity _previewDummy;
+            private EntityUid _previewDummy;
 
             public CharacterPickerButton(
                 IEntityManager entityManager,
@@ -219,7 +217,7 @@ namespace Content.Client.Preferences.UI
                     return;
 
                 IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) _previewDummy);
-                _previewDummy = null!;
+                _previewDummy = default;
             }
         }
     }

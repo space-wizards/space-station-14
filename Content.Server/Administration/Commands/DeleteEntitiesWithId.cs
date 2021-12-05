@@ -1,9 +1,8 @@
+using System.Linq;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using System.Linq;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Administration.Commands
 {
@@ -29,7 +28,7 @@ namespace Content.Server.Administration.Commands
 
             foreach (var entity in entities)
             {
-                IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) entity);
+                IoCManager.Resolve<IEntityManager>().DeleteEntity(entity);
                 i++;
             }
 

@@ -46,7 +46,7 @@ namespace Content.IntegrationTests.Tests.Utility
             await server.WaitAssertion(() =>
             {
                 var grid = GetMainGrid(sMapManager);
-                var gridEnt = sEntityManager.GetEntity(grid.GridEntityId);
+                var gridEnt = grid.GridEntityId;
                 var gridPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(gridEnt).WorldPosition;
                 var entityCoordinates = GetMainEntityCoordinates(sMapManager);
 

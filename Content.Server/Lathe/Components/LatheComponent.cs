@@ -202,7 +202,7 @@ namespace Content.Server.Lathe.Components
                 SetAppearance(LatheVisualState.Idle);
             });
 
-            IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) eventArgs.Using);
+            IoCManager.Resolve<IEntityManager>().DeleteEntity(eventArgs.Using);
 
             return true;
         }

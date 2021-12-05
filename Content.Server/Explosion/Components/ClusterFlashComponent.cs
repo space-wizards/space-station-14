@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Flash.Components;
@@ -100,7 +99,7 @@ namespace Content.Server.Explosion.Components
                 var delay = 20;
                 var grenadesInserted = _grenadesContainer.ContainedEntities.Count + _unspawnedCount;
                 var thrownCount = 0;
-                var segmentAngle = (int) (360 / grenadesInserted);
+                var segmentAngle = 360 / grenadesInserted;
                 while (TryGetGrenade(out var grenade))
                 {
                     var angleMin = segmentAngle * thrownCount;
@@ -123,14 +122,14 @@ namespace Content.Server.Explosion.Components
                     });
                 }
 
-                IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) Owner);
+                IoCManager.Resolve<IEntityManager>().DeleteEntity(Owner);
             });
             return true;
         }
 
-        private bool TryGetGrenade([NotNullWhen(true)] out IEntity? grenade)
+        private bool TryGetGrenade(out EntityUid grenade)
         {
-            grenade = null;
+            grenade = default;
 
             if (_unspawnedCount > 0)
             {

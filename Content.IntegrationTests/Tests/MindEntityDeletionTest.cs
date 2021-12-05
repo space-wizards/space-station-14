@@ -20,8 +20,8 @@ namespace Content.IntegrationTests.Tests
         {
             var (_, server) = await StartConnectedServerDummyTickerClientPair();
 
-            IEntity playerEnt = null;
-            IEntity visitEnt = null;
+            EntityUid playerEnt = default;
+            EntityUid visitEnt = default;
             Mind mind = null;
             server.Assert(() =>
             {
@@ -49,12 +49,12 @@ namespace Content.IntegrationTests.Tests
 
             server.Assert(() =>
             {
-                IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) visitEnt);
+                IoCManager.Resolve<IEntityManager>().DeleteEntity(visitEnt);
 
-                Assert.That(mind.VisitingEntity, Is.Null);
+                Assert.That(mind.VisitingEntity, Is.EqualTo(default));
 
                 // This used to throw so make sure it doesn't.
-                IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) playerEnt);
+                IoCManager.Resolve<IEntityManager>().DeleteEntity(playerEnt);
             });
 
             await server.WaitIdleAsync();
@@ -66,7 +66,7 @@ namespace Content.IntegrationTests.Tests
             // Has to be a non-dummy ticker so we have a proper map.
             var (_, server) = await StartConnectedServerClientPair();
 
-            IEntity playerEnt = null;
+            EntityUid playerEnt = default;
             Mind mind = null;
             server.Assert(() =>
             {
@@ -110,7 +110,7 @@ namespace Content.IntegrationTests.Tests
             // Has to be a non-dummy ticker so we have a proper map.
             var (_, server) = await StartConnectedServerClientPair();
 
-            IEntity playerEnt = null;
+            EntityUid playerEnt = default;
             Mind mind = null;
             MapId map = default;
             server.Assert(() =>

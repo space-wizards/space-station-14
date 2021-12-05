@@ -10,7 +10,6 @@ using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
@@ -33,8 +32,8 @@ namespace Content.Client.Examine
 
         public const string StyleClassEntityTooltip = "entity-tooltip";
 
-        private IEntity? _examinedEntity;
-        private IEntity? _playerEntity;
+        private EntityUid _examinedEntity;
+        private EntityUid _playerEntity;
         private Popup? _examineTooltipOpen;
         private CancellationTokenSource? _requestCancelTokenSource;
 
@@ -51,8 +50,8 @@ namespace Content.Client.Examine
 
         public override void Update(float frameTime)
         {
-            if (_examineTooltipOpen == null || !_examineTooltipOpen.Visible) return;
-            if (_examinedEntity == null || _playerEntity == null) return;
+            if (_examineTooltipOpen is not {Visible: true}) return;
+            if (!_examinedEntity.Valid || !_playerEntity.Valid) return;
 
             if (!CanExamine(_playerEntity, _examinedEntity))
                 CloseTooltip();
@@ -64,7 +63,7 @@ namespace Content.Client.Examine
             base.Shutdown();
         }
 
-        public override bool CanExamine(IEntity examiner, MapCoordinates target, Ignored? predicate = null)
+        public override bool CanExamine(EntityUid examiner, MapCoordinates target, Ignored? predicate = null)
         {
             var b = _eyeManager.GetWorldViewbounds();
             if (!b.Contains(target.Position))
@@ -73,16 +72,16 @@ namespace Content.Client.Examine
             return base.CanExamine(examiner, target, predicate);
         }
 
-        private bool HandleExamine(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
+        private bool HandleExamine(ICommonSession? session, EntityCoordinates coords, EntityUid entity)
         {
-            if (!uid.IsValid() || !EntityManager.TryGetEntity(uid, out var entity))
+            if (!entity.IsValid() || !EntityManager.EntityExists(entity))
             {
                 return false;
             }
 
-            _playerEntity = _playerManager.LocalPlayer?.ControlledEntity;
+            _playerEntity = _playerManager.LocalPlayer?.ControlledEntity ?? default;
 
-            if (_playerEntity == null || !CanExamine(_playerEntity, entity))
+            if (_playerEntity == default || !CanExamine(_playerEntity, entity))
             {
                 return false;
             }
@@ -104,7 +103,7 @@ namespace Content.Client.Examine
             args.Verbs.Add(verb);
         }
 
-        public async void DoExamine(IEntity entity)
+        public async void DoExamine(EntityUid entity)
         {
             // Close any examine tooltip that might already be opened
             CloseTooltip();

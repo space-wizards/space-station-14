@@ -9,7 +9,6 @@ using Content.Shared.Sound;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.Inventory.EquipmentSlotDefines;
@@ -96,7 +95,7 @@ namespace Content.Server.Clothing.Components
             return false;
         }
 
-        public bool TryEquip(InventoryComponent inv, Slots slot, IEntity user)
+        public bool TryEquip(InventoryComponent inv, Slots slot, EntityUiduser)
         {
             if (!inv.Equip(slot, this, true, out var reason))
             {

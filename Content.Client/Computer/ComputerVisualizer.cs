@@ -20,7 +20,7 @@ namespace Content.Client.Computer
         private string BodyBrokenState = "broken";
         private string ScreenBroken = "computer_broken";
 
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
 

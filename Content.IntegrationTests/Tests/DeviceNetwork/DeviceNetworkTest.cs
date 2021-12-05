@@ -64,8 +64,8 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
             var deviceNetTestSystem = entityManager.EntitySysManager.GetEntitySystem<DeviceNetworkTestSystem>();
 
 
-            IEntity device1 = null;
-            IEntity device2 = null;
+            EntityUid device1 = default;
+            EntityUid device2 = default;
             DeviceNetworkComponent networkComponent1 = null;
             DeviceNetworkComponent networkComponent2 = null;
 
@@ -126,8 +126,8 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
             var deviceNetTestSystem = entityManager.EntitySysManager.GetEntitySystem<DeviceNetworkTestSystem>();
 
 
-            IEntity device1 = null;
-            IEntity device2 = null;
+            EntityUid device1 = default;
+            EntityUid device2 = default;
             DeviceNetworkComponent networkComponent1 = null;
             DeviceNetworkComponent networkComponent2 = null;
             WirelessNetworkComponent wirelessNetworkComponent = null;
@@ -208,8 +208,8 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
             var deviceNetTestSystem = entityManager.EntitySysManager.GetEntitySystem<DeviceNetworkTestSystem>();
 
 
-            IEntity device1 = null;
-            IEntity device2 = null;
+            EntityUid device1 = default;
+            EntityUid device2 = default;
             DeviceNetworkComponent networkComponent1 = null;
             DeviceNetworkComponent networkComponent2 = null;
             WiredNetworkComponent wiredNetworkComponent = null;

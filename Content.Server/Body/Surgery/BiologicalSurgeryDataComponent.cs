@@ -51,7 +51,7 @@ namespace Content.Server.Body.Surgery
             }
         }
 
-        private async Task<bool> SurgeryDoAfter(IEntity performer)
+        private async Task<bool> SurgeryDoAfter(EntityUid performer)
         {
             if (!IoCManager.Resolve<IEntityManager>().HasComponent<DoAfterComponent>(performer))
             {
@@ -203,7 +203,7 @@ namespace Content.Server.Body.Surgery
             return GetSurgeryStep(toolType) != null;
         }
 
-        public bool PerformSurgery(SurgeryType surgeryType, IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
+        public bool PerformSurgery(SurgeryType surgeryType, IBodyPartContainer container, ISurgeon surgeon, EntityUid performer)
         {
             var step = GetSurgeryStep(surgeryType);
 
@@ -216,7 +216,7 @@ namespace Content.Server.Body.Surgery
             return true;
         }
 
-        private async void OpenSkinSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
+        private async void OpenSkinSurgery(IBodyPartContainer container, ISurgeon surgeon, EntityUid performer)
         {
             if (Parent == null)
             {
@@ -231,7 +231,7 @@ namespace Content.Server.Body.Surgery
             }
         }
 
-        private async void ClampVesselsSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
+        private async void ClampVesselsSurgery(IBodyPartContainer container, ISurgeon surgeon, EntityUid performer)
         {
             if (Parent == null) return;
 
@@ -243,7 +243,7 @@ namespace Content.Server.Body.Surgery
             }
         }
 
-        private async void RetractSkinSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
+        private async void RetractSkinSurgery(IBodyPartContainer container, ISurgeon surgeon, EntityUid performer)
         {
             if (Parent == null) return;
 
@@ -255,7 +255,7 @@ namespace Content.Server.Body.Surgery
             }
         }
 
-        private async void CauterizeIncisionSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
+        private async void CauterizeIncisionSurgery(IBodyPartContainer container, ISurgeon surgeon, EntityUid performer)
         {
             if (Parent == null) return;
 
@@ -269,7 +269,7 @@ namespace Content.Server.Body.Surgery
             }
         }
 
-        private void LoosenOrganSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
+        private void LoosenOrganSurgery(IBodyPartContainer container, ISurgeon surgeon, EntityUid performer)
         {
             if (Parent == null) return;
             if (Parent.Mechanisms.Count <= 0) return;
@@ -290,7 +290,7 @@ namespace Content.Server.Body.Surgery
         }
 
         private async void LoosenOrganSurgeryCallback(SharedMechanismComponent? target, IBodyPartContainer container, ISurgeon surgeon,
-            IEntity performer)
+            EntityUid performer)
         {
             if (Parent == null || target == null || !Parent.Mechanisms.Contains(target))
             {
@@ -311,7 +311,7 @@ namespace Content.Server.Body.Surgery
             }
         }
 
-        private void RemoveOrganSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
+        private void RemoveOrganSurgery(IBodyPartContainer container, ISurgeon surgeon, EntityUid performer)
         {
             if (Parent == null) return;
 
@@ -331,7 +331,7 @@ namespace Content.Server.Body.Surgery
         }
 
         private async void RemoveOrganSurgeryCallback(SharedMechanismComponent? target, IBodyPartContainer container, ISurgeon surgeon,
-            IEntity performer)
+            EntityUid performer)
         {
             if (Parent == null || target == null || !Parent.Mechanisms.Contains(target))
             {
@@ -354,7 +354,7 @@ namespace Content.Server.Body.Surgery
             }
         }
 
-        private async void RemoveBodyPartSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
+        private async void RemoveBodyPartSurgery(IBodyPartContainer container, ISurgeon surgeon, EntityUid performer)
         {
             if (Parent == null) return;
             if (container is not SharedBodyComponent body) return;

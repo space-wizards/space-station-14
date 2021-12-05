@@ -15,7 +15,6 @@ using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Shared.Administration;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
@@ -56,7 +55,7 @@ namespace Content.Server.Administration
 
         private void AddDebugVerbs(GetOtherVerbsEvent args)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ActorComponent?>(args.User, out var actor))
+            if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
                 return;
 
             var player = actor.PlayerSession;
@@ -68,7 +67,7 @@ namespace Content.Server.Administration
                 verb.Text = Loc.GetString("delete-verb-get-data-text");
                 verb.Category = VerbCategory.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png";
-                verb.Act = () => IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) args.Target);
+                verb.Act = () => EntityManager.DeleteEntity(args.Target);
                 verb.Impact = LogImpact.Medium;
                 args.Verbs.Add(verb);
             }
@@ -88,8 +87,8 @@ namespace Content.Server.Administration
             // Control mob verb
             if (_groupController.CanCommand(player, "controlmob") &&
                 args.User != args.Target &&
-                IoCManager.Resolve<IEntityManager>().HasComponent<MindComponent>(args.User) &&
-                IoCManager.Resolve<IEntityManager>().TryGetComponent<MindComponent?>(args.Target, out var targetMind))
+                EntityManager.HasComponent<MindComponent>(args.User) &&
+                EntityManager.TryGetComponent<MindComponent?>(args.Target, out var targetMind))
             {
                 Verb verb = new();
                 verb.Text = Loc.GetString("control-mob-verb-get-data-text");
@@ -106,7 +105,7 @@ namespace Content.Server.Administration
             // Make Sentient verb
             if (_groupController.CanCommand(player, "makesentient") &&
                 args.User != args.Target &&
-                !IoCManager.Resolve<IEntityManager>().HasComponent<MindComponent>(args.Target))
+                !EntityManager.HasComponent<MindComponent>(args.Target))
             {
                 Verb verb = new();
                 verb.Text = Loc.GetString("make-sentient-verb-get-data-text");
@@ -125,9 +124,9 @@ namespace Content.Server.Administration
                 verb.Category = VerbCategory.Debug;
                 verb.Act = () =>
                 {
-                    var coords = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.Target).Coordinates;
+                    var coords = EntityManager.GetComponent<TransformComponent>(args.Target).Coordinates;
                     Timer.Spawn(_gameTiming.TickPeriod, () => _explosions.SpawnExplosion(coords, 0, 1, 2, 1), CancellationToken.None);
-                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent(args.Target, out SharedBodyComponent? body))
+                    if (EntityManager.TryGetComponent(args.Target, out SharedBodyComponent? body))
                     {
                         body.Gib();
                     }
@@ -138,7 +137,7 @@ namespace Content.Server.Administration
 
             // Set clothing verb
             if (_groupController.CanCommand(player, "setoutfit") &&
-                IoCManager.Resolve<IEntityManager>().HasComponent<InventoryComponent>(args.Target))
+                EntityManager.HasComponent<InventoryComponent>(args.Target))
             {
                 Verb verb = new();
                 verb.Text = Loc.GetString("set-outfit-verb-get-data-text");
@@ -168,7 +167,7 @@ namespace Content.Server.Administration
 
             // Get Disposal tube direction verb
             if (_groupController.CanCommand(player, "tubeconnections") &&
-                IoCManager.Resolve<IEntityManager>().TryGetComponent<IDisposalTubeComponent?>(args.Target, out var tube))
+                EntityManager.TryGetComponent<IDisposalTubeComponent?>(args.Target, out var tube))
             {
                 Verb verb = new();
                 verb.Text = Loc.GetString("tube-direction-verb-get-data-text");
@@ -180,7 +179,7 @@ namespace Content.Server.Administration
 
             // Make ghost role verb
             if (_groupController.CanCommand(player, "makeghostrole") &&
-                !(IoCManager.Resolve<IEntityManager>().GetComponentOrNull<MindComponent>(args.TargetUid)?.HasMind ?? false))
+                !(EntityManager.GetComponentOrNull<MindComponent>(args.Target)?.HasMind ?? false))
             {
                 Verb verb = new();
                 verb.Text = Loc.GetString("make-ghost-role-verb-get-data-text");
@@ -194,7 +193,7 @@ namespace Content.Server.Administration
 
             // Configuration verb. Is this even used for anything!?
             if (_groupController.CanAdminMenu(player) &&
-                IoCManager.Resolve<IEntityManager>().TryGetComponent<ConfigurationComponent?>(args.TargetUid, out var config))
+                EntityManager.TryGetComponent<ConfigurationComponent?>(args.Target, out var config))
             {
                 Verb verb = new();
                 verb.Text = Loc.GetString("configure-verb-get-data-text");
@@ -206,7 +205,7 @@ namespace Content.Server.Administration
 
             // Add verb to open Solution Editor
             if (_groupController.CanCommand(player, "addreagent") &&
-                IoCManager.Resolve<IEntityManager>().HasComponent<SolutionContainerManagerComponent>(args.Target))
+                EntityManager.HasComponent<SolutionContainerManagerComponent>(args.Target))
             {
                 Verb verb = new();
                 verb.Text = Loc.GetString("edit-solutions-verb-get-data-text");

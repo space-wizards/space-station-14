@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,7 +9,6 @@ using Content.Server.Items;
 using Content.Server.Pulling;
 using Content.Server.Storage.Components;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.DragDrop;
 using Content.Shared.Input;
@@ -72,7 +70,7 @@ namespace Content.Server.Interaction
         }
 
         #region Client Input Validation
-        private bool ValidateClientInput(ICommonSession? session, EntityCoordinates coords, EntityUid uid, [NotNullWhen(true)] out IEntity? userEntity)
+        private bool ValidateClientInput(ICommonSession? session, EntityCoordinates coords, EntityUid uid, [NotNullWhen(true)] out EntityUid userEntity)
         {
             userEntity = null;
 
@@ -103,7 +101,7 @@ namespace Content.Server.Interaction
 
         public override bool CanAccessViaStorage(EntityUid user, EntityUid target)
         {
-            if (!EntityManager.TryGetEntity(target, out var entity))
+            if (!EntityManager.EntityExists(target)
                 return false;
 
             if (!entity.TryGetContainer(out var container))
@@ -129,7 +127,7 @@ namespace Content.Server.Interaction
         /// </summary>
         private void HandleInteractInventorySlotEvent(InteractInventorySlotEvent msg, EntitySessionEventArgs args)
         {
-            if (!EntityManager.TryGetEntity(msg.ItemUid, out var item))
+            if (!EntityManager.EntityExists(msg.ItemUid)
             {
                 Logger.WarningS("system.interaction",
                     $"Client sent inventory interaction with an invalid target item. Session={args.SenderSession}");
@@ -163,9 +161,9 @@ namespace Content.Server.Interaction
             if (!_actionBlockerSystem.CanInteract(userEntity))
                 return;
 
-            if (!EntityManager.TryGetEntity(msg.Dropped, out var dropped))
+            if (!EntityManager.EntityExists(msg.Dropped)
                 return;
-            if (!EntityManager.TryGetEntity(msg.Target, out var target))
+            if (!EntityManager.EntityExists(msg.Target)
                 return;
 
             var interactionArgs = new DragDropEvent(userEntity, msg.DropLocation, dropped, target);
@@ -208,7 +206,7 @@ namespace Content.Server.Interaction
                 return false;
             }
 
-            if (!EntityManager.TryGetEntity(uid, out var used))
+            if (!EntityManager.EntityExists(uid)
                 return false;
 
             InteractionActivate(user, used);
@@ -238,7 +236,7 @@ namespace Content.Server.Interaction
         /// <param name="entity"></param>
         /// <param name="coords"></param>
         /// <param name="uid"></param>
-        internal void AiUseInteraction(IEntity entity, EntityCoordinates coords, EntityUid uid)
+        internal void AiUseInteraction(EntityUid entity, EntityCoordinates coords, EntityUid uid)
         {
             if (IoCManager.Resolve<IEntityManager>().HasComponent<ActorComponent>(entity))
                 throw new InvalidOperationException();
@@ -285,7 +283,7 @@ namespace Content.Server.Interaction
             if (userEntity == uid)
                 return false;
 
-            if (!EntityManager.TryGetEntity(uid, out var pulledObject))
+            if (!EntityManager.EntityExists(uid)
                 return false;
 
             if (!InRangeUnobstructed(userEntity, pulledObject, popup: true))
@@ -306,7 +304,7 @@ namespace Content.Server.Interaction
         /// <param name="altInteract">Whether to use default or alternative interactions (usually as a result of
         /// alt+clicking). If combat mode is enabled, the alternative action is to perform the default non-combat
         /// interaction. Having an item in the active hand also disables alternative interactions.</param>
-        public async void UserInteraction(IEntity user, EntityCoordinates coordinates, EntityUid clickedUid, bool altInteract = false)
+        public async void UserInteraction(EntityUid user, EntityCoordinates coordinates, EntityUid clickedUid, bool altInteract = false)
         {
             // TODO COMBAT Consider using alt-interact for advanced combat? maybe alt-interact disarms?
             if (!altInteract && IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out CombatModeComponent? combatMode) && combatMode.IsInCombatMode)
@@ -322,7 +320,7 @@ namespace Content.Server.Interaction
                 return;
 
             // Get entity clicked upon from UID if valid UID, if not assume no entity clicked upon and null
-            EntityManager.TryGetEntity(clickedUid, out var target);
+            EntityManager.EntityExists(clickedUid);
 
             // Check if interacted entity is in the same container, the direct child, or direct parent of the user.
             // This is bypassed IF the interaction happened through an item slot (e.g., backpack UI)
@@ -371,7 +369,7 @@ namespace Content.Server.Interaction
             }
         }
 
-        private bool ValidateInteractAndFace(IEntity user, EntityCoordinates coordinates)
+        private bool ValidateInteractAndFace(EntityUid user, EntityCoordinates coordinates)
         {
             // Verify user is on the same map as the entity they clicked on
             if (coordinates.GetMapId(_entityManager) != IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user).MapID)
@@ -391,7 +389,7 @@ namespace Content.Server.Interaction
         /// Finds components with the InteractHand interface and calls their function
         /// NOTE: Does not have an InRangeUnobstructed check
         /// </summary>
-        public void InteractHand(IEntity user, IEntity target)
+        public void InteractHand(EntityUid user, EntityUid target)
         {
             if (!_actionBlockerSystem.CanInteract(user))
                 return;
@@ -423,7 +421,7 @@ namespace Content.Server.Interaction
         /// Will have two behaviors, either "uses" the used entity at range on the target entity if it is capable of accepting that action
         /// Or it will use the used entity itself on the position clicked, regardless of what was there
         /// </summary>
-        public async Task<bool> InteractUsingRanged(IEntity user, IEntity used, IEntity? target, EntityCoordinates clickLocation, bool inRangeUnobstructed)
+        public async Task<bool> InteractUsingRanged(EntityUid user, EntityUid used, EntityUid target, EntityCoordinates clickLocation, bool inRangeUnobstructed)
         {
             if (InteractDoBefore(user, used, inRangeUnobstructed ? target : null, clickLocation, false))
                 return true;
@@ -452,7 +450,7 @@ namespace Content.Server.Interaction
             return await InteractDoAfter(user, used, inRangeUnobstructed ? target : null, clickLocation, false);
         }
 
-        public void DoAttack(IEntity user, EntityCoordinates coordinates, bool wideAttack, EntityUid targetUid = default)
+        public void DoAttack(EntityUid user, EntityCoordinates coordinates, bool wideAttack, EntityUid targetUid = default)
         {
             if (!ValidateInteractAndFace(user, coordinates))
                 return;
@@ -460,12 +458,12 @@ namespace Content.Server.Interaction
             if (!_actionBlockerSystem.CanAttack(user))
                 return;
 
-            IEntity? targetEnt = null;
+            EntityUid targetEnt = null;
 
             if (!wideAttack)
             {
                 // Get entity clicked upon from UID if valid UID, if not assume no entity clicked upon and null
-                EntityManager.TryGetEntity(targetUid, out targetEnt);
+                EntityManager.EntityExists(targetUid);
 
                 // Check if interacted entity is in the same container, the direct child, or direct parent of the user.
                 if (targetEnt != null && !user.IsInSameOrParentContainer(targetEnt) && !CanAccessViaStorage(user, targetEnt))
@@ -521,7 +519,7 @@ namespace Content.Server.Interaction
                     }
                 }
                 else if (!wideAttack &&
-                    (targetEnt != null || EntityManager.TryGetEntity(targetUid, out targetEnt)) &&
+                    (targetEnt != null || EntityManager.EntityExists(targetUid) &&
                     IoCManager.Resolve<IEntityManager>().HasComponent<ItemComponent>(targetEnt))
                 {
                     // We pick up items if our hand is empty, even if we're in combat mode.

@@ -1,9 +1,7 @@
 using System.Threading.Tasks;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.DoAfter;
-using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
@@ -143,7 +141,7 @@ namespace Content.Server.Fluids.Components
             // is the puddle cleaned?
             if (puddleSolution.TotalVolume - transferAmount <= 0)
             {
-                IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) puddleComponent.Owner);
+                IoCManager.Resolve<IEntityManager>().DeleteEntity(puddleComponent.Owner);
 
                 // After cleaning the puddle, make a new puddle with solution from the mop as a "wet floor". Then evaporate it slowly.
                 // we do this WITHOUT adding to the existing puddle. Otherwise we have might have water puddles with the vomit sprite.

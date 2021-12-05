@@ -9,7 +9,7 @@ namespace Content.Client.Power.APC
     public class ApcVisualizer : AppearanceVisualizer
     {
         [UsedImplicitly]
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
 

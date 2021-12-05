@@ -10,7 +10,6 @@ using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-
 namespace Content.Client.Fluids
 {
     [UsedImplicitly]
@@ -21,7 +20,7 @@ namespace Content.Client.Fluids
         // Whether the underlying solution color should be used
         [DataField("recolor")] public bool Recolor;
 
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
 
@@ -46,8 +45,9 @@ namespace Content.Client.Fluids
         {
             base.OnChangeData(component);
 
+            var entities = IoCManager.Resolve<IEntityManager>();
             if (component.TryGetData<float>(PuddleVisuals.VolumeScale, out var volumeScale) &&
-                component.Owner.TryGetComponent<SpriteComponent>(out var spriteComponent))
+                entities.TryGetComponent<SpriteComponent>(component.Owner, out var spriteComponent))
             {
                 var cappedScale = Math.Min(1.0f, volumeScale * 0.75f +0.25f);
                 UpdateVisual(component, spriteComponent, cappedScale);

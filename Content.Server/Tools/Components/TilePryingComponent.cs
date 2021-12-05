@@ -3,7 +3,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Maps;
 using Content.Shared.Tools;
-using Content.Shared.Tools.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -32,7 +31,7 @@ namespace Content.Server.Tools.Components
             return true;
         }
 
-        public async void TryPryTile(IEntity user, EntityCoordinates clickLocation)
+        public async void TryPryTile(EntityUid user, EntityCoordinates clickLocation)
         {
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ToolComponent?>(Owner, out var tool) && _toolComponentNeeded)
                 return;

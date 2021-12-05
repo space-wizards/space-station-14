@@ -49,7 +49,6 @@ namespace Content.Server.AME
                 if (IoCManager.Resolve<IEntityManager>().TryGetComponent(nodeOwner, out AMEShieldComponent? shield))
                 {
                     var nodeNeighbors = grid.GetCellsInSquareArea(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(nodeOwner).Coordinates, 1)
-                        .Select(sgc => IoCManager.Resolve<IEntityManager>().GetEntity(sgc))
                         .Where(entity => entity != nodeOwner && IoCManager.Resolve<IEntityManager>().HasComponent<AMEShieldComponent>(entity));
 
                     if (nodeNeighbors.Count() >= 8)

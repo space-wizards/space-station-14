@@ -4,7 +4,6 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Whitelist;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
 namespace Content.IntegrationTests.Tests.Utility
@@ -66,22 +65,18 @@ namespace Content.IntegrationTests.Tests.Utility
 
             await server.WaitIdleAsync();
             var mapManager = server.ResolveDependency<IMapManager>();
-            var entityManager = server.ResolveDependency<IEntityManager>();
+            var sEntities = server.ResolveDependency<IEntityManager>();
 
             await server.WaitAssertion(() =>
             {
                 var mapId = GetMainMapId(mapManager);
                 var mapCoordinates = new MapCoordinates(0, 0, mapId);
 
-                IEntity tempQualifier = entityManager.SpawnEntity("ValidComponentDummy", mapCoordinates);
-                var validComponent = (EntityUid) tempQualifier;
-                IEntity tempQualifier1 = entityManager.SpawnEntity("ValidTagDummy", mapCoordinates);
-                var validTag = (EntityUid) tempQualifier1;
+                var validComponent = sEntities.SpawnEntity("ValidComponentDummy", mapCoordinates);
+                var validTag = sEntities.SpawnEntity("ValidTagDummy", mapCoordinates);
 
-                IEntity tempQualifier2 = entityManager.SpawnEntity("InvalidComponentDummy", mapCoordinates);
-                var invalidComponent = (EntityUid) tempQualifier2;
-                IEntity tempQualifier3 = entityManager.SpawnEntity("InvalidTagDummy", mapCoordinates);
-                var invalidTag = (EntityUid) tempQualifier3;
+                var invalidComponent = sEntities.SpawnEntity("InvalidComponentDummy", mapCoordinates);
+                var invalidTag = sEntities.SpawnEntity("InvalidTagDummy", mapCoordinates);
 
                 // Test instantiated on its own
                 var whitelistInst = new EntityWhitelist
@@ -102,8 +97,8 @@ namespace Content.IntegrationTests.Tests.Utility
                 Assert.That(whitelistInst.IsValid(invalidTag), Is.False);
 
                 // Test from serialized
-                var dummy = entityManager.SpawnEntity("WhitelistDummy", mapCoordinates);
-                var whitelistSer = IoCManager.Resolve<IEntityManager>().GetComponent<ItemSlotsComponent>(dummy).Slots.Values.First().Whitelist;
+                var dummy = sEntities.SpawnEntity("WhitelistDummy", mapCoordinates);
+                var whitelistSer = sEntities.GetComponent<ItemSlotsComponent>(dummy).Slots.Values.First().Whitelist;
                 Assert.That(whitelistSer, Is.Not.Null);
 
                 Assert.That(whitelistSer.Components, Is.Not.Null);

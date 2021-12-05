@@ -4,7 +4,6 @@ using Content.Client.Stylesheets;
 using Content.Shared.GameTicking;
 using Content.Shared.Popups;
 using Robust.Client.Graphics;
-using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
@@ -52,7 +51,7 @@ namespace Content.Client.Popups
             PopupMessage(message, _eyeManager.CoordinatesToScreen(transform.Coordinates));
         }
 
-        public void PopupMessage(string message, ScreenCoordinates coordinates, IEntity? entity = null)
+        public void PopupMessage(string message, ScreenCoordinates coordinates, EntityUid entity = default)
         {
             var label = new PopupLabel(_eyeManager)
             {
@@ -146,7 +145,7 @@ namespace Content.Client.Popups
 
             public float TimeLeft { get; private set; }
             public Vector2 InitialPos { get; set; }
-            public IEntity? Entity { get; set; }
+            public EntityUid Entity { get; set; }
 
             public PopupLabel(IEyeManager eyeManager)
             {
@@ -160,7 +159,7 @@ namespace Content.Client.Popups
             {
                 TimeLeft += eventArgs.DeltaSeconds;
 
-                var position = Entity == null
+                var position = Entity == default
                     ? InitialPos
                     : (_eyeManager.CoordinatesToScreen(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Entity).Coordinates).Position / UIScale) - DesiredSize / 2;
 

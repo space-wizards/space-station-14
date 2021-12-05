@@ -1,11 +1,6 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using Content.Server.Atmos;
-using Content.Server.Atmos.EntitySystems;
 using Content.Server.Disposal.Tube.Components;
-using Content.Server.Disposal.Tube;
-using Content.Server.Disposal.Unit.EntitySystems;
 using Content.Server.Items;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
@@ -77,7 +72,7 @@ namespace Content.Server.Disposal.Unit.Components
             Container = ContainerHelpers.EnsureContainer<Container>(Owner, nameof(DisposalHolderComponent));
         }
 
-        private bool CanInsert(IEntity entity)
+        private bool CanInsert(EntityUid entity)
         {
             if (!Container.CanInsert(entity))
             {
@@ -88,7 +83,7 @@ namespace Content.Server.Disposal.Unit.Components
                    IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(entity);
         }
 
-        public bool TryInsert(IEntity entity)
+        public bool TryInsert(EntityUid entity)
         {
             if (!CanInsert(entity) || !Container.Insert(entity))
             {

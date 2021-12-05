@@ -1,5 +1,4 @@
 using Content.Client.HUD;
-using Content.Client.Items.Components;
 using Content.Shared.Input;
 using Content.Shared.Inventory;
 using Content.Shared.Movement.EntitySystems;
@@ -36,7 +35,7 @@ namespace Content.Client.Inventory
         // jesus christ, this is duplicated to server/client, should really just be shared..
         private void OnSlipAttemptEvent(EntityUid uid, ClientInventoryComponent component, SlipAttemptEvent args)
         {
-            if (component.TryGetSlot(EquipmentSlotDefines.Slots.SHOES, out IEntity? shoes))
+            if (component.TryGetSlot(EquipmentSlotDefines.Slots.SHOES, out EntityUid shoes))
             {
                 RaiseLocalEvent(shoes, args, false);
             }
@@ -46,7 +45,7 @@ namespace Content.Client.Inventory
         {
             foreach (var (_, ent) in component.AllSlots)
             {
-                if (ent != null)
+                if (ent != default)
                 {
                     RaiseLocalEvent(ent, args, false);
                 }

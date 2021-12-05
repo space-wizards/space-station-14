@@ -12,7 +12,7 @@ namespace Content.Client.Animations
 {
     public static class ReusableAnimations
     {
-        public static void AnimateEntityPickup(IEntity entity, EntityCoordinates initialPosition, Vector2 finalPosition)
+        public static void AnimateEntityPickup(EntityUid entity, EntityCoordinates initialPosition, Vector2 finalPosition)
         {
             var animatableClone = IoCManager.Resolve<IEntityManager>().SpawnEntity("clientsideclone", initialPosition);
             string val = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityName;
@@ -28,7 +28,7 @@ namespace Content.Client.Animations
 
             var animations = IoCManager.Resolve<IEntityManager>().GetComponent<AnimationPlayerComponent>(animatableClone);
             animations.AnimationCompleted += (_) => {
-                IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) animatableClone);
+                IoCManager.Resolve<IEntityManager>().DeleteEntity(animatableClone);
             };
 
             animations.Play(new Animation

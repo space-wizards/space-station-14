@@ -19,7 +19,7 @@ namespace Content.Server.DeviceNetwork.Systems
         /// </summary>
         private void OnBeforePacketSent(EntityUid uid, WirelessNetworkComponent component, BeforePacketSentEvent args)
         {
-            var sender = EntityManager.GetEntity(args.Sender);
+            var sender = args.Sender
 
             var ownPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner).WorldPosition;
             var position = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(sender).WorldPosition;

@@ -44,7 +44,7 @@ namespace Content.Client.Singularity.Visualizers
             }
         }
 
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             if (!IoCManager.Resolve<IEntityManager>().HasComponent<AnimationPlayerComponent>(entity))
             {
@@ -56,8 +56,9 @@ namespace Content.Client.Singularity.Visualizers
         {
             base.OnChangeData(component);
 
-            if (!component.Owner.TryGetComponent<ISpriteComponent>(out var sprite)) return;
-            if (!component.Owner.TryGetComponent<AnimationPlayerComponent>(out var animPlayer)) return;
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (!entities.TryGetComponent(component.Owner, out ISpriteComponent sprite)) return;
+            if (!entities.TryGetComponent(component.Owner, out AnimationPlayerComponent animPlayer)) return;
             if (!component.TryGetData(RadiationCollectorVisuals.VisualState, out RadiationCollectorVisualState state))
             {
                 state = RadiationCollectorVisualState.Deactive;

@@ -55,8 +55,7 @@ namespace Content.IntegrationTests.Tests.Networking
             var clEntityManager = client.ResolveDependency<IEntityManager>();
             var svEntityManager = server.ResolveDependency<IEntityManager>();
 
-            IEntity tempQualifier = svEntityManager.GetEntities().Last();
-            var lastSvEntity = (EntityUid) tempQualifier;
+            var lastSvEntity = svEntityManager.GetEntities().Last();
 
             Assert.That(clEntityManager.GetComponent<TransformComponent>(lastSvEntity).Coordinates,
                 Is.EqualTo(svEntityManager.GetComponent<TransformComponent>(lastSvEntity).Coordinates));

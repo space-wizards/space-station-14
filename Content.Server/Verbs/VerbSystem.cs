@@ -1,7 +1,6 @@
 using Content.Shared.Verbs;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Log;
 
 namespace Content.Server.Verbs
@@ -30,7 +29,7 @@ namespace Content.Server.Verbs
                 return;
             }
 
-            if (!EntityManager.TryGetEntity(args.Target, out var targetEntity))
+            if (!EntityManager.EntityExists(args.Target)
             {
                 return;
             }
@@ -56,7 +55,7 @@ namespace Content.Server.Verbs
         {
             var player = (IPlayerSession) eventArgs.SenderSession;
 
-            if (!EntityManager.TryGetEntity(args.EntityUid, out var target))
+            if (!EntityManager.EntityExists(args.EntityUid)
             {
                 Logger.Warning($"{nameof(HandleVerbRequest)} called on a non-existent entity with id {args.EntityUid} by player {player}.");
                 return;

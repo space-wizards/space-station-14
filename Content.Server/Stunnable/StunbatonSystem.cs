@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using Content.Server.Items;
-using Content.Server.Jittering;
 using Content.Server.PowerCell.Components;
 using Content.Server.Speech.EntitySystems;
 using Content.Server.Stunnable.Components;
@@ -11,7 +10,6 @@ using Content.Shared.Audio;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Jittering;
-using Content.Shared.Popups;
 using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
@@ -53,7 +51,7 @@ namespace Content.Server.Stunnable
             if (!EntityManager.TryGetComponent<PowerCellSlotComponent>(uid, out var slot) || slot.Cell == null || !slot.Cell.TryUseCharge(comp.EnergyPerUse))
                 return;
 
-            foreach (IEntity entity in args.HitEntities)
+            foreach (EntityUid entity in args.HitEntities)
             {
                 StunEntity(entity, comp);
             }
@@ -119,7 +117,7 @@ namespace Content.Server.Stunnable
             args.PushMarkup(msg);
         }
 
-        private void StunEntity(IEntity entity, StunbatonComponent comp)
+        private void StunEntity(EntityUid entity, StunbatonComponent comp)
         {
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out StatusEffectsComponent? status) || !comp.Activated) return;
 
@@ -169,7 +167,7 @@ namespace Content.Server.Stunnable
             comp.Activated = false;
         }
 
-        private void TurnOn(StunbatonComponent comp, IEntity user)
+        private void TurnOn(StunbatonComponent comp, EntityUiduser)
         {
             if (comp.Activated)
             {

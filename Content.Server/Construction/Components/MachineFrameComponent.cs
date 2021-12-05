@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.Stack;
 using Content.Shared.Construction;
@@ -319,7 +318,7 @@ namespace Content.Server.Construction.Components
                     if (splitStack == null)
                         return false;
 
-                    if(!_partContainer.Insert(IoCManager.Resolve<IEntityManager>().GetEntity(splitStack.Value)))
+                    if(!_partContainer.Insert(splitStack.Value))
                         return false;
 
                     _materialProgress[type] += needed;

@@ -37,7 +37,7 @@ namespace Content.Server.Pointing.EntitySystems
             }
         }
 
-        private IEntity? RandomNearbyPlayer(EntityUid uid, RoguePointingArrowComponent? component = null, TransformComponent? transform = null)
+        private EntityUid RandomNearbyPlayer(EntityUid uid, RoguePointingArrowComponent? component = null, TransformComponent? transform = null)
         {
             if (!Resolve(uid, ref component, ref transform))
                 return null;
@@ -65,7 +65,7 @@ namespace Content.Server.Pointing.EntitySystems
         {
             foreach (var (component, transform) in EntityManager.EntityQuery<RoguePointingArrowComponent, TransformComponent>())
             {
-                var uid = (EntityUid) component.Owner;
+                var uid = component.Owner;
                 component.Chasing ??= RandomNearbyPlayer(uid, component, transform);
 
                 if (component.Chasing == null)

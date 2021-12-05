@@ -195,7 +195,7 @@ namespace Content.Client.Damage
             public readonly string? Color;
         }
 
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
 
@@ -207,7 +207,7 @@ namespace Content.Client.Damage
                 InitializeVisualizer(entity, damageData);
         }
 
-        private void VerifyVisualizerSetup(IEntity entity, DamageVisualizerDataComponent damageData)
+        private void VerifyVisualizerSetup(EntityUid entity, DamageVisualizerDataComponent damageData)
         {
             if (_thresholds.Count < 1)
             {
@@ -289,7 +289,7 @@ namespace Content.Client.Damage
             }
         }
 
-        private void InitializeVisualizer(IEntity entity, DamageVisualizerDataComponent damageData)
+        private void InitializeVisualizer(EntityUid entity, DamageVisualizerDataComponent damageData)
         {
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out SpriteComponent? spriteComponent)
                 || !IoCManager.Resolve<IEntityManager>().TryGetComponent<DamageableComponent?>(entity, out var damageComponent)
@@ -504,7 +504,8 @@ namespace Content.Client.Damage
 
         public override void OnChangeData(AppearanceComponent component)
         {
-            if (!component.Owner.TryGetComponent<DamageVisualizerDataComponent>(out var damageData))
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (!entities.TryGetComponent(component.Owner, out DamageVisualizerDataComponent damageData))
                 return;
 
             if (!damageData.Valid)
@@ -525,8 +526,9 @@ namespace Content.Client.Damage
 
         private void HandleDamage(AppearanceComponent component, DamageVisualizerDataComponent damageData)
         {
-            if (!component.Owner.TryGetComponent<SpriteComponent>(out var spriteComponent)
-                || !component.Owner.TryGetComponent<DamageableComponent>(out var damageComponent))
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (!entities.TryGetComponent(component.Owner, out SpriteComponent spriteComponent)
+                || !entities.TryGetComponent(component.Owner, out DamageableComponent damageComponent))
                 return;
 
             if (_targetLayers != null && _damageOverlayGroups != null)

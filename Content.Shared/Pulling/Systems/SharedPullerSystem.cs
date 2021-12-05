@@ -1,6 +1,5 @@
 using Content.Shared.Alert;
 using Content.Shared.Hands;
-using Content.Shared.Movement.Components;
 using Content.Shared.Movement.EntitySystems;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
@@ -31,11 +30,11 @@ namespace Content.Shared.Pulling.Systems
             if (component.Pulling == null)
                 return;
 
-            if (component.Pulling == EntityManager.GetEntity(args.BlockingEntity))
+            if (component.Pulling == args.BlockingEntity)
             {
                 if (EntityManager.TryGetComponent<SharedPullableComponent>(args.BlockingEntity, out var comp))
                 {
-                    _pullSystem.TryStopPull(comp, EntityManager.GetEntity(uid));
+                    _pullSystem.TryStopPull(comp, uid);
                 }
             }
         }

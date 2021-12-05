@@ -3,6 +3,7 @@ using Content.Shared.Conveyor;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.Conveyor.Visualizers
@@ -21,7 +22,8 @@ namespace Content.Client.Conveyor.Visualizers
 
         private void ChangeState(AppearanceComponent appearance)
         {
-            if (!appearance.Owner.TryGetComponent(out ISpriteComponent? sprite))
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (!entities.TryGetComponent(appearance.Owner, out ISpriteComponent? sprite))
             {
                 return;
             }
@@ -40,7 +42,7 @@ namespace Content.Client.Conveyor.Visualizers
             }
         }
 
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
 

@@ -5,7 +5,6 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Server.UserInterface;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
@@ -25,6 +24,8 @@ namespace Content.Server.Chemistry.Components
     [RegisterComponent]
     public sealed class SolutionTransferComponent : Component, IAfterInteract
     {
+        [Dependency] private readonly IEntityManager _entities = default!;
+
         // Behavior is as such:
         // If it's a reagent tank, TAKE reagent.
         // If it's anything else, GIVE reagent.
@@ -116,21 +117,21 @@ namespace Content.Server.Chemistry.Components
             if (!eventArgs.InRangeUnobstructed() || eventArgs.Target == null)
                 return false;
 
-            if (!IoCManager.Resolve<IEntityManager>().HasComponent<SolutionContainerManagerComponent>(Owner))
+            if (!_entities.HasComponent<SolutionContainerManagerComponent>(Owner))
                 return false;
 
-            var target = eventArgs.Target!;
-            if (!IoCManager.Resolve<IEntityManager>().HasComponent<SolutionContainerManagerComponent>(target))
+            var target = eventArgs.Target!.Value;
+            if (!_entities.HasComponent<SolutionContainerManagerComponent>(target))
             {
                 return false;
             }
 
 
-            if (CanReceive && IoCManager.Resolve<IEntityManager>().TryGetComponent(target, out ReagentTankComponent? tank)
+            if (CanReceive && _entities.TryGetComponent(target, out ReagentTankComponent? tank)
                            && solutionsSys.TryGetRefillableSolution(Owner, out var ownerRefill)
-                           && solutionsSys.TryGetDrainableSolution(eventArgs.Target, out var targetDrain))
+                           && solutionsSys.TryGetDrainableSolution(target, out var targetDrain))
             {
-                var transferred = DoTransfer(eventArgs.User, eventArgs.Target, targetDrain, Owner, ownerRefill, tank.TransferAmount);
+                var transferred = DoTransfer(eventArgs.User, target, targetDrain, Owner, ownerRefill, tank.TransferAmount);
                 if (transferred > 0)
                 {
                     var toTheBrim = ownerRefill.AvailableVolume == 0;
@@ -144,7 +145,7 @@ namespace Content.Server.Chemistry.Components
                 }
             }
 
-            if (CanSend && solutionsSys.TryGetRefillableSolution(eventArgs.Target, out var targetRefill)
+            if (CanSend && solutionsSys.TryGetRefillableSolution(target, out var targetRefill)
                         && solutionsSys.TryGetDrainableSolution(Owner, out var ownerDrain))
             {
                 var transferred = DoTransfer(eventArgs.User, Owner, ownerDrain, target, targetRefill, TransferAmount);
@@ -164,10 +165,10 @@ namespace Content.Server.Chemistry.Components
         }
 
         /// <returns>The actual amount transferred.</returns>
-        private static FixedPoint2 DoTransfer(IEntity user,
-            IEntity sourceEntity,
+        private static FixedPoint2 DoTransfer(EntityUid user,
+            EntityUid sourceEntity,
             Solution source,
-            IEntity targetEntity,
+            EntityUid targetEntity,
             Solution target,
             FixedPoint2 amount)
         {

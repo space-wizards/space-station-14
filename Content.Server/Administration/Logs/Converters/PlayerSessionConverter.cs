@@ -12,10 +12,12 @@ public class PlayerSessionConverter : AdminLogConverter<SerializablePlayer>
     {
         writer.WriteStartObject();
 
-        if (value.Player.AttachedEntity != null)
+        if (value.Player.AttachedEntity is {Valid: true} playerEntity)
         {
-            writer.WriteNumber("id", (int) (EntityUid) value.Player.AttachedEntity);
-            writer.WriteString("name", IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(value.Player.AttachedEntity).EntityName);
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+
+            writer.WriteNumber("id", (int) value.Player.AttachedEntity);
+            writer.WriteString("name", entityManager.GetComponent<MetaDataComponent>(playerEntity).EntityName);
         }
 
         writer.WriteString("player", value.Player.UserId.UserId);

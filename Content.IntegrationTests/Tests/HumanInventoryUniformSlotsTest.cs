@@ -61,10 +61,10 @@ namespace Content.IntegrationTests.Tests
             var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
             var server = StartServer(options);
 
-            IEntity human = null;
-            IEntity uniform = null;
-            IEntity idCard = null;
-            IEntity pocketItem = null;
+            EntityUid human = default;
+            EntityUid uniform = default;
+            EntityUid idCard = default;
+            EntityUid pocketItem = default;
             InventoryComponent inventory = null;
 
             server.Assert(() =>
@@ -121,7 +121,7 @@ namespace Content.IntegrationTests.Tests
             await server.WaitIdleAsync();
         }
 
-        private static bool IsDescendant(IEntity descendant, IEntity parent)
+        private static bool IsDescendant(EntityUid descendant, EntityUid parent)
         {
             var tmpParent = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(descendant).Parent;
             while (tmpParent != null)

@@ -2,13 +2,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.UserInterface;
 using Content.Shared.Body.Components;
-using Content.Shared.Body.Part;
 using Content.Shared.Body.Surgery;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
-using Content.Shared.Verbs;
-using Robust.Server.Console;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Containers;
@@ -27,7 +24,7 @@ namespace Content.Server.Body.Components
         private readonly Dictionary<int, object> _optionsCache = new();
         private SharedBodyComponent? _owningBodyCache;
         private int _idHash;
-        private IEntity? _surgeonCache;
+        private EntityUid? _surgeonCache;
         private Container _mechanismContainer = default!;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(SurgeryUIKey.Key);
@@ -104,7 +101,7 @@ namespace Content.Server.Body.Components
             _surgeonCache = null;
             _owningBodyCache = null;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Target, out SharedBodyComponent? body))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Target.Value, out SharedBodyComponent? body))
             {
                 SendSlots(eventArgs, body);
             }
@@ -161,7 +158,7 @@ namespace Content.Server.Body.Components
         private void ReceiveBodyPartSlot(int key)
         {
             if (_surgeonCache == null ||
-                !IoCManager.Resolve<IEntityManager>().TryGetComponent(_surgeonCache, out ActorComponent? actor))
+                !IoCManager.Resolve<IEntityManager>().TryGetComponent(_surgeonCache.Value, out ActorComponent? actor))
             {
                 return;
             }
@@ -176,7 +173,7 @@ namespace Content.Server.Body.Components
             // TODO: sanity checks to see whether user is in range, user is still able-bodied, target is still the same, etc etc
             if (!_optionsCache.TryGetValue(key, out var targetObject))
             {
-                _owningBodyCache.Owner.PopupMessage(_surgeonCache,
+                _owningBodyCache.Owner.PopupMessage(_surgeonCache.Value,
                     Loc.GetString("bodypart-component-no-way-to-attach-message", ("partName", Owner)));
             }
 
@@ -185,7 +182,7 @@ namespace Content.Server.Body.Components
                 ? Loc.GetString("bodypart-component-attach-success-message",("partName", Owner))
                 : Loc.GetString("bodypart-component-attach-fail-message",("partName", Owner));
 
-            _owningBodyCache.Owner.PopupMessage(_surgeonCache, message);
+            _owningBodyCache.Owner.PopupMessage(_surgeonCache.Value, message);
         }
 
         private void OpenSurgeryUI(IPlayerSession session)

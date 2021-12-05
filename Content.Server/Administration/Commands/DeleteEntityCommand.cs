@@ -28,13 +28,13 @@ namespace Content.Server.Administration.Commands
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
 
-            if (!entityManager.TryGetEntity(id, out var entity))
+            if (!entityManager.EntityExists(id))
             {
                 shell.WriteLine($"No entity found with id {id}.");
                 return;
             }
 
-            IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) entity);
+            IoCManager.Resolve<IEntityManager>().DeleteEntity(id);
             shell.WriteLine($"Deleted entity with id {id}.");
         }
     }

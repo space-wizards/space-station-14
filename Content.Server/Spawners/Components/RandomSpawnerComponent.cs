@@ -63,7 +63,7 @@ namespace Content.Server.Spawners.Components
         public override void MapInit()
         {
             Spawn();
-            IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) Owner);
+            IoCManager.Resolve<IEntityManager>().DeleteEntity(Owner);
         }
     }
 }

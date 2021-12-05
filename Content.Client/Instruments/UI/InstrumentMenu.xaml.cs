@@ -135,11 +135,11 @@ namespace Content.Client.Instruments.UI
             var instrument = _owner.Instrument;
 
             // If either the entity or component are null, return.
-            if (instrumentEnt == null || instrument == null)
+            if (instrumentEnt == default || instrument == default)
                 return false;
 
             // If we're a handheld instrument, we might be in a container. Get it just in case.
-            instrumentEnt.TryGetContainerMan(out var conMan);
+            instrumentEnt.Value.TryGetContainerMan(out var conMan);
 
             var localPlayer = IoCManager.Resolve<IPlayerManager>().LocalPlayer;
 
@@ -151,7 +151,7 @@ namespace Content.Client.Instruments.UI
                                          || conMan.Owner != localPlayer.ControlledEntity))) return false;
 
             // We check that we're in range unobstructed just in case.
-            return localPlayer.InRangeUnobstructed(instrumentEnt,
+            return localPlayer.InRangeUnobstructed(instrumentEnt.Value,
                 predicate: (e) => e == instrumentEnt || e == localPlayer.ControlledEntity);
         }
 

@@ -27,22 +27,21 @@ namespace Content.Server.Administration.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player as IPlayerSession;
-            if (args.Length < 1 && player != null) //Try to heal the users mob if applicable
+            if (args.Length < 1 && shell.Player is IPlayerSession player) //Try to heal the users mob if applicable
             {
                 shell.WriteLine(Loc.GetString("rejuvenate-command-self-heal-message"));
-                if (player.AttachedEntity == null)
+                if (player.AttachedEntity == default)
                 {
                     shell.WriteLine(Loc.GetString("rejuvenate-command-no-entity-attached-message"));
                     return;
                 }
-                PerformRejuvenate(player.AttachedEntity);
+                PerformRejuvenate(player.AttachedEntity.Value);
             }
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
             foreach (var arg in args)
             {
-                if(!EntityUid.TryParse(arg, out var uid) || !entityManager.TryGetEntity(uid, out var entity))
+                if (!EntityUid.TryParse(arg, out var entity) || !entityManager.EntityExists(entity))
                 {
                     shell.WriteLine(Loc.GetString("shell-could-not-find-entity",("entity", arg)));
                     continue;
@@ -51,9 +50,9 @@ namespace Content.Server.Administration.Commands
             }
         }
 
-        public static void PerformRejuvenate(IEntity target)
+        public static void PerformRejuvenate(EntityUid target)
         {
-            var targetUid = (EntityUid) target;
+            var targetUid = target;
             var entMan = IoCManager.Resolve<IEntityManager>();
             entMan.GetComponentOrNull<MobStateComponent>(targetUid)?.UpdateState(0);
             entMan.GetComponentOrNull<HungerComponent>(targetUid)?.ResetFood();
@@ -61,24 +60,24 @@ namespace Content.Server.Administration.Commands
 
             EntitySystem.Get<StatusEffectsSystem>().TryRemoveAllStatusEffects(target);
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(target, out FlammableComponent? flammable))
+            if (entMan.TryGetComponent(target, out FlammableComponent? flammable))
             {
                 EntitySystem.Get<FlammableSystem>().Extinguish(target, flammable);
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(target, out DamageableComponent? damageable))
+            if (entMan.TryGetComponent(target, out DamageableComponent? damageable))
             {
                 EntitySystem.Get<DamageableSystem>().SetAllDamage(damageable, 0);
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(target, out CreamPiedComponent? creamPied))
+            if (entMan.TryGetComponent(target, out CreamPiedComponent? creamPied))
             {
                 EntitySystem.Get<CreamPieSystem>().SetCreamPied(target, creamPied, false);
             }
 
-            if (IoCManager.Resolve<IEntityManager>().HasComponent<JitteringComponent>(target))
+            if (entMan.HasComponent<JitteringComponent>(target))
             {
-                IoCManager.Resolve<IEntityManager>().RemoveComponent<JitteringComponent>(target);
+                entMan.RemoveComponent<JitteringComponent>(target);
             }
         }
     }

@@ -36,7 +36,7 @@ namespace Content.Client.Trigger
             }
         }
 
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             if (!IoCManager.Resolve<IEntityManager>().HasComponent<AnimationPlayerComponent>(entity))
             {

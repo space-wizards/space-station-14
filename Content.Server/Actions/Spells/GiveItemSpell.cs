@@ -57,7 +57,7 @@ namespace Content.Server.Actions.Spells
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(spawnedProto, out ItemComponent? itemComponent))
             {
                 Logger.Error($"Tried to use {nameof(GiveItemSpell)} but prototype has no {nameof(ItemComponent)}?");
-                IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) spawnedProto);
+                IoCManager.Resolve<IEntityManager>().DeleteEntity(spawnedProto);
                 return;
             }
 

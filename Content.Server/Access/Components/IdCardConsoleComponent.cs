@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Access.Systems;
@@ -6,7 +5,6 @@ using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Access;
 using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -21,9 +19,10 @@ namespace Content.Server.Access.Components
     public sealed class IdCardConsoleComponent : SharedIdCardConsoleComponent
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IEntityManager _entities = default!;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(IdCardConsoleUiKey.Key);
-        [ViewVariables] private bool Powered => !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
+        [ViewVariables] private bool Powered => !_entities.TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         protected override void Initialize()
         {
@@ -40,7 +39,7 @@ namespace Content.Server.Access.Components
 
         private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
-            if (obj.Session.AttachedEntity == null)
+            if (obj.Session.AttachedEntity is not {Valid: true} player)
             {
                 return;
             }
@@ -51,10 +50,10 @@ namespace Content.Server.Access.Components
                     switch (msg.Button)
                     {
                         case UiButton.PrivilegedId:
-                            HandleIdButton(obj.Session.AttachedEntity, PrivilegedIdSlot);
+                            HandleIdButton(player, PrivilegedIdSlot);
                             break;
                         case UiButton.TargetId:
-                            HandleIdButton(obj.Session.AttachedEntity, TargetIdSlot);
+                            HandleIdButton(player, TargetIdSlot);
                             break;
                     }
                     break;
@@ -70,14 +69,14 @@ namespace Content.Server.Access.Components
         /// </summary>
         private bool PrivilegedIdIsAuthorized()
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AccessReader? reader))
+            if (!_entities.TryGetComponent(Owner, out AccessReader? reader))
             {
                 return true;
             }
 
             var privilegedIdEntity = PrivilegedIdSlot.Item;
             var accessSystem = EntitySystem.Get<AccessReaderSystem>();
-            return privilegedIdEntity != null && accessSystem.IsAllowed(reader, privilegedIdEntity);
+            return privilegedIdEntity != null && accessSystem.IsAllowed(reader, privilegedIdEntity.Value);
         }
 
         /// <summary>
@@ -86,8 +85,7 @@ namespace Content.Server.Access.Components
         /// </summary>
         private void TryWriteToTargetId(string newFullName, string newJobTitle, List<string> newAccessList)
         {
-            var targetIdEntity = TargetIdSlot.Item;
-            if (targetIdEntity == null || !PrivilegedIdIsAuthorized())
+            if (TargetIdSlot.Item is not {Valid: true} targetIdEntity || !PrivilegedIdIsAuthorized())
                 return;
 
             var cardSystem = EntitySystem.Get<IdCardSystem>();
@@ -107,7 +105,7 @@ namespace Content.Server.Access.Components
         /// <summary>
         /// Called when one of the insert/remove ID buttons gets pressed.
         /// </summary>
-        private void HandleIdButton(IEntity user, ItemSlot slot)
+        private void HandleIdButton(EntityUid user, ItemSlot slot)
         {
             if (slot.HasItem)
                 EntitySystem.Get<ItemSlotsSystem>().TryEjectToHands(((IComponent) this).Owner, slot, user);
@@ -117,12 +115,16 @@ namespace Content.Server.Access.Components
 
         public void UpdateUserInterface()
         {
-            var targetIdEntity = TargetIdSlot.Item;
             IdCardConsoleBoundUserInterfaceState newState;
             // this could be prettier
-            if (targetIdEntity == null)
+            if (TargetIdSlot.Item is not {Valid: true} targetIdEntity)
             {
-                IEntity? tempQualifier = PrivilegedIdSlot.Item;
+                var privilegedIdName = string.Empty;
+                if (PrivilegedIdSlot.Item is {Valid: true} item)
+                {
+                    privilegedIdName = _entities.GetComponent<MetaDataComponent>(item).EntityName;
+                }
+
                 newState = new IdCardConsoleBoundUserInterfaceState(
                     PrivilegedIdSlot.HasItem,
                     PrivilegedIdIsAuthorized(),
@@ -130,16 +132,16 @@ namespace Content.Server.Access.Components
                     null,
                     null,
                     null,
-                    (tempQualifier != null ? IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(tempQualifier).EntityName : null) ?? string.Empty,
+                    privilegedIdName,
                     string.Empty);
             }
             else
             {
-                var targetIdComponent = IoCManager.Resolve<IEntityManager>().GetComponent<IdCardComponent>(targetIdEntity);
-                var targetAccessComponent = IoCManager.Resolve<IEntityManager>().GetComponent<AccessComponent>(targetIdEntity);
+                var targetIdComponent = _entities.GetComponent<IdCardComponent>(targetIdEntity);
+                var targetAccessComponent = _entities.GetComponent<AccessComponent>(targetIdEntity);
                 var name = string.Empty;
-                if(PrivilegedIdSlot.Item != null)
-                    name = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(PrivilegedIdSlot.Item).EntityName;
+                if (PrivilegedIdSlot.Item is {Valid: true} item)
+                    name = _entities.GetComponent<MetaDataComponent>(item).EntityName;
                 newState = new IdCardConsoleBoundUserInterfaceState(
                     PrivilegedIdSlot.HasItem,
                     PrivilegedIdIsAuthorized(),
@@ -148,7 +150,7 @@ namespace Content.Server.Access.Components
                     targetIdComponent.JobTitle,
                     targetAccessComponent.Tags.ToArray(),
                     name,
-                    IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(targetIdEntity).EntityName);
+                    _entities.GetComponent<MetaDataComponent>(targetIdEntity).EntityName);
             }
             UserInterface?.SetState(newState);
         }

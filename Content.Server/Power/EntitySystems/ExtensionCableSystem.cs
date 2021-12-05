@@ -77,7 +77,7 @@ namespace Content.Server.Power.EntitySystems
 
         private IEnumerable<ExtensionCableReceiverComponent> FindAvailableReceivers(EntityUid uid, float range)
         {
-            var owner = EntityManager.GetEntity(uid);
+            var owner = uid
 
             var nearbyEntities = IoCManager.Resolve<IEntityLookup>()
                 .GetEntitiesInRange(owner, range);
@@ -174,7 +174,7 @@ namespace Content.Server.Power.EntitySystems
             RaiseLocalEvent(provider.Owner, new ReceiverConnectedEvent(receiver), broadcast: false);
         }
 
-        private static bool TryFindAvailableProvider(IEntity owner, float range, [NotNullWhen(true)] out ExtensionCableProviderComponent? foundProvider)
+        private static bool TryFindAvailableProvider(EntityUid owner, float range, [NotNullWhen(true)] out ExtensionCableProviderComponent? foundProvider)
         {
             var nearbyEntities = IoCManager.Resolve<IEntityLookup>()
                 .GetEntitiesInRange(owner, range);

@@ -32,7 +32,7 @@ namespace Content.Client.Verbs.UI
         public EntityUid CurrentTarget;
         public Dictionary<VerbType, SortedSet<Verb>> CurrentVerbs = new();
 
-        public VerbMenuPresenter(VerbSystem verbSystem) : base()
+        public VerbMenuPresenter(VerbSystem verbSystem)
         {
             IoCManager.InjectDependencies(this);
             _verbSystem = verbSystem;
@@ -41,10 +41,9 @@ namespace Content.Client.Verbs.UI
         /// <summary>
         ///     Open a verb menu and fill it work verbs applicable to the given target entity.
         /// </summary>
-        public void OpenVerbMenu(IEntity target)
+        public void OpenVerbMenu(EntityUid target)
         {
-            var user = _playerManager.LocalPlayer?.ControlledEntity;
-            if (user == null)
+            if (_playerManager.LocalPlayer?.ControlledEntity is not {Valid: true} user)
                 return;
 
             Close();

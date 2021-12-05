@@ -1,15 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Content.Server.Ghost.Components;
 using Content.Server.Players;
 using Content.Server.Pointing.Components;
 using Content.Server.Visible;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -20,7 +17,6 @@ using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Timing;
@@ -57,7 +53,7 @@ namespace Content.Server.Pointing.EntitySystems
         }
 
         // TODO: FOV
-        private void SendMessage(IEntity source, IEnumerable<ICommonSession> viewers, IEntity? pointed, string selfMessage,
+        private void SendMessage(EntityUid source, IEnumerable<ICommonSession> viewers, EntityUid pointed, string selfMessage,
             string viewerMessage, string? viewerPointedAtMessage = null)
         {
             foreach (var viewer in viewers)
@@ -78,7 +74,7 @@ namespace Content.Server.Pointing.EntitySystems
             }
         }
 
-        public bool InRange(IEntity pointer, EntityCoordinates coordinates)
+        public bool InRange(EntityUid pointer, EntityCoordinates coordinates)
         {
             if (IoCManager.Resolve<IEntityManager>().HasComponent<GhostComponent>(pointer))
             {
@@ -105,7 +101,7 @@ namespace Content.Server.Pointing.EntitySystems
                 return false;
             }
 
-            if (EntityManager.TryGetEntity(uid, out var entity) && IoCManager.Resolve<IEntityManager>().HasComponent<PointingArrowComponent>(entity))
+            if (EntityManager.EntityExists(uid)
             {
                 // this is a pointing arrow. no pointing here...
                 return false;
@@ -146,7 +142,7 @@ namespace Content.Server.Pointing.EntitySystems
             string viewerMessage;
             string? viewerPointedAtMessage = null;
 
-            if (EntityManager.TryGetEntity(uid, out var pointed))
+            if (EntityManager.EntityExists(uid)
             {
                 selfMessage = player == pointed
                     ? Loc.GetString("pointing-system-point-at-self")

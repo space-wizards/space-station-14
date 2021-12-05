@@ -88,7 +88,7 @@ namespace Content.Server.Power.Components
         /// This will remove the item directly into the user's hand / floor
         /// </summary>
         /// <param name="user"></param>
-        public void RemoveItem(IEntity user)
+        public void RemoveItem(EntityUiduser)
         {
             var heldItem = Container.ContainedEntity;
             if (heldItem == null)
@@ -134,7 +134,7 @@ namespace Content.Server.Power.Components
             return CellChargerStatus.Charging;
         }
 
-        public bool TryInsertItem(IEntity entity)
+        public bool TryInsertItem(EntityUid entity)
         {
             if (!IsEntityCompatible(entity) || HasCell)
             {
@@ -152,9 +152,9 @@ namespace Content.Server.Power.Components
         /// <summary>
         ///     If the supplied entity should fit into the charger.
         /// </summary>
-        public abstract bool IsEntityCompatible(IEntity entity);
+        public abstract bool IsEntityCompatible(EntityUid entity);
 
-        protected abstract BatteryComponent? GetBatteryFrom(IEntity entity);
+        protected abstract BatteryComponent? GetBatteryFrom(EntityUid entity);
 
         private void UpdateStatus()
         {

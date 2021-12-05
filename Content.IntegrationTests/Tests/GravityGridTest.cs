@@ -33,7 +33,7 @@ namespace Content.IntegrationTests.Tests
             var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
             var server = StartServer(options);
 
-            IEntity generator = null;
+            EntityUid generator = default;
 
             IMapGrid grid1 = null;
             IMapGrid grid2 = null;
@@ -65,9 +65,8 @@ namespace Content.IntegrationTests.Tests
 
                 Assert.That(generatorComponent.GravityActive, Is.True);
 
-                var entityMan = IoCManager.Resolve<IEntityManager>();
-                var grid1Entity = entityMan.GetEntity(grid1.GridEntityId);
-                var grid2Entity = entityMan.GetEntity(grid2.GridEntityId);
+                var grid1Entity = grid1.GridEntityId;
+                var grid2Entity = grid2.GridEntityId;
 
                 Assert.That(!IoCManager.Resolve<IEntityManager>().GetComponent<GravityComponent>(grid1Entity).Enabled);
                 Assert.That(IoCManager.Resolve<IEntityManager>().GetComponent<GravityComponent>(grid2Entity).Enabled);
@@ -83,8 +82,7 @@ namespace Content.IntegrationTests.Tests
 
                 Assert.That(generatorComponent.GravityActive, Is.False);
 
-                var entityMan = IoCManager.Resolve<IEntityManager>();
-                var grid2Entity = entityMan.GetEntity(grid2.GridEntityId);
+                var grid2Entity = grid2.GridEntityId;
 
                 Assert.That(IoCManager.Resolve<IEntityManager>().GetComponent<GravityComponent>(grid2Entity).Enabled, Is.False);
             });

@@ -4,7 +4,6 @@ using Content.Shared.Targeting;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 
@@ -35,7 +34,7 @@ namespace Content.Client.CombatMode
         public bool IsInCombatMode()
         {
             var entity = _playerManager.LocalPlayer?.ControlledEntity;
-            if (entity == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out CombatModeComponent? combatMode))
+            if (entity == default || !EntityManager.TryGetComponent(entity.Value, out CombatModeComponent? combatMode))
             {
                 return false;
             }

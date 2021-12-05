@@ -8,7 +8,6 @@ using Content.Shared.Climbing;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
-using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -66,7 +65,7 @@ namespace Content.Server.Climbing.Components
         /// <param name="target">The object that is being vaulted</param>
         /// <param name="reason">The reason why it cant be dropped</param>
         /// <returns></returns>
-        private bool CanVault(IEntity user, IEntity target, out string reason)
+        private bool CanVault(EntityUid user, EntityUid target, out string reason)
         {
             if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
             {
@@ -106,7 +105,7 @@ namespace Content.Server.Climbing.Components
         /// <param name="target">The object that is being vaulted onto</param>
         /// <param name="reason">The reason why it cant be dropped</param>
         /// <returns></returns>
-        private bool CanVault(IEntity user, IEntity dragged, IEntity target, out string reason)
+        private bool CanVault(EntityUid user, EntityUid dragged, EntityUid target, out string reason)
         {
             if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
             {
@@ -120,7 +119,7 @@ namespace Content.Server.Climbing.Components
                 return false;
             }
 
-            bool Ignored(IEntity entity) => entity == target || entity == user || entity == dragged;
+            bool Ignored(EntityUid entity) => entity == target || entity == user || entity == dragged;
 
             if (!user.InRangeUnobstructed(target, Range, predicate: Ignored) ||
                 !user.InRangeUnobstructed(dragged, Range, predicate: Ignored))
@@ -147,7 +146,7 @@ namespace Content.Server.Climbing.Components
             return true;
         }
 
-        private async void TryMoveEntity(IEntity user, IEntity entityToMove)
+        private async void TryMoveEntity(EntityUid user, EntityUid entityToMove)
         {
             var doAfterEventArgs = new DoAfterEventArgs(user, _climbDelay, default, entityToMove)
             {
@@ -191,7 +190,7 @@ namespace Content.Server.Climbing.Components
             }
         }
 
-        public async void TryClimb(IEntity user)
+        public async void TryClimb(EntityUiduser)
         {
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out ClimbingComponent? climbingComponent) || climbingComponent.IsClimbing)
                 return;

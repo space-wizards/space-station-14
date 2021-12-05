@@ -8,7 +8,6 @@ using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 using static Content.Shared.Inventory.EquipmentSlotDefines;
 
 namespace Content.IntegrationTests.Tests
@@ -50,19 +49,21 @@ namespace Content.IntegrationTests.Tests
             var options = new ServerIntegrationOptions {ExtraPrototypes = Prototypes};
             var server = StartServer(options);
 
-            IEntity human = null;
+            await server.WaitIdleAsync();
+
+            var sEntities = server.ResolveDependency<IEntityManager>();
+
+            EntityUid human = default;
             InventoryComponent inventory = null;
 
-            server.Assert(() =>
+            await server.WaitAssertion(() =>
             {
                 var mapMan = IoCManager.Resolve<IMapManager>();
 
                 mapMan.CreateNewMapEntity(MapId.Nullspace);
 
-                var entityMan = IoCManager.Resolve<IEntityManager>();
-
-                human = entityMan.SpawnEntity("InventoryStunnableDummy", MapCoordinates.Nullspace);
-                inventory = IoCManager.Resolve<IEntityManager>().GetComponent<InventoryComponent>(human);
+                human = sEntities.SpawnEntity("InventoryStunnableDummy", MapCoordinates.Nullspace);
+                inventory = sEntities.GetComponent<InventoryComponent>(human);
 
                 // Can't do the test if this human doesn't have the slots for it.
                 Assert.That(inventory.HasSlot(Slots.INNERCLOTHING));
@@ -72,7 +73,10 @@ namespace Content.IntegrationTests.Tests
 
                 // Do we actually have the uniform equipped?
                 Assert.That(inventory.TryGetSlotItem(Slots.INNERCLOTHING, out ItemComponent uniform));
-                Assert.That(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(uniform.Owner).EntityPrototype != null && IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(uniform.Owner).EntityPrototype.ID == "InventoryJumpsuitJanitorDummy");
+                Assert.That(sEntities.GetComponent<MetaDataComponent>(uniform.Owner).EntityPrototype is
+                {
+                    ID: "InventoryJumpsuitJanitorDummy"
+                });
 
                 EntitySystem.Get<StunSystem>().TryStun(human, TimeSpan.FromSeconds(1f));
 
@@ -85,10 +89,11 @@ namespace Content.IntegrationTests.Tests
                 // Let's try skipping the interaction check and see if it equips it!
                 Assert.That(inventory.SpawnItemInSlot(Slots.IDCARD, "InventoryIDCardDummy"));
                 Assert.That(inventory.TryGetSlotItem(Slots.IDCARD, out ItemComponent id));
-                Assert.That(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(id.Owner).EntityPrototype != null && IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(id.Owner).EntityPrototype.ID == "InventoryIDCardDummy");
+                Assert.That(sEntities.GetComponent<MetaDataComponent>(id.Owner).EntityPrototype is
+                {
+                    ID: "InventoryIDCardDummy"
+                });
             });
-
-            await server.WaitIdleAsync();
         }
     }
 }

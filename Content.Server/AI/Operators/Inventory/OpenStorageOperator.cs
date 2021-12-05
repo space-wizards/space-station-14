@@ -14,10 +14,10 @@ namespace Content.Server.AI.Operators.Inventory
     /// </summary>
     public sealed class OpenStorageOperator : AiOperator
     {
-        private readonly IEntity _owner;
-        private readonly IEntity _target;
+        private readonly EntityUid _owner;
+        private readonly EntityUid _target;
 
-        public OpenStorageOperator(IEntity owner, IEntity target)
+        public OpenStorageOperator(EntityUid owner, EntityUid target)
         {
             _owner = owner;
             _target = target;

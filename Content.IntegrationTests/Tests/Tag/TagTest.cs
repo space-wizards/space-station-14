@@ -54,7 +54,7 @@ namespace Content.IntegrationTests.Tests.Tag
             var sEntityManager = server.ResolveDependency<IEntityManager>();
             var sPrototypeManager = server.ResolveDependency<IPrototypeManager>();
 
-            IEntity sTagDummy = null!;
+            EntityUid sTagDummy = default;
             TagComponent sTagComponent = null!;
 
             await server.WaitPost(() =>

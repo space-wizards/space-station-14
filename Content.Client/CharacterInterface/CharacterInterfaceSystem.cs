@@ -37,8 +37,8 @@ namespace Content.Client.CharacterInterface
 
         private void HandleOpenCharacterMenu()
         {
-            if (_playerManager.LocalPlayer?.ControlledEntity == null
-                || !IoCManager.Resolve<IEntityManager>().TryGetComponent(_playerManager.LocalPlayer.ControlledEntity, out CharacterInterfaceComponent? characterInterface))
+            if (_playerManager.LocalPlayer?.ControlledEntity == default
+                || !EntityManager.TryGetComponent(_playerManager.LocalPlayer.ControlledEntity, out CharacterInterfaceComponent? characterInterface))
             {
                 return;
             }

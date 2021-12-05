@@ -50,7 +50,7 @@ namespace Content.Client.CharacterAppearance.Systems
             {
                 foreach (var (part, _) in body.Parts)
                 {
-                    if (EntityManager.TryGetComponent(part.OwnerUid, out SpriteComponent? partSprite))
+                    if (EntityManager.TryGetComponent(part.Owner, out SpriteComponent? partSprite))
                     {
                         partSprite!.Color = component.Appearance.SkinColor;
                     }
@@ -113,7 +113,7 @@ namespace Content.Client.CharacterAppearance.Systems
                 return;
             }
 
-            if (!entityManager.HasComponent<SpriteComponent>(args.Args.Part.OwnerUid))
+            if (!entityManager.HasComponent<SpriteComponent>(args.Args.Part.Owner))
             {
                 return;
             }
@@ -136,7 +136,7 @@ namespace Content.Client.CharacterAppearance.Systems
                 return;
             }
 
-            if (!EntityManager.HasComponent<SpriteComponent>(args.Args.Part.OwnerUid))
+            if (!EntityManager.HasComponent<SpriteComponent>(args.Args.Part.Owner))
             {
                 return;
             }

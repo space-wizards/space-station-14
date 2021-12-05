@@ -1,13 +1,10 @@
-using System.Collections.Generic;
 using Content.Server.Power.Components;
 using Content.Server.Recycling.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Recycling;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Recycling
 {
@@ -24,7 +21,7 @@ namespace Content.Server.Recycling
             Recycle(component, args.OtherFixture.Body.Owner);
         }
 
-        private void Recycle(RecyclerComponent component, IEntity entity)
+        private void Recycle(RecyclerComponent component, EntityUid entity)
         {
             // TODO: Prevent collision with recycled items
 
@@ -42,7 +39,7 @@ namespace Content.Server.Recycling
             recyclable.Recycle(component.Efficiency);
         }
 
-        private bool CanGib(RecyclerComponent component, IEntity entity)
+        private bool CanGib(RecyclerComponent component, EntityUid entity)
         {
             // We suppose this entity has a Recyclable component.
             return IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(entity) && !component.Safe &&

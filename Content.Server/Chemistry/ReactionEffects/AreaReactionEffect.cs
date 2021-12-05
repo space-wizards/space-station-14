@@ -2,10 +2,7 @@
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Coordinates.Helpers;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
-using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.Sound;
@@ -122,7 +119,7 @@ namespace Content.Server.Chemistry.ReactionEffects
             if (areaEffectComponent == null)
             {
                 Logger.Error("Couldn't get AreaEffectComponent from " + _prototypeId);
-                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity((EntityUid) ent);
+                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(ent);
                 return;
             }
 
@@ -132,6 +129,6 @@ namespace Content.Server.Chemistry.ReactionEffects
             SoundSystem.Play(Filter.Pvs(args.SolutionEntity), _sound.GetSound(), args.SolutionEntity, AudioHelpers.WithVariation(0.125f));
         }
 
-        protected abstract SolutionAreaEffectComponent? GetAreaEffectComponent(IEntity entity);
+        protected abstract SolutionAreaEffectComponent? GetAreaEffectComponent(EntityUid entity);
     }
 }

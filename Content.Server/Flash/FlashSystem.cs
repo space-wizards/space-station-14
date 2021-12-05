@@ -3,7 +3,6 @@ using Content.Server.Flash.Components;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
 using Content.Server.Stunnable;
-using Content.Server.Stunnable.Components;
 using Content.Server.Weapon.Melee;
 using Content.Shared.Examine;
 using Content.Shared.Flash;
@@ -13,7 +12,6 @@ using Content.Shared.Inventory;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
-using Content.Shared.Stunnable;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -50,7 +48,7 @@ namespace Content.Server.Flash
             }
 
             args.Handled = true;
-            foreach (IEntity e in args.HitEntities)
+            foreach (EntityUide in args.HitEntities)
             {
                 Flash(e, args.User, uid, comp.FlashDuration, comp.SlowTo);
             }
@@ -83,7 +81,7 @@ namespace Content.Server.Flash
             }
         }
 
-        private bool UseFlash(FlashComponent comp, IEntity user)
+        private bool UseFlash(FlashComponent comp, EntityUiduser)
         {
             if (comp.HasUses)
             {
@@ -136,9 +134,9 @@ namespace Content.Server.Flash
 
             if (displayPopup && user != null && target != user)
             {
-                // TODO Resolving the IEntity here bad.
-                if(EntityManager.TryGetEntity(user.Value, out var userEntity)
-                && EntityManager.TryGetEntity(target, out var targetEntity))
+                // TODO Resolving the EntityUidhere bad.
+                if(EntityManager.EntityExists(user.Value)
+                && EntityManager.EntityExists(target)
 
                 userEntity.PopupMessage(targetEntity,
                     Loc.GetString(

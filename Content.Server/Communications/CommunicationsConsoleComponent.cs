@@ -7,13 +7,9 @@ using Content.Server.Power.Components;
 using Content.Server.RoundEnd;
 using Content.Server.UserInterface;
 using Content.Shared.Communications;
-using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
-using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timing.Timer;
@@ -25,7 +21,9 @@ namespace Content.Server.Communications
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
-        private bool Powered => !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
+        [Dependency] private readonly IEntityManager _entities = default!;
+
+        private bool Powered => !_entities.TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         private RoundEndSystem RoundEndSystem => EntitySystem.Get<RoundEndSystem>();
 
@@ -109,8 +107,7 @@ namespace Content.Server.Communications
                     var message = msg.Message.Length <= 256 ? msg.Message.Trim() : $"{msg.Message.Trim().Substring(0, 256)}...";
 
                     var author = "Unknown";
-                    var mob = obj.Session.AttachedEntity;
-                    if (mob != null && mob.TryGetHeldId(out var id))
+                    if (obj.Session.AttachedEntity is {Valid: true} mob && mob.TryGetHeldId(out var id))
                     {
                         author = $"{id.FullName} ({CultureInfo.CurrentCulture.TextInfo.ToTitleCase(id.JobTitle ?? string.Empty)})".Trim();
                     }

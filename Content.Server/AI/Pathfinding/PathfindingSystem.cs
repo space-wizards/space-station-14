@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using Content.Server.Access;
-using Content.Server.Access.Components;
 using Content.Server.Access.Systems;
 using Content.Server.AI.Pathfinding.Pathfinders;
 using Content.Server.CPUJob.JobQueues;
@@ -46,7 +45,7 @@ namespace Content.Server.AI.Pathfinding
         private readonly Queue<TileRef> _tileUpdateQueue = new();
 
         // Need to store previously known entity positions for collidables for when they move
-        private readonly Dictionary<IEntity, PathfindingNode> _lastKnownPositions = new();
+        private readonly Dictionary<EntityUid, PathfindingNode> _lastKnownPositions = new();
 
         public const int TrackedCollisionLayers = (int)
             (CollisionGroup.Impassable |
@@ -85,15 +84,15 @@ namespace Content.Server.AI.Pathfinding
 
             foreach (var update in _collidableUpdateQueue)
             {
-                if (!EntityManager.TryGetEntity(update.Owner, out var entity)) continue;
+                if (!EntityManager.EntityExists(update.Owner)) continue;
 
                 if (update.CanCollide)
                 {
-                    HandleEntityAdd(entity);
+                    HandleEntityAdd(update.Owner);
                 }
                 else
                 {
-                    HandleEntityRemove(entity);
+                    HandleEntityRemove(update.Owner);
                 }
 
                 totalUpdates++;
@@ -182,7 +181,7 @@ namespace Content.Server.AI.Pathfinding
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public PathfindingNode GetNode(IEntity entity)
+        public PathfindingNode GetNode(EntityUid entity)
         {
             var tile = _mapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).GridID).GetTileRef(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates);
             return GetNode(tile);
@@ -263,7 +262,7 @@ namespace Content.Server.AI.Pathfinding
         /// </summary>
         /// The node will filter it to the correct category (if possible)
         /// <param name="entity"></param>
-        private void HandleEntityAdd(IEntity entity)
+        private void HandleEntityAdd(EntityUid entity)
         {
             if ((!IoCManager.Resolve<IEntityManager>().EntityExists(entity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityLifeStage) >= EntityLifeStage.Deleted ||
                 _lastKnownPositions.ContainsKey(entity) ||
@@ -282,7 +281,7 @@ namespace Content.Server.AI.Pathfinding
             _lastKnownPositions.Add(entity, node);
         }
 
-        private void HandleEntityRemove(IEntity entity)
+        private void HandleEntityRemove(EntityUid entity)
         {
             if (!_lastKnownPositions.TryGetValue(entity, out var node))
             {
@@ -361,7 +360,7 @@ namespace Content.Server.AI.Pathfinding
         // TODO: Need to rethink the pathfinder utils (traversable etc.). Maybe just chuck them all in PathfindingSystem
         // Otherwise you get the steerer using this and the pathfinders using a different traversable.
         // Also look at increasing tile cost the more physics entities are on it
-        public bool CanTraverse(IEntity entity, EntityCoordinates coordinates)
+        public bool CanTraverse(EntityUid entity, EntityCoordinates coordinates)
         {
             var gridId = coordinates.GetGridId(EntityManager);
             var tile = _mapManager.GetGrid(gridId).GetTileRef(coordinates);
@@ -369,7 +368,7 @@ namespace Content.Server.AI.Pathfinding
             return CanTraverse(entity, node);
         }
 
-        public bool CanTraverse(IEntity entity, PathfindingNode node)
+        public bool CanTraverse(EntityUid entity, PathfindingNode node)
         {
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out IPhysBody? physics) &&
                 (physics.CollisionMask & node.BlockedCollisionMask) != 0)

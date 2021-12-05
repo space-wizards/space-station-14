@@ -13,7 +13,7 @@ namespace Content.Client.Atmos.Visualizers
         [DataField("layer")]
         private int Layer { get; }
 
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
 

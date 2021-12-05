@@ -1,30 +1,28 @@
 using System;
+using Content.Server.Administration.Logs;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Ghost;
 using Content.Server.Light.Components;
 using Content.Server.MachineLinking.Events;
 using Content.Server.Power.Components;
-using Content.Server.Power.EntitySystems;
-using Content.Shared.Light;
+using Content.Server.Temperature.Components;
+using Content.Shared.Audio;
 using Content.Shared.Damage;
+using Content.Shared.Database;
+using Content.Shared.Hands.Components;
+using Content.Shared.Interaction;
+using Content.Shared.Light;
+using Content.Shared.Popups;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Timing;
-using Robust.Shared.Containers;
-using Content.Shared.Interaction;
-using Content.Shared.Hands.Components;
-using Content.Server.Temperature.Components;
-using Content.Shared.Popups;
 using Robust.Shared.Localization;
-using Robust.Shared.Audio;
-using Robust.Shared.Player;
 using Robust.Shared.Maths;
-using Content.Shared.Audio;
-using Content.Server.Administration.Logs;
-using Content.Shared.Administration.Logs;
-using Content.Shared.Database;
+using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Light.EntitySystems
 {
@@ -102,7 +100,7 @@ namespace Content.Server.Light.EntitySystems
                 return;
 
             // check if it's possible to apply burn damage to user
-            var userUid = (EntityUid) args.User;
+            var userUid = args.User;
             if (EntityManager.TryGetComponent(userUid, out HeatResistanceComponent? heatResist) &&
                 EntityManager.TryGetComponent(bulbUid.Value, out LightBulbComponent? lightBulb))
             {
@@ -179,7 +177,7 @@ namespace Content.Server.Light.EntitySystems
                 return null;
 
             // try to remove bulb from container
-            var bulbEnt = EntityManager.GetEntity(bulbUid.Value);
+            var bulbbulbUid.Value
             if (!light.LightBulbContainer.Remove(bulbEnt))
                 return null;
 

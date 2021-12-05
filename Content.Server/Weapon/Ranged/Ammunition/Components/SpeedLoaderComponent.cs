@@ -28,7 +28,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
         [DataField("capacity")]
         private int _capacity = 6;
         private Container _ammoContainer = default!;
-        private Stack<IEntity> _spawnedAmmo = new();
+        private Stack<EntityUid> _spawnedAmmo = new();
         private int _unspawnedCount;
 
         public int AmmoLeft => _spawnedAmmo.Count + _unspawnedCount;
@@ -67,7 +67,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             }
         }
 
-        public bool TryInsertAmmo(IEntity user, IEntity entity)
+        public bool TryInsertAmmo(EntityUid user, EntityUid entity)
         {
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out AmmoComponent? ammoComponent))
             {
@@ -93,7 +93,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
         }
 
-        private bool UseEntity(IEntity user)
+        private bool UseEntity(EntityUid user)
         {
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out HandsComponent? handsComponent))
             {
@@ -101,7 +101,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             }
 
             var ammo = TakeAmmo();
-            if (ammo == null)
+            if (ammo == default)
             {
                 return false;
             }
@@ -120,7 +120,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             return true;
         }
 
-        private IEntity? TakeAmmo()
+        private EntityUid TakeAmmo()
         {
             if (_spawnedAmmo.TryPop(out var entity))
             {
@@ -147,12 +147,13 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             // This area is dirty but not sure of an easier way to do it besides add an interface or somethin
             var changed = false;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Target, out RevolverBarrelComponent? revolverBarrel))
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (entities.TryGetComponent(eventArgs.Target.Value, out RevolverBarrelComponent? revolverBarrel))
             {
                 for (var i = 0; i < Capacity; i++)
                 {
                     var ammo = TakeAmmo();
-                    if (ammo == null)
+                    if (ammo == default)
                     {
                         break;
                     }
@@ -167,12 +168,13 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
                     TryInsertAmmo(eventArgs.User, ammo);
                     break;
                 }
-            } else if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Target, out BoltActionBarrelComponent? boltActionBarrel))
+            }
+            else if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Target.Value, out BoltActionBarrelComponent? boltActionBarrel))
             {
                 for (var i = 0; i < Capacity; i++)
                 {
                     var ammo = TakeAmmo();
-                    if (ammo == null)
+                    if (ammo == default)
                     {
                         break;
                     }

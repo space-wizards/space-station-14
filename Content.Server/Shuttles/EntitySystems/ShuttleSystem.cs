@@ -52,7 +52,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
         private void OnGridInit(GridInitializeEvent ev)
         {
-            EntityManager.GetEntity(ev.EntityUid).EnsureComponent<ShuttleComponent>();
+            ev.EntityUid).EnsureComponent<ShuttleComponent>(
         }
 
         private void OnShuttleStartup(EntityUid uid, ShuttleComponent component, ComponentStartup args)

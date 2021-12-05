@@ -67,7 +67,7 @@ namespace Content.Server.Lock
                 ("entityName", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(lockComp.Owner).EntityName)));
         }
 
-        public bool TryLock(EntityUid uid, IEntity user, LockComponent? lockComp = null)
+        public bool TryLock(EntityUid uid, EntityUid user, LockComponent? lockComp = null)
         {
             if (!Resolve(uid, ref lockComp))
                 return false;
@@ -96,7 +96,7 @@ namespace Content.Server.Lock
             return true;
         }
 
-        public bool TryUnlock(EntityUid uid, IEntity user, LockComponent? lockComp = null)
+        public bool TryUnlock(EntityUid uid, EntityUid user, LockComponent? lockComp = null)
         {
             if (!Resolve(uid, ref lockComp))
                 return false;
@@ -128,7 +128,7 @@ namespace Content.Server.Lock
         /// <summary>
         ///     Before locking the entity, check whether it's a locker. If is, prevent it from being locked from the inside or while it is open.
         /// </summary>
-        public bool CanToggleLock(EntityUid uid, IEntity user, EntityStorageComponent? storage = null, bool quiet = true)
+        public bool CanToggleLock(EntityUid uid, EntityUid user, EntityStorageComponent? storage = null, bool quiet = true)
         {
             if (!Resolve(uid, ref storage, logMissing: false))
                 return true;
@@ -144,7 +144,7 @@ namespace Content.Server.Lock
             return true;
         }
 
-        private bool HasUserAccess(EntityUid uid, IEntity user, AccessReader? reader = null, bool quiet = true)
+        private bool HasUserAccess(EntityUid uid, EntityUid user, AccessReader? reader = null, bool quiet = true)
         {
             // Not having an AccessComponent means you get free access. woo!
             if (!Resolve(uid, ref reader))

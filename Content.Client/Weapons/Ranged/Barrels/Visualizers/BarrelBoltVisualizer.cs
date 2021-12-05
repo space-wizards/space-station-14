@@ -9,7 +9,7 @@ namespace Content.Client.Weapons.Ranged.Barrels.Visualizers
     [UsedImplicitly]
     public sealed class BarrelBoltVisualizer : AppearanceVisualizer
     {
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
             var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(entity);

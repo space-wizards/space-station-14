@@ -33,7 +33,7 @@ namespace Content.Client.ParticleAccelerator
             _states.Add(ParticleAcceleratorVisualState.Level3, _baseState + "p3");
         }
 
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ISpriteComponent?>(entity, out var sprite))
@@ -50,7 +50,9 @@ namespace Content.Client.ParticleAccelerator
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
-            if (!component.Owner.TryGetComponent<ISpriteComponent>(out var sprite)) return;
+
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (!entities.TryGetComponent(component.Owner, out ISpriteComponent sprite)) return;
             if (!component.TryGetData(ParticleAcceleratorVisuals.VisualState, out ParticleAcceleratorVisualState state))
             {
                 state = ParticleAcceleratorVisualState.Unpowered;

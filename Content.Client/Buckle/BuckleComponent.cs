@@ -30,7 +30,7 @@ namespace Content.Client.Buckle
             _buckled = buckle.Buckled;
             LastEntityBuckledTo = buckle.LastEntityBuckledTo;
             DontCollide = buckle.DontCollide;
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(OwnerUid, out SpriteComponent? ownerSprite))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out SpriteComponent? ownerSprite))
             {
                 return;
             }

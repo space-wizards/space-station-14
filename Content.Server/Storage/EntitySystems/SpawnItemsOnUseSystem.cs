@@ -26,9 +26,8 @@ namespace Content.Server.Storage.EntitySystems
             if (args.Handled)
                 return;
 
-            var owner = EntityManager.GetEntity(uid);
             var alreadySpawnedGroups = new List<string>();
-            IEntity? entityToPlaceInHands = null;
+            EntityUid entityToPlaceInHands = default;
             foreach (var storageItem in component.Items)
             {
                 if (!string.IsNullOrEmpty(storageItem.GroupId) &&
@@ -42,24 +41,24 @@ namespace Content.Server.Storage.EntitySystems
 
                 for (var i = 0; i < storageItem.Amount; i++)
                 {
-                    entityToPlaceInHands = EntityManager.SpawnEntity(storageItem.PrototypeId, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.User).Coordinates);
+                    entityToPlaceInHands = EntityManager.SpawnEntity(storageItem.PrototypeId, EntityManager.GetComponent<TransformComponent>(args.User).Coordinates);
                 }
 
                 if (!string.IsNullOrEmpty(storageItem.GroupId)) alreadySpawnedGroups.Add(storageItem.GroupId);
             }
 
             if (component.Sound != null)
-                SoundSystem.Play(Filter.Pvs(owner), component.Sound.GetSound());
+                SoundSystem.Play(Filter.Pvs(uid), component.Sound.GetSound());
 
             component.Uses--;
             if (component.Uses == 0)
             {
                 args.Handled = true;
-                IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) owner);
+                EntityManager.DeleteEntity(uid);
             }
 
-            if (entityToPlaceInHands != null
-                && IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedHandsComponent?>(args.User, out var hands))
+            if (entityToPlaceInHands != default
+                && EntityManager.TryGetComponent<SharedHandsComponent?>(args.User, out var hands))
             {
                 hands.TryPutInAnyHand(entityToPlaceInHands);
             }

@@ -20,10 +20,10 @@ namespace Content.Server.Explosion.EntitySystems
     /// </summary>
     public class TriggerEvent : HandledEntityEventArgs
     {
-        public IEntity Triggered { get; }
-        public IEntity? User { get; }
+        public EntityUid Triggered { get; }
+        public EntityUid User { get; }
 
-        public TriggerEvent(IEntity triggered, IEntity? user = null)
+        public TriggerEvent(EntityUid triggered, EntityUid user = default)
         {
             Triggered = triggered;
             User = user;
@@ -116,13 +116,13 @@ namespace Content.Server.Explosion.EntitySystems
             Trigger(component.Owner);
         }
 
-        public void Trigger(IEntity trigger, IEntity? user = null)
+        public void Trigger(EntityUid trigger, EntityUid user = default)
         {
             var triggerEvent = new TriggerEvent(trigger, user);
             EntityManager.EventBus.RaiseLocalEvent(trigger, triggerEvent);
         }
 
-        public void HandleTimerTrigger(TimeSpan delay, IEntity triggered, IEntity? user = null)
+        public void HandleTimerTrigger(TimeSpan delay, EntityUid triggered, EntityUid user = default)
         {
             if (delay.TotalSeconds <= 0)
             {

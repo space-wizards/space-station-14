@@ -10,10 +10,10 @@ namespace Content.Server.AI.Operators.Inventory
     /// </summary>
     public class UseItemInInventoryOperator : AiOperator
     {
-        private readonly IEntity _owner;
-        private readonly IEntity _target;
+        private readonly EntityUid _owner;
+        private readonly EntityUid _target;
 
-        public UseItemInInventoryOperator(IEntity owner, IEntity target)
+        public UseItemInInventoryOperator(EntityUid owner, EntityUid target)
         {
             _owner = owner;
             _target = target;

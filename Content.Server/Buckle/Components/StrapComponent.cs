@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
 using Content.Shared.Alert;
 using Content.Shared.Buckle.Components;
@@ -10,7 +9,6 @@ using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -23,7 +21,7 @@ namespace Content.Server.Buckle.Components
     {
         [ComponentDependency] public readonly SpriteComponent? SpriteComponent = null;
 
-        private readonly HashSet<IEntity> _buckledEntities = new();
+        private readonly HashSet<EntityUid> _buckledEntities = new();
 
         /// <summary>
         /// The angle in degrees to rotate the player by when they get strapped
@@ -40,7 +38,7 @@ namespace Content.Server.Buckle.Components
         /// <summary>
         /// The entity that is currently buckled here, synced from <see cref="BuckleComponent.BuckledTo"/>
         /// </summary>
-        public IReadOnlyCollection<IEntity> BuckledEntities => _buckledEntities;
+        public IReadOnlyCollection<EntityUid> BuckledEntities => _buckledEntities;
 
         /// <summary>
         /// The change in position to the strapped mob

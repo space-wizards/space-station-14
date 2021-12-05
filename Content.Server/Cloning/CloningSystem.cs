@@ -35,7 +35,7 @@ namespace Content.Server.Cloning
         internal void TransferMindToClone(Mind.Mind mind)
         {
             if (!ClonesWaitingForMind.TryGetValue(mind, out var entityUid) ||
-                !EntityManager.TryGetEntity(entityUid, out var entity) ||
+                !EntityManager.EntityExists(entityUid) ||
                 !IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out MindComponent? mindComp) ||
                 mindComp.Mind != null)
                 return;
@@ -59,7 +59,7 @@ namespace Content.Server.Cloning
         private void HandleMindAdded(EntityUid uid, BeingClonedComponent component, MindAddedMessage message)
         {
             if (component.Parent == EntityUid.Invalid ||
-                !EntityManager.TryGetEntity(component.Parent, out var parent) ||
+                !EntityManager.EntityExists(component.Parent) ||
                 !IoCManager.Resolve<IEntityManager>().TryGetComponent<CloningPodComponent?>(parent, out var cloningPodComponent) ||
                 component.Owner != cloningPodComponent.BodyContainer?.ContainedEntity)
             {

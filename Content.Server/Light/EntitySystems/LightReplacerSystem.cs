@@ -1,8 +1,8 @@
+using System.Linq;
 using Content.Server.Light.Components;
 using Content.Server.Storage.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Light;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
@@ -12,8 +12,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
-using System;
-using System.Linq;
 
 namespace Content.Server.Light.EntitySystems
 {
@@ -71,7 +69,7 @@ namespace Content.Server.Light.EntitySystems
 
             if (eventArgs.Used != null)
             {
-                var usedUid = (EntityUid) eventArgs.Used;
+                var usedUid = eventArgs.Used;
 
                 // want to insert a new light bulb?
                 if (EntityManager.TryGetComponent(usedUid, out LightBulbComponent ? bulb))

@@ -51,9 +51,9 @@ namespace Content.Client.Light.Components
         [ViewVariables] protected float MaxTime { get; set; }
 
         private float _maxTime = default;
-        private IEntity _parent = default!;
+        private EntityUid _parent = default!;
 
-        public void Initialize(IEntity parent, IRobustRandom random)
+        public void Initialize(EntityUid parent, IRobustRandom random)
         {
             _random = random;
             _parent = parent;
@@ -128,7 +128,7 @@ namespace Content.Client.Light.Components
 
             if (Property == "Enabled") // special case for boolean
             {
-                ApplyProperty(interpolateValue < 0.5f? true : false);
+                ApplyProperty(interpolateValue < 0.5f);
                 return (-1, playingTime);
             }
 
@@ -183,7 +183,7 @@ namespace Content.Client.Light.Components
 
             if (Property == "Enabled") // special case for boolean
             {
-                ApplyProperty(interpolateValue < EndValue? true : false);
+                ApplyProperty(interpolateValue < EndValue);
                 return (-1, playingTime);
             }
 
@@ -258,7 +258,7 @@ namespace Content.Client.Light.Components
                     ApplyProperty(InterpolateLinear(_randomValue3, _randomValue4, interpolateValue));
                     break;
                 case AnimationInterpolationMode.Cubic:
-                    ApplyProperty(InterpolateCubic(_randomValue1!, _randomValue2, _randomValue3, _randomValue4, interpolateValue));
+                    ApplyProperty(InterpolateCubic(_randomValue1, _randomValue2, _randomValue3, _randomValue4, interpolateValue));
                     break;
                 default:
                 case AnimationInterpolationMode.Nearest:

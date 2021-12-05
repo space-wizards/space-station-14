@@ -4,30 +4,24 @@ using System.Linq;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Camera;
-using Content.Server.CombatMode;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.Nutrition.Components;
 using Content.Server.Storage.Components;
 using Content.Server.Stunnable;
-using Content.Server.Stunnable.Components;
-using Content.Shared.Interaction;
-using Content.Shared.PneumaticCannon;
-using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
-using Content.Server.Throwing;
-using Content.Server.Tools;
 using Content.Server.Tools.Components;
 using Content.Shared.CombatMode;
+using Content.Shared.Interaction;
+using Content.Shared.PneumaticCannon;
 using Content.Shared.Popups;
-using Content.Shared.Sound;
 using Content.Shared.StatusEffect;
 using Content.Shared.Verbs;
-using Content.Shared.Weapons.Melee;
 using Robust.Shared.Audio;
+using Robust.Shared.Containers;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -167,13 +161,13 @@ namespace Content.Server.PneumaticCannon
             {
                 args.User.PopupMessage(Loc.GetString("pneumatic-cannon-component-fire-no-gas",
                     ("cannon", component.Owner)));
-                SoundSystem.Play(Filter.Pvs((EntityUid) args.Used), "/Audio/Items/hiss.ogg", (EntityUid) args.Used, AudioParams.Default);
+                SoundSystem.Play(Filter.Pvs(args.Used), "/Audio/Items/hiss.ogg", args.Used, AudioParams.Default);
                 return;
             }
             AddToQueue(component, args.User, args.ClickLocation);
         }
 
-        public void AddToQueue(PneumaticCannonComponent comp, IEntity user, EntityCoordinates click)
+        public void AddToQueue(PneumaticCannonComponent comp, EntityUid user, EntityCoordinates click)
         {
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ServerStorageComponent?>(comp.Owner, out var storage))
                 return;
@@ -230,7 +224,7 @@ namespace Content.Server.PneumaticCannon
             if (storage.StoredEntities == null) return;
             if (storage.StoredEntities.Count == 0) return; // click sound?
 
-            IEntity ent = _random.Pick(storage.StoredEntities);
+            EntityUident = _random.Pick(storage.StoredEntities);
             storage.Remove(ent);
 
             SoundSystem.Play(Filter.Pvs(data.User), comp.FireSound.GetSound(), ((IComponent) comp).Owner, AudioParams.Default);
@@ -311,7 +305,7 @@ namespace Content.Server.PneumaticCannon
             args.Verbs.Add(ejectItems);
         }
 
-        public void TryRemoveGasTank(PneumaticCannonComponent component, IEntity user)
+        public void TryRemoveGasTank(PneumaticCannonComponent component, EntityUiduser)
         {
             if (component.GasTankSlot.ContainedEntity == null)
             {
@@ -334,7 +328,7 @@ namespace Content.Server.PneumaticCannon
             }
         }
 
-        public void TryEjectAllItems(PneumaticCannonComponent component, IEntity user)
+        public void TryEjectAllItems(PneumaticCannonComponent component, EntityUiduser)
         {
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent<ServerStorageComponent?>(component.Owner, out var storage))
             {

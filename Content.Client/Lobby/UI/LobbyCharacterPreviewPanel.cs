@@ -23,7 +23,7 @@ namespace Content.Client.Lobby.UI
     public class LobbyCharacterPreviewPanel : Control
     {
         private readonly IClientPreferencesManager _preferencesManager;
-        private IEntity _previewDummy;
+        private EntityUid _previewDummy;
         private readonly Label _summaryLabel;
         private readonly BoxContainer _loaded;
         private readonly Label _unloaded;
@@ -98,11 +98,11 @@ namespace Content.Client.Lobby.UI
             _preferencesManager.OnServerDataLoaded -= UpdateUI;
 
             if (!disposing) return;
-            IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) _previewDummy);
-            _previewDummy = null!;
+            IoCManager.Resolve<IEntityManager>().DeleteEntity(_previewDummy);
+            _previewDummy = default;
         }
 
-        private static SpriteView MakeSpriteView(IEntity entity, Direction direction)
+        private static SpriteView MakeSpriteView(EntityUid entity, Direction direction)
         {
             return new()
             {
@@ -136,7 +136,7 @@ namespace Content.Client.Lobby.UI
             }
         }
 
-        public static void GiveDummyJobClothes(IEntity dummy, HumanoidCharacterProfile profile)
+        public static void GiveDummyJobClothes(EntityUid dummy, HumanoidCharacterProfile profile)
         {
             var protoMan = IoCManager.Resolve<IPrototypeManager>();
 
@@ -144,6 +144,7 @@ namespace Content.Client.Lobby.UI
 
             var highPriorityJob = profile.JobPriorities.FirstOrDefault(p => p.Value == JobPriority.High).Key;
 
+            // ReSharper disable once ConstantNullCoalescingCondition
             var job = protoMan.Index<JobPrototype>(highPriorityJob ?? SharedGameTicker.FallbackOverflowJob);
 
             inventory.ClearAllSlotVisuals();
@@ -160,7 +161,7 @@ namespace Content.Client.Lobby.UI
                     {
                         var item = entityMan.SpawnEntity(itemType, MapCoordinates.Nullspace);
                         inventory.SetSlotVisuals(slot, item);
-                        IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) item);
+                        IoCManager.Resolve<IEntityManager>().DeleteEntity(item);
                     }
                 }
             }

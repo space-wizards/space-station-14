@@ -25,8 +25,6 @@ namespace Content.Client.Smoking
         [DataField("unlitPrefix")]
         private string _unlitPrefix = "unlit";
 
-
-
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
@@ -39,9 +37,10 @@ namespace Content.Client.Smoking
 
         private void SetState(AppearanceComponent component, SmokableState burnState)
         {
-            var clothing = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<ClothingComponent>(component.Owner);
+            var entities = IoCManager.Resolve<IEntityManager>();
+            var clothing = entities.GetComponentOrNull<ClothingComponent>(component.Owner);
 
-            if (component.Owner.TryGetComponent<ISpriteComponent>(out var sprite))
+            if (entities.TryGetComponent(component.Owner, out ISpriteComponent sprite))
             {
                 switch (burnState)
                 {

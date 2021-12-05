@@ -30,8 +30,7 @@ namespace Content.IntegrationTests.Tests.Destructible
             var sPrototypeManager = server.ResolveDependency<IPrototypeManager>();
             var sEntitySystemManager = server.ResolveDependency<IEntitySystemManager>();
 
-            IEntity sDestructibleEntity = null;
-            DamageableComponent sDamageableComponent = null;
+            EntityUid sDestructibleEntity = default;
             TestDestructibleListenerSystem sTestThresholdListenerSystem = null;
 
             await server.WaitPost(() =>
@@ -40,7 +39,6 @@ namespace Content.IntegrationTests.Tests.Destructible
                 var coordinates = new EntityCoordinates(gridId, 0, 0);
 
                 sDestructibleEntity = sEntityManager.SpawnEntity(DestructibleDestructionEntityId, coordinates);
-                sDamageableComponent = IoCManager.Resolve<IEntityManager>().GetComponent<DamageableComponent>(sDestructibleEntity);
                 sTestThresholdListenerSystem = sEntitySystemManager.GetEntitySystem<TestDestructibleListenerSystem>();
             });
 
@@ -73,12 +71,12 @@ namespace Content.IntegrationTests.Tests.Destructible
 
                 foreach (var entity in entitiesInRange)
                 {
-                    if (IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityPrototype == null)
+                    if (sEntityManager.GetComponent<MetaDataComponent>(entity).EntityPrototype == null)
                     {
                         continue;
                     }
 
-                    if (IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityPrototype.Name != SpawnedEntityId)
+                    if (sEntityManager.GetComponent<MetaDataComponent>(entity).EntityPrototype?.Name != SpawnedEntityId)
                     {
                         continue;
                     }

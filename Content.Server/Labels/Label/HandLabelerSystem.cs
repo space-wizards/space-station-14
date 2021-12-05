@@ -1,16 +1,16 @@
+using System;
 using Content.Server.Labels.Components;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Labels;
 using Content.Shared.Interaction;
+using Content.Shared.Labels;
+using Content.Shared.Popups;
+using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Players;
 using Robust.Shared.IoC;
-using JetBrains.Annotations;
 using Robust.Shared.Localization;
-using Content.Shared.Popups;
-using System;
+using Robust.Shared.Players;
 
 namespace Content.Server.Labels
 {
@@ -42,7 +42,7 @@ namespace Content.Server.Labels
                 handLabeler.Owner.PopupMessage(args.User, result);
         }
 
-        private void AddLabelTo(EntityUid uid, HandLabelerComponent? handLabeler, IEntity target, out string? result)
+        private void AddLabelTo(EntityUid uid, HandLabelerComponent? handLabeler, EntityUid target, out string? result)
         {
             if (!Resolve(uid, ref handLabeler))
             {
@@ -81,7 +81,7 @@ namespace Content.Server.Labels
 
         private bool CheckInteract(ICommonSession session)
         {
-            if (session.AttachedEntityUid is not { } uid
+            if (session.AttachedEntity is not { } uid
                 || !Get<ActionBlockerSystem>().CanInteract(uid)
                 || !Get<ActionBlockerSystem>().CanUse(uid))
                 return false;

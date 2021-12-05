@@ -36,7 +36,7 @@ namespace Content.Client.Chat.UI
         private const float EntityVerticalOffset = 0.5f;
 
         private readonly IEyeManager _eyeManager;
-        private readonly IEntity _senderEntity;
+        private readonly EntityUid _senderEntity;
         private readonly IChatManager _chatManager;
 
         private float _timeLeft = TotalTime;
@@ -46,7 +46,7 @@ namespace Content.Client.Chat.UI
 
         public float ContentHeight { get; private set; }
 
-        public static SpeechBubble CreateSpeechBubble(SpeechType type, string text, IEntity senderEntity, IEyeManager eyeManager, IChatManager chatManager)
+        public static SpeechBubble CreateSpeechBubble(SpeechType type, string text, EntityUid senderEntity, IEyeManager eyeManager, IChatManager chatManager)
         {
             switch (type)
             {
@@ -61,7 +61,7 @@ namespace Content.Client.Chat.UI
             }
         }
 
-        public SpeechBubble(string text, IEntity senderEntity, IEyeManager eyeManager, IChatManager chatManager)
+        public SpeechBubble(string text, EntityUid senderEntity, IEyeManager eyeManager, IChatManager chatManager)
         {
             _chatManager = chatManager;
             _senderEntity = senderEntity;
@@ -162,7 +162,7 @@ namespace Content.Client.Chat.UI
     public class EmoteSpeechBubble : SpeechBubble
 
     {
-        public EmoteSpeechBubble(string text, IEntity senderEntity, IEyeManager eyeManager, IChatManager chatManager)
+        public EmoteSpeechBubble(string text, EntityUid senderEntity, IEyeManager eyeManager, IChatManager chatManager)
             : base(text, senderEntity, eyeManager, chatManager)
         {
         }
@@ -188,7 +188,7 @@ namespace Content.Client.Chat.UI
 
     public class SaySpeechBubble : SpeechBubble
     {
-        public SaySpeechBubble(string text, IEntity senderEntity, IEyeManager eyeManager, IChatManager chatManager)
+        public SaySpeechBubble(string text, EntityUid senderEntity, IEyeManager eyeManager, IChatManager chatManager)
             : base(text, senderEntity, eyeManager, chatManager)
         {
         }

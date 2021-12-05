@@ -41,8 +41,7 @@ namespace Content.Shared.Weapons.Melee
             ClickLocation = clickLocation;
             Target = target;
 
-            IoCManager.Resolve<IEntityManager>().TryGetEntity(Target, out var targetEntity);
-            TargetEntity = targetEntity;
+            TargetEntity = IoCManager.Resolve<IEntityManager>().EntityExists(Target) ? Target : default(EntityUid?);
         }
     }
 

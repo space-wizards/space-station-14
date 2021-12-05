@@ -108,24 +108,24 @@ namespace Content.Client.Kitchen.UI
 
             _solids.Clear();
             _menu.IngredientsList.Clear();
-            foreach (var t in containedSolids)
+            foreach (var entity in containedSolids)
             {
-                if (!_entityManager.TryGetEntity(t, out var entity))
+                if (!_entityManager.EntityExists(entity))
                 {
                     return;
                 }
 
-                if ((!IoCManager.Resolve<IEntityManager>().EntityExists(entity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityLifeStage) >= EntityLifeStage.Deleted)
+                if ((!_entityManager.EntityExists(entity) ? EntityLifeStage.Deleted : _entityManager.GetComponent<MetaDataComponent>(entity).EntityLifeStage) >= EntityLifeStage.Deleted)
                 {
                     continue;
                 }
 
                 Texture? texture;
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out IconComponent? iconComponent))
+                if (_entityManager.TryGetComponent(entity, out IconComponent? iconComponent))
                 {
                     texture = iconComponent.Icon?.Default;
                 }
-                else if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out SpriteComponent? spriteComponent))
+                else if (_entityManager.TryGetComponent(entity, out SpriteComponent? spriteComponent))
                 {
                     texture = spriteComponent.Icon?.Default;
                 }
@@ -134,9 +134,9 @@ namespace Content.Client.Kitchen.UI
                     continue;
                 }
 
-                var solidItem = _menu.IngredientsList.AddItem(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityName, texture);
+                var solidItem = _menu.IngredientsList.AddItem(_entityManager.GetComponent<MetaDataComponent>(entity).EntityName, texture);
                 var solidIndex = _menu.IngredientsList.IndexOf(solidItem);
-                _solids.Add(solidIndex, t);
+                _solids.Add(solidIndex, entity);
             }
         }
     }
