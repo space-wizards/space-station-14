@@ -93,7 +93,6 @@ namespace Content.Server.AI.EntitySystems
 
             if (cvarMaxUpdates <= 0) return;
 
-            var count = 0;
             var npcs = _awakeNPCs.ToArray();
             var startIndex = 0;
 
@@ -115,11 +114,7 @@ namespace Content.Server.AI.EntitySystems
                 if (npc.Paused)
                     continue;
 
-                if (count >= cvarMaxUpdates)
-                    break;
-
                 npc.Update(frameTime);
-                count++;
             }
         }
 
