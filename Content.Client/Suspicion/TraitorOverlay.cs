@@ -15,7 +15,6 @@ namespace Content.Client.Suspicion
     public class TraitorOverlay : Overlay
     {
         private readonly IEntityManager _entityManager;
-        private readonly IEyeManager _eyeManager;
         private readonly IPlayerManager _playerManager;
 
         public override OverlaySpace Space => OverlaySpace.ScreenSpace;
@@ -25,20 +24,18 @@ namespace Content.Client.Suspicion
 
         public TraitorOverlay(
             IEntityManager entityManager,
-            IResourceCache resourceCache,
-            IEyeManager eyeManager)
+            IResourceCache resourceCache)
         {
             _playerManager = IoCManager.Resolve<IPlayerManager>();
 
             _entityManager = entityManager;
-            _eyeManager = eyeManager;
 
             _font = new VectorFont(resourceCache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), 10);
         }
 
         protected override void Draw(in OverlayDrawArgs args)
         {
-            var viewport = _eyeManager.GetWorldViewport();
+            var viewport = args.WorldAABB;
 
             var ent = _playerManager.LocalPlayer?.ControlledEntity;
             if (_entityManager.TryGetComponent(ent, out SuspicionRoleComponent? sus) != true)
@@ -68,7 +65,10 @@ namespace Content.Client.Suspicion
                 }
 
                 // if not on the same map, continue
-                if (_entityManager.GetComponent<TransformComponent>(physics.Owner).MapID != _eyeManager.CurrentMap || physics.Owner.IsInContainer())
+                if (_entityManager
+                        .GetComponent<TransformComponent>(physics.Owner)
+                        .MapID != args.Viewport.Eye!.Position.MapId
+                        || physics.Owner.IsInContainer())
                 {
                     continue;
                 }
