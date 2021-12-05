@@ -67829,6 +67829,20 @@ entities:
       DisposalTransit: !type:Container
         ents: []
     type: ContainerContainer
+- uid: 7124
+  type: DisposalPipe
+  components:
+  - pos: 36.5,-4.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+  - containers:
+      DisposalTransit: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 7125
   type: DisposalPipe
   components:
