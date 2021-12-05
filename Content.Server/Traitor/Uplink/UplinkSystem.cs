@@ -205,7 +205,7 @@ namespace Content.Server.Traitor.Uplink
             return true;
         }
 
-        private EntityUid FindUplinkTarget(EntityUiduser)
+        private EntityUid FindUplinkTarget(EntityUid user)
         {
             // Try to find PDA in inventory
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out InventoryComponent? inventory))

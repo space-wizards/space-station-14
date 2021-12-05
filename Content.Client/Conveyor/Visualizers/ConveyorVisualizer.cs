@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Shared.Conveyor;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -23,7 +23,7 @@ namespace Content.Client.Conveyor.Visualizers
         private void ChangeState(AppearanceComponent appearance)
         {
             var entities = IoCManager.Resolve<IEntityManager>();
-            if (!entities.TryGetComponent(appearance.Owner, out ISpriteComponent? sprite))
+            if (!entities.TryGetComponent(appearance.OwnerUid, out ISpriteComponent? sprite))
             {
                 return;
             }
@@ -45,8 +45,8 @@ namespace Content.Client.Conveyor.Visualizers
         public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
-
-            var appearance = entity.EnsureComponent<ClientAppearanceComponent>();
+            var entities = IoCManager.Resolve<IEntityManager>();
+            var appearance = entities.EnsureComponent<ClientAppearanceComponent>(entity);
             ChangeState(appearance);
         }
 

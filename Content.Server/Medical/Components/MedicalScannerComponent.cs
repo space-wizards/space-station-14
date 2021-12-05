@@ -165,7 +165,7 @@ namespace Content.Server.Medical.Components
             UserInterface?.Open(actor.PlayerSession);
         }
 
-        public void InsertBody(EntityUiduser)
+        public void InsertBody(EntityUid user)
         {
             _bodyContainer.Insert(user);
             UpdateUserInterface();

@@ -76,7 +76,7 @@ namespace Content.Server.Storage.Components
         /// </summary>
         /// <param name="user"></param>
         /// <returns>True if user recieved item</returns>
-        public bool TryGetItem(EntityUiduser)
+        public bool TryGetItem(EntityUid user)
         {
             if (_itemContainer.ContainedEntity == null)
                 return false;

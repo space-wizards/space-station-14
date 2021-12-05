@@ -81,7 +81,7 @@ namespace Content.Server.Flash
             }
         }
 
-        private bool UseFlash(FlashComponent comp, EntityUiduser)
+        private bool UseFlash(FlashComponent comp, EntityUid user)
         {
             if (comp.HasUses)
             {

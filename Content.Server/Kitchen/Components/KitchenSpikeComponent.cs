@@ -95,7 +95,7 @@ namespace Content.Server.Kitchen.Components
             return true;
         }
 
-        public async void TrySpike(EntityUid victim, EntityUiduser)
+        public async void TrySpike(EntityUid victim, EntityUid user)
         {
             var victimUid = (EntityUid) victim;
             if (_beingButchered.Contains(victimUid)) return;

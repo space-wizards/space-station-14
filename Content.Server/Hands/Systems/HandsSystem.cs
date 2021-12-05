@@ -70,7 +70,7 @@ namespace Content.Server.Hands.Systems
 
         private void HandlePullStarted(EntityUid uid, HandsComponent component, PullStartedMessage args)
         {
-            if (!_virtualItemSystem.TrySpawnVirtualItemInHand(args.Pulled.Owner, uid))
+            if (!_virtualItemSystem.TrySpawnVirtualItemInHand(args.Pulled.OwnerUid, uid))
             {
                 DebugTools.Assert("Unable to find available hand when starting pulling??");
             }
@@ -84,7 +84,7 @@ namespace Content.Server.Hands.Systems
             {
                 if (hand.HeldEntity == default
                     || !EntityManager.TryGetComponent(hand.HeldEntity, out HandVirtualItemComponent? virtualItem)
-                    || virtualItem.BlockingEntity != args.Pulled.Owner)
+                    || virtualItem.BlockingEntity != args.Pulled.OwnerUid)
                     continue;
 
                 EntityManager.DeleteEntity(hand.HeldEntity);
@@ -94,7 +94,7 @@ namespace Content.Server.Hands.Systems
 
         private void SwapHandsPressed(ICommonSession? session)
         {
-            var player = session?.AttachedEntity;
+            var player = session?.AttachedEntityUid;
 
             if (!player.HasValue || !player.Value.IsValid())
                 return;
@@ -110,9 +110,9 @@ namespace Content.Server.Hands.Systems
 
         private bool DropPressed(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
-            var player = session?.AttachedEntity;
+            var player = session?.AttachedEntityUid;
 
-            if (player == default)
+            if (!player.HasValue || !player.Value.IsValid())
                 return false;
 
             if (!EntityManager.TryGetComponent(player.Value, out SharedHandsComponent? hands))
@@ -171,7 +171,7 @@ namespace Content.Server.Hands.Systems
         {
             foreach (var inhand in component.GetAllHeldItems())
             {
-                if (EntityManager.HasComponent<HandVirtualItemComponent>(inhand.Owner))
+                if (EntityManager.HasComponent<HandVirtualItemComponent>(inhand.OwnerUid))
                     continue;
 
                 args.PushText(Loc.GetString("comp-hands-examine", ("user", component.Owner), ("item", inhand.Owner)));
@@ -187,14 +187,14 @@ namespace Content.Server.Hands.Systems
             if (session is not IPlayerSession playerSession)
                 return false;
 
-            var playerEnt = playerSession.AttachedEntity;
+            var player = playerSession.AttachedEntityUid;
 
-            if (playerEnt == default || !EntityManager.EntityExists(playerEnt))
+            if (!player.HasValue || !player.Value.IsValid())
                 return false;
 
-            return EntityManager.TryGetComponent(playerEnt, out hands);
+            return EntityManager.TryGetComponent(player.Value, out hands);
         }
-
+        
         private void HandleActivateItem(ICommonSession? session)
         {
             if (!TryGetHandsComp(session, out var hands))
@@ -216,14 +216,15 @@ namespace Content.Server.Hands.Systems
             if (session is not IPlayerSession playerSession)
                 return false;
 
-            var playerEnt = playerSession.AttachedEntity;
+            var maybePlayer = playerSession.AttachedEntityUid;
+            if (!maybePlayer.HasValue) return false;
+            var player = maybePlayer.Value;
 
-            if (playerEnt == default ||
-                !EntityManager.EntityExists(playerEnt) ||
-                playerEnt.IsInContainer() ||
-                !EntityManager.TryGetComponent(playerEnt, out SharedHandsComponent? hands) ||
+            if (!EntityManager.EntityExists(player) ||
+                player.IsInContainer() ||
+                !EntityManager.TryGetComponent(player, out SharedHandsComponent? hands) ||
                 !hands.TryGetActiveHeldEntity(out var throwEnt) ||
-                !_actionBlockerSystem.CanThrow(playerEnt))
+                !_actionBlockerSystem.CanThrow(player))
                 return false;
 
             if (EntityManager.TryGetComponent(throwEnt, out StackComponent? stack) && stack.Count > 1 && stack.ThrowIndividually)
@@ -275,7 +276,7 @@ namespace Content.Server.Hands.Systems
                 return;
 
             if (!inventory.TryGetSlotItem(equipmentSlot, out ItemComponent? equipmentItem) ||
-                !EntityManager.TryGetComponent(equipmentItem.Owner, out ServerStorageComponent? storageComponent))
+                !EntityManager.TryGetComponent(equipmentItem.OwnerUid, out ServerStorageComponent? storageComponent))
             {
                 plyEnt.PopupMessage(Loc.GetString("hands-system-missing-equipment-slot", ("slotName", SlotNames[equipmentSlot].ToLower())));
                 return;

@@ -88,7 +88,7 @@ namespace Content.Server.Power.Components
         /// This will remove the item directly into the user's hand / floor
         /// </summary>
         /// <param name="user"></param>
-        public void RemoveItem(EntityUiduser)
+        public void RemoveItem(EntityUid user)
         {
             var heldItem = Container.ContainedEntity;
             if (heldItem == null)

@@ -158,7 +158,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             return false;
         }
 
-        private bool TryUse(EntityUiduser)
+        private bool TryUse(EntityUid user)
         {
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out HandsComponent? handsComponent))
             {

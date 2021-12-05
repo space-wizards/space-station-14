@@ -13,7 +13,7 @@ namespace Content.Server.Jobs
         [DataField("component", required:true)]
         public string Component { get; } = string.Empty;
 
-        public override void AfterEquip(EntityUidmob)
+        public override void AfterEquip(EntityUid mob)
         {
             // Yes, this will throw if your component is invalid.
             var component = (Component)IoCManager.Resolve<IComponentFactory>().GetComponent(Component);
