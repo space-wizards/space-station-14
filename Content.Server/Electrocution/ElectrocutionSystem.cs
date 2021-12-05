@@ -392,17 +392,17 @@ namespace Content.Server.Electrocution
             visited.Add(entity);
 
             if (EntityManager.TryGetComponent(entity, out SharedPullableComponent? pullable)
-                && pullable.Puller != default
-                && !visited.Contains(pullable.Puller))
+                && pullable.Puller is {Valid: true} pullerId
+                && !visited.Contains(pullerId))
             {
-                GetChainedElectrocutionTargetsRecurse(pullable.Puller, depth + 1, visited, all);
+                GetChainedElectrocutionTargetsRecurse(pullerId, depth + 1, visited, all);
             }
 
             if (EntityManager.TryGetComponent(entity, out SharedPullerComponent? puller)
-                && puller.Pulling != default
-                && !visited.Contains(puller.Pulling))
+                && puller.Pulling is {Valid: true} pullingId
+                && !visited.Contains(pullingId))
             {
-                GetChainedElectrocutionTargetsRecurse(puller.Pulling, depth + 1, visited, all);
+                GetChainedElectrocutionTargetsRecurse(pullingId, depth + 1, visited, all);
             }
         }
 

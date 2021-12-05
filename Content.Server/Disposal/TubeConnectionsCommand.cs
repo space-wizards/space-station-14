@@ -38,13 +38,13 @@ namespace Content.Server.Disposal
             }
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            if (!entityManager.EntityExists(id)
+            if (!entityManager.EntityExists(id))
             {
                 shell.WriteLine(Loc.GetString("shell-could-not-find-entity-with-uid",("uid", id)));
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out IDisposalTubeComponent? tube))
+            if (!entityManager.TryGetComponent(id, out IDisposalTubeComponent? tube))
             {
                 shell.WriteLine(Loc.GetString("shell-entity-with-uid-lacks-component",
                                               ("uid", id),
@@ -52,7 +52,7 @@ namespace Content.Server.Disposal
                 return;
             }
 
-            tube.PopupDirections(player.AttachedEntity);
+            tube.PopupDirections(player.AttachedEntity.Value);
         }
     }
 }

@@ -288,10 +288,10 @@ namespace Content.Server.Chemistry.EntitySystems
             UpdateChemicals(uid, solution);
         }
 
-        public FixedPoint2 GetReagentQuantity(EntityUid Owner, string reagentId)
+        public FixedPoint2 GetReagentQuantity(EntityUid owner, string reagentId)
         {
             var reagentQuantity = FixedPoint2.New(0);
-            if (EntityManager.EntityExists(Owner)
+            if (EntityManager.EntityExists(owner)
                 && IoCManager.Resolve<IEntityManager>().TryGetComponent(owner, out SolutionContainerManagerComponent? managerComponent))
             {
                 foreach (var solution in managerComponent.Solutions.Values)

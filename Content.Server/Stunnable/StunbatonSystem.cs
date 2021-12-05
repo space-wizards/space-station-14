@@ -10,6 +10,7 @@ using Content.Shared.Audio;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Jittering;
+using Content.Shared.Popups;
 using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
@@ -167,7 +168,7 @@ namespace Content.Server.Stunnable
             comp.Activated = false;
         }
 
-        private void TurnOn(StunbatonComponent comp, EntityUiduser)
+        private void TurnOn(StunbatonComponent comp, EntityUid user)
         {
             if (comp.Activated)
             {

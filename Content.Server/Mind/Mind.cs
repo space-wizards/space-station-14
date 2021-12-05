@@ -67,7 +67,7 @@ namespace Content.Server.Mind
         [ViewVariables]
         public EntityUid VisitingEntity { get; private set; }
 
-        [ViewVariables] public EntityUid CurrentEntity => VisitingEntity.IsValid() ? VisitingEntity : OwnedEntity;
+        [ViewVariables] public EntityUid? CurrentEntity => VisitingEntity.IsValid() ? VisitingEntity : OwnedEntity;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public string? CharacterName { get; set; }
@@ -90,7 +90,7 @@ namespace Content.Server.Mind
         ///     Can be null.
         /// </summary>
         [ViewVariables]
-        public EntityUid OwnedEntity => OwnedComponent?.Owner ?? default;
+        public EntityUid? OwnedEntity => OwnedComponent?.Owner;
 
         /// <summary>
         ///     An enumerable over all the roles this mind has.
@@ -155,7 +155,7 @@ namespace Content.Server.Mind
                 // This can be null if they're deleted (spike / brain nom)
                 if (OwnedEntity == default)
                     return true;
-                var targetMobState = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<MobStateComponent>(OwnedEntity);
+                var targetMobState = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<MobStateComponent>(OwnedEntity.Value);
                 // This can be null if it's a brain (this happens very often)
                 // Brains are the result of gibbing so should definitely count as dead
                 if (targetMobState == null)
@@ -184,7 +184,10 @@ namespace Content.Server.Mind
             role.Greet();
 
             var message = new RoleAddedEvent(role);
-            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(OwnedEntity, message);
+            if (OwnedEntity != default)
+            {
+                IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(OwnedEntity.Value, message);
+            }
 
             return role;
         }
@@ -206,7 +209,11 @@ namespace Content.Server.Mind
             _roles.Remove(role);
 
             var message = new RoleRemovedEvent(role);
-            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(OwnedEntity, message);
+
+            if (OwnedEntity != default)
+            {
+                IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(OwnedEntity.Value, message);
+            }
         }
 
         public bool HasRole<T>() where T : Role

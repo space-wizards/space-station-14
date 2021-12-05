@@ -5,7 +5,7 @@ namespace Content.Server.MachineLinking.Events
 {
     public class LinkAttemptEvent : CancellableEntityEventArgs
     {
-        public readonly EntityUid Attemptee,
+        public readonly EntityUid Attemptee;
         public readonly SignalTransmitterComponent TransmitterComponent;
         public readonly string TransmitterPort;
         public readonly SignalReceiverComponent ReceiverComponent;

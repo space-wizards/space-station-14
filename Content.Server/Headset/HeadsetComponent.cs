@@ -50,12 +50,12 @@ namespace Content.Server.Headset
             _radioSystem = EntitySystem.Get<RadioSystem>();
         }
 
-        public bool CanListen(string message, EntityUidsource)
+        public bool CanListen(string message, EntityUid source)
         {
             return RadioRequested;
         }
 
-        public void Receive(string message, int channel, EntityUidsource)
+        public void Receive(string message, int channel, EntityUid source)
         {
             if (Owner.TryGetContainer(out var container))
             {
@@ -74,12 +74,12 @@ namespace Content.Server.Headset
             }
         }
 
-        public void Listen(string message, EntityUidspeaker)
+        public void Listen(string message, EntityUid speaker)
         {
             Broadcast(message, speaker);
         }
 
-        public void Broadcast(string message, EntityUidspeaker)
+        public void Broadcast(string message, EntityUid speaker)
         {
             _radioSystem.SpreadMessage(this, speaker, message, BroadcastFrequency);
             RadioRequested = false;

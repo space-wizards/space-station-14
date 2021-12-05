@@ -259,24 +259,27 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         /// <param name="robustRandom"></param>
         /// <param name="prototypeManager"></param>
         /// <param name="ejectDirections"></param>
-        public void EjectCasing(
+        public static void EjectCasing(
             EntityUid entity,
             bool playSound = true,
+            Direction[]? ejectDirections = null,
             IRobustRandom? robustRandom = null,
             IPrototypeManager? prototypeManager = null,
-            Direction[]? ejectDirections = null)
+            IEntityManager? entities = null)
         {
-            robustRandom ??= IoCManager.Resolve<IRobustRandom>();
+            IoCManager.Resolve(ref robustRandom, ref prototypeManager, ref entities);
+
             ejectDirections ??= new[]
                 {Direction.East, Direction.North, Direction.NorthWest, Direction.South, Direction.SouthEast, Direction.West};
 
             const float ejectOffset = 1.8f;
-            var ammo = _entities.GetComponent<AmmoComponent>(entity);
+            var ammo = entities.GetComponent<AmmoComponent>(entity);
             var offsetPos = ((robustRandom.NextFloat() - 0.5f) * ejectOffset, (robustRandom.NextFloat() - 0.5f) * ejectOffset);
-            _entities.GetComponent<TransformComponent>(entity).Coordinates = _entities.GetComponent<TransformComponent>(entity).Coordinates.Offset(offsetPos);
-            _entities.GetComponent<TransformComponent>(entity).LocalRotation = robustRandom.Pick(ejectDirections).ToAngle();
+            entities.GetComponent<TransformComponent>(entity).Coordinates = entities.GetComponent<TransformComponent>(entity).Coordinates.Offset(offsetPos);
+            entities.GetComponent<TransformComponent>(entity).LocalRotation = robustRandom.Pick(ejectDirections).ToAngle();
 
-            SoundSystem.Play(Filter.Broadcast(), ammo.SoundCollectionEject.GetSound(), _entities.GetComponent<TransformComponent>(entity).Coordinates, AudioParams.Default.WithVolume(-1));
+            var coordinates = entities.GetComponent<TransformComponent>(entity).Coordinates;
+            SoundSystem.Play(Filter.Broadcast(), ammo.SoundCollectionEject.GetSound(), coordinates, AudioParams.Default.WithVolume(-1));
         }
 
         /// <summary>
@@ -284,7 +287,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         /// Wraps EjectCasing to make it less toxic for bulk ejections
         /// </summary>
         /// <param name="entities"></param>
-        public void EjectCasings(IEnumerable<EntityUid> entities)
+        public static void EjectCasings(IEnumerable<EntityUid> entities)
         {
             var robustRandom = IoCManager.Resolve<IRobustRandom>();
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
@@ -294,7 +297,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
             foreach (var entity in entities)
             {
-                EjectCasing(entity, playSound, robustRandom, prototypeManager, ejectDirections);
+                EjectCasing(entity, playSound, ejectDirections, robustRandom, prototypeManager);
                 soundPlayCount++;
                 if (soundPlayCount > 3)
                 {

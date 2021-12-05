@@ -62,7 +62,7 @@ namespace Content.Server.Labels
 
         private void OnExamined(EntityUid uid, PaperLabelComponent comp, ExaminedEvent args)
         {
-            if (comp.LabelSlot.Item == null)
+            if (comp.LabelSlot.Item is not {Valid: true} item)
                 return;
 
             if (!args.IsInDetailsRange)
@@ -71,7 +71,7 @@ namespace Content.Server.Labels
                 return;
             }
 
-            if (!EntityManager.TryGetComponent(comp.LabelSlot.Item, out PaperComponent paper))
+            if (!EntityManager.TryGetComponent(item, out PaperComponent paper))
                 // Assuming yaml has the correct entity whitelist, this should not happen.
                 return;
 

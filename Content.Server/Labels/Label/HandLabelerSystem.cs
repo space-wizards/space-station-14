@@ -34,10 +34,10 @@ namespace Content.Server.Labels
 
         private void AfterInteractOn(EntityUid uid, HandLabelerComponent handLabeler, AfterInteractEvent args)
         {
-            if (args.Target == null || !handLabeler.Whitelist.IsValid(args.Target))
+            if (args.Target is not {Valid: true} target || !handLabeler.Whitelist.IsValid(target))
                 return;
 
-            AddLabelTo(uid, handLabeler, args.Target, out string? result);
+            AddLabelTo(uid, handLabeler, target, out string? result);
             if (result != null)
                 handLabeler.Owner.PopupMessage(args.User, result);
         }

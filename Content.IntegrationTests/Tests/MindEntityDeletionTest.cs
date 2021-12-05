@@ -91,14 +91,14 @@ namespace Content.IntegrationTests.Tests
 
             server.Post(() =>
             {
-                IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) playerEnt);
+                IoCManager.Resolve<IEntityManager>().DeleteEntity(playerEnt);
             });
 
             server.RunTicks(1);
 
             server.Assert(() =>
             {
-                Assert.That(IoCManager.Resolve<IEntityManager>().EntityExists(mind.CurrentEntity), Is.True);
+                Assert.That(IoCManager.Resolve<IEntityManager>().EntityExists(mind.CurrentEntity!.Value), Is.True);
             });
 
             await server.WaitIdleAsync();
@@ -149,7 +149,7 @@ namespace Content.IntegrationTests.Tests
 
             server.Assert(() =>
             {
-                Assert.That(IoCManager.Resolve<IEntityManager>().EntityExists(mind.CurrentEntity), Is.True);
+                Assert.That(IoCManager.Resolve<IEntityManager>().EntityExists(mind.CurrentEntity!.Value), Is.True);
                 Assert.That(mind.CurrentEntity, Is.Not.EqualTo(playerEnt));
             });
 

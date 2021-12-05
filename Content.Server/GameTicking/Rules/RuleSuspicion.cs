@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using Content.Server.Chat.Managers;
 using Content.Server.Doors;
@@ -35,6 +33,7 @@ namespace Content.Server.GameTicking.Rules
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private readonly IEntityManager _entities = default!;
 
         [DataField("addedSound")] private SoundSpecifier _addedSound = new SoundPathSpecifier("/Audio/Misc/tatoralert.ogg");
 
@@ -90,9 +89,9 @@ namespace Content.Server.GameTicking.Rules
 
             foreach (var playerSession in _playerManager.ServerSessions)
             {
-                if (playerSession.AttachedEntity == null
-                    || !IoCManager.Resolve<IEntityManager>().TryGetComponent(playerSession.AttachedEntity, out MobStateComponent? mobState)
-                    || !IoCManager.Resolve<IEntityManager>().HasComponent<SuspicionRoleComponent>(playerSession.AttachedEntity))
+                if (playerSession.AttachedEntity is not {Valid: true} playerEntity
+                    || !_entities.TryGetComponent(playerEntity, out MobStateComponent? mobState)
+                    || !_entities.HasComponent<SuspicionRoleComponent>(playerEntity))
                 {
                     continue;
                 }

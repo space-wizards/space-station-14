@@ -15,9 +15,10 @@ namespace Content.Client.HealthOverlay
     public class HealthOverlaySystem : EntitySystem
     {
         [Dependency] private readonly IEyeManager _eyeManager = default!;
+        [Dependency] private readonly IEntityManager _entities = default!;
 
         private readonly Dictionary<EntityUid, HealthOverlayGui> _guis = new();
-        private EntityUid _attachedEntity;
+        private EntityUid? _attachedEntity;
         private bool _enabled;
 
         public bool Enabled
@@ -72,7 +73,7 @@ namespace Content.Client.HealthOverlay
                 return;
             }
 
-            if (_attachedEntity == null || (!IoCManager.Resolve<IEntityManager>().EntityExists(_attachedEntity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_attachedEntity).EntityLifeStage) >= EntityLifeStage.Deleted)
+            if (_attachedEntity == null || (!_entities.EntityExists(_attachedEntity.Value) ? EntityLifeStage.Deleted : _entities.GetComponent<MetaDataComponent>(_attachedEntity.Value).EntityLifeStage) >= EntityLifeStage.Deleted)
             {
                 return;
             }
@@ -83,8 +84,8 @@ namespace Content.Client.HealthOverlay
             {
                 var entity = mobState.Owner;
 
-                if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_attachedEntity).MapID != IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).MapID ||
-                    !viewBox.Contains(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).WorldPosition))
+                if (_entities.GetComponent<TransformComponent>(_attachedEntity.Value).MapID != _entities.GetComponent<TransformComponent>(entity).MapID ||
+                    !viewBox.Contains(_entities.GetComponent<TransformComponent>(entity).WorldPosition))
                 {
                     if (_guis.TryGetValue(entity, out var oldGui))
                     {

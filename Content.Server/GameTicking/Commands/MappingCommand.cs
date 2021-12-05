@@ -18,6 +18,8 @@ namespace Content.Server.GameTicking.Commands
     [AdminCommand(AdminFlags.Server | AdminFlags.Mapping)]
     class MappingCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _entities = default!;
+
         public string Command => "mapping";
         public string Description => "Creates and teleports you to a new uninitialized map for mapping.";
         public string Help => $"Usage: {Command} <mapname> / {Command} <id> <mapname>";
@@ -76,9 +78,11 @@ namespace Content.Server.GameTicking.Commands
             shell.ExecuteCommand($"addmap {mapId} false");
             shell.ExecuteCommand($"loadbp {mapId} \"{CommandParsing.Escape(mapName)}\" true");
 
-            EntityUid tempQualifier = player.AttachedEntity;
-            if ((tempQualifier != null ? IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(tempQualifier).EntityPrototype : null)?.ID != "AdminObserver")
+            if (player.AttachedEntity is {Valid: true} playerEntity &&
+                _entities.GetComponent<MetaDataComponent>(playerEntity).EntityPrototype?.ID != "AdminObserver")
+            {
                 shell.ExecuteCommand("aghost");
+            }
 
             shell.ExecuteCommand($"tp 0 0 {mapId}");
             shell.RemoteExecuteCommand("showmarkers");

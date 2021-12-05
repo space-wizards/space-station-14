@@ -18,6 +18,8 @@ namespace Content.Server.Storage.Components
     [RegisterComponent]
     public class SecretStashComponent : Component, IDestroyAct
     {
+        [Dependency] private readonly IEntityManager _entities = default!;
+
         public override string Name => "SecretStash";
 
         [ViewVariables] [DataField("maxItemSize")]
@@ -76,22 +78,22 @@ namespace Content.Server.Storage.Components
         /// </summary>
         /// <param name="user"></param>
         /// <returns>True if user recieved item</returns>
-        public bool TryGetItem(EntityUiduser)
+        public bool TryGetItem(EntityUid user)
         {
-            if (_itemContainer.ContainedEntity == null)
+            if (_itemContainer.ContainedEntity is not {Valid: true} contained)
                 return false;
 
             Owner.PopupMessage(user, Loc.GetString("comp-secret-stash-action-get-item-found-something", ("stash", SecretPartName)));
 
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out HandsComponent? hands))
             {
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(_itemContainer.ContainedEntity, out ItemComponent? item))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(contained, out ItemComponent? item))
                     return false;
                 hands.PutInHandOrDrop(item);
             }
-            else if (_itemContainer.Remove(_itemContainer.ContainedEntity))
+            else if (_itemContainer.Remove(contained))
             {
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_itemContainer.ContainedEntity).Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates;
+                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(contained).Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates;
             }
 
             return true;
@@ -109,9 +111,9 @@ namespace Content.Server.Storage.Components
         public void OnDestroy(DestructionEventArgs eventArgs)
         {
             // drop item inside
-            if (_itemContainer.ContainedEntity != null)
+            if (_itemContainer.ContainedEntity is {Valid: true} contained)
             {
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_itemContainer.ContainedEntity).Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates;
+                _entities.GetComponent<TransformComponent>(contained).Coordinates = _entities.GetComponent<TransformComponent>(Owner).Coordinates;
             }
         }
     }

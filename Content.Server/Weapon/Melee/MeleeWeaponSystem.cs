@@ -208,18 +208,18 @@ namespace Content.Server.Weapon.Melee
                 return;
             }
 
-            if (!args.Target.Valid)
+            if (!args.Target.HasValue)
                 return;
 
             var location = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.User).Coordinates;
             var diff = args.ClickLocation.ToMapPos(IoCManager.Resolve<IEntityManager>()) - location.ToMapPos(IoCManager.Resolve<IEntityManager>());
             var angle = Angle.FromWorldVec(diff);
 
-            var hitEvent = new MeleeInteractEvent(args.Target, args.User);
+            var hitEvent = new MeleeInteractEvent(args.Target.Value, args.User);
             RaiseLocalEvent(owner, hitEvent, false);
 
             if (!hitEvent.CanInteract) return;
-            SendAnimation(comp.ClickArc, angle, args.User, owner, new List<EntityUid>() { args.Target }, comp.ClickAttackEffect, false);
+            SendAnimation(comp.ClickArc, angle, args.User, owner, new List<EntityUid>() { args.Target.Value }, comp.ClickAttackEffect, false);
 
             comp.LastAttackTime = curTime;
             comp.CooldownEnd = comp.LastAttackTime + TimeSpan.FromSeconds(comp.CooldownTime);

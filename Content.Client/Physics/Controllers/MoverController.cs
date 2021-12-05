@@ -44,8 +44,7 @@ namespace Content.Client.Physics.Controllers
             // If we're being pulled then we won't predict anything and will receive server lerps so it looks way smoother.
             if (EntityManager.TryGetComponent(player, out SharedPullableComponent? pullableComp))
             {
-                var puller = pullableComp.Puller;
-                if (puller != default && EntityManager.TryGetComponent<PhysicsComponent?>(puller, out var pullerBody))
+                if (pullableComp.Puller is {Valid: true} puller && EntityManager.TryGetComponent<PhysicsComponent?>(puller, out var pullerBody))
                 {
                     pullerBody.Predict = false;
                     body.Predict = false;
@@ -55,9 +54,7 @@ namespace Content.Client.Physics.Controllers
             // If we're pulling a mob then make sure that isn't predicted so it doesn't fuck our velocity up.
             if (EntityManager.TryGetComponent(player, out SharedPullerComponent? pullerComp))
             {
-                var pulling = pullerComp.Pulling;
-
-                if (pulling != default &&
+                if (pullerComp.Pulling is {Valid: true} pulling &&
                     EntityManager.HasComponent<MobStateComponent>(pulling) &&
                     EntityManager.TryGetComponent(pulling, out PhysicsComponent? pullingBody))
                 {

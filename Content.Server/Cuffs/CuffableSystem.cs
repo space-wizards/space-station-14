@@ -55,7 +55,7 @@ namespace Content.Server.Cuffs
             {
                 return;
             }
-            if (!EntityManager.EntityExists(args.User)
+            if (!EntityManager.EntityExists(args.User))
             {
                 // Should this even be possible?
                 args.Cancel();
@@ -66,7 +66,7 @@ namespace Content.Server.Cuffs
             if (args.User == args.Target)
             {
                 // This UncuffAttemptEvent check should probably be In MobStateSystem, not here?
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<MobStateComponent?>(userEntity, out var state))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<MobStateComponent?>(args.User, out var state))
                 {
                     // Manually check this.
                     if (state.IsIncapacitated())
@@ -83,14 +83,14 @@ namespace Content.Server.Cuffs
             else
             {
                 // Check if the user can interact.
-                if (!_actionBlockerSystem.CanInteract(userEntity))
+                if (!_actionBlockerSystem.CanInteract(args.User))
                 {
                     args.Cancel();
                 }
             }
             if (args.Cancelled)
             {
-                _popupSystem.PopupEntity(Loc.GetString("cuffable-component-cannot-interact-message"), args.Target, Filter.Entities(userEntity));
+                _popupSystem.PopupEntity(Loc.GetString("cuffable-component-cannot-interact-message"), args.Target, Filter.Entities(args.User));
             }
         }
 

@@ -22,6 +22,8 @@ namespace Content.Server.Climbing.Components
     [ComponentReference(typeof(IClimbable))]
     public class ClimbableComponent : SharedClimbableComponent
     {
+        [Dependency] private readonly IEntityManager _entities = default!;
+
         /// <summary>
         ///     The time it takes to climb onto the entity.
         /// </summary>
@@ -35,7 +37,7 @@ namespace Content.Server.Climbing.Components
 
             if (!Owner.EnsureComponent(out PhysicsComponent _))
             {
-                Logger.Warning($"Entity {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityName} at {IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).MapPosition} didn't have a {nameof(PhysicsComponent)}");
+                Logger.Warning($"Entity {_entities.GetComponent<MetaDataComponent>(Owner).EntityName} at {_entities.GetComponent<TransformComponent>(Owner).MapPosition} didn't have a {nameof(PhysicsComponent)}");
             }
         }
 
@@ -73,8 +75,8 @@ namespace Content.Server.Climbing.Components
                 return false;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().HasComponent<ClimbingComponent>(user) ||
-                !IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out SharedBodyComponent? body))
+            if (!_entities.HasComponent<ClimbingComponent>(user) ||
+                !_entities.TryGetComponent(user, out SharedBodyComponent? body))
             {
                 reason = Loc.GetString("comp-climbable-cant-climb");
                 return false;
@@ -113,7 +115,7 @@ namespace Content.Server.Climbing.Components
                 return false;
             }
 
-            if (target == null || !IoCManager.Resolve<IEntityManager>().HasComponent<ClimbingComponent>(dragged))
+            if (target == null || !_entities.HasComponent<ClimbingComponent>(dragged))
             {
                 reason = Loc.GetString("comp-climbable-cant-climb");
                 return false;
@@ -158,14 +160,14 @@ namespace Content.Server.Climbing.Components
 
             var result = await EntitySystem.Get<DoAfterSystem>().WaitDoAfter(doAfterEventArgs);
 
-            if (result != DoAfterStatus.Cancelled && IoCManager.Resolve<IEntityManager>().TryGetComponent(entityToMove, out PhysicsComponent? body) && body.Fixtures.Count >= 1)
+            if (result != DoAfterStatus.Cancelled && _entities.TryGetComponent(entityToMove, out PhysicsComponent? body) && body.Fixtures.Count >= 1)
             {
-                var entityPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entityToMove).WorldPosition;
+                var entityPos = _entities.GetComponent<TransformComponent>(entityToMove).WorldPosition;
 
-                var direction = (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).WorldPosition - entityPos).Normalized;
-                var endPoint = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).WorldPosition;
+                var direction = (_entities.GetComponent<TransformComponent>(Owner).WorldPosition - entityPos).Normalized;
+                var endPoint = _entities.GetComponent<TransformComponent>(Owner).WorldPosition;
 
-                var climbMode = IoCManager.Resolve<IEntityManager>().GetComponent<ClimbingComponent>(entityToMove);
+                var climbMode = _entities.GetComponent<ClimbingComponent>(entityToMove);
                 climbMode.IsClimbing = true;
 
                 if (MathF.Abs(direction.X) < 0.6f) // user climbed mostly vertically so lets make it a clean straight line
@@ -190,9 +192,9 @@ namespace Content.Server.Climbing.Components
             }
         }
 
-        public async void TryClimb(EntityUiduser)
+        public async void TryClimb(EntityUid user)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out ClimbingComponent? climbingComponent) || climbingComponent.IsClimbing)
+            if (!_entities.TryGetComponent(user, out ClimbingComponent? climbingComponent) || climbingComponent.IsClimbing)
                 return;
 
             var doAfterEventArgs = new DoAfterEventArgs(user, _climbDelay, default, Owner)
@@ -205,24 +207,24 @@ namespace Content.Server.Climbing.Components
 
             var result = await EntitySystem.Get<DoAfterSystem>().WaitDoAfter(doAfterEventArgs);
 
-            if (result != DoAfterStatus.Cancelled && IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out PhysicsComponent? body) && body.Fixtures.Count >= 1)
+            if (result != DoAfterStatus.Cancelled && _entities.TryGetComponent(user, out PhysicsComponent? body) && body.Fixtures.Count >= 1)
             {
                 // TODO: Remove the copy-paste code
-                var userPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user).WorldPosition;
+                var userPos = _entities.GetComponent<TransformComponent>(user).WorldPosition;
 
-                var direction = (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).WorldPosition - userPos).Normalized;
-                var endPoint = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).WorldPosition;
+                var direction = (_entities.GetComponent<TransformComponent>(Owner).WorldPosition - userPos).Normalized;
+                var endPoint = _entities.GetComponent<TransformComponent>(Owner).WorldPosition;
 
-                var climbMode = IoCManager.Resolve<IEntityManager>().GetComponent<ClimbingComponent>(user);
+                var climbMode = _entities.GetComponent<ClimbingComponent>(user);
                 climbMode.IsClimbing = true;
 
                 if (MathF.Abs(direction.X) < 0.6f) // user climbed mostly vertically so lets make it a clean straight line
                 {
-                    endPoint = new Vector2(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user).WorldPosition.X, endPoint.Y);
+                    endPoint = new Vector2(_entities.GetComponent<TransformComponent>(user).WorldPosition.X, endPoint.Y);
                 }
                 else if (MathF.Abs(direction.Y) < 0.6f) // user climbed mostly horizontally so lets make it a clean straight line
                 {
-                    endPoint = new Vector2(endPoint.X, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user).WorldPosition.Y);
+                    endPoint = new Vector2(endPoint.X, _entities.GetComponent<TransformComponent>(user).WorldPosition.Y);
                 }
 
                 climbMode.TryMoveTo(userPos, endPoint);

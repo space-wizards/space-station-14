@@ -68,9 +68,8 @@ namespace Content.Server.Disposal.Tube
                 return;
             }
 
-            var uid
             component.LastClang = _gameTiming.CurTime;
-            SoundSystem.Play(Filter.Pvs(entity), component.ClangSound.GetSound(), entity);
+            SoundSystem.Play(Filter.Pvs(uid), component.ClangSound.GetSound(), uid);
         }
 
         private static void BodyTypeChanged(

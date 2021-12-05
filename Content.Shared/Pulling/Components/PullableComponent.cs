@@ -24,7 +24,7 @@ namespace Content.Shared.Pulling.Components
         /// The current entity pulling this component.
         /// SharedPullingStateManagementSystem should be writing this. This means definitely not you.
         /// </summary>
-        public EntityUid Puller { get; set; }
+        public EntityUid? Puller { get; set; }
         /// <summary>
         /// The pull joint.
         /// SharedPullingStateManagementSystem should be writing this. This means probably not you.

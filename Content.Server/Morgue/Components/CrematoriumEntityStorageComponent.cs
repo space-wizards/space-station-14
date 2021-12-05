@@ -32,6 +32,8 @@ namespace Content.Server.Morgue.Components
     public class CrematoriumEntityStorageComponent : MorgueEntityStorageComponent, IExamine, ISuicideAct
 #pragma warning restore 618
     {
+        [Dependency] private readonly IEntityManager _entities = default!;
+
         public override string Name => "CrematoriumEntityStorage";
 
         [DataField("cremateStartSound")] private SoundSpecifier _cremateStartSound = new SoundPathSpecifier("/Audio/Items/lighter1.ogg");
@@ -104,7 +106,7 @@ namespace Content.Server.Morgue.Components
             _cremateCancelToken = new CancellationTokenSource();
             Owner.SpawnTimer(_burnMilis, () =>
             {
-                if ((!IoCManager.Resolve<IEntityManager>().EntityExists(Owner) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityLifeStage) >= EntityLifeStage.Deleted)
+                if ((!_entities.EntityExists(Owner) ? EntityLifeStage.Deleted : _entities.GetComponent<MetaDataComponent>(Owner).EntityLifeStage) >= EntityLifeStage.Deleted)
                     return;
 
                 Appearance?.SetData(CrematoriumVisuals.Burning, false);
@@ -116,10 +118,10 @@ namespace Content.Server.Morgue.Components
                     {
                         var item = Contents.ContainedEntities[i];
                         Contents.Remove(item);
-                        IoCManager.Resolve<IEntityManager>().DeleteEntity(item);
+                        _entities.DeleteEntity(item);
                     }
 
-                    var ash = IoCManager.Resolve<IEntityManager>().SpawnEntity("Ash", IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
+                    var ash = _entities.SpawnEntity("Ash", _entities.GetComponent<TransformComponent>(Owner).Coordinates);
                     Contents.Insert(ash);
                 }
 
@@ -132,13 +134,13 @@ namespace Content.Server.Morgue.Components
 
         SuicideKind ISuicideAct.Suicide(EntityUid victim, IChatManager chat)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(victim, out ActorComponent? actor) && actor.PlayerSession.ContentData()?.Mind is {} mind)
+            if (_entities.TryGetComponent(victim, out ActorComponent? actor) && actor.PlayerSession.ContentData()?.Mind is {} mind)
             {
                 EntitySystem.Get<GameTicker>().OnGhostAttempt(mind, false);
 
-                if (mind.OwnedEntity.Valid)
+                if (mind.OwnedEntity is {Valid: true} entity)
                 {
-                    mind.OwnedEntity.PopupMessage(Loc.GetString("crematorium-entity-storage-component-suicide-message"));
+                    entity.PopupMessage(Loc.GetString("crematorium-entity-storage-component-suicide-message"));
                 }
             }
 
@@ -151,7 +153,7 @@ namespace Content.Server.Morgue.Components
             }
             else
             {
-                IoCManager.Resolve<IEntityManager>().DeleteEntity(victim);
+                _entities.DeleteEntity(victim);
             }
 
             Cremate();

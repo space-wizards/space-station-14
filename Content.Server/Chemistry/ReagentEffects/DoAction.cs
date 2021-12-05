@@ -27,7 +27,7 @@ public class DoAction : ReagentEffect
             if (actions.IsGranted(proto.ActionType))
             {
                 var attempt = new ActionAttempt(proto);
-                attempt.DoInstantAction(args.args.SolutionEntity)
+                attempt.DoInstantAction(args.SolutionEntity);
             }
         }
     }

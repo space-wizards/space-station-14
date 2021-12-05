@@ -63,7 +63,7 @@ namespace Content.Server.Radio.Components
             _chatManager.EntitySay(Owner, message);
         }
 
-        public bool Use(EntityUiduser)
+        public bool Use(EntityUid user)
         {
             RadioOn = !RadioOn;
 

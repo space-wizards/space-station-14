@@ -20,10 +20,10 @@ namespace Content.Server.Objectives.Conditions
                 if (Target == null)
                     return Loc.GetString("objective-condition-kill-person-title", ("targetName", targetName));
 
-                if(Target.CharacterName != null)
+                if (Target.CharacterName != null)
                     targetName = Target.CharacterName;
-                else if (Target.OwnedEntity != null)
-                    targetName = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Target.OwnedEntity).EntityName;
+                else if (Target.OwnedEntity is {Valid: true} owned)
+                    targetName = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(owned).EntityName;
 
                 return Loc.GetString("objective-condition-kill-person-title", ("targetName", targetName));
             }

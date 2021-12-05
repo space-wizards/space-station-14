@@ -1,8 +1,8 @@
 using Content.Server.Construction.Components;
+using Content.Shared.Containers.ItemSlots;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Content.Shared.Containers.ItemSlots;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Containers
@@ -27,7 +27,7 @@ namespace Content.Server.Containers
             foreach (var slot in component.Slots.Values)
             {
                 if (slot.EjectOnDeconstruct && slot.Item != null)
-                    slot.ContainerSlot.Remove(slot.Item);
+                    slot.ContainerSlot.Remove(slot.Item.Value);
             }
         }
 

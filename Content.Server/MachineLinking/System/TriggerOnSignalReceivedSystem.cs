@@ -19,7 +19,7 @@ namespace Content.Server.MachineLinking.System
 
         private void OnSignalReceived(EntityUid uid, TriggerOnSignalReceivedComponent component, SignalReceivedEvent args)
         {
-            _trigger.Trigger(uid)
+            _trigger.Trigger(uid);
         }
     }
 }

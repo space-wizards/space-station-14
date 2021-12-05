@@ -16,6 +16,8 @@ namespace Content.Server.Interaction
     [AdminCommand(AdminFlags.Debug)]
     class TilePryCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _entities = default!;
+
         public string Command => "tilepry";
         public string Description => "Pries up all tiles in a radius around the user.";
         public string Help => $"Usage: {Command} <radius>";
@@ -47,9 +49,9 @@ namespace Content.Server.Interaction
             }
 
             var mapManager = IoCManager.Resolve<IMapManager>();
-            var playerGrid = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.AttachedEntity).GridID;
+            var playerGrid = _entities.GetComponent<TransformComponent>(player.AttachedEntity.Value).GridID;
             var mapGrid = mapManager.GetGrid(playerGrid);
-            var playerPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.AttachedEntity).Coordinates;
+            var playerPosition = _entities.GetComponent<TransformComponent>(player.AttachedEntity.Value).Coordinates;
             var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
 
             for (var i = -radius; i <= radius; i++)

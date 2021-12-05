@@ -19,6 +19,8 @@ namespace Content.Server.GameTicking.Presets
     /// </summary>
     public abstract class GamePreset
     {
+        [Dependency] private readonly IEntityManager _entities = default!;
+
         public abstract bool Start(IReadOnlyList<IPlayerSession> readyPlayers, bool force = false);
         public virtual string ModeTitle => "Sandbox";
         public virtual string Description => "Secret!";
@@ -39,7 +41,7 @@ namespace Content.Server.GameTicking.Presets
         {
             var playerEntity = mind.OwnedEntity;
 
-            if (playerEntity != default && IoCManager.Resolve<IEntityManager>().HasComponent<GhostComponent>(playerEntity))
+            if (playerEntity != default && IoCManager.Resolve<IEntityManager>().HasComponent<GhostComponent>(playerEntity.Value))
                 return false;
 
             if (mind.VisitingEntity != default)
@@ -47,7 +49,9 @@ namespace Content.Server.GameTicking.Presets
                 mind.UnVisit();
             }
 
-            var position = (playerEntity != null ? IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(playerEntity) : null).Coordinates ?? EntitySystem.Get<GameTicker>().GetObserverSpawnPoint();
+            var position = playerEntity is {Valid: true}
+                ? _entities.GetComponent<TransformComponent>(playerEntity.Value).Coordinates
+                : EntitySystem.Get<GameTicker>().GetObserverSpawnPoint();
             // Ok, so, this is the master place for the logic for if ghosting is "too cheaty" to allow returning.
             // There's no reason at this time to move it to any other place, especially given that the 'side effects required' situations would also have to be moved.
             // + If CharacterDeadPhysically applies, we're physically dead. Therefore, ghosting OK, and we can return (this is critical for gibbing)
@@ -58,7 +62,7 @@ namespace Content.Server.GameTicking.Presets
             //   (If the mob survives, that's a bug. Ghosting is kept regardless.)
             var canReturn = canReturnGlobal && mind.CharacterDeadPhysically;
 
-            if (playerEntity != null && canReturnGlobal && IoCManager.Resolve<IEntityManager>().TryGetComponent(playerEntity, out MobStateComponent? mobState))
+            if (playerEntity != default && canReturnGlobal && IoCManager.Resolve<IEntityManager>().TryGetComponent(playerEntity.Value, out MobStateComponent? mobState))
             {
                 if (mobState.IsCritical())
                 {
@@ -67,7 +71,7 @@ namespace Content.Server.GameTicking.Presets
                     //todo: what if they dont breathe lol
                     //cry deeply
                     DamageSpecifier damage = new(IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>("Asphyxiation"), 200);
-                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(playerEntity, damage, true);
+                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(playerEntity.Value, damage, true);
                 }
             }
 

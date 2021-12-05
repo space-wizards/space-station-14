@@ -32,10 +32,9 @@ namespace Content.Server.Examine
         {
             var player = (IPlayerSession) eventArgs.SenderSession;
             var session = eventArgs.SenderSession;
-            var playerEnt = session.AttachedEntity;
             var channel = player.ConnectedClient;
 
-            if (playerEnt == default
+            if (session.AttachedEntity is not {Valid: true} playerEnt
                 || !EntityManager.EntityExists(request.EntityUid)
                 || !CanExamine(playerEnt, request.EntityUid))
             {

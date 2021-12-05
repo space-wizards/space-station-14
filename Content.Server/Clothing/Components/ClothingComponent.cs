@@ -21,6 +21,8 @@ namespace Content.Server.Clothing.Components
     [NetworkedComponent()]
     public class ClothingComponent : ItemComponent, IUse
     {
+        [Dependency] private readonly IEntityManager _entities = default!;
+
         public override string Name => "Clothing";
 
         [ViewVariables]
@@ -60,8 +62,8 @@ namespace Content.Server.Clothing.Components
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             if (!_quickEquipEnabled) return false;
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User, out InventoryComponent? inv)
-            ||  !IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User, out HandsComponent? hands)) return false;
+            if (!_entities.TryGetComponent(eventArgs.User, out InventoryComponent? inv)
+            ||  !_entities.TryGetComponent(eventArgs.User, out HandsComponent? hands)) return false;
 
             foreach (var (slot, flag) in SlotMasks)
             {
@@ -79,14 +81,14 @@ namespace Content.Server.Clothing.Components
                     {
                         hands.Drop(item.Owner);
                         inv.Equip(slot, item);
-                        hands.PutInHand(IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(Owner));
+                        hands.PutInHand(_entities.GetComponent<ItemComponent>(Owner));
                     }
                 }
                 else
                 {
                     hands.Drop(Owner);
                     if (!TryEquip(inv, slot, eventArgs.User))
-                        hands.PutInHand(IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(Owner));
+                        hands.PutInHand(_entities.GetComponent<ItemComponent>(Owner));
                 }
 
                 return true;
@@ -95,7 +97,7 @@ namespace Content.Server.Clothing.Components
             return false;
         }
 
-        public bool TryEquip(InventoryComponent inv, Slots slot, EntityUiduser)
+        public bool TryEquip(InventoryComponent inv, Slots slot, EntityUid user)
         {
             if (!inv.Equip(slot, this, true, out var reason))
             {

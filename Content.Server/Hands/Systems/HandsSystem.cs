@@ -14,8 +14,10 @@ using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Content.Shared.Physics.Pull;
+using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Server.Player;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
@@ -187,9 +189,7 @@ namespace Content.Server.Hands.Systems
             if (session is not IPlayerSession playerSession)
                 return false;
 
-            var playerEnt = playerSession.AttachedEntity;
-
-            if (playerEnt == default || !EntityManager.EntityExists(playerEnt))
+            if (playerSession.AttachedEntity is not {Valid: true} playerEnt || !EntityManager.EntityExists(playerEnt))
                 return false;
 
             return EntityManager.TryGetComponent(playerEnt, out hands);
@@ -216,9 +216,7 @@ namespace Content.Server.Hands.Systems
             if (session is not IPlayerSession playerSession)
                 return false;
 
-            var playerEnt = playerSession.AttachedEntity;
-
-            if (playerEnt == default ||
+            if (playerSession.AttachedEntity is not {Valid: true} playerEnt ||
                 !EntityManager.EntityExists(playerEnt) ||
                 playerEnt.IsInContainer() ||
                 !EntityManager.TryGetComponent(playerEnt, out SharedHandsComponent? hands) ||
@@ -230,10 +228,10 @@ namespace Content.Server.Hands.Systems
             {
                 var splitStack = _stackSystem.Split(throwEnt, 1, EntityManager.GetComponent<TransformComponent>(playerEnt).Coordinates, stack);
 
-                if (!splitStack.Valid)
+                if (splitStack is not {Valid: true})
                     return false;
 
-                throwEnt = splitStack;
+                throwEnt = splitStack.Value;
             }
             else if (!hands.Drop(throwEnt))
                 return false;
@@ -265,9 +263,7 @@ namespace Content.Server.Hands.Systems
             if (session is not IPlayerSession playerSession)
                 return;
 
-            var plyEnt = playerSession.AttachedEntity;
-
-            if (plyEnt == default || !EntityManager.EntityExists(plyEnt))
+            if (playerSession.AttachedEntity is not {Valid: true} plyEnt || !EntityManager.EntityExists(plyEnt))
                 return;
 
             if (!EntityManager.TryGetComponent(plyEnt, out SharedHandsComponent? hands) ||

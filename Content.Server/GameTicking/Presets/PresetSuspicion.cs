@@ -1,16 +1,12 @@
 using System.Collections.Generic;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules;
-using Content.Server.Inventory.Components;
-using Content.Server.Items;
 using Content.Server.Players;
 using Content.Server.Suspicion;
 using Content.Server.Suspicion.Roles;
 using Content.Server.Traitor.Uplink;
 using Content.Server.Traitor.Uplink.Account;
-using Content.Server.Traitor.Uplink.Components;
 using Content.Shared.CCVar;
-using Content.Shared.Inventory;
 using Content.Shared.Roles;
 using Content.Shared.Traitor.Uplink;
 using Robust.Server.Player;
@@ -121,7 +117,7 @@ namespace Content.Server.GameTicking.Presets
 
                 // try to place uplink
                 if (!EntityManager.EntitySysManager.GetEntitySystem<UplinkSystem>()
-                    .AddUplink(mind.OwnedEntity, uplinkAccount))
+                    .AddUplink(mind.OwnedEntity!.Value, uplinkAccount))
                     continue;
             }
 

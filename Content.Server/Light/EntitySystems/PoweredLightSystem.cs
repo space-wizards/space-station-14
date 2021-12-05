@@ -154,7 +154,7 @@ namespace Content.Server.Light.EntitySystems
                 return false;
 
             // try to insert bulb in container
-            if (!light.LightBulbContainer.Insert(EntityManager.GetEntity(bulbUid)))
+            if (!light.LightBulbContainer.Insert(bulbUid))
                 return false;
 
             UpdateLight(uid, light);
@@ -172,24 +172,22 @@ namespace Content.Server.Light.EntitySystems
                 return null;
 
             // check if light has bulb
-            var bulbUid = GetBulb(uid, light);
-            if (bulbUid == null)
+            if (GetBulb(uid, light) is not {Valid: true} bulb)
                 return null;
 
             // try to remove bulb from container
-            var bulbbulbUid.Value
-            if (!light.LightBulbContainer.Remove(bulbEnt))
+            if (!light.LightBulbContainer.Remove(bulb))
                 return null;
 
             // try to place bulb in hands
             if (userUid != null)
             {
                 if (EntityManager.TryGetComponent(userUid.Value, out SharedHandsComponent? hands))
-                    hands.TryPutInActiveHandOrAny(bulbEnt);
+                    hands.TryPutInActiveHandOrAny(bulb);
             }
 
             UpdateLight(uid, light);
-            return bulbUid;
+            return bulb;
         }
 
         /// <summary>

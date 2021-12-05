@@ -151,13 +151,13 @@ namespace Content.Server.Storage.EntitySystems
                 var attachedEntity = session.AttachedEntity;
 
                 // The component manages the set of sessions, so this invalid session should be removed soon.
-                if (attachedEntity == null || !IoCManager.Resolve<IEntityManager>().EntityExists(attachedEntity))
+                if (attachedEntity == null || !IoCManager.Resolve<IEntityManager>().EntityExists(attachedEntity.Value))
                     continue;
 
-                if (storageMap != IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(attachedEntity).MapID)
+                if (storageMap != IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(attachedEntity.Value).MapID)
                     continue;
 
-                var distanceSquared = (storagePos - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(attachedEntity).WorldPosition).LengthSquared;
+                var distanceSquared = (storagePos - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(attachedEntity.Value).WorldPosition).LengthSquared;
                 if (distanceSquared > InteractionSystem.InteractionRangeSquared)
                 {
                     storageComp.UnsubscribeSession(session);

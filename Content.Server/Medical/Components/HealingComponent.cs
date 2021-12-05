@@ -2,7 +2,6 @@ using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.Stack;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Database;
@@ -41,7 +40,7 @@ namespace Content.Server.Medical.Components
                 return false;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Target, out DamageableComponent? targetDamage))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Target.Value, out DamageableComponent? targetDamage))
             {
                 return true;
             }
@@ -66,7 +65,7 @@ namespace Content.Server.Medical.Components
                 return true;
             }
 
-            var healed = EntitySystem.Get<DamageableSystem>().TryChangeDamage(eventArgs.Target, Damage, true);
+            var healed = EntitySystem.Get<DamageableSystem>().TryChangeDamage(eventArgs.Target.Value, Damage, true);
 
             if (healed == null)
                 return true;

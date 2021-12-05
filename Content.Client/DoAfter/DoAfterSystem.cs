@@ -31,7 +31,7 @@ namespace Content.Client.DoAfter
         /// </summary>
         public const float ExcessTime = 0.5f;
 
-        private EntityUid _attachedEntity;
+        private EntityUid? _attachedEntity;
 
         public override void Initialize()
         {
@@ -51,7 +51,8 @@ namespace Content.Client.DoAfter
             var currentTime = _gameTiming.CurTime;
 
             // Can't see any I guess?
-            if (_attachedEntity == default || (!EntityManager.EntityExists(_attachedEntity) ? EntityLifeStage.Deleted : EntityManager.GetComponent<MetaDataComponent>(_attachedEntity).EntityLifeStage) >= EntityLifeStage.Deleted)
+            if (_attachedEntity is not {Valid: true} entity ||
+                (!EntityManager.EntityExists(_attachedEntity.Value) ? EntityLifeStage.Deleted : EntityManager.GetComponent<MetaDataComponent>(entity).EntityLifeStage) >= EntityLifeStage.Deleted)
                 return;
 
             var viewbox = _eyeManager.GetWorldViewport().Enlarged(2.0f);
@@ -62,19 +63,19 @@ namespace Content.Client.DoAfter
                 var compPos = EntityManager.GetComponent<TransformComponent>(comp.Owner).WorldPosition;
 
                 if (doAfters.Count == 0 ||
-                    EntityManager.GetComponent<TransformComponent>(comp.Owner).MapID != EntityManager.GetComponent<TransformComponent>(_attachedEntity).MapID ||
+                    EntityManager.GetComponent<TransformComponent>(comp.Owner).MapID != EntityManager.GetComponent<TransformComponent>(entity).MapID ||
                     !viewbox.Contains(compPos))
                 {
                     comp.Disable();
                     continue;
                 }
 
-                var range = (compPos - EntityManager.GetComponent<TransformComponent>(_attachedEntity).WorldPosition).Length +
+                var range = (compPos - EntityManager.GetComponent<TransformComponent>(entity).WorldPosition).Length +
                             0.01f;
 
                 if (comp.Owner != _attachedEntity &&
                     !ExamineSystemShared.InRangeUnOccluded(
-                        EntityManager.GetComponent<TransformComponent>(_attachedEntity).MapPosition,
+                        EntityManager.GetComponent<TransformComponent>(entity).MapPosition,
                         EntityManager.GetComponent<TransformComponent>(comp.Owner).MapPosition, range,
                         entity => entity == comp.Owner || entity == _attachedEntity))
                 {

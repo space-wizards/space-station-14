@@ -74,7 +74,7 @@ namespace Content.Server.Rotatable
         /// <summary>
         ///     Replace a flippable entity with it's flipped / mirror-symmetric entity.
         /// </summary>
-        public static void TryFlip(FlippableComponent component, EntityUiduser)
+        public static void TryFlip(FlippableComponent component, EntityUid user)
         {
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner, out IPhysBody? physics) &&
                 physics.BodyType == BodyType.Static)

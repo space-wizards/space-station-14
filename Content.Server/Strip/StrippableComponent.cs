@@ -25,6 +25,8 @@ namespace Content.Server.Strip
     [ComponentReference(typeof(SharedStrippableComponent))]
     public sealed class StrippableComponent : SharedStrippableComponent
     {
+        [Dependency] private readonly IEntityManager _entities = default!;
+
         public const float StripDelay = 2f;
 
         // TODO: This component needs localization.
@@ -45,17 +47,17 @@ namespace Content.Server.Strip
             Owner.EnsureComponentWarn<HandsComponent>();
             Owner.EnsureComponentWarn<CuffableComponent>();
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out CuffableComponent? cuffed))
+            if (_entities.TryGetComponent(Owner, out CuffableComponent? cuffed))
             {
                 cuffed.OnCuffedStateChanged += UpdateSubscribed;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out InventoryComponent? inventory))
+            if (_entities.TryGetComponent(Owner, out InventoryComponent? inventory))
             {
                 inventory.OnItemChanged += UpdateSubscribed;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out HandsComponent? hands))
+            if (_entities.TryGetComponent(Owner, out HandsComponent? hands))
             {
                 hands.OnItemChanged += UpdateSubscribed;
             }
@@ -80,7 +82,7 @@ namespace Content.Server.Strip
 
         public override bool Drop(DragDropEvent args)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User, out ActorComponent? actor)) return false;
+            if (!_entities.TryGetComponent(args.User, out ActorComponent? actor)) return false;
 
             OpenUserInterface(actor.PlayerSession);
             return true;
@@ -90,14 +92,15 @@ namespace Content.Server.Strip
         {
             var dictionary = new Dictionary<EntityUid, string>();
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out CuffableComponent? cuffed))
+            if (!_entities.TryGetComponent(Owner, out CuffableComponent? cuffed))
             {
                 return dictionary;
             }
 
-            foreach (EntityUid entity in cuffed.StoredEntities)
+            foreach (var entity in cuffed.StoredEntities)
             {
-                dictionary.Add(entity, entity.Name);
+                var name = _entities.GetComponent<MetaDataComponent>(entity).EntityName;
+                dictionary.Add(entity, name);
             }
 
             return dictionary;
@@ -107,7 +110,7 @@ namespace Content.Server.Strip
         {
             var dictionary = new Dictionary<Slots, string>();
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out InventoryComponent? inventory))
+            if (!_entities.TryGetComponent(Owner, out InventoryComponent? inventory))
             {
                 return dictionary;
             }
@@ -117,7 +120,7 @@ namespace Content.Server.Strip
                 var name = "None";
 
                 if (inventory.GetSlotItem(slot) is { } item)
-                    name = item.Owner.Name;
+                    name = _entities.GetComponent<MetaDataComponent>(item.Owner).EntityName;
 
                 dictionary[slot] = name;
             }
@@ -129,7 +132,7 @@ namespace Content.Server.Strip
         {
             var dictionary = new Dictionary<string, string>();
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out HandsComponent? hands))
+            if (!_entities.TryGetComponent(Owner, out HandsComponent? hands))
             {
                 return dictionary;
             }
@@ -138,13 +141,13 @@ namespace Content.Server.Strip
             {
                 var owner = hands.GetItem(hand)?.Owner;
 
-                if ((owner != null ? IoCManager.Resolve<IEntityManager>().HasComponent<HandVirtualItemComponent>(owner) : (bool?) null) ?? true)
+                if (!owner.HasValue || _entities.HasComponent<HandVirtualItemComponent>(owner.Value))
                 {
                     dictionary[hand] = "None";
                     continue;
                 }
 
-                dictionary[hand] = owner.Name;
+                dictionary[hand] = _entities.GetComponent<MetaDataComponent>(owner.Value).EntityName;
             }
 
             return dictionary;
@@ -160,8 +163,8 @@ namespace Content.Server.Strip
         /// </summary>
         private async void PlaceActiveHandItemInInventory(EntityUid user, Slots slot)
         {
-            var inventory = IoCManager.Resolve<IEntityManager>().GetComponent<InventoryComponent>(Owner);
-            var userHands = IoCManager.Resolve<IEntityManager>().GetComponent<HandsComponent>(user);
+            var inventory = _entities.GetComponent<InventoryComponent>(Owner);
+            var userHands = _entities.GetComponent<HandsComponent>(user);
             var item = userHands.GetActiveHand;
 
             bool Check()
@@ -225,8 +228,8 @@ namespace Content.Server.Strip
         /// </summary>
         private async void PlaceActiveHandItemInHands(EntityUid user, string hand)
         {
-            var hands = IoCManager.Resolve<IEntityManager>().GetComponent<HandsComponent>(Owner);
-            var userHands = IoCManager.Resolve<IEntityManager>().GetComponent<HandsComponent>(user);
+            var hands = _entities.GetComponent<HandsComponent>(Owner);
+            var userHands = _entities.GetComponent<HandsComponent>(user);
             var item = userHands.GetActiveHand;
 
             bool Check()
@@ -291,8 +294,8 @@ namespace Content.Server.Strip
         /// </summary>
         private async void TakeItemFromInventory(EntityUid user, Slots slot)
         {
-            var inventory = IoCManager.Resolve<IEntityManager>().GetComponent<InventoryComponent>(Owner);
-            var userHands = IoCManager.Resolve<IEntityManager>().GetComponent<HandsComponent>(user);
+            var inventory = _entities.GetComponent<InventoryComponent>(Owner);
+            var userHands = _entities.GetComponent<HandsComponent>(user);
 
             bool Check()
             {
@@ -347,8 +350,8 @@ namespace Content.Server.Strip
         /// </summary>
         private async void TakeItemFromHands(EntityUid user, string hand)
         {
-            var hands = IoCManager.Resolve<IEntityManager>().GetComponent<HandsComponent>(Owner);
-            var userHands = IoCManager.Resolve<IEntityManager>().GetComponent<HandsComponent>(user);
+            var hands = _entities.GetComponent<HandsComponent>(Owner);
+            var userHands = _entities.GetComponent<HandsComponent>(user);
 
             bool Check()
             {
@@ -364,7 +367,7 @@ namespace Content.Server.Strip
                     return false;
                 }
 
-                if (IoCManager.Resolve<IEntityManager>().HasComponent<HandVirtualItemComponent>(heldItem.Owner))
+                if (_entities.HasComponent<HandVirtualItemComponent>(heldItem.Owner))
                     return false;
 
                 if (!hands.CanDrop(hand, false))
@@ -398,8 +401,9 @@ namespace Content.Server.Strip
 
         private void HandleUserInterfaceMessage(ServerBoundUserInterfaceMessage obj)
         {
-            var user = obj.Session.AttachedEntity;
-            if (user == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out HandsComponent? userHands)) return;
+            if (obj.Session.AttachedEntity is not {Valid: true} user ||
+                !_entities.TryGetComponent(user, out HandsComponent? userHands))
+                return;
 
             var placingItem = userHands.GetActiveHand != null;
 
@@ -407,7 +411,7 @@ namespace Content.Server.Strip
             {
                 case StrippingInventoryButtonPressed inventoryMessage:
 
-                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent<InventoryComponent?>(Owner, out var inventory))
+                    if (_entities.TryGetComponent<InventoryComponent?>(Owner, out var inventory))
                     {
                         if (inventory.TryGetSlotItem(inventoryMessage.Slot, out ItemComponent? _))
                             placingItem = false;
@@ -421,7 +425,7 @@ namespace Content.Server.Strip
 
                 case StrippingHandButtonPressed handMessage:
 
-                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent<HandsComponent?>(Owner, out var hands))
+                    if (_entities.TryGetComponent<HandsComponent?>(Owner, out var hands))
                     {
                         if (hands.TryGetItem(handMessage.Hand, out _))
                             placingItem = false;
@@ -435,7 +439,7 @@ namespace Content.Server.Strip
 
                 case StrippingHandcuffButtonPressed handcuffMessage:
 
-                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent<CuffableComponent?>(Owner, out var cuffed))
+                    if (_entities.TryGetComponent<CuffableComponent?>(Owner, out var cuffed))
                     {
                         foreach (var entity in cuffed.StoredEntities)
                         {

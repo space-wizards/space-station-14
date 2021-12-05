@@ -23,7 +23,7 @@ namespace Content.Server.Ghost.Components
 
         public IReadOnlyList<int> Channels => _channels;
 
-        public void Receive(string message, int channel, EntityUidspeaker)
+        public void Receive(string message, int channel, EntityUid speaker)
         {
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ActorComponent? actor))
                 return;
@@ -39,6 +39,6 @@ namespace Content.Server.Ghost.Components
             _netManager.ServerSendMessage(msg, playerChannel);
         }
 
-        public void Broadcast(string message, EntityUidspeaker) { }
+        public void Broadcast(string message, EntityUid speaker) { }
     }
 }

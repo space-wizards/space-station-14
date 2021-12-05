@@ -319,7 +319,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             return true;
         }
 
-        public void RemoveMagazine(EntityUiduser)
+        public void RemoveMagazine(EntityUid user)
         {
             var mag = MagazineContainer.ContainedEntity;
 

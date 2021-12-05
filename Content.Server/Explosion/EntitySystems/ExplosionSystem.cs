@@ -81,12 +81,13 @@ namespace Content.Server.Explosion.EntitySystems
 
             foreach (var player in players)
             {
-                if (!player.AttachedEntity.Valid || !EntityManager.TryGetComponent(player.AttachedEntity, out CameraRecoilComponent? recoil))
+                if (player.AttachedEntity is not {Valid: true} playerEntity ||
+                    !EntityManager.TryGetComponent(playerEntity, out CameraRecoilComponent? recoil))
                 {
                     continue;
                 }
 
-                var playerPos = EntityManager.GetComponent<TransformComponent>(player.AttachedEntity).WorldPosition;
+                var playerPos = EntityManager.GetComponent<TransformComponent>(playerEntity).WorldPosition;
                 var delta = epicenter.ToMapPos(EntityManager) - playerPos;
 
                 //Change if zero. Will result in a NaN later breaking camera shake if not changed

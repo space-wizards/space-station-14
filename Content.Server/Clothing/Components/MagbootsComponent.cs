@@ -47,7 +47,7 @@ namespace Content.Server.Clothing.Components
             }
         }
 
-        public void Toggle(EntityUiduser)
+        public void Toggle(EntityUid user)
         {
             On = !On;
         }

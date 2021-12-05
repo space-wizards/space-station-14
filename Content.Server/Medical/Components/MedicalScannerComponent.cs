@@ -79,7 +79,7 @@ namespace Content.Server.Medical.Components
                 return EmptyUIState;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(body, out DamageableComponent? damageable))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(body.Value, out DamageableComponent? damageable))
             {
                 return EmptyUIState;
             }
@@ -90,7 +90,7 @@ namespace Content.Server.Medical.Components
             }
 
             var cloningSystem = EntitySystem.Get<CloningSystem>();
-            var scanned = IoCManager.Resolve<IEntityManager>().TryGetComponent(_bodyContainer.ContainedEntity, out MindComponent? mindComponent) &&
+            var scanned = IoCManager.Resolve<IEntityManager>().TryGetComponent(_bodyContainer.ContainedEntity.Value, out MindComponent? mindComponent) &&
                          mindComponent.Mind != null &&
                          cloningSystem.HasDnaScan(mindComponent.Mind);
 
@@ -136,7 +136,7 @@ namespace Content.Server.Medical.Components
                 if (body == null)
                     return MedicalScannerStatus.Open;
 
-                var state = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<MobStateComponent>(body);
+                var state = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<MobStateComponent>(body.Value);
 
                 return state == null ? MedicalScannerStatus.Open : GetStatusFromDamageState(state);
             }
@@ -165,7 +165,7 @@ namespace Content.Server.Medical.Components
             UserInterface?.Open(actor.PlayerSession);
         }
 
-        public void InsertBody(EntityUiduser)
+        public void InsertBody(EntityUid user)
         {
             _bodyContainer.Insert(user);
             UpdateUserInterface();
@@ -174,12 +174,11 @@ namespace Content.Server.Medical.Components
 
         public void EjectBody()
         {
-            var containedEntity = _bodyContainer.ContainedEntity;
-            if (containedEntity == null) return;
-            _bodyContainer.Remove(containedEntity);
+            if (_bodyContainer.ContainedEntity is not {Valid: true} contained) return;
+            _bodyContainer.Remove(contained);
             UpdateUserInterface();
             UpdateAppearance();
-            EntitySystem.Get<ClimbSystem>().ForciblySetClimbing(containedEntity);
+            EntitySystem.Get<ClimbSystem>().ForciblySetClimbing(contained);
         }
 
         public void Update(float frameTime)
@@ -199,7 +198,7 @@ namespace Content.Server.Medical.Components
                     {
                         var cloningSystem = EntitySystem.Get<CloningSystem>();
 
-                        if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(_bodyContainer.ContainedEntity, out MindComponent? mindComp) || mindComp.Mind == null)
+                        if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(_bodyContainer.ContainedEntity.Value, out MindComponent? mindComp) || mindComp.Mind == null)
                         {
                             obj.Session.AttachedEntity?.PopupMessageCursor(Loc.GetString("medical-scanner-component-msg-no-soul"));
                             break;

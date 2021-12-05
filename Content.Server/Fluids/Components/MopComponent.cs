@@ -23,6 +23,8 @@ namespace Content.Server.Fluids.Components
     [RegisterComponent]
     public class MopComponent : Component, IAfterInteract
     {
+        [Dependency] private readonly IEntityManager _entities = default!;
+
         public override string Name => "Mop";
         public const string SolutionName = "mop";
 
@@ -101,7 +103,7 @@ namespace Content.Server.Fluids.Components
                 return false;
             }
 
-            if (eventArgs.Target == null)
+            if (eventArgs.Target is not {Valid: true} target)
             {
                 // Drop the liquid on the mop on to the ground
                 solutionSystem.SplitSolution(Owner, contents, FixedPoint2.Min(ResidueAmount, CurrentVolume))
@@ -109,13 +111,13 @@ namespace Content.Server.Fluids.Components
                 return true;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Target, out PuddleComponent? puddleComponent) ||
+            if (!_entities.TryGetComponent(target, out PuddleComponent? puddleComponent) ||
                 !solutionSystem.TryGetSolution(((IComponent) puddleComponent).Owner, puddleComponent.SolutionName, out var puddleSolution))
                 return false;
 
             // So if the puddle has 20 units we mop in 2 seconds. Don't just store CurrentVolume given it can change so need to re-calc it anyway.
             var doAfterArgs = new DoAfterEventArgs(eventArgs.User, _mopSpeed * puddleSolution.CurrentVolume.Float() / 10.0f,
-                target: eventArgs.Target)
+                target: target)
             {
                 BreakOnUserMove = true,
                 BreakOnStun = true,
@@ -152,7 +154,7 @@ namespace Content.Server.Fluids.Components
             else
             {
                 // remove solution from the puddle
-                solutionSystem.SplitSolution(eventArgs.Target, puddleSolution, transferAmount);
+                solutionSystem.SplitSolution(target, puddleSolution, transferAmount);
 
                 // and from the mop
                 solutionSystem.SplitSolution(Owner, contents, transferAmount);

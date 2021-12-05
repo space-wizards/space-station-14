@@ -116,7 +116,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
         private void DoInsertDisposalUnit(DoInsertDisposalUnitEvent ev)
         {
-            var toInsert = ev.ToInsert
+            var toInsert = ev.ToInsert;
 
             if (!EntityManager.TryGetComponent(ev.Unit, out DisposalUnitComponent? unit))
             {

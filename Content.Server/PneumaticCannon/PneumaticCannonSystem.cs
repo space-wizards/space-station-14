@@ -305,7 +305,7 @@ namespace Content.Server.PneumaticCannon
             args.Verbs.Add(ejectItems);
         }
 
-        public void TryRemoveGasTank(PneumaticCannonComponent component, EntityUiduser)
+        public void TryRemoveGasTank(PneumaticCannonComponent component, EntityUid user)
         {
             if (component.GasTankSlot.ContainedEntity == null)
             {
@@ -328,7 +328,7 @@ namespace Content.Server.PneumaticCannon
             }
         }
 
-        public void TryEjectAllItems(PneumaticCannonComponent component, EntityUiduser)
+        public void TryEjectAllItems(PneumaticCannonComponent component, EntityUid user)
         {
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent<ServerStorageComponent?>(component.Owner, out var storage))
             {

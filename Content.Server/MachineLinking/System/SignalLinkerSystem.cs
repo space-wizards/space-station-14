@@ -13,7 +13,6 @@ using Content.Shared.MachineLinking;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 
@@ -81,8 +80,8 @@ namespace Content.Server.MachineLinking.System
         {
             if (args.Handled) return;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SignalLinkerComponent?>(args.Used, out var linker) || !linker.Port.HasValue ||
-                !IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User, out ActorComponent? actor) ||
+            if (!EntityManager.TryGetComponent<SignalLinkerComponent?>(args.Used, out var linker) || !linker.Port.HasValue ||
+                !EntityManager.TryGetComponent(args.User, out ActorComponent? actor) ||
                 !linker.Port.Value.transmitter.Outputs.TryGetPort(linker.Port.Value.port, out var port))
             {
                 return;
@@ -121,15 +120,15 @@ namespace Content.Server.MachineLinking.System
             {
                 case SignalPortSelected portSelected:
                     if (msg.Session.AttachedEntity == null ||
-                        !IoCManager.Resolve<IEntityManager>().TryGetComponent(msg.Session.AttachedEntity, out HandsComponent? hands) ||
+                        !EntityManager.TryGetComponent(msg.Session.AttachedEntity.Value, out HandsComponent? hands) ||
                         !hands.TryGetActiveHeldEntity(out var heldEntity) ||
-                        !IoCManager.Resolve<IEntityManager>().TryGetComponent(heldEntity, out SignalLinkerComponent? signalLinkerComponent) ||
-                        !_interaction.InRangeUnobstructed(msg.Session.AttachedEntity, component.Owner, ignoreInsideBlocker: true) ||
+                        !EntityManager.TryGetComponent(heldEntity, out SignalLinkerComponent? signalLinkerComponent) ||
+                        !_interaction.InRangeUnobstructed(msg.Session.AttachedEntity.Value, component.Owner, ignoreInsideBlocker: true) ||
                         !signalLinkerComponent.Port.HasValue ||
                         !signalLinkerComponent.Port.Value.transmitter.Outputs.ContainsPort(signalLinkerComponent.Port
                             .Value.port) || !component.Inputs.ContainsPort(portSelected.Port))
                         return;
-                    LinkerInteraction(msg.Session.AttachedEntity, signalLinkerComponent.Port.Value.transmitter,
+                    LinkerInteraction(msg.Session.AttachedEntity.Value, signalLinkerComponent.Port.Value.transmitter,
                         signalLinkerComponent.Port.Value.port, component, portSelected.Port);
                     break;
             }
@@ -161,12 +160,12 @@ namespace Content.Server.MachineLinking.System
             {
                 case SignalPortSelected portSelected:
                     if (msg.Session.AttachedEntity == null ||
-                        !IoCManager.Resolve<IEntityManager>().TryGetComponent(msg.Session.AttachedEntity, out HandsComponent? hands) ||
+                        !EntityManager.TryGetComponent(msg.Session.AttachedEntity.Value, out HandsComponent? hands) ||
                         !hands.TryGetActiveHeldEntity(out var heldEntity) ||
-                        !IoCManager.Resolve<IEntityManager>().TryGetComponent(heldEntity, out SignalLinkerComponent? signalLinkerComponent) ||
-                        !_interaction.InRangeUnobstructed(msg.Session.AttachedEntity, component.Owner, ignoreInsideBlocker: true))
+                        !EntityManager.TryGetComponent(heldEntity, out SignalLinkerComponent? signalLinkerComponent) ||
+                        !_interaction.InRangeUnobstructed(msg.Session.AttachedEntity.Value, component.Owner, ignoreInsideBlocker: true))
                         return;
-                    LinkerSaveInteraction(msg.Session.AttachedEntity, signalLinkerComponent, component,
+                    LinkerSaveInteraction(msg.Session.AttachedEntity.Value, signalLinkerComponent, component,
                         portSelected.Port);
                     break;
             }
@@ -177,8 +176,8 @@ namespace Content.Server.MachineLinking.System
         {
             if (args.Handled) return;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SignalLinkerComponent?>(args.Used, out var linker) ||
-                !IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User, out ActorComponent? actor))
+            if (!EntityManager.TryGetComponent<SignalLinkerComponent?>(args.Used, out var linker) ||
+                !EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
             {
                 return;
             }
@@ -277,15 +276,15 @@ namespace Content.Server.MachineLinking.System
         private bool IsInRange(SignalTransmitterComponent transmitterComponent,
             SignalReceiverComponent receiverComponent)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<ApcPowerReceiverComponent?>(transmitterComponent.Owner, out var transmitterPowerReceiverComponent) &&
-                IoCManager.Resolve<IEntityManager>().TryGetComponent<ApcPowerReceiverComponent?>(receiverComponent.Owner, out var receiverPowerReceiverComponent)
+            if (EntityManager.TryGetComponent<ApcPowerReceiverComponent?>(transmitterComponent.Owner, out var transmitterPowerReceiverComponent) &&
+                EntityManager.TryGetComponent<ApcPowerReceiverComponent?>(receiverComponent.Owner, out var receiverPowerReceiverComponent)
             ) //&& todo are they on the same powernet?
             {
                 return true;
             }
 
-            return IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(transmitterComponent.Owner).MapPosition.InRange(
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(receiverComponent.Owner).MapPosition, 30f);
+            return EntityManager.GetComponent<TransformComponent>(transmitterComponent.Owner).MapPosition.InRange(
+                EntityManager.GetComponent<TransformComponent>(receiverComponent.Owner).MapPosition, 30f);
         }
     }
 }

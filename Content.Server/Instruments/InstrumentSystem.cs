@@ -150,13 +150,11 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
                  || instrument.LaggedBatches >= MaxMidiLaggedBatches)
                 && instrument.InstrumentPlayer != null && instrument.RespectMidiLimits)
             {
-                var mob = instrument.InstrumentPlayer.AttachedEntity;
-
                 // Just in case
                 Clean(((IComponent) instrument).Owner);
                 instrument.UserInterface?.CloseAll();
 
-                if (mob != null)
+                if (instrument.InstrumentPlayer.AttachedEntity is {Valid: true} mob)
                 {
                     _stunSystem.TryParalyze(mob, TimeSpan.FromSeconds(1));
 

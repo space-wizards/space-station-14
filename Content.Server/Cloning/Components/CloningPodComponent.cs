@@ -23,10 +23,12 @@ namespace Content.Server.Cloning.Components
     public class CloningPodComponent : SharedCloningPodComponent
     {
         [Dependency] private readonly IPlayerManager _playerManager = null!;
+        [Dependency] private readonly IEntityManager _entities = default!;
+
         [Dependency] private readonly EuiManager _euiManager = null!;
 
         [ViewVariables]
-        public bool Powered => !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
+        public bool Powered => !_entities.TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         [ViewVariables]
         public BoundUserInterface? UserInterface =>
@@ -70,7 +72,7 @@ namespace Content.Server.Cloning.Components
 
         private void UpdateAppearance()
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearance))
+            if (_entities.TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
                 appearance.SetData(CloningPodVisuals.Status, Status);
             }
@@ -105,12 +107,12 @@ namespace Content.Server.Cloning.Components
 
                     var mind = dna.Mind;
 
-                    if (cloningSystem.ClonesWaitingForMind.TryGetValue(mind, out var cloneUid))
+                    if (cloningSystem.ClonesWaitingForMind.TryGetValue(mind, out var clone))
                     {
-                        if (IoCManager.Resolve<IEntityManager>().EntityExists(cloneUid) &&
-                            IoCManager.Resolve<IEntityManager>().TryGetComponent<MobStateComponent?>(clone, out var cloneState) &&
+                        if (_entities.EntityExists(clone) &&
+                            _entities.TryGetComponent<MobStateComponent?>(clone, out var cloneState) &&
                             !cloneState.IsDead() &&
-                            IoCManager.Resolve<IEntityManager>().TryGetComponent(clone, out MindComponent? cloneMindComp) &&
+                            _entities.TryGetComponent(clone, out MindComponent? cloneMindComp) &&
                             (cloneMindComp.Mind == null || cloneMindComp.Mind == mind))
                         {
                             obj.Session.AttachedEntity?.PopupMessageCursor(Loc.GetString("cloning-pod-component-msg-already-cloning"));
@@ -121,7 +123,7 @@ namespace Content.Server.Cloning.Components
                     }
 
                     if (mind.OwnedEntity != null &&
-                        IoCManager.Resolve<IEntityManager>().TryGetComponent<MobStateComponent?>(mind.OwnedEntity, out var state) &&
+                        _entities.TryGetComponent<MobStateComponent?>(mind.OwnedEntity.Value, out var state) &&
                         !state.IsDead())
                     {
                         obj.Session.AttachedEntity?.PopupMessageCursor(Loc.GetString("cloning-pod-component-msg-already-alive"));
@@ -135,13 +137,13 @@ namespace Content.Server.Cloning.Components
                         return; // If we can't track down the client, we can't offer transfer. That'd be quite bad.
                     }
 
-                    var mob = IoCManager.Resolve<IEntityManager>().SpawnEntity("MobHuman", IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).MapPosition);
+                    var mob = _entities.SpawnEntity("MobHuman", _entities.GetComponent<TransformComponent>(Owner).MapPosition);
 
 
                     EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(mob, dna.Profile);
-                    IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(mob).EntityName = dna.Profile.Name;
+                    _entities.GetComponent<MetaDataComponent>(mob).EntityName = dna.Profile.Name;
 
-                    var cloneMindReturn = IoCManager.Resolve<IEntityManager>().AddComponent<BeingClonedComponent>(mob);
+                    var cloneMindReturn = _entities.AddComponent<BeingClonedComponent>(mob);
                     cloneMindReturn.Mind = mind;
                     cloneMindReturn.Parent = Owner;
 
@@ -167,12 +169,11 @@ namespace Content.Server.Cloning.Components
 
         public void Eject()
         {
-            var entity = BodyContainer.ContainedEntity;
-            if (entity == null || CloningProgress < CloningTime)
+            if (BodyContainer.ContainedEntity is not {Valid: true} entity || CloningProgress < CloningTime)
                 return;
 
-            IoCManager.Resolve<IEntityManager>().RemoveComponent<BeingClonedComponent>(entity);
-            BodyContainer.Remove(entity!);
+            _entities.RemoveComponent<BeingClonedComponent>(entity);
+            BodyContainer.Remove(entity);
             CapturedMind = null;
             CloningProgress = 0f;
             UpdateStatus(CloningPodStatus.Idle);

@@ -49,7 +49,7 @@ namespace Content.Server.Chat.Commands
                 return;
             }
 
-            chat.EntityMe(mindComponent.OwnedEntity, action);
+            chat.EntityMe(mindComponent.OwnedEntity.Value, action);
         }
     }
 }

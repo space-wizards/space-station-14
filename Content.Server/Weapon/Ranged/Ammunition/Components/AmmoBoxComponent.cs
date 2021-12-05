@@ -22,6 +22,8 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
     public sealed class AmmoBoxComponent : Component, IInteractUsing, IUse, IInteractHand, IMapInit, IExamine
 #pragma warning restore 618
     {
+        [Dependency] private readonly IEntityManager _entities = default!;
+
         public override string Name => "AmmoBox";
 
         [DataField("caliber")]
@@ -73,7 +75,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
         private void UpdateAppearance()
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearanceComponent))
+            if (_entities.TryGetComponent(Owner, out AppearanceComponent? appearanceComponent))
             {
                 appearanceComponent.SetData(MagazineBarrelVisuals.MagLoaded, true);
                 appearanceComponent.SetData(AmmoVisuals.AmmoCount, AmmoLeft);
@@ -81,7 +83,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             }
         }
 
-        public EntityUid TakeAmmo()
+        public EntityUid? TakeAmmo()
         {
             if (_spawnedAmmo.TryPop(out var ammo))
             {
@@ -91,10 +93,10 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
             if (_unspawnedCount > 0)
             {
-                ammo = IoCManager.Resolve<IEntityManager>().SpawnEntity(_fillPrototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
+                ammo = _entities.SpawnEntity(_fillPrototype, _entities.GetComponent<TransformComponent>(Owner).Coordinates);
 
                 // when dumping from held ammo box, this detaches the spawned ammo from the player.
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(ammo).AttachParentToContainerOrGrid();
+                _entities.GetComponent<TransformComponent>(ammo).AttachParentToContainerOrGrid();
 
                 _unspawnedCount--;
             }
@@ -104,7 +106,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
         public bool TryInsertAmmo(EntityUid user, EntityUid entity)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out AmmoComponent? ammoComponent))
+            if (!_entities.TryGetComponent(entity, out AmmoComponent? ammoComponent))
             {
                 return false;
             }
@@ -129,12 +131,12 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (IoCManager.Resolve<IEntityManager>().HasComponent<AmmoComponent>(eventArgs.Using))
+            if (_entities.HasComponent<AmmoComponent>(eventArgs.Using))
             {
                 return TryInsertAmmo(eventArgs.User, eventArgs.Using);
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Using, out RangedMagazineComponent? rangedMagazine))
+            if (_entities.TryGetComponent(eventArgs.Using, out RangedMagazineComponent? rangedMagazine))
             {
                 for (var i = 0; i < Math.Max(10, rangedMagazine.ShotsLeft); i++)
                 {
@@ -158,21 +160,19 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             return false;
         }
 
-        private bool TryUse(EntityUiduser)
+        private bool TryUse(EntityUid user)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out HandsComponent? handsComponent))
+            if (!_entities.TryGetComponent(user, out HandsComponent? handsComponent))
             {
                 return false;
             }
 
-            var ammo = TakeAmmo();
-
-            if (ammo == null)
+            if (TakeAmmo() is not { } ammo)
             {
                 return false;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(ammo, out ItemComponent? item))
+            if (_entities.TryGetComponent(ammo, out ItemComponent? item))
             {
                 if (!handsComponent.CanPutInHand(item))
                 {
@@ -194,8 +194,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
             for (var i = 0; i < Math.Min(count, Capacity); i++)
             {
-                var ammo = TakeAmmo();
-                if (ammo == null)
+                if (TakeAmmo() is not { } ammo)
                 {
                     break;
                 }

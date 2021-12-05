@@ -278,7 +278,7 @@ namespace Content.Server.GameTicking
                     if (mind.CharacterName != null)
                         playerIcName = mind.CharacterName;
                     else if (mind.CurrentEntity != null)
-                        playerIcName = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(mind.CurrentEntity).EntityName;
+                        playerIcName = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(mind.CurrentEntity.Value).EntityName;
 
                     var playerEndRoundInfo = new RoundEndMessageEvent.RoundEndPlayerInfo()
                     {

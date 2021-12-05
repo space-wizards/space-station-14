@@ -452,9 +452,7 @@ namespace Content.Server.Storage.Components
                 {
                     EnsureInitialCalculated();
 
-                    var player = session.AttachedEntity;
-
-                    if (!player.Valid)
+                    if (session.AttachedEntity is not {Valid: true} player)
                     {
                         break;
                     }
@@ -491,9 +489,7 @@ namespace Content.Server.Storage.Components
                 {
                     EnsureInitialCalculated();
 
-                    var player = session.AttachedEntity;
-
-                    if (player == null)
+                    if (session.AttachedEntity is not {Valid: true} player)
                     {
                         break;
                     }
@@ -570,7 +566,7 @@ namespace Content.Server.Storage.Components
 
             // Pick up all entities in a radius around the clicked location.
             // The last half of the if is because carpets exist and this is terrible
-            if (_areaInsert && (eventArgs.Target == null || !_entityManager.HasComponent<SharedItemComponent>(eventArgs.Target)))
+            if (_areaInsert && (eventArgs.Target == null || !_entityManager.HasComponent<SharedItemComponent>(eventArgs.Target.Value)))
             {
                 var validStorables = new List<EntityUid>();
                 foreach (var entity in IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(eventArgs.ClickLocation, _areaInsertRadius, LookupFlags.None))

@@ -21,7 +21,7 @@ namespace Content.Server.Jobs
         [DataField("prototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string Prototype { get; } = string.Empty;
 
-        public override void AfterEquip(EntityUidmob)
+        public override void AfterEquip(EntityUid mob)
         {
             if (string.IsNullOrEmpty(Holiday) || string.IsNullOrEmpty(Prototype))
                 return;

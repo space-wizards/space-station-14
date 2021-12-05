@@ -1,7 +1,6 @@
 using Content.Server.DeviceNetwork.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.DeviceNetwork.Systems
 {
@@ -19,13 +18,11 @@ namespace Content.Server.DeviceNetwork.Systems
         /// </summary>
         private void OnBeforePacketSent(EntityUid uid, WirelessNetworkComponent component, BeforePacketSentEvent args)
         {
-            var sender = args.Sender
-
-            var ownPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner).WorldPosition;
-            var position = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(sender).WorldPosition;
+            var ownPosition = EntityManager.GetComponent<TransformComponent>(component.Owner).WorldPosition;
+            var position = EntityManager.GetComponent<TransformComponent>(args.Sender).WorldPosition;
             var distance = (ownPosition - position).Length;
 
-            if(IoCManager.Resolve<IEntityManager>().TryGetComponent<WirelessNetworkComponent?>(sender, out var sendingComponent) && distance > sendingComponent.Range)
+            if (EntityManager.TryGetComponent<WirelessNetworkComponent?>(args.Sender, out var sendingComponent) && distance > sendingComponent.Range)
             {
                 args.Cancel();
             }

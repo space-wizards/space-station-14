@@ -102,7 +102,7 @@ namespace Content.Server.Light.Components
         ///     Illuminates the light if it is not active, extinguishes it if it is active.
         /// </summary>
         /// <returns>True if the light's status was toggled, false otherwise.</returns>
-        public bool ToggleStatus(EntityUiduser)
+        public bool ToggleStatus(EntityUid user)
         {
             if (!EntitySystem.Get<ActionBlockerSystem>().CanUse(user)) return false;
             return Activated ? TurnOff() : TurnOn(user);
@@ -128,7 +128,7 @@ namespace Content.Server.Light.Components
             return true;
         }
 
-        public bool TurnOn(EntityUiduser)
+        public bool TurnOn(EntityUid user)
         {
             if (Activated)
             {

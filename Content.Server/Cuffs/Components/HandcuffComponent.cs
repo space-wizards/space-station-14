@@ -24,6 +24,8 @@ namespace Content.Server.Cuffs.Components
     [ComponentReference(typeof(SharedHandcuffComponent))]
     public class HandcuffComponent : SharedHandcuffComponent, IAfterInteract
     {
+        [Dependency] private readonly IEntityManager _entities = default!;
+
         /// <summary>
         ///     The time it takes to apply a <see cref="CuffedComponent"/> to an entity.
         /// </summary>
@@ -146,7 +148,9 @@ namespace Content.Server.Cuffs.Components
         {
             if (_cuffing) return true;
 
-            if (eventArgs.Target == null || !EntitySystem.Get<ActionBlockerSystem>().CanUse(eventArgs.User) || !IoCManager.Resolve<IEntityManager>().TryGetComponent<CuffableComponent?>(eventArgs.Target, out var cuffed))
+            if (eventArgs.Target is not {Valid: true} target ||
+                !EntitySystem.Get<ActionBlockerSystem>().CanUse(eventArgs.User) ||
+                !_entities.TryGetComponent<CuffableComponent?>(eventArgs.Target.Value, out var cuffed))
             {
                 return false;
             }
@@ -163,7 +167,7 @@ namespace Content.Server.Cuffs.Components
                 return true;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<HandsComponent?>(eventArgs.Target, out var hands))
+            if (!_entities.TryGetComponent<HandsComponent?>(target, out var hands))
             {
                 eventArgs.User.PopupMessage(Loc.GetString("handcuff-component-target-has-no-hands-error",("targetName", eventArgs.Target)));
                 return true;
@@ -182,11 +186,11 @@ namespace Content.Server.Cuffs.Components
             }
 
             eventArgs.User.PopupMessage(Loc.GetString("handcuff-component-start-cuffing-target-message",("targetName", eventArgs.Target)));
-            eventArgs.User.PopupMessage(eventArgs.Target, Loc.GetString("handcuff-component-start-cuffing-by-other-message",("otherName", eventArgs.User)));
+            eventArgs.User.PopupMessage(target, Loc.GetString("handcuff-component-start-cuffing-by-other-message",("otherName", eventArgs.User)));
 
             SoundSystem.Play(Filter.Pvs(Owner), StartCuffSound.GetSound(), Owner);
 
-            TryUpdateCuff(eventArgs.User, eventArgs.Target, cuffed);
+            TryUpdateCuff(eventArgs.User, target, cuffed);
             return true;
         }
 
@@ -197,7 +201,7 @@ namespace Content.Server.Cuffs.Components
         {
             var cuffTime = CuffTime;
 
-            if (IoCManager.Resolve<IEntityManager>().HasComponent<StunnedComponent>(target))
+            if (_entities.HasComponent<StunnedComponent>(target))
             {
                 cuffTime = MathF.Max(0.1f, cuffTime - StunBonus);
             }

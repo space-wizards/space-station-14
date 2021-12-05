@@ -108,12 +108,12 @@ namespace Content.Server.Disposal.Unit.Components
 
         public void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
-            if (obj.Session.AttachedEntity == null)
+            if (obj.Session.AttachedEntity is not {Valid: true} player)
             {
                 return;
             }
 
-            if (!PlayerCanUse(obj.Session.AttachedEntity))
+            if (!PlayerCanUse(player))
             {
                 return;
             }

@@ -22,10 +22,10 @@ namespace Content.Server.Chemistry.EntitySystems
             SubscribeLocalEvent<TransformableContainerComponent, SolutionChangedEvent>(OnSolutionChange);
         }
 
-        private void OnSolutionChange(EntityUid uid, TransformableContainerComponent component,
+        private void OnSolutionChange(EntityUid owner, TransformableContainerComponent component,
             SolutionChangedEvent args)
         {
-            if (!_solutionsSystem.TryGetFitsInDispenser(uid, out var solution))
+            if (!_solutionsSystem.TryGetFitsInDispenser(owner, out var solution))
                 return;
             //Transform container into initial state when emptied
             if (component.CurrentReagent != null && solution.Contents.Count == 0)
@@ -50,15 +50,14 @@ namespace Content.Server.Chemistry.EntitySystems
                 var spriteSpec =
                     new SpriteSpecifier.Rsi(
                         new ResourcePath("Objects/Consumable/Drinks/" + proto.SpriteReplacementPath), "icon");
-                var Owner
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(ownerEntity, out SpriteComponent? sprite))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(owner, out SpriteComponent? sprite))
                 {
                     sprite?.LayerSetSprite(0, spriteSpec);
                 }
 
                 string val = proto.Name + " glass";
-                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(ownerEntity).EntityName = val;
-                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(ownerEntity).EntityDescription = proto.Description;
+                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(owner).EntityName = val;
+                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(owner).EntityDescription = proto.Description;
                 component.CurrentReagent = proto;
                 component.Transformed = true;
             }

@@ -43,16 +43,13 @@ namespace Content.Server.Damage.Commands
 
         private delegate void Damage(EntityUid entity, bool ignoreResistances);
 
-        private bool TryParseEntity(IConsoleShell shell, IPlayerSession? player, string arg,
-            [NotNullWhen(true)] out EntityUid entity)
+        private bool TryParseEntity(IConsoleShell shell, IPlayerSession? player, string arg, out EntityUid entity)
         {
-            entity = null;
+            entity = default;
 
             if (arg == "_")
             {
-                var playerEntity = player?.AttachedEntity;
-
-                if (playerEntity == null)
+                if (player?.AttachedEntity is not {Valid: true} playerEntity)
                 {
                     shell.WriteLine($"You must have a player entity to use this command without specifying an entity.\n{Help}");
                     return false;
@@ -62,23 +59,20 @@ namespace Content.Server.Damage.Commands
                 return true;
             }
 
-            if (!EntityUid.TryParse(arg, out var entityUid))
+            if (!EntityUid.TryParse(arg, out entity))
             {
                 shell.WriteLine($"{arg} is not a valid entity uid.\n{Help}");
-
                 return false;
             }
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
 
-            if (!entityManager.EntityExists(entityUid)
+            if (!entityManager.EntityExists(entity))
             {
-                shell.WriteLine($"No entity found with uid {entityUid}");
-
+                shell.WriteLine($"No entity found with uid {entity}");
                 return false;
             }
 
-            entity = parsedEntity;
             return true;
         }
 

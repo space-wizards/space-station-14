@@ -48,7 +48,7 @@ namespace Content.Server.Flash
             }
 
             args.Handled = true;
-            foreach (EntityUide in args.HitEntities)
+            foreach (var e in args.HitEntities)
             {
                 Flash(e, args.User, uid, comp.FlashDuration, comp.SlowTo);
             }
@@ -81,7 +81,7 @@ namespace Content.Server.Flash
             }
         }
 
-        private bool UseFlash(FlashComponent comp, EntityUiduser)
+        private bool UseFlash(FlashComponent comp, EntityUid user)
         {
             if (comp.HasUses)
             {
@@ -135,15 +135,11 @@ namespace Content.Server.Flash
             if (displayPopup && user != null && target != user)
             {
                 // TODO Resolving the EntityUidhere bad.
-                if(EntityManager.EntityExists(user.Value)
-                && EntityManager.EntityExists(target)
-
-                userEntity.PopupMessage(targetEntity,
-                    Loc.GetString(
-                        "flash-component-user-blinds-you",
-                        ("user", userEntity)
-                    )
-                );
+                if (EntityManager.EntityExists(user.Value) && EntityManager.EntityExists(target))
+                {
+                    user.Value.PopupMessage(target, Loc.GetString("flash-component-user-blinds-you",
+                        ("user", user.Value)));
+                }
             }
         }
 
