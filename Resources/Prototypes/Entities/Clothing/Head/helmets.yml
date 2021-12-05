@@ -78,7 +78,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHelmetScaf
-  name: scaf
+  name: scaf helmet
   description: A robust, strong helmet.
   components:
   - type: Sprite
