@@ -97,6 +97,7 @@ namespace Content.Shared.Pulling
             {
                 var pullerPhysics = puller.Owner.GetComponent<PhysicsComponent>();
                 var pullablePhysics = pullable.Owner.GetComponent<PhysicsComponent>();
+                pullablePhysics.FixedRotation = false;
 
                 // State startup
                 puller.Pulling = pullable.Owner;
