@@ -1,0 +1,30 @@
+- type: entity
+  name: cheap lighter
+  parent: BaseItem
+  id: CheapLighter
+  description: A cheap lighter.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Tools/lighters/cheap_lighter.rsi
+    layers:
+    - state: icon
+  - type: Item
+    sprite: Objects/Tools/lighters/cheap_lighter.rsi
+    HeldPrefix: off
+    size: 3
+  - type: Lighter
+    igniteSound:
+      path: /Audio/Items/match_strike.ogg
+  - type: PointLight
+    enabled: false
+    radius: 1.1
+    color: darkorange
+  - type: Appearance
+    visuals:
+      - type: GenericEnumVisualizer
+        key: enum.LighterVisuals.Status
+        layer: 0
+        states:
+          enum.LighterStatus.On: lighter_on
+          enum.LighterStatus.Off: icon

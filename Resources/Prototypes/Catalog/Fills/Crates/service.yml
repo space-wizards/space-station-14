@@ -59,6 +59,8 @@
         orGroup: Cigars
       - id: Matchbox
         amount: 2
+      - id: CheapLighter
+        amount: 2
 
 - type: entity
   id: CrateServiceCustomSmokable
@@ -74,3 +76,4 @@
     - id: GroundTobacco
       amount: 4
     - id: Matchbox
+    - id: CheapLighter
