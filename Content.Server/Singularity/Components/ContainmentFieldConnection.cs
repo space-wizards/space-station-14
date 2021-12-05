@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using Robust.Shared.GameObjects;
@@ -71,7 +71,7 @@ namespace Content.Server.Singularity.Components
             Timer.SpawnRepeating(1000, () => { SharedEnergyPool--;}, _powerDecreaseCancellationTokenSource.Token);
         }
 
-        public bool CanRepell(EntityUidtoRepell)
+        public bool CanRepell(EntityUid toRepell)
         {
             var powerNeeded = 1;
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent<ServerSingularityComponent?>(toRepell, out var singularityComponent))

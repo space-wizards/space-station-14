@@ -29,7 +29,7 @@ namespace Content.Server.Atmos.EntitySystems
         {
             if (airtight.FixAirBlockedDirectionInitialize)
             {
-                var rotateEvent = new RotateEvent(airtight.Owner, Angle.Zero, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(airtight.Owner).WorldRotation);
+                var rotateEvent = new RotateEvent(airtight.OwnerUid, Angle.Zero, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(airtight.Owner).WorldRotation);
                 OnAirtightRotated(uid, airtight, ref rotateEvent);
             }
 
@@ -79,7 +79,7 @@ namespace Content.Server.Atmos.EntitySystems
         {
             airtight.AirBlocked = airblocked;
             UpdatePosition(airtight);
-            RaiseLocalEvent(((IComponent) airtight).Owner, new AirtightChanged(airtight));
+            RaiseLocalEvent(((IComponent) airtight).OwnerUid, new AirtightChanged(airtight));
         }
 
         public void UpdatePosition(AirtightComponent airtight)

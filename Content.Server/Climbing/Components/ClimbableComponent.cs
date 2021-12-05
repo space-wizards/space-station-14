@@ -190,7 +190,7 @@ namespace Content.Server.Climbing.Components
             }
         }
 
-        public async void TryClimb(EntityUiduser)
+        public async void TryClimb(EntityUid user)
         {
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out ClimbingComponent? climbingComponent) || climbingComponent.IsClimbing)
                 return;

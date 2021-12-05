@@ -167,7 +167,7 @@ namespace Content.Server.Stunnable
             comp.Activated = false;
         }
 
-        private void TurnOn(StunbatonComponent comp, EntityUiduser)
+        private void TurnOn(StunbatonComponent comp, EntityUid user)
         {
             if (comp.Activated)
             {

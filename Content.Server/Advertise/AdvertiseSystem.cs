@@ -61,7 +61,7 @@ namespace Content.Server.Advertise
                 return;
 
             if (_prototypeManager.TryIndex(advertise.PackPrototypeId, out AdvertisementsPackPrototype? advertisements))
-                _chatManager.EntitySay(advertise.Owner, Loc.GetString(_random.Pick(advertisements.Advertisements)), hideChat: true);
+                _chatManager.EntitySay(advertise.OwnerUid, Loc.GetString(_random.Pick(advertisements.Advertisements)), hideChat: true);
 
             if(refresh)
                 RefreshTimer(uid, true, advertise);
@@ -117,7 +117,7 @@ namespace Content.Server.Advertise
                 if (advertise.NextAdvertisementTime > curTime)
                     continue;
 
-                SayAdvertisement(advertise.Owner, true, advertise);
+                SayAdvertisement(advertise.OwnerUid, true, advertise);
             }
         }
     }

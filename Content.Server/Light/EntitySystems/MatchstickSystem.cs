@@ -58,7 +58,7 @@ namespace Content.Server.Light.EntitySystems
             args.IsHot = component.CurrentState == SmokableState.Lit;
         }
 
-        public void Ignite(MatchstickComponent component, EntityUiduser)
+        public void Ignite(MatchstickComponent component, EntityUid user)
         {
             // Play Sound
             SoundSystem.Play(

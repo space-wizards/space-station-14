@@ -19,10 +19,7 @@ namespace Content.Server.DeviceNetwork.Systems
         /// </summary>
         private void OnBeforePacketSent(EntityUid uid, WiredNetworkComponent component, BeforePacketSentEvent args)
         {
-            args.Sender
-            uid
-
-            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(receiver).GridID != IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(sender).GridID)
+            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(uid).GridID != IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.Sender).GridID)
             {
                 args.Cancel();
             }

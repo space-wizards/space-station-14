@@ -95,7 +95,7 @@ namespace Content.Server.Clothing.Components
             return false;
         }
 
-        public bool TryEquip(InventoryComponent inv, Slots slot, EntityUiduser)
+        public bool TryEquip(InventoryComponent inv, Slots slot, EntityUid user)
         {
             if (!inv.Equip(slot, this, true, out var reason))
             {

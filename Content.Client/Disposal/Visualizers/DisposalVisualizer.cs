@@ -24,7 +24,7 @@ namespace Content.Client.Disposal.Visualizers
         private void ChangeState(AppearanceComponent appearance)
         {
             var entities = IoCManager.Resolve<IEntityManager>();
-            if (!entities.TryGetComponent(appearance.Owner, out ISpriteComponent? sprite))
+            if (!entities.TryGetComponent(appearance.OwnerUid, out ISpriteComponent? sprite))
             {
                 return;
             }
@@ -48,17 +48,17 @@ namespace Content.Client.Disposal.Visualizers
             {
                 appearance.Owner.EnsureComponent<SubFloorHideComponent>();
             }
-            else if (IoCManager.Resolve<IEntityManager>().HasComponent<SubFloorHideComponent>(appearance.Owner))
+            else if (IoCManager.Resolve<IEntityManager>().HasComponent<SubFloorHideComponent>(appearance.OwnerUid))
             {
-                IoCManager.Resolve<IEntityManager>().RemoveComponent<SubFloorHideComponent>(appearance.Owner);
+                IoCManager.Resolve<IEntityManager>().RemoveComponent<SubFloorHideComponent>(appearance.OwnerUid);
             }
         }
 
         public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
-
-            var appearance = entity.EnsureComponent<ClientAppearanceComponent>();
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var appearance = entityManager.EnsureComponent<ClientAppearanceComponent>(entity);
             ChangeState(appearance);
         }
 

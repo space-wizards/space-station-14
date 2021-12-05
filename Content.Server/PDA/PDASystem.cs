@@ -110,7 +110,7 @@ namespace Content.Server.PDA
             UpdatePDAUserInterface(pda);
         }
 
-        private bool OpenUI(PDAComponent pda, EntityUiduser)
+        private bool OpenUI(PDAComponent pda, EntityUid user)
         {
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out ActorComponent? actor))
                 return false;

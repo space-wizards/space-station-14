@@ -62,7 +62,7 @@ namespace Content.Server.Singularity.Components
         private Tuple<Direction, ContainmentFieldConnection>? _connection1;
         private Tuple<Direction, ContainmentFieldConnection>? _connection2;
 
-        public bool CanRepell(EntityUidtoRepell) => _connection1?.Item2?.CanRepell(toRepell) == true ||
+        public bool CanRepell(EntityUid toRepell) => _connection1?.Item2?.CanRepell(toRepell) == true ||
                                                    _connection2?.Item2?.CanRepell(toRepell) == true;
 
         public void OnAnchoredChanged()
