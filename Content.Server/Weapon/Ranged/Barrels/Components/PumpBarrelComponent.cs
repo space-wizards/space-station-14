@@ -85,7 +85,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             // (Is one chambered?, is the bullet spend)
             var chamber = (chamberedExists, false);
 
-            if (chamberedExists && IoCManager.Resolve<IEntityManager>().TryGetComponent<AmmoComponent?>(_chamberContainer.ContainedEntity!, out var ammo))
+            if (chamberedExists && IoCManager.Resolve<IEntityManager>().TryGetComponent<AmmoComponent?>(_chamberContainer.ContainedEntity!.Value, out var ammo))
             {
                 chamber.Item2 = ammo.Spent;
             }
@@ -140,15 +140,13 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             _appearanceComponent?.SetData(AmmoVisuals.AmmoMax, Capacity);
         }
 
-        public override EntityUid PeekAmmo()
+        public override EntityUid? PeekAmmo()
         {
             return _chamberContainer.ContainedEntity;
         }
 
-        public override EntityUid TakeProjectile(EntityCoordinates spawnAt)
+        public override EntityUid? TakeProjectile(EntityCoordinates spawnAt)
         {
-            var chamberEntity = _chamberContainer.ContainedEntity;
-
             if (!_manualCycle)
             {
                 Cycle();
@@ -158,7 +156,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 Dirty();
             }
 
-            if (chamberEntity == null)
+            if (_chamberContainer.ContainedEntity is not {Valid: true} chamberEntity)
                 return null;
 
             return IoCManager.Resolve<IEntityManager>().GetComponentOrNull<AmmoComponent>(chamberEntity)?.TakeBullet(spawnAt);
@@ -166,8 +164,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         private void Cycle(bool manual = false)
         {
-            var chamberedEntity = _chamberContainer.ContainedEntity;
-            if (chamberedEntity != null)
+            if (_chamberContainer.ContainedEntity is {Valid: true} chamberedEntity)
             {
                 _chamberContainer.Remove(chamberedEntity);
                 var ammoComponent = IoCManager.Resolve<IEntityManager>().GetComponent<AmmoComponent>(chamberedEntity);

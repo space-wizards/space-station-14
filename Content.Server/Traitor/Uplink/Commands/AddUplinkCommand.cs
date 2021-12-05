@@ -43,7 +43,7 @@ namespace Content.Server.Traitor.Uplink.Commands
             var user = session.AttachedEntity;
 
             // Get target item
-            EntityUid uplinkEntity = null;
+            EntityUid? uplinkEntity = null;
             var entityManager = IoCManager.Resolve<IEntityManager>();
             if (args.Length >= 2)
             {
@@ -60,7 +60,7 @@ namespace Content.Server.Traitor.Uplink.Commands
                     return;
                 }
 
-                uplinkeUid
+                uplinkEntity = eUid;
             }
 
             // Get TC count
@@ -74,7 +74,7 @@ namespace Content.Server.Traitor.Uplink.Commands
 
             // Finally add uplink
             if (!entityManager.EntitySysManager.GetEntitySystem<UplinkSystem>()
-                .AddUplink(user, uplinkAccount!, uplinkEntity))
+                .AddUplink(user.Value, uplinkAccount, uplinkEntity))
             {
                 shell.WriteLine(Loc.GetString("Failed to add uplink to the player"));
                 return;

@@ -185,8 +185,7 @@ namespace Content.Server.Stack
                 return;
             }
 
-            var split = Split(uid, amount, userTransform.Coordinates, stack);
-            if (!split.Valid)
+            if (Split(uid, amount, userTransform.Coordinates, stack) is not {Valid: true} split)
                 return;
 
             if (EntityManager.TryGetComponent<ItemComponent>(split, out var item))

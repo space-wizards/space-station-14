@@ -29,14 +29,14 @@ namespace Content.Server.Verbs
                 return;
             }
 
-            if (!EntityManager.EntityExists(args.Target)
+            if (!EntityManager.EntityExists(args.Target))
             {
                 return;
             }
 
             // Get the list of verbs. This effectively also checks that the requested verb is in fact a valid verb that
             // the user can perform.
-            var verbs = GetLocalVerbs(targetEntity, userEntity, args.Type)[args.Type];
+            var verbs = GetLocalVerbs(args.Target, userEntity.Value, args.Type)[args.Type];
 
             // Note that GetLocalVerbs might waste time checking & preparing unrelated verbs even though we know
             // precisely which one we want to run. However, MOST entities will only have 1 or 2 verbs of a given type.
@@ -44,7 +44,7 @@ namespace Content.Server.Verbs
 
             // Find the requested verb.
             if (verbs.TryGetValue(args.RequestedVerb, out var verb))
-                ExecuteVerb(verb, userEntity, args.Target);
+                ExecuteVerb(verb, userEntity.Value, args.Target);
             else
                 // 404 Verb not found. Note that this could happen due to something as simple as opening the verb menu, walking away, then trying
                 // to run the pickup-item verb. So maybe this shouldn't even be logged?
@@ -55,7 +55,7 @@ namespace Content.Server.Verbs
         {
             var player = (IPlayerSession) eventArgs.SenderSession;
 
-            if (!EntityManager.EntityExists(args.EntityUid)
+            if (!EntityManager.EntityExists(args.EntityUid))
             {
                 Logger.Warning($"{nameof(HandleVerbRequest)} called on a non-existent entity with id {args.EntityUid} by player {player}.");
                 return;
@@ -71,7 +71,7 @@ namespace Content.Server.Verbs
             // this, and some verbs (e.g. view variables) won't even care about whether an entity is accessible through
             // the entity menu or not.
 
-            var response = new VerbsResponseEvent(args.EntityUid, GetLocalVerbs(target, player.AttachedEntity, args.Type));
+            var response = new VerbsResponseEvent(args.EntityUid, GetLocalVerbs(args.EntityUid, player.AttachedEntity.Value, args.Type));
             RaiseNetworkEvent(response, player.ConnectedClient);
         }
     }

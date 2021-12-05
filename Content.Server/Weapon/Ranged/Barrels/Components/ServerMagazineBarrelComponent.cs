@@ -191,12 +191,12 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             UpdateAppearance();
         }
 
-        public override EntityUid PeekAmmo()
+        public override EntityUid? PeekAmmo()
         {
             return BoltOpen ? default : _chamberContainer.ContainedEntity;
         }
 
-        public override EntityUid TakeProjectile(EntityCoordinates spawnAt)
+        public override EntityUid? TakeProjectile(EntityCoordinates spawnAt)
         {
             if (BoltOpen)
             {

@@ -104,8 +104,7 @@ namespace Content.Server.Weapon.Ranged
             switch (message)
             {
                 case FirePosComponentMessage msg:
-                    var user = session.AttachedEntity;
-                    if (user == null)
+                    if (session.AttachedEntity is not {Valid: true} user)
                     {
                         return;
                     }

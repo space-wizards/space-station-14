@@ -93,7 +93,7 @@ namespace Content.Server.Power.Components
                 if (user == null) return;
 
                 var accessSystem = EntitySystem.Get<AccessReaderSystem>();
-                if (_accessReader == null || accessSystem.IsAllowed(_accessReader, user))
+                if (_accessReader == null || accessSystem.IsAllowed(_accessReader, user.Value))
                 {
                     MainBreakerEnabled = !MainBreakerEnabled;
                     IoCManager.Resolve<IEntityManager>().GetComponent<PowerNetworkBatteryComponent>(Owner).CanDischarge = MainBreakerEnabled;
@@ -103,7 +103,7 @@ namespace Content.Server.Power.Components
                 }
                 else
                 {
-                    user.PopupMessageCursor(Loc.GetString("apc-component-insufficient-access"));
+                    user.Value.PopupMessageCursor(Loc.GetString("apc-component-insufficient-access"));
                 }
 
             }

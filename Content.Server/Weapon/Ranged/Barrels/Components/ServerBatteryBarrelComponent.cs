@@ -127,7 +127,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             Dirty();
         }
 
-        public override EntityUid PeekAmmo()
+        public override EntityUid? PeekAmmo()
         {
             // Spawn a dummy entity because it's easier to work with I guess
             // This will get re-used for the projectile
@@ -141,7 +141,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             return ammo.Value;
         }
 
-        public override EntityUid TakeProjectile(EntityCoordinates spawnAt)
+        public override EntityUid? TakeProjectile(EntityCoordinates spawnAt)
         {
             var powerCellEntity = _powerCellContainer.ContainedEntity;
 

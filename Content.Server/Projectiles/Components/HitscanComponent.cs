@@ -47,7 +47,7 @@ namespace Content.Server.Projectiles.Components
         [DataField("soundHitWall")]
         private SoundSpecifier _soundHitWall = new SoundPathSpecifier("/Audio/Weapons/Guns/Hits/laser_sear_wall.ogg");
 
-        public void FireEffects(EntityUid user, float distance, Angle angle, EntityUid hitEntity = null)
+        public void FireEffects(EntityUid user, float distance, Angle angle, EntityUid? hitEntity = null)
         {
             var effectSystem = EntitySystem.Get<EffectSystem>();
             _startTime = _gameTiming.CurTime;

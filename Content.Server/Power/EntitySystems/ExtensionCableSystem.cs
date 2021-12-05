@@ -75,10 +75,8 @@ namespace Content.Server.Power.EntitySystems
             }
         }
 
-        private IEnumerable<ExtensionCableReceiverComponent> FindAvailableReceivers(EntityUid uid, float range)
+        private IEnumerable<ExtensionCableReceiverComponent> FindAvailableReceivers(EntityUid owner, float range)
         {
-            var owner = uid
-
             var nearbyEntities = IoCManager.Resolve<IEntityLookup>()
                 .GetEntitiesInRange(owner, range);
 

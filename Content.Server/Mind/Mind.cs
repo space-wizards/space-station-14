@@ -263,25 +263,25 @@ namespace Content.Server.Mind
         /// <exception cref="ArgumentException">
         ///     Thrown if <paramref name="entity"/> is already owned by another mind.
         /// </exception>
-        public void TransferTo(EntityUid entity = default, bool ghostCheckOverride = false)
+        public void TransferTo(EntityUid? entity, bool ghostCheckOverride = false)
         {
             var entMan = IoCManager.Resolve<IEntityManager>();
 
             MindComponent? component = null;
             var alreadyAttached = false;
 
-            if (entity != default)
+            if (entity != null)
             {
-                if (!entMan.TryGetComponent<MindComponent>(entity, out component))
+                if (!entMan.TryGetComponent<MindComponent>(entity.Value, out component))
                 {
-                    component = entMan.AddComponent<MindComponent>(entity);
+                    component = entMan.AddComponent<MindComponent>(entity.Value);
                 }
                 else if (component!.HasMind)
                 {
                     EntitySystem.Get<GameTicker>().OnGhostAttempt(component.Mind!, false);
                 }
 
-                if (entMan.TryGetComponent<ActorComponent>(entity, out var actor))
+                if (entMan.TryGetComponent<ActorComponent>(entity.Value, out var actor))
                 {
                     // Happens when transferring to your currently visited entity.
                     if (actor.PlayerSession != Session)

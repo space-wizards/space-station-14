@@ -76,7 +76,7 @@ namespace Content.Client.Singularity
             var distortions = _entityManager.EntityQuery<SingularityDistortionComponent>();
             foreach (var distortion in distortions) //Add all singulos that are not added yet but qualify
             {
-                var singuloEntity = distortion.OwnerUid;
+                var singuloEntity = distortion.Owner;
 
                 if (!_singularities.Keys.Contains(singuloEntity) && SinguloQualifies(singuloEntity, currentEyeLoc))
                 {

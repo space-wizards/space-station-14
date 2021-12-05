@@ -110,7 +110,7 @@ namespace Content.Server.Shuttles.EntitySystems
             if (dockingFixture == null)
             {
                 DebugTools.Assert(false);
-                Logger.ErrorS("docking", $"Found null fixture on {((IComponent) body).OwnerUid}");
+                Logger.ErrorS("docking", $"Found null fixture on {((IComponent) body).Owner}");
                 return null;
             }
 
@@ -200,8 +200,8 @@ namespace Content.Server.Shuttles.EntitySystems
             dockA.DockedWith = null;
 
             // If these grids are ever invalid then need to look at fixing ordering for unanchored events elsewhere.
-            var gridAUid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(((IComponent) dockA).OwnerUid).GridID).GridEntityId;
-            var gridBUid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(((IComponent) dockB).OwnerUid).GridID).GridEntityId;
+            var gridAUid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(((IComponent) dockA).Owner).GridID).GridEntityId;
+            var gridBUid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(((IComponent) dockB).Owner).GridID).GridEntityId;
 
             var msg = new UndockEvent
             {
@@ -211,8 +211,8 @@ namespace Content.Server.Shuttles.EntitySystems
                 GridBUid = gridBUid,
             };
 
-            EntityManager.EventBus.RaiseLocalEvent(((IComponent) dockA).OwnerUid, msg, false);
-            EntityManager.EventBus.RaiseLocalEvent(((IComponent) dockB).OwnerUid, msg, false);
+            EntityManager.EventBus.RaiseLocalEvent(((IComponent) dockA).Owner, msg, false);
+            EntityManager.EventBus.RaiseLocalEvent(((IComponent) dockB).Owner, msg, false);
             EntityManager.EventBus.RaiseEvent(EventSource.Local, msg);
         }
 
@@ -308,8 +308,8 @@ namespace Content.Server.Shuttles.EntitySystems
 
             // We could also potentially use a prismatic joint? Depending if we want clamps that can extend or whatever
 
-            var dockAXform = EntityManager.GetComponent<TransformComponent>(((IComponent) dockA).OwnerUid);
-            var dockBXform = EntityManager.GetComponent<TransformComponent>(((IComponent) dockB).OwnerUid);
+            var dockAXform = EntityManager.GetComponent<TransformComponent>(((IComponent) dockA).Owner);
+            var dockBXform = EntityManager.GetComponent<TransformComponent>(((IComponent) dockB).Owner);
 
             var gridA = _mapManager.GetGrid(dockAXform.GridID).GridEntityId;
             var gridB = _mapManager.GetGrid(dockBXform.GridID).GridEntityId;
@@ -344,13 +344,13 @@ namespace Content.Server.Shuttles.EntitySystems
             dockA.DockJoint = joint;
             dockB.DockJoint = joint;
 
-            if (EntityManager.TryGetComponent(((IComponent) dockA).OwnerUid, out ServerDoorComponent? doorA))
+            if (EntityManager.TryGetComponent(((IComponent) dockA).Owner, out ServerDoorComponent? doorA))
             {
                 doorA.ChangeAirtight = false;
                 doorA.Open();
             }
 
-            if (EntityManager.TryGetComponent(((IComponent) dockB).OwnerUid, out ServerDoorComponent? doorB))
+            if (EntityManager.TryGetComponent(((IComponent) dockB).Owner, out ServerDoorComponent? doorB))
             {
                 doorB.ChangeAirtight = false;
                 doorB.Open();
@@ -364,8 +364,8 @@ namespace Content.Server.Shuttles.EntitySystems
                 GridBUid = gridB,
             };
 
-            EntityManager.EventBus.RaiseLocalEvent(((IComponent) dockA).OwnerUid, msg, false);
-            EntityManager.EventBus.RaiseLocalEvent(((IComponent) dockB).OwnerUid, msg, false);
+            EntityManager.EventBus.RaiseLocalEvent(((IComponent) dockA).Owner, msg, false);
+            EntityManager.EventBus.RaiseLocalEvent(((IComponent) dockB).Owner, msg, false);
             EntityManager.EventBus.RaiseEvent(EventSource.Local, msg);
         }
 
@@ -374,8 +374,8 @@ namespace Content.Server.Shuttles.EntitySystems
         /// </summary>
         private void TryDock(DockingComponent dockA, DockingComponent dockB)
         {
-            if (!EntityManager.TryGetComponent(((IComponent) dockA).OwnerUid, out PhysicsComponent? bodyA) ||
-                !EntityManager.TryGetComponent(((IComponent) dockB).OwnerUid, out PhysicsComponent? bodyB) ||
+            if (!EntityManager.TryGetComponent(((IComponent) dockA).Owner, out PhysicsComponent? bodyA) ||
+                !EntityManager.TryGetComponent(((IComponent) dockB).Owner, out PhysicsComponent? bodyB) ||
                 !dockA.Enabled ||
                 !dockB.Enabled)
             {
@@ -425,13 +425,13 @@ namespace Content.Server.Shuttles.EntitySystems
                 return;
             }
 
-            if (EntityManager.TryGetComponent(((IComponent) dock).OwnerUid, out ServerDoorComponent? doorA))
+            if (EntityManager.TryGetComponent(((IComponent) dock).Owner, out ServerDoorComponent? doorA))
             {
                 doorA.ChangeAirtight = true;
                 doorA.Close();
             }
 
-            if (EntityManager.TryGetComponent(((IComponent) dock.DockedWith).OwnerUid, out ServerDoorComponent? doorB))
+            if (EntityManager.TryGetComponent(((IComponent) dock.DockedWith).Owner, out ServerDoorComponent? doorB))
             {
                 doorB.ChangeAirtight = true;
                 doorB.Close();

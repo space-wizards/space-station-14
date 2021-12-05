@@ -31,6 +31,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
     {
         // Originally I had this logic shared with PumpBarrel and used a couple of variables to control things
         // but it felt a lot messier to play around with, especially when adding verbs
+        [Dependency] private readonly IEntityManager _entities = default!;
 
         public override string Name => "BoltActionBarrel";
 
@@ -110,7 +111,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 if (_unspawnedCount > 0)
                 {
                     _unspawnedCount--;
-                    var chamberEntity = IoCManager.Resolve<IEntityManager>().SpawnEntity(_fillPrototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
+                    var chamberEntity = _entities.SpawnEntity(_fillPrototype, _entities.GetComponent<TransformComponent>(Owner).Coordinates);
                     _chamberContainer.Insert(chamberEntity);
                 }
             }
@@ -124,7 +125,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             // (Is one chambered?, is the bullet spend)
             var chamber = (chamberedExists, false);
 
-            if (chamberedExists && IoCManager.Resolve<IEntityManager>().TryGetComponent<AmmoComponent?>(_chamberContainer.ContainedEntity!, out var ammo))
+            if (chamberedExists && _entities.TryGetComponent<AmmoComponent?>(_chamberContainer.ContainedEntity!.Value, out var ammo))
             {
                 chamber.Item2 = ammo.Spent;
             }
@@ -154,7 +155,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
             _chamberContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-chamber-container");
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearanceComponent))
+            if (_entities.TryGetComponent(Owner, out AppearanceComponent? appearanceComponent))
             {
                 _appearanceComponent = appearanceComponent;
             }
@@ -171,14 +172,13 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             _appearanceComponent?.SetData(AmmoVisuals.AmmoMax, Capacity);
         }
 
-        public override EntityUid PeekAmmo()
+        public override EntityUid? PeekAmmo()
         {
             return _chamberContainer.ContainedEntity;
         }
 
-        public override EntityUid TakeProjectile(EntityCoordinates spawnAt)
+        public override EntityUid? TakeProjectile(EntityCoordinates spawnAt)
         {
-            var chamberEntity = _chamberContainer.ContainedEntity;
             if (_autoCycle)
             {
                 Cycle();
@@ -188,10 +188,10 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 Dirty();
             }
 
-            if (chamberEntity == null)
+            if (_chamberContainer.ContainedEntity is not {Valid: true} chamberEntity)
                 return null;
 
-            return IoCManager.Resolve<IEntityManager>().GetComponentOrNull<AmmoComponent>(chamberEntity)?.TakeBullet(spawnAt);
+            return _entities.GetComponentOrNull<AmmoComponent>(chamberEntity)?.TakeBullet(spawnAt);
         }
 
         protected override bool WeaponCanFire()
@@ -229,7 +229,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         public bool TryInsertBullet(EntityUid user, EntityUid ammo)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(ammo, out AmmoComponent? ammoComponent))
+            if (!_entities.TryGetComponent(ammo, out AmmoComponent? ammoComponent))
             {
                 return false;
             }
@@ -291,16 +291,15 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         private bool TryEjectChamber()
         {
-            var chamberedEntity = _chamberContainer.ContainedEntity;
-            if (chamberedEntity != null)
+            if (_chamberContainer.ContainedEntity is {Valid: true} chambered)
             {
-                if (!_chamberContainer.Remove(chamberedEntity))
+                if (!_chamberContainer.Remove(chambered))
                 {
                     return false;
                 }
-                if (!IoCManager.Resolve<IEntityManager>().GetComponent<AmmoComponent>(chamberedEntity).Caseless)
+                if (!_entities.GetComponent<AmmoComponent>(chambered).Caseless)
                 {
-                    EjectCasing(chamberedEntity);
+                    EjectCasing(chambered);
                 }
                 return true;
             }
@@ -322,7 +321,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             else if (_unspawnedCount > 0)
             {
                 _unspawnedCount--;
-                var ammoEntity = IoCManager.Resolve<IEntityManager>().SpawnEntity(_fillPrototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
+                var ammoEntity = _entities.SpawnEntity(_fillPrototype, _entities.GetComponent<TransformComponent>(Owner).Coordinates);
                 _chamberContainer.Insert(ammoEntity);
                 return true;
             }

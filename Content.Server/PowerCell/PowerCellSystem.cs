@@ -43,18 +43,18 @@ namespace Content.Server.PowerCell
 
         private void AddInsertVerb(EntityUid uid, PowerCellSlotComponent component, GetInteractionVerbsEvent args)
         {
-            if (args.Using == null ||
+            if (args.Using is not {Valid: true} @using ||
                 !args.CanAccess ||
                 !args.CanInteract ||
                 component.HasCell ||
-                !IoCManager.Resolve<IEntityManager>().HasComponent<PowerCellComponent>(args.Using) ||
+                !IoCManager.Resolve<IEntityManager>().HasComponent<PowerCellComponent>(@using) ||
                 !_actionBlockerSystem.CanDrop(args.User))
                 return;
 
             Verb verb = new();
-            verb.Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(args.Using).EntityName;
+            verb.Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(@using).EntityName;
             verb.Category = VerbCategory.Insert;
-            verb.Act = () => component.InsertCell(args.Using);
+            verb.Act = () => component.InsertCell(@using);
             args.Verbs.Add(verb);
         }
 

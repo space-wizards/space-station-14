@@ -38,7 +38,7 @@ namespace Content.Server.Projectiles
             var coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.OtherFixture.Body.Owner).Coordinates;
             var playerFilter = Filter.Pvs(coordinates);
 
-            if (!((!IoCManager.Resolve<IEntityManager>().EntityExists(otherEntity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(otherEntity).EntityLifeStage) >= EntityLifeStage.Deleted) && component.SoundHitSpecies != null &&
+            if (!EntityManager.GetComponent<MetaDataComponent>(otherEntity).EntityDeleted && component.SoundHitSpecies != null &&
                 IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(otherEntity))
             {
                 SoundSystem.Play(playerFilter, component.SoundHitSpecies.GetSound(), coordinates);
@@ -51,18 +51,19 @@ namespace Content.Server.Projectiles
                     SoundSystem.Play(playerFilter, soundHit, coordinates);
             }
 
-            if (!((!IoCManager.Resolve<IEntityManager>().EntityExists(otherEntity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(otherEntity).EntityLifeStage) >= EntityLifeStage.Deleted))
+            if (!EntityManager.GetComponent<MetaDataComponent>(otherEntity).EntityDeleted)
             {
                 var dmg = _damageableSystem.TryChangeDamage(otherEntity, component.Damage);
                 component.DamagedEntity = true;
 
-                if (dmg is not null && EntityManager.EntityExists(component.Shooter)
+                if (dmg is not null && EntityManager.EntityExists(component.Shooter))
                     _adminLogSystem.Add(LogType.BulletHit, LogImpact.Low,
-                        $"Projectile {component.Owner} shot by {shooter} hit {otherEntity} and dealt {dmg.Total} damage");
+                        $"Projectile {component.Owner} shot by {component.Shooter:shooter} hit {otherEntity} and dealt {dmg.Total} damage");
             }
 
             // Damaging it can delete it
-            if (!((!IoCManager.Resolve<IEntityManager>().EntityExists(otherEntity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(otherEntity).EntityLifeStage) >= EntityLifeStage.Deleted) && IoCManager.Resolve<IEntityManager>().TryGetComponent(otherEntity, out CameraRecoilComponent? recoilComponent))
+            if (!EntityManager.GetComponent<MetaDataComponent>(otherEntity).EntityDeleted &&
+                EntityManager.TryGetComponent(otherEntity, out CameraRecoilComponent? recoilComponent))
             {
                 var direction = args.OurFixture.Body.LinearVelocity.Normalized;
                 recoilComponent.Kick(direction);

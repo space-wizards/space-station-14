@@ -218,11 +218,8 @@ namespace Content.Server.Hands.Systems
             if (session is not IPlayerSession playerSession)
                 return false;
 
-            var maybePlayer = playerSession.AttachedEntity;
-            if (!maybePlayer.HasValue) return false;
-            var player = maybePlayer.Value;
-
-            if (!EntityManager.EntityExists(player) ||
+            if (playerSession.AttachedEntity is not {Valid: true} player ||
+                !EntityManager.EntityExists(player) ||
                 player.IsInContainer() ||
                 !EntityManager.TryGetComponent(player, out SharedHandsComponent? hands) ||
                 !hands.TryGetActiveHeldEntity(out var throwEnt) ||
@@ -231,7 +228,7 @@ namespace Content.Server.Hands.Systems
 
             if (EntityManager.TryGetComponent(throwEnt, out StackComponent? stack) && stack.Count > 1 && stack.ThrowIndividually)
             {
-                var splitStack = _stackSystem.Split(throwEnt, 1, EntityManager.GetComponent<TransformComponent>(playerEnt).Coordinates, stack);
+                var splitStack = _stackSystem.Split(throwEnt, 1, EntityManager.GetComponent<TransformComponent>(player).Coordinates, stack);
 
                 if (splitStack is not {Valid: true})
                     return false;
@@ -241,14 +238,14 @@ namespace Content.Server.Hands.Systems
             else if (!hands.Drop(throwEnt))
                 return false;
 
-            var direction = coords.ToMapPos(EntityManager) - EntityManager.GetComponent<TransformComponent>(playerEnt).WorldPosition;
+            var direction = coords.ToMapPos(EntityManager) - EntityManager.GetComponent<TransformComponent>(player).WorldPosition;
             if (direction == Vector2.Zero)
                 return true;
 
             direction = direction.Normalized * Math.Min(direction.Length, hands.ThrowRange);
 
             var throwStrength = hands.ThrowForceMultiplier;
-            throwEnt.TryThrow(direction, throwStrength, playerEnt);
+            throwEnt.TryThrow(direction, throwStrength, player);
 
             return true;
         }
@@ -276,7 +273,7 @@ namespace Content.Server.Hands.Systems
                 return;
 
             if (!inventory.TryGetSlotItem(equipmentSlot, out ItemComponent? equipmentItem) ||
-                !EntityManager.TryGetComponent(equipmentItem.OwnerUid, out ServerStorageComponent? storageComponent))
+                !EntityManager.TryGetComponent(equipmentItem.Owner, out ServerStorageComponent? storageComponent))
             {
                 plyEnt.PopupMessage(Loc.GetString("hands-system-missing-equipment-slot", ("slotName", SlotNames[equipmentSlot].ToLower())));
                 return;

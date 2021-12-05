@@ -78,7 +78,7 @@ namespace Content.Server.PneumaticCannon
 
         public struct FireData
         {
-            public EntityUid User,
+            public EntityUid User;
             public float Strength;
             public Vector2 Direction;
         }

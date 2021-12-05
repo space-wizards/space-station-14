@@ -84,8 +84,7 @@ namespace Content.Server.Mind.Components
 
             if (HasMind)
             {
-                var visiting = Mind?.VisitingEntity;
-                if (visiting != null)
+                if (Mind?.VisitingEntity is {Valid: true} visiting)
                 {
                     if (IoCManager.Resolve<IEntityManager>().TryGetComponent(visiting, out GhostComponent? ghost))
                     {

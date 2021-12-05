@@ -7,6 +7,7 @@ using Content.Server.Visible;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
+using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -58,8 +59,7 @@ namespace Content.Server.Pointing.EntitySystems
         {
             foreach (var viewer in viewers)
             {
-                var viewerEntity = viewer.AttachedEntity;
-                if (viewerEntity == null)
+                if (viewer.AttachedEntity is not {Valid: true} viewerEntity)
                 {
                     continue;
                 }
@@ -76,9 +76,9 @@ namespace Content.Server.Pointing.EntitySystems
 
         public bool InRange(EntityUid pointer, EntityCoordinates coordinates)
         {
-            if (IoCManager.Resolve<IEntityManager>().HasComponent<GhostComponent>(pointer))
+            if (EntityManager.HasComponent<GhostComponent>(pointer))
             {
-                return IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pointer).Coordinates.InRange(EntityManager, coordinates, 15);
+                return EntityManager.GetComponent<TransformComponent>(pointer).Coordinates.InRange(EntityManager, coordinates, 15);
             }
             else
             {
@@ -86,11 +86,10 @@ namespace Content.Server.Pointing.EntitySystems
             }
         }
 
-        public bool TryPoint(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
+        public bool TryPoint(ICommonSession? session, EntityCoordinates coords, EntityUid pointed)
         {
             var mapCoords = coords.ToMap(EntityManager);
-            var player = (session as IPlayerSession)?.ContentData()?.Mind?.CurrentEntity;
-            if (player == null)
+            if ((session as IPlayerSession)?.ContentData()?.Mind?.CurrentEntity is not { } player)
             {
                 return false;
             }
@@ -101,7 +100,7 @@ namespace Content.Server.Pointing.EntitySystems
                 return false;
             }
 
-            if (EntityManager.EntityExists(uid)
+            if (EntityManager.EntityExists(pointed))
             {
                 // this is a pointing arrow. no pointing here...
                 return false;
@@ -118,7 +117,7 @@ namespace Content.Server.Pointing.EntitySystems
             var arrow = EntityManager.SpawnEntity("pointingarrow", mapCoords);
 
             var layer = (int) VisibilityFlags.Normal;
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(player, out VisibilityComponent? playerVisibility))
+            if (EntityManager.TryGetComponent(player, out VisibilityComponent? playerVisibility))
             {
                 var arrowVisibility = arrow.EnsureComponent<VisibilityComponent>();
                 layer = arrowVisibility.Layer = playerVisibility.Layer;
@@ -127,11 +126,12 @@ namespace Content.Server.Pointing.EntitySystems
             // Get players that are in range and whose visibility layer matches the arrow's.
             bool ViewerPredicate(IPlayerSession playerSession)
             {
-                var ent = playerSession.ContentData()?.Mind?.CurrentEntity;
+                if (playerSession.ContentData()?.Mind?.CurrentEntity is not {Valid: true} ent ||
+                    !EntityManager.TryGetComponent<EyeComponent?>(ent, out var eyeComp) ||
+                    (eyeComp.VisibilityMask & layer) == 0)
+                    return false;
 
-                if (ent is null || (!IoCManager.Resolve<IEntityManager>().TryGetComponent<EyeComponent?>(ent, out var eyeComp) || (eyeComp.VisibilityMask & layer) == 0)) return false;
-
-                return IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(ent).MapPosition.InRange(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player).MapPosition, PointingRange);
+                return EntityManager.GetComponent<TransformComponent>(ent).MapPosition.InRange(EntityManager.GetComponent<TransformComponent>(player).MapPosition, PointingRange);
             }
 
             var viewers = Filter.Empty()
@@ -142,17 +142,17 @@ namespace Content.Server.Pointing.EntitySystems
             string viewerMessage;
             string? viewerPointedAtMessage = null;
 
-            if (EntityManager.EntityExists(uid)
+            if (EntityManager.EntityExists(pointed))
             {
                 selfMessage = player == pointed
                     ? Loc.GetString("pointing-system-point-at-self")
                     : Loc.GetString("pointing-system-point-at-other", ("other", pointed));
 
                 viewerMessage = player == pointed
-                    ? Loc.GetString("pointing-system-point-at-self-others", ("otherName", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(player).EntityName), ("other", player))
-                    : Loc.GetString("pointing-system-point-at-other-others", ("otherName", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(player).EntityName), ("other", pointed));
+                    ? Loc.GetString("pointing-system-point-at-self-others", ("otherName", Name: EntityManager.GetComponent<MetaDataComponent>(player).EntityName), ("other", player))
+                    : Loc.GetString("pointing-system-point-at-other-others", ("otherName", Name: EntityManager.GetComponent<MetaDataComponent>(player).EntityName), ("other", pointed));
 
-                viewerPointedAtMessage = Loc.GetString("pointing-system-point-at-you-other", ("otherName", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(player).EntityName));
+                viewerPointedAtMessage = Loc.GetString("pointing-system-point-at-you-other", ("otherName", Name: EntityManager.GetComponent<MetaDataComponent>(player).EntityName));
             }
             else
             {
@@ -167,10 +167,10 @@ namespace Content.Server.Pointing.EntitySystems
 
                 selfMessage = Loc.GetString("pointing-system-point-at-tile", ("tileName", tileDef.DisplayName));
 
-                viewerMessage = Loc.GetString("pointing-system-other-point-at-tile", ("otherName", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(player).EntityName), ("tileName", tileDef.DisplayName));
+                viewerMessage = Loc.GetString("pointing-system-other-point-at-tile", ("otherName", Name: EntityManager.GetComponent<MetaDataComponent>(player).EntityName), ("tileName", tileDef.DisplayName));
             }
 
-            _pointers[session!] = _gameTiming.CurTime;
+            _pointers[session] = _gameTiming.CurTime;
 
             SendMessage(player, viewers, pointed, selfMessage, viewerMessage, viewerPointedAtMessage);
 
@@ -196,17 +196,17 @@ namespace Content.Server.Pointing.EntitySystems
                 return;
 
             //Check if the object is already being pointed at
-            if (IoCManager.Resolve<IEntityManager>().HasComponent<PointingArrowComponent>(args.Target))
+            if (EntityManager.HasComponent<PointingArrowComponent>(args.Target))
                 return;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ActorComponent?>(args.User, out var actor)  ||
-                !InRange(args.User, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.Target).Coordinates))
+            if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor)  ||
+                !InRange(args.User, EntityManager.GetComponent<TransformComponent>(args.Target).Coordinates))
                 return;
 
             Verb verb = new();
             verb.Text = Loc.GetString("pointing-verb-get-data-text");
             verb.IconTexture = "/Textures/Interface/VerbIcons/point.svg.192dpi.png";
-            verb.Act = () => TryPoint(actor.PlayerSession, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.Target).Coordinates, args.Target); ;
+            verb.Act = () => TryPoint(actor.PlayerSession, EntityManager.GetComponent<TransformComponent>(args.Target).Coordinates, args.Target); ;
             args.Verbs.Add(verb);
         }
 

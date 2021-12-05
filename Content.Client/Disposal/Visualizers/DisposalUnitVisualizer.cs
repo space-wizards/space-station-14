@@ -71,7 +71,7 @@ namespace Content.Client.Disposal.Visualizers
             }
 
             var entities = IoCManager.Resolve<IEntityManager>();
-            if (!entities.TryGetComponent(appearance.OwnerUid, out ISpriteComponent? sprite))
+            if (!entities.TryGetComponent(appearance.Owner, out ISpriteComponent? sprite))
             {
                 return;
             }
@@ -90,7 +90,7 @@ namespace Content.Client.Disposal.Visualizers
                 case VisualState.Flushing:
                     sprite.LayerSetState(DisposalUnitVisualLayers.Base, _stateAnchored);
 
-                    var animPlayer = IoCManager.Resolve<IEntityManager>().GetComponent<AnimationPlayerComponent>(appearance.OwnerUid);
+                    var animPlayer = IoCManager.Resolve<IEntityManager>().GetComponent<AnimationPlayerComponent>(appearance.Owner);
 
                     if (!animPlayer.HasRunningAnimation(AnimationKey))
                     {

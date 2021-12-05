@@ -76,7 +76,7 @@ namespace Content.Server.Weapon.Ranged.Barrels
 
             Verb verb = new()
             {
-                Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(component.PowerCell.Owner).EntityName,
+                Text = EntityManager.GetComponent<MetaDataComponent>(component.PowerCell.Owner).EntityName,
                 Category = VerbCategory.Eject,
                 Act = () => component.TryEjectCell(args.User)
             };
@@ -85,18 +85,18 @@ namespace Content.Server.Weapon.Ranged.Barrels
 
         private void AddInsertCellVerb(EntityUid uid, ServerBatteryBarrelComponent component, GetInteractionVerbsEvent args)
         {
-            if (args.Using == null ||
+            if (args.Using is not {Valid: true} @using ||
                 !args.CanAccess ||
                 !args.CanInteract ||
                 component.PowerCell != null ||
-                !IoCManager.Resolve<IEntityManager>().HasComponent<BatteryComponent>(args.Using) ||
+                !EntityManager.HasComponent<BatteryComponent>(@using) ||
                 !_actionBlockerSystem.CanDrop(args.User))
                 return;
 
             Verb verb = new();
-            verb.Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(args.Using).EntityName;
+            verb.Text = EntityManager.GetComponent<MetaDataComponent>(@using).EntityName;
             verb.Category = VerbCategory.Insert;
-            verb.Act = () => component.TryInsertPowerCell(args.Using);
+            verb.Act = () => component.TryInsertPowerCell(@using);
             args.Verbs.Add(verb);
         }
 
@@ -113,7 +113,7 @@ namespace Content.Server.Weapon.Ranged.Barrels
                 return;
 
             Verb verb = new();
-            verb.Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(component.MagazineContainer.ContainedEntity!).EntityName;
+            verb.Text = EntityManager.GetComponent<MetaDataComponent>(component.MagazineContainer.ContainedEntity!.Value).EntityName;
             verb.Category = VerbCategory.Eject;
             verb.Act = () => component.RemoveMagazine(args.User);
             args.Verbs.Add(verb);
@@ -135,16 +135,16 @@ namespace Content.Server.Weapon.Ranged.Barrels
             args.Verbs.Add(toggleBolt);
 
             // Are we holding a mag that we can insert?
-            if (args.Using == null ||
-                !component.CanInsertMagazine(args.User, args.Using) ||
+            if (args.Using is not {Valid: true} @using ||
+                !component.CanInsertMagazine(args.User, @using) ||
                 !_actionBlockerSystem.CanDrop(args.User))
                 return;
 
             // Insert mag verb
             Verb insert = new();
-            insert.Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(args.Using).EntityName;
+            insert.Text = EntityManager.GetComponent<MetaDataComponent>(@using).EntityName;
             insert.Category = VerbCategory.Insert;
-            insert.Act = () => component.InsertMagazine(args.User, args.Using);
+            insert.Act = () => component.InsertMagazine(args.User, @using);
             args.Verbs.Add(insert);
         }
     }

@@ -188,12 +188,12 @@ namespace Content.Server.VendingMachines
             SoundSystem.Play(Filter.Pvs(Owner), _soundVend.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
         }
 
-        private void TryEject(string id, EntityUid sender)
+        private void TryEject(string id, EntityUid? sender)
         {
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent<AccessReader?>(Owner, out var accessReader))
             {
                 var accessSystem = EntitySystem.Get<AccessReaderSystem>();
-                if (sender == null || !accessSystem.IsAllowed(accessReader, sender))
+                if (sender == null || !accessSystem.IsAllowed(accessReader, sender.Value))
                 {
                     Owner.PopupMessageEveryone(Loc.GetString("vending-machine-component-try-eject-access-denied"));
                     Deny();

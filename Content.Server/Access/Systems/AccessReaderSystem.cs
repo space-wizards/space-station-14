@@ -84,7 +84,7 @@ namespace Content.Server.Access.Systems
             {
                 if (inventoryComponent.HasSlot(EquipmentSlotDefines.Slots.IDCARD) &&
                     inventoryComponent.TryGetSlotItem(EquipmentSlotDefines.Slots.IDCARD, out ItemComponent? item) &&
-                    FindAccessTagsItem(item.OwnerUid, out tags)
+                    FindAccessTagsItem(item.Owner, out tags)
                 )
                 {
                     return tags;

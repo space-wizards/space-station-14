@@ -104,7 +104,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             }
         }
 
-        public EntityUid TakeBullet(EntityCoordinates spawnAt)
+        public EntityUid? TakeBullet(EntityCoordinates spawnAt)
         {
             if (_ammoIsProjectile)
             {

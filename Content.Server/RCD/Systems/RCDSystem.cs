@@ -8,6 +8,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Maps;
 using Content.Shared.Popups;
+using Content.Shared.Tag;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -117,10 +118,9 @@ namespace Content.Server.RCD.Systems
                     }
                     else //Delete what the user targeted
                     {
-                        EntityUid tempQualifier = args.Target;
-                        if (tempQualifier != null)
+                        if (args.Target is {Valid: true} target)
                         {
-                            IoCManager.Resolve<IEntityManager>().DeleteEntity(tempQualifier);
+                            EntityManager.DeleteEntity(target);
                         }
                     }
                     break;
@@ -189,7 +189,7 @@ namespace Content.Server.RCD.Systems
                         return false;
                     }
                     //They tried to decon a non-turf but it's not in the whitelist
-                    if (eventArgs.Target != null && !eventArgs.Target.HasTag("RCDDeconstructWhitelist"))
+                    if (eventArgs.Target != null && !eventArgs.Target.Value.HasTag("RCDDeconstructWhitelist"))
                     {
                         rcd.Owner.PopupMessage(eventArgs.User, Loc.GetString("rcd-component-deconstruct-target-not-on-whitelist-message"));
                         return false;

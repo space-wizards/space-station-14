@@ -3,9 +3,7 @@ using Content.Shared.Pulling;
 using Content.Shared.Pulling.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.IoC;
 using Robust.Shared.Players;
 
 namespace Content.Server.Pulling
@@ -29,9 +27,7 @@ namespace Content.Server.Pulling
 
         private void HandleReleasePulledObject(ICommonSession? session)
         {
-            var player = session?.AttachedEntity;
-
-            if (player == null)
+            if (session?.AttachedEntity is not {Valid: true} player)
             {
                 return;
             }
@@ -41,7 +37,7 @@ namespace Content.Server.Pulling
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(pulled, out SharedPullableComponent? pullable))
+            if (!EntityManager.TryGetComponent(pulled.Value, out SharedPullableComponent? pullable))
             {
                 return;
             }

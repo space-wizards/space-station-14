@@ -90,8 +90,7 @@ namespace Content.Server.Power.Components
         /// <param name="user"></param>
         public void RemoveItem(EntityUid user)
         {
-            var heldItem = Container.ContainedEntity;
-            if (heldItem == null)
+            if (Container.ContainedEntity is not {Valid: true} heldItem)
             {
                 return;
             }

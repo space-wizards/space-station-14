@@ -57,8 +57,8 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         // _lastFire is when we actually fired (so if we hold the button then recoil doesn't build up if we're not firing)
         private TimeSpan _lastFire;
 
-        public abstract EntityUid PeekAmmo();
-        public abstract EntityUid TakeProjectile(EntityCoordinates spawnAt);
+        public abstract EntityUid? PeekAmmo();
+        public abstract EntityUid? TakeProjectile(EntityCoordinates spawnAt);
 
         // Recoil / spray control
         [DataField("minAngle")]
@@ -202,8 +202,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             }
 
             var ammo = PeekAmmo();
-            var projectile = TakeProjectile(_entities.GetComponent<TransformComponent>(shooter).Coordinates);
-            if (projectile == default)
+            if (TakeProjectile(_entities.GetComponent<TransformComponent>(shooter).Coordinates) is not {Valid: true} projectile)
             {
                 SoundSystem.Play(Filter.Broadcast(), SoundEmpty.GetSound(), Owner);
                 return;
@@ -225,9 +224,9 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             }
             else if (_entities.HasComponent<ProjectileComponent>(projectile) &&
                      ammo != default &&
-                     _entities.TryGetComponent(ammo, out AmmoComponent? ammoComponent))
+                     _entities.TryGetComponent(ammo.Value, out AmmoComponent? ammoComponent))
             {
-                FireProjectiles(shooter, projectile, ammoComponent.ProjectilesFired, ammoComponent.EvenSpreadAngle, angle, ammoComponent.Velocity, ammo);
+                FireProjectiles(shooter, projectile, ammoComponent.ProjectilesFired, ammoComponent.EvenSpreadAngle, angle, ammoComponent.Velocity, ammo.Value);
 
                 if (CanMuzzleFlash)
                 {
@@ -236,7 +235,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
                 if (ammoComponent.Caseless)
                 {
-                    _entities.DeleteEntity(ammo);
+                    _entities.DeleteEntity(ammo.Value);
                 }
             }
             else

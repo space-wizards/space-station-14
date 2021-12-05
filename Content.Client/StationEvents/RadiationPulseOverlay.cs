@@ -84,7 +84,7 @@ namespace Content.Client.StationEvents
             var pulses = _entityManager.EntityQuery<RadiationPulseComponent>();
             foreach (var pulse in pulses) //Add all pulses that are not added yet but qualify
             {
-                var pulseEntity = pulse.OwnerUid;
+                var pulseEntity = pulse.Owner;
 
                 if (!_pulses.Keys.Contains(pulseEntity) && PulseQualifies(pulseEntity, currentEyeLoc))
                 {

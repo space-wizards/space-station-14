@@ -34,7 +34,7 @@ namespace Content.Server.Verbs.Commands
             {
                 if (args[0] == "self" && shell.Player?.AttachedEntity != null)
                 {
-                    playerEntity = shell.Player.AttachedEntityUid.Value;
+                    playerEntity = shell.Player.AttachedEntity.Value;
                 }
                 else
                 {
@@ -60,17 +60,15 @@ namespace Content.Server.Verbs.Commands
                 return;
             }
 
-            var entUid = new EntityUid(intUid);
-            if (!entityManager.EntityExists(entUid))
+            var target = new EntityUid(intUid);
+            if (!entityManager.EntityExists(target))
             {
                 shell.WriteError(Loc.GetString("invoke-verb-command-invalid-target-entity"));
                 return;
             }
 
             var verbName = args[2].ToLowerInvariant();
-            var verbs = verbSystem.GetLocalVerbs(
-                target, playerEntity, VerbType.All, true
-                );
+            var verbs = verbSystem.GetLocalVerbs(target, playerEntity, VerbType.All, true);
 
             if ((Enum.TryParse(typeof(VerbType), verbName, ignoreCase: true, out var vtype) &&
                 vtype is VerbType key) &&

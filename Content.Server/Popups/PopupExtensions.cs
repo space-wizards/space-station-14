@@ -1,10 +1,6 @@
-using System.Collections.Generic;
-using System.Linq;
 using Content.Shared.Popups;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Map;
 using Robust.Shared.Player;
 
 namespace Content.Server.Popups
@@ -25,14 +21,12 @@ namespace Content.Server.Popups
 
             foreach (var viewer in viewers)
             {
-                var viewerEntity = viewer.AttachedEntity;
-
-                if (viewerEntity == null || source == viewerEntity || viewer.AttachedEntity == null)
+                if (viewer.AttachedEntity is not {Valid: true} viewerEntity || source == viewerEntity || viewer.AttachedEntity == null)
                 {
                     continue;
                 }
 
-                source.PopupMessage(viewer.AttachedEntity, message);
+                source.PopupMessage(viewerEntity, message);
             }
         }
 

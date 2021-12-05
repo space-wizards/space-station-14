@@ -23,7 +23,7 @@ namespace Content.Client.Conveyor.Visualizers
         private void ChangeState(AppearanceComponent appearance)
         {
             var entities = IoCManager.Resolve<IEntityManager>();
-            if (!entities.TryGetComponent(appearance.OwnerUid, out ISpriteComponent? sprite))
+            if (!entities.TryGetComponent(appearance.Owner, out ISpriteComponent? sprite))
             {
                 return;
             }

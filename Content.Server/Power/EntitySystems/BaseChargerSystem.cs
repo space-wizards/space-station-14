@@ -43,7 +43,7 @@ namespace Content.Server.Power.EntitySystems
                 return;
 
             Verb verb = new();
-            verb.Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(component.Container.ContainedEntity!).EntityName;
+            verb.Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(component.Container.ContainedEntity!.Value).EntityName;
             verb.Category = VerbCategory.Eject;
             verb.Act = () => component.RemoveItem(args.User);
             args.Verbs.Add(verb);
@@ -51,18 +51,18 @@ namespace Content.Server.Power.EntitySystems
 
         private void AddInsertVerb(EntityUid uid, BaseCharger component, GetInteractionVerbsEvent args)
         {
-            if (args.Using == null ||
+            if (args.Using is not {Valid: true} @using ||
                 !args.CanAccess ||
                 !args.CanInteract ||
                 component.HasCell ||
-                !component.IsEntityCompatible(args.Using) ||
+                !component.IsEntityCompatible(@using) ||
                 !_actionBlockerSystem.CanDrop(args.User))
                 return;
 
             Verb verb = new();
-            verb.Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(args.Using).EntityName;
+            verb.Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(@using).EntityName;
             verb.Category = VerbCategory.Insert;
-            verb.Act = () => component.TryInsertItem(args.Using);
+            verb.Act = () => component.TryInsertItem(@using);
             args.Verbs.Add(verb);
         }
     }

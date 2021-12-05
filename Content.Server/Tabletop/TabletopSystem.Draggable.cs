@@ -4,7 +4,6 @@ using Content.Shared.Tabletop.Events;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
@@ -43,29 +42,29 @@ namespace Content.Server.Tabletop
                 return;
 
             // Check if moved entity exists and has tabletop draggable component
-            if (!EntityManager.EntityExists(msg.MovedEntityUid)
+            if (!EntityManager.EntityExists(msg.MovedEntityUid))
                 return;
 
-            if (!EntityManager.HasComponent<TabletopDraggableComponent>(movedEntity))
+            if (!EntityManager.HasComponent<TabletopDraggableComponent>(msg.MovedEntityUid))
                 return;
 
             // TODO: some permission system, disallow movement if you're not permitted to move the item
 
             // Move the entity and dirty it (we use the map ID from the entity so noone can try to be funny and move the item to another map)
-            var transform = EntityManager.GetComponent<TransformComponent>(movedEntity);
+            var transform = EntityManager.GetComponent<TransformComponent>(msg.MovedEntityUid);
             var entityCoordinates = new EntityCoordinates(_mapManager.GetMapEntityId(transform.MapID), msg.Coordinates.Position);
             transform.Coordinates = entityCoordinates;
         }
 
         private void OnDraggingPlayerChanged(TabletopDraggingPlayerChangedEvent msg)
         {
-            var draggedmsg.DraggedEntityUid
+            var dragged = msg.DraggedEntityUid;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<TabletopDraggableComponent?>(draggedEntity, out var draggableComponent)) return;
+            if (!EntityManager.TryGetComponent<TabletopDraggableComponent?>(dragged, out var draggableComponent)) return;
 
             draggableComponent.DraggingPlayer = msg.DraggingPlayer;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<AppearanceComponent?>(draggedEntity, out var appearance)) return;
+            if (!EntityManager.TryGetComponent<AppearanceComponent?>(dragged, out var appearance)) return;
 
             if (draggableComponent.DraggingPlayer != null)
             {

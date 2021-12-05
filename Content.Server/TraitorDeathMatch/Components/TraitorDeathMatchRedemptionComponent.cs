@@ -63,10 +63,9 @@ namespace Content.Server.TraitorDeathMatch.Components
                 return false;
             }
 
-            var userPDAEntity = userInv.GetSlotItem(EquipmentSlotDefines.Slots.IDCARD)?.Owner;
             UplinkComponent? userUplink = null;
 
-            if (userPDAEntity != null)
+            if (userInv.GetSlotItem(EquipmentSlotDefines.Slots.IDCARD)?.Owner is {Valid: true} userPDAEntity)
                 if (IoCManager.Resolve<IEntityManager>().TryGetComponent<UplinkComponent?>(userPDAEntity, out var userUplinkComponent))
                     userUplink = userUplinkComponent;
 

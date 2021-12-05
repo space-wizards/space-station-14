@@ -69,7 +69,7 @@ namespace Content.Server.Traitor.Uplink.Account
 
         }
 
-        public bool TryPurchaseItem(UplinkAccount acc, string itemId, EntityCoordinates spawnCoords, [NotNullWhen(true)] out EntityUid purchasedItem)
+        public bool TryPurchaseItem(UplinkAccount acc, string itemId, EntityCoordinates spawnCoords, [NotNullWhen(true)] out EntityUid? purchasedItem)
         {
             purchasedItem = null;
 
