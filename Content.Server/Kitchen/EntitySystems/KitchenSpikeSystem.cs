@@ -95,15 +95,13 @@ namespace Content.Server.Kitchen.EntitySystems
 
             UpdateAppearance(uid, null, component);
 
-            // TODO: for everyone
             var user = EntityManager.GetEntity(uid);
-            _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-kill", ("user", user), ("victim", butcherable.Owner)), uid, Filter.Entities(userUid));
+            _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-kill", ("user", user), ("victim", butcherable.Owner)), uid, Filter.Pvs(userUid));
 
             // THE WHAT?
             // TODO: Need to be able to leave them on the spike to do DoT, see ss13.
             EntityManager.QueueDeleteEntity(victimUid);
 
-            // TODO: for everyone
             SoundSystem.Play(Filter.Pvs(user), component.SpikeSound.GetSound(), uid);
         }
 
