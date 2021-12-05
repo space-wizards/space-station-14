@@ -15,7 +15,7 @@ namespace Content.Server.Speech.EntitySystems
 
         public override void Initialize()
         {
-            SubscribeLocalEvent<MouseAccentComponent, AccentGetEvent>(OnAccent);
+            SubscribeLocalEvent<DogAccentComponent, AccentGetEvent>(OnAccent);
         }
 
         public string Accentuate(string message)
