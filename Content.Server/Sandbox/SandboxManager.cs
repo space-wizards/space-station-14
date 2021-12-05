@@ -157,7 +157,7 @@ namespace Content.Server.Sandbox
                 }
             }
 
-            void UpgradeId(EntityUidid)
+            void UpgradeId(EntityUid id)
             {
                 var accessSystem = EntitySystem.Get<AccessSystem>();
                 accessSystem.TrySetTags(id, allAccess);

@@ -133,8 +133,8 @@ namespace Content.Server.UserInterface
 
     public class ActivatableUIOpenAttemptEvent : CancellableEntityEventArgs
     {
-        public EntityUid user { get; }
-        public ActivatableUIOpenAttemptEvent(EntityUidwho)
+        public EntityUid User { get; }
+        public ActivatableUIOpenAttemptEvent(EntityUid who)
         {
             User = who;
         }

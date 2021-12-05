@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Server.Radio.Components;
 using Content.Shared.Chat;
 using Robust.Server.GameObjects;

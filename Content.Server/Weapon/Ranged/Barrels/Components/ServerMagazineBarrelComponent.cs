@@ -384,7 +384,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             return false;
         }
 
-        public void InsertMagazine(EntityUid user, EntityUidmagazine)
+        public void InsertMagazine(EntityUid user, EntityUid magazine)
         {
             SoundSystem.Play(Filter.Pvs(Owner), _soundMagInsert.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
             Owner.PopupMessage(user, Loc.GetString("server-magazine-barrel-component-interact-using-success"));

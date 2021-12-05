@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Content.Server.Administration;
 using Content.Shared.Administration;
@@ -29,12 +29,12 @@ namespace Content.Server.Verbs.Commands
             var verbSystem = EntitySystem.Get<SharedVerbSystem>();
 
             // get the 'player' entity (defaulting to command user, otherwise uses a uid)
-            EntityUid playerEntity = null;
+            EntityUid playerEntity = default;
             if (!int.TryParse(args[0], out var intPlayerUid))
             {
                 if (args[0] == "self" && shell.Player?.AttachedEntity != null)
                 {
-                    playerEntity = shell.Player.AttachedEntity;
+                    playerEntity = shell.Player.AttachedEntityUid.Value;
                 }
                 else
                 {
@@ -54,14 +54,14 @@ namespace Content.Server.Verbs.Commands
                 return;
             }
 
-            if (playerEntity == null)
+            if (playerEntity == default)
             {
                 shell.WriteError(Loc.GetString("invoke-verb-command-invalid-player-entity"));
                 return;
             }
 
             var entUid = new EntityUid(intUid);
-            if (!entityManager.EntityExists(entUid)
+            if (!entityManager.EntityExists(entUid))
             {
                 shell.WriteError(Loc.GetString("invoke-verb-command-invalid-target-entity"));
                 return;
