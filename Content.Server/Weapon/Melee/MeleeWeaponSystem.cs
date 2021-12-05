@@ -98,8 +98,8 @@ namespace Content.Server.Weapon.Melee
 
                     RaiseLocalEvent(target.Uid, new AttackedEvent(args.Used, args.User, args.ClickLocation));
 
-                    var appliedDamage = DamageSpecifier.ApplyModifierSets(comp.Damage + hitEvent.BonusDamage, hitEvent.ModifiersList);
-                    var damageResult = _damageableSystem.TryChangeDamage(target.Uid, appliedDamage);
+                    var modifiedDamage = DamageSpecifier.ApplyModifierSets(comp.Damage + hitEvent.BonusDamage, hitEvent.ModifiersList);
+                    var damageResult = _damageableSystem.TryChangeDamage(target.Uid, modifiedDamage);
 
                     if (damageResult != null)
                     {
@@ -173,13 +173,13 @@ namespace Content.Server.Weapon.Melee
                     SoundSystem.Play(Filter.Pvs(owner), comp.MissSound.GetSound(), args.User.Transform.Coordinates);
                 }
 
-                var appliedDamage = DamageSpecifier.ApplyModifierSets(comp.Damage + hitEvent.BonusDamage, hitEvent.ModifiersList);
+                var modifiedDamage = DamageSpecifier.ApplyModifierSets(comp.Damage + hitEvent.BonusDamage, hitEvent.ModifiersList);
 
                 foreach (var entity in hitEntities)
                 {
                     RaiseLocalEvent(entity.Uid, new AttackedEvent(args.Used, args.User, args.ClickLocation));
 
-                    var damageResult = _damageableSystem.TryChangeDamage(entity.Uid, appliedDamage);
+                    var damageResult = _damageableSystem.TryChangeDamage(entity.Uid, modifiedDamage);
 
                     if (damageResult != null)
                     {

@@ -52,7 +52,7 @@ namespace Content.Server.Tools.Components
         public SoundSpecifier WelderRefill { get; } = new SoundPathSpecifier("/Audio/Effects/refill.ogg");
 
         /// <summary>
-        ///     Damage to add to the base melee weapon damage while the welder is lit.
+        ///     When the welder is lit, this damage is added to the base melee weapon damage.
         /// </summary>
         /// <remarks>
         ///     If this is a standard welder, this damage bonus should probably subtract the entity's standard melee weapon damage
