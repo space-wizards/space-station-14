@@ -33,6 +33,9 @@
       normal: corgi
       crit: corgi_dead
       dead: corgi_dead
+  - type: Butcherable
+    meat: FoodMeat
+    pieces: 3
 
 - type: entity
   name: Ian
@@ -85,6 +88,9 @@
       normal: cat
       crit: cat_dead
       dead: cat_dead
+  - type: Butcherable
+    meat: FoodMeat
+    pieces: 2
 
 - type: entity
   name: calico cat
@@ -159,3 +165,6 @@
       normal: sloth
       crit: sloth_dead
       dead: sloth_dead
+  - type: Butcherable
+    meat: FoodMeat
+    pieces: 3

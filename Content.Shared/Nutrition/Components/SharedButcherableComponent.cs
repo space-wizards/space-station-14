@@ -13,6 +13,7 @@ namespace Content.Shared.Nutrition.Components
     {
         public override string Name => "Butcherable";
 
+        //TODO: List for sub-products like animal-hides, organs and etc?
         [ViewVariables]
         [DataField("meat")]
         public string? MeatPrototype;
