@@ -52,15 +52,13 @@ namespace Content.Server.Tools.Components
         public SoundSpecifier WelderRefill { get; } = new SoundPathSpecifier("/Audio/Effects/refill.ogg");
 
         /// <summary>
-        ///     Damage modifiers to apply when used as a melee weapon while lit.
+        ///     Damage to add to the base melee weapon damage while the welder is lit.
         /// </summary>
-        [DataField("litDamageModifier")]
-        public DamageModifierSet? LitDamageModifier;
-
-        /// <summary>
-        ///     Damage bonus to add when used as a melee weapon while lit.
-        /// </summary>
-        [DataField("litDamageBonus")]
-        public DamageSpecifier LitDamageBonus = new();
+        /// <remarks>
+        ///     If this is a standard welder, this damage bonus should probably subtract the entity's standard melee weapon damage
+        ///     and replace it all with heat damage. 
+        /// </remarks>
+        [DataField("litMeleeDamageBonus")]
+        public DamageSpecifier LitMeleeDamageBonus = new();
     }
 }

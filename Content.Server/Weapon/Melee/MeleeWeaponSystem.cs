@@ -98,17 +98,17 @@ namespace Content.Server.Weapon.Melee
 
                     RaiseLocalEvent(target.Uid, new AttackedEvent(args.Used, args.User, args.ClickLocation));
 
-                    var actualDamage = DamageSpecifier.ApplyModifierSets(comp.Damage + hitEvent.BonusDamage, hitEvent.ModifiersList);
-                    var damage = _damageableSystem.TryChangeDamage(target.Uid, actualDamage);
+                    var appliedDamage = DamageSpecifier.ApplyModifierSets(comp.Damage + hitEvent.BonusDamage, hitEvent.ModifiersList);
+                    var damageResult = _damageableSystem.TryChangeDamage(target.Uid, appliedDamage);
 
-                    if (damage != null)
+                    if (damageResult != null)
                     {
                         if (args.Used == args.User)
                             _logSystem.Add(LogType.MeleeHit,
-                                $"{args.User} melee attacked {args.TargetEntity} using their hands and dealt {damage.Total} damage");
+                                $"{args.User} melee attacked {args.TargetEntity} using their hands and dealt {damageResult.Total} damage");
                         else
                             _logSystem.Add(LogType.MeleeHit,
-                                $"{args.User} melee attacked {args.TargetEntity} using {args.Used} and dealt {damage.Total} damage");
+                                $"{args.User} melee attacked {args.TargetEntity} using {args.Used} and dealt {damageResult.Total} damage");
                     }
 
                     SoundSystem.Play(Filter.Pvs(owner), comp.HitSound.GetSound(), target);
@@ -173,22 +173,22 @@ namespace Content.Server.Weapon.Melee
                     SoundSystem.Play(Filter.Pvs(owner), comp.MissSound.GetSound(), args.User.Transform.Coordinates);
                 }
 
-                var actualDamage = DamageSpecifier.ApplyModifierSets(comp.Damage + hitEvent.BonusDamage, hitEvent.ModifiersList);
+                var appliedDamage = DamageSpecifier.ApplyModifierSets(comp.Damage + hitEvent.BonusDamage, hitEvent.ModifiersList);
 
                 foreach (var entity in hitEntities)
                 {
                     RaiseLocalEvent(entity.Uid, new AttackedEvent(args.Used, args.User, args.ClickLocation));
 
-                    var damage = _damageableSystem.TryChangeDamage(entity.Uid, actualDamage);
+                    var damageResult = _damageableSystem.TryChangeDamage(entity.Uid, appliedDamage);
 
-                    if (damage != null)
+                    if (damageResult != null)
                     {
                         if (args.Used == args.User)
                             _logSystem.Add(LogType.MeleeHit,
-                                $"{args.User} melee attacked {entity} using their hands and dealt {damage.Total} damage");
+                                $"{args.User} melee attacked {entity} using their hands and dealt {damageResult.Total} damage");
                         else
                             _logSystem.Add(LogType.MeleeHit,
-                                $"{args.User} melee attacked {entity} using {args.Used} and dealt {damage.Total} damage");
+                                $"{args.User} melee attacked {entity} using {args.Used} and dealt {damageResult.Total} damage");
                     }
                 }
             }

@@ -129,12 +129,10 @@
   - type: Tool
     speed: 0.05
   - type: Welder
-    litDamageModifier:
-      coefficients:
-        Blunt: 0 # you're burning them, not bashing them.
-    litDamageBonus:
-      types:
-        Heat: 0.5 # add 0.5 heat damage.
+    litMeleeDamageBonus:
+      types: # When lit, negate standard melee damage and replace with heat
+        Heat: 0.5
+        Blunt: -10
 
 - type: entity
   name: milkalyzer

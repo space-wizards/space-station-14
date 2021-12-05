@@ -49,12 +49,8 @@ namespace Content.Server.Tools
 
         private void OnMeleeHit(EntityUid uid, WelderComponent component, MeleeHitEvent args)
         {
-            if (args.Handled || !component.Lit)
-                return;
-
-            args.BonusDamage += component.LitDamageBonus;
-            if (component.LitDamageModifier != null)
-                args.ModifiersList.Add(component.LitDamageModifier);
+            if (!args.Handled && component.Lit)
+                args.BonusDamage += component.LitMeleeDamageBonus;
         }
 
         public (FixedPoint2 fuel, FixedPoint2 capacity) GetWelderFuelAndCapacity(EntityUid uid, WelderComponent? welder = null, SolutionContainerManagerComponent? solutionContainer = null)
