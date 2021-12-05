@@ -40,4 +40,5 @@
         states:
           enum.KitchenSpikeStatus.Empty: spike
           enum.KitchenSpikeStatus.Bloody: spikebloody
+  - type: DoAfter
 

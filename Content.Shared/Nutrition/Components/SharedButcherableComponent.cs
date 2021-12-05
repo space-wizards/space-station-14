@@ -21,6 +21,11 @@ namespace Content.Shared.Nutrition.Components
         [DataField("pieces")]
         public int Pieces = 5;
 
+        /// <summary>
+        /// Prevents butchering same entity on two and more spikes simultaneously and multiple doAfters on the same Spike
+        /// </summary>
+        public bool BeingButchered;
+
         // TODO: ECS this out!, my guess CanDropEvent should be client side only and then "ValidDragDrop" in the DragDropSystem needs a little touch
         // But this may lead to creating client-side systems for every Draggable component subbed to CanDrop. Actually those systems could control
         // CanDropOn behaviors as well (IDragDropOn)

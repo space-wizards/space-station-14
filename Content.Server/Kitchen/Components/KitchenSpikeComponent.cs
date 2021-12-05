@@ -21,7 +21,8 @@ namespace Content.Server.Kitchen.Components
         public string MeatSource0 = "?";
         public string MeatName = "?";
 
-        public List<EntityUid> BeingButchered = new();
+        // TODO: Spiking alive mobs?
+        // public List<EntityUid> BeingButchered = new();
 
         // ECS this out!, after DragDropSystem and InteractionSystem refactoring
         public override bool DragDropOn(DragDropEvent eventArgs)

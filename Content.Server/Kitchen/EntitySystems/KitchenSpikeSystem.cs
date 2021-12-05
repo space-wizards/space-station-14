@@ -34,17 +34,19 @@ namespace Content.Server.Kitchen.EntitySystems
 
         private void OnSpikingFail(EntityUid uid, KitchenSpikeComponent component, SpikingFailEvent args)
         {
-            component.BeingButchered.Remove(args.VictimUid);
+            if (EntityManager.TryGetComponent<SharedButcherableComponent>(args.VictimUid, out var butcherable))
+                butcherable.BeingButchered = false;
         }
 
         private void OnSpiknigFinished(EntityUid uid, KitchenSpikeComponent component, SpikingFinishedEvent args)
         {
-            component.BeingButchered.Remove(args.VictimUid);
+            if (EntityManager.TryGetComponent<SharedButcherableComponent>(args.VictimUid, out var butcherable))
+                butcherable.BeingButchered = false;
 
-            if (!Spikeable(uid, args.UserUid, args.VictimUid, component))
-                return;
-
-            Spike(uid, args.UserUid, args.VictimUid, component);
+            if (Spikeable(uid, args.UserUid, args.VictimUid, component, butcherable))
+            {
+                Spike(uid, args.UserUid, args.VictimUid, component);
+            }
         }
 
         private void OnDragDrop(EntityUid uid, KitchenSpikeComponent component, DragDropEvent args)
@@ -52,14 +54,20 @@ namespace Content.Server.Kitchen.EntitySystems
             // TODO: Server-side DragDropEvent should be Handleable and use UIDs
             // if(args.Handled)
             //      return;
+            //
+            // (!EntityManager.TryGetComponent<SharedButcherableComponent>(args.DraggedUid, out var butcherable)
+
+            if (!EntityManager.TryGetComponent<SharedButcherableComponent>(args.Dragged.Uid, out var butcherable)
+                || butcherable.BeingButchered)
+                return;
 
             if (!Spikeable(uid, args.User.Uid, args.Dragged.Uid, component))
                 return;
 
-            // if (TrySpike(uid, args.Dragged.Uid, args.User.Uid))
+            // if (TrySpike(uid, args.DraggedUid, args.UserUid))
             //      args.Handled = true;
 
-            TrySpike(uid, args.Dragged.Uid, args.User.Uid);
+            TrySpike(uid, args.User.Uid, args.Dragged.Uid, component, butcherable);
         }
 
         private void OnInteractUsing(EntityUid uid, KitchenSpikeComponent component, InteractUsingEvent args)
@@ -85,7 +93,6 @@ namespace Content.Server.Kitchen.EntitySystems
             // But Name is RobustToolbox-level, so presumably it'd have to be done in some other way (interface???)
             component.MeatName = Loc.GetString("comp-kitchen-spike-meat-name", ("victim", victimUid));
 
-            // TODO: Visualizer
             UpdateAppearance(uid, null, component);
 
             // TODO: for everyone
@@ -103,7 +110,7 @@ namespace Content.Server.Kitchen.EntitySystems
             KitchenSpikeComponent? component = null, TransformComponent? transform = null, UtensilComponent? utensil = null)
         {
             if (!Resolve(uid, ref component, ref transform) || component.MeatParts == 0)
-                return false; //TODO: Clean
+                return false;
 
             // Is using knife
             if (!Resolve(used, ref utensil) || (utensil.Types & UtensilType.Knife) == 0)
@@ -165,8 +172,6 @@ namespace Content.Server.Kitchen.EntitySystems
             if (!Resolve(uid, ref component) || !Resolve(victim, ref butcherable))
                 return;
 
-            if (component.BeingButchered.Contains(victim)) return;
-
             // THE WHAT?
             // Prevent dead from being spiked TODO: Maybe remove when rounds can be played and DOT is implemented
             if (Resolve(victim, ref mobState) &&
@@ -181,7 +186,9 @@ namespace Content.Server.Kitchen.EntitySystems
             else
                 _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-begin-hook-self", ("this", uid)), victim, Filter.Entities(user));
 
-            var doAfterArgs = new DoAfterEventArgs(uid, component.SpikeDelay, default, victim)
+            butcherable.BeingButchered = true;
+
+            var doAfterArgs = new DoAfterEventArgs(user, component.SpikeDelay, default, uid)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
