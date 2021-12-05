@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Content.Server.Act;
 using Content.Server.Chat.Managers;
 using Content.Server.Kitchen.EntitySystems;
@@ -23,7 +22,7 @@ namespace Content.Server.Kitchen.Components
         public string MeatSource0 = "?";
         public string MeatName = "?";
 
-        // ECS this out!, after DragDropSystem and InteractionSystem refactoring
+        // ECS this out!, when DragDropSystem and InteractionSystem refactored
         public override bool DragDropOn(DragDropEvent eventArgs)
         {
             return true;
