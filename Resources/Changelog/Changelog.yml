@@ -1,11 +1,6 @@
 Entries:
 - author: 20kdc
   changes:
-  - {message: Dragging an object causes it to not count as thrown anymore., type: Fix}
-  id: 208
-  time: '2021-05-27T10:47:40.0000000+00:00'
-- author: 20kdc
-  changes:
   - {message: 'Spears now apply damage when thrown, and have more damage', type: Add}
   id: 209
   time: '2021-05-27T10:47:49.0000000+00:00'
@@ -2867,3 +2862,9 @@ Entries:
       those who need it., type: Tweak}
   id: 709
   time: '2021-12-05T03:20:06.0000000+00:00'
+- author: Mith-randalf
+  changes:
+  - {message: 'Fixed some clothing names, applied armour to previously unarmoured
+      clothes, tweaked some armour values.', type: Tweak}
+  id: 710
+  time: '2021-12-05T06:39:52.0000000+00:00'
