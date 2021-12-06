@@ -15780,7 +15780,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 456
-  type: CrateGenericonimo
+  type: CrateGenericSteel
   components:
   - pos: 5.5,19.5
     parent: 0
@@ -26998,7 +26998,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 2090
-  type: CrateGenericonimo
+  type: CrateGenericSteel
   components:
   - pos: 6.5,32.5
     parent: 0
@@ -27012,7 +27012,7 @@ entities:
       PaperLabel: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 2091
-  type: CrateGenericonimo
+  type: CrateGenericSteel
   components:
   - pos: 7.5,31.5
     parent: 0
@@ -38043,7 +38043,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 3743
-  type: CrateGenericonimo
+  type: CrateGenericSteel
   components:
   - pos: 89.5,-7.5
     parent: 0
@@ -38057,7 +38057,7 @@ entities:
       PaperLabel: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 3744
-  type: CrateGenericonimo
+  type: CrateGenericSteel
   components:
   - pos: 90.5,-7.5
     parent: 0
@@ -48322,7 +48322,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 4940
-  type: CrateGenericonimo
+  type: CrateGenericSteel
   components:
   - pos: 17.5,41.5
     parent: 0
@@ -52917,7 +52917,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 5459
-  type: CrateGenericonimo
+  type: CrateGenericSteel
   components:
   - pos: 9.5,-18.5
     parent: 0
@@ -55405,7 +55405,7 @@ entities:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 5767
-  type: CrateGenericonimo
+  type: CrateGenericSteel
   components:
   - pos: 12.5,16.5
     parent: 0
