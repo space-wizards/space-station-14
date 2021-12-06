@@ -422,7 +422,7 @@ namespace Content.Server.Interaction
             if (InteractDoBefore(user, used, inRangeUnobstructed ? target : null, clickLocation, false))
                 return true;
 
-            if (target != null)
+            if (target != default)
             {
                 var rangedMsg = new RangedInteractEvent(user, used, target, clickLocation);
                 RaiseLocalEvent(target, rangedMsg);
