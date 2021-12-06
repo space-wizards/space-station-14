@@ -78,13 +78,13 @@ namespace Content.Client.Interactable
             bool popup = false)
         {
             var originEntity = origin.ControlledEntity;
-            if (originEntity == default)
+            if (originEntity == null)
             {
                 // TODO: Take into account the player's camera position?
                 return false;
             }
 
-            return SharedInteractionSystem.InRangeUnobstructed(originEntity, other, range, collisionMask, predicate,
+            return SharedInteractionSystem.InRangeUnobstructed(originEntity.Value, other, range, collisionMask, predicate,
                 ignoreInsideBlocker, popup);
         }
     }

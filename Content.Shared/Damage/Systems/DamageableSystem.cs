@@ -145,7 +145,7 @@ namespace Content.Shared.Damage
         ///     Returns a <see cref="DamageSpecifier"/> with information about the actual damage changes. This will be
         ///     null if the user had no applicable components that can take damage.
         /// </returns>
-        public DamageSpecifier? TryChangeDamage(EntityUid uid, DamageSpecifier damage, bool ignoreResistances = false,
+        public DamageSpecifier? TryChangeDamage(EntityUid? uid, DamageSpecifier damage, bool ignoreResistances = false,
             bool interruptsDoAfters = true, bool logChange = false)
         {
             if (!EntityManager.TryGetComponent<DamageableComponent>(uid, out var damageable))
@@ -175,7 +175,7 @@ namespace Content.Shared.Damage
                 }
 
                 var ev = new DamageModifyEvent(damage);
-                RaiseLocalEvent(uid, ev, false);
+                RaiseLocalEvent(uid.Value, ev, false);
                 damage = ev.Damage;
 
                 if (damage.Empty)

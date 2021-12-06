@@ -41,7 +41,8 @@ namespace Content.Server.GameTicking.Presets
         {
             var playerEntity = mind.OwnedEntity;
 
-            if (playerEntity != default && IoCManager.Resolve<IEntityManager>().HasComponent<GhostComponent>(playerEntity.Value))
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (entities.HasComponent<GhostComponent>(playerEntity))
                 return false;
 
             if (mind.VisitingEntity != default)
@@ -62,7 +63,7 @@ namespace Content.Server.GameTicking.Presets
             //   (If the mob survives, that's a bug. Ghosting is kept regardless.)
             var canReturn = canReturnGlobal && mind.CharacterDeadPhysically;
 
-            if (playerEntity != default && canReturnGlobal && IoCManager.Resolve<IEntityManager>().TryGetComponent(playerEntity.Value, out MobStateComponent? mobState))
+            if (canReturnGlobal && entities.TryGetComponent(playerEntity, out MobStateComponent? mobState))
             {
                 if (mobState.IsCritical())
                 {
@@ -71,7 +72,7 @@ namespace Content.Server.GameTicking.Presets
                     //todo: what if they dont breathe lol
                     //cry deeply
                     DamageSpecifier damage = new(IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>("Asphyxiation"), 200);
-                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(playerEntity.Value, damage, true);
+                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(playerEntity, damage, true);
                 }
             }
 
@@ -82,9 +83,9 @@ namespace Content.Server.GameTicking.Presets
             // If all else fails, it'll default to the default entity prototype name, "observer".
             // However, that should rarely happen.
             if(!string.IsNullOrWhiteSpace(mind.CharacterName))
-                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(ghost).EntityName = mind.CharacterName;
+                entities.GetComponent<MetaDataComponent>(ghost).EntityName = mind.CharacterName;
             else if (!string.IsNullOrWhiteSpace(mind.Session?.Name))
-                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(ghost).EntityName = mind.Session.Name;
+                entities.GetComponent<MetaDataComponent>(ghost).EntityName = mind.Session.Name;
 
             var ghostComponent = IoCManager.Resolve<IEntityManager>().GetComponent<GhostComponent>(ghost);
 

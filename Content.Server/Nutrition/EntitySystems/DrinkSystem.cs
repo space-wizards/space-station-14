@@ -113,7 +113,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
         private void AfterInteract(EntityUid uid, DrinkComponent component, AfterInteractEvent args)
         {
-            if (args.Handled || args.Target == default)
+            if (args.Handled || args.Target == null)
                 return;
 
             if (!_actionBlockerSystem.CanInteract(args.User) || !_actionBlockerSystem.CanUse(args.User))

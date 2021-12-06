@@ -140,9 +140,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             {
                 for (var i = 0; i < Math.Max(10, rangedMagazine.ShotsLeft); i++)
                 {
-                    var ammo = rangedMagazine.TakeAmmo();
-
-                    if (!ammo.Valid)
+                    if (rangedMagazine.TakeAmmo() is not {Valid: true} ammo)
                     {
                         continue;
                     }

@@ -56,17 +56,17 @@ namespace Content.Server.Chat.Commands
                     return;
                 }
 
-                if (mindComponent.OwnedEntity == default)
+                if (mindComponent.OwnedEntity is not {Valid: true} owned)
                 {
                     shell.WriteError("You don't have an entity!");
                     return;
                 }
 
-                var emote = chatSanitizer.TrySanitizeOutSmilies(message, mindComponent.OwnedEntity.Value, out var sanitized, out var emoteStr);
+                var emote = chatSanitizer.TrySanitizeOutSmilies(message, owned, out var sanitized, out var emoteStr);
                 if (sanitized.Length != 0)
-                    chat.EntitySay(mindComponent.OwnedEntity.Value, sanitized);
+                    chat.EntitySay(owned, sanitized);
                 if (emote)
-                    chat.EntityMe(mindComponent.OwnedEntity.Value, emoteStr!);
+                    chat.EntityMe(owned, emoteStr!);
             }
 
         }

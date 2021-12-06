@@ -22,6 +22,8 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
     public class RangedMagazineComponent : Component, IMapInit, IInteractUsing, IUse, IExamine
 #pragma warning restore 618
     {
+        [Dependency] private readonly IEntityManager _entities = default!;
+
         public override string Name => "RangedMagazine";
 
         private readonly Stack<EntityUid> _spawnedAmmo = new();
@@ -77,7 +79,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
                 }
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearanceComponent))
+            if (_entities.TryGetComponent(Owner, out AppearanceComponent? appearanceComponent))
             {
                 _appearanceComponent = appearanceComponent;
             }
@@ -93,7 +95,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
         public bool TryInsertAmmo(EntityUid user, EntityUid ammo)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(ammo, out AmmoComponent? ammoComponent))
+            if (!_entities.TryGetComponent(ammo, out AmmoComponent? ammoComponent))
             {
                 return false;
             }
@@ -116,7 +118,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             return true;
         }
 
-        public EntityUid TakeAmmo()
+        public EntityUid? TakeAmmo()
         {
             EntityUid ammo = default;
             // If anything's spawned use that first, otherwise use the fill prototype as a fallback (if we have spawn count left)
@@ -128,7 +130,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             else if (_unspawnedCount > 0)
             {
                 _unspawnedCount--;
-                ammo = IoCManager.Resolve<IEntityManager>().SpawnEntity(_fillPrototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
+                ammo = _entities.SpawnEntity(_fillPrototype, _entities.GetComponent<TransformComponent>(Owner).Coordinates);
             }
 
             UpdateAppearance();
@@ -142,21 +144,20 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User, out HandsComponent? handsComponent))
+            if (!_entities.TryGetComponent(eventArgs.User, out HandsComponent? handsComponent))
             {
                 return false;
             }
 
-            var ammo = TakeAmmo();
-            if (ammo == null)
+            if (TakeAmmo() is not {Valid: true} ammo)
             {
                 return false;
             }
 
-            var itemComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(ammo);
+            var itemComponent = _entities.GetComponent<ItemComponent>(ammo);
             if (!handsComponent.CanPutInHand(itemComponent))
             {
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(ammo).Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(eventArgs.User).Coordinates;
+                _entities.GetComponent<TransformComponent>(ammo).Coordinates = _entities.GetComponent<TransformComponent>(eventArgs.User).Coordinates;
                 ServerRangedBarrelComponent.EjectCasing(ammo);
             }
             else

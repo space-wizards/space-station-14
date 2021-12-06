@@ -23,8 +23,8 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
             _data = IoCManager.Resolve<IMapManager>().GetAllGrids().Where(g => (int) g.Index != 0);
             foreach (var grid in _data)
             {
-                var tempQualifier = IoCManager.Resolve<IPlayerManager>().LocalPlayer?.ControlledEntity;
-                var playerGrid = (tempQualifier != default ? IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(tempQualifier.Value) : null)?.GridID;
+                var player = IoCManager.Resolve<IPlayerManager>().LocalPlayer?.ControlledEntity;
+                var playerGrid = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<TransformComponent>(player)?.GridID;
                 GridOptions.AddItem($"{grid.Index} {(playerGrid == grid.Index ? " (Current)" : "")}");
             }
 

@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Interaction.Components;
@@ -42,7 +43,7 @@ namespace Content.Server.Chemistry.Components
 
         public bool TryDoInject(EntityUid? target, EntityUid user)
         {
-            if (target == default || !EligibleEntity(target.Value))
+            if (!EligibleEntity(target))
                 return false;
 
             string? msgFormat = null;
@@ -110,7 +111,7 @@ namespace Content.Server.Chemistry.Components
 
             EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(target.Value, targetSolution, removedSolution);
 
-            static bool EligibleEntity(EntityUid entity)
+            static bool EligibleEntity([NotNullWhen(true)] EntityUid? entity)
             {
                 // TODO: Does checking for BodyComponent make sense as a "can be hypospray'd" tag?
                 // In SS13 the hypospray ONLY works on mobs, NOT beakers or anything else.

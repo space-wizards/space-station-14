@@ -135,7 +135,7 @@ namespace Content.Client.Instruments.UI
             var instrument = _owner.Instrument;
 
             // If either the entity or component are null, return.
-            if (instrumentEnt == default || instrument == default)
+            if (instrumentEnt == null || instrument == null)
                 return false;
 
             // If we're a handheld instrument, we might be in a container. Get it just in case.

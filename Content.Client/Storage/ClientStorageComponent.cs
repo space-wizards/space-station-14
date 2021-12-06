@@ -256,7 +256,7 @@ namespace Content.Client.Storage
                 {
                     var controlledEntity = players.LocalPlayer?.ControlledEntity;
 
-                    if (controlledEntity != default && entities.HasComponent<HandsComponent>(controlledEntity.Value))
+                    if (entities.HasComponent<HandsComponent>(controlledEntity))
                     {
 #pragma warning disable 618
                         StorageEntity.SendNetworkMessage(new InsertEntityMessage());

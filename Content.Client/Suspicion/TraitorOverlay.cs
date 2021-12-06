@@ -41,7 +41,7 @@ namespace Content.Client.Suspicion
             var viewport = _eyeManager.GetWorldViewport();
 
             var ent = _playerManager.LocalPlayer?.ControlledEntity;
-            if (ent == default || _entityManager.TryGetComponent(ent.Value, out SuspicionRoleComponent? sus) != true)
+            if (_entityManager.TryGetComponent(ent, out SuspicionRoleComponent? sus) != true)
             {
                 return;
             }

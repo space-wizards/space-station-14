@@ -90,13 +90,13 @@ namespace Content.Client.Audio
             _accumulator -= _cooldown;
 
             var player = _playerManager.LocalPlayer?.ControlledEntity;
-            if (player == default)
+            if (!EntityManager.TryGetComponent(player, out TransformComponent? playerManager))
             {
                 ClearSounds();
                 return;
             }
 
-            var coordinates = EntityManager.GetComponent<TransformComponent>(player.Value).Coordinates;
+            var coordinates = playerManager.Coordinates;
 
             foreach (var (comp, (stream, _)) in _playingSounds.ToArray())
             {

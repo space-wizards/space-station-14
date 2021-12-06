@@ -121,7 +121,7 @@ namespace Content.Server.GameTicking.Presets
             }
 
             // Finally, it would be preferrable if they spawned as far away from other players as reasonably possible.
-            if (mind.OwnedEntity != default && FindAnyIsolatedSpawnLocation(mind, out var bestTarget))
+            if (mind.OwnedEntity != null && FindAnyIsolatedSpawnLocation(mind, out var bestTarget))
             {
                 _entityManager.GetComponent<TransformComponent>(mind.OwnedEntity.Value).Coordinates = bestTarget;
             }

@@ -47,7 +47,7 @@ namespace Content.Client.Weapons.Ranged
             }
 
             var entity = _playerManager.LocalPlayer?.ControlledEntity;
-            if (entity == default || !EntityManager.TryGetComponent(entity.Value, out SharedHandsComponent? hands))
+            if (!EntityManager.TryGetComponent(entity, out SharedHandsComponent? hands))
             {
                 return;
             }

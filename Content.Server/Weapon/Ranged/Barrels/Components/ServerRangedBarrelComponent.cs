@@ -223,8 +223,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 FireHitscan(shooter, hitscan, angle);
             }
             else if (_entities.HasComponent<ProjectileComponent>(projectile) &&
-                     ammo != default &&
-                     _entities.TryGetComponent(ammo.Value, out AmmoComponent? ammoComponent))
+                     _entities.TryGetComponent(ammo, out AmmoComponent? ammoComponent))
             {
                 FireProjectiles(shooter, projectile, ammoComponent.ProjectilesFired, ammoComponent.EvenSpreadAngle, angle, ammoComponent.Velocity, ammo.Value);
 

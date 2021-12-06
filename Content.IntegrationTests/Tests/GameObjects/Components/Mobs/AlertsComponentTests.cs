@@ -51,7 +51,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                 Assert.NotNull(local);
                 var controlled = local.ControlledEntity;
                 Assert.NotNull(controlled);
-                var alertsComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ClientAlertsComponent>(controlled);
+                var alertsComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ClientAlertsComponent>(controlled.Value);
                 Assert.NotNull(alertsComponent);
 
                 // find the alertsui
@@ -86,7 +86,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                 Assert.NotNull(local);
                 var controlled = local.ControlledEntity;
                 Assert.NotNull(controlled);
-                var alertsComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ClientAlertsComponent>(controlled);
+                var alertsComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ClientAlertsComponent>(controlled.Value);
                 Assert.NotNull(alertsComponent);
 
                 // find the alertsui

@@ -153,9 +153,7 @@ namespace Content.Server.Mind
                 //    (If being a borg or AI counts as dead, then this is highly likely, as it's still the same Mind for practical purposes.)
 
                 // This can be null if they're deleted (spike / brain nom)
-                if (OwnedEntity == default)
-                    return true;
-                var targetMobState = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<MobStateComponent>(OwnedEntity.Value);
+                var targetMobState = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<MobStateComponent>(OwnedEntity);
                 // This can be null if it's a brain (this happens very often)
                 // Brains are the result of gibbing so should definitely count as dead
                 if (targetMobState == null)
@@ -184,7 +182,7 @@ namespace Content.Server.Mind
             role.Greet();
 
             var message = new RoleAddedEvent(role);
-            if (OwnedEntity != default)
+            if (OwnedEntity != null)
             {
                 IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(OwnedEntity.Value, message);
             }
@@ -210,7 +208,7 @@ namespace Content.Server.Mind
 
             var message = new RoleRemovedEvent(role);
 
-            if (OwnedEntity != default)
+            if (OwnedEntity != null)
             {
                 IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(OwnedEntity.Value, message);
             }
