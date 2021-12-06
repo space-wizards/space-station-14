@@ -200,7 +200,7 @@ namespace Content.Server.Medical.Components
 
                         if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(_bodyContainer.ContainedEntity.Value, out MindComponent? mindComp) || mindComp.Mind == null)
                         {
-                            obj.Session.AttachedEntity?.PopupMessageCursor(Loc.GetString("medical-scanner-component-msg-no-soul"));
+                            obj.Session.AttachedEntity.PopupMessageCursor(Loc.GetString("medical-scanner-component-msg-no-soul"));
                             break;
                         }
 
@@ -215,7 +215,7 @@ namespace Content.Server.Medical.Components
                         if (mindUser == null)
                         {
                             // For now assume this means soul departed
-                            obj.Session.AttachedEntity?.PopupMessageCursor(Loc.GetString("medical-scanner-component-msg-soul-broken"));
+                            obj.Session.AttachedEntity.PopupMessageCursor(Loc.GetString("medical-scanner-component-msg-soul-broken"));
                             break;
                         }
 

@@ -163,7 +163,7 @@ namespace Content.Server.Kitchen.EntitySystems
                     if (!EntityManager.TryGetComponent(component.Owner, out ApcPowerReceiverComponent? receiver) ||
                         !receiver.Powered) break;
                     ClickSound(component);
-                    DoWork(component, message.Session.AttachedEntity!.Value,
+                    DoWork(component, message.Session.AttachedEntity,
                         SharedReagentGrinderComponent.GrinderProgram.Grind);
                     break;
 
@@ -171,7 +171,7 @@ namespace Content.Server.Kitchen.EntitySystems
                     if (!EntityManager.TryGetComponent(component.Owner, out ApcPowerReceiverComponent? receiver2) ||
                         !receiver2.Powered) break;
                     ClickSound(component);
-                    DoWork(component, message.Session.AttachedEntity!.Value,
+                    DoWork(component, message.Session.AttachedEntity,
                         SharedReagentGrinderComponent.GrinderProgram.Juice);
                     break;
 

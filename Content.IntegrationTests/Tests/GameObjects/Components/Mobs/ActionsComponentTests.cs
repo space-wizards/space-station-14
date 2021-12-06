@@ -75,7 +75,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             await server.WaitAssertion(() =>
             {
                 var playerEnt = serverPlayerManager.Sessions.Single().AttachedEntity;
-                var actionsComponent = sEntities.GetComponent<ServerActionsComponent>(playerEnt!.Value);
+                var actionsComponent = sEntities.GetComponent<ServerActionsComponent>(playerEnt);
 
                 // player should begin with their innate actions granted
                 innateActions.AddRange(actionsComponent.InnateActions);
@@ -157,7 +157,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             await server.WaitAssertion(() =>
             {
                 var playerEnt = serverPlayerManager.Sessions.Single().AttachedEntity;
-                var actionsComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ServerActionsComponent>(playerEnt!.Value);
+                var actionsComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ServerActionsComponent>(playerEnt);
                 actionsComponent.Revoke(ActionType.DebugInstant);
             });
 
@@ -250,7 +250,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
 
             await server.WaitAssertion(() =>
             {
-                serverPlayerEnt = serverPlayerManager.Sessions.Single().AttachedEntity!.Value;
+                serverPlayerEnt = serverPlayerManager.Sessions.Single().AttachedEntity;
                 serverActionsComponent = serverEntManager.GetComponent<ServerActionsComponent>(serverPlayerEnt);
 
                 // spawn and give them an item that has actions

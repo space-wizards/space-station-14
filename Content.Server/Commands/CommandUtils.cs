@@ -39,11 +39,11 @@ namespace Content.Server.Commands
         /// sending a failure to the performer if unable to.
         /// </summary>
         public static bool TryGetAttachedEntityByUsernameOrId(IConsoleShell shell,
-            string usernameOrId, IPlayerSession performer, [NotNullWhen(true)] out EntityUid? attachedEntity)
+            string usernameOrId, IPlayerSession performer, out EntityUid attachedEntity)
         {
-            attachedEntity = null;
+            attachedEntity = default;
             if (!TryGetSessionByUsernameOrId(shell, usernameOrId, performer, out var session)) return false;
-            if (session.AttachedEntity == null)
+            if (session.AttachedEntity == default)
             {
                 shell.WriteLine("User has no attached entity.");
                 return false;

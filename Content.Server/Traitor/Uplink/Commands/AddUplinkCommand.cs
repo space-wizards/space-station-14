@@ -74,7 +74,7 @@ namespace Content.Server.Traitor.Uplink.Commands
 
             // Finally add uplink
             if (!entityManager.EntitySysManager.GetEntitySystem<UplinkSystem>()
-                .AddUplink(user.Value, uplinkAccount, uplinkEntity))
+                .AddUplink(user, uplinkAccount, uplinkEntity))
             {
                 shell.WriteLine(Loc.GetString("Failed to add uplink to the player"));
                 return;

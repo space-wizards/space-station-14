@@ -202,10 +202,10 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             {
                 return default;
             }
-            var entity = _chamberContainer.ContainedEntity;
+            var entity = _chamberContainer.ContainedEntity ?? default;
 
             Cycle();
-            return (entity != null ? IoCManager.Resolve<IEntityManager>().GetComponent<AmmoComponent>(entity) : null).TakeBullet(spawnAt);
+            return entity != default ? IoCManager.Resolve<IEntityManager>().GetComponent<AmmoComponent>(entity).TakeBullet(spawnAt) : null;
         }
 
         private void Cycle(bool manual = false)
@@ -275,14 +275,14 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             var chamberEntity = _chamberContainer.ContainedEntity;
             if (chamberEntity != null)
             {
-                if (!_chamberContainer.Remove(chamberEntity))
+                if (!_chamberContainer.Remove(chamberEntity.Value))
                 {
                     return false;
                 }
-                var ammoComponent = IoCManager.Resolve<IEntityManager>().GetComponent<AmmoComponent>(chamberEntity);
+                var ammoComponent = IoCManager.Resolve<IEntityManager>().GetComponent<AmmoComponent>(chamberEntity.Value);
                 if (!ammoComponent.Caseless)
                 {
-                    EjectCasing(chamberEntity);
+                    EjectCasing(chamberEntity.Value);
                 }
                 return true;
             }
@@ -297,10 +297,10 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             }
 
             // Try and pull a round from the magazine to replace the chamber if possible
-            var magazine = MagazineContainer.ContainedEntity;
-            var nextRound = (magazine != null ? IoCManager.Resolve<IEntityManager>().GetComponent<RangedMagazineComponent>(magazine) : null).TakeAmmo();
+            var magazine = MagazineContainer.ContainedEntity ?? default;
+            var nextRound = magazine != default ? IoCManager.Resolve<IEntityManager>().GetComponent<RangedMagazineComponent>(magazine).TakeAmmo() : default;
 
-            if (nextRound == null)
+            if (nextRound == default)
             {
                 return false;
             }
@@ -334,12 +334,12 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 return;
             }
 
-            MagazineContainer.Remove(mag);
+            MagazineContainer.Remove(mag.Value);
             SoundSystem.Play(Filter.Pvs(Owner), _soundMagEject.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
 
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out HandsComponent? handsComponent))
             {
-                handsComponent.PutInHandOrDrop(IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(mag));
+                handsComponent.PutInHandOrDrop(IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(mag.Value));
             }
 
             Dirty();

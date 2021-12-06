@@ -145,7 +145,7 @@ namespace Content.Server.PDA
         private void OnUIMessage(PDAComponent pda, ServerBoundUserInterfaceMessage msg)
         {
             // cast EntityUid? to EntityUid
-            if (msg.Session.AttachedEntity is not { } playerUid)
+            if (msg.Session.AttachedEntity is not {Valid: true} playerUid)
                 return;
 
             switch (msg.Message)

@@ -81,7 +81,7 @@ namespace Content.Server.Labels
 
         private bool CheckInteract(ICommonSession session)
         {
-            if (session.AttachedEntity is not { } uid
+            if (session.AttachedEntity is not {Valid: true } uid
                 || !Get<ActionBlockerSystem>().CanInteract(uid)
                 || !Get<ActionBlockerSystem>().CanUse(uid))
                 return false;

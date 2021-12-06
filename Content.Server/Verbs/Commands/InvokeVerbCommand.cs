@@ -32,9 +32,9 @@ namespace Content.Server.Verbs.Commands
             EntityUid playerEntity = default;
             if (!int.TryParse(args[0], out var intPlayerUid))
             {
-                if (args[0] == "self" && shell.Player?.AttachedEntity != null)
+                if (args[0] == "self" && shell.Player?.AttachedEntity != default)
                 {
-                    playerEntity = shell.Player.AttachedEntity.Value;
+                    playerEntity = shell.Player.AttachedEntity;
                 }
                 else
                 {

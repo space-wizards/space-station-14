@@ -20,7 +20,7 @@ namespace Content.Shared.Pulling.Systems
         private void OnRelayMoveInput(EntityUid uid, SharedPullableComponent component, RelayMoveInputEvent args)
         {
             var entity = args.Session.AttachedEntity;
-            if (!entity.HasValue || !_blocker.CanMove(entity.Value)) return;
+            if (entity == default || !_blocker.CanMove(entity)) return;
             _pullSystem.TryStopPull(component);
         }
     }

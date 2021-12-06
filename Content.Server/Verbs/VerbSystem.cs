@@ -36,7 +36,7 @@ namespace Content.Server.Verbs
 
             // Get the list of verbs. This effectively also checks that the requested verb is in fact a valid verb that
             // the user can perform.
-            var verbs = GetLocalVerbs(args.Target, userEntity.Value, args.Type)[args.Type];
+            var verbs = GetLocalVerbs(args.Target, userEntity, args.Type)[args.Type];
 
             // Note that GetLocalVerbs might waste time checking & preparing unrelated verbs even though we know
             // precisely which one we want to run. However, MOST entities will only have 1 or 2 verbs of a given type.
@@ -44,7 +44,7 @@ namespace Content.Server.Verbs
 
             // Find the requested verb.
             if (verbs.TryGetValue(args.RequestedVerb, out var verb))
-                ExecuteVerb(verb, userEntity.Value, args.Target);
+                ExecuteVerb(verb, userEntity, args.Target);
             else
                 // 404 Verb not found. Note that this could happen due to something as simple as opening the verb menu, walking away, then trying
                 // to run the pickup-item verb. So maybe this shouldn't even be logged?
@@ -61,7 +61,7 @@ namespace Content.Server.Verbs
                 return;
             }
 
-            if (player.AttachedEntity == null)
+            if (player.AttachedEntity == default)
             {
                 Logger.Warning($"{nameof(HandleVerbRequest)} called by player {player} with no attached entity.");
                 return;
@@ -71,7 +71,7 @@ namespace Content.Server.Verbs
             // this, and some verbs (e.g. view variables) won't even care about whether an entity is accessible through
             // the entity menu or not.
 
-            var response = new VerbsResponseEvent(args.EntityUid, GetLocalVerbs(args.EntityUid, player.AttachedEntity.Value, args.Type));
+            var response = new VerbsResponseEvent(args.EntityUid, GetLocalVerbs(args.EntityUid, player.AttachedEntity, args.Type));
             RaiseNetworkEvent(response, player.ConnectedClient);
         }
     }

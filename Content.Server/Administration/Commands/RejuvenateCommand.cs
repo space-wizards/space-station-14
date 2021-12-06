@@ -35,7 +35,7 @@ namespace Content.Server.Administration.Commands
                     shell.WriteLine(Loc.GetString("rejuvenate-command-no-entity-attached-message"));
                     return;
                 }
-                PerformRejuvenate(player.AttachedEntity.Value);
+                PerformRejuvenate(player.AttachedEntity);
             }
 
             var entityManager = IoCManager.Resolve<IEntityManager>();

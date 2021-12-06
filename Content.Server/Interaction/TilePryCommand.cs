@@ -49,9 +49,9 @@ namespace Content.Server.Interaction
             }
 
             var mapManager = IoCManager.Resolve<IMapManager>();
-            var playerGrid = _entities.GetComponent<TransformComponent>(player.AttachedEntity.Value).GridID;
+            var playerGrid = _entities.GetComponent<TransformComponent>(player.AttachedEntity).GridID;
             var mapGrid = mapManager.GetGrid(playerGrid);
-            var playerPosition = _entities.GetComponent<TransformComponent>(player.AttachedEntity.Value).Coordinates;
+            var playerPosition = _entities.GetComponent<TransformComponent>(player.AttachedEntity).Coordinates;
             var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
 
             for (var i = -radius; i <= radius; i++)

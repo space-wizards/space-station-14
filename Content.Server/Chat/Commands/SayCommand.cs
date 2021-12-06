@@ -25,7 +25,7 @@ namespace Content.Server.Chat.Commands
                 return;
             }
 
-            if (player.Status != SessionStatus.InGame || !player.AttachedEntity.HasValue)
+            if (player.Status != SessionStatus.InGame || player.AttachedEntity == default)
                 return;
 
             if (args.Length < 1)

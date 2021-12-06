@@ -44,7 +44,7 @@ namespace Content.Server.Body.Commands
                         return;
                     }
 
-                    entity = player.AttachedEntity.Value;
+                    entity = player.AttachedEntity;
 
                     break;
                 case 2:

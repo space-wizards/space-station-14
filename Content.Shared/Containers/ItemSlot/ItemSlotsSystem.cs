@@ -244,14 +244,14 @@ namespace Content.Shared.Containers.ItemSlots
             if (!hands.TryGetActiveHeldEntity(out var item))
                 return false;
 
-            if (!CanInsert(uid, item.Value, slot))
+            if (!CanInsert(uid, item, slot))
                 return false;
 
             // hands.Drop(item) checks CanDrop action blocker
-            if (!_actionBlockerSystem.CanInteract(user) && hands.Drop(item.Value))
+            if (!_actionBlockerSystem.CanInteract(user) && hands.Drop(item))
                 return false;
 
-            Insert(uid, slot, item.Value);
+            Insert(uid, slot, item);
             return true;
         }
         #endregion

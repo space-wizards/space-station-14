@@ -81,7 +81,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private bool CheckInteract(ICommonSession session)
         {
-            if (session.AttachedEntity is not {} uid
+            if (session.AttachedEntity is not {Valid: true} uid
                 || !_actionBlockerSystem.CanInteract(uid)
                 || !_actionBlockerSystem.CanUse(uid))
                 return false;

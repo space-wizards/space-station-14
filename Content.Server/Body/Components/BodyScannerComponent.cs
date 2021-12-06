@@ -24,12 +24,12 @@ namespace Content.Server.Body.Components
 
             var session = actor.PlayerSession;
 
-            if (session.AttachedEntity == null)
+            if (session.AttachedEntity == default)
             {
                 return;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(session.AttachedEntity.Value, out SharedBodyComponent? body))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(session.AttachedEntity, out SharedBodyComponent? body))
             {
                 var state = InterfaceState(body);
                 UserInterface?.SetState(state);

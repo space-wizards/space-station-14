@@ -73,7 +73,7 @@ namespace Content.Server.Tabletop
         /// <param name="uid">The UID of the tabletop game entity.</param>
         public void OpenSessionFor(IPlayerSession player, EntityUid uid)
         {
-            if (!EntityManager.TryGetComponent(uid, out TabletopGameComponent? tabletop) || player.AttachedEntity is not {} attachedEntity)
+            if (!EntityManager.TryGetComponent(uid, out TabletopGameComponent? tabletop) || player.AttachedEntity is not {Valid: true} attachedEntity)
                 return;
 
             // Make sure we have a session, and add the player to it if not added already.

@@ -31,13 +31,13 @@ namespace Content.Server.Damage.Commands
                         return;
                     }
 
-                    if (player.AttachedEntity == null)
+                    if (player.AttachedEntity == default)
                     {
                         shell.WriteLine("An entity needs to be specified when you aren't attached to an entity.");
                         return;
                     }
 
-                    entity = player.AttachedEntity.Value;
+                    entity = player.AttachedEntity;
                     break;
                 case 1:
                     if (!EntityUid.TryParse(args[0], out var id))

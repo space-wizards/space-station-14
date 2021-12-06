@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Content.Server.Hands.Components;
 using Content.Server.Interaction;
 using Content.Server.Storage.Components;
+using Content.Shared.Interaction;
 using Content.Shared.Movement;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
@@ -151,14 +152,14 @@ namespace Content.Server.Storage.EntitySystems
                 var attachedEntity = session.AttachedEntity;
 
                 // The component manages the set of sessions, so this invalid session should be removed soon.
-                if (attachedEntity == null || !IoCManager.Resolve<IEntityManager>().EntityExists(attachedEntity.Value))
+                if (attachedEntity == default || !IoCManager.Resolve<IEntityManager>().EntityExists(attachedEntity))
                     continue;
 
-                if (storageMap != IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(attachedEntity.Value).MapID)
+                if (storageMap != IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(attachedEntity).MapID)
                     continue;
 
-                var distanceSquared = (storagePos - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(attachedEntity.Value).WorldPosition).LengthSquared;
-                if (distanceSquared > InteractionSystem.InteractionRangeSquared)
+                var distanceSquared = (storagePos - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(attachedEntity).WorldPosition).LengthSquared;
+                if (distanceSquared > SharedInteractionSystem.InteractionRangeSquared)
                 {
                     storageComp.UnsubscribeSession(session);
                 }

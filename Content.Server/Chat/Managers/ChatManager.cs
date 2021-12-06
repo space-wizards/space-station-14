@@ -306,7 +306,7 @@ namespace Content.Server.Chat.Managers
             msg.MessageWrap = Loc.GetString("chat-manager-send-dead-chat-wrap-message",
                                             ("deadChannelName", Loc.GetString("chat-manager-dead-channel-name")),
                                             ("playerName", (playerName)));
-            msg.SenderEntity = player.AttachedEntity.GetValueOrDefault();
+            msg.SenderEntity = player.AttachedEntity;
             _netManager.ServerSendToMany(msg, clients.ToList());
         }
 

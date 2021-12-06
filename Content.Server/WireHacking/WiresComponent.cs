@@ -9,6 +9,8 @@ using Content.Server.UserInterface;
 using Content.Server.VendingMachines;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Helpers;
+using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Tools;
 using Content.Shared.Wires;

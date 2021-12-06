@@ -59,9 +59,9 @@ namespace Content.IntegrationTests.Tests.PDA
 
             await server.WaitAssertion(() =>
             {
-                var player = sPlayerManager.Sessions.Single().AttachedEntity!.Value;
+                var player = sPlayerManager.Sessions.Single().AttachedEntity;
 
-                Assert.NotNull(player);
+                Assert.That(player != default);
 
                 // The player spawns with an ID on by default
                 Assert.NotNull(player.GetHeldId());

@@ -119,16 +119,16 @@ namespace Content.Server.MachineLinking.System
             switch (msg.Message)
             {
                 case SignalPortSelected portSelected:
-                    if (msg.Session.AttachedEntity == null ||
-                        !EntityManager.TryGetComponent(msg.Session.AttachedEntity.Value, out HandsComponent? hands) ||
+                    if (msg.Session.AttachedEntity == default ||
+                        !EntityManager.TryGetComponent(msg.Session.AttachedEntity, out HandsComponent? hands) ||
                         !hands.TryGetActiveHeldEntity(out var heldEntity) ||
                         !EntityManager.TryGetComponent(heldEntity, out SignalLinkerComponent? signalLinkerComponent) ||
-                        !_interaction.InRangeUnobstructed(msg.Session.AttachedEntity.Value, component.Owner, ignoreInsideBlocker: true) ||
+                        !_interaction.InRangeUnobstructed(msg.Session.AttachedEntity, component.Owner, ignoreInsideBlocker: true) ||
                         !signalLinkerComponent.Port.HasValue ||
                         !signalLinkerComponent.Port.Value.transmitter.Outputs.ContainsPort(signalLinkerComponent.Port
                             .Value.port) || !component.Inputs.ContainsPort(portSelected.Port))
                         return;
-                    LinkerInteraction(msg.Session.AttachedEntity.Value, signalLinkerComponent.Port.Value.transmitter,
+                    LinkerInteraction(msg.Session.AttachedEntity, signalLinkerComponent.Port.Value.transmitter,
                         signalLinkerComponent.Port.Value.port, component, portSelected.Port);
                     break;
             }
@@ -159,13 +159,13 @@ namespace Content.Server.MachineLinking.System
             switch (msg.Message)
             {
                 case SignalPortSelected portSelected:
-                    if (msg.Session.AttachedEntity == null ||
-                        !EntityManager.TryGetComponent(msg.Session.AttachedEntity.Value, out HandsComponent? hands) ||
+                    if (msg.Session.AttachedEntity == default ||
+                        !EntityManager.TryGetComponent(msg.Session.AttachedEntity, out HandsComponent? hands) ||
                         !hands.TryGetActiveHeldEntity(out var heldEntity) ||
                         !EntityManager.TryGetComponent(heldEntity, out SignalLinkerComponent? signalLinkerComponent) ||
-                        !_interaction.InRangeUnobstructed(msg.Session.AttachedEntity.Value, component.Owner, ignoreInsideBlocker: true))
+                        !_interaction.InRangeUnobstructed(msg.Session.AttachedEntity, component.Owner, ignoreInsideBlocker: true))
                         return;
-                    LinkerSaveInteraction(msg.Session.AttachedEntity.Value, signalLinkerComponent, component,
+                    LinkerSaveInteraction(msg.Session.AttachedEntity, signalLinkerComponent, component,
                         portSelected.Port);
                     break;
             }

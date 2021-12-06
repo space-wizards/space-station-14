@@ -49,7 +49,7 @@ namespace Content.Server.EntityList
 
             foreach (var entity in prototype.Entities(prototypeManager))
             {
-                entityManager.SpawnEntity(entity.ID, entityManager.GetComponent<TransformComponent>(player.AttachedEntity.Value).Coordinates);
+                entityManager.SpawnEntity(entity.ID, entityManager.GetComponent<TransformComponent>(player.AttachedEntity).Coordinates);
                 i++;
             }
 

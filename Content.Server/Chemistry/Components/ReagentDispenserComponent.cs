@@ -143,7 +143,7 @@ namespace Content.Server.Chemistry.Components
                 _ => true,
             };
 
-            if (!PlayerCanUseDispenser(obj.Session.AttachedEntity.Value, needsPower))
+            if (!PlayerCanUseDispenser(obj.Session.AttachedEntity, needsPower))
                 return;
 
             switch (msg.Button)

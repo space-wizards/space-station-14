@@ -191,10 +191,10 @@ namespace Content.Server.Hands.Systems
 
             var player = playerSession.AttachedEntity;
 
-            if (!player.HasValue || !player.Value.IsValid())
+            if (player is not {Valid: true})
                 return false;
 
-            return EntityManager.TryGetComponent(player.Value, out hands);
+            return EntityManager.TryGetComponent(player, out hands);
         }
 
         private void HandleActivateItem(ICommonSession? session)

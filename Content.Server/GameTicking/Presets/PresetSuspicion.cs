@@ -72,7 +72,7 @@ namespace Content.Server.GameTicking.Presets
                 }
                 prefList.Add(player);
 
-                player.AttachedEntity?.EnsureComponent<SuspicionRoleComponent>();
+                player.AttachedEntity.EnsureComponent<SuspicionRoleComponent>();
             }
 
             var numTraitors = MathHelper.Clamp(readyPlayers.Count / PlayersPerTraitor,

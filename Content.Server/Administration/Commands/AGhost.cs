@@ -43,8 +43,8 @@ namespace Content.Server.Administration.Commands
             }
 
             var canReturn = mind.CurrentEntity != default;
-            var coordinates = player.AttachedEntity.HasValue
-                ? _entities.GetComponent<TransformComponent>(player.AttachedEntity.Value).Coordinates
+            var coordinates = player.AttachedEntity != default
+                ? _entities.GetComponent<TransformComponent>(player.AttachedEntity).Coordinates
                 : EntitySystem.Get<GameTicker>().GetObserverSpawnPoint();
             var ghost = _entities.SpawnEntity("AdminObserver", coordinates);
 

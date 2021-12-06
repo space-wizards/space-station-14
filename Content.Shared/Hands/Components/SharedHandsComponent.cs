@@ -112,7 +112,7 @@ namespace Content.Shared.Hands.Components
                 if (hand.HeldEntity == null)
                     continue;
 
-                if (!entMan.TryGetComponent(hand.HeldEntity.Value, out SharedItemComponent? item) || item.RsiPath == null)
+                if (!entMan.TryGetComponent(hand.HeldEntity, out SharedItemComponent? item) || item.RsiPath == null)
                     continue;
 
                 var handState = new HandVisualState(item.RsiPath, item.EquippedPrefix, hand.Location, item.Color);
@@ -250,7 +250,7 @@ namespace Content.Shared.Hands.Components
             foreach (var hand in Hands)
             {
                 if (hand.HeldEntity != default)
-                    yield return hand.HeldEntity.Value;
+                    yield return hand.HeldEntity;
             }
         }
 
@@ -416,7 +416,7 @@ namespace Content.Shared.Hands.Components
             if (hand.HeldEntity == null)
                 return false;
 
-            var heldEntity = hand.HeldEntity.Value;
+            var heldEntity = hand.HeldEntity;
 
             var handContainer = hand.Container;
             if (handContainer == null)
@@ -447,7 +447,7 @@ namespace Content.Shared.Hands.Components
             if (hand.HeldEntity == null)
                 return;
 
-            var heldEntity = hand.HeldEntity.Value;
+            var heldEntity = hand.HeldEntity;
 
             var handContainer = hand.Container;
             if (handContainer == null)
@@ -475,7 +475,7 @@ namespace Content.Shared.Hands.Components
             if (hand.HeldEntity == null)
                 return;
 
-            var heldEntity = hand.HeldEntity.Value;
+            var heldEntity = hand.HeldEntity;
 
             RemoveHeldEntityFromHand(hand);
 
@@ -538,7 +538,7 @@ namespace Content.Shared.Hands.Components
             if (hand.HeldEntity == null)
                 return false;
 
-            var heldEntity = hand.HeldEntity.Value;
+            var heldEntity = hand.HeldEntity;
 
             if (checkActionBlocker && !PlayerCanDrop())
                 return false;
@@ -557,7 +557,7 @@ namespace Content.Shared.Hands.Components
             if (hand.HeldEntity == null)
                 return;
 
-            var heldEntity = hand.HeldEntity.Value;
+            var heldEntity = hand.HeldEntity;
 
             RemoveHeldEntityFromHand(hand);
 
@@ -713,7 +713,7 @@ namespace Content.Shared.Hands.Components
                 return;
 
             await EntitySystem.Get<SharedInteractionSystem>()
-                .InteractUsing(Owner, activeHeldEntity.Value, heldEntity.Value, EntityCoordinates.Invalid);
+                .InteractUsing(Owner, activeHeldEntity, heldEntity, EntityCoordinates.Invalid);
         }
 
         public void ActivateItem(bool altInteract = false)
@@ -722,7 +722,7 @@ namespace Content.Shared.Hands.Components
                 return;
 
             EntitySystem.Get<SharedInteractionSystem>()
-                .TryUseInteraction(Owner, heldEntity.Value, altInteract);
+                .TryUseInteraction(Owner, heldEntity, altInteract);
         }
 
         public void ActivateHeldEntity(string handName)
@@ -745,14 +745,14 @@ namespace Content.Shared.Hands.Components
             if (!TryGetHeldEntity(handName, out var heldEntity))
                 return false;
 
-            if (!CanInsertEntityIntoHand(activeHand, heldEntity.Value) || !CanRemoveHeldEntityFromHand(hand))
+            if (!CanInsertEntityIntoHand(activeHand, heldEntity) || !CanRemoveHeldEntityFromHand(hand))
                 return false;
 
             if (checkActionBlocker && (!PlayerCanDrop() || !PlayerCanPickup()))
                 return false;
 
             RemoveHeldEntityFromHand(hand);
-            PutEntityIntoHand(activeHand, heldEntity.Value);
+            PutEntityIntoHand(activeHand, heldEntity);
             return true;
         }
 
@@ -761,13 +761,13 @@ namespace Content.Shared.Hands.Components
         private void DeselectActiveHeldEntity()
         {
             if (TryGetActiveHeldEntity(out var entity))
-                EntitySystem.Get<SharedInteractionSystem>().HandDeselectedInteraction(Owner, entity.Value);
+                EntitySystem.Get<SharedInteractionSystem>().HandDeselectedInteraction(Owner, entity);
         }
 
         private void SelectActiveHeldEntity()
         {
             if (TryGetActiveHeldEntity(out var entity))
-                EntitySystem.Get<SharedInteractionSystem>().HandSelectedInteraction(Owner, entity.Value);
+                EntitySystem.Get<SharedInteractionSystem>().HandSelectedInteraction(Owner, entity);
         }
 
         private void HandCountChanged()

@@ -22,7 +22,7 @@ namespace Content.Shared.Hands
         {
             var entity = eventArgs.SenderSession.AttachedEntity;
 
-            if (entity == default || !EntityManager.TryGetComponent(entity, out SharedHandsComponent? hands))
+            if (entity == null || !EntityManager.TryGetComponent(entity, out SharedHandsComponent? hands))
                 return;
 
             hands.ActiveHand = msg.HandName;

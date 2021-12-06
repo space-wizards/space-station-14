@@ -108,11 +108,11 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
             {
                 if (instrument.LaggedBatches == (int) (MaxMidiLaggedBatches * (1 / 3d) + 1))
                 {
-                    instrument.InstrumentPlayer.AttachedEntity?.PopupMessage(
+                    instrument.InstrumentPlayer.AttachedEntity.PopupMessage(
                         Loc.GetString("instrument-component-finger-cramps-light-message"));
                 } else if (instrument.LaggedBatches == (int) (MaxMidiLaggedBatches * (2 / 3d) + 1))
                 {
-                    instrument.InstrumentPlayer.AttachedEntity?.PopupMessage(
+                    instrument.InstrumentPlayer.AttachedEntity.PopupMessage(
                         Loc.GetString("instrument-component-finger-cramps-serious-message"));
                 }
             }

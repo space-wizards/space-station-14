@@ -16,7 +16,7 @@ namespace Content.Shared.CombatMode
         {
             var entity = eventArgs.SenderSession.AttachedEntity;
 
-            if (entity == null || !EntityManager.TryGetComponent(entity.Value, out SharedCombatModeComponent? combatModeComponent))
+            if (entity == null || !EntityManager.TryGetComponent(entity, out SharedCombatModeComponent? combatModeComponent))
             {
                 return;
             }
