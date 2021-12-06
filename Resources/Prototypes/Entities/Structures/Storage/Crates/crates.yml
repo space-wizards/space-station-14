@@ -1,5 +1,5 @@
 - type: entity
-  id: CrateGenericonimo
+  id: CrateGenericSteel
   name: crate
   parent: CrateGeneric
   components:
@@ -21,8 +21,8 @@
       state_open: crate_open
       state_closed: crate_door
   - type: Construction
-    graph: CrateGenericonimo
-    node: crategenericonimo
+    graph: CrateGenericSteel
+    node: crategenericsteel
       
 
 - type: entity
@@ -74,8 +74,8 @@
       state_open: freezer_open
       state_closed: freezer_door
   - type: Construction
-    graph: CrateGenericonimo
-    node: crategenericonimo
+    graph: CrateGenericSteel
+    node: crategenericsteel
 
 - type: entity
   id: CrateHydroponics
@@ -100,8 +100,8 @@
       state_open: hydrocrate_open
       state_closed: hydrocrate_door
   - type: Construction
-    graph: CrateGenericonimo
-    node: crategenericonimo
+    graph: CrateGenericSteel
+    node: crategenericsteel
 
 - type: entity
   id: CrateMedical
@@ -126,8 +126,8 @@
       state_open: medicalcrate_open
       state_closed: medicalcrate_door
   - type: Construction
-    graph: CrateGenericonimo
-    node: crategenericonimo
+    graph: CrateGenericSteel
+    node: crategenericsteel
 
 - type: entity
   id: CrateRadiation
@@ -153,8 +153,8 @@
       state_open: radiationcrate_open
       state_closed: radiationcrate_door
   - type: Construction
-    graph: CrateGenericonimo
-    node: crategenericonimo
+    graph: CrateGenericSteel
+    node: crategenericsteel
 
 - type: entity
   id: CrateInternals
@@ -179,8 +179,8 @@
       state_open: o2crate_open
       state_closed: o2crate_door
   - type: Construction
-    graph: CrateGenericonimo
-    node: crategenericonimo
+    graph: CrateGenericSteel
+    node: crategenericsteel
 
 - type: entity
   id: CrateElectrical
@@ -205,8 +205,8 @@
       state_open: electricalcrate_open
       state_closed: electricalcrate_door
   - type: Construction
-    graph: CrateGenericonimo
-    node: crategenericonimo
+    graph: CrateGenericSteel
+    node: crategenericsteel
 
 - type: entity
   id: CrateEngineering
@@ -231,8 +231,8 @@
       state_open: engicrate_open
       state_closed: engicrate_door
   - type: Construction
-    graph: CrateGenericonimo
-    node: crategenericonimo
+    graph: CrateGenericSteel
+    node: crategenericsteel
 
 - type: entity
   id: CrateScience
@@ -257,8 +257,8 @@
       state_open: scicrate_open
       state_closed: scicrate_door
   - type: Construction
-    graph: CrateGenericonimo
-    node: crategenericonimo
+    graph: CrateGenericSteel
+    node: crategenericsteel
 
 - type: entity
   id: CrateSurgery
@@ -283,8 +283,8 @@
       state_open: surgerycrate_open
       state_closed: surgerycrate_door
   - type: Construction
-    graph: CrateGenericonimo
-    node: crategenericonimo
+    graph: CrateGenericSteel
+    node: crategenericsteel
 
 # Secure Crates
 

@@ -10,11 +10,11 @@
   objectType: Structure
   
 - type: construction
-  name: metal crate
-  id: CrateGenericonimo
-  graph: CrateGenericonimo
+  name: steel crate
+  id: CrateGenericSteel
+  graph: CrateGenericSteel
   startNode: start
-  targetNode: crategenericonimo
+  targetNode: crategenericsteel
   category: Storage
   description: "A metal crate for storing things"
   icon: Structures/Storage/Crates/generic.rsi/crate_icon.png
