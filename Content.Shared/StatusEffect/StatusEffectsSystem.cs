@@ -169,7 +169,7 @@ namespace Content.Shared.StatusEffect
             if (HasStatusEffect(uid, key, status))
             {
                 status.ActiveEffects[key].CooldownRefresh = refresh;
-                if(status.ActiveEffects[key].CooldownRefresh)
+                if(refresh)
                 {
                     //Making sure we don't reset a longer cooldown by applying a shorter one.
                     if((status.ActiveEffects[key].Cooldown.Item2 - _gameTiming.CurTime) < time)
