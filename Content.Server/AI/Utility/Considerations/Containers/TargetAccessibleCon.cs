@@ -17,15 +17,16 @@ namespace Content.Server.AI.Utility.Considerations.Containers
     {
         protected override float GetScore(Blackboard context)
         {
+            var entMan = IoCManager.Resolve<IEntityManager>();
             var target = context.GetState<TargetEntityState>().GetValue();
-            if (target == null)
+            if (!entMan.EntityExists(target))
             {
                 return 0.0f;
             }
 
             if (target.TryGetContainer(out var container))
             {
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(container.Owner, out EntityStorageComponent? storageComponent))
+                if (entMan.TryGetComponent(container.Owner, out EntityStorageComponent? storageComponent))
                 {
                     if (storageComponent.IsWeldedShut && !storageComponent.Open)
                     {

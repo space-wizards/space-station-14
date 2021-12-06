@@ -25,8 +25,14 @@ namespace Content.Server.Chat.Commands
                 return;
             }
 
-            if (player.Status != SessionStatus.InGame || player.AttachedEntity == default)
+            if (player.Status != SessionStatus.InGame)
                 return;
+
+            if (player.AttachedEntity is not {} playerEntity)
+            {
+                shell.WriteLine("You don't have an entity!");
+                return;
+            }
 
             if (args.Length < 1)
                 return;
@@ -37,12 +43,6 @@ namespace Content.Server.Chat.Commands
 
             var chat = IoCManager.Resolve<IChatManager>();
             var chatSanitizer = IoCManager.Resolve<IChatSanitizationManager>();
-
-            if (player.AttachedEntity is not {Valid: true} playerEntity)
-            {
-                shell.WriteLine("You don't have an entity!");
-                return;
-            }
 
             if (IoCManager.Resolve<IEntityManager>().HasComponent<GhostComponent>(playerEntity))
                 chat.SendDeadChat(player, message);

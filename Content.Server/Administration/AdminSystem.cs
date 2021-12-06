@@ -125,12 +125,12 @@ namespace Content.Server.Administration
             var name = session.Name;
             var username = string.Empty;
 
-            if (session.AttachedEntity != default)
-                username = EntityManager.GetComponent<MetaDataComponent>(session.AttachedEntity).EntityName;
+            if (session.AttachedEntity != null)
+                username = EntityManager.GetComponent<MetaDataComponent>(session.AttachedEntity.Value).EntityName;
 
             var antag = session.ContentData()?.Mind?.AllRoles.Any(r => r.Antagonist) ?? false;
 
-            return new PlayerInfo(name, username, antag, session.AttachedEntity, session.UserId);
+            return new PlayerInfo(name, username, antag, session.AttachedEntity.GetValueOrDefault(), session.UserId);
         }
     }
 }

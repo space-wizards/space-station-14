@@ -20,8 +20,8 @@ namespace Content.Server.Actions.Commands
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
-            if (player == null) return;
-            var attachedEntity = player.AttachedEntity;
+            if (player?.AttachedEntity == null) return;
+            var attachedEntity = player.AttachedEntity.Value;
             if (args.Length > 1)
             {
                 var target = args[1];

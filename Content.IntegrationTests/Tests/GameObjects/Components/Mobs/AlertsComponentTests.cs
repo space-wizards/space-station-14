@@ -29,7 +29,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
 
             await server.WaitAssertion(() =>
             {
-                var playerEnt = serverPlayerManager.Sessions.Single().AttachedEntity;
+                var playerEnt = serverPlayerManager.Sessions.Single().AttachedEntity.GetValueOrDefault();
                 Assert.That(playerEnt != default);
                 var alertsComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ServerAlertsComponent>(playerEnt);
                 Assert.NotNull(alertsComponent);
@@ -69,8 +69,8 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
 
             await server.WaitAssertion(() =>
             {
-                var playerEnt = serverPlayerManager.Sessions.Single().AttachedEntity;
-                Assert.That(playerEnt != default);
+                var playerEnt = serverPlayerManager.Sessions.Single().AttachedEntity.GetValueOrDefault();
+                Assert.That(playerEnt, Is.Not.EqualTo(default));
                 var alertsComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ServerAlertsComponent>(playerEnt);
                 Assert.NotNull(alertsComponent);
 

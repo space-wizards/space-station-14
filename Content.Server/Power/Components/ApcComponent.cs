@@ -87,25 +87,21 @@ namespace Content.Server.Power.Components
 
         private void UserInterfaceOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
         {
-            if (serverMsg.Message is ApcToggleMainBreakerMessage)
+            if (serverMsg.Message is not ApcToggleMainBreakerMessage || serverMsg.Session.AttachedEntity is not {} attached)
+                return;
+
+            var accessSystem = EntitySystem.Get<AccessReaderSystem>();
+            if (_accessReader == null || accessSystem.IsAllowed(_accessReader, attached))
             {
-                var user = serverMsg.Session.AttachedEntity;
-                if (user == null) return;
+                MainBreakerEnabled = !MainBreakerEnabled;
+                IoCManager.Resolve<IEntityManager>().GetComponent<PowerNetworkBatteryComponent>(Owner).CanDischarge = MainBreakerEnabled;
 
-                var accessSystem = EntitySystem.Get<AccessReaderSystem>();
-                if (_accessReader == null || accessSystem.IsAllowed(_accessReader, user))
-                {
-                    MainBreakerEnabled = !MainBreakerEnabled;
-                    IoCManager.Resolve<IEntityManager>().GetComponent<PowerNetworkBatteryComponent>(Owner).CanDischarge = MainBreakerEnabled;
-
-                    _uiDirty = true;
-                    SoundSystem.Play(Filter.Pvs(Owner), _onReceiveMessageSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
-                }
-                else
-                {
-                    user.PopupMessageCursor(Loc.GetString("apc-component-insufficient-access"));
-                }
-
+                _uiDirty = true;
+                SoundSystem.Play(Filter.Pvs(Owner), _onReceiveMessageSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
+            }
+            else
+            {
+                attached.PopupMessageCursor(Loc.GetString("apc-component-insufficient-access"));
             }
         }
 

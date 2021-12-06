@@ -235,7 +235,7 @@ namespace Content.Server.Atmos.Components
                     if (handsComponent.GetActiveHand?.Owner is not {Valid: true} activeHandEntity ||
                         !_entities.TryGetComponent(activeHandEntity, out GasAnalyzerComponent? gasAnalyzer))
                     {
-                        serverMsg.Session.AttachedEntity.PopupMessage(Loc.GetString("gas-analyzer-component-need-gas-analyzer-in-hand-message"));
+                        serverMsg.Session.AttachedEntity.Value.PopupMessage(Loc.GetString("gas-analyzer-component-need-gas-analyzer-in-hand-message"));
                         return;
                     }
 

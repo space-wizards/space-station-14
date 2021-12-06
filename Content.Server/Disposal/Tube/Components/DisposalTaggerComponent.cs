@@ -86,7 +86,7 @@ namespace Content.Server.Disposal.Tube.Components
         private bool PlayerCanUseDisposalTagger(IPlayerSession session)
         {
             //Need player entity to check if they are still able to use the configuration interface
-            if (session.AttachedEntity == null)
+            if (session.AttachedEntity is not {} attached)
                 return false;
             if (!Anchored)
                 return false;
@@ -94,7 +94,7 @@ namespace Content.Server.Disposal.Tube.Components
             var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
             var groupController = IoCManager.Resolve<IConGroupController>();
             //Check if player can interact in their current state
-            if (!groupController.CanAdminMenu(session) && (!actionBlocker.CanInteract(session.AttachedEntity) || !actionBlocker.CanUse(session.AttachedEntity)))
+            if (!groupController.CanAdminMenu(session) && (!actionBlocker.CanInteract(attached) || !actionBlocker.CanUse(attached)))
                 return false;
 
             return true;

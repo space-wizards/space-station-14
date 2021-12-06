@@ -43,13 +43,13 @@ namespace Content.Server.Commands
         {
             attachedEntity = default;
             if (!TryGetSessionByUsernameOrId(shell, usernameOrId, performer, out var session)) return false;
-            if (session.AttachedEntity == default)
+            if (session.AttachedEntity == null)
             {
                 shell.WriteLine("User has no attached entity.");
                 return false;
             }
 
-            attachedEntity = session.AttachedEntity;
+            attachedEntity = session.AttachedEntity.Value;
             return true;
         }
 

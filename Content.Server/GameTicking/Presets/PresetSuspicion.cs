@@ -66,13 +66,13 @@ namespace Content.Server.GameTicking.Presets
 
             foreach (var player in list)
             {
-                if (!ReadyProfiles.ContainsKey(player.UserId))
+                if (!ReadyProfiles.ContainsKey(player.UserId) || player.AttachedEntity is not {} attached)
                 {
                     continue;
                 }
                 prefList.Add(player);
 
-                player.AttachedEntity.EnsureComponent<SuspicionRoleComponent>();
+                attached.EnsureComponent<SuspicionRoleComponent>();
             }
 
             var numTraitors = MathHelper.Clamp(readyPlayers.Count / PlayersPerTraitor,

@@ -116,7 +116,7 @@ namespace Content.Server.UserInterface
                 // Must ToList in order to close things safely.
                 foreach (var session in ui.SubscribedSessions.ToArray())
                 {
-                    if (session.AttachedEntity == null || !_actionBlockerSystem.CanInteract(session.AttachedEntity))
+                    if (session.AttachedEntity == null || !_actionBlockerSystem.CanInteract(session.AttachedEntity.Value))
                     {
                         ui.Close(session);
                     }

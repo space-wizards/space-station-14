@@ -26,7 +26,7 @@ namespace Content.Server.Alert.Commands
                 return;
             }
 
-            var attachedEntity = player.AttachedEntity;
+            var attachedEntity = player.AttachedEntity.Value;
 
             if (args.Length > 1)
             {

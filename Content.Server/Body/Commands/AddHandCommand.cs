@@ -44,13 +44,13 @@ namespace Content.Server.Body.Commands
                         return;
                     }
 
-                    if (player.AttachedEntity == default)
+                    if (player.AttachedEntity == null)
                     {
                         shell.WriteLine("You don't have an entity to add a hand to.");
                         return;
                     }
 
-                    entity = player.AttachedEntity;
+                    entity = player.AttachedEntity.Value;
                     hand = entityManager.SpawnEntity(DefaultHandPrototype, entityManager.GetComponent<TransformComponent>(entity).Coordinates);
                     break;
                 }
@@ -75,13 +75,13 @@ namespace Content.Server.Body.Commands
                             return;
                         }
 
-                        if (player.AttachedEntity == default)
+                        if (player.AttachedEntity == null)
                         {
                             shell.WriteLine("You don't have an entity to add a hand to.");
                             return;
                         }
 
-                        entity = player.AttachedEntity;
+                        entity = player.AttachedEntity.Value;
                         hand = entityManager.SpawnEntity(args[0], entityManager.GetComponent<TransformComponent>(entity).Coordinates);
                     }
 

@@ -56,7 +56,7 @@ namespace Content.Server.Alert
             {
                 case ClickAlertMessage msg:
                 {
-                    var player = session.AttachedEntity;
+                    var player = session.AttachedEntity.GetValueOrDefault();
 
                     if (player != Owner)
                     {

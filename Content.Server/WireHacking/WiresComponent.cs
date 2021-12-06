@@ -407,8 +407,7 @@ namespace Content.Server.WireHacking
             {
                 case WiresActionMessage msg:
                     var wire = WiresList.Find(x => x.Id == msg.Id);
-                    var player = serverMsg.Session.AttachedEntity;
-                    if (wire == null || player == default)
+                    if (wire == null || serverMsg.Session.AttachedEntity is not {} player)
                     {
                         return;
                     }

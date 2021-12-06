@@ -59,7 +59,7 @@ namespace Content.IntegrationTests.Tests.PDA
 
             await server.WaitAssertion(() =>
             {
-                var player = sPlayerManager.Sessions.Single().AttachedEntity;
+                var player = sPlayerManager.Sessions.Single().AttachedEntity.GetValueOrDefault();
 
                 Assert.That(player != default);
 

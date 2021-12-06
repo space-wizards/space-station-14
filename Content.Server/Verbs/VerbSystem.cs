@@ -21,9 +21,8 @@ namespace Content.Server.Verbs
         public void HandleTryExecuteVerb(ExecuteVerbEvent args, EntitySessionEventArgs eventArgs)
         {
             var session = eventArgs.SenderSession;
-            var userEntity = session.AttachedEntity;
 
-            if (userEntity == null)
+            if (session.AttachedEntity is not {} userEntity)
             {
                 Logger.Warning($"{nameof(HandleTryExecuteVerb)} called by player {session} with no attached entity.");
                 return;
@@ -61,7 +60,7 @@ namespace Content.Server.Verbs
                 return;
             }
 
-            if (player.AttachedEntity == default)
+            if (player.AttachedEntity is not {} attached)
             {
                 Logger.Warning($"{nameof(HandleVerbRequest)} called by player {player} with no attached entity.");
                 return;
@@ -71,7 +70,7 @@ namespace Content.Server.Verbs
             // this, and some verbs (e.g. view variables) won't even care about whether an entity is accessible through
             // the entity menu or not.
 
-            var response = new VerbsResponseEvent(args.EntityUid, GetLocalVerbs(args.EntityUid, player.AttachedEntity, args.Type));
+            var response = new VerbsResponseEvent(args.EntityUid, GetLocalVerbs(args.EntityUid, attached, args.Type));
             RaiseNetworkEvent(response, player.ConnectedClient);
         }
     }

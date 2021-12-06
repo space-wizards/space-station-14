@@ -74,7 +74,8 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
 
             await server.WaitAssertion(() =>
             {
-                var playerEnt = serverPlayerManager.Sessions.Single().AttachedEntity;
+                var playerEnt = serverPlayerManager.Sessions.Single().AttachedEntity.GetValueOrDefault();
+                Assert.That(playerEnt, Is.Not.EqualTo(default));
                 var actionsComponent = sEntities.GetComponent<ServerActionsComponent>(playerEnt);
 
                 // player should begin with their innate actions granted
@@ -102,7 +103,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             {
                 var local = clientPlayerMgr.LocalPlayer;
                 var controlled = local!.ControlledEntity;
-                var actionsComponent = cEntities.GetComponent<ClientActionsComponent>(controlled!);
+                var actionsComponent = cEntities.GetComponent<ClientActionsComponent>(controlled!.Value);
 
                 // we should have our innate actions and debug1.
                 foreach (var innateAction in innateActions)
@@ -156,7 +157,8 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             // now revoke the action and check that the client sees it as revoked
             await server.WaitAssertion(() =>
             {
-                var playerEnt = serverPlayerManager.Sessions.Single().AttachedEntity;
+                var playerEnt = serverPlayerManager.Sessions.Single().AttachedEntity.GetValueOrDefault();
+                Assert.That(playerEnt, Is.Not.EqualTo(default));
                 var actionsComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ServerActionsComponent>(playerEnt);
                 actionsComponent.Revoke(ActionType.DebugInstant);
             });
@@ -168,7 +170,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             {
                 var local = clientPlayerMgr.LocalPlayer;
                 var controlled = local!.ControlledEntity;
-                var actionsComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ClientActionsComponent>(controlled!);
+                var actionsComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ClientActionsComponent>(controlled!.Value);
 
                 // we should have our innate actions, but debug1 should be revoked
                 foreach (var innateAction in innateActions)
@@ -250,7 +252,8 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
 
             await server.WaitAssertion(() =>
             {
-                serverPlayerEnt = serverPlayerManager.Sessions.Single().AttachedEntity;
+                serverPlayerEnt = serverPlayerManager.Sessions.Single().AttachedEntity.GetValueOrDefault();
+                Assert.That(serverPlayerEnt, Is.Not.EqualTo(default));
                 serverActionsComponent = serverEntManager.GetComponent<ServerActionsComponent>(serverPlayerEnt);
 
                 // spawn and give them an item that has actions
@@ -291,7 +294,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             {
                 var local = clientPlayerMgr.LocalPlayer;
                 var controlled = local!.ControlledEntity;
-                clientActionsComponent = clientEntities.GetComponent<ClientActionsComponent>(controlled!);
+                clientActionsComponent = clientEntities.GetComponent<ClientActionsComponent>(controlled!.Value);
 
                 var lightEntry = clientActionsComponent.ItemActionStates()
                     .Where(entry => entry.Value.ContainsKey(ItemActionType.ToggleLight))

@@ -152,7 +152,7 @@ namespace Content.Server.Kitchen.EntitySystems
         private void OnUIMessageReceived(EntityUid uid, ReagentGrinderComponent component,
             ServerBoundUserInterfaceMessage message)
         {
-            if (component.Busy)
+            if (component.Busy || message.Session.AttachedEntity is not {} attached)
             {
                 return;
             }
@@ -163,7 +163,7 @@ namespace Content.Server.Kitchen.EntitySystems
                     if (!EntityManager.TryGetComponent(component.Owner, out ApcPowerReceiverComponent? receiver) ||
                         !receiver.Powered) break;
                     ClickSound(component);
-                    DoWork(component, message.Session.AttachedEntity,
+                    DoWork(component, attached,
                         SharedReagentGrinderComponent.GrinderProgram.Grind);
                     break;
 
@@ -171,7 +171,7 @@ namespace Content.Server.Kitchen.EntitySystems
                     if (!EntityManager.TryGetComponent(component.Owner, out ApcPowerReceiverComponent? receiver2) ||
                         !receiver2.Powered) break;
                     ClickSound(component);
-                    DoWork(component, message.Session.AttachedEntity,
+                    DoWork(component, attached,
                         SharedReagentGrinderComponent.GrinderProgram.Juice);
                     break;
 

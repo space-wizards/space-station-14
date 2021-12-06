@@ -35,12 +35,11 @@ namespace Content.Server.Traitor.Uplink.Commands
                 shell.WriteLine(Loc.GetString("shell-target-player-does-not-exist"));
                 return;
             }
-            if (session.AttachedEntity == null)
+            if (session.AttachedEntity is not {} user)
             {
                 shell.WriteLine(Loc.GetString("Selected player doesn't controll any entity"));
                 return;
             }
-            var user = session.AttachedEntity;
 
             // Get target item
             EntityUid? uplinkEntity = null;

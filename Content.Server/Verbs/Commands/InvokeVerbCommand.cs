@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using Content.Server.Administration;
 using Content.Shared.Administration;
@@ -34,7 +34,7 @@ namespace Content.Server.Verbs.Commands
             {
                 if (args[0] == "self" && shell.Player?.AttachedEntity != null)
                 {
-                    playerEntity = shell.Player.AttachedEntity;
+                    playerEntity = shell.Player.AttachedEntity.Value;
                 }
                 else
                 {

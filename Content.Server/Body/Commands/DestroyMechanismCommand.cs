@@ -31,13 +31,13 @@ namespace Content.Server.Body.Commands
                 return;
             }
 
-            if (player.AttachedEntity == default)
+            if (player.AttachedEntity is not {} attached)
             {
                 shell.WriteLine("You have no entity.");
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(player.AttachedEntity, out SharedBodyComponent? body))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(attached, out SharedBodyComponent? body))
             {
                 var random = IoCManager.Resolve<IRobustRandom>();
                 var text = $"You have no body{(random.Prob(0.2f) ? " and you must scream." : ".")}";

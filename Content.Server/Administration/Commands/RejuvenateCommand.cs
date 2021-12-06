@@ -30,12 +30,12 @@ namespace Content.Server.Administration.Commands
             if (args.Length < 1 && shell.Player is IPlayerSession player) //Try to heal the users mob if applicable
             {
                 shell.WriteLine(Loc.GetString("rejuvenate-command-self-heal-message"));
-                if (player.AttachedEntity == default)
+                if (player.AttachedEntity == null)
                 {
                     shell.WriteLine(Loc.GetString("rejuvenate-command-no-entity-attached-message"));
                     return;
                 }
-                PerformRejuvenate(player.AttachedEntity);
+                PerformRejuvenate(player.AttachedEntity.Value);
             }
 
             var entityManager = IoCManager.Resolve<IEntityManager>();

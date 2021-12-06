@@ -89,6 +89,9 @@ namespace Content.Server.Chemistry.Components
 
         public void UserInterfaceOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
         {
+            if (serverMsg.Session.AttachedEntity == null)
+                return;
+
             switch (serverMsg.Message)
             {
                 case TransferAmountSetValueMessage svm:
@@ -96,7 +99,7 @@ namespace Content.Server.Chemistry.Components
                     var amount = Math.Clamp(sval, MinimumTransferAmount.Float(),
                         MaximumTransferAmount.Float());
 
-                    serverMsg.Session.AttachedEntity.PopupMessage(Loc.GetString("comp-solution-transfer-set-amount",
+                    serverMsg.Session.AttachedEntity.Value.PopupMessage(Loc.GetString("comp-solution-transfer-set-amount",
                         ("amount", amount)));
                     SetTransferAmount(FixedPoint2.New(amount));
                     break;

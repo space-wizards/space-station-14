@@ -52,7 +52,7 @@ namespace Content.Server.Disposal
                 return;
             }
 
-            tube.PopupDirections(player.AttachedEntity);
+            tube.PopupDirections(player.AttachedEntity.Value);
         }
     }
 }

@@ -20,19 +20,13 @@ namespace Content.Server.Alert.Commands
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
-            if (player == null)
+            if (player?.AttachedEntity == null)
             {
-                shell.WriteLine("You cannot run this command from the server.");
+                shell.WriteLine("You cannot run this from the server or without an attached entity.");
                 return;
             }
 
-            var attachedEntity = player.AttachedEntity;
-
-            if (attachedEntity == null)
-            {
-                shell.WriteLine("You don't have an entity.");
-                return;
-            }
+            var attachedEntity = player.AttachedEntity.Value;
 
             if (args.Length > 2)
             {

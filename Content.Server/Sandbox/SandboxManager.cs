@@ -115,7 +115,7 @@ namespace Content.Server.Sandbox
             }
 
             var player = _playerManager.GetSessionByChannel(message.MsgChannel);
-            if (player.AttachedEntity == default)
+            if (player.AttachedEntity is not {} attached)
             {
                 return;
             }
@@ -124,7 +124,7 @@ namespace Content.Server.Sandbox
                 .EnumeratePrototypes<AccessLevelPrototype>()
                 .Select(p => p.ID).ToArray();
 
-            if (_entityManager.TryGetComponent(player.AttachedEntity, out InventoryComponent? inv)
+            if (_entityManager.TryGetComponent(attached, out InventoryComponent? inv)
                 && inv.TryGetSlotItem(Slots.IDCARD, out ItemComponent? wornItem))
             {
                 if (_entityManager.HasComponent<AccessComponent>(wornItem.Owner))
@@ -148,10 +148,10 @@ namespace Content.Server.Sandbox
                     }
                 }
             }
-            else if (_entityManager.TryGetComponent<HandsComponent?>(player.AttachedEntity, out var hands))
+            else if (_entityManager.TryGetComponent<HandsComponent?>(attached, out var hands))
             {
                 var card = CreateFreshId();
-                if (!_entityManager.TryGetComponent(player.AttachedEntity, out inv) || !inv.Equip(Slots.IDCARD, card))
+                if (!_entityManager.TryGetComponent(attached, out inv) || !inv.Equip(Slots.IDCARD, card))
                 {
                     hands.PutInHandOrDrop(_entityManager.GetComponent<ItemComponent>(card));
                 }
@@ -170,10 +170,10 @@ namespace Content.Server.Sandbox
 
             EntityUid CreateFreshId()
             {
-                var card = _entityManager.SpawnEntity("CaptainIDCard", _entityManager.GetComponent<TransformComponent>(player.AttachedEntity).Coordinates);
+                var card = _entityManager.SpawnEntity("CaptainIDCard", _entityManager.GetComponent<TransformComponent>(attached).Coordinates);
                 UpgradeId(card);
 
-                _entityManager.GetComponent<IdCardComponent>(card).FullName = _entityManager.GetComponent<MetaDataComponent>(player.AttachedEntity).EntityName;
+                _entityManager.GetComponent<IdCardComponent>(card).FullName = _entityManager.GetComponent<MetaDataComponent>(attached).EntityName;
                 return card;
             }
         }
