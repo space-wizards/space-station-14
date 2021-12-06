@@ -62,7 +62,7 @@ namespace Content.Client.Actions.UI
         /// Item the action is provided by, only valid if Action is an ItemActionPrototype. May be null
         /// if the item action is not yet tied to an item.
         /// </summary>
-        public EntityUid Item { get; private set; }
+        public EntityUid? Item { get; private set; }
 
         /// <summary>
         /// Whether the action in this slot should be shown as toggled on. Separate from Depressed.
@@ -231,8 +231,8 @@ namespace Content.Client.Actions.UI
             {
                 ActionPrototype actionPrototype => new ActionAttempt(actionPrototype),
                 ItemActionPrototype itemActionPrototype =>
-                    (Item != default && IoCManager.Resolve<IEntityManager>().TryGetComponent<ItemActionsComponent?>(Item, out var itemActions)) ?
-                        new ItemActionAttempt(itemActionPrototype, Item, itemActions) : null,
+                    (Item != null && IoCManager.Resolve<IEntityManager>().TryGetComponent<ItemActionsComponent?>(Item, out var itemActions)) ?
+                        new ItemActionAttempt(itemActionPrototype, Item.Value, itemActions) : null,
                 _ => null
             };
             return attempt;
@@ -245,8 +245,8 @@ namespace Content.Client.Actions.UI
             _beingHovered = true;
             DrawModeChanged();
             if (Action is not ItemActionPrototype) return;
-            if (Item == default) return;
-            _actionsComponent.HighlightItemSlot(Item);
+            if (Item == null) return;
+            _actionsComponent.HighlightItemSlot(Item.Value);
         }
 
         protected override void MouseExited()

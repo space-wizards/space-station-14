@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.CombatMode;
 using Content.Server.Hands.Components;
+using Content.Server.Items;
 using Content.Server.Pulling;
 using Content.Server.Storage.Components;
 using Content.Shared.ActionBlocker;
@@ -507,7 +508,7 @@ namespace Content.Server.Interaction
                         }
                     }
                 }
-                else if (!wideAttack && targetUid != default)
+                else if (!wideAttack && targetUid != default && _entityManager.HasComponent<ItemComponent>(targetUid))
                 {
                     // We pick up items if our hand is empty, even if we're in combat mode.
                     InteractHand(user, targetUid);

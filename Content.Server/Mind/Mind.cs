@@ -62,12 +62,12 @@ namespace Content.Server.Mind
         public NetUserId OriginalOwnerUserId { get; }
 
         [ViewVariables]
-        public bool IsVisitingEntity => VisitingEntity != default;
+        public bool IsVisitingEntity => VisitingEntity != null;
 
         [ViewVariables]
-        public EntityUid VisitingEntity { get; private set; }
+        public EntityUid? VisitingEntity { get; private set; }
 
-        [ViewVariables] public EntityUid? CurrentEntity => VisitingEntity.IsValid() ? VisitingEntity : OwnedEntity;
+        [ViewVariables] public EntityUid? CurrentEntity => VisitingEntity ?? OwnedEntity;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public string? CharacterName { get; set; }
@@ -296,7 +296,7 @@ namespace Content.Server.Mind
             OwnedComponent = component;
             OwnedComponent?.InternalAssignMind(this);
 
-            if (IsVisitingEntity
+            if (VisitingEntity != null
                 && (ghostCheckOverride // to force mind transfer, for example from ControlMobVerb
                 || !entMan.TryGetComponent(VisitingEntity!, out GhostComponent? ghostComponent) // visiting entity is not a Ghost
                 || !ghostComponent.CanReturnToBody))  // it is a ghost, but cannot return to body anyway, so it's okay
@@ -367,20 +367,20 @@ namespace Content.Server.Mind
 
         public void UnVisit()
         {
-            if (!IsVisitingEntity)
+            if (VisitingEntity == null)
             {
                 return;
             }
 
             Session?.AttachToEntity(OwnedEntity);
-            var oldVisitingEnt = VisitingEntity;
+            var oldVisitingEnt = VisitingEntity.Value;
             // Null this before removing the component to avoid any infinite loops.
             VisitingEntity = default;
 
             DebugTools.AssertNotNull(oldVisitingEnt);
 
             var entities = IoCManager.Resolve<IEntityManager>();
-            if (entities.HasComponent<VisitingMindComponent>(oldVisitingEnt!))
+            if (entities.HasComponent<VisitingMindComponent>(oldVisitingEnt))
             {
                 entities.RemoveComponent<VisitingMindComponent>(oldVisitingEnt);
             }

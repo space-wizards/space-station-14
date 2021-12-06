@@ -66,9 +66,9 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             await server.WaitIdleAsync();
             await client.WaitIdleAsync();
 
-            var cEntities = IoCManager.Resolve<IEntityManager>();
+            var cEntities = client.ResolveDependency<IEntityManager>();
 
-            var sEntities = IoCManager.Resolve<IEntityManager>();
+            var sEntities = server.ResolveDependency<IEntityManager>();
             var serverPlayerManager = server.ResolveDependency<IPlayerManager>();
             var innateActions = new List<ActionType>();
 
