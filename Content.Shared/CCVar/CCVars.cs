@@ -105,32 +105,13 @@ namespace Content.Shared.CCVar
         ///     Controls the game map prototype to load. SS14 stores these prototypes in Prototypes/Maps.
         /// </summary>
         public static readonly CVarDef<string>
-            GameMap = CVarDef.Create("game.map", "saltern", CVar.SERVERONLY);
+            GameMap = CVarDef.Create("game.map", "knightship", CVar.SERVERONLY);
 
         /// <summary>
         ///     Controls if the game should obey map criteria or not. Overriden if a map vote or similar occurs.
         /// </summary>
         public static readonly CVarDef<bool>
             GameMapForced = CVarDef.Create("game.mapforced", false, CVar.SERVERONLY);
-
-        /// <summary>
-        ///     Whether a random position offset will be applied to the station on roundstart.
-        /// </summary>
-        public static readonly CVarDef<bool> StationOffset =
-            CVarDef.Create("game.station_offset", true);
-
-        /// <summary>
-        /// When the default blueprint is loaded what is the maximum amount it can be offset from 0,0.
-        /// Does nothing without <see cref="StationOffset"/> as true.
-        /// </summary>
-        public static readonly CVarDef<float> MaxStationOffset =
-            CVarDef.Create("game.maxstationoffset", 1000.0f);
-
-        /// <summary>
-        ///     Whether a random rotation will be applied to the station on roundstart.
-        /// </summary>
-        public static readonly CVarDef<bool> StationRotation =
-            CVarDef.Create("game.station_rotation", true);
 
         /// <summary>
         ///     When enabled, guests will be assigned permanent UIDs and will have their preferences stored.
@@ -220,7 +201,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("database.pg_port", 5432, CVar.SERVERONLY);
 
         public static readonly CVarDef<string> DatabasePgDatabase =
-            CVarDef.Create("database.pg_database", "ss14", CVar.SERVERONLY);
+            CVarDef.Create("database.pg_database", "or14", CVar.SERVERONLY);
 
         public static readonly CVarDef<string> DatabasePgUsername =
             CVarDef.Create("database.pg_username", "", CVar.SERVERONLY);
@@ -429,7 +410,7 @@ namespace Content.Shared.CCVar
         ///     Atmos tickrate in TPS. Atmos processing will happen every 1/TPS seconds.
         /// </summary>
         public static readonly CVarDef<float> AtmosTickRate =
-            CVarDef.Create("atmos.tickrate", 26f, CVar.SERVERONLY);
+            CVarDef.Create("atmos.tickrate", 30f, CVar.SERVERONLY);
 
         /*
          * MIDI instruments
@@ -499,13 +480,13 @@ namespace Content.Shared.CCVar
         ///     See vote.enabled, but specific to map votes
         /// </summary>
         public static readonly CVarDef<bool> VoteMapEnabled =
-            CVarDef.Create("vote.map_enabled", true, CVar.SERVERONLY);
+            CVarDef.Create("vote.map_enabled", false, CVar.SERVERONLY);
 
         /// <summary>
         ///     The required ratio of the server that must agree for a restart round vote to go through.
         /// </summary>
         public static readonly CVarDef<float> VoteRestartRequiredRatio =
-            CVarDef.Create("vote.restart_required_ratio", 0.8f, CVar.SERVERONLY);
+            CVarDef.Create("vote.restart_required_ratio", 0.7f, CVar.SERVERONLY);
 
         /// <summary>
         ///     The delay which two votes of the same type are allowed to be made by separate people, in seconds.

@@ -78,21 +78,6 @@ namespace Content.Server.GameTicking
 
             _stationSystem.InitialSetupStationGrid(grid.GridEntityId, map);
 
-            var stationXform = EntityManager.GetComponent<TransformComponent>(grid.GridEntityId);
-
-            if (StationOffset)
-            {
-                // Apply a random offset to the station grid entity.
-                var x = _robustRandom.NextFloat() * MaxStationOffset * 2 - MaxStationOffset;
-                var y = _robustRandom.NextFloat() * MaxStationOffset * 2 - MaxStationOffset;
-                stationXform.LocalPosition = new Vector2(x, y);
-            }
-
-            if (StationRotation)
-            {
-                stationXform.LocalRotation = _robustRandom.NextFloat(MathF.Tau);
-            }
-
             _spawnPoint = grid.ToCoordinates();
 
             var timeSpan = _gameTiming.RealTime - startTime;
