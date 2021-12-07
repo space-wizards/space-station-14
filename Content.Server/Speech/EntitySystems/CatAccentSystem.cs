@@ -24,7 +24,7 @@ namespace Content.Server.Speech.EntitySystems
             return _random.Pick(Meow);
         }
 
-        private void OnAccent(EntityUid uid, MouseAccentComponent component, AccentGetEvent args)
+        private void OnAccent(EntityUid uid, CatAccentComponent component, AccentGetEvent args)
         {
             args.Message = Accentuate(args.Message);
         }
