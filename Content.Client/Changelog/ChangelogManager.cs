@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Shared.CCVar;
 using Robust.Shared.ContentPack;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
@@ -18,9 +19,6 @@ namespace Content.Client.Changelog
 {
     public sealed class ChangelogManager
     {
-        // If you fork SS14, change this to have the changelog "last seen" date stored separately.
-        public const string ForkId = "Wizards";
-
         [Dependency] private readonly IResourceManager _resource = default!;
         [Dependency] private readonly ISerializationManager _serialization = default!;
 
@@ -43,7 +41,7 @@ namespace Content.Client.Changelog
             NewChangelogEntries = false;
             NewChangelogEntriesChanged?.Invoke();
 
-            using var file = _resource.UserData.Create(new ResourcePath($"/changelog_last_seen_{ForkId}"));
+            using var file = _resource.UserData.Create(new ResourcePath($"/changelog_last_seen_{CCVars.ServerId}"));
             using var sw = new StreamWriter(file);
 
             sw.Write(MaxId.ToString());
@@ -61,7 +59,7 @@ namespace Content.Client.Changelog
 
             MaxId = changelog.Max(c => c.Id);
 
-            var path = new ResourcePath($"/changelog_last_seen_{ForkId}");
+            var path = new ResourcePath($"/changelog_last_seen_{CCVars.ServerId}");
             if (_resource.UserData.Exists(path))
             {
                 LastReadId = int.Parse(_resource.UserData.ReadAllText(path));

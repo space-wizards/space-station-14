@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Globalization;
 using System.IO;
+using Content.Client.HUD;
+using Content.Shared.CCVar;
 using Robust.Shared.ContentPack;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
@@ -11,10 +13,6 @@ namespace Content.Client.Info;
 public sealed class RulesManager
 {
     [Dependency] private readonly IClientNetManager _clientNetManager = default!;
-
-    // If you fork SS14, change this to have the rules "last seen" date stored separately.
-    public const string ForkId = "Wizards";
-
     [Dependency] private readonly IResourceManager _resource = default!;
 
     public event Action? OpenRulesWindow;
@@ -24,7 +22,7 @@ public sealed class RulesManager
         if (state != ClientConnectionState.Connected)
             return;
 
-        var path = new ResourcePath($"/rules_last_seen_{ForkId}");
+        var path = new ResourcePath($"/rules_last_seen_{CCVars.ServerId}");
         var lastReadTime = DateTime.UnixEpoch;
         if (_resource.UserData.Exists(path))
         {
