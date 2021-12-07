@@ -303,6 +303,8 @@ namespace Content.Client.HUD
 
             _infoWindow = new InfoWindow();
 
+            IoCManager.Resolve<RulesManager>().OpenRulesWindow += OpenInfoWindow;
+
             _infoWindow.OnClose += () => _buttonInfo.Pressed = false;
 
             _inputManager.SetInputCommand(ContentKeyFunctions.OpenInfo,
@@ -426,6 +428,12 @@ namespace Content.Client.HUD
             LC.SetMarginTop(VoteContainer, 100);
             LC.SetGrowHorizontal(VoteContainer, LC.GrowDirection.End);
             LC.SetGrowVertical(VoteContainer, LC.GrowDirection.End);
+        }
+
+        private void OpenInfoWindow()
+        {
+            _infoWindow.OpenCentered();
+            _buttonInfo.Pressed = true;
         }
 
         private void ButtonInfoOnOnToggled()

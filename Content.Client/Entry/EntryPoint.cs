@@ -7,6 +7,7 @@ using Content.Client.EscapeMenu;
 using Content.Client.Eui;
 using Content.Client.Flash;
 using Content.Client.HUD;
+using Content.Client.Info;
 using Content.Client.Input;
 using Content.Client.IoC;
 using Content.Client.Launcher;
@@ -112,6 +113,7 @@ namespace Content.Client.Entry
             IoCManager.Resolve<IStylesheetManager>().Initialize();
             IoCManager.Resolve<IScreenshotHook>().Initialize();
             IoCManager.Resolve<ChangelogManager>().Initialize();
+            IoCManager.Resolve<RulesManager>().Initialize();
             IoCManager.Resolve<ViewportManager>().Initialize();
 
             IoCManager.InjectDependencies(this);

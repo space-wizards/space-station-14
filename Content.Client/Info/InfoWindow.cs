@@ -17,6 +17,7 @@ namespace Content.Client.Info
 {
     public sealed class InfoWindow : SS14Window
     {
+        [Dependency] private readonly RulesManager _rulesManager = default!;
         [Dependency] private readonly IResourceCache _resourceManager = default!;
 
         private OptionsMenu optionsMenu;
@@ -161,6 +162,13 @@ namespace Content.Client.Info
 
             controlsButton.OnPressed += _ =>
                 optionsMenu.OpenCentered();
+        }
+
+        protected override void Opened()
+        {
+            base.Opened();
+
+            _rulesManager.SaveLastReadTime();
         }
 
         private static IEnumerable<string> Lines(TextReader reader)
