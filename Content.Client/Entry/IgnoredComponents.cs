@@ -8,6 +8,7 @@ namespace Content.Client.Entry
             "Anchorable",
             "AmmoBox",
             "Pickaxe",
+            "IngestionBlocker",
             "Interactable",
             "CloningPod",
             "Destructible",

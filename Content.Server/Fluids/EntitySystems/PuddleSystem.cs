@@ -40,7 +40,6 @@ namespace Content.Server.Fluids.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<PuddleComponent, UnanchoredEvent>(OnUnanchored);
-            SubscribeLocalEvent<SpillableComponent, GetOtherVerbsEvent>(AddSpillVerb);
             SubscribeLocalEvent<PuddleComponent, ExaminedEvent>(HandlePuddleExamined);
             SubscribeLocalEvent<PuddleComponent, SolutionChangedEvent>(OnUpdate);
             SubscribeLocalEvent<PuddleComponent, ComponentInit>(OnInit);
@@ -90,25 +89,7 @@ namespace Content.Server.Fluids.EntitySystems
             }
         }
 
-        private void AddSpillVerb(EntityUid uid, SpillableComponent component, GetOtherVerbsEvent args)
-        {
-            if (!args.CanAccess || !args.CanInteract)
-                return;
 
-            if (!_solutionContainerSystem.TryGetDrainableSolution(args.Target.Uid, out var solution))
-                return;
-
-            if (solution.DrainAvailable == FixedPoint2.Zero)
-                return;
-
-            Verb verb = new();
-            verb.Text = Loc.GetString("spill-target-verb-get-data-text");
-            // TODO VERB ICONS spill icon? pouring out a glass/beaker?
-            verb.Act = () => _solutionContainerSystem.SplitSolution(args.Target.Uid,
-                solution, solution.DrainAvailable).SpillAt(args.Target.Transform.Coordinates, "PuddleSmear");
-            verb.Impact = LogImpact.Medium; // dangerous reagent reaction are logged separately.
-            args.Verbs.Add(verb);
-        }
 
         private void HandlePuddleExamined(EntityUid uid, PuddleComponent component, ExaminedEvent args)
         {

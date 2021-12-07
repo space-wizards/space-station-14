@@ -25,6 +25,8 @@ using Robust.Shared.Player;
 using System.Collections.Generic;
 using System.Linq;
 using Robust.Shared.Utility;
+using Content.Server.Inventory.Components;
+using Content.Shared.Inventory;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
@@ -51,6 +53,7 @@ namespace Content.Server.Nutrition.EntitySystems
             SubscribeLocalEvent<FoodComponent, GetInteractionVerbsEvent>(AddEatVerb);
             SubscribeLocalEvent<SharedBodyComponent, ForceFeedEvent>(OnForceFeed);
             SubscribeLocalEvent<ForceFeedCancelledEvent>(OnForceFeedCancelled);
+            SubscribeLocalEvent<InventoryComponent, IngestionAttemptEvent>(OnInventoryIngestAttempt);
         }
 
         /// <summary>
@@ -134,6 +137,9 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!EntityManager.TryGetComponent(userUid, out SharedBodyComponent ? body) ||
                 !_bodySystem.TryGetComponentsOnMechanisms<StomachComponent>(userUid, out var stomachs, body))
                 return false;
+
+            if (IsMouthBlocked(userUid, userUid))
+                return true;
 
             var usedUtensils = new List<UtensilComponent>();
 
@@ -252,6 +258,9 @@ namespace Content.Server.Nutrition.EntitySystems
                 return true;
             }
 
+            if (IsMouthBlocked(targetUid, userUid))
+                return true;
+
             if (!TryGetRequiredUtensils(userUid, food, out var utensils))
                 return true;
 
@@ -344,6 +353,9 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!Resolve(uid, ref food) || !Resolve(target, ref body, false))
                 return;
 
+            if (IsMouthBlocked(target))
+                return;
+
             if (!_solutionContainerSystem.TryGetSolution(uid, food.SolutionName, out var foodSolution))
                 return;
 
@@ -367,7 +379,9 @@ namespace Content.Server.Nutrition.EntitySystems
                 _logSystem.Add(LogType.ForceFeed, $"{edible} was thrown into the mouth of {targetEntity}");
             else
                 _logSystem.Add(LogType.ForceFeed, $"{userEntity} threw {edible} into the mouth of {targetEntity}");
-            _popupSystem.PopupEntity(Loc.GetString(food.EatMessage), target, Filter.Entities(target));
+
+            var filter = (user == null) ? Filter.Entities(target) : Filter.Entities(target, user.Value);
+            _popupSystem.PopupEntity(Loc.GetString(food.EatMessage), target, filter);
 
             foodSolution.DoEntityReaction(uid, ReactionMethod.Ingestion);
             _stomachSystem.TryTransferSolution(firstStomach.Value.Comp.OwnerUid, foodSolution, firstStomach.Value.Comp);
@@ -421,31 +435,55 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             args.Food.InUse = false;
         }
-    }
 
-    public sealed class ForceFeedEvent : EntityEventArgs
-    {
-        public readonly EntityUid User;
-        public readonly FoodComponent Food;
-        public readonly Solution FoodSolution;
-        public readonly List<UtensilComponent> Utensils;
-
-        public ForceFeedEvent(EntityUid user, FoodComponent food, Solution foodSolution, List<UtensilComponent> utensils)
+        /// <summary>
+        ///     Block ingestion attempts based on the equipped mask or head-wear
+        /// </summary>
+        private void OnInventoryIngestAttempt(EntityUid uid, InventoryComponent component, IngestionAttemptEvent args)
         {
-            User = user;
-            Food = food;
-            FoodSolution = foodSolution;
-            Utensils = utensils;
+            if (args.Cancelled)
+                return;
+
+            IngestionBlockerComponent blocker;
+
+            if (component.TryGetSlotItem(EquipmentSlotDefines.Slots.MASK, out ItemComponent? mask) &&
+                EntityManager.TryGetComponent(mask.OwnerUid, out blocker) &&
+                blocker.Enabled)
+            {
+                args.Blocker = mask.OwnerUid;
+                args.Cancel();
+                return;
+            }
+
+            if (component.TryGetSlotItem(EquipmentSlotDefines.Slots.HEAD, out ItemComponent? head) &&
+                EntityManager.TryGetComponent(head.OwnerUid, out blocker) &&
+                blocker.Enabled)
+            {
+                args.Blocker = head.OwnerUid;
+                args.Cancel();
+            }
         }
-    }
 
-    public sealed class ForceFeedCancelledEvent : EntityEventArgs
-    {
-        public readonly FoodComponent Food;
 
-        public ForceFeedCancelledEvent(FoodComponent food)
+        /// <summary>
+        ///     Check whether the target's mouth is blocked by equipment (masks or head-wear).
+        /// </summary>
+        /// <param name="uid">The target whose equipment is checked</param>
+        /// <param name="popupUid">Optional entity that will receive an informative pop-up identifying the blocking
+        /// piece of equipment.</param>
+        /// <returns></returns>
+        public bool IsMouthBlocked(EntityUid uid, EntityUid? popupUid = null)
         {
-            Food = food;
+            var attempt = new IngestionAttemptEvent();
+            RaiseLocalEvent(uid, attempt, false);
+            if (attempt.Cancelled && attempt.Blocker != null && popupUid != null)
+            {
+                var name = EntityManager.GetComponent<MetaDataComponent>(attempt.Blocker.Value).EntityName;
+                _popupSystem.PopupEntity(Loc.GetString("food-system-remove-mask", ("entity", name)),
+                    uid, Filter.Entities(popupUid.Value));
+            }
+
+            return attempt.Cancelled;
         }
     }
 }

@@ -83,8 +83,6 @@
   - type: BiologicalSurgeryData
 #    criticalThreshold: 40
 #    deadThreshold: 80
-  - type: Extension
-    distance: 2.4
 
 - type: entity
   id: RightArmHuman
@@ -106,8 +104,6 @@
   - type: BiologicalSurgeryData
 #    criticalThreshold: 40
 #    deadThreshold: 80
-  - type: Extension
-    distance: 2.4
 
 - type: entity
   id: LeftHandHuman
@@ -129,7 +125,6 @@
   - type: BiologicalSurgeryData
 #    criticalThreshold: 30
 #    deadThreshold: 60
-  - type: Grasp
 
 - type: entity
   id: RightHandHuman
@@ -151,7 +146,6 @@
   - type: BiologicalSurgeryData
 #    criticalThreshold: 30
 #    deadThreshold: 60
-  - type: Grasp
 
 - type: entity
   id: LeftLegHuman
@@ -173,10 +167,6 @@
   - type: BiologicalSurgeryData
 #    criticalThreshold: 45
 #    deadThreshold: 90
-  - type: Leg
-    speed: 2.6
-  - type: Extension
-    distance: 3.0
 
 - type: entity
   id: RightLegHuman
@@ -198,10 +188,6 @@
   - type: BiologicalSurgeryData
 #    criticalThreshold: 45
 #    deadThreshold: 90
-  - type: Leg
-    speed: 2.6
-  - type: Extension
-    distance: 3.0
 
 - type: entity
   id: LeftFootHuman

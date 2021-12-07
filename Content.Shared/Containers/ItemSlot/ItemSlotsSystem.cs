@@ -37,6 +37,7 @@ namespace Content.Shared.Containers.ItemSlots
 
             SubscribeLocalEvent<ItemSlotsComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<ItemSlotsComponent, InteractHandEvent>(OnInteractHand);
+            SubscribeLocalEvent<ItemSlotsComponent, UseInHandEvent>(OnUseInHand);
 
             SubscribeLocalEvent<ItemSlotsComponent, GetAlternativeVerbsEvent>(AddEjectVerbs);
             SubscribeLocalEvent<ItemSlotsComponent, GetInteractionVerbsEvent>(AddInteractionVerbsVerbs);
@@ -129,6 +130,25 @@ namespace Content.Shared.Containers.ItemSlots
         }
 
         /// <summary>
+        ///     Attempt to eject an item from the first valid item slot.
+        /// </summary>
+        private void OnUseInHand(EntityUid uid, ItemSlotsComponent itemSlots, UseInHandEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            foreach (var slot in itemSlots.Slots.Values)
+            {
+                if (slot.Locked || !slot.EjectOnUse || slot.Item == null)
+                    continue;
+
+                args.Handled = true;
+                TryEjectToHands(uid, slot, args.UserUid);
+                break;
+            }
+        }
+
+        /// <summary>
         ///     Tries to insert a held item in any fitting item slot. If a valid slot already contains an item, it will
         ///     swap it out and place the old one in the user's hand.
         /// </summary>
@@ -174,7 +194,7 @@ namespace Content.Shared.Containers.ItemSlots
             slot.ContainerSlot.Insert(item);
             // ContainerSlot automatically raises a directed EntInsertedIntoContainerMessage
 
-            PlaySound(uid, slot.InsertSound, userAudio ? null : user);
+            PlaySound(uid, slot.InsertSound, slot.SoundOptions, userAudio ? null : user);
         }
 
         /// <summary>
@@ -184,7 +204,7 @@ namespace Content.Shared.Containers.ItemSlots
         /// <param name="sound">The sound</param>
         /// <param name="excluded">Optional (server-side) argument used to prevent sending the audio to a specific
         /// user.</param>
-        private void PlaySound(EntityUid uid, SoundSpecifier? sound, EntityUid? excluded)
+        private void PlaySound(EntityUid uid, SoundSpecifier? sound, AudioParams audioParams, EntityUid? excluded)
         {
             if (sound == null || !_gameTiming.IsFirstTimePredicted)
                 return;
@@ -194,7 +214,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (excluded != null)
                 filter = filter.RemoveWhereAttachedEntity(entity => entity == excluded.Value);
 
-            SoundSystem.Play(filter, sound.GetSound(), uid, addInRange: false);
+            SoundSystem.Play(filter, sound.GetSound(), uid, audioParams);
         }
 
         /// <summary>
@@ -288,7 +308,7 @@ namespace Content.Shared.Containers.ItemSlots
             slot.ContainerSlot.Remove(item);
             // ContainerSlot automatically raises a directed EntRemovedFromContainerMessage
 
-            PlaySound(uid, slot.EjectSound, user);
+            PlaySound(uid, slot.EjectSound, slot.SoundOptions, user);
         }
 
         /// <summary>
@@ -339,7 +359,7 @@ namespace Content.Shared.Containers.ItemSlots
                 return false;
 
             if (user != null && EntityManager.TryGetComponent(user.Value, out SharedHandsComponent? hands))
-                hands.TryPutInAnyHand(item);
+                hands.TryPutInActiveHandOrAny(item);
 
             return true;
         }

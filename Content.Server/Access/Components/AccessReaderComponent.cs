@@ -26,6 +26,13 @@ namespace Content.Server.Access.Components
         public override string Name => "AccessReader";
 
         /// <summary>
+        ///     Whether this reader is enabled or not. If disabled, all access
+        ///     checks will pass.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool Enabled = true;
+
+        /// <summary>
         ///     The set of tags that will automatically deny an allowed check, if any of them are present.
         /// </summary>
         public HashSet<string> DenyTags = new();

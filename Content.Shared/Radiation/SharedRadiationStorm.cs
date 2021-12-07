@@ -20,6 +20,7 @@ namespace Content.Shared.Radiation
         public virtual bool Decay { get; set; }
         public virtual bool Draw { get; set; }
 
+        public virtual TimeSpan StartTime { get; }
         public virtual TimeSpan EndTime { get; }
     }
 
@@ -33,14 +34,16 @@ namespace Content.Shared.Radiation
         public readonly float Range;
         public readonly bool Draw;
         public readonly bool Decay;
+        public readonly TimeSpan StartTime;
         public readonly TimeSpan EndTime;
 
-        public RadiationPulseState(float radsPerSecond, float range, bool draw, bool decay, TimeSpan endTime)
+        public RadiationPulseState(float radsPerSecond, float range, bool draw, bool decay, TimeSpan startTime, TimeSpan endTime)
         {
             RadsPerSecond = radsPerSecond;
             Range = range;
             Draw = draw;
             Decay = decay;
+            StartTime = startTime;
             EndTime = endTime;
         }
     }

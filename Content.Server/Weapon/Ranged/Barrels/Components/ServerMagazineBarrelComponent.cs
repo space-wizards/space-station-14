@@ -27,7 +27,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
     [RegisterComponent]
     [NetworkedComponent()]
 #pragma warning disable 618
-    public sealed class ServerMagazineBarrelComponent : ServerRangedBarrelComponent, IExamine
+    public sealed class ServerMagazineBarrelComponent : ServerRangedBarrelComponent, IUse, IInteractUsing, IExamine
 #pragma warning restore 618
     {
         public override string Name => "MagazineBarrel";
@@ -248,7 +248,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             _appearanceComponent?.SetData(AmmoVisuals.AmmoMax, Capacity);
         }
 
-        public override bool UseEntity(UseEntityEventArgs eventArgs)
+        public bool UseEntity(UseEntityEventArgs eventArgs)
         {
             // Behavior:
             // If bolt open just close it
@@ -393,7 +393,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             UpdateAppearance();
         }
 
-        public override async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (CanInsertMagazine(eventArgs.User, eventArgs.Using, quiet: false))
             {

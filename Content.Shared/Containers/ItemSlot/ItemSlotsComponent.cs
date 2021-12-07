@@ -1,6 +1,7 @@
 using Content.Shared.Sound;
 using Content.Shared.Whitelist;
 using Robust.Shared.Analyzers;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
@@ -82,6 +83,12 @@ namespace Content.Shared.Containers.ItemSlots
         // maybe default to /Audio/Machines/id_swipe.ogg?
 
         /// <summary>
+        ///     Options used for playing the insert/eject sounds.
+        /// </summary>
+        [DataField("soundOptions")]
+        public AudioParams SoundOptions = AudioParams.Default; 
+
+        /// <summary>
         ///     The name of this item slot. This will be shown to the user in the verb menu.
         /// </summary>
         /// <remarks>
@@ -115,6 +122,18 @@ namespace Content.Shared.Containers.ItemSlots
         /// </remarks>
         [DataField("ejectOnInteract")]
         public bool EjectOnInteract = false;
+
+        /// <summary>
+        ///     If true, and if this slot is attached to an item, then it will attempt to eject slot when to the slot is
+        ///     used in the user's hands.
+        /// </summary>
+        /// <remarks>
+        ///     Desirable for things like ranged weapons ('Z' to eject), but not desirable for others (e.g., PDA uses
+        ///     'Z' to open UI). Unlike <see cref="EjectOnInteract"/>, this will not make any changes to the context
+        ///     menu, nor will it disable alt-click interactions.
+        /// </remarks>
+        [DataField("ejectOnUse")]
+        public bool EjectOnUse = false;
 
         /// <summary>
         ///     Override the insert verb text. Defaults to [insert category] -> [item-name]. If not null, the verb will
