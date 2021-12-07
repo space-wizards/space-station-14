@@ -159,7 +159,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
 
                 if (instrument.InstrumentPlayer.AttachedEntity is {Valid: true} mob)
                 {
-                    _stunSystem.TryParalyze(mob, TimeSpan.FromSeconds(1));
+                    _stunSystem.TryParalyze(mob, TimeSpan.FromSeconds(1), true);
 
                     instrument.Owner.PopupMessage(mob, "instrument-component-finger-cramps-max-message");
                 }

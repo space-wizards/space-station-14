@@ -171,7 +171,7 @@ namespace Content.Server.Weapon.Ranged
             {
                 //Wound them
                 EntitySystem.Get<DamageableSystem>().TryChangeDamage(user, ClumsyDamage);
-                EntitySystem.Get<StunSystem>().TryParalyze(user, TimeSpan.FromSeconds(3f));
+                EntitySystem.Get<StunSystem>().TryParalyze(user, TimeSpan.FromSeconds(3f), true);
 
                 // Apply salt to the wound ("Honk!")
                 SoundSystem.Play(

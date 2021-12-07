@@ -1,5 +1,6 @@
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Fluids.Components;
+using Content.Server.Fluids.EntitySystems;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Shared.Audio;
@@ -20,6 +21,7 @@ namespace Content.Server.Nutrition.EntitySystems
     public class CreamPieSystem : SharedCreamPieSystem
     {
         [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
+        [Dependency] private readonly SpillableSystem _spillableSystem = default!;
 
         protected override void SplattedCreamPie(EntityUid uid, CreamPieComponent creamPie)
         {
@@ -27,7 +29,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent<FoodComponent?>(creamPie.Owner, out var foodComp) && _solutionsSystem.TryGetSolution(creamPie.Owner, foodComp.SolutionName, out var solution))
             {
-                solution.SpillAt(creamPie.Owner, "PuddleSmear", false);
+                _spillableSystem.SpillAt(creamPie.Owner, solution, "PuddleSmear", false);
             }
         }
 

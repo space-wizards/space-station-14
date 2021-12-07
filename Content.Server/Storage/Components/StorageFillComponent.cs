@@ -48,10 +48,18 @@ namespace Content.Server.Storage.Components
                     continue;
                 }
 
+				var entMan = IoCManager.Resolve<IEntityManager>();
+				var transform = entMan.GetComponent<TransformComponent>(Owner);
+
                 for (var i = 0; i < storageItem.Amount; i++)
                 {
-                    storage.Insert(
-                        IoCManager.Resolve<IEntityManager>().SpawnEntity(storageItem.PrototypeId, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates));
+
+                    var ent = entMan.SpawnEntity(storageItem.PrototypeId, transform.Coordinates);
+
+                    if (storage.Insert(ent)) continue;
+
+                    Logger.ErrorS("storage", $"Tried to StorageFill {storageItem.PrototypeId} inside {Owner} but can't.");
+                    entMan.DeleteEntity(ent);
                 }
 
                 if (!string.IsNullOrEmpty(storageItem.GroupId)) alreadySpawnedGroups.Add(storageItem.GroupId);

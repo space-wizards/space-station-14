@@ -365,18 +365,12 @@ namespace Content.Server.Storage.Components
             // Trying to add while open just dumps it on the ground below us.
             if (Open)
             {
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).WorldPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).WorldPosition;
+                var entMan = IoCManager.Resolve<IEntityManager>();
+                entMan.GetComponent<TransformComponent>(entity).WorldPosition = entMan.GetComponent<TransformComponent>(Owner).WorldPosition;
                 return true;
             }
 
-            if (!Contents.Insert(entity)) return false;
-
-            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).LocalPosition = Vector2.Zero;
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out IPhysBody? body))
-            {
-                body.CanCollide = false;
-            }
-            return true;
+            return Contents.Insert(entity);
         }
 
         /// <inheritdoc />

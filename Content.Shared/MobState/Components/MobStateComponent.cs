@@ -289,9 +289,11 @@ namespace Content.Shared.MobState.Components
         /// </summary>
         private void SetMobState(IMobState? old, (IMobState state, FixedPoint2 threshold)? current)
         {
+            var entMan = IoCManager.Resolve<IEntityManager>();
+
             if (!current.HasValue)
             {
-                old?.ExitState(Owner, IoCManager.Resolve<IEntityManager>());
+                old?.ExitState(Owner, entMan);
                 return;
             }
 
@@ -301,22 +303,19 @@ namespace Content.Shared.MobState.Components
 
             if (state == old)
             {
-                state.UpdateState(Owner, threshold, IoCManager.Resolve<IEntityManager>());
+                state.UpdateState(Owner, threshold, entMan);
                 return;
             }
 
-            old?.ExitState(Owner, IoCManager.Resolve<IEntityManager>());
+            old?.ExitState(Owner, entMan);
 
             CurrentState = state;
 
-            state.EnterState(Owner, IoCManager.Resolve<IEntityManager>());
-            state.UpdateState(Owner, threshold, IoCManager.Resolve<IEntityManager>());
+            state.EnterState(Owner, entMan);
+            state.UpdateState(Owner, threshold, entMan);
 
-            var message = new MobStateChangedMessage(this, old, state);
-#pragma warning disable 618
-            SendMessage(message);
-#pragma warning restore 618
-            IoCManager.Resolve<IEntityManager>().EventBus.RaiseEvent(EventSource.Local, message);
+            var message = new MobStateChangedEvent(this, old, state);
+            entMan.EventBus.RaiseLocalEvent(Owner, message);
 
             Dirty();
         }

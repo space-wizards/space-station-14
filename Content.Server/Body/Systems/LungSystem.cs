@@ -50,7 +50,7 @@ public class LungSystem : EntitySystem
         Inhale(uid, lung.CycleDelay);
     }
 
-    public void UpdateLung(EntityUid uid, float frameTime,
+    public void UpdateLung(EntityUid uid,
         LungComponent? lung=null,
         SharedMechanismComponent? mech=null)
     {
@@ -69,8 +69,8 @@ public class LungSystem : EntitySystem
 
         lung.AccumulatedFrametime += lung.Status switch
         {
-            LungStatus.Inhaling => frameTime,
-            LungStatus.Exhaling => -frameTime,
+            LungStatus.Inhaling => 1,
+            LungStatus.Exhaling => -1,
             _ => throw new ArgumentOutOfRangeException()
         };
 

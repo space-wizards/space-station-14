@@ -4,6 +4,7 @@ using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Server.Fluids.Components;
+using Content.Server.Fluids.EntitySystems;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Shared.ActionBlocker;
@@ -14,6 +15,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
+using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Nutrition.Components;
@@ -42,6 +44,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SharedAdminLogSystem _logSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+        [Dependency] private readonly SpillableSystem _spillableSystem = default!;
 
         public override void Initialize()
         {
@@ -51,10 +54,24 @@ namespace Content.Server.Nutrition.EntitySystems
             SubscribeLocalEvent<DrinkComponent, ComponentInit>(OnDrinkInit);
             SubscribeLocalEvent<DrinkComponent, LandEvent>(HandleLand);
             SubscribeLocalEvent<DrinkComponent, UseInHandEvent>(OnUse);
+            SubscribeLocalEvent<DrinkComponent, HandDeselectedEvent>(OnDrinkDeselected);
             SubscribeLocalEvent<DrinkComponent, AfterInteractEvent>(AfterInteract);
             SubscribeLocalEvent<DrinkComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<SharedBodyComponent, ForceDrinkEvent>(OnForceDrink);
             SubscribeLocalEvent<ForceDrinkCancelledEvent>(OnForceDrinkCancelled);
+        }
+
+        /// <summary>
+        ///     If the user is currently forcing someone do drink, this cancels the attempt if they swap hands or
+        ///     otherwise loose the item. Prevents force-feeding dual-wielding.
+        /// </summary>
+        private void OnDrinkDeselected(EntityUid uid, DrinkComponent component, HandDeselectedEvent args)
+        {
+            if (component.CancelToken != null)
+            {
+                component.CancelToken.Cancel();
+                component.CancelToken = null;
+            }
         }
 
         public bool IsEmpty(EntityUid uid, DrinkComponent? component = null)
@@ -185,7 +202,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 UpdateAppearance(component);
 
                 var solution = _solutionContainerSystem.Drain(uid, interactions, interactions.DrainAvailable);
-                solution.SpillAt(uid, "PuddleSmear");
+                _spillableSystem.SpillAt(uid, solution, "PuddleSmear");
 
                 SoundSystem.Play(Filter.Pvs(uid), component.BurstSound.GetSound(), uid, AudioParams.Default.WithVolume(-4));
             }
@@ -235,6 +252,14 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!Resolve(uid, ref drink))
                 return false;
 
+            // if currently being used to force-feed, cancel that action.
+            if (drink.CancelToken != null)
+            {
+                drink.CancelToken.Cancel();
+                drink.CancelToken = null;
+                return true;
+            }
+
             if (!drink.Opened)
             {
                 _popupSystem.PopupEntity(Loc.GetString("drink-component-try-use-drink-not-open",
@@ -260,13 +285,8 @@ namespace Content.Server.Nutrition.EntitySystems
                 return true;
             }
 
-            if (_foodSystem.IsMouthBlocked(userUid, out var blocker))
-            {
-                var name = EntityManager.GetComponent<MetaDataComponent>(blocker.Value).EntityName;
-                _popupSystem.PopupEntity(Loc.GetString("food-system-remove-mask", ("entity", name)),
-                    userUid, Filter.Entities(userUid));
+            if (_foodSystem.IsMouthBlocked(userUid, userUid))
                 return true;
-            }
 
             var transferAmount = FixedPoint2.Min(drink.TransferAmount, drinkSolution.DrainAvailable);
             var drain = _solutionContainerSystem.Drain(uid, drinkSolution, transferAmount);
@@ -281,7 +301,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
                 if (EntityManager.HasComponent<RefillableSolutionComponent>(uid))
                 {
-                    drain.SpillAt(userUid, "PuddleSmear");
+                    _spillableSystem.SpillAt(userUid, drain, "PuddleSmear");
                     return true;
                 }
 
@@ -312,8 +332,12 @@ namespace Content.Server.Nutrition.EntitySystems
                 return false;
 
             // cannot stack do-afters
-            if (drink.InUse)
-                return false;
+            if (drink.CancelToken != null)
+            {
+                drink.CancelToken.Cancel();
+                drink.CancelToken = null;
+                return true;
+            }
 
             if (!EntityManager.HasComponent<SharedBodyComponent>(targetUid))
                 return false;
@@ -333,13 +357,8 @@ namespace Content.Server.Nutrition.EntitySystems
                 return true;
             }
 
-            if (_foodSystem.IsMouthBlocked(targetUid, out var blocker))
-            {
-                var name = EntityManager.GetComponent<MetaDataComponent>(blocker.Value).EntityName;
-                _popupSystem.PopupEntity(Loc.GetString("food-system-remove-mask", ("entity", name)),
-                    userUid, Filter.Entities(userUid));
+            if (_foodSystem.IsMouthBlocked(targetUid, userUid))
                 return true;
-            }
 
             EntityManager.TryGetComponent(userUid, out MetaDataComponent? meta);
             var userName = meta?.EntityName ?? string.Empty;
@@ -347,7 +366,8 @@ namespace Content.Server.Nutrition.EntitySystems
             _popupSystem.PopupEntity(Loc.GetString("drink-component-force-feed", ("user", userName)),
                 userUid, Filter.Entities(targetUid));
 
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(userUid, drink.ForceFeedDelay, target: targetUid)
+            drink.CancelToken = new();
+            _doAfterSystem.DoAfter(new DoAfterEventArgs(userUid, drink.ForceFeedDelay, drink.CancelToken.Token, targetUid)
             {
                 BreakOnUserMove = true,
                 BreakOnDamage = true,
@@ -355,13 +375,12 @@ namespace Content.Server.Nutrition.EntitySystems
                 BreakOnTargetMove = true,
                 MovementThreshold = 1.0f,
                 TargetFinishedEvent = new ForceDrinkEvent(userUid, drink, drinkSolution),
-                BroadcastCancelledEvent = new ForceDrinkCancelledEvent(drink)
+                BroadcastCancelledEvent = new ForceDrinkCancelledEvent(drink),
             });
 
             // logging
             _logSystem.Add(LogType.ForceFeed, LogImpact.Medium, $"{userUid} is forcing {targetUid} to drink {uid}");
 
-            drink.InUse = true;
             return true;
         }
 
@@ -370,7 +389,10 @@ namespace Content.Server.Nutrition.EntitySystems
         /// </summary>
         private void OnForceDrink(EntityUid uid, SharedBodyComponent body, ForceDrinkEvent args)
         {
-            args.Drink.InUse = false;
+            if (args.Drink.Deleted)
+                return;
+
+            args.Drink.CancelToken = null;
             var transferAmount = FixedPoint2.Min(args.Drink.TransferAmount, args.DrinkSolution.DrainAvailable);
             var drained = _solutionContainerSystem.Drain((args.Drink).Owner, args.DrinkSolution, transferAmount);
 
@@ -379,7 +401,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 _popupSystem.PopupEntity(Loc.GetString("drink-component-try-use-drink-cannot-drink-other"),
                     uid, Filter.Entities(args.User));
 
-                drained.SpillAt(uid, "PuddleSmear");
+                _spillableSystem.SpillAt(uid, drained, "PuddleSmear");
                 return;
             }
 
@@ -392,7 +414,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 _popupSystem.PopupEntity(Loc.GetString("drink-component-try-use-drink-had-enough-other"),
                     uid, Filter.Entities(args.User));
 
-                drained.SpillAt(uid, "PuddleSmear");
+                _spillableSystem.SpillAt(uid, drained, "PuddleSmear");
                 return;
             }
 
@@ -416,31 +438,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
         private void OnForceDrinkCancelled(ForceDrinkCancelledEvent args)
         {
-            args.Drink.InUse = false;
-        }
-    }
-
-    public sealed class ForceDrinkEvent : EntityEventArgs
-    {
-        public readonly EntityUid User;
-        public readonly DrinkComponent Drink;
-        public readonly Solution DrinkSolution;
-
-        public ForceDrinkEvent(EntityUid user, DrinkComponent drink, Solution drinkSolution)
-        {
-            User = user;
-            Drink = drink;
-            DrinkSolution = drinkSolution;
-        }
-    }
-
-    public sealed class ForceDrinkCancelledEvent : EntityEventArgs
-    {
-        public readonly DrinkComponent Drink;
-
-        public ForceDrinkCancelledEvent( DrinkComponent drink)
-        {
-            Drink = drink;
+            args.Drink.CancelToken = null;
         }
     }
 }

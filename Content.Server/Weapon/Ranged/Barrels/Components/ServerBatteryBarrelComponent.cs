@@ -1,19 +1,15 @@
 using System;
-using System.Threading.Tasks;
-using Content.Server.Hands.Components;
-using Content.Server.Items;
 using Content.Server.Power.Components;
 using Content.Server.Projectiles.Components;
-using Content.Shared.Interaction;
-using Content.Shared.Sound;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
-using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -27,6 +23,9 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         public override string Name => "BatteryBarrel";
 
+        [DataField("cellSlot", required: true)]
+        public ItemSlot CellSlot = new();
+
         // The minimum change we need before we can fire
         [DataField("lowerChargeLimit")]
         [ViewVariables] private float _lowerChargeLimit = 10;
@@ -36,23 +35,14 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         [DataField("ammoPrototype")]
         [ViewVariables] private string? _ammoPrototype;
 
-        [ViewVariables] public EntityUid? PowerCellEntity => _powerCellContainer.ContainedEntity;
-        public BatteryComponent? PowerCell => _powerCellContainer.ContainedEntity == null
-            ? null
-            : _entities.GetComponentOrNull<BatteryComponent>(_powerCellContainer.ContainedEntity.Value);
-
-        private ContainerSlot _powerCellContainer = default!;
+        public BatteryComponent? PowerCell => _entities.GetComponentOrNull<BatteryComponent>(CellSlot.Item);
         private ContainerSlot _ammoContainer = default!;
-        [DataField("powerCellPrototype")]
-        private string? _powerCellPrototype;
-        [DataField("powerCellRemovable")]
-        [ViewVariables] public bool PowerCellRemovable;
 
         public override int ShotsLeft
         {
             get
             {
-                if (_powerCellContainer.ContainedEntity is not {Valid: true} powerCell)
+                if (CellSlot.Item is not {} powerCell)
                 {
                     return 0;
                 }
@@ -65,7 +55,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         {
             get
             {
-                if (_powerCellContainer.ContainedEntity is not {Valid: true} powerCell)
+                if (CellSlot.Item is not {} powerCell)
                 {
                     return 0;
                 }
@@ -75,12 +65,6 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         }
 
         private AppearanceComponent? _appearanceComponent;
-
-        // Sounds
-        [DataField("soundPowerCellInsert", required: true)]
-        private SoundSpecifier _soundPowerCellInsert = default!;
-        [DataField("soundPowerCellEject", required: true)]
-        private SoundSpecifier _soundPowerCellEject = default!;
 
         public override ComponentState GetComponentState()
         {
@@ -94,12 +78,8 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         protected override void Initialize()
         {
             base.Initialize();
-            _powerCellContainer = Owner.EnsureContainer<ContainerSlot>($"{Name}-powercell-container", out var existing);
-            if (!existing && _powerCellPrototype != null)
-            {
-                var powerCellEntity = _entities.SpawnEntity(_powerCellPrototype, _entities.GetComponent<TransformComponent>(Owner).Coordinates);
-                _powerCellContainer.Insert(powerCellEntity);
-            }
+
+            EntitySystem.Get<ItemSlotsSystem>().AddItemSlot(Owner, $"{Name}-powercell-container", CellSlot);
 
             if (_ammoPrototype != null)
             {
@@ -113,6 +93,12 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             Dirty();
         }
 
+        protected override void OnRemove()
+        {
+            base.OnRemove();
+            EntitySystem.Get<ItemSlotsSystem>().RemoveItemSlot(Owner, CellSlot);
+        }
+
         protected override void Startup()
         {
             base.Startup();
@@ -121,7 +107,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         public void UpdateAppearance()
         {
-            _appearanceComponent?.SetData(MagazineBarrelVisuals.MagLoaded, _powerCellContainer.ContainedEntity != null);
+            _appearanceComponent?.SetData(MagazineBarrelVisuals.MagLoaded, CellSlot.HasItem);
             _appearanceComponent?.SetData(AmmoVisuals.AmmoCount, ShotsLeft);
             _appearanceComponent?.SetData(AmmoVisuals.AmmoMax, Capacity);
             Dirty();
@@ -143,7 +129,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         public override EntityUid? TakeProjectile(EntityCoordinates spawnAt)
         {
-            var powerCellEntity = _powerCellContainer.ContainedEntity;
+            var powerCellEntity = CellSlot.Item;
 
             if (powerCellEntity == null)
             {
@@ -197,77 +183,6 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             Dirty();
             UpdateAppearance();
             return entity.Value;
-        }
-
-        public bool TryInsertPowerCell(EntityUid entity)
-        {
-            if (_powerCellContainer.ContainedEntity != null)
-            {
-                return false;
-            }
-
-            if (!_entities.HasComponent<BatteryComponent>(entity))
-            {
-                return false;
-            }
-
-            SoundSystem.Play(Filter.Pvs(Owner), _soundPowerCellInsert.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
-
-            _powerCellContainer.Insert(entity);
-
-            Dirty();
-            UpdateAppearance();
-            return true;
-        }
-
-        public override bool UseEntity(UseEntityEventArgs eventArgs)
-        {
-            if (!PowerCellRemovable)
-            {
-                return false;
-            }
-
-            return PowerCellEntity != default && TryEjectCell(eventArgs.User);
-        }
-
-        public bool TryEjectCell(EntityUid user)
-        {
-            if (PowerCell == null || !PowerCellRemovable)
-            {
-                return false;
-            }
-
-            if (!_entities.TryGetComponent(user, out HandsComponent? hands))
-            {
-                return false;
-            }
-
-            var cell = PowerCell;
-            if (!_powerCellContainer.Remove(cell.Owner))
-            {
-                return false;
-            }
-
-            Dirty();
-            UpdateAppearance();
-
-            if (!hands.PutInHand(_entities.GetComponent<ItemComponent>(cell.Owner)))
-            {
-                _entities.GetComponent<TransformComponent>(cell.Owner).Coordinates = _entities.GetComponent<TransformComponent>(user).Coordinates;
-            }
-
-            SoundSystem.Play(Filter.Pvs(Owner), _soundPowerCellEject.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
-            return true;
-        }
-
-        public override async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
-        {
-            if (!_entities.HasComponent<BatteryComponent>(eventArgs.Using))
-            {
-                return false;
-            }
-
-            return TryInsertPowerCell(eventArgs.Using);
         }
     }
 }

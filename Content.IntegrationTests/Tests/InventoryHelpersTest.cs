@@ -78,7 +78,7 @@ namespace Content.IntegrationTests.Tests
                     ID: "InventoryJumpsuitJanitorDummy"
                 });
 
-                EntitySystem.Get<StunSystem>().TryStun(human, TimeSpan.FromSeconds(1f));
+                EntitySystem.Get<StunSystem>().TryStun(human, TimeSpan.FromSeconds(1f), true);
 
                 // Since the mob is stunned, they can't equip this.
                 Assert.That(inventory.SpawnItemInSlot(Slots.IDCARD, "InventoryIDCardDummy", true), Is.False);

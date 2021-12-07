@@ -34,12 +34,12 @@ namespace Content.Server.Stunnable
                 // Let the actual methods log errors for these.
                 Resolve(otherUid, ref alerts, ref standingState, ref appearance, false);
 
-                _stunSystem.TryStun(otherUid, TimeSpan.FromSeconds(component.StunAmount), status, alerts);
+                _stunSystem.TryStun(otherUid, TimeSpan.FromSeconds(component.StunAmount), true, status, alerts);
 
-                _stunSystem.TryKnockdown(otherUid, TimeSpan.FromSeconds(component.KnockdownAmount),
+                _stunSystem.TryKnockdown(otherUid, TimeSpan.FromSeconds(component.KnockdownAmount), true,
                     status, alerts);
 
-                _stunSystem.TrySlowdown(otherUid, TimeSpan.FromSeconds(component.SlowdownAmount),
+                _stunSystem.TrySlowdown(otherUid, TimeSpan.FromSeconds(component.SlowdownAmount), true,
                     component.WalkSpeedMultiplier, component.RunSpeedMultiplier, status, alerts);
             }
         }

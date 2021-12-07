@@ -120,7 +120,7 @@ namespace Content.Server.Stunnable
 
         private void StunEntity(EntityUid entity, StunbatonComponent comp)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out StatusEffectsComponent? status) || !comp.Activated) return;
+            if (!EntityManager.TryGetComponent(entity, out StatusEffectsComponent? status) || !comp.Activated) return;
 
             // TODO: Make slowdown inflicted customizable.
 
@@ -128,23 +128,23 @@ namespace Content.Server.Stunnable
             if (!EntityManager.HasComponent<SlowedDownComponent>(entity))
             {
                 if (_robustRandom.Prob(comp.ParalyzeChanceNoSlowdown))
-                    _stunSystem.TryParalyze(entity, TimeSpan.FromSeconds(comp.ParalyzeTime), status);
+                    _stunSystem.TryParalyze(entity, TimeSpan.FromSeconds(comp.ParalyzeTime), true, status);
                 else
-                    _stunSystem.TrySlowdown(entity, TimeSpan.FromSeconds(comp.SlowdownTime), 0.5f, 0.5f, status);
+                    _stunSystem.TrySlowdown(entity, TimeSpan.FromSeconds(comp.SlowdownTime), true,  0.5f, 0.5f, status);
             }
             else
             {
                 if (_robustRandom.Prob(comp.ParalyzeChanceWithSlowdown))
-                    _stunSystem.TryParalyze(entity, TimeSpan.FromSeconds(comp.ParalyzeTime), status);
+                    _stunSystem.TryParalyze(entity, TimeSpan.FromSeconds(comp.ParalyzeTime), true, status);
                 else
-                    _stunSystem.TrySlowdown(entity, TimeSpan.FromSeconds(comp.SlowdownTime), 0.5f, 0.5f, status);
+                    _stunSystem.TrySlowdown(entity, TimeSpan.FromSeconds(comp.SlowdownTime), true,  0.5f, 0.5f, status);
             }
 
             var slowdownTime = TimeSpan.FromSeconds(comp.SlowdownTime);
-            _jitterSystem.DoJitter(entity, slowdownTime, status:status);
-            _stutteringSystem.DoStutter(entity, slowdownTime, status);
+            _jitterSystem.DoJitter(entity, slowdownTime, true, status:status);
+            _stutteringSystem.DoStutter(entity, slowdownTime, true, status);
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<PowerCellSlotComponent?>(comp.Owner, out var slot) || slot.Cell == null || !(slot.Cell.CurrentCharge < comp.EnergyPerUse))
+            if (!EntityManager.TryGetComponent<PowerCellSlotComponent?>(comp.Owner, out var slot) || slot.Cell == null || !(slot.Cell.CurrentCharge < comp.EnergyPerUse))
                 return;
 
             SoundSystem.Play(Filter.Pvs(comp.Owner), comp.SparksSound.GetSound(), comp.Owner, AudioHelpers.WithVariation(0.25f));
@@ -158,8 +158,8 @@ namespace Content.Server.Stunnable
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(comp.Owner, out var sprite) ||
-                !IoCManager.Resolve<IEntityManager>().TryGetComponent<ItemComponent?>(comp.Owner, out var item)) return;
+            if (!EntityManager.TryGetComponent<SpriteComponent?>(comp.Owner, out var sprite) ||
+                !EntityManager.TryGetComponent<ItemComponent?>(comp.Owner, out var item)) return;
 
             SoundSystem.Play(Filter.Pvs(comp.Owner), comp.SparksSound.GetSound(), comp.Owner, AudioHelpers.WithVariation(0.25f));
             item.EquippedPrefix = "off";

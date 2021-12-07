@@ -23,7 +23,7 @@ namespace Content.IntegrationTests.Tests
         {
             var options = new ServerContentIntegrationOption()
             {
-                CVarOverrides = {{CCVars.AIMaxUpdates.Name, int.MaxValue.ToString()}}
+                CVarOverrides = {{CCVars.NPCMaxUpdates.Name, int.MaxValue.ToString()}}
             };
 
             var server = StartServer(options);

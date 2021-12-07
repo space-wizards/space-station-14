@@ -12,7 +12,6 @@ using Content.Server.Popups;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
@@ -27,7 +26,11 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
+using System.Collections.Generic;
 using Robust.Shared.Utility;
+using Content.Server.Inventory.Components;
+using Content.Shared.Inventory;
+using Content.Shared.Hands;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
@@ -51,9 +54,24 @@ namespace Content.Server.Nutrition.EntitySystems
 
             SubscribeLocalEvent<FoodComponent, UseInHandEvent>(OnUseFoodInHand);
             SubscribeLocalEvent<FoodComponent, AfterInteractEvent>(OnFeedFood);
+            SubscribeLocalEvent<FoodComponent, HandDeselectedEvent>(OnFoodDeselected);
             SubscribeLocalEvent<FoodComponent, GetInteractionVerbsEvent>(AddEatVerb);
             SubscribeLocalEvent<SharedBodyComponent, ForceFeedEvent>(OnForceFeed);
             SubscribeLocalEvent<ForceFeedCancelledEvent>(OnForceFeedCancelled);
+            SubscribeLocalEvent<InventoryComponent, IngestionAttemptEvent>(OnInventoryIngestAttempt);
+        }
+
+        /// <summary>
+        ///     If the user is currently force feeding someone, this cancels the attempt if they swap hands or otherwise
+        ///     loose the item. Prevents force-feeding dual-wielding.
+        /// </summary>
+        private void OnFoodDeselected(EntityUid uid, FoodComponent component, HandDeselectedEvent args)
+        {
+            if (component.CancelToken != null)
+            {
+                component.CancelToken.Cancel();
+                component.CancelToken = null;
+            }
         }
 
         /// <summary>
@@ -119,6 +137,14 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!Resolve(uid, ref food))
                 return false;
 
+            // if currently being used to force-feed, cancel that action.
+            if (food.CancelToken != null)
+            {
+                food.CancelToken.Cancel();
+                food.CancelToken = null;
+                return true;
+            }
+
             if (uid == user || //Suppresses self-eating
                 EntityManager.TryGetComponent<MobStateComponent>(uid, out var mobState) && mobState.IsAlive()) // Suppresses eating alive mobs
                 return false;
@@ -137,11 +163,8 @@ namespace Content.Server.Nutrition.EntitySystems
                 !_bodySystem.TryGetComponentsOnMechanisms<StomachComponent>(user, out var stomachs, body))
                 return false;
 
-            if (IsMouthBlocked(user, out var blocker))
+            if (IsMouthBlocked(user, user))
             {
-                var name = EntityManager.GetComponent<MetaDataComponent>(blocker.Value).EntityName;
-                _popupSystem.PopupEntity(Loc.GetString("food-system-remove-mask", ("entity", name)),
-                    user, Filter.Entities(user));
                 return true;
             }
 
@@ -218,6 +241,9 @@ namespace Content.Server.Nutrition.EntitySystems
 
         private void AddEatVerb(EntityUid uid, FoodComponent component, GetInteractionVerbsEvent ev)
         {
+            if (component.CancelToken != null)
+                return;
+
             if (uid == ev.User ||
                 !ev.CanInteract ||
                 !ev.CanAccess ||
@@ -250,6 +276,14 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!Resolve(uid, ref food))
                 return false;
 
+            // if currently being used to force-feed, cancel that action.
+            if (food.CancelToken != null)
+            {
+                food.CancelToken.Cancel();
+                food.CancelToken = null;
+                return true;
+            }
+
             if (!EntityManager.HasComponent<SharedBodyComponent>(target))
                 return false;
 
@@ -264,11 +298,8 @@ namespace Content.Server.Nutrition.EntitySystems
                 return true;
             }
 
-            if (IsMouthBlocked(target, out var blocker))
+            if (IsMouthBlocked(target, user))
             {
-                var name = EntityManager.GetComponent<MetaDataComponent>(blocker.Value).EntityName;
-                _popupSystem.PopupEntity(Loc.GetString("food-system-remove-mask", ("entity", name)),
-                    user, Filter.Entities(user));
                 return true;
             }
 
@@ -281,7 +312,8 @@ namespace Content.Server.Nutrition.EntitySystems
             _popupSystem.PopupEntity(Loc.GetString("food-system-force-feed", ("user", userName)),
                 user, Filter.Entities(target));
 
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(user, food.ForceFeedDelay, target: target)
+            food.CancelToken = new();
+            _doAfterSystem.DoAfter(new DoAfterEventArgs(user, food.ForceFeedDelay, food.CancelToken.Token, target)
             {
                 BreakOnUserMove = true,
                 BreakOnDamage = true,
@@ -295,13 +327,15 @@ namespace Content.Server.Nutrition.EntitySystems
             // logging
             _logSystem.Add(LogType.ForceFeed, LogImpact.Medium, $"{user} is forcing {target} to eat {uid}");
 
-            food.InUse = true;
             return true;
         }
 
         private void OnForceFeed(EntityUid uid, SharedBodyComponent body, ForceFeedEvent args)
         {
-            args.Food.InUse = false;
+            if (args.Food.Deleted)
+                return;
+
+            args.Food.CancelToken = null;
 
             if (!_bodySystem.TryGetComponentsOnMechanisms<StomachComponent>(uid, out var stomachs, body))
                 return;
@@ -361,7 +395,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!Resolve(uid, ref food) || !Resolve(target, ref body, false))
                 return;
 
-            if (IsMouthBlocked(target, out _))
+            if (IsMouthBlocked(target))
                 return;
 
             if (!_solutionContainerSystem.TryGetSolution(uid, food.SolutionName, out var foodSolution))
@@ -438,66 +472,57 @@ namespace Content.Server.Nutrition.EntitySystems
 
         private void OnForceFeedCancelled(ForceFeedCancelledEvent args)
         {
-            args.Food.InUse = false;
+            args.Food.CancelToken = null;
         }
 
         /// <summary>
-        ///     Is an entity's mouth accessible, or is it blocked by something like a mask? Does not actually check if
-        ///     the user has a mouth. Body system when?
+        ///     Block ingestion attempts based on the equipped mask or head-wear
         /// </summary>
-        public bool IsMouthBlocked(EntityUid uid, [NotNullWhen(true)] out EntityUid? blockingEntity,
-            InventoryComponent? inventory = null)
+        private void OnInventoryIngestAttempt(EntityUid uid, InventoryComponent component, IngestionAttemptEvent args)
         {
-            blockingEntity = null;
+            if (args.Cancelled)
+                return;
 
-            if (!Resolve(uid, ref inventory, false))
-                return false;
+            IngestionBlockerComponent blocker;
 
-            // check masks
-            if (inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.MASK, out ItemComponent? mask))
+            if (component.TryGetSlotItem(EquipmentSlotDefines.Slots.MASK, out ItemComponent? mask) &&
+                EntityManager.TryGetComponent(mask.Owner, out blocker) &&
+                blocker.Enabled)
             {
-                // For now, lets just assume that any masks always covers the mouth
-                // TODO MASKS if the ability is added to raise/lower masks, this needs to be updated.
-                blockingEntity = mask.Owner;
-                return true;
+                args.Blocker = mask.Owner;
+                args.Cancel();
+                return;
             }
 
-            // check helmets. Note that not all helmets cover the face.
-            if (inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.HEAD, out ItemComponent? head) &&
-                EntityManager.TryGetComponent(((IComponent) head).Owner, out TagComponent tag) &&
-                tag.HasTag("ConcealsFace"))
+            if (component.TryGetSlotItem(EquipmentSlotDefines.Slots.HEAD, out ItemComponent? head) &&
+                EntityManager.TryGetComponent(head.Owner, out blocker) &&
+                blocker.Enabled)
             {
-                blockingEntity = head.Owner;
-                return true;
+                args.Blocker = head.Owner;
+                args.Cancel();
+            }
+        }
+
+
+        /// <summary>
+        ///     Check whether the target's mouth is blocked by equipment (masks or head-wear).
+        /// </summary>
+        /// <param name="uid">The target whose equipment is checked</param>
+        /// <param name="popupUid">Optional entity that will receive an informative pop-up identifying the blocking
+        /// piece of equipment.</param>
+        /// <returns></returns>
+        public bool IsMouthBlocked(EntityUid uid, EntityUid? popupUid = null)
+        {
+            var attempt = new IngestionAttemptEvent();
+            RaiseLocalEvent(uid, attempt, false);
+            if (attempt.Cancelled && attempt.Blocker != null && popupUid != null)
+            {
+                var name = EntityManager.GetComponent<MetaDataComponent>(attempt.Blocker.Value).EntityName;
+                _popupSystem.PopupEntity(Loc.GetString("food-system-remove-mask", ("entity", name)),
+                    uid, Filter.Entities(popupUid.Value));
             }
 
-            return false;
-        }
-    }
-
-    public sealed class ForceFeedEvent : EntityEventArgs
-    {
-        public readonly EntityUid User;
-        public readonly FoodComponent Food;
-        public readonly Solution FoodSolution;
-        public readonly List<UtensilComponent> Utensils;
-
-        public ForceFeedEvent(EntityUid user, FoodComponent food, Solution foodSolution, List<UtensilComponent> utensils)
-        {
-            User = user;
-            Food = food;
-            FoodSolution = foodSolution;
-            Utensils = utensils;
-        }
-    }
-
-    public sealed class ForceFeedCancelledEvent : EntityEventArgs
-    {
-        public readonly FoodComponent Food;
-
-        public ForceFeedCancelledEvent(FoodComponent food)
-        {
-            Food = food;
+            return attempt.Cancelled;
         }
     }
 }

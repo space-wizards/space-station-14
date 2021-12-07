@@ -30,9 +30,7 @@
     sprite: Clothing/Head/Misc/chickenhead.rsi
   - type: Clothing
     sprite: Clothing/Head/Misc/chickenhead.rsi
-  - type: Tag
-    tags:
-    - ConcealsFace
+  - type: IngestionBlocker
 
 - type: entity
   parent: ClothingHeadBase
@@ -55,9 +53,7 @@
       sprite: Clothing/Head/Misc/pumpkin.rsi
     - type: Clothing
       sprite: Clothing/Head/Misc/pumpkin.rsi
-    - type: Tag
-      tags:
-      - ConcealsFace
+    - type: IngestionBlocker
 
 - type: entity
   parent: ClothingHeadBase
@@ -80,9 +76,7 @@
     sprite: Clothing/Head/Misc/richard.rsi
   - type: Clothing
     sprite: Clothing/Head/Misc/richard.rsi
-  - type: Tag
-    tags:
-    - ConcealsFace
+  - type: IngestionBlocker
 
 - type: entity
   parent: ClothingHeadBase
@@ -94,9 +88,7 @@
     sprite: Clothing/Head/Misc/skubhead.rsi
   - type: Clothing
     sprite: Clothing/Head/Misc/skubhead.rsi
-  - type: Tag
-    tags:
-    - ConcealsFace
+  - type: IngestionBlocker
 
 - type: entity
   parent: ClothingHeadBase
@@ -108,9 +100,7 @@
     sprite: Clothing/Head/Misc/xenom.rsi
   - type: Clothing
     sprite: Clothing/Head/Misc/xenom.rsi
-  - type: Tag
-    tags:
-    - ConcealsFace
+  - type: IngestionBlocker
 
 - type: entity
   parent: ClothingHeadBase
@@ -122,9 +112,7 @@
     sprite: Clothing/Head/Misc/xenos.rsi
   - type: Clothing
     sprite: Clothing/Head/Misc/xenos.rsi
-  - type: Tag
-    tags:
-    - ConcealsFace
+  - type: IngestionBlocker
 
 - type: entity
   parent: ClothingHeadBase

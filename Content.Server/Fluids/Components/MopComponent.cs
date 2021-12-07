@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.DoAfter;
+using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
@@ -89,6 +90,7 @@ namespace Content.Server.Fluids.Components
              * will spill some of the mop's solution onto the puddle which will evaporate eventually.
              */
             var solutionSystem = EntitySystem.Get<SolutionContainerSystem>();
+            var spillableSystem = EntitySystem.Get<SpillableSystem>();
 
             if (!solutionSystem.TryGetSolution(Owner, SolutionName, out var contents ) ||
                 Mopping ||
@@ -106,8 +108,8 @@ namespace Content.Server.Fluids.Components
             if (eventArgs.Target is not {Valid: true} target)
             {
                 // Drop the liquid on the mop on to the ground
-                solutionSystem.SplitSolution(Owner, contents, FixedPoint2.Min(ResidueAmount, CurrentVolume))
-                    .SpillAt(eventArgs.ClickLocation, "PuddleSmear");
+                var solution = solutionSystem.SplitSolution(Owner, contents, FixedPoint2.Min(ResidueAmount, CurrentVolume));
+                spillableSystem.SpillAt(solution, eventArgs.ClickLocation, "PuddleSmear");
                 return true;
             }
 
@@ -147,9 +149,9 @@ namespace Content.Server.Fluids.Components
 
                 // After cleaning the puddle, make a new puddle with solution from the mop as a "wet floor". Then evaporate it slowly.
                 // we do this WITHOUT adding to the existing puddle. Otherwise we have might have water puddles with the vomit sprite.
-                solutionSystem.SplitSolution(Owner, contents, transferAmount)
-                    .SplitSolution(ResidueAmount)
-                    .SpillAt(eventArgs.ClickLocation, "PuddleSmear", combine: false);
+                var splitSolution = solutionSystem.SplitSolution(Owner, contents, transferAmount)
+                    .SplitSolution(ResidueAmount);
+                spillableSystem.SpillAt(splitSolution, eventArgs.ClickLocation, "PuddleSmear", combine: false);
             }
             else
             {

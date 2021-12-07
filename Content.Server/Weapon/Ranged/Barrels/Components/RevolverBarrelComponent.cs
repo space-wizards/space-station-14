@@ -22,7 +22,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 {
     [RegisterComponent]
     [NetworkedComponent()]
-    public sealed class RevolverBarrelComponent : ServerRangedBarrelComponent, ISerializationHooks
+    public sealed class RevolverBarrelComponent : ServerRangedBarrelComponent, IUse, IInteractUsing, ISerializationHooks
     {
         [Dependency] private readonly IRobustRandom _random = default!;
 
@@ -251,7 +251,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         /// <param name="eventArgs"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public override bool UseEntity(UseEntityEventArgs eventArgs)
+        public bool UseEntity(UseEntityEventArgs eventArgs)
         {
             EjectAllSlots();
             Dirty();
@@ -259,7 +259,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             return true;
         }
 
-        public override async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             return TryInsertBullet(eventArgs.User, eventArgs.Using);
         }
