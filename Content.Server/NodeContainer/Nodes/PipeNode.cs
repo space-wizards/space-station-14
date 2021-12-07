@@ -132,6 +132,7 @@ namespace Content.Server.NodeContainer.Nodes
 
         public override IEnumerable<Node> GetReachableNodes()
         {
+            if (!ConnectionsEnabled) yield break;
             for (var i = 0; i < PipeDirectionHelpers.AllPipeDirections; i++)
             {
                 var pipeDir = (PipeDirection) (1 << i);
