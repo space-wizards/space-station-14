@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.FixedPoint;
@@ -55,9 +56,10 @@ namespace Content.Server.Nutrition.Components
         public float ForceFeedDelay = 3;
 
         /// <summary>
-        ///     If true, this food has some DoAfter active (someone is being force fed).
+        ///     Token for interrupting a do-after action (e.g., force feeding). If not null, implies component is
+        ///     currently "in use".
         /// </summary>
-        public bool InUse = false;
+        public CancellationTokenSource? CancelToken;
 
         [ViewVariables]
         public int UsesRemaining
