@@ -158,7 +158,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
 
                 if (mob != null)
                 {
-                    _stunSystem.TryParalyze(mob.Uid, TimeSpan.FromSeconds(1));
+                    _stunSystem.TryParalyze(mob.Uid, TimeSpan.FromSeconds(1), true);
 
                     instrument.Owner.PopupMessage(mob, "instrument-component-finger-cramps-max-message");
                 }
