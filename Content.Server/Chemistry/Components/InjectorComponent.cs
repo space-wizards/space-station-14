@@ -190,7 +190,7 @@ namespace Content.Server.Chemistry.Components
                 EntitySystem.Get<SolutionContainerSystem>().SplitSolution(user, targetBloodstream.Solution, realTransferAmount);
 
             var bloodstreamSys = EntitySystem.Get<BloodstreamSystem>();
-            bloodstreamSys.TryAddToBloodstream(((IComponent) targetBloodstream).Owner, removedSolution, targetBloodstream);
+            bloodstreamSys.TryAddToBloodstream((targetBloodstream).Owner, removedSolution, targetBloodstream);
 
             removedSolution.DoEntityReaction(targetBloodstream.Owner, ReactionMethod.Injection);
 

@@ -104,7 +104,7 @@ namespace Content.Client.Instruments.UI
             await Task.WhenAll(Timer.Delay(100), file.CopyToAsync(memStream));
 
             if (_owner.Instrument is not {} instrument
-                || !EntitySystem.Get<InstrumentSystem>().OpenMidi(((IComponent) instrument).Owner, memStream.GetBuffer().AsSpan(0, (int) memStream.Length), instrument))
+                || !EntitySystem.Get<InstrumentSystem>().OpenMidi(instrument.Owner, memStream.GetBuffer().AsSpan(0, (int) memStream.Length), instrument))
                 return;
 
             MidiPlaybackSetButtonsDisabled(false);
@@ -123,10 +123,10 @@ namespace Content.Client.Instruments.UI
 
                 MidiStopButtonOnPressed(null);
                 if(_owner.Instrument is {} instrument)
-                    instrumentSystem.OpenInput(((IComponent) instrument).Owner, instrument);
+                    instrumentSystem.OpenInput(instrument.Owner, instrument);
             }
             else  if(_owner.Instrument is {} instrument)
-                instrumentSystem.CloseInput(((IComponent) instrument).Owner, false, instrument);
+                instrumentSystem.CloseInput(instrument.Owner, false, instrument);
         }
 
         private bool PlayCheck()
@@ -162,7 +162,7 @@ namespace Content.Client.Instruments.UI
             if (_owner.Instrument is not { } instrument)
                 return;
 
-            EntitySystem.Get<InstrumentSystem>().CloseMidi(((IComponent) instrument).Owner, false, instrument);
+            EntitySystem.Get<InstrumentSystem>().CloseMidi(instrument.Owner, false, instrument);
         }
 
         private void MidiLoopButtonOnOnToggled(ButtonToggledEventArgs obj)
@@ -179,14 +179,14 @@ namespace Content.Client.Instruments.UI
             // Do not seek while still grabbing.
             if (PlaybackSlider.Grabbed || _owner.Instrument is not {} instrument) return;
 
-            EntitySystem.Get<InstrumentSystem>().SetPlayerTick(((IComponent) instrument).Owner, (int)Math.Ceiling(PlaybackSlider.Value), instrument);
+            EntitySystem.Get<InstrumentSystem>().SetPlayerTick(instrument.Owner, (int)Math.Ceiling(PlaybackSlider.Value), instrument);
         }
 
         private void PlaybackSliderKeyUp(GUIBoundKeyEventArgs args)
         {
             if (args.Function != EngineKeyFunctions.UIClick || _owner.Instrument is not {} instrument) return;
 
-            EntitySystem.Get<InstrumentSystem>().SetPlayerTick(((IComponent) instrument).Owner, (int)Math.Ceiling(PlaybackSlider.Value), instrument);
+            EntitySystem.Get<InstrumentSystem>().SetPlayerTick(instrument.Owner, (int)Math.Ceiling(PlaybackSlider.Value), instrument);
         }
 
         protected override void FrameUpdate(FrameEventArgs args)

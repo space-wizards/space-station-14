@@ -167,7 +167,7 @@ namespace Content.Shared.Movement
                    IoCManager.Resolve<IEntityManager>().HasComponent<MobStateComponent>(body.Owner) &&
                    // If we're being pulled then don't mess with our velocity.
                    (!IoCManager.Resolve<IEntityManager>().TryGetComponent(body.Owner, out SharedPullableComponent? pullable) || !pullable.BeingPulled) &&
-                   _blocker.CanMove(((IComponent) body).Owner);
+                   _blocker.CanMove((body).Owner);
         }
 
         /// <summary>

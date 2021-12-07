@@ -56,7 +56,7 @@ namespace Content.Server.Body.Systems
             foreach (var (part, _) in body.Parts)
             foreach (var mechanism in part.Mechanisms)
             {
-                if (EntityManager.TryGetComponent<T>(((IComponent) mechanism).Owner, out var comp))
+                if (EntityManager.TryGetComponent<T>((mechanism).Owner, out var comp))
                     yield return (comp, mechanism);
             }
         }

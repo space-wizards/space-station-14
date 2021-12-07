@@ -35,11 +35,11 @@ namespace Content.Server.Body.Systems
                 stomach.AccumulatedFrameTime -= stomach.UpdateInterval;
 
                 // Get our solutions
-                if (!_solutionContainerSystem.TryGetSolution(((IComponent) stomach).Owner, DefaultSolutionName,
+                if (!_solutionContainerSystem.TryGetSolution((stomach).Owner, DefaultSolutionName,
                     out var stomachSolution, sol))
                     continue;
 
-                if (!_solutionContainerSystem.TryGetSolution(((IComponent) mech.Body).Owner, stomach.BodySolutionName,
+                if (!_solutionContainerSystem.TryGetSolution((mech.Body).Owner, stomach.BodySolutionName,
                     out var bodySolution))
                     continue;
 
@@ -56,7 +56,7 @@ namespace Content.Server.Body.Systems
                             if (quant > delta.Quantity)
                                 quant = delta.Quantity;
 
-                            _solutionContainerSystem.TryRemoveReagent(((IComponent) stomach).Owner, stomachSolution,
+                            _solutionContainerSystem.TryRemoveReagent((stomach).Owner, stomachSolution,
                                 delta.ReagentId, quant);
                             transferSolution.AddReagent(delta.ReagentId, quant);
                         }
@@ -71,7 +71,7 @@ namespace Content.Server.Body.Systems
                 }
 
                 // Transfer everything to the body solution!
-                _solutionContainerSystem.TryAddSolution(((IComponent) mech.Body).Owner, bodySolution, transferSolution);
+                _solutionContainerSystem.TryAddSolution((mech.Body).Owner, bodySolution, transferSolution);
             }
         }
 

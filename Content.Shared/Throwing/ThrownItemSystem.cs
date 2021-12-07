@@ -54,7 +54,7 @@ namespace Content.Shared.Throwing
 
         private void ThrowItem(EntityUid uid, ThrownItemComponent component, ThrownEvent args)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner, out PhysicsComponent? physicsComponent) ||
+            if (!EntityManager.TryGetComponent(component.Owner, out PhysicsComponent? physicsComponent) ||
                 physicsComponent.Fixtures.Count != 1) return;
 
             if (_fixtures.GetFixtureOrNull(physicsComponent, ThrowingFixture) != null)
@@ -114,13 +114,13 @@ namespace Content.Shared.Throwing
 
         public void LandComponent(ThrownItemComponent thrownItem)
         {
-            if (thrownItem.Deleted || (!IoCManager.Resolve<IEntityManager>().EntityExists(thrownItem.Owner) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(thrownItem.Owner).EntityLifeStage) >= EntityLifeStage.Deleted || _containerSystem.IsEntityInContainer(thrownItem.Owner)) return;
+            if (thrownItem.Deleted || (!EntityManager.EntityExists(thrownItem.Owner) ? EntityLifeStage.Deleted : EntityManager.GetComponent<MetaDataComponent>(thrownItem.Owner).EntityLifeStage) >= EntityLifeStage.Deleted || _containerSystem.IsEntityInContainer(thrownItem.Owner)) return;
 
             var landing = thrownItem.Owner;
 
             // Unfortunately we can't check for hands containers as they have specific names.
             if (thrownItem.Owner.TryGetContainerMan(out var containerManager) &&
-                IoCManager.Resolve<IEntityManager>().HasComponent<SharedHandsComponent>(containerManager.Owner))
+                EntityManager.HasComponent<SharedHandsComponent>(containerManager.Owner))
             {
                 EntityManager.RemoveComponent(landing, thrownItem);
                 return;

@@ -112,17 +112,19 @@ namespace Content.Server.Solar.EntitySystems
             else
             {
                 TotalPanelPower = 0;
-                foreach (var panel in EntityManager.EntityQuery<SolarPanelComponent>())
+                foreach (var (panel, xform) in EntityManager.EntityQuery<SolarPanelComponent, TransformComponent>())
                 {
                     TotalPanelPower += panel.MaxSupply * panel.Coverage;
-                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(panel.Owner).WorldRotation = TargetPanelRotation;
+                    xform.WorldRotation = TargetPanelRotation;
                     _updateQueue.Enqueue(panel);
                 }
             }
         }
 
-        private void UpdatePanelCoverage(SolarPanelComponent panel) {
+        private void UpdatePanelCoverage(SolarPanelComponent panel)
+        {
             EntityUid entity = panel.Owner;
+            var xform = EntityManager.GetComponent<TransformComponent>(entity);
 
             // So apparently, and yes, I *did* only find this out later,
             // this is just a really fancy way of saying "Lambert's law of cosines".
@@ -136,7 +138,7 @@ namespace Content.Server.Solar.EntitySystems
             // directly downwards (abs(theta) = pi) = coverage -1
             // as TowardsSun + = CCW,
             // panelRelativeToSun should - = CW
-            var panelRelativeToSun = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).WorldRotation - TowardsSun;
+            var panelRelativeToSun = xform.WorldRotation - TowardsSun;
             // essentially, given cos = X & sin = Y & Y is 'downwards',
             // then for the first 90 degrees of rotation in either direction,
             // this plots the lower-right quadrant of a circle.
@@ -154,19 +156,19 @@ namespace Content.Server.Solar.EntitySystems
             if (coverage > 0)
             {
                 // Determine if the solar panel is occluded, and zero out coverage if so.
-                var ray = new CollisionRay(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).WorldPosition, TowardsSun.ToWorldVec(), (int) CollisionGroup.Opaque);
+                var ray = new CollisionRay(xform.WorldPosition, TowardsSun.ToWorldVec(), (int) CollisionGroup.Opaque);
                 var rayCastResults = _physicsSystem.IntersectRayWithPredicate(
-                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).MapID,
+                    xform.MapID,
                     ray,
                     SunOcclusionCheckDistance,
-                    e => !IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(e).Anchored || e == entity);
+                    e => !xform.Anchored || e == entity);
                 if (rayCastResults.Any())
                     coverage = 0;
             }
 
             // Total coverage calculated; apply it to the panel.
             panel.Coverage = coverage;
-            UpdateSupply(((IComponent) panel).Owner, panel);
+            UpdateSupply((panel).Owner, panel);
         }
 
         public void UpdateSupply(

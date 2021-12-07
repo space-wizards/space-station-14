@@ -29,7 +29,7 @@ namespace Content.Shared.Pulling
 
         public bool CanPull(EntityUid puller, EntityUid pulled)
         {
-            if (!IoCManager.Resolve<IEntityManager>().HasComponent<SharedPullerComponent>(puller))
+            if (!EntityManager.HasComponent<SharedPullerComponent>(puller))
             {
                 return false;
             }
@@ -39,7 +39,7 @@ namespace Content.Shared.Pulling
                 return false;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<IPhysBody?>(pulled, out var _physics))
+            if (!EntityManager.TryGetComponent<IPhysBody?>(pulled, out var _physics))
             {
                 return false;
             }
@@ -59,7 +59,7 @@ namespace Content.Shared.Pulling
                 return false;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedBuckleComponent?>(puller, out var buckle))
+            if (EntityManager.TryGetComponent<SharedBuckleComponent?>(puller, out var buckle))
             {
                 // Prevent people pulling the chair they're on, etc.
                 if (buckle.Buckled && (buckle.LastEntityBuckledTo == pulled))
@@ -92,7 +92,7 @@ namespace Content.Shared.Pulling
             }
 
             var msg = new StopPullingEvent(user);
-            RaiseLocalEvent(((IComponent) pullable).Owner, msg);
+            RaiseLocalEvent(pullable.Owner, msg);
 
             if (msg.Cancelled) return false;
 
@@ -173,14 +173,14 @@ namespace Content.Shared.Pulling
 
             var pullAttempt = new PullAttemptMessage(pullerPhysics, pullablePhysics);
 
-            RaiseLocalEvent(((IComponent) puller).Owner, pullAttempt, broadcast: false);
+            RaiseLocalEvent(puller.Owner, pullAttempt, broadcast: false);
 
             if (pullAttempt.Cancelled)
             {
                 return false;
             }
 
-            RaiseLocalEvent(((IComponent) pullable).Owner, pullAttempt);
+            RaiseLocalEvent(pullable.Owner, pullAttempt);
 
             if (pullAttempt.Cancelled)
             {
@@ -198,7 +198,7 @@ namespace Content.Shared.Pulling
                 return false;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().HasComponent<PhysicsComponent>(pullable.Owner))
+            if (!EntityManager.HasComponent<PhysicsComponent>(pullable.Owner))
             {
                 return false;
             }

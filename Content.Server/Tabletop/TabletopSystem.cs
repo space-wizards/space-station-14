@@ -103,7 +103,7 @@ namespace Content.Server.Tabletop
                     return;
                 };
 
-                var gamerUid = ((IComponent) gamer).Owner;
+                var gamerUid = (gamer).Owner;
 
                 if (actor.PlayerSession.Status > SessionStatus.Connected || CanSeeTable(gamerUid, gamer.Tabletop)
                                                                          || !StunnedOrNoHands(gamerUid))

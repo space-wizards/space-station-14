@@ -164,7 +164,7 @@ namespace Content.Shared.Pulling
             // The pulled object may have already been deleted.
             // TODO: Work out why. Monkey + meat spike is a good test for this,
             //  assuming you're still pulling the monkey when it gets gibbed.
-            if ((!EntityManager.EntityExists(pulled.Value) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(pulled.Value).EntityLifeStage) >= EntityLifeStage.Deleted)
+            if ((!EntityManager.EntityExists(pulled.Value) ? EntityLifeStage.Deleted : EntityManager.GetComponent<MetaDataComponent>(pulled.Value).EntityLifeStage) >= EntityLifeStage.Deleted)
             {
                 return;
             }
@@ -249,16 +249,18 @@ namespace Content.Shared.Pulling
         private void UpdatePulledRotation(EntityUid puller, EntityUid pulled)
         {
             // TODO: update once ComponentReference works with directed event bus.
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(pulled, out RotatableComponent? rotatable))
+            if (!EntityManager.TryGetComponent(pulled, out RotatableComponent? rotatable))
                 return;
 
             if (!rotatable.RotateWhilePulling)
                 return;
 
-            var dir = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(puller).WorldPosition - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pulled).WorldPosition;
+            var pulledXform = EntityManager.GetComponent<TransformComponent>(pulled);
+
+            var dir = EntityManager.GetComponent<TransformComponent>(puller).WorldPosition - pulledXform.WorldPosition;
             if (dir.LengthSquared > ThresholdRotDistance * ThresholdRotDistance)
             {
-                var oldAngle = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pulled).WorldRotation;
+                var oldAngle = pulledXform.WorldRotation;
                 var newAngle = Angle.FromWorldVec(dir);
 
                 var diff = newAngle - oldAngle;
@@ -268,10 +270,10 @@ namespace Content.Shared.Pulling
                     // Otherwise PIANO DOOR STUCK! happens.
                     // But it also needs to work with station rotation / align to the local parent.
                     // So...
-                    var baseRotation = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pulled).Parent?.WorldRotation ?? 0f;
+                    var baseRotation = pulledXform.Parent?.WorldRotation ?? 0f;
                     var localRotation = newAngle - baseRotation;
                     var localRotationSnapped = Angle.FromDegrees(Math.Floor((localRotation.Degrees / ThresholdRotAngle) + 0.5f) * ThresholdRotAngle);
-                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(pulled).LocalRotation = localRotationSnapped;
+                    pulledXform.LocalRotation = localRotationSnapped;
                 }
             }
         }

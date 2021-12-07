@@ -175,7 +175,7 @@ namespace Content.Server.PneumaticCannon
             if (storage.StoredEntities == null) return;
             if (storage.StoredEntities.Count == 0)
             {
-                SoundSystem.Play(Filter.Pvs(((IComponent) comp).Owner), "/Audio/Weapons/click.ogg", ((IComponent) comp).Owner, AudioParams.Default);
+                SoundSystem.Play(Filter.Pvs((comp).Owner), "/Audio/Weapons/click.ogg", ((IComponent) comp).Owner, AudioParams.Default);
                 return;
             }
 

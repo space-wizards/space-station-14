@@ -71,7 +71,7 @@ namespace Content.Server.StationEvents.Events
                 var possibleTargets = _entityManager.EntityQuery<StationComponent>()
                     .Where(x => x.Station == _target).ToArray();
                 StationComponent tempQualifier = _robustRandom.Pick(possibleTargets);
-                var stationEnt = ((IComponent) tempQualifier).Owner;
+                var stationEnt = (tempQualifier).Owner;
 
                 if (!_entityManager.TryGetComponent<IMapGridComponent>(stationEnt, out var grid))
                     return;
