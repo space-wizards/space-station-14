@@ -351,12 +351,12 @@ namespace Content.Server.Explosion.EntitySystems
             else if (user == null || !user.Value.IsValid())
             {
                 _logSystem.Add(LogType.Explosion, LogImpact.High,
-                    $"{EntityManager.GetEntity(entity.Value)} exploded at {text}");
+                    $"{EntityManager.ToPrettyString(entity.Value)} exploded at {text}");
             }
             else
             {
                 _logSystem.Add(LogType.Explosion, LogImpact.High,
-                    $"{EntityManager.GetEntity(user.Value)} caused {EntityManager.GetEntity(entity.Value)} to explode at {text}");
+                    $"{EntityManager.ToPrettyString(user.Value)} caused {EntityManager.ToPrettyString(entity.Value)} to explode at {text}");
             }
 
             var maxRange = MathHelper.Max(devastationRange, heavyImpactRange, lightImpactRange, 0);
