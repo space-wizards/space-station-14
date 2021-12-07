@@ -344,11 +344,11 @@ namespace Content.Server.Explosion.EntitySystems
 
             // logging
             var text = $"{epicenter} with range {devastationRange}/{heavyImpactRange}/{lightImpactRange}/{flashRange}";
-            if (entity == null)
+            if (entity == null || !entity.Value.IsValid())
             {
                 _logSystem.Add(LogType.Explosion, LogImpact.High, $"Explosion spawned at {text}");
             }
-            else if (user == null)
+            else if (user == null || !user.Value.IsValid())
             {
                 _logSystem.Add(LogType.Explosion, LogImpact.High,
                     $"{EntityManager.GetEntity(entity.Value)} exploded at {text}");
