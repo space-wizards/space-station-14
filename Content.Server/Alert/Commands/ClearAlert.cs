@@ -41,7 +41,7 @@ namespace Content.Server.Alert.Commands
             }
 
             var alertType = args[0];
-            var alertsSystem = EntitySystem.Get<SharedAlertsSystem>();
+            var alertsSystem = EntitySystem.Get<AlertsSystem>();
             if (!alertsSystem.TryGet(Enum.Parse<AlertType>(alertType), out var alert))
             {
                 shell.WriteLine("unrecognized alertType " + alertType);

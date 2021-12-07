@@ -71,7 +71,7 @@ namespace Content.Shared.MobState.Components
             if (_entMan.TryGetComponent(Owner, out AlertsComponent? status))
             {
                 var euid = status.Owner;
-                EntitySystem.Get<SharedAlertsSystem>().ClearAlert(euid, AlertType.HumanHealth);
+                EntitySystem.Get<AlertsSystem>().ClearAlert(euid, AlertType.HumanHealth);
             }
 
             base.OnRemove();

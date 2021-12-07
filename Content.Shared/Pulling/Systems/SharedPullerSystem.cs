@@ -48,7 +48,7 @@ namespace Content.Shared.Pulling.Systems
                 return;
 
             if (EntityManager.TryGetComponent(component.Owner, out AlertsComponent? alerts))
-                EntitySystem.Get<SharedAlertsSystem>().ShowAlert(alerts.Owner, AlertType.Pulling);
+                EntitySystem.Get<AlertsSystem>().ShowAlert(alerts.Owner, AlertType.Pulling);
 
             RefreshMovementSpeed(component);
         }
@@ -64,7 +64,7 @@ namespace Content.Shared.Pulling.Systems
             if (EntityManager.TryGetComponent(component.Owner, out AlertsComponent? alerts))
             {
                 var euid = alerts.Owner;
-                EntitySystem.Get<SharedAlertsSystem>().ClearAlert(euid, AlertType.Pulling);
+                EntitySystem.Get<AlertsSystem>().ClearAlert(euid, AlertType.Pulling);
             }
 
             RefreshMovementSpeed(component);

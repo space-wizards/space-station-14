@@ -95,11 +95,11 @@ namespace Content.Server.Nutrition.Components
                 // Update UI
                 if (ThirstThresholdAlertTypes.TryGetValue(_currentThirstThreshold, out var alertId))
                 {
-                    EntitySystem.Get<SharedAlertsSystem>().ShowAlert(Owner, alertId);
+                    EntitySystem.Get<AlertsSystem>().ShowAlert(Owner, alertId);
                 }
                 else
                 {
-                    EntitySystem.Get<SharedAlertsSystem>().ClearAlertCategory(Owner, AlertCategory.Thirst);
+                    EntitySystem.Get<AlertsSystem>().ClearAlertCategory(Owner, AlertCategory.Thirst);
                 }
 
                 switch (_currentThirstThreshold)

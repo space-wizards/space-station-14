@@ -101,11 +101,11 @@ namespace Content.Server.Buckle.Components
             if (Buckled)
             {
                 AlertType alertType = BuckledTo?.BuckledAlertType ?? AlertType.Buckled;
-                EntitySystem.Get<SharedAlertsSystem>().ShowAlert(_serverAlerts.Owner, alertType, null, null);
+                EntitySystem.Get<AlertsSystem>().ShowAlert(_serverAlerts.Owner, alertType, null, null);
             }
             else
             {
-                EntitySystem.Get<SharedAlertsSystem>().ClearAlertCategory(_serverAlerts.Owner, AlertCategory.Buckled);
+                EntitySystem.Get<AlertsSystem>().ClearAlertCategory(_serverAlerts.Owner, AlertCategory.Buckled);
             }
         }
 

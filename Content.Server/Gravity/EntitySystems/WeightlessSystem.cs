@@ -15,7 +15,7 @@ namespace Content.Server.Gravity.EntitySystems
     public class WeightlessSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly SharedAlertsSystem _alertsSystem = default!;
+        [Dependency] private readonly AlertsSystem _alertsSystem = default!;
 
         private readonly Dictionary<GridId, List<AlertsComponent>> _alerts = new();
 

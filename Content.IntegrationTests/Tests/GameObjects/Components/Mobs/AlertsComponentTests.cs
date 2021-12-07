@@ -23,7 +23,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             await client.WaitIdleAsync();
 
             var serverPlayerManager = server.ResolveDependency<IPlayerManager>();
-            var alertsSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<SharedAlertsSystem>();
+            var alertsSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<AlertsSystem>();
 
             await server.WaitAssertion(() =>
             {

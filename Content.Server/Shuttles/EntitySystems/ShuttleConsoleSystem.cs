@@ -18,7 +18,7 @@ namespace Content.Server.Shuttles.EntitySystems
     internal sealed class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     {
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
-        [Dependency] private readonly SharedAlertsSystem _alertsSystem = default!;
+        [Dependency] private readonly AlertsSystem _alertsSystem = default!;
 
         public override void Initialize()
         {

@@ -50,21 +50,21 @@ namespace Content.Tests.Shared.Alert
             var alertsComponent = new AlertsComponent();
             alertsComponent = IoCManager.InjectDependencies(alertsComponent);
 
-            Assert.That(EntitySystem.Get<SharedAlertsSystem>().TryGet(AlertType.LowPressure, out var lowpressure));
-            Assert.That(EntitySystem.Get<SharedAlertsSystem>().TryGet(AlertType.HighPressure, out var highpressure));
+            Assert.That(EntitySystem.Get<AlertsSystem>().TryGet(AlertType.LowPressure, out var lowpressure));
+            Assert.That(EntitySystem.Get<AlertsSystem>().TryGet(AlertType.HighPressure, out var highpressure));
 
-            EntitySystem.Get<SharedAlertsSystem>().ShowAlert(alertsComponent.Owner, AlertType.LowPressure, null, null);
+            EntitySystem.Get<AlertsSystem>().ShowAlert(alertsComponent.Owner, AlertType.LowPressure, null, null);
             var alertState = alertsComponent.GetComponentState() as AlertsComponentState;
             Assert.NotNull(alertState);
             Assert.That(alertState.Alerts.Count, Is.EqualTo(1));
             Assert.That(alertState.Alerts.ContainsKey(lowpressure.AlertKey));
 
-            EntitySystem.Get<SharedAlertsSystem>().ShowAlert(alertsComponent.Owner, AlertType.HighPressure, null, null);
+            EntitySystem.Get<AlertsSystem>().ShowAlert(alertsComponent.Owner, AlertType.HighPressure, null, null);
             alertState = alertsComponent.GetComponentState() as AlertsComponentState;
             Assert.That(alertState.Alerts.Count, Is.EqualTo(1));
             Assert.That(alertState.Alerts.ContainsKey(highpressure.AlertKey));
 
-            EntitySystem.Get<SharedAlertsSystem>().ClearAlertCategory(alertsComponent.Owner, AlertCategory.Pressure);
+            EntitySystem.Get<AlertsSystem>().ClearAlertCategory(alertsComponent.Owner, AlertCategory.Pressure);
             alertState = alertsComponent.GetComponentState() as AlertsComponentState;
             Assert.That(alertState.Alerts.Count, Is.EqualTo(0));
         }

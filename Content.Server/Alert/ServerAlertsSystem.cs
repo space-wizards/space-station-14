@@ -8,7 +8,7 @@ using Robust.Shared.Log;
 namespace Content.Server.Alert;
 
 [UsedImplicitly]
-internal class ServerAlertsSystem : SharedAlertsSystem
+internal class ServerAlertsSystem : AlertsSystem
 {
     public override void Initialize()
     {

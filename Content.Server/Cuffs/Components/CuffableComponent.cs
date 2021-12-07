@@ -159,11 +159,11 @@ namespace Content.Server.Cuffs.Components
         {
             if (CanStillInteract)
             {
-                EntitySystem.Get<SharedAlertsSystem>().ClearAlert(Owner, AlertType.Handcuffed);
+                EntitySystem.Get<AlertsSystem>().ClearAlert(Owner, AlertType.Handcuffed);
             }
             else
             {
-                EntitySystem.Get<SharedAlertsSystem>().ShowAlert(Owner, AlertType.Handcuffed);
+                EntitySystem.Get<AlertsSystem>().ShowAlert(Owner, AlertType.Handcuffed);
             }
         }
 

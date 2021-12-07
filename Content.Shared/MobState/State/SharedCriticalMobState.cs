@@ -17,7 +17,7 @@ namespace Content.Shared.MobState.State
 
             if (entityManager.TryGetComponent(uid, out AlertsComponent? status))
             {
-                EntitySystem.Get<SharedAlertsSystem>().ShowAlert(status.Owner, AlertType.HumanCrit); // TODO: combine humancrit-0 and humancrit-1 into a gif and display it
+                EntitySystem.Get<AlertsSystem>().ShowAlert(status.Owner, AlertType.HumanCrit); // TODO: combine humancrit-0 and humancrit-1 into a gif and display it
             }
 
             EntitySystem.Get<StandingStateSystem>().Down(uid);

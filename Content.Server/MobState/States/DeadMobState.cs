@@ -17,7 +17,7 @@ namespace Content.Server.MobState.States
         {
             base.EnterState(uid, entityManager);
 
-            EntitySystem.Get<SharedAlertsSystem>().ShowAlert(uid, AlertType.HumanDead);
+            EntitySystem.Get<AlertsSystem>().ShowAlert(uid, AlertType.HumanDead);
 
             if (entityManager.TryGetComponent(uid, out StatusEffectsComponent? stun))
             {

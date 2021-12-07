@@ -140,7 +140,7 @@ public interface IAlertsFrameView : IDisposable
 {
     event EventHandler<AlertType>? AlertPressed;
 
-    void SyncControls(SharedAlertsSystem alertsSystem, AlertOrderPrototype? alertOrderPrototype,
+    void SyncControls(AlertsSystem alertsSystem, AlertOrderPrototype? alertOrderPrototype,
         IReadOnlyDictionary<AlertKey, AlertState> alertStates);
     void ClearAllControls();
 }
@@ -169,7 +169,7 @@ public sealed partial class AlertsUI : Control, IAlertsFrameView
         LayoutContainer.SetMarginRight(this, -10);
     }
 
-    public void SyncControls(SharedAlertsSystem alertsSystem, AlertOrderPrototype? alertOrderPrototype,
+    public void SyncControls(AlertsSystem alertsSystem, AlertOrderPrototype? alertOrderPrototype,
         IReadOnlyDictionary<AlertKey, AlertState> alertStates)
     {
         // remove any controls with keys no longer present
@@ -261,7 +261,7 @@ public sealed partial class AlertsUI : Control, IAlertsFrameView
         return false;
     }
 
-    private void SyncUpdateControls(SharedAlertsSystem alertsSystem, AlertOrderPrototype? alertOrderPrototype,
+    private void SyncUpdateControls(AlertsSystem alertsSystem, AlertOrderPrototype? alertOrderPrototype,
         IReadOnlyDictionary<AlertKey, AlertState> alertStates)
     {
         foreach (var (alertKey, alertState) in alertStates)

@@ -11,7 +11,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Tests.Shared.Alert
 {
-    [TestFixture, TestOf(typeof(SharedAlertsSystem))]
+    [TestFixture, TestOf(typeof(AlertsSystem))]
     public class AlertManagerTests : ContentUnitTest
     {
         const string PROTOTYPES = @"
@@ -39,14 +39,14 @@ namespace Content.Tests.Shared.Alert
             prototypeManager.Initialize();
             prototypeManager.LoadFromStream(new StringReader(PROTOTYPES));
 
-            Assert.That(EntitySystem.Get<SharedAlertsSystem>().TryGet(AlertType.LowPressure, out var lowPressure));
+            Assert.That(EntitySystem.Get<AlertsSystem>().TryGet(AlertType.LowPressure, out var lowPressure));
             Assert.That(lowPressure.Icon, Is.EqualTo(new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/Alerts/Pressure/lowpressure.png"))));
-            Assert.That(EntitySystem.Get<SharedAlertsSystem>().TryGet(AlertType.HighPressure, out var highPressure));
+            Assert.That(EntitySystem.Get<AlertsSystem>().TryGet(AlertType.HighPressure, out var highPressure));
             Assert.That(highPressure.Icon, Is.EqualTo(new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/Alerts/Pressure/highpressure.png"))));
 
-            Assert.That(EntitySystem.Get<SharedAlertsSystem>().TryGet(AlertType.LowPressure, out lowPressure));
+            Assert.That(EntitySystem.Get<AlertsSystem>().TryGet(AlertType.LowPressure, out lowPressure));
             Assert.That(lowPressure.Icon, Is.EqualTo(new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/Alerts/Pressure/lowpressure.png"))));
-            Assert.That(EntitySystem.Get<SharedAlertsSystem>().TryGet(AlertType.HighPressure, out highPressure));
+            Assert.That(EntitySystem.Get<AlertsSystem>().TryGet(AlertType.HighPressure, out highPressure));
             Assert.That(highPressure.Icon, Is.EqualTo(new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/Alerts/Pressure/highpressure.png"))));
         }
     }

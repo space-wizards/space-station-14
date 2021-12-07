@@ -192,7 +192,7 @@ namespace Content.Shared.StatusEffect
             if (proto.Alert != null && alerts != null)
             {
                 (TimeSpan, TimeSpan)? cooldown1 = GetAlertCooldown(uid, proto.Alert.Value, status);
-                EntitySystem.Get<SharedAlertsSystem>().ShowAlert(alerts.Owner, proto.Alert.Value, null, cooldown1);
+                EntitySystem.Get<AlertsSystem>().ShowAlert(alerts.Owner, proto.Alert.Value, null, cooldown1);
             }
 
             status.Dirty();
@@ -269,7 +269,7 @@ namespace Content.Shared.StatusEffect
             if (proto.Alert != null && alerts != null)
             {
                 var euid = alerts.Owner;
-                EntitySystem.Get<SharedAlertsSystem>().ClearAlert(euid, proto.Alert.Value);
+                EntitySystem.Get<AlertsSystem>().ClearAlert(euid, proto.Alert.Value);
             }
 
             status.ActiveEffects.Remove(key);
@@ -370,7 +370,7 @@ namespace Content.Shared.StatusEffect
                 && proto.Alert != null)
             {
                 (TimeSpan, TimeSpan)? cooldown = GetAlertCooldown(uid, proto.Alert.Value, status);
-                EntitySystem.Get<SharedAlertsSystem>().ShowAlert(alert.Owner, proto.Alert.Value, null, cooldown);
+                EntitySystem.Get<AlertsSystem>().ShowAlert(alert.Owner, proto.Alert.Value, null, cooldown);
             }
 
             return true;
@@ -409,7 +409,7 @@ namespace Content.Shared.StatusEffect
                 && proto.Alert != null)
             {
                 (TimeSpan, TimeSpan)? cooldown = GetAlertCooldown(uid, proto.Alert.Value, status);
-                EntitySystem.Get<SharedAlertsSystem>().ShowAlert(alert.Owner, proto.Alert.Value, null, cooldown);
+                EntitySystem.Get<AlertsSystem>().ShowAlert(alert.Owner, proto.Alert.Value, null, cooldown);
             }
 
             return true;

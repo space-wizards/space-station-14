@@ -64,7 +64,7 @@ namespace Content.Server.Clothing.Components
                     movedByPressure.Enabled = true;
                 }
 
-                EntitySystem.Get<SharedAlertsSystem>().ClearAlert(eventArgs.User, AlertType.Magboots);
+                EntitySystem.Get<AlertsSystem>().ClearAlert(eventArgs.User, AlertType.Magboots);
             }
         }
 
@@ -88,11 +88,11 @@ namespace Content.Server.Clothing.Components
 
                 if (On)
                 {
-                    EntitySystem.Get<SharedAlertsSystem>().ShowAlert(container.Owner, AlertType.Magboots, null, null);
+                    EntitySystem.Get<AlertsSystem>().ShowAlert(container.Owner, AlertType.Magboots, null, null);
                 }
                 else
                 {
-                    EntitySystem.Get<SharedAlertsSystem>().ClearAlert(container.Owner, AlertType.Magboots);
+                    EntitySystem.Get<AlertsSystem>().ClearAlert(container.Owner, AlertType.Magboots);
                 }
             }
         }

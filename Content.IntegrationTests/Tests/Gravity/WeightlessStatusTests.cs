@@ -42,7 +42,7 @@ namespace Content.IntegrationTests.Tests.Gravity
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
-            var alertsSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<SharedAlertsSystem>();
+            var alertsSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<AlertsSystem>();
 
             EntityUid human = default;
 

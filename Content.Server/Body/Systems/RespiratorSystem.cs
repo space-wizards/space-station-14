@@ -204,7 +204,7 @@ namespace Content.Server.Body.Systems
 
             if (EntityManager.TryGetComponent(uid, out AlertsComponent? alertsComponent))
             {
-                Get<SharedAlertsSystem>().ShowAlert(alertsComponent.Owner, AlertType.LowOxygen);
+                Get<AlertsSystem>().ShowAlert(alertsComponent.Owner, AlertType.LowOxygen);
             }
 
             _damageableSys.TryChangeDamage(uid, respirator.Damage, true, false);
@@ -219,7 +219,7 @@ namespace Content.Server.Body.Systems
 
             if (EntityManager.TryGetComponent(uid, out AlertsComponent? alertsComponent))
             {
-                Get<SharedAlertsSystem>().ClearAlert(alertsComponent.Owner, AlertType.LowOxygen);
+                Get<AlertsSystem>().ClearAlert(alertsComponent.Owner, AlertType.LowOxygen);
             }
 
             _damageableSys.TryChangeDamage(uid, respirator.DamageRecovery, true);

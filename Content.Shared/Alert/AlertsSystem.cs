@@ -8,7 +8,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Alert;
 
-public abstract class SharedAlertsSystem : EntitySystem
+public abstract class AlertsSystem : EntitySystem
 {
     [Dependency]
     private readonly IPrototypeManager _prototypeManager = default!;

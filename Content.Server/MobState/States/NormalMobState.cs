@@ -36,7 +36,7 @@ namespace Content.Server.MobState.States
                 modifier = (short) (damageable.TotalDamage / (earliestThreshold / 7f));
             }
 
-            EntitySystem.Get<SharedAlertsSystem>().ShowAlert(entity, AlertType.HumanHealth, modifier);
+            EntitySystem.Get<AlertsSystem>().ShowAlert(entity, AlertType.HumanHealth, modifier);
         }
     }
 }

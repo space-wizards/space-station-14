@@ -96,11 +96,11 @@ namespace Content.Server.Nutrition.Components
                 // Update UI
                 if (HungerThresholdAlertTypes.TryGetValue(_currentHungerThreshold, out var alertId))
                 {
-                    EntitySystem.Get<SharedAlertsSystem>().ShowAlert(Owner, alertId);
+                    EntitySystem.Get<AlertsSystem>().ShowAlert(Owner, alertId);
                 }
                 else
                 {
-                    EntitySystem.Get<SharedAlertsSystem>().ClearAlertCategory(Owner, AlertCategory.Hunger);
+                    EntitySystem.Get<AlertsSystem>().ClearAlertCategory(Owner, AlertCategory.Hunger);
                 }
 
                 switch (_currentHungerThreshold)
