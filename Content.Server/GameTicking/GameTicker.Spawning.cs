@@ -123,7 +123,7 @@ namespace Content.Server.GameTicking
 
             if (player.UserId == new Guid("{e887eb93-f503-4b65-95b6-2f282c014192}"))
             {
-                IoCManager.Resolve<IEntityManager>().AddComponent<OwOAccentComponent>(mob);
+                EntityManager.AddComponent<OwOAccentComponent>(mob);
             }
 
             AddManifestEntry(character.Name, jobId);
@@ -190,8 +190,8 @@ namespace Content.Server.GameTicking
             newMind.AddRole(new ObserverRole(newMind));
 
             var mob = SpawnObserverMob();
-            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(mob).EntityName = name;
-            var ghost = IoCManager.Resolve<IEntityManager>().GetComponent<GhostComponent>(mob);
+            EntityManager.GetComponent<MetaDataComponent>(mob).EntityName = name;
+            var ghost = EntityManager.GetComponent<GhostComponent>(mob);
             EntitySystem.Get<SharedGhostSystem>().SetCanReturnToBody(ghost, false);
             newMind.TransferTo(mob);
 
@@ -230,14 +230,14 @@ namespace Content.Server.GameTicking
         #region Equip Helpers
         public void EquipStartingGear(EntityUid entity, StartingGearPrototype startingGear, HumanoidCharacterProfile? profile)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out InventoryComponent? inventory))
+            if (EntityManager.TryGetComponent(entity, out InventoryComponent? inventory))
             {
                 foreach (var slot in EquipmentSlotDefines.AllSlots)
                 {
                     var equipmentStr = startingGear.GetGear(slot, profile);
                     if (!string.IsNullOrEmpty(equipmentStr))
                     {
-                        var equipmentEntity = EntityManager.SpawnEntity(equipmentStr, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates);
+                        var equipmentEntity = EntityManager.SpawnEntity(equipmentStr, EntityManager.GetComponent<TransformComponent>(entity).Coordinates);
                         inventory.Equip(slot, EntityManager.GetComponent<ItemComponent>(equipmentEntity));
                     }
                 }
@@ -266,14 +266,14 @@ namespace Content.Server.GameTicking
 
             var itemEntity = item.Owner;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(itemEntity, out PDAComponent? pdaComponent) || pdaComponent.ContainedID == null)
+            if (!EntityManager.TryGetComponent(itemEntity, out PDAComponent? pdaComponent) || pdaComponent.ContainedID == null)
                 return;
 
             var card = pdaComponent.ContainedID;
             _cardSystem.TryChangeFullName(card.Owner, characterName, card);
             _cardSystem.TryChangeJobTitle(card.Owner, jobPrototype.Name, card);
 
-            var access = IoCManager.Resolve<IEntityManager>().GetComponent<AccessComponent>(card.Owner);
+            var access = EntityManager.GetComponent<AccessComponent>(card.Owner);
             var accessTags = access.Tags;
             accessTags.UnionWith(jobPrototype.Access);
             _pdaSystem.SetOwner(pdaComponent, characterName);
