@@ -15,7 +15,7 @@ namespace Content.Shared.CCVar
         ///     Change this to have the changelog and rules "last seen" date stored separately.
         /// </summary>
         public static readonly CVarDef<string> ServerId =
-            CVarDef.Create("server.id", "Wizards");
+            CVarDef.Create("server.id", "unknown");
 
         /*
          * Ambience
