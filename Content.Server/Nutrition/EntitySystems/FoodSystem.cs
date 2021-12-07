@@ -235,6 +235,9 @@ namespace Content.Server.Nutrition.EntitySystems
 
         private void AddEatVerb(EntityUid uid, FoodComponent component, GetInteractionVerbsEvent ev)
         {
+            if (component.CancelToken != null)
+                return;
+
             if (uid == ev.UserUid ||
                 !ev.CanInteract ||
                 !ev.CanAccess ||
