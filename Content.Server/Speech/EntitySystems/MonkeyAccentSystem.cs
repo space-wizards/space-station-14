@@ -11,8 +11,6 @@ namespace Content.Server.Speech.EntitySystems
     {
         [Dependency] private readonly IRobustRandom _random = default!;
 
-        private static readonly IReadOnlyList<string> Bark = new List<string>{ "Bark!", "Bork!", "Woof!", "Arf.", "Grrr." };
-
         public override void Initialize()
         {
             SubscribeLocalEvent<MonkeyAccentComponent, AccentGetEvent>(OnAccent);
@@ -20,8 +18,45 @@ namespace Content.Server.Speech.EntitySystems
 
         public string Accentuate(string message)
         {
-            // TODO: Maybe add more than one squeek when there are more words?
-            return _random.Pick(Bark);
+           
+            string[] words = message.Split(' ');
+            string accentedMessage = "";
+
+            foreach(string word in words)
+            {
+                if(_random.NextDouble() >= 0.5)
+                {
+                    if (word.Length > 1)
+                    {
+                        for (int i = 0; i < word.Length - 1; i++)
+                        {
+                            accentedMessage += "o";
+                        }
+                        if (_random.NextDouble() >= 0.3)
+                            accentedMessage += "k";
+                    }
+                    else
+                        accentedMessage += "o";
+                }
+                else
+                {
+                    foreach (char letter in word)
+                    {
+                        if (_random.NextDouble() >= 0.8)
+                            accentedMessage += "h";
+                        else
+                            accentedMessage += "a";
+                    }
+                    
+                }
+
+                accentedMessage += " ";
+            }
+            accentedMessage = accentedMessage.Substring(0, accentedMessage.Length - 1);
+            accentedMessage.Substring(0, 1).Replace(accentedMessage[0], (accentedMessage[0].ToString().ToUpper()).ToCharArray()[0]);
+            accentedMessage += "!";
+
+            return accentedMessage;
         }
 
         private void OnAccent(EntityUid uid, MonkeyAccentComponent component, AccentGetEvent args)
