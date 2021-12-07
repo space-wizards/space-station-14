@@ -40,19 +40,19 @@ namespace Content.Client.AI
             var deletedEntities = new List<EntityUid>(0);
             foreach (var (entity, panel) in _aiBoxes)
             {
-                if ((!IoCManager.Resolve<IEntityManager>().EntityExists(entity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityLifeStage) >= EntityLifeStage.Deleted)
+                if ((!EntityManager.EntityExists(entity) ? EntityLifeStage.Deleted : EntityManager.GetComponent<MetaDataComponent>(entity).EntityLifeStage) >= EntityLifeStage.Deleted)
                 {
                     deletedEntities.Add(entity);
                     continue;
                 }
 
-                if (!_eyeManager.GetWorldViewport().Contains(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).WorldPosition))
+                if (!_eyeManager.GetWorldViewport().Contains(EntityManager.GetComponent<TransformComponent>(entity).WorldPosition))
                 {
                     panel.Visible = false;
                     continue;
                 }
 
-                var (x, y) = _eyeManager.CoordinatesToScreen(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates).Position;
+                var (x, y) = _eyeManager.CoordinatesToScreen(EntityManager.GetComponent<TransformComponent>(entity).Coordinates).Position;
                 var offsetPosition = new Vector2(x - panel.Width / 2, y - panel.Height - 50f);
                 panel.Visible = true;
 

@@ -27,15 +27,17 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void OnAirtightInit(EntityUid uid, AirtightComponent airtight, ComponentInit args)
         {
+            var xform = EntityManager.GetComponent<TransformComponent>(uid);
+
             if (airtight.FixAirBlockedDirectionInitialize)
             {
-                var rotateEvent = new RotateEvent(airtight.Owner, Angle.Zero, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(airtight.Owner).WorldRotation);
+                var rotateEvent = new RotateEvent(airtight.Owner, Angle.Zero, xform.WorldRotation);
                 OnAirtightRotated(uid, airtight, ref rotateEvent);
             }
 
             // Adding this component will immediately anchor the entity, because the atmos system
             // requires airtight entities to be anchored for performance.
-            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(airtight.Owner).Anchored = true;
+            xform.Anchored = true;
 
             UpdatePosition(airtight);
         }
@@ -54,8 +56,10 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void OnAirtightPositionChanged(EntityUid uid, AirtightComponent airtight, ref AnchorStateChangedEvent args)
         {
-            var gridId = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(airtight.Owner).GridID;
-            var coords = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(airtight.Owner).Coordinates;
+            var xform = EntityManager.GetComponent<TransformComponent>(uid);
+
+            var gridId = xform.GridID;
+            var coords = xform.Coordinates;
 
             var grid = _mapManager.GetGrid(gridId);
             var tilePos = grid.TileIndicesFor(coords);
@@ -84,11 +88,13 @@ namespace Content.Server.Atmos.EntitySystems
 
         public void UpdatePosition(AirtightComponent airtight)
         {
-            if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(airtight.Owner).Anchored || !IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(airtight.Owner).GridID.IsValid())
+            var xform = EntityManager.GetComponent<TransformComponent>(airtight.Owner);
+
+            if (!xform.Anchored || !xform.GridID.IsValid())
                 return;
 
-            var grid = _mapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(airtight.Owner).GridID);
-            airtight.LastPosition = (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(airtight.Owner).GridID, grid.TileIndicesFor(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(airtight.Owner).Coordinates));
+            var grid = _mapManager.GetGrid(xform.GridID);
+            airtight.LastPosition = (xform.GridID, grid.TileIndicesFor(xform.Coordinates));
             InvalidatePosition(airtight.LastPosition.Item1, airtight.LastPosition.Item2, airtight.FixVacuum && !airtight.AirBlocked);
         }
 

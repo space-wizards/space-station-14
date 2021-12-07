@@ -114,9 +114,9 @@ public class LungSystem : EntitySystem
             EntityManager.TryGetComponent((mech.Body).Owner, out InternalsComponent? internals) &&
             internals.BreathToolEntity != null &&
             internals.GasTankEntity != null &&
-            IoCManager.Resolve<IEntityManager>().TryGetComponent(internals.BreathToolEntity, out BreathToolComponent? breathTool) &&
+            EntityManager.TryGetComponent(internals.BreathToolEntity, out BreathToolComponent? breathTool) &&
             breathTool.IsFunctional &&
-            IoCManager.Resolve<IEntityManager>().TryGetComponent(internals.GasTankEntity, out GasTankComponent? gasTank))
+            EntityManager.TryGetComponent(internals.GasTankEntity, out GasTankComponent? gasTank))
         {
             TakeGasFrom(uid, frameTime, gasTank.RemoveAirVolume(Atmospherics.BreathVolume), lung);
             return;
