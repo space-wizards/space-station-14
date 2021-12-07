@@ -107,7 +107,7 @@ namespace Content.Shared.Slippery
                 PlaySound(component);
             }
 
-            _adminLog.Add(LogType.Slip, LogImpact.Low, $"{component.Owner} slipped on collision with {otherBody.Owner}");
+            _adminLog.Add(LogType.Slip, LogImpact.Low, $"{otherBody.Owner} slipped on collision with {component.Owner}");
 
             return true;
         }
