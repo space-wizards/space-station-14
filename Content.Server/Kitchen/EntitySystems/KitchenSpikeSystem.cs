@@ -28,7 +28,7 @@ namespace Content.Server.Kitchen.EntitySystems
             SubscribeLocalEvent<KitchenSpikeComponent, DragDropEvent>(OnDragDrop);
 
             //DoAfter
-            SubscribeLocalEvent<KitchenSpikeComponent, SpikingFinishedEvent>(OnSpiknigFinished);
+            SubscribeLocalEvent<KitchenSpikeComponent, SpikingFinishedEvent>(OnSpikingFinished);
             SubscribeLocalEvent<KitchenSpikeComponent, SpikingFailEvent>(OnSpikingFail);
         }
 
@@ -38,7 +38,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 butcherable.BeingButchered = false;
         }
 
-        private void OnSpiknigFinished(EntityUid uid, KitchenSpikeComponent component, SpikingFinishedEvent args)
+        private void OnSpikingFinished(EntityUid uid, KitchenSpikeComponent component, SpikingFinishedEvent args)
         {
             if (EntityManager.TryGetComponent<SharedButcherableComponent>(args.VictimUid, out var butcherable))
                 butcherable.BeingButchered = false;
@@ -141,7 +141,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
         private void UpdateAppearance(EntityUid uid, AppearanceComponent? appearance = null, KitchenSpikeComponent? component = null)
         {
-            if (!Resolve(uid, ref component, ref appearance))
+            if (!Resolve(uid, ref component, ref appearance, false))
                 return;
             
             appearance.SetData(KitchenSpikeVisuals.Status, (component.MeatParts > 0) ? KitchenSpikeStatus.Bloody : KitchenSpikeStatus.Empty);
