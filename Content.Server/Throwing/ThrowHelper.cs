@@ -29,8 +29,8 @@ namespace Content.Server.Throwing
         /// <param name="direction">A vector pointing from the entity to its destination.</param>
         /// <param name="strength">How much the direction vector should be multiplied for velocity.</param>
         /// <param name="user"></param>
-        /// <param name="pushbackRatio">The ratio of impulse applied to the thrower</param>
-        internal static void TryThrow(this IEntity entity, Vector2 direction, float strength = 1.0f, IEntity? user = null, float pushbackRatio = 1.0f)
+        /// <param name="pushbackRatio">The ratio of impulse applied to the thrower - defaults to 10 because otherwise it's not enough to properly recover from getting spaced</param>
+        internal static void TryThrow(this IEntity entity, Vector2 direction, float strength = 1.0f, IEntity? user = null, float pushbackRatio = 10.0f)
         {
             if (entity.Deleted ||
                 strength <= 0f ||

@@ -1,18 +1,25 @@
 using System;
 using System.Threading.Tasks;
+using Content.Server.Administration.Logs;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
+using Content.Server.CombatMode;
+using Content.Server.DoAfter;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
+using Content.Shared.MobState.Components;
 using Content.Shared.Popups;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -41,16 +48,25 @@ namespace Content.Server.Chemistry.Components
         /// Amount to inject or draw on each usage. If the injector is inject only, it will
         /// attempt to inject it's entire contents upon use.
         /// </summary>
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         [DataField("transferAmount")]
         private FixedPoint2 _transferAmount = FixedPoint2.New(5);
 
         /// <summary>
-        /// Initial storage volume of the injector
+        /// Injection delay (seconds) when the target is a mob.
         /// </summary>
-        [ViewVariables]
-        [DataField("initialMaxVolume")]
-        private FixedPoint2 _initialMaxVolume = FixedPoint2.New(15);
+        /// <remarks>
+        /// The base delay has a minimum of 1 second, but this will still be modified if the target is incapacitated or
+        /// in combat mode.
+        /// </remarks>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("delay")]
+        public float Delay = 5;
+
+        /// <summary>
+        /// Is this component currently being used in a DoAfter?
+        /// </summary>
+        public bool InUse = false;
 
         private InjectorToggleMode _toggleState;
 
@@ -111,7 +127,13 @@ namespace Content.Server.Chemistry.Components
         /// <param name="eventArgs"></param>
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
+            if (InUse)
+                return false;
+
             if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
+                return false;
+
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User.Uid))
                 return false;
 
             var solutionsSys = EntitySystem.Get<SolutionContainerSystem>();
@@ -123,6 +145,13 @@ namespace Content.Server.Chemistry.Components
 
             var targetEntity = eventArgs.Target;
 
+            // Is the target a mob? If yes, use a do-after to give them time to respond.
+            if (Owner.EntityManager.HasComponent<MobStateComponent>(targetEntity.Uid) ||
+                Owner.EntityManager.HasComponent<BloodstreamComponent>(targetEntity.Uid))
+            {
+                if (!await TryInjectDoAfter(eventArgs.User.Uid, eventArgs.Target.Uid))
+                    return true;
+            }
 
             // Handle injecting/drawing for solutions
             if (ToggleState == InjectorToggleMode.Inject)
@@ -161,6 +190,77 @@ namespace Content.Server.Chemistry.Components
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Send informative pop-up messages and wait for a do-after to complete.
+        /// </summary>
+        public async Task<bool> TryInjectDoAfter(EntityUid user, EntityUid target)
+        {
+            InUse = true;
+            var popupSys = EntitySystem.Get<SharedPopupSystem>();
+
+            // Create a pop-up for the user
+            popupSys.PopupEntity(Loc.GetString("injector-component-injecting-user"), target, Filter.Entities(user));
+
+            // Get entity for logging. Log with EntityUids when?
+            var userEntity = Owner.EntityManager.GetEntity(user);
+            var logSys = EntitySystem.Get<AdminLogSystem>();
+
+            var actualDelay = MathF.Max(Delay, 1f);
+            if (user != target)
+            {
+                // Create a pop-up for the target
+                var userName = Owner.EntityManager.GetComponent<MetaDataComponent>(user).EntityName;
+                popupSys.PopupEntity(Loc.GetString("injector-component-injecting-target",
+                    ("user", userName)), user, Filter.Entities(target));
+
+                // Check if the target is incapacitated or in combat mode and modify time accordingly.
+                if (Owner.EntityManager.TryGetComponent<MobStateComponent>(target, out var mobState) &&
+                    mobState.IsIncapacitated())
+                {
+                    actualDelay /= 2;
+                }
+                else if (Owner.EntityManager.TryGetComponent<CombatModeComponent>(target, out var combat) &&
+                    combat.IsInCombatMode)
+                {
+                    // Slightly increase the delay when the target is in combat mode. Helps prevents cheese injections in
+                    // combat with fast syringes & lag.
+                    actualDelay += 1;
+                }
+
+                // Add an admin log, using the "force feed" log type. It's not quite feeding, but the effect is the same.
+                var targetEntity = Owner.EntityManager.GetEntity(target);
+                if (ToggleState == InjectorToggleMode.Inject)
+                {
+                    logSys.Add(LogType.ForceFeed,
+                        $"{userEntity} is attempting to inject a solution into {targetEntity}");
+                    // TODO solution pretty string.
+                }
+            }
+            else
+            {
+                // Self-injections take half as long.
+                actualDelay /= 2;
+
+                if (ToggleState == InjectorToggleMode.Inject)
+                    logSys.Add(LogType.Ingestion,
+                        $"{userEntity} is attempting to inject themselves with a solution.");
+                    //TODO solution pretty string.
+            }
+
+            var status = await EntitySystem.Get<DoAfterSystem>().WaitDoAfter(
+                new DoAfterEventArgs(user, actualDelay, target: target)
+                {
+                    BreakOnUserMove = true,
+                    BreakOnDamage = true,
+                    BreakOnStun = true,
+                    BreakOnTargetMove = true,
+                    MovementThreshold = 1.0f
+                });
+            InUse = false;
+
+            return status == DoAfterStatus.Finished;
         }
 
         /// <summary>

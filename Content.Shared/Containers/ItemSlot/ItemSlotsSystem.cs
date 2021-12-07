@@ -34,6 +34,7 @@ namespace Content.Shared.Containers.ItemSlots
 
             SubscribeLocalEvent<ItemSlotsComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<ItemSlotsComponent, InteractHandEvent>(OnInteractHand);
+            SubscribeLocalEvent<ItemSlotsComponent, UseInHandEvent>(OnUseInHand);
 
             SubscribeLocalEvent<ItemSlotsComponent, GetAlternativeVerbsEvent>(AddEjectVerbs);
             SubscribeLocalEvent<ItemSlotsComponent, GetInteractionVerbsEvent>(AddInteractionVerbsVerbs);
@@ -126,6 +127,25 @@ namespace Content.Shared.Containers.ItemSlots
         }
 
         /// <summary>
+        ///     Attempt to eject an item from the first valid item slot.
+        /// </summary>
+        private void OnUseInHand(EntityUid uid, ItemSlotsComponent itemSlots, UseInHandEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            foreach (var slot in itemSlots.Slots.Values)
+            {
+                if (slot.Locked || !slot.EjectOnUse || slot.Item == null)
+                    continue;
+
+                args.Handled = true;
+                TryEjectToHands(uid, slot, args.UserUid);
+                break;
+            }
+        }
+
+        /// <summary>
         ///     Tries to insert a held item in any fitting item slot. If a valid slot already contains an item, it will
         ///     swap it out and place the old one in the user's hand.
         /// </summary>
@@ -172,7 +192,7 @@ namespace Content.Shared.Containers.ItemSlots
             // ContainerSlot automatically raises a directed EntInsertedIntoContainerMessage
 
             if (slot.InsertSound != null)
-                SoundSystem.Play(Filter.Pvs(uid), slot.InsertSound.GetSound(), uid);
+                SoundSystem.Play(Filter.Pvs(uid), slot.InsertSound.GetSound(), uid, slot.SoundOptions);
         }
 
         /// <summary>
@@ -267,7 +287,7 @@ namespace Content.Shared.Containers.ItemSlots
             // ContainerSlot automatically raises a directed EntRemovedFromContainerMessage
 
             if (slot.EjectSound != null)
-                SoundSystem.Play(Filter.Pvs(uid), slot.EjectSound.GetSound(), uid);
+                SoundSystem.Play(Filter.Pvs(uid), slot.EjectSound.GetSound(), uid, slot.SoundOptions);
         }
 
         /// <summary>
@@ -317,7 +337,7 @@ namespace Content.Shared.Containers.ItemSlots
                 return false;
 
             if (user != null && EntityManager.TryGetComponent(user.Value, out SharedHandsComponent? hands))
-                hands.TryPutInAnyHand(item);
+                hands.TryPutInActiveHandOrAny(item);
 
             return true;
         }

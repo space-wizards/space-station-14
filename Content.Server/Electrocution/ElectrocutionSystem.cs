@@ -75,6 +75,7 @@ namespace Content.Server.Electrocution
             SubscribeLocalEvent<ElectrifiedComponent, StartCollideEvent>(OnElectrifiedStartCollide);
             SubscribeLocalEvent<ElectrifiedComponent, AttackedEvent>(OnElectrifiedAttacked);
             SubscribeLocalEvent<ElectrifiedComponent, InteractHandEvent>(OnElectrifiedHandInteract);
+            SubscribeLocalEvent<ElectrifiedComponent, InteractUsingEvent>(OnElectrifiedInteractUsing);
             SubscribeLocalEvent<RandomInsulationComponent, MapInitEvent>(OnRandomInsulationMapInit);
 
             UpdatesAfter.Add(typeof(PowerNetSystem));
@@ -137,6 +138,14 @@ namespace Content.Server.Electrocution
         private void OnElectrifiedHandInteract(EntityUid uid, ElectrifiedComponent electrified, InteractHandEvent args)
         {
             if (!electrified.OnHandInteract)
+                return;
+
+            TryDoElectrifiedAct(uid, args.User.Uid, electrified);
+        }
+
+        private void OnElectrifiedInteractUsing(EntityUid uid, ElectrifiedComponent electrified, InteractUsingEvent args)
+        {
+            if (!electrified.OnInteractUsing)
                 return;
 
             TryDoElectrifiedAct(uid, args.User.Uid, electrified);

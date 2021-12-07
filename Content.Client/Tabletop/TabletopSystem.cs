@@ -18,6 +18,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Timing;
 using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Client.Tabletop
@@ -28,6 +29,7 @@ namespace Content.Client.Tabletop
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IUserInterfaceManager _uiManger = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         // Time in seconds to wait until sending the location of a dragged entity to the server again
         private const float Delay = 1f / 10; // 10 Hz
@@ -50,6 +52,10 @@ namespace Content.Client.Tabletop
 
         public override void Update(float frameTime)
         {
+            // don't send network messages when doing prediction.
+            if (!_gameTiming.IsFirstTimePredicted)
+                return;
+
             // If there is no player entity, return
             if (_playerManager.LocalPlayer is not { ControlledEntity: { Uid: var playerEntity } }) return;
 

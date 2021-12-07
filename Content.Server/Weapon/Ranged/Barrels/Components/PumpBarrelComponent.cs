@@ -25,7 +25,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
     /// </summary>
     [RegisterComponent]
     [NetworkedComponent()]
-    public sealed class PumpBarrelComponent : ServerRangedBarrelComponent, IMapInit, ISerializationHooks
+    public sealed class PumpBarrelComponent : ServerRangedBarrelComponent, IUse, IInteractUsing, IMapInit, ISerializationHooks
     {
         public override string Name => "PumpBarrel";
 
@@ -223,13 +223,13 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             return false;
         }
 
-        public override bool UseEntity(UseEntityEventArgs eventArgs)
+        public bool UseEntity(UseEntityEventArgs eventArgs)
         {
             Cycle(true);
             return true;
         }
 
-        public override async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             return TryInsertBullet(eventArgs);
         }

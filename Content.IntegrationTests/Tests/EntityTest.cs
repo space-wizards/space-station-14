@@ -14,7 +14,7 @@ using Robust.Shared.Timing;
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    [TestOf(typeof(Entity))]
+    [TestOf(typeof(IEntity))]
     public class EntityTest : ContentIntegrationTest
     {
         [Test]
@@ -22,7 +22,7 @@ namespace Content.IntegrationTests.Tests
         {
             var options = new ServerContentIntegrationOption()
             {
-                CVarOverrides = {{CCVars.AIMaxUpdates.Name, int.MaxValue.ToString()}}
+                CVarOverrides = {{CCVars.NPCMaxUpdates.Name, int.MaxValue.ToString()}}
             };
 
             var server = StartServer(options);
