@@ -15,7 +15,7 @@ public sealed class RulesManager
     [Dependency] private readonly IClientNetManager _clientNetManager = default!;
     [Dependency] private readonly IResourceManager _resource = default!;
 
-    public event Action? OpenRulesWindow;
+    public event Action? OpenRulesAndInfoWindow;
 
     private void OnConnectStateChanged(ClientConnectionState state)
     {
@@ -32,7 +32,7 @@ public sealed class RulesManager
         var showRules = lastReadTime < DateTime.UtcNow - TimeSpan.FromDays(60);
 
         if (showRules)
-            OpenRulesWindow?.Invoke();
+            OpenRulesAndInfoWindow?.Invoke();
     }
 
     /// <summary>

@@ -69,7 +69,7 @@ namespace Content.Client.Preferences.UI
 
             UpdateUI();
 
-            RulesButton.OnPressed += _ => new InfoWindow().Open();
+            RulesButton.OnPressed += _ => new RulesAndInfoWindow().Open();
             preferencesManager.OnServerDataLoaded += UpdateUI;
         }
 

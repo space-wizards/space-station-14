@@ -104,7 +104,7 @@ namespace Content.Client.HUD
         private TopButton _buttonActionsMenu = default!;
         private TopButton _buttonAdminMenu = default!;
         private TopButton _buttonSandboxMenu = default!;
-        private InfoWindow _infoWindow = default!;
+        private RulesAndInfoWindow _rulesAndInfoWindow = default!;
         private TargetingDoll _targetingDoll = default!;
         private BoxContainer _combatPanelContainer = default!;
         private BoxContainer _topNotificationContainer = default!;
@@ -301,11 +301,11 @@ namespace Content.Client.HUD
 
             _buttonInfo.OnToggled += a => ButtonInfoOnOnToggled();
 
-            _infoWindow = new InfoWindow();
+            _rulesAndInfoWindow = new RulesAndInfoWindow();
 
-            IoCManager.Resolve<RulesManager>().OpenRulesWindow += OpenInfoWindow;
+            IoCManager.Resolve<RulesManager>().OpenRulesAndInfoWindow += OpenRulesAndInfoWindow;
 
-            _infoWindow.OnClose += () => _buttonInfo.Pressed = false;
+            _rulesAndInfoWindow.OnClose += () => _buttonInfo.Pressed = false;
 
             _inputManager.SetInputCommand(ContentKeyFunctions.OpenInfo,
                 InputCmdHandler.FromDelegate(s => ButtonInfoOnOnToggled()));
@@ -430,31 +430,31 @@ namespace Content.Client.HUD
             LC.SetGrowVertical(VoteContainer, LC.GrowDirection.End);
         }
 
-        private void OpenInfoWindow()
+        private void OpenRulesAndInfoWindow()
         {
-            _infoWindow.OpenCentered();
+            _rulesAndInfoWindow.OpenCentered();
             _buttonInfo.Pressed = true;
         }
 
         private void ButtonInfoOnOnToggled()
         {
             _buttonInfo.StyleClasses.Remove(TopButton.StyleClassRedTopButton);
-            if (_infoWindow.IsOpen)
+            if (_rulesAndInfoWindow.IsOpen)
             {
-                if (!_infoWindow.IsAtFront())
+                if (!_rulesAndInfoWindow.IsAtFront())
                 {
-                    _infoWindow.MoveToFront();
+                    _rulesAndInfoWindow.MoveToFront();
                     _buttonInfo.Pressed = true;
                 }
                 else
                 {
-                    _infoWindow.Close();
+                    _rulesAndInfoWindow.Close();
                     _buttonInfo.Pressed = false;
                 }
             }
             else
             {
-                _infoWindow.OpenCentered();
+                _rulesAndInfoWindow.OpenCentered();
                 _buttonInfo.Pressed = true;
             }
         }

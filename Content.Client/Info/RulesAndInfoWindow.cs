@@ -15,14 +15,14 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Info
 {
-    public sealed class InfoWindow : SS14Window
+    public sealed class RulesAndInfoWindow : SS14Window
     {
         [Dependency] private readonly RulesManager _rulesManager = default!;
         [Dependency] private readonly IResourceCache _resourceManager = default!;
 
         private OptionsMenu optionsMenu;
 
-        public InfoWindow()
+        public RulesAndInfoWindow()
         {
             IoCManager.InjectDependencies(this);
 
