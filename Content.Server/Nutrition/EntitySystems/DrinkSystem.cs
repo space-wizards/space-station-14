@@ -16,6 +16,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
+using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Nutrition.Components;
@@ -54,10 +55,24 @@ namespace Content.Server.Nutrition.EntitySystems
             SubscribeLocalEvent<DrinkComponent, ComponentInit>(OnDrinkInit);
             SubscribeLocalEvent<DrinkComponent, LandEvent>(HandleLand);
             SubscribeLocalEvent<DrinkComponent, UseInHandEvent>(OnUse);
+            SubscribeLocalEvent<DrinkComponent, HandDeselectedEvent>(OnDrinkDeselected);
             SubscribeLocalEvent<DrinkComponent, AfterInteractEvent>(AfterInteract);
             SubscribeLocalEvent<DrinkComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<SharedBodyComponent, ForceDrinkEvent>(OnForceDrink);
             SubscribeLocalEvent<ForceDrinkCancelledEvent>(OnForceDrinkCancelled);
+        }
+
+        /// <summary>
+        ///     If the user is currently forcing someone do drink, this cancels the attempt if they swap hands or
+        ///     otherwise loose the item. Prevents force-feeding dual-wielding.
+        /// </summary>
+        private void OnDrinkDeselected(EntityUid uid, DrinkComponent component, HandDeselectedEvent args)
+        {
+            if (component.CancelToken != null)
+            {
+                component.CancelToken.Cancel();
+                component.CancelToken = null;
+            }
         }
 
         public bool IsEmpty(EntityUid uid, DrinkComponent? component = null)
@@ -240,6 +255,14 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!Resolve(uid, ref drink))
                 return false;
 
+            // if currently being used to force-feed, cancel that action.
+            if (drink.CancelToken != null)
+            {
+                drink.CancelToken.Cancel();
+                drink.CancelToken = null;
+                return true;
+            }
+
             if (!drink.Opened)
             {
                 _popupSystem.PopupEntity(Loc.GetString("drink-component-try-use-drink-not-open",
@@ -312,8 +335,12 @@ namespace Content.Server.Nutrition.EntitySystems
                 return false;
 
             // cannot stack do-afters
-            if (drink.InUse)
-                return false;
+            if (drink.CancelToken != null)
+            {
+                drink.CancelToken.Cancel();
+                drink.CancelToken = null;
+                return true;
+            }
 
             if (!EntityManager.HasComponent<SharedBodyComponent>(targetUid))
                 return false;
@@ -342,7 +369,8 @@ namespace Content.Server.Nutrition.EntitySystems
             _popupSystem.PopupEntity(Loc.GetString("drink-component-force-feed", ("user", userName)),
                 userUid, Filter.Entities(targetUid));
 
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(userUid, drink.ForceFeedDelay, target: targetUid)
+            drink.CancelToken = new();
+            _doAfterSystem.DoAfter(new DoAfterEventArgs(userUid, drink.ForceFeedDelay, drink.CancelToken.Token, targetUid)
             {
                 BreakOnUserMove = true,
                 BreakOnDamage = true,
@@ -350,7 +378,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 BreakOnTargetMove = true,
                 MovementThreshold = 1.0f,
                 TargetFinishedEvent = new ForceDrinkEvent(userUid, drink, drinkSolution),
-                BroadcastCancelledEvent = new ForceDrinkCancelledEvent(drink)
+                BroadcastCancelledEvent = new ForceDrinkCancelledEvent(drink),
             });
 
             // logging
@@ -359,7 +387,6 @@ namespace Content.Server.Nutrition.EntitySystems
             var drinkable = EntityManager.GetEntity(uid);
             _logSystem.Add(LogType.ForceFeed, LogImpact.Medium, $"{user} is forcing {target} to drink {drinkable}");
 
-            drink.InUse = true;
             return true;
         }
 
@@ -368,7 +395,10 @@ namespace Content.Server.Nutrition.EntitySystems
         /// </summary>
         private void OnForceDrink(EntityUid uid, SharedBodyComponent body, ForceDrinkEvent args)
         {
-            args.Drink.InUse = false;
+            if (args.Drink.Deleted)
+                return;
+
+            args.Drink.CancelToken = null;
             var transferAmount = FixedPoint2.Min(args.Drink.TransferAmount, args.DrinkSolution.DrainAvailable);
             var drained = _solutionContainerSystem.Drain(args.Drink.OwnerUid, args.DrinkSolution, transferAmount);
 
@@ -414,7 +444,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
         private void OnForceDrinkCancelled(ForceDrinkCancelledEvent args)
         {
-            args.Drink.InUse = false;
+            args.Drink.CancelToken = null;
         }
     }
 }

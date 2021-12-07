@@ -9,7 +9,6 @@ using Content.Server.Popups;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
@@ -23,10 +22,10 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using System.Collections.Generic;
-using System.Linq;
 using Robust.Shared.Utility;
 using Content.Server.Inventory.Components;
 using Content.Shared.Inventory;
+using Content.Shared.Hands;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
@@ -50,10 +49,24 @@ namespace Content.Server.Nutrition.EntitySystems
 
             SubscribeLocalEvent<FoodComponent, UseInHandEvent>(OnUseFoodInHand);
             SubscribeLocalEvent<FoodComponent, AfterInteractEvent>(OnFeedFood);
+            SubscribeLocalEvent<FoodComponent, HandDeselectedEvent>(OnFoodDeselected);
             SubscribeLocalEvent<FoodComponent, GetInteractionVerbsEvent>(AddEatVerb);
             SubscribeLocalEvent<SharedBodyComponent, ForceFeedEvent>(OnForceFeed);
             SubscribeLocalEvent<ForceFeedCancelledEvent>(OnForceFeedCancelled);
             SubscribeLocalEvent<InventoryComponent, IngestionAttemptEvent>(OnInventoryIngestAttempt);
+        }
+
+        /// <summary>
+        ///     If the user is currently force feeding someone, this cancels the attempt if they swap hands or otherwise
+        ///     loose the item. Prevents force-feeding dual-wielding.
+        /// </summary>
+        private void OnFoodDeselected(EntityUid uid, FoodComponent component, HandDeselectedEvent args)
+        {
+            if (component.CancelToken != null)
+            {
+                component.CancelToken.Cancel();
+                component.CancelToken = null;
+            }
         }
 
         /// <summary>
@@ -119,6 +132,14 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             if (!Resolve(uid, ref component))
                 return false;
+
+            // if currently being used to force-feed, cancel that action.
+            if (component.CancelToken != null)
+            {
+                component.CancelToken.Cancel();
+                component.CancelToken = null;
+                return true;
+            }
 
             if (uid == userUid || //Suppresses self-eating
                 EntityManager.TryGetComponent<MobStateComponent>(uid, out var mobState) && mobState.IsAlive()) // Suppresses eating alive mobs
@@ -244,6 +265,14 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!Resolve(uid, ref food))
                 return false;
 
+            // if currently being used to force-feed, cancel that action.
+            if (food.CancelToken != null)
+            {
+                food.CancelToken.Cancel();
+                food.CancelToken = null;
+                return true;
+            }
+
             if (!EntityManager.HasComponent<SharedBodyComponent>(targetUid))
                 return false;
 
@@ -270,7 +299,8 @@ namespace Content.Server.Nutrition.EntitySystems
             _popupSystem.PopupEntity(Loc.GetString("food-system-force-feed", ("user", userName)),
                 userUid, Filter.Entities(targetUid));
 
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(userUid, food.ForceFeedDelay, target: targetUid)
+            food.CancelToken = new();
+            _doAfterSystem.DoAfter(new DoAfterEventArgs(userUid, food.ForceFeedDelay, food.CancelToken.Token, targetUid)
             {
                 BreakOnUserMove = true,
                 BreakOnDamage = true,
@@ -287,13 +317,15 @@ namespace Content.Server.Nutrition.EntitySystems
             var edible = EntityManager.GetEntity(uid);
             _logSystem.Add(LogType.ForceFeed, LogImpact.Medium, $"{user} is forcing {target} to eat {edible}");
 
-            food.InUse = true;
             return true;
         }
 
         private void OnForceFeed(EntityUid uid, SharedBodyComponent body, ForceFeedEvent args)
         {
-            args.Food.InUse = false;
+            if (args.Food.Deleted)
+                return;
+
+            args.Food.CancelToken = null;
 
             if (!_bodySystem.TryGetComponentsOnMechanisms<StomachComponent>(uid, out var stomachs, body))
                 return;
@@ -433,7 +465,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
         private void OnForceFeedCancelled(ForceFeedCancelledEvent args)
         {
-            args.Food.InUse = false;
+            args.Food.CancelToken = null;
         }
 
         /// <summary>
