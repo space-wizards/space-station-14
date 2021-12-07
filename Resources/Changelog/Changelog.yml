@@ -1,12 +1,6 @@
 Entries:
 - author: 20kdc
   changes:
-  - {message: 'Pulling is now more reliable across different object weights, and feels
-      better.', type: Fix}
-  id: 210
-  time: '2021-05-27T10:48:37.0000000+00:00'
-- author: 20kdc
-  changes:
   - {message: 'You can rotate barstools, PA components, and radiation collectors.',
     type: Add}
   - {message: You can turn to face people on rotatable chairs., type: Add}
@@ -2869,3 +2863,9 @@ Entries:
       Use a screwdriver to deconstruct crates., type: Add}
   id: 711
   time: '2021-12-06T22:10:04.0000000+00:00'
+- author: pointer-to-null
+  changes:
+  - {message: Fixed the status effects cooldown time accumulation. (Major clown nerf).,
+    type: Fix}
+  id: 712
+  time: '2021-12-07T06:18:07.0000000+00:00'
