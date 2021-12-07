@@ -22,9 +22,6 @@ namespace Content.Server.Ghost.Roles.Components
         [ViewVariables(VVAccess.ReadWrite)] [DataField("deleteOnSpawn")]
         private bool _deleteOnSpawn = true;
 
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("makeSentient")]
-        private bool _makeSentient = true;
-
         [ViewVariables(VVAccess.ReadWrite)] [DataField("availableTakeovers")]
         private int _availableTakeovers = 1;
 
@@ -41,12 +38,12 @@ namespace Content.Server.Ghost.Roles.Components
             if (Taken)
                 return false;
 
-            if(string.IsNullOrEmpty(Prototype))
+            if (string.IsNullOrEmpty(Prototype))
                 throw new NullReferenceException("Prototype string cannot be null or empty!");
 
             var mob = Owner.EntityManager.SpawnEntity(Prototype, Owner.Transform.Coordinates);
 
-            if(_makeSentient)
+            if (MakeSentient)
                 MakeSentientCommand.MakeSentient(mob.Uid, Owner.EntityManager);
 
             mob.EnsureComponent<MindComponent>();
@@ -62,9 +59,7 @@ namespace Content.Server.Ghost.Roles.Components
             if (_deleteOnSpawn)
                 Owner.Delete();
 
-
             return true;
-
         }
     }
 }

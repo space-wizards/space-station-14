@@ -2,9 +2,12 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.PAI;
 using Content.Shared.Verbs;
+using Content.Shared.Instruments;
 using Content.Server.Popups;
+using Content.Server.Instruments;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Mind.Components;
+using Robust.Server.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.GameObjects;
@@ -16,6 +19,7 @@ namespace Content.Server.PAI
     public class PAISystem : SharedPAISystem
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly InstrumentSystem _instrumentSystem = default!;
 
         public override void Initialize()
         {
@@ -97,6 +101,15 @@ namespace Content.Server.PAI
         private void PAITurningOff(EntityUid uid)
         {
             UpdatePAIAppearance(uid, PAIStatus.Off);
+            //  Close the instrument interface if it was open
+            //  before closing
+            if (EntityManager.TryGetComponent<ServerUserInterfaceComponent>(uid, out var serverUi))
+                if (EntityManager.TryGetComponent<ActorComponent>(uid, out var actor))
+                    if (serverUi.TryGetBoundUserInterface(InstrumentUiKey.Key,out var bui))
+                        bui.Close(actor.PlayerSession);
+
+            //  Stop instrument
+            if (EntityManager.TryGetComponent<InstrumentComponent>(uid, out var instrument)) _instrumentSystem.Clean(uid, instrument);
             if (EntityManager.TryGetComponent<MetaDataComponent>(uid, out var metadata))
             {
                 var proto = metadata.EntityPrototype;
