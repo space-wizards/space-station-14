@@ -40,7 +40,7 @@ public sealed class RulesManager
     /// </summary>
     public void SaveLastReadTime()
     {
-        using var file = _resource.UserData.Create(new ResourcePath($"/rules_last_seen_{ForkId}"));
+        using var file = _resource.UserData.Create(new ResourcePath($"/rules_last_seen_{CCVars.ServerId}"));
         using var sw = new StreamWriter(file);
 
         sw.Write(DateTime.UtcNow.ToUniversalTime());
