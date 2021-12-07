@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.Body.Components;
@@ -64,9 +65,10 @@ namespace Content.Server.Chemistry.Components
         public float Delay = 5;
 
         /// <summary>
-        /// Is this component currently being used in a DoAfter?
+        ///     Token for interrupting a do-after action (e.g., injection another player). If not null, implies
+        ///     component is currently "in use".
         /// </summary>
-        public bool InUse = false;
+        public CancellationTokenSource? CancelToken;
 
         private InjectorToggleMode _toggleState;
 
@@ -127,8 +129,11 @@ namespace Content.Server.Chemistry.Components
         /// <param name="eventArgs"></param>
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (InUse)
-                return false;
+            if (CancelToken != null)
+            {
+                CancelToken.Cancel();
+                return true;
+            }
 
             if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
                 return false;
@@ -197,7 +202,6 @@ namespace Content.Server.Chemistry.Components
         /// </summary>
         public async Task<bool> TryInjectDoAfter(EntityUid user, EntityUid target)
         {
-            InUse = true;
             var popupSys = EntitySystem.Get<SharedPopupSystem>();
 
             // Create a pop-up for the user
@@ -249,8 +253,9 @@ namespace Content.Server.Chemistry.Components
                     //TODO solution pretty string.
             }
 
+            CancelToken = new();
             var status = await EntitySystem.Get<DoAfterSystem>().WaitDoAfter(
-                new DoAfterEventArgs(user, actualDelay, target: target)
+                new DoAfterEventArgs(user, actualDelay, CancelToken.Token, target)
                 {
                     BreakOnUserMove = true,
                     BreakOnDamage = true,
@@ -258,7 +263,7 @@ namespace Content.Server.Chemistry.Components
                     BreakOnTargetMove = true,
                     MovementThreshold = 1.0f
                 });
-            InUse = false;
+            CancelToken = null;
 
             return status == DoAfterStatus.Finished;
         }
