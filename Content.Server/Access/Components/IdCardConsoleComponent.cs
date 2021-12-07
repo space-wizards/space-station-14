@@ -108,9 +108,9 @@ namespace Content.Server.Access.Components
         private void HandleIdButton(EntityUid user, ItemSlot slot)
         {
             if (slot.HasItem)
-                EntitySystem.Get<ItemSlotsSystem>().TryEjectToHands(((IComponent) this).Owner, slot, user);
+                EntitySystem.Get<ItemSlotsSystem>().TryEjectToHands(Owner, slot, user);
             else
-                EntitySystem.Get<ItemSlotsSystem>().TryInsertFromHand(((IComponent) this).Owner, slot, user);
+                EntitySystem.Get<ItemSlotsSystem>().TryInsertFromHand(Owner, slot, user);
         }
 
         public void UpdateUserInterface()

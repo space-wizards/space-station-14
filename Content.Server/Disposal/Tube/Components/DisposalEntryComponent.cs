@@ -32,7 +32,7 @@ namespace Content.Server.Disposal.Tube.Components
             EntitySystem.Get<AtmosphereSystem>().Merge(holderComponent.Air, from.Air);
             from.Air.Clear();
 
-            return EntitySystem.Get<DisposableSystem>().EnterTube(((IComponent) holderComponent).Owner, ((IComponent) this).Owner, holderComponent, null, this);
+            return EntitySystem.Get<DisposableSystem>().EnterTube(((IComponent) holderComponent).Owner, Owner, holderComponent, null, this);
         }
 
         protected override Direction[] ConnectableDirections()

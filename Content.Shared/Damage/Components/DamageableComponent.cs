@@ -95,7 +95,7 @@ namespace Content.Shared.Damage
                 damage.DamageDict.Add(typeID, damageValue);
             }
 
-            var actual = EntitySystem.Get<DamageableSystem>().TryChangeDamage(((IComponent) this).Owner, damage);
+            var actual = EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner, damage);
 
             // should logging be disabled during rad storms? a lot of entities are going to be damaged.
             if (actual != null && !actual.Empty)
@@ -120,7 +120,7 @@ namespace Content.Shared.Damage
                 damage.DamageDict.Add(typeID, damageValue);
             }
 
-            var actual = EntitySystem.Get<DamageableSystem>().TryChangeDamage(((IComponent) this).Owner, damage);
+            var actual = EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner, damage);
 
             // will logging handle nukes?
             if (actual != null && !actual.Empty)

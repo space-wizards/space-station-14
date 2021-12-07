@@ -22,7 +22,7 @@ namespace Content.Client.Nutrition.Components
 
             _currentThirstThreshold = thirst.CurrentThreshold;
 
-            EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(((IComponent) this).Owner);
+            EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(Owner);
         }
     }
 }

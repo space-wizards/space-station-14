@@ -94,7 +94,7 @@ namespace Content.Server.Storage.Components
 
         private void UpdateStorageVisualization()
         {
-            if (!_entityManager.TryGetComponent(((IComponent) this).Owner, out AppearanceComponent appearance))
+            if (!_entityManager.TryGetComponent(Owner, out AppearanceComponent appearance))
                 return;
 
             bool open = SubscribedSessions.Count != 0;
@@ -102,7 +102,7 @@ namespace Content.Server.Storage.Components
             appearance.SetData(StorageVisuals.Open, open);
             appearance.SetData(SharedBagOpenVisuals.BagState, open ? SharedBagState.Open : SharedBagState.Closed);
 
-            if (_entityManager.HasComponent<ItemCounterComponent>(((IComponent) this).Owner))
+            if (_entityManager.HasComponent<ItemCounterComponent>(Owner))
                 appearance.SetData(StackVisuals.Hide, !open);
         }
 
@@ -402,7 +402,7 @@ namespace Content.Server.Storage.Components
             {
                 if (_entityManager.TryGetComponent(entity, out ServerStorageComponent storageComponent))
                 {
-                    DebugTools.Assert(storageComponent != this, $"Storage component contains itself!? Entity: {((IComponent) this).Owner}");
+                    DebugTools.Assert(storageComponent != this, $"Storage component contains itself!? Entity: {Owner}");
                     storageComponent.UnsubscribeSession(session);
                 }
 
