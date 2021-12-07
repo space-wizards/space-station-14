@@ -68,7 +68,7 @@ namespace Content.Server.Power.EntitySystems
             {
                 // No point resetting what the receiver is doing if it's deleting, plus significant perf savings
                 // in not doing needless lookups
-                if (EntityManager.GetComponent<MetaDataComponent>(((IComponent) receiver).Owner).EntityLifeStage >
+                if (EntityManager.GetComponent<MetaDataComponent>((receiver).Owner).EntityLifeStage >
                     EntityLifeStage.MapInitialized) continue;
 
                 TryFindAndSetProvider(receiver);

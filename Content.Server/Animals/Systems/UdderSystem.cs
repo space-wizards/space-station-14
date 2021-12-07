@@ -50,11 +50,11 @@ namespace Content.Server.Animals.Systems
                         continue;
                 }
 
-                if (!_solutionContainerSystem.TryGetSolution(((IComponent) udder).Owner, udder.TargetSolutionName, out var solution))
+                if (!_solutionContainerSystem.TryGetSolution(udder.Owner, udder.TargetSolutionName, out var solution))
                     continue;
 
                 //TODO: toxins from bloodstream !?
-                _solutionContainerSystem.TryAddReagent(((IComponent) udder).Owner, solution, udder.ReagentId, udder.QuantityPerUpdate, out var accepted);
+                _solutionContainerSystem.TryAddReagent(udder.Owner, solution, udder.ReagentId, udder.QuantityPerUpdate, out var accepted);
                 udder.AccumulatedFrameTime = 0;
             }
         }

@@ -215,13 +215,13 @@ namespace Content.Server.Nutrition.EntitySystems
 
         public void UpdateAppearance(DrinkComponent component)
         {
-            if (!EntityManager.TryGetComponent(((IComponent) component).Owner, out AppearanceComponent? appearance) ||
-                !EntityManager.HasComponent<SolutionContainerManagerComponent>(((IComponent) component).Owner))
+            if (!EntityManager.TryGetComponent((component).Owner, out AppearanceComponent? appearance) ||
+                !EntityManager.HasComponent<SolutionContainerManagerComponent>((component).Owner))
             {
                 return;
             }
 
-            var drainAvailable = _solutionContainerSystem.DrainAvailable(((IComponent) component).Owner);
+            var drainAvailable = _solutionContainerSystem.DrainAvailable((component).Owner);
             appearance.SetData(FoodVisuals.Visual, drainAvailable.Float());
             appearance.SetData(DrinkCanStateVisual.Opened, component.Opened);
         }
@@ -245,7 +245,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!EntityManager.TryGetComponent(userUid, out SharedBodyComponent? body))
                 return false;
 
-            if (!_solutionContainerSystem.TryGetDrainableSolution(((IComponent) drink).Owner, out var drinkSolution) ||
+            if (!_solutionContainerSystem.TryGetDrainableSolution((drink).Owner, out var drinkSolution) ||
                 drinkSolution.DrainAvailable <= 0)
             {
                 _popupSystem.PopupEntity(Loc.GetString("drink-component-try-use-drink-is-empty",
@@ -271,7 +271,7 @@ namespace Content.Server.Nutrition.EntitySystems
             var transferAmount = FixedPoint2.Min(drink.TransferAmount, drinkSolution.DrainAvailable);
             var drain = _solutionContainerSystem.Drain(uid, drinkSolution, transferAmount);
             var firstStomach = stomachs.FirstOrNull(
-                stomach => _stomachSystem.CanTransferSolution(((IComponent) stomach.Comp).Owner, drain));
+                stomach => _stomachSystem.CanTransferSolution((stomach.Comp).Owner, drain));
 
             // All stomach are full or can't handle whatever solution we have.
             if (firstStomach == null)
@@ -296,7 +296,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 Filter.Pvs(userUid));
 
             drain.DoEntityReaction(userUid, ReactionMethod.Ingestion);
-            _stomachSystem.TryTransferSolution(((IComponent) firstStomach.Value.Comp).Owner, drain, firstStomach.Value.Comp);
+            _stomachSystem.TryTransferSolution((firstStomach.Value.Comp).Owner, drain, firstStomach.Value.Comp);
 
             return true;
         }
@@ -372,7 +372,7 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             args.Drink.InUse = false;
             var transferAmount = FixedPoint2.Min(args.Drink.TransferAmount, args.DrinkSolution.DrainAvailable);
-            var drained = _solutionContainerSystem.Drain(((IComponent) args.Drink).Owner, args.DrinkSolution, transferAmount);
+            var drained = _solutionContainerSystem.Drain((args.Drink).Owner, args.DrinkSolution, transferAmount);
 
             if (!_bodySystem.TryGetComponentsOnMechanisms<StomachComponent>(uid, out var stomachs, body))
             {
@@ -384,7 +384,7 @@ namespace Content.Server.Nutrition.EntitySystems
             }
 
             var firstStomach = stomachs.FirstOrNull(
-                stomach => _stomachSystem.CanTransferSolution(((IComponent) stomach.Comp).Owner, drained));
+                stomach => _stomachSystem.CanTransferSolution((stomach.Comp).Owner, drained));
 
             // All stomach are full or can't handle whatever solution we have.
             if (firstStomach == null)
@@ -411,7 +411,7 @@ namespace Content.Server.Nutrition.EntitySystems
             SoundSystem.Play(Filter.Pvs(uid), args.Drink.UseSound.GetSound(), uid, AudioParams.Default.WithVolume(-2f));
 
             drained.DoEntityReaction(uid, ReactionMethod.Ingestion);
-            _stomachSystem.TryTransferSolution(((IComponent) firstStomach.Value.Comp).Owner, drained, firstStomach.Value.Comp);
+            _stomachSystem.TryTransferSolution((firstStomach.Value.Comp).Owner, drained, firstStomach.Value.Comp);
         }
 
         private void OnForceDrinkCancelled(ForceDrinkCancelledEvent args)

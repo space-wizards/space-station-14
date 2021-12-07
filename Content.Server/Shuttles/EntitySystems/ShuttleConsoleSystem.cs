@@ -39,7 +39,7 @@ namespace Content.Server.Shuttles.EntitySystems
             {
                 if (comp.Console == null) continue;
 
-                if (!_blocker.CanInteract(((IComponent) comp).Owner))
+                if (!_blocker.CanInteract((comp).Owner))
                 {
                     toRemove.Add(comp);
                 }

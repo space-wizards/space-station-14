@@ -124,7 +124,7 @@ namespace Content.Server.Construction.Components
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent<ConstructionComponent?>(Owner, out var construction))
             {
                 // Attempt to set pathfinding to the machine node...
-                EntitySystem.Get<ConstructionSystem>().SetPathfindingTarget(((IComponent) this).Owner, "machine", construction);
+                EntitySystem.Get<ConstructionSystem>().SetPathfindingTarget(Owner, "machine", construction);
             }
         }
 
@@ -271,7 +271,7 @@ namespace Content.Server.Construction.Components
                     if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ConstructionComponent? construction))
                     {
                         // So prying the components off works correctly.
-                        EntitySystem.Get<ConstructionSystem>().ResetEdge(((IComponent) this).Owner, construction);
+                        EntitySystem.Get<ConstructionSystem>().ResetEdge(Owner, construction);
                     }
 
                     return true;

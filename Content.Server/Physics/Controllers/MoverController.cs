@@ -107,7 +107,7 @@ namespace Content.Server.Physics.Controllers
             // then do the movement input once for it.
             foreach (var (shuttle, pilots) in _shuttlePilots)
             {
-                if (shuttle.Paused || !EntityManager.TryGetComponent(((IComponent) shuttle).Owner, out PhysicsComponent? body)) continue;
+                if (shuttle.Paused || !EntityManager.TryGetComponent((shuttle).Owner, out PhysicsComponent? body)) continue;
 
                 // Collate movement linear and angular inputs together
                 var linearInput = Vector2.Zero;
@@ -130,7 +130,7 @@ namespace Content.Server.Physics.Controllers
 
                             if (sprint.Equals(Vector2.Zero)) continue;
 
-                            var offsetRotation = EntityManager.GetComponent<TransformComponent>(((IComponent) console).Owner).LocalRotation;
+                            var offsetRotation = EntityManager.GetComponent<TransformComponent>((console).Owner).LocalRotation;
 
                             linearInput += offsetRotation.RotateVec(new Vector2(0f, sprint.Y));
                             angularInput += sprint.X;
@@ -152,7 +152,7 @@ namespace Content.Server.Physics.Controllers
 
                             if (sprint.Equals(Vector2.Zero)) continue;
 
-                            var offsetRotation = EntityManager.GetComponent<TransformComponent>(((IComponent) console).Owner).LocalRotation;
+                            var offsetRotation = EntityManager.GetComponent<TransformComponent>((console).Owner).LocalRotation;
                             sprint = offsetRotation.RotateVec(sprint);
 
                             linearInput += sprint;
@@ -179,7 +179,7 @@ namespace Content.Server.Physics.Controllers
                     var angle = linearInput.ToWorldAngle();
                     var linearDir = angle.GetDir();
                     var dockFlag = linearDir.AsFlag();
-                    var shuttleNorth = EntityManager.GetComponent<TransformComponent>(((IComponent) body).Owner).WorldRotation.ToWorldVec();
+                    var shuttleNorth = EntityManager.GetComponent<TransformComponent>((body).Owner).WorldRotation.ToWorldVec();
 
                     // Won't just do cardinal directions.
                     foreach (DirectionFlag dir in Enum.GetValues(typeof(DirectionFlag)))

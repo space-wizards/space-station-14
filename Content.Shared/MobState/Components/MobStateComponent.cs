@@ -291,7 +291,7 @@ namespace Content.Shared.MobState.Components
         {
             if (!current.HasValue)
             {
-                old?.ExitState(((IComponent) this).Owner, IoCManager.Resolve<IEntityManager>());
+                old?.ExitState(Owner, IoCManager.Resolve<IEntityManager>());
                 return;
             }
 
@@ -301,16 +301,16 @@ namespace Content.Shared.MobState.Components
 
             if (state == old)
             {
-                state.UpdateState(((IComponent) this).Owner, threshold, IoCManager.Resolve<IEntityManager>());
+                state.UpdateState(Owner, threshold, IoCManager.Resolve<IEntityManager>());
                 return;
             }
 
-            old?.ExitState(((IComponent) this).Owner, IoCManager.Resolve<IEntityManager>());
+            old?.ExitState(Owner, IoCManager.Resolve<IEntityManager>());
 
             CurrentState = state;
 
-            state.EnterState(((IComponent) this).Owner, IoCManager.Resolve<IEntityManager>());
-            state.UpdateState(((IComponent) this).Owner, threshold, IoCManager.Resolve<IEntityManager>());
+            state.EnterState(Owner, IoCManager.Resolve<IEntityManager>());
+            state.UpdateState(Owner, threshold, IoCManager.Resolve<IEntityManager>());
 
             var message = new MobStateChangedMessage(this, old, state);
 #pragma warning disable 618

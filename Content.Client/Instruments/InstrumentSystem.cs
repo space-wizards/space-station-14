@@ -319,7 +319,7 @@ namespace Content.Client.Instruments
             foreach (var instrument in EntityManager.EntityQuery<InstrumentComponent>(true))
             {
                 if (instrument.DirtyRenderer && instrument.Renderer != null)
-                    UpdateRenderer(((IComponent) instrument).Owner, instrument);
+                    UpdateRenderer(instrument.Owner, instrument);
 
                 if (!instrument.IsMidiOpen && !instrument.IsInputOpen)
                     continue;
@@ -366,7 +366,7 @@ namespace Content.Client.Instruments
                 if (eventCount == 0)
                     continue;
 
-                RaiseNetworkEvent(new InstrumentMidiEventEvent(((IComponent) instrument).Owner, events));
+                RaiseNetworkEvent(new InstrumentMidiEventEvent(instrument.Owner, events));
 
                 instrument.SentWithinASec += eventCount;
 

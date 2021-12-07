@@ -121,7 +121,7 @@ namespace Content.Server.Chemistry.Components
             switch (msg.Action)
             {
                 case UiAction.Eject:
-                    EntitySystem.Get<ItemSlotsSystem>().TryEjectToHands(((IComponent) this).Owner, BeakerSlot, player);
+                    EntitySystem.Get<ItemSlotsSystem>().TryEjectToHands(Owner, BeakerSlot, player);
                     break;
                 case UiAction.ChemButton:
                     TransferReagent(msg.Id, msg.Amount, msg.IsBuffer);

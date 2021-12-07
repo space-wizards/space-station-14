@@ -397,14 +397,14 @@ namespace Content.Server.Shuttles.EntitySystems
             if (args.OurFixture.ID != BurnFixture) return;
 
             _activeThrusters.Add(component);
-            component.Colliding.Add(((IComponent) args.OtherFixture.Body).Owner);
+            component.Colliding.Add((args.OtherFixture.Body).Owner);
         }
 
         private void OnEndCollide(EntityUid uid, ThrusterComponent component, EndCollideEvent args)
         {
             if (args.OurFixture.ID != BurnFixture) return;
 
-            component.Colliding.Remove(((IComponent) args.OtherFixture.Body).Owner);
+            component.Colliding.Remove((args.OtherFixture.Body).Owner);
 
             if (component.Colliding.Count == 0)
             {
@@ -425,7 +425,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
             foreach (var comp in component.LinearThrusters[index])
             {
-                if (!EntityManager.TryGetComponent(((IComponent) comp).Owner, out AppearanceComponent? appearanceComponent))
+                if (!EntityManager.TryGetComponent((comp).Owner, out AppearanceComponent? appearanceComponent))
                     continue;
 
                 comp.Firing = true;
@@ -446,7 +446,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
             foreach (var comp in component.LinearThrusters[index])
             {
-                if (!EntityManager.TryGetComponent(((IComponent) comp).Owner, out AppearanceComponent? appearanceComponent))
+                if (!EntityManager.TryGetComponent((comp).Owner, out AppearanceComponent? appearanceComponent))
                     continue;
 
                 comp.Firing = false;
@@ -470,7 +470,7 @@ namespace Content.Server.Shuttles.EntitySystems
             {
                 foreach (var comp in component.AngularThrusters)
                 {
-                    if (!EntityManager.TryGetComponent(((IComponent) comp).Owner, out AppearanceComponent? appearanceComponent))
+                    if (!EntityManager.TryGetComponent((comp).Owner, out AppearanceComponent? appearanceComponent))
                         continue;
 
                     comp.Firing = true;
@@ -481,7 +481,7 @@ namespace Content.Server.Shuttles.EntitySystems
             {
                 foreach (var comp in component.AngularThrusters)
                 {
-                    if (!EntityManager.TryGetComponent(((IComponent) comp).Owner, out AppearanceComponent? appearanceComponent))
+                    if (!EntityManager.TryGetComponent((comp).Owner, out AppearanceComponent? appearanceComponent))
                         continue;
 
                     comp.Firing = false;

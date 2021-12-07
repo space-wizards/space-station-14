@@ -93,7 +93,7 @@ namespace Content.Server.Disposal.Tube.Components
                     continue;
                 }
 
-                EntitySystem.Get<DisposableSystem>().ExitDisposals(((IComponent) holder).Owner);
+                EntitySystem.Get<DisposableSystem>().ExitDisposals((holder).Owner);
             }
         }
 

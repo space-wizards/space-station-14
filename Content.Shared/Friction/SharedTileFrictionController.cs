@@ -56,7 +56,7 @@ namespace Content.Shared.Friction
                 if (body.Deleted ||
                     prediction && !body.Predict ||
                     body.BodyStatus == BodyStatus.InAir ||
-                    Mover.UseMobMovement(((IComponent) body).Owner)) continue;
+                    Mover.UseMobMovement(body.Owner)) continue;
 
                 var surfaceFriction = GetTileFriction(body);
                 var bodyModifier = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<SharedTileFrictionModifier>(body.Owner)?.Modifier ?? 1.0f;

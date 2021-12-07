@@ -83,10 +83,10 @@ namespace Content.Server.UserInterface
             // If we've gotten this far, fire a cancellable event that indicates someone is about to activate this.
             // This is so that stuff can require further conditions (like power).
             var oae = new ActivatableUIOpenAttemptEvent(user);
-            RaiseLocalEvent(((IComponent) aui).Owner, oae, false);
+            RaiseLocalEvent((aui).Owner, oae, false);
             if (oae.Cancelled) return false;
 
-            SetCurrentSingleUser(((IComponent) aui).Owner, actor.PlayerSession, aui);
+            SetCurrentSingleUser((aui).Owner, actor.PlayerSession, aui);
             ui.Toggle(actor.PlayerSession);
             return true;
         }

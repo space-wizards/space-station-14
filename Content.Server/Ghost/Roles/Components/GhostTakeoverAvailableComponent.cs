@@ -30,10 +30,10 @@ namespace Content.Server.Ghost.Roles.Components
                 return false;
 
             if (MakeSentient)
-                MakeSentientCommand.MakeSentient(((IComponent) this).Owner, IoCManager.Resolve<IEntityManager>());
+                MakeSentientCommand.MakeSentient(Owner, IoCManager.Resolve<IEntityManager>());
 
             var ghostRoleSystem = EntitySystem.Get<GhostRoleSystem>();
-            ghostRoleSystem.GhostRoleInternalCreateMindAndTransfer(session, ((IComponent) this).Owner, ((IComponent) this).Owner, this);
+            ghostRoleSystem.GhostRoleInternalCreateMindAndTransfer(session, Owner, Owner, this);
 
             ghostRoleSystem.UnregisterGhostRole(this);
 

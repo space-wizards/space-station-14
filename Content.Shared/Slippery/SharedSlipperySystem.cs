@@ -32,7 +32,7 @@ namespace Content.Shared.Slippery
 
         private void HandleCollide(EntityUid uid, SlipperyComponent component, StartCollideEvent args)
         {
-            var otherUid = ((IComponent) args.OtherFixture.Body).Owner;
+            var otherUid = args.OtherFixture.Body.Owner;
 
             if (!CanSlip(component, otherUid)) return;
 

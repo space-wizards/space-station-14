@@ -154,7 +154,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
                 && instrument.InstrumentPlayer != null && instrument.RespectMidiLimits)
             {
                 // Just in case
-                Clean(((IComponent) instrument).Owner);
+                Clean((instrument).Owner);
                 instrument.UserInterface?.CloseAll();
 
                 if (instrument.InstrumentPlayer.AttachedEntity is {Valid: true} mob)

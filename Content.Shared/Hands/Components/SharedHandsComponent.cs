@@ -433,7 +433,7 @@ namespace Content.Shared.Hands.Components
         /// </summary>
         private bool PlayerCanDrop()
         {
-            if (!IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ActionBlockerSystem>().CanDrop(((IComponent) this).Owner))
+            if (!IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ActionBlockerSystem>().CanDrop(Owner))
                 return false;
 
             return true;
