@@ -126,7 +126,7 @@ namespace Content.Server.Administration
                 verb.Act = () =>
                 {
                     var coords = args.Target.Transform.Coordinates;
-                    Timer.Spawn(_gameTiming.TickPeriod, () => _explosions.SpawnExplosion(coords, 0, 1, 2, 1, args.TargetUid), CancellationToken.None);
+                    Timer.Spawn(_gameTiming.TickPeriod, () => _explosions.SpawnExplosion(coords, 0, 1, 2, 1), CancellationToken.None);
                     if (args.Target.TryGetComponent(out SharedBodyComponent? body))
                     {
                         body.Gib();
