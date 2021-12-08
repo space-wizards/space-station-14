@@ -162,29 +162,31 @@ namespace Content.Server.Guardian
 
         public void OnGuardianManifestAction(EntityUid guardian, EntityUid host)
         {
-            var guardianloose = EntityManager.GetComponent<GuardianComponent>(guardian).GuardianLoose;
-            //the loose parameter toggling is inside the shared component
-            if (guardianloose == false)
+            if (EntityManager.TryGetComponent<GuardianComponent>(guardian, out GuardianComponent guardcomp))
             {
-                //Ejects the guardian if it is inside
-                if (EntityManager.TryGetComponent<GuardianHostComponent>(host, out GuardianHostComponent? hostcomp))
+                //the loose parameter toggling is inside the shared component
+                if (guardcomp.GuardianLoose == false)
                 {
-                    var guardcontainer = hostcomp.GuardianContainer;
-                    if (guardcontainer.ContainedEntity != null)
+                    //Ejects the guardian if it is inside
+                    if (EntityManager.TryGetComponent<GuardianHostComponent>(host, out GuardianHostComponent? hostcomp))
                     {
-                        guardcontainer.Remove(guardcontainer.ContainedEntity);
+                        var guardcontainer = hostcomp.GuardianContainer;
+                        if (guardcontainer.ContainedEntity != null)
+                        {
+                            guardcontainer.Remove(guardcontainer.ContainedEntity);
+                        }
                     }
                 }
+                else if (guardcomp.GuardianLoose == true)
+                {
+                    //Recalls guardian if it's outside
+                    //Message first otherwise it's a dead giveaway
+                    _popupSystem.PopupCoordinates(Loc.GetString("guardian-entity-recall"), EntityManager.GetEntity(guardian).Transform.Coordinates, Filter.Pvs(guardian));
+                    EntityManager.GetComponent<GuardianHostComponent>(host).GuardianContainer.Insert(EntityManager.GetEntity(guardian));
+                }
+                //Update the guardian loose value
+                EntityManager.GetComponent<GuardianComponent>(guardian).GuardianLoose = !guardcomp.GuardianLoose;
             }
-            else if (guardianloose == true)
-            {
-                //Recalls guardian if it's outside
-                //Message first otherwise it's a dead giveaway
-                _popupSystem.PopupCoordinates(Loc.GetString("guardian-entity-recall"), EntityManager.GetEntity(guardian).Transform.Coordinates, Filter.Pvs(guardian));
-                EntityManager.GetComponent<GuardianHostComponent>(host).GuardianContainer.Insert(EntityManager.GetEntity(guardian));
-            }
-            //Update the guardian loose value
-            EntityManager.GetComponent<GuardianComponent>(guardian).GuardianLoose = !guardianloose;
         }
     }
 }
