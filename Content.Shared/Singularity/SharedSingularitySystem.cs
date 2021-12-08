@@ -1,4 +1,5 @@
 ﻿using System;
+using Content.Shared.Ghost;
 using Content.Shared.Radiation;
 using Content.Shared.Singularity.Components;
 using Robust.Shared.GameObjects;
@@ -46,6 +47,34 @@ namespace Content.Shared.Singularity
             };
         }
 
+        public override void Initialize()
+        {
+            base.Initialize();
+            SubscribeLocalEvent<SharedSingularityComponent, PreventCollideEvent>(OnPreventCollide);
+        }
+
+        protected virtual void OnPreventCollide(EntityUid uid, SharedSingularityComponent component, PreventCollideEvent args)
+        {
+            var otherUid = args.BodyB.OwnerUid;
+
+            if (EntityManager.HasComponent<IMapGridComponent>(otherUid) ||
+                EntityManager.HasComponent<SharedGhostComponent>(otherUid))
+            {
+                args.Cancel();
+                return;
+            }
+
+            // If we're above 4 then breach containment
+            // otherwise, check if it's containment and just keep the collision
+            if (component.Level > 4 &&
+                (EntityManager.HasComponent<SharedContainmentFieldComponent>(otherUid) ||
+                 EntityManager.HasComponent<SharedContainmentFieldGeneratorComponent>(otherUid)))
+            {
+                args.Cancel();
+                return;
+            }
+        }
+
         public void ChangeSingularityLevel(SharedSingularityComponent singularity, int value)
         {
             if (value == singularity.Level)
@@ -90,25 +119,6 @@ namespace Content.Shared.Singularity
             }
 
             singularity.Dirty();
-        }
-
-        public override void Initialize()
-        {
-            base.Initialize();
-            SubscribeLocalEvent<SharedSingularityComponent, PreventCollideEvent>(HandleFieldCollision);
-        }
-
-        private void HandleFieldCollision(EntityUid uid, SharedSingularityComponent component, PreventCollideEvent args)
-        {
-            var other = args.BodyB.Owner;
-
-            if ((!other.HasComponent<SharedContainmentFieldComponent>() &&
-                !other.HasComponent<SharedContainmentFieldGeneratorComponent>()) ||
-                component.Level >= 4)
-            {
-                args.Cancel();
-                return;
-            }
         }
     }
 }

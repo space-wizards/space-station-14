@@ -1,3 +1,4 @@
+using System;
 using Content.Server.Singularity.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
@@ -28,7 +29,7 @@ namespace Content.Server.Physics.Controllers
 
                 if (singularity.MoveAccumulator > 0f) continue;
 
-                singularity.MoveAccumulator = MinMoveCooldown + (MaxMoveCooldown - MinMoveCooldown) * _robustRandom.NextFloat();
+                singularity.MoveAccumulator = _robustRandom.NextFloat(MinMoveCooldown, MaxMoveCooldown);
 
                 MoveSingulo(singularity, physics);
             }
@@ -44,13 +45,12 @@ namespace Content.Server.Physics.Controllers
             }
 
             // TODO: Could try gradual changes instead
-            var pushVector = new Vector2(_robustRandom.Next(-10, 10), _robustRandom.Next(-10, 10));
-
-            if (pushVector == Vector2.Zero) return;
+            var pushAngle = _robustRandom.NextAngle();
+            var pushStrength = _robustRandom.NextFloat(0.75f, 1.0f);
 
             physics.LinearVelocity = Vector2.Zero;
             physics.BodyStatus = BodyStatus.InAir;
-            physics.ApplyLinearImpulse(pushVector.Normalized + 1f / singularity.Level * physics.Mass);
+            physics.ApplyLinearImpulse(pushAngle.ToVec() * (pushStrength + 10f / Math.Min(singularity.Level, 4) * physics.Mass));
             // TODO: Speedcap it probably?
         }
     }
