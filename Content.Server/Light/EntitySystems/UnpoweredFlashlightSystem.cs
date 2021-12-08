@@ -37,13 +37,13 @@ namespace Content.Server.Light.EntitySystems
 
         public void ToggleLight(UnpoweredFlashlightComponent flashlight)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(flashlight.Owner, out PointLightComponent? light))
+            if (!EntityManager.TryGetComponent(flashlight.Owner, out PointLightComponent? light))
                 return;
 
             flashlight.LightOn = !flashlight.LightOn;
             light.Enabled = flashlight.LightOn;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(flashlight.Owner, out AppearanceComponent? appearance))
+            if (EntityManager.TryGetComponent(flashlight.Owner, out AppearanceComponent? appearance))
                 appearance.SetData(UnpoweredFlashlightVisuals.LightOn, flashlight.LightOn);
 
             SoundSystem.Play(Filter.Pvs(light.Owner), flashlight.ToggleSound.GetSound(), flashlight.Owner);

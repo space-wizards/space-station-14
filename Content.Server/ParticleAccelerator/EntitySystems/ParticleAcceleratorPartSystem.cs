@@ -26,7 +26,7 @@ namespace Content.Server.ParticleAccelerator.EntitySystems
 
         private static void RotateEvent(ref RotateEvent ev)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(ev.Sender, out ParticleAcceleratorPartComponent? part))
+            if (EntityManager.TryGetComponent(ev.Sender, out ParticleAcceleratorPartComponent? part))
             {
                 part.Rotated();
             }

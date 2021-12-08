@@ -77,8 +77,8 @@ namespace Content.Server.Weapon.Melee
             if (curTime < comp.CooldownEnd || !args.Target.IsValid())
                 return;
 
-            var location = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.User).Coordinates;
-            var diff = args.ClickLocation.ToMapPos(IoCManager.Resolve<IEntityManager>()) - location.ToMapPos(IoCManager.Resolve<IEntityManager>());
+            var location = EntityManager.GetComponent<TransformComponent>(args.User).Coordinates;
+            var diff = args.ClickLocation.ToMapPos(EntityManager) - location.ToMapPos(EntityManager);
             var angle = Angle.FromWorldVec(diff);
 
             if (args.Target is {Valid: true} target)
@@ -132,12 +132,12 @@ namespace Content.Server.Weapon.Melee
                 return;
             }
 
-            var location = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.User).Coordinates;
-            var diff = args.ClickLocation.ToMapPos(IoCManager.Resolve<IEntityManager>()) - location.ToMapPos(IoCManager.Resolve<IEntityManager>());
+            var location = EntityManager.GetComponent<TransformComponent>(args.User).Coordinates;
+            var diff = args.ClickLocation.ToMapPos(EntityManager) - location.ToMapPos(EntityManager);
             var angle = Angle.FromWorldVec(diff);
 
             // This should really be improved. GetEntitiesInArc uses pos instead of bounding boxes.
-            var entities = ArcRayCast(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.User).WorldPosition, angle, comp.ArcWidth, comp.Range, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(owner).MapID, args.User);
+            var entities = ArcRayCast(EntityManager.GetComponent<TransformComponent>(args.User).WorldPosition, angle, comp.ArcWidth, comp.Range, EntityManager.GetComponent<TransformComponent>(owner).MapID, args.User);
 
             var hitEntities = new List<EntityUid>();
             foreach (var entity in entities)
@@ -160,11 +160,11 @@ namespace Content.Server.Weapon.Melee
             {
                 if (entities.Count != 0)
                 {
-                    SoundSystem.Play(Filter.Pvs(owner), comp.HitSound.GetSound(), IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entities.First()).Coordinates);
+                    SoundSystem.Play(Filter.Pvs(owner), comp.HitSound.GetSound(), EntityManager.GetComponent<TransformComponent>(entities.First()).Coordinates);
                 }
                 else
                 {
-                    SoundSystem.Play(Filter.Pvs(owner), comp.MissSound.GetSound(), IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.User).Coordinates);
+                    SoundSystem.Play(Filter.Pvs(owner), comp.MissSound.GetSound(), EntityManager.GetComponent<TransformComponent>(args.User).Coordinates);
                 }
 
                 foreach (var entity in hitEntities)
@@ -211,8 +211,8 @@ namespace Content.Server.Weapon.Melee
             if (!args.Target.HasValue)
                 return;
 
-            var location = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.User).Coordinates;
-            var diff = args.ClickLocation.ToMapPos(IoCManager.Resolve<IEntityManager>()) - location.ToMapPos(IoCManager.Resolve<IEntityManager>());
+            var location = EntityManager.GetComponent<TransformComponent>(args.User).Coordinates;
+            var diff = args.ClickLocation.ToMapPos(EntityManager) - location.ToMapPos(EntityManager);
             var angle = Angle.FromWorldVec(diff);
 
             var hitEvent = new MeleeInteractEvent(args.Target.Value, args.User);
@@ -260,10 +260,10 @@ namespace Content.Server.Weapon.Melee
             var hitBloodstreams = new List<BloodstreamComponent>();
             foreach (var entity in args.HitEntities)
             {
-                if ((!IoCManager.Resolve<IEntityManager>().EntityExists(entity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityLifeStage) >= EntityLifeStage.Deleted)
+                if ((!EntityManager.EntityExists(entity) ? EntityLifeStage.Deleted : EntityManager.GetComponent<MetaDataComponent>(entity).EntityLifeStage) >= EntityLifeStage.Deleted)
                     continue;
 
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<BloodstreamComponent?>(entity, out var bloodstream))
+                if (EntityManager.TryGetComponent<BloodstreamComponent?>(entity, out var bloodstream))
                     hitBloodstreams.Add(bloodstream);
             }
 

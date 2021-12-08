@@ -70,7 +70,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (_robustRandom.Prob(component.BreakChance))
             {
                 SoundSystem.Play(Filter.Pvs(userUid), component.BreakSound.GetSound(), userUid, AudioParams.Default.WithVolume(-2f));
-                IoCManager.Resolve<IEntityManager>().DeleteEntity(component.Owner);
+                EntityManager.DeleteEntity(component.Owner);
             }
         }
     }

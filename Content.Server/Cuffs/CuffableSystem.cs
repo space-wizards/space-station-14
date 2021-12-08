@@ -66,7 +66,7 @@ namespace Content.Server.Cuffs
             if (args.User == args.Target)
             {
                 // This UncuffAttemptEvent check should probably be In MobStateSystem, not here?
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<MobStateComponent?>(args.User, out var state))
+                if (EntityManager.TryGetComponent<MobStateComponent?>(args.User, out var state))
                 {
                     // Manually check this.
                     if (state.IsIncapacitated())
@@ -101,11 +101,11 @@ namespace Content.Server.Cuffs
         {
             var owner = message.Sender;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(owner, out CuffableComponent? cuffable) ||
+            if (!EntityManager.TryGetComponent(owner, out CuffableComponent? cuffable) ||
                 !cuffable.Initialized) return;
 
             var dirty = false;
-            var handCount = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<HandsComponent>(owner)?.Count ?? 0;
+            var handCount = EntityManager.GetComponentOrNull<HandsComponent>(owner)?.Count ?? 0;
 
             while (cuffable.CuffedHandCount > handCount && cuffable.CuffedHandCount > 0)
             {
@@ -115,7 +115,7 @@ namespace Content.Server.Cuffs
                 var entity = container.ContainedEntities[^1];
 
                 container.Remove(entity);
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).WorldPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(owner).WorldPosition;
+                EntityManager.GetComponent<TransformComponent>(entity).WorldPosition = EntityManager.GetComponent<TransformComponent>(owner).WorldPosition;
             }
 
             if (dirty)

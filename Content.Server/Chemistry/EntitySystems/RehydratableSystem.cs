@@ -39,12 +39,12 @@ namespace Content.Server.Chemistry.EntitySystems
             owner.PopupMessageEveryone(Loc.GetString("rehydratable-component-expands-message", ("owner", owner)));
             if (!string.IsNullOrEmpty(component.TargetPrototype))
             {
-                var ent = IoCManager.Resolve<IEntityManager>().SpawnEntity(component.TargetPrototype,
-                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(owner).Coordinates);
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(ent).AttachToGridOrMap();
+                var ent = EntityManager.SpawnEntity(component.TargetPrototype,
+                    EntityManager.GetComponent<TransformComponent>(owner).Coordinates);
+                EntityManager.GetComponent<TransformComponent>(ent).AttachToGridOrMap();
             }
 
-            IoCManager.Resolve<IEntityManager>().QueueDeleteEntity((EntityUid) owner);
+            EntityManager.QueueDeleteEntity((EntityUid) owner);
         }
     }
 }

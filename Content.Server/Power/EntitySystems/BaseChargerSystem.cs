@@ -43,7 +43,7 @@ namespace Content.Server.Power.EntitySystems
                 return;
 
             Verb verb = new();
-            verb.Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(component.Container.ContainedEntity!.Value).EntityName;
+            verb.Text = EntityManager.GetComponent<MetaDataComponent>(component.Container.ContainedEntity!.Value).EntityName;
             verb.Category = VerbCategory.Eject;
             verb.Act = () => component.RemoveItem(args.User);
             args.Verbs.Add(verb);
@@ -60,7 +60,7 @@ namespace Content.Server.Power.EntitySystems
                 return;
 
             Verb verb = new();
-            verb.Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(@using).EntityName;
+            verb.Text = EntityManager.GetComponent<MetaDataComponent>(@using).EntityName;
             verb.Category = VerbCategory.Insert;
             verb.Act = () => component.TryInsertItem(@using);
             args.Verbs.Add(verb);

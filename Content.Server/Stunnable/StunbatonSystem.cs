@@ -175,12 +175,12 @@ namespace Content.Server.Stunnable
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(comp.Owner, out var sprite) ||
-                !IoCManager.Resolve<IEntityManager>().TryGetComponent<ItemComponent?>(comp.Owner, out var item))
+            if (!EntityManager.TryGetComponent<SpriteComponent?>(comp.Owner, out var sprite) ||
+                !EntityManager.TryGetComponent<ItemComponent?>(comp.Owner, out var item))
                 return;
 
             var playerFilter = Filter.Pvs(comp.Owner);
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<PowerCellSlotComponent?>(comp.Owner, out var slot))
+            if (!EntityManager.TryGetComponent<PowerCellSlotComponent?>(comp.Owner, out var slot))
                 return;
 
             if (slot.Cell == null)

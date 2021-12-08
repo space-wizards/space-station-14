@@ -31,7 +31,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
         private void OnExamined(EntityUid uid, GasValveComponent valve, ExaminedEvent args)
         {
-            if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(valve.Owner).Anchored || !args.IsInDetailsRange) // Not anchored? Out of range? No status.
+            if (!EntityManager.GetComponent<TransformComponent>(valve.Owner).Anchored || !args.IsInDetailsRange) // Not anchored? Out of range? No status.
                 return;
 
             if (Loc.TryGetString("gas-valve-system-examined", out var str,

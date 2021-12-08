@@ -78,7 +78,7 @@ namespace Content.Server.Pointing.EntitySystems
 
                 if (component.TurningDelay > 0)
                 {
-                    var difference = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(chasing).WorldPosition - transform.WorldPosition;
+                    var difference = EntityManager.GetComponent<TransformComponent>(chasing).WorldPosition - transform.WorldPosition;
                     var angle = difference.ToAngle();
                     var adjusted = angle.Degrees + 90;
                     var newAngle = Angle.FromDegrees(adjusted);
@@ -93,7 +93,7 @@ namespace Content.Server.Pointing.EntitySystems
 
                 UpdateAppearance(uid, component, transform);
 
-                var toChased = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(chasing).WorldPosition - transform.WorldPosition;
+                var toChased = EntityManager.GetComponent<TransformComponent>(chasing).WorldPosition - transform.WorldPosition;
 
                 transform.WorldPosition += toChased * frameTime * component.ChasingSpeed;
 

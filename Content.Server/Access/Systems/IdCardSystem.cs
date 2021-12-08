@@ -22,7 +22,7 @@ namespace Content.Server.Access.Systems
 
         private void OnInit(EntityUid uid, IdCardComponent id, ComponentInit args)
         {
-            id.OriginalOwnerName ??= IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(id.Owner).EntityName;
+            id.OriginalOwnerName ??= EntityManager.GetComponent<MetaDataComponent>(id.Owner).EntityName;
             UpdateEntityName(uid, id);
         }
 
@@ -67,7 +67,7 @@ namespace Content.Server.Access.Systems
 
             if (string.IsNullOrWhiteSpace(id.FullName) && string.IsNullOrWhiteSpace(id.JobTitle))
             {
-                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(id.Owner).EntityName = id.OriginalOwnerName;
+                EntityManager.GetComponent<MetaDataComponent>(id.Owner).EntityName = id.OriginalOwnerName;
                 return;
             }
 
@@ -80,7 +80,7 @@ namespace Content.Server.Access.Systems
                 : Loc.GetString("access-id-card-component-owner-full-name-job-title-text",
                     ("fullName", id.FullName),
                     ("jobSuffix", jobSuffix));
-            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(id.Owner).EntityName = val;
+            EntityManager.GetComponent<MetaDataComponent>(id.Owner).EntityName = val;
         }
 
         /// <summary>

@@ -53,7 +53,7 @@ namespace Content.Server.Labels
             LabelComponent label = target.EnsureComponent<LabelComponent>();
 
             if (label.OriginalName != null)
-                IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(target).EntityName = label.OriginalName;
+                EntityManager.GetComponent<MetaDataComponent>(target).EntityName = label.OriginalName;
             label.OriginalName = null;
 
             if (handLabeler.AssignedLabel == string.Empty)
@@ -63,16 +63,16 @@ namespace Content.Server.Labels
                 return;
             }
 
-            label.OriginalName = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(target).EntityName;
-            string val = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(target).EntityName + $" ({handLabeler.AssignedLabel})";
-            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(target).EntityName = val;
+            label.OriginalName = EntityManager.GetComponent<MetaDataComponent>(target).EntityName;
+            string val = EntityManager.GetComponent<MetaDataComponent>(target).EntityName + $" ({handLabeler.AssignedLabel})";
+            EntityManager.GetComponent<MetaDataComponent>(target).EntityName = val;
             label.CurrentLabel = handLabeler.AssignedLabel;
             result = Loc.GetString("hand-labeler-successfully-applied");
         }
 
         private void OnUseInHand(EntityUid uid, HandLabelerComponent handLabeler, UseInHandEvent args)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User, out ActorComponent? actor))
+            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
             handLabeler.Owner.GetUIOrNull(HandLabelerUiKey.Key)?.Open(actor.PlayerSession);

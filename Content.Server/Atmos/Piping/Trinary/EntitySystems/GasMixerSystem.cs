@@ -106,10 +106,10 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
         private void OnMixerInteractHand(EntityUid uid, GasMixerComponent component, InteractHandEvent args)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User, out ActorComponent? actor))
+            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
-            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner).Anchored)
+            if (EntityManager.GetComponent<TransformComponent>(component.Owner).Anchored)
             {
                 _userInterfaceSystem.TryOpen(uid, GasMixerUiKey.Key, actor.PlayerSession);
                 DirtyUI(uid, component);
@@ -128,7 +128,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 return;
 
             _userInterfaceSystem.TrySetUiState(uid, GasMixerUiKey.Key,
-                new GasMixerBoundUserInterfaceState(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(mixer.Owner).EntityName, mixer.TargetPressure, mixer.Enabled, mixer.InletOneConcentration));
+                new GasMixerBoundUserInterfaceState(EntityManager.GetComponent<MetaDataComponent>(mixer.Owner).EntityName, mixer.TargetPressure, mixer.Enabled, mixer.InletOneConcentration));
         }
 
         private void OnToggleStatusMessage(EntityUid uid, GasMixerComponent mixer, GasMixerToggleStatusMessage args)

@@ -88,7 +88,7 @@ namespace Content.Server.Doors.Systems
         private void OnDoorClickShouldActivate(EntityUid uid, AirlockComponent component, DoorClickShouldActivateEvent args)
         {
             if (component.WiresComponent != null && component.WiresComponent.IsPanelOpen &&
-                IoCManager.Resolve<IEntityManager>().TryGetComponent(args.Args.User, out ActorComponent? actor))
+                EntityManager.TryGetComponent(args.Args.User, out ActorComponent? actor))
             {
                 component.WiresComponent.OpenInterface(actor.PlayerSession);
                 args.Handled = true;

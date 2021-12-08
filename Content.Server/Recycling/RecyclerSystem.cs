@@ -26,12 +26,12 @@ namespace Content.Server.Recycling
             // TODO: Prevent collision with recycled items
 
             // Can only recycle things that are recyclable... And also check the safety of the thing to recycle.
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out RecyclableComponent? recyclable) || !recyclable.Safe && component.Safe) return;
+            if (!EntityManager.TryGetComponent(entity, out RecyclableComponent? recyclable) || !recyclable.Safe && component.Safe) return;
 
             // Mobs are a special case!
             if (CanGib(component, entity))
             {
-                IoCManager.Resolve<IEntityManager>().GetComponent<SharedBodyComponent>(entity).Gib(true);
+                EntityManager.GetComponent<SharedBodyComponent>(entity).Gib(true);
                 Bloodstain(component);
                 return;
             }
@@ -42,13 +42,13 @@ namespace Content.Server.Recycling
         private bool CanGib(RecyclerComponent component, EntityUid entity)
         {
             // We suppose this entity has a Recyclable component.
-            return IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(entity) && !component.Safe &&
-                   IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner, out ApcPowerReceiverComponent? receiver) && receiver.Powered;
+            return EntityManager.HasComponent<SharedBodyComponent>(entity) && !component.Safe &&
+                   EntityManager.TryGetComponent(component.Owner, out ApcPowerReceiverComponent? receiver) && receiver.Powered;
         }
 
         public void Bloodstain(RecyclerComponent component)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner, out AppearanceComponent? appearance))
+            if (EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearance))
             {
                 appearance.SetData(RecyclerVisuals.Bloody, true);
             }

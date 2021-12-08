@@ -35,11 +35,11 @@ namespace Content.Server.Projectiles
 
             var otherEntity = args.OtherFixture.Body.Owner;
 
-            var coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.OtherFixture.Body.Owner).Coordinates;
+            var coordinates = EntityManager.GetComponent<TransformComponent>(args.OtherFixture.Body.Owner).Coordinates;
             var playerFilter = Filter.Pvs(coordinates);
 
             if (!EntityManager.GetComponent<MetaDataComponent>(otherEntity).EntityDeleted && component.SoundHitSpecies != null &&
-                IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(otherEntity))
+                EntityManager.HasComponent<SharedBodyComponent>(otherEntity))
             {
                 SoundSystem.Play(playerFilter, component.SoundHitSpecies.GetSound(), coordinates);
             }
@@ -83,7 +83,7 @@ namespace Content.Server.Projectiles
 
                 if (component.TimeLeft <= 0)
                 {
-                    IoCManager.Resolve<IEntityManager>().DeleteEntity(component.Owner);
+                    EntityManager.DeleteEntity(component.Owner);
                 }
             }
         }

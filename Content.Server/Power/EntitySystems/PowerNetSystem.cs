@@ -343,7 +343,7 @@ namespace Content.Server.Power.EntitySystems
 
             foreach (var apc in net.Apcs)
             {
-                var netBattery = IoCManager.Resolve<IEntityManager>().GetComponent<PowerNetworkBatteryComponent>(apc.Owner);
+                var netBattery = EntityManager.GetComponent<PowerNetworkBatteryComponent>(apc.Owner);
                 netNode.BatteriesDischarging.Add(netBattery.NetworkBattery.Id);
                 netBattery.NetworkBattery.LinkedNetworkDischarging = netNode.Id;
             }
@@ -372,14 +372,14 @@ namespace Content.Server.Power.EntitySystems
 
             foreach (var charger in net.Chargers)
             {
-                var battery = IoCManager.Resolve<IEntityManager>().GetComponent<PowerNetworkBatteryComponent>(charger.Owner);
+                var battery = EntityManager.GetComponent<PowerNetworkBatteryComponent>(charger.Owner);
                 netNode.BatteriesCharging.Add(battery.NetworkBattery.Id);
                 battery.NetworkBattery.LinkedNetworkCharging = netNode.Id;
             }
 
             foreach (var discharger in net.Dischargers)
             {
-                var battery = IoCManager.Resolve<IEntityManager>().GetComponent<PowerNetworkBatteryComponent>(discharger.Owner);
+                var battery = EntityManager.GetComponent<PowerNetworkBatteryComponent>(discharger.Owner);
                 netNode.BatteriesDischarging.Add(battery.NetworkBattery.Id);
                 battery.NetworkBattery.LinkedNetworkDischarging = netNode.Id;
             }

@@ -41,18 +41,18 @@ namespace Content.Server.Engineering.EntitySystems
                 component.TokenSource.Cancel();
             }
 
-            if (component.Deleted || (!IoCManager.Resolve<IEntityManager>().EntityExists(component.Owner) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(component.Owner).EntityLifeStage) >= EntityLifeStage.Deleted)
+            if (component.Deleted || (!EntityManager.EntityExists(component.Owner) ? EntityLifeStage.Deleted : EntityManager.GetComponent<MetaDataComponent>(component.Owner).EntityLifeStage) >= EntityLifeStage.Deleted)
                 return;
 
-            var entity = EntityManager.SpawnEntity(component.Prototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner).Coordinates);
+            var entity = EntityManager.SpawnEntity(component.Prototype, EntityManager.GetComponent<TransformComponent>(component.Owner).Coordinates);
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<HandsComponent?>(args.User, out var hands)
-                && IoCManager.Resolve<IEntityManager>().TryGetComponent<ItemComponent?>(entity, out var item))
+            if (EntityManager.TryGetComponent<HandsComponent?>(args.User, out var hands)
+                && EntityManager.TryGetComponent<ItemComponent?>(entity, out var item))
             {
                 hands.PutInHandOrDrop(item);
             }
 
-            IoCManager.Resolve<IEntityManager>().DeleteEntity(component.Owner);
+            EntityManager.DeleteEntity(component.Owner);
 
             return;
         }

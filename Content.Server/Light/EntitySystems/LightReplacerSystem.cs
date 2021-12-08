@@ -105,7 +105,7 @@ namespace Content.Server.Light.EntitySystems
 
             // try get first inserted bulb of the same type as targeted light fixtutre
             var bulb = replacer.InsertedBulbs.ContainedEntities.FirstOrDefault(
-                (e) => IoCManager.Resolve<IEntityManager>().GetComponentOrNull<LightBulbComponent>(e)?.Type == fixture.BulbType);
+                (e) => EntityManager.GetComponentOrNull<LightBulbComponent>(e)?.Type == fixture.BulbType);
 
             // found bulb in inserted storage
             if (bulb != null)
@@ -123,7 +123,7 @@ namespace Content.Server.Light.EntitySystems
                 // found right bulb, let's spawn it
                 if (bulbEnt != null)
                 {
-                    bulb = EntityManager.SpawnEntity(bulbEnt.PrototypeName, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(replacer.Owner).Coordinates);
+                    bulb = EntityManager.SpawnEntity(bulbEnt.PrototypeName, EntityManager.GetComponent<TransformComponent>(replacer.Owner).Coordinates);
                     bulbEnt.Amount--;
                 }
                 // not found any light bulbs

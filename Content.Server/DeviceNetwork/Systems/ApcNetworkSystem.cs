@@ -36,7 +36,7 @@ namespace Content.Server.DeviceNetwork.Systems
 
         private void OnProviderConnected(EntityUid uid, ApcNetworkComponent component, ExtensionCableSystem.ProviderConnectedEvent args)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.Provider.Owner, out NodeContainerComponent? nodeContainer)) return;
+            if (!EntityManager.TryGetComponent(args.Provider.Owner, out NodeContainerComponent? nodeContainer)) return;
 
             if (nodeContainer.TryGetNode("power", out CableNode? node))
             {

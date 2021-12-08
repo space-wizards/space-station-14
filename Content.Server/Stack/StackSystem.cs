@@ -47,7 +47,7 @@ namespace Content.Server.Stack
             // Get a prototype ID to spawn the new entity. Null is also valid, although it should rarely be picked...
             var prototype = _prototypeManager.TryIndex<StackPrototype>(stack.StackTypeId, out var stackType)
                 ? stackType.Spawn
-                : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(stack.Owner).EntityPrototype?.ID;
+                : EntityManager.GetComponent<MetaDataComponent>(stack.Owner).EntityPrototype?.ID;
 
             // Try to remove the amount of things we want to split from the original stack...
             if (!Use(uid, amount, stack))
@@ -86,7 +86,7 @@ namespace Content.Server.Stack
             if (args.Handled)
                 return;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<StackComponent?>(args.Used, out var otherStack))
+            if (!EntityManager.TryGetComponent<StackComponent?>(args.Used, out var otherStack))
                 return;
 
             if (!otherStack.StackTypeId.Equals(stack.StackTypeId))
@@ -100,7 +100,7 @@ namespace Content.Server.Stack
 
             if (!popupPos.IsValid(EntityManager))
             {
-                popupPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(args.User).Coordinates;
+                popupPos = EntityManager.GetComponent<TransformComponent>(args.User).Coordinates;
             }
 
             var filter = Filter.Entities(args.User);

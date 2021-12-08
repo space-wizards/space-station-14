@@ -55,7 +55,7 @@ namespace Content.Server.AI.EntitySystems
         public Faction GetHostileFactions(Faction faction) => _hostileFactions.TryGetValue(faction, out var hostiles) ? hostiles : Faction.None;
 
         public Faction GetFactions(EntityUid entity) =>
-            IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out AiFactionTagComponent? factionTags)
+            EntityManager.TryGetComponent(entity, out AiFactionTagComponent? factionTags)
             ? factionTags.Factions
             : Faction.None;
 
@@ -72,9 +72,9 @@ namespace Content.Server.AI.EntitySystems
             {
                 if ((component.Factions & hostile) == 0)
                     continue;
-                if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner).MapID != IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).MapID)
+                if (EntityManager.GetComponent<TransformComponent>(component.Owner).MapID != EntityManager.GetComponent<TransformComponent>(entity).MapID)
                     continue;
-                if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner).MapPosition.InRange(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).MapPosition, range))
+                if (!EntityManager.GetComponent<TransformComponent>(component.Owner).MapPosition.InRange(EntityManager.GetComponent<TransformComponent>(entity).MapPosition, range))
                     continue;
 
                 yield return component.Owner;

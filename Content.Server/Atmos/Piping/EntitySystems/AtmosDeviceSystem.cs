@@ -32,7 +32,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
 
         private bool CanJoinAtmosphere(AtmosDeviceComponent component)
         {
-            return !component.RequireAnchored || IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner).Anchored;
+            return !component.RequireAnchored || EntityManager.GetComponent<TransformComponent>(component.Owner).Anchored;
         }
 
         public void JoinAtmosphere(AtmosDeviceComponent component)
@@ -104,7 +104,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             if (!component.RequireAnchored)
                 return;
 
-            if(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner).Anchored)
+            if(EntityManager.GetComponent<TransformComponent>(component.Owner).Anchored)
                 JoinAtmosphere(component);
             else
                 LeaveAtmosphere(component);

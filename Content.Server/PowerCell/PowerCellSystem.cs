@@ -47,12 +47,12 @@ namespace Content.Server.PowerCell
                 !args.CanAccess ||
                 !args.CanInteract ||
                 component.HasCell ||
-                !IoCManager.Resolve<IEntityManager>().HasComponent<PowerCellComponent>(@using) ||
+                !EntityManager.HasComponent<PowerCellComponent>(@using) ||
                 !_actionBlockerSystem.CanDrop(args.User))
                 return;
 
             Verb verb = new();
-            verb.Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(@using).EntityName;
+            verb.Text = EntityManager.GetComponent<MetaDataComponent>(@using).EntityName;
             verb.Category = VerbCategory.Insert;
             verb.Act = () => component.InsertCell(@using);
             args.Verbs.Add(verb);

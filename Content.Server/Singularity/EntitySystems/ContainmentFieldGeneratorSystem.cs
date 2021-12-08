@@ -22,7 +22,7 @@ namespace Content.Server.Singularity.EntitySystems
 
         private void HandleParticleCollide(EntityUid uid, ParticleProjectileComponent component, StartCollideEvent args)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SingularityGeneratorComponent?>(args.OtherFixture.Body.Owner, out var singularityGeneratorComponent))
+            if (EntityManager.TryGetComponent<SingularityGeneratorComponent?>(args.OtherFixture.Body.Owner, out var singularityGeneratorComponent))
             {
                 singularityGeneratorComponent.Power += component.State switch
                 {

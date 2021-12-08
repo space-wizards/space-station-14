@@ -165,7 +165,7 @@ namespace Content.Server.Electrocution
                 foreach (var entity in transform.Coordinates.GetEntitiesInTile(
                     LookupFlags.Approximate | LookupFlags.IncludeAnchored, _entityLookup))
                 {
-                    if (IoCManager.Resolve<IEntityManager>().HasComponent<WindowComponent>(entity))
+                    if (EntityManager.HasComponent<WindowComponent>(entity))
                         return false;
                 }
             }
@@ -285,10 +285,10 @@ namespace Content.Server.Electrocution
             var electrocutionEntity = EntityManager.SpawnEntity(
                 $"VirtualElectrocutionLoad{node.NodeGroupID}", sourceTransform.Coordinates);
 
-            var electrocutionNode = IoCManager.Resolve<IEntityManager>().GetComponent<NodeContainerComponent>(electrocutionEntity)
+            var electrocutionNode = EntityManager.GetComponent<NodeContainerComponent>(electrocutionEntity)
                 .GetNode<ElectrocutionNode>("electrocution");
 
-            var electrocutionComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ElectrocutionComponent>(electrocutionEntity);
+            var electrocutionComponent = EntityManager.GetComponent<ElectrocutionComponent>(electrocutionEntity);
 
             electrocutionNode.CableEntity = sourceUid;
             electrocutionNode.NodeName = node.Name;

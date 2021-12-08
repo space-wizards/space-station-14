@@ -214,7 +214,7 @@ namespace Content.Server.AI.Pathfinding.Accessible
                 return false;
             }
 
-            var entityTile = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(entity).GridID).GetTileRef(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates);
+            var entityTile = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(entity).GridID).GetTileRef(EntityManager.GetComponent<TransformComponent>(entity).Coordinates);
             var entityNode = _pathfindingSystem.GetNode(entityTile);
             var entityRegion = GetRegion(entityNode);
             var targetRegion = GetRegion(targetNode);
@@ -424,12 +424,12 @@ namespace Content.Server.AI.Pathfinding.Accessible
         /// <returns></returns>
         public PathfindingRegion? GetRegion(EntityUid entity)
         {
-            if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).GridID.IsValid())
+            if (!EntityManager.GetComponent<TransformComponent>(entity).GridID.IsValid())
             {
                 return null;
             }
 
-            var entityTile = _mapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).GridID).GetTileRef(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates);
+            var entityTile = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(entity).GridID).GetTileRef(EntityManager.GetComponent<TransformComponent>(entity).Coordinates);
             var entityNode = _pathfindingSystem.GetNode(entityTile);
             return GetRegion(entityNode);
         }

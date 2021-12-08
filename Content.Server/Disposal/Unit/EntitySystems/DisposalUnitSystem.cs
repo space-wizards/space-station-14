@@ -172,7 +172,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         #region Eventbus Handlers
         private void HandleActivate(EntityUid uid, DisposalUnitComponent component, ActivateInWorldEvent args)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User, out ActorComponent? actor))
+            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
             {
                 return;
             }
@@ -187,7 +187,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
         private void HandleInteractHand(EntityUid uid, DisposalUnitComponent component, InteractHandEvent args)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User, out ActorComponent? actor)) return;
+            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor)) return;
 
             // Duplicated code here, not sure how else to get actor inside to make UserInterface happy.
 
@@ -198,7 +198,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
         private void HandleInteractUsing(EntityUid uid, DisposalUnitComponent component, InteractUsingEvent args)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User, out HandsComponent? hands))
+            if (!EntityManager.TryGetComponent(args.User, out HandsComponent? hands))
             {
                 return;
             }
@@ -238,7 +238,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             UpdateInterface(component, component.Powered);
 
-            if (!IoCManager.Resolve<IEntityManager>().HasComponent<AnchorableComponent>(component.Owner))
+            if (!EntityManager.HasComponent<AnchorableComponent>(component.Owner))
             {
                 Logger.WarningS("VitalComponentMissing", $"Disposal unit {uid} is missing an {nameof(AnchorableComponent)}");
             }
@@ -302,7 +302,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         {
             var currentTime = GameTiming.CurTime;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.Entity, out HandsComponent? hands) ||
+            if (!EntityManager.TryGetComponent(args.Entity, out HandsComponent? hands) ||
                 hands.Count == 0 ||
                 currentTime < component.LastExitAttempt + ExitAttemptDelay)
             {
@@ -351,7 +351,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             if (count > 0)
             {
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner, out PhysicsComponent? disposalsBody))
+                if (!EntityManager.TryGetComponent(component.Owner, out PhysicsComponent? disposalsBody))
                 {
                     component.RecentlyEjected.Clear();
                 }
@@ -395,7 +395,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             }
             // This popup message doesn't appear on clicks, even when code was seperate. Unsure why.
 
-            if (!IoCManager.Resolve<IEntityManager>().HasComponent<HandsComponent>(eventArgs.User))
+            if (!EntityManager.HasComponent<HandsComponent>(eventArgs.User))
             {
                 eventArgs.Target.PopupMessage(eventArgs.User, Loc.GetString("ui-disposal-unit-is-valid-interaction-no-hands"));
                 return false;
@@ -444,8 +444,8 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return false;
             }
 
-            var grid = _mapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner).GridID);
-            var coords = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner).Coordinates;
+            var grid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(component.Owner).GridID);
+            var coords = EntityManager.GetComponent<TransformComponent>(component.Owner).Coordinates;
             var entry = grid.GetLocal(coords)
                 .FirstOrDefault(entity => EntityManager.HasComponent<DisposalEntryComponent>(entity));
 
@@ -457,7 +457,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             var air = component.Air;
             var entryComponent = EntityManager.GetComponent<DisposalEntryComponent>(entry);
 
-            if (_atmosSystem.GetTileMixture(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner).Coordinates, true) is {Temperature: > 0} environment)
+            if (_atmosSystem.GetTileMixture(EntityManager.GetComponent<TransformComponent>(component.Owner).Coordinates, true) is {Temperature: > 0} environment)
             {
                 var transferMoles = 0.1f * (0.05f * Atmospherics.OneAtmosphere * 1.01f - air.Pressure) * air.Volume / (environment.Temperature * Atmospherics.R);
 
@@ -483,7 +483,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         public void UpdateInterface(DisposalUnitComponent component, bool powered)
         {
             var stateString = Loc.GetString($"{component.State}");
-            var state = new SharedDisposalUnitComponent.DisposalUnitBoundUserInterfaceState(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(component.Owner).EntityName, stateString, EstimatedFullPressure(component), powered, component.Engaged);
+            var state = new SharedDisposalUnitComponent.DisposalUnitBoundUserInterfaceState(EntityManager.GetComponent<MetaDataComponent>(component.Owner).EntityName, stateString, EstimatedFullPressure(component), powered, component.Engaged);
             component.UserInterface?.SetState(state);
         }
 
@@ -504,12 +504,12 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
         public void UpdateVisualState(DisposalUnitComponent component, bool flush)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner, out AppearanceComponent? appearance))
+            if (!EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearance))
             {
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner).Anchored)
+            if (!EntityManager.GetComponent<TransformComponent>(component.Owner).Anchored)
             {
                 appearance.SetData(SharedDisposalUnitComponent.Visuals.VisualState, SharedDisposalUnitComponent.VisualState.UnAnchored);
                 appearance.SetData(SharedDisposalUnitComponent.Visuals.Handle, SharedDisposalUnitComponent.HandleState.Normal);
@@ -567,7 +567,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
         public bool CanFlush(DisposalUnitComponent component)
         {
-            return component.State == SharedDisposalUnitComponent.PressureState.Ready && component.Powered && IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner).Anchored;
+            return component.State == SharedDisposalUnitComponent.PressureState.Ready && component.Powered && EntityManager.GetComponent<TransformComponent>(component.Owner).Anchored;
         }
 
         public void Engage(DisposalUnitComponent component)
@@ -633,7 +633,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         {
             TryQueueEngage(component);
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ActorComponent? actor))
+            if (EntityManager.TryGetComponent(entity, out ActorComponent? actor))
             {
                 component.UserInterface?.Close(actor.PlayerSession);
             }

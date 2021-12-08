@@ -57,7 +57,7 @@ namespace Content.Shared.Containers.ItemSlots
                 if (slot.HasItem || string.IsNullOrEmpty(slot.StartingItem))
                     continue;
 
-                var item = EntityManager.SpawnEntity(slot.StartingItem, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(itemSlots.Owner).Coordinates);
+                var item = EntityManager.SpawnEntity(slot.StartingItem, EntityManager.GetComponent<TransformComponent>(itemSlots.Owner).Coordinates);
                 slot.ContainerSlot.Insert(item);
             }
         }
@@ -82,7 +82,7 @@ namespace Content.Shared.Containers.ItemSlots
             var itemSlots = EntityManager.EnsureComponent<ItemSlotsComponent>(uid);
             slot.ContainerSlot = ContainerHelpers.EnsureContainer<ContainerSlot>(itemSlots.Owner, id);
             if (itemSlots.Slots.ContainsKey(id))
-                Logger.Error($"Duplicate item slot key. Entity: {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(itemSlots.Owner).EntityName} ({uid}), key: {id}");
+                Logger.Error($"Duplicate item slot key. Entity: {EntityManager.GetComponent<MetaDataComponent>(itemSlots.Owner).EntityName} ({uid}), key: {id}");
             itemSlots.Slots[id] = slot;
         }
 
@@ -364,7 +364,7 @@ namespace Content.Shared.Containers.ItemSlots
 
                 var verbSubject = slot.Name != string.Empty
                     ? Loc.GetString(slot.Name)
-                    : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(slot.Item!.Value).EntityName ?? string.Empty;
+                    : EntityManager.GetComponent<MetaDataComponent>(slot.Item!.Value).EntityName ?? string.Empty;
 
                 Verb verb = new();
                 verb.Act = () => TryEjectToHands(uid, slot, args.User);
@@ -399,7 +399,7 @@ namespace Content.Shared.Containers.ItemSlots
 
                     var verbSubject = slot.Name != string.Empty
                         ? Loc.GetString(slot.Name)
-                        : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(slot.Item!.Value).EntityName ?? string.Empty;
+                        : EntityManager.GetComponent<MetaDataComponent>(slot.Item!.Value).EntityName ?? string.Empty;
 
                     Verb takeVerb = new();
                     takeVerb.Act = () => TryEjectToHands(uid, slot, args.User);
@@ -425,7 +425,7 @@ namespace Content.Shared.Containers.ItemSlots
 
                 var verbSubject = slot.Name != string.Empty
                     ? Loc.GetString(slot.Name)
-                    : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(args.Using.Value).EntityName ?? string.Empty;
+                    : EntityManager.GetComponent<MetaDataComponent>(args.Using.Value).EntityName ?? string.Empty;
 
                 Verb insertVerb = new();
                 insertVerb.Act = () => Insert(uid, slot, args.Using.Value);

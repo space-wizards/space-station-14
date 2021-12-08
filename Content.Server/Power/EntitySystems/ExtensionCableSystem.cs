@@ -85,7 +85,7 @@ namespace Content.Server.Power.EntitySystems
                 if (EntityManager.TryGetComponent<ExtensionCableReceiverComponent>(entity, out var receiver) &&
                     receiver.Connectable &&
                     receiver.Provider == null &&
-                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates.TryDistance(IoCManager.Resolve<IEntityManager>(), IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(owner).Coordinates, out var distance) &&
+                    EntityManager.GetComponent<TransformComponent>(entity).Coordinates.TryDistance(EntityManager, EntityManager.GetComponent<TransformComponent>(owner).Coordinates, out var distance) &&
                     distance < Math.Min(range, receiver.ReceptionRange))
                 {
                     yield return receiver;
@@ -118,7 +118,7 @@ namespace Content.Server.Power.EntitySystems
 
         private void OnReceiverStarted(EntityUid uid, ExtensionCableReceiverComponent receiver, ComponentStartup args)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(receiver.Owner, out PhysicsComponent? physicsComponent))
+            if (EntityManager.TryGetComponent(receiver.Owner, out PhysicsComponent? physicsComponent))
             {
                 receiver.Connectable = physicsComponent.BodyType == BodyType.Static;
             }
@@ -179,11 +179,11 @@ namespace Content.Server.Power.EntitySystems
 
             foreach (var entity in nearbyEntities)
             {
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ExtensionCableProviderComponent?>(entity, out var provider)) continue;
+                if (!EntityManager.TryGetComponent<ExtensionCableProviderComponent?>(entity, out var provider)) continue;
 
                 if (!provider.Connectable) continue;
 
-                if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates.TryDistance(IoCManager.Resolve<IEntityManager>(), IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(owner).Coordinates, out var distance)) continue;
+                if (!EntityManager.GetComponent<TransformComponent>(entity).Coordinates.TryDistance(EntityManager, EntityManager.GetComponent<TransformComponent>(owner).Coordinates, out var distance)) continue;
 
                 if (!(distance < Math.Min(range, provider.TransferRange))) continue;
 

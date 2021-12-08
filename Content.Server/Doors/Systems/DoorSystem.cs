@@ -46,7 +46,7 @@ namespace Content.Server.Doors
 
         private void HandleCollide(EntityUid uid, ServerDoorComponent component, StartCollideEvent args)
         {
-            if (!IoCManager.Resolve<IEntityManager>().HasComponent<DoorBumpOpenerComponent>(args.OtherFixture.Body.Owner))
+            if (!EntityManager.HasComponent<DoorBumpOpenerComponent>(args.OtherFixture.Body.Owner))
             {
                 return;
             }

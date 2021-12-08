@@ -62,7 +62,7 @@ namespace Content.Server.Pinpointer
             {
                 if (whitelist.IsValid(e))
                 {
-                    var dist = (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(e).WorldPosition - transform.WorldPosition).LengthSquared;
+                    var dist = (EntityManager.GetComponent<TransformComponent>(e).WorldPosition - transform.WorldPosition).LengthSquared;
                     l.TryAdd(dist, e);
                 }
             }

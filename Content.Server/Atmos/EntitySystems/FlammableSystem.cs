@@ -224,7 +224,7 @@ namespace Content.Server.Atmos.EntitySystems
                     flammable.FireStacks = MathF.Min(0, flammable.FireStacks + 1);
                 }
 
-                IoCManager.Resolve<IEntityManager>().TryGetComponent(flammable.Owner, out ServerAlertsComponent? status);
+                EntityManager.TryGetComponent(flammable.Owner, out ServerAlertsComponent? status);
 
                 if (!flammable.OnFire)
                 {

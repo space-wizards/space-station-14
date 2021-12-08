@@ -19,7 +19,7 @@ namespace Content.Server.Security.Systems
 
         private void OnStartup(EntityUid uid, DeployableBarrierComponent component, ComponentStartup args)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner, out LockComponent? lockComponent))
+            if (!EntityManager.TryGetComponent(component.Owner, out LockComponent? lockComponent))
                 return;
 
             ToggleBarrierDeploy(component, lockComponent.Locked);
@@ -32,15 +32,15 @@ namespace Content.Server.Security.Systems
 
         private void ToggleBarrierDeploy(DeployableBarrierComponent component, bool isDeployed)
         {
-            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner).Anchored = isDeployed;
+            EntityManager.GetComponent<TransformComponent>(component.Owner).Anchored = isDeployed;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner, out AppearanceComponent? appearanceComponent))
+            if (!EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearanceComponent))
                 return;
 
             var state = isDeployed ? DeployableBarrierState.Deployed : DeployableBarrierState.Idle;
             appearanceComponent.SetData(DeployableBarrierVisuals.State, state);
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner, out PointLightComponent? light))
+            if (EntityManager.TryGetComponent(component.Owner, out PointLightComponent? light))
                 light.Enabled = isDeployed;
         }
     }

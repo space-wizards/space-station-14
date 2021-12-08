@@ -49,21 +49,21 @@ namespace Content.Shared.Disposal
 
         public virtual bool CanInsert(SharedDisposalUnitComponent component, EntityUid entity)
         {
-            if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(component.Owner).Anchored)
+            if (!EntityManager.GetComponent<TransformComponent>(component.Owner).Anchored)
                 return false;
 
             // TODO: Probably just need a disposable tag.
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out SharedItemComponent? storable) &&
-                !IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(entity))
+            if (!EntityManager.TryGetComponent(entity, out SharedItemComponent? storable) &&
+                !EntityManager.HasComponent<SharedBodyComponent>(entity))
             {
                 return false;
             }
 
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out IPhysBody? physics) ||
+            if (!EntityManager.TryGetComponent(entity, out IPhysBody? physics) ||
                 !physics.CanCollide && storable == null)
             {
-                if (!(IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out MobStateComponent? damageState) && damageState.IsDead()))
+                if (!(EntityManager.TryGetComponent(entity, out MobStateComponent? damageState) && damageState.IsDead()))
                 {
                     return false;
                 }

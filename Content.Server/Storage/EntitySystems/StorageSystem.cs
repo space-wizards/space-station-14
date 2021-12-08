@@ -92,7 +92,7 @@ namespace Content.Server.Storage.EntitySystems
                 return;
 
             // Get the session for the user
-            var session = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<ActorComponent>(args.User)?.PlayerSession;
+            var session = EntityManager.GetComponentOrNull<ActorComponent>(args.User)?.PlayerSession;
             if (session == null)
                 return;
 
@@ -118,7 +118,7 @@ namespace Content.Server.Storage.EntitySystems
         {
             var oldParentEntity = message.Container.Owner;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(oldParentEntity, out ServerStorageComponent? storageComp))
+            if (EntityManager.TryGetComponent(oldParentEntity, out ServerStorageComponent? storageComp))
             {
                 storageComp.HandleEntityMaybeRemoved(message);
             }
@@ -128,7 +128,7 @@ namespace Content.Server.Storage.EntitySystems
         {
             var oldParentEntity = message.Container.Owner;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(oldParentEntity, out ServerStorageComponent? storageComp))
+            if (EntityManager.TryGetComponent(oldParentEntity, out ServerStorageComponent? storageComp))
             {
                 storageComp.HandleEntityMaybeInserted(message);
             }
@@ -144,19 +144,19 @@ namespace Content.Server.Storage.EntitySystems
             if (_sessionCache.Count == 0)
                 return;
 
-            var storagePos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(storageComp.Owner).WorldPosition;
-            var storageMap = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(storageComp.Owner).MapID;
+            var storagePos = EntityManager.GetComponent<TransformComponent>(storageComp.Owner).WorldPosition;
+            var storageMap = EntityManager.GetComponent<TransformComponent>(storageComp.Owner).MapID;
 
             foreach (var session in _sessionCache)
             {
                 // The component manages the set of sessions, so this invalid session should be removed soon.
-                if (session.AttachedEntity is not {} attachedEntity || !IoCManager.Resolve<IEntityManager>().EntityExists(attachedEntity))
+                if (session.AttachedEntity is not {} attachedEntity || !EntityManager.EntityExists(attachedEntity))
                     continue;
 
-                if (storageMap != IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(attachedEntity).MapID)
+                if (storageMap != EntityManager.GetComponent<TransformComponent>(attachedEntity).MapID)
                     continue;
 
-                var distanceSquared = (storagePos - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(attachedEntity).WorldPosition).LengthSquared;
+                var distanceSquared = (storagePos - EntityManager.GetComponent<TransformComponent>(attachedEntity).WorldPosition).LengthSquared;
                 if (distanceSquared > SharedInteractionSystem.InteractionRangeSquared)
                 {
                     storageComp.UnsubscribeSession(session);

@@ -133,7 +133,7 @@ namespace Content.Server.Shuttles.EntitySystems
         public void AddPilot(EntityUid entity, ShuttleConsoleComponent component)
         {
             if (!_blocker.CanInteract(entity) ||
-                !IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out PilotComponent? pilotComponent) ||
+                !EntityManager.TryGetComponent(entity, out PilotComponent? pilotComponent) ||
                 component.SubscribedPilots.Contains(pilotComponent))
             {
                 return;
@@ -141,7 +141,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
             component.SubscribedPilots.Add(pilotComponent);
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ServerAlertsComponent? alertsComponent))
+            if (EntityManager.TryGetComponent(entity, out ServerAlertsComponent? alertsComponent))
             {
                 alertsComponent.ShowAlert(AlertType.PilotingShuttle);
             }
@@ -163,7 +163,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
             if (!helmsman.SubscribedPilots.Remove(pilotComponent)) return;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(pilotComponent.Owner, out ServerAlertsComponent? alertsComponent))
+            if (EntityManager.TryGetComponent(pilotComponent.Owner, out ServerAlertsComponent? alertsComponent))
             {
                 alertsComponent.ClearAlert(AlertType.PilotingShuttle);
             }
@@ -176,7 +176,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
         public void RemovePilot(EntityUid entity)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out PilotComponent? pilotComponent)) return;
+            if (!EntityManager.TryGetComponent(entity, out PilotComponent? pilotComponent)) return;
 
             RemovePilot(pilotComponent);
         }

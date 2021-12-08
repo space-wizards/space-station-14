@@ -196,17 +196,17 @@ namespace Content.Server.Atmos.EntitySystems
             // This is the max in any direction that we can get a chunk (e.g. max 2 chunks away of data).
             var (maxXDiff, maxYDiff) = ((int) (_updateRange / ChunkSize) + 1, (int) (_updateRange / ChunkSize) + 1);
 
-            var worldBounds = Box2.CenteredAround(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).WorldPosition,
+            var worldBounds = Box2.CenteredAround(EntityManager.GetComponent<TransformComponent>(entity).WorldPosition,
                 new Vector2(_updateRange, _updateRange));
 
-            foreach (var grid in _mapManager.FindGridsIntersecting(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).MapID, worldBounds))
+            foreach (var grid in _mapManager.FindGridsIntersecting(EntityManager.GetComponent<TransformComponent>(entity).MapID, worldBounds))
             {
                 if (!_overlay.TryGetValue(grid.Index, out var chunks))
                 {
                     continue;
                 }
 
-                var entityTile = grid.GetTileRef(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates).GridIndices;
+                var entityTile = grid.GetTileRef(EntityManager.GetComponent<TransformComponent>(entity).Coordinates).GridIndices;
 
                 for (var x = -maxXDiff; x <= maxXDiff; x++)
                 {

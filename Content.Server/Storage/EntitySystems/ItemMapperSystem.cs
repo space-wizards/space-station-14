@@ -16,7 +16,7 @@ namespace Content.Server.Storage.EntitySystems
             ItemMapperComponent itemMapper,
             out IReadOnlyList<string> showLayers)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(msg.Container.Owner, out ServerStorageComponent? component))
+            if (EntityManager.TryGetComponent(msg.Container.Owner, out ServerStorageComponent? component))
             {
                 var containedLayers = component.StoredEntities ?? new List<EntityUid>();
                 var list = new List<string>();
