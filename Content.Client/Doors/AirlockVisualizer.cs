@@ -48,13 +48,10 @@ namespace Content.Client.Doors
         private Animation OpenAnimation = default!;
         private Animation DenyAnimation = default!;
 
-        public AirlockVisualizer()
-        {
-            IoCManager.InjectDependencies(this);
-        }
-
         void ISerializationHooks.AfterDeserialization()
         {
+            IoCManager.InjectDependencies(this);
+
             CloseAnimation = new Animation {Length = TimeSpan.FromSeconds(_delay)};
             {
                 var flick = new AnimationTrackSpriteFlick();

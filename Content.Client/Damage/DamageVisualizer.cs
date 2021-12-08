@@ -195,14 +195,11 @@ namespace Content.Client.Damage
             public readonly string? Color;
         }
 
-        public DamageVisualizer()
-        {
-            IoCManager.InjectDependencies(this);
-        }
-
         public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
+
+            IoCManager.InjectDependencies(this);
 
             var damageData = _entityManager.EnsureComponent<DamageVisualizerDataComponent>(entity);
             VerifyVisualizerSetup(entity, damageData);

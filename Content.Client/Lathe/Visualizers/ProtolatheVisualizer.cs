@@ -25,8 +25,6 @@ namespace Content.Client.Lathe.Visualizers
 
         public ProtolatheVisualizer()
         {
-            IoCManager.InjectDependencies(this);
-
             _buildingAnimation = PopulateAnimation("building", "building_unlit", 0.8f);
             _insertingMetalAnimation = PopulateAnimation("inserting_metal", "inserting_unlit", 0.8f);
             _insertingGlassAnimation = PopulateAnimation("inserting_glass", "inserting_unlit", 0.8f);
@@ -54,10 +52,9 @@ namespace Content.Client.Lathe.Visualizers
 
         public override void InitializeEntity(EntityUid entity)
         {
-            if (!_entMan.HasComponent<AnimationPlayerComponent>(entity))
-            {
-                _entMan.AddComponent<AnimationPlayerComponent>(entity);
-            }
+            IoCManager.InjectDependencies(this);
+
+            _entMan.EnsureComponent<AnimationPlayerComponent>(entity);
         }
 
         public override void OnChangeData(AppearanceComponent component)
