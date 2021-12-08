@@ -20,32 +20,22 @@ public class AdminLogsEui : BaseEui
 
     public AdminLogsEui()
     {
-        var monitor = _clyde.EnumerateMonitors().First();
-
-        ClydeWindow = _clyde.CreateWindow(new WindowCreateParameters
-        {
-            Maximized = true,
-            Title = "Admin Logs",
-            Monitor = monitor
-        });
-
-        ClydeWindow.RequestClosed += OnRequestClosed;
-        ClydeWindow.DisposeOnClose = true;
-
         LogsWindow = new AdminLogsWindow();
-        LogsWindow.LogSearch.OnTextEntered += _ => RequestLogs();
-        LogsWindow.RefreshButton.OnPressed += _ => RequestLogs();
-        LogsWindow.NextButton.OnPressed += _ => NextLogs();
+        LogsControl = LogsWindow.Logs;
 
-        Root = _uiManager.CreateWindowRoot(ClydeWindow);
-        Root.AddChild(LogsWindow);
+        LogsControl.LogSearch.OnTextEntered += _ => RequestLogs();
+        LogsControl.RefreshButton.OnPressed += _ => RequestLogs();
+        LogsControl.NextButton.OnPressed += _ => NextLogs();
+        LogsControl.PopOutButton.OnPressed += _ => PopOut();
     }
 
-    private WindowRoot Root { get; }
+    private WindowRoot? Root { get; set; }
 
-    private IClydeWindow ClydeWindow { get; }
+    private IClydeWindow? ClydeWindow { get; set; }
 
-    private AdminLogsWindow LogsWindow { get; }
+    private AdminLogsWindow? LogsWindow { get; set; }
+
+    private AdminLogsControl LogsControl { get; }
 
     private bool FirstState { get; set; } = true;
 
@@ -57,12 +47,12 @@ public class AdminLogsEui : BaseEui
     private void RequestLogs()
     {
         var request = new LogsRequest(
-            LogsWindow.SelectedRoundId,
-            LogsWindow.SelectedTypes.ToList(),
+            LogsControl.SelectedRoundId,
+            LogsControl.SelectedTypes.ToList(),
             null,
             null,
             null,
-            LogsWindow.SelectedPlayers.ToArray(),
+            LogsControl.SelectedPlayers.ToArray(),
             null,
             null,
             DateOrder.Descending);
@@ -76,6 +66,38 @@ public class AdminLogsEui : BaseEui
         SendMessage(request);
     }
 
+    private void PopOut()
+    {
+        if (LogsWindow == null)
+        {
+            return;
+        }
+
+        LogsControl.Orphan();
+        LogsWindow.Dispose();
+        LogsWindow = null;
+
+        var monitor = _clyde.EnumerateMonitors().First();
+
+        ClydeWindow = _clyde.CreateWindow(new WindowCreateParameters
+        {
+            Maximized = false,
+            Title = "Admin Logs",
+            Monitor = monitor,
+            Width = 1000,
+            Height = 400
+        });
+
+        ClydeWindow.RequestClosed += OnRequestClosed;
+        ClydeWindow.DisposeOnClose = true;
+
+        Root = _uiManager.CreateWindowRoot(ClydeWindow);
+        Root.AddChild(LogsControl);
+
+        LogsControl.PopOutButton.Disabled = true;
+        LogsControl.PopOutButton.Visible = false;
+    }
+
     private bool TrySetFirstState(AdminLogsEuiState state)
     {
         if (!FirstState)
@@ -84,8 +106,8 @@ public class AdminLogsEui : BaseEui
         }
 
         FirstState = false;
-        LogsWindow.SetCurrentRound(state.RoundId);
-        LogsWindow.SetRoundSpinBox(state.RoundId);
+        LogsControl.SetCurrentRound(state.RoundId);
+        LogsControl.SetRoundSpinBox(state.RoundId);
         return true;
     }
 
@@ -100,8 +122,8 @@ public class AdminLogsEui : BaseEui
             return;
         }
 
-        LogsWindow.SetCurrentRound(s.RoundId);
-        LogsWindow.SetPlayers(s.Players);
+        LogsControl.SetCurrentRound(s.RoundId);
+        LogsControl.SetPlayers(s.Players);
 
         if (first)
         {
@@ -116,22 +138,33 @@ public class AdminLogsEui : BaseEui
         switch (msg)
         {
             case NewLogs {Replace: true} newLogs:
-                LogsWindow.SetLogs(newLogs.Logs);
+                LogsControl.SetLogs(newLogs.Logs);
                 break;
             case NewLogs {Replace: false} newLogs:
-                LogsWindow.AddLogs(newLogs.Logs);
+                LogsControl.AddLogs(newLogs.Logs);
                 break;
         }
+    }
+
+    public override void Opened()
+    {
+        base.Opened();
+
+        LogsWindow?.OpenCentered();
     }
 
     public override void Closed()
     {
         base.Closed();
 
-        ClydeWindow.RequestClosed -= OnRequestClosed;
+        if (ClydeWindow != null)
+        {
+            ClydeWindow.RequestClosed -= OnRequestClosed;
+        }
 
-        LogsWindow.Dispose();
-        Root.Dispose();
-        ClydeWindow.Dispose();
+        LogsControl.Dispose();
+        LogsWindow?.Dispose();
+        Root?.Dispose();
+        ClydeWindow?.Dispose();
     }
 }
