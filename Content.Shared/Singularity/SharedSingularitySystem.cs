@@ -55,7 +55,7 @@ namespace Content.Shared.Singularity
 
             value = Math.Clamp(value, 0, 6);
 
-            var physics = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<PhysicsComponent>(singularity.Owner);
+            var physics = EntityManager.GetComponentOrNull<PhysicsComponent>(singularity.Owner);
 
             if (singularity.Level > 1 && value <= 1)
             {
@@ -68,12 +68,12 @@ namespace Content.Shared.Singularity
 
             singularity.Level = value;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(singularity.Owner, out SharedRadiationPulseComponent? pulse))
+            if (EntityManager.TryGetComponent(singularity.Owner, out SharedRadiationPulseComponent? pulse))
             {
                 pulse.RadsPerSecond = 10 * value;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(singularity.Owner, out AppearanceComponent? appearance))
+            if (EntityManager.TryGetComponent(singularity.Owner, out AppearanceComponent? appearance))
             {
                 appearance.SetData(SingularityVisuals.Level, value);
             }
@@ -83,7 +83,7 @@ namespace Content.Shared.Singularity
                 circle.Radius = value - 0.5f;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(singularity.Owner, out SingularityDistortionComponent? distortion))
+            if (EntityManager.TryGetComponent(singularity.Owner, out SingularityDistortionComponent? distortion))
             {
                 distortion.Falloff = GetFalloff(value);
                 distortion.Intensity = GetIntensity(value);
@@ -102,8 +102,8 @@ namespace Content.Shared.Singularity
         {
             var other = args.BodyB.Owner;
 
-            if ((!IoCManager.Resolve<IEntityManager>().HasComponent<SharedContainmentFieldComponent>(other) &&
-                !IoCManager.Resolve<IEntityManager>().HasComponent<SharedContainmentFieldGeneratorComponent>(other)) ||
+            if ((!EntityManager.HasComponent<SharedContainmentFieldComponent>(other) &&
+                !EntityManager.HasComponent<SharedContainmentFieldGeneratorComponent>(other)) ||
                 component.Level >= 4)
             {
                 args.Cancel();

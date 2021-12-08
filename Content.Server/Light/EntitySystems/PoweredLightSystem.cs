@@ -73,7 +73,7 @@ namespace Content.Server.Light.EntitySystems
                     _ => throw new ArgumentOutOfRangeException()
                 };
 
-                var entity = EntityManager.SpawnEntity(prototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(light.Owner).Coordinates);
+                var entity = EntityManager.SpawnEntity(prototype, EntityManager.GetComponent<TransformComponent>(light.Owner).Coordinates);
                 light.LightBulbContainer.Insert(entity);
             }
 
@@ -336,7 +336,7 @@ namespace Content.Server.Light.EntitySystems
 
             light.IsBlinking = isNowBlinking;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(light.Owner, out AppearanceComponent? appearance))
+            if (!EntityManager.TryGetComponent(light.Owner, out AppearanceComponent? appearance))
                 return;
             appearance.SetData(PoweredLightVisuals.Blinking, isNowBlinking);
         }
