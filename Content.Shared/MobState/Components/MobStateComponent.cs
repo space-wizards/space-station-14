@@ -26,6 +26,8 @@ namespace Content.Shared.MobState.Components
     [NetworkedComponent]
     public class MobStateComponent : Component
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "MobState";
 
         /// <summary>
@@ -60,13 +62,13 @@ namespace Content.Shared.MobState.Components
             else
             {
                 // Initialize with some amount of damage, defaulting to 0.
-                UpdateState(IoCManager.Resolve<IEntityManager>().GetComponentOrNull<DamageableComponent>(Owner)?.TotalDamage ?? FixedPoint2.Zero);
+                UpdateState(_entMan.GetComponentOrNull<DamageableComponent>(Owner)?.TotalDamage ?? FixedPoint2.Zero);
             }
         }
 
         protected override void OnRemove()
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out SharedAlertsComponent? status))
+            if (_entMan.TryGetComponent(Owner, out SharedAlertsComponent? status))
             {
                 status.ClearAlert(AlertType.HumanHealth);
             }
@@ -289,7 +291,7 @@ namespace Content.Shared.MobState.Components
         /// </summary>
         private void SetMobState(IMobState? old, (IMobState state, FixedPoint2 threshold)? current)
         {
-            var entMan = IoCManager.Resolve<IEntityManager>();
+            var entMan = _entMan;
 
             if (!current.HasValue)
             {

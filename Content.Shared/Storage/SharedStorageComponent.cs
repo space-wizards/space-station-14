@@ -16,6 +16,8 @@ namespace Content.Shared.Storage
     [NetworkedComponent()]
     public abstract class SharedStorageComponent : Component, IDraggable
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "Storage";
 
         public abstract IReadOnlyList<EntityUid>? StoredEntities { get; }
@@ -29,7 +31,7 @@ namespace Content.Shared.Storage
 
         bool IDraggable.CanDrop(CanDropEvent args)
         {
-            return IoCManager.Resolve<IEntityManager>().TryGetComponent(args.Target, out PlaceableSurfaceComponent? placeable) &&
+            return _entMan.TryGetComponent(args.Target, out PlaceableSurfaceComponent? placeable) &&
                    placeable.IsPlaceable;
         }
 
@@ -52,7 +54,7 @@ namespace Content.Shared.Storage
             {
                 if (Remove(storedEntity))
                 {
-                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(storedEntity).WorldPosition = eventArgs.DropLocation.Position;
+                    _entMan.GetComponent<TransformComponent>(storedEntity).WorldPosition = eventArgs.DropLocation.Position;
                 }
             }
 

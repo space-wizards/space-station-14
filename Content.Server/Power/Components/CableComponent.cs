@@ -18,6 +18,8 @@ namespace Content.Server.Power.Components
     [RegisterComponent]
     public class CableComponent : Component, IInteractUsing
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "Cable";
 
         [ViewVariables]
@@ -45,11 +47,11 @@ namespace Content.Server.Power.Components
 
             if (EntitySystem.Get<ElectrocutionSystem>().TryDoElectrifiedAct(Owner, eventArgs.User)) return false;
 
-            IoCManager.Resolve<IEntityManager>().DeleteEntity(Owner);
-            var droppedEnt = IoCManager.Resolve<IEntityManager>().SpawnEntity(_cableDroppedOnCutPrototype, eventArgs.ClickLocation);
+            _entMan.DeleteEntity(Owner);
+            var droppedEnt = _entMan.SpawnEntity(_cableDroppedOnCutPrototype, eventArgs.ClickLocation);
 
             // TODO: Literally just use a prototype that has a single thing in the stack, it's not that complicated...
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<StackComponent?>(droppedEnt, out var stack))
+            if (_entMan.TryGetComponent<StackComponent?>(droppedEnt, out var stack))
                 EntitySystem.Get<StackSystem>().SetCount(droppedEnt, 1, stack);
 
             return true;

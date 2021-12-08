@@ -17,6 +17,8 @@ namespace Content.Server.Singularity.Components
     [ComponentReference(typeof(SharedContainmentFieldGeneratorComponent))]
     public class ContainmentFieldGeneratorComponent : SharedContainmentFieldGeneratorComponent
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         private int _powerBuffer;
 
         [ViewVariables]
@@ -95,9 +97,9 @@ namespace Content.Server.Singularity.Components
             {
                 if (_connection1?.Item1 == direction || _connection2?.Item1 == direction) continue;
 
-                var dirVec = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).WorldRotation.RotateVec(direction.ToVec());
-                var ray = new CollisionRay(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).WorldPosition, dirVec, (int) CollisionGroup.MobMask);
-                var rawRayCastResults = EntitySystem.Get<SharedPhysicsSystem>().IntersectRay(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).MapID, ray, 4.5f, Owner, false);
+                var dirVec = _entMan.GetComponent<TransformComponent>(Owner).WorldRotation.RotateVec(direction.ToVec());
+                var ray = new CollisionRay(_entMan.GetComponent<TransformComponent>(Owner).WorldPosition, dirVec, (int) CollisionGroup.MobMask);
+                var rawRayCastResults = EntitySystem.Get<SharedPhysicsSystem>().IntersectRay(_entMan.GetComponent<TransformComponent>(Owner).MapID, ray, 4.5f, Owner, false);
 
                 var rayCastResults = rawRayCastResults as RayCastResults[] ?? rawRayCastResults.ToArray();
                 if(!rayCastResults.Any()) continue;
@@ -113,11 +115,11 @@ namespace Content.Server.Singularity.Components
                 }
                 if(closestResult == null) continue;
                 var ent = closestResult.Value.HitEntity;
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ContainmentFieldGeneratorComponent?>(ent, out var fieldGeneratorComponent) ||
+                if (!_entMan.TryGetComponent<ContainmentFieldGeneratorComponent?>(ent, out var fieldGeneratorComponent) ||
                     fieldGeneratorComponent.Owner == Owner ||
                     !fieldGeneratorComponent.HasFreeConnections() ||
                     IsConnectedWith(fieldGeneratorComponent) ||
-                    !IoCManager.Resolve<IEntityManager>().TryGetComponent<PhysicsComponent?>(ent, out var collidableComponent) ||
+                    !_entMan.TryGetComponent<PhysicsComponent?>(ent, out var collidableComponent) ||
                     collidableComponent.BodyType != BodyType.Static)
                 {
                     continue;

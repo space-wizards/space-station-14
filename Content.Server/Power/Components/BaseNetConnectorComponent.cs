@@ -18,6 +18,8 @@ namespace Content.Server.Power.Components
 
     public abstract class BaseNetConnectorComponent<TNetType> : Component, IBaseNetConnectorComponent<TNetType>
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         [ViewVariables(VVAccess.ReadWrite)]
         public Voltage Voltage { get => _voltage; set => SetVoltage(value); }
         [DataField("voltage")]
@@ -68,7 +70,7 @@ namespace Content.Server.Power.Components
 
         private bool TryFindNet([NotNullWhen(true)] out TNetType? foundNet)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<NodeContainerComponent?>(Owner, out var container))
+            if (_entMan.TryGetComponent<NodeContainerComponent?>(Owner, out var container))
             {
                 var compatibleNet = container.Nodes.Values
                     .Where(node => (NodeId == null || NodeId == node.Name) && node.NodeGroupID == (NodeGroupID) Voltage)

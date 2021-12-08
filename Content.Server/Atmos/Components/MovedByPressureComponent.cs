@@ -119,7 +119,7 @@ namespace Content.Server.Atmos.Components
 
         public static bool IsMovedByPressure(this EntityUid entity, [NotNullWhen(true)] out MovedByPressureComponent? moved)
         {
-            return _entMan.TryGetComponent(entity, out moved) &&
+            return IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out moved) &&
                    moved.Enabled;
         }
     }

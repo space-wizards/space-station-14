@@ -55,7 +55,7 @@ namespace Content.Server.Sandbox.Commands
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eUid, out NodeContainerComponent? nodeContainerComponent))
+            if (!entityManager.TryGetComponent(eUid, out NodeContainerComponent? nodeContainerComponent))
             {
                 shell.WriteLine(Loc.GetString("shell-entity-is-not-node-container"));
                 return;

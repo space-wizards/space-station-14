@@ -41,10 +41,11 @@ namespace Content.Shared.Actions.Behaviors.Item
             Performer = performer;
             ActionType = actionType;
             Item = item;
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Item, out ItemActions))
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            if (!entMan.TryGetComponent(Item, out ItemActions))
             {
-                throw new InvalidOperationException($"performer {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(performer).EntityName} tried to perform item action {actionType} " +
-                                                    $" for item {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Item).EntityName} but the item had no ItemActionsComponent," +
+                throw new InvalidOperationException($"performer {entMan.GetComponent<MetaDataComponent>(performer).EntityName} tried to perform item action {actionType} " +
+                                                    $" for item {entMan.GetComponent<MetaDataComponent>(Item).EntityName} but the item had no ItemActionsComponent," +
                                                     " which should never occur");
             }
         }

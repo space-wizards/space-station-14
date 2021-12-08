@@ -18,7 +18,7 @@ namespace Content.Server.Storage.Components
     [RegisterComponent]
     public class SecretStashComponent : Component, IDestroyAct
     {
-        [Dependency] private readonly IEntityManager _entities = default!;
+        [Dependency] private readonly IEntityManager _entMan = default!;
 
         public override string Name => "SecretStash";
 
@@ -30,7 +30,7 @@ namespace Content.Server.Storage.Components
 
         [ViewVariables] private ContainerSlot _itemContainer = default!;
 
-        public string SecretPartName => _secretPartNameOverride ?? Loc.GetString("comp-secret-stash-secret-part-name", ("name", IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityName));
+        public string SecretPartName => _secretPartNameOverride ?? Loc.GetString("comp-secret-stash-secret-part-name", ("name", _entMan.GetComponent<MetaDataComponent>(Owner).EntityName));
 
         protected override void Initialize()
         {
@@ -52,7 +52,7 @@ namespace Content.Server.Storage.Components
                 return false;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(itemToHide, out ItemComponent? item))
+            if (!_entMan.TryGetComponent(itemToHide, out ItemComponent? item))
                 return false;
 
             if (item.Size > _maxItemSize)
@@ -62,7 +62,7 @@ namespace Content.Server.Storage.Components
                 return false;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out HandsComponent? hands))
+            if (!_entMan.TryGetComponent(user, out HandsComponent? hands))
                 return false;
 
             if (!hands.Drop(itemToHide, _itemContainer))
@@ -85,15 +85,15 @@ namespace Content.Server.Storage.Components
 
             Owner.PopupMessage(user, Loc.GetString("comp-secret-stash-action-get-item-found-something", ("stash", SecretPartName)));
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out HandsComponent? hands))
+            if (_entMan.TryGetComponent(user, out HandsComponent? hands))
             {
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(contained, out ItemComponent? item))
+                if (!_entMan.TryGetComponent(contained, out ItemComponent? item))
                     return false;
                 hands.PutInHandOrDrop(item);
             }
             else if (_itemContainer.Remove(contained))
             {
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(contained).Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates;
+                _entMan.GetComponent<TransformComponent>(contained).Coordinates = _entMan.GetComponent<TransformComponent>(Owner).Coordinates;
             }
 
             return true;
@@ -113,7 +113,7 @@ namespace Content.Server.Storage.Components
             // drop item inside
             if (_itemContainer.ContainedEntity is {Valid: true} contained)
             {
-                _entities.GetComponent<TransformComponent>(contained).Coordinates = _entities.GetComponent<TransformComponent>(Owner).Coordinates;
+                _entMan.GetComponent<TransformComponent>(contained).Coordinates = _entMan.GetComponent<TransformComponent>(Owner).Coordinates;
             }
         }
     }

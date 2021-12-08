@@ -10,6 +10,8 @@ namespace Content.Shared.Body.Components
 {
     public abstract class SharedMechanismComponent : Component, ISerializationHooks
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "Mechanism";
 
         protected readonly Dictionary<int, object> OptionsCache = new();
@@ -37,11 +39,11 @@ namespace Content.Shared.Body.Components
                 {
                     if (old.Body == null)
                     {
-                        IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, new RemovedFromPartEvent(old));
+                        _entMan.EventBus.RaiseLocalEvent(Owner, new RemovedFromPartEvent(old));
                     }
                     else
                     {
-                        IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, new RemovedFromPartInBodyEvent(old.Body, old));
+                        _entMan.EventBus.RaiseLocalEvent(Owner, new RemovedFromPartInBodyEvent(old.Body, old));
                     }
                 }
 
@@ -49,11 +51,11 @@ namespace Content.Shared.Body.Components
                 {
                     if (value.Body == null)
                     {
-                        IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, new AddedToPartEvent(value));
+                        _entMan.EventBus.RaiseLocalEvent(Owner, new AddedToPartEvent(value));
                     }
                     else
                     {
-                        IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, new AddedToPartInBodyEvent(value.Body, value));
+                        _entMan.EventBus.RaiseLocalEvent(Owner, new AddedToPartInBodyEvent(value.Body, value));
                     }
                 }
             }

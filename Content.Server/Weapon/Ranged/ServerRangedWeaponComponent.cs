@@ -30,6 +30,7 @@ namespace Content.Server.Weapon.Ranged
     [RegisterComponent]
     public sealed class ServerRangedWeaponComponent : SharedRangedWeaponComponent, IHandSelected
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -143,12 +144,12 @@ namespace Content.Server.Weapon.Ranged
         /// <param name="targetPos">Target position on the map to shoot at.</param>
         private void TryFire(EntityUid user, Vector2 targetPos)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out HandsComponent? hands) || hands.GetActiveHand?.Owner != Owner)
+            if (!_entMan.TryGetComponent(user, out HandsComponent? hands) || hands.GetActiveHand?.Owner != Owner)
             {
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out CombatModeComponent? combat) || !combat.IsInCombatMode)
+            if (!_entMan.TryGetComponent(user, out CombatModeComponent? combat) || !combat.IsInCombatMode)
             {
                 return;
             }
@@ -176,21 +177,21 @@ namespace Content.Server.Weapon.Ranged
                 // Apply salt to the wound ("Honk!")
                 SoundSystem.Play(
                     Filter.Pvs(Owner), _clumsyWeaponHandlingSound.GetSound(),
-                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates, AudioParams.Default.WithMaxDistance(5));
+                    _entMan.GetComponent<TransformComponent>(Owner).Coordinates, AudioParams.Default.WithMaxDistance(5));
 
                 SoundSystem.Play(
                     Filter.Pvs(Owner), _clumsyWeaponShotSound.GetSound(),
-                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates, AudioParams.Default.WithMaxDistance(5));
+                    _entMan.GetComponent<TransformComponent>(Owner).Coordinates, AudioParams.Default.WithMaxDistance(5));
 
                 user.PopupMessage(Loc.GetString("server-ranged-weapon-component-try-fire-clumsy"));
 
-                IoCManager.Resolve<IEntityManager>().DeleteEntity(Owner);
+                _entMan.DeleteEntity(Owner);
                 return;
             }
 
             if (_canHotspot)
             {
-                EntitySystem.Get<AtmosphereSystem>().HotspotExpose(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user).Coordinates, 700, 50);
+                EntitySystem.Get<AtmosphereSystem>().HotspotExpose(_entMan.GetComponent<TransformComponent>(user).Coordinates, 700, 50);
             }
             FireHandler?.Invoke(user, targetPos);
         }

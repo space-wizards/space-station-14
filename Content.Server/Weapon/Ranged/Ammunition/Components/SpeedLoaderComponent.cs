@@ -20,6 +20,8 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
     [RegisterComponent]
     public class SpeedLoaderComponent : Component, IAfterInteract, IInteractUsing, IMapInit, IUse
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "SpeedLoader";
 
         [DataField("caliber")]
@@ -59,7 +61,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
         private void UpdateAppearance()
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearanceComponent))
+            if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearanceComponent))
             {
                 appearanceComponent?.SetData(MagazineBarrelVisuals.MagLoaded, true);
                 appearanceComponent?.SetData(AmmoVisuals.AmmoCount, AmmoLeft);
@@ -69,7 +71,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
         public bool TryInsertAmmo(EntityUid user, EntityUid entity)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out AmmoComponent? ammoComponent))
+            if (!_entMan.TryGetComponent(entity, out AmmoComponent? ammoComponent))
             {
                 return false;
             }
@@ -95,7 +97,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
         private bool UseEntity(EntityUid user)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out HandsComponent? handsComponent))
+            if (!_entMan.TryGetComponent(user, out HandsComponent? handsComponent))
             {
                 return false;
             }
@@ -106,7 +108,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
                 return false;
             }
 
-            var itemComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(ammo);
+            var itemComponent = _entMan.GetComponent<ItemComponent>(ammo);
             if (!handsComponent.CanPutInHand(itemComponent))
             {
                 ServerRangedBarrelComponent.EjectCasing(ammo);
@@ -130,7 +132,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
             if (_unspawnedCount > 0)
             {
-                entity = IoCManager.Resolve<IEntityManager>().SpawnEntity(_fillPrototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
+                entity = _entMan.SpawnEntity(_fillPrototype, _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
                 _unspawnedCount--;
             }
 
@@ -147,7 +149,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             // This area is dirty but not sure of an easier way to do it besides add an interface or somethin
             var changed = false;
 
-            var entities = IoCManager.Resolve<IEntityManager>();
+            var entities = _entMan;
             if (entities.TryGetComponent(eventArgs.Target.Value, out RevolverBarrelComponent? revolverBarrel))
             {
                 for (var i = 0; i < Capacity; i++)
@@ -169,7 +171,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
                     break;
                 }
             }
-            else if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Target.Value, out BoltActionBarrelComponent? boltActionBarrel))
+            else if (_entMan.TryGetComponent(eventArgs.Target.Value, out BoltActionBarrelComponent? boltActionBarrel))
             {
                 for (var i = 0; i < Capacity; i++)
                 {

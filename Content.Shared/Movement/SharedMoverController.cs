@@ -67,7 +67,7 @@ namespace Content.Shared.Movement
         {
             var (walkDir, sprintDir) = mover.VelocityDir;
 
-            var transform = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(mover.Owner);
+            var transform = EntityManager.GetComponent<TransformComponent>(mover.Owner);
             var parentRotation = transform.Parent!.WorldRotation;
 
             // Regular movement.
@@ -105,7 +105,7 @@ namespace Content.Shared.Movement
             }
 
             UsedMobMovement[mover.Owner] = true;
-            var transform = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(mover.Owner);
+            var transform = EntityManager.GetComponent<TransformComponent>(mover.Owner);
             var weightless = mover.Owner.IsWeightless(physicsComponent, mapManager: _mapManager, entityManager: _entityManager);
             var (walkDir, sprintDir) = mover.VelocityDir;
 
@@ -164,9 +164,9 @@ namespace Content.Shared.Movement
         protected bool UseMobMovement(PhysicsComponent body)
         {
             return body.BodyStatus == BodyStatus.OnGround &&
-                   IoCManager.Resolve<IEntityManager>().HasComponent<MobStateComponent>(body.Owner) &&
+                   EntityManager.HasComponent<MobStateComponent>(body.Owner) &&
                    // If we're being pulled then don't mess with our velocity.
-                   (!IoCManager.Resolve<IEntityManager>().TryGetComponent(body.Owner, out SharedPullableComponent? pullable) || !pullable.BeingPulled) &&
+                   (!EntityManager.TryGetComponent(body.Owner, out SharedPullableComponent? pullable) || !pullable.BeingPulled) &&
                    _blocker.CanMove((body).Owner);
         }
 
@@ -186,7 +186,7 @@ namespace Content.Shared.Movement
                     !otherCollider.CanCollide ||
                     ((collider.CollisionMask & otherCollider.CollisionLayer) == 0 &&
                     (otherCollider.CollisionMask & collider.CollisionLayer) == 0) ||
-                    (IoCManager.Resolve<IEntityManager>().TryGetComponent(otherCollider.Owner, out SharedPullableComponent? pullable) && pullable.BeingPulled))
+                    (EntityManager.TryGetComponent(otherCollider.Owner, out SharedPullableComponent? pullable) && pullable.BeingPulled))
                 {
                     continue;
                 }

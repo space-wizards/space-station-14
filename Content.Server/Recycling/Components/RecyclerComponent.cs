@@ -21,6 +21,8 @@ namespace Content.Server.Recycling.Components
     [Friend(typeof(RecyclerSystem))]
     public class RecyclerComponent : Component, ISuicideAct
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "Recycler";
 
         /// <summary>
@@ -39,7 +41,7 @@ namespace Content.Server.Recycling.Components
 
         private void Clean()
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearance))
+            if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
                 appearance.SetData(RecyclerVisuals.Bloody, false);
             }
@@ -47,7 +49,7 @@ namespace Content.Server.Recycling.Components
 
         SuicideKind ISuicideAct.Suicide(EntityUid victim, IChatManager chat)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(victim, out ActorComponent? actor) && actor.PlayerSession.ContentData()?.Mind is {} mind)
+            if (_entMan.TryGetComponent(victim, out ActorComponent? actor) && actor.PlayerSession.ContentData()?.Mind is {} mind)
             {
                 EntitySystem.Get<GameTicker>().OnGhostAttempt(mind, false);
                 mind.OwnedEntity?.PopupMessage(Loc.GetString("recycler-component-suicide-message"));
@@ -55,7 +57,7 @@ namespace Content.Server.Recycling.Components
 
             victim.PopupMessageOtherClients(Loc.GetString("recycler-component-suicide-message-others", ("victim",victim)));
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedBodyComponent?>(victim, out var body))
+            if (_entMan.TryGetComponent<SharedBodyComponent?>(victim, out var body))
             {
                 body.Gib(true);
             }

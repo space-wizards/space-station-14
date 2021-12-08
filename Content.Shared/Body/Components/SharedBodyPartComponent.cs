@@ -18,6 +18,8 @@ namespace Content.Shared.Body.Components
     [NetworkedComponent()]
     public abstract class SharedBodyPartComponent : Component, IBodyPartContainer
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "BodyPart";
 
         private SharedBodyComponent? _body;
@@ -109,11 +111,11 @@ namespace Content.Shared.Body.Components
         public BodyPartSymmetry Symmetry { get; private set; } = BodyPartSymmetry.None;
 
         [ViewVariables]
-        public ISurgeryData? SurgeryDataComponent => IoCManager.Resolve<IEntityManager>().GetComponentOrNull<ISurgeryData>(Owner);
+        public ISurgeryData? SurgeryDataComponent => _entMan.GetComponentOrNull<ISurgeryData>(Owner);
 
         protected virtual void OnAddMechanism(SharedMechanismComponent mechanism)
         {
-            var prototypeId = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(mechanism.Owner).EntityPrototype!.ID;
+            var prototypeId = _entMan.GetComponent<MetaDataComponent>(mechanism.Owner).EntityPrototype!.ID;
 
             if (!_mechanismIds.Contains(prototypeId))
             {
@@ -128,7 +130,7 @@ namespace Content.Shared.Body.Components
 
         protected virtual void OnRemoveMechanism(SharedMechanismComponent mechanism)
         {
-            _mechanismIds.Remove(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(mechanism.Owner).EntityPrototype!.ID);
+            _mechanismIds.Remove(_entMan.GetComponent<MetaDataComponent>(mechanism.Owner).EntityPrototype!.ID);
             mechanism.Part = null;
             SizeUsed -= mechanism.Size;
 
@@ -267,7 +269,7 @@ namespace Content.Shared.Body.Components
         {
             if (RemoveMechanism(mechanism))
             {
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(mechanism.Owner).Coordinates = coordinates;
+                _entMan.GetComponent<TransformComponent>(mechanism.Owner).Coordinates = coordinates;
                 return true;
             }
 
@@ -292,34 +294,34 @@ namespace Content.Shared.Body.Components
                 return false;
             }
 
-            IoCManager.Resolve<IEntityManager>().DeleteEntity(mechanism.Owner);
+            _entMan.DeleteEntity(mechanism.Owner);
             return true;
         }
 
         private void AddedToBody(SharedBodyComponent body)
         {
-            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).LocalRotation = 0;
-            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).AttachParent(body.Owner);
+            _entMan.GetComponent<TransformComponent>(Owner).LocalRotation = 0;
+            _entMan.GetComponent<TransformComponent>(Owner).AttachParent(body.Owner);
             OnAddedToBody(body);
 
             foreach (var mechanism in _mechanisms)
             {
-                IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(mechanism.Owner, new AddedToBodyEvent(body));
+                _entMan.EventBus.RaiseLocalEvent(mechanism.Owner, new AddedToBodyEvent(body));
             }
         }
 
         private void RemovedFromBody(SharedBodyComponent old)
         {
-            if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Deleted)
+            if (!_entMan.GetComponent<TransformComponent>(Owner).Deleted)
             {
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).AttachToGridOrMap();
+                _entMan.GetComponent<TransformComponent>(Owner).AttachToGridOrMap();
             }
 
             OnRemovedFromBody(old);
 
             foreach (var mechanism in _mechanisms)
             {
-                IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(mechanism.Owner, new RemovedFromBodyEvent(old));
+                _entMan.EventBus.RaiseLocalEvent(mechanism.Owner, new RemovedFromBodyEvent(old));
             }
         }
 
@@ -358,7 +360,7 @@ namespace Content.Shared.Body.Components
                 return _mechanisms;
             }
 
-            entityManager ??= IoCManager.Resolve<IEntityManager>();
+            entityManager ??= _entMan;
 
             var mechanisms = new List<SharedMechanismComponent>(MechanismIds.Length);
 

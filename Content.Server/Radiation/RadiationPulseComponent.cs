@@ -15,6 +15,7 @@ namespace Content.Server.Radiation
     [ComponentReference(typeof(SharedRadiationPulseComponent))]
     public sealed class RadiationPulseComponent : SharedRadiationPulseComponent
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
@@ -107,11 +108,11 @@ namespace Content.Server.Radiation
 
         public void Update(float frameTime)
         {
-            if (!Decay || (!IoCManager.Resolve<IEntityManager>().EntityExists(Owner) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityLifeStage) >= EntityLifeStage.Deleted)
+            if (!Decay || (!_entMan.EntityExists(Owner) ? EntityLifeStage.Deleted : _entMan.GetComponent<MetaDataComponent>(Owner).EntityLifeStage) >= EntityLifeStage.Deleted)
                 return;
 
             if (_duration <= 0f)
-                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(Owner);
+                _entMan.QueueDeleteEntity(Owner);
 
             _duration -= frameTime;
         }

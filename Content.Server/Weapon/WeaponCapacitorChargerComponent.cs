@@ -15,17 +15,19 @@ namespace Content.Server.Weapon
     [ComponentReference(typeof(BaseCharger))]
     public sealed class WeaponCapacitorChargerComponent : BaseCharger
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "WeaponCapacitorCharger";
 
         public override bool IsEntityCompatible(EntityUid entity)
         {
-            return IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ServerBatteryBarrelComponent? battery) && battery.PowerCell != null ||
-                   IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out PowerCellSlotComponent? slot) && slot.HasCell;
+            return _entMan.TryGetComponent(entity, out ServerBatteryBarrelComponent? battery) && battery.PowerCell != null ||
+                   _entMan.TryGetComponent(entity, out PowerCellSlotComponent? slot) && slot.HasCell;
         }
 
         protected override BatteryComponent? GetBatteryFrom(EntityUid entity)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out PowerCellSlotComponent? slot))
+            if (_entMan.TryGetComponent(entity, out PowerCellSlotComponent? slot))
             {
                 if (slot.Cell != null)
                 {
@@ -33,7 +35,7 @@ namespace Content.Server.Weapon
                 }
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ServerBatteryBarrelComponent? battery))
+            if (_entMan.TryGetComponent(entity, out ServerBatteryBarrelComponent? battery))
             {
                 if (battery.PowerCell != null)
                 {

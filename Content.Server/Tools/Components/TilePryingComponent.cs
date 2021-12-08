@@ -14,6 +14,7 @@ namespace Content.Server.Tools.Components
     [RegisterComponent]
     public class TilePryingComponent : Component, IAfterInteract
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
 
@@ -33,10 +34,10 @@ namespace Content.Server.Tools.Components
 
         public async void TryPryTile(EntityUid user, EntityCoordinates clickLocation)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ToolComponent?>(Owner, out var tool) && _toolComponentNeeded)
+            if (!_entMan.TryGetComponent<ToolComponent?>(Owner, out var tool) && _toolComponentNeeded)
                 return;
 
-            if (!_mapManager.TryGetGrid(clickLocation.GetGridId(IoCManager.Resolve<IEntityManager>()), out var mapGrid))
+            if (!_mapManager.TryGetGrid(clickLocation.GetGridId(_entMan), out var mapGrid))
                 return;
 
             var tile = mapGrid.GetTileRef(clickLocation);
@@ -54,7 +55,7 @@ namespace Content.Server.Tools.Components
             if (_toolComponentNeeded && !await EntitySystem.Get<ToolSystem>().UseTool(Owner, user, null, 0f, 0f, _qualityNeeded, toolComponent:tool))
                 return;
 
-            coordinates.PryTile(IoCManager.Resolve<IEntityManager>(), _mapManager);
+            coordinates.PryTile(_entMan, _mapManager);
         }
     }
 }

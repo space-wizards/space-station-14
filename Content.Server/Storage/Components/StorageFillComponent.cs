@@ -15,6 +15,8 @@ namespace Content.Server.Storage.Components
     [RegisterComponent]
     public sealed class StorageFillComponent : Component, IMapInit
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "StorageFill";
 
         [DataField("contents")] private List<EntitySpawnEntry> _contents = new();
@@ -28,7 +30,7 @@ namespace Content.Server.Storage.Components
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out IStorageComponent? storage))
+            if (!_entMan.TryGetComponent(Owner, out IStorageComponent? storage))
             {
                 Logger.Error($"StorageFillComponent couldn't find any StorageComponent ({Owner})");
                 return;
@@ -48,7 +50,7 @@ namespace Content.Server.Storage.Components
                     continue;
                 }
 
-				var entMan = IoCManager.Resolve<IEntityManager>();
+				var entMan = _entMan;
 				var transform = entMan.GetComponent<TransformComponent>(Owner);
 
                 for (var i = 0; i < storageItem.Amount; i++)

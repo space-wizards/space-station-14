@@ -23,6 +23,8 @@ namespace Content.Shared.Hands.Components
     [NetworkedComponent]
     public abstract class SharedHandsComponent : Component
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public sealed override string Name => "Hands";
 
         public event Action? OnItemChanged; //TODO: Try to replace C# event
@@ -96,12 +98,12 @@ namespace Content.Shared.Hands.Components
             UpdateHandVisualizer();
             Dirty();
 
-            IoCManager.Resolve<IEntityManager>().EventBus.RaiseEvent(EventSource.Local, new HandsModifiedMessage { Hands = this });
+            _entMan.EventBus.RaiseEvent(EventSource.Local, new HandsModifiedMessage { Hands = this });
         }
 
         public void UpdateHandVisualizer()
         {
-            var entMan = IoCManager.Resolve<IEntityManager>();
+            var entMan = _entMan;
 
             if (!entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
                 return;
@@ -377,7 +379,7 @@ namespace Content.Shared.Hands.Components
             if (!TryGetHand(handName, out var hand))
                 return false;
 
-            return TryDropHeldEntity(hand, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates, checkActionBlocker);
+            return TryDropHeldEntity(hand, _entMan.GetComponent<TransformComponent>(Owner).Coordinates, checkActionBlocker);
         }
 
         /// <summary>
@@ -388,7 +390,7 @@ namespace Content.Shared.Hands.Components
             if (!TryGetHandHoldingEntity(entity, out var hand))
                 return false;
 
-            return TryDropHeldEntity(hand, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates, checkActionBlocker);
+            return TryDropHeldEntity(hand, _entMan.GetComponent<TransformComponent>(Owner).Coordinates, checkActionBlocker);
         }
 
         /// <summary>
@@ -481,7 +483,7 @@ namespace Content.Shared.Hands.Components
 
             EntitySystem.Get<SharedInteractionSystem>().DroppedInteraction(Owner, heldEntity);
 
-            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(heldEntity).WorldPosition = GetFinalDropCoordinates(targetDropLocation);
+            _entMan.GetComponent<TransformComponent>(heldEntity).WorldPosition = GetFinalDropCoordinates(targetDropLocation);
 
             OnItemChanged?.Invoke();
         }
@@ -491,8 +493,8 @@ namespace Content.Shared.Hands.Components
         /// </summary>
         private Vector2 GetFinalDropCoordinates(EntityCoordinates targetCoords)
         {
-            var origin = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).MapPosition;
-            var target = targetCoords.ToMap(IoCManager.Resolve<IEntityManager>());
+            var origin = _entMan.GetComponent<TransformComponent>(Owner).MapPosition;
+            var target = targetCoords.ToMap(_entMan);
 
             var dropVector = target.Position - origin.Position;
             var requestedDropDistance = dropVector.Length;
@@ -530,7 +532,7 @@ namespace Content.Shared.Hands.Components
         /// </summary>
         private void DropHeldEntityToFloor(Hand hand)
         {
-            DropHeldEntity(hand, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
+            DropHeldEntity(hand, _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
         }
 
         private bool CanPutHeldEntityIntoContainer(Hand hand, IContainer targetContainer, bool checkActionBlocker)
@@ -654,7 +656,7 @@ namespace Content.Shared.Hands.Components
             if (hand.Name == ActiveHand)
                 SelectActiveHeldEntity();
 
-            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).LocalPosition = Vector2.Zero;
+            _entMan.GetComponent<TransformComponent>(entity).LocalPosition = Vector2.Zero;
 
             OnItemChanged?.Invoke();
 
@@ -772,7 +774,7 @@ namespace Content.Shared.Hands.Components
 
         private void HandCountChanged()
         {
-            IoCManager.Resolve<IEntityManager>().EventBus.RaiseEvent(EventSource.Local, new HandCountChangedEvent(Owner));
+            _entMan.EventBus.RaiseEvent(EventSource.Local, new HandCountChangedEvent(Owner));
         }
 
         /// <summary>
@@ -791,7 +793,7 @@ namespace Content.Shared.Hands.Components
             var entity = item.Owner;
 
             if (!TryPutInActiveHandOrAny(entity, checkActionBlocker))
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates;
+                _entMan.GetComponent<TransformComponent>(entity).Coordinates = _entMan.GetComponent<TransformComponent>(Owner).Coordinates;
         }
 
         /// <summary>

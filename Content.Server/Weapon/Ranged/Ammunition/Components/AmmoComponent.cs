@@ -25,6 +25,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
     public class AmmoComponent : Component, IExamine, ISerializationHooks
 #pragma warning restore 618
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override string Name => "Ammo";
@@ -117,12 +118,12 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             }
 
             _spent = true;
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearanceComponent))
+            if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearanceComponent))
             {
                 appearanceComponent.SetData(AmmoVisuals.Spent, true);
             }
 
-            var entity = IoCManager.Resolve<IEntityManager>().SpawnEntity(_projectileId, spawnAt);
+            var entity = _entMan.SpawnEntity(_projectileId, spawnAt);
 
             return entity;
         }

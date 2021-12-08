@@ -270,7 +270,7 @@ namespace Content.Server.Physics.Controllers
         {
             if (!mover.Owner.HasTag("FootstepSound")) return;
 
-            var transform = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(mover.Owner);
+            var transform = EntityManager.GetComponent<TransformComponent>(mover.Owner);
             var coordinates = transform.Coordinates;
             var gridId = coordinates.GetGridId(EntityManager);
             var distanceNeeded = mover.Sprinting ? StepSoundMoveDistanceRunning : StepSoundMoveDistanceWalking;
@@ -302,9 +302,9 @@ namespace Content.Server.Physics.Controllers
 
             mobMover.StepSoundDistance -= distanceNeeded;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<InventoryComponent?>(mover.Owner, out var inventory)
+            if (EntityManager.TryGetComponent<InventoryComponent?>(mover.Owner, out var inventory)
                 && inventory.TryGetSlotItem<ItemComponent>(EquipmentSlotDefines.Slots.SHOES, out var item)
-                && IoCManager.Resolve<IEntityManager>().TryGetComponent<FootstepModifierComponent?>(item.Owner, out var modifier))
+                && EntityManager.TryGetComponent<FootstepModifierComponent?>(item.Owner, out var modifier))
             {
                 modifier.PlayFootstep();
             }
@@ -351,7 +351,7 @@ namespace Content.Server.Physics.Controllers
             SoundSystem.Play(
                 Filter.Pvs(coordinates),
                 soundToPlay,
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(mover).Coordinates,
+                EntityManager.GetComponent<TransformComponent>(mover).Coordinates,
                 sprinting ? AudioParams.Default.WithVolume(0.75f) : null);
         }
     }

@@ -22,6 +22,8 @@ namespace Content.Server.Suspicion
     public class SuspicionRoleComponent : SharedSuspicionRoleComponent, IExamine
 #pragma warning restore 618
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         private Role? _role;
         [ViewVariables]
         private readonly HashSet<SuspicionRoleComponent> _allies = new();
@@ -60,7 +62,7 @@ namespace Content.Server.Suspicion
 
         public bool IsDead()
         {
-            return IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out MobStateComponent? state) &&
+            return _entMan.TryGetComponent(Owner, out MobStateComponent? state) &&
                    state.IsDead();
         }
 
@@ -76,7 +78,7 @@ namespace Content.Server.Suspicion
 
         public void SyncRoles()
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out MindComponent? mind) ||
+            if (!_entMan.TryGetComponent(Owner, out MindComponent? mind) ||
                 !mind.HasMind)
             {
                 return;

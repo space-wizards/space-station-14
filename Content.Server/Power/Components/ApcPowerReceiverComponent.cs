@@ -24,6 +24,8 @@ namespace Content.Server.Power.Components
     public class ApcPowerReceiverComponent : Component, IExamine
 #pragma warning restore 618
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "ApcPowerReceiver";
 
         [ViewVariables]
@@ -85,9 +87,9 @@ namespace Content.Server.Power.Components
 #pragma warning disable 618
             SendMessage(new PowerChangedMessage(Powered));
 #pragma warning restore 618
-            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, new PowerChangedEvent(Powered, NetworkLoad.ReceivingPower));
+            _entMan.EventBus.RaiseLocalEvent(Owner, new PowerChangedEvent(Powered, NetworkLoad.ReceivingPower));
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<AppearanceComponent?>(Owner, out var appearance))
+            if (_entMan.TryGetComponent<AppearanceComponent?>(Owner, out var appearance))
             {
                 appearance.SetData(PowerDeviceVisuals.Powered, Powered);
             }

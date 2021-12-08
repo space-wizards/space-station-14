@@ -51,11 +51,13 @@ namespace Content.Server.StationEvents.Events
 
         public override void Shutdown()
         {
+            var entMan = IoCManager.Resolve<IEntityManager>();
+
             foreach (var entity in _powered)
             {
-                if ((!IoCManager.Resolve<IEntityManager>().EntityExists(entity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityLifeStage) >= EntityLifeStage.Deleted) continue;
+                if (entMan.Deleted(entity)) continue;
 
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ApcPowerReceiverComponent? powerReceiverComponent))
+                if (entMan.TryGetComponent(entity, out ApcPowerReceiverComponent? powerReceiverComponent))
                 {
                     powerReceiverComponent.PowerDisabled = false;
                 }

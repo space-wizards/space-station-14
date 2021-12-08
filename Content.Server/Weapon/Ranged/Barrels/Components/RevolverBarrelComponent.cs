@@ -24,6 +24,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
     [NetworkedComponent()]
     public sealed class RevolverBarrelComponent : ServerRangedBarrelComponent, IUse, IInteractUsing, ISerializationHooks
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
         public override string Name => "RevolverBarrel";
@@ -81,7 +82,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             {
                 slotsSpent[i] = null;
                 var ammoEntity = _ammoSlots[i];
-                if (ammoEntity != default && IoCManager.Resolve<IEntityManager>().TryGetComponent(ammoEntity, out AmmoComponent? ammo))
+                if (ammoEntity != default && _entMan.TryGetComponent(ammoEntity, out AmmoComponent? ammo))
                 {
                     slotsSpent[i] = ammo.Spent;
                 }
@@ -113,7 +114,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
             for (var i = 0; i < _unspawnedCount; i++)
             {
-                var entity = IoCManager.Resolve<IEntityManager>().SpawnEntity(_fillPrototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
+                var entity = _entMan.SpawnEntity(_fillPrototype, _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
                 _ammoSlots[idx] = entity;
                 _ammoContainer.Insert(entity);
                 idx++;
@@ -125,7 +126,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         private void UpdateAppearance()
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearance))
+            if (!_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
                 return;
             }
@@ -138,7 +139,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         public bool TryInsertBullet(EntityUid user, EntityUid entity)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out AmmoComponent? ammoComponent))
+            if (!_entMan.TryGetComponent(entity, out AmmoComponent? ammoComponent))
             {
                 return false;
             }
@@ -208,7 +209,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             EntityUid? bullet = null;
             if (ammo != default)
             {
-                var ammoComponent = IoCManager.Resolve<IEntityManager>().GetComponent<AmmoComponent>(ammo);
+                var ammoComponent = _entMan.GetComponent<AmmoComponent>(ammo);
                 bullet = ammoComponent.TakeBullet(spawnAt);
                 if (ammoComponent.Caseless)
                 {

@@ -89,15 +89,15 @@ namespace Content.Server.StationEvents.Events
                 return;
 
             var pulse = _entityManager.SpawnEntity("RadiationPulse", coordinates);
-            IoCManager.Resolve<IEntityManager>().GetComponent<RadiationPulseComponent>(pulse).DoPulse();
+            _entityManager.GetComponent<RadiationPulseComponent>(pulse).DoPulse();
             ResetTimeUntilPulse();
         }
 
-        public static void SpawnPulseAt(EntityCoordinates at)
+        public void SpawnPulseAt(EntityCoordinates at)
         {
             var pulse = IoCManager.Resolve<IEntityManager>()
                 .SpawnEntity("RadiationPulse", at);
-            IoCManager.Resolve<IEntityManager>().GetComponent<RadiationPulseComponent>(pulse).DoPulse();
+            _entityManager.GetComponent<RadiationPulseComponent>(pulse).DoPulse();
         }
 
         private bool TryFindRandomGrid(IMapGrid mapGrid, out EntityCoordinates coordinates)

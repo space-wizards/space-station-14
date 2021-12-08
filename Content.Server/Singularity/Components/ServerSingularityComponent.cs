@@ -14,6 +14,8 @@ namespace Content.Server.Singularity.Components
     [ComponentReference(typeof(SharedSingularityComponent))]
     public class ServerSingularityComponent : SharedSingularityComponent
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         private SharedSingularitySystem _singularitySystem = default!;
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -27,7 +29,7 @@ namespace Content.Server.Singularity.Components
                 _energy = value;
                 if (_energy <= 0)
                 {
-                    IoCManager.Resolve<IEntityManager>().DeleteEntity(Owner);
+                    _entMan.DeleteEntity(Owner);
                     return;
                 }
 
@@ -92,7 +94,7 @@ namespace Content.Server.Singularity.Components
         protected override void Shutdown()
         {
             base.Shutdown();
-            SoundSystem.Play(Filter.Pvs(Owner), _singularityCollapsingSound.GetSound(), IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
+            SoundSystem.Play(Filter.Pvs(Owner), _singularityCollapsingSound.GetSound(), _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
         }
     }
 }

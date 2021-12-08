@@ -27,6 +27,7 @@ namespace Content.Server.Window
     public class WindowComponent : SharedWindowComponent, IExamine, IInteractHand
 #pragma warning restore 618
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         [ViewVariables(VVAccess.ReadWrite)] private TimeSpan _lastKnockTime;
@@ -43,8 +44,8 @@ namespace Content.Server.Window
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out DamageableComponent? damageable) ||
-                !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out DestructibleComponent? destructible))
+            if (!_entMan.TryGetComponent(Owner, out DamageableComponent? damageable) ||
+                !_entMan.TryGetComponent(Owner, out DestructibleComponent? destructible))
             {
                 return;
             }
@@ -104,7 +105,7 @@ namespace Content.Server.Window
 
             SoundSystem.Play(
                 Filter.Pvs(eventArgs.Target), _knockSound.GetSound(),
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(eventArgs.Target).Coordinates, AudioHelpers.WithVariation(0.05f));
+                _entMan.GetComponent<TransformComponent>(eventArgs.Target).Coordinates, AudioHelpers.WithVariation(0.05f));
             eventArgs.Target.PopupMessageEveryone(Loc.GetString("comp-window-knock"));
 
             _lastKnockTime = _gameTiming.CurTime;

@@ -15,19 +15,21 @@ namespace Content.Server.TraitorDeathMatch.Components
     [RegisterComponent]
     public class TraitorDeathMatchRedemptionComponent : Component, IInteractUsing
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         /// <inheritdoc />
         public override string Name => "TraitorDeathMatchRedemption";
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<InventoryComponent?>(eventArgs.User, out var userInv))
+            if (!_entMan.TryGetComponent<InventoryComponent?>(eventArgs.User, out var userInv))
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("traitor-death-match-redemption-component-interact-using-main-message",
                                                                  ("secondMessage", Loc.GetString("traitor-death-match-redemption-component-interact-using-no-inventory-message"))));
                 return false;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<MindComponent?>(eventArgs.User, out var userMindComponent))
+            if (!_entMan.TryGetComponent<MindComponent?>(eventArgs.User, out var userMindComponent))
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("traitor-death-match-redemption-component-interact-using-main-message",
                                                                  ("secondMessage", Loc.GetString("traitor-death-match-redemption-component-interact-using-no-mind-message"))));
@@ -42,14 +44,14 @@ namespace Content.Server.TraitorDeathMatch.Components
                 return false;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<UplinkComponent?>(eventArgs.Using, out var victimUplink))
+            if (!_entMan.TryGetComponent<UplinkComponent?>(eventArgs.Using, out var victimUplink))
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("traitor-death-match-redemption-component-interact-using-main-message",
                                                                  ("secondMessage", Loc.GetString("traitor-death-match-redemption-component-interact-using-no-pda-message"))));
                 return false;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<TraitorDeathMatchReliableOwnerTagComponent?>(eventArgs.Using, out var victimPDAOwner))
+            if (!_entMan.TryGetComponent<TraitorDeathMatchReliableOwnerTagComponent?>(eventArgs.Using, out var victimPDAOwner))
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("traitor-death-match-redemption-component-interact-using-main-message",
                                                                  ("secondMessage", Loc.GetString("traitor-death-match-redemption-component-interact-using-no-pda-owner-message"))));
@@ -66,7 +68,7 @@ namespace Content.Server.TraitorDeathMatch.Components
             UplinkComponent? userUplink = null;
 
             if (userInv.GetSlotItem(EquipmentSlotDefines.Slots.IDCARD)?.Owner is {Valid: true} userPDAEntity)
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<UplinkComponent?>(userPDAEntity, out var userUplinkComponent))
+                if (_entMan.TryGetComponent<UplinkComponent?>(userPDAEntity, out var userUplinkComponent))
                     userUplink = userUplinkComponent;
 
             if (userUplink == null)
@@ -104,12 +106,12 @@ namespace Content.Server.TraitorDeathMatch.Components
             }
 
             // 4 is the per-PDA bonus amount.
-            var accounts = IoCManager.Resolve<IEntityManager>().EntitySysManager.GetEntitySystem<UplinkAccountsSystem>();
+            var accounts = _entMan.EntitySysManager.GetEntitySystem<UplinkAccountsSystem>();
             var transferAmount = victimAccount.Balance + 4;
             accounts.SetBalance(victimAccount, 0);
             accounts.AddToBalance(userAccount, transferAmount);
 
-            IoCManager.Resolve<IEntityManager>().DeleteEntity(victimUplink.Owner);
+            _entMan.DeleteEntity(victimUplink.Owner);
 
             Owner.PopupMessage(eventArgs.User, Loc.GetString("traitor-death-match-redemption-component-interact-using-success-message", ("tcAmount", transferAmount)));
             return true;

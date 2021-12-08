@@ -22,6 +22,8 @@ namespace Content.Shared.Item
     [NetworkedComponent()]
     public abstract class SharedItemComponent : Component, IEquipped, IUnequipped, IInteractHand
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "Item";
 
         /// <summary>
@@ -115,10 +117,10 @@ namespace Content.Shared.Item
             if (!EntitySystem.Get<ActionBlockerSystem>().CanPickup(user))
                 return false;
 
-            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user).MapID != IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).MapID)
+            if (_entMan.GetComponent<TransformComponent>(user).MapID != _entMan.GetComponent<TransformComponent>(Owner).MapID)
                 return false;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out IPhysBody? physics) || physics.BodyType == BodyType.Static)
+            if (!_entMan.TryGetComponent(Owner, out IPhysBody? physics) || physics.BodyType == BodyType.Static)
                 return false;
 
             return user.InRangeUnobstructed(Owner, ignoreInsideBlocker: true, popup: popup);
@@ -141,7 +143,7 @@ namespace Content.Shared.Item
             if (!CanPickup(user))
                 return false;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out SharedHandsComponent? hands))
+            if (!_entMan.TryGetComponent(user, out SharedHandsComponent? hands))
                 return false;
 
             var activeHand = hands.ActiveHand;

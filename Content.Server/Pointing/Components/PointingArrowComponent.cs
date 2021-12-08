@@ -11,6 +11,8 @@ namespace Content.Server.Pointing.Components
     [RegisterComponent]
     public class PointingArrowComponent : SharedPointingArrowComponent
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         /// <summary>
         ///     The current amount of seconds left on this arrow.
         /// </summary>
@@ -58,7 +60,7 @@ namespace Content.Server.Pointing.Components
         {
             base.Startup();
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out SpriteComponent? sprite))
+            if (_entMan.TryGetComponent(Owner, out SpriteComponent? sprite))
             {
                 sprite.DrawDepth = (int) DrawDepth.Overlays;
             }
@@ -67,7 +69,7 @@ namespace Content.Server.Pointing.Components
         public void Update(float frameTime)
         {
             var movement = _speed * frameTime * (_up ? 1 : -1);
-            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).LocalPosition += (0, movement);
+            _entMan.GetComponent<TransformComponent>(Owner).LocalPosition += (0, movement);
 
             _duration -= frameTime;
             _currentStep -= frameTime;
@@ -76,12 +78,12 @@ namespace Content.Server.Pointing.Components
             {
                 if (_rogue)
                 {
-                    IoCManager.Resolve<IEntityManager>().RemoveComponent<PointingArrowComponent>(Owner);
-                    IoCManager.Resolve<IEntityManager>().AddComponent<RoguePointingArrowComponent>(Owner);
+                    _entMan.RemoveComponent<PointingArrowComponent>(Owner);
+                    _entMan.AddComponent<RoguePointingArrowComponent>(Owner);
                     return;
                 }
 
-                IoCManager.Resolve<IEntityManager>().DeleteEntity(Owner);
+                _entMan.DeleteEntity(Owner);
                 return;
             }
 

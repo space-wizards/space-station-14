@@ -8,6 +8,8 @@ namespace Content.Server.Recycling.Components
     [RegisterComponent]
     public class RecyclableComponent : Component
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "Recyclable";
 
         /// <summary>
@@ -33,12 +35,12 @@ namespace Content.Server.Recycling.Components
             {
                 for (var i = 0; i < Math.Max(_amount * efficiency, 1); i++)
                 {
-                    IoCManager.Resolve<IEntityManager>().SpawnEntity(_prototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
+                    _entMan.SpawnEntity(_prototype, _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
                 }
 
             }
 
-            IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(Owner);
+            _entMan.QueueDeleteEntity(Owner);
         }
     }
 }
