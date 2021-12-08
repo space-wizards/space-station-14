@@ -53,7 +53,7 @@ namespace Content.Client.Popups
 
         public void PopupMessage(string message, ScreenCoordinates coordinates, EntityUid entity = default)
         {
-            var label = new PopupLabel(_eyeManager)
+            var label = new PopupLabel(_eyeManager, EntityManager)
             {
                 Entity = entity,
                 Text = message,
@@ -142,14 +142,16 @@ namespace Content.Client.Popups
         private class PopupLabel : Label
         {
             private readonly IEyeManager _eyeManager;
+            private readonly IEntityManager _entityManager;
 
             public float TimeLeft { get; private set; }
             public Vector2 InitialPos { get; set; }
             public EntityUid Entity { get; set; }
 
-            public PopupLabel(IEyeManager eyeManager)
+            public PopupLabel(IEyeManager eyeManager, IEntityManager entityManager)
             {
                 _eyeManager = eyeManager;
+                _entityManager = entityManager;
                 ShadowOffsetXOverride = 1;
                 ShadowOffsetYOverride = 1;
                 FontColorShadowOverride = Color.Black;
@@ -161,7 +163,7 @@ namespace Content.Client.Popups
 
                 var position = Entity == default
                     ? InitialPos
-                    : (_eyeManager.CoordinatesToScreen(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Entity).Coordinates).Position / UIScale) - DesiredSize / 2;
+                    : (_eyeManager.CoordinatesToScreen(_entityManager.GetComponent<TransformComponent>(Entity).Coordinates).Position / UIScale) - DesiredSize / 2;
 
                 LayoutContainer.SetPosition(this, position - (0, 20 * (TimeLeft * TimeLeft + TimeLeft)));
 

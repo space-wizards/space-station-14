@@ -22,7 +22,7 @@ namespace Content.Server.CharacterAppearance.Systems
             {
                 foreach (var (part, _) in body.Parts)
                 {
-                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent(part.Owner, out SpriteComponent? sprite))
+                    if (EntityManager.TryGetComponent(part.Owner, out SpriteComponent? sprite))
                     {
                         sprite!.Color = component.Appearance.SkinColor;
                     }

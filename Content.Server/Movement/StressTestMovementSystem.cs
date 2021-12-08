@@ -16,7 +16,7 @@ namespace Content.Server.Movement
 
             foreach (var stressTest in EntityManager.EntityQuery<StressTestMovementComponent>(true))
             {
-                var transform = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(stressTest.Owner);
+                var transform = EntityManager.GetComponent<TransformComponent>(stressTest.Owner);
 
                 stressTest.Progress += frameTime;
 

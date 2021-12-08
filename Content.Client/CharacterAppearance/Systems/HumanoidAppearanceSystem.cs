@@ -107,13 +107,12 @@ namespace Content.Client.CharacterAppearance.Systems
         // Scaffolding until Body is moved to ECS.
         private void BodyPartAdded(HumanoidAppearanceBodyPartAddedEvent args)
         {
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            if (!entityManager.TryGetComponent(args.Uid, out SpriteComponent? sprite))
+            if (!EntityManager.TryGetComponent(args.Uid, out SpriteComponent? sprite))
             {
                 return;
             }
 
-            if (!entityManager.HasComponent<SpriteComponent>(args.Args.Part.Owner))
+            if (!EntityManager.HasComponent<SpriteComponent>(args.Args.Part.Owner))
             {
                 return;
             }
