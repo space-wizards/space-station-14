@@ -11,6 +11,7 @@ namespace Content.Client.Access.UI
     public class IdCardConsoleBoundUserInterface : BoundUserInterface
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public IdCardConsoleBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
@@ -22,7 +23,7 @@ namespace Content.Client.Access.UI
         {
             base.Open();
 
-            _window = new IdCardConsoleWindow(this, _prototypeManager) {Title = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Owner).EntityName};
+            _window = new IdCardConsoleWindow(this, _prototypeManager) {Title = _entityManager.GetComponent<MetaDataComponent>(Owner.Owner).EntityName};
             _window.OnClose += Close;
             _window.OpenCentered();
         }

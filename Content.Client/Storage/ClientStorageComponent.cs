@@ -124,7 +124,7 @@ namespace Content.Client.Storage
 
                 if (_entityManager.EntityExists(entity))
                 {
-                    ReusableAnimations.AnimateEntityPickup(entity, initialPosition, _entityManager.GetComponent<TransformComponent>(Owner).LocalPosition);
+                    ReusableAnimations.AnimateEntityPickup(entity, initialPosition, _entityManager.GetComponent<TransformComponent>(Owner).LocalPosition, _entityManager);
                 }
             }
         }
