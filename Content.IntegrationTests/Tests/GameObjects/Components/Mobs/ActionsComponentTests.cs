@@ -159,7 +159,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             {
                 var playerEnt = serverPlayerManager.Sessions.Single().AttachedEntity.GetValueOrDefault();
                 Assert.That(playerEnt, Is.Not.EqualTo(default));
-                var actionsComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ServerActionsComponent>(playerEnt);
+                var actionsComponent = sEntities.GetComponent<ServerActionsComponent>(playerEnt);
                 actionsComponent.Revoke(ActionType.DebugInstant);
             });
 
@@ -170,7 +170,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             {
                 var local = clientPlayerMgr.LocalPlayer;
                 var controlled = local!.ControlledEntity;
-                var actionsComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ClientActionsComponent>(controlled!.Value);
+                var actionsComponent = cEntities.GetComponent<ClientActionsComponent>(controlled!.Value);
 
                 // we should have our innate actions, but debug1 should be revoked
                 foreach (var innateAction in innateActions)

@@ -33,9 +33,10 @@ namespace Content.Client.Rotation
 
         private void SetRotation(AppearanceComponent component, Angle rotation)
         {
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            var sprite = entMan.GetComponent<ISpriteComponent>(component.Owner);
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(sprite.Owner, out AnimationPlayerComponent? animation))
+            if (!entMan.TryGetComponent(sprite.Owner, out AnimationPlayerComponent? animation))
             {
                 sprite.Rotation = rotation;
                 return;

@@ -20,6 +20,7 @@ namespace Content.IntegrationTests.Tests
         {
             var (_, server) = await StartConnectedServerDummyTickerClientPair();
 
+            var entMan = server.ResolveDependency<IServerEntityManager>();
             EntityUid playerEnt = default;
             EntityUid visitEnt = default;
             Mind mind = null;
@@ -28,12 +29,11 @@ namespace Content.IntegrationTests.Tests
                 var player = IoCManager.Resolve<IPlayerManager>().ServerSessions.Single();
 
                 var mapMan = IoCManager.Resolve<IMapManager>();
-                var entMgr = IoCManager.Resolve<IServerEntityManager>();
 
                 mapMan.CreateNewMapEntity(MapId.Nullspace);
 
-                playerEnt = entMgr.SpawnEntity(null, MapCoordinates.Nullspace);
-                visitEnt = entMgr.SpawnEntity(null, MapCoordinates.Nullspace);
+                playerEnt = entMan.SpawnEntity(null, MapCoordinates.Nullspace);
+                visitEnt = entMan.SpawnEntity(null, MapCoordinates.Nullspace);
 
                 mind = new Mind(player.UserId);
                 mind.ChangeOwningPlayer(player.UserId);
@@ -49,12 +49,12 @@ namespace Content.IntegrationTests.Tests
 
             server.Assert(() =>
             {
-                IoCManager.Resolve<IEntityManager>().DeleteEntity(visitEnt);
+                entMan.DeleteEntity(visitEnt);
 
                 Assert.That(mind.VisitingEntity, Is.EqualTo(default));
 
                 // This used to throw so make sure it doesn't.
-                IoCManager.Resolve<IEntityManager>().DeleteEntity(playerEnt);
+                entMan.DeleteEntity(playerEnt);
             });
 
             await server.WaitIdleAsync();
@@ -66,6 +66,7 @@ namespace Content.IntegrationTests.Tests
             // Has to be a non-dummy ticker so we have a proper map.
             var (_, server) = await StartConnectedServerClientPair();
 
+            var entMan = server.ResolveDependency<IServerEntityManager>();
             EntityUid playerEnt = default;
             Mind mind = null;
             server.Assert(() =>
@@ -73,11 +74,10 @@ namespace Content.IntegrationTests.Tests
                 var player = IoCManager.Resolve<IPlayerManager>().ServerSessions.Single();
 
                 var mapMan = IoCManager.Resolve<IMapManager>();
-                var entMgr = IoCManager.Resolve<IServerEntityManager>();
 
                 mapMan.CreateNewMapEntity(MapId.Nullspace);
 
-                playerEnt = entMgr.SpawnEntity(null, MapCoordinates.Nullspace);
+                playerEnt = entMan.SpawnEntity(null, MapCoordinates.Nullspace);
 
                 mind = new Mind(player.UserId);
                 mind.ChangeOwningPlayer(player.UserId);
@@ -91,14 +91,14 @@ namespace Content.IntegrationTests.Tests
 
             server.Post(() =>
             {
-                IoCManager.Resolve<IEntityManager>().DeleteEntity(playerEnt);
+                entMan.DeleteEntity(playerEnt);
             });
 
             server.RunTicks(1);
 
             server.Assert(() =>
             {
-                Assert.That(IoCManager.Resolve<IEntityManager>().EntityExists(mind.CurrentEntity!.Value), Is.True);
+                Assert.That(entMan.EntityExists(mind.CurrentEntity!.Value), Is.True);
             });
 
             await server.WaitIdleAsync();

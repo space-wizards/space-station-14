@@ -46,10 +46,7 @@ namespace Content.Client.Singularity.Visualizers
 
         public override void InitializeEntity(EntityUid entity)
         {
-            if (!IoCManager.Resolve<IEntityManager>().HasComponent<AnimationPlayerComponent>(entity))
-            {
-                IoCManager.Resolve<IEntityManager>().AddComponent<AnimationPlayerComponent>(entity);
-            }
+            IoCManager.Resolve<IEntityManager>().EnsureComponent<AnimationPlayerComponent>(entity);
         }
 
         public override void OnChangeData(AppearanceComponent component)

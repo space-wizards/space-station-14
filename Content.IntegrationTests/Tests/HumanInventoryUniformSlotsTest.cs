@@ -81,7 +81,7 @@ namespace Content.IntegrationTests.Tests
                 pocketItem = entityMan.SpawnEntity("FlashlightDummy", MapCoordinates.Nullspace);
                 var tooBigItem = entityMan.SpawnEntity("ToolboxDummy", MapCoordinates.Nullspace);
 
-                inventory = IoCManager.Resolve<IEntityManager>().GetComponent<InventoryComponent>(human);
+                inventory = entityMan.GetComponent<InventoryComponent>(human);
 
                 Assert.That(inventory.CanEquip(Slots.INNERCLOTHING, uniform));
 

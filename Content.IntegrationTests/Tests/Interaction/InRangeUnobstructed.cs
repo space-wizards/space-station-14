@@ -83,7 +83,7 @@ namespace Content.IntegrationTests.Tests.Interaction
 
 
                 // Move them slightly apart
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(origin).LocalPosition += _interactionRangeDivided15X;
+                sEntities.GetComponent<TransformComponent>(origin).LocalPosition += _interactionRangeDivided15X;
 
                 // Entity <-> Entity
                 Assert.True(origin.InRangeUnobstructed(other));
@@ -107,7 +107,7 @@ namespace Content.IntegrationTests.Tests.Interaction
 
 
                 // Move them out of range
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(origin).LocalPosition += _interactionRangeDivided15X;
+                sEntities.GetComponent<TransformComponent>(origin).LocalPosition += _interactionRangeDivided15X;
 
                 // Entity <-> Entity
                 Assert.False(origin.InRangeUnobstructed(other));

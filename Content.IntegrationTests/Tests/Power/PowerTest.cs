@@ -205,9 +205,9 @@ namespace Content.IntegrationTests.Tests.Power
                 var consumerEnt1 = _entityManager.SpawnEntity("ConsumerDummy", grid.ToCoordinates(0, 1));
                 var consumerEnt2 = _entityManager.SpawnEntity("ConsumerDummy", grid.ToCoordinates(0, 2));
 
-                supplier = IoCManager.Resolve<IEntityManager>().GetComponent<PowerSupplierComponent>(generatorEnt);
-                consumer1 = IoCManager.Resolve<IEntityManager>().GetComponent<PowerConsumerComponent>(consumerEnt1);
-                consumer2 = IoCManager.Resolve<IEntityManager>().GetComponent<PowerConsumerComponent>(consumerEnt2);
+                supplier = _entityManager.GetComponent<PowerSupplierComponent>(generatorEnt);
+                consumer1 = _entityManager.GetComponent<PowerConsumerComponent>(consumerEnt1);
+                consumer2 = _entityManager.GetComponent<PowerConsumerComponent>(consumerEnt2);
 
                 // Plenty of surplus and tolerance
                 supplier.MaxSupply = loadPower * 4;
@@ -259,9 +259,9 @@ namespace Content.IntegrationTests.Tests.Power
                 var consumerEnt1 = _entityManager.SpawnEntity("ConsumerDummy", grid.ToCoordinates(0, 1));
                 var consumerEnt2 = _entityManager.SpawnEntity("ConsumerDummy", grid.ToCoordinates(0, 2));
 
-                supplier = IoCManager.Resolve<IEntityManager>().GetComponent<PowerSupplierComponent>(generatorEnt);
-                consumer1 = IoCManager.Resolve<IEntityManager>().GetComponent<PowerConsumerComponent>(consumerEnt1);
-                consumer2 = IoCManager.Resolve<IEntityManager>().GetComponent<PowerConsumerComponent>(consumerEnt2);
+                supplier = _entityManager.GetComponent<PowerSupplierComponent>(generatorEnt);
+                consumer1 = _entityManager.GetComponent<PowerConsumerComponent>(consumerEnt1);
+                consumer2 = _entityManager.GetComponent<PowerConsumerComponent>(consumerEnt2);
 
                 // Too little supply, both consumers should get 33% power.
                 supplier.MaxSupply = loadPower;
@@ -306,8 +306,8 @@ namespace Content.IntegrationTests.Tests.Power
                 var generatorEnt = _entityManager.SpawnEntity("GeneratorDummy", grid.ToCoordinates());
                 var consumerEnt = _entityManager.SpawnEntity("ConsumerDummy", grid.ToCoordinates(0, 2));
 
-                supplier = IoCManager.Resolve<IEntityManager>().GetComponent<PowerSupplierComponent>(generatorEnt);
-                consumer = IoCManager.Resolve<IEntityManager>().GetComponent<PowerConsumerComponent>(consumerEnt);
+                supplier = _entityManager.GetComponent<PowerSupplierComponent>(generatorEnt);
+                consumer = _entityManager.GetComponent<PowerConsumerComponent>(consumerEnt);
 
                 // Supply has enough total power but needs to ramp up to match.
                 supplier.MaxSupply = 400;
@@ -376,9 +376,9 @@ namespace Content.IntegrationTests.Tests.Power
                 var generatorEnt = _entityManager.SpawnEntity("DischargingBatteryDummy", grid.ToCoordinates());
                 var consumerEnt = _entityManager.SpawnEntity("ConsumerDummy", grid.ToCoordinates(0, 2));
 
-                netBattery = IoCManager.Resolve<IEntityManager>().GetComponent<PowerNetworkBatteryComponent>(generatorEnt);
-                battery = IoCManager.Resolve<IEntityManager>().GetComponent<BatteryComponent>(generatorEnt);
-                consumer = IoCManager.Resolve<IEntityManager>().GetComponent<PowerConsumerComponent>(consumerEnt);
+                netBattery = _entityManager.GetComponent<PowerNetworkBatteryComponent>(generatorEnt);
+                battery = _entityManager.GetComponent<BatteryComponent>(generatorEnt);
+                consumer = _entityManager.GetComponent<PowerConsumerComponent>(consumerEnt);
 
                 battery.MaxCharge = startingCharge;
                 battery.CurrentCharge = startingCharge;
@@ -454,9 +454,9 @@ namespace Content.IntegrationTests.Tests.Power
                 var generatorEnt = _entityManager.SpawnEntity("GeneratorDummy", grid.ToCoordinates());
                 var batteryEnt = _entityManager.SpawnEntity("ChargingBatteryDummy", grid.ToCoordinates(0, 2));
 
-                supplier = IoCManager.Resolve<IEntityManager>().GetComponent<PowerSupplierComponent>(generatorEnt);
-                var netBattery = IoCManager.Resolve<IEntityManager>().GetComponent<PowerNetworkBatteryComponent>(batteryEnt);
-                battery = IoCManager.Resolve<IEntityManager>().GetComponent<BatteryComponent>(batteryEnt);
+                supplier = _entityManager.GetComponent<PowerSupplierComponent>(generatorEnt);
+                var netBattery = _entityManager.GetComponent<PowerNetworkBatteryComponent>(batteryEnt);
+                battery = _entityManager.GetComponent<BatteryComponent>(batteryEnt);
 
                 supplier.MaxSupply = 500;
                 supplier.SupplyRampTolerance = 500;
@@ -499,16 +499,16 @@ namespace Content.IntegrationTests.Tests.Power
                 }
 
                 var terminal = _entityManager.SpawnEntity("CableTerminal", grid.ToCoordinates(0, 1));
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(terminal).LocalRotation = Angle.FromDegrees(180);
+                _entityManager.GetComponent<TransformComponent>(terminal).LocalRotation = Angle.FromDegrees(180);
 
                 var batteryEnt = _entityManager.SpawnEntity("FullBatteryDummy", grid.ToCoordinates(0, 2));
                 var supplyEnt = _entityManager.SpawnEntity("GeneratorDummy", grid.ToCoordinates(0, 0));
                 var consumerEnt = _entityManager.SpawnEntity("ConsumerDummy", grid.ToCoordinates(0, 3));
 
-                consumer = IoCManager.Resolve<IEntityManager>().GetComponent<PowerConsumerComponent>(consumerEnt);
-                supplier = IoCManager.Resolve<IEntityManager>().GetComponent<PowerSupplierComponent>(supplyEnt);
-                netBattery = IoCManager.Resolve<IEntityManager>().GetComponent<PowerNetworkBatteryComponent>(batteryEnt);
-                battery = IoCManager.Resolve<IEntityManager>().GetComponent<BatteryComponent>(batteryEnt);
+                consumer = _entityManager.GetComponent<PowerConsumerComponent>(consumerEnt);
+                supplier = _entityManager.GetComponent<PowerSupplierComponent>(supplyEnt);
+                netBattery = _entityManager.GetComponent<PowerNetworkBatteryComponent>(batteryEnt);
+                battery = _entityManager.GetComponent<BatteryComponent>(batteryEnt);
 
                 // Consumer needs 1000 W, supplier can only provide 800, battery fills in the remaining 200.
                 consumer.DrawRate = 1000;
@@ -567,16 +567,16 @@ namespace Content.IntegrationTests.Tests.Power
                 }
 
                 var terminal = _entityManager.SpawnEntity("CableTerminal", grid.ToCoordinates(0, 1));
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(terminal).LocalRotation = Angle.FromDegrees(180);
+                _entityManager.GetComponent<TransformComponent>(terminal).LocalRotation = Angle.FromDegrees(180);
 
                 var batteryEnt = _entityManager.SpawnEntity("FullBatteryDummy", grid.ToCoordinates(0, 2));
                 var supplyEnt = _entityManager.SpawnEntity("GeneratorDummy", grid.ToCoordinates(0, 0));
                 var consumerEnt = _entityManager.SpawnEntity("ConsumerDummy", grid.ToCoordinates(0, 3));
 
-                consumer = IoCManager.Resolve<IEntityManager>().GetComponent<PowerConsumerComponent>(consumerEnt);
-                supplier = IoCManager.Resolve<IEntityManager>().GetComponent<PowerSupplierComponent>(supplyEnt);
-                netBattery = IoCManager.Resolve<IEntityManager>().GetComponent<PowerNetworkBatteryComponent>(batteryEnt);
-                battery = IoCManager.Resolve<IEntityManager>().GetComponent<BatteryComponent>(batteryEnt);
+                consumer = _entityManager.GetComponent<PowerConsumerComponent>(consumerEnt);
+                supplier = _entityManager.GetComponent<PowerSupplierComponent>(supplyEnt);
+                netBattery = _entityManager.GetComponent<PowerNetworkBatteryComponent>(batteryEnt);
+                battery = _entityManager.GetComponent<BatteryComponent>(batteryEnt);
 
                 // Consumer needs 1000 W, supply and battery can only provide 400 each.
                 // BUT the battery has 50% input efficiency, so 50% of the power of the supply gets lost.
@@ -643,7 +643,7 @@ namespace Content.IntegrationTests.Tests.Power
 
                 _entityManager.SpawnEntity("CableTerminal", grid.ToCoordinates(0, 2));
                 var terminal = _entityManager.SpawnEntity("CableTerminal", grid.ToCoordinates(0, 2));
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(terminal).LocalRotation = Angle.FromDegrees(180);
+                _entityManager.GetComponent<TransformComponent>(terminal).LocalRotation = Angle.FromDegrees(180);
 
                 var batteryEnt1 = _entityManager.SpawnEntity("FullBatteryDummy", grid.ToCoordinates(0, 1));
                 var batteryEnt2 = _entityManager.SpawnEntity("FullBatteryDummy", grid.ToCoordinates(0, 3));
@@ -651,13 +651,13 @@ namespace Content.IntegrationTests.Tests.Power
                 var consumerEnt1 = _entityManager.SpawnEntity("ConsumerDummy", grid.ToCoordinates(0, 0));
                 var consumerEnt2 = _entityManager.SpawnEntity("ConsumerDummy", grid.ToCoordinates(0, 4));
 
-                consumer1 = IoCManager.Resolve<IEntityManager>().GetComponent<PowerConsumerComponent>(consumerEnt1);
-                consumer2 = IoCManager.Resolve<IEntityManager>().GetComponent<PowerConsumerComponent>(consumerEnt2);
-                supplier = IoCManager.Resolve<IEntityManager>().GetComponent<PowerSupplierComponent>(supplyEnt);
-                var netBattery1 = IoCManager.Resolve<IEntityManager>().GetComponent<PowerNetworkBatteryComponent>(batteryEnt1);
-                var netBattery2 = IoCManager.Resolve<IEntityManager>().GetComponent<PowerNetworkBatteryComponent>(batteryEnt2);
-                var battery1 = IoCManager.Resolve<IEntityManager>().GetComponent<BatteryComponent>(batteryEnt1);
-                var battery2 = IoCManager.Resolve<IEntityManager>().GetComponent<BatteryComponent>(batteryEnt2);
+                consumer1 = _entityManager.GetComponent<PowerConsumerComponent>(consumerEnt1);
+                consumer2 = _entityManager.GetComponent<PowerConsumerComponent>(consumerEnt2);
+                supplier = _entityManager.GetComponent<PowerSupplierComponent>(supplyEnt);
+                var netBattery1 = _entityManager.GetComponent<PowerNetworkBatteryComponent>(batteryEnt1);
+                var netBattery2 = _entityManager.GetComponent<PowerNetworkBatteryComponent>(batteryEnt2);
+                var battery1 = _entityManager.GetComponent<BatteryComponent>(batteryEnt1);
+                var battery2 = _entityManager.GetComponent<BatteryComponent>(batteryEnt2);
 
                 // There are two loads, 500 W and 1000 W respectively.
                 // The 500 W load is behind a 50% efficient battery,
@@ -730,7 +730,7 @@ namespace Content.IntegrationTests.Tests.Power
 
                 _entityManager.SpawnEntity("CableTerminal", grid.ToCoordinates(0, 2));
                 var terminal = _entityManager.SpawnEntity("CableTerminal", grid.ToCoordinates(0, 2));
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(terminal).LocalRotation = Angle.FromDegrees(180);
+                _entityManager.GetComponent<TransformComponent>(terminal).LocalRotation = Angle.FromDegrees(180);
 
                 var batteryEnt1 = _entityManager.SpawnEntity("FullBatteryDummy", grid.ToCoordinates(0, 1));
                 var batteryEnt2 = _entityManager.SpawnEntity("FullBatteryDummy", grid.ToCoordinates(0, 3));
@@ -738,13 +738,13 @@ namespace Content.IntegrationTests.Tests.Power
                 var consumerEnt1 = _entityManager.SpawnEntity("ConsumerDummy", grid.ToCoordinates(0, 0));
                 var consumerEnt2 = _entityManager.SpawnEntity("ConsumerDummy", grid.ToCoordinates(0, 4));
 
-                consumer1 = IoCManager.Resolve<IEntityManager>().GetComponent<PowerConsumerComponent>(consumerEnt1);
-                consumer2 = IoCManager.Resolve<IEntityManager>().GetComponent<PowerConsumerComponent>(consumerEnt2);
-                supplier = IoCManager.Resolve<IEntityManager>().GetComponent<PowerSupplierComponent>(supplyEnt);
-                var netBattery1 = IoCManager.Resolve<IEntityManager>().GetComponent<PowerNetworkBatteryComponent>(batteryEnt1);
-                var netBattery2 = IoCManager.Resolve<IEntityManager>().GetComponent<PowerNetworkBatteryComponent>(batteryEnt2);
-                var battery1 = IoCManager.Resolve<IEntityManager>().GetComponent<BatteryComponent>(batteryEnt1);
-                var battery2 = IoCManager.Resolve<IEntityManager>().GetComponent<BatteryComponent>(batteryEnt2);
+                consumer1 = _entityManager.GetComponent<PowerConsumerComponent>(consumerEnt1);
+                consumer2 = _entityManager.GetComponent<PowerConsumerComponent>(consumerEnt2);
+                supplier = _entityManager.GetComponent<PowerSupplierComponent>(supplyEnt);
+                var netBattery1 = _entityManager.GetComponent<PowerNetworkBatteryComponent>(batteryEnt1);
+                var netBattery2 = _entityManager.GetComponent<PowerNetworkBatteryComponent>(batteryEnt2);
+                var battery1 = _entityManager.GetComponent<BatteryComponent>(batteryEnt1);
+                var battery2 = _entityManager.GetComponent<BatteryComponent>(batteryEnt2);
 
                 consumer1.DrawRate = 500;
                 consumer2.DrawRate = 1000;
@@ -800,16 +800,16 @@ namespace Content.IntegrationTests.Tests.Power
                 }
 
                 var terminal = _entityManager.SpawnEntity("CableTerminal", grid.ToCoordinates(0, 1));
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(terminal).LocalRotation = Angle.FromDegrees(180);
+                _entityManager.GetComponent<TransformComponent>(terminal).LocalRotation = Angle.FromDegrees(180);
 
                 var batteryEnt = _entityManager.SpawnEntity("FullBatteryDummy", grid.ToCoordinates(0, 2));
                 var supplyEnt = _entityManager.SpawnEntity("GeneratorDummy", grid.ToCoordinates(0, 0));
                 var consumerEnt = _entityManager.SpawnEntity("ConsumerDummy", grid.ToCoordinates(0, 3));
 
-                consumer = IoCManager.Resolve<IEntityManager>().GetComponent<PowerConsumerComponent>(consumerEnt);
-                supplier = IoCManager.Resolve<IEntityManager>().GetComponent<PowerSupplierComponent>(supplyEnt);
-                netBattery = IoCManager.Resolve<IEntityManager>().GetComponent<PowerNetworkBatteryComponent>(batteryEnt);
-                var battery = IoCManager.Resolve<IEntityManager>().GetComponent<BatteryComponent>(batteryEnt);
+                consumer = _entityManager.GetComponent<PowerConsumerComponent>(consumerEnt);
+                supplier = _entityManager.GetComponent<PowerSupplierComponent>(supplyEnt);
+                netBattery = _entityManager.GetComponent<PowerNetworkBatteryComponent>(batteryEnt);
+                var battery = _entityManager.GetComponent<BatteryComponent>(batteryEnt);
 
                 // Consumer needs 1000 W, supplier can only provide 800, battery fills in the remaining 200.
                 consumer.DrawRate = 1000;
@@ -879,13 +879,13 @@ namespace Content.IntegrationTests.Tests.Power
                 var rightEnt = _entityManager.SpawnEntity("CableHV", grid.ToCoordinates(0, 3));
 
                 var terminal = _entityManager.SpawnEntity("CableTerminal", grid.ToCoordinates(0, 1));
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(terminal).LocalRotation = Angle.FromDegrees(180);
+                _entityManager.GetComponent<TransformComponent>(terminal).LocalRotation = Angle.FromDegrees(180);
 
                 var battery = _entityManager.SpawnEntity("FullBatteryDummy", grid.ToCoordinates(0, 2));
-                var batteryNodeContainer = IoCManager.Resolve<IEntityManager>().GetComponent<NodeContainerComponent>(battery);
+                var batteryNodeContainer = _entityManager.GetComponent<NodeContainerComponent>(battery);
 
-                leftNode = IoCManager.Resolve<IEntityManager>().GetComponent<NodeContainerComponent>(leftEnt).GetNode<CableNode>("power");
-                rightNode = IoCManager.Resolve<IEntityManager>().GetComponent<NodeContainerComponent>(rightEnt).GetNode<CableNode>("power");
+                leftNode = _entityManager.GetComponent<NodeContainerComponent>(leftEnt).GetNode<CableNode>("power");
+                rightNode = _entityManager.GetComponent<NodeContainerComponent>(rightEnt).GetNode<CableNode>("power");
 
                 batteryInput = batteryNodeContainer.GetNode<Node>("input");
                 batteryOutput = batteryNodeContainer.GetNode<Node>("output");
@@ -931,9 +931,9 @@ namespace Content.IntegrationTests.Tests.Power
                 var substationEnt = _entityManager.SpawnEntity("SubstationDummy", grid.ToCoordinates(0, 1));
                 var apcEnt = _entityManager.SpawnEntity("ApcDummy", grid.ToCoordinates(0, 2));
 
-                var generatorSupplier = IoCManager.Resolve<IEntityManager>().GetComponent<PowerSupplierComponent>(generatorEnt);
-                substationNetBattery = IoCManager.Resolve<IEntityManager>().GetComponent<PowerNetworkBatteryComponent>(substationEnt);
-                apcBattery = IoCManager.Resolve<IEntityManager>().GetComponent<BatteryComponent>(apcEnt);
+                var generatorSupplier = _entityManager.GetComponent<PowerSupplierComponent>(generatorEnt);
+                substationNetBattery = _entityManager.GetComponent<PowerNetworkBatteryComponent>(substationEnt);
+                apcBattery = _entityManager.GetComponent<BatteryComponent>(apcEnt);
 
                 generatorSupplier.MaxSupply = 1000;
                 generatorSupplier.SupplyRampTolerance = 1000;
@@ -973,9 +973,9 @@ namespace Content.IntegrationTests.Tests.Power
                 var apcExtensionEnt = _entityManager.SpawnEntity("CableApcExtension", grid.ToCoordinates(0, 0));
                 var powerReceiverEnt = _entityManager.SpawnEntity("ApcPowerReceiverDummy", grid.ToCoordinates(0, 2));
 
-                receiver = IoCManager.Resolve<IEntityManager>().GetComponent<ApcPowerReceiverComponent>(powerReceiverEnt);
-                var battery = IoCManager.Resolve<IEntityManager>().GetComponent<BatteryComponent>(apcEnt);
-                apcNetBattery = IoCManager.Resolve<IEntityManager>().GetComponent<PowerNetworkBatteryComponent>(apcEnt);
+                receiver = _entityManager.GetComponent<ApcPowerReceiverComponent>(powerReceiverEnt);
+                var battery = _entityManager.GetComponent<BatteryComponent>(apcEnt);
+                apcNetBattery = _entityManager.GetComponent<PowerNetworkBatteryComponent>(apcEnt);
 
                 _extensionCableSystem.SetProviderTransferRange(apcExtensionEnt, 5);
                 _extensionCableSystem.SetReceiverReceptionRange(powerReceiverEnt, 5);

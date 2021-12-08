@@ -38,16 +38,14 @@ namespace Content.Client.Trigger
 
         public override void InitializeEntity(EntityUid entity)
         {
-            if (!IoCManager.Resolve<IEntityManager>().HasComponent<AnimationPlayerComponent>(entity))
-            {
-                IoCManager.Resolve<IEntityManager>().AddComponent<AnimationPlayerComponent>(entity);
-            }
+            IoCManager.Resolve<IEntityManager>().EnsureComponent<AnimationPlayerComponent>(entity);
         }
 
         public override void OnChangeData(AppearanceComponent component)
         {
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
-            var animPlayer = IoCManager.Resolve<IEntityManager>().GetComponent<AnimationPlayerComponent>(component.Owner);
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            var sprite = entMan.GetComponent<ISpriteComponent>(component.Owner);
+            var animPlayer = entMan.GetComponent<AnimationPlayerComponent>(component.Owner);
             if (!component.TryGetData(TriggerVisuals.VisualState, out TriggerVisualState state))
             {
                 state = TriggerVisualState.Unprimed;

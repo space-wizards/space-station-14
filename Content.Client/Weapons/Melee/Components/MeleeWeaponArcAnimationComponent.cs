@@ -10,6 +10,8 @@ namespace Content.Client.Weapons.Melee.Components
     [RegisterComponent]
     public sealed class MeleeWeaponArcAnimationComponent : Component
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "MeleeWeaponArcAnimation";
 
         private MeleeWeaponAnimationPrototype? _meleeWeaponAnimation;
@@ -22,7 +24,7 @@ namespace Content.Client.Weapons.Melee.Components
         {
             base.Initialize();
 
-            _sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(Owner);
+            _sprite = _entMan.GetComponent<SpriteComponent>(Owner);
         }
 
         public void SetData(MeleeWeaponAnimationPrototype prototype, Angle baseAngle, EntityUid attacker, bool followAttacker = true)
@@ -31,7 +33,7 @@ namespace Content.Client.Weapons.Melee.Components
             _sprite?.AddLayer(new RSI.StateId(prototype.State));
             _baseAngle = baseAngle;
             if(followAttacker)
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).AttachParent(attacker);
+                _entMan.GetComponent<TransformComponent>(Owner).AttachParent(attacker);
         }
 
         internal void Update(float frameTime)
@@ -51,16 +53,17 @@ namespace Content.Client.Weapons.Melee.Components
                 _sprite.Color = new Color(r, g, b, a);
             }
 
+            var transform = _entMan.GetComponent<TransformComponent>(Owner);
+
             switch (_meleeWeaponAnimation.ArcType)
             {
                 case WeaponArcType.Slash:
                     var angle = Angle.FromDegrees(_meleeWeaponAnimation.Width)/2;
-                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).WorldRotation =
-                        _baseAngle + Angle.Lerp(-angle, angle, (float) (_timer / _meleeWeaponAnimation.Length.TotalSeconds));
+                    transform.WorldRotation = _baseAngle + Angle.Lerp(-angle, angle, (float) (_timer / _meleeWeaponAnimation.Length.TotalSeconds));
                     break;
 
                 case WeaponArcType.Poke:
-                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).WorldRotation = _baseAngle;
+                    transform.WorldRotation = _baseAngle;
 
                     if (_sprite != null)
                     {
@@ -72,7 +75,7 @@ namespace Content.Client.Weapons.Melee.Components
 
             if (_meleeWeaponAnimation.Length.TotalSeconds <= _timer)
             {
-                IoCManager.Resolve<IEntityManager>().DeleteEntity(Owner);
+                _entMan.DeleteEntity(Owner);
             }
         }
     }

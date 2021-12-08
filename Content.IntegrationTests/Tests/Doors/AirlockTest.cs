@@ -65,7 +65,7 @@ namespace Content.IntegrationTests.Tests.Doors
 
                 airlock = entityManager.SpawnEntity("AirlockDummy", MapCoordinates.Nullspace);
 
-                Assert.True(IoCManager.Resolve<IEntityManager>().TryGetComponent(airlock, out doorComponent));
+                Assert.True(entityManager.TryGetComponent(airlock, out doorComponent));
                 Assert.That(doorComponent.State, Is.EqualTo(SharedDoorComponent.DoorState.Closed));
             });
 
@@ -97,7 +97,7 @@ namespace Content.IntegrationTests.Tests.Doors
             {
                 Assert.DoesNotThrow(() =>
                 {
-                    IoCManager.Resolve<IEntityManager>().DeleteEntity(airlock);
+                    entityManager.DeleteEntity(airlock);
                 });
             });
 
@@ -136,9 +136,9 @@ namespace Content.IntegrationTests.Tests.Doors
 
                 airlock = entityManager.SpawnEntity("AirlockDummy", new MapCoordinates((0, 0), mapId));
 
-                Assert.True(IoCManager.Resolve<IEntityManager>().TryGetComponent(physicsDummy, out physBody));
+                Assert.True(entityManager.TryGetComponent(physicsDummy, out physBody));
 
-                Assert.True(IoCManager.Resolve<IEntityManager>().TryGetComponent(airlock, out doorComponent));
+                Assert.True(entityManager.TryGetComponent(airlock, out doorComponent));
                 Assert.That(doorComponent.State, Is.EqualTo(SharedDoorComponent.DoorState.Closed));
             });
 
@@ -151,7 +151,7 @@ namespace Content.IntegrationTests.Tests.Doors
             for (var i = 0; i < 240; i += 10)
             {
                 // Keep the airlock awake so they collide
-                server.Post(() => IoCManager.Resolve<IEntityManager>().GetComponent<IPhysBody>(airlock).WakeBody());
+                server.Post(() => entityManager.GetComponent<IPhysBody>(airlock).WakeBody());
 
                 await server.WaitRunTicks(10);
                 await server.WaitIdleAsync();
@@ -164,7 +164,7 @@ namespace Content.IntegrationTests.Tests.Doors
             // Assert.That(physicsDummy.Transform.MapPosition.X, Is.GreaterThan(physicsDummyStartingX));
 
             // Blocked by the airlock
-            await server.WaitAssertion(() => Assert.That(Math.Abs(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(physicsDummy).MapPosition.X - 1) > 0.01f));
+            await server.WaitAssertion(() => Assert.That(Math.Abs(entityManager.GetComponent<TransformComponent>(physicsDummy).MapPosition.X - 1) > 0.01f));
         }
     }
 }

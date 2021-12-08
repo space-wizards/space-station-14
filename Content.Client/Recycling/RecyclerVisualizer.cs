@@ -21,8 +21,9 @@ namespace Content.Client.Recycling
         {
             base.InitializeEntity(entity);
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ISpriteComponent? sprite) ||
-                !IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out AppearanceComponent? appearance))
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            if (!entMan.TryGetComponent(entity, out ISpriteComponent? sprite) ||
+                !entMan.TryGetComponent(entity, out AppearanceComponent? appearance))
             {
                 return;
             }

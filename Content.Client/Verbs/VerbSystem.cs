@@ -153,12 +153,12 @@ namespace Content.Client.Verbs
             // Remove any entities that do not have LOS
             if ((visibility & MenuVisibility.NoFov) == 0)
             {
-                var playerPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(player.Value).MapPosition;
+                var playerPos = EntityManager.GetComponent<TransformComponent>(player.Value).MapPosition;
                 foreach (var entity in entities.ToList())
                 {
                     if (!ExamineSystemShared.InRangeUnOccluded(
                         playerPos,
-                        IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).MapPosition,
+                        EntityManager.GetComponent<TransformComponent>(entity).MapPosition,
                         ExamineSystemShared.ExamineRange,
                         null))
                     {

@@ -86,7 +86,7 @@ namespace Content.IntegrationTests.Tests
                 var container = ent.SpawnEntity("ContainerOcclusionA", pos);
                 dummy = ent.SpawnEntity("ContainerOcclusionDummy", pos);
 
-                IoCManager.Resolve<IEntityManager>().GetComponent<EntityStorageComponent>(container).Insert(dummy);
+                ent.GetComponent<EntityStorageComponent>(container).Insert(dummy);
             });
 
             await RunTicksSync(c, s, 5);
@@ -119,7 +119,7 @@ namespace Content.IntegrationTests.Tests
                 var container = ent.SpawnEntity("ContainerOcclusionB", pos);
                 dummy = ent.SpawnEntity("ContainerOcclusionDummy", pos);
 
-                IoCManager.Resolve<IEntityManager>().GetComponent<EntityStorageComponent>(container).Insert(dummy);
+                ent.GetComponent<EntityStorageComponent>(container).Insert(dummy);
             });
 
             await RunTicksSync(c, s, 5);
@@ -153,8 +153,8 @@ namespace Content.IntegrationTests.Tests
                 var containerB = ent.SpawnEntity("ContainerOcclusionB", pos);
                 dummy = ent.SpawnEntity("ContainerOcclusionDummy", pos);
 
-                IoCManager.Resolve<IEntityManager>().GetComponent<EntityStorageComponent>(containerA).Insert(containerB);
-                IoCManager.Resolve<IEntityManager>().GetComponent<EntityStorageComponent>(containerB).Insert(dummy);
+                ent.GetComponent<EntityStorageComponent>(containerA).Insert(containerB);
+                ent.GetComponent<EntityStorageComponent>(containerB).Insert(dummy);
             });
 
             await RunTicksSync(c, s, 5);

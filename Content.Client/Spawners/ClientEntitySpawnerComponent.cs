@@ -11,6 +11,8 @@ namespace Content.Client.Spawners
     [RegisterComponent]
     public class ClientEntitySpawnerComponent : Component
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "ClientEntitySpawner";
 
         [DataField("prototypes")] private List<string> _prototypes =  new() { "HVDummyWire" };
@@ -33,7 +35,7 @@ namespace Content.Client.Spawners
         {
             foreach (var proto in _prototypes)
             {
-                var entity = IoCManager.Resolve<IEntityManager>().SpawnEntity(proto, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
+                var entity = _entMan.SpawnEntity(proto, _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
                 _entity.Add(entity);
             }
         }
@@ -42,7 +44,7 @@ namespace Content.Client.Spawners
         {
             foreach (var entity in _entity)
             {
-                IoCManager.Resolve<IEntityManager>().DeleteEntity(entity);
+                _entMan.DeleteEntity(entity);
             }
         }
     }

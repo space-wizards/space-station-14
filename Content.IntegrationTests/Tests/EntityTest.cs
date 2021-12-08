@@ -88,7 +88,7 @@ namespace Content.IntegrationTests.Tests
                                 Logger.LogS(LogLevel.Debug, "EntityTest", $"Testing: {prototype.ID}");
                                 testEntity = entityMan.SpawnEntity(prototype.ID, testLocation);
                                 server.RunTicks(2);
-                                Assert.That((!IoCManager.Resolve<IEntityManager>().EntityExists(testEntity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(testEntity).EntityLifeStage) >= EntityLifeStage.Initialized);
+                                Assert.That(entityMan.GetComponent<MetaDataComponent>(testEntity).EntityInitialized);
                                 entityMan.DeleteEntity(testEntity);
                             }, "Entity '{0}' threw an exception.",
                             prototype.ID);
@@ -173,11 +173,11 @@ namespace Content.IntegrationTests.Tests
 
                         var entity = entityManager.SpawnEntity("AllComponentsOneToOneDeleteTestEntity", testLocation);
 
-                        Assert.That((!IoCManager.Resolve<IEntityManager>().EntityExists(entity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityLifeStage) >= EntityLifeStage.Initialized);
+                        Assert.That(entityManager.GetComponent<MetaDataComponent>(entity).EntityInitialized);
 
                         // The component may already exist if it is a mandatory component
                         // such as MetaData or Transform
-                        if (IoCManager.Resolve<IEntityManager>().HasComponent(entity, type))
+                        if (entityManager.HasComponent(entity, type))
                         {
                             continue;
                         }
@@ -302,14 +302,14 @@ namespace Content.IntegrationTests.Tests
                         var testLocation = grid.ToCoordinates();
                         var entity = entityManager.SpawnEntity("AllComponentsOneEntityDeleteTestEntity", testLocation);
 
-                        Assert.That((!IoCManager.Resolve<IEntityManager>().EntityExists(entity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityLifeStage) >= EntityLifeStage.Initialized);
+                        Assert.That(entityManager.GetComponent<MetaDataComponent>(entity).EntityInitialized);
 
                         foreach (var type in distinct.components)
                         {
                             var component = (Component) componentFactory.GetComponent(type);
 
                             // If the entity already has this component, if it was ensured or added by another
-                            if (IoCManager.Resolve<IEntityManager>().HasComponent(entity, component.GetType()))
+                            if (entityManager.HasComponent(entity, component.GetType()))
                             {
                                 continue;
                             }

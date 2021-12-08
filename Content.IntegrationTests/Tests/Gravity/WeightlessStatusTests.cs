@@ -52,7 +52,7 @@ namespace Content.IntegrationTests.Tests.Gravity
                 var coordinates = grid.ToCoordinates();
                 human = entityManager.SpawnEntity("HumanDummy", coordinates);
 
-                Assert.True(IoCManager.Resolve<IEntityManager>().TryGetComponent(human, out alerts));
+                Assert.True(entityManager.TryGetComponent(human, out alerts));
             });
 
             // Let WeightlessSystem and GravitySystem tick
@@ -63,7 +63,7 @@ namespace Content.IntegrationTests.Tests.Gravity
                 // No gravity without a gravity generator
                 Assert.True(alerts.IsShowingAlert(AlertType.Weightless));
 
-                entityManager.SpawnEntity("GravityGeneratorDummy", IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(human).Coordinates);
+                entityManager.SpawnEntity("GravityGeneratorDummy", entityManager.GetComponent<TransformComponent>(human).Coordinates);
             });
 
             // Let WeightlessSystem and GravitySystem tick

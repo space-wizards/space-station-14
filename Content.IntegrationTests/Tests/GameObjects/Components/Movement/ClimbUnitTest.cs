@@ -59,7 +59,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Movement
 
                 // Now let's make the player enter a climbing transitioning state.
                 climbing.IsClimbing = true;
-                climbing.TryMoveTo(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(human).WorldPosition, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(table).WorldPosition);
+                climbing.TryMoveTo(entityManager.GetComponent<TransformComponent>(human).WorldPosition, entityManager.GetComponent<TransformComponent>(table).WorldPosition);
                 var body = entityManager.GetComponent<IPhysBody>(human);
                 // TODO: Check it's climbing
 

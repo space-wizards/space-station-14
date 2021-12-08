@@ -26,6 +26,7 @@ namespace Content.Client.Wall.Components
     {
         public override string Name => "LowWall";
 
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
 
         public CornerFill LastCornerNE { get; private set; }
@@ -42,11 +43,11 @@ namespace Content.Client.Wall.Components
         {
             base.Startup();
 
-            _overlayEntity = IoCManager.Resolve<IEntityManager>().SpawnEntity("LowWallOverlay", IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
-            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_overlayEntity).AttachParent(Owner);
-            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_overlayEntity).LocalPosition = Vector2.Zero;
+            _overlayEntity = _entMan.SpawnEntity("LowWallOverlay", _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
+            _entMan.GetComponent<TransformComponent>(_overlayEntity).AttachParent(Owner);
+            _entMan.GetComponent<TransformComponent>(_overlayEntity).LocalPosition = Vector2.Zero;
 
-            _overlaySprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(_overlayEntity);
+            _overlaySprite = _entMan.GetComponent<ISpriteComponent>(_overlayEntity);
 
             var overState0 = $"{StateBase}over_0";
             _overlaySprite.LayerMapSet(OverCornerLayers.SE, _overlaySprite.AddLayerState(overState0));
@@ -66,7 +67,7 @@ namespace Content.Client.Wall.Components
             EntityUid tempQualifier = _overlayEntity;
             if (tempQualifier != null)
             {
-                IoCManager.Resolve<IEntityManager>().DeleteEntity(tempQualifier);
+                _entMan.DeleteEntity(tempQualifier);
             }
         }
 
@@ -74,13 +75,13 @@ namespace Content.Client.Wall.Components
         {
             base.CalculateNewSprite();
 
-            if (Sprite == null || !IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Anchored || _overlaySprite == null)
+            if (Sprite == null || !_entMan.GetComponent<TransformComponent>(Owner).Anchored || _overlaySprite == null)
             {
                 return;
             }
 
-            var grid = _mapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).GridID);
-            var coords = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates;
+            var grid = _mapManager.GetGrid(_entMan.GetComponent<TransformComponent>(Owner).GridID);
+            var coords = _entMan.GetComponent<TransformComponent>(Owner).Coordinates;
 
             var (n, nl) = MatchingWall(grid.GetInDir(coords, Direction.North));
             var (ne, nel) = MatchingWall(grid.GetInDir(coords, Direction.NorthEast));
@@ -208,7 +209,7 @@ namespace Content.Client.Wall.Components
 
             foreach (var entity in grid.GetLocal(coords))
             {
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out WindowComponent? window))
+                if (_entMan.TryGetComponent(entity, out WindowComponent? window))
                 {
                     //window.UpdateSprite();
                 }
@@ -220,7 +221,7 @@ namespace Content.Client.Wall.Components
         {
             foreach (var entity in candidates)
             {
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out IconSmoothComponent? other))
+                if (!_entMan.TryGetComponent(entity, out IconSmoothComponent? other))
                 {
                     continue;
                 }

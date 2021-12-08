@@ -147,18 +147,18 @@ namespace Content.IntegrationTests.Tests.Disposal
 
                 // Test for components existing
                 ref DisposalUnitComponent? comp = ref unit!;
-                Assert.True(IoCManager.Resolve<IEntityManager>().TryGetComponent(disposalUnit, out comp));
-                Assert.True(IoCManager.Resolve<IEntityManager>().HasComponent<DisposalEntryComponent>(disposalTrunk));
+                Assert.True(entityManager.TryGetComponent(disposalUnit, out comp));
+                Assert.True(entityManager.HasComponent<DisposalEntryComponent>(disposalTrunk));
 
                 // Can't insert, unanchored and unpowered
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(unit.Owner).Anchored = false;
+                entityManager.GetComponent<TransformComponent>(unit.Owner).Anchored = false;
                 UnitInsertContains(unit, false, human, wrench, disposalUnit, disposalTrunk);
             });
 
             await server.WaitAssertion(() =>
             {
                 // Anchor the disposal unit
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(unit.Owner).Anchored = true;
+                entityManager.GetComponent<TransformComponent>(unit.Owner).Anchored = true;
 
                 // No power
                 Assert.False(unit.Powered);
@@ -173,7 +173,7 @@ namespace Content.IntegrationTests.Tests.Disposal
             await server.WaitAssertion(() =>
             {
                 // Move the disposal trunk away
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(disposalTrunk).WorldPosition += (1, 0);
+                entityManager.GetComponent<TransformComponent>(disposalTrunk).WorldPosition += (1, 0);
 
                 // Fail to flush with a mob and an item
                 Flush(unit, false, human, wrench);
@@ -182,7 +182,7 @@ namespace Content.IntegrationTests.Tests.Disposal
             await server.WaitAssertion(() =>
             {
                 // Move the disposal trunk back
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(disposalTrunk).WorldPosition -= (1, 0);
+                entityManager.GetComponent<TransformComponent>(disposalTrunk).WorldPosition -= (1, 0);
 
                 // Fail to flush with a mob and an item, no power
                 Flush(unit, false, human, wrench);
@@ -191,7 +191,7 @@ namespace Content.IntegrationTests.Tests.Disposal
             await server.WaitAssertion(() =>
             {
                 // Remove power need
-                Assert.True(IoCManager.Resolve<IEntityManager>().TryGetComponent(disposalUnit, out ApcPowerReceiverComponent power));
+                Assert.True(entityManager.TryGetComponent(disposalUnit, out ApcPowerReceiverComponent power));
                 power!.NeedsPower = false;
                 Assert.True(unit.Powered);
 

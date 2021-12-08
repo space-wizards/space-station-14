@@ -121,10 +121,7 @@ namespace Content.Client.VendingMachines.UI
         {
             base.InitializeEntity(entity);
 
-            if (!IoCManager.Resolve<IEntityManager>().HasComponent<AnimationPlayerComponent>(entity))
-            {
-                IoCManager.Resolve<IEntityManager>().AddComponent<AnimationPlayerComponent>(entity);
-            }
+            IoCManager.Resolve<IEntityManager>().EnsureComponent<AnimationPlayerComponent>(entity);
         }
 
         private void HideLayers(ISpriteComponent spriteComponent)
@@ -141,8 +138,9 @@ namespace Content.Client.VendingMachines.UI
         {
             base.OnChangeData(component);
 
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
-            var animPlayer = IoCManager.Resolve<IEntityManager>().GetComponent<AnimationPlayerComponent>(component.Owner);
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            var sprite = entMan.GetComponent<ISpriteComponent>(component.Owner);
+            var animPlayer = entMan.GetComponent<AnimationPlayerComponent>(component.Owner);
             if (!component.TryGetData(VendingMachineVisuals.VisualState, out VendingMachineVisualState state))
             {
                 state = VendingMachineVisualState.Normal;
