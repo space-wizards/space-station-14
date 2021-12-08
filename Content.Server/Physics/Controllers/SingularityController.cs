@@ -13,7 +13,8 @@ namespace Content.Server.Physics.Controllers
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
-        private const float MaxMoveCooldown = 10f;
+        // SS13 has 10s but that's quite a while
+        private const float MaxMoveCooldown = 5f;
         private const float MinMoveCooldown = 2f;
 
         public override void UpdateBeforeSolve(bool prediction, float frameTime)

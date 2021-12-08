@@ -53,26 +53,38 @@ namespace Content.Shared.Singularity
             SubscribeLocalEvent<SharedSingularityComponent, PreventCollideEvent>(OnPreventCollide);
         }
 
-        protected virtual void OnPreventCollide(EntityUid uid, SharedSingularityComponent component, PreventCollideEvent args)
+        protected void OnPreventCollide(EntityUid uid, SharedSingularityComponent component, PreventCollideEvent args)
+        {
+            PreventCollide(uid, component, args);
+        }
+
+        protected virtual bool PreventCollide(EntityUid uid, SharedSingularityComponent component,
+            PreventCollideEvent args)
         {
             var otherUid = args.BodyB.OwnerUid;
 
+            // For prediction reasons always want the client to ignore these.
             if (EntityManager.HasComponent<IMapGridComponent>(otherUid) ||
                 EntityManager.HasComponent<SharedGhostComponent>(otherUid))
             {
                 args.Cancel();
-                return;
+                return true;
             }
 
             // If we're above 4 then breach containment
             // otherwise, check if it's containment and just keep the collision
-            if (component.Level > 4 &&
-                (EntityManager.HasComponent<SharedContainmentFieldComponent>(otherUid) ||
-                 EntityManager.HasComponent<SharedContainmentFieldGeneratorComponent>(otherUid)))
+            if (EntityManager.HasComponent<SharedContainmentFieldComponent>(otherUid) ||
+                EntityManager.HasComponent<SharedContainmentFieldGeneratorComponent>(otherUid))
             {
-                args.Cancel();
-                return;
+                if (component.Level > 4)
+                {
+                    args.Cancel();
+                }
+
+                return true;
             }
+
+            return false;
         }
 
         public void ChangeSingularityLevel(SharedSingularityComponent singularity, int value)

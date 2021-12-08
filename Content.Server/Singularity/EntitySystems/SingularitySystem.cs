@@ -37,22 +37,19 @@ namespace Content.Server.Singularity.EntitySystems
             SubscribeLocalEvent<ServerSingularityComponent, StartCollideEvent>(OnCollide);
         }
 
-        protected override void OnPreventCollide(EntityUid uid, SharedSingularityComponent component, PreventCollideEvent args)
+        protected override bool PreventCollide(EntityUid uid, SharedSingularityComponent component, PreventCollideEvent args)
         {
+            if (base.PreventCollide(uid, component, args)) return true;
+
             var otherUid = args.BodyB.OwnerUid;
 
-            base.OnPreventCollide(uid, component, args);
+            if (args.Cancelled) return true;
 
-            if (args.Cancelled) return;
-
-            // Anything else not covered off we just won't collide don't @ me
-            if (!EntityManager.HasComponent<SinguloFoodComponent>(otherUid) &&
-                !EntityManager.HasComponent<ServerSingularityComponent>(otherUid) &&
-                !EntityManager.HasComponent<ContainmentFieldComponent>(otherUid) &&
-                !EntityManager.HasComponent<ContainmentFieldGeneratorComponent>(otherUid))
-            {
+            // If it's not cancelled then we'll cancel if we can't immediately destroy it on collision
+            if (!CanDestroy(component, otherUid))
                 args.Cancel();
-            }
+
+            return true;
         }
 
         private void OnCollide(EntityUid uid, ServerSingularityComponent component, StartCollideEvent args)
@@ -69,23 +66,9 @@ namespace Content.Server.Singularity.EntitySystems
 
             var otherUid = args.OtherFixture.Body.OwnerUid;
 
-            // Absorb other singulo
-            if (EntityManager.TryGetComponent(otherUid, out ServerSingularityComponent? otherSingulo))
-            {
-                if (otherSingulo.BeingDeletedByAnotherSingularity) return;
+            if (!CanDestroy(component, otherUid)) return;
 
-                component.Energy += otherSingulo.Energy;
-                otherSingulo.BeingDeletedByAnotherSingularity = true;
-                EntityManager.QueueDeleteEntity(otherSingulo.OwnerUid);
-                return;
-            }
-
-            // Eat singulo food
-            if (EntityManager.TryGetComponent(otherUid, out SinguloFoodComponent? food))
-            {
-                component.Energy += food.Energy;
-                EntityManager.QueueDeleteEntity(otherUid);
-            }
+            HandleDestroy(component, otherUid);
         }
 
         public override void Update(float frameTime)
@@ -108,21 +91,21 @@ namespace Content.Server.Singularity.EntitySystems
             {
                 _gravityAccumulator -= GravityCooldown;
 
-                foreach (var singularity in EntityManager.EntityQuery<ServerSingularityComponent>())
+                foreach (var (singularity, xform) in EntityManager.EntityQuery<ServerSingularityComponent, TransformComponent>())
                 {
-                    Update(singularity, GravityCooldown);
+                    Update(singularity, xform, GravityCooldown);
                 }
             }
         }
 
-        private void Update(ServerSingularityComponent component, float frameTime)
+        private void Update(ServerSingularityComponent component, TransformComponent xform, float frameTime)
         {
             if (component.BeingDeletedByAnotherSingularity) return;
 
-            var worldPos = component.Owner.Transform.WorldPosition;
-            DestroyEntities(component, worldPos);
-            DestroyTiles(component, worldPos);
-            PullEntities(component, worldPos, frameTime);
+            var worldPos = xform.WorldPosition;
+            DestroyEntities(component, xform, worldPos);
+            DestroyTiles(component, xform, worldPos);
+            PullEntities(component, xform, worldPos, frameTime);
         }
 
         private float PullRange(ServerSingularityComponent component)
@@ -163,23 +146,23 @@ namespace Content.Server.Singularity.EntitySystems
                 otherSingulo.BeingDeletedByAnotherSingularity = true;
             }
 
-            EntityManager.QueueDeleteEntity(entity);
-
             if (EntityManager.TryGetComponent<SinguloFoodComponent>(entity, out var singuloFood))
                 component.Energy += singuloFood.Energy;
             else
                 component.Energy++;
+
+            EntityManager.QueueDeleteEntity(entity);
         }
 
         /// <summary>
         /// Handle deleting entities and increasing energy
         /// </summary>
-        private void DestroyEntities(ServerSingularityComponent component, Vector2 worldPos)
+        private void DestroyEntities(ServerSingularityComponent component, TransformComponent xform, Vector2 worldPos)
         {
             // The reason we don't /just/ use collision is because we'll be deleting stuff that may not necessarily have physics (e.g. carpets).
             var destroyRange = DestroyTileRange(component);
 
-            foreach (var entity in _lookup.GetEntitiesInRange(component.Owner.Transform.MapID, worldPos, destroyRange))
+            foreach (var entity in _lookup.GetEntitiesInRange(xform.MapID, worldPos, destroyRange))
             {
                 HandleDestroy(component, entity.Uid);
             }
@@ -194,14 +177,17 @@ namespace Content.Server.Singularity.EntitySystems
                    entity.IsInContainer());
         }
 
-        private void PullEntities(ServerSingularityComponent component, Vector2 worldPos, float frameTime)
+        /// <summary>
+        /// Pull dynamic bodies in range to the singulo.
+        /// </summary>
+        private void PullEntities(ServerSingularityComponent component, TransformComponent xform, Vector2 worldPos, float frameTime)
         {
             // TODO: When we split up dynamic and static trees we might be able to make items always on the broadphase
             // in which case we can just query dynamictree directly for brrt
             var pullRange = PullRange(component);
             var destroyRange = DestroyTileRange(component);
 
-            foreach (var entity in _lookup.GetEntitiesInRange(component.Owner.Transform.MapID, worldPos, pullRange))
+            foreach (var entity in _lookup.GetEntitiesInRange(xform.MapID, worldPos, pullRange))
             {
                 // I tried having it so level 6 can de-anchor. BAD IDEA, MASSIVE LAG.
                 if (entity == component.Owner ||
@@ -224,22 +210,23 @@ namespace Content.Server.Singularity.EntitySystems
         /// <summary>
         /// Destroy any grid tiles within the relevant Level range.
         /// </summary>
-        private void DestroyTiles(ServerSingularityComponent component, Vector2 worldPos)
+        private void DestroyTiles(ServerSingularityComponent component, TransformComponent xform, Vector2 worldPos)
         {
             var radius = DestroyTileRange(component);
 
             var circle = new Circle(worldPos, radius);
             var box = new Box2(worldPos - radius, worldPos + radius);
 
-            foreach (var grid in _mapManager.FindGridsIntersecting(component.Owner.Transform.MapID, box))
+            foreach (var grid in _mapManager.FindGridsIntersecting(xform.MapID, box))
             {
+                // Bundle these together so we can use the faster helper to set tiles.
                 var toDestroy = new List<(Vector2i, Tile)>();
 
                 foreach (var tile in grid.GetTilesIntersecting(circle))
                 {
                     if (tile.Tile.IsEmpty) continue;
 
-                    // Avoid ripping up tiles that may be essential.
+                    // Avoid ripping up tiles that may be essential to containment
                     if (component.Level < 5)
                     {
                         var canDelete = true;
